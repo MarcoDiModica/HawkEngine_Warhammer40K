@@ -1,3 +1,4 @@
+#include <string>
 #include <GL/glew.h>
 #include <chrono>
 #include <thread>
@@ -13,8 +14,15 @@
 #include "../MyGameEngine/Mesh.h"
 #include "Camera.h"
 #include "imgui.h"
+#include <glm/gtc/type_ptr.hpp>
 
 using namespace std;
+
+
+#define CHECKERS_HEIGHT 64
+#define CHECKERS_WIDTH 64
+
+GLuint textureID;
 
 using hrclock = chrono::high_resolution_clock;
 using u8vec4 = glm::u8vec4;
@@ -31,6 +39,7 @@ static void init_openGL() {
 	glewInit();
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.5, 0.5, 0.5, 1.0);
 
 	glMatrixMode(GL_PROJECTION);
@@ -63,25 +72,41 @@ static void drawFloorGrid(int size, double step) {
 void move_camera() 
 {
 	//move the transform of the camera
-    if (ImGui::IsKeyDown(ImGuiKey_W)) camera.transform().translate(camera.transform().fwd() * 0.1);
-	if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(-camera.transform().fwd() * 0.1);
+    if (ImGui::IsKeyDown(ImGuiKey_W)) camera.transform().translate(-camera.transform().fwd() * 0.1);
+	if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(camera.transform().fwd() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_A)) camera.transform().translate(-camera.transform().left() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_D)) camera.transform().translate(camera.transform().left() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_Q)) camera.transform().translate(-camera.transform().up() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_E)) camera.transform().translate(camera.transform().up() * 0.1);
 	//rotate the transform of the camera
-	
-	
-	
-	
+	if (ImGui::IsKeyDown(ImGuiKey_LeftArrow)) camera.transform().rotate(0.02, vec3(0, 1, 0));
+	if (ImGui::IsKeyDown(ImGuiKey_RightArrow)) camera.transform().rotate(-0.02, vec3(0, 1, 0));
+	if (ImGui::IsKeyDown(ImGuiKey_UpArrow)) camera.transform().rotate(0.02, camera.transform().left());
+	if (ImGui::IsKeyDown(ImGuiKey_DownArrow)) camera.transform().rotate(-0.02, camera.transform().left());
 
+}
+
+
+
+void configureCamera() {
+	glm::dmat4 projectionMatrix = camera.projection();
+	glm::dmat4 viewMatrix = camera.view();
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixd(glm::value_ptr(projectionMatrix));
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixd(glm::value_ptr(viewMatrix));
 }
 
 static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-	glLoadMatrixd(&camera.view()[0][0]);
+	//glLoadMatrixd(&camera.view()[0][0]);
+	configureCamera();
 	drawFloorGrid(16, 0.25);
+
 	mesh.Draw();
+
 }
 
 int main(int argc, char** argv) {
@@ -91,8 +116,11 @@ int main(int argc, char** argv) {
 	init_openGL();
 	camera.transform().pos() = vec3(0, 1, 4);
 	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
+
 	
+
 	mesh.LoadMesh("BakerHouse.fbx");
+	
 
 	while (window.processEvents(&gui) && window.isOpen()) {
 		const auto t0 = hrclock::now();

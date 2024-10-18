@@ -3,11 +3,10 @@
 #pragma once
 
 #include <vector>
-
+#include <GL/glew.h>
 #include <string>
 
 using namespace std;
-
 
 
 class Mesh
@@ -18,6 +17,7 @@ public:
 
     void Draw();
     void LoadMesh(const char* file_path);
+	void LoadTexture();
 
 private:
     void setupMesh();
@@ -35,11 +35,12 @@ public:
     bool active;
     bool drawWireframe;
     bool drawChecker;
-
+    unsigned int textureID;
     std::string path;
 
 private:
     unsigned int VAO, VBO, EBO;
+  
 };
 
 #endif // !__MESH_H__

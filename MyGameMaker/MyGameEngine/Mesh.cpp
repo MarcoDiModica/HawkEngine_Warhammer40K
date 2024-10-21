@@ -11,11 +11,12 @@
 #include <IL/ilu.h>
 #include <IL/ilut.h>
 #include <iostream>
+#include <string>
 using namespace std;
 
 
-#define CHECKERS_HEIGHT 64
-#define CHECKERS_WIDTH 64
+#define CHECKERS_HEIGHT 32
+#define CHECKERS_WIDTH 32
 
 Mesh::Mesh() {
     
@@ -27,7 +28,7 @@ Mesh::~Mesh() {
 
 void Mesh::Load(const glm::vec3* vertices, size_t num_verts, unsigned int* indices, size_t num_indexs) {
 	vertices_buffer.LoadData(vertices, num_verts * sizeof(glm::vec3));
-	indices_buffer.LoadData(indices, num_indexs);
+	indices_buffer.LoadIndices(indices, num_indexs);
     texCoords_buffer.UnLoad();
 	normals_buffer.UnLoad();
 	colors_buffer.UnLoad();
@@ -48,13 +49,18 @@ void Mesh::LoadColors(const glm::u8vec3* colors, size_t num_colors) {
 }
 void Mesh::Draw() const 
 {
-    if (texCoords_buffer.Id()) {
+    if (textureID) {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+	}
+
+    //if (texCoords_buffer.Id()) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         //for shaders enable veretx attribute something ? watafak
         texCoords_buffer.bind();
         //instead of pointer glvertex atribute, the position attribute
 		glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
-    }
+    //}
 	if (normals_buffer.Id()) {
 		glEnableClientState(GL_NORMAL_ARRAY);
 		normals_buffer.bind();
@@ -79,37 +85,85 @@ void Mesh::Draw() const
 	if (normals_buffer.Id()) { glDisableClientState(GL_NORMAL_ARRAY);}
 	if (colors_buffer.Id()) { glDisableClientState(GL_COLOR_ARRAY);}
 
+    if (textureID) {
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
+    }
 }
 
 
 
 void Mesh::LoadMesh(const char* file_path) {
-   /* const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
-
+    const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
+  
     if (scene != nullptr && scene->HasMeshes()) {
         for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
-            num_vertices = scene->mMeshes[i]->mNumVertices;
-            vertices = new float[num_vertices * 3];
-            memcpy(vertices, scene->mMeshes[i]->mVertices, sizeof(float) * num_vertices * 3);
+            size_t num_vertices = scene->mMeshes[i]->mNumVertices;
+            glm::vec3* vertex = new glm::vec3[num_vertices * 3];
+            memcpy(vertex, scene->mMeshes[i]->mVertices, sizeof(float) * num_vertices * 3);
+
+            if (scene->mMeshes[i]->HasTextureCoords(0)) {
+                glm::vec2* texCoords = new glm::vec2[num_vertices];
+                for (size_t j = 0; j < num_vertices; ++j) {
+                    texCoords[j] = glm::vec2(
+                        scene->mMeshes[i]->mTextureCoords[0][j].x,
+                        scene->mMeshes[i]->mTextureCoords[0][j].y
+                    );
+                }
+                loadTexCoords(texCoords, num_vertices);
+                delete[] texCoords;
+            }
+          
 
             if (scene->mMeshes[i]->HasFaces()) {
-                num_index = scene->mMeshes[i]->mNumFaces * 3;
-                index = new unsigned int[num_index]; // assume each face is a triangle
+                size_t num_index = scene->mMeshes[i]->mNumFaces * 3;
+                unsigned int* index = new unsigned int[num_index]; // assume each face is a triangle
                 for (unsigned int j = 0; j < scene->mMeshes[i]->mNumFaces; ++j) {
                     memcpy(&index[j * 3], scene->mMeshes[i]->mFaces[j].mIndices, 3 * sizeof(unsigned int));
                 }
+				 Load(vertex,num_vertices,index,num_index);
             }
 
-            setupMesh();
+           
         }
         aiReleaseImport(scene);
     }
     else {
         // Handle error
-    }*/
+    }
 }
-void Mesh::LoadTexture() {
-  /*  GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
+
+
+void Mesh::LoadTexture(const std::string& file_path) {
+
+    auto img = ilGenImage();
+    ilBindImage(img);
+    ilLoadImage((const wchar_t*)file_path.c_str());
+    auto width = ilGetInteger(IL_IMAGE_WIDTH);
+
+    auto height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+    auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
+    auto data = ilGetData();
+
+    //load image as a texture in VRAM
+	textureID = texCoords_buffer.Id();
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexImage2D(GL_TEXTURE_2D, 0, channels, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    //now we can delete image from RAM
+    ilDeleteImage(img);
+}
+
+void Mesh::LoadCheckerTexture() {
+    GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
     for (int i = 0; i < CHECKERS_HEIGHT; i++) {
         for (int j = 0; j < CHECKERS_WIDTH; j++) {
             int c = ((((i & 0x8) == 0) ^ (((j & 0x8)) == 0))) * 255;
@@ -126,7 +180,6 @@ void Mesh::LoadTexture() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);*/
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 }
-
 

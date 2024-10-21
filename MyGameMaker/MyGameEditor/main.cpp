@@ -15,6 +15,9 @@
 #include "Camera.h"
 #include "imgui.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <IL/il.h>
+#include <IL/ilu.h>	
+#include <IL/ilut.h>
 
 using namespace std;
 
@@ -60,7 +63,7 @@ static void draw_triangle(const u8vec4& color, const vec3& center, double size) 
 }
 
 static void drawFloorGrid(int size, double step) {
-	glColor3ub(0, 2, 200);
+	//glColor3ub(0, 2, 200);
 	glBegin(GL_LINES);
 	for (double i = -size; i <= size; i += step) {
 		glVertex3d(i, 0, -size);
@@ -68,6 +71,7 @@ static void drawFloorGrid(int size, double step) {
 		glVertex3d(-size, 0, i);
 		glVertex3d(size, 0, i);
 	}
+	
 	glEnd();
 }
 void move_camera() 
@@ -114,6 +118,10 @@ static void display_func() {
 }
 
 int main(int argc, char** argv) {
+	//initialize devil
+	ilInit();
+	iluInit();
+	ilutInit();
 	MyWindow window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
 	MyGUI gui(window.windowPtr(), window.contextPtr());
 
@@ -123,8 +131,9 @@ int main(int argc, char** argv) {
 
 	
 
-	//mesh.LoadMesh("BakerHouse.fbx");
-	//mesh.LoadTexture();
+	mesh.LoadMesh("BakerHouse.fbx");
+	mesh.LoadTexture("Baker_house.png");
+	//mesh.LoadCheckerTexture();
 
 	while (window.processEvents(&gui) && window.isOpen()) {
 		const auto t0 = hrclock::now();

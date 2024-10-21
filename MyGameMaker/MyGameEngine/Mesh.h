@@ -24,6 +24,8 @@ class Mesh
 	BufferObject normals_buffer;
 	BufferObject colors_buffer;
 
+	unsigned int textureID;
+
 public:
     Mesh();
     virtual ~Mesh();
@@ -37,9 +39,10 @@ public:
 	void LoadColors(const glm::u8vec3* colors, size_t num_colors);
     void Draw() const;
 
-
-    void LoadMesh(const char* file_path);
-	void LoadTexture();
+	void LoadTexture(const std::string& file_path);
+	void LoadMesh(const char* file_path);
+   
+	void LoadCheckerTexture();
 
   
 };

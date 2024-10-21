@@ -35,6 +35,7 @@ static const ivec2 WINDOW_SIZE(1280, 720);
 static const auto FPS = 60;
 static const auto FRAME_DT = 1.0s / FPS;
 
+
 static void init_openGL() {
 	glewInit();
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
@@ -59,7 +60,7 @@ static void draw_triangle(const u8vec4& color, const vec3& center, double size) 
 }
 
 static void drawFloorGrid(int size, double step) {
-	glColor3ub(0, 0, 0);
+	glColor3ub(0, 2, 200);
 	glBegin(GL_LINES);
 	for (double i = -size; i <= size; i += step) {
 		glVertex3d(i, 0, -size);
@@ -71,6 +72,7 @@ static void drawFloorGrid(int size, double step) {
 }
 void move_camera() 
 {
+
 	//move the transform of the camera
     if (ImGui::IsKeyDown(ImGuiKey_W)) camera.transform().translate(-camera.transform().fwd() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(camera.transform().fwd() * 0.1);
@@ -99,10 +101,12 @@ void configureCamera() {
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 }
 
+
 static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	//glLoadMatrixd(&camera.view()[0][0]);
 	configureCamera();
+
 	drawFloorGrid(16, 0.25);
 
 	mesh.Draw();
@@ -119,8 +123,8 @@ int main(int argc, char** argv) {
 
 	
 
-	mesh.LoadMesh("BakerHouse.fbx");
-	
+	//mesh.LoadMesh("BakerHouse.fbx");
+	//mesh.LoadTexture();
 
 	while (window.processEvents(&gui) && window.isOpen()) {
 		const auto t0 = hrclock::now();

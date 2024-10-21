@@ -5,41 +5,42 @@
 #include <vector>
 #include <GL/glew.h>
 #include <string>
+#include <glm/glm.hpp>
 
-using namespace std;
+#include "BufferObject.h"
 
 
 class Mesh
 {
+	
+
+	std::vector<glm::vec3> _vertices;
+	std::vector<unsigned int> _indices;
+
+
+    BufferObject vertices_buffer;
+	BufferObject indices_buffer;
+	BufferObject texCoords_buffer;
+	BufferObject normals_buffer;
+	BufferObject colors_buffer;
+
 public:
     Mesh();
     virtual ~Mesh();
+	//myb tambien tener normals, texcoords, colors
+	const auto& vertices() const { return _vertices; }
+	const auto& indices() const { return _indices; }
 
-    void Draw();
+    void Load(const glm::vec3* vertices, size_t num_verts, unsigned int* indices, size_t num_indexs);
+	void loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords);
+	void LoadNormals(const glm::vec3* normals, size_t num_normals);
+	void LoadColors(const glm::u8vec3* colors, size_t num_colors);
+    void Draw() const;
+
+
     void LoadMesh(const char* file_path);
 	void LoadTexture();
 
-private:
-    void setupMesh();
-
-
-public:
-    unsigned int id_index = 0; // index in VRAM
-    unsigned int num_index = 0;
-    unsigned int* index = nullptr;
-
-    unsigned int id_vertex = 0; // unique vertex in VRAM
-    unsigned int num_vertices = 0;
-    float* vertices = nullptr;
-
-    bool active;
-    bool drawWireframe;
-    bool drawChecker;
-    unsigned int textureID;
-    std::string path;
-
-private:
-    unsigned int VAO, VBO, EBO;
   
 };
 

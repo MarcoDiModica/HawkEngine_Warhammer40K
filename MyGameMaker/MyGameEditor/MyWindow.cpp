@@ -3,18 +3,41 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_opengl.h>
 #include "MyWindow.h"
+
+#include "Log.h"
+
 using namespace std;
 
 Window::Window(const char* title, unsigned short width, unsigned short height) {
-    open(title, width, height);
+    Open(title, width, height);
 }
 
 Window::~Window() {
-    close();
+    Close();
 }
 
-void Window::open(const char* title, unsigned short width, unsigned short height) {
-    if (isOpen()) return;
+bool Window::Awake()
+{
+    bool ret = true;
+
+    /*SetResolution(resolution);*/
+
+  /*  LOG(LogType::LOG_INFO, "# Initializing SDL Window with OpenGL...");
+    if (!initSDLWindowWithOpenGL())
+        return false;
+
+    LOG(LogType::LOG_INFO, "# Initializing OpenGL...");
+    if (!createSdlGlContext())
+        return false;
+
+    if (!initOpenGL())
+        return false;*/
+
+    return true;
+}
+
+void Window::Open(const char* title, unsigned short width, unsigned short height) {
+    if (IsOpen()) return;
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
@@ -29,8 +52,8 @@ void Window::open(const char* title, unsigned short width, unsigned short height
     if (SDL_GL_SetSwapInterval(1) != 0) throw exception(SDL_GetError());
 }
 
-void Window::close() {
-    if (!isOpen()) return;
+void Window::Close() {
+    if (!IsOpen()) return;
 
     SDL_GL_DeleteContext(_ctx);
     _ctx = nullptr;
@@ -39,11 +62,11 @@ void Window::close() {
     _window = nullptr;
 }
 
-void Window::swapBuffers() const {
+void Window::SwapBuffers() const {
     SDL_GL_SwapWindow(static_cast<SDL_Window*>(_window));
 }
 
-bool Window::processEvents(IEventProcessor* event_processor) {
+bool Window::ProcessEvents(IEventProcessor* event_processor) {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         if (event_processor) event_processor->processEvent(e);
@@ -55,7 +78,7 @@ bool Window::processEvents(IEventProcessor* event_processor) {
 
         case SDL_QUIT: 
             printf("Closing application");
-            close(); 
+            Close(); 
             return false;
         }
     }

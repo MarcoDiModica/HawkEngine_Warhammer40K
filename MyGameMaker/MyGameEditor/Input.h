@@ -2,6 +2,9 @@
 #define __INPUT_H__
 
 #pragma once
+
+#include "Module.h"
+
 #define MAX_MOUSE_BUTTONS 5
 
 enum KEY_STATE
@@ -12,16 +15,17 @@ enum KEY_STATE
 	KEY_UP
 };
 
-class Input
+class Input : public Module
 {
 public:
-	//Input(App* app);
+	Input(App* Application);
 
 	virtual ~Input();
 
 	bool Awake();
 
 	bool PreUpdate();
+
 	bool Update(double dt);
 
 	bool processSDLEvents();

@@ -18,6 +18,7 @@ public:
 
 	virtual void Start() = 0;
 	virtual void Update(float deltaTime) = 0;
+	virtual void Destroy() = 0;
 
 	std::shared_ptr<GameObject> GetOwner() const { return owner.lock(); }
 	std::string GetName() const { return name; }

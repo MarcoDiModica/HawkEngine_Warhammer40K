@@ -54,13 +54,13 @@ void Mesh::Draw() const
         glBindTexture(GL_TEXTURE_2D, textureID);
 	}
 
-    //if (texCoords_buffer.Id()) {
+    if (texCoords_buffer.Id()) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        //for shaders enable veretx attribute something ? watafak
+        //for shaders enable veretx attribute something
         texCoords_buffer.bind();
         //instead of pointer glvertex atribute, the position attribute
 		glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
-    //}
+    }
 	if (normals_buffer.Id()) {
 		glEnableClientState(GL_NORMAL_ARRAY);
 		normals_buffer.bind();

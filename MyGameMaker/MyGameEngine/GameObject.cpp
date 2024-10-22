@@ -1,9 +1,7 @@
 #include "GameObject.h"
-#include <iostream>
+#include "Component.h"
 
-using namespace std;
-
-void GameObject::paint() {
-	
-	cout << "random message";
+GameObject::GameObject(const std::string& name, const std::string& tag, bool active)
+	: name(name), tag(tag), active(active), destroyed(false)
+{
 }

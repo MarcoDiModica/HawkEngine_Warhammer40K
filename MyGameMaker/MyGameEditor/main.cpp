@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <exception>
+#include <iostream>
 #include <glm/glm.hpp>
 #include "MyWindow.h"
 #include "MyGUI.h"
@@ -118,6 +119,9 @@ static void display_func() {
 }
 
 int main(int argc, char** argv) {
+	
+	//check version cpp
+	cout << "C++ Version: " << __cplusplus << endl;
 	//initialize devil
 	ilInit();
 	iluInit();

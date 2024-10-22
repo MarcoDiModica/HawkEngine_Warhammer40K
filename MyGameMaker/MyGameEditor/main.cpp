@@ -19,11 +19,24 @@
 #include <IL/ilu.h>	
 #include <IL/ilut.h>
 
+#include "App.h"
+
 using namespace std;
 
 
 #define CHECKERS_HEIGHT 64
 #define CHECKERS_WIDTH 64
+
+enum MainState
+{
+	CREATE,
+	AWAKE,
+	START,
+	LOOP,
+	FREE,
+	FAIL,
+	EXIT
+};
 
 GLuint textureID;
 
@@ -117,34 +130,92 @@ static void display_func() {
 
 }
 
+App* Application = NULL;
+
 int main(int argc, char** argv) {
+
+	MainState state = CREATE;
+
+	while (state != EXIT) 
+	{
+		switch (state)
+		{
+
+		case CREATE:
+
+			Application = new App();
+
+			if (Application) { state = AWAKE; }
+			else { state = FAIL; printf("Failed on Create"); }
+			break;
+
+
+		case AWAKE:
+
+			if (Application->Awake()) { state = START; }
+
+			else
+			{
+				printf("Failed on Awake");
+				state = FAIL;
+			}
+			break;
+
+		case START:
+
+			if (Application->Start()) { state = LOOP; }
+			else { state = FAIL; printf("Failed on START"); }
+			break;
+
+		case LOOP:
+
+			if (!Application->Update()) {
+				state = FREE;
+			}
+			break;
+
+
+		case FREE:
+
+			// TODO Free all classes and memory
+			state = EXIT;
+
+		}
+
+	}
+
+
+
+
+
+
 	//initialize devil
-	ilInit();
-	iluInit();
-	ilutInit();
-	MyWindow window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
-	MyGUI gui(window.windowPtr(), window.contextPtr());
+	//ilInit();
+	//iluInit();
+	//ilutInit();
+	//Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
+	//MyGUI gui(window.windowPtr(), window.contextPtr());
 
-	init_openGL();
-	camera.transform().pos() = vec3(0, 1, 4);
-	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
+	//init_openGL();
+	//camera.transform().pos() = vec3(0, 1, 4);
+	//camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
 
-	
+	//
 
-	mesh.LoadMesh("BakerHouse.fbx");
-	mesh.LoadTexture("Baker_house.png");
+	//mesh.LoadMesh("BakerHouse.fbx");
+	//mesh.LoadTexture("Baker_house.png");
 	//mesh.LoadCheckerTexture();
 
-	while (window.processEvents(&gui) && window.isOpen()) {
-		const auto t0 = hrclock::now();
-		display_func();
-		gui.render();
-		move_camera();
-		window.swapBuffers();
-		const auto t1 = hrclock::now();
-		const auto dt = t1 - t0;
-		if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
-	}
+	//while (window.processEvents(&gui) && window.isOpen()) {
+	//	const auto t0 = hrclock::now();
+	//	display_func();
+	//	gui.render();
+	//	move_camera();
+	//	window.swapBuffers();
+	//	const auto t1 = hrclock::now();
+	//	const auto dt = t1 - t0;
+	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
+	//}
 
 	return 0;
 }

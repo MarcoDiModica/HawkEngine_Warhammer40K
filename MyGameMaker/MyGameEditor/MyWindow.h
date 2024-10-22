@@ -9,7 +9,7 @@ public:
 	virtual void processEvent(const SDL_Event& event) = 0;
 };
 
-class MyWindow {
+class Window {
 
 	SDL_Window* _window = nullptr;
 	void* _ctx = nullptr;
@@ -25,11 +25,11 @@ public:
 	auto* windowPtr() const { return _window; }
 	auto* contextPtr() const { return _ctx; }
 
-	MyWindow(const char* title, unsigned short width, unsigned short height);
-	MyWindow(MyWindow&&) noexcept = delete;
-	MyWindow(const MyWindow&) = delete;
-	MyWindow& operator=(const MyWindow&) = delete;
-	~MyWindow();
+	Window(const char* title, unsigned short width, unsigned short height);
+	Window(Window&&) noexcept = delete;
+	Window(const Window&) = delete;
+	Window& operator=(const Window&) = delete;
+	~Window();
 
 	void open(const char* title, unsigned short width, unsigned short height);
 	void close();

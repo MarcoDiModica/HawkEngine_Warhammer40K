@@ -5,15 +5,15 @@
 #include "MyWindow.h"
 using namespace std;
 
-MyWindow::MyWindow(const char* title, unsigned short width, unsigned short height) {
+Window::Window(const char* title, unsigned short width, unsigned short height) {
     open(title, width, height);
 }
 
-MyWindow::~MyWindow() {
+Window::~Window() {
     close();
 }
 
-void MyWindow::open(const char* title, unsigned short width, unsigned short height) {
+void Window::open(const char* title, unsigned short width, unsigned short height) {
     if (isOpen()) return;
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -29,7 +29,7 @@ void MyWindow::open(const char* title, unsigned short width, unsigned short heig
     if (SDL_GL_SetSwapInterval(1) != 0) throw exception(SDL_GetError());
 }
 
-void MyWindow::close() {
+void Window::close() {
     if (!isOpen()) return;
 
     SDL_GL_DeleteContext(_ctx);
@@ -39,16 +39,24 @@ void MyWindow::close() {
     _window = nullptr;
 }
 
-void MyWindow::swapBuffers() const {
+void Window::swapBuffers() const {
     SDL_GL_SwapWindow(static_cast<SDL_Window*>(_window));
 }
 
-bool MyWindow::processEvents(IEventProcessor* event_processor) {
+bool Window::processEvents(IEventProcessor* event_processor) {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         if (event_processor) event_processor->processEvent(e);
         switch (e.type) {
-        case SDL_QUIT: close(); return false;
+        case SDL_DROPFILE:
+
+            printf("A file was dropped");
+            return true;
+
+        case SDL_QUIT: 
+            printf("Closing application");
+            close(); 
+            return false;
         }
     }
     return true;

@@ -102,6 +102,16 @@ void Mesh::LoadMesh(const char* file_path) {
             glm::vec3* vertex = new glm::vec3[num_vertices * 3];
             memcpy(vertex, scene->mMeshes[i]->mVertices, sizeof(float) * num_vertices * 3);
 
+
+            if (scene->mMeshes[i]->HasFaces()) {
+                size_t num_index = scene->mMeshes[i]->mNumFaces * 3;
+                unsigned int* index = new unsigned int[num_index]; // assume each face is a triangle
+                for (unsigned int j = 0; j < scene->mMeshes[i]->mNumFaces; ++j) {
+                    memcpy(&index[j * 3], scene->mMeshes[i]->mFaces[j].mIndices, 3 * sizeof(unsigned int));
+                }
+				 Load(vertex,num_vertices,index,num_index);
+            }
+            
             if (scene->mMeshes[i]->HasTextureCoords(0)) {
                 glm::vec2* texCoords = new glm::vec2[num_vertices];
                 for (size_t j = 0; j < num_vertices; ++j) {
@@ -113,17 +123,7 @@ void Mesh::LoadMesh(const char* file_path) {
                 loadTexCoords(texCoords, num_vertices);
                 delete[] texCoords;
             }
-          
-
-            if (scene->mMeshes[i]->HasFaces()) {
-                size_t num_index = scene->mMeshes[i]->mNumFaces * 3;
-                unsigned int* index = new unsigned int[num_index]; // assume each face is a triangle
-                for (unsigned int j = 0; j < scene->mMeshes[i]->mNumFaces; ++j) {
-                    memcpy(&index[j * 3], scene->mMeshes[i]->mFaces[j].mIndices, 3 * sizeof(unsigned int));
-                }
-				 Load(vertex,num_vertices,index,num_index);
-            }
-
+	
            
         }
         aiReleaseImport(scene);

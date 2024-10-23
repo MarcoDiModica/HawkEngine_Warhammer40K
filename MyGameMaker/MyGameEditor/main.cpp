@@ -24,6 +24,7 @@
 
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
+#include "MyGameEngine/MeshRendererComponent.h"
 
 using namespace std;
 
@@ -177,10 +178,19 @@ int main(int argc, char** argv) {
 	camera.transform().pos() = vec3(0, 1, 4);
 	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
 
-	
+	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("TesteoLocoJIJI");
+	gameObject->AddComponent<Transform_Component>();
+	auto renderer = gameObject->AddComponent<MeshRenderer>();
 
-	mesh.LoadMesh("BakerHouse.fbx");
-	mesh.LoadTexture("Baker_house.png");
+	std::shared_ptr<Mesh> myMesh = std::make_shared<Mesh>();
+	myMesh->LoadMesh("BakerHouse.fbx");
+	myMesh->LoadTexture("Baker_house.png");
+	//myMesh->LoadCheckerTexture(); // uV caramba
+
+	renderer->SetMesh(myMesh);	
+
+	//mesh.LoadMesh("BakerHouse.fbx");
+	//mesh.LoadTexture("Baker_house.png");
 	//mesh.LoadCheckerTexture();
 
 	MarcoTests(); //hola buenas tardes
@@ -188,6 +198,9 @@ int main(int argc, char** argv) {
 	while (window.processEvents(&gui) && window.isOpen()) {
 		const auto t0 = hrclock::now();
 		display_func();
+
+		renderer->Render();
+
 		gui.render();
 		move_camera();
 		window.swapBuffers();

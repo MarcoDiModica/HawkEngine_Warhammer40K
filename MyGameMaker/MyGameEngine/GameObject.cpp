@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "MeshRendererComponent.h"
 
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)) {}
 

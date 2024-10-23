@@ -38,5 +38,3 @@ protected:
 
 template <typename T>
 concept IsComponent = std::is_base_of<Component, T>::value;
-
-//no ueseis el namespace de std, es el diablo

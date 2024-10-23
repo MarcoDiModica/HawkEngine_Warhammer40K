@@ -20,6 +20,11 @@
 #include <IL/ilu.h>	
 #include <IL/ilut.h>
 
+//pruebas de include "GameObject.h"
+
+#include "MyGameEngine/GameObject.h"
+#include "MyGameEngine/TransformComponent.h"
+
 using namespace std;
 
 
@@ -118,10 +123,49 @@ static void display_func() {
 
 }
 
+static void MarcoTests()
+{
+	std::shared_ptr<GameObject> parent = std::make_shared<GameObject>("Parent");
+	std::shared_ptr<GameObject> child1 = std::make_shared<GameObject>("Child1");
+	std::shared_ptr<GameObject> child2 = std::make_shared<GameObject>("Child2");
+
+	parent->AddChild(child1);
+	parent->AddChild(child2);
+
+	std::cout << "Parent: " << parent->GetName() << std::endl;
+	std::cout << "  Children:" << std::endl;
+	for (const auto& child : parent->GetChildren()) {
+		std::cout << "    " << child->GetName() << std::endl;
+	}
+
+	parent->RemoveChild(child1);
+
+	std::cout << "Parent: " << parent->GetName() << std::endl;
+	std::cout << "  Children:" << std::endl;
+	for (const auto& child : parent->GetChildren()) {
+		std::cout << "    " << child->GetName() << std::endl;
+	}
+
+	parent->AddComponent<Transform_Component>();
+	auto transform = parent->GetComponent<Transform_Component>();
+	transform->SetPosition(glm::vec3(1.0f, 2.0f, 3.0f));
+	std::cout << "Parent position: " << transform->GetPosition().x << ", " << transform->GetPosition().y << ", " << transform->GetPosition().z << std::endl;
+
+	std::cout << "Parent has Transform component: " << parent->HasComponent<Transform_Component>() << std::endl;
+	parent->RemoveComponent<Transform_Component>();
+	std::cout << "Parent has Transform component: " << parent->HasComponent<Transform_Component>() << std::endl;
+
+	parent->SetActive(false);
+	std::cout << "Parent is active: " << parent->IsActive() << std::endl;
+	parent->SetActive(true);
+	std::cout << "Parent is active: " << parent->IsActive() << std::endl;
+
+	parent->Destroy();
+	std::cout << "Parent is destroyed: " << parent->IsActive() << std::endl;
+}
+
 int main(int argc, char** argv) {
 	
-	//check version cpp
-	cout << "C++ Version: " << __cplusplus << endl;
 	//initialize devil
 	ilInit();
 	iluInit();
@@ -138,6 +182,8 @@ int main(int argc, char** argv) {
 	mesh.LoadMesh("BakerHouse.fbx");
 	mesh.LoadTexture("Baker_house.png");
 	//mesh.LoadCheckerTexture();
+
+	MarcoTests(); //hola buenas tardes
 
 	while (window.processEvents(&gui) && window.isOpen()) {
 		const auto t0 = hrclock::now();

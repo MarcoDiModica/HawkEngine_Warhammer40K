@@ -83,9 +83,46 @@ static void drawFloorGrid(int size, double step) {
 }
 void move_camera() 
 {
+	static bool isPanning = false;
+	static glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);
 
+	if (ImGui::IsMouseDown(ImGuiMouseButton_Middle))
+	{
+		glm::dvec2 mousePos = glm::dvec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+
+		if (!isPanning) {
+			isPanning = true;
+			lastMousePos = mousePos;
+		}
+
+		glm::dvec2 delta = mousePos - lastMousePos;
+
+		double sensitivity = 0.005;
+		camera.transform().rotate(sensitivity * -delta.x, vec3(0, 1, 0));
+		camera.transform().rotate(sensitivity * -delta.y, camera.transform().left());
+	
+		lastMousePos = mousePos;
+	}
+	else {
+		isPanning = false;
+	}
+
+	/*glm::dvec3 forward = camera.transform().fwd();
+	glm::dvec3 right = camera.transform().left();
+	glm::dvec3 up = camera.transform().up();
+
+	double moveSpeed = 0.1;
+
+	if (ImGui::IsKeyDown(ImGuiKey_W)) camera.transform().translate(-forward * moveSpeed);
+	if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(forward * moveSpeed);
+	if (ImGui::IsKeyDown(ImGuiKey_A)) camera.transform().translate(-right * moveSpeed);
+	if (ImGui::IsKeyDown(ImGuiKey_D)) camera.transform().translate(right * moveSpeed);
+	if (ImGui::IsKeyDown(ImGuiKey_Q)) camera.transform().translate(-up * moveSpeed);
+	if (ImGui::IsKeyDown(ImGuiKey_E)) camera.transform().translate(up * moveSpeed);*/
+
+	//default movement
 	//move the transform of the camera
-    if (ImGui::IsKeyDown(ImGuiKey_W)) camera.transform().translate(-camera.transform().fwd() * 0.1);
+	if (ImGui::IsKeyDown(ImGuiKey_W)) camera.transform().translate(-camera.transform().fwd() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(camera.transform().fwd() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_A)) camera.transform().translate(-camera.transform().left() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_D)) camera.transform().translate(camera.transform().left() * 0.1);

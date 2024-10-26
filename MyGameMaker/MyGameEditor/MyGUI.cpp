@@ -28,7 +28,6 @@ MyGUI::~MyGUI() {
 	ImGui::DestroyContext();
 }
 
-
 struct SceneObject {
 	const char* name;
 	std::vector<SceneObject> children; // List of child objects
@@ -40,7 +39,6 @@ bool MyGUI::Awake() {
 
 	return true;
 }
-
 
 bool MyGUI::Start() {
 
@@ -54,6 +52,7 @@ bool MyGUI::PreUpdate() {
 
 	return true;
 }
+
 bool MyGUI::Update(double dt) { 
 
 	//Render();
@@ -107,8 +106,6 @@ bool MyGUI::PostUpdate() {
 
 }
 bool MyGUI::CleanUp() { return true; }
-
-
 
 void MyGUI::Render() {
 	ImGui_ImplOpenGL3_NewFrame();

@@ -1,11 +1,12 @@
 #include "Module.h"
 #include "MyWindow.h"
 #include "App.h"
-
+#include <list>
 
 #pragma once
 
-
+class Panel;
+class PanelHierarchy;
 
 
 class MyGUI : public IEventProcessor , public Module

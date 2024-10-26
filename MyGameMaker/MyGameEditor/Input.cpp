@@ -158,7 +158,7 @@ bool Input::processSDLEvents()
 
                 std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
                 mesh->LoadMesh(CopyFBXFileToProject(fileDir).c_str());
-                mesh->LoadCheckerTexture();
+                //mesh->LoadCheckerTexture();
 
                 Application->root->CreateMeshObject(fileNameExt,  mesh);
 

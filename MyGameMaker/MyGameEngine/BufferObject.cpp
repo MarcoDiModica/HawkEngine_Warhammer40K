@@ -28,7 +28,7 @@ void BufferObject::bind() const
 	glBindBuffer(target, id);
 }
 
-void BufferObject::LoadData(const void* data, size_t size) 
+void BufferObject::LoadData(const void* data, size_t size)
 {
 	target = GL_ARRAY_BUFFER;
 

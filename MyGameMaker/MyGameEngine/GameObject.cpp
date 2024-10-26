@@ -1,7 +1,11 @@
 #include "GameObject.h"
 #include "MeshRendererComponent.h"
+#include <iostream>
 
-GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)) {}
+GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)) 
+{
+    transform = AddComponent<Transform_Component>();
+}
 
 GameObject::~GameObject()
 {
@@ -40,11 +44,30 @@ void GameObject::Update(float deltaTime)
     {
         component.second->Update(deltaTime);
     }
-
+    
     for (auto& child : children)
     {
         child->Update(deltaTime);
     }
+
+    /*if (HasComponent<MeshRenderer>())
+	{
+		auto meshRenderer = GetComponent<MeshRenderer>();
+		if (meshRenderer)
+		{
+			meshRenderer->Render();
+		}
+        else
+        {
+			std::cout << "MeshRenderer is nullptr" << std::endl;
+		}
+	}
+    else
+    {
+        std::cout << "No MeshRenderer" << std::endl;
+    }*/
+
+    transform->Translate(glm::vec3(0.01f, 0.0f, 0.0f));
 }
 
 void GameObject::Destroy()
@@ -96,22 +119,47 @@ void GameObject::SetName(const std::string& name)
     this->name = name;
 }
 
-void GameObject::AddChild(std::shared_ptr<GameObject> child)
+void GameObject::AddChild(std::shared_ptr<GameObject> child) 
 {
-    child->parent = weak_from_this();
-    children.push_back(child);
-    
-
-
+    child->SetParent(shared_from_this());
 }
 
-void GameObject::RemoveChild(std::shared_ptr<GameObject> child)
+void GameObject::RemoveChild(std::shared_ptr<GameObject> child) 
 {
     auto iter = std::find(children.begin(), children.end(), child);
-    if (iter != children.end())
-    {
+    if (iter != children.end()) {
         children.erase(iter);
-        child->parent.reset();
+        child->RemoveParent();
+    }
+}
+
+void GameObject::SetParent(std::shared_ptr<GameObject> newParent) 
+{
+    if (auto oldParent = parent.lock()) {
+        oldParent->RemoveChild(shared_from_this());
+    }
+
+    parent = newParent;
+
+    if (newParent) {
+        newParent->children.push_back(shared_from_this());
+    }
+
+    if (transform) {
+        transform->SetParent(newParent ? newParent->transform : std::weak_ptr<Transform_Component>());
+    }
+}
+
+void GameObject::RemoveParent() 
+{
+    if (auto oldParent = parent.lock()) {
+        oldParent->RemoveChild(shared_from_this());
+    }
+
+    parent.reset();
+
+    if (transform) {
+        transform->SetParent({});
     }
 }
 

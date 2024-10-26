@@ -27,19 +27,7 @@ public:
 
     std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
 
-    std::shared_ptr<GameObject> CreateGameObject(std::string name, bool as_child) {
-
-
-        std::shared_ptr<GameObject> object = make_shared<GameObject>(name);
-
-        if (!as_child) {
-
-            children.push_back(object);
-        }
-
-        return object;
-
-    }
+    std::shared_ptr<GameObject> CreateGameObject(std::string name, bool as_child = false);
 
     void RemoveGameObject(std::string name);
 

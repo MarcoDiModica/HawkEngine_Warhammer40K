@@ -1,12 +1,11 @@
 #pragma once
 #include "Component.h"
-#include <glm/glm.hpp> 
-#include <glm/gtc/matrix_transform.hpp> 
+#include <glm/glm.hpp>
 
 class Mesh;
+class Material;
 
-class MeshRenderer : public Component
-{
+class MeshRenderer : public Component {
 public:
     explicit MeshRenderer(std::weak_ptr<GameObject> owner);
     ~MeshRenderer() override = default;
@@ -18,6 +17,9 @@ public:
     void SetMesh(std::shared_ptr<Mesh> mesh);
     std::shared_ptr<Mesh> GetMesh() const;
 
+    void SetMaterial(std::shared_ptr<Material> material);
+    std::shared_ptr<Material> GetMaterial() const;
+
     void SetColor(const glm::vec3& color);
     glm::vec3 GetColor() const;
 
@@ -25,5 +27,6 @@ public:
 
 private:
     std::shared_ptr<Mesh> mesh;
+    std::shared_ptr<Material> material;
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 };

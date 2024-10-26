@@ -9,42 +9,30 @@
 
 #include "BufferObject.h"
 
-
-class Mesh
-{
-	
-
-	std::vector<glm::vec3> _vertices;
-	std::vector<unsigned int> _indices;
-
-
+class Mesh {
     BufferObject vertices_buffer;
-	BufferObject indices_buffer;
-	BufferObject texCoords_buffer;
-	BufferObject normals_buffer;
-	BufferObject colors_buffer;
+    BufferObject indices_buffer;
+    BufferObject texCoords_buffer;
+    BufferObject normals_buffer;
+    BufferObject colors_buffer;
 
-	unsigned int textureID;
+    std::vector<glm::vec3> _vertices;
+    std::vector<unsigned int> _indices;
 
 public:
     Mesh();
     virtual ~Mesh();
-	//myb tambien tener normals, texcoords, colors
-	const auto& vertices() const { return _vertices; }
-	const auto& indices() const { return _indices; }
+
+    const auto& vertices() const { return _vertices; }
+    const auto& indices() const { return _indices; }
 
     void Load(const glm::vec3* vertices, size_t num_verts, unsigned int* indices, size_t num_indexs);
-	void loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords);
-	void LoadNormals(const glm::vec3* normals, size_t num_normals);
-	void LoadColors(const glm::u8vec3* colors, size_t num_colors);
+    void loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords);
+    void LoadNormals(const glm::vec3* normals, size_t num_normals);
+    void LoadColors(const glm::u8vec3* colors, size_t num_colors);
     void Draw() const;
 
-	void LoadTexture(const std::string& file_path);
-	void LoadMesh(const char* file_path);
-   
-	void LoadCheckerTexture();
-
-  
+    void LoadMesh(const char* file_path);
 };
 
 #endif // !__MESH_H__

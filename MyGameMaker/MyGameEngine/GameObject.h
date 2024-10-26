@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "TransformComponent.h"
 
 class GameObject : public std::enable_shared_from_this<GameObject>
 {
@@ -22,6 +23,8 @@ public:
     void AddChild(std::shared_ptr<GameObject> child);
     void RemoveChild(std::shared_ptr<GameObject> child);
     std::shared_ptr<GameObject> GetParent() const;
+    void SetParent(std::shared_ptr<GameObject> newParent);
+    void RemoveParent();
     const std::vector<std::shared_ptr<GameObject>>& GetChildren() const;
 
     void Start();
@@ -36,6 +39,8 @@ public:
 
     std::string GetName() const;
     void SetName(const std::string& name);
+
+    std::shared_ptr<Transform_Component> GetTransform() const { return transform; }
 
 private:
     std::string name;
@@ -52,6 +57,7 @@ private:
 public:
     // marco no me mates hago esto publico de momento
     std::vector<std::shared_ptr<GameObject>> children;
+    std::shared_ptr<Transform_Component> transform;
 };
 
 

@@ -34,7 +34,8 @@ public:
     void LookAt(const glm::vec3& target);
 
     // Matrix
-    glm::mat4 GetModelMatrix() const;
+    glm::dmat4 GetModelMatrix() const;
+    mutable bool isMatrixDirty = true;
 
 private:
     glm::vec3 position = glm::vec3(0.0f);
@@ -44,5 +45,6 @@ private:
     std::weak_ptr<Transform_Component> parent;
 
     mutable glm::mat4 cachedModelMatrix = glm::mat4(1.0f);
-    mutable bool isMatrixDirty = true;
+
+    void PropagateDirtyFlag() const;
 };

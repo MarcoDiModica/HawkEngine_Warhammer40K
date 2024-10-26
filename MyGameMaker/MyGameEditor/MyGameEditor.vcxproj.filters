@@ -51,6 +51,9 @@
     <ClCompile Include="Root.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="HardwareSettings.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -81,6 +84,9 @@
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Root.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="HardwareSettings.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

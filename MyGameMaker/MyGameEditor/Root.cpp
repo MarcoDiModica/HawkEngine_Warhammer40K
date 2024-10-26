@@ -1,4 +1,8 @@
 #include "Root.h"
+#include "MyGameEngine/GameObject.h"
+#include "MyGameEngine/TransformComponent.h"
+#include "MyGameEngine/MeshRendererComponent.h"
+#include "MyGameEngine/Mesh.h"
 #include <iostream>
 
 using namespace std;
@@ -9,8 +13,10 @@ bool  Root::Awake() {
     
 
 
-    CreateGameObject("Pau" , false)->AddChild(CreateGameObject("PauJr" , true));
+
     CreateGameObject("Pablo" , false);
+    CreateGameObject("Pau" , false)->AddChild(CreateGameObject("PauJr" , true));
+    CreateGameObject("Sonic", false);
 
     return true; 
 
@@ -32,11 +38,19 @@ bool Root::Update(double dt) {
 
 }
 
-shared_ptr<GameObject> Root::CreateMeshObject(string path)
+shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh)
 {
    
+    auto object = CreateGameObject(name, false);
 
-    
+    object->AddComponent<MeshRenderer>();
+
+    auto meshRenderer = object->GetComponent<MeshRenderer>();
+
+    // Load Mesh
+
+    meshRenderer->SetMesh( mesh);
+
 
     return nullptr;
 }

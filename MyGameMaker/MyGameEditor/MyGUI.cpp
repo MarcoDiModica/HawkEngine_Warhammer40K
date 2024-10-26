@@ -7,6 +7,7 @@
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
 #include <vector>
+#include <iostream>
 
 
 MyGUI::MyGUI(App* app) : Module(app) {
@@ -109,12 +110,6 @@ bool MyGUI::CleanUp() { return true; }
 
 
 
-
-std::vector<SceneObject> sceneObjects = {
-	{"Object A", {{"Child A1", {}}, {"Child A2", {}}}}, {"Pau"},
-	{"Object B", {{"Child B1", {}}}}, {"Pau2"}
-};
-
 void MyGUI::Render() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
@@ -156,6 +151,9 @@ void RenderSceneHierarchy(std::list< std::shared_ptr<GameObject>>  &objects) {
 	ImGui::End(); 
 }
 
+
+// TODO : Fix forSome Reason only the first button is clickable
+
 void DrawSceneObject(GameObject& obj) {
 	// Create a tree node for the current object
 	bool open = ImGui::TreeNode(obj.GetName().c_str()); 
@@ -172,7 +170,7 @@ void DrawSceneObject(GameObject& obj) {
 	if (ImGui::Button("Remove")) {
 		
 
-
+		std::cout << "Remove " << obj.GetName();
 
 	}
 }

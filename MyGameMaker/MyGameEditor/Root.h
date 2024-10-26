@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include "MyGameEngine/Mesh.h"
 #include "MyGameEngine/GameObject.h"
 #include <list>
 
@@ -24,7 +25,7 @@ public:
 
     bool CleanUp() { return true; }
 
-    std::shared_ptr<GameObject> CreateMeshObject(std::string path);
+    std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
 
     std::shared_ptr<GameObject> CreateGameObject(std::string name, bool as_child) {
 

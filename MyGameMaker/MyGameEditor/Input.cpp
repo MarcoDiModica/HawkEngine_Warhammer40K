@@ -152,13 +152,20 @@ bool Input::processSDLEvents()
 
                 LOG(LogType::LOG_ASSIMP, "Importing %s from: %s", fileNameExt.data(), fileDir.data());
 
-                Application->ElMesh.LoadMesh("BakerHouse.fbx");
+  /*              Application->ElMesh.LoadMesh("BakerHouse.fbx");
                 Application->ElMesh.LoadTexture("Baker_house.png");
-                Application->ElMesh.LoadCheckerTexture();
-               
-   /*             Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
-
                 Application->ElMesh.LoadCheckerTexture();*/
+
+                std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+                mesh->LoadMesh(CopyFBXFileToProject(fileDir).c_str());
+                mesh->LoadCheckerTexture();
+
+                Application->root->CreateMeshObject(fileNameExt,  mesh);
+
+               
+                //Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
+
+                //Application->ElMesh.LoadCheckerTexture();
 
 
             }

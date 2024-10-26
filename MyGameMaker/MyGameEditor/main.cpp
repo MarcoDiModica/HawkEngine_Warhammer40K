@@ -145,7 +145,7 @@ void move_camera()
 }
 
 
-
+// Initializes camera
 void configureCamera() {
 	glm::dmat4 projectionMatrix = camera.projection();
 	glm::dmat4 viewMatrix = camera.view();
@@ -166,6 +166,14 @@ static void display_func() {
 	drawFloorGrid(16, 0.25);
 
 	Application->ElMesh.Draw();
+
+	// TODO cambiar esto de sitio
+	for (auto object : Application->root->children) {
+		if (object->HasComponent<MeshRenderer>()) {
+
+			object->GetComponent<MeshRenderer>()->GetMesh()->Draw();
+		}
+	}
 
 }
 
@@ -282,9 +290,9 @@ int main(int argc, char** argv) {
 
 
 
-	Application->ElMesh.LoadMesh("BakerHouse.fbx");
-	Application->ElMesh.LoadTexture("Baker_house.png");
-	Application->ElMesh.LoadCheckerTexture();
+	//Application->ElMesh.LoadMesh("BakerHouse.fbx");
+	//Application->ElMesh.LoadTexture("Baker_house.png");
+	//Application->ElMesh.LoadCheckerTexture();
 
 	while (state != EXIT) 
 	{

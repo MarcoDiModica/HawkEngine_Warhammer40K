@@ -52,7 +52,7 @@ using hrclock = chrono::high_resolution_clock;
 using u8vec4 = glm::u8vec4;
 using ivec2 = glm::ivec2;
 using vec3 = glm::dvec3;
-Mesh mesh;
+
 
 static const ivec2 WINDOW_SIZE(1280, 720);
 static const auto FPS = 60;
@@ -165,7 +165,7 @@ static void display_func() {
 
 	drawFloorGrid(16, 0.25);
 
-	mesh.Draw();
+	Application->ElMesh.Draw();
 
 }
 
@@ -282,9 +282,9 @@ int main(int argc, char** argv) {
 
 
 
-	/*mesh.LoadMesh("sonic.fbx");*/
-	/*mesh.LoadTexture("Baker_house.png");*/
-	//mesh.LoadCheckerTexture();
+	//Application->ElMesh.LoadMesh("BakerHouse.fbx");
+	//Application->ElMesh.LoadTexture("Baker_house.png");
+	//Application->ElMesh.LoadCheckerTexture();
 
 	while (state != EXIT) 
 	{

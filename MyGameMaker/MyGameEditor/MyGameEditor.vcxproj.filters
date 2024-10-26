@@ -48,6 +48,9 @@
     <ClCompile Include="Log.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Root.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Root.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

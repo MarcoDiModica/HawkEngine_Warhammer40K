@@ -150,11 +150,11 @@ bool Input::processSDLEvents()
 
                 LOG(LogType::LOG_ASSIMP, "Importing %s from: %s", fileNameExt.data(), fileDir.data());
 
-                Mesh mesh;
-               
-                mesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
 
-                mesh.LoadCheckerTexture();
+               
+                Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
+
+                Application->ElMesh.LoadCheckerTexture();
 
                  //Check if it already exists in Library
                /* if (std::filesystem::exists(assetsDir))

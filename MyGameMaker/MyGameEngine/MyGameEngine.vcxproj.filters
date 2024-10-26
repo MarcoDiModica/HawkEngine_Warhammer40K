@@ -33,9 +33,6 @@
     <ClInclude Include="MeshRendererComponent.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="MeshLoader.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -51,9 +48,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="MeshRendererComponent.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshLoader.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

@@ -24,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyWindow.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -45,17 +42,14 @@
     <ClCompile Include="MyGUI.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="MyWindow.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MyWindow.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="MyGUI.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -70,6 +64,18 @@
     </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="MyWindow.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="MyGUI.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

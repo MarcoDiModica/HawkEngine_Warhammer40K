@@ -1,12 +1,16 @@
+#include "MyGameEngine/Mesh.h"
 #include "App.h"
+#include "Log.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include "Input.h"
 #include <string>
 #include <iostream>
 #include <filesystem>
 
+
 #define MAX_KEYS 300
 #define SCREEN_SIZE 1
+#define ASSETS_PATH "Assets\\"
 
 namespace fs = std::filesystem;
 
@@ -44,6 +48,7 @@ bool Input::Update(double dt)
 
     return ret;
 }
+std::string CopyFBXFileToProject(const std::string& sourceFilePath);
 
 bool Input::processSDLEvents()
 {
@@ -141,27 +146,26 @@ bool Input::processSDLEvents()
             // FBX
             if (fileDir.ends_with(".fbx") || fileDir.ends_with(".FBX"))
             {
-               /* fs::path assetsDir = fs::path(ASSETS_PATH) / "Meshes" / fileNameExt;*/
+                fs::path assetsDir = fs::path(ASSETS_PATH) / "Meshes" / fileNameExt;
 
-                /*LOG(LogType::LOG_ASSIMP, "Importing %s from: %s", fileNameExt.data(), fileDir.data());*/
+                LOG(LogType::LOG_ASSIMP, "Importing %s from: %s", fileNameExt.data(), fileDir.data());
 
-                // Check if it already exists in Library
-                //if (std::filesystem::exists(assetsDir))
-                //{
-                //    LOG(LogType::LOG_WARNING, "-%s already exists in %s", fileNameExt.data(), assetsDir.string().data());
+                Mesh mesh;
+               
+                mesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
 
-                //    //Find Meshes in Library
-                //    app->sceneManager->CreateExistingMeshGO(assetsDir.string());
-                //}
-                //else
-                //{
-                //    LOG(LogType::LOG_OK, "-%s Imported successfully into: %s", fileNameExt.data(), assetsDir.string().data());
-                //    std::filesystem::copy(fileDir, assetsDir, std::filesystem::copy_options::overwrite_existing);
+                mesh.LoadCheckerTexture();
 
-                //    //Creates GO and Serialize Meshes
-                //    app->sceneManager->CreateMeshGO(assetsDir.string());
-                //    LOG(LogType::LOG_OK, "-Created GameObject: %s", assetsDir.string().data());
-                //}
+                 //Check if it already exists in Library
+               /* if (std::filesystem::exists(assetsDir))
+                {
+                    
+                }
+                else
+                {
+                    Mesh mesh;
+                    mesh.LoadMesh()
+                }*/
             }
 
             // PNG / DDS
@@ -175,4 +179,25 @@ bool Input::processSDLEvents()
         }
     }
     return true;
+}
+
+std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
+
+
+    std::string fileNameExt = sourceFilePath.substr(sourceFilePath.find_last_of('\\') + 1);
+    fs::path assetsDir = fs::path(ASSETS_PATH) / "Meshes" / fileNameExt;
+
+
+
+    try {
+        /* to copy the source file to the destination path, overwriting if it already exists*/
+        std::filesystem::copy(sourceFilePath, assetsDir, std::filesystem::copy_options::overwrite_existing);
+
+
+    }
+    catch (std::filesystem::filesystem_error& e) {
+        std::cerr << "Error copying file: " << e.what() << std::endl;
+    }
+    std::cout << (assetsDir.string()).c_str();
+    return assetsDir.string();
 }

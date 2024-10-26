@@ -19,7 +19,7 @@
 #include <IL/il.h>
 #include <IL/ilu.h>	
 #include <IL/ilut.h>
-
+#include "Input.h"
 
 //pruebas de include "GameObject.h"
 
@@ -121,42 +121,26 @@ void move_camera()
 		isPanning = false;
 	}
 
-	/*glm::dvec3 forward = camera.transform().fwd();
-	glm::dvec3 right = camera.transform().left();
-	glm::dvec3 up = camera.transform().up();
 
-	double moveSpeed = 0.1;
-
-	if (ImGui::IsKeyDown(ImGuiKey_W)) camera.transform().translate(-forward * moveSpeed);
-	if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(forward * moveSpeed);
-	if (ImGui::IsKeyDown(ImGuiKey_A)) camera.transform().translate(-right * moveSpeed);
-	if (ImGui::IsKeyDown(ImGuiKey_D)) camera.transform().translate(right * moveSpeed);
-	if (ImGui::IsKeyDown(ImGuiKey_Q)) camera.transform().translate(-up * moveSpeed);
-	if (ImGui::IsKeyDown(ImGuiKey_E)) camera.transform().translate(up * moveSpeed);*/
-
-	//default movement
-	//move the transform of the camera
-
-	
-	if (ImGui::IsKeyDown(ImGuiKey_W)) {
+	if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		camera.transform().translate(-camera.transform().fwd() * 0.1);
 	}
 
-	if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(camera.transform().fwd() * 0.1);
-	if (ImGui::IsKeyDown(ImGuiKey_A)) camera.transform().translate(-camera.transform().left() * 0.1);
-	if (ImGui::IsKeyDown(ImGuiKey_D)) camera.transform().translate(camera.transform().left() * 0.1);
-	if (ImGui::IsKeyDown(ImGuiKey_Q)) camera.transform().translate(-camera.transform().up() * 0.1);
-	if (ImGui::IsKeyDown(ImGuiKey_E)) camera.transform().translate(camera.transform().up() * 0.1);
+	if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) camera.transform().translate(camera.transform().fwd() * 0.1);
+	if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) camera.transform().translate(-camera.transform().left() * 0.1);
+	if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) camera.transform().translate(camera.transform().left() * 0.1);
+	if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) camera.transform().translate(-camera.transform().up() * 0.1);
+	if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) camera.transform().translate(camera.transform().up() * 0.1);
 	//rotate the transform of the camera
 	
-	if (ImGui::IsKeyDown(ImGuiKey_LeftArrow)) {
+	if (Application->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		camera.transform().rotate(0.02, vec3(0, 1, 0));
 	}
-	if (ImGui::IsKeyDown(ImGuiKey_RightArrow)) {
+	if (Application->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		camera.transform().rotate(-0.02, vec3(0, 1, 0));
 	}
-	if (ImGui::IsKeyDown(ImGuiKey_UpArrow)) camera.transform().rotate(0.02, camera.transform().left());
-	if (ImGui::IsKeyDown(ImGuiKey_DownArrow)) camera.transform().rotate(-0.02, camera.transform().left());
+	if (Application->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) camera.transform().rotate(0.02, camera.transform().left());
+	if (Application->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) camera.transform().rotate(-0.02, camera.transform().left());
 
 }
 
@@ -298,9 +282,9 @@ int main(int argc, char** argv) {
 
 
 
-	mesh.LoadMesh("BakerHouse.fbx");
-	mesh.LoadTexture("Baker_house.png");
-	mesh.LoadCheckerTexture();
+	/*mesh.LoadMesh("sonic.fbx");*/
+	/*mesh.LoadTexture("Baker_house.png");*/
+	//mesh.LoadCheckerTexture();
 
 	while (state != EXIT) 
 	{

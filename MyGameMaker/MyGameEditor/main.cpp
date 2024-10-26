@@ -20,17 +20,31 @@
 #include <IL/ilu.h>	
 #include <IL/ilut.h>
 
+
 //pruebas de include "GameObject.h"
 
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
+#include "App.h"
+
 
 using namespace std;
 
 
 #define CHECKERS_HEIGHT 64
 #define CHECKERS_WIDTH 64
+
+enum MainState
+{
+	CREATE,
+	AWAKE,
+	START,
+	LOOP,
+	FREE,
+	FAIL,
+	EXIT
+};
 
 GLuint textureID;
 
@@ -40,11 +54,11 @@ using ivec2 = glm::ivec2;
 using vec3 = glm::dvec3;
 Mesh mesh;
 
-static Camera camera;
 static const ivec2 WINDOW_SIZE(1280, 720);
 static const auto FPS = 60;
 static const auto FRAME_DT = 1.0s / FPS;
 
+static Camera camera;
 
 static void init_openGL() {
 	glewInit();
@@ -122,15 +136,25 @@ void move_camera()
 
 	//default movement
 	//move the transform of the camera
-	if (ImGui::IsKeyDown(ImGuiKey_W)) camera.transform().translate(-camera.transform().fwd() * 0.1);
+
+	
+	if (ImGui::IsKeyDown(ImGuiKey_W)) {
+		camera.transform().translate(-camera.transform().fwd() * 0.1);
+	}
+
 	if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(camera.transform().fwd() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_A)) camera.transform().translate(-camera.transform().left() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_D)) camera.transform().translate(camera.transform().left() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_Q)) camera.transform().translate(-camera.transform().up() * 0.1);
 	if (ImGui::IsKeyDown(ImGuiKey_E)) camera.transform().translate(camera.transform().up() * 0.1);
 	//rotate the transform of the camera
-	if (ImGui::IsKeyDown(ImGuiKey_LeftArrow)) camera.transform().rotate(0.02, vec3(0, 1, 0));
-	if (ImGui::IsKeyDown(ImGuiKey_RightArrow)) camera.transform().rotate(-0.02, vec3(0, 1, 0));
+	
+	if (ImGui::IsKeyDown(ImGuiKey_LeftArrow)) {
+		camera.transform().rotate(0.02, vec3(0, 1, 0));
+	}
+	if (ImGui::IsKeyDown(ImGuiKey_RightArrow)) {
+		camera.transform().rotate(-0.02, vec3(0, 1, 0));
+	}
 	if (ImGui::IsKeyDown(ImGuiKey_UpArrow)) camera.transform().rotate(0.02, camera.transform().left());
 	if (ImGui::IsKeyDown(ImGuiKey_DownArrow)) camera.transform().rotate(-0.02, camera.transform().left());
 
@@ -160,6 +184,7 @@ static void display_func() {
 	mesh.Draw();
 
 }
+
 
 static void MarcoTests()
 {
@@ -201,50 +226,169 @@ static void MarcoTests()
 	parent->Destroy();
 	std::cout << "Parent is destroyed: " << parent->IsActive() << std::endl;
 }
+App* Application = NULL;
 
-int main(int argc, char** argv) {
-	
-	//initialize devil
-	ilInit();
-	iluInit();
-	ilutInit();
-	MyWindow window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
-	MyGUI gui(window.windowPtr(), window.contextPtr());
 
-	init_openGL();
-	camera.transform().pos() = vec3(0, 1, 4);
-	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
 
-	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("TesteoLocoJIJI");
-	gameObject->AddComponent<Transform_Component>();
-	auto renderer = gameObject->AddComponent<MeshRenderer>();
+//MyGUI PauCode() {
+//	//initialize devil
+//	ilInit();
+//	iluInit();
+//	ilutInit();
+//	/*Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);*/
+//	MyGUI gui(Application->window->windowPtr() , Application->window->contextPtr());
+//	
+//	init_openGL();
+//	camera.transform().pos() = vec3(0, 1, 4);
+//	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
+//	
+//	
+//	
+//	mesh.LoadMesh("BakerHouse.fbx");
+//	mesh.LoadTexture("Baker_house.png");
+//	mesh.LoadCheckerTexture();
+//	
+//
+//	//while (window.processEvents(&gui) && window.isOpen()) {
+//	//	const auto t0 = hrclock::now();
+//	//display_func();
+//	//	gui.render();
+//	//	move_camera();
+//	//	window.swapBuffers();
+//	//	const auto t1 = hrclock::now();
+//	//	const auto dt = t1 - t0;
+//	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
+//	//}
+//}
 
-	std::shared_ptr<Mesh> myMesh = std::make_shared<Mesh>();
-	myMesh->LoadMesh("BakerHouse.fbx");
-	myMesh->LoadTexture("Baker_house.png");
-	//myMesh->LoadCheckerTexture(); // uV caramba
+void PauCode2(MyGUI* gui) {
 
-	renderer->SetMesh(myMesh);	
+	if (Application->window->ProcessEvents(gui) && Application->window->IsOpen()) {
 
-	//mesh.LoadMesh("BakerHouse.fbx");
-	//mesh.LoadTexture("Baker_house.png");
-	//mesh.LoadCheckerTexture();
-
-	MarcoTests(); //hola buenas tardes
-
-	while (window.processEvents(&gui) && window.isOpen()) {
 		const auto t0 = hrclock::now();
 		display_func();
+		gui->Render();
 
-		renderer->Render();
-
-		gui.render();
 		move_camera();
-		window.swapBuffers();
+		Application->window->SwapBuffers();
 		const auto t1 = hrclock::now();
 		const auto dt = t1 - t0;
 		if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
 	}
 
+}
+
+int main(int argc, char** argv) {
+
+	MainState state = CREATE;
+
+	// The application is created
+	Application = new App();
+
+	//initialize devil
+	ilInit();
+	iluInit();
+	ilutInit();
+	/*Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);*/
+	//MyGUI gui(Application->window->windowPtr(), Application->window->contextPtr());
+
+	init_openGL();
+	camera.transform().pos() = vec3(0, 1, 4);
+	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
+
+
+
+	mesh.LoadMesh("BakerHouse.fbx");
+	mesh.LoadTexture("Baker_house.png");
+	mesh.LoadCheckerTexture();
+
+	while (state != EXIT) 
+	{
+		switch (state)
+		{
+
+		case CREATE:
+
+			/*Application = new App();*/
+
+			if (Application) {	
+				state = AWAKE;
+
+				/*gui = PauCode();*/
+			}
+			else { state = FAIL; printf("Failed on Create"); }
+			break;
+
+
+		case AWAKE:
+
+			if (Application->Awake()) { state = START; }
+
+			else
+			{
+				printf("Failed on Awake");
+				state = FAIL;
+			}
+			break;
+
+		case START:
+
+			if (Application->Start()) { state = LOOP; }
+			else { state = FAIL; printf("Failed on START"); }
+			break;
+
+		case LOOP:
+
+			PauCode2(Application->gui);
+
+			if (!Application->Update()) {
+				state = FREE;
+			}
+			break;
+
+
+		case FREE:
+
+			// TODO Free all classes and memory
+			state = EXIT;
+			break;
+		}
+
+	}
+
+
+
+
+
+
+	//initialize devil
+	//ilInit();
+	//iluInit();
+	//ilutInit();
+	//Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
+	//MyGUI gui(window.windowPtr(), window.contextPtr());
+
+	//init_openGL();
+	//camera.transform().pos() = vec3(0, 1, 4);
+	//camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
+
+	//
+
+	//mesh.LoadMesh("BakerHouse.fbx");
+	//mesh.LoadTexture("Baker_house.png");
+	//mesh.LoadCheckerTexture();
+
+	//while (window.processEvents(&gui) && window.isOpen()) {
+	//	const auto t0 = hrclock::now();
+	//display_func();
+	//	gui.render();
+	//	move_camera();
+	//	window.swapBuffers();
+	//	const auto t1 = hrclock::now();
+	//	const auto dt = t1 - t0;
+	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
+	//}
+
 	return 0;
 }
+

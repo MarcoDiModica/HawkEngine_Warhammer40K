@@ -85,14 +85,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="App.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGUI.cpp" />
     <ClCompile Include="MyWindow.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="App.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Module.h" />
     <ClInclude Include="MyGUI.h" />
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="Transform.h" />

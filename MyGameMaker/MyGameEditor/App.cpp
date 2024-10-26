@@ -8,7 +8,7 @@
 
 App::App() {
 
-	window = new Window("George" , 300,300);
+	window = new Window("George" , 600,600);
 
 	input = new Input(Application);
 

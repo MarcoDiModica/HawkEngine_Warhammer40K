@@ -15,7 +15,7 @@ MyGUI::MyGUI(SDL_Window* window, void* context) {
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	ImGui::StyleColorsDark();
+	ImGui::StyleColorsClassic();
 	ImGui_ImplSDL2_InitForOpenGL(window, context);
 	ImGui_ImplOpenGL3_Init();
 }

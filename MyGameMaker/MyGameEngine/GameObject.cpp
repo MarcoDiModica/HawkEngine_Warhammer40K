@@ -100,6 +100,9 @@ void GameObject::AddChild(std::shared_ptr<GameObject> child)
 {
     child->parent = weak_from_this();
     children.push_back(child);
+    
+
+
 }
 
 void GameObject::RemoveChild(std::shared_ptr<GameObject> child)

@@ -2,6 +2,7 @@
 #include "MyWindow.h"
 #include "MyGUI.h"
 #include "Input.h"
+#include "Root.h"
 #include "Log.h"
 
 #define MAX_LOGS_CONSOLE 1000
@@ -10,20 +11,38 @@ App::App() {
 
 	window = new Window("George" , 600,600);
 
-	input = new Input(Application);
+	input = new Input(this);
 
-	gui = new MyGUI(window->windowPtr(), window->contextPtr());
+	gui = new MyGUI(this);
+
+	root = new Root(this);
 
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(gui, true);
+	AddModule(root, true);
 
 
 };
 
 
 bool App::Awake() { return true; }
-bool App::Start() { return true; }
+bool App::Start() { 
+	
+	
+	for (const auto& module : modules) {
+		
+		if( module->Awake()) continue;
+
+		else { 
+			return false; 
+		}
+
+	}
+	
+	
+	return true; 
+}
 
 
 

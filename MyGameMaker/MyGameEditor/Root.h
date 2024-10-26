@@ -12,23 +12,36 @@ public:
 
     Root(App* app);
 
-    virtual ~Root();
+    virtual ~Root() = default;
 
     bool Awake();
 
-    bool Start();
+    bool Start() { return true; }
 
-    bool PreUpdate();
+    bool PreUpdate() { return true; }
     bool Update(double dt);
-    bool PostUpdate();
+    bool PostUpdate() { return true; }
 
-    bool CleanUp();
+    bool CleanUp() { return true; }
 
     std::shared_ptr<GameObject> CreateMeshObject(std::string path);
 
-private:
+    std::shared_ptr<GameObject> CreateGameObject(std::string name, bool as_child) {
 
-	std::list<GameObject> children;
+
+        std::shared_ptr<GameObject> object = make_shared<GameObject>(name);
+
+        if (!as_child) {
+            children.push_back(object);
+        }
+
+        return object;
+
+    }
+
+public:
+
+	std::list< std::shared_ptr<GameObject> > children;
 
 
 };

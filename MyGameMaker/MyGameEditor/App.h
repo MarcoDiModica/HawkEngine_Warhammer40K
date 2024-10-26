@@ -4,6 +4,7 @@
 #include <list>
 #include "Log.h"
 #include "Camera.h"
+#include "Root.h"
 #include "MyGameEngine/Mesh.h"
 
 #pragma once
@@ -12,6 +13,7 @@ class  Module;
 class Window;
 class Input;
 class MyGUI;
+class Root;
 
 class Mesh;
 
@@ -44,6 +46,7 @@ public:
 	Window* window = nullptr;
 	Input* input = nullptr;
 	MyGUI* gui = nullptr;
+	Root* root = nullptr;
 
 	Mesh ElMesh;
 

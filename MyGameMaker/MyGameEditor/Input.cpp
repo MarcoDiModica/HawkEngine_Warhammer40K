@@ -1,8 +1,9 @@
 #include "MyGameEngine/Mesh.h"
 #include "App.h"
 #include "Log.h"
-#include <SDL2/SDL.h> // idk what to do to remove this
+#include "MyGUI.h"
 #include "Input.h"
+#include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
 #include <filesystem>
@@ -104,7 +105,8 @@ bool Input::processSDLEvents()
 
     while (SDL_PollEvent(&event) != 0)
     {
-        /*Application->gui->HandleInput(&event);*/
+        Application->gui->processEvent(event);
+
         switch (event.type)
         {
         case SDL_MOUSEWHEEL:
@@ -150,22 +152,15 @@ bool Input::processSDLEvents()
 
                 LOG(LogType::LOG_ASSIMP, "Importing %s from: %s", fileNameExt.data(), fileDir.data());
 
-
-               
-                Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
-
+                Application->ElMesh.LoadMesh("BakerHouse.fbx");
+                Application->ElMesh.LoadTexture("Baker_house.png");
                 Application->ElMesh.LoadCheckerTexture();
+               
+   /*             Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
 
-                 //Check if it already exists in Library
-               /* if (std::filesystem::exists(assetsDir))
-                {
-                    
-                }
-                else
-                {
-                    Mesh mesh;
-                    mesh.LoadMesh()
-                }*/
+                Application->ElMesh.LoadCheckerTexture();*/
+
+
             }
 
             // PNG / DDS

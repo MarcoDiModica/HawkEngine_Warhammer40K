@@ -12,7 +12,7 @@ public:
 
 	Module() {}
 
-	Module(App* parent) : active(false) /*,Application(parent)*/
+	Module(App* parent) : active(false) ,Application(parent)
 	{}
 
 	void Init()

@@ -49,6 +49,8 @@ private:
     mutable std::shared_ptr<Component> cachedComponent;
 
     std::weak_ptr<GameObject> parent;
+public:
+    // marco no me mates hago esto publico de momento
     std::vector<std::shared_ptr<GameObject>> children;
 };
 

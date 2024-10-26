@@ -282,9 +282,9 @@ int main(int argc, char** argv) {
 
 
 
-	//Application->ElMesh.LoadMesh("BakerHouse.fbx");
-	//Application->ElMesh.LoadTexture("Baker_house.png");
-	//Application->ElMesh.LoadCheckerTexture();
+	Application->ElMesh.LoadMesh("BakerHouse.fbx");
+	Application->ElMesh.LoadTexture("Baker_house.png");
+	Application->ElMesh.LoadCheckerTexture();
 
 	while (state != EXIT) 
 	{

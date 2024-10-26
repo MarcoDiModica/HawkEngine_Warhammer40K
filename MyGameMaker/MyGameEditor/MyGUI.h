@@ -13,7 +13,7 @@ class MyGUI : public IEventProcessor , public Module
 public:
 
 	//MyGUI(App* Application);
-	MyGUI(SDL_Window* window, void* context);
+	MyGUI(App* app);
 	MyGUI(MyGUI&&) noexcept = delete;
 	MyGUI(const MyGUI&) = delete;
 	MyGUI& operator=(const MyGUI&) = delete;

@@ -49,7 +49,7 @@
       <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Root.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>EditorModules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +81,7 @@
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Root.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

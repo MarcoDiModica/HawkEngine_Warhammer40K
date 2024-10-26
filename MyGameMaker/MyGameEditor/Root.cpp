@@ -55,6 +55,19 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
     return nullptr;
 }
 
+void Root::RemoveGameObject(std::string name) {
+    for (auto it = children.begin(); it != children.end(); ) {
+        if ((*it)->GetName() == name) {
+            (*it)->Destroy();  // Call Destroy on the object.
+            it = children.erase(it); // Erase returns the next iterator.
+            return; // Exit after removing the object.
+        }
+        else {
+            ++it; // Move to the next element if not removed.
+        }
+    }
+}
+
 //shared_ptr<GameObject> Root:: CreateGameObject(string name, bool as_child) {
 //
 //

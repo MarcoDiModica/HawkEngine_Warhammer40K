@@ -163,6 +163,7 @@ bool Input::processSDLEvents()
                 Application->root->CreateMeshObject(fileNameExt,  mesh);
 
                
+
                 //Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
 
                 //Application->ElMesh.LoadCheckerTexture();

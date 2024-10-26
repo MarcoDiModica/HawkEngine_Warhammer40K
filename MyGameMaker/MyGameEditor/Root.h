@@ -33,6 +33,7 @@ public:
         std::shared_ptr<GameObject> object = make_shared<GameObject>(name);
 
         if (!as_child) {
+
             children.push_back(object);
         }
 
@@ -40,9 +41,11 @@ public:
 
     }
 
+    void RemoveGameObject(std::string name);
+
 public:
 
-	std::list< std::shared_ptr<GameObject> > children;
+	std::vector< std::shared_ptr<GameObject> > children;
 
 
 };

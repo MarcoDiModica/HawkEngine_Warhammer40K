@@ -90,7 +90,7 @@ bool MyGUI::Update(double dt) {
 
 }
 
-void RenderSceneHierarchy(std::list< std::shared_ptr<GameObject>>& objects);
+void RenderSceneHierarchy(std::vector< std::shared_ptr<GameObject>>& objects);
 
 bool MyGUI::PostUpdate() { 
 	
@@ -141,12 +141,30 @@ void MyGUI::processEvent(const SDL_Event& event) {
 
 void DrawSceneObject(GameObject& obj);
 
-void RenderSceneHierarchy(std::list< std::shared_ptr<GameObject>>  &objects) {
+void RenderSceneHierarchy(std::vector< std::shared_ptr<GameObject>>  &objects) {
 	ImGui::Begin("Scene Hierarchy"); 
 
-	for (auto& obj : objects) {
-		DrawSceneObject(*obj); // Draw each object in the scene
+	auto it = objects.begin();
+
+	for (int i = 0; i < objects.size(); ++i) {
+
+		if (objects[i]) {
+			DrawSceneObject(*objects[i]);
+		}
+
 	}
+	
+
+	//for (auto it = objects.begin(); it != objects.end();) {
+
+	//	if (*it) {
+	//		DrawSceneObject(**it); // Draw each object in the scene
+	//	}
+	//	else {
+	//		continue;
+	//	}
+	//	it++;
+	//}
 
 	ImGui::End(); 
 }
@@ -171,6 +189,7 @@ void DrawSceneObject(GameObject& obj) {
 		
 
 		std::cout << "Remove " << obj.GetName();
+		Application->root->RemoveGameObject(obj.GetName());
 
 	}
 }

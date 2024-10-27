@@ -54,6 +54,9 @@
     <ClCompile Include="HardwareSettings.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -87,6 +90,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="HardwareSettings.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

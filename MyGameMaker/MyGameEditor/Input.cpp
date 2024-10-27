@@ -3,6 +3,8 @@
 #include "Log.h"
 #include "MyGUI.h"
 #include "Input.h"
+#include "Camera.h"
+#include "MyWindow.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -183,6 +185,52 @@ bool Input::processSDLEvents()
     }
     return true;
 }
+
+#pragma region TODO(look what to do with the camera)
+
+glm::vec3 Input::MousePosToWorld()
+{
+   /* float ndc_x = (2.0f * mouse_x) / Application->window->width() - 1.0f;
+    float ndc_y = 1.0f - (2.0f * mouse_y) / Application->window->height();
+
+    glm::vec4 clip_coords = glm::vec4(ndc_x, ndc_y, -1.0f, 1.0f);
+
+
+    glm::mat4 projection_matrix = camera.projection();
+    glm::vec4 view_coords = glm::inverse(projection_matrix) * clip_coords;
+    view_coords = glm::vec4(view_coords.x, view_coords.y, -1.0f, 0.0f);
+
+    glm::mat4 view_matrix = camera.view();
+    glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
+
+
+    return glm::vec3(world_coords.x + camera.transform().pos().x, world_coords.y + camera.transform().pos().y, world_coords.z + camera.transform().pos().z);*/
+    return vec3(0.0f);
+}
+
+glm::vec3 Input::MouseRayPick() 
+{
+    //// Coordenadas del ratón en el espacio de la ventana
+    //glm::vec3 window_coords = glm::vec3(mouse_x, Application->window->height() - mouse_y, 0.0f);
+
+    //// Matrices de vista y proyección
+    //glm::mat4 view_matrix = camera.view();
+    //glm::mat4 projection_matrix = camera.projection();
+
+    //// Viewport
+    //glm::vec4 viewport = glm::vec4(0, 0, Application->window->width(), Application->window->height());
+
+
+    //glm::vec3 v0 = glm::unProject(window_coords, view_matrix, projection_matrix, viewport);
+    //glm::vec3 v1 = glm::unProject(glm::vec3(window_coords.x, window_coords.y, 1.0f), view_matrix, projection_matrix, viewport);
+
+    //// Desproyectar las coordenadas del ratón
+    //glm::vec3 world_coords = (v1 - v0);
+
+    //return world_coords;
+	return vec3(0.0f);
+}
+#pragma endregion
 
 std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
 

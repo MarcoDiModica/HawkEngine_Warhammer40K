@@ -30,6 +30,13 @@ public:
 
 	bool processSDLEvents();
 
+	
+	//Direction of MousePick Ray
+	glm::vec3 MouseRayPick();
+
+	//Origin of MousePick Ray
+	glm::vec3 MousePosToWorld();
+
 	KEY_STATE GetKey(int id) const
 	{
 		return keyboard[id];

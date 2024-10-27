@@ -16,6 +16,7 @@
 #include "Camera.h"
 #include "imgui.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <IL/il.h>
 #include <IL/ilu.h>	
 #include <IL/ilut.h>
@@ -74,12 +75,26 @@ static void init_openGL() {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+struct Triangle {
+	vec3 v0, v1, v2;
+	void draw_triangle(const u8vec4& color) {
+		//glColor4ub(color.r, color.g, color.b, color.a);
+		glBegin(GL_TRIANGLES);
+		glVertex3d(v0.x, v0.y, v0.z);
+		glVertex3d(v1.x, v1.y, v1.z);
+		glVertex3d(v2.x, v2.y, v2.z);
+		//glColor4ub(255.0f, 255.0f, 255.0f, 0.0f);
+		glEnd();
+	}
+};
+
 static void draw_triangle(const u8vec4& color, const vec3& center, double size) {
 	glColor4ub(color.r, color.g, color.b, color.a);
 	glBegin(GL_TRIANGLES);
 	glVertex3d(center.x, center.y + size, center.z);
 	glVertex3d(center.x - size, center.y - size, center.z);
 	glVertex3d(center.x + size, center.y - size, center.z);
+	
 	glEnd();
 }
 
@@ -156,14 +171,113 @@ void configureCamera() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 }
+#pragma region RayPickingCode(MoveSomewhereElse)
 
+glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height)
+{
+
+	float ndc_x = (2.0f * mouse_x) / screen_width - 1.0f;
+	float ndc_y = 1.0f - (2.0f * mouse_y) / screen_height;
+
+	glm::vec4 clip_coords = glm::vec4(ndc_x, ndc_y, -1.0f, 1.0f);
+
+
+	glm::mat4 projection_matrix = camera.projection();
+	glm::vec4 view_coords = glm::inverse(projection_matrix) * clip_coords;
+	view_coords = glm::vec4(view_coords.x, view_coords.y, -1.0f, 0.0f);
+
+	glm::mat4 view_matrix = camera.view();
+	glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
+
+	
+	return glm::vec3(world_coords.x + camera.transform().pos().x, world_coords.y + camera.transform().pos().y, world_coords.z + camera.transform().pos().z);
+}
+
+void DrawRay(const glm::vec3& ray_origin, const glm::vec3& ray_direction)
+{
+	//draw the ray
+	glBegin(GL_LINES);
+	glVertex3f(ray_origin.x, ray_origin.y, ray_origin.z);
+	glVertex3f(ray_origin.x + ray_direction.x , ray_origin.y + ray_direction.y , ray_origin.z + ray_direction.z);
+	glEnd();
+}
+
+glm::vec3 GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height)
+{
+	// Coordenadas del ratón en el espacio de la ventana
+	glm::vec3 window_coords = glm::vec3(mouse_x, screen_height - mouse_y, 0.0f);
+
+	// Matrices de vista y proyección
+	glm::mat4 view_matrix = camera.view();
+	glm::mat4 projection_matrix = camera.projection();
+
+	// Viewport
+	glm::vec4 viewport = glm::vec4(0, 0, screen_width, screen_height);
+	
+
+	glm::vec3 v0 = glm::unProject(window_coords, view_matrix, projection_matrix, viewport);
+	glm::vec3 v1 = glm::unProject(glm::vec3(window_coords.x, window_coords.y, 1.0f), view_matrix, projection_matrix, viewport);
+
+	// Desproyectar las coordenadas del ratón
+	glm::vec3 world_coords = (v1 - v0);
+
+	return world_coords;
+}
+struct Ray {
+	glm::vec3 origin;
+	glm::vec3 direction;
+};
+
+
+Triangle redTriangle;
+
+bool RayIntersectsTriangle(const Ray& ray, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2, float& t) {
+	const float EPSILON = 0.0000001f;
+	glm::vec3 edge1 = v1 - v0;
+	glm::vec3 edge2 = v2 - v0;
+	glm::vec3 h = glm::cross(ray.direction, edge2);
+	float a = glm::dot(edge1, h);
+	if (a > -EPSILON && a < EPSILON) return false; // El rayo es paralelo al triángulo
+	float f = 1.0f / a;
+	glm::vec3 s = ray.origin - v0;
+	float u = f * glm::dot(s, h);
+	if (u < 0.0f || u > 1.0f) return false;
+	glm::vec3 q = glm::cross(s, edge1);
+	float v = f * glm::dot(ray.direction, q);
+	if (v < 0.0f || u + v > 1.0f) return false;
+	t = f * glm::dot(edge2, q);
+	if (t > EPSILON) return true; // Hay una intersección
+	else return false; // No hay intersección
+}
+
+// Función para verificar la colisión entre un rayo y una malla
+bool CheckRayMeshCollision(const Ray& ray, const Triangle& triangle) {
+	bool hit = false;
+	float t_temp;
+		if (RayIntersectsTriangle(ray, triangle.v0, triangle.v1, triangle.v2, t_temp)) {
+			
+				hit = true;
+				std::cout << "HIT" << endl;
+		}
+	
+	return hit;
+}
+
+#pragma endregion
 
 static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	//glLoadMatrixd(&camera.view()[0][0]);
 	configureCamera();
+	redTriangle.draw_triangle(u8vec4(255, 0, 0, 255));
 
 	drawFloorGrid(16, 0.25);
+
+	glm::vec3 rayStartPos = ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
+	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
+	DrawRay(rayStartPos, rayDir);
+
+	CheckRayMeshCollision({ rayStartPos, rayDir }, redTriangle);
 
 	Application->ElMesh.Draw();
 
@@ -270,6 +384,10 @@ void PauCode2(MyGUI* gui) {
 
 }
 
+
+
+
+
 int main(int argc, char** argv) {
 
 	MainState state = CREATE;
@@ -288,7 +406,9 @@ int main(int argc, char** argv) {
 	camera.transform().pos() = vec3(0, 1, 4);
 	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
 
-
+	redTriangle.v0 = glm::vec3(-1.0f, -1.0f, -5.0f);
+	redTriangle.v1 = glm::vec3(1.0f, -1.0f, -5.0f);
+	redTriangle.v2 = glm::vec3(0.0f, 1.0f, -5.0f);
 
 	//Application->ElMesh.LoadMesh("BakerHouse.fbx");
 	//Application->ElMesh.LoadTexture("Baker_house.png");

@@ -15,8 +15,8 @@ class Window : public Module {
 	SDL_Window* _window = nullptr;
 	void* _ctx = nullptr;
 
-	unsigned short _width = 800;
-	unsigned short _height = 600;
+	unsigned short _width = 1280;
+	unsigned short _height = 720;
 
 public:
 

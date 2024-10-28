@@ -1,6 +1,7 @@
-#include "../MyGameEditor/types.h"
+#pragma once
 
 #include <array>
+#include "types.h"
 
 struct BoundingBox {
 	vec3 min;
@@ -23,13 +24,8 @@ struct BoundingBox {
 	BoundingBox() = default;
 	BoundingBox(const vec3* vertices, size_t num_verts);
 
-	
-
-	
-
 	BoundingBox operator+(const BoundingBox& other) const;
 };
 
 
 BoundingBox operator*(const mat4& mat, const BoundingBox& bbox);
-

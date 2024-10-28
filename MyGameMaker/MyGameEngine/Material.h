@@ -1,18 +1,26 @@
 #pragma once
-#include <string>
+
+#include <memory>
+#include "Image.h"
 
 class Material
 {
 public:
-	Material() = default;
+	enum WrapModes { Repeat, MirroredRepeat, Clamp };
+	WrapModes wrapMode = Repeat;
 
-	bool LoadTexture(const std::string& file_path);
-	void Bind() const;
-
-	unsigned int GetTextureID() const { return textureID; }
+	enum Filters { Nearest, Linear };
+	Filters filter = Nearest;
 
 private:
-	unsigned int textureID = 0;
-	void CreateDefaultTexture();
+	std::shared_ptr<Image> imagePtr;
+
+public:
+
+	void LoadTexture(const std::string& filename);
+	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
+	void bind() const;
+	void setImage(const std::shared_ptr<Image>& img_ptr) { imagePtr = img_ptr; }
+	const auto& image() const { return *imagePtr; }
 };
 

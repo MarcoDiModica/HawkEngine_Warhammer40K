@@ -108,7 +108,6 @@
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="types.h" />
     <ClInclude Include="UIElement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

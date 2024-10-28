@@ -55,33 +55,4 @@ std::shared_ptr<Material> MeshRenderer::GetMaterial() const
 
 void MeshRenderer::Render() const
 {
-    if (!mesh || !IsOwnerValid()) return;
-
-    auto ownerPtr = GetOwner();
-    auto transform = ownerPtr->GetComponent<Transform_Component>();
-
-    glm::dmat4 modelMatrix = transform->GetModelMatrix();
-    glMultMatrixd(&modelMatrix[0][0]);
-    glColor3b(color.r, color.g, color.b);
-
-    if (material)
-	{
-		material->Bind();
-	}
-
-    if (mesh)
-    {
-        mesh->Draw();
-    }
-
-    for (const auto& child : ownerPtr->GetChildren())
-	{
-		if (child->HasComponent<MeshRenderer>())
-		{
-			auto meshRenderer = child->GetComponent<MeshRenderer>();
-			meshRenderer->Render();
-		}
-	}
-
-    glPopMatrix();
 }

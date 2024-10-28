@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Module.h"
-#include "types.h"
+#include "MyGameEngine/types.h"
 
 #include <string>
 

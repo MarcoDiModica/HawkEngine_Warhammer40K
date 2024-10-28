@@ -12,30 +12,11 @@ Root::Root(App* app) : Module(app) { ; }
 
 bool  Root::Awake() { 
     
-    auto gameObject = CreateGameObject("OdioSonic");
+    auto MarcoPresidente = CreateGameObject("MarcoPresidente", false);
 
-    auto meshRenderer = gameObject->AddComponent<MeshRenderer>();
+    //auto meshRenderer = MarcoPresidente->AddComponent<MeshRenderer>();
 
-    auto material = std::make_shared<Material>();
-    material->LoadTexture("Baker_house.png");
 
-    auto mesh = std::make_shared<Mesh>();
-    glm::vec3 vertices[] = {
-        {-0.5f, -0.5f, 0.0f},
-        {0.5f, -0.5f, 0.0f},
-        {0.0f,  0.5f, 0.0f}
-    };
-    unsigned int indices[] = { 0, 1, 2 };
-    mesh->Load(vertices, 3, indices, 3);
-
-    meshRenderer->SetMaterial(material);
-    meshRenderer->SetMesh(mesh);
-
-    gameObject->transform->SetRotation(glm::vec3(0.0f, 180.0f, 0.0f));
-
-    //CreateGameObject("Pablo" , false);
-    //CreateGameObject("Pau" , false)->AddChild(CreateGameObject("PauJr" , true));
-    //CreateGameObject("Sonic", false);
 
     return true;
 }

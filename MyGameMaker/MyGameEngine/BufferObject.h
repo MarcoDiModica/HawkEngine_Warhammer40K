@@ -1,4 +1,5 @@
 #pragma once
+
 class BufferObject
 {
 	unsigned int id = 0;

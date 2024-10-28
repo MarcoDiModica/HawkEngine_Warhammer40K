@@ -1,8 +1,12 @@
 #pragma once
+
 #include "Component.h"
 #include "TransformComponent.h"
+#include "TreeExt.h"
+#include "Mesh.h"
+#include "BoundingBox.h"
 
-class GameObject : public std::enable_shared_from_this<GameObject>
+class GameObject : public std::enable_shared_from_this<GameObject>, public TreeExt<GameObject>
 {
 public:
     GameObject(const std::string& name = "GameObject");
@@ -20,15 +24,9 @@ public:
     template <IsComponent T>
     bool HasComponent() const;
 
-    void AddChild(std::shared_ptr<GameObject> child);
-    void RemoveChild(std::shared_ptr<GameObject> child);
-    std::shared_ptr<GameObject> GetParent() const;
-    void SetParent(std::shared_ptr<GameObject> newParent);
-    void RemoveParent();
-    const std::vector<std::shared_ptr<GameObject>>& GetChildren() const;
-
     void Start();
     void Update(float deltaTime);
+    void Draw() const;
     void Destroy();
 
     void OnEnable();
@@ -39,6 +37,11 @@ public:
 
     std::string GetName() const;
     void SetName(const std::string& name);
+
+    //bool CompareTag(const std::string& tag) const;
+
+    BoundingBox boundingBox() const;
+    BoundingBox localBoundingBox() const { return mesh ? mesh->boundingBox() : BoundingBox(); }
 
     std::shared_ptr<Transform_Component> GetTransform() const { return transform; }
 
@@ -53,11 +56,8 @@ private:
     mutable std::type_index cachedComponentType;
     mutable std::shared_ptr<Component> cachedComponent;
 
-    std::weak_ptr<GameObject> parent;
-public:
-    // marco no me mates hago esto publico de momento
-    std::vector<std::shared_ptr<GameObject>> children;
     std::shared_ptr<Transform_Component> transform;
+    std::shared_ptr<Mesh> mesh;
 };
 
 

@@ -175,8 +175,8 @@ void DrawSceneObject(GameObject& obj) {
 
 	if (open) {
 		// If the node is open, draw its children
-		for (auto& child : obj.children) {
-			DrawSceneObject(*child); // Recursively draw children
+		for (auto& child : obj.children()) {
+			DrawSceneObject(child); // Recursively draw children
 		}
 		ImGui::TreePop(); 
 	}

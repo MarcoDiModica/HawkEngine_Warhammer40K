@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Component.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include "Component.h"
 
 class Transform_Component : public Component
 {
@@ -14,37 +14,40 @@ public:
     void Update(float deltaTime) override {}
     void Destroy() override {}
 
-    glm::vec3 GetPosition() const { return position; }
-    void SetPosition(const glm::vec3& newPosition);
-    void Translate(const glm::vec3& translation);
+    const auto& GetMatrix() const { return matrix; }
+    const auto& GetLeft() const { return left; }
+    const auto& GetUp() const { return up; }
+    const auto& GetForward() const { return forward; }
+    const auto& GetPosition() const { return position; }
+    const auto& GetRotation() const { return rotation; }
+    const auto& GetScale() const { return scale; }
+    auto& GetPosition() { return position; }
 
-    glm::quat GetRotation() const { return rotation; }
-    void SetRotation(const glm::quat& newRotation);
-    void Rotate(const glm::vec3& axis, float angle);
+    const auto* GetData() const { return &matrix[0][0]; }
 
-    glm::vec3 GetScale() const { return scale; }
-    void SetScale(const glm::vec3& newScale);
+    void Translate(const glm::dvec3& translation);
+    void Rotate(double rads, const glm::dvec3& axis);
+    void Scale(const glm::dvec3& scale);
+    void LookAt(const glm::dvec3& target);
 
-    void SetParent(std::weak_ptr<Transform_Component> newParent);
-    std::shared_ptr<Transform_Component> GetParent() const;
-
-    glm::vec3 GetForward() const;
-    glm::vec3 GetRight() const;
-    glm::vec3 GetUp() const;
-    void LookAt(const glm::vec3& target);
-
-    // Matrix
-    glm::dmat4 GetModelMatrix() const;
-    mutable bool isMatrixDirty = true;
+    //Transform_Component operator*(const mat4& other) { return Transform_Component(matrix * other); }
+    //Transform_Component operator*(const Transform_Component& other) { return Transform_Component(matrix * other.matrix); }
 
 private:
-    glm::vec3 position = glm::vec3(0.0f);
-    glm::quat rotation = glm::quat(glm::vec3(0.0f));
-    glm::vec3 scale = glm::vec3(1.0f);
 
-    std::weak_ptr<Transform_Component> parent;
-
-    mutable glm::mat4 cachedModelMatrix = glm::mat4(1.0f);
-
-    void PropagateDirtyFlag() const;
+    union
+    {
+        glm::dmat4 matrix = glm::dmat4(1.0);
+        struct
+        {
+            glm::dvec3 left; glm::dmat4::value_type left_w;
+            glm::dvec3 up; glm::dmat4::value_type up_w;
+            glm::dvec3 forward; glm::dmat4::value_type fwd_w;
+            glm::dvec3 position; glm::dmat4::value_type pos_w;
+            glm::dvec3 rotation; glm::dmat4::value_type rot_w;
+            glm::dvec3 scale; glm::dmat4::value_type scale_w;
+        };
+    };
 };
+
+//inline Transform_Component operator*(const mat4& m, const Transform_Component& t) { return Transform_Component(m * t.GetMatrix()); }

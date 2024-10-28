@@ -1,3 +1,7 @@
+#define GLM_ENABLE_EXPERIMENTAL
+#define CHECKERS_HEIGHT 64
+#define CHECKERS_WIDTH 64
+
 #include <string>
 #include <GL/glew.h>
 #include <chrono>
@@ -23,8 +27,7 @@
 #include <IL/ilut.h>
 #include "Input.h"
 
-//pruebas de include "GameObject.h"
-
+//pruebas de include "StaticLibEngineIncludes"
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
@@ -33,9 +36,6 @@
 
 using namespace std;
 
-#define GLM_ENABLE_EXPERIMENTAL
-#define CHECKERS_HEIGHT 64
-#define CHECKERS_WIDTH 64
 
 enum MainState
 {
@@ -292,47 +292,6 @@ static void display_func() {
 
 }
 
-
-static void MarcoTests()
-{
-	std::shared_ptr<GameObject> parent = std::make_shared<GameObject>("Parent");
-	std::shared_ptr<GameObject> child1 = std::make_shared<GameObject>("Child1");
-	std::shared_ptr<GameObject> child2 = std::make_shared<GameObject>("Child2");
-
-	parent->AddChild(child1);
-	parent->AddChild(child2);
-
-	std::cout << "Parent: " << parent->GetName() << std::endl;
-	std::cout << "  Children:" << std::endl;
-	for (const auto& child : parent->GetChildren()) {
-		std::cout << "    " << child->GetName() << std::endl;
-	}
-
-	parent->RemoveChild(child1);
-
-	std::cout << "Parent: " << parent->GetName() << std::endl;
-	std::cout << "  Children:" << std::endl;
-	for (const auto& child : parent->GetChildren()) {
-		std::cout << "    " << child->GetName() << std::endl;
-	}
-
-	parent->AddComponent<Transform_Component>();
-	auto transform = parent->GetComponent<Transform_Component>();
-	transform->SetPosition(glm::vec3(1.0f, 2.0f, 3.0f));
-	std::cout << "Parent position: " << transform->GetPosition().x << ", " << transform->GetPosition().y << ", " << transform->GetPosition().z << std::endl;
-
-	std::cout << "Parent has Transform component: " << parent->HasComponent<Transform_Component>() << std::endl;
-	parent->RemoveComponent<Transform_Component>();
-	std::cout << "Parent has Transform component: " << parent->HasComponent<Transform_Component>() << std::endl;
-
-	parent->SetActive(false);
-	std::cout << "Parent is active: " << parent->IsActive() << std::endl;
-	parent->SetActive(true);
-	std::cout << "Parent is active: " << parent->IsActive() << std::endl;
-
-	parent->Destroy();
-	std::cout << "Parent is destroyed: " << parent->IsActive() << std::endl;
-}
 App* Application = NULL;
 
 

@@ -57,6 +57,9 @@
     <ClCompile Include="UIElement.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="UIConsole.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -90,6 +93,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UIElement.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIConsole.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

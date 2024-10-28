@@ -5,9 +5,9 @@
 
 #pragma once
 
-class Panel;
-class PanelHierarchy;
-
+class UIElement;
+class UIConsole;
+// class PanelHierarchy;
 
 class MyGUI : public IEventProcessor , public Module
 {
@@ -28,7 +28,18 @@ public:
 	bool CleanUp();
 
 	void Render();
+	bool isInitialized(UIElement* element);
 
 	void processEvent(const SDL_Event& event) override;
+
+public:
+
+	// UI Elements
+	UIConsole* UIconsolePanel = nullptr;
+
+private:
+	std::list<UIElement*> elements;
+
+	bool showGUI = true;
 
 };

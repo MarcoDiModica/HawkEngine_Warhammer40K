@@ -174,6 +174,16 @@ void App::AddLog(LogType type, const char* entry)
 	logs.push_back(info);
 }
 
+std::vector<LogInfo> App::GetLogs() 
+{ 
+	return logs; 
+}
+
+void App::CleanLogs() 
+{ 
+	logs.clear(); 
+}
+
 // Add a new module to handle
 void App::AddModule(Module* module, bool activate) { 
 
@@ -182,3 +192,4 @@ void App::AddModule(Module* module, bool activate) {
 	modules.push_back(module);
 
 }
+

@@ -8,6 +8,7 @@ enum class UIType
 {
 	SETTINGS,
 	DEFAULT,
+	CONSOLE,
 	UNKNOWN	
 };
 

@@ -38,7 +38,9 @@ public:
 
 	bool CleanUP();
 
+	std::vector<LogInfo> GetLogs();
 	void AddLog(LogType type, const char* entry);
+	void CleanLogs();
 
 	// Add a new module to handle
 	void AddModule(Module* module, bool activate);

@@ -2,6 +2,9 @@
 
 #include <ostream>
 #include <istream>
+#include <IL/il.h>
+#include <IL/ilu.h>
+#include <glm/glm.hpp>
 
 class Image {
 
@@ -25,6 +28,8 @@ public:
 
 	void bind() const;
 	void load(int width, int height, int channels, void* data);
+	// Load Texture
+	void LoadTexture(const std::string& path);
 };
 
 std::ostream& operator<<(std::ostream& os, const Image& img);

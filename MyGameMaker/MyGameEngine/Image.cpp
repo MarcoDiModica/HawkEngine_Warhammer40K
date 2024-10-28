@@ -90,3 +90,24 @@ std::istream& operator>>(std::istream& is, Image& img) {
 
 	return is;
 }
+
+void Image::LoadTexture(const std::string& path)
+{
+	auto img = ilGenImage();
+	ilBindImage(img);
+	ilLoadImage((const wchar_t*)path.c_str());
+	auto width = ilGetInteger(IL_IMAGE_WIDTH);
+
+	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+	auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
+	auto data = ilGetData();
+
+	//load image as a texture in VRAM
+	load(width, height, channels, data);
+
+
+
+	//now we can delete image from RAM
+	ilDeleteImage(img);
+}

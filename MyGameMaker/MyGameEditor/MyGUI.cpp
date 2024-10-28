@@ -4,10 +4,14 @@
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_opengl.h>
 #include <imgui.h>
+#include <imgui_internal.h>	
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
 #include <vector>
 #include <iostream>
+
+#include "UIElement.h"
+#include "UIConsole.h"
 
 
 MyGUI::MyGUI(App* app) : Module(app) {
@@ -36,12 +40,30 @@ struct SceneObject {
 bool MyGUI::Awake() {
 
 	// Example UI
+	LOG(LogType::LOG_INFO, "UI Awake");
 
+	bool ret = true;
+
+	UIconsolePanel = new UIConsole(UIType::CONSOLE, "Console");
+	elements.push_back(UIconsolePanel);
+	ret *= isInitialized(UIconsolePanel);
+	
+	return ret;
+}
+
+bool MyGUI::isInitialized(UIElement* element) {
+	if (!element)
+	{
+		LOG(LogType::LOG_ERROR, "-%s", element->GetName().c_str());
+		return false;
+	}
+	LOG(LogType::LOG_INFO, "+%s", element->GetName().c_str());
 	return true;
 }
 
 bool MyGUI::Start() {
 
+	Application->gui->UIconsolePanel->SetState(true);
 
 	return true;
 }
@@ -113,6 +135,10 @@ void MyGUI::Render() {
 	ImGui::NewFrame();
 
 	RenderSceneHierarchy(Application->root->children);
+
+	if (UIconsolePanel) {
+		UIconsolePanel->Draw();
+	}
 
 	//ImGui::ShowDemoWindow();
 	//with ImGui create a top horizontal menu bar

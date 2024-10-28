@@ -3,6 +3,7 @@
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/Mesh.h"
+#include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include <iostream>
 
@@ -16,8 +17,11 @@ bool  Root::Awake() {
     auto MarcoPresidente = CreateGameObject("MarcoPresidente", false);
     auto meshRenderer = MarcoPresidente->AddComponent<MeshRenderer>();
     auto mesh = make_shared<Mesh>();
+	auto image = make_shared<Image>();
     mesh->LoadMesh("BakerHouse.fbx");
     meshRenderer->SetMesh(mesh);
+	image->LoadTexture("Baker_house.png");
+	meshRenderer->SetImage(image);
 
     return true;
 }

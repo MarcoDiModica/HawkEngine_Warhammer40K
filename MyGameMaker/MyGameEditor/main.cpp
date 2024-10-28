@@ -290,6 +290,7 @@ static void display_func() {
 			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox))
 			{
 				std::cout << "Hit: " << object->GetName();
+				Application->input->SetSelectedGameObject(object);
 			}
 		}
 	}

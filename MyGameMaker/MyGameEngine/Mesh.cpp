@@ -79,6 +79,7 @@ void Mesh::LoadColors(const glm::u8vec3* colors, size_t num_colors)
 
 void Mesh::Draw() const 
 {
+	glEnable(GL_TEXTURE_2D);
     if (texCoords_buffer.Id()) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         texCoords_buffer.bind();
@@ -110,6 +111,7 @@ void Mesh::Draw() const
 	if (texCoords_buffer.Id()) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	if (drawBoundingbox) { drawBoundingBox(_boundingBox);
 	}
+	glDisable(GL_TEXTURE_2D);
 }
 
 void Mesh::LoadMesh(const char* file_path) 
@@ -140,7 +142,7 @@ void Mesh::LoadMesh(const char* file_path)
                 for (size_t j = 0; j < num_vertices; ++j) {
                     texCoords[j] = glm::vec2(
                         scene->mMeshes[i]->mTextureCoords[0][j].x,
-                        scene->mMeshes[i]->mTextureCoords[0][j].y
+                        -scene->mMeshes[i]->mTextureCoords[0][j].y
                     );
                 }
                 loadTexCoords(texCoords, num_vertices);

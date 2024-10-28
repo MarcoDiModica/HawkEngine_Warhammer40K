@@ -5,6 +5,7 @@
 #include "Material.h"
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
+#include "Image.h"
 
 MeshRenderer::MeshRenderer(std::weak_ptr<GameObject> owner) : Component(owner) {}
 
@@ -51,6 +52,16 @@ void MeshRenderer::SetMaterial(std::shared_ptr<Material> material)
 std::shared_ptr<Material> MeshRenderer::GetMaterial() const
 {
 	return material;
+}
+
+void MeshRenderer::SetImage(std::shared_ptr<Image> image)
+{
+	this->image = image;
+}
+
+std::shared_ptr<Image> MeshRenderer::GetImage() const
+{
+	return image;
 }
 
 void MeshRenderer::Render() const

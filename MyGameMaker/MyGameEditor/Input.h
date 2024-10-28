@@ -72,6 +72,16 @@ public:
 		return mouse_y_motion;
 	}
 
+	void SetSelectedGameObject(std::shared_ptr<GameObject> gameObject) 
+	{
+		selectedObject = gameObject;
+	}
+
+	std::shared_ptr<GameObject> GetSelectedGameObject() const 
+	{
+		return selectedObject;
+	}
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
@@ -82,7 +92,7 @@ private:
 	int mouse_y_motion;
 	float dx;
 	float dy;
-
+	std::shared_ptr<GameObject> selectedObject;
 };
 
 #endif // !__INPUT_H__

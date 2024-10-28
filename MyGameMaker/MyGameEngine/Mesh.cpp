@@ -7,12 +7,15 @@
 #include <vector>
 #include <string>
 #include <GL/glew.h>
+#include <GL/freeglut.h>
 #include <iostream>
 using namespace std;
 
 Mesh::Mesh() {}
 
 Mesh::~Mesh() {}
+
+
 
 void Mesh::Load(const glm::vec3* vertices, size_t num_verts, unsigned int* indices, size_t num_indexs) 
 {
@@ -26,6 +29,36 @@ void Mesh::Load(const glm::vec3* vertices, size_t num_verts, unsigned int* indic
     _indices.clear();
     _vertices.assign(vertices, vertices + num_verts);
     _indices.assign(indices, indices + num_indexs);
+
+    _boundingBox.min = _vertices.front();
+    _boundingBox.max = _vertices.front();
+
+    for (const auto& v : _vertices) {
+        _boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v));
+        _boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v));
+    }
+
+}
+
+void Mesh::drawBoundingBox(const BoundingBox& bbox) {
+    glLineWidth(2.0);
+    drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v011(), bbox.v010());
+    drawWiredQuad(bbox.v100(), bbox.v101(), bbox.v111(), bbox.v110());
+    drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v101(), bbox.v100());
+    drawWiredQuad(bbox.v010(), bbox.v011(), bbox.v111(), bbox.v110());
+    drawWiredQuad(bbox.v000(), bbox.v010(), bbox.v110(), bbox.v100());
+    drawWiredQuad(bbox.v001(), bbox.v011(), bbox.v111(), bbox.v101());
+
+}
+
+void Mesh::drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3) {
+	glBegin(GL_LINE_LOOP);
+	glVertex3(v0);
+	glVertex3(v1);
+	glVertex3(v2);
+	glVertex3(v3);
+	glEnd();
+
 }
 
 void Mesh::loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords) 
@@ -42,6 +75,7 @@ void Mesh::LoadColors(const glm::u8vec3* colors, size_t num_colors)
 {
     colors_buffer.LoadData(colors, num_colors * sizeof(glm::u8vec3));
 }
+
 
 void Mesh::Draw() const 
 {
@@ -74,6 +108,8 @@ void Mesh::Draw() const
 	if (colors_buffer.Id()) glDisableClientState(GL_COLOR_ARRAY);
 	if (normals_buffer.Id()) glDisableClientState(GL_NORMAL_ARRAY);
 	if (texCoords_buffer.Id()) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	if (drawBoundingbox) { drawBoundingBox(_boundingBox);
+	}
 }
 
 void Mesh::LoadMesh(const char* file_path) 
@@ -119,6 +155,8 @@ void Mesh::LoadMesh(const char* file_path)
         // Handle error
     }
 }
+
+
 
 //void Mesh::LoadCheckerTexture() {
 //    GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];

@@ -16,6 +16,7 @@
 #include "Camera.h"
 #include "imgui.h"
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/intersect.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <IL/il.h>
 #include <IL/ilu.h>	
@@ -32,7 +33,7 @@
 
 using namespace std;
 
-
+#define GLM_ENABLE_EXPERIMENTAL
 #define CHECKERS_HEIGHT 64
 #define CHECKERS_WIDTH 64
 
@@ -228,39 +229,35 @@ struct Ray {
 	glm::vec3 direction;
 };
 
+bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox) {
+	float tmin = (bBox.min.x - rayOrigin.x) / rayDir.x;
+	float tmax = (bBox.max.x - rayOrigin.x) / rayDir.x;
 
-Triangle redTriangle;
+	if (tmin > tmax) std::swap(tmin, tmax);
 
-bool RayIntersectsTriangle(const Ray& ray, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2, float& t) {
-	const float EPSILON = 0.0000001f;
-	glm::vec3 edge1 = v1 - v0;
-	glm::vec3 edge2 = v2 - v0;
-	glm::vec3 h = glm::cross(ray.direction, edge2);
-	float a = glm::dot(edge1, h);
-	if (a > -EPSILON && a < EPSILON) return false; // El rayo es paralelo al triángulo
-	float f = 1.0f / a;
-	glm::vec3 s = ray.origin - v0;
-	float u = f * glm::dot(s, h);
-	if (u < 0.0f || u > 1.0f) return false;
-	glm::vec3 q = glm::cross(s, edge1);
-	float v = f * glm::dot(ray.direction, q);
-	if (v < 0.0f || u + v > 1.0f) return false;
-	t = f * glm::dot(edge2, q);
-	if (t > EPSILON) return true; // Hay una intersección
-	else return false; // No hay intersección
-}
+	float tymin = (bBox.min.y - rayOrigin.y) / rayDir.y;
+	float tymax = (bBox.max.y - rayOrigin.y) / rayDir.y;
 
-// Función para verificar la colisión entre un rayo y una malla
-bool CheckRayMeshCollision(const Ray& ray, const Triangle& triangle) {
-	bool hit = false;
-	float t_temp;
-		if (RayIntersectsTriangle(ray, triangle.v0, triangle.v1, triangle.v2, t_temp)) {
-			
-				hit = true;
-				std::cout << "HIT" << endl;
-		}
-	
-	return hit;
+	if (tymin > tymax) std::swap(tymin, tymax);
+
+	if ((tmin > tymax) || (tymin > tmax))
+		return false;
+
+	if (tymin > tmin)
+		tmin = tymin;
+
+	if (tymax < tmax)
+		tmax = tymax;
+
+	float tzmin = (bBox.min.z - rayOrigin.z) / rayDir.z;
+	float tzmax = (bBox.max.z - rayOrigin.z) / rayDir.z;
+
+	if (tzmin > tzmax) std::swap(tzmin, tzmax);
+
+	if ((tmin > tzmax) || (tzmin > tmax))
+		return false;
+
+	return true;
 }
 
 #pragma endregion
@@ -269,7 +266,7 @@ static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	//glLoadMatrixd(&camera.view()[0][0]);
 	configureCamera();
-	redTriangle.draw_triangle(u8vec4(255, 0, 0, 255));
+
 
 	drawFloorGrid(16, 0.25);
 
@@ -277,7 +274,7 @@ static void display_func() {
 	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
 	DrawRay(rayStartPos, rayDir);
 
-	CheckRayMeshCollision({ rayStartPos, rayDir }, redTriangle);
+	
 
 	Application->ElMesh.Draw();
 
@@ -286,6 +283,10 @@ static void display_func() {
 		if (object->HasComponent<MeshRenderer>()) {
 
 			object->GetComponent<MeshRenderer>()->GetMesh()->Draw();
+			if (CheckRayAABBCollision(rayStartPos, rayDir, object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox())) 
+			{
+				std::cout << "Hit: " << object->GetName();
+			}
 		}
 	}
 
@@ -405,10 +406,6 @@ int main(int argc, char** argv) {
 	init_openGL();
 	camera.transform().pos() = vec3(0, 1, 4);
 	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
-
-	redTriangle.v0 = glm::vec3(-1.0f, -1.0f, -5.0f);
-	redTriangle.v1 = glm::vec3(1.0f, -1.0f, -5.0f);
-	redTriangle.v2 = glm::vec3(0.0f, 1.0f, -5.0f);
 
 	//Application->ElMesh.LoadMesh("BakerHouse.fbx");
 	//Application->ElMesh.LoadTexture("Baker_house.png");

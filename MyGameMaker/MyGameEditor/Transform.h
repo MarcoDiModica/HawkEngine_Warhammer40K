@@ -23,7 +23,16 @@ public:
 	const auto& pos() const { return _pos; }
 	auto& pos() { return _pos; }
 
+	const auto* data() const { return &_mat[0][0]; }
+
+	Transform() = default;
+	Transform(const mat4& mat) : _mat(mat) {}
+
+
 	void translate(const vec3& v);
 	void rotate(double rads, const vec3& v);
-
+	Transform operator*(const mat4& other) { return Transform(_mat * other); }
+	Transform operator*(const Transform& other) { return Transform(_mat * other._mat); }
 };
+
+inline Transform operator*(const mat4& m, const Transform& t) { return Transform(m * t.mat()); }

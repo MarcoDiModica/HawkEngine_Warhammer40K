@@ -283,8 +283,11 @@ static void display_func() {
 		
 		if (object->HasComponent<MeshRenderer>()) {
 
-			//object->GetComponent<MeshRenderer>()->GetMesh()->Draw();
-			if (CheckRayAABBCollision(rayStartPos, rayDir, object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox())) 
+			BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+
+			bbox = object->GetTransform()->GetMatrix() * bbox;
+
+			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox))
 			{
 				std::cout << "Hit: " << object->GetName();
 			}

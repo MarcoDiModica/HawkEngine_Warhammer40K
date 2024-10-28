@@ -51,7 +51,7 @@ void GameObject::Update(float deltaTime)
 
     Draw();
 
-    transform->Rotate(0.1f, vec3(0,1,0));
+    transform->Translate(glm::vec3(0.0f, 0.01f, 0.0f));
 }
 
 void GameObject::Destroy()
@@ -76,7 +76,7 @@ void GameObject::Draw() const
 
     if (auto meshRenderer = GetComponent<MeshRenderer>())
 	{
-		meshRenderer->Render();
+        meshRenderer->Render();
 	}
 
 	for (const auto& child : children())

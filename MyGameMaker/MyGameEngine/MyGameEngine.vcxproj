@@ -77,7 +77,6 @@
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="BufferObject.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="CreateGameObjects.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Material.h" />

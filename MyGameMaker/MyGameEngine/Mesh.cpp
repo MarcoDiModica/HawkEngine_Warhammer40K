@@ -17,7 +17,7 @@ Mesh::~Mesh() {}
 
 
 
-void Mesh::Load(const glm::vec3* vertices, size_t num_verts, unsigned int* indices, size_t num_indexs) 
+void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs) 
 {
     vertices_buffer.LoadData(vertices, num_verts * sizeof(glm::vec3));
     indices_buffer.LoadIndices(indices, num_indexs);

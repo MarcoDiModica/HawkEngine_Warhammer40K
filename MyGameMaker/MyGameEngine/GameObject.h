@@ -45,6 +45,15 @@ public:
 
     std::shared_ptr<Transform_Component> GetTransform() const { return transform; }
 
+    //Primitive Creation
+    static std::shared_ptr<GameObject> CreateEmptyGameObject(const std::string& name);
+    static std::shared_ptr<GameObject> CreateCube(const std::string& name);
+    static std::shared_ptr<GameObject> CreateSphere(const std::string& name);
+    static std::shared_ptr<GameObject> CreatePlane(const std::string& name);
+    static std::shared_ptr<GameObject> CreateQuad(const std::string& name);
+    static std::shared_ptr<GameObject> CreateCylinder(const std::string& name);
+    static std::shared_ptr<GameObject> CreateCapsule(const std::string& name);
+
 private:
     std::string name;
     std::string tag = "Untagged";
@@ -58,8 +67,6 @@ private:
 
     std::shared_ptr<Transform_Component> transform;
     std::shared_ptr<Mesh> mesh;
-
-    BoundingBox bbox;
 };
 
 

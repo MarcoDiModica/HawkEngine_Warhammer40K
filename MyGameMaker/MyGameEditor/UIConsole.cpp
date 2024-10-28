@@ -15,6 +15,8 @@ UIConsole::~UIConsole()
 
 bool UIConsole::Draw()
 {
+	ImGui::SetNextWindowSizeConstraints(ImVec2(300, 200), ImVec2(800, 600));
+
 	ImGuiWindowFlags consoleFlags = 0;
 	consoleFlags |= ImGuiWindowFlags_NoCollapse;
 
@@ -50,7 +52,22 @@ bool UIConsole::Draw()
 					logType = "WARNING";
 					ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "WARNING");
 					break;
+				case LogType::LOG_ASSIMP:
+					logType = "ASSIMP";
+					ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "ASSIMP");
+					break;
+				case LogType::LOG_ERROR:
+					logType = "ERROR";
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "ERROR");
+					break;
+				case LogType::LOG_OK:
+					logType = "OK";
+					ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "OK");
+					break;
 				}
+				if (log.message[0] == '-')
+					logType.insert(0, "\t");
+
 				ImGui::SameLine();
 				ImGui::TextUnformatted(log.message.c_str());
 				

@@ -15,13 +15,7 @@
 
 
 MyGUI::MyGUI(App* app) : Module(app) {
-
-	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	ImGui::StyleColorsClassic();
 	ImGui_ImplSDL2_InitForOpenGL(app->window->windowPtr(), app->window->contextPtr());
 	ImGui_ImplOpenGL3_Init();
 }
@@ -38,7 +32,6 @@ struct SceneObject {
 };
 
 bool MyGUI::Awake() {
-
 	// Example UI
 	LOG(LogType::LOG_INFO, "UI Awake");
 
@@ -62,6 +55,38 @@ bool MyGUI::isInitialized(UIElement* element) {
 }
 
 bool MyGUI::Start() {
+	
+	LOG(LogType::LOG_INFO, "Initializing ImGui/ImPlot...");
+
+	IMGUI_CHECKVERSION();
+	LOG(LogType::LOG_OK, "-ImGui Version: %s", IMGUI_VERSION);
+
+	ImGuiContext* contextGUI = ImGui::CreateContext();
+
+	if (!contextGUI)
+	{
+		LOG(LogType::LOG_ERROR, "-ImGui Context not created");
+	}
+	else
+	{
+		LOG(LogType::LOG_OK, "-ImGui Context created");
+	}
+
+
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+	if (!&io)
+	{
+		LOG(LogType::LOG_ERROR, "-ImGui IO not created");
+	}
+	else
+	{
+		LOG(LogType::LOG_OK, "-ImGui IO created");
+	}
+
+	ImGui::StyleColorsClassic();
 
 	Application->gui->UIconsolePanel->SetState(true);
 

@@ -26,13 +26,22 @@ App::App() {
 };
 
 
-bool App::Awake() { return true; }
+bool App::Awake() { 
+
+	for (const auto& module : modules) {
+		if (module->Awake()) continue;
+		else {
+			return false;
+		}
+	}
+	return true; 
+}
 bool App::Start() { 
 	
-	
+
 	for (const auto& module : modules) {
 		
-		if( module->Awake()) continue;
+		if( module->Start()) continue;
 
 		else { 
 			return false; 

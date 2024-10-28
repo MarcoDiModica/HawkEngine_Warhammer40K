@@ -55,4 +55,5 @@ std::shared_ptr<Material> MeshRenderer::GetMaterial() const
 
 void MeshRenderer::Render() const
 {
+    mesh->Draw();
 }

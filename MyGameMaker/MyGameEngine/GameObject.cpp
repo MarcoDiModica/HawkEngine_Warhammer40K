@@ -51,7 +51,7 @@ void GameObject::Update(float deltaTime)
 
     Draw();
 
-    transform->Translate(glm::vec3(0.01f, 0.0f, 0.0f));
+    transform->Rotate(0.1f, vec3(0,1,0));
 }
 
 void GameObject::Destroy()
@@ -71,8 +71,20 @@ void GameObject::Destroy()
 
 void GameObject::Draw() const
 {
-    // Draw the object
+    glPushMatrix();
+    glMultMatrixd(transform->GetData());
 
+    if (auto meshRenderer = GetComponent<MeshRenderer>())
+	{
+		meshRenderer->Render();
+	}
+
+	for (const auto& child : children())
+	{
+		child.Draw();
+	}
+
+	glPopMatrix();
 }
 
 void GameObject::OnEnable() {}
@@ -106,6 +118,11 @@ std::string GameObject::GetName() const
 void GameObject::SetName(const std::string& name)
 {
     this->name = name;
+}
+
+bool GameObject::CompareTag(const std::string& tag) const
+{
+	return this->tag == tag;
 }
 
 BoundingBox GameObject::boundingBox() const 

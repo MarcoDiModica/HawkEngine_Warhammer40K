@@ -274,15 +274,16 @@ static void display_func() {
 	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
 	DrawRay(rayStartPos, rayDir);
 
-	
-
 	Application->ElMesh.Draw();
 
 	// TODO cambiar esto de sitio
-	for (auto object : Application->root->children) {
+	for (auto object : Application->root->children) 
+	{
+		object->Update(0.16f);
+		
 		if (object->HasComponent<MeshRenderer>()) {
 
-			object->GetComponent<MeshRenderer>()->GetMesh()->Draw();
+			//object->GetComponent<MeshRenderer>()->GetMesh()->Draw();
 			if (CheckRayAABBCollision(rayStartPos, rayDir, object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox())) 
 			{
 				std::cout << "Hit: " << object->GetName();
@@ -341,12 +342,7 @@ void PauCode2(MyGUI* gui) {
 		const auto dt = t1 - t0;
 		if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
 	}
-
 }
-
-
-
-
 
 int main(int argc, char** argv) {
 

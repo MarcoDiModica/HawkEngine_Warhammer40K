@@ -38,7 +38,7 @@ public:
     std::string GetName() const;
     void SetName(const std::string& name);
 
-    //bool CompareTag(const std::string& tag) const;
+    bool CompareTag(const std::string& tag) const;
 
     BoundingBox boundingBox() const;
     BoundingBox localBoundingBox() const { return mesh ? mesh->boundingBox() : BoundingBox(); }
@@ -58,10 +58,10 @@ private:
 
     std::shared_ptr<Transform_Component> transform;
     std::shared_ptr<Mesh> mesh;
+
+    BoundingBox bbox;
 };
 
-
-//las funciones plantilla se definen donde se declaran porque el compilador lo necesita para generar el codigo especifico para que cada type con el que se usa
 
 template <IsComponent T, typename... Args>
 std::shared_ptr<T> GameObject::AddComponent(Args&&... args) {

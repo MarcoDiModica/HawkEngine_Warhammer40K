@@ -7,26 +7,27 @@
 #include <iostream>
 
 using namespace std;
+GameObject Scene;
 
 Root::Root(App* app) : Module(app) { ; }
 
 bool  Root::Awake() { 
     
     auto MarcoPresidente = CreateGameObject("MarcoPresidente", false);
-
-    //auto meshRenderer = MarcoPresidente->AddComponent<MeshRenderer>();
-
-
+    auto meshRenderer = MarcoPresidente->AddComponent<MeshRenderer>();
+    auto mesh = make_shared<Mesh>();
+    mesh->LoadMesh("BakerHouse.fbx");
+    meshRenderer->SetMesh(mesh);
 
     return true;
 }
 
 bool Root::Update(double dt) { 
 
-    for (shared_ptr<GameObject> object : children) 
+    /*for (shared_ptr<GameObject> object : children) 
     {
         object->Update(dt);
-    }
+    }*/
 
     return true; 
 }

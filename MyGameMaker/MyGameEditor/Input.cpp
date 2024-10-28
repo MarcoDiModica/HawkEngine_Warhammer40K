@@ -5,6 +5,8 @@
 #include "Input.h"
 #include "Camera.h"
 #include "MyWindow.h"
+#include "MyGameEngine/MeshRendererComponent.h"
+#include "MyGameEngine/Image.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -177,6 +179,13 @@ bool Input::processSDLEvents()
             else if (fileDir.ends_with(".png") || fileDir.ends_with(".dds"))
             {
                 std::filesystem::copy(fileDir, "Assets", std::filesystem::copy_options::overwrite_existing);
+				if (selectedObject != nullptr)
+				{
+					auto meshRenderer = selectedObject->GetComponent<MeshRenderer>();
+					auto image = std::make_shared<Image>();
+					image->LoadTexture(fileDir);
+					meshRenderer->SetImage(image);
+				}
             }
             SDL_free(event.drop.file);
             break;

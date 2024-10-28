@@ -287,6 +287,7 @@ static void display_func() {
 			if (CheckRayAABBCollision(rayStartPos, rayDir, object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox())) 
 			{
 				std::cout << "Hit: " << object->GetName();
+				Application->input->SetSelectedGameObject(object);
 			}
 		}
 	}

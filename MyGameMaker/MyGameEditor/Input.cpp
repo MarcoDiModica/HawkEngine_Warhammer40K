@@ -34,6 +34,19 @@ Input::~Input()
 bool Input::Awake()
 {
     bool ret = true;
+    LOG(LogType::LOG_INFO, "Initializing Input Events...");
+
+    if (SDL_InitSubSystem(SDL_INIT_EVENTS) == 0)
+    {
+        LOG(LogType::LOG_OK, "Init SDL Input Event subsystem");
+    }
+    else
+    {
+        LOG(LogType::LOG_ERROR, "SDL Input Event subsystem could not be initialized! %s", SDL_GetError());
+        ret = false;
+    }
+
+    LOG(LogType::LOG_OK, "-File System current path: %s", std::filesystem::current_path().string().c_str());
 
     return ret;
 }

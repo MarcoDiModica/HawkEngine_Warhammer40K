@@ -40,6 +40,8 @@ bool MyGUI::Awake() {
 	UIconsolePanel = new UIConsole(UIType::CONSOLE, "Console");
 	elements.push_back(UIconsolePanel);
 	ret *= isInitialized(UIconsolePanel);
+
+	// Other UI elements
 	
 	return ret;
 }

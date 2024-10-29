@@ -113,6 +113,7 @@ static void drawFloorGrid(int size, double step) {
 	
 	glEnd();
 }
+
 void move_camera() 
 {
 	static bool isPanning = false;

@@ -22,6 +22,8 @@ public:
     const auto& GetRotation() const { return rotation; }
     const auto& GetScale() const { return scale; }
     auto& GetPosition() { return position; }
+    auto& GetRotation() { return rotation; }
+    auto& GetScale() { return scale; }
 
     const auto* GetData() const { return &matrix[0][0]; }
 

@@ -51,6 +51,9 @@
     <ClInclude Include="types.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObject.cpp">
@@ -78,6 +81,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="CreateGameObjects.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>

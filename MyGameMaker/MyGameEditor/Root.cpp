@@ -14,8 +14,9 @@ Root::Root(App* app) : Module(app) { ; }
 
 bool  Root::Awake() { 
     
-    auto MarcoPresidente = CreateGameObject("MarcoPresidente", false);
-    MarcoPresidente->GetTransform()->GetPosition() = vec3(5, 0, 0);
+    MarcoPresidente = CreateGameObject("MarcoPresidente", false);
+    MarcoPresidente->GetTransform()->GetPosition() = vec3(3, 0, 0);
+    MarcoPresidente->GetTransform()->Scale(vec3(0.3f, 0.3f, 0.3f));
     auto meshRenderer = MarcoPresidente->AddComponent<MeshRenderer>();
     auto mesh = make_shared<Mesh>();
     auto image = make_shared<Image>();
@@ -26,8 +27,8 @@ bool  Root::Awake() {
     meshRenderer->SetMesh(mesh);
     meshRenderer->SetMaterial(material);
 
-    auto MarcoVicePresidente = CreateGameObject("MarcoVicePresidente", false);
-    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(-5, 0, 0);
+    MarcoVicePresidente = CreateGameObject("MarcoVicePresidente", false);
+    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(-3, 0, 0);
     auto meshRenderer2 = MarcoVicePresidente->AddComponent<MeshRenderer>();
     auto mesh2 = make_shared<Mesh>();
     auto image2 = make_shared<Image>();
@@ -47,6 +48,9 @@ bool Root::Update(double dt) {
     {
         object->Update(dt);
     }*/
+
+    //MarcoPresidente->GetTransform()->Rotate(0.01f, vec3(0, 1, 0));
+    //MarcoVicePresidente->GetTransform()->Rotate(0.01f, vec3(0, -1, 0));
 
     return true; 
 }

@@ -15,7 +15,7 @@ GameObject::~GameObject()
     components.clear();
 
     for (auto& child : children()) {
-        //destroy childs
+        child.Destroy();
     }
 }
 

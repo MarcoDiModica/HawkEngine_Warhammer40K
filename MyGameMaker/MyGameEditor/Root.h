@@ -36,5 +36,8 @@ public:
 	std::vector< std::shared_ptr<GameObject> > children;
 
 
+    std::shared_ptr<GameObject> MarcoPresidente;
+    std::shared_ptr<GameObject> MarcoVicePresidente;
+
 };
 

@@ -31,8 +31,11 @@ public:
     template <IsComponent T>
     bool HasComponent() const;
 
+    //void Awake();
     void Start();
+    //void FixedUpdate(float fixedDeltaTime);
     void Update(float deltaTime);
+    //void LateUpdate(float deltaTime);
     void Draw() const;
     void Destroy();
 

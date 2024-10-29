@@ -6,6 +6,9 @@
 #include "Root.h"
 #include "Log.h"
 
+#include "UISettings.h"
+
+
 #define MAX_LOGS_CONSOLE 1000
 
 App::App() {
@@ -34,6 +37,8 @@ App::App() {
 
 bool App::Awake() { 
 
+	targetFrameDuration = (std::chrono::duration<double>)1 / frameRate;
+
 	for (const auto& module : modules) {
 		if (module->Awake()) continue;
 		else {
@@ -45,6 +50,7 @@ bool App::Awake() {
 
 bool App::Start() { 
 	
+	dt = 0;
 
 	for (const auto& module : modules) {
 		
@@ -147,32 +153,30 @@ bool App::PostUpdate()
 
 void App::FinishUpdate()
 {
-	// dt calculation
 	frameEnd = std::chrono::steady_clock::now();
-	dt = std::chrono::duration<double>(frameEnd - frameStart).count();
-	//auto frameDuration = std::chrono::duration_cast<std::chrono::duration<double>>(frameEnd - frameStart);
+	auto frameDuration = std::chrono::duration_cast<std::chrono::duration<double>>(frameEnd - frameStart);
 
-	frameCount++;
+	dt = frameDuration.count();
+
+	if (frameDuration < targetFrameDuration)
+	{
+		//std::chrono::duration<double> sleepTime = targetFrameDuration - frameDuration;
+		dt = targetFrameDuration.count();
+	}
+
+
 	dtCount += dt;
+	frameCount++;
 
-	if (dtCount >= 1.0)
+	if (dtCount >= 1)
 	{
 		fps = frameCount;
 		frameCount = 0;
-		dtCount = 0.0;
+		dtCount = 0;
 	}
 
-	//dt = frameDuration.count();
+	Application->gui->UIsettingsPanel->AddFpsMark(fps);
 
-	//if (frameDuration < targetFrameDuration)
-	//{
-	//	std::chrono::duration<double> sleepTime = targetFrameDuration - frameDuration;
-	//	std::this_thread::sleep_for(sleepTime);
-
-	//	dt = targetFrameDuration.count();
-	//}
-
-	//app->gui->panelSettings->AddFpsValue(fps);
 }
 
 bool App::CleanUP() { return true; }
@@ -207,5 +211,10 @@ void App::AddModule(Module* module, bool activate) {
 
 }
 
-int App::GetFps() const { return fps;}
+int App::GetFps() const { return frameRate;}
+
+void App::SetFpsCap(int fps) {
+	this->frameRate = frameRate == 0 ? Application->window->GetDisplayRefreshRate() : frameRate;
+	targetFrameDuration = (std::chrono::duration<double>)1 / this->frameRate;
+}
 

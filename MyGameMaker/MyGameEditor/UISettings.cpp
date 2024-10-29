@@ -92,15 +92,10 @@ void UISettings::PerformanceData()
 {
 	int currentFps = Application->GetFps();
 
-	AddFpsMark(currentFps);
+	ImGui::Separator();
 
 	ImGui::Text("Performance Information");
 	ImGui::PlotLines("FPS", fpsRecord.data(), static_cast<int>(fpsRecord.size()), 0, nullptr, 0.0f, 300.0f, ImVec2(0, 80));
-
-	ImGui::Text("Current FPS: %d", currentFps);  // Debug: Show the FPS value on the UI
-	ImGui::Separator();
-
-	ImGui::Separator();
 }
 
 void UISettings::HardwareData()

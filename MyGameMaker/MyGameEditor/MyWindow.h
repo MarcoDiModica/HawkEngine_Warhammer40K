@@ -59,4 +59,9 @@ public:
 
 	void SwapBuffers() const;
 
+	unsigned int GetDisplayRefreshRate();
+	
+private:
+	unsigned int refreshRate;
+
 };

@@ -66,11 +66,14 @@ private:
 
 	std::list<Module*> modules;
 
-	std::chrono::time_point<std::chrono::steady_clock> frameStart, frameEnd;
-	double dt = 0.0;
-	int fps = 0;
+	std::chrono::duration<double> targetFrameDuration;
+	std::chrono::steady_clock::time_point frameStart, frameEnd;
+
+	int frameRate = 120;
+	double dt = 0;
+	double dtCount = 0;
 	int frameCount = 0;
-	double dtCount = 0.0;
+	int fps = 0;
 };
 
 extern App* Application;

@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Window::Window(const char* title, unsigned short width, unsigned short height) {
+Window::Window(const char* title, unsigned short width, unsigned short height) : refreshRate(0) {
     Open(title, width, height);
 }
 
@@ -83,4 +83,16 @@ bool Window::ProcessEvents(IEventProcessor* event_processor) {
         }
     }
     return true;
+}
+
+unsigned int Window::GetDisplayRefreshRate()
+{
+    SDL_DisplayMode desktopDisplay;
+
+    if (SDL_GetDesktopDisplayMode(0, &desktopDisplay) == 0)
+        refreshRate = desktopDisplay.refresh_rate;
+    else
+        LOG(LogType::LOG_ERROR, "Getting display refresh rate: %s", SDL_GetError());
+
+    return refreshRate;
 }

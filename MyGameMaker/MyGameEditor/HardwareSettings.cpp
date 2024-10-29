@@ -7,7 +7,7 @@ HardwareInfo::HardwareInfo(App* app) : Module(app)
 {
 	SDL_version version;
 	SDL_GetVersion(&version);
-	//sprintf_s(settings.sdl_version, "%d.%d.%d", version.major, version.minor, version.patch);
+	sprintf_s(settings.sdlVersion, "%d.%d.%d", version.major, version.minor, version.patch);
 
 	settings.ram = (float)SDL_GetSystemRAM() / 1024;
 	settings.cpuCores = SDL_GetCPUCount();

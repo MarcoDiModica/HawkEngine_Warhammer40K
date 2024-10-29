@@ -12,6 +12,7 @@
 class  Module;
 class Window;
 class Input;
+class HardwareInfo;
 class MyGUI;
 class Root;
 
@@ -42,11 +43,15 @@ public:
 	void AddLog(LogType type, const char* entry);
 	void CleanLogs();
 
+	void GetFps();
+	void SetFpsCap(int fps);
+
 	// Add a new module to handle
 	void AddModule(Module* module, bool activate);
 
 	Window* window = nullptr;
 	Input* input = nullptr;
+	HardwareInfo* hardwareInfo = nullptr;
 	MyGUI* gui = nullptr;
 	Root* root = nullptr;
 

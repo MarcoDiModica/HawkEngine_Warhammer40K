@@ -12,6 +12,7 @@
 
 #include "UIElement.h"
 #include "UIConsole.h"
+#include "UISettings.h"
 
 
 MyGUI::MyGUI(App* app) : Module(app) {
@@ -40,6 +41,10 @@ bool MyGUI::Awake() {
 	UIconsolePanel = new UIConsole(UIType::CONSOLE, "Console");
 	elements.push_back(UIconsolePanel);
 	ret *= isInitialized(UIconsolePanel);
+
+	UIsettingsPanel = new UISettings(UIType::SETTINGS, "Settings");
+	elements.push_back(UIsettingsPanel);
+	ret *= isInitialized(UIsettingsPanel);
 
 	// Other UI elements
 	
@@ -91,6 +96,7 @@ bool MyGUI::Start() {
 	ImGui::StyleColorsClassic();
 
 	Application->gui->UIconsolePanel->SetState(true);
+	Application->gui->UIsettingsPanel->SetState(true);
 
 	return true;
 }
@@ -165,6 +171,10 @@ void MyGUI::Render() {
 
 	if (UIconsolePanel) {
 		UIconsolePanel->Draw();
+	}
+
+	if (UIsettingsPanel) {
+		UIsettingsPanel->Draw();
 	}
 
 	//ImGui::ShowDemoWindow();

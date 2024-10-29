@@ -169,7 +169,7 @@ bool Input::processSDLEvents()
 
                 LOG(LogType::LOG_ASSIMP, "Importing %s from: %s", fileNameExt.data(), fileDir.data());
 
-  /*              Application->ElMesh.LoadMesh("BakerHouse.fbx");
+                /* Application->ElMesh.LoadMesh("BakerHouse.fbx");
                 Application->ElMesh.LoadTexture("Baker_house.png");
                 Application->ElMesh.LoadCheckerTexture();*/
 

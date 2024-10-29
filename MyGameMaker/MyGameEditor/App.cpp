@@ -1,5 +1,6 @@
 #include "App.h"
 #include "MyWindow.h"
+#include "HardwareSettings.h"
 #include "MyGUI.h"
 #include "Input.h"
 #include "Root.h"
@@ -13,12 +14,17 @@ App::App() {
 
 	input = new Input(this);
 
+	hardwareInfo = new HardwareInfo(this);
+
 	gui = new MyGUI(this);
 
 	root = new Root(this);
 
+
+
 	AddModule(window, true);
 	AddModule(input, true);
+	AddModule(hardwareInfo, true);
 	AddModule(gui, true);
 	AddModule(root, true);
 

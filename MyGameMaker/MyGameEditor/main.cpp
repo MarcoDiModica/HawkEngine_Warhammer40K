@@ -62,12 +62,14 @@ static const auto FRAME_DT = 1.0s / FPS;
 
 static Camera camera;
 
+App* Application = NULL;
+
 static void init_openGL() {
 	glewInit();
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-	glClearColor(0.5, 0.5, 0.5, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -297,41 +299,6 @@ static void display_func() {
 
 }
 
-App* Application = NULL;
-
-
-
-//MyGUI PauCode() {
-//	//initialize devil
-//	ilInit();
-//	iluInit();
-//	ilutInit();
-//	/*Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);*/
-//	MyGUI gui(Application->window->windowPtr() , Application->window->contextPtr());
-//	
-//	init_openGL();
-//	camera.transform().pos() = vec3(0, 1, 4);
-//	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
-//	
-//	
-//	
-//	mesh.LoadMesh("BakerHouse.fbx");
-//	mesh.LoadTexture("Baker_house.png");
-//	mesh.LoadCheckerTexture();
-//	
-//
-//	//while (window.processEvents(&gui) && window.isOpen()) {
-//	//	const auto t0 = hrclock::now();
-//	//display_func();
-//	//	gui.render();
-//	//	move_camera();
-//	//	window.swapBuffers();
-//	//	const auto t1 = hrclock::now();
-//	//	const auto dt = t1 - t0;
-//	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
-//	//}
-//}
-
 void PauCode2(MyGUI* gui) {
 
 	if (Application->window->ProcessEvents(gui) && Application->window->IsOpen()) {
@@ -359,16 +326,10 @@ int main(int argc, char** argv) {
 	ilInit();
 	iluInit();
 	ilutInit();
-	/*Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);*/
-	//MyGUI gui(Application->window->windowPtr(), Application->window->contextPtr());
 
 	init_openGL();
 	camera.transform().pos() = vec3(0, 1, 4);
 	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
-
-	//Application->ElMesh.LoadMesh("BakerHouse.fbx");
-	//Application->ElMesh.LoadTexture("Baker_house.png");
-	//Application->ElMesh.LoadCheckerTexture();
 
 	while (state != EXIT) 
 	{

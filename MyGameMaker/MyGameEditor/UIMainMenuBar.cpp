@@ -2,7 +2,9 @@
 #include "App.h"
 #include "MyGUI.h"
 #include <imgui.h>
-
+#include "Input.h"
+#include "MyGameEngine/MeshRendererComponent.h"
+#include "MyGameEngine/Image.h"
 #include "Log.h"
 //libraries to open websites
 #include <windows.h>
@@ -27,7 +29,7 @@ bool UIMainMenuBar::Draw()
 		{
 
 			if (ImGui::MenuItem("About")) { ShellExecute(0, 0, L"https://github.com/CITM-UPC/HawkEngine", 0, 0, SW_SHOW); }
-			if (ImGui::MenuItem("Quit")) { /*codigo para salir de la app*/ }
+			if (ImGui::MenuItem("Quit")) { /*Poner aqui codigo de quitear*/ }
 			//Aqui abajo mas botones para esconder las diferentes ventanas de Imgui
 			ImGui::EndMenu();
 		}
@@ -35,7 +37,7 @@ bool UIMainMenuBar::Draw()
 		{
 
 			if (ImGui::MenuItem("Cube")) {}
-			if (ImGui::MenuItem("Sphere")) {}
+			if (ImGui::MenuItem("SetCheckerTexture")) { Application->input->GetSelectedGameObject()->GetComponent<MeshRenderer>()->GetImage()->LoadCheckerTexture(); }
 			ImGui::EndMenu();
 		}
 		// Finaliza la barra de menú principal

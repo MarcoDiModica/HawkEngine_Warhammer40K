@@ -30,6 +30,8 @@ public:
 	void load(int width, int height, int channels, void* data);
 	// Load Texture
 	void LoadTexture(const std::string& path);
+
+	void LoadCheckerTexture();
 };
 
 std::ostream& operator<<(std::ostream& os, const Image& img);

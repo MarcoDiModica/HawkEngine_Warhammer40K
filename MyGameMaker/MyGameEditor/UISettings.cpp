@@ -16,10 +16,10 @@ UISettings::~UISettings()
 {
 }
 
-void UISettings::AddFpsValue(int fps)
+void UISettings::AddFpsMark(int fps)
 {
 	fpsRecord.push_back(fps);
-	
+
 	if (fpsRecord.size() > RECORD_SIZE)
 	{
 		fpsRecord.erase(fpsRecord.begin());
@@ -29,7 +29,7 @@ void UISettings::AddFpsValue(int fps)
 bool UISettings::Draw()
 {
 	ImGuiWindowFlags settingsFlags = 0;
-	settingsFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
+	settingsFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoCollapse;
 
 	ImVec2 mainViewportPos = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(ImVec2(mainViewportPos.x, mainViewportPos.y), ImGuiCond_Appearing, ImVec2(0.5, 0.8));
@@ -76,8 +76,6 @@ bool UISettings::Draw()
 			case SettingType::SOFTWARE:
 				SoftwareData();
 				break;
-			default:
-				break;
 			}
 
 			ImGui::EndChild();
@@ -92,9 +90,17 @@ bool UISettings::Draw()
 
 void UISettings::PerformanceData()
 {
-	//int frameRate = Application->GetFrameRate();
+	int currentFps = Application->GetFps();
 
-	// Plotting FPS (need library)
+	AddFpsMark(currentFps);
+
+	ImGui::Text("Performance Information");
+	ImGui::PlotLines("FPS", fpsRecord.data(), static_cast<int>(fpsRecord.size()), 0, nullptr, 0.0f, 300.0f, ImVec2(0, 80));
+
+	ImGui::Text("Current FPS: %d", currentFps);  // Debug: Show the FPS value on the UI
+	ImGui::Separator();
+
+	ImGui::Separator();
 }
 
 void UISettings::HardwareData()

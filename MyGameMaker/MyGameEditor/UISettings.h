@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-#define RECORD_SIZE 300
+#define RECORD_SIZE 100
 
 enum class SettingType
 {
@@ -23,7 +23,7 @@ public:
 	~UISettings();
 
 	bool Draw();
-	void AddFpsValue(int fps);
+	void AddFpsMark(int fps);
 
 private:
 
@@ -35,7 +35,7 @@ private:
 
 	SettingType settingType = SettingType::PERFORMANCE;
 
-	std::vector<int> fpsRecord;
+	std::vector<float> fpsRecord;
 	std::vector<double> msRecord;
 
 	const char* fpsMarkList[4]

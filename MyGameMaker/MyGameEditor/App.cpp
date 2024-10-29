@@ -42,6 +42,7 @@ bool App::Awake() {
 	}
 	return true; 
 }
+
 bool App::Start() { 
 	
 
@@ -58,8 +59,6 @@ bool App::Start() {
 	
 	return true; 
 }
-
-
 
 bool App::Update()
 {
@@ -94,7 +93,7 @@ bool App::Update()
 
 void App::PrepareUpdate()
 {
-	/*frameStart = std::chrono::steady_clock::now();*/
+	frameStart = std::chrono::steady_clock::now();
 }
 
 bool App::PreUpdate()
@@ -149,8 +148,19 @@ bool App::PostUpdate()
 void App::FinishUpdate()
 {
 	// dt calculation
-	//frameEnd = std::chrono::steady_clock::now();
+	frameEnd = std::chrono::steady_clock::now();
+	dt = std::chrono::duration<double>(frameEnd - frameStart).count();
 	//auto frameDuration = std::chrono::duration_cast<std::chrono::duration<double>>(frameEnd - frameStart);
+
+	frameCount++;
+	dtCount += dt;
+
+	if (dtCount >= 1.0)
+	{
+		fps = frameCount;
+		frameCount = 0;
+		dtCount = 0.0;
+	}
 
 	//dt = frameDuration.count();
 
@@ -160,17 +170,6 @@ void App::FinishUpdate()
 	//	std::this_thread::sleep_for(sleepTime);
 
 	//	dt = targetFrameDuration.count();
-	//}
-
-	//// fps calculation
-	//dtCount += dt;
-	//frameCount++;
-
-	//if (dtCount >= 1)
-	//{
-	//	fps = frameCount;
-	//	frameCount = 0;
-	//	dtCount = 0;
 	//}
 
 	//app->gui->panelSettings->AddFpsValue(fps);
@@ -207,4 +206,6 @@ void App::AddModule(Module* module, bool activate) {
 	modules.push_back(module);
 
 }
+
+int App::GetFps() const { return fps;}
 

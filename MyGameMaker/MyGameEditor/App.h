@@ -7,6 +7,8 @@
 #include "Root.h"
 #include "MyGameEngine/Mesh.h"
 
+#include <chrono>
+
 #pragma once
 
 class  Module;
@@ -43,7 +45,7 @@ public:
 	void AddLog(LogType type, const char* entry);
 	void CleanLogs();
 
-	void GetFps();
+	int GetFps() const;
 	void SetFpsCap(int fps);
 
 	// Add a new module to handle
@@ -64,6 +66,11 @@ private:
 
 	std::list<Module*> modules;
 
+	std::chrono::time_point<std::chrono::steady_clock> frameStart, frameEnd;
+	double dt = 0.0;
+	int fps = 0;
+	int frameCount = 0;
+	double dtCount = 0.0;
 };
 
 extern App* Application;

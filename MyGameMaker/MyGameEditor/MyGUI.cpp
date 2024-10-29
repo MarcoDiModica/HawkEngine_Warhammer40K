@@ -13,7 +13,7 @@
 #include "UIElement.h"
 #include "UIConsole.h"
 #include "UISettings.h"
-
+#include "UIMainMenuBar.h"
 
 MyGUI::MyGUI(App* app) : Module(app) {
 	ImGui::CreateContext();
@@ -45,6 +45,10 @@ bool MyGUI::Awake() {
 	UIsettingsPanel = new UISettings(UIType::SETTINGS, "Settings");
 	elements.push_back(UIsettingsPanel);
 	ret *= isInitialized(UIsettingsPanel);
+
+	UIMainMenuBarPanel = new UIMainMenuBar(UIType::DEFAULT, "MainMenuBar");
+	elements.push_back(UIMainMenuBarPanel);
+	ret *= isInitialized(UIMainMenuBarPanel);
 
 	// Other UI elements
 	
@@ -177,20 +181,10 @@ void MyGUI::Render() {
 		UIsettingsPanel->Draw();
 	}
 
-	//ImGui::ShowDemoWindow();
-	//with ImGui create a top horizontal menu bar
-	if (ImGui::BeginMainMenuBar()) {
-		// Inicia el menú "File"
-
-
-		if (ImGui::BeginMenu("not File")) {
-
-			if (ImGui::MenuItem("Import3DModel")) { /* Lógica para crear un nuevo archivo */ }
-			ImGui::EndMenu();
-		}
-		// Finaliza la barra de menú principal
-		ImGui::EndMainMenuBar();
+	if (UIMainMenuBarPanel) {
+		UIMainMenuBarPanel->Draw();
 	}
+
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

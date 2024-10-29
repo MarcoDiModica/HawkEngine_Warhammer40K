@@ -63,6 +63,9 @@
     <ClCompile Include="UISettings.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="UIMainMenuBar.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -102,6 +105,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UISettings.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMainMenuBar.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

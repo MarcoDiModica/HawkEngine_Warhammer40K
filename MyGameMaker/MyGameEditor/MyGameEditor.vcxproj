@@ -97,6 +97,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIConsole.cpp" />
     <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UIMainMenuBar.cpp" />
     <ClCompile Include="UISettings.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +113,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIConsole.h" />
     <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIMainMenuBar.h" />
     <ClInclude Include="UISettings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

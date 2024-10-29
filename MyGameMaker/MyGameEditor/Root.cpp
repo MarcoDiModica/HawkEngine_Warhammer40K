@@ -15,13 +15,28 @@ Root::Root(App* app) : Module(app) { ; }
 bool  Root::Awake() { 
     
     auto MarcoPresidente = CreateGameObject("MarcoPresidente", false);
+    MarcoPresidente->GetTransform()->GetPosition() = vec3(5, 0, 0);
     auto meshRenderer = MarcoPresidente->AddComponent<MeshRenderer>();
     auto mesh = make_shared<Mesh>();
-	auto image = make_shared<Image>();
+    auto image = make_shared<Image>();
+    auto material = make_shared<Material>();
     mesh->LoadMesh("BakerHouse.fbx");
+    image->LoadTexture("Baker_house.png");
+    material->setImage(image);
     meshRenderer->SetMesh(mesh);
-	image->LoadTexture("Baker_house.png");
-	meshRenderer->SetImage(image);
+    meshRenderer->SetMaterial(material);
+
+    auto MarcoVicePresidente = CreateGameObject("MarcoVicePresidente", false);
+    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(-5, 0, 0);
+    auto meshRenderer2 = MarcoVicePresidente->AddComponent<MeshRenderer>();
+    auto mesh2 = make_shared<Mesh>();
+    auto image2 = make_shared<Image>();
+    auto material2 = make_shared<Material>();
+    mesh2->LoadMesh("BakerHouse.fbx");
+    image2->LoadTexture("Baker_house2.png");
+    material2->setImage(image2);
+    meshRenderer2->SetMesh(mesh2);
+    meshRenderer2->SetMaterial(material2);
 
     return true;
 }

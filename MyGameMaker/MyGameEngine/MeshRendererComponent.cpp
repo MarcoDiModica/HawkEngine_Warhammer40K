@@ -66,5 +66,16 @@ std::shared_ptr<Image> MeshRenderer::GetImage() const
 
 void MeshRenderer::Render() const
 {
-    mesh->Draw();
+    if (material)
+    {
+        glEnable(GL_TEXTURE_2D);
+        material->bind();
+    }
+
+    if (mesh) mesh->Draw();
+
+    if (material)
+	{
+		glDisable(GL_TEXTURE_2D);
+	}
 }

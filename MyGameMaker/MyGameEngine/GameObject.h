@@ -6,6 +6,13 @@
 #include "Mesh.h"
 #include "BoundingBox.h"
 
+enum class DrawMode
+{
+    AccumultedMatrix,
+    InstancedMatrix,
+    PushPopMatrix
+};
+
 class GameObject : public std::enable_shared_from_this<GameObject>, public TreeExt<GameObject>
 {
 public:
@@ -54,7 +61,14 @@ public:
     static std::shared_ptr<GameObject> CreateCylinder(const std::string& name);
     static std::shared_ptr<GameObject> CreateCapsule(const std::string& name);
 
+    DrawMode drawMode = DrawMode::PushPopMatrix;
+
 private:
+
+    void DrawAccumultedMatrix() const;
+    void DrawInstancedMatrix() const;
+    void DrawPushPopMatrix() const;
+
     std::string name;
     std::string tag = "Untagged";
     bool active = true;

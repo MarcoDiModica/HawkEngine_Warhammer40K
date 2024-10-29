@@ -50,8 +50,6 @@ void GameObject::Update(float deltaTime)
 	}
 
     Draw();
-
-    transform->Translate(glm::vec3(0.0f, 0.01f, 0.0f));
 }
 
 void GameObject::Destroy()
@@ -71,20 +69,46 @@ void GameObject::Destroy()
 
 void GameObject::Draw() const
 {
+    switch (drawMode)
+    {
+    case DrawMode::AccumultedMatrix:
+        DrawAccumultedMatrix();
+        break;
+    case DrawMode::InstancedMatrix:
+        DrawInstancedMatrix();
+        break;
+    case DrawMode::PushPopMatrix:
+        DrawPushPopMatrix();
+        break;
+    }
+}
+
+void GameObject::DrawAccumultedMatrix() const
+{
+    //De momento nada ya lo hare en un futuro :)
+}
+
+void GameObject::DrawInstancedMatrix() const
+{
+	//De momento nada ya lo hare en un futuro :)
+}
+
+void GameObject::DrawPushPopMatrix() const
+{
     glPushMatrix();
     glMultMatrixd(transform->GetData());
 
     if (auto meshRenderer = GetComponent<MeshRenderer>())
-	{
+    {
         meshRenderer->Render();
-	}
+    }
 
-	for (const auto& child : children())
-	{
-		child.Draw();
-	}
+    for (const auto& child : children())
+    {
+        child.Draw();
+    }
 
-	glPopMatrix();
+    glPopMatrix();
 }
 
 void GameObject::OnEnable() {}

@@ -3,6 +3,8 @@
 #include "MyGUI.h"
 #include "Input.h"
 #include "HardwareSettings.h"
+#include "assimp/version.h"
+#include "IL/il.h"
 
 #include "imgui.h"
 
@@ -135,17 +137,18 @@ void UISettings::HardwareData()
 	ImGui::BulletText("Vendor: %s", settings.gpuVendor.c_str());
 	ImGui::BulletText("Brand: %s", settings.gpuBrand.c_str());
 	ImGui::BulletText("Driver Version: %s", settings.gpuDriverVersion.c_str());
-	ImGui::BulletText("VRAM Budget: %.2f MB", settings.vramBudget);
-	ImGui::BulletText("VRAM Available: %.2f MB", settings.vramAvailable);
-	ImGui::BulletText("VRAM Usage: %.2f MB", settings.vramUsage);
 
 	ImGui::Separator();
 
 	// VRAM Information
-	ImGui::Text("VRAM:");
-	ImGui::BulletText("Total Budget: %.2f MB", settings.vramBudget);
-	ImGui::BulletText("Available: %.2f MB", settings.vramAvailable);
-	ImGui::BulletText("Usage: %.2f MB", settings.vramUsage);
+	if (settings.vramBudget > 0.0f) {
+		ImGui::BulletText("Total VRAM Budget: %.2f MB", settings.vramBudget);
+		ImGui::BulletText("Available VRAM: %.2f MB", settings.vramAvailable);
+		ImGui::BulletText("VRAM Usage: %.2f MB", settings.vramUsage);
+	}
+	else {
+		ImGui::BulletText("VRAM information not available");
+	}
 
 	ImGui::Separator();
 
@@ -171,4 +174,18 @@ void UISettings::SoftwareData()
 	ImGui::BulletText("Version: %s", settings.gpuDriverVersion.c_str());
 
 	ImGui::Separator();
+
+	// Assimp Version
+	ImGui::Text("Assimp:");
+	ImGui::BulletText("Version: %d.%d.%d", aiGetVersionMajor(), aiGetVersionMinor(), aiGetVersionRevision());
+
+	ImGui::Separator();
+
+	// DevIL Version
+	ImGui::Text("DevIL:");
+	ImGui::BulletText("Version: %d.%d.%d",
+		ilGetInteger(IL_VERSION_NUM) / 100,        // Major version
+		(ilGetInteger(IL_VERSION_NUM) / 10) % 10,  // Minor version
+		ilGetInteger(IL_VERSION_NUM) % 10          // Revision version
+	);
 }

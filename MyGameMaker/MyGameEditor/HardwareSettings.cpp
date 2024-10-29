@@ -1,6 +1,7 @@
 #include "App.h"
 #include "HardwareSettings.h"
 #include "SDL2/SDL.h"
+#include "GL/glew.h"
 
 
 HardwareInfo::HardwareInfo(App* app) : Module(app)
@@ -50,22 +51,28 @@ const HardwareSettings& HardwareInfo::GetSettings() const
 	const GLubyte* renderer = glGetString(GL_RENDERER);	
 	const GLubyte* driver = glGetString(GL_VERSION);
 
-	GLint vramBudget = 0;
-	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vramBudget);
-
-	GLint vramAvaliable = 0;
-	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vramAvaliable);
-
-	GLint vramUsage = 0;
-	vramUsage = vramBudget - vramAvaliable;
-
 	settings.gpuVendor.assign((const char*)vendor);
 	settings.gpuBrand.assign((const char*)renderer);
 	settings.gpuDriverVersion.assign((const char*)driver);
 
-	settings.vramBudget = float(vramBudget) / 1024;
-	settings.vramAvailable = float(vramAvaliable) / 1024;
-	settings.vramUsage = float(vramUsage) / 1024;
+	if(glewIsSupported("GL_NVX_gpu_memory_info"))
+	{
+		GLint vramBudget = 0;
+		GLint vramAvailable = 0;
+
+		glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vramBudget);
+		glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vramAvailable);
+
+		settings.vramBudget = float(vramBudget) / 1024;      
+		settings.vramAvailable = float(vramAvailable) / 1024;
+		settings.vramUsage = settings.vramBudget - settings.vramAvailable;
+	}
+	else
+	{
+		settings.vramBudget = 0.0f;
+		settings.vramAvailable = 0.0f;
+		settings.vramUsage = 0.0f;
+	}
 
 	return settings;
 }

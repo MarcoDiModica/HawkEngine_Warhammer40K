@@ -61,7 +61,7 @@ static const ivec2 WINDOW_SIZE(1280, 720);
 static const auto FPS = 60;
 static const auto FRAME_DT = 1.0s / FPS;
 
-static Camera camera;
+static Camera* camera = nullptr;
 
 App* Application = NULL;
 
@@ -115,105 +115,12 @@ static void drawFloorGrid(int size, double step) {
 	glEnd();
 }
 
-float orbitRadius = 5.0f;
-float orbitSpeed = 0.01f;
-float angle = 0.0f;
-float angleHorizontal = 0.0f;
-float angleVertical = 0.0f;
-
-void move_camera() 
-{
-	float speed = 0.1f;
-	static bool isPanning = false;
-	static glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);
-
-	if (ImGui::IsMouseDown(ImGuiMouseButton_Middle))
-	{
-		if (!isPanning) {
-			lastMousePos = glm::dvec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
-			isPanning = true;
-		}
-		else {
-			glm::dvec2 currentMousePos = glm::dvec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
-			glm::dvec2 delta = currentMousePos - lastMousePos;
-			lastMousePos = currentMousePos;
-			camera.transform().translate(glm::vec3(delta.x, delta.y, 0) * 0.01f);
-		}
-	}
-	else {
-		isPanning = false;
-	}
-
-	if (Application->input->GetMouseButton(3) == KEY_REPEAT) {
-
-		if (Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) 	speed = 0.3f;
-
-		if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, 0, speed));
-		if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, 0, -speed));
-		if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) camera.transform().translate(glm::vec3(speed, 0, 0));
-		if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) camera.transform().translate(glm::vec3(-speed, 0, 0));
-		if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, -speed, 0));
-		if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, speed, 0));
-
-		//FreeLook
-		glm::dvec2 mousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
-		glm::dvec2 delta = mousePos - lastMousePos;
-		lastMousePos = mousePos;
-
-		const double sensitivity = 0.1;
-		static double yaw = 0.0;
-		static double pitch = 0.0;
-		const double MAX_PITCH = glm::radians(89.0);
-
-		yaw += delta.x * sensitivity;
-		pitch -= delta.y * sensitivity;
-
-		if (pitch > MAX_PITCH) pitch = MAX_PITCH;
-		if (pitch < -MAX_PITCH) pitch = -MAX_PITCH;
-
-		camera.transform().rotate(glm::radians(-delta.x * sensitivity), glm::vec3(0, 1, 0));
-		camera.transform().rotate(glm::radians(delta.y * sensitivity), glm::vec3(1, 0, 0));
-		camera.transform().alignToGlobalUp();
-	}
-	if (Application->input->GetMouseZ() > 0) camera.transform().translate(glm::vec3(0, 0, 0.5));
-	if (Application->input->GetMouseZ() < 0) camera.transform().translate(glm::vec3(0, 0, -0.5));
-
-	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && Application->input->GetSelectedGameObject() != NULL) camera.transform().LookAt(Application->input->GetSelectedGameObject()->GetTransform()->GetPosition());
-
-
-
-	if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT && Application->input->GetSelectedGameObject() != NULL)
-    {
-        glm::dvec2 currentMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
-        glm::dvec2 delta = currentMousePos - lastMousePos;
-        lastMousePos = currentMousePos;
-
-		angleHorizontal += delta.x * orbitSpeed;
-        angleVertical += delta.y * orbitSpeed;
-
-        if (angleVertical < -glm::half_pi<double>()) angleVertical = -glm::half_pi<double>();
-        if (angleVertical > glm::half_pi<double>()) angleVertical = glm::half_pi<double>();
-
-        vec3 targetPosition = Application->input->GetSelectedGameObject()->GetTransform()->GetPosition();
-
-        camera.transform().pos().x = targetPosition.x + orbitRadius * cos(angleVertical) * cos(angleHorizontal);
-        camera.transform().pos().y = targetPosition.y + orbitRadius * sin(angleVertical);
-        camera.transform().pos().z = targetPosition.z + orbitRadius * cos(angleVertical) * sin(angleHorizontal);
-
-        camera.transform().LookAt(targetPosition);
-		camera.transform().alignToGlobalUp();
-    }
-    else
-    {
-        lastMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
-    }
-}
 
 
 // Initializes camera
 void configureCamera() {
-	glm::dmat4 projectionMatrix = camera.projection();
-	glm::dmat4 viewMatrix = camera.view();
+	glm::dmat4 projectionMatrix = camera->projection();
+	glm::dmat4 viewMatrix = camera->view();
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(glm::value_ptr(projectionMatrix));
@@ -232,15 +139,15 @@ glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, 
 	glm::vec4 clip_coords = glm::vec4(ndc_x, ndc_y, -1.0f, 1.0f);
 
 
-	glm::mat4 projection_matrix = camera.projection();
+	glm::mat4 projection_matrix = camera->projection();
 	glm::vec4 view_coords = glm::inverse(projection_matrix) * clip_coords;
 	view_coords = glm::vec4(view_coords.x, view_coords.y, -1.0f, 0.0f);
 
-	glm::mat4 view_matrix = camera.view();
+	glm::mat4 view_matrix = camera->view();
 	glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
 
 	
-	return glm::vec3(world_coords.x + camera.transform().pos().x, world_coords.y + camera.transform().pos().y, world_coords.z + camera.transform().pos().z);
+	return glm::vec3(world_coords.x + camera->transform().pos().x, world_coords.y + camera->transform().pos().y, world_coords.z + camera->transform().pos().z);
 }
 
 void DrawRay(const glm::vec3& ray_origin, const glm::vec3& ray_direction)
@@ -258,8 +165,8 @@ glm::vec3 GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen
 	glm::vec3 window_coords = glm::vec3(mouse_x, screen_height - mouse_y, 0.0f);
 
 	// Matrices de vista y proyección
-	glm::mat4 view_matrix = camera.view();
-	glm::mat4 projection_matrix = camera.projection();
+	glm::mat4 view_matrix = camera->view();
+	glm::mat4 projection_matrix = camera->projection();
 
 	// Viewport
 	glm::vec4 viewport = glm::vec4(0, 0, screen_width, screen_height);
@@ -356,7 +263,7 @@ void PauCode2(MyGUI* gui) {
 		display_func();
 		gui->Render();
 
-		move_camera();
+		/*move_camera();*/
 		Application->window->SwapBuffers();
 		const auto t1 = hrclock::now();
 		const auto dt = t1 - t0;
@@ -371,14 +278,23 @@ int main(int argc, char** argv) {
 	// The application is created
 	Application = new App();
 
+	/*Application->camera = new Camera(Application);*/
+	
+	//std::shared_ptr<Camera> cameraPtr = std::make_shared<Camera>(Application);
+	//camera = cameraPtr.get();
+
+	//Application->camera = shared_ptr<Camera>
+
+
 	//initialize devil
 	ilInit();
 	iluInit();
 	ilutInit();
 
 	init_openGL();
-	camera.transform().pos() = vec3(0, 1, 4);
-	camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
+
+	camera = Application->camera;
+
 
 	while (state != EXIT) 
 	{
@@ -399,7 +315,10 @@ int main(int argc, char** argv) {
 
 
 		case AWAKE:
+			//Application->AddModule(cameraPtr.get(), true);
 
+			camera->transform().pos() = vec3(0, 1, 4);
+			camera->transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
 			if (Application->Awake()) { state = START; }
 
 			else

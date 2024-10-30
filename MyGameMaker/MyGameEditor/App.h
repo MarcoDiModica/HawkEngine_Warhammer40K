@@ -19,6 +19,7 @@ class Input;
 class HardwareInfo;
 class MyGUI;
 class Root;
+class Camera;
 
 class Mesh;
 
@@ -60,6 +61,7 @@ public:
 	HardwareInfo* hardwareInfo = nullptr;
 	MyGUI* gui = nullptr;
 	Root* root = nullptr;
+	Camera* camera = nullptr;
 
 	Mesh ElMesh;
 

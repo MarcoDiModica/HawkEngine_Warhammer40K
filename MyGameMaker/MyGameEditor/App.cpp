@@ -28,13 +28,16 @@ App::App() {
 
 	root = new Root(this);
 
+	camera = new Camera(this);
 
+	//camera = new Camera(this);
 
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(hardwareInfo, true);
 	AddModule(gui, true);
 	AddModule(root, true);
+	AddModule(camera, true);
 
 
 };

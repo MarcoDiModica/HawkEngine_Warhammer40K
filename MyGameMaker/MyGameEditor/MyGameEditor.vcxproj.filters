@@ -24,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>EditorModules</Filter>
     </ClCompile>
     <ClCompile Include="UIInspector.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
   </ItemGroup>

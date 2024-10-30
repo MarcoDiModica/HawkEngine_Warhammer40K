@@ -178,11 +178,11 @@ void move_camera()
 	if (Application->input->GetMouseZ() > 0) camera.transform().translate(glm::vec3(0, 0, 0.5));
 	if (Application->input->GetMouseZ() < 0) camera.transform().translate(glm::vec3(0, 0, -0.5));
 
-	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) camera.transform().LookAt(Application->input->GetSelectedGameObject()->GetTransform()->GetPosition());
+	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && Application->input->GetSelectedGameObject() != NULL) camera.transform().LookAt(Application->input->GetSelectedGameObject()->GetTransform()->GetPosition());
 
 
 
-	if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT)
+	if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT && Application->input->GetSelectedGameObject() != NULL)
     {
         glm::dvec2 currentMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
         glm::dvec2 delta = currentMousePos - lastMousePos;
@@ -323,7 +323,7 @@ static void display_func() {
 	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
 	DrawRay(rayStartPos, rayDir);
 
-	Application->ElMesh.Draw();
+	//Application->ElMesh.Draw();
 
 	// TODO cambiar esto de sitio
 	for (auto object : Application->root->children) 
@@ -344,7 +344,7 @@ static void display_func() {
 		}
 	}
 
-	Application->root->sceneManagement.Update(0.16f);
+	//Application->root->sceneManagement.Update(0.16f);
 
 }
 

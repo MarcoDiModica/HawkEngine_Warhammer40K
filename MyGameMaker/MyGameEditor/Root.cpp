@@ -96,12 +96,21 @@ bool  Root::Awake() {
     return true;
 }
 
+bool Root::Start() 
+{ 
+	sceneManagement.Start();
+
+    return true;
+}
+
 bool Root::Update(double dt) { 
 
     /*for (shared_ptr<GameObject> object : children) 
     {
         object->Update(dt);
     }*/
+
+    sceneManagement.Update(dt);
 
     return true; 
 }

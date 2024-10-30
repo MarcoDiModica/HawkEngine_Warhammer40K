@@ -1,3 +1,5 @@
+#include <SDL2/SDL.h>
+#include <iostream>
 #include "App.h"
 #include "MyWindow.h"
 #include "HardwareSettings.h"
@@ -10,6 +12,9 @@
 
 
 #define MAX_LOGS_CONSOLE 1000
+#define MAX_FIXED_UPDATES 5
+
+
 
 App::App() {
 
@@ -123,14 +128,41 @@ bool App::DoUpdate()
 {
 	//OPTICK_CATEGORY("DoUpdate", Optick::Category::GameLogic);
 
+	fixedCounter += dt;
+	int numFixedUpdates = 0;
+
+	while (fixedCounter > FIXED_INTERVAL) {
+		numFixedUpdates++;
+		fixedCounter -= FIXED_INTERVAL;
+		//Call fixedUpdate
+		for (const auto& module : modules)
+		{
+			if (module->active == false)
+				continue;
+
+			if (module->FixedUpdate() == false)
+				return false;
+		}
+
+		// Prevent spiral of death
+		if (numFixedUpdates > MAX_FIXED_UPDATES) {
+			break;
+		}
+	}
+	std::cout << std::endl << "There were " << numFixedUpdates << "fixed updates";
+
 	for (const auto& module : modules)
 	{
 		if (module->active == false)
 			continue;
 
-		if (module->Update(0.016f) == false)
+		if (module->Update(dt) == false)
 			return false;
 	}
+
+
+	
+
 
 	return true;
 }
@@ -158,12 +190,20 @@ void App::FinishUpdate()
 
 	dt = frameDuration.count();
 
+
+
 	if (frameDuration < targetFrameDuration)
 	{
-		//std::chrono::duration<double> sleepTime = targetFrameDuration - frameDuration;
+		auto sleepTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+			std::max(targetFrameDuration - frameDuration, std::chrono::duration<double>(0))
+		);
+
+		// Delay to maintain target frame rate
+		SDL_Delay(static_cast<Uint32>(sleepTime.count()));
+
 		dt = targetFrameDuration.count();
 	}
-
+	//std::cout << std::endl << dt;
 
 	dtCount += dt;
 	frameCount++;

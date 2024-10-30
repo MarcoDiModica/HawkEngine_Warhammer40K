@@ -38,6 +38,11 @@ public:
 		return true;
 	}
 
+	virtual bool FixedUpdate() {
+
+		return true;
+	}
+
 	// Called each loop iteration
 	virtual bool Update(double dt)
 	{

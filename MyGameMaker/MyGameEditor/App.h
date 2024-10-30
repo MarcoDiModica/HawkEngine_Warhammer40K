@@ -11,6 +11,8 @@
 
 #pragma once
 
+#define FIXED_INTERVAL 0.02
+
 class  Module;
 class Window;
 class Input;
@@ -35,6 +37,8 @@ public:
 	bool PreUpdate();
 
 	bool Update();
+
+	bool FixedUpdate();
 
 	bool PostUpdate();
 	void FinishUpdate();
@@ -61,6 +65,8 @@ public:
 
 private:
 
+	double fixedCounter = FIXED_INTERVAL;
+
 	LogInfo logInfo;
 	std::vector<LogInfo> logs;
 
@@ -69,7 +75,7 @@ private:
 	std::chrono::duration<double> targetFrameDuration;
 	std::chrono::steady_clock::time_point frameStart, frameEnd;
 
-	int frameRate = 120;
+	int frameRate = 90;
 	double dt = 0;
 	double dtCount = 0;
 	int frameCount = 0;

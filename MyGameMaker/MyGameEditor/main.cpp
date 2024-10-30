@@ -22,6 +22,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/common.hpp>
 #include <IL/il.h>
 #include <IL/ilu.h>	
 #include <IL/ilut.h>
@@ -114,6 +115,12 @@ static void drawFloorGrid(int size, double step) {
 	glEnd();
 }
 
+float orbitRadius = 5.0f;
+float orbitSpeed = 0.01f;
+float angle = 0.0f;
+float angleHorizontal = 0.0f;
+float angleVertical = 0.0f;
+
 void move_camera() 
 {
 	float speed = 0.1f;
@@ -122,20 +129,16 @@ void move_camera()
 
 	if (ImGui::IsMouseDown(ImGuiMouseButton_Middle))
 	{
-		glm::dvec2 mousePos = glm::dvec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
-
 		if (!isPanning) {
+			lastMousePos = glm::dvec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
 			isPanning = true;
-			lastMousePos = mousePos;
 		}
-
-		glm::dvec2 delta = mousePos - lastMousePos;
-
-		double sensitivity = 0.005;
-		camera.transform().rotate(sensitivity * -delta.x, vec3(0, 1, 0));
-		camera.transform().rotate(sensitivity * -delta.y, camera.transform().left());
-	
-		lastMousePos = mousePos;
+		else {
+			glm::dvec2 currentMousePos = glm::dvec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+			glm::dvec2 delta = currentMousePos - lastMousePos;
+			lastMousePos = currentMousePos;
+			camera.transform().translate(glm::vec3(delta.x, delta.y, 0) * 0.01f);
+		}
 	}
 	else {
 		isPanning = false;
@@ -149,26 +152,61 @@ void move_camera()
 		if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, 0, -speed));
 		if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) camera.transform().translate(glm::vec3(speed, 0, 0));
 		if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) camera.transform().translate(glm::vec3(-speed, 0, 0));
-		if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, speed, 0));
-		if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, -speed, 0));
-		//rotate the transform of the camera
+		if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, -speed, 0));
+		if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, speed, 0));
+
+		//FreeLook
+		glm::dvec2 mousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
+		glm::dvec2 delta = mousePos - lastMousePos;
+		lastMousePos = mousePos;
+
+		const double sensitivity = 0.1;
+		static double yaw = 0.0;
+		static double pitch = 0.0;
+		const double MAX_PITCH = glm::radians(89.0);
+
+		yaw += delta.x * sensitivity;
+		pitch -= delta.y * sensitivity;
+
+		if (pitch > MAX_PITCH) pitch = MAX_PITCH;
+		if (pitch < -MAX_PITCH) pitch = -MAX_PITCH;
+
+		camera.transform().rotate(glm::radians(-delta.x * sensitivity), glm::vec3(0, 1, 0));
+		camera.transform().rotate(glm::radians(delta.y * sensitivity), glm::vec3(1, 0, 0));
+		camera.transform().alignToGlobalUp();
 	}
-
-
+	if (Application->input->GetMouseZ() > 0) camera.transform().translate(glm::vec3(0, 0, 0.5));
+	if (Application->input->GetMouseZ() < 0) camera.transform().translate(glm::vec3(0, 0, -0.5));
 
 	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) camera.transform().LookAt(Application->input->GetSelectedGameObject()->GetTransform()->GetPosition());
 
-	
-	
-	if (Application->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		camera.transform().rotate(0.02, vec3(0, 1, 0));
-	}
-	if (Application->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		camera.transform().rotate(-0.02, vec3(0, 1, 0));
-	}
-	if (Application->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) camera.transform().rotate(0.02, camera.transform().left());
-	if (Application->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) camera.transform().rotate(-0.02, camera.transform().left());
 
+
+	if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT)
+    {
+        glm::dvec2 currentMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
+        glm::dvec2 delta = currentMousePos - lastMousePos;
+        lastMousePos = currentMousePos;
+
+		angleHorizontal += delta.x * orbitSpeed;
+        angleVertical += delta.y * orbitSpeed;
+
+        if (angleVertical < -glm::half_pi<double>()) angleVertical = -glm::half_pi<double>();
+        if (angleVertical > glm::half_pi<double>()) angleVertical = glm::half_pi<double>();
+
+        vec3 targetPosition = Application->input->GetSelectedGameObject()->GetTransform()->GetPosition();
+
+        camera.transform().pos().x = targetPosition.x + orbitRadius * cos(angleVertical) * cos(angleHorizontal);
+        camera.transform().pos().y = targetPosition.y + orbitRadius * sin(angleVertical);
+        camera.transform().pos().z = targetPosition.z + orbitRadius * cos(angleVertical) * sin(angleHorizontal);
+
+        camera.transform().LookAt(targetPosition);
+		camera.transform().alignToGlobalUp();
+    }
+    else
+    {
+        lastMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
+    }
 }
 
 
@@ -298,7 +336,7 @@ static void display_func() {
 
 			bbox = object->GetTransform()->GetMatrix() * bbox;
 
-			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox))
+			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox) && Application->input->GetMouseButton(1) == KEY_DOWN)
 			{
 				std::cout << "Hit: " << object->GetName();
 				Application->input->SetSelectedGameObject(object);

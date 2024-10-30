@@ -28,7 +28,7 @@ public:
 	Transform() = default;
 	Transform(const mat4& mat) : _mat(mat) {}
 
-
+	void alignToGlobalUp(const vec3& worldUp = vec3(0.0f, 1.0f, 0.0f));
 	void translate(const vec3& v);
 	void rotate(double rads, const vec3& v);
 	void LookAt(const vec3& target);

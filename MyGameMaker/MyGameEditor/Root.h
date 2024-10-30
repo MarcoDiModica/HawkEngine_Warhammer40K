@@ -19,7 +19,7 @@ public:
 
     bool Awake();
 
-    bool Start() { return true; }
+    bool Start();
 
     bool PreUpdate() { return true; }
     bool Update(double dt);

@@ -323,7 +323,7 @@ static void display_func() {
 	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
 	DrawRay(rayStartPos, rayDir);
 
-	Application->ElMesh.Draw();
+	//Application->ElMesh.Draw();
 
 	// TODO cambiar esto de sitio
 	for (auto object : Application->root->children) 
@@ -344,7 +344,7 @@ static void display_func() {
 		}
 	}
 
-	Application->root->sceneManagement.Update(0.16f);
+	//Application->root->sceneManagement.Update(0.16f);
 
 }
 

@@ -19,11 +19,8 @@ public:
     const auto& GetUp() const { return up; }
     const auto& GetForward() const { return forward; }
     const auto& GetPosition() const { return position; }
-    const auto& GetRotation() const { return rotation; }
-    const auto& GetScale() const { return scale; }
     auto& GetPosition() { return position; }
-    auto& GetRotation() { return rotation; }
-    auto& GetScale() { return scale; }
+
 
     const auto* GetData() const { return &matrix[0][0]; }
 
@@ -46,8 +43,6 @@ private:
             glm::dvec3 up; glm::dmat4::value_type up_w;
             glm::dvec3 forward; glm::dmat4::value_type fwd_w;
             glm::dvec3 position; glm::dmat4::value_type pos_w;
-            glm::dvec3 rotation; glm::dmat4::value_type rot_w;
-            glm::dvec3 scale; glm::dmat4::value_type scale_w;
         };
     };
 };

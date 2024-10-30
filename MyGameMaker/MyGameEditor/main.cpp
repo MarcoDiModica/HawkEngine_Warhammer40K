@@ -344,6 +344,8 @@ static void display_func() {
 		}
 	}
 
+	Application->root->sceneManagement.Update(0.16f);
+
 }
 
 void PauCode2(MyGUI* gui) {

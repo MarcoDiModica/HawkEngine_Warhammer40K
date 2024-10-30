@@ -157,3 +157,87 @@ void Mesh::LoadMesh(const char* file_path)
         // Handle error
     }
 }
+
+std::shared_ptr<Mesh> Mesh::CreateCube() 
+{
+	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+	const glm::vec3 vertices[] = {
+		glm::vec3(-1.0f, -1.0f, 1.0f),
+		glm::vec3(1.0f, -1.0f, 1.0f),
+		glm::vec3(1.0f, 1.0f, 1.0f),
+		glm::vec3(-1.0f, 1.0f, 1.0f),
+		glm::vec3(-1.0f, -1.0f, -1.0f),
+		glm::vec3(1.0f, -1.0f, -1.0f),
+		glm::vec3(1.0f, 1.0f, -1.0f),
+		glm::vec3(-1.0f, 1.0f, -1.0f)
+	};
+
+	const unsigned int indices[] = {
+		0, 1, 2, 0, 2, 3,
+		1, 5, 6, 1, 6, 2,
+		5, 4, 7, 5, 7, 6,
+		4, 0, 3, 4, 3, 7,
+		3, 2, 6, 3, 6, 7,
+		4, 5, 1, 4, 1, 0
+	};
+
+	mesh->Load(vertices, 8, indices, 36);
+	return mesh;
+}
+
+std::shared_ptr<Mesh> Mesh::CreateSphere() 
+{
+	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+	const int stacks = 20;
+	const int slices = 20;
+	const float radius = 1.0f;
+	std::vector<glm::vec3> vertices;
+	std::vector<unsigned int> indices;
+
+	for (int i = 0; i <= stacks; ++i) {
+		float V = i / (float)stacks;
+		float phi = V * glm::pi<float>();
+
+		for (int j = 0; j <= slices; ++j) {
+			float U = j / (float)slices;
+			float theta = U * (glm::pi<float>() * 2);
+
+			float x = cos(theta) * sin(phi);
+			float y = cos(phi);
+			float z = sin(theta) * sin(phi);
+
+			vertices.push_back(glm::vec3(x, y, z) * radius);
+		}
+	}
+
+	for (int i = 0; i < slices * stacks + slices; ++i) {
+		indices.push_back(i);
+		indices.push_back(i + slices + 1);
+		indices.push_back(i + slices);
+
+		indices.push_back(i + slices + 1);
+		indices.push_back(i);
+		indices.push_back(i + 1);
+	}
+
+	mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
+	return mesh;
+}
+
+std::shared_ptr<Mesh> Mesh::CreatePlane() 
+{
+	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+	const glm::vec3 vertices[] = {
+		glm::vec3(-1.0f, 0.0f, 1.0f),
+		glm::vec3(1.0f, 0.0f, 1.0f),
+		glm::vec3(1.0f, 0.0f, -1.0f),
+		glm::vec3(-1.0f, 0.0f, -1.0f)
+	};
+
+	const unsigned int indices[] = {
+		0, 1, 2, 0, 2, 3
+	};
+
+	mesh->Load(vertices, 4, indices, 6);
+	return mesh;
+}

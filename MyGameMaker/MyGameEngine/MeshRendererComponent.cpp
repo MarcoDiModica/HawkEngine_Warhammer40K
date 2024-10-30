@@ -72,7 +72,15 @@ void MeshRenderer::Render() const
         material->bind();
     }
 
-    if (mesh) mesh->Draw();
+    if (mesh) 
+    {    
+        glPushMatrix();
+        glMultMatrixd(owner.lock()->GetTransform()->GetData()); 
+
+        mesh->Draw();
+
+        glPopMatrix();
+    }
 
     if (material)
 	{

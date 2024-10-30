@@ -5,16 +5,16 @@
 #include "MyGameEngine/Mesh.h"
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
+
 #include <iostream>
 
 using namespace std;
-GameObject Scene;
 
 Root::Root(App* app) : Module(app) { ; }
 
 bool  Root::Awake() { 
     
-    MarcoPresidente = CreateGameObject("MarcoPresidente", false);
+    /*MarcoPresidente = CreateGameObject("MarcoPresidente", false);
     MarcoPresidente->GetTransform()->GetPosition() = vec3(3, 0, 0);
     MarcoPresidente->GetTransform()->Scale(vec3(0.3f, 0.3f, 0.3f));
     auto meshRenderer = MarcoPresidente->AddComponent<MeshRenderer>();
@@ -37,7 +37,61 @@ bool  Root::Awake() {
     image2->LoadTexture("Baker_house2.png");
     material2->setImage(image2);
     meshRenderer2->SetMesh(mesh2);
+    meshRenderer2->SetMaterial(material2);*/
+
+    /*padre = GameObject::CreateEmptyGameObject("Padre");
+    padre->GetTransform()->GetPosition() = vec3(0, 0, 0);
+    auto meshRendererPadre = padre->AddComponent<MeshRenderer>();
+    auto meshPadre = make_shared<Mesh>();
+    auto imagePadre = make_shared<Image>();
+    auto materialPadre = make_shared<Material>();
+    meshPadre->LoadMesh("BakerHouse.fbx");
+    imagePadre->LoadTexture("Baker_house.png");
+    materialPadre->setImage(imagePadre);
+    meshRendererPadre->SetMesh(meshPadre);
+    meshRendererPadre->SetMaterial(materialPadre);
+
+    hijo = GameObject::CreateEmptyGameObject("Hijo");
+    hijo->GetTransform()->GetPosition() = vec3(10, 0, 0);
+    auto meshRendererHijo = hijo->AddComponent<MeshRenderer>();
+    auto meshHijo = make_shared<Mesh>();
+    auto imageHijo = make_shared<Image>();
+    auto materialHijo = make_shared<Material>();
+    meshHijo->LoadMesh("BakerHouse.fbx");
+    imageHijo->LoadTexture("Baker_house2.png");
+    materialHijo->setImage(imageHijo);
+    meshRendererHijo->SetMesh(meshHijo);
+    meshRendererHijo->SetMaterial(materialHijo);
+
+    padre->emplaceChild(hijo);
+
+    children.push_back(padre);*/
+    sceneManagement.CreateScene("Scene");
+    currentScene = sceneManagement.GetActiveScene();
+    auto object1 = CreateGameObject("MarcoPresidente", false);
+    auto mesh = Mesh::CreateCube();
+    auto meshRenderer = object1->AddComponent<MeshRenderer>();
+    meshRenderer->SetMesh(mesh);
+    auto image = make_shared<Image>();
+    image->LoadTexture("Baker_house.png");
+    auto material = make_shared<Material>();
+    material->setImage(image);
+    meshRenderer->SetMaterial(material);
+    currentScene->AddGameObject(object1);
+
+    auto MarcoVicePresidente = CreateGameObject("MarcoVicePresidente", false);
+    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(-3, 0, 0);
+    auto meshRenderer2 = MarcoVicePresidente->AddComponent<MeshRenderer>();
+    auto mesh2 = make_shared<Mesh>();
+    auto image2 = make_shared<Image>();
+    auto material2 = make_shared<Material>();
+    mesh2->LoadMesh("BakerHouse.fbx");
+    image2->LoadTexture("Baker_house2.png");
+    material2->setImage(image2);
+    meshRenderer2->SetMesh(mesh2);
     meshRenderer2->SetMaterial(material2);
+
+    currentScene->AddGameObject(MarcoVicePresidente);
 
     return true;
 }
@@ -48,9 +102,6 @@ bool Root::Update(double dt) {
     {
         object->Update(dt);
     }*/
-
-    //MarcoPresidente->GetTransform()->Rotate(0.01f, vec3(0, 1, 0));
-    //MarcoVicePresidente->GetTransform()->Rotate(0.01f, vec3(0, -1, 0));
 
     return true; 
 }

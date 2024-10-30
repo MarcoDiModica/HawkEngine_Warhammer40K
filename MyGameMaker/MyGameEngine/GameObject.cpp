@@ -69,6 +69,8 @@ void GameObject::Destroy()
 
 void GameObject::Draw() const
 {
+    //std::cout << "Draw GameObject: " << name << std::endl;
+    
     switch (drawMode)
     {
     case DrawMode::AccumultedMatrix:
@@ -101,11 +103,6 @@ void GameObject::DrawPushPopMatrix() const
     if (auto meshRenderer = GetComponent<MeshRenderer>())
     {
         meshRenderer->Render();
-    }
-
-    for (const auto& child : children())
-    {
-        child.Draw();
     }
 
     glPopMatrix();

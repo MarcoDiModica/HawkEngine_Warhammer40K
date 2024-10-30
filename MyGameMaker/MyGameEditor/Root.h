@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "MyGameEngine/Mesh.h"
 #include "MyGameEngine/GameObject.h"
+#include "MyGameEngine/SceneManagement.h"
+#include "MyGameEngine/Scene.h"
 #include <list>
 
 
@@ -34,10 +36,8 @@ public:
 public:
 
 	std::vector< std::shared_ptr<GameObject> > children;
-
-
-    std::shared_ptr<GameObject> MarcoPresidente;
-    std::shared_ptr<GameObject> MarcoVicePresidente;
-
+    
+    SceneManagement sceneManagement;
+    std::shared_ptr<Scene> currentScene = std::make_shared<Scene>("Scene1");
 };
 

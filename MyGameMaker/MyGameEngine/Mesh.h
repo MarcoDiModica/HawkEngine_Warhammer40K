@@ -5,6 +5,7 @@
 #include <vector>
 #include <GL/glew.h>
 #include <string>
+#include <memory>
 #include <glm/glm.hpp>
 
 #include "BufferObject.h"
@@ -29,6 +30,10 @@ public:
     const auto& vertices() const { return _vertices; }
     const auto& indices() const { return _indices; }
     const auto& boundingBox() const { return _boundingBox; }
+
+    static std::shared_ptr<Mesh> CreateCube();
+    static std::shared_ptr<Mesh> CreateSphere();
+    static std::shared_ptr<Mesh> CreatePlane();
 
     void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);
     void loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords);

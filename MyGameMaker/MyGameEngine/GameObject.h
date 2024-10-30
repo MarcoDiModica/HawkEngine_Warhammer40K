@@ -56,15 +56,19 @@ public:
     std::shared_ptr<Transform_Component> GetTransform() const { return transform; }
 
     //Primitive Creation
-    static std::shared_ptr<GameObject> CreateEmptyGameObject(const std::string& name);
-    static std::shared_ptr<GameObject> CreateCube(const std::string& name);
-    static std::shared_ptr<GameObject> CreateSphere(const std::string& name);
-    static std::shared_ptr<GameObject> CreatePlane(const std::string& name);
-    static std::shared_ptr<GameObject> CreateQuad(const std::string& name);
-    static std::shared_ptr<GameObject> CreateCylinder(const std::string& name);
-    static std::shared_ptr<GameObject> CreateCapsule(const std::string& name);
+    static std::shared_ptr<GameObject> CreateEmptyGameObject(const std::string& name = "EmptyGameObject");
+    static std::shared_ptr<GameObject> CreateCube(const std::string& name = "Cube");
+    static std::shared_ptr<GameObject> CreateSphere(const std::string& name = "Sphere");
+    static std::shared_ptr<GameObject> CreatePlane(const std::string& name = "Plane");
+    static std::shared_ptr<GameObject> CreateQuad(const std::string& name = "Quad");
+    static std::shared_ptr<GameObject> CreateCylinder(const std::string& name = "Cylinder");
+    static std::shared_ptr<GameObject> CreateCapsule(const std::string& name = "Capsule");
 
     DrawMode drawMode = DrawMode::PushPopMatrix;
+
+    bool operator==(const GameObject& other) const {
+        return name == other.name;
+    }
 
 private:
 

@@ -116,6 +116,7 @@ static void drawFloorGrid(int size, double step) {
 
 void move_camera() 
 {
+	float speed = 0.1f;
 	static bool isPanning = false;
 	static glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);
 
@@ -140,17 +141,24 @@ void move_camera()
 		isPanning = false;
 	}
 
+	if (Application->input->GetMouseButton(3) == KEY_REPEAT) {
 
-	if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		camera.transform().translate(-camera.transform().fwd() * 0.1);
+		if (Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) 	speed = 0.3f;
+
+		if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, 0, speed));
+		if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, 0, -speed));
+		if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) camera.transform().translate(glm::vec3(speed, 0, 0));
+		if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) camera.transform().translate(glm::vec3(-speed, 0, 0));
+		if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, speed, 0));
+		if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) camera.transform().translate(glm::vec3(0, -speed, 0));
+		//rotate the transform of the camera
 	}
 
-	if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) camera.transform().translate(camera.transform().fwd() * 0.1);
-	if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) camera.transform().translate(-camera.transform().left() * 0.1);
-	if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) camera.transform().translate(camera.transform().left() * 0.1);
-	if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) camera.transform().translate(-camera.transform().up() * 0.1);
-	if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) camera.transform().translate(camera.transform().up() * 0.1);
-	//rotate the transform of the camera
+
+
+	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) camera.transform().LookAt(Application->input->GetSelectedGameObject()->GetTransform()->GetPosition());
+
+	
 	
 	if (Application->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		camera.transform().rotate(0.02, vec3(0, 1, 0));

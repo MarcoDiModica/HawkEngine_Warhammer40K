@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 #include <GL/glew.h>
-#include <GL/freeglut.h>
+
 #include <iostream>
 using namespace std;
 

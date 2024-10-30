@@ -31,6 +31,7 @@ public:
 
 	void translate(const vec3& v);
 	void rotate(double rads, const vec3& v);
+	void LookAt(const vec3& target);
 	Transform operator*(const mat4& other) { return Transform(_mat * other); }
 	Transform operator*(const Transform& other) { return Transform(_mat * other._mat); }
 };

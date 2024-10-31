@@ -143,6 +143,25 @@ void Root::RemoveGameObject(std::string name) {
 }
 
 shared_ptr<GameObject> Root::CreateGameObject(string name, bool as_child) {
+
+    string og_name = name;
+
+    int num_repeat = 0;
+    for (size_t i = 0; i < children.size(); ++i) {
+        if (children[i]->GetName() == name) {
+            num_repeat++;
+            name = og_name + std::to_string(num_repeat);
+
+        }
+    }
+
+    if (num_repeat != 0) {
+
+        name = og_name + std::to_string(num_repeat);
+
+    }
+
+
 	shared_ptr<GameObject> object = make_shared<GameObject>(name);
 
 	if (!as_child) {

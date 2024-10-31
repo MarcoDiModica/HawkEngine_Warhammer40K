@@ -57,6 +57,7 @@ std::shared_ptr<Material> MeshRenderer::GetMaterial() const
 
 void MeshRenderer::SetImage(std::shared_ptr<Image> image)
 {
+    material->setImage(image);
     this->image = image;
 }
 

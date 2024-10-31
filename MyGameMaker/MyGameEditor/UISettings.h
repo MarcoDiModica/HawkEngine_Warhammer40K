@@ -24,6 +24,7 @@ public:
 
 	bool Draw();
 	void AddFpsMark(int fps);
+	void AddMemoryMark();
 
 private:
 

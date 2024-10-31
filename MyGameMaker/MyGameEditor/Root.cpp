@@ -5,6 +5,8 @@
 #include "MyGameEngine/Mesh.h"
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
+#include "App.h"
+#include "Input.h"
 
 #include <iostream>
 
@@ -78,6 +80,7 @@ bool  Root::Awake() {
     material->setImage(image);
     meshRenderer->SetMaterial(material);
     currentScene->AddGameObject(object1);
+    meshRenderer->SetImage(image);
 
     auto MarcoVicePresidente = CreateGameObject("MarcoVicePresidente", false);
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(-3, 0, 0);
@@ -90,6 +93,7 @@ bool  Root::Awake() {
     material2->setImage(image2);
     meshRenderer2->SetMesh(mesh2);
     meshRenderer2->SetMaterial(material2);
+    meshRenderer2->SetImage(image2);
 
     currentScene->AddGameObject(MarcoVicePresidente);
 
@@ -132,6 +136,10 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
 void Root::RemoveGameObject(std::string name) {
     for (auto it = children.begin(); it != children.end(); ) {
         if ((*it)->GetName() == name) {
+            if ((*it)->isSelected) {
+				(*it)->isSelected = false;
+                Application->input->SetSelectedGameObject(nullptr);
+			}
             (*it)->Destroy();  // Call Destroy on the object.
             it = children.erase(it); // Erase returns the next iterator.
             return; // Exit after removing the object.
@@ -174,7 +182,6 @@ shared_ptr<GameObject> Root::CreateGameObject(string name, bool as_child) {
 void Root::CreateEmptyObject(std::string name) 
 {
 	auto go = CreateGameObject(name, false);
-
 }
 
 void Root::CreateCubeObject(std::string name) {
@@ -203,4 +210,5 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     material->setImage(image);
     meshRenderer->SetMesh(mesh);
     meshRenderer->SetMaterial(material);
+    meshRenderer->SetImage(image);
 }

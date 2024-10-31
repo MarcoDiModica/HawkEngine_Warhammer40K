@@ -2,7 +2,7 @@
 
 #include "App.h"
 #include "Root.h"
-
+#include "MyGameEditor/Input.h"
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <iostream>
@@ -39,8 +39,8 @@ bool UIHierarchy::Draw() {
 void UIHierarchy::RenderSceneHierarchy(std::shared_ptr<Scene>& currentScene) {
 	//ImGui::Begin("Scene Hierarchy");
 
-	for (auto& obj : currentScene->children()) {
-		DrawSceneObject(obj);
+	for (size_t i = 0; i < Application->root->children.size(); ++i) {
+		DrawSceneObject(*Application->root->children[i]);
 	}
 
 	//ImGui::End();
@@ -57,10 +57,16 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		ImGui::TreePop();
 	}
 
-	ImGui::SameLine();
-	if (ImGui::Button("Remove"))
-	{
-		std::cout << "Remove " << obj.GetName();
+	ImGui::Button("Delete");
+
+	if (ImGui::IsItemClicked(0)) {
 		Application->root->RemoveGameObject(obj.GetName());
 	}
+
+	//ImGui::SameLine();
+	//if (ImGui::Button("Remove"))
+	//{
+	//	std::cout << "Remove " << obj.GetName();
+	//	Application->root->RemoveGameObject(obj.GetName());
+	//}
 }

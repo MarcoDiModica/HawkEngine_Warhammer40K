@@ -259,7 +259,7 @@ static void display_func() {
 
 void PauCode2(MyGUI* gui) {
 
-	if (Application->window->ProcessEvents(gui) && Application->window->IsOpen()) {
+	if (Application->window->IsOpen()) {
 
 		const auto t0 = hrclock::now();
 		display_func();

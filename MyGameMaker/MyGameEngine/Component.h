@@ -8,7 +8,7 @@
 #include <concepts>
 #include <stdexcept>
 
-class GameObject;	
+class GameObject;
 
 class Component
 {

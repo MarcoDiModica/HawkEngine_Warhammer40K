@@ -6,12 +6,13 @@
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 #include "Image.h"
+#include <iostream>
 
 MeshRenderer::MeshRenderer(std::weak_ptr<GameObject> owner) : Component(owner) {}
 
 void MeshRenderer::Start()
 {
-	
+
 }
 
 void MeshRenderer::Update(float deltaTime)
@@ -46,22 +47,22 @@ glm::vec3 MeshRenderer::GetColor() const
 
 void MeshRenderer::SetMaterial(std::shared_ptr<Material> material)
 {
-	this->material = material;
+    this->material = material;
 }
 
 std::shared_ptr<Material> MeshRenderer::GetMaterial() const
 {
-	return material;
+    return material;
 }
 
 void MeshRenderer::SetImage(std::shared_ptr<Image> image)
 {
-	this->image = image;
+    this->image = image;
 }
 
 std::shared_ptr<Image> MeshRenderer::GetImage() const
 {
-	return image;
+    return image;
 }
 
 void MeshRenderer::Render() const
@@ -72,18 +73,13 @@ void MeshRenderer::Render() const
         material->bind();
     }
 
-    if (mesh) 
-    {    
-        glPushMatrix();
-        glMultMatrixd(owner.lock()->GetTransform()->GetData()); 
-
+    if (mesh)
+    {
         mesh->Draw();
-
-        glPopMatrix();
     }
 
     if (material)
-	{
-		glDisable(GL_TEXTURE_2D);
-	}
+    {
+        glDisable(GL_TEXTURE_2D);
+    }
 }

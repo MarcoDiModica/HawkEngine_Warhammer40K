@@ -40,14 +40,14 @@ bool Camera::Update(double dt) {
 	static bool isPanning = false;
 	static glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);
 
-	if (ImGui::IsMouseDown(ImGuiMouseButton_Middle))
+	if (Application->input->GetMouseButton(2) == KEY_REPEAT)
 	{
 		if (!isPanning) {
-			lastMousePos = glm::dvec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+			lastMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
 			isPanning = true;
 		}
 		else {
-			glm::dvec2 currentMousePos = glm::dvec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+			glm::dvec2 currentMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
 			glm::dvec2 delta = currentMousePos - lastMousePos;
 			lastMousePos = currentMousePos;
 			transform().translate(glm::vec3(delta.x, delta.y, 0) * 0.01f);

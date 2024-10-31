@@ -151,3 +151,37 @@ shared_ptr<GameObject> Root::CreateGameObject(string name, bool as_child) {
 
 	return object;
 }
+
+void Root::CreateEmptyObject(std::string name) 
+{
+	auto go = CreateGameObject(name, false);
+
+}
+
+void Root::CreateCubeObject(std::string name) {
+
+	auto go = CreateGameObject(name, false);
+	AddMeshRenderer(*go, Mesh::CreateCube(), "default.png");
+
+}
+void Root::CreateSphereObject(std::string name) {
+    auto go = CreateGameObject(name, false);
+    AddMeshRenderer(*go, Mesh::CreateSphere(), "default.png");
+
+}
+void Root::CreatePlaneObject(std::string name) {
+
+    auto go = CreateGameObject(name, false);
+    AddMeshRenderer(*go, Mesh::CreatePlane(), "default.png");
+}
+
+void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath)
+{
+    auto meshRenderer = go.AddComponent<MeshRenderer>();
+    auto image = std::make_shared<Image>();
+    auto material = std::make_shared<Material>();
+    image->LoadTexture(texturePath);
+    material->setImage(image);
+    meshRenderer->SetMesh(mesh);
+    meshRenderer->SetMaterial(material);
+}

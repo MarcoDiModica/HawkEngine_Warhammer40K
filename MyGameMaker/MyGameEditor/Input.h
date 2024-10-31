@@ -82,7 +82,7 @@ public:
 		}
 
 		selectedObject = gameObject;
-
+		if (selectedObject != nullptr)
 		selectedObject->isSelected = true;
 	}
 

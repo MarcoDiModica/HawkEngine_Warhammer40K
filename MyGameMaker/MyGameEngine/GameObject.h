@@ -88,6 +88,11 @@ private:
 
     std::shared_ptr<Transform_Component> transform;
     std::shared_ptr<Mesh> mesh;
+
+public:
+
+    bool isSelected = false;
+
 };
 
 

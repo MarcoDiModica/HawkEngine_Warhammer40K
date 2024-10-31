@@ -152,7 +152,7 @@ bool App::DoUpdate()
 			break;
 		}
 	}
-	std::cout << std::endl << "There were " << numFixedUpdates << "fixed updates";
+	//std::cout << std::endl << "There were " << numFixedUpdates << "fixed updates";
 
 	for (const auto& module : modules)
 	{

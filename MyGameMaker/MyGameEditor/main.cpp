@@ -233,8 +233,10 @@ static void display_func() {
 	//Application->ElMesh.Draw();
 
 	// TODO cambiar esto de sitio
-	for (auto object : Application->root->children) 
+	for (size_t i = 0; i < Application->root->children.size(); ++i) 
 	{
+		GameObject* object = Application->root->children[i].get();
+
 		object->Update(0.16f);
 		
 		if (object->HasComponent<MeshRenderer>()) {

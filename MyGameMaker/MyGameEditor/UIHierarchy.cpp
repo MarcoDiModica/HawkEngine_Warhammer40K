@@ -48,7 +48,22 @@ void UIHierarchy::RenderSceneHierarchy(std::shared_ptr<Scene>& currentScene) {
 
 void UIHierarchy::DrawSceneObject(GameObject& obj)
 {
+	bool color = false;
+
+	if (obj.isSelected) {
+		color = true;
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f)); // Orange color for selected
+	}
+
 	bool open = ImGui::TreeNode(obj.GetName().c_str());
+	if (ImGui::IsItemClicked(0)) {
+		Application->input->SetSelectedGameObject(&obj);
+	}
+
+	if (obj.isSelected && color) {
+		ImGui::PopStyleColor(); // Orange color for selected
+	}
+	
 
 	if (open) {
 		for (auto& child : obj.children()) {
@@ -57,11 +72,14 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		ImGui::TreePop();
 	}
 
+
 	ImGui::Button("Delete");
 
 	if (ImGui::IsItemClicked(0)) {
 		Application->root->RemoveGameObject(obj.GetName());
 	}
+
+
 
 	//ImGui::SameLine();
 	//if (ImGui::Button("Remove"))

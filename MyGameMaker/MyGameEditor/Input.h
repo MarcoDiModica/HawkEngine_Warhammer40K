@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <iostream>
 #include "Module.h"
 
 #define MAX_MOUSE_BUTTONS 5
@@ -72,12 +73,20 @@ public:
 		return mouse_y_motion;
 	}
 
-	void SetSelectedGameObject(std::shared_ptr<GameObject> gameObject) 
+	void SetSelectedGameObject(GameObject* gameObject) 
 	{
+		if (selectedObject) selectedObject->isSelected = false;
+		else {
+
+			std::cout << "WHAAAAAAAT";
+		}
+
 		selectedObject = gameObject;
+
+		selectedObject->isSelected = true;
 	}
 
-	std::shared_ptr<GameObject> GetSelectedGameObject() const 
+	GameObject* GetSelectedGameObject() const 
 	{
 		return selectedObject;
 	}
@@ -92,7 +101,7 @@ private:
 	int mouse_y_motion;
 	float dx;
 	float dy;
-	std::shared_ptr<GameObject> selectedObject;
+	GameObject* selectedObject;
 };
 
 #endif // !__INPUT_H__

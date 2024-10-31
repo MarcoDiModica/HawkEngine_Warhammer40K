@@ -1,5 +1,5 @@
 
-## 🦅 HawkEngine 🦅 ##
+# 🦅 HawkEngine 🦅 #
 
 First version of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
 
@@ -13,7 +13,7 @@ First version of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
 
 [Pau Mora](https://github.com/Peluchomp)
 
-## CONTROLS ##
+# CONTROLS #
 
 -Press Left Click on the inspector to select an object
 
@@ -28,6 +28,14 @@ First version of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
 -Press F if an Object is selected to make the camera look at an object
 
 -You can press the Middle Mouse Button to move the camera across the screen
+
+## OTHER CONTROLS ##
+
+-You can move/rotate the objects with the mouse on the inspector window
+
+-You can delete GameObjects in the hierarchy
+
+-You can drag and drop textures and meshes directly on the window
 
 ## LICENSES ##
 

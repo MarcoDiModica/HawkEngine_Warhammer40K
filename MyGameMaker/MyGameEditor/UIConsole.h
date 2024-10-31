@@ -14,7 +14,4 @@ public:
 
 	bool Draw();
 };
-#endif // !__UI_CONSOLE_H__
-
-
-
+#endif // !__UI_CONSOLE_H__s

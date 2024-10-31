@@ -9,7 +9,9 @@ enum class UIType
 	SETTINGS,
 	DEFAULT,
 	CONSOLE,
-	UNKNOWN	
+	INSPECTOR,
+	HIERARCHY,
+	UNKNOWN
 };
 
 class UIElement
@@ -37,5 +39,3 @@ protected:
 };
 
 #endif // !__UIELEMENT_H__
-
-

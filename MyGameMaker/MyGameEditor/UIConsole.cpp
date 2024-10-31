@@ -70,9 +70,9 @@ bool UIConsole::Draw()
 
 				ImGui::SameLine();
 				ImGui::TextUnformatted(log.message.c_str());
-				
+
 			}
-			
+
 			ImGui::PopStyleVar();
 
 			if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
@@ -81,7 +81,7 @@ bool UIConsole::Draw()
 			ImGui::EndChild();
 		}
 
-		ImGui::End();	
+		ImGui::End();
 
 	}
 	return true;

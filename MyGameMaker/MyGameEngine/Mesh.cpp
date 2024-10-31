@@ -7,8 +7,11 @@
 #include <vector>
 #include <string>
 #include <GL/glew.h>
-
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include <queue>
 using namespace std;
 
 Mesh::Mesh() {}
@@ -17,37 +20,38 @@ Mesh::~Mesh() {}
 
 
 
-void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs) 
+void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs)
 {
-    vertices_buffer.LoadData(vertices, num_verts * sizeof(glm::vec3));
-    indices_buffer.LoadIndices(indices, num_indexs);
-    texCoords_buffer.UnLoad();
-    normals_buffer.UnLoad();
-    colors_buffer.UnLoad();
+	vertices_buffer.LoadData(vertices, num_verts * sizeof(glm::vec3));
+	indices_buffer.LoadIndices(indices, num_indexs);
+	texCoords_buffer.UnLoad();
+	normals_buffer.UnLoad();
+	colors_buffer.UnLoad();
 
-    _vertices.clear();
-    _indices.clear();
-    _vertices.assign(vertices, vertices + num_verts);
-    _indices.assign(indices, indices + num_indexs);
+	_vertices.clear();
+	_indices.clear();
+	_vertices.assign(vertices, vertices + num_verts);
+	_indices.assign(indices, indices + num_indexs);
 
-    _boundingBox.min = _vertices.front();
-    _boundingBox.max = _vertices.front();
+	_boundingBox.min = _vertices.front();
+	_boundingBox.max = _vertices.front();
 
-    for (const auto& v : _vertices) {
-        _boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v));
-        _boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v));
-    }
+	for (const auto& v : _vertices) {
+		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v));
+		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v));
+	}
 
+	CalculateNormals();
 }
 
 void Mesh::drawBoundingBox(const BoundingBox& bbox) {
-    glLineWidth(2.0);
-    drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v011(), bbox.v010());
-    drawWiredQuad(bbox.v100(), bbox.v101(), bbox.v111(), bbox.v110());
-    drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v101(), bbox.v100());
-    drawWiredQuad(bbox.v010(), bbox.v011(), bbox.v111(), bbox.v110());
-    drawWiredQuad(bbox.v000(), bbox.v010(), bbox.v110(), bbox.v100());
-    drawWiredQuad(bbox.v001(), bbox.v011(), bbox.v111(), bbox.v101());
+	glLineWidth(2.0);
+	drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v011(), bbox.v010());
+	drawWiredQuad(bbox.v100(), bbox.v101(), bbox.v111(), bbox.v110());
+	drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v101(), bbox.v100());
+	drawWiredQuad(bbox.v010(), bbox.v011(), bbox.v111(), bbox.v110());
+	drawWiredQuad(bbox.v000(), bbox.v010(), bbox.v110(), bbox.v100());
+	drawWiredQuad(bbox.v001(), bbox.v011(), bbox.v111(), bbox.v101());
 
 }
 
@@ -61,40 +65,62 @@ void Mesh::drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const v
 
 }
 
-void Mesh::loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords) 
+void Mesh::loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords)
 {
-    texCoords_buffer.LoadData(texCoords, num_texCoords * sizeof(glm::vec2));
+	texCoords_buffer.LoadData(texCoords, num_texCoords * sizeof(glm::vec2));
 }
 
-void Mesh::LoadNormals(const glm::vec3* normals, size_t num_normals) 
+void Mesh::LoadNormals(const glm::vec3* normals, size_t num_normals)
 {
-    normals_buffer.LoadData(normals, num_normals * sizeof(glm::vec3));
+	normals_buffer.LoadData(normals, num_normals * sizeof(glm::vec3));
+	_normals.assign(normals, normals + num_normals);
 }
 
-void Mesh::LoadColors(const glm::u8vec3* colors, size_t num_colors) 
+void Mesh::LoadColors(const glm::u8vec3* colors, size_t num_colors)
 {
-    colors_buffer.LoadData(colors, num_colors * sizeof(glm::u8vec3));
+	colors_buffer.LoadData(colors, num_colors * sizeof(glm::u8vec3));
 }
 
+void Mesh::CalculateNormals() {
+	_normals.resize(_vertices.size(), glm::vec3(0.0f));
 
-void Mesh::Draw() const 
+	for (size_t i = 0; i < _indices.size(); i += 3) {
+		glm::vec3 v0 = _vertices[_indices[i]];
+		glm::vec3 v1 = _vertices[_indices[i + 1]];
+		glm::vec3 v2 = _vertices[_indices[i + 2]];
+
+		glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
+
+		_normals[_indices[i]] += normal;
+		_normals[_indices[i + 1]] += normal;
+		_normals[_indices[i + 2]] += normal;
+	}
+
+	for (auto& normal : _normals) {
+		normal = glm::normalize(normal);
+	}
+
+	normals_buffer.LoadData(_normals.data(), _normals.size() * sizeof(glm::vec3));
+}
+
+void Mesh::Draw() const
 {
 	glEnable(GL_TEXTURE_2D);
-    if (texCoords_buffer.Id()) {
+	if (texCoords_buffer.Id()) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        texCoords_buffer.bind();
+		texCoords_buffer.bind();
 		glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
 	}
 
 	if (normals_buffer.Id()) {
 		glEnableClientState(GL_NORMAL_ARRAY);
 		normals_buffer.bind();
-		glNormalPointer( GL_FLOAT, 0, nullptr);
+		glNormalPointer(GL_FLOAT, 0, nullptr);
 	}
 
 	if (colors_buffer.Id()) {
 		glEnableClientState(GL_COLOR_ARRAY);
-        colors_buffer.bind();
+		colors_buffer.bind();
 		glColorPointer(3, GL_UNSIGNED_BYTE, 0, nullptr);
 	}
 
@@ -103,62 +129,158 @@ void Mesh::Draw() const
 	glVertexPointer(3, GL_FLOAT, 0, nullptr);
 
 	indices_buffer.bind();
+	if (drawWireframe) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+
 	glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(_indices.size()), GL_UNSIGNED_INT, nullptr);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	if (colors_buffer.Id()) glDisableClientState(GL_COLOR_ARRAY);
 	if (normals_buffer.Id()) glDisableClientState(GL_NORMAL_ARRAY);
 	if (texCoords_buffer.Id()) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	if (drawBoundingbox) { drawBoundingBox(_boundingBox);
+	if (drawBoundingbox) {
+		drawBoundingBox(_boundingBox);
 	}
-    glDisable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
+	if (drawVertexNormals)
+	{
+		glColor3f(0.0f, 0.0f, 1.0f); // Blue color for vertex normals
+		glBegin(GL_LINES);
+
+		for (size_t i = 0; i < _vertices.size(); ++i) {
+			glm::vec3 end = _vertices[i] + _normals[i] * 0.2f;
+			glVertex3fv(glm::value_ptr(_vertices[i]));
+			glVertex3fv(glm::value_ptr(end));
+		}
+
+		glEnd();
+		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
+	}
+
+	if (drawTriangleNormals) {
+		glColor3f(0.0f, 1.0f, 0.0f); // Green color for triangle normals
+		glBegin(GL_LINES);
+
+		for (size_t i = 0; i < _indices.size(); i += 3) {
+			glm::vec3 v0 = _vertices[_indices[i]];
+			glm::vec3 v1 = _vertices[_indices[i + 1]];
+			glm::vec3 v2 = _vertices[_indices[i + 2]];
+
+			glm::vec3 center = (v0 + v1 + v2) / 3.0f;
+			glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
+			glm::vec3 end = center + normal * 0.2f;
+
+			glVertex3fv(glm::value_ptr(center));
+			glVertex3fv(glm::value_ptr(end));
+		}
+
+		glEnd();
+		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
+
+		if (drawFaceNormals)
+		{
+			glColor3f(1.0f, 0.0f, 0.0f); // Red color for face normals
+			glm::vec3 center = ((glm::vec3)_boundingBox.min + (glm::vec3)_boundingBox.max) / 2.0f;
+			glBegin(GL_LINES);
+
+			for (size_t i = 0; i < _indices.size(); i += 3) {
+				glm::vec3 v0 = _vertices[_indices[i]];
+				glm::vec3 v1 = _vertices[_indices[i + 1]];
+				glm::vec3 v2 = _vertices[_indices[i + 2]];
+
+				glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
+				glm::vec3 end = center + normal * 0.2f;
+
+				glVertex3fv(glm::value_ptr(center));
+				glVertex3fv(glm::value_ptr(end));
+			}
+
+			glEnd();
+			glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
+		}
+	}
 }
 
-void Mesh::LoadMesh(const char* file_path) 
+void Mesh::LoadMesh(const char* file_path)
 {
+	cout << endl << file_path;
 
-    cout << endl << file_path;
+	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
-    const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
-  
-    if (scene != nullptr && scene->HasMeshes()) {
-        for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
-            size_t num_vertices = scene->mMeshes[i]->mNumVertices;
-            glm::vec3* vertex = new glm::vec3[num_vertices * 3];
-            memcpy(vertex, scene->mMeshes[i]->mVertices, sizeof(float) * num_vertices * 3);
+	if (scene != nullptr && scene->HasMeshes()) {
+		std::vector<glm::vec3> all_vertices;
+		std::vector<unsigned int> all_indices;
+		std::vector<glm::vec2> all_texCoords;
+		std::vector<glm::vec3> all_normals;
+		std::vector<glm::u8vec3> all_colors;
 
+		unsigned int vertex_offset = 0;
 
-            if (scene->mMeshes[i]->HasFaces()) {
-                size_t num_index = scene->mMeshes[i]->mNumFaces * 3;
-                unsigned int* index = new unsigned int[num_index]; // assume each face is a triangle
-                for (unsigned int j = 0; j < scene->mMeshes[i]->mNumFaces; ++j) {
-                    memcpy(&index[j * 3], scene->mMeshes[i]->mFaces[j].mIndices, 3 * sizeof(unsigned int));
-                }
-				 Load(vertex,num_vertices,index,num_index);
-            }
-            
-            if (scene->mMeshes[i]->HasTextureCoords(0)) {
-                glm::vec2* texCoords = new glm::vec2[num_vertices];
-                for (size_t j = 0; j < num_vertices; ++j) {
-                    texCoords[j] = glm::vec2(
-                        scene->mMeshes[i]->mTextureCoords[0][j].x,
-                        -scene->mMeshes[i]->mTextureCoords[0][j].y
-                    );
-                }
-                loadTexCoords(texCoords, num_vertices);
-                delete[] texCoords;
-            }
-	
-           
-        }
-        aiReleaseImport(scene);
-    }
-    else {
-        // Handle error
-    }
+		for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
+			aiMesh* mesh = scene->mMeshes[i];
+
+			// Copy vertices
+			for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
+				all_vertices.push_back(glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z));
+			}
+
+			// Copy indices
+			for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
+				aiFace& face = mesh->mFaces[j];
+				for (unsigned int k = 0; k < face.mNumIndices; k++) {
+					all_indices.push_back(face.mIndices[k] + vertex_offset);
+				}
+			}
+
+			// Copy texture coordinates
+			if (mesh->HasTextureCoords(0)) {
+				for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
+					all_texCoords.push_back(glm::vec2(mesh->mTextureCoords[0][j].x, -mesh->mTextureCoords[0][j].y));
+				}
+			}
+
+			// Copy normals
+			if (mesh->HasNormals()) {
+				for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
+					all_normals.push_back(glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z));
+				}
+			}
+
+			// Copy colors
+			if (mesh->HasVertexColors(0)) {
+				for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
+					all_colors.push_back(glm::u8vec3(mesh->mColors[0][j].r * 255, mesh->mColors[0][j].g * 255, mesh->mColors[0][j].b * 255));
+				}
+			}
+
+			vertex_offset += mesh->mNumVertices;
+		}
+
+		// Load the combined mesh data
+		Load(all_vertices.data(), all_vertices.size(), all_indices.data(), all_indices.size());
+
+		if (!all_texCoords.empty()) {
+			loadTexCoords(all_texCoords.data(), all_texCoords.size());
+		}
+
+		if (!all_normals.empty()) {
+			LoadNormals(all_normals.data(), all_normals.size());
+		}
+
+		if (!all_colors.empty()) {
+			LoadColors(all_colors.data(), all_colors.size());
+		}
+
+		aiReleaseImport(scene);
+	}
+	else {
+		// Handle error
+		cout << "Error loading mesh: " << file_path << endl;
+	}
 }
 
-std::shared_ptr<Mesh> Mesh::CreateCube() 
+std::shared_ptr<Mesh> Mesh::CreateCube()
 {
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	const glm::vec3 vertices[] = {
@@ -185,7 +307,7 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	return mesh;
 }
 
-std::shared_ptr<Mesh> Mesh::CreateSphere() 
+std::shared_ptr<Mesh> Mesh::CreateSphere()
 {
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	const int stacks = 20;
@@ -224,7 +346,7 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 	return mesh;
 }
 
-std::shared_ptr<Mesh> Mesh::CreatePlane() 
+std::shared_ptr<Mesh> Mesh::CreatePlane()
 {
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	const glm::vec3 vertices[] = {

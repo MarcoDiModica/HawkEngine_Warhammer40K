@@ -30,7 +30,13 @@ UIInspector::~UIInspector()
 
 bool UIInspector::Draw()
 {
-	ImGuiWindowFlags inspectorFlags = ImGuiWindowFlags_NoFocusOnAppearing;
+	ImGuiWindowFlags inspectorFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize;
+
+	ImVec2 screenSize = ImGui::GetIO().DisplaySize;
+	ImVec2 inspectorPos = ImVec2(screenSize.x - 300, 30);
+
+	ImGui::SetNextWindowPos(inspectorPos);
+	ImGui::SetNextWindowSize(ImVec2(300, screenSize.y));
 
 	if (ImGui::Begin("Inspector", &enabled, inspectorFlags))
 	{
@@ -106,6 +112,13 @@ bool UIInspector::Draw()
 				ImGui::Text("Vertices: %d", mesh->vertices().size());
 				ImGui::Text("Indices: %d", mesh->indices().size());
 
+				bool& triNormals = mesh->drawTriangleNormals;
+				bool& vertexNormals = mesh->drawVertexNormals;
+				// bool& quadNormals = mesh->drawFaceNormals;
+
+				ImGui::Checkbox("Tri Normals", &triNormals);
+				ImGui::Checkbox("Vertex Normals", &vertexNormals);
+
 			}
 
 			ImGui::Separator();
@@ -118,6 +131,8 @@ bool UIInspector::Draw()
 
 				ImGui::Text("Width: %d", image->width());
 				ImGui::Text("Heigth: %d", image->width());
+
+				//ImGui::Checkbox("Checker Texture", image->LoadCheckerTexture())
 			}
 		}
 

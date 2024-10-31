@@ -15,74 +15,68 @@ UIConsole::~UIConsole()
 
 bool UIConsole::Draw()
 {
-	ImGui::SetNextWindowSizeConstraints(ImVec2(300, 200), ImVec2(800, 600));
+    ImGui::SetNextWindowSizeConstraints(ImVec2(300, 200), ImVec2(800, 600));
 
-	ImGuiWindowFlags consoleFlags = 0;
-	consoleFlags |= ImGuiWindowFlags_NoCollapse;
+    ImGuiWindowFlags consoleFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
 
-	if (ImGui::Begin("Console", &enabled, consoleFlags))
-	{
-		if (ImGui::SmallButton("Clean"))
-		{
-			Application->CleanLogs();
-		}
+    ImVec2 screenSize = ImGui::GetIO().DisplaySize;
+    ImVec2 consolePos = ImVec2(0, screenSize.y - 200);
 
-		ImGui::Separator();
+    ImGui::SetNextWindowPos(consolePos);
+    ImGui::SetNextWindowSize(ImVec2(screenSize.x, 200));
 
-		ImGuiWindowFlags scrollFlags = 0;
-		scrollFlags |= ImGuiWindowFlags_HorizontalScrollbar;
-		scrollFlags |= ImGuiWindowFlags_AlwaysVerticalScrollbar;
+    if (ImGui::Begin("Console", &enabled, consoleFlags))
+    {
+        if (ImGui::SmallButton("Clean"))
+        {
+            Application->CleanLogs();
+        }
 
-		if (ImGui::BeginChild("Scrolling", ImVec2(0, 0), false, scrollFlags))
-		{
-			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(5, 15));
+        ImGui::Separator();
 
-			std::string logType;
+        ImGui::BeginChild("Scrolling Area", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar);
 
-			// Iterate through array of logs, switch between logtypes
-			for (const auto& log : Application->GetLogs())
-			{
-				switch (log.type)
-				{
-				case LogType::LOG_INFO:
-					logType = "INFO";
-					ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "INFO");
-					break;
-				case LogType::LOG_WARNING:
-					logType = "WARNING";
-					ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "WARNING");
-					break;
-				case LogType::LOG_ASSIMP:
-					logType = "ASSIMP";
-					ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "ASSIMP");
-					break;
-				case LogType::LOG_ERROR:
-					logType = "ERROR";
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "ERROR");
-					break;
-				case LogType::LOG_OK:
-					logType = "OK";
-					ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "OK");
-					break;
-				}
-				if (log.message[0] == '-')
-					logType.insert(0, "\t");
+        for (const auto& log : Application->GetLogs())
+        {
+            std::string logType;
 
-				ImGui::SameLine();
-				ImGui::TextUnformatted(log.message.c_str());
+            switch (log.type)
+            {
+            case LogType::LOG_INFO:
+                logType = "INFO";
+                ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "INFO");
+                break;
+            case LogType::LOG_WARNING:
+                logType = "WARNING";
+                ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "WARNING");
+                break;
+            case LogType::LOG_ASSIMP:
+                logType = "ASSIMP";
+                ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "ASSIMP");
+                break;
+            case LogType::LOG_ERROR:
+                logType = "ERROR";
+                ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "ERROR");
+                break;
+            case LogType::LOG_OK:
+                logType = "OK";
+                ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "OK");
+                break;
+            }
 
-			}
+            if (log.message[0] == '-')
+                logType.insert(0, "\t");
 
-			ImGui::PopStyleVar();
+            ImGui::SameLine();
+            ImGui::TextUnformatted(log.message.c_str());
+        }
 
-			if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
-				ImGui::SetScrollHereY(1.0f);
+        if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+            ImGui::SetScrollHereY(1.0f);
 
-			ImGui::EndChild();
-		}
+        ImGui::EndChild(); 
 
-		ImGui::End();
-
-	}
+        ImGui::End(); 
+    }
 	return true;
 }

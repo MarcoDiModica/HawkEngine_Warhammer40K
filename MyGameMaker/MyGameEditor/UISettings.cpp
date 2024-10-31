@@ -30,64 +30,55 @@ void UISettings::AddFpsMark(int fps)
 
 bool UISettings::Draw()
 {
-	ImGuiWindowFlags settingsFlags = 0;
-	settingsFlags = ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoCollapse;
-
-	ImVec2 viewportPos = ImGui::GetMainViewport()->Pos;
-	ImVec2 viewportSize = ImGui::GetMainViewport()->Size;
+	ImGuiWindowFlags settingsFlags = ImGuiWindowFlags_NoFocusOnAppearing |
+		ImGuiWindowFlags_NoScrollbar |
+		ImGuiWindowFlags_NoScrollWithMouse |
+		ImGuiWindowFlags_NoCollapse;
 
 	ImVec2 mainViewportPos = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(ImVec2(mainViewportPos.x, mainViewportPos.y), ImGuiCond_Appearing, ImVec2(0.5, 0.8));
 
 	if (ImGui::Begin("Settings", &enabled, settingsFlags))
 	{
-		ImVec2 leftChildSize = ImVec2(ImGui::GetWindowSize().x * 0.3f, ImGui::GetWindowSize().y);
-		ImVec2 buttonSize = ImVec2(ImGui::GetWindowSize().x * 0.2, 20);
+		ImVec2 buttonSize = ImVec2(ImGui::GetWindowSize().x * 0.2f, 20);
+		ImVec2 performanceButtonPos = ImVec2(ImGui::GetWindowSize().x * 0.05f, ImGui::GetCursorPosY());
+		ImVec2 hardwareButtonPos = ImVec2(ImGui::GetWindowSize().x * 0.05f, performanceButtonPos.y + buttonSize.y + 5);
+		ImVec2 softwareButtonPos = ImVec2(ImGui::GetWindowSize().x * 0.05f, hardwareButtonPos.y + buttonSize.y + 5);
 
-		if (ImGui::BeginChild("Settings", leftChildSize, true))
+		ImGui::SetCursorPos(performanceButtonPos);
+		if (ImGui::Button("Performance", buttonSize))
 		{
-			if (ImGui::Button("Performance", buttonSize))
-			{
-				settingType = SettingType::PERFORMANCE;
-			}
-
-			if (ImGui::Button("Hardware", buttonSize))
-			{
-				settingType = SettingType::HARDWARE;
-			}
-
-			if (ImGui::Button("Software", buttonSize))
-			{
-				settingType = SettingType::SOFTWARE;
-			}
-
-			ImGui::EndChild();
+			settingType = SettingType::PERFORMANCE;
 		}
 
-		ImGui::SameLine();
-
-		settingsFlags &= ~(ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
-
-		if (ImGui::BeginChild("Settings Type", ImVec2(ImGui::GetWindowSize().x * 0.8f, ImGui::GetWindowSize().y), false, settingsFlags))
+		ImGui::SetCursorPos(hardwareButtonPos);
+		if (ImGui::Button("Hardware", buttonSize))
 		{
-			switch (settingType)
-			{
-			case SettingType::PERFORMANCE:
-				PerformanceData();
-				break;
-			case SettingType::HARDWARE:
-				HardwareData();
-				break;
-			case SettingType::SOFTWARE:
-				SoftwareData();
-				break;
-			}
+			settingType = SettingType::HARDWARE;
+		}
 
-			ImGui::EndChild();
+		ImGui::SetCursorPos(softwareButtonPos);
+		if (ImGui::Button("Software", buttonSize))
+		{
+			settingType = SettingType::SOFTWARE;
+		}
+
+		ImGui::Dummy(ImVec2(0, 20));
+
+		switch (settingType)
+		{
+		case SettingType::PERFORMANCE:
+			PerformanceData();
+			break;
+		case SettingType::HARDWARE:
+			HardwareData();
+			break;
+		case SettingType::SOFTWARE:
+			SoftwareData();
+			break;
 		}
 
 		ImGui::End();
-
 	}
 
 	return true;
@@ -105,7 +96,6 @@ void UISettings::PerformanceData()
 
 void UISettings::HardwareData()
 {
-	// Esto lo ha hecho ChatGPT, ni de coña lo hago a mano
 	HardwareSettings settings = Application->hardwareInfo->GetSettings();
 
 	ImGui::Text("Hardware Information");

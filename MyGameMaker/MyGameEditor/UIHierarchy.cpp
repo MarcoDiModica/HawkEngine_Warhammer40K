@@ -14,7 +14,16 @@ UIHierarchy::~UIHierarchy() {
 }
 
 bool UIHierarchy::Draw() {
-	ImGuiWindowFlags hierarchyFlags = ImGuiWindowFlags_NoFocusOnAppearing;
+
+
+	ImGuiWindowFlags hierarchyFlags = ImGuiWindowFlags_NoFocusOnAppearing |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_AlwaysAutoResize;
+
+	ImVec2 hierarchyPos = ImVec2(0, 30);
+	ImGui::SetNextWindowPos(hierarchyPos, ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(250, 650), ImGuiCond_Once);
 
 	if (ImGui::Begin("Hierarchy", &enabled, hierarchyFlags)) {
 		ImGuiIO& io = ImGui::GetIO();

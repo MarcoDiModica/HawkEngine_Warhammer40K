@@ -10,7 +10,7 @@
 #include "UISettings.h"
 #include "UIInspector.h"
 #include "UIHierarchy.h"
-
+#include <SDL2/SDL.h>
 
 
 //libraries to open websites
@@ -36,7 +36,10 @@ bool UIMainMenuBar::Draw()
 		{
 
 			if (ImGui::MenuItem("About")) { ShellExecute(0, 0, L"https://github.com/CITM-UPC/HawkEngine", 0, 0, SW_SHOW); }
-			if (ImGui::MenuItem("Quit")) { /*Poner aqui codigo de quitear*/ }
+			if (ImGui::MenuItem("Quit")) {
+				SDL_Quit();
+				exit(0);
+			}
 			//Aqui abajo mas botones para esconder las diferentes ventanas de Imgui
 			ImGui::EndMenu();
 		}
@@ -47,7 +50,7 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Cube")) { Application->root->CreateCubeObject("Cube"); }
 			if (ImGui::MenuItem("Sphere")) { Application->root->CreateSphereObject("Sphere"); }
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlaneObject("Plane"); }
-			if (ImGui::MenuItem("SetCheckerTexture")) { Application->input->GetSelectedGameObject()->GetComponent<MeshRenderer>()->GetImage()->LoadCheckerTexture(); }
+			//if (ImGui::MenuItem("SetCheckerTexture")) { Application->input->GetSelectedGameObject()->GetComponent<MeshRenderer>()->GetImage()->LoadCheckerTexture(); }
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))

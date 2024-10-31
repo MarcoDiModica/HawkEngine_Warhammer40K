@@ -181,7 +181,7 @@ bool Input::processSDLEvents()
 
                 //Application->root->CreateMeshObject(fileNameExt,  mesh);
                 auto go = Application->root->CreateGameObject(fileNameExt, false);
-                Application->root->AddMeshRenderer(*go, mesh, "default.png");
+                Application->root->AddMeshRenderer(*go, mesh, "Assets/default.png");
 
                 //Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
 
@@ -193,7 +193,8 @@ bool Input::processSDLEvents()
             // PNG / DDS
             else if (fileDir.ends_with(".png") || fileDir.ends_with(".dds"))
             {
-                std::filesystem::copy(fileDir, "Assets", std::filesystem::copy_options::overwrite_existing);
+                //std::filesystem::copy(fileDir, "Assets", std::filesystem::copy_options::overwrite_existing);
+                //fs::path assetsDir = fs::path(ASSETS_PATH) / "Assets" / fileNameExt;
 				if (draggedObject != nullptr)
 				{
                     auto meshRenderer = draggedObject->GetComponent<MeshRenderer>();

@@ -131,6 +131,7 @@ void Mesh::Draw() const
 	glVertexPointer(3, GL_FLOAT, 0, nullptr);
 
 	indices_buffer.bind();
+
 	if (drawWireframe) {
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}

@@ -71,16 +71,11 @@ bool  Root::Awake() {
     sceneManagement.CreateScene("Scene");
     currentScene = sceneManagement.GetActiveScene();
 
-    auto object1 = CreateGameObject("MarcoPresidente", false);
-    AddMeshRenderer(*object1, Mesh::CreateCube(), "Baker_house.png");
-
-    currentScene->AddGameObject(object1);
-
-    auto MarcoVicePresidente = CreateGameObject("MarcoVicePresidente", false);
-    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(-3, 0, 0);
+    auto MarcoVicePresidente = CreateGameObject("BakerHouse", false);
+    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
     auto mesh = make_shared<Mesh>();
-    mesh->LoadMesh("BakerHouse.fbx");
-    AddMeshRenderer(*MarcoVicePresidente, mesh, "Baker_house2.png");
+    mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
+    AddMeshRenderer(*MarcoVicePresidente, mesh, "Assets/Baker_house.png");
 
     currentScene->AddGameObject(MarcoVicePresidente);
 
@@ -174,18 +169,18 @@ void Root::CreateEmptyObject(std::string name)
 void Root::CreateCubeObject(std::string name) {
 
 	auto go = CreateGameObject(name, false);
-	AddMeshRenderer(*go, Mesh::CreateCube(), "default.png");
+	AddMeshRenderer(*go, Mesh::CreateCube(), "Assets/default.png");
 
 }
 void Root::CreateSphereObject(std::string name) {
     auto go = CreateGameObject(name, false);
-    AddMeshRenderer(*go, Mesh::CreateSphere(), "default.png");
+    AddMeshRenderer(*go, Mesh::CreateSphere(), "Assets/default.png");
 
 }
 void Root::CreatePlaneObject(std::string name) {
 
     auto go = CreateGameObject(name, false);
-    AddMeshRenderer(*go, Mesh::CreatePlane(), "default.png");
+    AddMeshRenderer(*go, Mesh::CreatePlane(), "Assets/default.png");
 }
 
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath)

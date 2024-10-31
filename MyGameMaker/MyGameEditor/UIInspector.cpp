@@ -111,7 +111,7 @@ bool UIInspector::Draw()
 
 				ImGui::Text("Vertices: %d", mesh->vertices().size());
 				ImGui::Text("Indices: %d", mesh->indices().size());
-
+			
 				bool& triNormals = mesh->drawTriangleNormals;
 				bool& vertexNormals = mesh->drawVertexNormals;
 				// bool& quadNormals = mesh->drawFaceNormals;

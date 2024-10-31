@@ -194,9 +194,9 @@ bool Input::processSDLEvents()
             else if (fileDir.ends_with(".png") || fileDir.ends_with(".dds"))
             {
                 std::filesystem::copy(fileDir, "Assets", std::filesystem::copy_options::overwrite_existing);
-				if (selectedObject != nullptr)
+				if (draggedObject != nullptr)
 				{
-                    auto meshRenderer = selectedObject->GetComponent<MeshRenderer>();
+                    auto meshRenderer = draggedObject->GetComponent<MeshRenderer>();
                     auto image = std::make_shared<Image>();
                     auto material = std::make_shared<Material>();
                     image->LoadTexture(fileDir);

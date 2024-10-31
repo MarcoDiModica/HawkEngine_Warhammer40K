@@ -245,7 +245,14 @@ static void display_func() {
 
 			bbox = object->GetTransform()->GetMatrix() * bbox;
 
-			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox) && Application->input->GetMouseButton(1) == KEY_DOWN)
+			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox))
+			{
+				
+				Application->input->SetDraggedGameObject(object);
+			}
+
+			if (Application->input->GetMouseButton(1) == KEY_DOWN)
+			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox) )
 			{
 				std::cout << "Hit: " << object->GetName();
 				Application->input->SetSelectedGameObject(object);

@@ -91,6 +91,16 @@ public:
 		return selectedObject;
 	}
 
+	GameObject* GetDraggedGameObject() const
+	{
+		return draggedObject;
+	}
+
+	void SetDraggedGameObject(GameObject* gameObject)
+	{
+		draggedObject = gameObject;
+	}
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
@@ -102,6 +112,7 @@ private:
 	float dx;
 	float dy;
 	GameObject* selectedObject;
+	GameObject* draggedObject;
 };
 
 #endif // !__INPUT_H__

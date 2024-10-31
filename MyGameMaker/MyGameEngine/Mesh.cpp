@@ -11,6 +11,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <unordered_set>
+#include "../MyGameEditor/Log.h"
+
 #include <queue>
 using namespace std;
 
@@ -223,8 +225,9 @@ void Mesh::LoadMesh(const char* file_path)
 			// Copy vertices
 			for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
 				all_vertices.push_back(glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z));
+				
 			}
-
+			LOG(LogType::LOG_ASSIMP, "Loaded vertices :%d for mesh %d", mesh->mNumVertices, i);
 			// Copy indices
 			for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
 				aiFace& face = mesh->mFaces[j];
@@ -232,14 +235,14 @@ void Mesh::LoadMesh(const char* file_path)
 					all_indices.push_back(face.mIndices[k] + vertex_offset);
 				}
 			}
-
+			LOG(LogType::LOG_ASSIMP, "Loaded faces :%d for mesh %d", mesh->mNumFaces, i);
 			// Copy texture coordinates
 			if (mesh->HasTextureCoords(0)) {
 				for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
 					all_texCoords.push_back(glm::vec2(mesh->mTextureCoords[0][j].x, -mesh->mTextureCoords[0][j].y));
 				}
 			}
-
+			
 			// Copy normals
 			if (mesh->HasNormals()) {
 				for (unsigned int j = 0; j < mesh->mNumVertices; j++) {

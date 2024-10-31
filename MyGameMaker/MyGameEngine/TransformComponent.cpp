@@ -2,6 +2,7 @@
 #include "GameObject.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/glm.hpp>
 
 Transform_Component::Transform_Component(std::weak_ptr<GameObject> owner) : Component(owner) {}
 

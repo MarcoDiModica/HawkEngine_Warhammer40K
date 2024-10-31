@@ -8,10 +8,12 @@
 class UIElement;
 class UIConsole;
 class UISettings;
+class UIInspector;
 class UIMainMenuBar;
+class UIHierarchy;
 // class PanelHierarchy;
 
-class MyGUI : public IEventProcessor , public Module
+class MyGUI : public IEventProcessor, public Module
 {
 public:
 
@@ -37,9 +39,17 @@ public:
 public:
 
 	// UI Elements
+	UIHierarchy* UIHierarchyPanel = nullptr;
 	UIConsole* UIconsolePanel = nullptr;
 	UISettings* UIsettingsPanel = nullptr;
+	UIInspector* UIinspectorPanel = nullptr;
 	UIMainMenuBar* UIMainMenuBarPanel = nullptr;
+
+	bool showHierarchy = true;
+	bool showInspector = true;
+	bool showConsole = true;
+	bool showSettings = false;
+	bool showMainMenuBar = true;
 
 private:
 	std::list<UIElement*> elements;

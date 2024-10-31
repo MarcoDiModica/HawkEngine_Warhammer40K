@@ -97,6 +97,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UIConsole.cpp" />
     <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UIHierarchy.cpp" />
     <ClCompile Include="UIInspector.cpp" />
     <ClCompile Include="UIMainMenuBar.cpp" />
     <ClCompile Include="UISettings.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIConsole.h" />
     <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIHierarchy.h" />
     <ClInclude Include="UIInspector.h" />
     <ClInclude Include="UIMainMenuBar.h" />
     <ClInclude Include="UISettings.h" />

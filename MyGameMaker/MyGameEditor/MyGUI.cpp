@@ -14,6 +14,9 @@
 #include "UIConsole.h"
 #include "UISettings.h"
 #include "UIMainMenuBar.h"
+#include "UIInspector.h"
+#include "UIHierarchy.h"
+
 
 MyGUI::MyGUI(App* app) : Module(app) {
 	ImGui::CreateContext();
@@ -38,6 +41,10 @@ bool MyGUI::Awake() {
 
 	bool ret = true;
 
+	UIHierarchyPanel = new UIHierarchy(UIType::HIERARCHY, "Hierarchy");
+	elements.push_back(UIHierarchyPanel);
+	ret *= isInitialized(UIHierarchyPanel);
+
 	UIconsolePanel = new UIConsole(UIType::CONSOLE, "Console");
 	elements.push_back(UIconsolePanel);
 	ret *= isInitialized(UIconsolePanel);
@@ -50,8 +57,15 @@ bool MyGUI::Awake() {
 	elements.push_back(UIMainMenuBarPanel);
 	ret *= isInitialized(UIMainMenuBarPanel);
 
-	// Other UI elements
-	
+	UIinspectorPanel = new UIInspector(UIType::INSPECTOR, "Inspector");
+	elements.push_back(UIinspectorPanel);
+	ret *= isInitialized(UIinspectorPanel);
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
+	style.WindowRounding = 5.0f;
+	style.FramePadding = ImVec2(5, 5);
+
 	return ret;
 }
 
@@ -66,7 +80,7 @@ bool MyGUI::isInitialized(UIElement* element) {
 }
 
 bool MyGUI::Start() {
-	
+
 	LOG(LogType::LOG_INFO, "Initializing ImGui/ImPlot...");
 
 	IMGUI_CHECKVERSION();
@@ -101,57 +115,26 @@ bool MyGUI::Start() {
 
 	Application->gui->UIconsolePanel->SetState(true);
 	Application->gui->UIsettingsPanel->SetState(true);
+	Application->gui->UIinspectorPanel->SetState(true);
+	Application->gui->UIMainMenuBarPanel->SetState(true);
 
 	return true;
 }
 
 
-bool MyGUI::PreUpdate() { 
-	
+bool MyGUI::PreUpdate() {
+
 
 	return true;
 }
 
-bool MyGUI::Update(double dt) { 
-
-	//Render();
-
-	////move the transform of the camera
-	//
-
-
-	//if (ImGui::IsKeyDown(ImGuiKey_W)) {
-	//	camera.transform().translate(-camera.transform().fwd() * 0.1);
-	//}
-	//if (ImGui::IsKeyDown(ImGuiKey_S)) camera.transform().translate(camera.transform().fwd() * 0.1);
-	//if (ImGui::IsKeyDown(ImGuiKey_A)) camera.transform().translate(-camera.transform().left() * 0.1);
-	//if (ImGui::IsKeyDown(ImGuiKey_D)) camera.transform().translate(camera.transform().left() * 0.1);
-	//if (ImGui::IsKeyDown(ImGuiKey_Q)) camera.transform().translate(-camera.transform().up() * 0.1);
-	//if (ImGui::IsKeyDown(ImGuiKey_E)) camera.transform().translate(camera.transform().up() * 0.1);
-	////rotate the transform of the camera
-	//
-	//if (ImGui::IsKeyDown(ImGuiKey_LeftArrow)) {
-	//	camera.transform().rotate(0.02, vec3(0, 1, 0));
-	//}
-	//if (ImGui::IsKeyDown(ImGuiKey_RightArrow)) {
-	//	camera.transform().rotate(-0.02, vec3(0, 1, 0));
-	//}
-	//if (ImGui::IsKeyDown(ImGuiKey_UpArrow)) camera.transform().rotate(0.02, camera.transform().left());
-	//if (ImGui::IsKeyDown(ImGuiKey_DownArrow)) camera.transform().rotate(-0.02, camera.transform().left());
-
-
-
-
-	//Application->window->SwapBuffers();
-
-	return true; 
-
+bool MyGUI::Update(double dt)
+{
+	return true;
 }
 
-void RenderSceneHierarchy(std::vector< std::shared_ptr<GameObject>>& objects);
+bool MyGUI::PostUpdate() {
 
-bool MyGUI::PostUpdate() { 
-	
 	/*ImGui::Render();*/
 	//glViewport(100, 300, 100, 100); // Set your viewport
 	//glClearColor(0.45f, 0.55f, 0.60f, 1.00f); // Clear color
@@ -160,8 +143,7 @@ bool MyGUI::PostUpdate() {
 	//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	//if (Application) { SDL_GL_SwapWindow(Application->window->windowPtr()); } // Swap the window buffer
 
-
-	return true; 
+	return true;
 
 }
 bool MyGUI::CleanUp() { return true; }
@@ -171,18 +153,24 @@ void MyGUI::Render() {
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	RenderSceneHierarchy(Application->root->children);
+	if (showHierarchy) {
+		UIHierarchyPanel->Draw();
+	}
 
-	if (UIconsolePanel) {
+	if (showConsole) {
 		UIconsolePanel->Draw();
 	}
 
-	if (UIsettingsPanel) {
+	if (showSettings) {
 		UIsettingsPanel->Draw();
 	}
 
-	if (UIMainMenuBarPanel) {
+	if (showMainMenuBar) {
 		UIMainMenuBarPanel->Draw();
+	}
+
+	if (showInspector) {
+		UIinspectorPanel->Draw();
 	}
 
 	ImGui::Render();
@@ -192,59 +180,3 @@ void MyGUI::Render() {
 void MyGUI::processEvent(const SDL_Event& event) {
 	ImGui_ImplSDL2_ProcessEvent(&event);
 }
-
-void DrawSceneObject(GameObject& obj);
-
-void RenderSceneHierarchy(std::vector< std::shared_ptr<GameObject>>  &objects) {
-	ImGui::Begin("Scene Hierarchy"); 
-
-	auto it = objects.begin();
-
-	for (int i = 0; i < objects.size(); ++i) {
-
-		if (objects[i]) {
-			DrawSceneObject(*objects[i]);
-		}
-
-	}
-	
-
-	//for (auto it = objects.begin(); it != objects.end();) {
-
-	//	if (*it) {
-	//		DrawSceneObject(**it); // Draw each object in the scene
-	//	}
-	//	else {
-	//		continue;
-	//	}
-	//	it++;
-	//}
-
-	ImGui::End(); 
-}
-
-
-// TODO : Fix forSome Reason only the first button is clickable
-
-void DrawSceneObject(GameObject& obj) {
-	// Create a tree node for the current object
-	bool open = ImGui::TreeNode(obj.GetName().c_str()); 
-
-	if (open) {
-		// If the node is open, draw its children
-		for (auto& child : obj.children()) {
-			DrawSceneObject(child); // Recursively draw children
-		}
-		ImGui::TreePop(); 
-	}
-
-	ImGui::SameLine(); // Place a button next to the tree node
-	if (ImGui::Button("Remove")) {
-		
-
-		std::cout << "Remove " << obj.GetName();
-		Application->root->RemoveGameObject(obj.GetName());
-
-	}
-}
-

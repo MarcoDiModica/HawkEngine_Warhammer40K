@@ -21,6 +21,20 @@ public:
     const auto& GetPosition() const { return position; }
     auto& GetPosition() { return position; }
 
+    //idk why declaring it on the cpp gives me errors ;p
+    glm::dquat GetRotation() const {
+        return glm::quat_cast(matrix);
+    }
+    glm::dvec3 GetScale() const {
+        return glm::dvec3(
+            glm::length(left),
+            glm::length(up),
+            glm::length(forward)
+        );
+    }
+    glm::dvec3 GetEulerAngles() const {
+        return glm::degrees(glm::eulerAngles(GetRotation()));
+    }
 
     const auto* GetData() const { return &matrix[0][0]; }
 
@@ -29,8 +43,17 @@ public:
     void Scale(const glm::dvec3& scale);
     void LookAt(const glm::dvec3& target);
 
-    //Transform_Component operator*(const mat4& other) { return Transform_Component(matrix * other); }
-    //Transform_Component operator*(const Transform_Component& other) { return Transform_Component(matrix * other.matrix); }
+    Transform_Component operator*(const glm::dmat4& other) const {
+        Transform_Component result(*this);
+        result.matrix = matrix * other;
+        return result;
+    }
+
+    Transform_Component operator*(const Transform_Component& other) const {
+        Transform_Component result(*this);
+        result.matrix = matrix * other.matrix;
+        return result;
+    }
 
 private:
 
@@ -47,4 +70,6 @@ private:
     };
 };
 
-//inline Transform_Component operator*(const mat4& m, const Transform_Component& t) { return Transform_Component(m * t.GetMatrix()); }
+inline Transform_Component operator*(const glm::dmat4& m, const Transform_Component& t) {
+    return Transform_Component(t) * m;
+}

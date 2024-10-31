@@ -69,6 +69,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="UIHierarchy.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -114,6 +117,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UIInspector.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHierarchy.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

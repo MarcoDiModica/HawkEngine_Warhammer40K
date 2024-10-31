@@ -45,7 +45,7 @@ private:
 		"120",
 		"240"
 	};
-	
+
 };
 
 #endif // !__UI_SETTINGS_H__

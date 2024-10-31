@@ -70,30 +70,17 @@ bool  Root::Awake() {
     children.push_back(padre);*/
     sceneManagement.CreateScene("Scene");
     currentScene = sceneManagement.GetActiveScene();
+
     auto object1 = CreateGameObject("MarcoPresidente", false);
-    auto mesh = Mesh::CreateCube();
-    auto meshRenderer = object1->AddComponent<MeshRenderer>();
-    meshRenderer->SetMesh(mesh);
-    auto image = make_shared<Image>();
-    image->LoadTexture("Baker_house.png");
-    auto material = make_shared<Material>();
-    material->setImage(image);
-    meshRenderer->SetMaterial(material);
+    AddMeshRenderer(*object1, Mesh::CreateCube(), "Baker_house.png");
+
     currentScene->AddGameObject(object1);
-    meshRenderer->SetImage(image);
 
     auto MarcoVicePresidente = CreateGameObject("MarcoVicePresidente", false);
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(-3, 0, 0);
-    auto meshRenderer2 = MarcoVicePresidente->AddComponent<MeshRenderer>();
-    auto mesh2 = make_shared<Mesh>();
-    auto image2 = make_shared<Image>();
-    auto material2 = make_shared<Material>();
-    mesh2->LoadMesh("BakerHouse.fbx");
-    image2->LoadTexture("Baker_house2.png");
-    material2->setImage(image2);
-    meshRenderer2->SetMesh(mesh2);
-    meshRenderer2->SetMaterial(material2);
-    meshRenderer2->SetImage(image2);
+    auto mesh = make_shared<Mesh>();
+    mesh->LoadMesh("BakerHouse.fbx");
+    AddMeshRenderer(*MarcoVicePresidente, mesh, "Baker_house2.png");
 
     currentScene->AddGameObject(MarcoVicePresidente);
 

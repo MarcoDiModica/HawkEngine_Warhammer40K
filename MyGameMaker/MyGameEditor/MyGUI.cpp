@@ -9,6 +9,7 @@
 #include <imgui_impl_opengl3.h>
 #include <vector>
 #include <iostream>
+#include "MyWindow.h"
 
 #include "UIElement.h"
 #include "UIConsole.h"
@@ -79,6 +80,7 @@ bool MyGUI::isInitialized(UIElement* element) {
 	return true;
 }
 
+
 bool MyGUI::Start() {
 
 	LOG(LogType::LOG_INFO, "Initializing ImGui/ImPlot...");
@@ -117,6 +119,32 @@ bool MyGUI::Start() {
 	Application->gui->UIsettingsPanel->SetState(true);
 	Application->gui->UIinspectorPanel->SetState(true);
 	Application->gui->UIMainMenuBarPanel->SetState(true);
+
+	// Generate and bind the FBO
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+	// Create the texture to render to
+	glGenTextures(1, &fboTexture);
+	glBindTexture(GL_TEXTURE_2D, fboTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Application->window->width(), Application->window->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTexture, 0);
+
+	// Create a renderbuffer object for depth and stencil attachments
+	glGenRenderbuffers(1, &rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Application->window->width(), Application->window->height());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+	// Check if framebuffer is complete
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		std::cerr << "Error: Framebuffer is not complete!" << std::endl;
+
+	// Unbind the framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 
 	return true;
 }
@@ -172,6 +200,19 @@ void MyGUI::Render() {
 	if (showInspector) {
 		UIinspectorPanel->Draw();
 	}
+
+	
+
+	ImGui::Begin("GameWindow");
+	{
+		ImGui::BeginChild("GameRender");
+		// Get the size of the child (i.e. the whole draw size of the windows).
+		ImVec2 wsize = ImVec2(Application->window->width(), Application->window->height());
+		// Because I use the texture from OpenGL, I need to invert the V from the UV.
+		ImGui::Image((ImTextureID)fboTexture, wsize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::EndChild();
+	}
+	ImGui::End();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

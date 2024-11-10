@@ -51,6 +51,12 @@ public:
 	bool showSettings = false;
 	bool showMainMenuBar = true;
 
+
+	GLuint fbo = 0;
+	GLuint fboTexture = 0;
+	GLuint rbo = 0;
+
+
 private:
 	std::list<UIElement*> elements;
 

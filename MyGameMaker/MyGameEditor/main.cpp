@@ -28,6 +28,7 @@
 #include <IL/ilu.h>	
 #include <IL/ilut.h>
 #include "Input.h"
+#include "MyGUI.h"
 
 //pruebas de include "StaticLibEngineIncludes"
 #include "MyGameEngine/GameObject.h"
@@ -220,9 +221,18 @@ bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, 
 #pragma endregion
 
 static void display_func() {
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	glViewport(0, 0, Application->window->width(), Application->window->height());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	//glLoadMatrixd(&camera.view()[0][0]);
 	configureCamera();
+
+	// Bind the framebuffer and render the scene
+	
+
+	
+
+
 
 
 	drawFloorGrid(16, 0.25);
@@ -260,6 +270,8 @@ static void display_func() {
 			}
 		}
 	}
+	// Unbind the framebuffer to render to the screen next
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	//Application->root->sceneManagement.Update(0.16f);
 

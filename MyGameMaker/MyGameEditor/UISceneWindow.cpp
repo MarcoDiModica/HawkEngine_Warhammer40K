@@ -59,6 +59,8 @@ bool UISceneWindow::Draw()
 		ImVec2 windowPos = ImGui::GetWindowPos();
 		ImVec2 windowSize = ImGui::GetWindowSize();
 
+		winPos = vec2(windowPos.x, windowPos.y);
+		winSize = vec2(windowSize.x, windowSize.y);
 		// Define the title bar rectangle
 		ImRect titleBarRect(windowPos, ImVec2(windowPos.x + windowSize.x, windowPos.y + ImGui::GetFrameHeight()));
 

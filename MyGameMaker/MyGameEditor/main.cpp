@@ -133,14 +133,19 @@ void configureCamera() {
 }
 #pragma region RayPickingCode(MoveSomewhereElse)
 
-glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height)
+glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x,int window_y)
 {
+	int adjusted_mouse_x = mouse_x - window_x;
+	int adjusted_mouse_y = mouse_y - window_y;
 
-	float ndc_x = (2.0f * mouse_x) / screen_width - 1.0f;
-	float ndc_y = 1.0f - (2.0f * mouse_y) / screen_height;
+	if (adjusted_mouse_x < 0 || adjusted_mouse_x > screen_width || adjusted_mouse_y < 0 || adjusted_mouse_y > screen_height) {
+		// if the mouse is outside the window make it so it doesnt detect anything
+	}
+
+	float ndc_x = (2.0f * adjusted_mouse_x) / screen_width - 1.0f;
+	float ndc_y = 1.0f - (2.0f * adjusted_mouse_y) / screen_height;
 
 	glm::vec4 clip_coords = glm::vec4(ndc_x, ndc_y, -1.0f, 1.0f);
-
 
 	glm::mat4 projection_matrix = camera->projection();
 	glm::vec4 view_coords = glm::inverse(projection_matrix) * clip_coords;
@@ -149,7 +154,6 @@ glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, 
 	glm::mat4 view_matrix = camera->view();
 	glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
 
-	
 	return glm::vec3(world_coords.x + camera->transform().pos().x, world_coords.y + camera->transform().pos().y, world_coords.z + camera->transform().pos().z);
 }
 
@@ -162,23 +166,25 @@ void DrawRay(const glm::vec3& ray_origin, const glm::vec3& ray_direction)
 	glEnd();
 }
 
-glm::vec3 GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height)
+glm::vec3 GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y)
 {
-	// Coordenadas del ratón en el espacio de la ventana
-	glm::vec3 window_coords = glm::vec3(mouse_x, screen_height - mouse_y, 0.0f);
+	int adjusted_mouse_x = mouse_x - window_x;
+	int adjusted_mouse_y = mouse_y - window_y;
 
-	// Matrices de vista y proyección
+	if (adjusted_mouse_x < 0 || adjusted_mouse_x > screen_width || adjusted_mouse_y < 0 || adjusted_mouse_y > screen_height) {
+		 // if the mouse is outside the window make it so it doesnt detect anything
+	}
+
+	glm::vec3 window_coords = glm::vec3(adjusted_mouse_x, screen_height - adjusted_mouse_y, 0.0f);
+
 	glm::mat4 view_matrix = camera->view();
 	glm::mat4 projection_matrix = camera->projection();
 
-	// Viewport
 	glm::vec4 viewport = glm::vec4(0, 0, screen_width, screen_height);
-	
 
 	glm::vec3 v0 = glm::unProject(window_coords, view_matrix, projection_matrix, viewport);
 	glm::vec3 v1 = glm::unProject(glm::vec3(window_coords.x, window_coords.y, 1.0f), view_matrix, projection_matrix, viewport);
 
-	// Desproyectar las coordenadas del ratón
 	glm::vec3 world_coords = (v1 - v0);
 
 	return world_coords;
@@ -231,8 +237,14 @@ static void display_func() {
 
 	drawFloorGrid(16, 0.25);
 
-	glm::vec3 rayStartPos = ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
-	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
+	glm::vec3 rayStartPos = ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(), 
+	Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
+	Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
+
+	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), 
+	Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
+	Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
+
 	DrawRay(rayStartPos, rayDir);
 
 	// TODO cambiar esto de sitio

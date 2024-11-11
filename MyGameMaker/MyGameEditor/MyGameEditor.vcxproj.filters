@@ -72,6 +72,9 @@
     <ClCompile Include="UIHierarchy.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="UISceneWindow.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -120,6 +123,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UIHierarchy.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="UISceneWindow.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

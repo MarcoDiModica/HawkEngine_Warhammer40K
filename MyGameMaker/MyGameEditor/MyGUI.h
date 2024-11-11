@@ -11,6 +11,7 @@ class UISettings;
 class UIInspector;
 class UIMainMenuBar;
 class UIHierarchy;
+class UISceneWindow;
 // class PanelHierarchy;
 
 class MyGUI : public IEventProcessor, public Module
@@ -44,18 +45,19 @@ public:
 	UISettings* UIsettingsPanel = nullptr;
 	UIInspector* UIinspectorPanel = nullptr;
 	UIMainMenuBar* UIMainMenuBarPanel = nullptr;
+	UISceneWindow* UISceneWindowPanel = nullptr;
 
 	bool showHierarchy = true;
 	bool showInspector = true;
 	bool showConsole = true;
 	bool showSettings = false;
 	bool showMainMenuBar = true;
-
+	bool showSceneWindow = true;
 
 	GLuint fbo = 0;
+	vec2 camSize = vec2(1280, 720);
 	GLuint fboTexture = 0;
 	GLuint rbo = 0;
-
 
 private:
 	std::list<UIElement*> elements;

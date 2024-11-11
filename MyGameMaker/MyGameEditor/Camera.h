@@ -28,6 +28,8 @@ public:
 
 	void move_camera();
 
+	void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
+
 	float orbitRadius = 5.0f;
 	float orbitSpeed = 0.01f;
 	float angle = 0.0f;

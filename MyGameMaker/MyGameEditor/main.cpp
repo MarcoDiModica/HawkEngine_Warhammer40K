@@ -29,6 +29,7 @@
 #include <IL/ilut.h>
 #include "Input.h"
 #include "MyGUI.h"
+#include "UISceneWindow.h"
 
 //pruebas de include "StaticLibEngineIncludes"
 #include "MyGameEngine/GameObject.h"
@@ -223,25 +224,16 @@ bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, 
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-	//glLoadMatrixd(&camera.view()[0][0]);
+	
 	configureCamera();
-
-	// Bind the framebuffer and render the scene
-	
-
-	
-
-
-
 
 	drawFloorGrid(16, 0.25);
 
 	glm::vec3 rayStartPos = ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
 	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), Application->window->width(), Application->window->height());
 	DrawRay(rayStartPos, rayDir);
-
-	//Application->ElMesh.Draw();
 
 	// TODO cambiar esto de sitio
 	for (size_t i = 0; i < Application->root->children.size(); ++i) 
@@ -258,7 +250,6 @@ static void display_func() {
 
 			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox))
 			{
-				
 				Application->input->SetDraggedGameObject(object);
 			}
 
@@ -270,9 +261,8 @@ static void display_func() {
 			}
 		}
 	}
-	// Unbind the framebuffer to render to the screen next
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//Application->root->sceneManagement.Update(0.16f);
 
 }

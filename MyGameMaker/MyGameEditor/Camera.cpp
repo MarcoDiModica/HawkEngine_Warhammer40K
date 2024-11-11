@@ -4,7 +4,10 @@
 #include "Input.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <SDL2/SDL.h>
-
+#include "App.h"
+#include "MyWindow.h"
+#include "MyGUI.h"
+#include "UISceneWindow.h"
 Camera::Camera(App* app) : Module(app) { ; }
 
 glm::dmat4 Camera::projection() const {
@@ -27,6 +30,25 @@ void Camera::move_camera()
 	
 }
 
+void Camera::UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight) {
+	// Calculate the aspect ratios
+	double windowAspect = windowWidth / windowHeight;
+	double imageAspect = imageWidth / imageHeight;
+
+	// Adjust the camera's aspect ratio
+	aspect = windowAspect;
+
+	// Adjust the camera's FOV to fit the image
+	if (windowAspect > imageAspect) {
+		// Window is wider than the image
+		fov = 2.0 * atan(tan(glm::radians(60.0) / 2.0) * (imageAspect / windowAspect));
+	}
+	else {
+		// Window is taller than the image
+		fov = glm::radians(60.0);
+	}
+}
+
 
 
 bool Camera::Start(){ return true;}
@@ -34,6 +56,11 @@ bool Camera::Start(){ return true;}
 bool Camera::Awake() { return true; }
 
 bool Camera::Update(double dt) {
+
+	double windowWidth = Application->window->width();
+	double windowHeight = Application->window->height();
+
+	UpdateCameraView(windowWidth, windowHeight, Application->gui->camSize.x, Application->gui->camSize.y);
 
 
 	float speed = 0.1f;

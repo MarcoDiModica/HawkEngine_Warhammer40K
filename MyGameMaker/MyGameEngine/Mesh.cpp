@@ -179,30 +179,30 @@ void Mesh::Draw() const
 		}
 
 		glEnd();
-		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
-
-		if (drawFaceNormals)
-		{
-			glColor3f(1.0f, 0.0f, 0.0f); // Red color for face normals
-			glm::vec3 center = ((glm::vec3)_boundingBox.min + (glm::vec3)_boundingBox.max) / 2.0f;
-			glBegin(GL_LINES);
-
-			for (size_t i = 0; i < _indices.size(); i += 3) {
-				glm::vec3 v0 = _vertices[_indices[i]];
-				glm::vec3 v1 = _vertices[_indices[i + 1]];
-				glm::vec3 v2 = _vertices[_indices[i + 2]];
-
-				glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
-				glm::vec3 end = center + normal * 0.2f;
-
-				glVertex3fv(glm::value_ptr(center));
-				glVertex3fv(glm::value_ptr(end));
-			}
-
-			glEnd();
-			glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
-		}
+		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white	
 	}
+	if (drawFaceNormals)
+	{
+		glColor3f(1.0f, 0.0f, 0.0f); // Red color for face normals
+		glm::vec3 center = ((glm::vec3)_boundingBox.min + (glm::vec3)_boundingBox.max) / 2.0f;
+		glBegin(GL_LINES);
+
+		for (size_t i = 0; i < _indices.size(); i += 3) {
+			glm::vec3 v0 = _vertices[_indices[i]];
+			glm::vec3 v1 = _vertices[_indices[i + 1]];
+			glm::vec3 v2 = _vertices[_indices[i + 2]];
+
+			glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
+			glm::vec3 end = center + normal * 0.2f;
+
+			glVertex3fv(glm::value_ptr(center));
+			glVertex3fv(glm::value_ptr(end));
+		}
+
+		glEnd();
+		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
+	}
+
 }
 
 void Mesh::LoadMesh(const char* file_path)

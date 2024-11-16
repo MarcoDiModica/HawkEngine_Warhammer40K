@@ -30,7 +30,7 @@ App::App() {
 
 	camera = new Camera(this);
 
-	//camera = new Camera(this);
+	gizmos = new Gizmos(this);
 
 	AddModule(window, true);
 	AddModule(input, true);
@@ -38,7 +38,7 @@ App::App() {
 	AddModule(gui, true);
 	AddModule(root, true);
 	AddModule(camera, true);
-
+	AddModule(gizmos, true);
 
 };
 

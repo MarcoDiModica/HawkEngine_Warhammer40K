@@ -33,10 +33,10 @@ public:
 
 	
 	//Direction of MousePick Ray
-	glm::vec3 MouseRayPick();
+	glm::vec3 GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y);
 
 	//Origin of MousePick Ray
-	glm::vec3 MousePosToWorld();
+	glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y);
 
 	KEY_STATE GetKey(int id) const
 	{
@@ -113,6 +113,7 @@ private:
 	float dy;
 	GameObject* selectedObject;
 	GameObject* draggedObject;
+	Camera* camera;
 };
 
 #endif // !__INPUT_H__

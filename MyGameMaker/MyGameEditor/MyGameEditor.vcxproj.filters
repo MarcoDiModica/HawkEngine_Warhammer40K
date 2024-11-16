@@ -75,6 +75,9 @@
     <ClCompile Include="UISceneWindow.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="Gizmos.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -126,6 +129,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UISceneWindow.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="Gizmos.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

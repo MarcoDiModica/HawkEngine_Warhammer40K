@@ -5,6 +5,7 @@
 #include "Log.h"
 #include "Camera.h"
 #include "Root.h"
+#include "Gizmos.h"
 #include "MyGameEngine/Mesh.h"
 
 #include <chrono>
@@ -20,6 +21,7 @@ class HardwareInfo;
 class MyGUI;
 class Root;
 class Camera;
+class Gizmos;
 
 class Mesh;
 
@@ -62,6 +64,7 @@ public:
 	MyGUI* gui = nullptr;
 	Root* root = nullptr;
 	Camera* camera = nullptr;
+	Gizmos* gizmos = nullptr;
 
 	Mesh ElMesh;
 

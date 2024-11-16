@@ -227,6 +227,8 @@ bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, 
 
 #pragma endregion
 
+
+
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
@@ -235,13 +237,14 @@ static void display_func() {
 	
 	configureCamera();
 
+
 	drawFloorGrid(16, 0.25);
 
-	glm::vec3 rayStartPos = ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(), 
+	glm::vec3 rayStartPos = Application->input->ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(), 
 	Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
 	Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
 
-	glm::vec3 rayDir = GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(), 
+	glm::vec3 rayDir = Application->input->GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(),
 	Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
 	Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
 
@@ -273,6 +276,9 @@ static void display_func() {
 			}
 		}
 	}
+	//It has to go AFTER drawing the objects
+	Application->gizmos->DrawGizmos();
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//Application->root->sceneManagement.Update(0.16f);
@@ -285,6 +291,7 @@ void PauCode2(MyGUI* gui) {
 
 		const auto t0 = hrclock::now();
 		display_func();
+	
 		gui->Render();
 
 		/*move_camera();*/

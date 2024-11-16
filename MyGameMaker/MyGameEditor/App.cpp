@@ -32,6 +32,8 @@ App::App() {
 
 	gizmos = new Gizmos(this);
 
+	scene_serializer = new SceneSerializer(this);
+
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(hardwareInfo, true);
@@ -39,6 +41,7 @@ App::App() {
 	AddModule(root, true);
 	AddModule(camera, true);
 	AddModule(gizmos, true);
+	AddModule(scene_serializer, true);
 
 };
 

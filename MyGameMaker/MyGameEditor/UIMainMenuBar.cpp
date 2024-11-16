@@ -31,7 +31,15 @@ bool UIMainMenuBar::Draw()
 	if (ImGui::BeginMainMenuBar()) {
 		// Inicia el menú "General"
 
+		if (ImGui::BeginMenu("File"))
+		{
 
+
+			if (ImGui::MenuItem("Save Scene")) {
+				Application->scene_serializer->Serialize();
+			}
+			ImGui::EndMenu();
+		}
 		if (ImGui::BeginMenu("General"))
 		{
 

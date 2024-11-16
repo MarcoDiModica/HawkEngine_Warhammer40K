@@ -78,6 +78,9 @@
     <ClCompile Include="Gizmos.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="SceneSerializer.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -132,6 +135,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="Gizmos.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSerializer.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

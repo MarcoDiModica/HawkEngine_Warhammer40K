@@ -4,6 +4,7 @@
 #include <list>
 #include "Log.h"
 #include "Camera.h"
+#include "SceneSerializer.h"
 #include "Root.h"
 #include "Gizmos.h"
 #include "MyGameEngine/Mesh.h"
@@ -18,6 +19,7 @@ class  Module;
 class Window;
 class Input;
 class HardwareInfo;
+class SceneSerializer;
 class MyGUI;
 class Root;
 class Camera;
@@ -64,6 +66,7 @@ public:
 	MyGUI* gui = nullptr;
 	Root* root = nullptr;
 	Camera* camera = nullptr;
+	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
 
 	Mesh ElMesh;

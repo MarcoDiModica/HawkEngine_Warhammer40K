@@ -4,6 +4,7 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/SceneManagement.h"
 #include "MyGameEngine/Scene.h"
+#include "SceneSerializer.h"
 #include <list>
 
 
@@ -44,5 +45,8 @@ public:
     
     SceneManagement sceneManagement;
     std::shared_ptr<Scene> currentScene = std::make_shared<Scene>("Scene1");
+
+    friend SceneSerializer;
+
 };
 

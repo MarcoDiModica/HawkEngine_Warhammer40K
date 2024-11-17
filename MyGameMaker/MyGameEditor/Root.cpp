@@ -68,8 +68,13 @@ bool  Root::Awake() {
     padre->emplaceChild(hijo);
 
     children.push_back(padre);*/
-    sceneManagement.CreateScene("Scene");
-    currentScene = sceneManagement.GetActiveScene();
+    //sceneManagement.CreateScene("Scene");
+    //currentScene = sceneManagement.GetActiveScene();
+
+    currentScene = std::make_shared<Scene>("MyScene");
+
+   // currentScene = new Scene(); /* TODO , change to shared*/
+
 
     auto MarcoVicePresidente = CreateGameObject("BakerHouse", false);
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
@@ -77,26 +82,30 @@ bool  Root::Awake() {
     mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
     AddMeshRenderer(*MarcoVicePresidente, mesh, "Assets/Baker_house.png");
 
-    currentScene->AddGameObject(MarcoVicePresidente);
-
     return true;
 }
 
 bool Root::Start() 
 { 
-	sceneManagement.Start();
+    for (shared_ptr<GameObject> object : currentScene->children)
+    {
+        object->Start();
+    }
+
+
+	//sceneManagement.Start();
 
     return true;
 }
 
 bool Root::Update(double dt) { 
 
-    /*for (shared_ptr<GameObject> object : children) 
+    for (shared_ptr<GameObject> object : currentScene->children) 
     {
         object->Update(dt);
-    }*/
+    }
 
-    sceneManagement.Update(dt);
+    //sceneManagement.Update(dt);
 
     return true; 
 }
@@ -116,14 +125,14 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
 }
 
 void Root::RemoveGameObject(std::string name) {
-    for (auto it = children.begin(); it != children.end(); ) {
+    for (auto it = currentScene->children.begin(); it != currentScene->children.end(); ) {
         if ((*it)->GetName() == name) {
             if ((*it)->isSelected) {
 				(*it)->isSelected = false;
                 Application->input->SetSelectedGameObject(nullptr);
 			}
             (*it)->Destroy();  // Call Destroy on the object.
-            it = children.erase(it); // Erase returns the next iterator.
+            it = currentScene->children.erase(it); // Erase returns the next iterator.
             return; // Exit after removing the object.
         }
         else {
@@ -137,8 +146,8 @@ shared_ptr<GameObject> Root::CreateGameObject(string name, bool as_child) {
     string og_name = name;
 
     int num_repeat = 0;
-    for (size_t i = 0; i < children.size(); ++i) {
-        if (children[i]->GetName() == name) {
+    for (size_t i = 0; i < currentScene->children.size(); ++i) {
+        if (currentScene->children[i]->GetName() == name) {
             num_repeat++;
             name = og_name + std::to_string(num_repeat);
 
@@ -155,7 +164,7 @@ shared_ptr<GameObject> Root::CreateGameObject(string name, bool as_child) {
 	shared_ptr<GameObject> object = make_shared<GameObject>(name);
 
 	if (!as_child) {
-		children.push_back(object);
+		currentScene->children.push_back(object);
 	}
 
 	return object;

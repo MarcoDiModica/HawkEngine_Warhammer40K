@@ -10,7 +10,7 @@
 
 void SceneSerializer::Serialize() {
 
-	std::vector gameObjects = Application->root->children;
+	std::vector gameObjects = Application->root->currentScene->children;
 
 	YAML::Emitter emitter;
 

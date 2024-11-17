@@ -3,7 +3,8 @@
 #pragma once
 
 #include "UIElement.h"
-#include "MyGameEngine/Scene.h"
+//#include "MyGameEngine/Scene.h"
+#include "Root.h"
 #include <vector>
 #include <string>
 #include <memory>
@@ -14,7 +15,7 @@ public:
 	UIHierarchy(UIType type, std::string name);
 	~UIHierarchy();
 
-	void RenderSceneHierarchy(std::shared_ptr<Scene>& currentScene);
+	void RenderSceneHierarchy(Scene* scene);
 	void DrawSceneObject(GameObject& obj);
 
 	bool Draw();

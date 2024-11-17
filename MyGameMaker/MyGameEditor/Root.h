@@ -7,7 +7,7 @@
 #include "SceneSerializer.h"
 #include <list>
 
-
+class Scene;
 
 class Root : public Module
 {
@@ -41,12 +41,24 @@ public:
 
 public:
 
-	std::vector< std::shared_ptr<GameObject> > children;
+    std::shared_ptr<Scene> currentScene = nullptr;
     
-    SceneManagement sceneManagement;
-    std::shared_ptr<Scene> currentScene = std::make_shared<Scene>("Scene1");
+    //SceneManagement sceneManagement;
+    //std::shared_ptr<Scene> currentScene = std::make_shared<Scene>("Scene1");
 
     friend SceneSerializer;
 
 };
 
+class Scene {
+public:
+
+    Scene(std::string SceneName = "Scene") {
+        name = SceneName;
+    }
+
+
+    std::string name;
+
+    std::vector< std::shared_ptr<GameObject> > children;
+};

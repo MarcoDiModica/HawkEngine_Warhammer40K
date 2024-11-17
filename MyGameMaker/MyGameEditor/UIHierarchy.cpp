@@ -29,7 +29,7 @@ bool UIHierarchy::Draw() {
 		ImGuiIO& io = ImGui::GetIO();
 		ImGui::SetNextWindowSize(ImVec2(250, 650), ImGuiCond_Once);
 
-		auto& currentScene = Application->root->currentScene;
+		Scene* currentScene = Application->root->currentScene.get();
 
 		if (currentScene == nullptr) {
 			ImGui::Text("No Scene loaded");
@@ -45,11 +45,11 @@ bool UIHierarchy::Draw() {
 }
 
 
-void UIHierarchy::RenderSceneHierarchy(std::shared_ptr<Scene>& currentScene) {
+void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::Begin("Scene Hierarchy");
 
-	for (size_t i = 0; i < Application->root->children.size(); ++i) {
-		DrawSceneObject(*Application->root->children[i]);
+	for (size_t i = 0; i < Application->root->currentScene->children.size(); ++i) {
+		DrawSceneObject(*Application->root->currentScene->children[i]);
 	}
 
 	//ImGui::End();

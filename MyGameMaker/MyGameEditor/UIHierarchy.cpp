@@ -85,7 +85,8 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 	ImGui::Button("Delete");
 
 	if (ImGui::IsItemClicked(0)) {
-		Application->root->RemoveGameObject(obj.GetName());
+
+		obj.Destroy();
 	}
 
 

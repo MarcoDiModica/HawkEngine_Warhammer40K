@@ -1,3 +1,6 @@
+#ifndef TYPES_H
+#define TYPES_H
+
 #pragma once
 
 #include <glm/glm.hpp>
@@ -51,3 +54,5 @@ inline const char* const PATH(const char* folder, const char* file)
 #define TITLE "HawkEngine"
 #define VERSION "v0.1"
 #define ORGANIZATION "UPC-CITM"
+
+#endif

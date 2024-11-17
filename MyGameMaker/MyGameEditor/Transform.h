@@ -1,6 +1,8 @@
+#ifndef TRANSFORM_H
+#define TRANSFORM_H
 #pragma once
 
-#include "MyGameEngine/types.h"
+#include "../MyGameEngine/types.h"
 #include <glm/glm.hpp>
 
 class Transform {
@@ -37,3 +39,6 @@ public:
 };
 
 inline Transform operator*(const mat4& m, const Transform& t) { return Transform(m * t.mat()); }
+
+
+#endif

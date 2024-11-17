@@ -1,4 +1,9 @@
 #pragma once
+#ifndef SCENE_SERIALIZER_H
+#define SCENE_SERIALIZER_H
+
+
+
 #include "Module.h"
 
 #include <yaml-cpp/yaml.h>
@@ -17,3 +22,5 @@ public:
 
 };
 
+
+#endif

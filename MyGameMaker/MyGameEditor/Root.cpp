@@ -1,5 +1,5 @@
 #include "Root.h"
-#include "MyGameEngine/GameObject.h"
+
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/Mesh.h"
@@ -11,6 +11,8 @@
 #include <iostream>
 
 using namespace std;
+
+class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
 
@@ -125,13 +127,15 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
 }
 
 void Root::RemoveGameObject(std::string name) {
+
+
     for (auto it = currentScene->children.begin(); it != currentScene->children.end(); ) {
         if ((*it)->GetName() == name) {
             if ((*it)->isSelected) {
 				(*it)->isSelected = false;
                 Application->input->SetSelectedGameObject(nullptr);
 			}
-            (*it)->Destroy();  // Call Destroy on the object.
+            //(*it)->Destroy();  // Call Destroy on the object.
             it = currentScene->children.erase(it); // Erase returns the next iterator.
             return; // Exit after removing the object.
         }

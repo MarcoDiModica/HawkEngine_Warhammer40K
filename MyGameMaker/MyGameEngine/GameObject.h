@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "Component.h"
 #include "TransformComponent.h"
 #include "TreeExt.h"
@@ -136,3 +137,4 @@ template <IsComponent T>
 bool GameObject::HasComponent() const {
     return components.find(typeid(T)) != components.end();
 }
+

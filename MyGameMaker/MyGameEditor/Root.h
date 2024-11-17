@@ -1,13 +1,18 @@
+
+#ifndef ROOT_H
+#define ROOT_H
+
 #pragma once
 #include "Module.h"
-#include "MyGameEngine/Mesh.h"
-#include "MyGameEngine/GameObject.h"
-#include "MyGameEngine/SceneManagement.h"
-#include "MyGameEngine/Scene.h"
+//#include "MyGameEngine/Mesh.h"
+#include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/SceneManagement.h"
+#include "../MyGameEngine/Scene.h"
 #include "SceneSerializer.h"
 #include <list>
 
 class Scene;
+class Mesh;
 
 class Root : public Module
 {
@@ -57,8 +62,22 @@ public:
         name = SceneName;
     }
 
+    void DestroyScene() {
+
+        for (size_t i = 0; i < children.size(); ++i) {
+
+
+
+
+        }
+
+
+    }
+
 
     std::string name;
 
     std::vector< std::shared_ptr<GameObject> > children;
 };
+
+#endif

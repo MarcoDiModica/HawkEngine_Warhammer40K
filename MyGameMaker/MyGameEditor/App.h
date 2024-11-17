@@ -7,7 +7,7 @@
 #include "SceneSerializer.h"
 #include "Root.h"
 #include "Gizmos.h"
-#include "MyGameEngine/Mesh.h"
+#include "../MyGameEngine/Mesh.h"
 
 #include <chrono>
 

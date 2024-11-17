@@ -1,3 +1,5 @@
+#ifndef GIZMOS_H
+#define GIZMOS_H
 #pragma once
 #include "Module.h"
 #include "Transform.h"
@@ -35,3 +37,5 @@ private:
 	glm::vec3 rayDir;
 
 };
+
+#endif

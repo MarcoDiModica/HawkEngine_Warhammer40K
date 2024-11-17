@@ -1,5 +1,7 @@
 #include "GameObject.h"
 #include "MeshRendererComponent.h"
+#include "../MyGameEditor/App.h"
+//#include "../MyGameEditor/Root.h"
 #include <iostream>
 
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)) 
@@ -54,17 +56,23 @@ void GameObject::Update(float deltaTime)
 
 void GameObject::Destroy()
 {
-    destroyed = true;
-    
-    for (auto& component : components)
-	{
-		component.second->Destroy();
-	}
 
-    for (auto& child : children())
-    {
-        child.Destroy();
-    }
+    Application->root->RemoveGameObject(name);
+    
+    //if (this) {
+
+    //    destroyed = true;
+
+    //    for (auto& component : components)
+    //    {
+    //        component.second->Destroy();
+    //    }
+
+    //    for (auto& child : children())
+    //    {
+    //        child.Destroy();
+    //    }
+    //}
 }
 
 void GameObject::Draw() const

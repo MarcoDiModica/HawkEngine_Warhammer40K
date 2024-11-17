@@ -1,3 +1,6 @@
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #pragma once
 #include "Module.h"
 #include "Transform.h"
@@ -52,3 +55,5 @@ public:
 	mat4 view() const;
 
 };
+
+#endif

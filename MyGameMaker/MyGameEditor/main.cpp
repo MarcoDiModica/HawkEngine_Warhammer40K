@@ -227,7 +227,53 @@ bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, 
 
 #pragma endregion
 
+void Draw3DRectangle(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, float width, float height, float depth) {
+	glm::vec3 right = glm::normalize(glm::cross(rayDirection, glm::vec3(0.0f, 1.0f, 0.0f))) * width;
+	glm::vec3 up = glm::normalize(glm::cross(right, rayDirection)) * height;
+	glm::vec3 forward = glm::normalize(rayDirection) * depth;
 
+	glm::vec3 vertices[8];
+	vertices[0] = rayOrigin;
+	vertices[1] = rayOrigin + right;
+	vertices[2] = rayOrigin + right + up;
+	vertices[3] = rayOrigin + up;
+	vertices[4] = rayOrigin + forward;
+	vertices[5] = rayOrigin + forward + right;
+	vertices[6] = rayOrigin + forward + right + up;
+	vertices[7] = rayOrigin + forward + up;
+
+	glBegin(GL_LINES);
+	// Front face
+	glVertex3fv(glm::value_ptr(vertices[0]));
+	glVertex3fv(glm::value_ptr(vertices[1]));
+	glVertex3fv(glm::value_ptr(vertices[1]));
+	glVertex3fv(glm::value_ptr(vertices[2]));
+	glVertex3fv(glm::value_ptr(vertices[2]));
+	glVertex3fv(glm::value_ptr(vertices[3]));
+	glVertex3fv(glm::value_ptr(vertices[3]));
+	glVertex3fv(glm::value_ptr(vertices[0]));
+
+	// Back face
+	glVertex3fv(glm::value_ptr(vertices[4]));
+	glVertex3fv(glm::value_ptr(vertices[5]));
+	glVertex3fv(glm::value_ptr(vertices[5]));
+	glVertex3fv(glm::value_ptr(vertices[6]));
+	glVertex3fv(glm::value_ptr(vertices[6]));
+	glVertex3fv(glm::value_ptr(vertices[7]));
+	glVertex3fv(glm::value_ptr(vertices[7]));
+	glVertex3fv(glm::value_ptr(vertices[4]));
+
+	// Connecting lines
+	glVertex3fv(glm::value_ptr(vertices[0]));
+	glVertex3fv(glm::value_ptr(vertices[4]));
+	glVertex3fv(glm::value_ptr(vertices[1]));
+	glVertex3fv(glm::value_ptr(vertices[5]));
+	glVertex3fv(glm::value_ptr(vertices[2]));
+	glVertex3fv(glm::value_ptr(vertices[6]));
+	glVertex3fv(glm::value_ptr(vertices[3]));
+	glVertex3fv(glm::value_ptr(vertices[7]));
+	glEnd();
+}
 
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
@@ -248,7 +294,8 @@ static void display_func() {
 	Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
 	Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
 
-	DrawRay(rayStartPos, rayDir);
+
+	Draw3DRectangle(rayStartPos, rayDir, 1.0f, 1.0f, 1.0f);
 
 	// TODO cambiar esto de sitio
 	for (size_t i = 0; i < Application->root->currentScene->children.size(); ++i)

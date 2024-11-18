@@ -7,8 +7,10 @@
 #include <typeindex>
 #include <concepts>
 #include <stdexcept>
+#include <yaml-cpp/yaml.h>
 
 class GameObject;
+class SceneSerializer;
 
 class Component
 {
@@ -29,11 +31,26 @@ public:
 	void SetName(const std::string& name) { this->name = name; }
 
 protected:
+
+	friend class SceneSerializer;
+
 	std::weak_ptr<GameObject> owner;
 	std::string name;
 	bool enabled = true;
 
 	bool IsOwnerValid() const { return !owner.expired(); }
+
+
+	virtual YAML::Node encode() {
+		YAML::Node node;
+
+		node["name"] = name;
+		node["enabled"] = enabled;
+
+
+		return node;
+	}
+
 };
 
 template <typename T>

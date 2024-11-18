@@ -10,7 +10,7 @@
 
 void SceneSerializer::Serialize() {
 
-	std::vector gameObjects = Application->root->currentScene->children;
+	std::vector gameObjects = Application->root->currentScene->_children;
 
 	YAML::Emitter emitter;
 
@@ -19,6 +19,16 @@ void SceneSerializer::Serialize() {
 		/*Define a node with the object's properties*/
 		YAML::Node node;
 		node["name"] = gameObjects[i]->GetName();
+
+		for (auto& component : gameObjects[i]->components)
+		{
+			YAML::Node node2;
+			node2 = component.second->encode();
+			
+			node[component.second->name] = node2;
+		}
+
+		/*node["transform"] = gameObjects[i]->GetTransform()->encode();*/
 
 		/*Save node to the emitter*/
 		emitter << node;

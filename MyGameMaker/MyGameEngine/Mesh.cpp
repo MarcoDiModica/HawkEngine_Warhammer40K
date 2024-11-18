@@ -207,6 +207,9 @@ void Mesh::Draw() const
 
 void Mesh::LoadMesh(const char* file_path)
 {
+
+	filePath = std::string(file_path);
+
 	cout << endl << file_path;
 
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);

@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Mesh.h"
 #include <glm/glm.hpp>
 
 class Mesh;
@@ -34,4 +35,17 @@ private:
     std::shared_ptr<Image> image;
     std::shared_ptr<Material> material;
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+
+
+protected:
+    YAML::Node encode() override {
+
+        YAML::Node node = Component::encode();
+        
+        node["mesh_path"] = mesh->filePath;
+
+
+        return node;
+    }
+
 };

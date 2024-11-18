@@ -2,7 +2,12 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+
+#include <yaml-cpp/yaml.h>
 #include "Component.h"
+
+
+class SceneSerializer;
 
 class Transform_Component : public Component
 {
@@ -54,6 +59,51 @@ public:
         result.matrix = matrix * other.matrix;
         return result;
     }
+
+protected:
+
+    friend class SceneSerializer;
+
+    YAML::Node encode() {
+        YAML::Node node = Component::encode();
+
+        node["position"] = encodePosition();
+        node["rotation"] = encodeRotation();
+        node["scale"] = encodeScale();
+        return node;
+    }
+
+
+    YAML::Node encodePosition() {
+        YAML::Node node;
+        auto position = GetPosition();
+
+        node["x"] = position.x;
+        node["y"] = position.y;
+        node["z"] = position.z;
+        return node;
+    }
+
+    YAML::Node encodeRotation() {
+        YAML::Node node;
+        auto rotation = GetRotation();
+
+        node["x"] = rotation.x;
+        node["y"] = rotation.y;
+        node["z"] = rotation.z;
+        return node;
+    }
+
+    YAML::Node encodeScale() {
+        YAML::Node node;
+        auto scale = GetScale();
+
+        node["x"] = scale.x;
+        node["y"] = scale.y;
+        node["z"] = scale.z;
+        return node;
+    }
+
 
 private:
 

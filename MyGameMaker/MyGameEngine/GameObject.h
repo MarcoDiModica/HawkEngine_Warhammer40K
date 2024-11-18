@@ -7,6 +7,8 @@
 #include "Mesh.h"
 #include "BoundingBox.h"
 
+class SceneSerializer;
+
 enum class DrawMode
 {
     AccumultedMatrix,
@@ -71,7 +73,11 @@ public:
         return name == other.name;
     }
 
+
+
 private:
+
+    friend class SceneSerializer;
 
     void DrawAccumultedMatrix() const;
     void DrawInstancedMatrix() const;
@@ -82,6 +88,8 @@ private:
     bool active = true;
     bool destroyed = false;
 
+
+
     std::unordered_map<std::type_index, std::shared_ptr<Component>> components;
 
     mutable std::type_index cachedComponentType;
@@ -89,6 +97,9 @@ private:
 
     std::shared_ptr<Transform_Component> transform;
     std::shared_ptr<Mesh> mesh;
+
+
+    
 
 public:
 

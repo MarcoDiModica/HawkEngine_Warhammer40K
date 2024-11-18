@@ -8,6 +8,8 @@
 #include "App.h"
 #include "Input.h"
 
+#include <SDL2/SDL.h>
+
 #include <iostream>
 
 using namespace std;
@@ -89,7 +91,7 @@ bool  Root::Awake() {
 
 bool Root::Start() 
 { 
-    for (shared_ptr<GameObject> object : currentScene->children)
+    for (shared_ptr<GameObject> object : currentScene->_children)
     {
         object->Start();
     }
@@ -102,9 +104,14 @@ bool Root::Start()
 
 bool Root::Update(double dt) { 
 
-    for (shared_ptr<GameObject> object : currentScene->children) 
+    for (shared_ptr<GameObject> object : currentScene->_children) 
     {
         object->Update(dt);
+    }
+
+    if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
+
+        currentScene->DestroyScene();
     }
 
     //sceneManagement.Update(dt);
@@ -129,14 +136,14 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
 void Root::RemoveGameObject(std::string name) {
 
 
-    for (auto it = currentScene->children.begin(); it != currentScene->children.end(); ) {
+    for (auto it = currentScene->_children.begin(); it != currentScene->_children.end(); ) {
         if ((*it)->GetName() == name) {
             if ((*it)->isSelected) {
 				(*it)->isSelected = false;
                 Application->input->SetSelectedGameObject(nullptr);
 			}
             //(*it)->Destroy();  // Call Destroy on the object.
-            it = currentScene->children.erase(it); // Erase returns the next iterator.
+            it = currentScene->_children.erase(it); // Erase returns the next iterator.
             return; // Exit after removing the object.
         }
         else {
@@ -150,8 +157,8 @@ shared_ptr<GameObject> Root::CreateGameObject(string name, bool as_child) {
     string og_name = name;
 
     int num_repeat = 0;
-    for (size_t i = 0; i < currentScene->children.size(); ++i) {
-        if (currentScene->children[i]->GetName() == name) {
+    for (size_t i = 0; i < currentScene->_children.size(); ++i) {
+        if (currentScene->_children[i]->GetName() == name) {
             num_repeat++;
             name = og_name + std::to_string(num_repeat);
 
@@ -168,7 +175,7 @@ shared_ptr<GameObject> Root::CreateGameObject(string name, bool as_child) {
 	shared_ptr<GameObject> object = make_shared<GameObject>(name);
 
 	if (!as_child) {
-		currentScene->children.push_back(object);
+		currentScene->_children.push_back(object);
 	}
 
 	return object;
@@ -206,4 +213,24 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     meshRenderer->SetMesh(mesh);
     meshRenderer->SetMaterial(material);
     meshRenderer->SetImage(image);
+}
+
+
+void Scene::DestroyScene() {
+
+    //TODO , implement recursion for child objects
+
+    for (auto it = _children.begin(); it != _children.end(); ) {
+
+        if ((*it)->isSelected) {
+            (*it)->isSelected = false;
+            //Application->input->SetSelectedGameObject(nullptr);
+        }
+        //(*it)->Destroy();  // Call Destroy on the object.
+        it = _children.erase(it); // Erase returns the next iterator.
+        //return; // Exit after removing the object.
+
+    }
+
+
 }

@@ -251,9 +251,9 @@ static void display_func() {
 	DrawRay(rayStartPos, rayDir);
 
 	// TODO cambiar esto de sitio
-	for (size_t i = 0; i < Application->root->currentScene->children.size(); ++i)
+	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
-		GameObject* object = Application->root->currentScene->children[i].get();
+		GameObject* object = Application->root->currentScene->children()[i].get();
 
 		object->Update(0.16f);
 		

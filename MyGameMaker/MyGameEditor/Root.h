@@ -8,10 +8,14 @@
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/SceneManagement.h"
 #include "../MyGameEngine/Scene.h"
+#include "../MyGameEditor/App.h"
+#include "../MyGameEditor/Input.h"
+#include "../MyGameEngine/readOnlyView.h"
 #include "SceneSerializer.h"
 #include <list>
 
 class Scene;
+class App;
 class Mesh;
 
 class Root : public Module
@@ -62,22 +66,19 @@ public:
         name = SceneName;
     }
 
-    void DestroyScene() {
-
-        for (size_t i = 0; i < children.size(); ++i) {
-
-
-
-
-        }
-
-
-    }
-
+    void DestroyScene();
 
     std::string name;
 
-    std::vector< std::shared_ptr<GameObject> > children;
+    auto children()const { return readOnlyVector<std::shared_ptr<GameObject>>(_children); }
+
+
+private:
+    /*These class can modify the vector*/
+    friend class Root;
+    friend class SceneSerializer;
+
+    std::vector< std::shared_ptr<GameObject> > _children;
 };
 
 #endif

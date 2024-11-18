@@ -11,6 +11,8 @@
 #include "BufferObject.h"
 #include "BoundingBox.h"
 
+class SceneSerializer;
+
 class Mesh {
     BufferObject vertices_buffer;
     BufferObject indices_buffer;
@@ -58,6 +60,13 @@ public:
 
     glm::vec3 aabbMin;
     glm::vec3 aabbMax;
+
+protected:
+
+    friend class MeshRenderer;
+
+    std::string filePath;
+
 };
 
 #endif // !__MESH_H__

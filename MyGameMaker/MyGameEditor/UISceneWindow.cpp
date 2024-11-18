@@ -89,7 +89,7 @@ bool UISceneWindow::Draw()
 		float aspectRatio = originalWidth / originalHeight;
 
 		// Calculate the new size for the image that fits within the GameWindow while maintaining the aspect ratio
-		ImVec2 imageSize = ImVec2(1280, 720);
+		ImVec2 imageSize = ImVec2(windowSize.x,windowSize.y);
 
 		// Calculate the offset needed to center the image
 		float offsetX = (availableSize.x - imageSize.x) / 2.0f;

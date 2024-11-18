@@ -2,6 +2,8 @@
 #include "App.h"
 #include "Log.h"
 #include "MyGUI.h"
+#include "imgui.h"
+#include "UiSceneWindow.h"
 #include "Input.h"
 #include "Camera.h"
 #include "MyWindow.h"
@@ -215,56 +217,36 @@ bool Input::processSDLEvents()
     return true;
 }
 
-#pragma region TODO(look what to do with the camera)
+glm::vec3 Input::getRayFromMouse(int mouseX, int mouseY, const glm::mat4& projection, const glm::mat4& view, const glm::ivec2& viewportSize) {
+    float x = (2.0f * mouseX) / viewportSize.x - 1.0f;
+    float y = 1.0f - (2.0f * mouseY) / viewportSize.y;
+    glm::vec4 rayClip = glm::vec4(x, y, -1.0f, 1.0f);
 
-glm::vec3 Input::ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y)
-{
-    int adjusted_mouse_x = mouse_x - window_x;
-    int adjusted_mouse_y = mouse_y - window_y;
+    glm::vec4 rayEye = glm::inverse(projection) * rayClip;
+    rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
 
-    if (adjusted_mouse_x < 0 || adjusted_mouse_x > screen_width || adjusted_mouse_y < 0 || adjusted_mouse_y > screen_height) {
-        // if the mouse is outside the window make it so it doesnt detect anything
-    }
-
-    float ndc_x = (2.0f * adjusted_mouse_x) / screen_width - 1.0f;
-    float ndc_y = 1.0f - (2.0f * adjusted_mouse_y) / screen_height;
-
-    glm::vec4 clip_coords = glm::vec4(ndc_x, ndc_y, -1.0f, 1.0f);
-
-    glm::mat4 projection_matrix = camera->projection();
-    glm::vec4 view_coords = glm::inverse(projection_matrix) * clip_coords;
-    view_coords = glm::vec4(view_coords.x, view_coords.y, -1.0f, 0.0f);
-
-    glm::mat4 view_matrix = camera->view();
-    glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
-
-    return glm::vec3(world_coords.x + camera->transform().pos().x, world_coords.y + camera->transform().pos().y, world_coords.z + camera->transform().pos().z);
+    glm::vec3 rayWorld = glm::normalize(glm::vec3(glm::inverse(view) * rayEye));
+    return rayWorld;
 }
 
-glm::vec3 Input::GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y)
+glm::vec3 Input::getMousePickRay() 
 {
-    int adjusted_mouse_x = mouse_x - window_x;
-    int adjusted_mouse_y = mouse_y - window_y;
+    ImVec2 windowPos = ImVec2(Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
+    ImVec2 windowSize = ImVec2(Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y);
 
-    if (adjusted_mouse_x < 0 || adjusted_mouse_x > screen_width || adjusted_mouse_y < 0 || adjusted_mouse_y > screen_height) {
-        // if the mouse is outside the window make it so it doesnt detect anything
+    float mouseX = Application->input->GetMouseX() - windowPos.x + 10;
+    float mouseY = Application->input->GetMouseY() - windowPos.y + 20;
+
+    glm::ivec2 size = glm::ivec2(windowSize.x, windowSize.y);
+
+    // Ensure the mouse coordinates are within the bounds of the ImGui window
+    if (mouseX >= 0 && mouseX <= windowSize.x && mouseY >= 0 && mouseY <= windowSize.y) {
+
     }
-
-    glm::vec3 window_coords = glm::vec3(adjusted_mouse_x, screen_height - adjusted_mouse_y, 0.0f);
-
-    glm::mat4 view_matrix = camera->view();
-    glm::mat4 projection_matrix = camera->projection();
-
-    glm::vec4 viewport = glm::vec4(0, 0, screen_width, screen_height);
-
-    glm::vec3 v0 = glm::unProject(window_coords, view_matrix, projection_matrix, viewport);
-    glm::vec3 v1 = glm::unProject(glm::vec3(window_coords.x, window_coords.y, 1.0f), view_matrix, projection_matrix, viewport);
-
-    glm::vec3 world_coords = (v1 - v0);
-
-    return world_coords;
+   
+    glm::vec3 rayDirection = Application->input->getRayFromMouse(mouseX, mouseY, camera->projection(), camera->view(), size);
+	return rayDirection;
 }
-#pragma endregion
 
 std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
 

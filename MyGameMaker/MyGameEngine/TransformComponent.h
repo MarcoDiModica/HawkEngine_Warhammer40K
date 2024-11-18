@@ -44,6 +44,7 @@ public:
     const auto* GetData() const { return &matrix[0][0]; }
 
     void Translate(const glm::dvec3& translation);
+	void SetPosition(const glm::dvec3& position);
     void Rotate(double rads, const glm::dvec3& axis);
     void Scale(const glm::dvec3& scale);
     void LookAt(const glm::dvec3& target);

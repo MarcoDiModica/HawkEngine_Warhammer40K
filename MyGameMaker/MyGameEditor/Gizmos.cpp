@@ -24,6 +24,9 @@ bool Gizmos::Awake() { return true; }
 
 bool Gizmos::Update(double dt) {
 
+    rayStartPos = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
+    rayDir = Application->input->getMousePickRay();
+
 	if (Application->input->GetSelectedGameObject() != nullptr) {
         ProcessMousePicking();
 	}
@@ -46,7 +49,7 @@ void Gizmos::DrawGizmos() {
         glBegin(GL_LINES);
 
         // Dibujar eje X (rojo)
-        if (isAxisSelected && selectedAxis == glm::vec3(1, 0, 0)) {
+        if (selectedAxis == glm::vec3(1, 0, 0)) {
             glColor3f(1.0f, 1.0f, 0.0f); // Amarillo si está seleccionado
         }
         else {
@@ -56,7 +59,7 @@ void Gizmos::DrawGizmos() {
         glVertex3f(position.x + 1.0f, position.y, position.z);
 
         // Dibujar eje Y (verde)
-        if (isAxisSelected && selectedAxis == glm::vec3(0, 1, 0)) {
+        if (selectedAxis == glm::vec3(0, 1, 0)) {
             glColor3f(1.0f, 1.0f, 0.0f); // Amarillo si está seleccionado
         }
         else {
@@ -66,7 +69,7 @@ void Gizmos::DrawGizmos() {
         glVertex3f(position.x, position.y + 1.0f, position.z);
 
         // Dibujar eje Z (azul)
-        if (isAxisSelected && selectedAxis == glm::vec3(0, 0, 1)) {
+        if (selectedAxis == glm::vec3(0, 0, 1)) {
             glColor3f(1.0f, 1.0f, 0.0f); // Amarillo si está seleccionado
         }
         else {
@@ -88,13 +91,7 @@ void Gizmos::ProcessMousePicking() {
     static bool isDragging = false;
 
     if (Application->input->GetMouseButton(1) == KEY_DOWN) {
-        rayStartPos = Application->input->ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(),
-            Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
-            Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
-
-       rayDir = Application->input->GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(),
-            Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
-            Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
+    
 		IntersectAxis(rayStartPos, rayDir, selectedAxis);
         // Detectar si el rayo intersecta con alguno de los ejes
         if (IntersectAxis(rayStartPos, rayDir, selectedAxis)) {
@@ -112,14 +109,7 @@ void Gizmos::ProcessMousePicking() {
     }
 
     if (isDragging) {
-        rayStartPos = Application->input->ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(),
-            Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
-            Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
-
-        rayDir = Application->input->GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(),
-            Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
-            Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
-
+    
         // Mover el objeto a lo largo del eje seleccionado
         MoveObjectAlongAxis(rayStartPos, rayDir, selectedAxis);
     }
@@ -127,7 +117,7 @@ void Gizmos::ProcessMousePicking() {
 
 bool RaysIntersect(const glm::vec3& origin1, const glm::vec3& direction1,
     const glm::vec3& origin2, const glm::vec3& direction2,
-    float tolerance = 1e-6f)
+    float tolerance = 1e-2f)
 {
     // Normalize directions
     glm::vec3 d1 = glm::normalize(direction1);
@@ -167,31 +157,41 @@ bool Gizmos::IntersectAxis(const glm::vec3& rayOrigin, const glm::vec3& rayDirec
 
     // Eje X
   
-    if (RaysIntersect(rayOrigin,rayDirection,position,glm::vec3 (1,0,0))){
+    if (RaysIntersect(rayOrigin,rayDirection,position,glm::vec3 (1,0,0)) && isAxisSelected == false){
         selectedAxis = glm::vec3(1, 0, 0);
         return true;
     }
 
     // Eje Y
-    if (RaysIntersect(rayOrigin, rayDirection, position, glm::vec3(0, 1, 0))) {
+    if (RaysIntersect(rayOrigin, rayDirection, position, glm::vec3(0, 1, 0)) && isAxisSelected == false) {
         selectedAxis = glm::vec3(0, 1, 0);
         return true;
     }
 
     // Eje Z
-    if (RaysIntersect(rayOrigin, rayDirection, position, glm::vec3(0, 0, 1))) {
+    if (RaysIntersect(rayOrigin, rayDirection, position, glm::vec3(0, 0, 1)) && isAxisSelected == false) {
         selectedAxis = glm::vec3(0, 0, 1);
         return true;
     }
+
+	if (isAxisSelected == false)
+    selectedAxis = glm::vec3(0, 0, 0);
 
     return false;
 }
 
 
-void Gizmos::MoveObjectAlongAxis(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, const glm::vec3& axis) {
-    // Implementar la lógica para mover el objeto a lo largo del eje seleccionado
-    // Puedes proyectar el rayo en el eje y mover el objeto en consecuencia
-    glm::vec3 position = Application->input->GetDraggedGameObject()->GetTransform()->GetPosition();
-    glm::vec3 projectedPoint = rayOrigin + glm::dot((position - rayOrigin), axis) * axis;
-    Application->input->GetSelectedGameObject()->GetTransform()->Translate(projectedPoint);
+void Gizmos::MoveObjectAlongAxis(const glm::vec3& rayOrigin, glm::vec3& rayDirection, const glm::vec3& axis) {
+ 
+    glm::vec3 normalizedRayDir = glm::normalize(rayDirection);
+    glm::vec3 normalizedAxis = glm::normalize(axis);
+
+    // Compute the projection of the ray direction onto the axis
+    float projectionScale = glm::dot(normalizedRayDir, normalizedAxis);
+    glm::dvec3 projectedRayDir = projectionScale * normalizedAxis;
+
+    // Find the closest point on the axis to the ray origin
+  
+    // Move the selected game object to the projected point
+    Application->input->GetSelectedGameObject()->GetTransform()->SetPosition(projectedRayDir);
 }

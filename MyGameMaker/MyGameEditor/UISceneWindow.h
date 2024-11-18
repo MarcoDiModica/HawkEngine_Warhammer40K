@@ -16,6 +16,6 @@ public:
 	bool Draw();
 	vec2 winSize = vec2(0, 0);
 	vec2 winPos = vec2(0, 0);
-	
+	vec2 winMousePos = vec2(0, 0);
 };
 #endif // !__UI_SCENE_WINDOW_H__

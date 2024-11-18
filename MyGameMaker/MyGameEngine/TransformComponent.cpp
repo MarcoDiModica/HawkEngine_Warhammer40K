@@ -10,6 +10,10 @@ void Transform_Component::Translate(const glm::dvec3& translation)
 {
 	matrix = glm::translate(matrix, translation);
 }
+void Transform_Component::SetPosition(const glm::dvec3& position)
+{
+	matrix[3] = glm::dvec4(position, 1);
+}
 
 void Transform_Component::Rotate(double rads, const glm::dvec3& axis)
 {

@@ -282,41 +282,34 @@ static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	
 	configureCamera();
-
-
 	drawFloorGrid(16, 0.25);
 
-	glm::vec3 rayStartPos = Application->input->ConvertMouseToWorldCoords(Application->input->GetMouseX(), Application->input->GetMouseY(), 
-	Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
-	Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
+	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
+	glm::vec3 rayDirection = Application->input->getMousePickRay();
 
-	glm::vec3 rayDir = Application->input->GetMousePickDir(Application->input->GetMouseX(), Application->input->GetMouseY(),
-	Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y,
-	Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
-
-
-	Draw3DRectangle(rayStartPos, rayDir, 1.0f, 1.0f, 1.0f);
+	Draw3DRectangle(rayOrigin, rayDirection, 1.0f, 1.0f, 1.0f);
+	
 
 	// TODO cambiar esto de sitio
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
 		GameObject* object = Application->root->currentScene->children()[i].get();
-
+	
 		object->Update(0.16f);
 		
 		if (object->HasComponent<MeshRenderer>()) {
-
+	
 			BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-
+	
 			bbox = object->GetTransform()->GetMatrix() * bbox;
-
-			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox))
+	
+			if (CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
 			{
 				Application->input->SetDraggedGameObject(object);
 			}
-
+	
 			if (Application->input->GetMouseButton(1) == KEY_DOWN)
-			if (CheckRayAABBCollision(rayStartPos, rayDir, bbox) )
+			if (CheckRayAABBCollision(rayOrigin, rayDirection, bbox) )
 			{
 				std::cout << "Hit: " << object->GetName();
 				Application->input->SetSelectedGameObject(object);

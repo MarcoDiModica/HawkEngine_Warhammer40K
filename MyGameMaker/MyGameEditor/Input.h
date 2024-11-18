@@ -38,6 +38,11 @@ public:
 	//Origin of MousePick Ray
 	glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y);
 
+
+	glm::vec3 getRayFromMouse(int mouseX, int mouseY, const glm::mat4& projection, const glm::mat4& view, const glm::ivec2& viewportSize);
+
+	glm::vec3 getMousePickRay();
+
 	KEY_STATE GetKey(int id) const
 	{
 		return keyboard[id];

@@ -119,56 +119,55 @@ bool RaysIntersect(const glm::vec3& origin1, const glm::vec3& direction1,
     const glm::vec3& origin2, const glm::vec3& direction2,
     float tolerance = 1e-2f)
 {
-    // Normalize directions
     glm::vec3 d1 = glm::normalize(direction1);
     glm::vec3 d2 = glm::normalize(direction2);
 
-    // Cross product of directions
     glm::vec3 crossD = glm::cross(d1, d2);
 
-    // If crossD is (near) zero, rays are parallel or coincident
     float crossLen2 = glm::length2(crossD);
     if (crossLen2 < tolerance) {
-        // Check if the rays are collinear
+    
         glm::vec3 diff = origin2 - origin1;
         if (glm::length2(glm::cross(diff, d1)) < tolerance) {
-            return true; // Collinear rays intersect
+            return true; 
         }
-        return false; // Parallel but not intersecting
+        return false; 
     }
 
-    // Calculate shortest line connecting the rays
+  
     glm::vec3 diff = origin2 - origin1;
 
-    // Parameters for closest points on each ray
+   
     float t1 = glm::dot(glm::cross(diff, d2), crossD) / crossLen2;
     float t2 = glm::dot(glm::cross(diff, d1), crossD) / crossLen2;
 
-    // Closest points on each ray
+
     glm::vec3 point1 = origin1 + t1 * d1;
     glm::vec3 point2 = origin2 + t2 * d2;
 
-    // Check if the closest points are within the tolerance
+    if (t2 > 1 || t2 < 0) {
+		return false;
+    }
+    
     return glm::length2(point1 - point2) < tolerance;
 }
 
 bool Gizmos::IntersectAxis(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, glm::vec3& outAxis) {
     glm::vec3 position = Application->input->GetSelectedGameObject()->GetTransform()->GetPosition();
 
-    // Eje X
-  
+    // Axis X
     if (RaysIntersect(rayOrigin,rayDirection,position,glm::vec3 (1,0,0)) && isAxisSelected == false){
         selectedAxis = glm::vec3(1, 0, 0);
         return true;
     }
 
-    // Eje Y
+    // Axis Y
     if (RaysIntersect(rayOrigin, rayDirection, position, glm::vec3(0, 1, 0)) && isAxisSelected == false) {
         selectedAxis = glm::vec3(0, 1, 0);
         return true;
     }
 
-    // Eje Z
+    // Axis Z
     if (RaysIntersect(rayOrigin, rayDirection, position, glm::vec3(0, 0, 1)) && isAxisSelected == false) {
         selectedAxis = glm::vec3(0, 0, 1);
         return true;
@@ -180,18 +179,53 @@ bool Gizmos::IntersectAxis(const glm::vec3& rayOrigin, const glm::vec3& rayDirec
     return false;
 }
 
+glm::vec3 GetRayAxisIntersection(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, const glm::vec3& axisOrigin, const glm::vec3& axisDirection) {
+    glm::vec3 normalizedRayDir = glm::normalize(rayDirection);
+    glm::vec3 normalizedAxisDir = glm::normalize(axisDirection);
+
+    // Calculate the vector from the ray origin to the axis origin
+    glm::vec3 originToOrigin = axisOrigin - rayOrigin;
+
+    // Calculate the cross product of the ray direction and axis direction
+    glm::vec3 crossDir = glm::cross(normalizedRayDir, normalizedAxisDir);
+
+    // If the cross product is zero, the ray and axis are parallel and do not intersect
+    if (glm::length(crossDir) < 1e-2) {
+        return glm::vec3(0.0f);
+    }
+
+    // Calculate the distance along the ray direction to the intersection point
+    float t = glm::dot(glm::cross(originToOrigin, normalizedAxisDir), crossDir) / glm::length2(crossDir);
+
+    // Calculate the intersection point
+    glm::vec3 intersectionPoint = rayOrigin + t * normalizedRayDir;
+
+    // Project the intersection point onto the axis
+    glm::vec3 projectedIntersectionPoint = axisOrigin + glm::dot(intersectionPoint - axisOrigin, normalizedAxisDir) * normalizedAxisDir;
+
+    return projectedIntersectionPoint;
+}
+
+//if we want to make another gizmo that moves two axis at the same time we sould use this (still doesnt work as intended)
+glm::vec3 GetRayPlainIntersection(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, const glm::vec3& axisOrigin, const glm::vec3& axisDirection) {
+    glm::vec3 normalizedRayDir = glm::normalize(rayDirection);
+    glm::vec3 normalizedAxisDir = glm::normalize(axisDirection);
+
+    // Calculate the vector from the ray origin to the axis origin
+    glm::vec3 originToOrigin = axisOrigin - rayOrigin;
+
+    // Calculate the projection of the originToOrigin vector onto the axis direction
+    float t = glm::dot(originToOrigin, normalizedAxisDir) / glm::dot(normalizedRayDir, normalizedAxisDir);
+
+    // Calculate the intersection point
+    glm::vec3 intersectionPoint = rayOrigin + t * normalizedRayDir;
+
+    return intersectionPoint;
+}
 
 void Gizmos::MoveObjectAlongAxis(const glm::vec3& rayOrigin, glm::vec3& rayDirection, const glm::vec3& axis) {
- 
-    glm::vec3 normalizedRayDir = glm::normalize(rayDirection);
-    glm::vec3 normalizedAxis = glm::normalize(axis);
+   
+    Application->input->GetSelectedGameObject()->GetTransform()->SetPosition(GetRayAxisIntersection(rayOrigin, rayDirection, Application->input->GetSelectedGameObject()->GetTransform()->GetPosition(), axis));
+	sphere3 = GetRayAxisIntersection(rayOrigin,rayDirection, Application->input->GetSelectedGameObject()->GetTransform()->GetPosition(),axis);
 
-    // Compute the projection of the ray direction onto the axis
-    float projectionScale = glm::dot(normalizedRayDir, normalizedAxis);
-    glm::dvec3 projectedRayDir = projectionScale * normalizedAxis;
-
-    // Find the closest point on the axis to the ray origin
-  
-    // Move the selected game object to the projected point
-    Application->input->GetSelectedGameObject()->GetTransform()->SetPosition(projectedRayDir);
 }

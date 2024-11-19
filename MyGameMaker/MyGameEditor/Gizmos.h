@@ -29,12 +29,18 @@ public:
 
 	void MoveObjectAlongAxis(const glm::vec3& rayOrigin, glm::vec3& rayDirection, const glm::vec3& axis);
 
+	glm::vec3 sphere1;
+	glm::vec3 sphere2;
+	glm::vec3 sphere3;
+
 private:
 
 	glm::vec3 selectedAxis = glm::vec3(0,0,0);
 	bool isAxisSelected = false;
 	glm::vec3 rayStartPos;
 	glm::vec3 rayDir;
+
+
 
 };
 

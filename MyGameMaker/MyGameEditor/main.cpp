@@ -38,6 +38,8 @@
 #include "App.h"
 
 
+#include "Gizmos.h"
+
 using namespace std;
 
 
@@ -275,6 +277,23 @@ void Draw3DRectangle(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, 
 	glEnd();
 }
 
+//using it to debug axis movement will be removed
+void CreateSphere(const glm::vec3& position, float radius, const glm::vec3& color) {
+
+	glColor3f(color.r, color.g, color.b);
+	glPushMatrix();
+	glTranslatef(position.x, position.y, position.z);
+
+	// Create a sphere using OpenGL
+	GLUquadric* quad = gluNewQuadric();
+	gluSphere(quad, radius, 20, 20);
+	gluDeleteQuadric(quad);
+
+	glPopMatrix();
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+}
+
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
@@ -283,6 +302,9 @@ static void display_func() {
 	
 	configureCamera();
 	drawFloorGrid(16, 0.25);
+
+	//debug for axis movement, will delete later
+	CreateSphere(Application->gizmos->sphere3, 0.1f, glm::vec3(0.0f, 0.0f, 1.0f)); 
 
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();

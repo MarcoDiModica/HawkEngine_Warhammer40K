@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include "MyWindow.h"
+#include <imGuizmo.h>
 
 #include "UIElement.h"
 #include "UIConsole.h"
@@ -108,6 +109,7 @@ bool MyGUI::Start() {
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
 	if (!&io)
 	{
@@ -185,6 +187,8 @@ void MyGUI::Render() {
 	if (showSceneWindow) {
 		UISceneWindowPanel->Draw();
 	}
+
+
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -7,7 +7,9 @@
 #include <imgui_impl_opengl3.h>
 #include <SDL2/SDL.h>
 #include <iostream>
-
+#include <ImGuizmo.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, name)
 {
@@ -44,7 +46,7 @@ void UISceneWindow::Init()
 	// Unbind the framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
-ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse;
+ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;;
 
 bool UISceneWindow::Draw()
 {
@@ -100,6 +102,44 @@ bool UISceneWindow::Draw()
 
 		// Because I use the texture from OpenGL, I need to invert the V from the UV.
 		ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, imageSize, ImVec2(0, 1), ImVec2(1, 0));
+
+		ImGuizmo::SetDrawlist();
+
+        // Set the ImGuizmo viewport
+        ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
+
+        // Define the view and projection matrices
+        glm::mat4 viewMatrix = Application->camera->view();
+        glm::mat4 projectionMatrix = Application->camera->projection();
+
+        // Convert matrices to float arrays
+        float view[16];
+        float projection[16];
+        memcpy(view, &viewMatrix, sizeof(float) * 16);
+        memcpy(projection, &projectionMatrix, sizeof(float) * 16);
+
+        // Get the selected game object
+        GameObject* selectedObject = Application->input->GetSelectedGameObject();
+        if (selectedObject != nullptr) {
+            // Get the transformation matrix of the selected object
+            glm::mat4 matrix = selectedObject->GetTransform()->GetMatrix();
+
+            // Convert matrix to float array
+            float objectMatrix[16];
+            memcpy(objectMatrix, &matrix, sizeof(float) * 16);
+
+            // Manipulate the transformation matrix
+            ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE, ImGuizmo::WORLD, objectMatrix);
+
+			glm::vec3 position, rotation, scale;
+			ImGuizmo::DecomposeMatrixToComponents(objectMatrix, glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale));
+
+		
+			selectedObject->GetTransform()->SetPosition(position);
+			//changesetrotation
+			selectedObject->GetTransform()->SetRotation(rotation);
+			selectedObject->GetTransform()->SetScale(scale);
+        }
 	}
 	ImGui::End();
 

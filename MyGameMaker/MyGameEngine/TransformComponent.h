@@ -48,6 +48,8 @@ public:
     void Rotate(double rads, const glm::dvec3& axis);
     void Scale(const glm::dvec3& scale);
     void LookAt(const glm::dvec3& target);
+	void SetRotation(const glm::dvec3& eulerAngles);
+	void SetScale(const glm::dvec3& scale);
 
     Transform_Component operator*(const glm::dmat4& other) const {
         Transform_Component result(*this);

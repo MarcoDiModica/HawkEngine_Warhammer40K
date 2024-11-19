@@ -27,7 +27,11 @@ public:
 	
 	bool IntersectAxis(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, glm::vec3& outAxis);
 
+	bool IntersectPlanes(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, glm::vec3& outAxis);
+
 	void MoveObjectAlongAxis(const glm::vec3& rayOrigin, glm::vec3& rayDirection, const glm::vec3& axis);
+
+	void MoveObjectAlongPlane(const glm::vec3& rayOrigin, glm::vec3& rayDirection, const glm::vec3& axis);
 
 	glm::vec3 sphere1;
 	glm::vec3 sphere2;
@@ -36,12 +40,13 @@ public:
 private:
 
 	glm::vec3 selectedAxis = glm::vec3(0,0,0);
+	glm::vec3 selectedPlane = glm::vec3(0, 0, 0);
 	bool isAxisSelected = false;
 	glm::vec3 rayStartPos;
 	glm::vec3 rayDir;
 
-
-
+	void DrawMovementArrows();
+	void DrawAxisPlanesMovement();
 };
 
 #endif

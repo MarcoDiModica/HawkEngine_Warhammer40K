@@ -304,6 +304,7 @@ static void display_func() {
 	drawFloorGrid(16, 0.25);
 
 	//debug for axis movement, will delete later
+	CreateSphere(Application->gizmos->sphere1, 0.2f, glm::vec3(1.0f, 0.0f, 0.0f));
 	CreateSphere(Application->gizmos->sphere3, 0.1f, glm::vec3(0.0f, 0.0f, 1.0f)); 
 
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
@@ -339,7 +340,7 @@ static void display_func() {
 		}
 	}
 	//It has to go AFTER drawing the objects
-	Application->gizmos->DrawGizmos();
+	//Application->gizmos->DrawGizmos();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -15,15 +15,8 @@ UIConsole::~UIConsole()
 
 bool UIConsole::Draw()
 {
-    ImGui::SetNextWindowSizeConstraints(ImVec2(300, 200), ImVec2(800, 600));
-
-    ImGuiWindowFlags consoleFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize;
-
-    ImVec2 screenSize = ImGui::GetIO().DisplaySize;
-    ImVec2 consolePos = ImVec2(0, screenSize.y - 200);
-
-    ImGui::SetNextWindowPos(consolePos);
-    ImGui::SetNextWindowSize(ImVec2(screenSize.x, 200));
+ 
+    ImGuiWindowFlags consoleFlags = ImGuiWindowFlags_None;
 
     if (ImGui::Begin("Console", &enabled, consoleFlags))
     {
@@ -76,7 +69,8 @@ bool UIConsole::Draw()
 
         ImGui::EndChild(); 
 
-        ImGui::End(); 
+        
     }
+    ImGui::End();
 	return true;
 }

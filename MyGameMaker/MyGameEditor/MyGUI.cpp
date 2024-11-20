@@ -164,6 +164,34 @@ void MyGUI::Render() {
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
+	// Docking
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->WorkPos);
+	ImGui::SetNextWindowSize(viewport->WorkSize);
+	ImGui::SetNextWindowViewport(viewport->ID);
+
+	ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoDocking |
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoBringToFrontOnFocus |
+		ImGuiWindowFlags_AlwaysAutoResize |
+		ImGuiWindowFlags_UnsavedDocument |
+		ImGuiDockNodeFlags_AutoHideTabBar |
+		ImGuiWindowFlags_NoNavFocus;
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+	ImGui::Begin("DockSpace", nullptr, windowFlags);
+	ImGui::PopStyleVar(3);
+
+	ImGuiID dockspaceID = ImGui::GetID("MyDockSpace");
+	ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+	ImGui::End();
+
 	if (showHierarchy) {
 		UIHierarchyPanel->Draw();
 	}

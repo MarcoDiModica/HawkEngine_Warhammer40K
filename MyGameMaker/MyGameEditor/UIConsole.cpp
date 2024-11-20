@@ -15,8 +15,13 @@ UIConsole::~UIConsole()
 
 bool UIConsole::Draw()
 {
- 
     ImGuiWindowFlags consoleFlags = ImGuiWindowFlags_None;
+
+    if (firstDraw)
+    {
+        ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_FirstUseEver);
+		firstDraw = false; 
+    }
 
     if (ImGui::Begin("Console", &enabled, consoleFlags))
     {

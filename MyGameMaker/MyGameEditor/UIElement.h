@@ -29,6 +29,8 @@ public:
 	virtual bool GetState();
 	virtual void SetState(bool state);
 	virtual void SwitchState();
+	
+	bool firstDraw = true;
 
 protected:
 

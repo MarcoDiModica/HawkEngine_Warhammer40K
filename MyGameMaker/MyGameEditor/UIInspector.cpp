@@ -96,7 +96,8 @@ bool UIInspector::Draw()
 				{
 					// Scale is just for visualization at the moment
 				}
-
+				ImGui::Checkbox("SnapMovement", &snap);
+				ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f,10.0f);
 
 			}
 

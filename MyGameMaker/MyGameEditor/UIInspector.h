@@ -12,9 +12,12 @@ public:
 	~UIInspector();
 
 	bool Draw();
+	bool snap = false;
+	float snapValue = 1;
 
 private:
 	bool matrixDirty;
+	
 
 	glm::vec3 position;
 	glm::vec3 rotationDegrees;

@@ -1,4 +1,5 @@
 #include "UISceneWindow.h"
+#include "UIInspector.h"
 #include "App.h"
 #include "MyGUI.h"
 #include <imgui.h>
@@ -10,6 +11,7 @@
 #include <ImGuizmo.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 
 UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, name)
 {
@@ -128,17 +130,25 @@ bool UISceneWindow::Draw()
             float objectMatrix[16];
             memcpy(objectMatrix, &matrix, sizeof(float) * 16);
 
-            // Manipulate the transformation matrix
-            ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE, ImGuizmo::WORLD, objectMatrix);
+			float snap[3] = { 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue } ;
+
+			if (Application->gui->UIinspectorPanel->snap) 
+			{
+				ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE, ImGuizmo::LOCAL, objectMatrix, NULL, snap);
+			}	
+			else
+			{
+				ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE, ImGuizmo::LOCAL, objectMatrix, NULL);
+			}
 
 			glm::vec3 position, rotation, scale;
 			ImGuizmo::DecomposeMatrixToComponents(objectMatrix, glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale));
 
-		
-			selectedObject->GetTransform()->SetPosition(position);
-			//changesetrotation
-			selectedObject->GetTransform()->SetRotation(rotation);
-			selectedObject->GetTransform()->SetScale(scale);
+			ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale), objectMatrix);
+
+			glm::mat4 newMatrix = glm::make_mat4(objectMatrix);
+
+			Application->input->GetSelectedGameObject()->GetTransform()->SetMatrix(newMatrix);			
         }
 	}
 	ImGui::End();

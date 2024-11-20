@@ -50,6 +50,7 @@ public:
     void LookAt(const glm::dvec3& target);
 	void SetRotation(const glm::dvec3& eulerAngles);
 	void SetScale(const glm::dvec3& scale);
+	void SetMatrix(const glm::dmat4& newMatrix) { matrix = newMatrix; }
 
     Transform_Component operator*(const glm::dmat4& other) const {
         Transform_Component result(*this);

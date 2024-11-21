@@ -34,9 +34,13 @@ bool UISettings::Draw()
 		ImGuiWindowFlags_NoScrollbar |
 		ImGuiWindowFlags_NoScrollWithMouse |
 		ImGuiWindowFlags_NoCollapse;
+	ImGuiWindowClass windowClass;
 
 	ImVec2 mainViewportPos = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(ImVec2(mainViewportPos.x, mainViewportPos.y), ImGuiCond_Appearing, ImVec2(0.5, 0.8));
+
+	ImGui::SetNextWindowClass(&windowClass);
+	windowClass.DockingAllowUnclassed = false;
 
 	if (ImGui::Begin("Settings", &enabled, settingsFlags))
 	{

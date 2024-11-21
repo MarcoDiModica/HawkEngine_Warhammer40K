@@ -31,20 +31,21 @@ UIInspector::~UIInspector()
 
 bool UIInspector::Draw()
 {
-	ImGuiWindowFlags inspectorFlags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_AlwaysAutoResize;
+	ImGuiWindowFlags inspectorFlags = ImGuiWindowFlags_None | ImGuiWindowFlags_NoCollapse;
+	ImGuiWindowClass windowClass;
 
-	ImVec2 screenSize = ImGui::GetIO().DisplaySize;
-	ImVec2 inspectorPos = ImVec2(screenSize.x - 300, 30);
+	if (firstDraw)
+	{
+		ImGui::SetNextWindowSize(ImVec2(300, 600), ImGuiCond_FirstUseEver);
+		firstDraw = false;
+	}
 
-	ImGui::SetNextWindowPos(inspectorPos);
-	ImGui::SetNextWindowSize(ImVec2(300, screenSize.y));
-
-	
+	ImGui::SetNextWindowClass(&windowClass);
+	windowClass.DockingAllowUnclassed = false;
 
 	if (ImGui::Begin("Inspector", &enabled, inspectorFlags))
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		ImGui::SetNextWindowSize(ImVec2(250, 650), ImGuiCond_Once);
 
 		auto selectedGameObject = Application->input->GetSelectedGameObject();
 

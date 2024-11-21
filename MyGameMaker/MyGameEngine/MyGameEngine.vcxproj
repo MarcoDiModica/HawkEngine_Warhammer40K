@@ -85,6 +85,7 @@
     <ClInclude Include="readOnlyView.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManagement.h" />
+    <ClInclude Include="Shaders.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TreeExt.h" />
     <ClInclude Include="types.h" />
@@ -100,6 +101,7 @@
     <ClCompile Include="MeshRendererComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManagement.cpp" />
+    <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

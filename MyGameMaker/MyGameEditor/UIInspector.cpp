@@ -10,6 +10,7 @@
 #include "..\MyGameEngine\MeshRendererComponent.h"
 #include "..\MyGameEngine\Mesh.h"
 #include "..\MyGameEngine\Image.h"
+#include <string>
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -38,6 +39,8 @@ bool UIInspector::Draw()
 	ImGui::SetNextWindowPos(inspectorPos);
 	ImGui::SetNextWindowSize(ImVec2(300, screenSize.y));
 
+	
+
 	if (ImGui::Begin("Inspector", &enabled, inspectorFlags))
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -52,53 +55,66 @@ bool UIInspector::Draw()
 
 		if (selectedGameObject != nullptr)
 		{
+			char newName[128] = {};
+			strncpy_s(newName, selectedGameObject->GetName().c_str(), sizeof(newName));
 			ImGui::SameLine(); ImGui::Text("GameObject:");
-			ImGui::SameLine(); ImGui::Text(selectedGameObject->GetName().c_str());
+			if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue))
+			{
+				if (strlen(newName) > 0)
+				{
+					selectedGameObject->SetName(newName);
+				}
+			}
+			ImGui::SameLine(); ImGui::Checkbox("Static", &Application->input->GetSelectedGameObject()->isStatic);
 
 			std::shared_ptr<Transform_Component> transform = selectedGameObject->GetTransform();
 
 			if (transform)
 			{
-				ImGui::Text("Transform");
-				ImGui::Separator();
-
-				glm::dvec3 currentPosition = transform->GetPosition();
-				glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
-				glm::dvec3 currentScale = transform->GetScale();
-
-				float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
-				// Ojo que hay que castear a grados creo
-				float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
-				float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
-
-				if (ImGui::DragFloat3("Postition", pos, 0.1f))
+				
+				if (ImGui::CollapsingHeader("Transform"))
 				{
-					glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-					glm::dvec3 deltaPos = newPosition - currentPosition;
-					transform->Translate(deltaPos);
+					//ImGui::Separator();
+
+					glm::dvec3 currentPosition = transform->GetPosition();
+					glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
+					glm::dvec3 currentScale = transform->GetScale();
+
+					float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+					// Ojo que hay que castear a grados creo
+					float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
+					float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+
+					if (ImGui::DragFloat3("Postition", pos, 0.1f))
+					{
+						glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
+						glm::dvec3 deltaPos = newPosition - currentPosition;
+						transform->Translate(deltaPos);
+					}
+
+					if (ImGui::DragFloat3("Rotation", rot, 0.1f))
+					{
+						glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
+						glm::dvec3 deltaRot = newRotation - currentRotation;
+
+						//float newX = deltaRot.x * DEGTORAD;
+						//float newY = deltaRot.y * DEGTORAD;
+						//float newZ = deltaRot.z * DEGTORAD;
+
+						transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+						transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+						transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+					}
+
+					if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 0.1f))
+					{
+						transform->Scale(glm::dvec3(sca[0], sca[1], sca[2]));
+					}
+					ImGui::Checkbox("Snap", &snap);
+					ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f,10.0f);
+
+					
 				}
-
-				if (ImGui::DragFloat3("Rotation", rot, 0.1f))
-				{
-					glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-					glm::dvec3 deltaRot = newRotation - currentRotation;
-
-					//float newX = deltaRot.x * DEGTORAD;
-					//float newY = deltaRot.y * DEGTORAD;
-					//float newZ = deltaRot.z * DEGTORAD;
-
-					transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-					transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-					transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
-				}
-
-				if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.01f, 100.0f))
-				{
-					// Scale is just for visualization at the moment
-				}
-				ImGui::Checkbox("SnapMovement", &snap);
-				ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f,10.0f);
-
 			}
 
 			ImGui::Separator();

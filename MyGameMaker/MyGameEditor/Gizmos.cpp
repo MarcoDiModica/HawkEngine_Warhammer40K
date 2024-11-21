@@ -8,9 +8,9 @@
 #include <GL/glew.h>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/norm.hpp> 
-#include "ImGuizmo.h"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
+#include "ImGuizmo.h"
 
 Gizmos::Gizmos(App* app) : Module(app) { ; }
 
@@ -26,14 +26,6 @@ bool Gizmos::Start() { return true; }
 bool Gizmos::Awake() { return true; }
 
 bool Gizmos::Update(double dt) {
-
-    rayStartPos = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
-    rayDir = Application->input->getMousePickRay();
-
-	if (Application->input->GetSelectedGameObject() != nullptr) {
-        ProcessMousePicking();
-	}
-
 
 	return true;
 }

@@ -104,7 +104,7 @@ private:
 public:
 
     bool isSelected = false;
-
+    bool isStatic = false;
 };
 
 

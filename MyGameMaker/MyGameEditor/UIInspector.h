@@ -14,6 +14,7 @@ public:
 	bool Draw();
 	bool snap = false;
 	float snapValue = 1;
+	bool once = false;
 
 private:
 	bool matrixDirty;

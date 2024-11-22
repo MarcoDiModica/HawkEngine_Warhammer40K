@@ -10,7 +10,7 @@ public:
     ~Shaders();
 
     bool LoadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile);
-    void Use() const;
+    void Bind() const;
     GLuint GetProgram() const;
 
     void SetUniform(const std::string& name, int value);

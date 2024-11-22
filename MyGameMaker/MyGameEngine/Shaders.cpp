@@ -39,7 +39,7 @@ bool Shaders::LoadShaders(const std::string& vertexShaderFile, const std::string
     return true;
 }
 
-void Shaders::Use() const {
+void Shaders::Bind() const {
     glUseProgram(_program);
 }
 

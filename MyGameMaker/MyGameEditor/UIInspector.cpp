@@ -72,7 +72,7 @@ bool UIInspector::Draw()
 
 			if (transform)
 			{
-				
+				ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 				if (ImGui::CollapsingHeader("Transform"))
 				{
 					//ImGui::Separator();
@@ -114,10 +114,11 @@ bool UIInspector::Draw()
 					ImGui::Checkbox("Snap", &snap);
 					ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f,10.0f);
 
-					
+				
 				}
 			}
 
+			if ()
 			ImGui::Separator();
 
 			std::shared_ptr<Mesh> mesh = selectedGameObject->GetComponent<MeshRenderer>()->GetMesh();

@@ -17,7 +17,7 @@ public:
 
 	void Serialize();
 
-	void DeSerialize();
+	void DeSerialize(std::string path);
 
 
 };

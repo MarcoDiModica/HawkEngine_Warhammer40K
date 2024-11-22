@@ -86,6 +86,11 @@ protected:
         auto position = GetPosition();
 
         return YAML::convert<glm::dvec3>::encode(position);
+
+        node["x"] = position.x;
+        node["y"] = position.y;
+        node["z"] = position.z;
+        return node;
     }
 
     YAML::Node encodeRotation() {
@@ -102,7 +107,10 @@ protected:
         YAML::Node node;
         auto scale = GetScale();
 
-        return YAML::convert<glm::dvec3>::encode(scale);
+        node["x"] = scale.x;
+        node["y"] = scale.y;
+        node["z"] = scale.z;
+        return node;
     }
 
     bool decode(const YAML::Node& node) {
@@ -112,10 +120,6 @@ protected:
         if (!node["position"] || !node["rotation"] || !node["scale"])
             return false;
 
-        YAML::convert<glm::dvec3>::decode(node, position);
-        glm::dvec3 new_scale;
-        YAML::convert<glm::dvec3>::decode(node, new_scale);
-        SetScale(new_scale);
 
       /*  position
 

@@ -13,6 +13,8 @@ void SceneSerializer::Serialize() {
 	std::vector gameObjects = Application->root->currentScene->_children;
 
 	YAML::Emitter emitter;
+	YAML::Node game_object_node;
+
 
 	for (size_t i = 0; i < gameObjects.size(); ++i) {
 
@@ -29,7 +31,7 @@ void SceneSerializer::Serialize() {
 		}
 
 		/*node["transform"] = gameObjects[i]->GetTransform()->encode();*/
-
+		//game_object_node["GameObject"] = node;
 		/*Save node to the emitter*/
 		emitter << node;
 	}
@@ -43,5 +45,19 @@ void SceneSerializer::Serialize() {
 
 		file.close();
 	}
+
+}
+
+
+void SceneSerializer::DeSerialize(std::string path) {
+
+	YAML::Emitter emitter;
+	YAML::Node node = YAML::LoadFile(path);
+
+	emitter << node;
+
+	std::string saved_string = emitter.c_str();
+
+	int i = 9;
 
 }

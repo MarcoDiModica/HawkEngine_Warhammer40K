@@ -42,6 +42,7 @@ protected:
 
 	bool IsOwnerValid() const { return !owner.expired(); }
 
+	// Saves the important attributes returning a Yaml node
 	virtual YAML::Node encode() {
 		YAML::Node node;
 
@@ -49,6 +50,17 @@ protected:
 		node["enabled"] = enabled;
 
 		return node;
+	}
+
+	// Pass the Yaml Node you want to extract data from
+	virtual bool decode(const YAML::Node& node) {
+		if (!node["name"] || !node["enabled"])
+			return false;
+
+		name = node["name"].as<std::string>();
+		enabled = node["enabled"].as<bool>();
+
+		return true;
 	}
 };
 

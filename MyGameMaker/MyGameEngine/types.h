@@ -4,6 +4,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <yaml-cpp/yaml.h>
 
 // Math constants
 #define PI 3.14159265358979323846f;
@@ -35,6 +36,30 @@ using mat4 = glm::dmat4;
 using vec4 = glm::dvec4;
 using vec3 = glm::dvec3;
 using u8vec3 = glm::u8vec3;
+
+// Specialize YAML::convert for glm::dvec3
+namespace YAML {
+    template<>
+    struct convert<glm::dvec3> {
+        static Node encode(const glm::dvec3& rhs) {
+            Node node;
+            node["x"] = (rhs.x);
+            node["y"] = (rhs.y);
+            node["z"] = (rhs.z);
+            return node;
+        }
+
+        static bool decode(const Node& node, glm::dvec3& rhs) {
+            if (!node.IsSequence() || node.size() != 3) {
+                return false;  // Ensure it's a sequence of three elements
+            }
+            rhs.x = node[0].as<double>();
+            rhs.y = node[1].as<double>();
+            rhs.z = node[2].as<double>();
+            return true;
+        }
+    };
+}
 
 namespace Colors {
 	const glm::u8vec3 Red(255, 0, 0);

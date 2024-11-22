@@ -128,6 +128,7 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     meshRenderer->SetMaterial(material);
 
     //if (material->loadShaders("vertex_shader.glsl", "fragment_shader.glsl")) {
+    //    material->useShader = true;
     //    material->bindShaders();
     //}
     meshRenderer->SetImage(image);

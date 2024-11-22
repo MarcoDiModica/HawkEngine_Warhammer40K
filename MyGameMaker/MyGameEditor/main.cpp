@@ -31,6 +31,7 @@
 #include "MyGUI.h"
 #include "UISceneWindow.h"
 
+
 //pruebas de include "StaticLibEngineIncludes"
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
@@ -303,14 +304,13 @@ static void display_func() {
 	configureCamera();
 	drawFloorGrid(16, 0.25);
 
-	//debug for axis movement, will delete later
-	CreateSphere(Application->gizmos->sphere1, 0.2f, glm::vec3(1.0f, 0.0f, 0.0f));
-	CreateSphere(Application->gizmos->sphere3, 0.1f, glm::vec3(0.0f, 0.0f, 1.0f)); 
+
 
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
 
-	Draw3DRectangle(rayOrigin, rayDirection, 1.0f, 1.0f, 1.0f);
+	//Debug for mousepicking
+	//Draw3DRectangle(rayOrigin, rayDirection, 1.0f, 1.0f, 1.0f);
 	
 
 	// TODO cambiar esto de sitio
@@ -378,7 +378,7 @@ int main(int argc, char** argv) {
 	//camera = cameraPtr.get();
 
 	//Application->camera = shared_ptr<Camera>
-
+	
 
 	//initialize devil
 	ilInit();
@@ -388,7 +388,6 @@ int main(int argc, char** argv) {
 	init_openGL();
 
 	camera = Application->camera;
-
 
 	while (state != EXIT) 
 	{
@@ -429,6 +428,7 @@ int main(int argc, char** argv) {
 			break;
 
 		case LOOP:
+			
 
 			PauCode2(Application->gui);
 

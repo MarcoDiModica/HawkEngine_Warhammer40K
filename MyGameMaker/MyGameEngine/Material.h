@@ -15,6 +15,7 @@ public:
 
 	Shaders shader;
 
+	bool useShader = false;
 private:
 	std::shared_ptr<Image> imagePtr;
 

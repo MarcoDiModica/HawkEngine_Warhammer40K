@@ -246,6 +246,8 @@ void Mesh::LoadMesh(const char* file_path)
 					all_texCoords.push_back(glm::vec2(mesh->mTextureCoords[0][j].x, -mesh->mTextureCoords[0][j].y));
 				}
 			}
+
+
 			
 			// Copy normals
 			if (mesh->HasNormals()) {
@@ -269,6 +271,8 @@ void Mesh::LoadMesh(const char* file_path)
 
 		if (!all_texCoords.empty()) {
 			loadTexCoords(all_texCoords.data(), all_texCoords.size());
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), (void*)0);
+			glEnableVertexAttribArray(1);
 		}
 
 		if (!all_normals.empty()) {

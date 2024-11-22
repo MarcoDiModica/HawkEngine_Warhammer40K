@@ -6,7 +6,13 @@
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 #include "Image.h"
+#include "Shaders.h"
 #include <iostream>
+
+//cosailegal
+#include "../MyGameEditor/App.h"
+#include "../MyGameEditor/Camera.h"
+#include "../MyGameEditor/Transform.h"
 
 MeshRenderer::MeshRenderer(std::weak_ptr<GameObject> owner) : Component(owner) { name = "MeshRenderer"; }
 
@@ -78,16 +84,35 @@ std::shared_ptr<Image> MeshRenderer::GetImage() const
 
 void MeshRenderer::Render() const
 {
+
+    if (material && material->useShader)
+    {
+        material->bindShaders();
+        material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
+        material->setShaderUniform("model", owner.lock()->GetComponent<Transform_Component>()->GetMatrix());
+        material->setShaderUniform("view", Application->camera->view());
+        material->setShaderUniform("projection", Application->camera->projection());
+
+
+
+
+     
+
+        
+    }
+
     if (material)
     {
         glEnable(GL_TEXTURE_2D);
         material->bind();
+        material->setShaderUniform("texture1", 0); // Pasar la unidad de textura al shader
     }
-
+  
     if (mesh)
     {
         mesh->Draw();
     }
+
 
     if (material)
     {

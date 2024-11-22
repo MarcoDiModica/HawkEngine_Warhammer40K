@@ -6,6 +6,7 @@
 class Mesh;
 class Material;
 class Image;
+class Shaders;
 
 class MeshRenderer : public Component {
 public:

@@ -118,7 +118,7 @@ bool UIInspector::Draw()
 				}
 			}
 
-			if ()
+			
 			ImGui::Separator();
 
 			std::shared_ptr<Mesh> mesh = selectedGameObject->GetComponent<MeshRenderer>()->GetMesh();

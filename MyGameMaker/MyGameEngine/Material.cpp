@@ -33,3 +33,29 @@ void Material::bind() const {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GLMinFilter(filter));
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GLMagFilter(filter));
 }
+
+bool Material::loadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {
+	return shader.LoadShaders(vertexShaderFile, fragmentShaderFile);
+}
+
+// Function to bind shaders
+void Material::bindShaders() const {
+	shader.Bind();
+}
+
+// Function to set shader uniforms
+void Material::setShaderUniform(const std::string& name, int value) {
+	shader.SetUniform(name, value);
+}
+
+void Material::setShaderUniform(const std::string& name, float value) {
+	shader.SetUniform(name, value);
+}
+
+void Material::setShaderUniform(const std::string& name, const glm::vec3& value) {
+	shader.SetUniform(name, value);
+}
+
+void Material::setShaderUniform(const std::string& name, const glm::mat4& value) {
+	shader.SetUniform(name, value);
+}

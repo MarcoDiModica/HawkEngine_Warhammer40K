@@ -25,6 +25,16 @@ void MeshRenderer::Destroy()
     mesh.reset();
 }
 
+std::shared_ptr<Component> MeshRenderer::Clone()
+{
+	auto meshRenderer = std::make_shared<MeshRenderer>(*this);
+	meshRenderer->mesh = mesh;
+	meshRenderer->material = material;
+	meshRenderer->image = image;
+	meshRenderer->color = color;
+	return meshRenderer;
+}
+
 void MeshRenderer::SetMesh(std::shared_ptr<Mesh> mesh)
 {
     this->mesh = mesh;

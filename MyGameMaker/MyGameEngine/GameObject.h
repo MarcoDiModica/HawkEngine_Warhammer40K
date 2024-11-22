@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Component.h"
 #include "TransformComponent.h"
 #include "TreeExt.h"
@@ -21,6 +20,9 @@ class GameObject : public std::enable_shared_from_this<GameObject>, public TreeE
 public:
     GameObject(const std::string& name = "GameObject");
     ~GameObject();
+
+    GameObject(const GameObject& other);
+    GameObject& operator=(const GameObject& other);
 
     template <IsComponent T, typename... Args>
     std::shared_ptr<T> AddComponent(Args&&... args);
@@ -58,25 +60,22 @@ public:
 
     std::shared_ptr<Transform_Component> GetTransform() const { return transform; }
 
-    //Primitive Creation
-    static std::shared_ptr<GameObject> CreateEmptyGameObject(const std::string& name = "EmptyGameObject");
-    static std::shared_ptr<GameObject> CreateCube(const std::string& name = "Cube");
-    static std::shared_ptr<GameObject> CreateSphere(const std::string& name = "Sphere");
-    static std::shared_ptr<GameObject> CreatePlane(const std::string& name = "Plane");
-    static std::shared_ptr<GameObject> CreateQuad(const std::string& name = "Quad");
-    static std::shared_ptr<GameObject> CreateCylinder(const std::string& name = "Cylinder");
-    static std::shared_ptr<GameObject> CreateCapsule(const std::string& name = "Capsule");
-
     DrawMode drawMode = DrawMode::PushPopMatrix;
 
+    unsigned int GetId() const { return gid; }
+
     bool operator==(const GameObject& other) const {
-        return name == other.name;
+        return gid == other.gid;
     }
 
+    bool operator!=(const GameObject& other) const {
+        return !(*this == other);
+    }
 
+    bool isSelected = false;
+    bool isStatic = false;
 
 private:
-
     friend class SceneSerializer;
 
     void DrawAccumultedMatrix() const;
@@ -84,11 +83,11 @@ private:
     void DrawPushPopMatrix() const;
 
     std::string name;
+    unsigned int gid;
+    static unsigned int nextGid;
     std::string tag = "Untagged";
     bool active = true;
     bool destroyed = false;
-
-
 
     std::unordered_map<std::type_index, std::shared_ptr<Component>> components;
 
@@ -97,14 +96,6 @@ private:
 
     std::shared_ptr<Transform_Component> transform;
     std::shared_ptr<Mesh> mesh;
-
-
-    
-
-public:
-
-    bool isSelected = false;
-    bool isStatic = false;
 };
 
 

@@ -84,7 +84,6 @@
     <ClInclude Include="MeshRendererComponent.h" />
     <ClInclude Include="readOnlyView.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManagement.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TreeExt.h" />
@@ -93,14 +92,12 @@
   <ItemGroup>
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="BufferObject.cpp" />
-    <ClCompile Include="CreateGameObjects.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRendererComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManagement.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>

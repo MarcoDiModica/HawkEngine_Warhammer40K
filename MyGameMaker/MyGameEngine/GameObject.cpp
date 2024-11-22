@@ -1,10 +1,11 @@
 #include "GameObject.h"
 #include "MeshRendererComponent.h"
 #include "../MyGameEditor/App.h"
-//#include "../MyGameEditor/Root.h"
 #include <iostream>
 
-GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)) 
+unsigned int GameObject::nextGid = 1;
+
+GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), gid(nextGid++)
 {
     transform = AddComponent<Transform_Component>();
 }
@@ -19,6 +20,40 @@ GameObject::~GameObject()
     for (auto& child : children()) {
         child.Destroy();
     }
+}
+
+GameObject::GameObject(const GameObject& other) :
+    name(other.name),
+    gid(nextGid++),
+    active(other.active),
+    transform(std::make_shared<Transform_Component>(*other.transform)),
+    mesh(other.mesh),
+    tag(other.tag),
+    cachedComponentType(typeid(Component))
+{
+    for (const auto& component : other.components) {
+        components[component.first] = component.second->Clone();
+    }
+}
+
+GameObject& GameObject::operator=(const GameObject& other) {
+    if (this != &other)
+    {
+        name = other.name;
+        gid = nextGid++;
+        active = other.active;
+        transform = std::make_shared<Transform_Component>(*other.transform);
+        mesh = other.mesh;
+        tag = other.tag;
+
+        components.clear();
+
+        for (const auto& component : other.components)
+        {
+            components[component.first] = component.second->Clone();
+        }
+    }
+    return *this;
 }
 
 void GameObject::Start()
@@ -56,23 +91,17 @@ void GameObject::Update(float deltaTime)
 
 void GameObject::Destroy()
 {
+    destroyed = true;
 
-    Application->root->RemoveGameObject(name);
-    
-    //if (this) {
+    for (auto& component : components)
+    {
+        component.second->Destroy();
+    }
 
-    //    destroyed = true;
-
-    //    for (auto& component : components)
-    //    {
-    //        component.second->Destroy();
-    //    }
-
-    //    for (auto& child : children())
-    //    {
-    //        child.Destroy();
-    //    }
-    //}
+    for (auto& child : children())
+    {
+        child.Destroy();
+    }
 }
 
 void GameObject::Draw() const

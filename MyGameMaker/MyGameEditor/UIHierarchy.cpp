@@ -74,17 +74,8 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 
 	ImGui::Button("Delete");
 
-	if (ImGui::IsItemClicked(0)) {
-
-		obj.Destroy();
+	if (ImGui::IsItemClicked(0)) 
+	{
+		Application->root->RemoveGameObject(&obj);
 	}
-
-
-
-	//ImGui::SameLine();
-	//if (ImGui::Button("Remove"))
-	//{
-	//	std::cout << "Remove " << obj.GetName();
-	//	Application->root->RemoveGameObject(obj.GetName());
-	//}
 }

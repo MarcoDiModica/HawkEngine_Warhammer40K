@@ -6,6 +6,40 @@
 
 Transform_Component::Transform_Component(std::weak_ptr<GameObject> owner) : Component(owner) { name = "Transform_Component"; }
 
+Transform_Component::Transform_Component(const Transform_Component& other) : Component(other)
+{
+    matrix = other.matrix;
+    position = other.position;
+    left = other.left;
+    up = other.up;
+    forward = other.forward;
+}
+
+Transform_Component& Transform_Component::operator=(const Transform_Component& other)
+{
+    if (this != &other)
+    {
+        Component::operator=(other);
+        matrix = other.matrix;
+        position = other.position;
+        left = other.left;
+        up = other.up;
+        forward = other.forward;
+    }
+    return *this;
+}
+
+std::shared_ptr<Component> Transform_Component::Clone()
+{
+    auto clone = std::make_shared<Transform_Component>(*this);
+    clone->matrix = this->matrix;
+    clone->left = this->left;
+    clone->up = this->up;
+    clone->forward = this->forward;
+    clone->position = this->position;
+    return clone;
+}
+
 void Transform_Component::Translate(const glm::dvec3& translation)
 {
 	matrix = glm::translate(matrix, translation);

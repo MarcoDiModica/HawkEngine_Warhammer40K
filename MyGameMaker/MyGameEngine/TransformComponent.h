@@ -15,9 +15,14 @@ public:
     Transform_Component(std::weak_ptr<GameObject> owner);
     ~Transform_Component() override = default;
 
+    Transform_Component(const Transform_Component& other);
+    Transform_Component& operator=(const Transform_Component& other);
+
     void Start() override {}
     void Update(float deltaTime) override {}
     void Destroy() override {}
+
+    std::shared_ptr<Component> Clone() override;
 
     const auto& GetMatrix() const { return matrix; }
     const auto& GetLeft() const { return left; }
@@ -65,7 +70,6 @@ public:
     }
 
 protected:
-
     friend class SceneSerializer;
 
     YAML::Node encode() {
@@ -76,7 +80,6 @@ protected:
         node["scale"] = encodeScale();
         return node;
     }
-
 
     YAML::Node encodePosition() {
         YAML::Node node;
@@ -108,9 +111,7 @@ protected:
         return node;
     }
 
-
 private:
-
     union
     {
         glm::dmat4 matrix = glm::dmat4(1.0);

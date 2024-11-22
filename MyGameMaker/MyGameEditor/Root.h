@@ -4,9 +4,8 @@
 
 #pragma once
 #include "Module.h"
-//#include "MyGameEngine/Mesh.h"
+#include "../MyGameEngine/Mesh.h"
 #include "../MyGameEngine/GameObject.h"
-#include "../MyGameEngine/SceneManagement.h"
 #include "../MyGameEngine/Scene.h"
 #include "../MyGameEditor/App.h"
 #include "../MyGameEditor/Input.h"
@@ -14,15 +13,9 @@
 #include "SceneSerializer.h"
 #include <list>
 
-class Scene;
-class App;
-class Mesh;
-
 class Root : public Module
 {
 public:
-
-
     Root(App* app);
 
     virtual ~Root() = default;
@@ -37,48 +30,28 @@ public:
 
     bool CleanUp() { return true; }
 
+    void CreateScene(const std::string& name);
+    void AddScene(std::shared_ptr<Scene> scene);
+    void RemoveScene(const std::string& name);
+    void SetActiveScene(const std::string& name);
+    std::shared_ptr<Scene> GetActiveScene() const;
+
+    std::shared_ptr<GameObject> CreateGameObject(const std::string& name);
+    std::shared_ptr<GameObject> CreateCube(const std::string& name);
+    std::shared_ptr<GameObject> CreateSphere(const std::string& name);
+    std::shared_ptr<GameObject> CreatePlane(const std::string& name);
     std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
-    void CreateCubeObject(std::string name);
-    void CreateSphereObject(std::string name);
-    void CreatePlaneObject(std::string name);
-	void CreateEmptyObject(std::string name);
 
-    std::shared_ptr<GameObject> CreateGameObject(std::string name, bool as_child = false);
+    void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png");
 
-    void AddMeshRenderer(GameObject& go, std::shared_ptr<   Mesh> mesh, const std::string& texturePath = "default.png");
-    void RemoveGameObject(std::string name);
-
-public:
+    void RemoveGameObject(GameObject* gameObject);
 
     std::shared_ptr<Scene> currentScene = nullptr;
-    
-    //SceneManagement sceneManagement;
-    //std::shared_ptr<Scene> currentScene = std::make_shared<Scene>("Scene1");
 
     friend SceneSerializer;
 
-};
-
-class Scene {
-public:
-
-    Scene(std::string SceneName = "Scene") {
-        name = SceneName;
-    }
-
-    void DestroyScene();
-
-    std::string name;
-
-    auto children()const { return readOnlyVector<std::shared_ptr<GameObject>>(_children); }
-
-
 private:
-    /*These class can modify the vector*/
-    friend class Root;
-    friend class SceneSerializer;
-
-    std::vector< std::shared_ptr<GameObject> > _children;
+    std::vector<std::shared_ptr<Scene>> scenes;
 };
 
 #endif

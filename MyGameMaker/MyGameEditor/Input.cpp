@@ -184,7 +184,7 @@ bool Input::processSDLEvents()
                 //mesh->LoadCheckerTexture();
 
                 //Application->root->CreateMeshObject(fileNameExt,  mesh);
-                auto go = Application->root->CreateGameObject(fileNameExt, false);
+                auto go = Application->root->CreateGameObject(fileNameExt);
                 Application->root->AddMeshRenderer(*go, mesh, "Assets/default.png");
 
                 //Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());

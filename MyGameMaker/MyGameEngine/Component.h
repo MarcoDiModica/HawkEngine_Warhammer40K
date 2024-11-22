@@ -22,6 +22,8 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	virtual void Destroy() = 0;
 
+	virtual std::shared_ptr<Component> Clone() = 0;
+
 	std::shared_ptr<GameObject> GetOwner() const { return owner.lock(); }
 	std::string GetName() const { return name; }
 
@@ -40,17 +42,14 @@ protected:
 
 	bool IsOwnerValid() const { return !owner.expired(); }
 
-
 	virtual YAML::Node encode() {
 		YAML::Node node;
 
 		node["name"] = name;
 		node["enabled"] = enabled;
 
-
 		return node;
 	}
-
 };
 
 template <typename T>

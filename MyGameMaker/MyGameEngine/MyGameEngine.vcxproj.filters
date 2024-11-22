@@ -72,9 +72,6 @@
     <ClInclude Include="Scene.h">
       <Filter>Archivos de encabezado\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManagement.h">
-      <Filter>Archivos de encabezado\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Shaders.h">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
@@ -95,9 +92,6 @@
     <ClCompile Include="Image.cpp">
       <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
-    <ClCompile Include="CreateGameObjects.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
@@ -108,9 +102,6 @@
       <Filter>Archivos de origen\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Archivos de origen\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManagement.cpp">
       <Filter>Archivos de origen\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Shaders.cpp">

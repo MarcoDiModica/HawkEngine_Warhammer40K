@@ -16,6 +16,8 @@ public:
     void Update(float deltaTime) override;
     void Destroy() override;
 
+    std::shared_ptr<Component> Clone() override;
+
     void SetMesh(std::shared_ptr<Mesh> mesh);
     std::shared_ptr<Mesh> GetMesh() const;
 
@@ -36,7 +38,6 @@ private:
     std::shared_ptr<Material> material;
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
-
 protected:
     YAML::Node encode() override {
 
@@ -44,8 +45,6 @@ protected:
         
         node["mesh_path"] = mesh->filePath;
 
-
         return node;
     }
-
 };

@@ -21,12 +21,10 @@ void Scene::Update(float deltaTime)
 
 void Scene::Destroy()
 {
-
 	for (auto& child : _children) {
-        child->Destroy();
+        RemoveGameObject(child);
     }
     _children.clear();
-
 }
 
 void Scene::OnEnable()
@@ -48,6 +46,8 @@ void Scene::OnDisable()
 void Scene::RemoveGameObject(std::shared_ptr<GameObject> gameObject)
 {
 	_children.erase(std::remove(_children.begin(), _children.end(), gameObject), _children.end());
+
+	gameObject->Destroy();
 }
 
 void Scene::AddGameObject(std::shared_ptr<GameObject> gameObject)

@@ -147,8 +147,9 @@ void Root::AddScene(std::shared_ptr<Scene> scene)
 
 void Root::RemoveScene(const std::string& name)
 {
-	for (auto it = scenes.begin(); it != scenes.end(); ) {
+    for (auto it = scenes.begin(); it != scenes.end(); ) {
 		if ((*it)->name == name) {
+			(*it)->Destroy();
 			it = scenes.erase(it);
 			return;
 		}

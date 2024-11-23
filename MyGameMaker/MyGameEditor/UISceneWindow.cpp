@@ -93,7 +93,7 @@ bool UISceneWindow::Draw()
 		float aspectRatio = originalWidth / originalHeight;
 
 		// Calculate the new size for the image that fits within the GameWindow while maintaining the aspect ratio
-		ImVec2 imageSize = ImVec2(windowSize.x,windowSize.y);
+		ImVec2 imageSize = ImVec2(windowSize.x, windowSize.y);
 
 		// Calculate the offset needed to center the image
 		float offsetX = (availableSize.x - imageSize.x) / 2.0f;
@@ -106,52 +106,196 @@ bool UISceneWindow::Draw()
 		ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, imageSize, ImVec2(0, 1), ImVec2(1, 0));
 
 		ImGuizmo::SetDrawlist();
+		ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
 
-        // Set the ImGuizmo viewport
-        ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
+		glm::mat4 viewMatrix = Application->camera->view();
+		glm::mat4 projectionMatrix = Application->camera->projection();
 
-        // Define the view and projection matrices
-        glm::mat4 viewMatrix = Application->camera->view();
-        glm::mat4 projectionMatrix = Application->camera->projection();
+		float view[16];
+		float projection[16];
+		memcpy(view, &viewMatrix, sizeof(float) * 16);
+		memcpy(projection, &projectionMatrix, sizeof(float) * 16);
 
-        // Convert matrices to float arrays
-        float view[16];
-        float projection[16];
-        memcpy(view, &viewMatrix, sizeof(float) * 16);
-        memcpy(projection, &projectionMatrix, sizeof(float) * 16);
+		auto selectedGameObjects = Application->input->GetSelectedGameObjects();
 
-        // Get the selected game object
-        GameObject* selectedObject = Application->input->GetSelectedGameObject();
-        if (selectedObject != nullptr) {
-            // Get the transformation matrix of the selected object
-            glm::mat4 matrix = selectedObject->GetTransform()->GetMatrix();
+		if (!selectedGameObjects.empty()) {
+			glm::vec3 averagePosition(0.0f);
 
-            // Convert matrix to float array
-            float objectMatrix[16];
-            memcpy(objectMatrix, &matrix, sizeof(float) * 16);
+			for (GameObject* selectedObject : selectedGameObjects) {
+				if (selectedObject != nullptr) {
+					averagePosition += selectedObject->GetTransform()->GetPosition();
+				}
+			}
+			averagePosition /= static_cast<float>(selectedGameObjects.size());
 
-			float snap[3] = { 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue } ;
+			glm::mat4 gizmoMatrix = glm::translate(glm::mat4(1.0f), averagePosition);
+			float gizmoMatrixArray[16];
+			memcpy(gizmoMatrixArray, glm::value_ptr(gizmoMatrix), sizeof(float) * 16);
 
-			if (Application->gui->UIinspectorPanel->snap) 
-			{
-				ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE, ImGuizmo::LOCAL, objectMatrix, NULL, snap);
-			}	
-			else
-			{
-				ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE, ImGuizmo::LOCAL, objectMatrix, NULL);
+			float snap[3] = {
+				1.0f * Application->gui->UIinspectorPanel->snapValue,
+				1.0f * Application->gui->UIinspectorPanel->snapValue,
+				1.0f * Application->gui->UIinspectorPanel->snapValue
+			};
+
+			if (Application->gui->UIinspectorPanel->snap) {
+				ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE,
+					ImGuizmo::LOCAL, gizmoMatrixArray, nullptr, snap);
+			}
+			else {
+				ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE,
+					ImGuizmo::LOCAL, gizmoMatrixArray, nullptr);
 			}
 
-			glm::vec3 position, rotation, scale;
-			ImGuizmo::DecomposeMatrixToComponents(objectMatrix, glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale));
+			glm::vec3 newPosition, newRotation, newScale;
+			ImGuizmo::DecomposeMatrixToComponents(gizmoMatrixArray, glm::value_ptr(newPosition),
+				glm::value_ptr(newRotation), glm::value_ptr(newScale));
 
-			ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale), objectMatrix);
+			// Calcular la diferencia de escala del gizmo
+			glm::vec3 gizmoScaleDelta = newScale / gizmoOriginalScale;
 
-			glm::mat4 newMatrix = glm::make_mat4(objectMatrix);
+			for (GameObject* selectedObject : selectedGameObjects) {
+				if (selectedObject != nullptr) {
+					// Calcular la posición relativa y la nueva posición
+					glm::vec3 objectPosition = selectedObject->GetTransform()->GetPosition();
+					glm::vec3 relativePosition = objectPosition - averagePosition;
+					glm::vec3 finalPosition = newPosition + relativePosition;
 
-			Application->input->GetSelectedGameObject()->GetTransform()->SetMatrix(newMatrix);			
-        }
+					// Rotación
+					glm::quat objectRotationQuat = selectedObject->GetTransform()->GetRotation();
+
+					// Convertir la rotación del gizmo a quaternion
+					glm::quat gizmoRotationQuat = glm::quat(glm::radians(newRotation));
+
+					// Combinar la rotación del objeto con la rotación del gizmo
+					glm::quat finalRotationQuat = gizmoRotationQuat * objectRotationQuat;
+
+					// Convertir la rotación final a Euler angles (glm::vec3)
+					glm::vec3 finalRotationEuler = glm::degrees(glm::eulerAngles(finalRotationQuat));
+
+					// Escala
+					glm::vec3 objectScale = selectedObject->GetTransform()->GetScale();
+					glm::vec3 finalScale = objectScale * gizmoScaleDelta;
+
+					// Actualizar las transformaciones en el objeto seleccionado
+					selectedObject->GetTransform()->SetPosition(finalPosition);
+
+					// Usar SetRotation con glm::vec3
+					selectedObject->GetTransform()->SetRotation(finalRotationEuler);
+
+					selectedObject->GetTransform()->SetScale(finalScale);
+				}
+			}
+
+			// Actualizar la escala original del gizmo
+			gizmoOriginalScale = newScale;
+		}
+
+		ImGui::End();
+		return true;
 	}
-	ImGui::End();
-
-	return true;
 }
+
+
+
+//bool UISceneWindow::Draw()
+//{
+//	ImGui::SetNextWindowPos(ImVec2(110, 30), ImGuiCond_Once); // Set the desired initial position
+//	ImGui::SetNextWindowSize(ImVec2(865, 485), ImGuiCond_Once);
+//
+//
+//	// Begin the GameWindow
+//	ImGui::Begin("Scene", nullptr, windowFlags);
+//	{
+//		// Get the current window's position and size
+//		ImVec2 windowPos = ImGui::GetWindowPos();
+//		ImVec2 windowSize = ImGui::GetWindowSize();
+//
+//		winPos = vec2(windowPos.x, windowPos.y);
+//		winSize = vec2(windowSize.x, windowSize.y);
+//		// Define the title bar rectangle
+//		ImRect titleBarRect(windowPos, ImVec2(windowPos.x + windowSize.x, windowPos.y + ImGui::GetFrameHeight()));
+//
+//		// Get the current mouse position
+//		ImVec2 mousePos = ImGui::GetMousePos();
+//
+//		// Check if the mouse is over the title bar of the GameWindow
+//		bool isMouseOverTitleBar = (mousePos.x >= titleBarRect.Min.x && mousePos.x <= titleBarRect.Max.x &&
+//			mousePos.y >= titleBarRect.Min.y && mousePos.y <= titleBarRect.Max.y);
+//
+//		// If the mouse is over the title bar, allow the window to be moved
+//		if (isMouseOverTitleBar) {
+//			windowFlags &= ~ImGuiWindowFlags_NoMove;
+//		}
+//		else {
+//			windowFlags |= ImGuiWindowFlags_NoMove;
+//		}
+//
+//		ImVec2 availableSize = ImGui::GetContentRegionAvail();
+//
+//		// Original image size (replace with your actual image size)
+//		float originalWidth = 1280.0f; // Example width
+//		float originalHeight = 720.0f; // Example height
+//
+//		// Calculate the aspect ratio of the original image
+//		float aspectRatio = originalWidth / originalHeight;
+//
+//		// Calculate the new size for the image that fits within the GameWindow while maintaining the aspect ratio
+//		ImVec2 imageSize = ImVec2(windowSize.x, windowSize.y);
+//
+//		// Calculate the offset needed to center the image
+//		float offsetX = (availableSize.x - imageSize.x) / 2.0f;
+//		float offsetY = (availableSize.y - imageSize.y) / 2.0f;
+//
+//		// Set the cursor position to the calculated offset
+//		ImGui::SetCursorPos(ImVec2(offsetX, offsetY));
+//
+//		// Because I use the texture from OpenGL, I need to invert the V from the UV.
+//		ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, imageSize, ImVec2(0, 1), ImVec2(1, 0));
+//
+//		ImGuizmo::SetDrawlist();
+//		ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
+//
+//		glm::mat4 viewMatrix = Application->camera->view();
+//		glm::mat4 projectionMatrix = Application->camera->projection();
+//
+//		float view[16];
+//		float projection[16];
+//		memcpy(view, &viewMatrix, sizeof(float) * 16);
+//		memcpy(projection, &projectionMatrix, sizeof(float) * 16);
+//
+//		// Itera sobre la lista de GameObjects seleccionados
+//		for (GameObject* selectedObject : Application->input->GetSelectedGameObjects())
+//		{
+//			if (selectedObject != nullptr) {
+//				glm::mat4 matrix = selectedObject->GetTransform()->GetMatrix();
+//				float objectMatrix[16];
+//				memcpy(objectMatrix, &matrix, sizeof(float) * 16);
+//
+//				float snap[3] = { 1.0f * Application->gui->UIinspectorPanel->snapValue,
+//								  1.0f * Application->gui->UIinspectorPanel->snapValue,
+//								  1.0f * Application->gui->UIinspectorPanel->snapValue };
+//
+//				if (Application->gui->UIinspectorPanel->snap) {
+//					ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE,
+//						ImGuizmo::LOCAL, objectMatrix, NULL, snap);
+//				}
+//				else {
+//					ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE,
+//						ImGuizmo::LOCAL, objectMatrix, NULL);
+//				}
+//
+//				glm::vec3 position, rotation, scale;
+//				ImGuizmo::DecomposeMatrixToComponents(objectMatrix, glm::value_ptr(position),
+//					glm::value_ptr(rotation), glm::value_ptr(scale));
+//				ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(position), glm::value_ptr(rotation),
+//					glm::value_ptr(scale), objectMatrix);
+//
+//				glm::mat4 newMatrix = glm::make_mat4(objectMatrix);
+//				selectedObject->GetTransform()->SetMatrix(newMatrix);
+//			}
+//		}
+//	}
+//	ImGui::End();
+//	return true;
+//}

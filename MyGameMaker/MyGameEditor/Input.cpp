@@ -147,7 +147,16 @@ bool Input::processSDLEvents()
 
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym) {
-            case SDLK_ESCAPE: return false;
+            case SDLK_ESCAPE:
+                return false;
+            case SDLK_DELETE:
+                for (auto it = selectedObjects.begin(); it != selectedObjects.end(); ) {
+                    GameObject* selectedObject = *it;
+                    Application->root->RemoveGameObject(selectedObject);
+
+                    it = selectedObjects.erase(it);
+                }
+                break;
             }
             break;
 
@@ -158,6 +167,7 @@ bool Input::processSDLEvents()
             }
             break;
         }
+
         case SDL_DROPFILE:
         {
             // Just flag event here
@@ -254,17 +264,40 @@ std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
     std::string fileNameExt = sourceFilePath.substr(sourceFilePath.find_last_of('\\') + 1);
     fs::path assetsDir = fs::path(ASSETS_PATH) / "Meshes" / fileNameExt;
 
-
-
     try {
         /* to copy the source file to the destination path, overwriting if it already exists*/
         std::filesystem::copy(sourceFilePath, assetsDir, std::filesystem::copy_options::overwrite_existing);
-
-
     }
     catch (std::filesystem::filesystem_error& e) {
         std::cerr << "Error copying file: " << e.what() << std::endl;
     }
     std::cout << (assetsDir.string()).c_str();
     return assetsDir.string();
+}
+
+void Input::AddToSelection(GameObject* gameObject) {
+    auto it = std::find(selectedObjects.begin(), selectedObjects.end(), gameObject);
+    if (it == selectedObjects.end()) {
+        selectedObjects.push_back(gameObject);
+        gameObject->isSelected = true;
+    }
+}
+
+void Input::RemoveFromSelection(GameObject* gameObject) {
+    auto it = std::find(selectedObjects.begin(), selectedObjects.end(), gameObject);
+    if (it != selectedObjects.end()) {
+        selectedObjects.erase(it);
+        gameObject->isSelected = false;
+    }
+}
+
+std::vector<GameObject*> Input::GetSelectedGameObjects() const {
+    return selectedObjects;
+}
+
+void Input::ClearSelection() {
+	for (auto& selectedObject : selectedObjects) {
+		selectedObject->isSelected = false;
+	}
+	selectedObjects.clear();
 }

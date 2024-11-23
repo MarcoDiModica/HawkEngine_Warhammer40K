@@ -17,5 +17,6 @@ public:
 	vec2 winSize = vec2(0, 0);
 	vec2 winPos = vec2(0, 0);
 	vec2 winMousePos = vec2(0, 0);
+	glm::vec3 gizmoOriginalScale = glm::vec3(1.0f);
 };
 #endif // !__UI_SCENE_WINDOW_H__

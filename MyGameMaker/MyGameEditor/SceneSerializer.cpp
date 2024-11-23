@@ -60,7 +60,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 		child->isSelected = false;
 	}
 
-	Application->input->SetSelectedGameObject(nullptr);
+	Application->input->ClearSelection();
 
 	Application->root->RemoveScene(Application->root->currentScene->GetName());
 	Application->root->CreateScene("Scene");

@@ -335,7 +335,7 @@ static void display_func() {
 			if (CheckRayAABBCollision(rayOrigin, rayDirection, bbox) )
 			{
 				std::cout << "Hit: " << object->GetName();
-				Application->input->SetSelectedGameObject(object);
+				Application->input->AddToSelection(object);
 			}
 		}
 	}

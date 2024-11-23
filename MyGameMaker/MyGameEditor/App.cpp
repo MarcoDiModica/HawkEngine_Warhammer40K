@@ -30,7 +30,7 @@ App::App() {
 
 	camera = new Camera(this);
 
-	gizmos = new Gizmos(this);
+	//gizmos = new Gizmos(this);
 
 	scene_serializer = new SceneSerializer(this);
 
@@ -40,7 +40,7 @@ App::App() {
 	AddModule(gui, true);
 	AddModule(root, true);
 	AddModule(camera, true);
-	AddModule(gizmos, true);
+	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
 
 };

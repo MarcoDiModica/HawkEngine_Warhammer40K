@@ -72,7 +72,7 @@ void Root::RemoveGameObject(GameObject* gameObject) {
         if ((*it).get() == gameObject) { // Compara las direcciones de memoria
             if ((*it)->isSelected) {
                 (*it)->isSelected = false;
-                Application->input->SetSelectedGameObject(nullptr);
+                Application->input->ClearSelection();
             }
             (*it)->Destroy(); // Call Destroy on the object.
             it = currentScene->_children.erase(it); // Erase returns the next iterator.

@@ -6,6 +6,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <iostream>
+#include <SDL2/SDL.h>
 
 UIHierarchy::UIHierarchy(UIType type, std::string name) : UIElement(type, name) {
 }
@@ -27,6 +28,10 @@ bool UIHierarchy::Draw() {
 
 		if (currentScene != nullptr) {
 			RenderSceneHierarchy(currentScene);
+		}
+
+		if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) {
+			Application->input->ClearSelection();
 		}
 	}
 
@@ -55,8 +60,20 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 	}
 
 	bool open = ImGui::TreeNode(obj.GetName().c_str());
+
 	if (ImGui::IsItemClicked(0)) {
-		Application->input->SetSelectedGameObject(&obj);
+		if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
+			if (obj.isSelected) {
+				Application->input->RemoveFromSelection(&obj);
+			}
+			else {
+				Application->input->AddToSelection(&obj);
+			}
+		}
+		else {
+			Application->input->ClearSelection();
+			Application->input->AddToSelection(&obj);
+		}
 	}
 
 	if (obj.isSelected && color) {

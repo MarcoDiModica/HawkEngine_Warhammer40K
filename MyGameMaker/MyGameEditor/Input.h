@@ -78,24 +78,6 @@ public:
 		return mouse_y_motion;
 	}
 
-	void SetSelectedGameObject(GameObject* gameObject) 
-	{
-		if (selectedObject) selectedObject->isSelected = false;
-		else {
-
-			std::cout << "WHAAAAAAAT";
-		}
-
-		selectedObject = gameObject;
-		if (selectedObject != nullptr)
-		selectedObject->isSelected = true;
-	}
-
-	GameObject* GetSelectedGameObject() const 
-	{
-		return selectedObject;
-	}
-
 	GameObject* GetDraggedGameObject() const
 	{
 		return draggedObject;
@@ -105,6 +87,11 @@ public:
 	{
 		draggedObject = gameObject;
 	}
+
+	void AddToSelection(GameObject* gameObject);
+	void RemoveFromSelection(GameObject* gameObject);
+	std::vector<GameObject*> GetSelectedGameObjects() const;
+	void ClearSelection();
 
 private:
 	KEY_STATE* keyboard;
@@ -116,7 +103,7 @@ private:
 	int mouse_y_motion;
 	float dx;
 	float dy;
-	GameObject* selectedObject;
+	std::vector<GameObject*> selectedObjects;
 	GameObject* draggedObject;
 	Camera* camera;
 };

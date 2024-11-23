@@ -118,33 +118,28 @@ bool Camera::Update(double dt) {
 	if (Application->input->GetMouseZ() > 0) transform().translate(glm::vec3(0, 0, 0.5));
 	if (Application->input->GetMouseZ() < 0) transform().translate(glm::vec3(0, 0, -0.5));
 
-	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && Application->input->GetSelectedGameObject() != NULL) transform().LookAt(Application->input->GetSelectedGameObject()->GetTransform()->GetPosition());
+	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !Application->input->GetSelectedGameObjects().empty()) {
+		vec3 avgPosition(0.0f);
+		for (GameObject* obj : Application->input->GetSelectedGameObjects()) {
+			avgPosition += obj->GetTransform()->GetPosition();
+		}
+		avgPosition /= Application->input->GetSelectedGameObjects().size();
 
+		transform().LookAt(avgPosition);
+	}
 
+	if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT) {
 
-	if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT && Application->input->GetSelectedGameObject() != NULL)
-	{
 		glm::dvec2 currentMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
 		glm::dvec2 delta = currentMousePos - lastMousePos;
 		lastMousePos = currentMousePos;
 
-		angleHorizontal += delta.x * orbitSpeed;
-		angleVertical += delta.y * orbitSpeed;
+		transform().rotate(glm::radians(-delta.y * 0.1), glm::dvec3(1, 0, 0));
+		transform().rotate(glm::radians(-delta.x * 0.1), glm::dvec3(0, 1, 0));
 
-		if (angleVertical < -glm::half_pi<double>()) angleVertical = -glm::half_pi<double>();
-		if (angleVertical > glm::half_pi<double>()) angleVertical = glm::half_pi<double>();
-
-		vec3 targetPosition = Application->input->GetSelectedGameObject()->GetTransform()->GetPosition();
-
-		transform().pos().x = targetPosition.x + orbitRadius * cos(angleVertical) * cos(angleHorizontal);
-		transform().pos().y = targetPosition.y + orbitRadius * sin(angleVertical);
-		transform().pos().z = targetPosition.z + orbitRadius * cos(angleVertical) * sin(angleHorizontal);
-
-		transform().LookAt(targetPosition);
 		transform().alignToGlobalUp();
 	}
-	else
-	{
+	else {
 		lastMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
 	}
 

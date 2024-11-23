@@ -96,6 +96,7 @@ std::istream& operator>>(std::istream& is, Image& img) {
 
 void Image::LoadTexture(const std::string& path)
 {
+	image_path = path;
 	auto img = ilGenImage();
 	ilBindImage(img);
 	ilLoadImage((const wchar_t*)path.c_str());

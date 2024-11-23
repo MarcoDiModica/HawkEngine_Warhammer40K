@@ -4,9 +4,9 @@ GameObject0:
     name: Transform_Component
     enabled: true
     position:
-      x: -1.1222848892211914
-      y: 0
-      z: 0
+      x: -1.7181792259216309
+      y: 1.1142258644104004
+      z: -7.62939453125e-06
     rotation:
       x: 0
       y: -0
@@ -19,3 +19,4 @@ GameObject0:
     name: MeshRenderer
     enabled: true
     mesh_path: Assets/Meshes/BakerHouse.fbx
+    image_path: Assets/Baker_house.png

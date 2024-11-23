@@ -6,7 +6,7 @@
 #include <iostream>
 #include <fstream>
 
-
+class MeshRenderer;
 
 void SceneSerializer::Serialize() {
 
@@ -62,6 +62,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 		YAML::Node _node = root["GameObject" + std::to_string(i)];
 		if (_node["name"].IsDefined()) {
 
+
 			std::shared_ptr<GameObject> game_obj = Application->root->CreateGameObject(_node["name"].as<std::string>());
 
 			//---Load Components---//
@@ -77,6 +78,12 @@ void SceneSerializer::DeSerialize(std::string path) {
 
 						if (component_name == "Transform_Component") {
 							game_obj->transform->decode(value);
+						}
+						if (component_name == "MeshRenderer") {
+							//game_obj->AddComponent<MeshRenderer>();
+							auto mesh = std::make_shared<Mesh>();
+							mesh->LoadMesh(value["mesh_path"].as<std::string>().c_str());
+							Application->root->AddMeshRenderer(*game_obj, mesh, value["image_path"].as<std::string>() );
 						}
 
 					}
@@ -105,9 +112,9 @@ void SceneSerializer::DeSerialize(std::string path) {
 	}
 
 
-	emitter << root;
+	//emitter << root;
 
-	std::string saved_string = emitter.c_str();
+	//std::string saved_string = emitter.c_str();
 
 	int j = 9;
 

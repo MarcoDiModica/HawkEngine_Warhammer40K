@@ -149,16 +149,60 @@ bool Input::processSDLEvents()
             switch (event.key.keysym.sym) {
             case SDLK_ESCAPE:
                 return false;
-            case SDLK_DELETE:
-                for (auto it = selectedObjects.begin(); it != selectedObjects.end(); ) {
-                    GameObject* selectedObject = *it;
-                    Application->root->RemoveGameObject(selectedObject);
 
-                    it = selectedObjects.erase(it);
+            case SDLK_DELETE: {
+                int i = 0;
+                while (i < selectedObjects.size()) {
+                    GameObject* selectedObject = selectedObjects[i];
+                    Application->root->RemoveGameObject(selectedObject);
+                    i++;
+                }
+                selectedObjects.clear(); // Limpiar la selección después de borrar los objetos
+                break;
+            }
+
+            case SDLK_c: // Ctrl + C
+                if (SDL_GetModState() & KMOD_CTRL) {
+                    LOG(LogType::LOG_INFO, "Copied %d objects", selectedObjects.size());
+                    if (!selectedObjects.empty()) {
+                        copiedObjects.clear();
+                        for (auto& selectedObject : selectedObjects) {
+                            copiedObjects.push_back(selectedObject);
+                        }
+                    }
+                }
+                break;
+
+            case SDLK_v: // Ctrl + V
+                if (SDL_GetModState() & KMOD_CTRL) {
+                    LOG(LogType::LOG_INFO, "Pasted %d objects", copiedObjects.size());
+                    if (!copiedObjects.empty()) {
+                        for (auto& copiedObject : copiedObjects) {
+                            // Crear una copia del objeto y añadirlo al root
+                            auto newObject = Application->root->CreateGameObject(copiedObject->GetName() + "_copy");
+                            //newObject = std::make_shared<GameObject>(copiedObject);
+                            // Puedes copiar los datos del objeto si es necesario (por ejemplo, transformaciones)
+                        }
+                    }
+                }
+                break;
+
+            case SDLK_d: // Ctrl + D
+                if (SDL_GetModState() & KMOD_CTRL) {
+                    LOG(LogType::LOG_INFO, "Duplicated %d objects", selectedObjects.size());
+                    if (!selectedObjects.empty()) {
+                        for (auto& selectedObject : selectedObjects) {
+                            // Crear una copia del objeto y añadirlo al root
+                            auto newObject = Application->root->CreateGameObject(selectedObject->GetName() + "_copy");
+                            //newObject = std::make_shared<GameObject>(selectedObject);
+                            // Puedes copiar los datos del objeto si es necesario (por ejemplo, transformaciones)
+                        }
+                    }
                 }
                 break;
             }
             break;
+
 
         case SDL_WINDOWEVENT:
         {

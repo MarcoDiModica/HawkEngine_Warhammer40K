@@ -68,19 +68,29 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
 }
 
 void Root::RemoveGameObject(GameObject* gameObject) {
-    for (auto it = currentScene->_children.begin(); it != currentScene->_children.end(); ) {
-        if ((*it).get() == gameObject) { // Compara las direcciones de memoria
-            if ((*it)->isSelected) {
-                (*it)->isSelected = false;
-                Application->input->ClearSelection();
-            }
-            (*it)->Destroy(); // Call Destroy on the object.
-            it = currentScene->_children.erase(it); // Erase returns the next iterator.
-            return; // Exit after removing the object.
+    if (!gameObject) {
+        LOG(LogType::LOG_ERROR, "Error: Se ha intentado eliminar un GameObject nulo.");
+        return;
+    }
+
+    auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
+        [gameObject](const auto& child) { return child.get() == gameObject; });
+
+    if (it == currentScene->_children.end()) {
+        LOG(LogType::LOG_ERROR, "Error: El GameObject no se encuentra en la escena.");
+        return;
+    }
+
+    try {
+        if ((*it)->isSelected) {
+            (*it)->isSelected = false;
+            Application->input->ClearSelection();
         }
-        else {
-            ++it; // Move to the next element if not removed.
-        }
+        (*it)->Destroy();
+        it = currentScene->_children.erase(it);
+    }
+    catch (const std::exception& e) {
+        LOG(LogType::LOG_ERROR, "Error al destruir el GameObject: %s", e.what());
     }
 }
 

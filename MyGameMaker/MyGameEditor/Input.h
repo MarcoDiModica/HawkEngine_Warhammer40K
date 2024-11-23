@@ -104,6 +104,7 @@ private:
 	float dx;
 	float dy;
 	std::vector<GameObject*> selectedObjects;
+	std::vector<GameObject*> copiedObjects;
 	GameObject* draggedObject;
 	Camera* camera;
 };

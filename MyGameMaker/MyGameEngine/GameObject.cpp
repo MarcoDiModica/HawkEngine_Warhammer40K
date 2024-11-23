@@ -29,6 +29,7 @@ GameObject::GameObject(const GameObject& other) :
     transform(std::make_shared<Transform_Component>(*other.transform)),
     mesh(other.mesh),
     tag(other.tag),
+    destroyed(other.destroyed),
     cachedComponentType(typeid(Component))
 {
     for (const auto& component : other.components) {
@@ -45,6 +46,7 @@ GameObject& GameObject::operator=(const GameObject& other) {
         transform = std::make_shared<Transform_Component>(*other.transform);
         mesh = other.mesh;
         tag = other.tag;
+        destroyed = other.destroyed;
 
         components.clear();
 
@@ -52,6 +54,11 @@ GameObject& GameObject::operator=(const GameObject& other) {
         {
             components[component.first] = component.second->Clone();
         }
+
+        for (auto& child : children())
+		{
+			child.Destroy();
+		}
     }
     return *this;
 }

@@ -54,7 +54,17 @@ void SceneSerializer::DeSerialize(std::string path) {
 	YAML::Emitter emitter;
 	YAML::Node root = YAML::LoadFile(path);
 
-	Application->root->currentScene->Destroy();
+	// iterate over the scene game objects check if its selected and if its selected, deselect it
+
+	for (const auto& child : Application->root->currentScene->_children) {
+		child->isSelected = false;
+	}
+
+	Application->input->SetSelectedGameObject(nullptr);
+
+	Application->root->RemoveScene(Application->root->currentScene->GetName());
+	Application->root->CreateScene("Scene");
+	Application->root->SetActiveScene("Scene");
 
 	int i = 0;
 	for (const auto& child : root) {

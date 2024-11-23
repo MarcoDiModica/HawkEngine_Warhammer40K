@@ -22,12 +22,10 @@ void Scene::Update(float deltaTime)
 void Scene::Destroy()
 {
 
-	for (size_t i = 0; i < children().size(); ++i) {
-		
-		_children[i]->Destroy();
-		
-	}
-	_children.clear();
+	for (auto& child : _children) {
+        child->Destroy();
+    }
+    _children.clear();
 
 }
 

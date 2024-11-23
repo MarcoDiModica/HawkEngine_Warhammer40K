@@ -4,9 +4,9 @@ GameObject0:
     name: Transform_Component
     enabled: true
     position:
-      x: -1.7181792259216309
-      y: 1.1142258644104004
-      z: -7.62939453125e-06
+      x: 0
+      y: 0
+      z: 0
     rotation:
       x: 0
       y: -0

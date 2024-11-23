@@ -50,12 +50,12 @@ namespace YAML {
         }
 
         static bool decode(const Node& node, glm::dvec3& rhs) {
-            if (!node.IsSequence() || node.size() != 3) {
-                return false;  // Ensure it's a sequence of three elements
-            }
-            rhs.x = node[0].as<double>();
-            rhs.y = node[1].as<double>();
-            rhs.z = node[2].as<double>();
+            //if (!node.IsSequence() || node.size() != 3) {
+            //    return false;  // Ensure it's a sequence of three elements
+            //}
+            rhs.x = node["x"].as<double>();
+            rhs.y = node["y"].as<double>();
+            rhs.z = node["z"].as<double>();
             return true;
         }
     };

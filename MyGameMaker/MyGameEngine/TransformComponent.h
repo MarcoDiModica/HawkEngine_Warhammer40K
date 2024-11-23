@@ -90,12 +90,10 @@ protected:
 
     YAML::Node encodeRotation() {
         YAML::Node node;
-        auto rotation = GetRotation();
+        auto rotation = GetEulerAngles();
 
-        node["x"] = rotation.x;
-        node["y"] = rotation.y;
-        node["z"] = rotation.z;
-        return node;
+        return YAML::convert<glm::dvec3>::encode(rotation);
+
     }
 
     YAML::Node encodeScale() {
@@ -111,16 +109,17 @@ protected:
 
         if (!node["position"] || !node["rotation"] || !node["scale"])
             return false;
-
-        YAML::convert<glm::dvec3>::decode(node, position);
+        /*----------Position-------------*/
+        YAML::convert<glm::dvec3>::decode(node["position"], position);
+        /*----------Scale-------------*/
         glm::dvec3 new_scale;
-        YAML::convert<glm::dvec3>::decode(node, new_scale);
+        YAML::convert<glm::dvec3>::decode(node["scale"], new_scale);
         SetScale(new_scale);
+        /*----------Rotation-------------*/
+        glm::dvec3 new_rotation;
+        YAML::convert<glm::dvec3>::decode(node["rotation"], new_rotation);
+        SetRotation(new_rotation);
 
-      /*  position
-
-        name = node["name"].as<std::string>();
-        enabled = node["enabled"].as<bool>();*/
 
         return true;
     }

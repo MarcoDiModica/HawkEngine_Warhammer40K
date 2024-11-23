@@ -31,9 +31,9 @@ void SceneSerializer::Serialize() {
 		}
 
 		/*node["transform"] = gameObjects[i]->GetTransform()->encode();*/
-		//game_object_node["GameObject"] = node;
+		game_object_node["GameObject" + std::to_string(i)] = node;
 		/*Save node to the emitter*/
-		emitter << node;
+		emitter << game_object_node;
 	}
 
 	std::string saved_string = emitter.c_str();
@@ -52,12 +52,63 @@ void SceneSerializer::Serialize() {
 void SceneSerializer::DeSerialize(std::string path) {
 
 	YAML::Emitter emitter;
-	YAML::Node node = YAML::LoadFile(path);
+	YAML::Node root = YAML::LoadFile(path);
 
-	emitter << node;
+	Application->root->currentScene->Destroy();
+
+	int i = 0;
+	for (const auto& child : root) {
+
+		YAML::Node _node = root["GameObject" + std::to_string(i)];
+		if (_node["name"].IsDefined()) {
+
+			std::shared_ptr<GameObject> game_obj = Application->root->CreateGameObject(_node["name"].as<std::string>());
+
+			//---Load Components---//
+
+			for (YAML::const_iterator it = _node.begin(); it != _node.end(); ++it) {
+				
+				const std::string key = it->first.as<std::string>();
+				const YAML::Node& value = it->second;
+
+				if (key == "Transform_Component" || key == "MeshRenderer") {
+					if (value["name"].IsDefined()) {
+						std::string component_name = value["name"].as<std::string>();
+
+						if (component_name == "Transform_Component") {
+							game_obj->transform->decode(value);
+						}
+
+					}
+				}
+
+
+			}
+
+			//for (const auto& component_node : _node) {
+
+			//	if (component_node.IsDefined() && component_node["name"].IsDefined()) {
+
+			//		std::string component_name = component_node["name"].as<std::string>();
+
+			//		if (component_name == "Transform_Component") {
+
+			//			game_obj->transform->decode(component_node);
+			//		}
+			//	}
+			//	else {
+			//		int h = 9;
+			//	}
+			//}
+		}
+
+	}
+
+
+	emitter << root;
 
 	std::string saved_string = emitter.c_str();
 
-	int i = 9;
+	int j = 9;
 
 }

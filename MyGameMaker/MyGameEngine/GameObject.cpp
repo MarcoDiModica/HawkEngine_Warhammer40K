@@ -137,8 +137,9 @@ void GameObject::DrawPushPopMatrix() const
     glPushMatrix();
     glMultMatrixd(transform->GetData());
 
-    if (auto meshRenderer = GetComponent<MeshRenderer>())
+    if (HasComponent<MeshRenderer>())
     {
+        auto meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer->Render();
     }
 

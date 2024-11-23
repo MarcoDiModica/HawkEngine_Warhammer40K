@@ -121,37 +121,40 @@ bool UIInspector::Draw()
 			
 			ImGui::Separator();
 
-			std::shared_ptr<Mesh> mesh = selectedGameObject->GetComponent<MeshRenderer>()->GetMesh();
+			if (selectedGameObject->HasComponent<MeshRenderer>()) {
+				std::shared_ptr<Mesh> mesh = selectedGameObject->GetComponent<MeshRenderer>()->GetMesh();
 
-			if (mesh)
-			{
-				ImGui::Text("Mesh");
+				if (mesh)
+				{
+					ImGui::Text("Mesh");
+					ImGui::Separator();
+
+					ImGui::Text("Vertices: %d", mesh->vertices().size());
+					ImGui::Text("Indices: %d", mesh->indices().size());
+
+					bool& triNormals = mesh->drawTriangleNormals;
+					bool& vertexNormals = mesh->drawVertexNormals;
+					// bool& quadNormals = mesh->drawFaceNormals;
+
+					ImGui::Checkbox("Tri Normals", &triNormals);
+					ImGui::Checkbox("Vertex Normals", &vertexNormals);
+
+				}
+
+
 				ImGui::Separator();
 
-				ImGui::Text("Vertices: %d", mesh->vertices().size());
-				ImGui::Text("Indices: %d", mesh->indices().size());
-			
-				bool& triNormals = mesh->drawTriangleNormals;
-				bool& vertexNormals = mesh->drawVertexNormals;
-				// bool& quadNormals = mesh->drawFaceNormals;
+				std::shared_ptr<Image> image = selectedGameObject->GetComponent<MeshRenderer>()->GetImage();
+				if (image)
+				{
+					ImGui::Text("Image");
+					ImGui::Separator();
 
-				ImGui::Checkbox("Tri Normals", &triNormals);
-				ImGui::Checkbox("Vertex Normals", &vertexNormals);
+					ImGui::Text("Width: %d", image->width());
+					ImGui::Text("Heigth: %d", image->width());
 
-			}
-
-			ImGui::Separator();
-
-			std::shared_ptr<Image> image = selectedGameObject->GetComponent<MeshRenderer>()->GetImage();
-			if (image)
-			{
-				ImGui::Text("Image");
-				ImGui::Separator();
-
-				ImGui::Text("Width: %d", image->width());
-				ImGui::Text("Heigth: %d", image->width());
-
-				//ImGui::Checkbox("Checker Texture", image->LoadCheckerTexture())
+					//ImGui::Checkbox("Checker Texture", image->LoadCheckerTexture())
+				}
 			}
 		}
 

@@ -21,10 +21,14 @@ void Scene::Update(float deltaTime)
 
 void Scene::Destroy()
 {
-	for (auto& child : children())
-	{
-		child->Destroy();
+
+	for (size_t i = 0; i < children().size(); ++i) {
+		
+		_children[i]->Destroy();
+		
 	}
+	_children.clear();
+
 }
 
 void Scene::OnEnable()

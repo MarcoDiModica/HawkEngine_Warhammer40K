@@ -34,6 +34,10 @@ public:
     void AddScene(std::shared_ptr<Scene> scene);
     void RemoveScene(const std::string& name);
     void SetActiveScene(const std::string& name);
+
+
+    bool ParentGameObject(GameObject& child, GameObject& father);
+
     std::shared_ptr<Scene> GetActiveScene() const;
 
     std::shared_ptr<GameObject> CreateGameObject(const std::string& name);

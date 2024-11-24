@@ -101,7 +101,7 @@ private:
 
 template <IsComponent T, typename... Args>
 std::shared_ptr<T> GameObject::AddComponent(Args&&... args) {
-    std::shared_ptr<T> newComponent = std::make_shared<T>(weak_from_this(), std::forward<Args>(args)...);
+    std::shared_ptr<T> newComponent = std::make_shared<T>( this, std::forward<Args>(args)...);
     components[typeid(T)] = newComponent;
     return newComponent;
 }

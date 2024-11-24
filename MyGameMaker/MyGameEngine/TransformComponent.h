@@ -12,7 +12,7 @@ class SceneSerializer;
 class Transform_Component : public Component
 {
 public:
-    Transform_Component(std::weak_ptr<GameObject> owner);
+    Transform_Component(GameObject* owner);
     ~Transform_Component() override = default;
 
     Transform_Component(const Transform_Component& other);

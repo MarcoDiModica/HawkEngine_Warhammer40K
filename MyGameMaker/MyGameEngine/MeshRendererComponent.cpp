@@ -14,7 +14,7 @@
 #include "../MyGameEditor/Camera.h"
 #include "../MyGameEditor/Transform.h"
 
-MeshRenderer::MeshRenderer(std::weak_ptr<GameObject> owner) : Component(owner) { name = "MeshRenderer"; }
+MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) { name = "MeshRenderer"; }
 
 void MeshRenderer::Start()
 {
@@ -89,7 +89,7 @@ void MeshRenderer::Render() const
     {
         material->bindShaders();
         material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-        material->setShaderUniform("model", owner.lock()->GetComponent<Transform_Component>()->GetMatrix());
+        material->setShaderUniform("model", owner->GetComponent<Transform_Component>()->GetMatrix());
         material->setShaderUniform("view", Application->camera->view());
         material->setShaderUniform("projection", Application->camera->projection());
 

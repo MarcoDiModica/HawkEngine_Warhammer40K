@@ -79,6 +79,35 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 	if (obj.isSelected && color) {
 		ImGui::PopStyleColor(); // Orange color for selected
 	}
+
+	// IF the treenode is dragged
+	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+		//               type identifier ,  ptr to obj   , size of obj
+		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
+		/*A payload named "GAMEOBJECT" is created, containing a pointer to obj
+		it can be rerieved at a drop target via ImGui::AcceptDragDropPayload */
+
+		ImGui::Text("Dragging %s", obj.GetName().c_str()); // text created in drag&drop context follows the cursor be default
+
+		ImGui::EndDragDropSource(); // Draging context MUST be closed
+	}
+
+	// Drag-and-Drop: Target
+	if (ImGui::BeginDragDropTarget()) {
+		// Retrieve playload, ptr to dragged obj
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+
+			GameObject* draggedObj = *(GameObject**)payload->Data;
+			if (draggedObj && draggedObj != &obj) {
+
+				std::cout << "dragged " << draggedObj->GetName() << "into " << obj.GetName();
+				//obj.emplaceChild(*draggedObj);
+				Application->root->ParentGameObject(*draggedObj, obj);
+			}
+		}
+		ImGui::EndDragDropTarget();
+	}
+
 	
 
 	if (open) {

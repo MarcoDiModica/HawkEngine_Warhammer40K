@@ -11,7 +11,7 @@ class Shaders;
 
 class MeshRenderer : public Component {
 public:
-    explicit MeshRenderer(std::weak_ptr<GameObject> owner);
+    explicit MeshRenderer(GameObject*  owner);
     ~MeshRenderer() override = default;
 
     void Start() override;

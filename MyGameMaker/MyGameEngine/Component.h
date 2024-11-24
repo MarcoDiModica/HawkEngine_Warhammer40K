@@ -15,7 +15,7 @@ class SceneSerializer;
 class Component
 {
 public:
-	explicit Component(std::weak_ptr<GameObject> owner) : owner(owner) {}
+	explicit Component(GameObject* owner) : owner(owner) {}
 	virtual ~Component() = default;
 
 	virtual void Start() = 0;
@@ -24,7 +24,7 @@ public:
 
 	virtual std::shared_ptr<Component> Clone() = 0;
 
-	std::shared_ptr<GameObject> GetOwner() const { return owner.lock(); }
+	GameObject* GetOwner() const { return owner; }
 	std::string GetName() const { return name; }
 
 	bool IsEnabled() const { return enabled; }
@@ -36,11 +36,11 @@ protected:
 
 	friend class SceneSerializer;
 
-	std::weak_ptr<GameObject> owner;
+	GameObject* owner;
 	std::string name;
 	bool enabled = true;
 
-	bool IsOwnerValid() const { return !owner.expired(); }
+	bool IsOwnerValid() const { return owner; }
 
 	// Saves the important attributes returning a Yaml node
 	virtual YAML::Node encode() {

@@ -1,6 +1,7 @@
 #include "GameObject.h"
 #include "MeshRendererComponent.h"
 #include "../MyGameEditor/App.h"
+#include "../MyGameEditor/Log.h"
 #include <iostream>
 
 unsigned int GameObject::nextGid = 1;
@@ -80,6 +81,8 @@ void GameObject::Update(float deltaTime)
     {
         return;
     }
+    LOG(LogType::LOG_ASSIMP, "%s has %d children", GetName().c_str(), children().size());
+    std::cout << std::endl << GetName() << "has " << children().size() << " children";
 
     for (auto& component : components)
     {

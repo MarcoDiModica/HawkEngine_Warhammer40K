@@ -2,7 +2,6 @@
 
 #include "Component.h"
 #include "TransformComponent.h"
-#include "TreeExt.h"
 #include "Mesh.h"
 #include "BoundingBox.h"
 
@@ -15,7 +14,7 @@ enum class DrawMode
     PushPopMatrix
 };
 
-class GameObject : public std::enable_shared_from_this<GameObject>, public TreeExt<GameObject>
+class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:
     GameObject(const std::string& name = "GameObject");
@@ -75,6 +74,13 @@ public:
     bool isSelected = false;
     bool isStatic = false;
 
+    void SetParent(std::shared_ptr<GameObject> parent);
+    void AddChild(std::shared_ptr<GameObject> child);
+    void RemoveChild(std::shared_ptr<GameObject> child);
+
+    std::shared_ptr<GameObject> GetParent() const;
+    const std::vector<std::shared_ptr<GameObject>>& GetChildren() const;
+
 private:
     friend class SceneSerializer;
 
@@ -83,6 +89,8 @@ private:
     void DrawPushPopMatrix() const;
 
     std::string name;
+    std::weak_ptr<GameObject> parent;
+    std::vector<std::shared_ptr<GameObject>> children;
     unsigned int gid;
     static unsigned int nextGid;
     std::string tag = "Untagged";

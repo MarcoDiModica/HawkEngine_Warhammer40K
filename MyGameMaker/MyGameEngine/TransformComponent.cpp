@@ -43,17 +43,6 @@ std::shared_ptr<Component> Transform_Component::Clone()
 void Transform_Component::Translate(const glm::dvec3& translation)
 {
 	matrix = glm::translate(matrix, translation);
-
-
-    //------Recursively apply translation to all children---------//
-    if (owner ) {
-        
-        for (GameObject& child : owner->children()) {
-            int size = child.children().size();
-            child.GetTransform()->Translate(translation);
-
-        }
-    }
 }
 void Transform_Component::SetPosition(const glm::dvec3& position)
 {

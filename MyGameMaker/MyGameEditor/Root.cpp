@@ -207,7 +207,7 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
             std::shared_ptr<GameObject> _child = currentScene->_children[i];
 
             currentScene->_children.erase(currentScene->_children.begin() + i);
-            father.emplaceChild(*_child);
+            father.AddChild(_child);
             return true;
 
         }
@@ -215,3 +215,4 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
     }
 
     return false;
+}

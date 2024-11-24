@@ -81,8 +81,8 @@ void GameObject::Update(float deltaTime)
     {
         return;
     }
-    LOG(LogType::LOG_ASSIMP, "%s has %d children", GetName().c_str(), children().size());
-    std::cout << std::endl << GetName() << "has " << children().size() << " children";
+    LOG(LogType::LOG_ASSIMP, "%s has %d children", GetName().c_str(), children.size());
+    std::cout << std::endl << GetName() << "has " << children.size() << " children";
 
     for (auto& component : components)
     {

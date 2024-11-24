@@ -50,8 +50,7 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::End();
 }
 
-void UIHierarchy::DrawSceneObject(GameObject& obj)
-{
+void UIHierarchy::DrawSceneObject(GameObject& obj) {
 	bool color = false;
 
 	if (obj.isSelected) {
@@ -59,7 +58,14 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f)); // Orange color for selected
 	}
 
-	bool open = ImGui::TreeNode(obj.GetName().c_str());
+	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+
+	// Si el GameObject no tiene hijos, deshabilita el ícono de la flecha
+	if (obj.GetChildren().empty()) {
+		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+	}
+
+	bool open = ImGui::TreeNodeEx(obj.GetName().c_str(), flags);
 
 	if (ImGui::IsItemClicked(0)) {
 		if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
@@ -79,20 +85,19 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 	if (obj.isSelected && color) {
 		ImGui::PopStyleColor(); // Orange color for selected
 	}
-	
 
 	if (open) {
-		for (auto& child : obj.children()) {
-			DrawSceneObject(child);
+		for (auto& child : obj.GetChildren()) { // Usa GetChildren()
+			DrawSceneObject(*child); // Pasa el hijo por referencia
 		}
-		ImGui::TreePop();
+
+		if (!(flags & ImGuiTreeNodeFlags_NoTreePushOnOpen)) {
+			ImGui::TreePop();
+		}
 	}
 
-
-	ImGui::Button("Delete");
-
-	if (ImGui::IsItemClicked(0)) 
-	{
+	ImGui::SameLine();
+	if (ImGui::Button("Delete")) {
 		Application->root->RemoveGameObject(&obj);
 	}
 }

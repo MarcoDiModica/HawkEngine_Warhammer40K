@@ -36,7 +36,7 @@ public:
     void SetActiveScene(const std::string& name);
     std::shared_ptr<Scene> GetActiveScene() const;
 
-    std::shared_ptr<GameObject> CreateGameObject(const std::string& name);
+    std::shared_ptr<GameObject> CreateGameObject(const std::string& name, GameObject* parent = nullptr);
     std::shared_ptr<GameObject> CreateCube(const std::string& name);
     std::shared_ptr<GameObject> CreateSphere(const std::string& name);
     std::shared_ptr<GameObject> CreatePlane(const std::string& name);
@@ -45,6 +45,9 @@ public:
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png");
 
     void RemoveGameObject(GameObject* gameObject);
+
+    void AddParent(GameObject* parent, GameObject* child);
+    void RemoveParent(GameObject* parent, GameObject* child);
 
     std::shared_ptr<Scene> currentScene = nullptr;
 

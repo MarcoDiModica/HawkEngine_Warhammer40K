@@ -17,8 +17,8 @@ GameObject::~GameObject()
     }
     components.clear();
 
-    for (auto& child : children()) {
-        child.Destroy();
+    for (auto& child : children) {
+        child->Destroy();
     }
 }
 
@@ -53,9 +53,9 @@ GameObject& GameObject::operator=(const GameObject& other) {
             components[component.first] = component.second->Clone();
         }
 
-        for (auto& child : children())
+        for (auto& child : children)
 		{
-			child.Destroy();
+			child->Destroy();
 		}
     }
     return *this;
@@ -68,9 +68,9 @@ void GameObject::Start()
         component.second->Start();
     }
 
-    for (auto& child : children())
+    for (auto& child : children)
     {
-        child.Start();
+        child->Start();
     }
 }
 
@@ -86,9 +86,9 @@ void GameObject::Update(float deltaTime)
         component.second->Update(deltaTime);
     }
     
-    for (auto& child : children())
+    for (auto& child : children)
 	{
-		child.Update(deltaTime);
+		child->Update(deltaTime);
 	}
 
     Draw();
@@ -103,9 +103,9 @@ void GameObject::Destroy()
         component.second->Destroy();
     }
 
-    for (auto& child : children())
+    for (auto& child : children)
     {
-        child.Destroy();
+        child->Destroy();
     }
 }
 
@@ -192,7 +192,50 @@ bool GameObject::CompareTag(const std::string& tag) const
 BoundingBox GameObject::boundingBox() const 
 {
     BoundingBox bbox = localBoundingBox();
-    if (!mesh && children().size()) bbox = children().front().boundingBox();
-    for (const auto& child : children()) bbox = bbox + child.boundingBox();
+    if (!mesh && children.size()) bbox = children.front()->boundingBox();
+    for (const auto& child : children) bbox = bbox + child->boundingBox();
     return transform->GetMatrix() * bbox;
+}
+
+void GameObject::SetParent(std::shared_ptr<GameObject> parent) {
+    // Si ya tiene un padre, se elimina como hijo del padre anterior
+    if (auto currentParent = this->parent.lock()) {
+        currentParent->RemoveChild(shared_from_this());
+    }
+
+    // Asigna el nuevo padre
+    this->parent = parent;
+
+    // Si el nuevo padre es válido, se añade como hijo
+    if (parent) {
+        parent->AddChild(shared_from_this());
+    }
+}
+
+void GameObject::AddChild(std::shared_ptr<GameObject> child) {
+    // Se asegura que el hijo no sea nulo y no sea el propio objeto
+    if (child && child != shared_from_this()) {
+        // Se añade el hijo a la lista de hijos
+        children.push_back(child);
+    }
+}
+
+void GameObject::RemoveChild(std::shared_ptr<GameObject> child) {
+    // Se busca al hijo en la lista de hijos
+    auto it = std::find(children.begin(), children.end(), child);
+
+    // Si se encuentra al hijo, se elimina de la lista
+    if (it != children.end()) {
+        children.erase(it);
+    }
+}
+
+std::shared_ptr<GameObject> GameObject::GetParent() const {
+    // Intenta bloquear el weak_ptr para obtener un shared_ptr al padre
+    return parent.lock();
+}
+
+const std::vector<std::shared_ptr<GameObject>>& GameObject::GetChildren() const {
+    // Devuelve la lista de hijos
+    return children;
 }

@@ -30,6 +30,12 @@ bool  Root::Awake()
     mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
     AddMeshRenderer(*MarcoVicePresidente, mesh, "Assets/Baker_house.png");
 
+    auto MarcoPresidente = CreateGameObject("BakerHouse2", MarcoVicePresidente.get());
+    MarcoPresidente->GetTransform()->GetPosition() = vec3(5, 0, 0);
+    auto mesh2 = make_shared<Mesh>();
+    mesh2->LoadMesh("Assets/Meshes/BakerHouse.fbx");
+    AddMeshRenderer(*MarcoPresidente, mesh2, "Assets/Baker_house.png");
+
     return true;
 }
 
@@ -94,7 +100,7 @@ void Root::RemoveGameObject(GameObject* gameObject) {
     }
 }
 
-std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name) 
+std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name, GameObject* parent)
 {
     std::string uniqueName = name;
     int counter = 1;
@@ -105,7 +111,12 @@ std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name)
     }
 
     auto gameObject = std::make_shared<GameObject>(uniqueName);
-    currentScene->_children.push_back(gameObject);
+    if (parent) {
+        parent->AddChild(gameObject);
+    }
+    else {
+        currentScene->_children.push_back(gameObject);
+    }
     return gameObject;
 }
 
@@ -182,4 +193,14 @@ void Root::SetActiveScene(const std::string& name)
 std::shared_ptr<Scene> Root::GetActiveScene() const
 {
 	return currentScene;
+}
+
+void Root::AddParent(GameObject* parent, GameObject* child)
+{
+
+}
+
+void Root::RemoveParent(GameObject* parent, GameObject* child)
+{
+
 }

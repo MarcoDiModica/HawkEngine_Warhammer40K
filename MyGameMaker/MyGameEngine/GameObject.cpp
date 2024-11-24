@@ -148,6 +148,11 @@ void GameObject::DrawPushPopMatrix() const
         meshRenderer->Render();
     }
 
+    for (const auto& child : children)
+	{
+		child->Draw();
+	}
+
     glPopMatrix();
 }
 

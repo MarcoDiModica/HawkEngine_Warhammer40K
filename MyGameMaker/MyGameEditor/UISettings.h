@@ -5,6 +5,7 @@
 #include "UIElement.h"
 #include <vector>
 #include <string>
+#include "imgui.h"
 
 #define RECORD_SIZE 100
 
@@ -16,6 +17,13 @@ enum class SettingType
 	DEFAULT
 };
 
+enum class Theme
+{
+	DARK,
+	LIGHT,
+	CUSTOM
+};
+
 class UISettings : public UIElement
 {
 public:
@@ -25,6 +33,12 @@ public:
 	bool Draw();
 	void AddFpsMark(int fps);
 	void AddMemoryMark();
+
+	// Style Management
+
+	void ApplyDarkTheme(ImGuiStyle& style);
+	void ApplyLightTheme(ImGuiStyle& style);
+	void ApplyCustomTheme(ImGuiStyle& style);
 
 private:
 

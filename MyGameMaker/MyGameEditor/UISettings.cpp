@@ -186,3 +186,29 @@ void UISettings::SoftwareData()
 		ilGetInteger(IL_VERSION_NUM) % 10          // Revision version
 	);
 }
+
+void UISettings::ApplyLightTheme(ImGuiStyle& style)
+{
+	style.Alpha = 1.0f;
+	style.FramePadding = ImVec2(4, 2);
+	style.ItemSpacing = ImVec2(10, 2);
+	style.Colors[ImGuiCol_WindowBg] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	style.Colors[ImGuiCol_Text] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+void UISettings::ApplyDarkTheme(ImGuiStyle& style)
+{
+	style.Alpha = 1.0f;
+	style.FramePadding = ImVec2(4, 2);
+	style.ItemSpacing = ImVec2(10, 2);
+	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
+	style.Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+void UISettings::ApplyCustomTheme(ImGuiStyle& style) {
+	style.Alpha = 1.0f;
+	style.FramePadding = ImVec2(6, 4);
+	style.ItemSpacing = ImVec2(12, 4);
+	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.2f, 0.2f, 0.3f, 1.0f);
+	style.Colors[ImGuiCol_Text] = ImVec4(0.9f, 0.9f, 0.9f, 1.0f);
+}

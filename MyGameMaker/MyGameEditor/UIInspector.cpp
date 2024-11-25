@@ -85,8 +85,7 @@ bool UIInspector::Draw()
                     if (ImGui::DragFloat3("Postition", pos, 0.1f))
                     {
                         glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-                        glm::dvec3 deltaPos = newPosition - currentPosition;
-                        transform->Translate(deltaPos);
+						transform->SetPosition(newPosition);
                     }
 
                     if (ImGui::DragFloat3("Rotation", rot, 0.1f))
@@ -99,9 +98,11 @@ bool UIInspector::Draw()
                         transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
                     }
 
-                    if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 0.1f))
+                    if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f))
                     {
-                        transform->Scale(glm::dvec3(sca[0], sca[1], sca[2]));
+						glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
+                        glm::dvec3 deltaScale = newScale / currentScale;
+                        transform->Scale(deltaScale);
                     }
                     ImGui::Checkbox("Snap", &snap);
                     ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f, 10.0f);

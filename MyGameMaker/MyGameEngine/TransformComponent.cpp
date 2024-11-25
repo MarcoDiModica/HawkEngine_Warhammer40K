@@ -3,6 +3,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 Transform_Component::Transform_Component(GameObject* owner) : Component(owner) { name = "Transform_Component"; }
 
@@ -66,7 +67,6 @@ void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
     matrix = rotationMatrix;
     matrix[3] = glm::dvec4(position, 1);
 }
-
 
 void Transform_Component::SetScale(const glm::dvec3& scale)
 {

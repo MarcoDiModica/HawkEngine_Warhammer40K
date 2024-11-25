@@ -33,6 +33,7 @@ bool UIHierarchy::Draw() {
 		if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) {
 			Application->input->ClearSelection();
 		}
+
 	}
 
 	ImGui::End();
@@ -112,5 +113,14 @@ void UIHierarchy::DrawSceneObject(GameObject& obj) {
 			}
 		}
 		ImGui::EndDragDropTarget();
+	}
+
+	if (open && !obj.GetChildren().empty())
+	{
+		for (const auto& child : obj.GetChildren())
+		{
+			DrawSceneObject(*child);
+		}
+		ImGui::TreePop();
 	}
 }

@@ -55,7 +55,9 @@ public:
     void LookAt(const glm::dvec3& target);
     void SetRotation(const glm::dvec3& eulerAngles);
     void SetScale(const glm::dvec3& scale);
-    void SetMatrix(const glm::dmat4& newMatrix) { matrix = newMatrix; }
+    void SetMatrix(const glm::dmat4& newMatrix) {
+        matrix = newMatrix;
+    }
 
     Transform_Component operator*(const glm::dmat4& other) const {
         Transform_Component result(*this);
@@ -71,10 +73,7 @@ public:
 
     void TranslateLocal(const glm::dvec3& translation);
 
-    void RotateLocal(double rads, const glm::dvec3& axis) {
-
-        local_matrix = glm::rotate(local_matrix, rads, axis);
-    }
+    void RotateLocal(double rads, const glm::dvec3& axis);
 
     void SetLocalPosition(const glm::dvec3& position) {
 
@@ -164,6 +163,10 @@ private:
     void UpdateLocalMatrix(const glm::dmat4& parentWorldMatrix) {
         local_matrix = glm::inverse( parentWorldMatrix  ) * matrix;
     }
+
+    void HandleWorldUpdate();
+
+    void HandleLocalUpdate();
 
 };
 

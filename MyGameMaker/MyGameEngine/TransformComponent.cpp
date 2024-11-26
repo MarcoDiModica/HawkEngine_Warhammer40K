@@ -43,8 +43,30 @@ std::shared_ptr<Component> Transform_Component::Clone(GameObject* owner)
 
 void Transform_Component::Translate(const glm::dvec3& translation)
 {
-    //matrix = glm::translate(matrix, translation);
-    TranslateLocal(translation);
+
+    matrix = glm::translate(matrix, translation);
+
+    /* After modifying WORLD , recalculate  LOCAL */
+
+    if (!owner->parent())/*No owner means owner is the scene*/ {
+        UpdateLocalMatrix(glm::dmat4(1.0));
+    }
+    else {
+        UpdateLocalMatrix(owner->parent()->GetTransform()->matrix);
+    }
+
+}
+
+void Transform_Component::TranslateLocal(const glm::dvec3& translation) {
+
+    local_matrix = glm::translate(local_matrix, translation);
+
+    if (!owner->parent())/*No owner means owner is the scene*/ {
+        UpdateWorldMatrix(glm::dmat4(1.0));
+    }
+    else {
+        UpdateWorldMatrix(owner->parent()->GetTransform()->matrix);
+    }
 }
 
 void Transform_Component::Update(float deltaTime) {
@@ -68,7 +90,8 @@ void Transform_Component::SetPosition(const glm::dvec3& position)
 
 void Transform_Component::Rotate(double rads, const glm::dvec3& axis)
 {
-    //matrix = glm::rotate(matrix, rads, axis);
+    // MARCOB Revise this
+    matrix = glm::rotate(matrix, rads, axis);
     RotateLocal(rads, axis);
 }
 

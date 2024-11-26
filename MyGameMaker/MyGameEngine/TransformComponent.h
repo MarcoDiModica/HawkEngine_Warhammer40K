@@ -69,24 +69,7 @@ public:
         return result;
     }
 
-    /* Update the world matrix based on the parent's world matrix */
-    void UpdateWorldMatrix(const glm::dmat4& parentWorldMatrix) {
-        auto buff = matrix;
-        matrix = parentWorldMatrix * local_matrix;
-        if (buff != matrix) {
-            int u = 7;
-        }
-
-    }
-
-    void TranslateLocal(const glm::dvec3& translation) {
-        auto buff = local_matrix;
-        local_matrix = glm::translate(local_matrix, translation);
-
-        if (local_matrix == buff) {
-            int y = 9;
-        }
-    }
+    void TranslateLocal(const glm::dvec3& translation);
 
     void RotateLocal(double rads, const glm::dvec3& axis) {
 
@@ -167,6 +150,20 @@ private:
     };
 
     glm::dmat4 local_matrix = glm::dmat4(1.0);
+
+    /* Update the world matrix based on the parent's world matrix */
+    void UpdateWorldMatrix(const glm::dmat4& parentWorldMatrix) {
+        auto buff = matrix;
+        matrix = parentWorldMatrix * local_matrix;
+        if (buff != matrix) {
+            int u = 7;
+        }
+
+    }
+
+    void UpdateLocalMatrix(const glm::dmat4& parentWorldMatrix) {
+        local_matrix = glm::inverse( parentWorldMatrix  ) * matrix;
+    }
 
 };
 

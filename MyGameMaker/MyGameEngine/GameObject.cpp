@@ -106,6 +106,10 @@ void GameObject::Update(float deltaTime)
 
 void GameObject::Destroy()
 {
+    if (!this) {
+        return;
+    }
+
     destroyed = true;
 
     for (auto& component : components)

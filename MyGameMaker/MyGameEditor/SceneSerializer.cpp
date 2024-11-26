@@ -2,6 +2,7 @@
 #include "App.h"
 #include "Root.h"
 #include <vector>
+#include <memory>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -30,11 +31,26 @@ void SceneSerializer::Serialize() {
 			node[component.second->name] = node2;
 		}
 
-		/*node["transform"] = gameObjects[i]->GetTransform()->encode();*/
+		/* If it has children , save children node inside */
+		//for (size_t j = 0; j < gameObjects[i]->children().size(); ++j) {
+
+		//	YAML::Node node;
+		//	node["Child" + std::to_string(j)] = ObjectSerialize(gameObjects[i]->children()[j], j);
+
+		//}
+		int j = 0;
+		for (auto it = gameObjects[i]->children().begin(); it != gameObjects[i]->children().end(); ++it) {
+
+			node["Child" + std::to_string(j)] = ObjectSerialize(*it, j);
+
+			j++;
+		}
+
 		game_object_node["GameObject" + std::to_string(i)] = node;
-		/*Save node to the emitter*/
-		emitter << game_object_node;
+
+
 	}
+	emitter << game_object_node;
 
 	std::string saved_string = emitter.c_str();
 	
@@ -47,6 +63,8 @@ void SceneSerializer::Serialize() {
 	}
 
 }
+
+
 
 
 void SceneSerializer::DeSerialize(std::string path) {
@@ -90,42 +108,32 @@ void SceneSerializer::DeSerialize(std::string path) {
 							game_obj->transform->decode(value);
 						}
 						if (component_name == "MeshRenderer") {
-							//game_obj->AddComponent<MeshRenderer>();
-							auto mesh = std::make_shared<Mesh>();
-							mesh->LoadMesh(value["mesh_path"].as<std::string>().c_str());
-							Application->root->AddMeshRenderer(*game_obj, mesh, value["image_path"].as<std::string>() );
-						}
 
+							auto _mesh = std::make_shared<Mesh>();
+							std::string path = value["mesh_path"].as<std::string>();
+
+							if (path.substr(0, 6) == "shapes") {
+								if (path.find("cube")) {
+									_mesh = Mesh::CreateCube();
+								}
+								else if (path.find("sphere")) {
+									_mesh = Mesh::CreateSphere();
+								}
+								else if (path.find("plane")) {
+									_mesh = Mesh::CreatePlane();
+								}
+							}
+							else {
+								_mesh->LoadMesh(path.c_str());
+							}
+
+							Application->root->AddMeshRenderer(*game_obj, _mesh, value["image_path"].as<std::string>() );
+						}
 					}
 				}
-
-
 			}
+			i++;
 
-			//for (const auto& component_node : _node) {
-
-			//	if (component_node.IsDefined() && component_node["name"].IsDefined()) {
-
-			//		std::string component_name = component_node["name"].as<std::string>();
-
-			//		if (component_name == "Transform_Component") {
-
-			//			game_obj->transform->decode(component_node);
-			//		}
-			//	}
-			//	else {
-			//		int h = 9;
-			//	}
-			//}
 		}
-
 	}
-
-
-	//emitter << root;
-
-	//std::string saved_string = emitter.c_str();
-
-	int j = 9;
-
 }

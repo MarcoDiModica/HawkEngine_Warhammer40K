@@ -24,6 +24,8 @@ bool  Root::Awake()
     AddScene(make_shared<Scene>("Scene1"));
     SetActiveScene("Scene1");
 
+    return true;
+
     auto MarcoVicePresidente = CreateGameObject("BakerHouse");
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
     auto mesh = make_shared<Mesh>();
@@ -44,6 +46,8 @@ bool Root::Start()
 }
 
 bool Root::Update(double dt) {
+
+    LOG(LogType::LOG_INFO, " %d num objects in scene", currentScene->children().size());
 
     for (shared_ptr<GameObject> object : currentScene->_children)
     {

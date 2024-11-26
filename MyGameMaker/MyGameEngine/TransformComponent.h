@@ -126,7 +126,9 @@ protected:
         if (!node["position"] || !node["rotation"] || !node["scale"])
             return false;
         /*----------Position-------------*/
-        YAML::convert<glm::dvec3>::decode(node["position"], position);
+        glm::dvec3 _position;
+        YAML::convert<glm::dvec3>::decode(node["position"], _position);
+        SetPosition(_position);
         /*----------Scale-------------*/
         glm::dvec3 new_scale;
         YAML::convert<glm::dvec3>::decode(node["scale"], new_scale);

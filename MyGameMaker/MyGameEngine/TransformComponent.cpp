@@ -108,7 +108,7 @@ void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
         matrix = rotationMatrix;
         matrix[3] = glm::dvec4(position, 1);
         LOG(LogType::LOG_ERROR, "Attempting to rotat");
-        /*HandleLocalUpdate();*/
+        HandleLocalUpdate();
     }
 }
 
@@ -123,6 +123,8 @@ void Transform_Component::SetScale(const glm::dvec3& scale)
     glm::dvec3 position = glm::dvec3(matrix[3]);
     matrix = scaleMatrix;
     matrix[3] = glm::dvec4(position, 1);
+
+    HandleLocalUpdate();
 }
 
 void Transform_Component::Scale(const glm::dvec3& scale)

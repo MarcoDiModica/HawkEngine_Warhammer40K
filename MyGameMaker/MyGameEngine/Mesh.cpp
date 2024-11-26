@@ -293,6 +293,7 @@ void Mesh::LoadMesh(const char* file_path)
 
 std::shared_ptr<Mesh> Mesh::CreateCube()
 {
+
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	const glm::vec3 vertices[] = {
 		glm::vec3(-1.0f, -1.0f, 1.0f),
@@ -315,6 +316,7 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	};
 
 	mesh->Load(vertices, 8, indices, 36);
+	mesh->filePath = std::string("shapes/cube");
 	return mesh;
 }
 
@@ -354,6 +356,7 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 	}
 
 	mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
+	mesh->filePath = std::string("shapes/sphere");
 	return mesh;
 }
 
@@ -372,5 +375,6 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	};
 
 	mesh->Load(vertices, 4, indices, 6);
+	mesh->filePath = std::string("shapes/plane");
 	return mesh;
 }

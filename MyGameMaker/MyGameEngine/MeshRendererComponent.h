@@ -61,7 +61,22 @@ protected:
         // node["mesh_path"].as<std::string>();
 
         auto _mesh = std::make_shared<Mesh>();
-        _mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
+        std::string path = node["mesh_path"].as<std::string>();
+
+        if (path.substr(0, 6) == "shape") {
+            if (path.find("cube")) {
+                _mesh = Mesh::CreateCube();
+            }
+            else if (path.find("sphere")) {
+                _mesh = Mesh::CreateSphere();
+            }
+            else if (path.find("plane")) {
+                _mesh = Mesh::CreatePlane();
+            }
+        }
+        else {
+             _mesh->LoadMesh(path.c_str());
+        }
         SetMesh(_mesh);
 
 

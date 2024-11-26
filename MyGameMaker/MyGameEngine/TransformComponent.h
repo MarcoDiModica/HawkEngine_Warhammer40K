@@ -57,6 +57,11 @@ public:
     void SetScale(const glm::dvec3& scale);
     void SetMatrix(const glm::dmat4& newMatrix) {
         matrix = newMatrix;
+        HandleLocalUpdate();
+    }
+    void SetLocalMatrix(const glm::dmat4& newMatrix) {
+        local_matrix = newMatrix;
+        HandleWorldUpdate();
     }
 
     Transform_Component operator*(const glm::dmat4& other) const {
@@ -138,6 +143,7 @@ protected:
 private:
     union
     {
+        //DONT modify directly, use SetMatrix
         glm::dmat4 matrix = glm::dmat4(1.0);
         struct
         {
@@ -148,6 +154,7 @@ private:
         };
     };
 
+    // DONT modigy directly use SetLocalMatrix
     glm::dmat4 local_matrix = glm::dmat4(1.0);
 
     /* Update the world matrix based on the parent's world matrix */

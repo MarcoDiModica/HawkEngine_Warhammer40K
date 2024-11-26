@@ -106,94 +106,63 @@ bool UISceneWindow::Draw()
 		ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, imageSize, ImVec2(0, 1), ImVec2(1, 0));
 
 		ImGuizmo::SetDrawlist();
+
+		// Set the ImGuizmo viewport
 		ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
 
+		// Define the view and projection matrices
 		glm::mat4 viewMatrix = Application->camera->view();
 		glm::mat4 projectionMatrix = Application->camera->projection();
 
+		// Convert matrices to float arrays
 		float view[16];
 		float projection[16];
 		memcpy(view, &viewMatrix, sizeof(float) * 16);
 		memcpy(projection, &projectionMatrix, sizeof(float) * 16);
 
-		auto selectedGameObjects = Application->input->GetSelectedGameObjects();
+		// Get the selected game object
+		//GameObject* selectedObject = Application->input->GetSelectedGameObject();
 
-		if (!selectedGameObjects.empty()) {
-			glm::vec3 averagePosition(0.0f);
+		for (auto& selectedObject : Application->input->GetSelectedGameObjects()){
 
-			for (GameObject* selectedObject : selectedGameObjects) {
-				if (selectedObject != nullptr) {
-					averagePosition += selectedObject->GetTransform()->GetPosition();
+
+			if (selectedObject != nullptr) {
+				// Get the transformation matrix of the selected object
+				glm::mat4 matrix = selectedObject->GetTransform()->GetMatrix();
+
+				// Convert matrix to float array
+				float objectMatrix[16];
+				memcpy(objectMatrix, &matrix, sizeof(float) * 16);
+
+				float snap[3] = { 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue };
+
+				if (Application->gui->UIinspectorPanel->snap)
+				{
+					ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE, ImGuizmo::LOCAL, objectMatrix, NULL, snap);
 				}
-			}
-			averagePosition /= static_cast<float>(selectedGameObjects.size());
-
-			glm::mat4 gizmoMatrix = glm::translate(glm::mat4(1.0f), averagePosition);
-			float gizmoMatrixArray[16];
-			memcpy(gizmoMatrixArray, glm::value_ptr(gizmoMatrix), sizeof(float) * 16);
-
-			float snap[3] = {
-				1.0f * Application->gui->UIinspectorPanel->snapValue,
-				1.0f * Application->gui->UIinspectorPanel->snapValue,
-				1.0f * Application->gui->UIinspectorPanel->snapValue
-			};
-
-			if (Application->gui->UIinspectorPanel->snap) {
-				ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE,
-					ImGuizmo::LOCAL, gizmoMatrixArray, nullptr, snap);
-			}
-			else {
-				ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE,
-					ImGuizmo::LOCAL, gizmoMatrixArray, nullptr);
-			}
-
-			glm::vec3 newPosition, newRotation, newScale;
-			ImGuizmo::DecomposeMatrixToComponents(gizmoMatrixArray, glm::value_ptr(newPosition),
-				glm::value_ptr(newRotation), glm::value_ptr(newScale));
-
-			// Calcular la diferencia de escala del gizmo
-			glm::vec3 gizmoScaleDelta = newScale / gizmoOriginalScale;
-
-			for (GameObject* selectedObject : selectedGameObjects) {
-				if (selectedObject != nullptr) {
-					// Calcular la posición relativa y la nueva posición
-					glm::vec3 objectPosition = selectedObject->GetTransform()->GetPosition();
-					glm::vec3 relativePosition = objectPosition - averagePosition;
-					glm::vec3 finalPosition = newPosition + relativePosition;
-
-					// Rotación
-					glm::quat objectRotationQuat = selectedObject->GetTransform()->GetRotation();
-
-					// Convertir la rotación del gizmo a quaternion
-					glm::quat gizmoRotationQuat = glm::quat(glm::radians(newRotation));
-
-					// Combinar la rotación del objeto con la rotación del gizmo
-					glm::quat finalRotationQuat = gizmoRotationQuat * objectRotationQuat;
-
-					// Convertir la rotación final a Euler angles (glm::vec3)
-					glm::vec3 finalRotationEuler = glm::degrees(glm::eulerAngles(finalRotationQuat));
-
-					// Escala
-					glm::vec3 objectScale = selectedObject->GetTransform()->GetScale();
-					glm::vec3 finalScale = objectScale * gizmoScaleDelta;
-
-					// Actualizar las transformaciones en el objeto seleccionado
-					selectedObject->GetTransform()->SetPosition(finalPosition);
-
-					// Usar SetRotation con glm::vec3
-					selectedObject->GetTransform()->SetRotation(finalRotationEuler);
-
-					selectedObject->GetTransform()->SetScale(finalScale);
+				else
+				{
+					ImGuizmo::Manipulate(view, projection, ImGuizmo::TRANSLATE | ImGuizmo::ROTATE | ImGuizmo::SCALE, ImGuizmo::LOCAL, objectMatrix, NULL);
 				}
-			}
 
-			// Actualizar la escala original del gizmo
-			gizmoOriginalScale = newScale;
+				glm::vec3 position, rotation, scale;
+				ImGuizmo::DecomposeMatrixToComponents(objectMatrix, glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale));
+
+				ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale), objectMatrix);
+
+				glm::mat4 newMatrix = glm::make_mat4(objectMatrix);
+
+
+				selectedObject->GetTransform()->SetMatrix(newMatrix);
+
+
+				//Application->input->GetSelectedGameObject()->GetTransform()->SetMatrix(newMatrix);
+			}
 		}
-
-		ImGui::End();
-		return true;
 	}
+	ImGui::End();
+
+	return true;
 }
 
 //peta cuando

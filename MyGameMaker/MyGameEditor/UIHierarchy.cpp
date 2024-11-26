@@ -123,4 +123,11 @@ void UIHierarchy::DrawSceneObject(GameObject& obj) {
 		}
 		ImGui::TreePop();
 	}
+
+	ImGui::Button("Delete");
+
+	if (ImGui::IsItemClicked(0))
+	{
+		Application->root->RemoveGameObject(&obj);
+	}
 }

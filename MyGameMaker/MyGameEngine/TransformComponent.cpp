@@ -1,9 +1,8 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
-
+#include "../MyGameEditor/Log.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
 
 Transform_Component::Transform_Component(GameObject* owner) : Component(owner) { name = "Transform_Component"; }
 
@@ -30,7 +29,7 @@ Transform_Component& Transform_Component::operator=(const Transform_Component& o
     return *this;
 }
 
-std::shared_ptr<Component> Transform_Component::Clone()
+std::shared_ptr<Component> Transform_Component::Clone(GameObject* owner)
 {
     auto clone = std::make_shared<Transform_Component>(*this);
     clone->matrix = this->matrix;
@@ -38,21 +37,39 @@ std::shared_ptr<Component> Transform_Component::Clone()
     clone->up = this->up;
     clone->forward = this->forward;
     clone->position = this->position;
+    clone->owner = owner;
     return clone;
 }
 
 void Transform_Component::Translate(const glm::dvec3& translation)
 {
-	matrix = glm::translate(matrix, translation);
+    //matrix = glm::translate(matrix, translation);
+    TranslateLocal(translation);
 }
+
+void Transform_Component::Update(float deltaTime) {
+
+    if (owner) {
+
+        if (!owner->parent())/*No owner means owner is the scene*/ {
+           UpdateWorldMatrix(glm::dmat4(1.0));
+        }
+        for (GameObject& child : owner->children()) {
+            child.GetTransform()->UpdateWorldMatrix(matrix);
+        }
+
+    }
+}
+
 void Transform_Component::SetPosition(const glm::dvec3& position)
 {
-	matrix[3] = glm::dvec4(position, 1);
+    matrix[3] = glm::dvec4(position, 1);
 }
 
 void Transform_Component::Rotate(double rads, const glm::dvec3& axis)
 {
-	matrix = glm::rotate(matrix, rads, axis);
+    //matrix = glm::rotate(matrix, rads, axis);
+    RotateLocal(rads, axis);
 }
 
 void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
@@ -68,6 +85,7 @@ void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
     matrix[3] = glm::dvec4(position, 1);
 }
 
+
 void Transform_Component::SetScale(const glm::dvec3& scale)
 {
     glm::dmat4 scaleMatrix = glm::identity<glm::dmat4>();
@@ -81,10 +99,10 @@ void Transform_Component::SetScale(const glm::dvec3& scale)
 
 void Transform_Component::Scale(const glm::dvec3& scale)
 {
-	matrix = glm::scale(matrix, scale);
+    matrix = glm::scale(matrix, scale);
 }
 
 void Transform_Component::LookAt(const glm::dvec3& target)
 {
-	matrix = glm::lookAt(position, target, up);
+    matrix = glm::lookAt(position, target, up);
 }

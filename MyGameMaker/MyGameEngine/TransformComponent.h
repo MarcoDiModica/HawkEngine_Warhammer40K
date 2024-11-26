@@ -19,10 +19,10 @@ public:
     Transform_Component& operator=(const Transform_Component& other);
 
     void Start() override {}
-    void Update(float deltaTime) override {}
+    void Update(float deltaTime) override;
     void Destroy() override {}
 
-    std::shared_ptr<Component> Clone() override;
+    std::shared_ptr<Component> Clone(GameObject* owner) override;
 
     const auto& GetMatrix() const { return matrix; }
     const auto& GetLeft() const { return left; }
@@ -49,13 +49,13 @@ public:
     const auto* GetData() const { return &matrix[0][0]; }
 
     void Translate(const glm::dvec3& translation);
-	void SetPosition(const glm::dvec3& position);
+    void SetPosition(const glm::dvec3& position);
     void Rotate(double rads, const glm::dvec3& axis);
     void Scale(const glm::dvec3& scale);
     void LookAt(const glm::dvec3& target);
-	void SetRotation(const glm::dvec3& eulerAngles);
-	void SetScale(const glm::dvec3& scale);
-	void SetMatrix(const glm::dmat4& newMatrix) { matrix = newMatrix; }
+    void SetRotation(const glm::dvec3& eulerAngles);
+    void SetScale(const glm::dvec3& scale);
+    void SetMatrix(const glm::dmat4& newMatrix) { matrix = newMatrix; }
 
     Transform_Component operator*(const glm::dmat4& other) const {
         Transform_Component result(*this);
@@ -67,6 +67,35 @@ public:
         Transform_Component result(*this);
         result.matrix = matrix * other.matrix;
         return result;
+    }
+
+    /* Update the world matrix based on the parent's world matrix */
+    void UpdateWorldMatrix(const glm::dmat4& parentWorldMatrix) {
+        auto buff = matrix;
+        matrix = parentWorldMatrix * local_matrix;
+        if (buff != matrix) {
+            int u = 7;
+        }
+
+    }
+
+    void TranslateLocal(const glm::dvec3& translation) {
+        auto buff = local_matrix;
+        local_matrix = glm::translate(local_matrix, translation);
+
+        if (local_matrix == buff) {
+            int y = 9;
+        }
+    }
+
+    void RotateLocal(double rads, const glm::dvec3& axis) {
+
+        local_matrix = glm::rotate(local_matrix, rads, axis);
+    }
+
+    void SetLocalPosition(const glm::dvec3& position) {
+
+        local_matrix[3] = glm::dvec4(position, 1.0);
     }
 
 protected:
@@ -136,6 +165,9 @@ private:
             glm::dvec3 position; glm::dmat4::value_type pos_w;
         };
     };
+
+    glm::dmat4 local_matrix = glm::dmat4(1.0);
+
 };
 
 inline Transform_Component operator*(const glm::dmat4& m, const Transform_Component& t) {

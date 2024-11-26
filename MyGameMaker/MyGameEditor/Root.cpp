@@ -19,28 +19,22 @@ class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
 
-bool  Root::Awake() 
-{       
+bool  Root::Awake()
+{
     AddScene(make_shared<Scene>("Scene1"));
     SetActiveScene("Scene1");
-    
+
     auto MarcoVicePresidente = CreateGameObject("BakerHouse");
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
     auto mesh = make_shared<Mesh>();
     mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
     AddMeshRenderer(*MarcoVicePresidente, mesh, "Assets/Baker_house.png");
 
-    auto MarcoPresidente = CreateGameObject("BakerHouse2", MarcoVicePresidente.get());
-    MarcoPresidente->GetTransform()->GetPosition() = vec3(5, 0, 0);
-    auto mesh2 = make_shared<Mesh>();
-    mesh2->LoadMesh("Assets/Meshes/BakerHouse.fbx");
-    AddMeshRenderer(*MarcoPresidente, mesh2, "Assets/Baker_house.png");
-
     return true;
 }
 
-bool Root::Start() 
-{ 
+bool Root::Start()
+{
     for (shared_ptr<GameObject> object : currentScene->_children)
     {
         object->Start();
@@ -49,9 +43,9 @@ bool Root::Start()
     return true;
 }
 
-bool Root::Update(double dt) { 
+bool Root::Update(double dt) {
 
-    for (shared_ptr<GameObject> object : currentScene->_children) 
+    for (shared_ptr<GameObject> object : currentScene->_children)
     {
         object->Update(dt);
     }
@@ -62,7 +56,7 @@ bool Root::Update(double dt) {
 
     }
 
-    return true; 
+    return true;
 }
 
 shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh)
@@ -100,23 +94,18 @@ void Root::RemoveGameObject(GameObject* gameObject) {
     }
 }
 
-std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name, GameObject* parent)
+std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name)
 {
     std::string uniqueName = name;
     int counter = 1;
-    for (const auto& child : currentScene->_children) {
+    for (std::shared_ptr<GameObject> child : currentScene->_children) {
         if (child->GetName() == uniqueName) {
             uniqueName = name + "_" + std::to_string(counter++);
         }
     }
 
     auto gameObject = std::make_shared<GameObject>(uniqueName);
-    if (parent) {
-        parent->AddChild(gameObject);
-    }
-    else {
-        currentScene->_children.push_back(gameObject);
-    }
+    currentScene->_children.push_back(gameObject);
     return gameObject;
 }
 
@@ -157,43 +146,44 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
 
 void Root::CreateScene(const std::string& name)
 {
-	auto scene = make_shared<Scene>(name);
-	scenes.push_back(scene);
+    auto scene = make_shared<Scene>(name);
+    scenes.push_back(scene);
 }
 
 void Root::AddScene(std::shared_ptr<Scene> scene)
 {
-	scenes.push_back(scene);
+    scenes.push_back(scene);
 }
 
 void Root::RemoveScene(const std::string& name)
 {
     for (auto it = scenes.begin(); it != scenes.end(); ) {
-		if ((*it)->name == name) {
-			(*it)->Destroy();
-			it = scenes.erase(it);
-			return;
-		}
-		else {
-			++it;
-		}
-	}
+        if ((*it)->name == name) {
+            (*it)->Destroy();
+            it = scenes.erase(it);
+            return;
+        }
+        else {
+            ++it;
+        }
+    }
 }
 
 void Root::SetActiveScene(const std::string& name)
 {
-	for (auto scene : scenes) {
-		if (scene->name == name) {
-			currentScene = scene;
-			return;
-		}
-	}
+    for (auto scene : scenes) {
+        if (scene->name == name) {
+            currentScene = scene;
+            return;
+        }
+    }
 }
 
 std::shared_ptr<Scene> Root::GetActiveScene() const
 {
-	return currentScene;
+    return currentScene;
 }
+
 
 bool Root::ParentGameObject(GameObject& child, GameObject& father) {
 
@@ -205,9 +195,9 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
         if (*currentScene->_children[i] == child) {
 
             std::shared_ptr<GameObject> _child = currentScene->_children[i];
-
+            father.emplaceChild(*_child);
             currentScene->_children.erase(currentScene->_children.begin() + i);
-            father.AddChild(_child);
+
             return true;
 
         }

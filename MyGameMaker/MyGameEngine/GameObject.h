@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "TransformComponent.h"
+#include "TreeExt.h"
 #include "Mesh.h"
 #include "BoundingBox.h"
 
@@ -14,7 +15,7 @@ enum class DrawMode
     PushPopMatrix
 };
 
-class GameObject : public std::enable_shared_from_this<GameObject>
+class GameObject : public std::enable_shared_from_this<GameObject>, public TreeExt<GameObject>
 {
 public:
     GameObject(const std::string& name = "GameObject");
@@ -74,13 +75,6 @@ public:
     bool isSelected = false;
     bool isStatic = false;
 
-    void SetParent(std::shared_ptr<GameObject> parent);
-    void AddChild(std::shared_ptr<GameObject> child);
-    void RemoveChild(std::shared_ptr<GameObject> child);
-
-    std::shared_ptr<GameObject> GetParent() const;
-    const std::vector<std::shared_ptr<GameObject>>& GetChildren() const;
-
 private:
     friend class SceneSerializer;
 
@@ -89,8 +83,6 @@ private:
     void DrawPushPopMatrix() const;
 
     std::string name;
-    std::weak_ptr<GameObject> parent;
-    std::vector<std::shared_ptr<GameObject>> children;
     unsigned int gid;
     static unsigned int nextGid;
     std::string tag = "Untagged";
@@ -109,7 +101,7 @@ private:
 
 template <IsComponent T, typename... Args>
 std::shared_ptr<T> GameObject::AddComponent(Args&&... args) {
-    std::shared_ptr<T> newComponent = std::make_shared<T>( this, std::forward<Args>(args)...);
+    std::shared_ptr<T> newComponent = std::make_shared<T>(this, std::forward<Args>(args)...);
     components[typeid(T)] = newComponent;
     return newComponent;
 }
@@ -147,4 +139,3 @@ template <IsComponent T>
 bool GameObject::HasComponent() const {
     return components.find(typeid(T)) != components.end();
 }
-

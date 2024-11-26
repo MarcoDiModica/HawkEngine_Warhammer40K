@@ -31,14 +31,15 @@ void MeshRenderer::Destroy()
     mesh.reset();
 }
 
-std::shared_ptr<Component> MeshRenderer::Clone()
+std::shared_ptr<Component> MeshRenderer::Clone(GameObject* owner)
 {
-	auto meshRenderer = std::make_shared<MeshRenderer>(*this);
-	meshRenderer->mesh = mesh;
-	meshRenderer->material = material;
-	meshRenderer->image = image;
-	meshRenderer->color = color;
-	return meshRenderer;
+    auto meshRenderer = std::make_shared<MeshRenderer>(*this);
+    meshRenderer->mesh = mesh;
+    meshRenderer->material = material;
+    meshRenderer->image = image;
+    meshRenderer->color = color;
+    meshRenderer->owner = owner;
+    return meshRenderer;
 }
 
 void MeshRenderer::SetMesh(std::shared_ptr<Mesh> mesh)
@@ -96,9 +97,9 @@ void MeshRenderer::Render() const
 
 
 
-     
 
-        
+
+
     }
 
     if (material)
@@ -107,7 +108,7 @@ void MeshRenderer::Render() const
         material->bind();
         material->setShaderUniform("texture1", 0); // Pasar la unidad de textura al shader
     }
-  
+
     if (mesh)
     {
         mesh->Draw();

@@ -85,7 +85,9 @@ bool UIInspector::Draw()
                     if (ImGui::DragFloat3("Postition", pos, 0.1f))
                     {
                         glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-						transform->SetPosition(newPosition);
+						/*transform->SetPosition(newPosition);*/
+                        glm::dvec3 deltaPos = newPosition - currentPosition;
+                        transform->Translate(deltaPos);
                     }
 
                     if (ImGui::DragFloat3("Rotation", rot, 0.1f))

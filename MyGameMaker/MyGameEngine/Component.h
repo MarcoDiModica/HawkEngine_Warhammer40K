@@ -22,7 +22,7 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	virtual void Destroy() = 0;
 
-	virtual std::shared_ptr<Component> Clone() = 0;
+	virtual std::shared_ptr<Component> Clone(GameObject* new_owner) = 0;
 
 	GameObject* GetOwner() const { return owner; }
 	std::string GetName() const { return name; }
@@ -32,11 +32,15 @@ public:
 
 	void SetName(const std::string& name) { this->name = name; }
 
+	GameObject* owner;
+
+	GameObject* owner2;
+
 protected:
 
 	friend class SceneSerializer;
 
-	GameObject* owner;
+
 	std::string name;
 	bool enabled = true;
 

@@ -33,7 +33,6 @@ bool UIHierarchy::Draw() {
 		if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) {
 			Application->input->ClearSelection();
 		}
-
 	}
 
 	ImGui::End();
@@ -51,7 +50,8 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::End();
 }
 
-void UIHierarchy::DrawSceneObject(GameObject& obj) {
+void UIHierarchy::DrawSceneObject(GameObject& obj)
+{
 	bool color = false;
 
 	if (obj.isSelected) {
@@ -59,14 +59,7 @@ void UIHierarchy::DrawSceneObject(GameObject& obj) {
 		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f)); // Orange color for selected
 	}
 
-	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-
-	// Si el GameObject no tiene hijos, deshabilita el �cono de la flecha
-	if (obj.GetChildren().empty()) {
-		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-	}
-
-	bool open = ImGui::TreeNodeEx(obj.GetName().c_str(), flags);
+	bool open = ImGui::TreeNode(obj.GetName().c_str());
 
 	if (ImGui::IsItemClicked(0)) {
 		if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
@@ -115,12 +108,18 @@ void UIHierarchy::DrawSceneObject(GameObject& obj) {
 		ImGui::EndDragDropTarget();
 	}
 
-	if (open && !obj.GetChildren().empty())
-	{
-		for (const auto& child : obj.GetChildren())
-		{
-			DrawSceneObject(*child);
+	if (open) {
+		for (auto& child : obj.children()) {
+			DrawSceneObject(child);
 		}
 		ImGui::TreePop();
+	}
+
+
+	ImGui::Button("Delete");
+
+	if (ImGui::IsItemClicked(0))
+	{
+		Application->root->RemoveGameObject(&obj);
 	}
 }

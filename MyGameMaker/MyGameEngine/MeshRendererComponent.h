@@ -11,14 +11,14 @@ class Shaders;
 
 class MeshRenderer : public Component {
 public:
-    explicit MeshRenderer(GameObject*  owner);
+    explicit MeshRenderer(GameObject* owner);
     ~MeshRenderer() override = default;
 
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;
 
-    std::shared_ptr<Component> Clone() override;
+    std::shared_ptr<Component> Clone(GameObject* owner) override;
 
     void SetMesh(std::shared_ptr<Mesh> mesh);
     std::shared_ptr<Mesh> GetMesh() const;
@@ -44,7 +44,7 @@ protected:
     YAML::Node encode() override {
 
         YAML::Node node = Component::encode();
-        
+
         node["mesh_path"] = mesh->filePath;
         node["image_path"] = image->image_path;
 
@@ -58,7 +58,7 @@ protected:
         if (!node["mesh_path"] || !node["image_path"])
             return false;
 
-       // node["mesh_path"].as<std::string>();
+        // node["mesh_path"].as<std::string>();
 
         auto _mesh = std::make_shared<Mesh>();
         _mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");

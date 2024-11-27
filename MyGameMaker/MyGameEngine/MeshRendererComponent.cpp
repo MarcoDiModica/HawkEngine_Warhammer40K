@@ -94,11 +94,23 @@ void MeshRenderer::Render() const
         material->setShaderUniform("view", Application->camera->view());
         material->setShaderUniform("projection", Application->camera->projection());
 
+        material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        material->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+        material->setShaderUniform("dirLight.intensity", 3.0f);
 
+        material->setShaderUniform("viewPos", Application->camera->transform().pos());
 
-
-
-
+        material->setShaderUniform("pointLights.position", glm::vec3(0.0f, 0.0f, 0.0f));
+        material->setShaderUniform("pointLights.ambient", glm::vec3(0.2f, 0.8f, 0.2f));
+        material->setShaderUniform("pointLights.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        material->setShaderUniform("pointLights.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        material->setShaderUniform("pointLights.constant", 1.0f);
+        material->setShaderUniform("pointLights.linear", 0.09f);
+        material->setShaderUniform("pointLights.quadratic", 0.032f);
+        material->setShaderUniform("pointLights.radius", 1.0f);
+        material->setShaderUniform("pointLights.intensity", 2.5f);
 
     }
 

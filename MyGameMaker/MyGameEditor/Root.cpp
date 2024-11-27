@@ -24,8 +24,6 @@ bool  Root::Awake()
     AddScene(make_shared<Scene>("Scene1"));
     SetActiveScene("Scene1");
 
-    return true;
-
     auto MarcoVicePresidente = CreateGameObject("BakerHouse");
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
     auto mesh = make_shared<Mesh>();
@@ -141,10 +139,10 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     meshRenderer->SetMesh(mesh);
     meshRenderer->SetMaterial(material);
 
-    //if (material->loadShaders("vertex_shader.glsl", "fragment_shader.glsl")) {
-    //    material->useShader = true;
-    //    material->bindShaders();
-    //}
+    if (material->loadShaders("vertex_shader.glsl", "fragment_shader.glsl")) {
+        material->useShader = true;
+        material->bindShaders();
+    }
     meshRenderer->SetImage(image);
 }
 

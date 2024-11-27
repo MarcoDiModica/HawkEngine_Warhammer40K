@@ -51,6 +51,8 @@ public:
 		return node;
 	}
 
+	GameObject& DeSerializeChild(YAML::Node _node);
+
 
 };
 

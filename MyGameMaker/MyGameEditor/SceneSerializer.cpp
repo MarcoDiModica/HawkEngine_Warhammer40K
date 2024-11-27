@@ -131,9 +131,64 @@ void SceneSerializer::DeSerialize(std::string path) {
 						}
 					}
 				}
+				else if (key.substr(0, 5) == "Child") {
+
+					/* Deserialize child and add to children vector */
+					Application->root->ParentGameObject( DeSerializeChild(value) , *game_obj );
+
+
+				}
 			}
 			i++;
 
 		}
 	}
+}
+
+GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node) {
+
+	std::shared_ptr<GameObject> game_obj = Application->root->CreateGameObject(_node["name"].as<std::string>());
+
+	for (YAML::const_iterator it = _node.begin(); it != _node.end(); ++it) {
+
+		const std::string key = it->first.as<std::string>();
+		const YAML::Node& value = it->second;
+
+		if (key == "Transform_Component" || key == "MeshRenderer") {
+			if (value["name"].IsDefined()) {
+				std::string component_name = value["name"].as<std::string>();
+
+				if (component_name == "Transform_Component") {
+					game_obj->transform->decode(value);
+				}
+				if (component_name == "MeshRenderer") {
+
+					auto _mesh = std::make_shared<Mesh>();
+					std::string path = value["mesh_path"].as<std::string>();
+
+					if (path.substr(0, 6) == "shapes") {
+						if (path.find("cube")) {
+							_mesh = Mesh::CreateCube();
+						}
+						else if (path.find("sphere")) {
+							_mesh = Mesh::CreateSphere();
+						}
+						else if (path.find("plane")) {
+							_mesh = Mesh::CreatePlane();
+						}
+					}
+					else {
+						_mesh->LoadMesh(path.c_str());
+					}
+					Application->root->AddMeshRenderer(*game_obj, _mesh, value["image_path"].as<std::string>());
+				}
+			}
+		}
+		else if (key.substr(0, 5) == "Child") {
+			/* Deserialize child and add to children vector, RECURSIVE */
+			Application->root->ParentGameObject(DeSerializeChild(value), *game_obj);
+		}
+	}
+	return *game_obj;
+
 }

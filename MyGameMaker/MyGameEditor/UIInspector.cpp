@@ -43,7 +43,7 @@ bool UIInspector::Draw()
     ImGui::SetNextWindowClass(&windowClass);
     windowClass.DockingAllowUnclassed = false;
 
-    if (ImGui::Begin("Inspector", &enabled, inspectorFlags))
+    if (ImGui::Begin("Inspector", nullptr, inspectorFlags))
     {
         ImGuiIO& io = ImGui::GetIO();
 
@@ -118,17 +118,17 @@ bool UIInspector::Draw()
 
                 if (mesh)
                 {
-                    ImGui::Text("Mesh");
-                    ImGui::Separator();
+                    if (ImGui::CollapsingHeader("Mesh"))
+                    {
+                        ImGui::Text("Vertices: %d", mesh->vertices().size());
+                        ImGui::Text("Indices: %d", mesh->indices().size());
 
-                    ImGui::Text("Vertices: %d", mesh->vertices().size());
-                    ImGui::Text("Indices: %d", mesh->indices().size());
+                        bool& triNormals = mesh->drawTriangleNormals;
+                        bool& vertexNormals = mesh->drawVertexNormals;
 
-                    bool& triNormals = mesh->drawTriangleNormals;
-                    bool& vertexNormals = mesh->drawVertexNormals;
-
-                    ImGui::Checkbox("Tri Normals", &triNormals);
-                    ImGui::Checkbox("Vertex Normals", &vertexNormals);
+                        ImGui::Checkbox("Tri Normals", &triNormals);
+                        ImGui::Checkbox("Vertex Normals", &vertexNormals);
+                    }    
                 }
 
                 ImGui::Separator();
@@ -136,11 +136,11 @@ bool UIInspector::Draw()
                 std::shared_ptr<Image> image = selectedGameObject->GetComponent<MeshRenderer>()->GetImage();
                 if (image)
                 {
-                    ImGui::Text("Image");
-                    ImGui::Separator();
-
-                    ImGui::Text("Width: %d", image->width());
-                    ImGui::Text("Heigth: %d", image->width());
+                    if (ImGui::CollapsingHeader("Image"))
+                    {
+                        ImGui::Text("Width: %d", image->width());
+                        ImGui::Text("Heigth: %d", image->width());
+                    }
                 }
             }
         }

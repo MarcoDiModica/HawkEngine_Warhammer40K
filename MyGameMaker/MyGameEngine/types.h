@@ -77,6 +77,10 @@ inline const char* const PATH(const char* folder, const char* file)
 	return path;
 }
 
+// Directories
+#define ASSETS_PATH "Assets\\"
+#define LIBRARY_PATH "Library\\"
+
 // Config
 #define TITLE "HawkEngine"
 #define VERSION "v0.1"

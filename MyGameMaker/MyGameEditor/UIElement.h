@@ -11,6 +11,7 @@ enum class UIType
 	CONSOLE,
 	INSPECTOR,
 	HIERARCHY,
+	PROJECT,
 	UNKNOWN
 };
 

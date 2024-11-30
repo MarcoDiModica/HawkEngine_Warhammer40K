@@ -19,6 +19,7 @@
 #include "UIInspector.h"
 #include "UIHierarchy.h"
 #include "UISceneWindow.h"
+#include "UIProject.h"
 
 
 MyGUI::MyGUI(App* app) : Module(app) {
@@ -63,6 +64,10 @@ bool MyGUI::Awake() {
 	UIinspectorPanel = new UIInspector(UIType::INSPECTOR, "Inspector");
 	elements.push_back(UIinspectorPanel);
 	ret *= isInitialized(UIinspectorPanel);
+
+	UIProjectPanel = new UIProject(UIType::PROJECT, "Project");
+	elements.push_back(UIProjectPanel);
+	ret *= isInitialized(UIProjectPanel);
 
 	UISceneWindowPanel = new UISceneWindow(UIType::DEFAULT, "SceneWindow");
 	elements.push_back(UISceneWindowPanel);
@@ -123,6 +128,7 @@ bool MyGUI::Start() {
 	ImGui::StyleColorsClassic();
 
 	Application->gui->UIconsolePanel->SetState(true);
+	Application->gui->UIProjectPanel->SetState(true);
 	Application->gui->UIsettingsPanel->SetState(true);
 	Application->gui->UIinspectorPanel->SetState(true);
 	Application->gui->UIMainMenuBarPanel->SetState(true);
@@ -214,6 +220,10 @@ void MyGUI::Render() {
 
 	if (showSceneWindow) {
 		UISceneWindowPanel->Draw();
+	}
+
+	if (showProject) {
+		UIProjectPanel->Draw();
 	}
 
 

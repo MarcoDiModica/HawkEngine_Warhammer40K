@@ -8,6 +8,7 @@
 class UIElement;
 class UIConsole;
 class UISettings;
+class UIProject;
 class UIInspector;
 class UIMainMenuBar;
 class UIHierarchy;
@@ -46,6 +47,7 @@ public:
 	UIInspector* UIinspectorPanel = nullptr;
 	UIMainMenuBar* UIMainMenuBarPanel = nullptr;
 	UISceneWindow* UISceneWindowPanel = nullptr;
+	UIProject* UIProjectPanel = nullptr;
 
 	bool showHierarchy = true;
 	bool showInspector = true;
@@ -53,6 +55,7 @@ public:
 	bool showSettings = false;
 	bool showMainMenuBar = true;
 	bool showSceneWindow = true;
+	bool showProject = true;
 
 	GLuint fbo = 0;
 	vec2 camSize = vec2(1280, 720);

@@ -115,10 +115,13 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		ImGui::TreePop();
 	}
 
-	ImGui::Button("Delete");
-
-	if (ImGui::IsItemClicked(0))
+	if (ImGui::BeginPopupContextItem(obj.GetName().c_str()))
 	{
-		Application->root->RemoveGameObject(&obj);
+		if (ImGui::MenuItem("Delete"))
+		{
+			Application->root->RemoveGameObject(&obj);
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
 	}
 }

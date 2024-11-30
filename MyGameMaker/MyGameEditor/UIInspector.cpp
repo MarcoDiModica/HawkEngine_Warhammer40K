@@ -139,10 +139,43 @@ bool UIInspector::Draw()
                     if (ImGui::CollapsingHeader("Image"))
                     {
                         ImGui::Text("Width: %d", image->width());
-                        ImGui::Text("Heigth: %d", image->width());
+                        ImGui::Text("Heigth: %d", image->height());
+
+                        ImGui::Separator();
+
+                        auto textureID = image.get()->id();
+                        if (textureID)
+                        {
+							ImGui::Text("Preview: %dx%d", image->width(), image->height());
+                            ImVec2 imageSize = ImVec2(static_cast<float>(image->width()), static_cast<float>(image->height()));
+                        
+							float maxPreviewSize = 200.0f;
+                            if (imageSize.x > maxPreviewSize || imageSize.y > maxPreviewSize)
+                            {
+								float aspectRatio = imageSize.x / imageSize.y;
+								if (aspectRatio > 1.0f)
+								{
+									imageSize.x = maxPreviewSize;
+									imageSize.y = maxPreviewSize / aspectRatio;
+								}
+								else
+								{
+                                    imageSize.y = maxPreviewSize;
+									imageSize.x = maxPreviewSize * aspectRatio;
+								}
+                            }
+							ImGui::Image((void*)(intptr_t)textureID, imageSize);
+                        }
+                        else
+                        {
+							ImGui::Text("No texture loaded");
+                        }
+                    
                     }
                 }
             }
+
+            // Condiciones de otros componentes 
         }
 
         ImGui::End();

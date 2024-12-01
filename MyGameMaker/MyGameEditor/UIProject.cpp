@@ -14,6 +14,7 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 {
 	// Definir el path del directorio (cambiar en types.h)
 	directoryPath = ASSETS_PATH;
+	currentSceneFile = "";
 }
 
 UIProject::~UIProject()
@@ -147,6 +148,39 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 				{
 					(*count)--;
 				}
+			}
+		}
+
+		if (entryIsFile && name.ends_with(".scene"))
+		{
+			if (ImGui::IsItemClicked() && ImGui::IsMouseDoubleClicked(0))
+			{
+				ImGui::OpenPopup("Cargar escena");
+			}
+
+			if (ImGui::BeginPopupModal("Cargar escena"))
+			{
+				if (ImGui::Button("Guardar y cargar"))
+				{
+					Application->scene_serializer->Serialize(path.string());
+					Application->scene_serializer->DeSerialize(entry.path().string());
+					currentSceneFile = entry.path().string();
+					ImGui::CloseCurrentPopup();
+				}
+
+				if (ImGui::Button("Cargar sin guardar"))
+				{
+					Application->scene_serializer->DeSerialize(entry.path().string());
+					currentSceneFile = entry.path().string();
+					ImGui::CloseCurrentPopup();
+				}
+
+				if (ImGui::Button("No cargar"))
+				{
+					ImGui::CloseCurrentPopup();
+				}
+
+				ImGui::EndPopup();
 			}
 		}
 	}

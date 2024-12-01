@@ -1,0 +1,44 @@
+GameObject0:
+  name: BakerHouse
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    position:
+      x: 0
+      y: 0
+      z: 0
+    rotation:
+      x: 0
+      y: -0
+      z: 0
+    scale:
+      x: 1
+      y: 1
+      z: 1
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh_path: Assets/Meshes/BakerHouse.fbx
+    image_path: Assets/Baker_house.png
+GameObject1:
+  name: BakerHouse2
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    position:
+      x: 5
+      y: 5
+      z: 0
+    rotation:
+      x: 0
+      y: -0
+      z: 0
+    scale:
+      x: 1
+      y: 1
+      z: 1
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh_path: Assets/Meshes/BakerHouse.fbx
+    image_path: Assets/Baker_house.png

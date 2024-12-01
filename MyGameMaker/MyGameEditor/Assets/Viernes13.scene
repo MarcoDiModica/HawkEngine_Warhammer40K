@@ -1,0 +1,22 @@
+GameObject0:
+  name: MarcoPresi
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    position:
+      x: 0
+      y: 0
+      z: 0
+    rotation:
+      x: -179.99989572594751
+      y: -53.240290563949031
+      z: -179.99989572591483
+    scale:
+      x: 0.99999985881541831
+      y: 1.0000000000059655
+      z: 0.99999985882019771
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh_path: Assets/Meshes/BakerHouse.fbx
+    image_path: Assets/Baker_house.png

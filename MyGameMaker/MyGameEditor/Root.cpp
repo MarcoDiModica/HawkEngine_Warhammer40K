@@ -21,14 +21,7 @@ Root::Root(App* app) : Module(app) { ; }
 
 bool  Root::Awake()
 {
-    AddScene(make_shared<Scene>("Scene1"));
-    SetActiveScene("Scene1");
-
-    auto MarcoVicePresidente = CreateGameObject("BakerHouse");
-    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    auto mesh = make_shared<Mesh>();
-    mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
-    AddMeshRenderer(*MarcoVicePresidente, mesh, "Assets/Baker_house.png");
+    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
 
     return true;
 }
@@ -45,7 +38,7 @@ bool Root::Start()
 
 bool Root::Update(double dt) {
 
-    LOG(LogType::LOG_INFO, " %d num objects in scene", currentScene->children().size());
+    //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
 
     for (shared_ptr<GameObject> object : currentScene->_children)
     {
@@ -55,8 +48,17 @@ bool Root::Update(double dt) {
     if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
 
         //destroy scene
-
     }
+
+
+    //if press 1 active scene Viernes13 and press 2 active scene Salimos
+    if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+        Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
+	}
+    else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+        Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
+    }
+    
 
     return true;
 }

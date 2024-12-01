@@ -9,13 +9,22 @@
 
 class MeshRenderer;
 
-void SceneSerializer::Serialize() {
+void SceneSerializer::Serialize(const std::string& directoryPath) {
 
 	std::vector gameObjects = Application->root->currentScene->_children;
 
 	YAML::Emitter emitter;
 	YAML::Node game_object_node;
 
+	if (gameObjects.empty()) {
+		std::string filepath = directoryPath + "/" + Application->root->currentScene->GetName() + ".scene";
+		std::ofstream file(filepath);
+		if (file.is_open()) {
+			file << "";
+			file.close();
+		}
+		return;
+	}
 
 	for (size_t i = 0; i < gameObjects.size(); ++i) {
 
@@ -52,37 +61,65 @@ void SceneSerializer::Serialize() {
 	}
 	emitter << game_object_node;
 
-	std::string saved_string = emitter.c_str();
-	
-	std::ofstream file("Serialized/scene.yaml");
+	std::string filepath = directoryPath + "/" + Application->root->currentScene->GetName() + ".scene";
 
-	if (file.is_open()) {
-		file << saved_string;
-
-		file.close();
+	try {
+		std::ofstream file(filepath);
+		if (file.is_open()) {
+			file << emitter.c_str();
+			file.close();
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "No se pudo abrir el archivo para guardar la escena.");
+		}
 	}
-
+	catch (const std::exception& e) {
+		LOG(LogType::LOG_ERROR, "Error al guardar la escena: %s", e.what());
+	}
 }
-
-
-
 
 void SceneSerializer::DeSerialize(std::string path) {
 
 	YAML::Emitter emitter;
 	YAML::Node root = YAML::LoadFile(path);
 
-	// iterate over the scene game objects check if its selected and if its selected, deselect it
+	LOG(LogType::LOG_INFO, "Deserializando escena: %s", path.c_str());
 
-	for (const auto& child : Application->root->currentScene->_children) {
-		child->isSelected = false;
+	if (root.IsNull()) {
+		LOG(LogType::LOG_ERROR, "Error al cargar la escena.");
+		return;
 	}
 
-	Application->input->ClearSelection();
+	if (Application->root->GetActiveScene() != nullptr)
+	{
+		for (const auto& child : Application->root->currentScene->_children) {
+			child->isSelected = false;
+		}
 
-	Application->root->RemoveScene(Application->root->currentScene->GetName());
-	Application->root->CreateScene("Scene");
-	Application->root->SetActiveScene("Scene");
+		Application->input->ClearSelection();
+	}
+
+    std::string sceneName = path.substr(path.find_last_of("/\\") + 1);
+    sceneName = sceneName.substr(0, sceneName.find_last_of("."));
+
+	LOG(LogType::LOG_INFO, "Scene Name: %s", sceneName.c_str());
+
+    std::shared_ptr<Scene> scene = nullptr;
+    for (auto& s : Application->root->scenes) {
+        if (s->GetName() == sceneName) {
+            scene = s;
+            break;
+        }
+    }
+
+	if (Application->root->GetActiveScene() != nullptr) {
+		Application->root->RemoveScene(Application->root->currentScene->GetName());
+	}
+
+	Application->root->CreateScene(sceneName);
+	Application->root->SetActiveScene(sceneName);
+
+	Application->root->currentScene->_children.clear();
 
 	int i = 0;
 	for (const auto& child : root) {

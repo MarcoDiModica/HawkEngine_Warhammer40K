@@ -33,13 +33,11 @@ bool UIMainMenuBar::Draw()
 
 		if (ImGui::BeginMenu("File"))
 		{
-
-
 			if (ImGui::MenuItem("Save Scene")) {
-				Application->scene_serializer->Serialize();
+				Application->scene_serializer->Serialize("Assets");
 			}
 			if (ImGui::MenuItem("Load Scene")) {
-				Application->scene_serializer->DeSerialize(std::string("Serialized/scene.yaml"));
+				Application->scene_serializer->DeSerialize(std::string("Assets/Scene1.scene"));
 			}
 			ImGui::EndMenu();
 		}

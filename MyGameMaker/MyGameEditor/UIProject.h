@@ -16,6 +16,7 @@ public:
 
 public:
 	std::string directoryPath;
+	std::string currentSceneFile;
 };
 
 #endif // !__UI_PROJECT_H__

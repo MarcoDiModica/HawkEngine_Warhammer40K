@@ -9,6 +9,8 @@
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 #include <unordered_map>
 #include <unordered_set>
 #include "../MyGameEditor/Log.h"
@@ -284,6 +286,10 @@ void Mesh::LoadMesh(const char* file_path)
 		}
 
 		aiReleaseImport(scene);
+
+		std::string onlyFans = std::filesystem::path(file_path).filename().string();
+
+		//Save(onlyFileName);
 	}
 	else {
 		// Handle error
@@ -377,4 +383,65 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	mesh->Load(vertices, 4, indices, 6);
 	mesh->filePath = std::string("shapes/plane");
 	return mesh;
+}
+
+YAML::Node Mesh::Encode() const
+{
+	YAML::Node node;
+	node["vertices"] = YAML::convert<std::vector<glm::vec3>>::encode(_vertices);
+	node["indices"] = YAML::convert<std::vector<unsigned int>>::encode(_indices);
+	node["normals"] = YAML::convert<std::vector<glm::vec3>>::encode(_normals);
+	node["boundingBox"]["min"] = _boundingBox.min;
+	node["boundingBox"]["max"] = _boundingBox.max;
+	node["filePath"] = filePath;
+	return node;
+}
+
+bool Mesh::Decode(const YAML::Node& node)
+{
+	_vertices = node["vertices"].as<std::vector<glm::vec3>>();
+	_indices = node["indices"].as<std::vector<unsigned int>>();
+	_normals = node["normals"].as<std::vector<glm::vec3>>();
+	_boundingBox.min = node["boundingBox"]["min"].as<glm::vec3>();
+	_boundingBox.max = node["boundingBox"]["max"].as<glm::vec3>();
+	filePath = node["filePath"].as<std::string>();
+
+	vertices_buffer.LoadData(_vertices.data(), _vertices.size() * sizeof(glm::vec3));
+	indices_buffer.LoadIndices(_indices.data(), _indices.size());
+	normals_buffer.LoadData(_normals.data(), _normals.size() * sizeof(glm::vec3));
+	
+	return true;
+}
+
+void Mesh::Save(const std::string& filename) const 
+{
+	std::string fullPath = "Library/Mesh" + filename + ".mesh";
+
+	if (!std::filesystem::exists("Library")) {
+		std::filesystem::create_directory("Library");
+	}
+
+	LOG(LogType::LOG_INFO, "Guardando malla en: %s", fullPath.c_str());
+
+	std::ofstream fout(fullPath);
+	YAML::Emitter out;
+	out << Encode();
+	fout << out.c_str();
+
+	LOG(LogType::LOG_INFO, "Malla guardada correctamente");
+}
+
+std::shared_ptr<Mesh> Mesh::Load(const std::string& filename) 
+{
+	std::string fullPath = "Library/Mesh" + filename + ".mesh";
+
+	std::ifstream fin(fullPath);
+	YAML::Node node = YAML::Load(fin);
+	auto mesh = std::make_shared<Mesh>();
+	if (mesh->Decode(node)) {
+		return mesh;
+	}
+	else {
+		return nullptr;
+	}
 }

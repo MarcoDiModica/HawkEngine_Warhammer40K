@@ -119,6 +119,8 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 	{
 		if (ImGui::MenuItem("Delete"))
 		{
+			Application->input->RemoveFromSelection(&obj);
+			Application->input->ClearSelection();
 			Application->root->RemoveGameObject(&obj);
 			ImGui::CloseCurrentPopup();
 		}

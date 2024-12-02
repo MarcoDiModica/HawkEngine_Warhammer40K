@@ -289,7 +289,7 @@ void Mesh::LoadMesh(const char* file_path)
 
 		std::string onlyFans = std::filesystem::path(file_path).filename().string();
 
-		//Save(onlyFileName);
+		//Save(onlyFans);
 	}
 	else {
 		// Handle error

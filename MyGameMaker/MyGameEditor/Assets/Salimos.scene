@@ -1,44 +1,31 @@
 GameObject0:
-  name: BakerHouse
+  name: Cube
   Transform_Component:
     name: Transform_Component
     enabled: true
-    position:
-      x: 0
-      y: 0
-      z: 0
-    rotation:
-      x: 0
-      y: -0
-      z: 0
-    scale:
-      x: 1
-      y: 1
-      z: 1
+    matrix:
+      row0:
+        col0: 0.068014837801456451
+        col1: 0.65003639459609985
+        col2: 0.75685274600982666
+        col3: 0
+      row1:
+        col0: -0.99457055330276489
+        col1: 0.10406427830457687
+        col2: -1.1408704203574871e-08
+        col3: 0
+      row2:
+        col0: -0.078761368989944458
+        col1: -0.75274384021759033
+        col2: 0.65358525514602661
+        col3: 0
+      row3:
+        col0: 0.42816019058227539
+        col1: 0
+        col2: -0.36973962187767029
+        col3: 1
   MeshRenderer:
     name: MeshRenderer
     enabled: true
-    mesh_path: Assets/Meshes/BakerHouse.fbx
-    image_path: Assets/Baker_house.png
-GameObject1:
-  name: BakerHouse2
-  Transform_Component:
-    name: Transform_Component
-    enabled: true
-    position:
-      x: 5
-      y: 5
-      z: 0
-    rotation:
-      x: 0
-      y: -0
-      z: 0
-    scale:
-      x: 1
-      y: 1
-      z: 1
-  MeshRenderer:
-    name: MeshRenderer
-    enabled: true
-    mesh_path: Assets/Meshes/BakerHouse.fbx
-    image_path: Assets/Baker_house.png
+    mesh_path: shapes/cube
+    image_path: Assets/default.png

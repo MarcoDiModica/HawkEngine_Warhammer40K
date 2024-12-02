@@ -166,24 +166,26 @@ void Transform_Component::HandleLocalUpdate() {
 YAML::Node Transform_Component::encode() {
     YAML::Node node = Component::encode();
 
-    //node["matrix"] = matrix;
+    node["matrix"] = matrix;
 
-    //return node;
-
-    node["position"] = encodePosition();
-    node["rotation"] = encodeRotation();
-    node["scale"] = encodeScale();
     return node;
+
+    //node["position"] = encodePosition();
+    //node["rotation"] = encodeRotation();
+    //node["scale"] = encodeScale();
+    //return node;
 }
 
 bool Transform_Component::decode(const YAML::Node& node) {
 
-    //Component::decode(node);
-    //glm::dmat4 new_matrix;
-    //decodeMat(node, new_matrix);
-    //SetMatrix(new_matrix);
+    Component::decode(node);
+    glm::dmat4 new_matrix;
+    decodeMat(node, new_matrix);
 
-    //return true;
+
+    SetMatrix(new_matrix);
+
+    return true;
 
     if (!node["position"] || !node["rotation"] || !node["scale"])
         return false;
@@ -217,15 +219,18 @@ bool Transform_Component::decode(const YAML::Node& node) {
     }
 
     static  bool decodeMat(const YAML::Node& node, glm::dmat4& rhs) {
+
+        YAML::Node matNode = node["matrix"];
+
         for (int i = 0; i < 4; ++i) {
             for (int j = 0; j < 4; ++j) {
                 std::string rowKey = "row" + std::to_string(i);
                 std::string colKey = "col" + std::to_string(j);
 
-                if (!node[rowKey] || !node[rowKey][colKey]) {
+                if (!matNode[rowKey] || !matNode[rowKey][colKey]) {
                     return false;
                 }
-                rhs[i][j] = node[rowKey][colKey].as<double>();
+                rhs[i][j] = matNode[rowKey][colKey].as<double>();
             }
         }
         return true;

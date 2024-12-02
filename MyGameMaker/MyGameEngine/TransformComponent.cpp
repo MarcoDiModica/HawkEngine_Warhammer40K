@@ -166,9 +166,9 @@ void Transform_Component::HandleLocalUpdate() {
 YAML::Node Transform_Component::encode() {
     YAML::Node node = Component::encode();
 
-    node["matrix"] = matrix;
+    //node["matrix"] = matrix;
 
-    return node;
+    //return node;
 
     node["position"] = encodePosition();
     node["rotation"] = encodeRotation();
@@ -178,27 +178,27 @@ YAML::Node Transform_Component::encode() {
 
 bool Transform_Component::decode(const YAML::Node& node) {
 
-    Component::decode(node);
-    glm::dmat4 new_matrix;
-    decodeMat(node, new_matrix);
-    SetMatrix(new_matrix);
+    //Component::decode(node);
+    //glm::dmat4 new_matrix;
+    //decodeMat(node, new_matrix);
+    //SetMatrix(new_matrix);
 
-    return true;
+    //return true;
 
-    //if (!node["position"] || !node["rotation"] || !node["scale"])
-    //    return false;
-    ///*----------Position-------------*/
-    //glm::dvec3 _position;
-    //YAML::convert<glm::dvec3>::decode(node["position"], _position);
-    //SetPosition(_position);
-    ///*----------Scale-------------*/
-    //glm::dvec3 new_scale;
-    //YAML::convert<glm::dvec3>::decode(node["scale"], new_scale);
-    //SetScale(new_scale);
-    ///*----------Rotation-------------*/
-    //glm::dvec3 new_rotation;
-    //YAML::convert<glm::dvec3>::decode(node["rotation"], new_rotation);
-    //SetRotation(new_rotation);
+    if (!node["position"] || !node["rotation"] || !node["scale"])
+        return false;
+    /*----------Position-------------*/
+    glm::dvec3 _position;
+    YAML::convert<glm::dvec3>::decode(node["position"], _position);
+    SetPosition(_position);
+    /*----------Scale-------------*/
+    glm::dvec3 new_scale;
+    YAML::convert<glm::dvec3>::decode(node["scale"], new_scale);
+    SetScale(new_scale);
+    /*----------Rotation-------------*/
+    glm::dvec3 new_rotation;
+    YAML::convert<glm::dvec3>::decode(node["rotation"], new_rotation);
+    SetRotation(new_rotation);
 
 
     return true;

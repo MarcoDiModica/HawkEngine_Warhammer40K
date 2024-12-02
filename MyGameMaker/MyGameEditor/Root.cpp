@@ -23,15 +23,7 @@ bool  Root::Awake()
 {
 
     Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
-    AddScene(make_shared<Scene>("Scene1"));
-    SetActiveScene("Scene1");
 
-
-    auto MarcoVicePresidente = CreateGameObject("BakerHouse");
-    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    auto mesh = make_shared<Mesh>();
-    mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
-    AddMeshRenderer(*MarcoVicePresidente, mesh, "Assets/Baker_house.png");
 
 
     return true;

@@ -129,6 +129,7 @@ bool UISceneWindow::Draw()
 			if (selectedObject != nullptr) {
 				// Get the transformation matrix of the selected object
 				glm::mat4 matrix = selectedObject->GetTransform()->GetMatrix();
+				//glm::mat4 matrix = glm::mat4(1.0);
 
 				// Convert matrix to float array
 				float objectMatrix[16];

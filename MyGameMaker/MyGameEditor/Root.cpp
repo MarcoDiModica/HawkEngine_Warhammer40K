@@ -21,7 +21,18 @@ Root::Root(App* app) : Module(app) { ; }
 
 bool  Root::Awake()
 {
+
     Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
+    AddScene(make_shared<Scene>("Scene1"));
+    SetActiveScene("Scene1");
+
+
+    auto MarcoVicePresidente = CreateGameObject("BakerHouse");
+    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+    auto mesh = make_shared<Mesh>();
+    mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
+    AddMeshRenderer(*MarcoVicePresidente, mesh, "Assets/Baker_house.png");
+
 
     return true;
 }
@@ -199,8 +210,10 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
         if (*currentScene->_children[i] == child) {
 
             std::shared_ptr<GameObject> _child = currentScene->_children[i];
-            father.emplaceChild(*_child);
+            auto& object = father.emplaceChild(*_child);
             currentScene->_children.erase(currentScene->_children.begin() + i);
+
+            object.GetTransform()->UpdateLocalMatrix( father.GetTransform()->GetMatrix() );
 
             return true;
 

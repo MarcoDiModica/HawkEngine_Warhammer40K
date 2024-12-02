@@ -2,10 +2,10 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
-
-#include <yaml-cpp/yaml.h>
 #include "Component.h"
 #include "types.h"
+#include <yaml-cpp/yaml.h>
+
 
 class SceneSerializer;
 
@@ -25,6 +25,7 @@ public:
     std::shared_ptr<Component> Clone(GameObject* owner) override;
 
     const auto& GetMatrix() const { return matrix; }
+    const auto& GetLocalMatrix() const { return local_matrix; }
     const auto& GetLeft() const { return left; }
     const auto& GetUp() const { return up; }
     const auto& GetForward() const { return forward; }
@@ -45,6 +46,8 @@ public:
     glm::dvec3 GetEulerAngles() const {
         return glm::degrees(glm::eulerAngles(GetRotation()));
     }
+
+    auto& GetLocalPosition() { return local_matrix; }
 
     const auto* GetData() const { return &matrix[0][0]; }
 
@@ -88,14 +91,7 @@ public:
 protected:
     friend class SceneSerializer;
 
-    YAML::Node encode() {
-        YAML::Node node = Component::encode();
-
-        node["position"] = encodePosition();
-        node["rotation"] = encodeRotation();
-        node["scale"] = encodeScale();
-        return node;
-    }
+    YAML::Node encode();
 
     YAML::Node encodePosition() {
         YAML::Node node;
@@ -119,30 +115,13 @@ protected:
         return YAML::convert<glm::dvec3>::encode(scale);
     }
 
-    bool decode(const YAML::Node& node) {
-
-        Component::decode(node);
-
-        if (!node["position"] || !node["rotation"] || !node["scale"])
-            return false;
-        /*----------Position-------------*/
-        glm::dvec3 _position;
-        YAML::convert<glm::dvec3>::decode(node["position"], _position);
-        SetPosition(_position);
-        /*----------Scale-------------*/
-        glm::dvec3 new_scale;
-        YAML::convert<glm::dvec3>::decode(node["scale"], new_scale);
-        SetScale(new_scale);
-        /*----------Rotation-------------*/
-        glm::dvec3 new_rotation;
-        YAML::convert<glm::dvec3>::decode(node["rotation"], new_rotation);
-        SetRotation(new_rotation);
-
-
-        return true;
-    }
+    bool decode(const YAML::Node& node);
 
 private:
+
+    friend class Root;
+    friend class GameObject;
+
     union
     {
         //DONT modify directly, use SetMatrix
@@ -156,8 +135,21 @@ private:
         };
     };
 
+    union
+    {
+        //DONT modify directly, use SetMatrix
+        glm::dmat4 local_matrix = glm::dmat4(1.0);
+        struct
+        {
+            glm::dvec3 left; glm::dmat4::value_type left_w;
+            glm::dvec3 up; glm::dmat4::value_type up_w;
+            glm::dvec3 forward; glm::dmat4::value_type fwd_w;
+            glm::dvec3 position; glm::dmat4::value_type pos_w;
+        };
+    };
+
     // DONT modigy directly use SetLocalMatrix
-    glm::dmat4 local_matrix = glm::dmat4(1.0);
+   // glm::dmat4 local_matrix = glm::dmat4(1.0);
 
     /* Update the world matrix based on the parent's world matrix */
     void UpdateWorldMatrix(const glm::dmat4& parentWorldMatrix) {

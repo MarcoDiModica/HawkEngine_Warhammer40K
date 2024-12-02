@@ -1,8 +1,14 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
 #include "../MyGameEditor/Log.h"
+#include "types.h"
+#include <yaml-cpp/yaml.h>
+#include "Component.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
+
+static  bool decodeMat(const YAML::Node& node, glm::dmat4& rhs);
+static  YAML::Node encodeMat(const glm::dmat4& rhs);
 
 Transform_Component::Transform_Component(GameObject* owner) : Component(owner) { name = "Transform_Component"; }
 
@@ -156,3 +162,71 @@ void Transform_Component::HandleLocalUpdate() {
         UpdateLocalMatrix(owner->parent()->GetTransform()->matrix);
     }
 }
+
+YAML::Node Transform_Component::encode() {
+    YAML::Node node = Component::encode();
+
+    node["matrix"] = matrix;
+
+    return node;
+
+    node["position"] = encodePosition();
+    node["rotation"] = encodeRotation();
+    node["scale"] = encodeScale();
+    return node;
+}
+
+bool Transform_Component::decode(const YAML::Node& node) {
+
+    Component::decode(node);
+    glm::dmat4 new_matrix;
+    decodeMat(node, new_matrix);
+    SetMatrix(new_matrix);
+
+    return true;
+
+    //if (!node["position"] || !node["rotation"] || !node["scale"])
+    //    return false;
+    ///*----------Position-------------*/
+    //glm::dvec3 _position;
+    //YAML::convert<glm::dvec3>::decode(node["position"], _position);
+    //SetPosition(_position);
+    ///*----------Scale-------------*/
+    //glm::dvec3 new_scale;
+    //YAML::convert<glm::dvec3>::decode(node["scale"], new_scale);
+    //SetScale(new_scale);
+    ///*----------Rotation-------------*/
+    //glm::dvec3 new_rotation;
+    //YAML::convert<glm::dvec3>::decode(node["rotation"], new_rotation);
+    //SetRotation(new_rotation);
+
+
+    return true;
+}
+
+
+
+    static  YAML::Node encodeMat(const glm::dmat4& rhs) {
+        YAML::Node node;
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                node["row" + std::to_string(i)]["col" + std::to_string(j)] = rhs[i][j];
+            }
+        }
+        return node;
+    }
+
+    static  bool decodeMat(const YAML::Node& node, glm::dmat4& rhs) {
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j) {
+                std::string rowKey = "row" + std::to_string(i);
+                std::string colKey = "col" + std::to_string(j);
+
+                if (!node[rowKey] || !node[rowKey][colKey]) {
+                    return false;
+                }
+                rhs[i][j] = node[rowKey][colKey].as<double>();
+            }
+        }
+        return true;
+    }

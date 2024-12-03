@@ -30,6 +30,19 @@ bool UIHierarchy::Draw() {
 			RenderSceneHierarchy(currentScene);
 		}
 
+		if (ImGui::IsMouseClicked(1) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered())
+		{
+			ImGui::OpenPopup("HierarchyContextMenu");
+		}
+
+		if (ImGui::BeginPopup("HierarchyContextMenu"))
+		{
+			if (ImGui::MenuItem("Cube")) { Application->root->CreateCube("Cube"); }
+			if (ImGui::MenuItem("Sphere")) { Application->root->CreateSphere("Sphere"); }
+			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
+			ImGui::EndPopup();
+		}
+
 		if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) {
 			Application->input->ClearSelection();
 		}

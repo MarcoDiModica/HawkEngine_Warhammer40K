@@ -38,54 +38,54 @@ bool UIProject::Draw()
 	ImGui::SetNextWindowClass(&windowClass);
 	windowClass.DockingAllowUnclassed = false;
 
-	if (ImGui::Begin("Project", &enabled, projectFlags))
+if (ImGui::Begin("Project", &enabled, projectFlags))
+{
+	int width = ImGui::GetContentRegionAvail().x;
+
+	static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
+
+	if (ImGui::BeginTable("Table", 2, tableFlags))
 	{
-		int width = ImGui::GetContentRegionAvail().x;
-
-		static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
-
-		if (ImGui::BeginTable("Table", 2, tableFlags))
+		ImGui::TableNextColumn();
+		if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
-			ImGui::TableNextColumn();
-			if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
+			uint32_t count = 0;
+			// Esto no sé si está bien
+			for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
 			{
-				uint32_t count = 0;
-				// Esto no sé si está bien
-				for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
-				{
-					count++;
-				}
-
-				static int selectionMask = 0;
-
-				auto clickState = DirectoryView(directoryPath, &count, &selectionMask);
-
-				if (clickState.first) // Esto es para la selección múltiple
-				{
-					if (ImGui::GetIO().KeyCtrl)
-					{
-						selectionMask ^= BIT(clickState.second); 
-					}
-					else
-					{
-						selectionMask = BIT(clickState.second);
-					}
-				}
-
+				count++;
 			}
-			
-			ImGui::TableNextColumn();
 
-			// Aquí creo que va algo
+			static int selectionMask = 0;
 
-			ImGui::EndTable();
+			auto clickState = DirectoryView(directoryPath, &count, &selectionMask);
+
+			if (clickState.first) // Esto es para la selección múltiple
+			{
+				if (ImGui::GetIO().KeyCtrl)
+				{
+					selectionMask ^= BIT(clickState.second);
+				}
+				else
+				{
+					selectionMask = BIT(clickState.second);
+				}
+			}
+
 		}
-	
-		ImGui::PopStyleVar();
-		ImGui::End();
+
+		ImGui::TableNextColumn();
+
+		// Aquí creo que va algo
+
+		ImGui::EndTable();
 	}
 
-	return true;
+	ImGui::PopStyleVar();
+	ImGui::End();
+}
+
+return true;
 }
 
 std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& path, uint32_t* count, int* selection_mask)
@@ -96,6 +96,8 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 
 	bool anyNodeClicked = false;
 	uint32_t nodeClicked = 0;
+	bool openDeleteModal = false;
+	std::filesystem::path selectedPathForDeletion;
 
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
@@ -106,12 +108,12 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 			treeFlags |= ImGuiTreeNodeFlags_Selected;
 		}
 
-		std::string name = entry.path().string();
+		std::string name = entry.path().filename().string();
 
 		auto lastMalcomX = name.find_last_of("/\\");
 		lastMalcomX = lastMalcomX == std::string::npos ? 0 : lastMalcomX + 1;
 		name = name.substr(lastMalcomX, name.size() - lastMalcomX);
-
+		
 		bool entryIsFile = !std::filesystem::is_directory(entry.path());
 		if (entryIsFile)
 		{
@@ -119,11 +121,22 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		}
 
 		bool nodeOpen = ImGui::TreeNodeEx((void*)(intptr_t)(*count), treeFlags, name.c_str());
-	
+
 		if (ImGui::IsItemClicked())
 		{
 			nodeClicked = *count;
 			anyNodeClicked = true;
+		}
+
+		if (ImGui::BeginPopupContextItem(name.c_str()))
+		{
+			if (ImGui::MenuItem("Delete"))
+			{
+				openDeleteModal = true;
+				selectedPathForDeletion = entry.path().filename().string();
+			}
+
+			ImGui::EndPopup();
 		}
 	
 		(*count)--;
@@ -183,6 +196,28 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 				ImGui::EndPopup();
 			}
 		}
+	}
+
+	if (openDeleteModal)
+	{
+		ImGui::OpenPopup("Confirm delete");
+		openDeleteModal = false;
+	}
+
+	if (ImGui::BeginPopupModal(("Confirm delete"), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text("Are you sure you want to delete %s?", selectedPathForDeletion.string().c_str());
+		if (ImGui::Button("Pau (Yes)"))
+		{
+			std::filesystem::remove_all(selectedPathForDeletion);
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Marco (No)"))
+		{
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
 	}
 
 	return { anyNodeClicked, nodeClicked };

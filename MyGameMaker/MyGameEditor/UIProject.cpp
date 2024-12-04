@@ -38,54 +38,54 @@ bool UIProject::Draw()
 	ImGui::SetNextWindowClass(&windowClass);
 	windowClass.DockingAllowUnclassed = false;
 
-if (ImGui::Begin("Project", &enabled, projectFlags))
+	if (ImGui::Begin("Project", &enabled, projectFlags))
 {
-	int width = ImGui::GetContentRegionAvail().x;
+		int width = ImGui::GetContentRegionAvail().x;
 
-	static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
+		static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
 
-	if (ImGui::BeginTable("Table", 2, tableFlags))
-	{
-		ImGui::TableNextColumn();
-		if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
+		if (ImGui::BeginTable("Table", 2, tableFlags))
 		{
-			uint32_t count = 0;
-			// Esto no sé si está bien
-			for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
+			ImGui::TableNextColumn();
+			if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
 			{
-				count++;
+				uint32_t count = 0;
+				// Esto no sé si está bien
+				for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
+				{
+					count++;
+				}
+
+				static int selectionMask = 0;
+
+				auto clickState = DirectoryView(directoryPath, &count, &selectionMask);
+
+				if (clickState.first) // Esto es para la selección múltiple
+				{
+					if (ImGui::GetIO().KeyCtrl)
+					{
+						selectionMask ^= BIT(clickState.second);
+					}
+					else
+					{
+						selectionMask = BIT(clickState.second);
+					}
+				}
+
 			}
 
-			static int selectionMask = 0;
+			ImGui::TableNextColumn();
 
-			auto clickState = DirectoryView(directoryPath, &count, &selectionMask);
+			// Aquí creo que va algo
 
-			if (clickState.first) // Esto es para la selección múltiple
-			{
-				if (ImGui::GetIO().KeyCtrl)
-				{
-					selectionMask ^= BIT(clickState.second);
-				}
-				else
-				{
-					selectionMask = BIT(clickState.second);
-				}
-			}
-
+			ImGui::EndTable();
 		}
 
-		ImGui::TableNextColumn();
-
-		// Aquí creo que va algo
-
-		ImGui::EndTable();
+		ImGui::PopStyleVar();
+		ImGui::End();
 	}
 
-	ImGui::PopStyleVar();
-	ImGui::End();
-}
-
-return true;
+	return true;
 }
 
 std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& path, uint32_t* count, int* selection_mask)
@@ -96,8 +96,11 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 
 	bool anyNodeClicked = false;
 	uint32_t nodeClicked = 0;
+
 	bool openDeleteModal = false;
 	std::filesystem::path selectedPathForDeletion;
+
+	std::string sceneToLoad;
 
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
@@ -109,10 +112,6 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		}
 
 		std::string name = entry.path().filename().string();
-
-		auto lastMalcomX = name.find_last_of("/\\");
-		lastMalcomX = lastMalcomX == std::string::npos ? 0 : lastMalcomX + 1;
-		name = name.substr(lastMalcomX, name.size() - lastMalcomX);
 		
 		bool entryIsFile = !std::filesystem::is_directory(entry.path());
 		if (entryIsFile)
@@ -133,7 +132,7 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 			if (ImGui::MenuItem("Delete"))
 			{
 				openDeleteModal = true;
-				selectedPathForDeletion = entry.path().filename().string();
+				selectedPathForDeletion = entry.path();
 			}
 
 			ImGui::EndPopup();
@@ -155,58 +154,26 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 
 				ImGui::TreePop();
 			}
-			else
-			{
-				for (const auto& e : std::filesystem::recursive_directory_iterator(entry.path()))
-				{
-					(*count)--;
-				}
-			}
 		}
-
+		
 		if (entryIsFile && name.ends_with(".scene"))
 		{
 			if (ImGui::IsItemClicked() && ImGui::IsMouseDoubleClicked(0))
 			{
-				ImGui::OpenPopup("Cargar escena");
-			}
-
-			if (ImGui::BeginPopupModal("Cargar escena"))
-			{
-				if (ImGui::Button("Guardar y cargar"))
-				{
-					Application->scene_serializer->Serialize(path.string());
-					Application->scene_serializer->DeSerialize(entry.path().string());
-					currentSceneFile = entry.path().string();
-					ImGui::CloseCurrentPopup();
-				}
-
-				if (ImGui::Button("Cargar sin guardar"))
-				{
-					Application->scene_serializer->DeSerialize(entry.path().string());
-					currentSceneFile = entry.path().string();
-					ImGui::CloseCurrentPopup();
-				}
-
-				if (ImGui::Button("No cargar"))
-				{
-					ImGui::CloseCurrentPopup();
-				}
-
-				ImGui::EndPopup();
+				sceneToLoad = entry.path().string();
 			}
 		}
+
 	}
 
 	if (openDeleteModal)
 	{
 		ImGui::OpenPopup("Confirm delete");
-		openDeleteModal = false;
 	}
 
 	if (ImGui::BeginPopupModal(("Confirm delete"), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::Text("Are you sure you want to delete %s?", selectedPathForDeletion.string().c_str());
+		ImGui::Text("Are you sure you want to delete %s?", selectedPathForDeletion.filename().string().c_str());
 		if (ImGui::Button("Pau (Yes)"))
 		{
 			std::filesystem::remove_all(selectedPathForDeletion);
@@ -214,6 +181,35 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Marco (No)"))
+		{
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+
+	if (!sceneToLoad.empty())
+	{
+		ImGui::OpenPopup("Load scene");
+	}
+
+	if (ImGui::BeginPopupModal("Load Scene"))
+	{
+		if (ImGui::Button("Save & Load"))
+		{
+			Application->scene_serializer->Serialize(currentSceneFile);
+			Application->scene_serializer->DeSerialize(sceneToLoad);
+			currentSceneFile = sceneToLoad;
+			ImGui::CloseCurrentPopup();
+		}
+
+		if (ImGui::Button("Load without saving"))
+		{
+			Application->scene_serializer->DeSerialize(sceneToLoad);
+			currentSceneFile = sceneToLoad;
+			ImGui::CloseCurrentPopup();
+		}
+
+		if (ImGui::Button("Cancel"))
 		{
 			ImGui::CloseCurrentPopup();
 		}

@@ -197,20 +197,43 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
     child.isSelected = false;
     Application->input->ClearSelection();
 
-    for (size_t i = 0; i < currentScene->_children.size(); ++i) {
+    // if object is child of the scene
+    if (child.parent() == nullptr) {
 
-        if (*currentScene->_children[i] == child) {
+        for (size_t i = 0; i < currentScene->_children.size(); ++i) {
 
-            std::shared_ptr<GameObject> _child = currentScene->_children[i];
-            auto& object = father.emplaceChild(*_child);
-            currentScene->_children.erase(currentScene->_children.begin() + i);
+            if (*currentScene->_children[i] == child) {
 
-            object.GetTransform()->UpdateLocalMatrix( father.GetTransform()->GetMatrix() );
+                std::shared_ptr<GameObject> _child = currentScene->_children[i];
+                auto& object = father.emplaceChild(*_child);
+                currentScene->_children.erase(currentScene->_children.begin() + i);
 
-            return true;
+                object.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
+
+                return true;
+
+            }
 
         }
+    }
+    else /* child object is already the child of some object */ {
+        GameObject* prev_father = child.parent();
 
+        for (auto& _child : prev_father->children())
+        {
+            if (_child == child) {
+
+                std::shared_ptr<GameObject> new_child = std::make_shared<GameObject>( _child );
+                auto& object = father.emplaceChild(*new_child);
+                
+                prev_father->removeChild(_child);
+
+                object.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
+
+                return true;
+
+            }
+        }
     }
 
     return false;

@@ -24,5 +24,10 @@ public:
 		return _children.back();
 	}
 
-	void removeChild(const T& child) { return _children.remove(std::forward(child)); }
+
+	void removeChild(const T& child) {
+		_children.remove(child);  
+	}
+
+	//void removeChild(const T& child) { return _children.remove(std::forward(child)); }
 };

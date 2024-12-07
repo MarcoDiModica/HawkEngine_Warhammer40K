@@ -3,13 +3,14 @@
 #include <vector>
 #include "GameObject.h"
 #include "readOnlyView.h"
+#include "Octree.h"
 
 class GameObject;
 
 class Scene
 {
 public:
-	Scene(const std::string& name = "Scene") : name(name) {}
+	Scene( const std::string& name = "Scene") : name(name)  {}
 	~Scene() {}
 
 	//void Awake();
@@ -22,6 +23,8 @@ public:
 	void OnEnable();
 	void OnDisable();
 
+	void DebugDrawTree();
+
 	void RemoveGameObject(std::shared_ptr<GameObject> gameObject);
 	void AddGameObject(std::shared_ptr<GameObject> gameObject);
 
@@ -29,6 +32,8 @@ public:
 	void SetName(const std::string& name);
 
 	auto children()const { return readOnlyVector<std::shared_ptr<GameObject>>(_children); }
+
+	std::shared_ptr<Octree> tree; // change to unique
 
 private:
 	friend class GameObject;

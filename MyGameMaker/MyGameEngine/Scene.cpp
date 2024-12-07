@@ -5,14 +5,17 @@
 
 void Scene::Start()
 {
-	for (auto& child : children())
-	{
-		child->Start();
-	}
+	tree = std::make_shared<Octree>(BoundingBox(vec3(-10, -10, -10), vec3(10, 10, 10)), 10, 1);
+
+	//for (auto& child : children())
+	//{
+	//	child->Start();
+	//}
 }
 
 void Scene::Update(float deltaTime)
 {
+
 	for (auto& child : children())
 	{
 		child->Update(deltaTime);
@@ -54,6 +57,7 @@ void Scene::AddGameObject(std::shared_ptr<GameObject> gameObject)
 {
 	gameObject->scene = this;
 	_children.push_back(gameObject);
+	tree->Insert(tree->root, *_children[_children.size() - 1], 0);
 }
 
 std::string Scene::GetName() const
@@ -64,4 +68,17 @@ std::string Scene::GetName() const
 void Scene::SetName(const std::string& name)
 {
 	this->name = name;
+}
+void display() {
+
+
+
+	BoundingBox box(vec3(-10, -1, -1), vec3(10, 1, 1));
+	box.draw();
+
+
+}
+void Scene::DebugDrawTree() {
+	display();
+	tree->DebugDraw(tree->root);
 }

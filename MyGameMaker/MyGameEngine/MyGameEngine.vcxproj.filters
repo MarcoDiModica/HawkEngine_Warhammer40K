@@ -77,6 +77,8 @@
     </ClInclude>
     <ClInclude Include="CameraBase.h">
       <Filter>Archivos de encabezado\Core</Filter>
+    <ClInclude Include="Octree.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +114,8 @@
     </ClCompile>
     <ClCompile Include="CameraBase.cpp">
       <Filter>Archivos de origen\Core</Filter>
+    <ClCompile Include="Octree.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -21,6 +21,7 @@ Root::Root(App* app) : Module(app) { ; }
 
 bool  Root::Awake()
 {
+
     Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
 
     return true;
@@ -28,6 +29,7 @@ bool  Root::Awake()
 
 bool Root::Start()
 {
+
     for (shared_ptr<GameObject> object : currentScene->_children)
     {
         object->Start();
@@ -39,6 +41,7 @@ bool Root::Start()
 bool Root::Update(double dt) {
 
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
+    currentScene->DebugDrawTree();
 
     for (shared_ptr<GameObject> object : currentScene->_children)
     {
@@ -151,13 +154,14 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
 
 void Root::CreateScene(const std::string& name)
 {
-    auto scene = make_shared<Scene>(name);
+    auto scene = make_shared<Scene>( name);
     scenes.push_back(scene);
 }
 
 void Root::AddScene(std::shared_ptr<Scene> scene)
 {
     scenes.push_back(scene);
+
 }
 
 void Root::RemoveScene(const std::string& name)
@@ -179,6 +183,7 @@ void Root::SetActiveScene(const std::string& name)
     for (auto scene : scenes) {
         if (scene->name == name) {
             currentScene = scene;
+            currentScene->Start();
             return;
         }
     }

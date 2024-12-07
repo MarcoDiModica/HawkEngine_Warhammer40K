@@ -109,6 +109,8 @@ void Mesh::CalculateNormals() {
 
 void Mesh::Draw() const
 {
+	//display();
+
 	glEnable(GL_TEXTURE_2D);
 	if (texCoords_buffer.Id()) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -145,6 +147,7 @@ void Mesh::Draw() const
 	if (normals_buffer.Id()) glDisableClientState(GL_NORMAL_ARRAY);
 	if (texCoords_buffer.Id()) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	if (drawBoundingbox) {
+
 		drawBoundingBox(_boundingBox);
 	}
 	glDisable(GL_TEXTURE_2D);

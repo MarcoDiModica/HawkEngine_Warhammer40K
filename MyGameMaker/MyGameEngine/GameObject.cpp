@@ -150,6 +150,7 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
+    //display();
     if (!active)
     {
         return;
@@ -243,6 +244,7 @@ void GameObject::DrawPushPopMatrix() const
 
     if (HasComponent<MeshRenderer>())
     {
+        //Application->root->currentScene->DebugDrawTree();
         auto meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer->Render();
     }

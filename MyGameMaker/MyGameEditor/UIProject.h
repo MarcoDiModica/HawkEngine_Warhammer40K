@@ -3,6 +3,7 @@
 #pragma once
 
 #include "UIElement.h"
+#include "MyGameEngine/Image.h"
 #include <filesystem>
 
 class UIProject : public UIElement
@@ -19,6 +20,15 @@ public:
 	std::string currentSceneFile;
 
 	void HandleFileSelection(const std::string& filePath);
+
+private:
+	Image* folderIcon;
+
+	Image* fbxIcon;
+	Image* sceneIcon;
+	Image* pngIcon;
+	Image* meshIcon;
+
 };
 
 #endif // !__UI_PROJECT_H__

@@ -24,6 +24,7 @@ class MyGUI;
 class Root;
 class Camera;
 class Gizmos;
+class UIMainMenuBar;
 
 class Mesh;
 
@@ -88,6 +89,10 @@ private:
 	double dtCount = 0;
 	int frameCount = 0;
 	int fps = 0;
+
+protected:
+	friend class UIMainMenuBar;
+	bool play = false;
 };
 
 extern App* Application;

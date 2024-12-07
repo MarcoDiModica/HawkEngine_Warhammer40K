@@ -31,6 +31,8 @@ public:
 	// Load Texture
 	void LoadTexture(const std::string& path);
 
+	void LoadTextureLocalPath(const std::string& path);
+
 	void LoadCheckerTexture();
 
 	std::string image_path;

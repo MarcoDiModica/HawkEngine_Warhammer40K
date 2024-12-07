@@ -16,7 +16,7 @@ public:
 
 	SceneSerializer(App* app) : Module(app) { ; }
 
-	void Serialize(const std::string& directoryPath);
+	void Serialize(const std::string& directoryPath, bool play = false);
 
 	void DeSerialize(std::string path);
 

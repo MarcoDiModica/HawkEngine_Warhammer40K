@@ -3,11 +3,21 @@
 #pragma once
 
 #include "UIElement.h"
+#include "MyGameEngine/Image.h"
 #include <vector>
 #include <string>
 
+class Image;
+
 class UIMainMenuBar : public UIElement
 {
+private:
+	Image play_image;
+	Image stop_image;
+
+
+	bool pressing_play = false;
+
 public:
 	UIMainMenuBar(UIType type, std::string name);
 	~UIMainMenuBar();

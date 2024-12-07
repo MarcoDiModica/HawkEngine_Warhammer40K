@@ -198,6 +198,9 @@ void MyGUI::Render() {
 	ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
 	ImGui::End();
 
+	ImVec4* colors = ImGui::GetStyle().Colors;
+	colors[ImGuiCol_Button] = ImVec4(1.0f, 0.0f, 0.0f, 1.0f); // Red button
+
 	if (showHierarchy) {
 		UIHierarchyPanel->Draw();
 	}

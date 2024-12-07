@@ -1,6 +1,9 @@
 #include "Image.h"
+#include <filesystem>
 #include <vector>
 #include <GL/glew.h>
+
+namespace fs = std::filesystem;
 
 #define CHECKERS_WIDTH 64
 #define CHECKERS_HEIGHT 64
@@ -110,11 +113,33 @@ void Image::LoadTexture(const std::string& path)
 	//load image as a texture in VRAM
 	load(width, height, channels, data);
 
-
-
 	//now we can delete image from RAM
 	ilDeleteImage(img);
 }
+
+void Image::LoadTextureLocalPath(const std::string& path) {
+
+	fs::path absPath = fs::absolute(path);
+	image_path =  absPath.string();
+	auto img = ilGenImage();
+	ilBindImage(img);
+	ilLoadImage((const wchar_t*)image_path.c_str());
+	auto width = ilGetInteger(IL_IMAGE_WIDTH);
+
+	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+	auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
+	auto data = ilGetData();
+
+	//load image as a texture in VRAM
+	load(width, height, channels, data);
+
+	//now we can delete image from RAM
+	ilDeleteImage(img);
+
+}
+
+
 void Image::LoadCheckerTexture() {
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {

@@ -9,7 +9,7 @@
 
 class MeshRenderer;
 
-void SceneSerializer::Serialize(const std::string& directoryPath) {
+void SceneSerializer::Serialize(const std::string& directoryPath, bool play) {
 
 	std::vector gameObjects = Application->root->currentScene->_children;
 
@@ -61,21 +61,24 @@ void SceneSerializer::Serialize(const std::string& directoryPath) {
 	}
 	emitter << game_object_node;
 
-	std::string filepath = directoryPath + "/" + Application->root->currentScene->GetName() + ".scene";
+	std::string filepath;
+	if (!play) filepath = directoryPath + "/" + Application->root->currentScene->GetName() + ".scene";
+	else { filepath = "EngineAssets/" + Application->root->currentScene->GetName() + ".scene"; }
 
-	try {
-		std::ofstream file(filepath);
-		if (file.is_open()) {
-			file << emitter.c_str();
-			file.close();
+		try {
+			std::ofstream file(filepath);
+			if (file.is_open()) {
+				file << emitter.c_str();
+				file.close();
+			}
+			else {
+				LOG(LogType::LOG_ERROR, "No se pudo abrir el archivo para guardar la escena.");
+			}
 		}
-		else {
-			LOG(LogType::LOG_ERROR, "No se pudo abrir el archivo para guardar la escena.");
+		catch (const std::exception& e) {
+			LOG(LogType::LOG_ERROR, "Error al guardar la escena: %s", e.what());
 		}
-	}
-	catch (const std::exception& e) {
-		LOG(LogType::LOG_ERROR, "Error al guardar la escena: %s", e.what());
-	}
+
 }
 
 void SceneSerializer::DeSerialize(std::string path) {

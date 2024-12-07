@@ -31,9 +31,9 @@ void MeshRenderer::Destroy()
     mesh.reset();
 }
 
-std::shared_ptr<Component> MeshRenderer::Clone(GameObject* owner)
+std::unique_ptr<Component> MeshRenderer::Clone(GameObject* owner)
 {
-    auto meshRenderer = std::make_shared<MeshRenderer>(*this);
+    auto meshRenderer = std::make_unique<MeshRenderer>(*this);
     meshRenderer->mesh = mesh;
     meshRenderer->material = material;
     meshRenderer->image = image;
@@ -90,7 +90,7 @@ void MeshRenderer::Render() const
     {
         material->bindShaders();
         material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-        material->setShaderUniform("model", owner->GetComponent<Transform_Component>()->GetMatrix());
+        material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
         material->setShaderUniform("view", Application->camera->view());
         material->setShaderUniform("projection", Application->camera->projection());
 

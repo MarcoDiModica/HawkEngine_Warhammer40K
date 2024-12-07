@@ -22,7 +22,7 @@ public:
 	virtual void Update(float deltaTime) = 0;
 	virtual void Destroy() = 0;
 
-	virtual std::shared_ptr<Component> Clone(GameObject* new_owner) = 0;
+	virtual std::unique_ptr<Component> Clone(GameObject* new_owner) = 0;
 
 	GameObject* GetOwner() const { return owner; }
 	std::string GetName() const { return name; }

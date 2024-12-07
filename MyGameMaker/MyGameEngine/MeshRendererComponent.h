@@ -18,7 +18,7 @@ public:
     void Update(float deltaTime) override;
     void Destroy() override;
 
-    std::shared_ptr<Component> Clone(GameObject* owner) override;
+    std::unique_ptr<Component> Clone(GameObject* owner) override;
 
     void SetMesh(std::shared_ptr<Mesh> mesh);
     std::shared_ptr<Mesh> GetMesh() const;

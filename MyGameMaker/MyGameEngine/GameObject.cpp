@@ -8,7 +8,8 @@ unsigned int GameObject::nextGid = 1;
 
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), gid(nextGid++)
 {
-    transform = AddComponent<Transform_Component>();
+    AddComponent<Transform_Component>();
+    transform = GetComponent<Transform_Component>();
 }
 
 GameObject::~GameObject()
@@ -18,8 +19,8 @@ GameObject::~GameObject()
     }
     components.clear();
 
-    for (auto& child : children()) {
-        child.Destroy();
+    for (auto& child : children) {
+        child->Destroy();
     }
 }
 
@@ -27,26 +28,22 @@ GameObject::GameObject(const GameObject& other) :
     name(other.name),
     gid(nextGid++),
     active(other.active),
-    transform(std::make_shared<Transform_Component>(*other.transform)),
+    transform(other.transform),
     mesh(other.mesh),
     tag(other.tag),
-    cachedComponentType(typeid(Component))
+    cachedComponentType(typeid(Component)),
+    parent(nullptr)
 {
     for (const auto& component : other.components) {
-
         components[component.first] = component.second->Clone(this);
         components[component.first]->owner = this;
     }
-    if (transform != GetComponent<Transform_Component>()) /*Update Transform ptr*/ {
-        transform = GetComponent<Transform_Component>();
-    }
-    //--------Pass children to copy------------//
-    for (const auto& child : other.children()) {
-        
-        auto& new_child = emplaceChild(child);
-        new_child.GetTransform()->UpdateLocalMatrix(this->GetTransform()->matrix);
-    }
 
+    for (const auto& child : other.children) {
+        auto newChild = std::make_shared<GameObject>(*child);
+        newChild->parent = this;
+        children.emplace_back(std::move(newChild));
+	}
 }
 
 GameObject& GameObject::operator=(const GameObject& other) {
@@ -55,23 +52,87 @@ GameObject& GameObject::operator=(const GameObject& other) {
         name = other.name;
         gid = nextGid++;
         active = other.active;
-        transform = std::make_shared<Transform_Component>(*other.transform);
+        transform = other.transform;
         mesh = other.mesh;
         tag = other.tag;
+        parent = nullptr;
 
         components.clear();
-
         for (const auto& component : other.components)
         {
             components[component.first] = component.second->Clone(this);
         }
 
-        for (auto& child : children())
+        for (auto& child : children)
         {
-            child.Destroy();
+            child->parent = nullptr;
+            child->Destroy();
         }
+        children.clear();
+
+        for (const auto& child : other.children)
+		{
+			auto newChild = std::make_shared<GameObject>(*child);
+			newChild->parent = this;
+			children.emplace_back(std::move(newChild));
+		}
     }
     return *this;
+}
+
+GameObject::GameObject(GameObject&& other) noexcept :
+	name(std::move(other.name)),
+	gid(nextGid++),
+	active(other.active),
+	transform(std::move(other.transform)),
+	mesh(std::move(other.mesh)),
+	tag(std::move(other.tag)),
+	components(std::move(other.components)),
+    children(std::move(other.children)),
+    parent(other.parent),
+	cachedComponentType(typeid(Component))
+{
+    for (auto& child : children) {
+        child->parent = this;
+    }
+    
+    for (auto& component : components)
+	{
+		component.second->owner = this;
+	}
+
+    other.parent = nullptr;
+    other.children.clear();
+}
+
+GameObject& GameObject::operator=(GameObject&& other) noexcept
+{
+	if (this != &other)
+	{
+		name = std::move(other.name);
+		gid = nextGid++;
+		active = other.active;
+		transform = std::move(other.transform);
+		mesh = std::move(other.mesh);
+		tag = std::move(other.tag);
+		components = std::move(other.components);
+        children = std::move(other.children);
+        parent = other.parent;
+		cachedComponentType = typeid(Component);
+
+        for (auto& child : children) {
+            child->parent = this;
+        }
+        
+        for (auto& component : components)
+		{
+			component.second->owner = this;
+		}
+
+        other.parent = nullptr;
+        other.children.clear();
+	}
+	return *this;
 }
 
 void GameObject::Start()
@@ -81,9 +142,9 @@ void GameObject::Start()
         component.second->Start();
     }
 
-    for (auto& child : children())
+    for (auto& child : children)
     {
-        child.Start();
+        child->Start();
     }
 }
 
@@ -94,18 +155,30 @@ void GameObject::Update(float deltaTime)
         return;
     }
 
-    std::cout << std::endl << GetName() << "has " << children().size() << " children";
+    //LOG(LogType::LOG_INFO, "GameObject::Update", "GameObject: " + name + " - Update");
 
-    for (auto it = components.begin(); it != components.end(); ++it) {
+    //std::cout << std::endl << GetName() << "has " << children().size() << " children";
 
-        std::shared_ptr<Component> component = it->second;
-        component->Update(deltaTime);
+    //check the state of the components and throw an error if they are null
+    for (auto& component : components)
+	{
+		if (!component.second)
+		{
+			throw std::runtime_error("Component is null");
+		}
+	}
 
-    }
+    //log size of components
+    
+    for (auto& component : components)
+	{
+		component.second->Update(deltaTime);
+        //LOG(LogType::LOG_INFO, "GameObject::Update", "GameObject: " + name + " - Update");
+	}
 
-    for (auto& child : children())
+    for (auto& child : children)
     {
-        child.Update(deltaTime);
+        child->Update(deltaTime);
     }
 
     Draw();
@@ -124,9 +197,9 @@ void GameObject::Destroy()
         component.second->Destroy();
     }
 
-    for (auto& child : children())
+    for (auto& child : children)
     {
-        child.Destroy();
+        child->Destroy();
     }
 }
 
@@ -147,11 +220,10 @@ void GameObject::Draw() const
         break;
     }
 
-    for (const auto& child : children())
+    for (const auto& child : children)
     {
-        child.Draw();
+        child->Draw();
     }
-
 }
 
 void GameObject::DrawAccumultedMatrix() const
@@ -219,7 +291,46 @@ bool GameObject::CompareTag(const std::string& tag) const
 BoundingBox GameObject::boundingBox() const
 {
     BoundingBox bbox = localBoundingBox();
-    if (!mesh && children().size()) bbox = children().front().boundingBox();
-    for (const auto& child : children()) bbox = bbox + child.boundingBox();
+    if (!mesh && children.size()) bbox = children.front()->boundingBox();
+    for (const auto& child : children) bbox = bbox + child->boundingBox();
     return transform->GetMatrix() * bbox;
+}
+
+void GameObject::SetParent(GameObject* parent)
+{
+    if (this->parent == parent)
+	{
+		return;
+	}
+
+    if (this->parent)
+	{
+		this->parent->RemoveChild(this);
+	}
+
+	this->parent = parent;
+    if (parent)
+    {
+        parent->AddChild(this);
+	}
+}
+
+void GameObject::AddChild(GameObject* child)
+{
+    children.push_back(child->shared_from_this());
+	child->parent = this;
+}
+
+void GameObject::RemoveChild(GameObject* child)
+{
+    for (auto it = children.begin(); it != children.end(); ++it)
+	{
+		if ((*it).get() == child)
+		{
+			children.erase(it);
+			break;
+		}
+	}
+
+    child->parent = nullptr;
 }

@@ -37,9 +37,8 @@ public:
 		/* If it has children , save children node inside */
 
 		int j = 0;
-		for (auto it = child.children().begin(); it != child.children().end(); ++it) {
-
-			node["Child" + std::to_string(j)] = ObjectSerialize(*it, j);
+		for (const auto& child : child.GetChildren()) {
+			node["Child" + std::to_string(j)] = ObjectSerialize(*child, j);
 			j++;
 		}
 

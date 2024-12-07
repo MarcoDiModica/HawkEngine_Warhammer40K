@@ -21,10 +21,7 @@ Root::Root(App* app) : Module(app) { ; }
 
 bool  Root::Awake()
 {
-
     Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
-
-
 
     return true;
 }
@@ -191,24 +188,85 @@ std::shared_ptr<Scene> Root::GetActiveScene() const
     return currentScene;
 }
 
-
-bool Root::ParentGameObject(GameObject& child, GameObject& father) {
-
+bool Root::ParentGameObjectToScene(GameObject& child) {
     child.isSelected = false;
     Application->input->ClearSelection();
 
+    GameObject* currentParent = child.GetParent();
+
+    if (currentParent) {
+        currentParent->RemoveChild(&child);
+    }
+
+    currentScene->_children.push_back(child.shared_from_this());
+    child.SetParent(nullptr);
+
+    return true;
+}
+
+bool Root::ParentGameObjectToObject(GameObject& child, GameObject& father) {
+    child.isSelected = false;
+    father.isSelected = false;
+    Application->input->ClearSelection();
+
+    auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
+        [&child](const std::shared_ptr<GameObject>& obj) { return obj.get() == &child; });
+    if (it != currentScene->_children.end()) {
+        currentScene->_children.erase(it);
+    }
+
+    child.SetParent(&father);
+    child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
+
+    return true;
+}
+
+
+bool Root::ParentGameObject(GameObject& child, GameObject& father) {
+
+    //ParentGameObjectToScene(child);
+    //ParentGameObjectToObject(child, father);
+    //return true;
+    
+    /*child.isSelected = false;
+    father.isSelected = false;
+    Application->input->ClearSelection();
+
+    GameObject* currentParent = child.GetParent();
+
+    if (currentParent != nullptr) {
+        currentParent->RemoveChild(&child);
+    }
+    else {
+        for (auto it = currentScene->_children.begin(); it != currentScene->_children.end(); ++it) {
+            if ((*it).get() == &child) {
+                currentScene->_children.erase(it);
+                break;
+            }
+        }
+    }
+
+    child.SetParent(&father);
+
+    child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
+
+    return true;*/
+
+    child.isSelected = false;
+    father.isSelected = false;
+    Application->input->ClearSelection();
+
     // if object is child of the scene
-    if (child.parent() == nullptr) {
+    if (child.GetParent() == nullptr) {
 
         for (size_t i = 0; i < currentScene->_children.size(); ++i) {
 
             if (*currentScene->_children[i] == child) {
 
-                std::shared_ptr<GameObject> _child = currentScene->_children[i];
-                auto& object = father.emplaceChild(*_child);
+                father.AddChild(&child);
                 currentScene->_children.erase(currentScene->_children.begin() + i);
 
-                object.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
+                child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
 
                 return true;
 
@@ -217,23 +275,14 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
         }
     }
     else /* child object is already the child of some object */ {
-        GameObject* prev_father = child.parent();
+        GameObject* prev_father = child.GetParent();
 
-        for (auto& _child : prev_father->children())
-        {
-            if (_child == child) {
+        father.AddChild(&child);
+        prev_father->RemoveChild(&child);
 
-                std::shared_ptr<GameObject> new_child = std::make_shared<GameObject>( _child );
-                auto& object = father.emplaceChild(*new_child);
-                
-                prev_father->removeChild(_child);
+        child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
 
-                object.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
-
-                return true;
-
-            }
-        }
+        return true;
     }
 
     return false;

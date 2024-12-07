@@ -125,15 +125,15 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 				std::cout << "dragged " << draggedObject->GetName() << "into " << obj.GetName();
 				//obj.emplaceChild(*draggedObj);
 				Application->root->ParentGameObject(*draggedObject, obj);
-				//draggedObject = nullptr;
+				draggedObject = nullptr;
 			}
 		}
 		ImGui::EndDragDropTarget();
 	}
 
 	if (open) {
-		for (auto& child : obj.children()) {
-			DrawSceneObject(child);
+		for (const auto& child : obj.GetChildren()) {
+			DrawSceneObject(*child);
 		}
 		ImGui::TreePop();
 	}

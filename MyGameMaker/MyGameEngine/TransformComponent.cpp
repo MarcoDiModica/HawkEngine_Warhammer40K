@@ -35,9 +35,32 @@ Transform_Component& Transform_Component::operator=(const Transform_Component& o
     return *this;
 }
 
-std::shared_ptr<Component> Transform_Component::Clone(GameObject* owner)
+Transform_Component::Transform_Component(Transform_Component&& other) noexcept : Component(std::move(other))
 {
-    auto clone = std::make_shared<Transform_Component>(*this);
+	matrix = std::move(other.matrix);
+	position = std::move(other.position);
+	left = std::move(other.left);
+	up = std::move(other.up);
+	forward = std::move(other.forward);
+}
+
+Transform_Component& Transform_Component::operator=(Transform_Component&& other) noexcept
+{
+	if (this != &other)
+	{
+		Component::operator=(std::move(other));
+		matrix = std::move(other.matrix);
+		position = std::move(other.position);
+		left = std::move(other.left);
+		up = std::move(other.up);
+		forward = std::move(other.forward);
+	}
+	return *this;
+}
+
+std::unique_ptr<Component> Transform_Component::Clone(GameObject* owner)
+{
+    auto clone = std::make_unique<Transform_Component>(*this);
     clone->matrix = this->matrix;
     clone->left = this->left;
     clone->up = this->up;
@@ -65,18 +88,28 @@ void Transform_Component::TranslateLocal(const glm::dvec3& translation) {
     HandleWorldUpdate();
 }
 
-void Transform_Component::Update(float deltaTime) {
-
+void Transform_Component::Update(float deltaTime) 
+{
     if (owner) {
 
-        if (!owner->parent())/*No owner means owner is the scene*/ {
+        if (!owner->GetParent())/*No owner means owner is the scene*/ {
            UpdateWorldMatrix(glm::dmat4(1.0));
         }
-        for (GameObject& child : owner->children()) {
-            child.GetTransform()->UpdateWorldMatrix(matrix);
+        for (auto& child : owner->GetChildren()) {
+            child->GetTransform()->UpdateWorldMatrix(matrix);
         }
-
     }
+
+    //log if owner is null or not
+    bool isOwnerNull = owner == nullptr;
+    if (isOwnerNull)
+    {
+        LOG(LogType::LOG_ERROR, "Owner is null");
+    }
+    else
+    {
+		LOG(LogType::LOG_ERROR, "Owner is not null");
+	}
 }
 
 void Transform_Component::SetPosition(const glm::dvec3& position)
@@ -113,7 +146,7 @@ void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
     if (rotationMatrix != matrix) {
         matrix = rotationMatrix;
         matrix[3] = glm::dvec4(position, 1);
-        LOG(LogType::LOG_ERROR, "Attempting to rotat");
+        LOG(LogType::LOG_ERROR, "Attempting to rotate");
         HandleLocalUpdate();
     }
 }
@@ -145,21 +178,21 @@ void Transform_Component::LookAt(const glm::dvec3& target)
 
 void Transform_Component::HandleWorldUpdate() {
 
-    if (!owner->parent())/*No owner means owner is the scene*/ {
+    if (!owner->GetParent())/*No owner means owner is the scene*/ {
         UpdateWorldMatrix(glm::dmat4(1.0));
     }
     else {
-        UpdateWorldMatrix(owner->parent()->GetTransform()->matrix);
+        UpdateWorldMatrix(owner->GetParent()->GetTransform()->matrix);
     }
 }
 
 void Transform_Component::HandleLocalUpdate() {
 
-    if (!owner->parent())/*No owner means owner is the scene*/ {
+    if (!owner->GetParent())/*No owner means owner is the scene*/ {
         UpdateLocalMatrix(glm::dmat4(1.0));
     }
     else {
-        UpdateLocalMatrix(owner->parent()->GetTransform()->matrix);
+        UpdateLocalMatrix(owner->GetParent()->GetTransform()->matrix);
     }
 }
 
@@ -181,7 +214,6 @@ bool Transform_Component::decode(const YAML::Node& node) {
     Component::decode(node);
     glm::dmat4 new_matrix;
     decodeMat(node, new_matrix);
-
 
     SetMatrix(new_matrix);
 
@@ -205,8 +237,6 @@ bool Transform_Component::decode(const YAML::Node& node) {
 
     return true;
 }
-
-
 
     static  YAML::Node encodeMat(const glm::dmat4& rhs) {
         YAML::Node node;

@@ -50,8 +50,8 @@ public:
 
     void RemoveGameObject(GameObject* gameObject);
 
-    void AddParent(GameObject* parent, GameObject* child);
-    void RemoveParent(GameObject* parent, GameObject* child);
+    bool ParentGameObjectToScene(GameObject& child);
+    bool ParentGameObjectToObject(GameObject& child, GameObject& father);
 
     std::shared_ptr<Scene> currentScene = nullptr;
 

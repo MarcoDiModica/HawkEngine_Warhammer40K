@@ -15,7 +15,7 @@ enum class DrawMode
     PushPopMatrix
 };
 
-class GameObject : public std::enable_shared_from_this<GameObject>, public TreeExt<GameObject>
+class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:
     GameObject(const std::string& name = "GameObject");
@@ -24,11 +24,14 @@ public:
     GameObject(const GameObject& other);
     GameObject& operator=(const GameObject& other);
 
+    GameObject(GameObject&& other) noexcept;
+    GameObject& operator=(GameObject&& other) noexcept;
+
     template <IsComponent T, typename... Args>
-    std::shared_ptr<T> AddComponent(Args&&... args);
+    T* AddComponent(Args&&... args);
 
     template <IsComponent T>
-    std::shared_ptr<T> GetComponent() const;
+    T* GetComponent() const;
 
     template <IsComponent T>
     void RemoveComponent();
@@ -58,11 +61,17 @@ public:
     BoundingBox boundingBox() const;
     BoundingBox localBoundingBox() const { return mesh ? mesh->boundingBox() : BoundingBox(); }
 
-    std::shared_ptr<Transform_Component> GetTransform() const { return transform; }
+    Transform_Component* GetTransform() const { return transform; }
 
     DrawMode drawMode = DrawMode::PushPopMatrix;
 
     unsigned int GetId() const { return gid; }
+
+    void SetParent(GameObject* parent);
+    GameObject* GetParent() const { return parent; }
+    void AddChild(GameObject* child);
+    void RemoveChild(GameObject* child);
+    const std::vector<std::shared_ptr<GameObject>>& GetChildren() const { return children; }
 
     bool operator==(const GameObject& other) const {
         return gid == other.gid;
@@ -89,41 +98,47 @@ private:
     bool active = true;
     bool destroyed = false;
 
-    std::unordered_map<std::type_index, std::shared_ptr<Component>> components;
+    std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
 
     mutable std::type_index cachedComponentType;
     mutable std::shared_ptr<Component> cachedComponent;
 
-    std::shared_ptr<Transform_Component> transform;
+    Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
+
+    GameObject* parent = nullptr;
+    std::vector<std::shared_ptr<GameObject>> children;
 };
 
 
 template <IsComponent T, typename... Args>
-std::shared_ptr<T> GameObject::AddComponent(Args&&... args) {
-    std::shared_ptr<T> newComponent = std::make_shared<T>(this, std::forward<Args>(args)...);
-    components[typeid(T)] = newComponent;
-    return newComponent;
+T* GameObject::AddComponent(Args&&... args) {
+    std::unique_ptr<T> newComponent = std::make_unique<T>(this, std::forward<Args>(args)...);
+
+    T* result = newComponent.get();
+
+    components[typeid(T)] = std::move(newComponent);
+
+    if (result != nullptr) {
+        return result;
+    }
+    else {
+        std::string errorMsg = "Error on AddComponent(): " + this->GetName() + " - Failed to create component of type " + typeid(T).name();
+        throw std::runtime_error(errorMsg);
+    }
 }
 
 template <IsComponent T>
-std::shared_ptr<T> GameObject::GetComponent() const {
-    if (cachedComponentType == typeid(T) && cachedComponent) {
-        return std::static_pointer_cast<T>(cachedComponent);
-    }
-
+T* GameObject::GetComponent() const {
     auto it = components.find(typeid(T));
     if (it != components.end()) {
-        cachedComponentType = typeid(T);
-        cachedComponent = it->second;
-        return std::static_pointer_cast<T>(cachedComponent);
+        return dynamic_cast<T*>(it->second.get());
     }
     else {
         throw std::runtime_error("Component not found on GameObject: " + this->GetName());
     }
 }
 
-//en un futuro si el componente esta siendo usado no dejar que se elimine
 template <IsComponent T>
 void GameObject::RemoveComponent() {
     auto it = components.find(typeid(T));
@@ -131,7 +146,7 @@ void GameObject::RemoveComponent() {
         components.erase(it);
     }
     else {
-        //Log a warning or something idk asdsa
+        throw std::runtime_error("Error on RemoveComponent(): " + this->GetName());
     }
 }
 

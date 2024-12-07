@@ -29,13 +29,11 @@ UIInspector::~UIInspector()
 {
 }
 
-bool UIInspector::Draw()
-{
+bool UIInspector::Draw() {
     ImGuiWindowFlags inspectorFlags = ImGuiWindowFlags_None | ImGuiWindowFlags_NoCollapse;
     ImGuiWindowClass windowClass;
 
-    if (firstDraw)
-    {
+    if (firstDraw) {
         ImGui::SetNextWindowSize(ImVec2(300, 600), ImGuiCond_FirstUseEver);
         firstDraw = false;
     }
@@ -43,37 +41,38 @@ bool UIInspector::Draw()
     ImGui::SetNextWindowClass(&windowClass);
     windowClass.DockingAllowUnclassed = false;
 
-    if (ImGui::Begin("Inspector", nullptr, inspectorFlags))
-    {
+    if (ImGui::Begin("Inspector", nullptr, inspectorFlags)) {
         ImGuiIO& io = ImGui::GetIO();
 
-        if (Application->input->GetSelectedGameObjects().empty())
-        {
+        if (Application->input->GetSelectedGameObjects().empty()) {
             ImGui::Text("No GameObject selected");
         }
-        else
-        {
+        else {
+            // Obtener el último GameObject seleccionado
             GameObject* selectedGameObject = Application->input->GetSelectedGameObjects().back();
+
+            // Verificar si selectedGameObject es válido
+            if (!selectedGameObject) {
+                LOG(LogType::LOG_ERROR, "UIInspector::Draw: selectedGameObject is nullptr");
+                ImGui::Text("Error: Invalid GameObject selected");
+                return false;
+            }
 
             char newName[128] = {};
             strncpy_s(newName, selectedGameObject->GetName().c_str(), sizeof(newName));
             ImGui::SameLine(); ImGui::Text("GameObject:");
-            if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue))
-            {
-                if (strlen(newName) > 0)
-                {
+            if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue)) {
+                if (strlen(newName) > 0) {
                     selectedGameObject->SetName(newName);
                 }
             }
             ImGui::SameLine(); ImGui::Checkbox("Static", &selectedGameObject->isStatic);
 
-            std::shared_ptr<Transform_Component> transform = selectedGameObject->GetTransform();
+            Transform_Component* transform = selectedGameObject->GetTransform();
 
-            if (transform)
-            {
+            if (transform) {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Transform"))
-                {
+                if (ImGui::CollapsingHeader("Transform")) {
                     glm::dvec3 currentPosition = transform->GetPosition();
                     glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
                     glm::dvec3 currentScale = transform->GetScale();
@@ -82,16 +81,13 @@ bool UIInspector::Draw()
                     float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
                     float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
 
-                    if (ImGui::DragFloat3("Postition", pos, 0.1f))
-                    {
+                    if (ImGui::DragFloat3("Postition", pos, 0.1f)) {
                         glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-						/*transform->SetPosition(newPosition);*/
                         glm::dvec3 deltaPos = newPosition - currentPosition;
                         transform->Translate(deltaPos);
                     }
 
-                    if (ImGui::DragFloat3("Rotation", rot, 0.1f))
-                    {
+                    if (ImGui::DragFloat3("Rotation", rot, 0.1f)) {
                         glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
                         glm::dvec3 deltaRot = newRotation - currentRotation;
 
@@ -100,9 +96,8 @@ bool UIInspector::Draw()
                         transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
                     }
 
-                    if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f))
-                    {
-						glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
+                    if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f)) {
+                        glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
                         glm::dvec3 deltaScale = newScale / currentScale;
                         transform->Scale(deltaScale);
                     }
@@ -110,16 +105,26 @@ bool UIInspector::Draw()
                     ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f, 10.0f);
                 }
             }
+            else {
+                throw std::runtime_error("UIInspector::Draw: Transform component is nullptr");
+            }
 
             ImGui::Separator();
 
             if (selectedGameObject->HasComponent<MeshRenderer>()) {
-                std::shared_ptr<Mesh> mesh = selectedGameObject->GetComponent<MeshRenderer>()->GetMesh();
+                MeshRenderer* meshRenderer = selectedGameObject->GetComponent<MeshRenderer>();
 
-                if (mesh)
-                {
-                    if (ImGui::CollapsingHeader("Mesh"))
-                    {
+                // Verificar si meshRenderer es válido
+                if (!meshRenderer) {
+                    LOG(LogType::LOG_ERROR, "UIInspector::Draw: meshRenderer is nullptr");
+                    ImGui::Text("Error: Invalid MeshRenderer component");
+                    return false;
+                }
+
+                std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
+
+                if (mesh) {
+                    if (ImGui::CollapsingHeader("Mesh")) {
                         ImGui::Text("Vertices: %d", mesh->vertices().size());
                         ImGui::Text("Indices: %d", mesh->indices().size());
 
@@ -128,54 +133,51 @@ bool UIInspector::Draw()
 
                         ImGui::Checkbox("Tri Normals", &triNormals);
                         ImGui::Checkbox("Vertex Normals", &vertexNormals);
-                    }    
+                    }
+                }
+                else {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: MeshRenderer has no Mesh");
                 }
 
                 ImGui::Separator();
 
-                std::shared_ptr<Image> image = selectedGameObject->GetComponent<MeshRenderer>()->GetImage();
-                if (image)
-                {
-                    if (ImGui::CollapsingHeader("Image"))
-                    {
+                std::shared_ptr<Image> image = meshRenderer->GetImage();
+
+                if (image) {
+                    if (ImGui::CollapsingHeader("Image")) {
                         ImGui::Text("Width: %d", image->width());
                         ImGui::Text("Heigth: %d", image->height());
 
                         ImGui::Separator();
 
                         auto textureID = image.get()->id();
-                        if (textureID)
-                        {
-							ImGui::Text("Preview: %dx%d", image->width(), image->height());
+                        if (textureID) {
+                            ImGui::Text("Preview: %dx%d", image->width(), image->height());
                             ImVec2 imageSize = ImVec2(static_cast<float>(image->width()), static_cast<float>(image->height()));
-                        
-							float maxPreviewSize = 200.0f;
-                            if (imageSize.x > maxPreviewSize || imageSize.y > maxPreviewSize)
-                            {
-								float aspectRatio = imageSize.x / imageSize.y;
-								if (aspectRatio > 1.0f)
-								{
-									imageSize.x = maxPreviewSize;
-									imageSize.y = maxPreviewSize / aspectRatio;
-								}
-								else
-								{
+
+                            float maxPreviewSize = 200.0f;
+                            if (imageSize.x > maxPreviewSize || imageSize.y > maxPreviewSize) {
+                                float aspectRatio = imageSize.x / imageSize.y;
+                                if (aspectRatio > 1.0f) {
+                                    imageSize.x = maxPreviewSize;
+                                    imageSize.y = maxPreviewSize / aspectRatio;
+                                }
+                                else {
                                     imageSize.y = maxPreviewSize;
-									imageSize.x = maxPreviewSize * aspectRatio;
-								}
+                                    imageSize.x = maxPreviewSize * aspectRatio;
+                                }
                             }
-							ImGui::Image((void*)(intptr_t)textureID, imageSize);
+                            ImGui::Image((void*)(intptr_t)textureID, imageSize);
                         }
-                        else
-                        {
-							ImGui::Text("No texture loaded");
+                        else {
+                            ImGui::Text("No texture loaded");
                         }
-                    
                     }
                 }
+                else {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: MeshRenderer has no Image");
+                }
             }
-
-            // Condiciones de otros componentes 
         }
 
         ImGui::End();

@@ -48,10 +48,8 @@ void SceneSerializer::Serialize(const std::string& directoryPath) {
 
 		//}
 		int j = 0;
-		for (auto it = gameObjects[i]->children().begin(); it != gameObjects[i]->children().end(); ++it) {
-
-			node["Child" + std::to_string(j)] = ObjectSerialize(*it, j);
-
+		for (const auto& child : gameObjects[i]->GetChildren()) {
+			node["Child" + std::to_string(j)] = ObjectSerialize(*child, j);
 			j++;
 		}
 
@@ -171,9 +169,8 @@ void SceneSerializer::DeSerialize(std::string path) {
 				else if (key.substr(0, 5) == "Child") {
 
 					/* Deserialize child and add to children vector */
-					Application->root->ParentGameObject( DeSerializeChild(value) , *game_obj );
-
-
+					//Application->root->ParentGameObject( DeSerializeChild(value) , *game_obj );
+					game_obj->AddChild(&DeSerializeChild(value));
 				}
 			}
 			i++;
@@ -223,7 +220,8 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node) {
 		}
 		else if (key.substr(0, 5) == "Child") {
 			/* Deserialize child and add to children vector, RECURSIVE */
-			Application->root->ParentGameObject(DeSerializeChild(value), *game_obj);
+			//Application->root->ParentGameObject(DeSerializeChild(value), *game_obj);
+			game_obj->AddChild(&DeSerializeChild(value));
 		}
 	}
 	return *game_obj;

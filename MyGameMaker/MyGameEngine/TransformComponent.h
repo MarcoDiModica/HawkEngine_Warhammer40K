@@ -18,11 +18,14 @@ public:
     Transform_Component(const Transform_Component& other);
     Transform_Component& operator=(const Transform_Component& other);
 
+    Transform_Component(Transform_Component&& other) noexcept;
+    Transform_Component& operator=(Transform_Component&& other) noexcept;
+
     void Start() override {}
     void Update(float deltaTime) override;
     void Destroy() override {}
 
-    std::shared_ptr<Component> Clone(GameObject* owner) override;
+    std::unique_ptr<Component> Clone(GameObject* owner) override;
 
     const auto& GetMatrix() const { return matrix; }
     const auto& GetLocalMatrix() const { return local_matrix; }

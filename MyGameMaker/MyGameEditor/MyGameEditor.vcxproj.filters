@@ -66,7 +66,7 @@
     <ClCompile Include="UIInspector.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="EditorCamera.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
     <ClCompile Include="UIHierarchy.cpp">
@@ -104,7 +104,7 @@
     <ClInclude Include="MyGUI.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="EditorCamera.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="Log.h">

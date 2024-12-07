@@ -86,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="EditorCamera.cpp" />
     <ClCompile Include="Gizmos.cpp" />
     <ClCompile Include="HardwareSettings.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -108,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="EditorCamera.h" />
     <ClInclude Include="Gizmos.h" />
     <ClInclude Include="HardwareSettings.h" />
     <ClInclude Include="Input.h" />

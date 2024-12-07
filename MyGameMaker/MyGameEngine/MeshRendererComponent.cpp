@@ -11,7 +11,7 @@
 
 //cosailegal
 #include "../MyGameEditor/App.h"
-#include "../MyGameEditor/Camera.h"
+#include "../MyGameEditor/EditorCamera.h"
 #include "../MyGameEditor/Transform.h"
 
 MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) { name = "MeshRenderer"; }
@@ -100,7 +100,7 @@ void MeshRenderer::Render() const
         material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
         material->setShaderUniform("dirLight.intensity", 3.0f);
 
-        material->setShaderUniform("viewPos", Application->camera->transform().pos());
+        material->setShaderUniform("viewPos", Application->camera->GetTransform().GetPosition());
 
         material->setShaderUniform("pointLights.position", glm::vec3(0.0f, 0.0f, 0.0f));
         material->setShaderUniform("pointLights.ambient", glm::vec3(0.2f, 0.8f, 0.2f));

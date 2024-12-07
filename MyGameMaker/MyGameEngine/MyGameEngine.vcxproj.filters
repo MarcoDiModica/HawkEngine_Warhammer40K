@@ -75,6 +75,9 @@
     <ClInclude Include="Shaders.h">
       <Filter>Archivos de encabezado\Core</Filter>
     </ClInclude>
+    <ClInclude Include="CameraBase.h">
+      <Filter>Archivos de encabezado\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MeshRendererComponent.cpp">
@@ -105,6 +108,9 @@
       <Filter>Archivos de origen\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Shaders.cpp">
+      <Filter>Archivos de origen\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraBase.cpp">
       <Filter>Archivos de origen\Core</Filter>
     </ClCompile>
   </ItemGroup>

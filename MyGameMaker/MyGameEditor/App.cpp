@@ -28,7 +28,7 @@ App::App() {
 
 	root = new Root(this);
 
-	camera = new Camera(this);
+	camera = new EditorCamera(this);
 
 	//gizmos = new Gizmos(this);
 

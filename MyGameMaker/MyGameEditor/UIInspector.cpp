@@ -4,7 +4,7 @@
 
 #include "..\MyGameEngine\TransformComponent.h"
 #include "..\MyGameEngine\Mesh.h"
-#include "Camera.h"
+#include "EditorCamera.h"
 #include "Input.h"
 #include "..\MyGameEngine\types.h"
 #include "..\MyGameEngine\MeshRendererComponent.h"

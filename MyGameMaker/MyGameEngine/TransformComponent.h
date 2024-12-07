@@ -59,6 +59,7 @@ public:
     void Rotate(double rads, const glm::dvec3& axis);
     void Scale(const glm::dvec3& scale);
     void LookAt(const glm::dvec3& target);
+    void AlignToGlobalUp(const glm::vec3& worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
     void SetRotation(const glm::dvec3& eulerAngles);
     void SetScale(const glm::dvec3& scale);
     void SetMatrix(const glm::dmat4& newMatrix) {
@@ -152,7 +153,7 @@ private:
     };
 
     // DONT modigy directly use SetLocalMatrix
-   // glm::dmat4 local_matrix = glm::dmat4(1.0);
+    // glm::dmat4 local_matrix = glm::dmat4(1.0);
 
     /* Update the world matrix based on the parent's world matrix */
     void UpdateWorldMatrix(const glm::dmat4& parentWorldMatrix) {
@@ -161,7 +162,6 @@ private:
         if (buff != matrix) {
             int u = 7;
         }
-
     }
 
     void UpdateLocalMatrix(const glm::dmat4& parentWorldMatrix) {

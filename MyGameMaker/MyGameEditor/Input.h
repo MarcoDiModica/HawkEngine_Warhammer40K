@@ -106,7 +106,7 @@ private:
 	std::vector<GameObject*> selectedObjects;
 	std::vector<GameObject*> copiedObjects;
 	GameObject* draggedObject;
-	Camera* camera;
+	EditorCamera* camera;
 };
 
 #endif // !__INPUT_H__

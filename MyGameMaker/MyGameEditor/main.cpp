@@ -18,7 +18,7 @@
 #include "assimp/scene.h" 
 #include "assimp/postprocess.h"
 #include "../MyGameEngine/Mesh.h"
-#include "Camera.h"
+#include "EditorCamera.h"
 #include "imgui.h"
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/intersect.hpp>
@@ -64,10 +64,10 @@ using vec3 = glm::dvec3;
 
 
 static const ivec2 WINDOW_SIZE(1280, 720);
-static const auto FPS = 60;
+static const auto FPS = 120;
 static const auto FRAME_DT = 1.0s / FPS;
 
-static Camera* camera = nullptr;
+static EditorCamera* camera = nullptr;
 
 App* Application = NULL;
 
@@ -157,7 +157,7 @@ glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, 
 	glm::mat4 view_matrix = camera->view();
 	glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
 
-	return glm::vec3(world_coords.x + camera->transform().pos().x, world_coords.y + camera->transform().pos().y, world_coords.z + camera->transform().pos().z);
+	return glm::vec3(world_coords.x + camera->GetTransform().GetPosition().x, world_coords.y + camera->GetTransform().GetPosition().y, world_coords.z + camera->GetTransform().GetPosition().z);
 }
 
 void DrawRay(const glm::vec3& ray_origin, const glm::vec3& ray_direction)
@@ -410,8 +410,8 @@ int main(int argc, char** argv) {
 		case AWAKE:
 			//Application->AddModule(cameraPtr.get(), true);
 
-			camera->transform().pos() = vec3(0, 1, 4);
-			camera->transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
+			camera->GetTransform().GetPosition() = vec3(0, 1, 4);
+			camera->GetTransform().Rotate(glm::radians(180.0), vec3(0, 1, 0));
 			if (Application->Awake()) { state = START; }
 
 			else

@@ -3,7 +3,7 @@
 #include <vector>
 #include <list>
 #include "Log.h"
-#include "Camera.h"
+#include "EditorCamera.h"
 #include "SceneSerializer.h"
 #include "Root.h"
 #include "Gizmos.h"
@@ -66,7 +66,7 @@ public:
 	HardwareInfo* hardwareInfo = nullptr;
 	MyGUI* gui = nullptr;
 	Root* root = nullptr;
-	Camera* camera = nullptr;
+	EditorCamera* camera = nullptr;
 	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
 

@@ -5,7 +5,7 @@
 #include "imgui.h"
 #include "UiSceneWindow.h"
 #include "Input.h"
-#include "Camera.h"
+#include "EditorCamera.h"
 #include "MyWindow.h"
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/Image.h"

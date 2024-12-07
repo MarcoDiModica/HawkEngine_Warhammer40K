@@ -99,6 +99,10 @@ void Transform_Component::Update(float deltaTime)
             child->GetTransform()->UpdateWorldMatrix(matrix);
         }
     }
+    else
+    {
+        UpdateWorldMatrix(glm::dmat4(1.0));
+    }
 
     //log if owner is null or not
     bool isOwnerNull = owner == nullptr;
@@ -174,26 +178,54 @@ void Transform_Component::Scale(const glm::dvec3& scale)
 void Transform_Component::LookAt(const glm::dvec3& target)
 {
     matrix = glm::lookAt(position, target, up);
+
+    HandleLocalUpdate();
+}
+
+void Transform_Component::AlignToGlobalUp(const glm::vec3& worldUp)
+{
+    glm::vec3 fwd = glm::normalize(forward);
+    glm::vec3 right = glm::normalize(glm::cross(worldUp, fwd));
+    glm::vec3 up = glm::cross(fwd, right);
+
+    left = right;
+    this->up = up;
+    forward = fwd;
+    position = position;
+	
+    SetMatrix(glm::dmat4(glm::dvec4(left, 0.0), glm::dvec4(up, 0.0), glm::dvec4(forward, 0.0), glm::dvec4(position, 1.0)));
 }
 
 void Transform_Component::HandleWorldUpdate() {
 
-    if (!owner->GetParent())/*No owner means owner is the scene*/ {
-        UpdateWorldMatrix(glm::dmat4(1.0));
+    if (owner) {
+        if (!owner->GetParent())/*No owner means owner is the scene*/ {
+            UpdateWorldMatrix(glm::dmat4(1.0));
+        }
+        else {
+            UpdateWorldMatrix(owner->GetParent()->GetTransform()->matrix);
+        }
     }
-    else {
-        UpdateWorldMatrix(owner->GetParent()->GetTransform()->matrix);
-    }
+    else
+    {
+		UpdateWorldMatrix(glm::dmat4(1.0));
+	}
 }
 
 void Transform_Component::HandleLocalUpdate() {
 
-    if (!owner->GetParent())/*No owner means owner is the scene*/ {
-        UpdateLocalMatrix(glm::dmat4(1.0));
-    }
-    else {
-        UpdateLocalMatrix(owner->GetParent()->GetTransform()->matrix);
-    }
+    if (owner) {
+		if (!owner->GetParent())/*No owner means owner is the scene*/ {
+			UpdateLocalMatrix(glm::dmat4(1.0));
+		}
+		else {
+			UpdateLocalMatrix(owner->GetParent()->GetTransform()->matrix);
+		}
+	}
+    else
+    {
+		UpdateLocalMatrix(glm::dmat4(1.0));
+	}
 }
 
 YAML::Node Transform_Component::encode() {

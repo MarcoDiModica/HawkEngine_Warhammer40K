@@ -214,61 +214,67 @@ bool Input::processSDLEvents()
 
         case SDL_DROPFILE:
         {
-            // Just flag event here
-            // This code elsewhere
             std::string fileDir = event.drop.file;
-            std::string fileNameExt = fileDir.substr(fileDir.find_last_of('\\') + 1);
-
-            std::string fbxName = fileDir.substr(fileDir.find_last_of("\\/") + 1, fileDir.find_last_of('.') - fileDir.find_last_of("\\/") - 1);
-
-            // FBX
-            if (fileDir.ends_with(".fbx") || fileDir.ends_with(".FBX"))
-            {
-                fs::path assetsDir = fs::path(ASSETS_PATH) / "Meshes" / fileNameExt;
-
-                LOG(LogType::LOG_ASSIMP, "Importing %s from: %s", fileNameExt.data(), fileDir.data());
-
-                /* Application->ElMesh.LoadMesh("BakerHouse.fbx");
-                Application->ElMesh.LoadTexture("Baker_house.png");
-                Application->ElMesh.LoadCheckerTexture();*/
-
-                std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-                mesh->LoadMesh(CopyFBXFileToProject(fileDir).c_str());
-                
-                //mesh->LoadCheckerTexture();
-
-                //Application->root->CreateMeshObject(fileNameExt,  mesh);
-                auto go = Application->root->CreateGameObject(fileNameExt);
-                Application->root->AddMeshRenderer(*go, mesh, "Assets/default.png");
-
-                //Application->ElMesh.LoadMesh(CopyFBXFileToProject( fileDir).c_str());
-
-                //Application->ElMesh.LoadCheckerTexture();
-
-
-            }
-
-            // PNG / DDS
-            else if (fileDir.ends_with(".png") || fileDir.ends_with(".dds"))
-            {
-                //std::filesystem::copy(fileDir, "Assets", std::filesystem::copy_options::overwrite_existing);
-                //fs::path assetsDir = fs::path(ASSETS_PATH) / "Assets" / fileNameExt;
-				if (draggedObject != nullptr)
-				{
-                    auto meshRenderer = draggedObject->GetComponent<MeshRenderer>();
-                    auto image = std::make_shared<Image>();
-                    auto material = std::make_shared<Material>();
-                    image->LoadTexture(fileDir);
-                    material->setImage(image);
-                    meshRenderer->SetMaterial(material);
-				}
-            }
+			HandleFileDrop(fileDir);
             SDL_free(event.drop.file);
             break;
         }
         }
     }
     return true;
+}
+
+void Input::HandleFileDrop(const std::string& fileDir)
+{
+    std::string fileNameExt = fileDir.substr(fileDir.find_last_of("\\/") + 1);
+    std::string fileExt = fileDir.substr(fileDir.find_last_of('.') + 1);
+
+    fs::path targetPath = fs::path(ASSETS_PATH) / fileNameExt;
+
+    if (fileExt == "fbx" || fileExt == "FBX") {
+        LOG(LogType::LOG_ASSIMP, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+
+        std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+        mesh->LoadMesh(CopyFBXFileToProject(fileDir).c_str());
+
+        auto go = Application->root->CreateGameObject(fileNameExt);
+        Application->root->AddMeshRenderer(*go, mesh, "Assets/default.png");
+    }
+    else if (fileExt == "png" || fileExt == "dds") {
+        LOG(LogType::LOG_INFO, "Loading Texture: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+
+        if (draggedObject != nullptr) {
+            auto meshRenderer = draggedObject->GetComponent<MeshRenderer>();
+            auto image = std::make_shared<Image>();
+            auto material = std::make_shared<Material>();
+
+            image->LoadTexture(fileDir);
+            material->setImage(image);
+            meshRenderer->SetMaterial(material);
+        }
+    }
+    else if (fileExt == "scene")
+    {
+        LOG(LogType::LOG_INFO, "Loading Scene File: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+    }
+    else if (fileExt == "mesh")
+    {
+        LOG(LogType::LOG_INFO, "Detected Custom Mesh: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+    }
+
+    try {
+        if (!fs::exists(targetPath) || fs::file_size(fileDir) != fs::file_size(targetPath)) {
+            fs::copy(fileDir, targetPath, fs::copy_options::overwrite_existing);
+            LOG(LogType::LOG_OK, "File copied to: %s", targetPath.string().c_str());
+        }
+        else {
+            LOG(LogType::LOG_INFO, "File already exists: %s", targetPath.string().c_str());
+        }
+    }
+    catch (const std::exception& e) {
+        LOG(LogType::LOG_ERROR, "Failed to copy file: %s - %s", fileNameExt.c_str(), e.what());
+    }
+    // Lógica por si la file ya existe
 }
 
 glm::vec3 Input::getRayFromMouse(int mouseX, int mouseY, const glm::mat4& projection, const glm::mat4& view, const glm::ivec2& viewportSize) {

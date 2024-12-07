@@ -108,7 +108,7 @@ void Transform_Component::Update(float deltaTime)
     }
     else
     {
-		LOG(LogType::LOG_ERROR, "Owner is not null");
+		//LOG(LogType::LOG_ERROR, "Owner is not null");
 	}
 }
 

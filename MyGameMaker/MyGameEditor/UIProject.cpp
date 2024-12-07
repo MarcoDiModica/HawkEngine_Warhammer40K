@@ -7,6 +7,7 @@
 
 #include <filesystem>
 #include <string>
+#include <fstream>
 
 #define BIT(x) (1 << x)
 
@@ -40,7 +41,6 @@ bool UIProject::Draw()
 
 	if (ImGui::Begin("Project", &enabled, projectFlags))
 	{
-
 		static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
 
 		if (ImGui::BeginTable("Table", 2, tableFlags))
@@ -96,9 +96,6 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 	bool anyNodeClicked = false;
 	uint32_t nodeClicked = 0;
 
-	static bool openScenePopup = false;
-	static std::string sceneToLoad;
-
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
 		ImGuiTreeNodeFlags treeFlags = nodeFlags;
@@ -118,6 +115,14 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		}
 
 		bool nodeOpen = ImGui::TreeNodeEx((void*)(intptr_t)(*count), treeFlags, name.c_str());
+
+		if (entryIsFile && ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+		{
+			const std::string filePath = entry.path().string();
+			ImGui::SetDragDropPayload("FilePath", filePath.c_str(), filePath.size() + 1);
+			ImGui::Text("Dragging: %s", filePath.c_str());
+			ImGui::EndDragDropSource();
+		}
 
 		if (ImGui::IsItemClicked())
 		{
@@ -149,16 +154,6 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 			}
 
 			ImGui::EndPopup();
-		}
-
-
-		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
-		{
-			if (name.ends_with(".scene"))
-			{
-				openScenePopup = true;
-				sceneToLoad = entry.path().string();
-			}
 		}
 	
 		(*count)--;
@@ -216,6 +211,8 @@ void UIProject::HandleFileSelection(const std::string& filePath)
 		ImGui::EndPopup();
 	}
 }
+
+
 
 
 

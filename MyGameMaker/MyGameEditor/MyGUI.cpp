@@ -218,7 +218,7 @@ void MyGUI::Render() {
 	}
 
 	if (showInspector) {
-		UIinspectorPanel->Draw();
+		UIinspectorPanel->Draw(); // Ojo que minimizar peta el engine por el inspector
 	}
 
 	if (showSceneWindow) {

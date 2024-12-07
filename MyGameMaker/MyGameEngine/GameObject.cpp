@@ -317,8 +317,33 @@ void GameObject::SetParent(GameObject* parent)
 
 void GameObject::AddChild(GameObject* child)
 {
-    children.push_back(child->shared_from_this());
-	child->parent = this;
+    if (child->GetParent() == nullptr) {
+        if (child->scene) {
+            
+            for (size_t i = 0; i < child->scene->_children.size(); ++i) {
+
+                if (*child->scene->_children[i] == *child) {
+
+                    children.push_back(child->shared_from_this());
+                    children[children.size() - 1]->parent = this;
+                    children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
+
+                    child->scene->_children.erase(child->scene->_children.begin() + i);
+                    return;
+                }
+            }
+        }
+    }
+    else {
+
+        GameObject* prev_father = child->GetParent();
+        children.push_back(child->shared_from_this());
+        children[children.size() -1]->parent = this;
+        children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
+        prev_father->RemoveChild(child);
+
+        return;
+    }
 }
 
 void GameObject::RemoveChild(GameObject* child)
@@ -331,6 +356,4 @@ void GameObject::RemoveChild(GameObject* child)
 			break;
 		}
 	}
-
-    child->parent = nullptr;
 }

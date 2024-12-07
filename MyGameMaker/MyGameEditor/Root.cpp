@@ -109,7 +109,8 @@ std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name)
     }
 
     auto gameObject = std::make_shared<GameObject>(uniqueName);
-    currentScene->_children.push_back(gameObject);
+    currentScene->AddGameObject(gameObject);
+    //currentScene->_children.push_back(gameObject);
     return gameObject;
 }
 
@@ -224,66 +225,7 @@ bool Root::ParentGameObjectToObject(GameObject& child, GameObject& father) {
 
 bool Root::ParentGameObject(GameObject& child, GameObject& father) {
 
-    //ParentGameObjectToScene(child);
-    //ParentGameObjectToObject(child, father);
-    //return true;
-    
-    /*child.isSelected = false;
-    father.isSelected = false;
-    Application->input->ClearSelection();
-
-    GameObject* currentParent = child.GetParent();
-
-    if (currentParent != nullptr) {
-        currentParent->RemoveChild(&child);
-    }
-    else {
-        for (auto it = currentScene->_children.begin(); it != currentScene->_children.end(); ++it) {
-            if ((*it).get() == &child) {
-                currentScene->_children.erase(it);
-                break;
-            }
-        }
-    }
-
-    child.SetParent(&father);
-
-    child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
-
-    return true;*/
-
-    child.isSelected = false;
-    father.isSelected = false;
-    Application->input->ClearSelection();
-
-    // if object is child of the scene
-    if (child.GetParent() == nullptr) {
-
-        for (size_t i = 0; i < currentScene->_children.size(); ++i) {
-
-            if (*currentScene->_children[i] == child) {
-
-                father.AddChild(&child);
-                currentScene->_children.erase(currentScene->_children.begin() + i);
-
-                child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
-
-                return true;
-
-            }
-
-        }
-    }
-    else /* child object is already the child of some object */ {
-        GameObject* prev_father = child.GetParent();
-
-        father.AddChild(&child);
-        prev_father->RemoveChild(&child);
-
-        child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
-
-        return true;
-    }
+    father.AddChild(&child);
 
     return false;
 }

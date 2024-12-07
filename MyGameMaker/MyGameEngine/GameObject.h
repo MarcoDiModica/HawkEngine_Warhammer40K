@@ -7,6 +7,7 @@
 #include "BoundingBox.h"
 
 class SceneSerializer;
+class Scene;
 
 enum class DrawMode
 {
@@ -106,6 +107,10 @@ private:
     Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
 
+protected:
+    friend class Scene;
+
+    Scene* scene = nullptr;
     GameObject* parent = nullptr;
     std::vector<std::shared_ptr<GameObject>> children;
 };

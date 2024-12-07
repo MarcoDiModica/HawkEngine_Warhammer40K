@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "readOnlyView.h"
 
+class GameObject;
+
 class Scene
 {
 public:
@@ -29,6 +31,8 @@ public:
 	auto children()const { return readOnlyVector<std::shared_ptr<GameObject>>(_children); }
 
 private:
+	friend class GameObject;
+
 	std::string name;
 
 	friend class Root;

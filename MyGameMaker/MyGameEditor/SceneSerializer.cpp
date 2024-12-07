@@ -9,6 +9,31 @@
 
 class MeshRenderer;
 
+YAML::Node SceneSerializer::ObjectSerialize(GameObject& child, int num) {
+
+	//YAML::Node game_object_node;
+	YAML::Node node;
+	node["name"] = child.GetName();
+
+	/*            Save the components                 */
+	for (auto& component : child.components)
+	{
+		YAML::Node node2;
+		node2 = component.second->encode();
+
+		node[component.second->name] = node2;
+	}
+	/* If it has children , save children node inside */
+
+	int j = 0;
+	for (const auto& child : child.GetChildren()) {
+		node["Child" + std::to_string(j)] = ObjectSerialize(*child, j);
+		j++;
+	}
+
+	return node;
+}
+
 void SceneSerializer::Serialize(const std::string& directoryPath, bool play) {
 
 	std::vector gameObjects = Application->root->currentScene->_children;
@@ -41,12 +66,7 @@ void SceneSerializer::Serialize(const std::string& directoryPath, bool play) {
 		}
 
 		/* If it has children , save children node inside */
-		//for (size_t j = 0; j < gameObjects[i]->children().size(); ++j) {
 
-		//	YAML::Node node;
-		//	node["Child" + std::to_string(j)] = ObjectSerialize(gameObjects[i]->children()[j], j);
-
-		//}
 		int j = 0;
 		for (const auto& child : gameObjects[i]->GetChildren()) {
 			node["Child" + std::to_string(j)] = ObjectSerialize(*child, j);
@@ -172,7 +192,6 @@ void SceneSerializer::DeSerialize(std::string path) {
 				else if (key.substr(0, 5) == "Child") {
 
 					/* Deserialize child and add to children vector */
-					//Application->root->ParentGameObject( DeSerializeChild(value) , *game_obj );
 					game_obj->AddChild(&DeSerializeChild(value));
 				}
 			}
@@ -223,8 +242,8 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node) {
 		}
 		else if (key.substr(0, 5) == "Child") {
 			/* Deserialize child and add to children vector, RECURSIVE */
-			//Application->root->ParentGameObject(DeSerializeChild(value), *game_obj);
-			game_obj->AddChild(&DeSerializeChild(value));
+			Application->root->ParentGameObject(DeSerializeChild(value), *game_obj);
+			//game_obj->AddChild(&DeSerializeChild(value));
 		}
 	}
 	return *game_obj;

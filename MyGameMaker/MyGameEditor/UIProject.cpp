@@ -39,8 +39,7 @@ bool UIProject::Draw()
 	windowClass.DockingAllowUnclassed = false;
 
 	if (ImGui::Begin("Project", &enabled, projectFlags))
-{
-		int width = ImGui::GetContentRegionAvail().x;
+	{
 
 		static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
 
@@ -77,7 +76,7 @@ bool UIProject::Draw()
 			ImGui::TableNextColumn();
 
 			// Aquí creo que va algo
-
+			ImGui::Text("Properties or Preview here...");
 			ImGui::EndTable();
 		}
 
@@ -92,15 +91,13 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 {
 	std::pair<bool, uint32_t> ret = { false, 0 };
 
-	ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_SpanFullWidth;
+	ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth;
 
 	bool anyNodeClicked = false;
 	uint32_t nodeClicked = 0;
 
-	bool openDeleteModal = false;
-	std::filesystem::path selectedPathForDeletion;
-
-	std::string sceneToLoad;
+	static bool openScenePopup = false;
+	static std::string sceneToLoad;
 
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
@@ -114,6 +111,7 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		std::string name = entry.path().filename().string();
 		
 		bool entryIsFile = !std::filesystem::is_directory(entry.path());
+		
 		if (entryIsFile)
 		{
 			treeFlags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
@@ -125,17 +123,42 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		{
 			nodeClicked = *count;
 			anyNodeClicked = true;
+			HandleFileSelection(entry.path().string());
 		}
 
 		if (ImGui::BeginPopupContextItem(name.c_str()))
 		{
+			if (name.ends_with(".scene"))
+			{
+				if (ImGui::MenuItem("Save & Load Scene"))
+				{
+					Application->scene_serializer->Serialize(currentSceneFile);
+					Application->scene_serializer->DeSerialize(entry.path().string());
+					currentSceneFile = entry.path().string();
+				}
+				if (ImGui::MenuItem("Load Scene without saving"))
+				{
+					Application->scene_serializer->DeSerialize(entry.path().string());
+					currentSceneFile = entry.path().string();
+				}
+			}
+
 			if (ImGui::MenuItem("Delete"))
 			{
-				openDeleteModal = true;
-				selectedPathForDeletion = entry.path();
+				std::filesystem::remove_all(entry.path());
 			}
 
 			ImGui::EndPopup();
+		}
+
+
+		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
+		{
+			if (name.ends_with(".scene"))
+			{
+				openScenePopup = true;
+				sceneToLoad = entry.path().string();
+			}
 		}
 	
 		(*count)--;
@@ -155,41 +178,18 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 				ImGui::TreePop();
 			}
 		}
-		
-		if (entryIsFile && name.ends_with(".scene"))
-		{
-			if (ImGui::IsItemClicked() && ImGui::IsMouseDoubleClicked(0))
-			{
-				sceneToLoad = entry.path().string();
-			}
-		}
 
 	}
 
-	if (openDeleteModal)
-	{
-		ImGui::OpenPopup("Confirm delete");
-	}
+	return { anyNodeClicked, nodeClicked };
+}
 
-	if (ImGui::BeginPopupModal(("Confirm delete"), nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+void UIProject::HandleFileSelection(const std::string& filePath)
+{
+	if (filePath.ends_with(".scene"))
 	{
-		ImGui::Text("Are you sure you want to delete %s?", selectedPathForDeletion.filename().string().c_str());
-		if (ImGui::Button("Pau (Yes)"))
-		{
-			std::filesystem::remove_all(selectedPathForDeletion);
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Marco (No)"))
-		{
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::EndPopup();
-	}
-
-	if (!sceneToLoad.empty())
-	{
-		ImGui::OpenPopup("Load scene");
+		currentSceneFile = filePath;
+		ImGui::OpenPopup(("Load Scene"));
 	}
 
 	if (ImGui::BeginPopupModal("Load Scene"))
@@ -197,15 +197,15 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		if (ImGui::Button("Save & Load"))
 		{
 			Application->scene_serializer->Serialize(currentSceneFile);
-			Application->scene_serializer->DeSerialize(sceneToLoad);
-			currentSceneFile = sceneToLoad;
+			Application->scene_serializer->DeSerialize(filePath);
+			currentSceneFile = filePath;
 			ImGui::CloseCurrentPopup();
 		}
 
 		if (ImGui::Button("Load without saving"))
 		{
-			Application->scene_serializer->DeSerialize(sceneToLoad);
-			currentSceneFile = sceneToLoad;
+			Application->scene_serializer->DeSerialize(filePath);
+			currentSceneFile = filePath;
 			ImGui::CloseCurrentPopup();
 		}
 
@@ -215,8 +215,6 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		}
 		ImGui::EndPopup();
 	}
-
-	return { anyNodeClicked, nodeClicked };
 }
 
 

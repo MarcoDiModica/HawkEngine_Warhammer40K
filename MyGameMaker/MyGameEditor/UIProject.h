@@ -11,12 +11,14 @@ public:
 	UIProject(UIType type, std::string name);
 	~UIProject();
 
-	bool Draw();
+	bool Draw() override;
 	std::pair<bool, uint32_t> DirectoryView(const std::filesystem::path& path, uint32_t* count, int* selection_mask);
 
 public:
 	std::string directoryPath;
 	std::string currentSceneFile;
+
+	void HandleFileSelection(const std::string& filePath);
 };
 
 #endif // !__UI_PROJECT_H__

@@ -93,6 +93,8 @@ public:
 	std::vector<GameObject*> GetSelectedGameObjects() const;
 	void ClearSelection();
 
+	void HandleFileDrop(const std::string& fileDir);
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];

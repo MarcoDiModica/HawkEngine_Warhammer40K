@@ -7,6 +7,7 @@
 
 #include <filesystem>
 #include <string>
+#include <fstream>
 
 #define BIT(x) (1 << x)
 
@@ -15,6 +16,21 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 	// Definir el path del directorio (cambiar en types.h)
 	directoryPath = ASSETS_PATH;
 	currentSceneFile = "";
+
+	folderIcon = new Image();
+	folderIcon->LoadTexture("Assets/Icons/folder_icon.png");
+
+	fbxIcon = new Image();
+	fbxIcon->LoadTexture("Assets/Icons/fbx_icon.png");
+
+	pngIcon = new Image();
+	pngIcon->LoadTexture("Assets/Icons/png_icon.png");
+
+	sceneIcon = new Image();
+	sceneIcon->LoadTexture("Assets/Icons/scene_icon.png");
+
+	meshIcon = new Image();
+	meshIcon->LoadTexture("Assets/Icons/mesh_icon.png");
 }
 
 UIProject::~UIProject()
@@ -40,7 +56,6 @@ bool UIProject::Draw()
 
 	if (ImGui::Begin("Project", &enabled, projectFlags))
 	{
-
 		static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
 
 		if (ImGui::BeginTable("Table", 2, tableFlags))
@@ -96,9 +111,6 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 	bool anyNodeClicked = false;
 	uint32_t nodeClicked = 0;
 
-	static bool openScenePopup = false;
-	static std::string sceneToLoad;
-
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
 		ImGuiTreeNodeFlags treeFlags = nodeFlags;
@@ -109,12 +121,29 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		}
 
 		std::string name = entry.path().filename().string();
-		
 		bool entryIsFile = !std::filesystem::is_directory(entry.path());
 		
+		auto icon = entryIsFile ? nullptr : folderIcon;
 		if (entryIsFile)
 		{
+			std::string extension = entry.path().extension().string();
+
+			if (extension == ".fbx" || extension == ".FBX")
+				icon = fbxIcon;
+			else if (extension == ".png")
+				icon = pngIcon;
+			else if (extension == ".scene")
+				icon = sceneIcon;
+			else if (extension == ".mesh")
+				icon = meshIcon;
+
 			treeFlags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+		}
+
+		if (icon)
+		{
+			ImGui::Image(reinterpret_cast<void*>(icon->id()), ImVec2(16, 16));
+			ImGui::SameLine();
 		}
 
 		bool nodeOpen = ImGui::TreeNodeEx((void*)(intptr_t)(*count), treeFlags, name.c_str());
@@ -149,16 +178,6 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 			}
 
 			ImGui::EndPopup();
-		}
-
-
-		if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
-		{
-			if (name.ends_with(".scene"))
-			{
-				openScenePopup = true;
-				sceneToLoad = entry.path().string();
-			}
 		}
 	
 		(*count)--;
@@ -216,6 +235,8 @@ void UIProject::HandleFileSelection(const std::string& filePath)
 		ImGui::EndPopup();
 	}
 }
+
+
 
 
 

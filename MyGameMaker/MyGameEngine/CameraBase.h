@@ -23,6 +23,8 @@ public:
 
     void UpdateAspectRatio(double aspectRatio);
 
+	// Serialización de la cámara
+
 	struct Plane
 	{
 		glm::vec3 normal;
@@ -111,4 +113,10 @@ public:
     double aspect;
     double zNear;
     double zFar;
+
+	float yaw, pitch;
+
+	Frustum frustum;
+
+	bool drawFrustum;
 };

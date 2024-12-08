@@ -25,6 +25,8 @@ public:
 
     void UpdateAspectRatio(double aspectRatio);
 
+	// Serialización de la cámara
+
 	struct Plane
 	{
 		glm::vec3 normal;
@@ -45,6 +47,11 @@ public:
 			float magnitude = glm::length(normal);
 			normal /= magnitude;
 			distance /= magnitude;
+		}
+
+		float distanceToPoint(const glm::vec3& point) const
+		{
+			return glm::dot(normal, point) + distance;
 		}
 	};
 
@@ -103,9 +110,15 @@ public:
 		}
 	};
 
-protected:
+public:
     double fov;
     double aspect;
     double zNear;
     double zFar;
+
+	float yaw, pitch;
+
+	Frustum frustum;
+
+	bool drawFrustum;
 };

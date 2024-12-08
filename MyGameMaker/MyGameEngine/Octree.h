@@ -27,6 +27,7 @@ struct OctreeNode {
 		return false;
 	}
 
+
 };
 
 class Octree
@@ -66,6 +67,7 @@ public:
 
 private:
 	friend class Scene;
+	friend class GameObject;
 
 	OctreeNode* root;
 	// limit as to how much the octree can subdivide

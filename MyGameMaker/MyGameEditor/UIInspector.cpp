@@ -128,6 +128,10 @@ bool UIInspector::Draw() {
                         ImGui::Text("Vertices: %d", mesh->vertices().size());
                         ImGui::Text("Indices: %d", mesh->indices().size());
 
+                        auto v = selectedGameObject->boundingBox().min;
+                        ImGui::Text("BB min: %f", (float) v.x);
+
+
                         bool& triNormals = mesh->drawTriangleNormals;
                         bool& vertexNormals = mesh->drawVertexNormals;
 

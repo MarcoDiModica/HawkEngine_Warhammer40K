@@ -142,6 +142,10 @@ void GameObject::Start()
         component.second->Start();
     }
 
+    if (GetName() != "Cube_3") {
+        scene->tree->Insert(scene->tree->root, *this, 0);
+    }
+
     for (auto& child : children)
     {
         child->Start();

@@ -57,7 +57,13 @@ void Scene::AddGameObject(std::shared_ptr<GameObject> gameObject)
 {
 	gameObject->scene = this;
 	_children.push_back(gameObject);
-	tree->Insert(tree->root, *_children[_children.size() - 1], 0);
+
+	//if (gameObject->GetName() != "Cube_3") {
+	//	tree->Insert(tree->root, *_children[_children.size() - 1], 0);
+	//}
+	//else {
+	//	int a = 8;
+	//}
 }
 
 std::string Scene::GetName() const

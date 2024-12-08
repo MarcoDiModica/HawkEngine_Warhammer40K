@@ -13,6 +13,7 @@ class UIInspector;
 class UIMainMenuBar;
 class UIHierarchy;
 class UISceneWindow;
+class UICamera;
 // class PanelHierarchy;
 
 class MyGUI : public IEventProcessor, public Module
@@ -48,6 +49,7 @@ public:
 	UIMainMenuBar* UIMainMenuBarPanel = nullptr;
 	UISceneWindow* UISceneWindowPanel = nullptr;
 	UIProject* UIProjectPanel = nullptr;
+	UICamera* UICameraPanel = nullptr;
 
 	bool showHierarchy = true;
 	bool showInspector = true;
@@ -56,6 +58,7 @@ public:
 	bool showMainMenuBar = true;
 	bool showSceneWindow = true;
 	bool showProject = true;
+	bool showCamera = true;
 
 	GLuint fbo = 0;
 	vec2 camSize = vec2(1280, 720);

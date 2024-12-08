@@ -20,7 +20,7 @@
 #include "UIHierarchy.h"
 #include "UISceneWindow.h"
 #include "UIProject.h"
-
+#include "UICamera.h"
 
 MyGUI::MyGUI(App* app) : Module(app) {
 	ImGui::CreateContext();
@@ -72,6 +72,10 @@ bool MyGUI::Awake() {
 	UISceneWindowPanel = new UISceneWindow(UIType::DEFAULT, "SceneWindow");
 	elements.push_back(UISceneWindowPanel);
 	ret *= isInitialized(UISceneWindowPanel);
+
+	UICameraPanel = new UICamera(UIType::CAMERA, "Camera");
+	elements.push_back(UICameraPanel);
+	ret *= isInitialized(UICameraPanel);
 
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
@@ -133,6 +137,7 @@ bool MyGUI::Start() {
 	Application->gui->UIinspectorPanel->SetState(true);
 	Application->gui->UIMainMenuBarPanel->SetState(true);
 	Application->gui->UISceneWindowPanel->SetState(true);
+	Application->gui->UICameraPanel->SetState(true);
 	UISceneWindowPanel->Init();
 
 	return true;
@@ -227,6 +232,10 @@ void MyGUI::Render() {
 
 	if (showProject) {
 		UIProjectPanel->Draw();
+	}
+
+	if (showCamera) {
+		UICameraPanel->Draw();
 	}
 
 

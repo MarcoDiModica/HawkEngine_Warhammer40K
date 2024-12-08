@@ -12,6 +12,7 @@ enum class UIType
 	INSPECTOR,
 	HIERARCHY,
 	PROJECT,
+	CAMERA,
 	UNKNOWN
 };
 

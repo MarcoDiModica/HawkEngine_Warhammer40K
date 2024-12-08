@@ -3,6 +3,7 @@
 #include "MyGUI.h"
 
 #include "..\MyGameEngine\TransformComponent.h"
+#include "..\MyGameEngine\CameraComponent.h"
 #include "..\MyGameEngine\Mesh.h"
 #include "EditorCamera.h"
 #include "Input.h"
@@ -181,6 +182,57 @@ bool UIInspector::Draw() {
                 else {
                     LOG(LogType::LOG_WARNING, "UIInspector::Draw: MeshRenderer has no Image");
                 }
+
+                ImGui::Separator();
+
+                if (selectedGameObject->GetComponent<CameraComponent>()) {
+					CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
+
+                    LOG(LogType::LOG_INFO, "UIInspector::Draw: CameraComponent found");
+
+                    // Verificar si cameraComponent es válido
+                    if (!cameraComponent) {
+						LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
+						ImGui::Text("Error: Invalid CameraComponent component");
+						return false;
+					}
+
+					if (cameraComponent) {
+						if (ImGui::CollapsingHeader("Camera")) {
+							bool orthographic = cameraComponent->IsOrthographic();
+							float orthoSize = cameraComponent->GetOrthoSize();
+							float fov = cameraComponent->GetFOV();
+							float nearPlane = cameraComponent->GetNearPlane();
+							float farPlane = cameraComponent->GetFarPlane();
+
+							if (ImGui::Checkbox("Orthographic", &orthographic)) {
+								cameraComponent->SetOrthographic(orthographic, cameraComponent->GetNearPlane(), cameraComponent->GetFarPlane());
+							}
+
+							if (orthographic) {
+								if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
+									cameraComponent->SetOrthoSize(orthoSize);
+								}
+							}
+							else {
+								if (ImGui::DragFloat("FOV", &fov, 0.1f, 1.0f, 179.0f)) {
+									cameraComponent->SetFOV(fov);
+								}
+							}
+
+							if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
+								cameraComponent->SetNearPlane(nearPlane);
+							}
+
+							if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
+								cameraComponent->SetFarPlane(farPlane);
+							}
+						}
+					}
+					else {
+						LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
+					}
+				}
             }
         }
 

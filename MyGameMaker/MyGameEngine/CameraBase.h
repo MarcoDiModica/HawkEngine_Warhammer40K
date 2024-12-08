@@ -21,9 +21,16 @@ public:
     void SetFarPlane(double zFar);
     double GetFarPlane() const;
 
+	void SetOrthographic(bool orthographic);
+	bool IsOrthographic() const { return orthographic; }
+
+	float GetOrthoSize() const { return orthoSize; }
+	void SetOrthoSize(float size);
+
     void UpdateAspectRatio(double aspectRatio);
 
 	// Serialización de la cámara
+
 
 	struct Plane
 	{
@@ -113,6 +120,9 @@ public:
     double aspect;
     double zNear;
     double zFar;
+
+	bool orthographic;
+	float orthoSize;
 
 	float yaw, pitch;
 

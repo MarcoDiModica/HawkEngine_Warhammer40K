@@ -55,6 +55,9 @@ public:
 
     std::shared_ptr<Scene> currentScene = nullptr;
 
+    //main camera
+    std::shared_ptr<GameObject> mainCamera = nullptr;
+
     friend SceneSerializer;
 
 private:

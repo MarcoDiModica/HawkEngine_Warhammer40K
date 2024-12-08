@@ -21,7 +21,7 @@ class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
 
-bool  Root::Awake()
+bool Root::Awake()
 {
 
     Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
@@ -47,15 +47,26 @@ bool  Root::Awake()
 	//}
     
 
-    auto MarcoVicePresidente = CreateGameObject("MainCamera");
-    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    MarcoVicePresidente->AddComponent<CameraComponent>();
+    
 
     return true;
 }
 
 bool Root::Start()
 {
+    auto MarcoVicePresidente = CreateGameObject("MainCamera");
+    MarcoVicePresidente->AddComponent<CameraComponent>();
+
+    mainCamera = MarcoVicePresidente;
+
+    auto HasCamera = MarcoVicePresidente->GetComponent<CameraComponent>();
+
+    if (HasCamera) {
+        LOG(LogType::LOG_INFO, "CameraComponent added to MainCamera");
+    }
+    else {
+        LOG(LogType::LOG_ERROR, "CameraComponent not added to MainCamera");
+    }
 
     for (shared_ptr<GameObject> object : currentScene->_children)
     {

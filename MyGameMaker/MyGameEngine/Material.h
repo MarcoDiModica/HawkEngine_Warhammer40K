@@ -3,6 +3,7 @@
 #include <memory>
 #include "Image.h"
 #include "Shaders.h"
+#include "types.h"
 
 class Material
 {
@@ -14,6 +15,7 @@ public:
 	Filters filter = Nearest;
 
 	Shaders shader;
+	color4 color;
 
 	bool useShader = false;
 private:
@@ -31,6 +33,7 @@ public:
 	void setShaderUniform(const std::string& name, int value);
 	void setShaderUniform(const std::string& name, float value);
 	void setShaderUniform(const std::string& name, const glm::vec3& value);
+	void setShaderUniform(const std::string& name, const glm::vec4& value);
 	void setShaderUniform(const std::string& name, const glm::mat4& value);
 
 

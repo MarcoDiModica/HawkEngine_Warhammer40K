@@ -6,6 +6,7 @@
 #include "MyGameEngine/Scene.h"
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
+#include "MyGameEngine/ModelImporter.h"
 #include "App.h"
 #include "Input.h"
 
@@ -23,6 +24,27 @@ bool  Root::Awake()
 {
 
     Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
+    //auto MarcoVicePresidente = CreateGameObject("BakerHouse");
+    //MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+    //auto mesh = make_shared<Mesh>();
+	
+    //mesh->LoadMesh("Assets/Meshes/BakerHouse.fbx");
+    //ModelImporter meshImp;
+	//meshImp.loadFromFile("Assets/Meshes/BakerHouse.fbx");
+    //
+    //for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
+    //    auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
+	//	//mesh = meshImp.meshes[i];
+    //    //AddMeshRenderer(*MarcoVicePresidente2, mesh, "Assets/Baker_house.png");
+    //    
+    //    currentScene->_children.emplace_back(MarcoVicePresidente2);
+    //    //if (currentScene->_children[i]->GetTransform()->GetPosition() == vec3(0,0,0)) {
+    //    //    int a = 0;
+    //    //}
+    //
+	//	ParentGameObject(*MarcoVicePresidente2, *MarcoVicePresidente);
+	//}
+    
 
     return true;
 }

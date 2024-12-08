@@ -38,6 +38,11 @@ using vec4 = glm::dvec4;
 using vec3 = glm::dvec3;
 using u8vec3 = glm::u8vec3;
 
+using color1 = glm::u8vec1;
+using color2 = glm::u8vec2;
+using color3 = glm::u8vec3;
+using color4 = glm::u8vec4;
+
 // Specialize YAML::convert for glm::dvec3
 namespace YAML {
     

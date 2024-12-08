@@ -84,6 +84,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRendererComponent.h" />
     <ClInclude Include="Octree.h" />
+    <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="readOnlyView.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shaders.h" />
@@ -101,6 +102,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRendererComponent.cpp" />
     <ClCompile Include="Octree.cpp" />
+    <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />

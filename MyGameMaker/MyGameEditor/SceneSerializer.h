@@ -8,9 +8,9 @@
 #include "../MyGameEngine/GameObject.h"
 #include <yaml-cpp/yaml.h>
 
-
 class SceneSerializer : public Module
 {
+private:
 	
 public:
 

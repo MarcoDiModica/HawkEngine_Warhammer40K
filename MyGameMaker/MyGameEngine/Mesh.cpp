@@ -233,7 +233,20 @@ void Mesh::LoadMesh(const char* file_path)
 
 			// Copy vertices
 			for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
-				all_vertices.push_back(glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z));
+				all_vertices.push_back(glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z));	
+
+				if (mesh->HasNormals()) {
+
+						all_normals.push_back(glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z));
+					
+				}
+
+				// Copy colors
+				if (mesh->HasVertexColors(0)) {
+				
+						all_colors.push_back(glm::u8vec3(mesh->mColors[0][j].r * 255, mesh->mColors[0][j].g * 255, mesh->mColors[0][j].b * 255));
+					
+				}
 				
 			}
 			LOG(LogType::LOG_ASSIMP, "Loaded vertices :%d for mesh %d", mesh->mNumVertices, i);
@@ -255,18 +268,7 @@ void Mesh::LoadMesh(const char* file_path)
 
 			
 			// Copy normals
-			if (mesh->HasNormals()) {
-				for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
-					all_normals.push_back(glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z));
-				}
-			}
-
-			// Copy colors
-			if (mesh->HasVertexColors(0)) {
-				for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
-					all_colors.push_back(glm::u8vec3(mesh->mColors[0][j].r * 255, mesh->mColors[0][j].g * 255, mesh->mColors[0][j].b * 255));
-				}
-			}
+		
 
 			vertex_offset += mesh->mNumVertices;
 		}

@@ -56,6 +56,10 @@ void Material::setShaderUniform(const std::string& name, const glm::vec3& value)
 	shader.SetUniform(name, value);
 }
 
+void Material::setShaderUniform(const std::string& name, const glm::vec4& value) {
+	shader.SetUniform(name, value);
+}
+
 void Material::setShaderUniform(const std::string& name, const glm::mat4& value) {
 	shader.SetUniform(name, value);
 }

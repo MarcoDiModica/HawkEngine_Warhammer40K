@@ -19,12 +19,16 @@ public:
 	bool PostUpdate() override;
 	bool CleanUp() override;
 
-	void HandleInput(float deltaTime) override;
-
 	Transform_Component& GetTransform() { return transform; }
 
 	glm::dmat4 view() const { return GetViewMatrix(transform); }
 	glm::dmat4 projection() const { return GetProjectionMatrix(); }
+
+	float GetMovementSpeed() const { return cameraSpeed; }
+	void SetMovementSpeed(float speed) { cameraSpeed = speed; }
+
+	float GetMouseSensitivity() const { return sensitivity; }
+	void SetMouseSensitivity(float sensitivity) { this->sensitivity = sensitivity; }
 
 private:
 	glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);

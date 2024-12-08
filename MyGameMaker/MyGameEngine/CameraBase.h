@@ -9,8 +9,6 @@ public:
     CameraBase(float fov = glm::radians(60.0), double zNear = 0.1, double zFar = 128.0, double aspect = 16.0 / 9.0);
     virtual ~CameraBase() = default;
 
-    virtual void HandleInput(float deltaTime) = 0;
-
     glm::dmat4 GetProjectionMatrix() const;
     glm::dmat4 GetViewMatrix(const Transform_Component& transform) const;
 
@@ -45,6 +43,11 @@ public:
 			float magnitude = glm::length(normal);
 			normal /= magnitude;
 			distance /= magnitude;
+		}
+
+		float distanceToPoint(const glm::vec3& point) const
+		{
+			return glm::dot(normal, point) + distance;
 		}
 	};
 
@@ -103,7 +106,7 @@ public:
 		}
 	};
 
-protected:
+public:
     double fov;
     double aspect;
     double zNear;

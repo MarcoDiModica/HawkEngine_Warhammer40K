@@ -158,6 +158,11 @@ void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
     }
 }
 
+void Transform_Component::SetRotationQuat(const glm::dquat& rotation)
+{
+	matrix = glm::mat4_cast(rotation);
+	HandleLocalUpdate();
+}
 
 void Transform_Component::SetScale(const glm::dvec3& scale)
 {
@@ -171,6 +176,19 @@ void Transform_Component::SetScale(const glm::dvec3& scale)
     matrix[3] = glm::dvec4(position, 1);
 
     HandleLocalUpdate();
+}
+
+void Transform_Component::SetForward(const glm::dvec3& forward)
+{
+	glm::dvec3 newForward = glm::normalize(forward);
+	glm::dvec3 newRight = glm::normalize(glm::cross(up, newForward));
+	glm::dvec3 newUp = glm::cross(newForward, newRight);
+
+	left = newRight;
+	this->up = newUp;
+	this->forward = newForward;
+
+	HandleLocalUpdate();
 }
 
 void Transform_Component::Scale(const glm::dvec3& scale)

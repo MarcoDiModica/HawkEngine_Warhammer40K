@@ -48,6 +48,7 @@ bool UISettings::Draw()
 		ImVec2 performanceButtonPos = ImVec2(ImGui::GetWindowSize().x * 0.05f, ImGui::GetCursorPosY());
 		ImVec2 hardwareButtonPos = ImVec2(ImGui::GetWindowSize().x * 0.05f, performanceButtonPos.y + buttonSize.y + 5);
 		ImVec2 softwareButtonPos = ImVec2(ImGui::GetWindowSize().x * 0.05f, hardwareButtonPos.y + buttonSize.y + 5);
+		ImVec2 editorCamButtonPos = ImVec2(ImGui::GetWindowSize().x * 0.05f, softwareButtonPos.y + buttonSize.y + 5);
 
 		ImGui::SetCursorPos(performanceButtonPos);
 		if (ImGui::Button("Performance", buttonSize))
@@ -67,6 +68,12 @@ bool UISettings::Draw()
 			settingType = SettingType::SOFTWARE;
 		}
 
+		ImGui::SetCursorPos(editorCamButtonPos);
+		if (ImGui::Button("Editor Camera", buttonSize))
+		{
+			settingType = SettingType::EDITORCAM;
+		}
+
 		ImGui::Dummy(ImVec2(0, 20));
 
 		switch (settingType)
@@ -79,6 +86,9 @@ bool UISettings::Draw()
 			break;
 		case SettingType::SOFTWARE:
 			SoftwareData();
+			break;
+		case SettingType::EDITORCAM:
+			EditorCamData();
 			break;
 		}
 
@@ -185,6 +195,71 @@ void UISettings::SoftwareData()
 		(ilGetInteger(IL_VERSION_NUM) / 10) % 10,  // Minor version
 		ilGetInteger(IL_VERSION_NUM) % 10          // Revision version
 	);
+}
+
+void UISettings::EditorCamData()
+{
+	ImGui::Text("Editor Camera Settings");
+	ImGui::Separator();
+
+	EditorCamera* camera = Application->camera;
+	
+	bool orthographic = camera->IsOrthographic();
+
+	// FOV
+	if (orthographic)
+	{
+		float fov = camera->GetFOV();
+		fov = glm::degrees(fov);
+		if (ImGui::SliderFloat("FOV", &fov, 1.0f, 179.0f))
+		{
+			camera->SetFOV(glm::radians(fov));
+		}
+	}
+
+	// Near Plane
+	float zNear = camera->GetNearPlane();
+	if (ImGui::SliderFloat("Near Plane", &zNear, 0.00001f, 100.0f))
+	{
+		camera->SetNearPlane(zNear);
+	}
+
+	// Far Plane
+	float zFar = camera->GetFarPlane();
+	if (ImGui::SliderFloat("Far Plane", &zFar, 100.0f, 10000.0f))
+	{
+		camera->SetFarPlane(zFar);
+	}
+
+	// Orthographic
+	if (ImGui::Checkbox("Orthographic", &orthographic))
+	{
+		camera->SetOrthographic(orthographic);
+	}
+
+	// Ortho Size (solo si es ortográfica)
+	if (orthographic)
+	{
+		float orthoSize = camera->GetOrthoSize();
+		if (ImGui::SliderFloat("Ortho Size", &orthoSize, 1.0f, 100.0f))
+		{
+			camera->SetOrthoSize(orthoSize);
+		}
+	}
+
+	// Movement Speed
+	float movementSpeed = camera->GetMovementSpeed();
+	if (ImGui::SliderFloat("Movement Speed", &movementSpeed, 0.1f, 10.0f))
+	{
+		camera->SetMovementSpeed(movementSpeed);
+	}
+
+	// Mouse Sensitivity
+	float mouseSensitivity = camera->GetMouseSensitivity();
+	if (ImGui::SliderFloat("Mouse Sensitivity", &mouseSensitivity, 0.1f, 2.0f))
+	{
+		camera->SetMouseSensitivity(mouseSensitivity);
+	}
 }
 
 void UISettings::ApplyLightTheme(ImGuiStyle& style)

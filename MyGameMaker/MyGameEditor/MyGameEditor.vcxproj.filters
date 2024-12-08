@@ -84,6 +84,9 @@
     <ClCompile Include="UIProject.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="UICamera.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -144,6 +147,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UIProject.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="UICamera.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

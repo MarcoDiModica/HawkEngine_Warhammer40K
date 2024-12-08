@@ -1,125 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Archivos de origen">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Archivos de encabezado">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Archivos de recursos">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Archivos de encabezado\Components">
-      <UniqueIdentifier>{6750c99d-4003-4e59-9ec0-dadfc0ee5858}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\Core">
-      <UniqueIdentifier>{400b4033-9d08-4edc-a8e8-d6ec8bfb8852}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\Objects">
-      <UniqueIdentifier>{22ae4406-1b23-45b3-adc8-2d1f6c2b458e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\Components">
-      <UniqueIdentifier>{b3341e50-766f-4765-9ca9-daeacf3f6078}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\Core">
-      <UniqueIdentifier>{97067d81-3ed6-4764-8fb5-80ef05f88d76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\Objects">
-      <UniqueIdentifier>{c3d1975a-360e-4606-9367-60d9035e8697}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="BoundingBox.cpp" />
+    <ClCompile Include="BufferObject.cpp" />
+    <ClCompile Include="CameraBase.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshRendererComponent.cpp" />
+    <ClCompile Include="Octree.cpp" />
+    <ClCompile Include="ModelImporter.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Component.h">
-      <Filter>Archivos de encabezado\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshRendererComponent.h">
-      <Filter>Archivos de encabezado\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformComponent.h">
-      <Filter>Archivos de encabezado\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="BoundingBox.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="BufferObject.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="readOnlyView.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeExt.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="types.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Archivos de encabezado\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Archivos de encabezado\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Shaders.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraBase.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    <ClInclude Include="Octree.h">
-      <Filter>Archivos de encabezado</Filter>
-    <ClInclude Include="ModelImporter.h">
-      <Filter>Archivos de encabezado\Core</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="MeshRendererComponent.cpp">
-      <Filter>Archivos de origen\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
-      <Filter>Archivos de origen\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="BoundingBox.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="BufferObject.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Archivos de origen\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Archivos de origen\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Shaders.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraBase.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    <ClCompile Include="Octree.cpp">
-      <Filter>Archivos de origen</Filter>
-    <ClCompile Include="ModelImporter.cpp">
-      <Filter>Archivos de origen\Core</Filter>
-    </ClCompile>
+    <ClInclude Include="BoundingBox.h" />
+    <ClInclude Include="BufferObject.h" />
+    <ClInclude Include="CameraBase.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshRendererComponent.h" />
+    <ClInclude Include="Octree.h" />
+    <ClInclude Include="ModelImporter.h" />
+    <ClInclude Include="readOnlyView.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Shaders.h" />
+    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="TreeExt.h" />
+    <ClInclude Include="types.h" />
+    <ClInclude Include="CameraComponent.h" />
   </ItemGroup>
 </Project>

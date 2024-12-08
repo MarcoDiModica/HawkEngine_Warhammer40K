@@ -14,6 +14,7 @@ enum class SettingType
 	PERFORMANCE,
 	HARDWARE,
 	SOFTWARE,
+	EDITORCAM,
 	DEFAULT
 };
 
@@ -45,6 +46,7 @@ private:
 	void PerformanceData();
 	void HardwareData();
 	void SoftwareData();
+	void EditorCamData();
 
 private:
 

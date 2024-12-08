@@ -2,6 +2,7 @@
 
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
+#include "MyGameEngine/CameraComponent.h"
 #include "MyGameEngine/Mesh.h"
 #include "MyGameEngine/Scene.h"
 #include "MyGameEngine/Image.h"
@@ -45,6 +46,10 @@ bool  Root::Awake()
 	//	ParentGameObject(*MarcoVicePresidente2, *MarcoVicePresidente);
 	//}
     
+
+    auto MarcoVicePresidente = CreateGameObject("MainCamera");
+    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+    MarcoVicePresidente->AddComponent<CameraComponent>();
 
     return true;
 }

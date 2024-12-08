@@ -33,7 +33,7 @@ bool EditorCamera::FixedUpdate()
 
 bool EditorCamera::Update(double dt)
 {
-	HandleInput(dt);
+	move_camera(cameraSpeed, dt);
 
 	return true;
 }
@@ -46,11 +46,6 @@ bool EditorCamera::PostUpdate()
 bool EditorCamera::CleanUp()
 {
 	return true;
-}
-
-void EditorCamera::HandleInput(float deltaTime)
-{
-	move_camera(cameraSpeed, deltaTime);
 }
 
 void EditorCamera::move_camera(float speed, float deltaTime)

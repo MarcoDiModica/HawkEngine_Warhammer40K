@@ -61,7 +61,9 @@ public:
     void LookAt(const glm::dvec3& target);
     void AlignToGlobalUp(const glm::vec3& worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
     void SetRotation(const glm::dvec3& eulerAngles);
+    void SetRotationQuat(const glm::dquat& rotation);
     void SetScale(const glm::dvec3& scale);
+    void SetForward(const glm::dvec3& forward);
     void SetMatrix(const glm::dmat4& newMatrix) {
         matrix = newMatrix;
         HandleLocalUpdate();

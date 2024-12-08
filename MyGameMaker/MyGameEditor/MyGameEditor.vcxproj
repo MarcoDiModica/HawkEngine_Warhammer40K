@@ -97,6 +97,7 @@
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UICamera.cpp" />
     <ClCompile Include="UIConsole.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIHierarchy.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UICamera.h" />
     <ClInclude Include="UIConsole.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIHierarchy.h" />

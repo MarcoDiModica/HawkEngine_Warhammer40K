@@ -10,7 +10,13 @@ CameraBase::CameraBase(float fov, double zNear, double zFar, double aspect) :
 
 glm::dmat4 CameraBase::GetProjectionMatrix() const
 {
-    return glm::perspective(fov, aspect, zNear, zFar);
+    if (orthographic) {
+        return glm::ortho(-orthoSize * (float)aspect, orthoSize * (float)aspect, -orthoSize, orthoSize, (float)zNear, (float)zFar);
+    }
+    else
+    {
+        return glm::perspective(fov, aspect, zNear, zFar);
+    }
 }
 
 glm::dmat4 CameraBase::GetViewMatrix(const Transform_Component& transform) const
@@ -51,4 +57,14 @@ double CameraBase::GetFarPlane() const
 void CameraBase::UpdateAspectRatio(double aspectRatio)
 {
     aspect = aspectRatio;
+}
+
+void CameraBase::SetOrthographic(bool orthographic)
+{
+	this->orthographic = orthographic;
+}
+
+void CameraBase::SetOrthoSize(float size)
+{
+	orthoSize = size;
 }

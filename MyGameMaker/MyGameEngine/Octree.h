@@ -49,6 +49,8 @@ public:
 
 		for ( auto& node : root_node->children  ){
 			
+			if (node == NULL) { continue; }
+
 			if (! node->isLeaf()) {
 
 				DebugDraw(node);
@@ -66,8 +68,9 @@ private:
 	friend class Scene;
 
 	OctreeNode* root;
-
+	// limit as to how much the octree can subdivide
 	int max_depth;
+	// how many objects can a node contain before it splits into 4
 	int max_points_per_node;
 
 	void Subdivide(OctreeNode* node);

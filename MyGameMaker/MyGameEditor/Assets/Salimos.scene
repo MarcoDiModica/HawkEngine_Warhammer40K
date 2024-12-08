@@ -5,58 +5,120 @@ GameObject0:
     enabled: true
     matrix:
       row0:
-        col0: 0.068014837801456451
-        col1: 0.65003639459609985
-        col2: 0.75685274600982666
+        col0: 1
+        col1: 0
+        col2: 0
         col3: 0
       row1:
-        col0: -0.99457055330276489
-        col1: 0.10406427830457687
-        col2: -1.1408704203574871e-08
+        col0: 0
+        col1: 1
+        col2: 0
         col3: 0
       row2:
-        col0: -0.078761368989944458
-        col1: -0.75274384021759033
-        col2: 0.65358525514602661
+        col0: 0
+        col1: 0
+        col2: 1
         col3: 0
       row3:
-        col0: 0.43427172303199768
-        col1: 0.058409519493579865
-        col2: -0.30173203349113464
+        col0: -6.8078861236572266
+        col1: -4.5
+        col2: -9.1089134216308594
         col3: 1
   MeshRenderer:
     name: MeshRenderer
     enabled: true
     mesh_path: shapes/cube
     image_path: Assets/default.png
-  Child0:
-    name: Sphere
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 1
-          col1: 0
-          col2: -6.9388939039072284e-18
-          col3: 0
-        row1:
-          col0: 0
-          col1: 1
-          col2: -5.5511151231257827e-17
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0
-          col2: 1
-          col3: 0
-        row3:
-          col0: -2.6953554153442378
-          col1: 1.9984014443252818e-15
-          col2: -1.27675647831893e-15
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: shapes/cube
-      image_path: Assets/default.png
+GameObject1:
+  name: Cube_1
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    matrix:
+      row0:
+        col0: 1
+        col1: 0
+        col2: 0
+        col3: 0
+      row1:
+        col0: 0
+        col1: 1
+        col2: 0
+        col3: 0
+      row2:
+        col0: 0
+        col1: 0
+        col2: 1
+        col3: 0
+      row3:
+        col0: -2.2999999523162842
+        col1: -6.5024633407592773
+        col2: -2.8795819282531738
+        col3: 1
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh_path: shapes/cube
+    image_path: Assets/default.png
+GameObject2:
+  name: Cube_2
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    matrix:
+      row0:
+        col0: 1
+        col1: 0
+        col2: 0
+        col3: 0
+      row1:
+        col0: 0
+        col1: 1
+        col2: 0
+        col3: 0
+      row2:
+        col0: 0
+        col1: 0
+        col2: 1
+        col3: 0
+      row3:
+        col0: -6.6999998092651367
+        col1: -5.3000001907348633
+        col2: -7.0099391937255859
+        col3: 1
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh_path: shapes/cube
+    image_path: Assets/default.png
+GameObject3:
+  name: Cube_3
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    matrix:
+      row0:
+        col0: 1
+        col1: 0
+        col2: 0
+        col3: 0
+      row1:
+        col0: 0
+        col1: 1
+        col2: 0
+        col3: 0
+      row2:
+        col0: 0
+        col1: 0
+        col2: 1
+        col3: 0
+      row3:
+        col0: 0
+        col1: 0
+        col2: 0
+        col3: 1
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh_path: shapes/cube
+    image_path: Assets/default.png

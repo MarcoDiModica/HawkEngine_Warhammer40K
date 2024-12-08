@@ -5,7 +5,7 @@
 
 void Scene::Start()
 {
-	tree = std::make_shared<Octree>(BoundingBox(vec3(-10, -10, -10), vec3(10, 10, 10)), 10, 1);
+	tree = std::make_shared<Octree>(BoundingBox(vec3(-10, -10, -10), vec3(10, 10, 10)), 10, 2);
 
 	//for (auto& child : children())
 	//{
@@ -79,6 +79,6 @@ void display() {
 
 }
 void Scene::DebugDrawTree() {
-	display();
+	//display();
 	tree->DebugDraw(tree->root);
 }

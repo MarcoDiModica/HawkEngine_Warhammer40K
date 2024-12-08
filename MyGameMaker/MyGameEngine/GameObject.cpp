@@ -225,6 +225,8 @@ void GameObject::Draw() const
     {
         child->Draw();
     }
+
+    glLoadIdentity(); // Resets the current matrix to identity
 }
 
 void GameObject::DrawAccumultedMatrix() const
@@ -244,12 +246,14 @@ void GameObject::DrawPushPopMatrix() const
 
     if (HasComponent<MeshRenderer>())
     {
-        //Application->root->currentScene->DebugDrawTree();
         auto meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer->Render();
     }
 
+  //  glMultMatrixd(&glm::dmat4(1.0)[0][0]);
+
     glPopMatrix();
+    glLoadIdentity();
 }
 
 void GameObject::OnEnable() {}

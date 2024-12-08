@@ -111,6 +111,8 @@ static void draw_triangle(const u8vec4& color, const vec3& center, double size) 
 static void drawFloorGrid(int size, double step) {
 	//glColor3ub(0, 2, 200);
 	glBegin(GL_LINES);
+	Application->root->currentScene->DebugDrawTree();
+
 	for (double i = -size; i <= size; i += step) {
 		glVertex3d(i, 0, -size);
 		glVertex3d(i, 0, size);

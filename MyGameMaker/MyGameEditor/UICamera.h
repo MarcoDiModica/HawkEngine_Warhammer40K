@@ -11,6 +11,9 @@ class UICamera : public UIElement
 public:
 	UICamera(UIType type, std::string name);
 	~UICamera();
+
+	void Init();
+
 	bool Draw();
 };
 #endif // !__UI_CAMERA_H__

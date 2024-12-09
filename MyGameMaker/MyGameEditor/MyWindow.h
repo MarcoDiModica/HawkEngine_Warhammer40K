@@ -18,6 +18,8 @@ class Window : public Module {
 	unsigned short _width = 1280;
 	unsigned short _height = 720;
 
+	bool isFullscreen = false;
+
 public:
 
 	// TODO fully implement theese methods
@@ -58,6 +60,8 @@ public:
 	bool ProcessEvents(IEventProcessor* event_processor = nullptr);
 
 	void SwapBuffers() const;
+
+	void ToggleFullscreen();
 
 	unsigned int GetDisplayRefreshRate();
 	

@@ -74,7 +74,29 @@ bool UIInspector::Draw() {
         }
         ImGui::SameLine(); ImGui::Checkbox("Static", &selectedGameObject->isStatic);
 
+		ImGui::Separator();
+
         Transform_Component* transform = selectedGameObject->GetTransform();
+
+        if (ImGui::Button("Add Component")) {
+            ImGui::OpenPopup("AddComponentMenu");
+        }
+
+        if (ImGui::BeginPopup("AddComponentMenu")) {
+            if (!selectedGameObject->HasComponent<CameraComponent>() && ImGui::MenuItem("Camera")) {
+                selectedGameObject->AddComponent<CameraComponent>();
+            }
+
+            if (!selectedGameObject->HasComponent<MeshRenderer>() && ImGui::MenuItem("MeshRenderer")) {
+                selectedGameObject->AddComponent<MeshRenderer>();
+            }
+
+            // More components here
+
+            ImGui::EndPopup();
+        }
+
+        ImGui::Separator();
 
         if (transform) {
             ImGui::SetNextItemOpen(true, ImGuiCond_Once);
@@ -116,24 +138,6 @@ bool UIInspector::Draw() {
         }
 
         ImGui::Separator();
-
-        if (ImGui::Button("Add Component")) {
-			ImGui::OpenPopup("AddComponentMenu");
-        }
-
-		if (ImGui::BeginPopup("AddComponentMenu")) {
-			if (!selectedGameObject->HasComponent<CameraComponent>() && ImGui::MenuItem("Camera")) {
-				selectedGameObject->AddComponent<CameraComponent>();
-			}
-
-			if (!selectedGameObject->HasComponent<MeshRenderer>() && ImGui::MenuItem("MeshRenderer")) {
-				selectedGameObject->AddComponent<MeshRenderer>();
-			}
-
-			// More components here
-
-            ImGui::EndPopup();
-		}
 
         if (selectedGameObject->HasComponent<MeshRenderer>()) {
             MeshRenderer* meshRenderer = selectedGameObject->GetComponent<MeshRenderer>();

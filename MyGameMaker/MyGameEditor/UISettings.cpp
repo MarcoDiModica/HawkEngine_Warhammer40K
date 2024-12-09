@@ -36,6 +36,13 @@ bool UISettings::Draw()
 		ImGuiWindowFlags_NoCollapse;
 	ImGuiWindowClass windowClass;
 
+	ImGuiViewport* mainViewport = ImGui::GetMainViewport();
+	if (mainViewport->Size.x <= 0 || mainViewport->Size.y <= 0)
+	{
+		// La ventana principal está minimizada, no dibujar la ventana de configuración
+		return false;
+	}
+
 	ImVec2 mainViewportPos = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(ImVec2(mainViewportPos.x, mainViewportPos.y), ImGuiCond_Appearing, ImVec2(0.5, 0.8));
 
@@ -92,9 +99,8 @@ bool UISettings::Draw()
 			break;
 		}
 
-		ImGui::End();
 	}
-
+	ImGui::End();
 	return true;
 }
 

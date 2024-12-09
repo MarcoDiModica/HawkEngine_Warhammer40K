@@ -48,6 +48,8 @@ private:
 	void SoftwareData();
 	void EditorCamData();
 
+	bool IsWindowMinimized();
+
 private:
 
 	SettingType settingType = SettingType::PERFORMANCE;

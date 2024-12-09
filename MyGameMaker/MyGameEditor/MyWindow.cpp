@@ -43,7 +43,7 @@ void Window::Open(const char* title, unsigned short width, unsigned short height
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-    _window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+    _window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     if (!_window) throw exception(SDL_GetError());
 
     _ctx = SDL_GL_CreateContext(_window);
@@ -80,7 +80,15 @@ bool Window::ProcessEvents(IEventProcessor* event_processor) {
             printf("Closing application");
             Close(); 
             return false;
-        }
+
+        case SDL_WINDOWEVENT:
+            if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
+                printf("Window resized to %d %d\n", e.window.data1, e.window.data2);
+
+                glViewport(0, 0, e.window.data1, e.window.data2);
+			}
+			break;
+		}
     }
     return true;
 }
@@ -95,4 +103,19 @@ unsigned int Window::GetDisplayRefreshRate()
         LOG(LogType::LOG_ERROR, "Getting display refresh rate: %s", SDL_GetError());
 
     return refreshRate;
+}
+
+void Window::ToggleFullscreen() 
+{
+	if (!_window) return;
+
+	isFullscreen = !isFullscreen;
+
+	if (isFullscreen) {
+		SDL_SetWindowFullscreen(_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	}
+	else {
+        SDL_SetWindowFullscreen(_window, 0);
+        SDL_SetWindowPosition(_window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	}
 }

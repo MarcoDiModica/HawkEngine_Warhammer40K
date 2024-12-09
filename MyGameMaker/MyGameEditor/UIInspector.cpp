@@ -185,7 +185,7 @@ bool UIInspector::Draw() {
 
                 ImGui::Separator();
 
-                if (selectedGameObject->GetComponent<CameraComponent>()) {
+                if (selectedGameObject->HasComponent<CameraComponent>()) {
 					CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
 
                     LOG(LogType::LOG_INFO, "UIInspector::Draw: CameraComponent found");

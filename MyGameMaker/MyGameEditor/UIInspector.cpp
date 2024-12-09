@@ -43,218 +43,238 @@ bool UIInspector::Draw() {
     ImGui::SetNextWindowClass(&windowClass);
     windowClass.DockingAllowUnclassed = false;
 
-    if (ImGui::Begin("Inspector", nullptr, inspectorFlags)) {
-        ImGuiIO& io = ImGui::GetIO();
+	if (!ImGui::Begin("Inspector", nullptr, inspectorFlags)) {
+        ImGui::CloseCurrentPopup();
+		ImGui::End();
+		return false;
+	}
 
-        if (Application->input->GetSelectedGameObjects().empty()) {
-            ImGui::Text("No GameObject selected");
+    if (Application->input->GetSelectedGameObjects().empty()) {
+        ImGui::Text("No GameObject selected");
+    }
+    else {
+        // Obtener el último GameObject seleccionado
+        GameObject* selectedGameObject = Application->input->GetSelectedGameObjects().back();
+
+        // Verificar si selectedGameObject es válido
+        if (!selectedGameObject) {
+            LOG(LogType::LOG_ERROR, "UIInspector::Draw: selectedGameObject is nullptr");
+            ImGui::Text("Error: Invalid GameObject selected");
+            ImGui::End();
+            return false;
+        }
+
+        char newName[128] = {};
+        strncpy_s(newName, selectedGameObject->GetName().c_str(), sizeof(newName));
+        ImGui::SameLine(); ImGui::Text("GameObject:");
+        if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue)) {
+            if (strlen(newName) > 0) {
+                selectedGameObject->SetName(newName);
+            }
+        }
+        ImGui::SameLine(); ImGui::Checkbox("Static", &selectedGameObject->isStatic);
+
+        Transform_Component* transform = selectedGameObject->GetTransform();
+
+        if (transform) {
+            ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+            if (ImGui::CollapsingHeader("Transform")) {
+                glm::dvec3 currentPosition = transform->GetPosition();
+                glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
+                glm::dvec3 currentScale = transform->GetScale();
+
+                float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+                float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
+                float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+
+                if (ImGui::DragFloat3("Postition", pos, 0.1f)) {
+                    glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
+                    glm::dvec3 deltaPos = newPosition - currentPosition;
+                    transform->Translate(deltaPos);
+                }
+
+                if (ImGui::DragFloat3("Rotation", rot, 0.1f)) {
+                    glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
+                    glm::dvec3 deltaRot = newRotation - currentRotation;
+
+                    transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+                    transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+                    transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+                }
+
+                if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f)) {
+                    glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
+                    glm::dvec3 deltaScale = newScale / currentScale;
+                    transform->Scale(deltaScale);
+                }
+                ImGui::Checkbox("Snap", &snap);
+                ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f, 10.0f);
+            }
         }
         else {
-            // Obtener el último GameObject seleccionado
-            GameObject* selectedGameObject = Application->input->GetSelectedGameObjects().back();
+            throw std::runtime_error("UIInspector::Draw: Transform component is nullptr");
+        }
 
-            // Verificar si selectedGameObject es válido
-            if (!selectedGameObject) {
-                LOG(LogType::LOG_ERROR, "UIInspector::Draw: selectedGameObject is nullptr");
-                ImGui::Text("Error: Invalid GameObject selected");
+        ImGui::Separator();
+
+        if (ImGui::Button("Add Component")) {
+			ImGui::OpenPopup("AddComponentMenu");
+        }
+
+		if (ImGui::BeginPopup("AddComponentMenu")) {
+			if (!selectedGameObject->HasComponent<CameraComponent>() && ImGui::MenuItem("Camera")) {
+				selectedGameObject->AddComponent<CameraComponent>();
+			}
+
+			if (!selectedGameObject->HasComponent<MeshRenderer>() && ImGui::MenuItem("MeshRenderer")) {
+				selectedGameObject->AddComponent<MeshRenderer>();
+			}
+
+			// More components here
+
+            ImGui::EndPopup();
+		}
+
+        if (selectedGameObject->HasComponent<MeshRenderer>()) {
+            MeshRenderer* meshRenderer = selectedGameObject->GetComponent<MeshRenderer>();
+
+            // Verificar si meshRenderer es válido
+            if (!meshRenderer) {
+                LOG(LogType::LOG_ERROR, "UIInspector::Draw: meshRenderer is nullptr");
+                ImGui::Text("Error: Invalid MeshRenderer component");
                 return false;
             }
 
-            char newName[128] = {};
-            strncpy_s(newName, selectedGameObject->GetName().c_str(), sizeof(newName));
-            ImGui::SameLine(); ImGui::Text("GameObject:");
-            if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue)) {
-                if (strlen(newName) > 0) {
-                    selectedGameObject->SetName(newName);
-                }
-            }
-            ImGui::SameLine(); ImGui::Checkbox("Static", &selectedGameObject->isStatic);
+            std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
 
-            Transform_Component* transform = selectedGameObject->GetTransform();
-
-            if (transform) {
+            if (mesh) {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Transform")) {
-                    glm::dvec3 currentPosition = transform->GetPosition();
-                    glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
-                    glm::dvec3 currentScale = transform->GetScale();
+                if (ImGui::CollapsingHeader("Mesh")) {
+                    ImGui::Text("Vertices: %d", mesh->vertices().size());
+                    ImGui::Text("Indices: %d", mesh->indices().size());
 
-                    float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
-                    float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
-                    float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+                    auto v = selectedGameObject->boundingBox().min;
+                    ImGui::Text("BB min: %f", (float)v.x);
 
-                    if (ImGui::DragFloat3("Postition", pos, 0.1f)) {
-                        glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-                        glm::dvec3 deltaPos = newPosition - currentPosition;
-                        transform->Translate(deltaPos);
-                    }
 
-                    if (ImGui::DragFloat3("Rotation", rot, 0.1f)) {
-                        glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-                        glm::dvec3 deltaRot = newRotation - currentRotation;
+                    bool& triNormals = mesh->drawTriangleNormals;
+                    bool& vertexNormals = mesh->drawVertexNormals;
 
-                        transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-                        transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-                        transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
-                    }
-
-                    if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f)) {
-                        glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
-                        glm::dvec3 deltaScale = newScale / currentScale;
-                        transform->Scale(deltaScale);
-                    }
-                    ImGui::Checkbox("Snap", &snap);
-                    ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f, 10.0f);
+                    ImGui::Checkbox("Tri Normals", &triNormals);
+                    ImGui::Checkbox("Vertex Normals", &vertexNormals);
                 }
             }
             else {
-                throw std::runtime_error("UIInspector::Draw: Transform component is nullptr");
+                LOG(LogType::LOG_WARNING, "UIInspector::Draw: MeshRenderer has no Mesh");
             }
 
             ImGui::Separator();
 
-            if (selectedGameObject->HasComponent<MeshRenderer>()) {
-                MeshRenderer* meshRenderer = selectedGameObject->GetComponent<MeshRenderer>();
+            std::shared_ptr<Image> image = meshRenderer->GetImage();
 
-                // Verificar si meshRenderer es válido
-                if (!meshRenderer) {
-                    LOG(LogType::LOG_ERROR, "UIInspector::Draw: meshRenderer is nullptr");
-                    ImGui::Text("Error: Invalid MeshRenderer component");
-                    return false;
-                }
+            if (image) {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Image")) {
+                    ImGui::Text("Width: %d", image->width());
+                    ImGui::Text("Heigth: %d", image->height());
 
-                std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
+                    ImGui::Separator();
 
-                if (mesh) {
-                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                    if (ImGui::CollapsingHeader("Mesh")) {
-                        ImGui::Text("Vertices: %d", mesh->vertices().size());
-                        ImGui::Text("Indices: %d", mesh->indices().size());
+                    auto textureID = image.get()->id();
+                    if (textureID) {
+                        ImGui::Text("Preview: %dx%d", image->width(), image->height());
+                        ImVec2 imageSize = ImVec2(static_cast<float>(image->width()), static_cast<float>(image->height()));
 
-                        auto v = selectedGameObject->boundingBox().min;
-                        ImGui::Text("BB min: %f", (float)v.x);
-
-
-                        bool& triNormals = mesh->drawTriangleNormals;
-                        bool& vertexNormals = mesh->drawVertexNormals;
-
-                        ImGui::Checkbox("Tri Normals", &triNormals);
-                        ImGui::Checkbox("Vertex Normals", &vertexNormals);
-                    }
-                }
-                else {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: MeshRenderer has no Mesh");
-                }
-
-                ImGui::Separator();
-
-                std::shared_ptr<Image> image = meshRenderer->GetImage();
-
-                if (image) {
-                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                    if (ImGui::CollapsingHeader("Image")) {
-                        ImGui::Text("Width: %d", image->width());
-                        ImGui::Text("Heigth: %d", image->height());
-
-                        ImGui::Separator();
-
-                        auto textureID = image.get()->id();
-                        if (textureID) {
-                            ImGui::Text("Preview: %dx%d", image->width(), image->height());
-                            ImVec2 imageSize = ImVec2(static_cast<float>(image->width()), static_cast<float>(image->height()));
-
-                            float maxPreviewSize = 200.0f;
-                            if (imageSize.x > maxPreviewSize || imageSize.y > maxPreviewSize) {
-                                float aspectRatio = imageSize.x / imageSize.y;
-                                if (aspectRatio > 1.0f) {
-                                    imageSize.x = maxPreviewSize;
-                                    imageSize.y = maxPreviewSize / aspectRatio;
-                                }
-                                else {
-                                    imageSize.y = maxPreviewSize;
-                                    imageSize.x = maxPreviewSize * aspectRatio;
-                                }
+                        float maxPreviewSize = 200.0f;
+                        if (imageSize.x > maxPreviewSize || imageSize.y > maxPreviewSize) {
+                            float aspectRatio = imageSize.x / imageSize.y;
+                            if (aspectRatio > 1.0f) {
+                                imageSize.x = maxPreviewSize;
+                                imageSize.y = maxPreviewSize / aspectRatio;
                             }
-                            ImGui::Image((void*)(intptr_t)textureID, imageSize);
-                            vec4 matColor = meshRenderer->GetMaterial()->GetColor();
-                            float colorArray[4] = { matColor.x,matColor.y, matColor.z,matColor.w };
-
-                            if (ImGui::ColorPicker4("Color", colorArray))
-                            {
-                                vec4 retColor;
-                                retColor.x = colorArray[0];
-                                retColor.y = colorArray[1];
-                                retColor.z = colorArray[2];
-                                retColor.w = colorArray[3];
-
-                                meshRenderer->GetMaterial()->SetColor(retColor);
+                            else {
+                                imageSize.y = maxPreviewSize;
+                                imageSize.x = maxPreviewSize * aspectRatio;
                             }
                         }
-                        else {
-                            ImGui::Text("No texture loaded");
+                        ImGui::Image((void*)(intptr_t)textureID, imageSize);
+                        vec4 matColor = meshRenderer->GetMaterial()->GetColor();
+                        float colorArray[4] = { matColor.x,matColor.y, matColor.z,matColor.w };
+
+                        if (ImGui::ColorPicker4("Color", colorArray))
+                        {
+                            vec4 retColor;
+                            retColor.x = colorArray[0];
+                            retColor.y = colorArray[1];
+                            retColor.z = colorArray[2];
+                            retColor.w = colorArray[3];
+
+                            meshRenderer->GetMaterial()->SetColor(retColor);
                         }
                     }
-                }
-                else {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: MeshRenderer has no Image");
+                    else {
+                        ImGui::Text("No texture loaded");
+                    }
                 }
             }
-
-            ImGui::Separator();
-
-            if (selectedGameObject->HasComponent<CameraComponent>()) {
-				CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
-
-                LOG(LogType::LOG_INFO, "UIInspector::Draw: CameraComponent found");
-
-                // Verificar si cameraComponent es válido
-                if (!cameraComponent) {
-					LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
-					ImGui::Text("Error: Invalid CameraComponent component");
-					return false;
-				}
-
-				if (cameraComponent) {
-                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-					if (ImGui::CollapsingHeader("Camera")) {
-						bool orthographic = cameraComponent->IsOrthographic();
-						float orthoSize = cameraComponent->GetOrthoSize();
-						float fov = cameraComponent->GetFOV();
-						float nearPlane = cameraComponent->GetNearPlane();
-						float farPlane = cameraComponent->GetFarPlane();
-
-						if (ImGui::Checkbox("Orthographic", &orthographic)) {
-							cameraComponent->SetOrthographic(orthographic, cameraComponent->GetNearPlane(), cameraComponent->GetFarPlane());
-						}
-
-						if (orthographic) {
-							if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
-								cameraComponent->SetOrthoSize(orthoSize);
-							}
-						}
-						else {
-							if (ImGui::DragFloat("FOV", &fov, 0.1f, 1.0f, 179.0f)) {
-								cameraComponent->SetFOV(fov);
-							}
-						}
-
-						if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
-							cameraComponent->SetNearPlane(nearPlane);
-						}
-
-						if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
-							cameraComponent->SetFarPlane(farPlane);
-						}
-					}
-				}
-				else {
-					LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
-				}
+            else {
+                LOG(LogType::LOG_WARNING, "UIInspector::Draw: MeshRenderer has no Image");
             }
         }
 
-        ImGui::End();
+        ImGui::Separator();
+
+        if (selectedGameObject->HasComponent<CameraComponent>()) {
+			CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
+
+            LOG(LogType::LOG_INFO, "UIInspector::Draw: CameraComponent found");
+
+            // Verificar si cameraComponent es válido
+            if (!cameraComponent) {
+				LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
+				ImGui::Text("Error: Invalid CameraComponent component");
+				return false;
+			}
+
+			if (cameraComponent) {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+				if (ImGui::CollapsingHeader("Camera")) {
+					bool orthographic = cameraComponent->IsOrthographic();
+					float orthoSize = cameraComponent->GetOrthoSize();
+					float fov = cameraComponent->GetFOV();
+					float nearPlane = cameraComponent->GetNearPlane();
+					float farPlane = cameraComponent->GetFarPlane();
+
+					if (ImGui::Checkbox("Orthographic", &orthographic)) {
+						cameraComponent->SetOrthographic(orthographic, cameraComponent->GetNearPlane(), cameraComponent->GetFarPlane());
+					}
+
+					if (orthographic) {
+						if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
+							cameraComponent->SetOrthoSize(orthoSize);
+						}
+					}
+					else {
+						if (ImGui::DragFloat("FOV", &fov, 0.1f, 1.0f, 179.0f)) {
+							cameraComponent->SetFOV(fov);
+						}
+					}
+
+					if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
+						cameraComponent->SetNearPlane(nearPlane);
+					}
+
+					if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
+						cameraComponent->SetFarPlane(farPlane);
+					}
+				}
+			}
+			else {
+				LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
+			}
+        }
     }
 
+    ImGui::End();
     return true;
 }

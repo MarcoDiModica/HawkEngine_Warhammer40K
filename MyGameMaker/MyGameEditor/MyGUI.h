@@ -65,6 +65,10 @@ public:
 	GLuint fboTexture = 0;
 	GLuint rbo = 0;
 
+	GLuint fboCamera = 0;
+	GLuint fboTextureCamera = 0;
+	GLuint rboCamera = 0;
+
 private:
 	std::list<UIElement*> elements;
 

@@ -139,6 +139,7 @@ bool MyGUI::Start() {
 	Application->gui->UISceneWindowPanel->SetState(true);
 	Application->gui->UICameraPanel->SetState(true);
 	UISceneWindowPanel->Init();
+	UICameraPanel->Init();
 
 	return true;
 }

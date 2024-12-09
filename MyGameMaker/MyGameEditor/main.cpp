@@ -33,6 +33,7 @@
 
 #include "MyGameEngine/CameraBase.h"
 #include "MyGameEngine/BoundingBox.h"
+#include "MyGameEngine/CameraComponent.h"
 //#include "MyGameEngine/GameObject.h"
 
 
@@ -139,6 +140,23 @@ void configureCamera() {
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
 	camera->frustum.Update(projectionMatrix * viewMatrix);
+}
+
+void configureGameCamera()
+{
+	if (Application->root->mainCamera != nullptr)
+	{
+		glm::dmat4 projectionMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->projection();
+		glm::dmat4 viewMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->view();
+
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrixd(glm::value_ptr(projectionMatrix));
+
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixd(glm::value_ptr(viewMatrix));
+
+		Application->root->mainCamera->GetComponent<CameraComponent>()->frustum.Update(projectionMatrix * viewMatrix);
+	}
 }
 
 void drawFrustum(const CameraBase& camera) 
@@ -347,7 +365,16 @@ static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	
 	configureCamera();
-	drawFrustum(*camera);
+	//drawFrustum(*camera);
+
+	//glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboCamera);
+
+	//glViewport(0, 0, Application->window->width(), Application->window->height());
+
+	//lClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	configureGameCamera();
+	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
 
 	drawFloorGrid(16, 0.25);
 

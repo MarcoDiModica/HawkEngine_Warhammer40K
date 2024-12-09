@@ -132,7 +132,7 @@ bool UIInspector::Draw() {
                         ImGui::Text("Indices: %d", mesh->indices().size());
 
                         auto v = selectedGameObject->boundingBox().min;
-                        ImGui::Text("BB min: %f", (float) v.x);
+                        ImGui::Text("BB min: %f", (float)v.x);
 
 
                         bool& triNormals = mesh->drawTriangleNormals;
@@ -176,18 +176,18 @@ bool UIInspector::Draw() {
                                 }
                             }
                             ImGui::Image((void*)(intptr_t)textureID, imageSize);
-							vec4 matColor = meshRenderer->GetMaterial()->GetColor();
+                            vec4 matColor = meshRenderer->GetMaterial()->GetColor();
                             float colorArray[4] = { matColor.x,matColor.y, matColor.z,matColor.w };
 
-                            if (ImGui::ColorPicker4("Color",colorArray))
+                            if (ImGui::ColorPicker4("Color", colorArray))
                             {
                                 vec4 retColor;
-								retColor.x = colorArray[0];
-    							retColor.y = colorArray[1];
-								retColor.z = colorArray[2];
-								retColor.w = colorArray[3];
+                                retColor.x = colorArray[0];
+                                retColor.y = colorArray[1];
+                                retColor.z = colorArray[2];
+                                retColor.w = colorArray[3];
 
-    							meshRenderer->GetMaterial()->SetColor(retColor);
+                                meshRenderer->GetMaterial()->SetColor(retColor);
                             }
                         }
                         else {
@@ -198,57 +198,57 @@ bool UIInspector::Draw() {
                 else {
                     LOG(LogType::LOG_WARNING, "UIInspector::Draw: MeshRenderer has no Image");
                 }
+            }
 
-                ImGui::Separator();
+            ImGui::Separator();
 
-                if (selectedGameObject->HasComponent<CameraComponent>()) {
-					CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
+            if (selectedGameObject->HasComponent<CameraComponent>()) {
+				CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
 
-                    LOG(LogType::LOG_INFO, "UIInspector::Draw: CameraComponent found");
+                LOG(LogType::LOG_INFO, "UIInspector::Draw: CameraComponent found");
 
-                    // Verificar si cameraComponent es válido
-                    if (!cameraComponent) {
-						LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
-						ImGui::Text("Error: Invalid CameraComponent component");
-						return false;
-					}
+                // Verificar si cameraComponent es válido
+                if (!cameraComponent) {
+					LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
+					ImGui::Text("Error: Invalid CameraComponent component");
+					return false;
+				}
 
-					if (cameraComponent) {
-                        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-						if (ImGui::CollapsingHeader("Camera")) {
-							bool orthographic = cameraComponent->IsOrthographic();
-							float orthoSize = cameraComponent->GetOrthoSize();
-							float fov = cameraComponent->GetFOV();
-							float nearPlane = cameraComponent->GetNearPlane();
-							float farPlane = cameraComponent->GetFarPlane();
+				if (cameraComponent) {
+                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+					if (ImGui::CollapsingHeader("Camera")) {
+						bool orthographic = cameraComponent->IsOrthographic();
+						float orthoSize = cameraComponent->GetOrthoSize();
+						float fov = cameraComponent->GetFOV();
+						float nearPlane = cameraComponent->GetNearPlane();
+						float farPlane = cameraComponent->GetFarPlane();
 
-							if (ImGui::Checkbox("Orthographic", &orthographic)) {
-								cameraComponent->SetOrthographic(orthographic, cameraComponent->GetNearPlane(), cameraComponent->GetFarPlane());
-							}
+						if (ImGui::Checkbox("Orthographic", &orthographic)) {
+							cameraComponent->SetOrthographic(orthographic, cameraComponent->GetNearPlane(), cameraComponent->GetFarPlane());
+						}
 
-							if (orthographic) {
-								if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
-									cameraComponent->SetOrthoSize(orthoSize);
-								}
-							}
-							else {
-								if (ImGui::DragFloat("FOV", &fov, 0.1f, 1.0f, 179.0f)) {
-									cameraComponent->SetFOV(fov);
-								}
-							}
-
-							if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
-								cameraComponent->SetNearPlane(nearPlane);
-							}
-
-							if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
-								cameraComponent->SetFarPlane(farPlane);
+						if (orthographic) {
+							if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
+								cameraComponent->SetOrthoSize(orthoSize);
 							}
 						}
+						else {
+							if (ImGui::DragFloat("FOV", &fov, 0.1f, 1.0f, 179.0f)) {
+								cameraComponent->SetFOV(fov);
+							}
+						}
+
+						if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
+							cameraComponent->SetNearPlane(nearPlane);
+						}
+
+						if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
+							cameraComponent->SetFarPlane(farPlane);
+						}
 					}
-					else {
-						LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
-					}
+				}
+				else {
+					LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
 				}
             }
         }

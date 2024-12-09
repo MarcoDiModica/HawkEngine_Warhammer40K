@@ -65,6 +65,11 @@ bool Root::Start()
         ParentGameObject(*Street2, *Street);
     }
 
+    auto MainCamera = CreateGameObject("MainCamera");
+    MainCamera->GetTransform()->GetPosition() = vec3(0, 0, -10);
+    auto camera = MainCamera->AddComponent<CameraComponent>();
+    mainCamera = MainCamera;
+
     for (shared_ptr<GameObject> object : currentScene->_children)
     {
         object->Start();

@@ -12,6 +12,14 @@
 class GameObject;
 class SceneSerializer;
 
+enum class ComponentType {
+	NONE,
+	TRANSFORM,
+	MESH_RENDERER,
+	CAMERA,
+	LIGHT
+};
+
 class Component
 {
 public:
@@ -21,6 +29,8 @@ public:
 	virtual void Start() = 0;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Destroy() = 0;
+
+	virtual ComponentType GetType() const = 0;
 
 	virtual std::unique_ptr<Component> Clone(GameObject* new_owner) = 0;
 

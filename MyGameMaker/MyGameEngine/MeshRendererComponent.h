@@ -18,6 +18,8 @@ public:
     void Update(float deltaTime) override;
     void Destroy() override;
 
+    ComponentType GetType() const override { return ComponentType::MESH_RENDERER; }
+
     std::unique_ptr<Component> Clone(GameObject* owner) override;
 
     void SetMesh(std::shared_ptr<Mesh> mesh);

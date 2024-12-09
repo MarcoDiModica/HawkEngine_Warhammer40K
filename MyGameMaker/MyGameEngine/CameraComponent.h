@@ -25,6 +25,8 @@ public:
     void Update(float deltaTime) override;
     void Destroy() override {}
 
+    ComponentType GetType() const override { return ComponentType::CAMERA; }
+
     glm::dmat4 view() const { return GetViewMatrix(*owner->GetTransform()); }
     glm::dmat4 projection() const { return GetProjectionMatrix(); }
 

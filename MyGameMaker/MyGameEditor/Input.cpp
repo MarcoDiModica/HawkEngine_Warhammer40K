@@ -178,10 +178,9 @@ bool Input::processSDLEvents()
                     LOG(LogType::LOG_INFO, "Pasted %d objects", copiedObjects.size());
                     if (!copiedObjects.empty()) {
                         for (auto& copiedObject : copiedObjects) {
-                            // Crear una copia del objeto y añadirlo al root
-                            auto newObject = Application->root->CreateGameObject(copiedObject->GetName() + "_copy");
-                            //newObject = std::make_shared<GameObject>(copiedObject);
-                            // Puedes copiar los datos del objeto si es necesario (por ejemplo, transformaciones)
+                            auto newObject = std::make_shared<GameObject>(*copiedObject);
+                            newObject->SetName(copiedObject->GetName() + "_copy");
+                            Application->root->currentScene->AddGameObject(newObject);
                         }
                     }
                 }
@@ -192,10 +191,9 @@ bool Input::processSDLEvents()
                     LOG(LogType::LOG_INFO, "Duplicated %d objects", selectedObjects.size());
                     if (!selectedObjects.empty()) {
                         for (auto& selectedObject : selectedObjects) {
-                            // Crear una copia del objeto y añadirlo al root
-                            auto newObject = Application->root->CreateGameObject(selectedObject->GetName() + "_copy");
-                            //newObject = std::make_shared<GameObject>(selectedObject);
-                            // Puedes copiar los datos del objeto si es necesario (por ejemplo, transformaciones)
+                            auto newObject = std::make_shared<GameObject>(*selectedObject);
+                            newObject->SetName(selectedObject->GetName() + "_copy");
+                            Application->root->currentScene->AddGameObject(newObject);
                         }
                     }
                 }

@@ -28,12 +28,12 @@ GameObject::GameObject(const GameObject& other) :
     name(other.name),
     gid(nextGid++),
     active(other.active),
-    transform(other.transform),
+    transform(new Transform_Component(this)),
     mesh(other.mesh),
     tag(other.tag),
     cachedComponentType(typeid(Component)),
     parent(nullptr)
-{
+{   
     for (const auto& component : other.components) {
         components[component.first] = component.second->Clone(this);
         components[component.first]->owner = this;

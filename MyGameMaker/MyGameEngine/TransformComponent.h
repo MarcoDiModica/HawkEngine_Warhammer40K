@@ -73,6 +73,8 @@ public:
         HandleWorldUpdate();
     }
 
+    ComponentType GetType() const override { return ComponentType::TRANSFORM; }
+
     Transform_Component operator*(const glm::dmat4& other) const {
         Transform_Component result(*this);
         result.matrix = matrix * other;

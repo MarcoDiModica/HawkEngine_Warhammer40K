@@ -23,8 +23,10 @@ Root::Root(App* app) : Module(app) { ; }
 
 bool Root::Awake()
 {
-
-    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
+    CreateScene("HolaBuenas");
+    SetActiveScene("HolaBuenas");
+    
+    //Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
     //auto MarcoVicePresidente = CreateGameObject("BakerHouse");
     //MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
     //auto mesh = make_shared<Mesh>();
@@ -69,6 +71,10 @@ bool Root::Start()
     MainCamera->GetTransform()->GetPosition() = vec3(0, 0, -10);
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera;
+
+    auto cube = CreateCube("Cube");
+    cube->GetTransform()->GetPosition() = vec3(0, 0, 0);
+    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");
 
     for (shared_ptr<GameObject> object : currentScene->_children)
     {

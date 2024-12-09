@@ -137,9 +137,9 @@ bool MyGUI::Start() {
 	Application->gui->UIinspectorPanel->SetState(true);
 	Application->gui->UIMainMenuBarPanel->SetState(true);
 	Application->gui->UISceneWindowPanel->SetState(true);
-	Application->gui->UICameraPanel->SetState(true);
+	//Application->gui->UICameraPanel->SetState(true);
 	UISceneWindowPanel->Init();
-	UICameraPanel->Init();
+	//UICameraPanel->Init();
 
 	return true;
 }
@@ -235,9 +235,9 @@ void MyGUI::Render() {
 		UIProjectPanel->Draw();
 	}
 
-	if (showCamera) {
-		UICameraPanel->Draw();
-	}
+	//if (showCamera) {
+	//	UICameraPanel->Draw();
+	//}
 
 
 

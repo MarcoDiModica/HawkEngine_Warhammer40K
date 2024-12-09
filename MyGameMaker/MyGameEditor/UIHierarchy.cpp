@@ -40,6 +40,7 @@ bool UIHierarchy::Draw() {
 			if (ImGui::MenuItem("Cube")) { Application->root->CreateCube("Cube"); }
 			if (ImGui::MenuItem("Sphere")) { Application->root->CreateSphere("Sphere"); }
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
+			if (ImGui::MenuItem("Empty GameObject")) { Application->root->CreateGameObject("Empty"); }
 			ImGui::EndPopup();
 		}
 
@@ -64,8 +65,6 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 
 	//ImGui::End();
 }
-
-
 
 void UIHierarchy::DrawSceneObject(GameObject& obj)
 {
@@ -146,6 +145,12 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 			Application->input->RemoveFromSelection(&obj);
 			Application->input->ClearSelection();
 			Application->root->RemoveGameObject(&obj);
+			ImGui::CloseCurrentPopup();
+		}
+		if (ImGui::MenuItem("Empty Child"))
+		{
+			auto empty = Application->root->CreateGameObject("Empty");
+			Application->root->ParentGameObject(*empty, obj);
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::EndPopup();

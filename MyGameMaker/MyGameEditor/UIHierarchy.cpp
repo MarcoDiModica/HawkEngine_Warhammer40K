@@ -52,8 +52,8 @@ bool UIHierarchy::Draw() {
 	ImGui::End();
 	return true;
 }
-GameObject* draggedObject;
 
+GameObject* draggedObject;
 
 void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::Begin("Scene Hierarchy");

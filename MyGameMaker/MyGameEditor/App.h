@@ -58,6 +58,8 @@ public:
 	int GetFps() const;
 	void SetFpsCap(int fps);
 
+	double GetDt() const;
+
 	// Add a new module to handle
 	void AddModule(Module* module, bool activate);
 

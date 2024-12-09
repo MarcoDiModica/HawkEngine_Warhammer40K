@@ -25,7 +25,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/common.hpp>
 #include <IL/il.h>
-#include <IL/ilu.h>	
+#include <IL/ilu.h>
+#include <stack>
 #include <IL/ilut.h>
 #include "Input.h"
 #include "MyGUI.h"
@@ -388,18 +389,27 @@ static void display_func() {
 	
 
 	// TODO cambiar esto de sitio
+	std::stack<GameObject*> objectStack;
+
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
-		GameObject* object = Application->root->currentScene->children()[i].get();
-	
-		object->Update(0.16f);
-		
+		objectStack.push(Application->root->currentScene->children()[i].get());
+	}
+
+	bool hitSomething = false;
+
+	while (!objectStack.empty())
+	{
+		GameObject* object = objectStack.top();
+		objectStack.pop();
+
+		object->Update(Application->GetDt());
+
 		if (object->HasComponent<MeshRenderer>()) {
-	
+
 			BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-	
 			bbox = object->GetTransform()->GetMatrix() * bbox;
-			
+
 			if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
 									camera->frustum.left, camera->frustum.right,
 									camera->frustum.top, camera->frustum.bot })) {
@@ -408,16 +418,36 @@ static void display_func() {
 
 			if (CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
 			{
+				hitSomething = true;
+
 				Application->input->SetDraggedGameObject(object);
-			}
-	
-			if (Application->input->GetMouseButton(1) == KEY_DOWN)
-			if (CheckRayAABBCollision(rayOrigin, rayDirection, bbox) )
-			{
-				std::cout << "Hit: " << object->GetName();
-				Application->input->AddToSelection(object);
+
+				if (Application->input->GetMouseButton(1) == KEY_DOWN) {
+					if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
+						// Si Control está presionado, alterna la selección
+						if (Application->input->IsGameObjectSelected(object)) {
+							Application->input->RemoveFromSelection(object);
+						}
+						else {
+							Application->input->AddToSelection(object);
+						}
+					}
+					else {
+						Application->input->ClearSelection();
+						Application->input->AddToSelection(object);
+					}
+				}
 			}
 		}
+
+		for (size_t i = 0; i < object->GetChildren().size(); ++i)
+		{
+			objectStack.push(object->GetChildren()[i].get());
+		}
+	}
+
+	if (!hitSomething && Application->input->GetMouseButton(1) == KEY_DOWN) {
+		Application->input->ClearSelection();
 	}
 	//It has to go AFTER drawing the objects
 	//Application->gizmos->DrawGizmos();

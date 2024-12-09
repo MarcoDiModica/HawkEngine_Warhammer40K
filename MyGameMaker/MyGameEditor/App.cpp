@@ -259,6 +259,8 @@ void App::AddModule(Module* module, bool activate) {
 
 int App::GetFps() const { return frameRate;}
 
+double App::GetDt() const { return dt; }
+
 void App::SetFpsCap(int fps) {
 	this->frameRate = frameRate == 0 ? Application->window->GetDisplayRefreshRate() : frameRate;
 	targetFrameDuration = (std::chrono::duration<double>)1 / this->frameRate;

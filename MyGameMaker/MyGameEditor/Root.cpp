@@ -54,7 +54,7 @@ bool Root::Awake()
 
 bool Root::Start()
 {
-    auto Street = CreateGameObject("Street");
+    /*auto Street = CreateGameObject("Street");
     Street->GetTransform()->GetPosition() = vec3(0, 0, 0);
     ModelImporter meshImp;
     meshImp.loadFromFile("Assets/Meshes/ff.fbx");
@@ -63,7 +63,7 @@ bool Root::Start()
         auto& Street2 = meshImp.meshGameObjects[i];
         currentScene->AddGameObject(Street2);
         ParentGameObject(*Street2, *Street);
-    }
+    }*/
 
     auto MainCamera = CreateGameObject("MainCamera");
     MainCamera->GetTransform()->GetPosition() = vec3(0, 0, -10);

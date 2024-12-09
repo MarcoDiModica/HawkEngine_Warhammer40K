@@ -92,6 +92,7 @@ public:
 	void RemoveFromSelection(GameObject* gameObject);
 	std::vector<GameObject*> GetSelectedGameObjects() const;
 	void ClearSelection();
+	bool IsGameObjectSelected(GameObject* gameObject) const;
 
 	void HandleFileDrop(const std::string& fileDir);
 

@@ -351,3 +351,8 @@ void Input::ClearSelection() {
 	}
 	selectedObjects.clear();
 }
+
+bool Input::IsGameObjectSelected(GameObject* gameObject) const {
+	auto it = std::find(selectedObjects.begin(), selectedObjects.end(), gameObject);
+	return it != selectedObjects.end();
+}

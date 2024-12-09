@@ -86,5 +86,5 @@ void display() {
 }
 void Scene::DebugDrawTree() {
 	//display();
-	tree->DebugDraw(tree->root);
+	//tree->DebugDraw(tree->root);
 }

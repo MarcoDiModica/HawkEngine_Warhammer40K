@@ -54,18 +54,15 @@ bool Root::Awake()
 
 bool Root::Start()
 {
-    auto MarcoVicePresidente = CreateGameObject("MainCamera");
-    MarcoVicePresidente->AddComponent<CameraComponent>();
+    auto Street = CreateGameObject("Street");
+    Street->GetTransform()->GetPosition() = vec3(0, 0, 0);
+    ModelImporter meshImp;
+    meshImp.loadFromFile("Assets/Meshes/ff.fbx");
 
-    mainCamera = MarcoVicePresidente;
-
-    auto HasCamera = MarcoVicePresidente->GetComponent<CameraComponent>();
-
-    if (HasCamera) {
-        LOG(LogType::LOG_INFO, "CameraComponent added to MainCamera");
-    }
-    else {
-        LOG(LogType::LOG_ERROR, "CameraComponent not added to MainCamera");
+    for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
+        auto& Street2 = meshImp.meshGameObjects[i];
+        currentScene->AddGameObject(Street2);
+        ParentGameObject(*Street2, *Street);
     }
 
     for (shared_ptr<GameObject> object : currentScene->_children)

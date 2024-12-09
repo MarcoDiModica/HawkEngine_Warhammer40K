@@ -53,7 +53,7 @@ void main()
     
 
     // Sample the texture using the texture coordinates
-    vec4 texColor = texture(texture1, TexCoord) + ExtraColor;
+    vec4 texColor = texture(texture1, TexCoord);
     FragColor = vec4(result, 1.0) * texColor;
 }
 

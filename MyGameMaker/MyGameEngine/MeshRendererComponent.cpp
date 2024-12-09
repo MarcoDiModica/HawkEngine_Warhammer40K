@@ -118,7 +118,8 @@ void MeshRenderer::Render() const
 
     if (material)
     {
-        glColor4ub(material->color.r, material->color.g, material->color.b, material->color.a);
+        color4 newColor = color4(material->color.r, material->color.g, material->color.b, material->color.a);
+        //glColor4ubv(&newColor.r);
         glEnable(GL_TEXTURE_2D);
         material->bind();
         material->setShaderUniform("texture1", 0); // Pasar la unidad de textura al shader

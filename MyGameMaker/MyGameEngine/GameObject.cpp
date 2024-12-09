@@ -230,7 +230,7 @@ void GameObject::Draw() const
         child->Draw();
     }
 
-    glLoadIdentity(); // Resets the current matrix to identity
+    //glLoadIdentity(); // Resets the current matrix to identity
 }
 
 void GameObject::DrawAccumultedMatrix() const
@@ -257,7 +257,7 @@ void GameObject::DrawPushPopMatrix() const
   //  glMultMatrixd(&glm::dmat4(1.0)[0][0]);
 
     glPopMatrix();
-    glLoadIdentity();
+    //glLoadIdentity();
 }
 
 void GameObject::OnEnable() {}

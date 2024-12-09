@@ -177,15 +177,15 @@ bool UIInspector::Draw() {
                             }
                             ImGui::Image((void*)(intptr_t)textureID, imageSize);
 							vec4 matColor = meshRenderer->GetMaterial()->GetColor();
-							float colorArray[4] = { matColor.r,matColor.g, matColor.b,matColor.a};
+                            float colorArray[4] = { matColor.x,matColor.y, matColor.z,matColor.w };
 
                             if (ImGui::ColorPicker4("Color",colorArray))
                             {
                                 vec4 retColor;
-								retColor.r = colorArray[0];
-								retColor.g = colorArray[1];
-								retColor.b = colorArray[2];
-								retColor.a = colorArray[3];
+								retColor.x = colorArray[0];
+    							retColor.y = colorArray[1];
+								retColor.z = colorArray[2];
+								retColor.w = colorArray[3];
 
     							meshRenderer->GetMaterial()->SetColor(retColor);
                             }

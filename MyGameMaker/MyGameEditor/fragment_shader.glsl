@@ -3,11 +3,13 @@
 in vec2 TexCoord; // Texture coordinate of the fragment
 in vec3 FragPos; // Position of the fragment
 in vec3 Normal; // Normal of the fragment
-in vec4 ExtraColor;
+
 
 out vec4 FragColor;
 
 uniform sampler2D texture1; // Texture sampler
+uniform vec4 modColor; // New uniform for color modifier
+
 
 struct PointLight {
     vec3 position;
@@ -51,10 +53,10 @@ void main()
    
     result += CalcPointLight(pointLights, norm, FragPos, viewDir);
     
-
+    
     // Sample the texture using the texture coordinates
     vec4 texColor = texture(texture1, TexCoord);
-    FragColor = vec4(result, 1.0) * texColor;
+    FragColor = vec4(result, 1.0) * texColor * modColor;
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)

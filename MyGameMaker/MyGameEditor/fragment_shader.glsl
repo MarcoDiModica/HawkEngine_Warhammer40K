@@ -3,6 +3,7 @@
 in vec2 TexCoord; // Texture coordinate of the fragment
 in vec3 FragPos; // Position of the fragment
 in vec3 Normal; // Normal of the fragment
+in vec4 ExtraColor;
 
 out vec4 FragColor;
 
@@ -52,7 +53,7 @@ void main()
     
 
     // Sample the texture using the texture coordinates
-    vec4 texColor = texture(texture1, TexCoord);
+    vec4 texColor = texture(texture1, TexCoord) + ExtraColor;
     FragColor = vec4(result, 1.0) * texColor;
 }
 

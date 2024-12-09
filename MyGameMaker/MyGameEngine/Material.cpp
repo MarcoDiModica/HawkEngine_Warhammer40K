@@ -26,6 +26,14 @@ static auto GLMinFilter(Material::Filters filter) {
 	}
 }
 
+void Material::SetColor(const vec4& color) {
+	this->color = color;
+}
+
+vec4 Material::GetColor() {
+	return this->color;
+}
+
 void Material::bind() const {
 	glBindTexture(GL_TEXTURE_2D, imagePtr->id());
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLWrapMode(wrapMode));

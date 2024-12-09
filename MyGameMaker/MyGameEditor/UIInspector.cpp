@@ -11,6 +11,7 @@
 #include "..\MyGameEngine\MeshRendererComponent.h"
 #include "..\MyGameEngine\Mesh.h"
 #include "..\MyGameEngine\Image.h"
+#include "..\MyGameEngine\Material.h"
 #include <string>
 
 #include <imgui.h>
@@ -125,6 +126,7 @@ bool UIInspector::Draw() {
                 std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
 
                 if (mesh) {
+                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
                     if (ImGui::CollapsingHeader("Mesh")) {
                         ImGui::Text("Vertices: %d", mesh->vertices().size());
                         ImGui::Text("Indices: %d", mesh->indices().size());
@@ -149,6 +151,7 @@ bool UIInspector::Draw() {
                 std::shared_ptr<Image> image = meshRenderer->GetImage();
 
                 if (image) {
+                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
                     if (ImGui::CollapsingHeader("Image")) {
                         ImGui::Text("Width: %d", image->width());
                         ImGui::Text("Heigth: %d", image->height());
@@ -173,6 +176,19 @@ bool UIInspector::Draw() {
                                 }
                             }
                             ImGui::Image((void*)(intptr_t)textureID, imageSize);
+							vec4 matColor = meshRenderer->GetMaterial()->GetColor();
+							float colorArray[4] = { matColor.r,matColor.g, matColor.b,matColor.a};
+
+                            if (ImGui::ColorPicker4("Color",colorArray))
+                            {
+                                vec4 retColor;
+								retColor.r = colorArray[0];
+								retColor.g = colorArray[1];
+								retColor.b = colorArray[2];
+								retColor.a = colorArray[3];
+
+    							meshRenderer->GetMaterial()->SetColor(retColor);
+                            }
                         }
                         else {
                             ImGui::Text("No texture loaded");
@@ -198,6 +214,7 @@ bool UIInspector::Draw() {
 					}
 
 					if (cameraComponent) {
+                        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 						if (ImGui::CollapsingHeader("Camera")) {
 							bool orthographic = cameraComponent->IsOrthographic();
 							float orthoSize = cameraComponent->GetOrthoSize();

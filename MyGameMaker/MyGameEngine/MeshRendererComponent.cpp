@@ -91,7 +91,7 @@ void MeshRenderer::Render() const
         material->bindShaders();
         material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
         material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
-        material->setShaderUniform("aColor", material->color.r);
+        material->setShaderUniform("aColor", glm::vec4( material->color.r,material->color.g,material->color.b,material->color.a));
         //material->setShaderUniform("model", owner->GetComponent<Transform_Component>()->GetMatrix());
         material->setShaderUniform("view", Application->camera->view());
         material->setShaderUniform("projection", Application->camera->projection());
@@ -118,7 +118,7 @@ void MeshRenderer::Render() const
 
     if (material)
     {
-        glColor4ubv(&material->color.r);
+        glColor4ub(material->color.r, material->color.g, material->color.b, material->color.a);
         glEnable(GL_TEXTURE_2D);
         material->bind();
         material->setShaderUniform("texture1", 0); // Pasar la unidad de textura al shader

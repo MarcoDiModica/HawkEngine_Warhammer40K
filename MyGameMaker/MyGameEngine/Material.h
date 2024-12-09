@@ -15,7 +15,7 @@ public:
 	Filters filter = Nearest;
 
 	Shaders shader;
-	color4 color;
+	vec4 color;
 
 	bool useShader = false;
 private:
@@ -35,7 +35,8 @@ public:
 	void setShaderUniform(const std::string& name, const glm::vec3& value);
 	void setShaderUniform(const std::string& name, const glm::vec4& value);
 	void setShaderUniform(const std::string& name, const glm::mat4& value);
-
+	vec4 GetColor();
+	void SetColor(const vec4& color);
 
 };
 

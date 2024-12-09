@@ -368,13 +368,8 @@ static void display_func() {
 	configureCamera();
 	//drawFrustum(*camera);
 
-	//glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboCamera);
 
-	//glViewport(0, 0, Application->window->width(), Application->window->height());
-
-	//lClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	configureGameCamera();
+	//configureGameCamera();
 	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
 
 	drawFloorGrid(16, 0.25);
@@ -458,13 +453,80 @@ static void display_func() {
 
 }
 
+static void display_func2() {
+
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboCamera);
+
+	glViewport(0, 0, Application->window->width(), Application->window->height());
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//configureCamera();
+	//drawFrustum(*camera);
+
+
+	configureGameCamera();
+	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
+
+	drawFloorGrid(16, 0.25);
+
+
+
+	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
+	glm::vec3 rayDirection = Application->input->getMousePickRay();
+
+	//Debug for mousepicking
+	//Draw3DRectangle(rayOrigin, rayDirection, 1.0f, 1.0f, 1.0f);
+
+
+	// TODO cambiar esto de sitio
+	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
+	{
+		GameObject* object = Application->root->currentScene->children()[i].get();
+
+		object->Update(0.16f);
+
+		if (object->HasComponent<MeshRenderer>()) {
+
+			BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+
+			bbox = object->GetTransform()->GetMatrix() * bbox;
+
+			if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
+									camera->frustum.left, camera->frustum.right,
+									camera->frustum.top, camera->frustum.bot })) {
+				continue; // Aquí omitimos el objeto si no está en el frustum
+			}
+
+			if (CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+			{
+				Application->input->SetDraggedGameObject(object);
+			}
+
+			if (Application->input->GetMouseButton(1) == KEY_DOWN)
+				if (CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+				{
+					std::cout << "Hit: " << object->GetName();
+					Application->input->AddToSelection(object);
+				}
+		}
+	}
+	//It has to go AFTER drawing the objects
+	//Application->gizmos->DrawGizmos();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//Application->root->sceneManagement.Update(0.16f);
+
+}
+
 void PauCode2(MyGUI* gui) {
 
 	if (Application->window->IsOpen()) {
 
 		const auto t0 = hrclock::now();
 		display_func();
-	
+		display_func2();
 		gui->Render();
 
 		/*move_camera();*/

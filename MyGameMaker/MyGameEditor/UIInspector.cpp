@@ -12,6 +12,7 @@
 #include "..\MyGameEngine\Mesh.h"
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
+#include "..\MyGameEngine\LightComponent.h"
 #include <string>
 
 #include <imgui.h>
@@ -90,6 +91,10 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<MeshRenderer>() && ImGui::MenuItem("MeshRenderer")) {
                 selectedGameObject->AddComponent<MeshRenderer>();
             }
+
+            if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
+				selectedGameObject->AddComponent<LightComponent>();
+			}
 
             // More components here
 
@@ -231,8 +236,6 @@ bool UIInspector::Draw() {
         if (selectedGameObject->HasComponent<CameraComponent>()) {
 			CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
 
-            LOG(LogType::LOG_INFO, "UIInspector::Draw: CameraComponent found");
-
             // Verificar si cameraComponent es válido
             if (!cameraComponent) {
 				LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
@@ -276,6 +279,58 @@ bool UIInspector::Draw() {
 			else {
 				LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
 			}
+
+            ImGui::Separator();
+
+            if (selectedGameObject->HasComponent<LightComponent>())
+            {
+                LightComponent* lightComponent = selectedGameObject->GetComponent<LightComponent>();
+
+                if (lightComponent)
+                {
+                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                    if (ImGui::CollapsingHeader("Light"))
+                    {
+                        LightType lightType = lightComponent->GetLightType();
+                        vec3 color = lightComponent->GetColor();
+                        float intensity = lightComponent->GetIntensity();
+                        float radius = lightComponent->GetRadius();
+                        glm::dvec3 direction = lightComponent->GetDirection();
+
+                        if (ImGui::Combo("Type", (int*)&lightType, "Directional\0Point\0"))
+                        {
+                            lightComponent->SetLightType(lightType);
+                        }
+
+                        if (ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 100.0f))
+                        {
+                            lightComponent->SetIntensity(intensity);
+                        }
+
+                        /*if (ImGui::ColorEdit3("Color"))
+                        {
+                            lightComponent->SetColor(color); COLOR
+                        }*/
+
+                        if (lightType == LightType::POINT)
+                        {
+                            if (ImGui::DragFloat("Range", &radius, 0.1f, 0.0f, 1000.0f))
+                            {
+                                lightComponent->SetRadius(radius);
+                            }
+                        }
+
+                        //if (lightType == LightType::DIRECTIONAL)
+                        //{
+                        //                   // change direction vec3
+                        //}
+                    }
+                }
+                else
+                {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
+                }
+            }
         }
     }
 

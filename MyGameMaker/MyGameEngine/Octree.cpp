@@ -3,7 +3,7 @@
 #include "BoundingBox.h"
 
 
-void Octree::Insert(OctreeNode* node, const GameObject& obj, int depth) {
+void Octree::Insert(OctreeNode* node,  GameObject& obj, int depth) {
     // If the object's bounding box does not intersect this node, do nothing
     if (!node->bbox.intersects(obj.boundingBox()) || !node->bbox.contains(obj)) {
         return;
@@ -11,7 +11,8 @@ void Octree::Insert(OctreeNode* node, const GameObject& obj, int depth) {
 
     // If this is a leaf node and has room for more objects, add the object here
     if (node->isLeaf() && (node->contained_objects.size() < max_points_per_node || depth >= max_depth)) {
-        node->contained_objects.push_back(obj);
+        node->contained_objects.push_back(obj.weak_from_this()); /* TODO should notify the node that the object is geting remove in it's copy or destrcutor */
+        obj.node = node;
         return;
     }
 
@@ -22,7 +23,7 @@ void Octree::Insert(OctreeNode* node, const GameObject& obj, int depth) {
     for (auto* child : node->children) /* Insert the object to the children that contains it*/ {
 
         for (size_t j = 0; j < node->contained_objects.size(); ++j) {
-            GameObject& object = node->contained_objects[j];
+            GameObject& object = *node->contained_objects[j].lock();
 
             auto bb = object.boundingBox();
 

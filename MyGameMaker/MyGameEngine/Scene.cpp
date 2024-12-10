@@ -59,9 +59,9 @@ void Scene::AddGameObject(std::shared_ptr<GameObject> gameObject)
 	gameObject->scene = this;
 	_children.push_back(gameObject);
 
-	//if (tree) {
-	//	tree->Insert(tree->root, *_children[_children.size() - 1], 0);
-	//}
+	if (tree) {
+		tree->Insert(tree->root, *_children[_children.size() - 1], 0);
+	}
 
 }
 

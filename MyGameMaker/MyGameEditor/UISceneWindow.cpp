@@ -11,7 +11,7 @@
 #include <ImGuizmo.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
+#include <functional>
 #include "../MyGameEngine/MeshRendererComponent.h"
 
 
@@ -220,32 +220,6 @@ bool UISceneWindow::Draw()
 				glm::mat4 newMatrix = glm::make_mat4(objectMatrix);
 
 				selectedObject->GetTransform()->SetMatrix(newMatrix);
-			}
-		}
-
-		//mouse picking
-		if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) {
-			int mouse_x = ImGui::GetMousePos().x;
-			int mouse_y = ImGui::GetMousePos().y;
-			int screen_width = Application->window->width();
-			int screen_height = Application->window->height();
-			int window_x = windowPos.x;
-			int window_y = windowPos.y;
-
-			glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
-			glm::vec3 rayDir = Application->input->getMousePickRay();
-
-			for (auto& gameObject : Application->root->currentScene->children())
-			{
-				if (gameObject->HasComponent<MeshRenderer>())
-				{
-					BoundingBox bBox = gameObject->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-					if (CheckRayAABBCollision(rayOrigin, rayDir, bBox))
-					{
-						Application->input->ClearSelection();
-						Application->input->AddToSelection(gameObject.get());
-					}
-				}
 			}
 		}
 	}

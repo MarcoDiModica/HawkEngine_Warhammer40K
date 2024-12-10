@@ -24,9 +24,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
@@ -75,9 +72,6 @@
     <ClCompile Include="UISceneWindow.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
-    <ClCompile Include="Gizmos.cpp">
-      <Filter>EditorModules</Filter>
-    </ClCompile>
     <ClCompile Include="SceneSerializer.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
@@ -89,9 +83,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Transform.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="App.h">
       <Filter>Main</Filter>
     </ClInclude>
@@ -138,9 +129,6 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UISceneWindow.h">
-      <Filter>EditorModules</Filter>
-    </ClInclude>
-    <ClInclude Include="Gizmos.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="SceneSerializer.h">

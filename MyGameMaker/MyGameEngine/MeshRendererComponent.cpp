@@ -12,7 +12,6 @@
 //cosailegal
 #include "../MyGameEditor/App.h"
 #include "../MyGameEditor/EditorCamera.h"
-#include "../MyGameEditor/Transform.h"
 
 MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) { name = "MeshRenderer"; }
 

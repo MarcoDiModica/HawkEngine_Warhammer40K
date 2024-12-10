@@ -238,10 +238,10 @@ static void display_func() {
 		}
 	}
 
-	// Si no se ha detectado ninguna colisión, se deselecciona cualquier objeto seleccionado
-	if (!hitSomething && Application->input->GetMouseButton(1) == KEY_DOWN) {
-		Application->input->ClearSelection();
-	}
+	//// Si no se ha detectado ninguna colisión, se deselecciona cualquier objeto seleccionado
+	//if (!hitSomething && Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused) {
+	//	Application->input->ClearSelection();
+	//}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

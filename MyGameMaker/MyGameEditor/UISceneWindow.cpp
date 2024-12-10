@@ -222,6 +222,15 @@ bool UISceneWindow::Draw()
 				selectedObject->GetTransform()->SetMatrix(newMatrix);
 			}
 		}
+
+		if (ImGui::IsWindowHovered())
+		{
+			isFoucused = true;
+		}
+		else
+		{
+			isFoucused = false;
+		}
 	}
 	ImGui::End();
 

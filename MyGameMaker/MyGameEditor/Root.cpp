@@ -45,20 +45,11 @@ void MakeCity() {
 
 bool Root::Awake()
 {
-<<<<<<< HEAD
-    //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
-    //MakeCity();
-
-    CreateScene("Hola");
-    SetActiveScene("Hola");
-=======
    // Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //MakeCity();
 
     Application->root->CreateScene("Adios");
     Application->root->SetActiveScene("Adios");
-    
->>>>>>> fa10807745d106fc575dac1aeda613f0b43a4a91
 
     return true;
 }

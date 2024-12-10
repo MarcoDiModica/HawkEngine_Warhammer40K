@@ -20,7 +20,6 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 	folderIcon = new Image();
 	folderIcon->LoadTexture("Assets/Icons/folder_icon.png");
 
-
 	fbxIcon = new Image();
 	//fbxIcon->LoadTexture("Assets/Icons/fbx_icon.png");
 	fbxIcon->LoadTexture("Assets/Icons/folder_icon.png");
@@ -59,53 +58,67 @@ bool UIProject::Draw()
 	ImGui::SetNextWindowClass(&windowClass);
 	windowClass.DockingAllowUnclassed = false;
 
-	if (ImGui::Begin("Project", &enabled, projectFlags))
+	bool windowActive = ImGui::Begin("Project", &enabled, projectFlags);
+
+	ImGuiDockNode* dockNode = ImGui::GetWindowDockNode();
+	bool isDocked = (dockNode != nullptr);
+
+	bool isMinimized = (isDocked && (dockNode->Size.x <= 0.0f || dockNode->Size.y <= 0.0f));
+
+	if (isMinimized || !windowActive)
 	{
-		static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
+		ImGui::End();
+		ImGui::PopStyleVar();
+		return true;
+	}
 
-		if (ImGui::BeginTable("Table", 2, tableFlags))
+	static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
+
+	if (ImGui::BeginTable("Table", 2, tableFlags))
+	{
+		ImGui::TableNextColumn();
+		if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
-			ImGui::TableNextColumn();
-			if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
+			uint32_t count = 0;
+			// Esto no sé si está bien
+			for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
 			{
-				uint32_t count = 0;
-				// Esto no sé si está bien
-				for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
-				{
-					count++;
-				}
-
-				static int selectionMask = 0;
-
-				auto clickState = DirectoryView(directoryPath, &count, &selectionMask);
-
-				if (clickState.first) // Esto es para la selección múltiple
-				{
-					if (ImGui::GetIO().KeyCtrl)
-					{
-						selectionMask ^= BIT(clickState.second);
-					}
-					else
-					{
-						selectionMask = BIT(clickState.second);
-					}
-				}
-
+				count++;
 			}
 
-			ImGui::TableNextColumn();
+			static int selectionMask = 0;
 
-			// Aquí creo que va algo
-			ImGui::Text("Properties or Preview here...");
-			ImGui::EndTable();
+			auto clickState = DirectoryView(directoryPath, &count, &selectionMask);
+
+			if (clickState.first) // Esto es para la selección múltiple
+			{
+				if (ImGui::GetIO().KeyCtrl)
+				{
+					selectionMask ^= BIT(clickState.second);
+				}
+				else
+				{
+					selectionMask = BIT(clickState.second);
+				}
+			}
+
 		}
 
-		ImGui::PopStyleVar();
-		ImGui::End();
+		ImGui::TableNextColumn();
+
+		// Aquí creo que va algo
+		ImGui::Text("Properties or Preview here...");
+		ImGui::EndTable();
 	}
+
+	ImGui::PopStyleVar();
+	ImGui::End();
 
 	return true;
 }
+
+
+
 
 std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& path, uint32_t* count, int* selection_mask)
 {

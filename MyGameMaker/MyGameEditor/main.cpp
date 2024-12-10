@@ -179,25 +179,16 @@ static void display_func() {
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
 
-	std::stack<GameObject*> objectStack;
-
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
-		objectStack.push(Application->root->currentScene->children()[i].get());
-	}
+		GameObject* object = Application->root->currentScene->children()[i].get();
 
-	bool hitSomething = false; // Variable para rastrear si se ha detectado una colisión
-
-	while (!objectStack.empty())
-	{
-		GameObject* object = objectStack.top();
-		objectStack.pop();
-
-		object->Update(0.16f);
+		object->Update(Application->GetDt());
 
 		if (object->HasComponent<MeshRenderer>()) {
 
 			BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+
 			bbox = object->GetTransform()->GetMatrix() * bbox;
 
 			if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
@@ -208,40 +199,17 @@ static void display_func() {
 
 			if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
 			{
-				hitSomething = true; // Se ha detectado una colisión
-
 				Application->input->SetDraggedGameObject(object);
-
-				if (Application->input->GetMouseButton(1) == KEY_DOWN) {
-					if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
-						// Si Control está presionado, alterna la selección
-						if (Application->input->IsGameObjectSelected(object)) {
-							Application->input->RemoveFromSelection(object);
-						}
-						else {
-							Application->input->AddToSelection(object);
-						}
-					}
-					else {
-						// Si Control no está presionado, selecciona solo este objeto
-						Application->input->ClearSelection();
-						Application->input->AddToSelection(object);
-					}
-				}
 			}
-		}
 
-		// Agregar los hijos del objeto actual a la pila
-		for (size_t i = 0; i < object->GetChildren().size(); ++i)
-		{
-			objectStack.push(object->GetChildren()[i].get());
+			if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused)
+				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+				{
+					Application->input->ClearSelection();
+					Application->input->AddToSelection(object);
+				}
 		}
 	}
-
-	//// Si no se ha detectado ninguna colisión, se deselecciona cualquier objeto seleccionado
-	//if (!hitSomething && Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused) {
-	//	Application->input->ClearSelection();
-	//}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -418,22 +418,23 @@ bool Mesh::Decode(const YAML::Node& node)
 	return true;
 }
 
-void Mesh::Save(const std::string& filename) const 
+void Mesh::Save(const std::string& filename)  
 {
 	std::string fullPath = "Library/Mesh" + filename + ".mesh";
 
 	if (!std::filesystem::exists("Library")) {
 		std::filesystem::create_directory("Library");
 	}
+	meshPath = "Library/Mesh" + filename + ".mesh";
 
-	LOG(LogType::LOG_INFO, "Guardando malla en: %s", fullPath.c_str());
+	LOG(LogType::LOG_INFO, "Saving mesh in: %s", fullPath.c_str());
 
 	std::ofstream fout(fullPath);
 	YAML::Emitter out;
 	out << Encode();
 	fout << out.c_str();
 
-	LOG(LogType::LOG_INFO, "Malla guardada correctamente");
+	LOG(LogType::LOG_INFO, "Mesh correctly saved");
 }
 
 std::shared_ptr<Mesh> Mesh::Load(const std::string& filename) 

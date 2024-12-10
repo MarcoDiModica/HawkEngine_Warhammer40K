@@ -1,7 +1,8 @@
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "ModelImporter.h"
 #include <map>
 #include <filesystem>
+#include <fstream>
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
@@ -218,6 +219,16 @@ void ModelImporter::loadFromFile(const std::string& path) {
 		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
 	aiGetErrorString();
 	meshes = createMeshesFromFBX(*fbx_scene);
+
+	// save each imported mesh to library
+	for (unsigned int i = 0; i < fbx_scene->mNumMeshes; ++i) {
+
+		const aiMesh* mesh = fbx_scene->mMeshes[i];
+
+		meshes[i]->Save(mesh->mName.C_Str());
+
+	}
+
 	const auto materials = createMaterialsFromFBX(*fbx_scene, fs::absolute(path).parent_path());
 
 
@@ -225,4 +236,35 @@ void ModelImporter::loadFromFile(const std::string& path) {
 	/*GameObject fbx_obj =*/ graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);
 	aiReleaseImport(fbx_scene);
 	//return std::make_shared<GameObject>(fbx_obj);
+}
+
+void EncodeFBXScene(const std::string path, std::vector<std::shared_ptr<Mesh>> meshes, aiScene* fbx_scene) {
+
+	std::string fullPath = "Library/Mesh" + path + ".mesh";
+	FILE* file = fopen(path.c_str(), "w");
+
+	if (file == nullptr) {
+		//LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str());
+	}
+	else {
+
+		YAML::Emitter emitter;
+		YAML::Node parent_node;
+		/* Save ech node each mesh into the file */
+		for (int i = 0; i < meshes.size(); ++i) {
+		
+			parent_node[fbx_scene->mMeshes[i]->mName.C_Str()] = meshes[i]->Encode();
+		}
+
+		
+		if (file != nullptr) {
+			/* Write the YAML content to the file */
+			fwrite(emitter.c_str(), sizeof(char), emitter.size(), file);
+
+			fclose(file);
+		}
+		else {
+			perror("Error opening file");
+		}
+	}
 }

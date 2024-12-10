@@ -21,11 +21,9 @@ class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
 
-bool Root::Awake()
-{
-    CreateScene("HolaBuenas");
-
-    SetActiveScene("HolaBuenas");
+void MakeCity() {
+    Application->root->CreateScene("HolaBuenas");
+    Application->root->SetActiveScene("HolaBuenas");
     auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
 
@@ -36,18 +34,19 @@ bool Root::Awake()
         auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
 
         auto go = Application->root->CreateGameObject("GameObject");
-		auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
+        auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
         Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
-		go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
+        go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
-
-        //Application->root->currentScene->AddGameObject(MarcoVicePresidente2);
-
-
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
     }
 
-    
+}
+
+bool Root::Awake()
+{
+    //Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
+    MakeCity();
 
     
 

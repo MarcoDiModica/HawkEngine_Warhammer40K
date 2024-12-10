@@ -65,7 +65,7 @@ public:
     YAML::Node Encode() const;
     bool Decode(const YAML::Node& node);
 
-    void Save(const std::string& filename) const;
+    void Save(const std::string& filename);
     static std::shared_ptr<Mesh> Load(const std::string& filename);
 
 protected:
@@ -73,6 +73,7 @@ protected:
     friend class MeshRenderer;
 
     std::string filePath;
+    std::string meshPath;
 
 };
 

@@ -175,27 +175,41 @@ void SceneSerializer::DeSerialize(std::string path) {
 
 							auto _mesh = std::make_shared<Mesh>();
 							if (value["mesh_path"]) {
+								std::string path = value["mesh_path"].as<std::string>();
 
-								std::string meshPath = value["mesh_path"].as<std::string>();
-								std::string node_name = value["mesh_name"].as<std::string>();
-
-								//TODO MARCO , create some file loader / methods module for this
-
-								FILE* file = fopen(meshPath.c_str(), "r");
-
-								// If fopen fails, file will be null
-								if (file == nullptr) { LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str()); }
-								else {
-
-									fclose(file); /*Close file*/
-
-									YAML::Node meshNode = YAML::LoadFile(meshPath);
-
-									if (node_name != "") { 
-										_mesh->Decode(meshNode);
+								if (path.substr(0, 6) == "shapes") {
+									if (path.find("cube") != std::string::npos) {
+										_mesh = Mesh::CreateCube();
 									}
-									else { 
-										_mesh->Decode(meshNode[node_name]);
+									else if (path.find("sphere") != std::string::npos) {
+										_mesh = Mesh::CreateSphere();
+									}
+									else if (path.find("plane") != std::string::npos) {
+										_mesh = Mesh::CreatePlane();
+									}
+								}
+								else {
+									std::string meshPath = value["mesh_path"].as<std::string>();
+									std::string node_name = value["mesh_name"].as<std::string>();
+
+									//TODO MARCO , create some file loader / methods module for this
+
+									FILE* file = fopen(meshPath.c_str(), "r");
+
+									// If fopen fails, file will be null
+									if (file == nullptr) { LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str()); }
+									else {
+
+										fclose(file); /*Close file*/
+
+										YAML::Node meshNode = YAML::LoadFile(meshPath);
+
+										if (node_name != "") {
+											_mesh->Decode(meshNode);
+										}
+										else {
+											_mesh->Decode(meshNode[node_name]);
+										}
 									}
 								}
 							}
@@ -244,51 +258,48 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 					auto _mesh = std::make_shared<Mesh>();
 					if (value["mesh_path"]) {
 
-						std::string meshPath = value["mesh_path"].as<std::string>();
-						std::string node_name = value["mesh_name"].as<std::string>();
+						std::string path = value["mesh_path"].as<std::string>();
 
-						//TODO MARCO , create some file loader / methods module for this
-
-						FILE* file = fopen(meshPath.c_str(), "r");
-
-						// If fopen fails, file will be null
-						if (file == nullptr) { LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str()); }
+						if (path.substr(0, 6) == "shapes") {
+							if (path.find("cube") != std::string::npos) {
+								_mesh = Mesh::CreateCube();
+							}
+							else if (path.find("sphere") != std::string::npos) {
+								_mesh = Mesh::CreateSphere();
+							}
+							else if (path.find("plane") != std::string::npos) {
+								_mesh = Mesh::CreatePlane();
+							}
+						}
 						else {
 
-							fclose(file); /*Close file*/
+							std::string meshPath = value["mesh_path"].as<std::string>();
+							std::string node_name = value["mesh_name"].as<std::string>();
 
-							if (strcmp( meshPath.c_str() , _mesh_path.c_str() ) != 0) {
-								_mesh_path = meshPath;
-								mesh_root_node = YAML::LoadFile(meshPath);
-							}
+							//TODO MARCO , create some file loader / methods module for this
 
-							if (node_name == "") { 
-								_mesh->Decode(mesh_root_node);
-							}
-							else{
-								_mesh->Decode(mesh_root_node[node_name]);
+							FILE* file = fopen(meshPath.c_str(), "r");
+
+							// If fopen fails, file will be null
+							if (file == nullptr) { LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str()); }
+							else {
+
+								fclose(file); /*Close file*/
+
+								if (strcmp(meshPath.c_str(), _mesh_path.c_str()) != 0) {
+									_mesh_path = meshPath;
+									mesh_root_node = YAML::LoadFile(meshPath);
+								}
+
+								if (node_name == "") {
+									_mesh->Decode(mesh_root_node);
+								}
+								else {
+									_mesh->Decode(mesh_root_node[node_name]);
+								}
 							}
 						}
 					}
-
-
-
-					/*std::string path = value["mesh_path"].as<std::string>();
-
-					if (path.substr(0, 6) == "shapes") {
-						if (path.find("cube")) {
-							_mesh = Mesh::CreateCube();
-						}
-						else if (path.find("sphere")) {
-							_mesh = Mesh::CreateSphere();
-						}
-						else if (path.find("plane")) {
-							_mesh = Mesh::CreatePlane();
-						}
-					}
-					else {
-						_mesh->LoadMesh(path.c_str());
-					}*/
 
 					// TODO , add default img
 					Application->root->AddMeshRenderer(*game_obj, _mesh);

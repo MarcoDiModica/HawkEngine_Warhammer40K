@@ -25,7 +25,7 @@ struct OctreeNode {
 
 
 	BoundingBox bbox;
-	std::vector<GameObject> contained_objects; // objects contained in the bbox
+	std::vector<std::weak_ptr<GameObject>> contained_objects; // objects contained in the bbox
 	OctreeNode* children [8] = { nullptr };
 
 	bool isLeaf() const {
@@ -33,6 +33,26 @@ struct OctreeNode {
 		if (children[0] == nullptr) { return true; }
 
 		return false;
+	}
+
+	void removeObject(GameObject& obj) {
+
+		for (int i = 0; i < contained_objects.size(); ++i) {
+
+			if (contained_objects[i].lock() == nullptr) {
+				contained_objects.erase(contained_objects.begin() + i);
+				return;
+			}
+
+			if (obj == *contained_objects[i].lock()) {
+				
+				contained_objects.erase(contained_objects.begin() + i);
+				return;
+			}
+		}
+
+		return;
+
 	}
 
 
@@ -85,7 +105,7 @@ private:
 	int max_points_per_node;
 
 	void Subdivide(OctreeNode* node);
-	void Insert(OctreeNode* node, const GameObject& go, int depth = 0);
+	void Insert(OctreeNode* node,  GameObject& go, int depth = 0);
 
 
 	std::vector<GameObject> query(OctreeNode* node, const BoundingBox& region) const {
@@ -93,8 +113,9 @@ private:
 
 		if (!node || !node->bbox.intersects(region)) return result;
 
-		for (const auto& obj : node->contained_objects) {
-			if (region.contains(obj)) result.push_back(obj);
+		for (const auto obj : node->contained_objects) {
+			std::shared_ptr<GameObject> object = obj.lock();
+			if (region.contains(*object)) result.push_back(*object);
 		}
 
 		// Recurse into children

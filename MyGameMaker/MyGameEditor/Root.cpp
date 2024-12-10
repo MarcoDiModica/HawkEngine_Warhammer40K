@@ -48,8 +48,8 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //MakeCity();
 
-    Application->root->CreateScene("Adios");
-    Application->root->SetActiveScene("Adios");
+    Application->scene_serializer->DeSerialize("Assets/Adios.scene");
+
 
     return true;
 }

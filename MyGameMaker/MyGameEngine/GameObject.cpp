@@ -22,6 +22,10 @@ GameObject::~GameObject()
     for (auto& child : children) {
         child->Destroy();
     }
+
+    if (node != nullptr) {
+        node->removeObject(*this);
+    }
 }
 
 GameObject::GameObject(const GameObject& other) :

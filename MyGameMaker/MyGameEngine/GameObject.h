@@ -8,6 +8,7 @@
 
 class SceneSerializer;
 class Scene;
+class OctreeNode;
 
 enum class DrawMode
 {
@@ -85,8 +86,11 @@ public:
     bool isSelected = false;
     bool isStatic = false;
 
+    OctreeNode* node = nullptr;
+
 private:
     friend class SceneSerializer;
+    friend class GameObject;
 
     void DrawAccumultedMatrix() const;
     void DrawInstancedMatrix() const;
@@ -106,6 +110,8 @@ private:
 
     //Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
+
+
 
 protected:
     friend class Scene;

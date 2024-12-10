@@ -39,8 +39,6 @@
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "App.h"
 
-#include "Gizmos.h"
-
 using namespace std;
 
 enum MainState
@@ -178,11 +176,39 @@ static void display_func() {
 
 	drawFloorGrid(16, 0.25);
 
+	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
+	glm::vec3 rayDirection = Application->input->getMousePickRay();
+
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
 		GameObject* object = Application->root->currentScene->children()[i].get();
 
 		object->Update(Application->GetDt());
+
+		if (object->HasComponent<MeshRenderer>()) {
+
+			BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+
+			bbox = object->GetTransform()->GetMatrix() * bbox;
+
+			if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
+									camera->frustum.left, camera->frustum.right,
+									camera->frustum.top, camera->frustum.bot })) {
+				continue; // Aquí omitimos el objeto si no está en el frustum
+			}
+
+			if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+			{
+				Application->input->SetDraggedGameObject(object);
+			}
+
+			if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused)
+				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+				{
+					Application->input->ClearSelection();
+					Application->input->AddToSelection(object);
+				}
+		}
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

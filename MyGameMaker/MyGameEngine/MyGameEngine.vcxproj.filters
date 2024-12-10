@@ -15,6 +15,7 @@
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="LightComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -35,5 +36,6 @@
     <ClInclude Include="TreeExt.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="LightComponent.h" />
   </ItemGroup>
 </Project>

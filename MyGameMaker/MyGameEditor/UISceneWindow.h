@@ -20,6 +20,8 @@ public:
     vec2 winMousePos = vec2(0, 0);
     glm::vec3 gizmoOriginalScale = glm::vec3(1.0f);
 
+    bool isFoucused = false;
+
     glm::vec3 ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y);
     glm::vec3 GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y);
     bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox);

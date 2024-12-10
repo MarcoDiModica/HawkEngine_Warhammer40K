@@ -254,8 +254,10 @@ void Input::HandleFileDrop(const std::string& fileDir)
             auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
 
             auto go = Application->root->CreateGameObject("GameObject");
+            auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
+          
             Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
-
+            go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
             go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
 
             //Application->root->currentScene->AddGameObject(MarcoVicePresidente2);

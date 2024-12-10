@@ -24,27 +24,29 @@ Root::Root(App* app) : Module(app) { ; }
 bool Root::Awake()
 {
     CreateScene("HolaBuenas");
-    SetActiveScene("HolaBuenas");
-    
-    //Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
- //   auto MarcoVicePresidente = CreateGameObject("BakerHouse");
- //   MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
 
- //   ModelImporter meshImp;
-	//meshImp.loadFromFile("Assets/Meshes/BakerHouse.fbx");
- //   
- //   for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
- //       auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
-	//	//mesh = meshImp.meshes[i];
- //       //AddMeshRenderer(*MarcoVicePresidente2, mesh, "Assets/Baker_house.png");
- //       
- //       currentScene->AddGameObject(MarcoVicePresidente2);
- //       //if (currentScene->_children[i]->GetTransform()->GetPosition() == vec3(0,0,0)) {
- //       //    int a = 0;
- //       //}
- //   
-	//	ParentGameObject(*MarcoVicePresidente2, *MarcoVicePresidente);
-	//}
+    SetActiveScene("HolaBuenas");
+    auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
+    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+
+    ModelImporter meshImp;
+    meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
+
+    for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
+        auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
+
+        auto go = Application->root->CreateGameObject("GameObject");
+		auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
+        Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
+		go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
+        go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+
+        //Application->root->currentScene->AddGameObject(MarcoVicePresidente2);
+
+
+        Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+    }
+
     
 
     

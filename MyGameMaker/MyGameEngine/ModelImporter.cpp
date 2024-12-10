@@ -220,14 +220,17 @@ void ModelImporter::loadFromFile(const std::string& path) {
 	aiGetErrorString();
 	meshes = createMeshesFromFBX(*fbx_scene);
 
-	// save each imported mesh to library
+	// must giv name to the meshes
+
 	for (unsigned int i = 0; i < fbx_scene->mNumMeshes; ++i) {
 
 		const aiMesh* mesh = fbx_scene->mMeshes[i];
 
-		meshes[i]->Save(mesh->mName.C_Str());
+		meshes[i]->name = std::string(mesh->mName.C_Str());
 
 	}
+
+	EncodeFBXScene(path, meshes, fbx_scene);
 
 	const auto materials = createMaterialsFromFBX(*fbx_scene, fs::absolute(path).parent_path());
 
@@ -238,12 +241,14 @@ void ModelImporter::loadFromFile(const std::string& path) {
 	//return std::make_shared<GameObject>(fbx_obj);
 }
 
-void EncodeFBXScene(const std::string path, std::vector<std::shared_ptr<Mesh>> meshes, aiScene* fbx_scene) {
+void ModelImporter::EncodeFBXScene(const std::string path, std::vector<std::shared_ptr<Mesh>> meshes,const aiScene* fbx_scene) {
 
-	std::string fullPath = "Library/Mesh" + path + ".mesh";
-	FILE* file = fopen(path.c_str(), "w");
+	std::string name = path; name.erase(0, 14);
+	std::string fullPath = "Library/Mesh/" + name + ".mesh";
+	FILE* file = fopen(fullPath.c_str(), "w");
 
 	if (file == nullptr) {
+		int a = 4;
 		//LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str());
 	}
 	else {
@@ -252,11 +257,11 @@ void EncodeFBXScene(const std::string path, std::vector<std::shared_ptr<Mesh>> m
 		YAML::Node parent_node;
 		/* Save ech node each mesh into the file */
 		for (int i = 0; i < meshes.size(); ++i) {
-		
+			meshes[i]->filePath = fullPath;
 			parent_node[fbx_scene->mMeshes[i]->mName.C_Str()] = meshes[i]->Encode();
 		}
 
-		
+		emitter << parent_node;
 		if (file != nullptr) {
 			/* Write the YAML content to the file */
 			fwrite(emitter.c_str(), sizeof(char), emitter.size(), file);

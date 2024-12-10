@@ -407,8 +407,8 @@ bool Mesh::Decode(const YAML::Node& node)
 	_vertices = node["vertices"].as<std::vector<glm::vec3>>();
 	_indices = node["indices"].as<std::vector<unsigned int>>();
 	_normals = node["normals"].as<std::vector<glm::vec3>>();
-	_boundingBox.min = node["boundingBox"]["min"].as<glm::vec3>();
-	_boundingBox.max = node["boundingBox"]["max"].as<glm::vec3>();
+	/*_boundingBox.min = node["boundingBox"]["min"].as<glm::vec3>();
+	_boundingBox.max = node["boundingBox"]["max"].as<glm::vec3>();*/
 	filePath = node["filePath"].as<std::string>();
 
 	vertices_buffer.LoadData(_vertices.data(), _vertices.size() * sizeof(glm::vec3));

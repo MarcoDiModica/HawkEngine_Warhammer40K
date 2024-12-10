@@ -24,7 +24,8 @@ public:
 
 	GameObject& DeSerializeChild(YAML::Node _node);
 
-
+	std::string _mesh_path = "";
+	YAML::Node mesh_root_node;
 };
 
 

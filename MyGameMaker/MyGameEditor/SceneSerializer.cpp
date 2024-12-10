@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <cstring>
 #include <iostream>
 #include <fstream>
 
@@ -106,6 +107,8 @@ void SceneSerializer::DeSerialize(std::string path) {
 	YAML::Emitter emitter;
 	YAML::Node root = YAML::LoadFile(path);
 
+
+
 	LOG(LogType::LOG_INFO, "Deserializando escena: %s", path.c_str());
 
 	if (root.IsNull()) {
@@ -170,27 +173,29 @@ void SceneSerializer::DeSerialize(std::string path) {
 						if (component_name == "MeshRenderer") {
 
 							auto _mesh = std::make_shared<Mesh>();
-							if (value["mesh"]) {
+							if (value["mesh_path"]) {
 
-								std::string meshPath = value["mesh"].as<std::string>();
+								std::string meshPath = value["mesh_path"].as<std::string>();
+								std::string node_name = value["mesh_name"].as<std::string>();
 
 								//TODO MARCO , create some file loader / methods module for this
 
 								FILE* file = fopen(meshPath.c_str(), "r");
 
 								// If fopen fails, file will be null
-								if (file == nullptr) {
-									LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str());
-								}
+								if (file == nullptr) { LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str()); }
 								else {
 
 									fclose(file); /*Close file*/
 
 									YAML::Node meshNode = YAML::LoadFile(meshPath);
 
-									// if submeshs are astored in a sigle file
-
-									_mesh->Decode(meshNode);
+									if (node_name != "") { 
+										_mesh->Decode(meshNode);
+									}
+									else { 
+										_mesh->Decode(meshNode[node_name]);
+									}
 								}
 							}
 
@@ -228,6 +233,10 @@ void SceneSerializer::DeSerialize(std::string path) {
 
 		}
 	}
+
+	// Reassign to delete memory, works like smart ptr
+	mesh_root_node = YAML::Node();
+
 }
 
 GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node) {
@@ -249,25 +258,32 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node) {
 				if (component_name == "MeshRenderer") {
 
 					auto _mesh = std::make_shared<Mesh>();
-					if (value["mesh"]) {
+					if (value["mesh_path"]) {
 
-						std::string meshPath = value["mesh"].as<std::string>();
+						std::string meshPath = value["mesh_path"].as<std::string>();
+						std::string node_name = value["mesh_name"].as<std::string>();
 
 						//TODO MARCO , create some file loader / methods module for this
 
 						FILE* file = fopen(meshPath.c_str(), "r");
 
 						// If fopen fails, file will be null
-						if (file == nullptr) {
-							LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str());
-						}
+						if (file == nullptr) { LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str()); }
 						else {
 
 							fclose(file); /*Close file*/
 
-							YAML::Node meshNode = YAML::LoadFile(meshPath);
+							if (strcmp( meshPath.c_str() , _mesh_path.c_str() ) != 0) {
+								_mesh_path = meshPath;
+								mesh_root_node = YAML::LoadFile(meshPath);
+							}
 
-							_mesh->Decode(meshNode);
+							if (node_name == "") { 
+								_mesh->Decode(mesh_root_node);
+							}
+							else{
+								_mesh->Decode(mesh_root_node[node_name]);
+							}
 						}
 					}
 

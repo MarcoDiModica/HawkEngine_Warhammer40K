@@ -1,0 +1,218 @@
+GameObject0:
+  name: BakerHouse
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    matrix:
+      row0:
+        col0: 1
+        col1: 0
+        col2: 0
+        col3: 0
+      row1:
+        col0: 0
+        col1: 1
+        col2: 0
+        col3: 0
+      row2:
+        col0: 0
+        col1: 0
+        col2: 1
+        col3: 0
+      row3:
+        col0: 0
+        col1: 0
+        col2: 0
+        col3: 1
+  Child0:
+    name: GameObject
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      matrix:
+        row0:
+          col0: 1
+          col1: 0
+          col2: 0
+          col3: 0
+        row1:
+          col0: 0
+          col1: 1
+          col2: 0
+          col3: 0
+        row2:
+          col0: 0
+          col1: 0
+          col2: 1
+          col3: 0
+        row3:
+          col0: -41.47589111328125
+          col1: 21.01409912109375
+          col2: 0
+          col3: 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      image_path: Assets/default.png
+      mesh_name: City_building_004
+  Child1:
+    name: GameObject
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      matrix:
+        row0:
+          col0: 1
+          col1: 0
+          col2: 0
+          col3: 0
+        row1:
+          col0: 0
+          col1: 1
+          col2: 0
+          col3: 0
+        row2:
+          col0: 0
+          col1: 0
+          col2: 1
+          col3: 0
+        row3:
+          col0: 17.707164764404297
+          col1: 20.053276062011719
+          col2: 2.1210729528320371e-07
+          col3: 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      image_path: Assets/default.png
+      mesh_name: City_building_001
+  Child2:
+    name: GameObject
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      matrix:
+        row0:
+          col0: 1
+          col1: 0
+          col2: 0
+          col3: 0
+        row1:
+          col0: 0
+          col1: 1
+          col2: 0
+          col3: 0
+        row2:
+          col0: 0
+          col1: 0
+          col2: 1
+          col3: 0
+        row3:
+          col0: 16.010492324829102
+          col1: 37.4932861328125
+          col2: -1.5106878663573298e-06
+          col3: 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      image_path: Assets/default.png
+      mesh_name: City_building_007
+  Child3:
+    name: GameObject
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      matrix:
+        row0:
+          col0: 1
+          col1: 0
+          col2: 0
+          col3: 0
+        row1:
+          col0: 0
+          col1: 1
+          col2: 0
+          col3: 0
+        row2:
+          col0: 0
+          col1: 0
+          col2: 1
+          col3: 0
+        row3:
+          col0: 40.979995727539062
+          col1: 18.270824432373047
+          col2: -2.0522466002148576e-06
+          col3: 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      image_path: Assets/default.png
+      mesh_name: City_building_008
+  Child4:
+    name: GameObject
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      matrix:
+        row0:
+          col0: 1
+          col1: 0
+          col2: 0
+          col3: 0
+        row1:
+          col0: 0
+          col1: 1
+          col2: 0
+          col3: 0
+        row2:
+          col0: 0
+          col1: 0
+          col2: 1
+          col3: 0
+        row3:
+          col0: -2.1597719192504883
+          col1: 1.8538382053375244
+          col2: 0
+          col3: 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      image_path: Assets/default.png
+      mesh_name: Line002
+  Child5:
+    name: GameObject
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      matrix:
+        row0:
+          col0: 1
+          col1: 0
+          col2: 0
+          col3: 0
+        row1:
+          col0: 0
+          col1: 1
+          col2: 0
+          col3: 0
+        row2:
+          col0: 0
+          col1: 0
+          col2: 1
+          col3: 0
+        row3:
+          col0: -0.02860260009765625
+          col1: 0.026032090187072754
+          col2: 0
+          col3: 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      image_path: Assets/default.png
+      mesh_name: Plane001

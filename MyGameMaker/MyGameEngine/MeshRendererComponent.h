@@ -49,6 +49,7 @@ protected:
 
         node["mesh_path"] = mesh->filePath;
         node["image_path"] = image->image_path;
+        node["mesh_name"] = mesh->name;
 
         return node;
     }

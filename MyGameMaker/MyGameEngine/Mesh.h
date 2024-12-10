@@ -71,9 +71,11 @@ public:
 protected:
 
     friend class MeshRenderer;
+    friend class ModelImporter;
 
     std::string filePath;
     std::string meshPath;
+    std::string name;
 
 };
 

@@ -15,6 +15,14 @@ struct OctreeNode {
 		this->bbox = bbox;
 	}
 
+	~OctreeNode() {
+		/* Recursively delete all child nodes */
+		for (int i = 0; i < 8; ++i) {
+			delete children[i]; 
+		}
+
+	}
+
 
 	BoundingBox bbox;
 	std::vector<GameObject> contained_objects; // objects contained in the bbox
@@ -68,6 +76,7 @@ public:
 private:
 	friend class Scene;
 	friend class GameObject;
+	friend class Root;
 
 	OctreeNode* root;
 	// limit as to how much the octree can subdivide

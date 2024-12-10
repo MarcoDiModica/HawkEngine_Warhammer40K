@@ -33,7 +33,7 @@ public:
 
 	auto children()const { return readOnlyVector<std::shared_ptr<GameObject>>(_children); }
 
-	std::shared_ptr<Octree> tree; // change to unique
+	Octree* tree = nullptr; // change to unique
 
 private:
 	friend class GameObject;

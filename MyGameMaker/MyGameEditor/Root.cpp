@@ -45,9 +45,11 @@ void MakeCity() {
 
 bool Root::Awake()
 {
-    Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
+   // Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //MakeCity();
 
+    Application->root->CreateScene("Adios");
+    Application->root->SetActiveScene("Adios");
     
 
     return true;
@@ -88,15 +90,24 @@ bool Root::Update(double dt) {
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
     currentScene->DebugDrawTree();
 
-    for (shared_ptr<GameObject> object : currentScene->_children)
-    {
-        object->Update(dt);
-    }
+    currentScene->Update(dt);
 
     if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
 
-        //destroy scene
+        if (currentScene->tree == nullptr) {
+            currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 5);
+            for (auto child : currentScene->children()) {
+                currentScene->tree->Insert(currentScene->tree->root, *child, 0);
+            }
+
+        }
+        else {
+            delete currentScene->tree;
+            currentScene->tree = nullptr;
+            int a = 7;
+        }
     }
+
 
 
     //if press 1 active scene Viernes13 and press 2 active scene Salimos

@@ -234,8 +234,6 @@ void ModelImporter::loadFromFile(const std::string& path) {
 
 	const auto materials = createMaterialsFromFBX(*fbx_scene, fs::absolute(path).parent_path());
 
-
-
 	/*GameObject fbx_obj =*/ graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);
 	aiReleaseImport(fbx_scene);
 	//return std::make_shared<GameObject>(fbx_obj);

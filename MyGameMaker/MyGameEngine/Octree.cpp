@@ -61,6 +61,7 @@ void Octree::Insert(OctreeNode* node, const GameObject& obj, int depth) {
 void Octree::Subdivide(OctreeNode* node) {
    auto subBounds = node->bbox.subdivide();
     for (size_t i = 0; i < 8; ++i) {
+        /* Alocate memory for new children */
         node->children[i] = new OctreeNode(subBounds[i]);
 
     }

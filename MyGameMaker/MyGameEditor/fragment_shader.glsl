@@ -50,8 +50,10 @@ void main()
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
 
     // Point lights
-   
-    result += CalcPointLight(pointLights, norm, FragPos, viewDir);
+    for (int i = 0; i < MAX_POINT_LIGHTS; ++i) 
+    {
+        //result += CalcPointLight(pointLights, norm, FragPos, viewDir);
+    }
     
     
     // Sample the texture using the texture coordinates

@@ -28,7 +28,7 @@ void MakeCity() {
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
 
     ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
+    meshImp.loadFromFile("Assets/Meshes/BakerHouse.fbx");
 
     for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
         auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
@@ -45,8 +45,8 @@ void MakeCity() {
 
 bool Root::Awake()
 {
-    Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
-    //MakeCity();
+    //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
+    MakeCity();
 
     
 

@@ -87,36 +87,32 @@ void MeshRenderer::Render() const
 
     if (material && material->useShader)
     {
-        material->bindShaders();
-        material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-        material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
-        material->setShaderUniform("modColor", glm::vec4( 1,0.2f,0,1));
-        if (material->GetColor().x > 0) 
-        {
-            material->GetColor();
-        }
-        glUniform4f(glGetUniformLocation(material->shader.GetProgram(), "modColor"), material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
-        //material->setShaderUniform("model", owner->GetComponent<Transform_Component>()->GetMatrix());
-        material->setShaderUniform("view", Application->camera->view());
-        material->setShaderUniform("projection", Application->camera->projection());
+        //material->bindShaders();
+        //material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
+        //material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
+        //material->setShaderUniform("modColor", glm::vec4( 1,0.2f,0,1));
+        //glUniform4f(glGetUniformLocation(material->shader.GetProgram(), "modColor"), material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
+        ////material->setShaderUniform("model", owner->GetComponent<Transform_Component>()->GetMatrix());
+        //material->setShaderUniform("view", Application->camera->view());
+        //material->setShaderUniform("projection", Application->camera->projection());
 
-        material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        material->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-        material->setShaderUniform("dirLight.intensity", 3.0f);
+        //material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        //material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        //material->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        //material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+        //material->setShaderUniform("dirLight.intensity", 3.0f);
 
-        material->setShaderUniform("viewPos", Application->camera->GetTransform().GetPosition());
+        //material->setShaderUniform("viewPos", Application->camera->GetTransform().GetPosition());
 
-        material->setShaderUniform("pointLights.position", glm::vec3(0.0f, 0.0f, 0.0f));
-        material->setShaderUniform("pointLights.ambient", glm::vec3(0.2f, 0.8f, 0.2f));
-        material->setShaderUniform("pointLights.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        material->setShaderUniform("pointLights.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        material->setShaderUniform("pointLights.constant", 1.0f);
-        material->setShaderUniform("pointLights.linear", 0.09f);
-        material->setShaderUniform("pointLights.quadratic", 0.032f);
-        material->setShaderUniform("pointLights.radius", 1.0f);
-        material->setShaderUniform("pointLights.intensity", 2.5f);
+        //material->setShaderUniform("pointLights.position",   glm::vec3(0.0f, 0.0f, 0.0f));
+        //material->setShaderUniform("pointLights.ambient",    glm::vec3(0.2f, 0.8f, 0.2f));
+        //material->setShaderUniform("pointLights.diffuse",    glm::vec3(0.5f, 0.5f, 0.5f));
+        //material->setShaderUniform("pointLights.specular",   glm::vec3(1.0f, 1.0f, 1.0f));
+        //material->setShaderUniform("pointLights.constant",   1.0f);
+        //material->setShaderUniform("pointLights.linear",     0.09f);
+        //material->setShaderUniform("pointLights.quadratic",  0.032f);
+        //material->setShaderUniform("pointLights.radius",     1.0f);
+        //material->setShaderUniform("pointLights.intensity",  2.5f);
 
     }
 

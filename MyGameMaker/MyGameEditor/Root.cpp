@@ -45,7 +45,7 @@ void MakeCity() {
 
 bool Root::Awake()
 {
-   // Application->scene_serializer->DeSerialize("Assets/Adios.scene");
+    //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //MakeCity();
 
     Application->root->CreateScene("Adios");

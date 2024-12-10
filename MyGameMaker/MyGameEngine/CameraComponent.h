@@ -6,6 +6,7 @@
 #include "TransformComponent.h"
 
 class GameObject;
+class SceneSerializer;
 
 enum class ProjectionType { Perspective, Orthographic };
 
@@ -58,7 +59,48 @@ public:
     bool ShakeEnabled = false;
     bool frustrumCullingEnabled = true;
     bool frustrumRepresentation = true;
+
+    ProjectionType projectionType = ProjectionType::Perspective;
+
 private:
 
     void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
+
+protected:
+
+    friend class SceneSerializer;
+
+    YAML::Node encode() override
+    {
+		YAML::Node node = Component::encode();
+
+		node["projection_type"] = projectionType == ProjectionType::Perspective ? "perspective" : "orthographic";
+		node["fov"] = fov;
+		node["size"] = orthoSize;
+		node["near_plane"] = zNear;
+		node["far_plane"] = zFar;
+
+		return node;
+    }
+
+    bool decode(const YAML::Node& node) override
+	{
+        Component::decode(node);
+
+		if (!node["projection_type"] || !node["fov"] || !node["near_plane"] || !node["far_plane"])
+			return false;
+
+		std::string projection = node["projection_type"].as<std::string>();
+		if (projection == "perspective")
+			projectionType = ProjectionType::Perspective;
+		else if (projection == "orthographic")
+			projectionType = ProjectionType::Orthographic;
+
+		fov = node["fov"].as<float>();
+		orthoSize = node["size"].as<float>();
+		zNear = node["near_plane"].as<double>();
+		zFar = node["far_plane"].as<double>();
+
+		return true;
+	}
 };

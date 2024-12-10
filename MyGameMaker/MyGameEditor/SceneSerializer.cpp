@@ -8,6 +8,7 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
+#include "../MyGameEngine/CameraComponent.h"
 
 
 class MeshRenderer;
@@ -163,7 +164,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 				const std::string key = it->first.as<std::string>();
 				const YAML::Node& value = it->second;
 
-				if (key == "Transform_Component" || key == "MeshRenderer") {
+				if (key == "Transform_Component" || key == "MeshRenderer" || key == "CameraComponent") {
 					if (value["name"].IsDefined()) {
 						std::string component_name = value["name"].as<std::string>();
 
@@ -198,28 +199,11 @@ void SceneSerializer::DeSerialize(std::string path) {
 									}
 								}
 							}
-
-
-
-							/*std::string path = value["mesh_path"].as<std::string>();
-
-							if (path.substr(0, 6) == "shapes") {
-								if (path.find("cube")) {
-									_mesh = Mesh::CreateCube();
-								}
-								else if (path.find("sphere")) {
-									_mesh = Mesh::CreateSphere();
-								}
-								else if (path.find("plane")) {
-									_mesh = Mesh::CreatePlane();
-								}
-							}
-							else {
-								_mesh->LoadMesh(path.c_str());
-							}*/
-
 							// TODO , add default img
 							Application->root->AddMeshRenderer(*game_obj, _mesh);
+						}
+						if (component_name == "CameraComponent") {
+							game_obj->AddComponent<CameraComponent>()->decode(value);
 						}
 					}
 				}
@@ -248,7 +232,7 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 		const std::string key = it->first.as<std::string>();
 		const YAML::Node& value = it->second;
 
-		if (key == "Transform_Component" || key == "MeshRenderer") {
+		if (key == "Transform_Component" || key == "MeshRenderer" || key == "CameraComponent") {
 			if (value["name"].IsDefined()) {
 				std::string component_name = value["name"].as<std::string>();
 
@@ -308,6 +292,9 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 
 					// TODO , add default img
 					Application->root->AddMeshRenderer(*game_obj, _mesh);
+				}
+				if (component_name == "CameraComponent") {
+					game_obj->AddComponent<CameraComponent>()->decode(value);
 				}
 			}
 		}

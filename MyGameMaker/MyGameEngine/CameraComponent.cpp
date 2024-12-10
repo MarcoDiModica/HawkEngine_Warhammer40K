@@ -4,6 +4,7 @@
 
 CameraComponent::CameraComponent(GameObject* owner) : Component(owner), CameraBase()
 {
+    name = "CameraComponent";
 }
 
 CameraComponent::CameraComponent(const CameraComponent& other) :
@@ -111,6 +112,15 @@ void CameraComponent::Update(float deltaTime)
 		{
             DrawFrustrum();
 		}
+    }
+
+    if (orthographic)
+    {
+        projectionType = ProjectionType::Orthographic;
+    }
+    else
+    {
+        projectionType = ProjectionType::Perspective;
     }
 }
 

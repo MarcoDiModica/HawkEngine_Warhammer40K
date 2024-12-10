@@ -1,5 +1,7 @@
 #include "CameraComponent.h"
 #include "GameObject.h"
+#include "MeshRendererComponent.h"
+#include "Scene.h"
 #include <random>
 
 CameraComponent::CameraComponent(GameObject* owner) : Component(owner), CameraBase()
@@ -111,6 +113,26 @@ void CameraComponent::Update(float deltaTime)
         if (frustrumRepresentation)
 		{
             DrawFrustrum();
+		}
+
+        for (auto& gameObject : owner->GetScene()->children())
+		{
+            if (gameObject.get() == owner)
+            {
+                continue;
+            }
+
+            if (gameObject->HasComponent<MeshRenderer>())
+			{
+				if (IsInsideFrustrum(gameObject->GetComponent<MeshRenderer>()->GetMesh()->boundingBox()))
+				{
+					//gameObject->SetActive(false);
+				}
+				else
+				{
+					//gameObject->SetActive(true);
+				}
+			}
 		}
     }
 

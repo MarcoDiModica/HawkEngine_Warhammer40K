@@ -82,6 +82,8 @@ public:
         return !(*this == other);
     }
 
+    Scene* GetScene() const { return scene; }
+
     bool isSelected = false;
     bool isStatic = false;
 

@@ -44,6 +44,11 @@ CameraComponent& CameraComponent::operator=(CameraComponent&& other) noexcept
     return *this;
 }
 
+void CameraComponent::Start()
+{
+	UpdateCameraView(1280, 720, 1280, 720);
+}
+
 void CameraComponent::Update(float deltaTime)
 {
     if (followTarget != nullptr) {
@@ -96,6 +101,16 @@ void CameraComponent::Update(float deltaTime)
         {
             ShakeEnabled = false;
         }
+    }
+
+    if (frustrumCullingEnabled)
+    {
+        frustum.Update(GetViewMatrix(*owner->GetTransform()) * GetProjectionMatrix());
+
+        if (frustrumRepresentation)
+		{
+            DrawFrustrum();
+		}
     }
 }
 

@@ -21,7 +21,7 @@ public:
 
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
-    void Start() override {}
+    void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override {}
 
@@ -37,9 +37,6 @@ public:
     void LookAtTarget(GameObject* target, const glm::vec3& offset, float smoothness);
 
     void Shake(float intensity, float duration, float frequency);
-
-private:
-    void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
 
     GameObject* followTarget = nullptr;
     double followDistance = 5.0f;
@@ -59,4 +56,9 @@ private:
     float shakeTimer = 0.0f;
 
     bool ShakeEnabled = false;
+    bool frustrumCullingEnabled = true;
+    bool frustrumRepresentation = true;
+private:
+
+    void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
 };

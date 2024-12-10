@@ -262,7 +262,7 @@ void UISettings::EditorCamData()
 
 	// Mouse Sensitivity
 	float mouseSensitivity = camera->GetMouseSensitivity();
-	if (ImGui::SliderFloat("Mouse Sensitivity", &mouseSensitivity, 0.1f, 2.0f))
+	if (ImGui::SliderFloat("Mouse Sensitivity", &mouseSensitivity, 0.1f, 10.0f))
 	{
 		camera->SetMouseSensitivity(mouseSensitivity);
 	}

@@ -53,7 +53,7 @@ public:
 
     void LoadMesh(const char* file_path);
 
-    bool drawBoundingbox = true;
+    bool drawBoundingbox = false;
     bool drawTriangleNormals = false;
     bool drawVertexNormals = false;
     bool drawFaceNormals = false;

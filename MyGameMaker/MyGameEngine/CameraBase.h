@@ -2,6 +2,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "TransformComponent.h"
+#include "BoundingBox.h"
 
 class CameraBase
 {
@@ -128,5 +129,6 @@ public:
 
 	Frustum frustum;
 
-	bool drawFrustum;
+	void DrawFrustrum();
+	bool IsInsideFrustrum(const BoundingBox& bbox);
 };

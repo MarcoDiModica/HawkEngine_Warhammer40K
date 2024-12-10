@@ -107,7 +107,7 @@ void configureCamera() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
-	camera->frustum.Update(projectionMatrix * viewMatrix);
+	//camera->frustum.Update(projectionMatrix * viewMatrix);
 }
 
 void configureGameCamera()
@@ -123,7 +123,7 @@ void configureGameCamera()
 		glMatrixMode(GL_MODELVIEW);
 		glLoadMatrixd(glm::value_ptr(viewMatrix));
 
-		Application->root->mainCamera->GetComponent<CameraComponent>()->frustum.Update(projectionMatrix * viewMatrix);
+		//Application->root->mainCamera->GetComponent<CameraComponent>()->frustum.Update(projectionMatrix * viewMatrix);
 	}
 }
 
@@ -223,7 +223,7 @@ static void display_func2() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	configureGameCamera();
+	//configureGameCamera();
 	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -236,7 +236,7 @@ void PauCode2(MyGUI* gui) {
 
 		const auto t0 = hrclock::now();
 		display_func();
-		display_func2();
+		//display_func2();
 		gui->Render();
 
 		/*move_camera();*/

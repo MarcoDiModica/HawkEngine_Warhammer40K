@@ -83,6 +83,7 @@ void BoundingBox::draw() {
 void glVertex3(const vec3& v) { glVertex3dv(&v.x); }
 
 void drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3) {
+	glColor3f(1,0,1);
 	glBegin(GL_LINE_LOOP);
 	glVertex3(v0);
 	glVertex3(v1);

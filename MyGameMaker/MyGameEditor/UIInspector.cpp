@@ -89,7 +89,7 @@ bool UIInspector::Draw() {
             }
 
             if (!selectedGameObject->HasComponent<MeshRenderer>() && ImGui::MenuItem("MeshRenderer")) {
-                selectedGameObject->AddComponent<MeshRenderer>();
+                Application->root->AddMeshRenderer(*selectedGameObject, Mesh::CreateCube(), "Assets/default.png");
             }
 
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
@@ -247,13 +247,16 @@ bool UIInspector::Draw() {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 				if (ImGui::CollapsingHeader("Camera")) {
 					bool orthographic = cameraComponent->IsOrthographic();
+                    bool frustum = cameraComponent->frustrumCullingEnabled;
 					float orthoSize = cameraComponent->GetOrthoSize();
 					float fov = cameraComponent->GetFOV();
 					float nearPlane = cameraComponent->GetNearPlane();
 					float farPlane = cameraComponent->GetFarPlane();
 
+                    //lookAt & follow settings
+
 					if (ImGui::Checkbox("Orthographic", &orthographic)) {
-						cameraComponent->SetOrthographic(orthographic, cameraComponent->GetNearPlane(), cameraComponent->GetFarPlane());
+						cameraComponent->orthographic = orthographic;
 					}
 
 					if (orthographic) {
@@ -262,9 +265,12 @@ bool UIInspector::Draw() {
 						}
 					}
 					else {
-						if (ImGui::DragFloat("FOV", &fov, 0.1f, 1.0f, 179.0f)) {
-							cameraComponent->SetFOV(fov);
-						}
+                        float fovDeg = cameraComponent->GetFOV();
+                        fovDeg = glm::degrees(fovDeg);
+                        if (ImGui::SliderFloat("FOV", &fovDeg, 1.0f, 179.0f))
+                        {
+                            cameraComponent->SetFOV(glm::radians(fovDeg));
+                        }
 					}
 
 					if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
@@ -273,6 +279,18 @@ bool UIInspector::Draw() {
 
 					if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
 						cameraComponent->SetFarPlane(farPlane);
+					}
+
+                    //frustrum settings
+                    if (ImGui::Checkbox("Frustrum Culling", &frustum)) {
+						cameraComponent->frustrumCullingEnabled = frustum;
+					}
+
+					if (frustum) {
+						bool frustumRepresentation = cameraComponent->frustrumRepresentation;
+						if (ImGui::Checkbox("Frustrum Representation", &frustumRepresentation)) {
+							cameraComponent->frustrumRepresentation = frustumRepresentation;
+						}
 					}
 				}
 			}

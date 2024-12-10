@@ -142,9 +142,9 @@ void GameObject::Start()
         component.second->Start();
     }
 
-    if (GetName() != "Cube_3") {
-        scene->tree->Insert(scene->tree->root, *this, 0);
-    }
+    //if (GetName() != "Cube_3") {
+    //    scene->tree->Insert(scene->tree->root, *this, 0);
+    //}
 
     for (auto& child : children)
     {
@@ -350,6 +350,10 @@ void GameObject::AddChild(GameObject* child)
                 if (*child->scene->_children[i] == *child) {
 
                     children.push_back(child->shared_from_this());
+                    if (scene->tree) {
+                        scene->tree->Insert(scene->tree->root, *children.back(), 0);
+                    }
+
                     children[children.size() - 1]->parent = this;
                     children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
 
@@ -363,6 +367,11 @@ void GameObject::AddChild(GameObject* child)
 
         GameObject* prev_father = child->GetParent();
         children.push_back(child->shared_from_this());
+
+        if (scene->tree) {
+            scene->tree->Insert(scene->tree->root, *children.back(), 0);
+        }
+
         children[children.size() -1]->parent = this;
         children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
         prev_father->RemoveChild(child);

@@ -67,18 +67,22 @@ bool Root::Start()
         ParentGameObject(*Street2, *Street);
     }*/
 
-    auto MainCamera = CreateGameObject("MainCamera");
+    /*auto MainCamera = CreateGameObject("MainCamera");
     MainCamera->GetTransform()->GetPosition() = vec3(0, 0, -10);
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera;
 
     auto cube = CreateCube("Cube");
     cube->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");
+    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");*/
 
     for (shared_ptr<GameObject> object : currentScene->_children)
     {
         object->Start();
+
+        if (object->HasComponent<CameraComponent>()) {
+            mainCamera = object;
+		}
     }
 
     return true;

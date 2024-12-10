@@ -1,5 +1,6 @@
 #include "CameraComponent.h"
 #include "GameObject.h"
+#include "../MyGameEditor/Log.h"
 #include "MeshRendererComponent.h"
 #include "Scene.h"
 #include <random>
@@ -126,11 +127,14 @@ void CameraComponent::Update(float deltaTime)
 			{
 				if (IsInsideFrustrum(gameObject->GetComponent<MeshRenderer>()->GetMesh()->boundingBox()))
 				{
-					//gameObject->SetActive(false);
+                    LOG(LogType::LOG_INFO, "inside %s",gameObject->GetName().c_str());
+                    
+                    gameObject->SetActive(true);
 				}
 				else
 				{
-					//gameObject->SetActive(true);
+                    LOG(LogType::LOG_INFO, "outside %s",gameObject->GetName().c_str());
+					gameObject->SetActive(false);
 				}
 			}
 		}

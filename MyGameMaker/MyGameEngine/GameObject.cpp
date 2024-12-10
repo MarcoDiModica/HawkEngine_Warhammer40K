@@ -231,6 +231,8 @@ void GameObject::Draw() const
 {
     //std::cout << "Draw GameObject: " << name << std::endl;
 
+
+
     switch (drawMode)
     {
     case DrawMode::AccumultedMatrix:

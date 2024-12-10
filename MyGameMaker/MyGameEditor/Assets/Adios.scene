@@ -33,40 +33,6 @@ GameObject0:
     near_plane: 0.10000000000000001
     far_plane: 18.600000381469727
 GameObject1:
-  name: MainCamera_1
-  Transform_Component:
-    name: Transform_Component
-    enabled: true
-    matrix:
-      row0:
-        col0: 1
-        col1: 0
-        col2: 0
-        col3: 0
-      row1:
-        col0: 0
-        col1: 1
-        col2: 0
-        col3: 0
-      row2:
-        col0: 0
-        col1: 0
-        col2: 1
-        col3: 0
-      row3:
-        col0: 0
-        col1: 0
-        col2: 0
-        col3: 1
-  CameraComponent:
-    name: CameraComponent
-    enabled: true
-    projection_type: perspective
-    fov: 1.0471975803375244
-    size: 0
-    near_plane: 0.10000000000000001
-    far_plane: 1000
-GameObject2:
   name: Sphere
   Transform_Component:
     name: Transform_Component
@@ -89,12 +55,44 @@ GameObject2:
         col3: 0
       row3:
         col0: 0
-        col1: 0
-        col2: 0
+        col1: 4.3556361198425293
+        col2: 3.3240115642547607
         col3: 1
   MeshRenderer:
     name: MeshRenderer
     enabled: true
     mesh_path: shapes/sphere
-    image_path: Assets/default.png
+    image_path: default.png
+    mesh_name: ""
+GameObject2:
+  name: Cube
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    matrix:
+      row0:
+        col0: 1
+        col1: 0
+        col2: 0
+        col3: 0
+      row1:
+        col0: 0
+        col1: 1
+        col2: 0
+        col3: 0
+      row2:
+        col0: 0
+        col1: 0
+        col2: 1
+        col3: 0
+      row3:
+        col0: 0
+        col1: 0
+        col2: 3.2000000476837158
+        col3: 1
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh_path: shapes/cube
+    image_path: default.png
     mesh_name: ""

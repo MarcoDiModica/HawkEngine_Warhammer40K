@@ -163,7 +163,8 @@ void SceneSerializer::DeSerialize(std::string path) {
 						std::string component_name = value["name"].as<std::string>();
 
 						if (component_name == "Transform_Component") {
-							game_obj->transform->decode(value);
+							//TODO , MARCO , revise this doesnt cause issues
+							game_obj->GetTransform()->decode(value);
 						}
 						if (component_name == "MeshRenderer") {
 
@@ -215,7 +216,8 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node) {
 				std::string component_name = value["name"].as<std::string>();
 
 				if (component_name == "Transform_Component") {
-					game_obj->transform->decode(value);
+					// TODO , Marco revise this doesnt cause issues
+					game_obj->GetTransform()->decode(value);
 				}
 				if (component_name == "MeshRenderer") {
 

@@ -10,6 +10,7 @@
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
+#include "../MyGameEngine/ModelImporter.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -232,11 +233,37 @@ void Input::HandleFileDrop(const std::string& fileDir)
     if (fileExt == "fbx" || fileExt == "FBX") {
         LOG(LogType::LOG_ASSIMP, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
 
-        std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+ /*       std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
         mesh->LoadMesh(CopyFBXFileToProject(fileDir).c_str());
 
         auto go = Application->root->CreateGameObject(fileNameExt);
         Application->root->AddMeshRenderer(*go, mesh, "Assets/default.png");
+*/
+
+
+
+
+        //new
+        auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
+        MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+
+        ModelImporter meshImp;
+        meshImp.loadFromFile((CopyFBXFileToProject(fileDir).c_str()));
+
+        for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
+            auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
+
+            auto go = Application->root->CreateGameObject("GameObject");
+            Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
+
+            go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+
+            //Application->root->currentScene->AddGameObject(MarcoVicePresidente2);
+
+
+            Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        }
+
     }
     else if (fileExt == "png" || fileExt == "dds") {
         LOG(LogType::LOG_INFO, "Loading Texture: %s from: %s", fileNameExt.c_str(), fileDir.c_str());

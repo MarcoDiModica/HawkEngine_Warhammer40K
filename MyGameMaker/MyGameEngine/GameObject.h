@@ -62,7 +62,7 @@ public:
     BoundingBox boundingBox() const;
     BoundingBox localBoundingBox() const { return mesh ? mesh->boundingBox() : BoundingBox(); }
 
-    Transform_Component* GetTransform() const { return transform; }
+    Transform_Component* GetTransform() const { return GetComponent<Transform_Component>(); }
 
     DrawMode drawMode = DrawMode::PushPopMatrix;
 
@@ -104,7 +104,7 @@ private:
     mutable std::type_index cachedComponentType;
     mutable std::shared_ptr<Component> cachedComponent;
 
-    Transform_Component* transform;
+    //Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
 
 protected:

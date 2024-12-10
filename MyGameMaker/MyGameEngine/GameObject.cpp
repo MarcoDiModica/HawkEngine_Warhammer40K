@@ -9,7 +9,7 @@ unsigned int GameObject::nextGid = 1;
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), gid(nextGid++)
 {
     AddComponent<Transform_Component>();
-    transform = GetComponent<Transform_Component>();
+    //transform = GetComponent<Transform_Component>();
 }
 
 GameObject::~GameObject()
@@ -28,14 +28,14 @@ GameObject::GameObject(const GameObject& other) :
     name(other.name),
     gid(nextGid++),
     active(other.active),
-    transform(new Transform_Component(this)),
+    //transform(new Transform_Component(this)),
     mesh(other.mesh),
     tag(other.tag),
     cachedComponentType(typeid(Component)),
     parent(nullptr)
 {   
     for (const auto& component : other.components) {
-        components[component.first] = component.second->Clone(this);
+        components[component.first] = std::move( component.second->Clone(this) );
         components[component.first]->owner = this;
     }
 
@@ -52,7 +52,7 @@ GameObject& GameObject::operator=(const GameObject& other) {
         name = other.name;
         gid = nextGid++;
         active = other.active;
-        transform = other.transform;
+        //transform = other.transform;
         mesh = other.mesh;
         tag = other.tag;
         parent = nullptr;
@@ -84,7 +84,7 @@ GameObject::GameObject(GameObject&& other) noexcept :
 	name(std::move(other.name)),
 	gid(nextGid++),
 	active(other.active),
-	transform(std::move(other.transform)),
+	//transform(std::move(other.transform)),
 	mesh(std::move(other.mesh)),
 	tag(std::move(other.tag)),
 	components(std::move(other.components)),
@@ -112,7 +112,7 @@ GameObject& GameObject::operator=(GameObject&& other) noexcept
 		name = std::move(other.name);
 		gid = nextGid++;
 		active = other.active;
-		transform = std::move(other.transform);
+		//transform = std::move(other.transform);
 		mesh = std::move(other.mesh);
 		tag = std::move(other.tag);
 		components = std::move(other.components);
@@ -160,13 +160,28 @@ void GameObject::Update(float deltaTime)
         return;
     }
 
-    //LOG(LogType::LOG_INFO, "GameObject::Update", "GameObject: " + name + " - Update");
+    //auto trans = GetComponent<Transform_Component>();
 
-    //std::cout << std::endl << GetName() << "has " << children().size() << " children";
+    //if (GetComponent<Transform_Component>() != GetTransform()) {
+    //    int a = 5;
+    //    transform = GetComponent<Transform_Component>();
+    //    if (GetComponent<Transform_Component>() != transform) {
+    //        int b = 8;
+
+    //        if (transform != GetTransform()) {
+    //            int g = 2;
+    //        }
+
+    //    }
+    //}
 
     //check the state of the components and throw an error if they are null
     for (auto& component : components)
 	{
+        //if (component.second->GetName() == "Transform_Component") {
+        //    component.second = std::make_unique<Transform_Component>(*transform);
+        //}
+
 		if (!component.second)
 		{
 			throw std::runtime_error("Component is null");
@@ -246,7 +261,7 @@ void GameObject::DrawInstancedMatrix() const
 void GameObject::DrawPushPopMatrix() const
 {
     glPushMatrix();
-    glMultMatrixd(transform->GetData());
+    glMultMatrixd(GetTransform()->GetData());
 
     if (HasComponent<MeshRenderer>())
     {
@@ -303,7 +318,7 @@ BoundingBox GameObject::boundingBox() const
     BoundingBox bbox = localBoundingBox();
     if (!mesh && children.size()) bbox = children.front()->boundingBox();
     for (const auto& child : children) bbox = bbox + child->boundingBox();
-    return transform->GetMatrix() * bbox;
+    return GetTransform()->GetMatrix() * bbox;
 }
 
 void GameObject::SetParent(GameObject* parent)

@@ -106,7 +106,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 
 	YAML::Emitter emitter;
 	YAML::Node root = YAML::LoadFile(path);
-
+	YAML::Node mesh_root_node;
 
 
 	LOG(LogType::LOG_INFO, "Deserializando escena: %s", path.c_str());
@@ -226,7 +226,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 				else if (key.substr(0, 5) == "Child") {
 
 					/* Deserialize child and add to children vector */
-					game_obj->AddChild(&DeSerializeChild(value));
+					game_obj->AddChild(&DeSerializeChild(value, mesh_root_node));
 				}
 			}
 			i++;
@@ -235,11 +235,11 @@ void SceneSerializer::DeSerialize(std::string path) {
 	}
 
 	// Reassign to delete memory, works like smart ptr
-	mesh_root_node = YAML::Node();
+	//mesh_root_node = YAML::Node();
 
 }
 
-GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node) {
+GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh_root_node) {
 
 	std::shared_ptr<GameObject> game_obj = Application->root->CreateGameObject(_node["name"].as<std::string>());
 
@@ -313,7 +313,7 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node) {
 		}
 		else if (key.substr(0, 5) == "Child") {
 			/* Deserialize child and add to children vector, RECURSIVE */
-			Application->root->ParentGameObject(DeSerializeChild(value), *game_obj);
+			Application->root->ParentGameObject(DeSerializeChild(value,  mesh_root_node), *game_obj);
 			//game_obj->AddChild(&DeSerializeChild(value));
 		}
 	}

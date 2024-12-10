@@ -22,10 +22,10 @@ public:
 
 	YAML::Node ObjectSerialize(GameObject& child, int num);
 
-	GameObject& DeSerializeChild(YAML::Node _node);
+	GameObject& DeSerializeChild(YAML::Node _node, YAML::Node& mesh_root_node);
 
 	std::string _mesh_path = "";
-	YAML::Node mesh_root_node;
+
 };
 
 

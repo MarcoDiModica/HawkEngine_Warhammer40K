@@ -20,17 +20,22 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 	folderIcon = new Image();
 	folderIcon->LoadTexture("Assets/Icons/folder_icon.png");
 
+
 	fbxIcon = new Image();
-	fbxIcon->LoadTexture("Assets/Icons/fbx_icon.png");
+	//fbxIcon->LoadTexture("Assets/Icons/fbx_icon.png");
+	fbxIcon->LoadTexture("Assets/Icons/folder_icon.png");
 
 	pngIcon = new Image();
-	pngIcon->LoadTexture("Assets/Icons/png_icon.png");
+	//pngIcon->LoadTexture("Assets/Icons/png_icon.png");
+	pngIcon->LoadTexture("Assets/Icons/folder_icon.png");
 
 	sceneIcon = new Image();
-	sceneIcon->LoadTexture("Assets/Icons/scene_icon.png");
+	//sceneIcon->LoadTexture("Assets/Icons/scene_icon.png");
+	sceneIcon->LoadTexture("Assets/Icons/folder_icon.png");
 
 	meshIcon = new Image();
-	meshIcon->LoadTexture("Assets/Icons/mesh_icon.png");
+	//meshIcon->LoadTexture("Assets/Icons/mesh_icon.png");
+	meshIcon->LoadTexture("Assets/Icons/folder_icon.png");
 }
 
 UIProject::~UIProject()

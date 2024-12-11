@@ -46,6 +46,9 @@ public:
     void SetLightType(LightType type);
     LightType GetLightType() const;
 
+    void SetDirection(const glm::vec3& direction);
+    glm::vec3 GetDirection() const;
+
     vec3 GetAmbient() const;
     vec3 GetDiffuse() const;
     vec3 GetSpecular() const;
@@ -54,6 +57,7 @@ public:
     float GetQuadratic() const;
     float GetRadius() const;
     float GetIntensity() const;
+
 
   
     void SetAmbient(const vec3& ambient);

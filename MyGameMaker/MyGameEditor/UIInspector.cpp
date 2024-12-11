@@ -310,7 +310,7 @@ bool UIInspector::Draw() {
                 if (ImGui::CollapsingHeader("Light"))
                 {
                     LightType lightType = lightComponent->GetLightType();
-                    vec3 color = lightComponent->GetColor();
+
                     float intensity = lightComponent->GetIntensity();
                     float radius = lightComponent->GetRadius();
                     glm::dvec3 direction = lightComponent->GetDirection();
@@ -319,13 +319,13 @@ bool UIInspector::Draw() {
                     {
                         LightType lightType = lightComponent->GetLightType();
                         vec3 diffuse = lightComponent->GetDiffuse();
-						vec3 specular = lightComponent->GetSpecular();
-						vec3 ambient = lightComponent->GetAmbient();
+                        vec3 specular = lightComponent->GetSpecular();
+                        vec3 ambient = lightComponent->GetAmbient();
                         float intensity = lightComponent->GetIntensity();
                         float radius = lightComponent->GetRadius();
-						float constant = lightComponent->GetConstant();
+                        float constant = lightComponent->GetConstant();
                         float linear = lightComponent->GetLinear();
-						float quadratic = lightComponent->GetQuadratic();
+                        float quadratic = lightComponent->GetQuadratic();
 
                         //glm::dvec3 direction = lightComponent->GetDirection();
 
@@ -346,39 +346,39 @@ bool UIInspector::Draw() {
 
                         if (lightType == LightType::POINT)
                         {
-							float diffusefloat[3] = { diffuse.x, diffuse.y, diffuse.z };
-							float specularfloat[3] = { specular.x, specular.y, specular.z };
-							float ambientfloat[3] = { ambient.x, ambient.y, ambient.z };
+                            float diffusefloat[3] = { diffuse.x, diffuse.y, diffuse.z };
+                            float specularfloat[3] = { specular.x, specular.y, specular.z };
+                            float ambientfloat[3] = { ambient.x, ambient.y, ambient.z };
 
                             if (ImGui::DragFloat("Range", &radius, 0.1f, 0.0f, 1000.0f))
                             {
                                 lightComponent->SetRadius(radius);
                             }
-							if (ImGui::DragFloat("Constant", &constant, 0.1f, 0.0f, 1000.0f))
-							{
-								lightComponent->SetConstant(constant);
-							}
-							if (ImGui::DragFloat("Linear", &linear, 0.1f, 0.0f, 1000.0f))
-							{
-								lightComponent->SetLinear(linear);
-							}
-							if (ImGui::DragFloat("Quadratic", &quadratic, 0.1f, 0.0f, 1000.0f))
-							{
-								lightComponent->SetQuadratic(quadratic);
-							}
-							if (ImGui::ColorEdit3("Ambient", ambientfloat))
-							{
-								ambient = vec3(ambientfloat[0], ambientfloat[1], ambientfloat[2]);
-								lightComponent->SetAmbient(ambient);
-							}
-                            if (ImGui::ColorEdit3("Diffuse", diffusefloat)) {
-								diffuse = vec3(diffusefloat[0], diffusefloat[1], diffusefloat[2]);
-								lightComponent->SetDiffuse(diffuse);
-                            }
-                            if (ImGui::ColorEdit3("Specular", specularfloat)) 
+                            if (ImGui::DragFloat("Constant", &constant, 0.1f, 0.0f, 1000.0f))
                             {
-								specular = vec3(specularfloat[0], specularfloat[1], specularfloat[2]);
-								lightComponent->SetSpecular(specular);
+                                lightComponent->SetConstant(constant);
+                            }
+                            if (ImGui::DragFloat("Linear", &linear, 0.1f, 0.0f, 1000.0f))
+                            {
+                                lightComponent->SetLinear(linear);
+                            }
+                            if (ImGui::DragFloat("Quadratic", &quadratic, 0.1f, 0.0f, 1000.0f))
+                            {
+                                lightComponent->SetQuadratic(quadratic);
+                            }
+                            if (ImGui::ColorEdit3("Ambient", ambientfloat))
+                            {
+                                ambient = vec3(ambientfloat[0], ambientfloat[1], ambientfloat[2]);
+                                lightComponent->SetAmbient(ambient);
+                            }
+                            if (ImGui::ColorEdit3("Diffuse", diffusefloat)) {
+                                diffuse = vec3(diffusefloat[0], diffusefloat[1], diffusefloat[2]);
+                                lightComponent->SetDiffuse(diffuse);
+                            }
+                            if (ImGui::ColorEdit3("Specular", specularfloat))
+                            {
+                                specular = vec3(specularfloat[0], specularfloat[1], specularfloat[2]);
+                                lightComponent->SetSpecular(specular);
                             }
                         }
 
@@ -416,7 +416,7 @@ bool UIInspector::Draw() {
             {
                 LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
             }
-        
+        }
     }
 
     ImGui::End();

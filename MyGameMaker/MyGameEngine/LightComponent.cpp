@@ -72,6 +72,10 @@ float LightComponent::GetRadius() const {
     return radius;
 }
 
+glm::vec3 LightComponent::GetDirection() const {
+    return direction;
+}
+
 float LightComponent::GetIntensity() const {
     return intensity;
 }
@@ -102,6 +106,10 @@ void LightComponent::SetQuadratic(float quadratic) {
 
 void LightComponent::SetRadius(float radius) {
     this->radius = radius;
+}
+
+void LightComponent::SetDirection(const glm::vec3& direction) {
+	this->direction = direction;
 }
 
 void LightComponent::SetIntensity(float intensity) {

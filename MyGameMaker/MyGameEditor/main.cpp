@@ -119,7 +119,7 @@ void configureCamera() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
-	//camera->frustum.Update(projectionMatrix * viewMatrix);
+	camera->frustum.Update(projectionMatrix * viewMatrix);
 }
 
 void configureGameCamera()
@@ -135,7 +135,7 @@ void configureGameCamera()
 		glMatrixMode(GL_MODELVIEW);
 		glLoadMatrixd(glm::value_ptr(viewMatrix));
 
-		//Application->root->mainCamera->GetComponent<CameraComponent>()->frustum.Update(projectionMatrix * viewMatrix);
+		Application->root->mainCamera->GetComponent<CameraComponent>()->frustum.Update(projectionMatrix * viewMatrix);
 	}
 }
 
@@ -174,6 +174,37 @@ bool isInsideFrustum(const BoundingBox& bbox, const std::list<CameraBase::Plane>
 	return true;
 }
 
+void Jordi_Code(GameObject* object)
+{
+	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
+	glm::vec3 rayDirection = Application->input->getMousePickRay();
+
+	if (object->HasComponent<MeshRenderer>()) {
+
+		BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+
+		bbox = object->GetTransform()->GetMatrix() * bbox;
+
+		if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
+								camera->frustum.left, camera->frustum.right,
+								camera->frustum.top, camera->frustum.bot })) {
+			//return; // Aquí omitimos el objeto si no está en el frustum
+		}
+
+		if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+		{
+			Application->input->SetDraggedGameObject(object);
+		}
+
+		if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused)
+			if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+			{
+				Application->input->ClearSelection();
+				Application->input->AddToSelection(object);
+			}
+	}
+}
+
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
@@ -188,8 +219,7 @@ static void display_func() {
 
 	drawFloorGrid(16, 0.25);
 
-	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
-	glm::vec3 rayDirection = Application->input->getMousePickRay();
+	
 
 
 	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo mañana
@@ -213,29 +243,12 @@ static void display_func() {
 		
 		object->Update(Application->GetDt());
 
-		if (object->HasComponent<MeshRenderer>()) {
-
-			BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-
-			bbox = object->GetTransform()->GetMatrix() * bbox;
-			
-			if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
-									camera->frustum.left, camera->frustum.right,
-									camera->frustum.top, camera->frustum.bot })) {
-				continue; // Aquí omitimos el objeto si no está en el frustum
-			}
-
-			if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
-			{
-				Application->input->SetDraggedGameObject(object);
-			}
-
-			if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused)
-				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
-				{
-					Application->input->ClearSelection();
-					Application->input->AddToSelection(object);
-				}
+		Jordi_Code(object);
+		for (size_t j = 0; j < object->GetChildren().size(); ++j)
+		{
+			GameObject* child = object->GetChildren()[j].get();
+			child->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights, mainShader);
+			Jordi_Code(child);
 		}
 	}
 
@@ -251,7 +264,7 @@ static void display_func2() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//configureGameCamera();
+	configureGameCamera();
 	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -264,7 +277,7 @@ void PauCode2(MyGUI* gui) {
 
 		const auto t0 = hrclock::now();
 		display_func();
-		//display_func2();
+		display_func2();
 		gui->Render();
 
 		/*move_camera();*/

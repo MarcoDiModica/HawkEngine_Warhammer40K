@@ -175,7 +175,7 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetTransform()->GetMatrix());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("modColor", glm::vec4(1, 0.2f, 0, 1));
         glUniform4f(glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader.GetProgram(), "modColor"), GetComponent<MeshRenderer>()->GetMaterial()->GetColor().x, GetComponent<MeshRenderer>()->GetMaterial()->GetColor().y, GetComponent<MeshRenderer>()->GetMaterial()->GetColor().z, GetComponent<MeshRenderer>()->GetMaterial()->GetColor().w);
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetComponent<Transform_Component>()->GetMatrix());
+        //GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetComponent<Transform_Component>()->GetMatrix());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("view", view);
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("projection", projection);
 
@@ -208,10 +208,10 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
 
 	}
 
-	for (auto& child : children)
-	{
-		child->ShaderUniforms(view,projection,cameraPosition,lights,useShader);
-	}
+	//for (auto& child : children)
+	//{
+	//	child->ShaderUniforms(view,projection,cameraPosition,lights,useShader);
+	//}
 }
 
 void GameObject::Update(float deltaTime)

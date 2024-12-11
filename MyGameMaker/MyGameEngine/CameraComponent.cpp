@@ -134,7 +134,7 @@ void CameraComponent::Update(float deltaTime)
                 }
             }
 
-            for (const auto& child : gameObject->GetChildren()) {
+            for (auto& child : gameObject->GetChildren()) {
                 checkGameObject(child);
             }
         };

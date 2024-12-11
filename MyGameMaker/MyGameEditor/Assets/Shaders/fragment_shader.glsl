@@ -33,7 +33,7 @@ struct DirLight {
 
 #define MAX_POINT_LIGHTS 100 // Max number of point lights, cant be changed dinamically so use we should plan the maximum amountof them 
 
-uniform PointLight pointLights[MAX_POINT_LIGHTS];
+uniform PointLight pointLights[MAX_POINT_LIGHTS]
 uniform DirLight dirLight;
 uniform vec3 viewPos;
 uniform int numPointLights;

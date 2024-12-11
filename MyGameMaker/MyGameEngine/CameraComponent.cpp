@@ -55,6 +55,7 @@ void CameraComponent::Start()
 
 void CameraComponent::Update(float deltaTime)
 {
+    //CameraBase::RunTests();
     if (followTarget != nullptr) {
         glm::dvec3 targetPosition = followTarget->GetTransform()->GetPosition();
         glm::dvec3 desiredPosition = targetPosition + followOffset - followTarget->GetTransform()->GetForward() * followDistance;
@@ -109,10 +110,13 @@ void CameraComponent::Update(float deltaTime)
 
     if (frustrumCullingEnabled)
     {
+        //frustum.Update(GetViewMatrix(*owner->GetTransform()) * GetProjectionMatrix());
         glm::mat4 view = GetViewMatrix(*owner->GetTransform());
         glm::mat4 projection = GetProjectionMatrix();
         glm::mat4 vpm = projection * view;
 		frustum.Update(vpm);
+
+        Log(__FILE__, __LINE__, LogType::LOG_INFO, "Frustum actualizado");
 
         if (frustrumRepresentation)
 		{

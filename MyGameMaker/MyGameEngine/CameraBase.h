@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "TransformComponent.h"
 #include "BoundingBox.h"
-#include "../MyGameEditor/Log.h"
+#include "../MyGameEditor/Log.h" // Esto hay que quitarlo
 
 
 class CameraBase
@@ -31,6 +31,9 @@ public:
 	void SetOrthoSize(float size);
 
     void UpdateAspectRatio(double aspectRatio);
+
+	void RunTests();
+
 
 	// Serialización de la cámara
 
@@ -140,6 +143,7 @@ public:
 				vertices[i] = temp / temp.w;
 			}
 		}
+
 	};
 
 public:
@@ -156,5 +160,5 @@ public:
 	Frustum frustum;
 
 	void DrawFrustrum();
-	bool IsInsideFrustrum(const BoundingBox& bbox);
+	bool IsInsideFrustrum(const BoundingBox& bbox) const;
 };

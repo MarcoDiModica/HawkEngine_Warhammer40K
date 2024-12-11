@@ -56,7 +56,7 @@ GameObject0:
       mesh_path: ""
       image_path: Assets/default.png
       mesh_name: Untitled.001
-      material_path: material_4.mat
+      material_path: material_6.mat
   Child1:
     name: GameObject
     Transform_Component:
@@ -89,4 +89,4 @@ GameObject0:
       mesh_path: ""
       image_path: Assets/default.png
       mesh_name: Untitled
-      material_path: material_3.mat
+      material_path: material_5.mat

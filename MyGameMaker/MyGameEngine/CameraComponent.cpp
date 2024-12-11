@@ -1,9 +1,9 @@
 #include "CameraComponent.h"
 #include "GameObject.h"
-#include "../MyGameEditor/Log.h"
 #include "MeshRendererComponent.h"
 #include "Scene.h"
 #include <random>
+#include <functional>
 
 CameraComponent::CameraComponent(GameObject* owner) : Component(owner), CameraBase()
 {
@@ -55,7 +55,6 @@ void CameraComponent::Start()
 
 void CameraComponent::Update(float deltaTime)
 {
-    //CameraBase::RunTests();
     if (followTarget != nullptr) {
         glm::dvec3 targetPosition = followTarget->GetTransform()->GetPosition();
         glm::dvec3 desiredPosition = targetPosition + followOffset - followTarget->GetTransform()->GetForward() * followDistance;
@@ -116,35 +115,33 @@ void CameraComponent::Update(float deltaTime)
         glm::mat4 vpm = projection * view;
 		frustum.Update(vpm);
 
-        Log(__FILE__, __LINE__, LogType::LOG_INFO, "Frustum actualizado");
-
         if (frustrumRepresentation)
 		{
             DrawFrustrum();
 		}
 
-        for (auto& gameObject : owner->GetScene()->children())
-		{
-            if (gameObject.get() == owner)
-            {
-                continue;
+        std::function<void(std::shared_ptr<GameObject>)> checkGameObject = [&](std::shared_ptr<GameObject> gameObject) {
+            if (gameObject.get() == owner) {
+                return;
             }
 
-            if (gameObject->HasComponent<MeshRenderer>())
-			{
-				if (IsInsideFrustrum(gameObject->GetComponent<MeshRenderer>()->GetMesh()->boundingBox()))
-				{
-                    LOG(LogType::LOG_INFO, "inside %s",gameObject->GetName().c_str());
-                    
+            if (gameObject->HasComponent<MeshRenderer>()) {
+                if (IsInsideFrustrum(gameObject->boundingBox())) {
                     gameObject->SetActive(true);
-				}
-				else
-				{
-                    LOG(LogType::LOG_INFO, "outside %s",gameObject->GetName().c_str());
-					gameObject->SetActive(false);
-				}
-			}
-		}
+                }
+                else {
+                    gameObject->SetActive(false);
+                }
+            }
+
+            for (const auto& child : gameObject->GetChildren()) {
+                checkGameObject(child);
+            }
+        };
+
+        for (auto& gameObject : owner->GetScene()->children()) {
+            checkGameObject(gameObject);
+        }
     }
 
     if (orthographic)

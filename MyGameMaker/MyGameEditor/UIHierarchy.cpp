@@ -102,23 +102,29 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 	}
 
 	// IF the treenode is dragged
-	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-		//               type identifier ,  ptr to obj   , size of obj
-		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
-		/*A payload named "GAMEOBJECT" is created, containing a pointer to obj
-		it can be rerieved at a drop target via ImGui::AcceptDragDropPayload */
-
-		ImGui::Text("Dragging %s", obj.GetName().c_str()); // text created in drag&drop context follows the cursor be default
-		draggedObject = &obj;
-
-		//RenderSceneHierarchy(Application->root->currentScene.get());
-
+	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)  /*&& obj.isSelected*/) {
+		if (obj.isSelected) {
+			//               type identifier ,  ptr to obj   , size of obj
+			ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
+			/*A payload named "GAMEOBJECT" is created, containing a pointer to obj
+			it can be rerieved at a drop target via ImGui::AcceptDragDropPayload */
+			int id = obj.GetId();
+			ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), id); // text created in drag&drop context follows the cursor be default
+			draggedObject = &obj;
+			//draggedObject->SetName("DraggedFella");
+			//ImGui::Text("Dragging %s, gid %d", draggedObject->GetName().c_str(), draggedObject->GetId());
+			//RenderSceneHierarchy(Application->root->currentScene.get());
+		}
 		ImGui::EndDragDropSource(); // Draging context MUST be closed
 	}
 
-	if (draggedObject) {
+	if (draggedObject ) {
 		bool ImGuiWorks = false; 
 		if (ImGui::BeginDragDropTarget()) /*ImGui approach*/ {
+
+			if (draggedObject == &obj) {
+				int y = 87;
+			}
 			ImGuiWorks = true;
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
 				
@@ -132,6 +138,9 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 			}
 		}/* Approach for when ImGui doesnt work */
 		else if (draggedObject && ImGui::IsItemHovered() && Application->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) {
+			if (draggedObject == &obj) {
+				int y = 87;
+			}
 			Application->root->ParentGameObject(*draggedObject, obj);
 			draggedObject = nullptr;
 			should_continue = false;

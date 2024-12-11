@@ -37,7 +37,9 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
+
 #include "MyGameEngine/LightComponent.h"
+#include "MyGameEngine/Shaders.h"
 #include "MyGameEngine/Material.h"
 #include "App.h"
 
@@ -72,6 +74,8 @@ std::list<GameObject*> lights;
 
 static EditorCamera* camera = nullptr;
 
+Shaders mainShader;
+
 App* Application = NULL;
 
 static void init_openGL() {
@@ -90,6 +94,7 @@ static void init_openGL() {
 
 static void drawFloorGrid(int size, double step) {
 	//glColor3ub(0, 2, 200);
+
 	glBegin(GL_LINES);
 	Application->root->currentScene->DebugDrawTree();
 
@@ -203,47 +208,9 @@ static void display_func() {
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
 		GameObject* object = Application->root->currentScene->children()[i].get();
-
 		
-
-		if (object->HasComponent<MeshRenderer>() && object->GetComponent<MeshRenderer>()->GetMaterial()->useShader == true) 
-		{
-			object->GetComponent<MeshRenderer>()->GetMaterial()->bindShaders();
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", object->GetTransform()->GetMatrix());
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("modColor", glm::vec4(1, 0.2f, 0, 1));
-			glUniform4f(glGetUniformLocation(object->GetComponent<MeshRenderer>()->GetMaterial()->shader.GetProgram(), "modColor"), object->GetComponent<MeshRenderer>()->GetMaterial()->GetColor().x, object->GetComponent<MeshRenderer>()->GetMaterial()->GetColor().y, object->GetComponent<MeshRenderer>()->GetMaterial()->GetColor().z, object->GetComponent<MeshRenderer>()->GetMaterial()->GetColor().w);
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", object->GetComponent<Transform_Component>()->GetMatrix());
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("view", Application->camera->view());
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("projection", Application->camera->projection());
-
-			for (const auto& light : lights)
-			{
-				string pointLightstr = "pointLights[" + to_string(i) + "]";
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr + ".position", light->GetComponent<Transform_Component>()->GetPosition());
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr+".ambient", light->GetComponent<LightComponent>()->GetAmbient());
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr+".diffuse", light->GetComponent<LightComponent>()->GetDiffuse());
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr+".specular", light->GetComponent<LightComponent>()->GetSpecular());
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr+".constant", light->GetComponent<LightComponent>()->GetConstant());
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr+".linear", light->GetComponent<LightComponent>()->GetLinear());
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr+".quadratic", light->GetComponent<LightComponent>()->GetQuadratic());
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr+".radius", light->GetComponent<LightComponent>()->GetRadius());
-				object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform( pointLightstr+".intensity", light->GetComponent<LightComponent>()->GetIntensity());
-			}
-
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.intensity", 3.0f);
-
-			object->GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("viewPos", Application->camera->GetTransform().GetPosition());
-
-			
-		}
-
+		object->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights,mainShader);
 		
-
 		object->Update(Application->GetDt());
 
 		if (object->HasComponent<MeshRenderer>()) {
@@ -329,6 +296,10 @@ int main(int argc, char** argv) {
 	ilutInit();
 
 	init_openGL();
+
+	//if (mainShader.LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
+	//
+	//}
 
 	camera = Application->camera;
 

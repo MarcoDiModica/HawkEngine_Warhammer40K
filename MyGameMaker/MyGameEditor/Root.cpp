@@ -191,7 +191,7 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     meshRenderer->SetMaterial(material);
     meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-    if (material->loadShaders("vertex_shader.glsl", "fragment_shader.glsl")) {
+    if (material->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
         material->useShader = true;
         material->bindShaders();
     }

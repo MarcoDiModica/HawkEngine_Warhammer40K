@@ -279,7 +279,7 @@ bool UIInspector::Draw() {
 			else {
 				LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
 			}
-
+		}
             ImGui::Separator();
 
             if (selectedGameObject->HasComponent<LightComponent>())
@@ -367,7 +367,7 @@ bool UIInspector::Draw() {
                     LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
                 }
             }
-        }
+        
     }
 
     ImGui::End();

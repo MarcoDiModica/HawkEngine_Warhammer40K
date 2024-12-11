@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Root.h"
 #include "MyGameEditor/Input.h"
+#include "MyGameEngine/GameObject.h"
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <iostream>
@@ -47,13 +48,21 @@ bool UIHierarchy::Draw() {
 		if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) {
 			Application->input->ClearSelection();
 		}
+
+		if (draggedObject && ImGui::IsMouseReleased(ImGuiMouseButton_Left) && draggedObject->GetParent()) {
+			GameObject* p = draggedObject->GetParent();
+			currentScene->AddGameObject(draggedObject->shared_from_this());
+
+			if (p ) p->RemoveChild(draggedObject);
+			draggedObject = nullptr;
+		}
 	}
 
 	ImGui::End();
 	return true;
 }
 
-GameObject* draggedObject;
+
 
 void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::Begin("Scene Hierarchy");
@@ -66,9 +75,10 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::End();
 }
 
-void UIHierarchy::DrawSceneObject(GameObject& obj)
+bool UIHierarchy::DrawSceneObject(GameObject& obj)
 {
 	bool color = false;
+	bool should_continue = true;
 
 	if (obj.isSelected) {
 		color = true;
@@ -92,48 +102,66 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 	}
 
+	if (ImGui::IsItemHovered() && Application->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) {
+		LOG(LogType::LOG_INFO, "%s has been touched in the hierarchy ", obj.GetName().c_str());
+	}
+
 	if (obj.isSelected && color) {
 		ImGui::PopStyleColor(); // Orange color for selected
 	}
 
 	// IF the treenode is dragged
-	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-		//               type identifier ,  ptr to obj   , size of obj
-		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
-		/*A payload named "GAMEOBJECT" is created, containing a pointer to obj
-		it can be rerieved at a drop target via ImGui::AcceptDragDropPayload */
-
-		ImGui::Text("Dragging %s", obj.GetName().c_str()); // text created in drag&drop context follows the cursor be default
-		draggedObject = &obj;
-
-		//RenderSceneHierarchy(Application->root->currentScene.get());
-
+	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)  /*&& obj.isSelected*/) {
+		if (obj.isSelected) {
+			//               type identifier ,  ptr to obj   , size of obj
+			ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
+			/*A payload named "GAMEOBJECT" is created, containing a pointer to obj
+			it can be rerieved at a drop target via ImGui::AcceptDragDropPayload */
+			int id = obj.GetId();
+			ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), id); // text created in drag&drop context follows the cursor be default
+			draggedObject = &obj;
+			//draggedObject->SetName("DraggedFella");
+			//ImGui::Text("Dragging %s, gid %d", draggedObject->GetName().c_str(), draggedObject->GetId());
+			//RenderSceneHierarchy(Application->root->currentScene.get());
+		}
 		ImGui::EndDragDropSource(); // Draging context MUST be closed
 	}
 
-	// Drag-and-Drop: Target
-	if (ImGui::BeginDragDropTarget()) {
-		// Retrieve playload, ptr to dragged obj
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+	if (draggedObject ) {
+		bool ImGuiWorks = false; 
+		if (ImGui::BeginDragDropTarget()) /*ImGui approach*/ {
 
-			if (!draggedObject) { 
-				draggedObject = *(GameObject**)payload->Data;
+			if (draggedObject == &obj) {
+				int y = 87;
 			}
+			ImGuiWorks = true;
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+				
+				if (!draggedObject) {
+					draggedObject = *(GameObject**)payload->Data;
+				}
 
-			if (draggedObject && draggedObject != &obj) {
-
-				std::cout << "dragged " << draggedObject->GetName() << "into " << obj.GetName();
-				//obj.emplaceChild(*draggedObj);
 				Application->root->ParentGameObject(*draggedObject, obj);
 				draggedObject = nullptr;
+				should_continue = false;
 			}
+		}/* Approach for when ImGui doesnt work */
+		else if (draggedObject && ImGui::IsItemHovered() && Application->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) {
+			if (draggedObject == &obj) {
+				int y = 87;
+			}
+			Application->root->ParentGameObject(*draggedObject, obj);
+			draggedObject = nullptr;
+			should_continue = false;
 		}
-		ImGui::EndDragDropTarget();
+
+		if (ImGuiWorks) { ImGui::EndDragDropTarget(); }
+
 	}
 
 	if (open) {
-		for (const auto& child : obj.GetChildren()) {
-			DrawSceneObject(*child);
+		for (size_t w = 0; w < obj.GetChildren().size(); ++w) {
+			DrawSceneObject(* obj.GetChildren()[w]);
 		}
 		ImGui::TreePop();
 	}
@@ -155,4 +183,5 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 		ImGui::EndPopup();
 	}
+	return should_continue;
 }

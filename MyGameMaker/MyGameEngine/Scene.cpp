@@ -56,6 +56,7 @@ void Scene::RemoveGameObject(std::shared_ptr<GameObject> gameObject)
 
 void Scene::AddGameObject(std::shared_ptr<GameObject> gameObject)
 {
+	gameObject->parent = nullptr;
 	gameObject->scene = this;
 	_children.push_back(gameObject);
 

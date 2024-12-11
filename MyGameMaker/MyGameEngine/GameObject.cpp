@@ -406,8 +406,17 @@ void GameObject::SetParent(GameObject* parent)
 
 void GameObject::AddChild(GameObject* child)
 {
-    if (child->GetParent() == nullptr) {
+    if (child->GetParent() == nullptr)/* If child is in the scene */ {
         if (child->scene) {
+
+            if (GetParent() == child) {
+                for (size_t i = 0; i < child->children.size(); ++i) {
+                    auto& uncle = child->children[i];
+                    scene->AddGameObject(uncle);
+                    child->RemoveChild(child->children[i].get());
+                    i--;
+                }
+            }
             
             for (size_t i = 0; i < child->scene->_children.size(); ++i) {
 
@@ -428,8 +437,16 @@ void GameObject::AddChild(GameObject* child)
         }
     }
     else {
-
         GameObject* prev_father = child->GetParent();
+        /*The problem when you call AddChild when a child childifies its parent is that the paarent is being copied with the child that now parents it*/
+        if ( GetParent() == child) {
+                for (size_t i = 0; i < child->children.size(); ++i) {
+                    auto& uncle = child->children[i];
+                    prev_father->AddChild(uncle.get());
+                    i--;
+                }
+        }
+
         children.push_back(child->shared_from_this());
 
         if (scene->tree) {

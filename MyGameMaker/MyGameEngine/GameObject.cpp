@@ -446,7 +446,7 @@ void GameObject::AddChild(GameObject* child)
                     i--;
                 }
             }
-            else {
+            else /* TODO move this to the upper if stament*/ {
                 //scene->AddGameObject(this->shared_from_this());
                 /*for (auto& uncle : child->children) {
                     scene->AddGameObject(uncle);

@@ -69,6 +69,7 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 bool UIHierarchy::DrawSceneObject(GameObject& obj)
 {
 	bool color = false;
+	bool should_continue = true;
 
 	if (obj.isSelected) {
 		color = true;
@@ -116,7 +117,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 	}
 
 	if (draggedObject) {
-		bool ImGuiWorks = false; bool parenting = false;
+		bool ImGuiWorks = false; 
 		if (ImGui::BeginDragDropTarget()) /*ImGui approach*/ {
 			ImGuiWorks = true;
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
@@ -127,13 +128,13 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 				Application->root->ParentGameObject(*draggedObject, obj);
 				draggedObject = nullptr;
-				parenting = true;
+				should_continue = false;
 			}
 		}/* Approach for when ImGui doesnt work */
 		else if (draggedObject && ImGui::IsItemHovered() && Application->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) {
 			Application->root->ParentGameObject(*draggedObject, obj);
 			draggedObject = nullptr;
-			parenting = true;
+			should_continue = false;
 		}
 
 		if (ImGuiWorks) { ImGui::EndDragDropTarget(); }
@@ -141,8 +142,8 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 	}
 
 	if (open) {
-		for (const auto& child : obj.GetChildren()) {
-			DrawSceneObject(*child);
+		for (size_t w = 0; w < obj.GetChildren().size(); ++w) {
+			DrawSceneObject(* obj.GetChildren()[w]);
 		}
 		ImGui::TreePop();
 	}
@@ -164,5 +165,5 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 		ImGui::EndPopup();
 	}
-	return true;
+	return should_continue;
 }

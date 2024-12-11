@@ -29,7 +29,7 @@ void MakeCity() {
     MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
 
     ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
+    meshImp.loadFromFile("Assets/Meshes/BakerHouse.fbx");
 
     for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
         auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
@@ -216,7 +216,7 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     meshRenderer->SetMaterial(material);
     meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-    if (material->loadShaders("vertex_shader.glsl", "fragment_shader.glsl")) {
+    if (material->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
         material->useShader = true;
         material->bindShaders();
     }

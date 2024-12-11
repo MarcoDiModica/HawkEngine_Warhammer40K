@@ -9,6 +9,7 @@
 class SceneSerializer;
 class Scene;
 class OctreeNode;
+class Shaders;
 
 enum class DrawMode
 {
@@ -54,6 +55,8 @@ public:
 
     void SetActive(bool active);
     bool IsActive() const;
+    
+	void ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dvec3 cameraPosition, std::list<GameObject*> lights, Shaders useShader);
 
     std::string GetName() const;
     void SetName(const std::string& name);
@@ -97,6 +100,7 @@ private:
     void DrawAccumultedMatrix() const;
     void DrawInstancedMatrix() const;
     void DrawPushPopMatrix() const;
+
 
     std::string name;
     unsigned int gid;

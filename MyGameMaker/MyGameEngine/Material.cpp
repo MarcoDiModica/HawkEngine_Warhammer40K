@@ -48,6 +48,17 @@ bool Material::loadShaders(const std::string& vertexShaderFile, const std::strin
 	return shader.LoadShaders(vertexShaderFile, fragmentShaderFile);
 }
 
+void Material::SetShader(Shaders& shader) 
+{
+	this->shader = shader;
+}
+
+Shaders Material::GetShader() 
+{
+	return this->shader;
+}
+
+
 // Function to bind shaders
 void Material::bindShaders() const {
 	shader.Bind();

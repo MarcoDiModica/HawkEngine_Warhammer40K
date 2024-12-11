@@ -44,9 +44,9 @@ void main()
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
 
     // Point lights
-    for(int i = 0; i < MAX_POINT_LIGHTS; i++) 
+    for(int i = 0; i < MAX_POINT_LIGHTS; i++;) 
     {
-        result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+        result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);sdfafs
     }
     // Sample the texture using the texture coordinates
     vec4 texColor = texture(texture1, TexCoord);

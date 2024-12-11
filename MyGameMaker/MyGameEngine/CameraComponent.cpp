@@ -1,6 +1,5 @@
 #include "CameraComponent.h"
 #include "GameObject.h"
-#include "../MyGameEditor/Log.h"
 #include "MeshRendererComponent.h"
 #include "Scene.h"
 #include <random>
@@ -56,7 +55,6 @@ void CameraComponent::Start()
 
 void CameraComponent::Update(float deltaTime)
 {
-    //CameraBase::RunTests();
     if (followTarget != nullptr) {
         glm::dvec3 targetPosition = followTarget->GetTransform()->GetPosition();
         glm::dvec3 desiredPosition = targetPosition + followOffset - followTarget->GetTransform()->GetForward() * followDistance;
@@ -117,8 +115,6 @@ void CameraComponent::Update(float deltaTime)
         glm::mat4 vpm = projection * view;
 		frustum.Update(vpm);
 
-        Log(__FILE__, __LINE__, LogType::LOG_INFO, "Frustum actualizado");
-
         if (frustrumRepresentation)
 		{
             DrawFrustrum();
@@ -131,11 +127,9 @@ void CameraComponent::Update(float deltaTime)
 
             if (gameObject->HasComponent<MeshRenderer>()) {
                 if (IsInsideFrustrum(gameObject->boundingBox())) {
-                    LOG(LogType::LOG_INFO, "inside %s", gameObject->GetName().c_str());
                     gameObject->SetActive(true);
                 }
                 else {
-                    LOG(LogType::LOG_INFO, "outside %s", gameObject->GetName().c_str());
                     gameObject->SetActive(false);
                 }
             }

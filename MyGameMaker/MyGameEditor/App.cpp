@@ -18,7 +18,7 @@
 
 App::App() {
 
-	window = new Window("Who is George" , 1280,720);
+	window = new Window("HawkEngine" , 1280,720);
 
 	input = new Input(this);
 

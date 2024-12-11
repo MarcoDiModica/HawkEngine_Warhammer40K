@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Mesh.h"
+#include "Material.h"
 #include "Image.h"
 #include <glm/glm.hpp>
 
@@ -51,9 +52,12 @@ protected:
         node["image_path"] = image->image_path;
         node["mesh_name"] = mesh->name;
 
-        /*if (material) {
-            node["material"] = material->encode();
-        }*/
+        if (material) {
+            std::string materialFilename = "material_" + std::to_string(material->GetId());
+            material->SaveBinary(materialFilename);
+
+            node["material_path"] = materialFilename + ".mat";
+        }
 
         return node;
     }
@@ -86,6 +90,15 @@ protected:
         }
         SetMesh(_mesh);
 
+        if (node["material_path"]) {
+            std::string materialPath = node["material_path"].as<std::string>();
+            material = Material::LoadBinary(materialPath);
+
+            if (!material) {
+                //log error
+            }
+        }
+        SetMaterial(material);
 
         return true;
     }

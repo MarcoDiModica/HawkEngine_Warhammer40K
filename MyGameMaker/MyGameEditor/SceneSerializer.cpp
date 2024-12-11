@@ -271,6 +271,8 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 
 					// TODO , add default img
 					Application->root->AddMeshRenderer(*game_obj, _mesh);
+
+
 				}
 				if (component_name == "CameraComponent") {
 					game_obj->AddComponent<CameraComponent>()->decode(value);

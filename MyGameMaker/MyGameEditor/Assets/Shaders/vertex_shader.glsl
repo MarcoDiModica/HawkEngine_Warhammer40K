@@ -10,7 +10,7 @@ out vec3 Normal; // Normal of the fragment
 out vec4 ExtraColor;
 
 uniform mat4 model;
-uniform mat4 view;
+uniform mat4 view
 uniform mat4 projection;
 uniform vec4 aColor;
 

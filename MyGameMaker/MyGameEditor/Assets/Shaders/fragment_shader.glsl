@@ -5,7 +5,7 @@ in vec3 FragPos; // Position of the fragment
 in vec3 Normal; // Normal of the fragment
 
 
-out vec4 FragColor;
+out vec4 FragColor
 
 uniform sampler2D texture1; // Texture sampler
 uniform vec4 modColor; // New uniform for color modifier

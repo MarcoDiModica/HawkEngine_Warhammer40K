@@ -8,6 +8,7 @@
 class Material
 {
 public:
+	Material();
 	enum WrapModes { Repeat, MirroredRepeat, Clamp };
 	WrapModes wrapMode = Repeat;
 
@@ -18,11 +19,8 @@ public:
 	vec4 color;
 
 	bool useShader = false;
-private:
-	std::shared_ptr<Image> imagePtr;
 
-public:
-
+	unsigned int GetId() const { return gid; }
 	void LoadTexture(const std::string& filename);
 	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
 	void bind() const;
@@ -41,7 +39,14 @@ public:
 	Shaders GetShader();
 
 	void SaveBinary(const std::string& filename) const;
-	void LoadBinary(const std::string& filename);
+	static std::shared_ptr<Material> LoadBinary(const std::string& filename);
+
+private:
+	std::shared_ptr<Image> imagePtr;
+	std::string image_path;
+
+	unsigned int gid;
+	static unsigned int next_id;
 
 };
 

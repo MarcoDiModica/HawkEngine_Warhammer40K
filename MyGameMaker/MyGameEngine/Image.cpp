@@ -5,6 +5,7 @@
 #include "../MyGameEditor/Log.h"
 #include <fstream>
 #include <zlib.h>
+#include <unordered_map>
 
 namespace fs = std::filesystem;
 
@@ -164,8 +165,18 @@ void Image::LoadCheckerTexture() {
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 }
 
+std::unordered_map<std::string, std::shared_ptr<Image>> imageCache;
+
 void Image::SaveBinary(const std::string& filename) const {
-	std::ofstream fout(filename + ".image", std::ios::binary);
+	
+	std::string fullPath = "Library/Images/" + filename + ".image";
+	LOG(LogType::LOG_INFO, "Saving image to: %s", fullPath.c_str());
+
+	if (!std::filesystem::exists("Library/Images")) {
+		std::filesystem::create_directory("Library/Images");
+	}
+
+	std::ofstream fout(fullPath, std::ios::binary);
 	if (!fout.is_open()) {
 		return;
 	}
@@ -180,21 +191,41 @@ void Image::SaveBinary(const std::string& filename) const {
 	fout.write(reinterpret_cast<const char*>(pixelData), dataSize);
 }
 
-void Image::LoadBinary(const std::string& filename) {
-	std::ifstream fin(filename + ".image", std::ios::binary);
-	if (!fin.is_open()) {
-		return;
+std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
+	std::string fullPath = "Library/Images/" + filename + ".image";
+	LOG(LogType::LOG_INFO, "Loading image from: %s", fullPath.c_str());
+
+	auto it = imageCache.find(fullPath);
+	if (it != imageCache.end()) {
+		return it->second;
 	}
 
-	fin.read(reinterpret_cast<char*>(&_width), sizeof(_width));
-	fin.read(reinterpret_cast<char*>(&_height), sizeof(_height));
-	fin.read(reinterpret_cast<char*>(&_channels), sizeof(_channels));
+	std::shared_ptr<Image> img;
+	try {
+		std::ifstream fin(fullPath, std::ios::binary);
+		if (!fin.is_open()) {
+			throw std::runtime_error("Error opening image file: " + fullPath);
+		}
 
-	ILubyte* pixelData = new ILubyte[_width * _height * _channels];
+		img = std::make_shared<Image>();
 
-	fin.read(reinterpret_cast<char*>(pixelData), _width * _height * _channels);
+		fin.read(reinterpret_cast<char*>(&img->_width), sizeof(img->_width));
+		fin.read(reinterpret_cast<char*>(&img->_height), sizeof(img->_height));
+		fin.read(reinterpret_cast<char*>(&img->_channels), sizeof(img->_channels));
 
-	ilTexImage(_width, _height, 1, _channels, IL_RGBA, IL_UNSIGNED_BYTE, pixelData); //devil
-	
-	delete[] pixelData;
+		ILubyte* pixelData = new ILubyte[img->_width * img->_height * img->_channels];
+
+		fin.read(reinterpret_cast<char*>(pixelData), img->_width * img->_height * img->_channels);
+
+		ilTexImage(img->_width, img->_height, 1, img->_channels, IL_RGBA, IL_UNSIGNED_BYTE, pixelData);
+
+		delete[] pixelData;
+
+		imageCache[fullPath] = img;
+	}
+	catch (const std::exception& e) {
+		return nullptr;
+	}
+
+	return img;
 }

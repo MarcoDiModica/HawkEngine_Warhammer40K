@@ -9,6 +9,8 @@
 #include <string>
 #include <memory>
 
+class GameObject;
+
 class UIHierarchy : public UIElement
 {
 public:
@@ -19,5 +21,7 @@ public:
 	bool DrawSceneObject(GameObject& obj);
 
 	bool Draw();
+
+	GameObject* draggedObject;
 };
 #endif // !__UI_HIERARCHY_H__

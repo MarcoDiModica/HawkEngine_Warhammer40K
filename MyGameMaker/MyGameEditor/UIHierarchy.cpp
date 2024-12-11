@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Root.h"
 #include "MyGameEditor/Input.h"
+#include "MyGameEngine/GameObject.h"
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <iostream>
@@ -47,13 +48,21 @@ bool UIHierarchy::Draw() {
 		if (ImGui::IsMouseClicked(0) && ImGui::IsWindowHovered() && !ImGui::IsAnyItemHovered()) {
 			Application->input->ClearSelection();
 		}
+
+		if (draggedObject && ImGui::IsMouseReleased(ImGuiMouseButton_Left) && draggedObject->GetParent()) {
+			GameObject* p = draggedObject->GetParent();
+			currentScene->AddGameObject(draggedObject->shared_from_this());
+
+			if (p ) p->RemoveChild(draggedObject);
+			draggedObject = nullptr;
+		}
 	}
 
 	ImGui::End();
 	return true;
 }
 
-GameObject* draggedObject;
+
 
 void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::Begin("Scene Hierarchy");

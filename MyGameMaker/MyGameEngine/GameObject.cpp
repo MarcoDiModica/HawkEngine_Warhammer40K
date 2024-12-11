@@ -406,7 +406,7 @@ void GameObject::SetParent(GameObject* parent)
 
 void GameObject::AddChild(GameObject* child)
 {
-    if (child->GetParent() == nullptr) {
+    if (child->GetParent() == nullptr)/* If child is in the scene */ {
         if (child->scene) {
 
             if (GetParent() == child) {

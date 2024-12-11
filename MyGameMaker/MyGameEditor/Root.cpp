@@ -204,22 +204,30 @@ std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
 	return light;
 }
 
-void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath)
+void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
 {
     auto meshRenderer = go.AddComponent<MeshRenderer>();
     auto image = std::make_shared<Image>();
     auto material = std::make_shared<Material>();
-    image->LoadTexture(texturePath);
-    material->setImage(image);
+    
+    
     meshRenderer->SetMesh(mesh);
+    if (mat) {
+        material = mat;
+        image = mat->getImg();
+    }
+    else {
+        image->LoadTexture(texturePath);
+    }
+    material->setImage(image);
     meshRenderer->SetMaterial(material);
-    meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    //meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
     if (material->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
         material->useShader = true;
         material->bindShaders();
     }
-    meshRenderer->SetImage(image);
+    //meshRenderer->SetImage(image);
 }
 
 void Root::CreateScene(const std::string& name)

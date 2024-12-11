@@ -2,6 +2,7 @@
 #include "SceneSerializer.h"
 #include "App.h"
 #include "Root.h"
+#include "../MyGameEngine/Material.h"
 #include <vector>
 #include <memory>
 #include <string>
@@ -174,6 +175,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 						if (component_name == "MeshRenderer") {
 
 							auto _mesh = std::make_shared<Mesh>();
+							auto _material = std::make_shared<Material>();
 							if (value["mesh_path"]) {
 								std::string path = value["mesh_path"].as<std::string>();
 
@@ -191,6 +193,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 								else {
 									std::string meshPath = value["mesh_path"].as<std::string>();
 									std::string node_name = value["mesh_name"].as<std::string>();
+									_mesh->nameM = node_name;
 
 									_mesh = Mesh::LoadBinary(node_name);
 
@@ -200,8 +203,13 @@ void SceneSerializer::DeSerialize(std::string path) {
 								}
 							}
 
-							// TODO , add default img
-							Application->root->AddMeshRenderer(*game_obj, _mesh);
+							if (value["material_path"]) {
+
+								std::string path = value["material_path"].as<std::string>();
+								_material = _material->LoadBinary(path);
+							}
+
+							Application->root->AddMeshRenderer(*game_obj, _mesh, "default.png", _material);
 						}
 						if (component_name == "CameraComponent") {
 							game_obj->AddComponent<CameraComponent>()->decode(value);
@@ -243,6 +251,7 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 				if (component_name == "MeshRenderer") {
 
 					auto _mesh = std::make_shared<Mesh>();
+					auto _material = std::make_shared<Material>();
 					if (value["mesh_path"]) {
 						std::string path = value["mesh_path"].as<std::string>();
 
@@ -260,7 +269,7 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 						else {
 							std::string meshPath = value["mesh_path"].as<std::string>();
 							std::string node_name = value["mesh_name"].as<std::string>();
-
+							_mesh->nameM = node_name;
 							_mesh = Mesh::LoadBinary(node_name);
 
 							if (_mesh == nullptr) {
@@ -269,8 +278,13 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 						}
 					}
 
-					// TODO , add default img
-					Application->root->AddMeshRenderer(*game_obj, _mesh);
+					if (value["material_path"]) {
+
+						std::string path = value["material_path"].as<std::string>();
+						_material = _material->LoadBinary(path);
+					}
+
+					Application->root->AddMeshRenderer(*game_obj, _mesh,"default.png", _material);
 
 
 				}

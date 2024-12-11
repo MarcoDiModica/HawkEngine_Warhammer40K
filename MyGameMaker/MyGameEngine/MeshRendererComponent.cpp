@@ -35,7 +35,7 @@ std::unique_ptr<Component> MeshRenderer::Clone(GameObject* owner)
     auto meshRenderer = std::make_unique<MeshRenderer>(*this);
     meshRenderer->mesh = mesh;
     meshRenderer->material = material;
-    meshRenderer->image = image;
+    //meshRenderer->image = image;
     meshRenderer->color = color;
     meshRenderer->owner = owner;
     return meshRenderer;
@@ -43,6 +43,7 @@ std::unique_ptr<Component> MeshRenderer::Clone(GameObject* owner)
 
 void MeshRenderer::SetMesh(std::shared_ptr<Mesh> mesh)
 {
+   /* this->mesh->nameM = mesh->nameM;*/
     this->mesh = mesh;
 }
 
@@ -74,13 +75,13 @@ std::shared_ptr<Material> MeshRenderer::GetMaterial() const
 void MeshRenderer::SetImage(std::shared_ptr<Image> image)
 {
     material->setImage(image);
-    this->image = image;
+   // this->image = image;
 }
 
-std::shared_ptr<Image> MeshRenderer::GetImage() const
-{
-    return image;
-}
+//std::shared_ptr<Image> MeshRenderer::GetImage() const
+//{
+//    return image;
+//}
 
 void MeshRenderer::Render() const
 {
@@ -119,11 +120,11 @@ void MeshRenderer::Render() const
 
     if (material)
     {
-        color4 newColor = color4(material->color.x, material->color.y, material->color.z, material->color.w);
+        //color4 newColor = color4(material->color.x, material->color.y, material->color.z, material->color.w);
         
         glEnable(GL_TEXTURE_2D);
         material->bind();
-        material->setShaderUniform("texture1", 0); // Pasar la unidad de textura al shader
+        //material->setShaderUniform("texture1", 0); // Pasar la unidad de textura al shader
 
     }
 

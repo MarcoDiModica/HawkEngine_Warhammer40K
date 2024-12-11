@@ -175,7 +175,7 @@ bool isInsideFrustum(const BoundingBox& bbox, const std::list<CameraBase::Plane>
 }
 
 void Jordi_Code(GameObject* object)
-{
+{	
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
 

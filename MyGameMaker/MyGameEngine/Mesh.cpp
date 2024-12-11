@@ -414,7 +414,7 @@ void Mesh::SaveBinary(const std::string& filename) const
 	//texcords?colors?
 }
 
-std::shared_ptr<Mesh> Mesh::LoadBinary(const std::string& filename)
+std::shared_ptr<Mesh> Mesh::LoadBinary( std::string& filename)
 {
 	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
 
@@ -452,6 +452,6 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(const std::string& filename)
 	//texcords?colors?
 
 	meshCache[fullPath] = mesh;
-
+	mesh->nameM = filename;
 	return mesh;
 }

@@ -226,7 +226,7 @@ void ModelImporter::loadFromFile(const std::string& path) {
 
 		const aiMesh* mesh = fbx_scene->mMeshes[i];
 
-		meshes[i]->name = std::string(mesh->mName.C_Str());
+		meshes[i]->nameM = std::string(mesh->mName.C_Str());
 
 	}
 

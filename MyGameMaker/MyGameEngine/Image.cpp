@@ -192,9 +192,10 @@ void Image::SaveBinary(const std::string& filename) const {
 }
 
 std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
-	std::string fullPath = "Library/Images/" + filename + ".image";
-	LOG(LogType::LOG_INFO, "Loading image from: %s", fullPath.c_str());
+	std::string fpath = filename.substr(0, filename.size() - 4);
 
+	std::string fullPath = "Library/Images/" + fpath + ".image";
+	LOG(LogType::LOG_INFO, "Loading image from: %s", fullPath.c_str());
 	auto it = imageCache.find(fullPath);
 	if (it != imageCache.end()) {
 		return it->second;

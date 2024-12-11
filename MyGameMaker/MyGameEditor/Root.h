@@ -13,6 +13,8 @@
 #include "SceneSerializer.h"
 #include <list>
 
+class Material;
+
 class Root : public Module
 {
 public:
@@ -48,7 +50,9 @@ public:
     std::shared_ptr<GameObject> CreateCameraObject(const std::string& name);
     std::shared_ptr<GameObject> CreateLightObject(const std::string& name);
 
-    void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png");
+    void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr);
+
+    
 
     void RemoveGameObject(GameObject* gameObject);
 

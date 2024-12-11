@@ -1,5 +1,5 @@
 GameObject0:
-  name: BakerHouse
+  name: GameObject
   Transform_Component:
     name: Transform_Component
     enabled: true
@@ -20,73 +20,13 @@ GameObject0:
         col2: 1
         col3: 0
       row3:
-        col0: 0
+        col0: -0.40000000596046448
         col1: 0
         col2: 0
         col3: 1
-  Child0:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 1
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: 1
-          col2: 0
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0
-          col2: 1
-          col3: 0
-        row3:
-          col0: 0
-          col1: 0
-          col2: 0
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      image_path: Assets/default.png
-      mesh_name: Untitled.001
-      material_path: material_6.mat
-  Child1:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 1
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: 1
-          col2: 0
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0
-          col2: 1
-          col3: 0
-        row3:
-          col0: 0
-          col1: 0
-          col2: 0
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      image_path: Assets/default.png
-      mesh_name: Untitled
-      material_path: material_5.mat
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh_path: ""
+    mesh_name: Untitled
+    material_path: material_3.mat

@@ -30,7 +30,7 @@ public:
     std::shared_ptr<Material> GetMaterial() const;
 
     void SetImage(std::shared_ptr<Image> image);
-    std::shared_ptr<Image> GetImage() const;
+//std::shared_ptr<Image> GetImage() const;
 
     void SetColor(const glm::vec3& color);
     glm::vec3 GetColor() const;
@@ -39,7 +39,7 @@ public:
 
 private:
     std::shared_ptr<Mesh> mesh;
-    std::shared_ptr<Image> image;
+   // std::shared_ptr<Image> image;
     std::shared_ptr<Material> material;
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
@@ -49,8 +49,8 @@ protected:
         YAML::Node node = Component::encode();
 
         node["mesh_path"] = mesh->filePath;
-        node["image_path"] = image->image_path;
-        node["mesh_name"] = mesh->name;
+        //node["image_path"] = image->image_path;
+        node["mesh_name"] = mesh->nameM;
 
         if (material) {
             std::string materialFilename = "material_" + std::to_string(material->GetId());

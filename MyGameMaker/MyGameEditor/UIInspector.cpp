@@ -179,7 +179,7 @@ bool UIInspector::Draw() {
 
             ImGui::Separator();
 
-            std::shared_ptr<Image> image = meshRenderer->GetImage();
+            std::shared_ptr<Image> image /*= meshRenderer->GetImage()*/;
 
             if (image) {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);

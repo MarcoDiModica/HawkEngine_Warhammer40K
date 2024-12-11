@@ -63,16 +63,16 @@ public:
     glm::vec3 aabbMax;
 
     void SaveBinary(const std::string& filename) const;
-    static std::shared_ptr<Mesh> LoadBinary(const std::string& filename);
+    static std::shared_ptr<Mesh> LoadBinary( std::string& filename);
 
 protected:
-
+    friend class SceneSerializer;
     friend class MeshRenderer;
     friend class ModelImporter;
 
     std::string filePath;
     std::string meshPath;
-    std::string name;
+    std::string nameM;
 
 };
 

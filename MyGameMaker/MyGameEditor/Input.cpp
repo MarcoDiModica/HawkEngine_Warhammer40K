@@ -280,6 +280,17 @@ void Input::HandleFileDrop(const std::string& fileDir)
             meshRenderer->SetMaterial(material);
         }
     }
+    else if (fileExt == "image") {
+        if (draggedObject != nullptr) {
+            auto meshRenderer = draggedObject->GetComponent<MeshRenderer>();
+            auto image = std::make_shared<Image>();
+            auto material = std::make_shared<Material>();
+
+            image->LoadBinary(fileDir);
+            material->setImage(image);
+            meshRenderer->SetMaterial(material);
+        }
+    }
     else if (fileExt == "scene")
     {
         LOG(LogType::LOG_INFO, "Loading Scene File: %s from: %s", fileNameExt.c_str(), fileDir.c_str());

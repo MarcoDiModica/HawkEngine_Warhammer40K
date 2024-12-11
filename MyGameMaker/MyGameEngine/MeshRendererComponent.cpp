@@ -87,9 +87,10 @@ void MeshRenderer::Render() const
 
     if (material && material->useShader)
     {
-        //material->bindShaders();
+        material->bindShaders();
+
         //material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-        //material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
+        material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
         //material->setShaderUniform("modColor", glm::vec4( 1,0.2f,0,1));
         //glUniform4f(glGetUniformLocation(material->shader.GetProgram(), "modColor"), material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
         ////material->setShaderUniform("model", owner->GetComponent<Transform_Component>()->GetMatrix());

@@ -37,6 +37,8 @@ public:
 	void setShaderUniform(const std::string& name, const glm::mat4& value);
 	vec4 GetColor();
 	void SetColor(const vec4& color);
+	void SetShader(Shaders& shader);
+	Shaders GetShader();
 
 };
 

@@ -33,7 +33,7 @@ struct DirLight {
 
 #define MAX_POINT_LIGHTS 4
 
-uniform PointLight pointLights;
+uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform DirLight dirLight;
 uniform vec3 viewPos;
 
@@ -50,8 +50,10 @@ void main()
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
 
     // Point lights
-   
-    result += CalcPointLight(pointLights, norm, FragPos, viewDir);
+    for (int i = 0; i < 1; ++i) 
+    {
+        result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+    }
     
     
     // Sample the texture using the texture coordinates

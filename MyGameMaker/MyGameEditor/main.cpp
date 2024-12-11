@@ -37,6 +37,10 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
+
+#include "MyGameEngine/LightComponent.h"
+#include "MyGameEngine/Shaders.h"
+#include "MyGameEngine/Material.h"
 #include "App.h"
 
 using namespace std;
@@ -63,7 +67,14 @@ static const ivec2 WINDOW_SIZE(1280, 720);
 static const auto FPS = 120;
 static const auto FRAME_DT = 1.0s / FPS;
 
+int numPointLight = 0;
+int numDirLight = 0;
+
+std::list<GameObject*> lights;
+
 static EditorCamera* camera = nullptr;
+
+Shaders mainShader;
 
 App* Application = NULL;
 
@@ -83,6 +94,7 @@ static void init_openGL() {
 
 static void drawFloorGrid(int size, double step) {
 	//glColor3ub(0, 2, 200);
+
 	glBegin(GL_LINES);
 	Application->root->currentScene->DebugDrawTree();
 
@@ -179,10 +191,26 @@ static void display_func() {
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
 
+
+	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo mañana
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
 		GameObject* object = Application->root->currentScene->children()[i].get();
 
+		if (object->HasComponent<LightComponent>()) {
+			auto it = std::find(lights.begin(), lights.end(), object);
+			if (it == lights.end()) {
+				lights.push_back(object);
+			}
+		}
+	}
+
+	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
+	{
+		GameObject* object = Application->root->currentScene->children()[i].get();
+		
+		object->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights,mainShader);
+		
 		object->Update(Application->GetDt());
 
 		if (object->HasComponent<MeshRenderer>()) {
@@ -190,7 +218,7 @@ static void display_func() {
 			BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
 
 			bbox = object->GetTransform()->GetMatrix() * bbox;
-
+			
 			if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
 									camera->frustum.left, camera->frustum.right,
 									camera->frustum.top, camera->frustum.bot })) {
@@ -268,6 +296,10 @@ int main(int argc, char** argv) {
 	ilutInit();
 
 	init_openGL();
+
+	//if (mainShader.LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
+	//
+	//}
 
 	camera = Application->camera;
 

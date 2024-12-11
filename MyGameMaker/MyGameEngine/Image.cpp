@@ -2,6 +2,9 @@
 #include <filesystem>
 #include <vector>
 #include <GL/glew.h>
+#include "../MyGameEditor/Log.h"
+#include <fstream>
+#include <zlib.h>
 
 namespace fs = std::filesystem;
 
@@ -139,7 +142,6 @@ void Image::LoadTextureLocalPath(const std::string& path) {
 
 }
 
-
 void Image::LoadCheckerTexture() {
 	GLubyte checkerImage[CHECKERS_HEIGHT][CHECKERS_WIDTH][4];
 	for (int i = 0; i < CHECKERS_HEIGHT; i++) {
@@ -160,4 +162,39 @@ void Image::LoadCheckerTexture() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
+}
+
+void Image::SaveBinary(const std::string& filename) const {
+	std::ofstream fout(filename + ".image", std::ios::binary);
+	if (!fout.is_open()) {
+		return;
+	}
+
+	fout.write(reinterpret_cast<const char*>(&_width), sizeof(_width));
+	fout.write(reinterpret_cast<const char*>(&_height), sizeof(_height));
+	fout.write(reinterpret_cast<const char*>(&_channels), sizeof(_channels));
+
+	ILubyte* pixelData = ilGetData(); //devil
+	ILuint dataSize = _width * _height * _channels;
+
+	fout.write(reinterpret_cast<const char*>(pixelData), dataSize);
+}
+
+void Image::LoadBinary(const std::string& filename) {
+	std::ifstream fin(filename + ".image", std::ios::binary);
+	if (!fin.is_open()) {
+		return;
+	}
+
+	fin.read(reinterpret_cast<char*>(&_width), sizeof(_width));
+	fin.read(reinterpret_cast<char*>(&_height), sizeof(_height));
+	fin.read(reinterpret_cast<char*>(&_channels), sizeof(_channels));
+
+	ILubyte* pixelData = new ILubyte[_width * _height * _channels];
+
+	fin.read(reinterpret_cast<char*>(pixelData), _width * _height * _channels);
+
+	ilTexImage(_width, _height, 1, _channels, IL_RGBA, IL_UNSIGNED_BYTE, pixelData); //devil
+	
+	delete[] pixelData;
 }

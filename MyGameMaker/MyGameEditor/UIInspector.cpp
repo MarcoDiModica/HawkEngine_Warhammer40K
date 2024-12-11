@@ -297,57 +297,57 @@ bool UIInspector::Draw() {
 			else {
 				LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
 			}
+        }
 
-            ImGui::Separator();
+        ImGui::Separator();
 
-            if (selectedGameObject->HasComponent<LightComponent>())
+        if (selectedGameObject->HasComponent<LightComponent>())
+        {
+            LightComponent* lightComponent = selectedGameObject->GetComponent<LightComponent>();
+
+            if (lightComponent)
             {
-                LightComponent* lightComponent = selectedGameObject->GetComponent<LightComponent>();
-
-                if (lightComponent)
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Light"))
                 {
-                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                    if (ImGui::CollapsingHeader("Light"))
+                    LightType lightType = lightComponent->GetLightType();
+                    vec3 color = lightComponent->GetColor();
+                    float intensity = lightComponent->GetIntensity();
+                    float radius = lightComponent->GetRadius();
+                    glm::dvec3 direction = lightComponent->GetDirection();
+
+                    if (ImGui::Combo("Type", (int*)&lightType, "Directional\0Point\0"))
                     {
-                        LightType lightType = lightComponent->GetLightType();
-                        vec3 color = lightComponent->GetColor();
-                        float intensity = lightComponent->GetIntensity();
-                        float radius = lightComponent->GetRadius();
-                        glm::dvec3 direction = lightComponent->GetDirection();
-
-                        if (ImGui::Combo("Type", (int*)&lightType, "Directional\0Point\0"))
-                        {
-                            lightComponent->SetLightType(lightType);
-                        }
-
-                        if (ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 100.0f))
-                        {
-                            lightComponent->SetIntensity(intensity);
-                        }
-
-                        /*if (ImGui::ColorEdit3("Color"))
-                        {
-                            lightComponent->SetColor(color); COLOR
-                        }*/
-
-                        if (lightType == LightType::POINT)
-                        {
-                            if (ImGui::DragFloat("Range", &radius, 0.1f, 0.0f, 1000.0f))
-                            {
-                                lightComponent->SetRadius(radius);
-                            }
-                        }
-
-                        //if (lightType == LightType::DIRECTIONAL)
-                        //{
-                        //                   // change direction vec3
-                        //}
+                        lightComponent->SetLightType(lightType);
                     }
+
+                    if (ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 100.0f))
+                    {
+                        lightComponent->SetIntensity(intensity);
+                    }
+
+                    /*if (ImGui::ColorEdit3("Color"))
+                    {
+                        lightComponent->SetColor(color); COLOR
+                    }*/
+
+                    if (lightType == LightType::POINT)
+                    {
+                        if (ImGui::DragFloat("Range", &radius, 0.1f, 0.0f, 1000.0f))
+                        {
+                            lightComponent->SetRadius(radius);
+                        }
+                    }
+
+                    //if (lightType == LightType::DIRECTIONAL)
+                    //{
+                    //                   // change direction vec3
+                    //}
                 }
-                else
-                {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
-                }
+            }
+            else
+            {
+                LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
             }
         }
     }

@@ -51,6 +51,10 @@ protected:
         node["image_path"] = image->image_path;
         node["mesh_name"] = mesh->name;
 
+        /*if (material) {
+            node["material"] = material->encode();
+        }*/
+
         return node;
     }
 

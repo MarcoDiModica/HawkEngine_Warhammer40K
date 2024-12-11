@@ -38,5 +38,8 @@ public:
 	vec4 GetColor();
 	void SetColor(const vec4& color);
 
+	void SaveBinary(const std::string& filename) const;
+	void LoadBinary(const std::string& filename);
+
 };
 

@@ -1,5 +1,7 @@
 #include "Material.h"
 #include <GL/glew.h>
+#include <fstream>
+#include <zlib.h>
 
 static auto GLWrapMode(Material::WrapModes mode) {
 	switch (mode) {
@@ -70,4 +72,32 @@ void Material::setShaderUniform(const std::string& name, const glm::vec4& value)
 
 void Material::setShaderUniform(const std::string& name, const glm::mat4& value) {
 	shader.SetUniform(name, value);
+}
+
+void Material::SaveBinary(const std::string& filename) const {
+	/*std::ofstream fout(filename + ".material", std::ios::binary);
+	if (!fout.is_open()) {
+		return;
+	}
+
+	fout.write(reinterpret_cast<const char*>(&wrapMode), sizeof(wrapMode));
+
+	fout.write(reinterpret_cast<const char*>(&filter), sizeof(filter));
+
+	fout.write(reinterpret_cast<const char*>(&color), sizeof(color));
+
+	fout.write(reinterpret_cast<const char*>(&useShader), sizeof(useShader));
+
+	if (imagePtr) {
+		fout.write("IMG", 3);
+		imagePtr->SaveBinary(fout);
+	}
+	else {
+		fout.write("NOI", 3);
+	}*/
+}
+
+void Material::LoadBinary(const std::string& filename)
+{
+
 }

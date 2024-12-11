@@ -35,6 +35,9 @@ public:
 
 	void LoadCheckerTexture();
 
+	void SaveBinary(const std::string& path) const;
+	void LoadBinary(const std::string& path);
+
 	std::string image_path;
 };
 

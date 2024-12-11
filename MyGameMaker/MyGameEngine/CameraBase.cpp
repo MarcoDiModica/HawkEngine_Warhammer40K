@@ -102,28 +102,29 @@ bool CameraBase::IsInsideFrustrum(const BoundingBox& bbox) const
 {
     for (const auto& plane : { frustum.left, frustum.right, frustum.top, frustum.bot, frustum._near, frustum._far })
     {
-        bool isOutside = true;
-
+        bool isInside = false;
         for (const glm::vec3& vertex : bbox.vertices())
         {
-            if (plane.distanceToPoint(vertex) >= 0)
+            float distance = plane.distanceToPoint(vertex);
+            Log(__FILE__, __LINE__, LogType::LOG_INFO, "Distancia del vértice (%.2f, %.2f, %.2f) al plano: %.2f", vertex.x, vertex.y, vertex.z, distance);
+            if (distance >= 0)
             {
-                isOutside = false;
+                isInside = true;
                 break;
             }
         }
 
-        if (isOutside)
+        if (!isInside)
         {
             Log(__FILE__, __LINE__, LogType::LOG_WARNING, "BoundingBox fuera del frustum");
             return false;
         }
-         
+
     }
     Log(__FILE__, __LINE__, LogType::LOG_INFO, "BoundingBox dentro del frustum");
     return true;
-
 }
+
 
 void CameraBase::RunTests()
 {

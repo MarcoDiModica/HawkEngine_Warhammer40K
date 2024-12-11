@@ -4,6 +4,7 @@
 #include "MeshRendererComponent.h"
 #include "Scene.h"
 #include <random>
+#include <functional>
 
 CameraComponent::CameraComponent(GameObject* owner) : Component(owner), CameraBase()
 {
@@ -123,28 +124,30 @@ void CameraComponent::Update(float deltaTime)
             DrawFrustrum();
 		}
 
-        for (auto& gameObject : owner->GetScene()->children())
-		{
-            if (gameObject.get() == owner)
-            {
-                continue;
+        std::function<void(std::shared_ptr<GameObject>)> checkGameObject = [&](std::shared_ptr<GameObject> gameObject) {
+            if (gameObject.get() == owner) {
+                return;
             }
 
-            if (gameObject->HasComponent<MeshRenderer>())
-			{
-				if (IsInsideFrustrum(gameObject->GetComponent<MeshRenderer>()->GetMesh()->boundingBox()))
-				{
-                    LOG(LogType::LOG_INFO, "inside %s",gameObject->GetName().c_str());
-                    
+            if (gameObject->HasComponent<MeshRenderer>()) {
+                if (IsInsideFrustrum(gameObject->boundingBox())) {
+                    LOG(LogType::LOG_INFO, "inside %s", gameObject->GetName().c_str());
                     gameObject->SetActive(true);
-				}
-				else
-				{
-                    LOG(LogType::LOG_INFO, "outside %s",gameObject->GetName().c_str());
-					gameObject->SetActive(false);
-				}
-			}
-		}
+                }
+                else {
+                    LOG(LogType::LOG_INFO, "outside %s", gameObject->GetName().c_str());
+                    gameObject->SetActive(false);
+                }
+            }
+
+            for (const auto& child : gameObject->GetChildren()) {
+                checkGameObject(child);
+            }
+        };
+
+        for (auto& gameObject : owner->GetScene()->children()) {
+            checkGameObject(gameObject);
+        }
     }
 
     if (orthographic)

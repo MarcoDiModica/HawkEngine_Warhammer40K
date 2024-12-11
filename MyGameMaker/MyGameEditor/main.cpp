@@ -129,38 +129,22 @@ void configureGameCamera()
 
 void drawFrustum(const CameraBase& camera)
 {
-	const auto& frustum = camera.frustum;
+	//const auto& frustum = camera.frustum;
 
-	glBegin(GL_LINES);
-	for (int i = 0; i < 4; i++) {
-		glVertex3fv(glm::value_ptr(frustum.vertices[i]));
-		glVertex3fv(glm::value_ptr(frustum.vertices[(i + 1) % 4]));
+	//glBegin(GL_LINES);
+	//for (int i = 0; i < 4; i++) {
+	//	glVertex3fv(glm::value_ptr(frustum.vertices[i]));
+	//	glVertex3fv(glm::value_ptr(frustum.vertices[(i + 1) % 4]));
 
-		glVertex3fv(glm::value_ptr(frustum.vertices[i + 4]));
-		glVertex3fv(glm::value_ptr(frustum.vertices[(i + 1) % 4 + 4]));
+	//	glVertex3fv(glm::value_ptr(frustum.vertices[i + 4]));
+	//	glVertex3fv(glm::value_ptr(frustum.vertices[(i + 1) % 4 + 4]));
 
-		glVertex3fv(glm::value_ptr(frustum.vertices[i]));
-		glVertex3fv(glm::value_ptr(frustum.vertices[i + 4]));
-	}
-	glEnd();
+	//	glVertex3fv(glm::value_ptr(frustum.vertices[i]));
+	//	glVertex3fv(glm::value_ptr(frustum.vertices[i + 4]));
+	//}
+	//glEnd();
 }
 
-bool isInsideFrustum(const BoundingBox& bbox, const std::list<CameraBase::Plane>& frustumPlanes) {
-	for (const auto& plane : frustumPlanes) {
-		// Si todos los vértices del BoundingBox están fuera de un plano, entonces el BoundingBox está fuera del frustum.
-		if (plane.distanceToPoint(bbox.v000()) < 0 &&
-			plane.distanceToPoint(bbox.v001()) < 0 &&
-			plane.distanceToPoint(bbox.v010()) < 0 &&
-			plane.distanceToPoint(bbox.v011()) < 0 &&
-			plane.distanceToPoint(bbox.v100()) < 0 &&
-			plane.distanceToPoint(bbox.v101()) < 0 &&
-			plane.distanceToPoint(bbox.v110()) < 0 &&
-			plane.distanceToPoint(bbox.v111()) < 0) {
-			return false;
-		}
-	}
-	return true;
-}
 
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
@@ -191,11 +175,11 @@ static void display_func() {
 
 			bbox = object->GetTransform()->GetMatrix() * bbox;
 
-			if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
-									camera->frustum.left, camera->frustum.right,
-									camera->frustum.top, camera->frustum.bot })) {
-				continue; // Aquí omitimos el objeto si no está en el frustum
-			}
+			//if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
+			//						camera->frustum.left, camera->frustum.right,
+			//						camera->frustum.top, camera->frustum.bot })) {
+			//	continue; // Aquí omitimos el objeto si no está en el frustum
+			//}
 
 			if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
 			{

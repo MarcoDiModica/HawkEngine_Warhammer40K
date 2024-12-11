@@ -24,7 +24,9 @@ glm::dmat4 CameraBase::GetProjectionMatrix() const
 
 glm::dmat4 CameraBase::GetViewMatrix(const Transform_Component& transform) const
 {
-    return glm::lookAt(transform.GetPosition(), transform.GetPosition() + transform.GetForward(), transform.GetUp());
+    glm::dmat4 rotation = glm::mat4_cast(glm::conjugate(transform.GetRotation()));
+    glm::dmat4 translation = glm::translate(glm::dmat4(1.0), -transform.GetPosition());
+    return rotation * translation;
 }
 
 void CameraBase::SetFOV(float fov)
@@ -90,21 +92,19 @@ void CameraBase::DrawFrustrum()
 
 bool CameraBase::IsInsideFrustrum(const BoundingBox& bbox)
 {
-    for (const auto& plane : { frustum._near, frustum._far,
-                              frustum.left, frustum.right,
-                              frustum.top, frustum.bot })
+    for (const auto& plane : { frustum._near, frustum._far, frustum.left, frustum.right, frustum.top, frustum.bot })
     {
-        // Si todos los vértices del BoundingBox están fuera de un plano, entonces el BoundingBox está fuera del frustum.
-        if (plane.distanceToPoint(bbox.v000()) < 0 &&
-            plane.distanceToPoint(bbox.v001()) < 0 &&
-            plane.distanceToPoint(bbox.v010()) < 0 &&
-            plane.distanceToPoint(bbox.v011()) < 0 &&
-            plane.distanceToPoint(bbox.v100()) < 0 &&
-            plane.distanceToPoint(bbox.v101()) < 0 &&
-            plane.distanceToPoint(bbox.v110()) < 0 &&
-            plane.distanceToPoint(bbox.v111()) < 0) {
-            return false;
+        int outsideCount = 0;
+        for (const auto& vertex : { bbox.v000(), bbox.v001(), bbox.v010(), bbox.v011(),
+                                    bbox.v100(), bbox.v101(), bbox.v110(), bbox.v111() })
+        {
+            if (plane.distanceToPoint(vertex) < 0) {
+                outsideCount++;
+            }
+        }
+        if (outsideCount == 8) {
+            return false;  
         }
     }
-    return true;
+    return true;  
 }

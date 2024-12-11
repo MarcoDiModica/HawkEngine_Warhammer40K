@@ -109,7 +109,10 @@ void CameraComponent::Update(float deltaTime)
 
     if (frustrumCullingEnabled)
     {
-        frustum.Update(GetViewMatrix(*owner->GetTransform()) * GetProjectionMatrix());
+        glm::mat4 view = GetViewMatrix(*owner->GetTransform());
+        glm::mat4 projection = GetProjectionMatrix();
+        glm::mat4 vpm = projection * view;
+		frustum.Update(vpm);
 
         if (frustrumRepresentation)
 		{
@@ -165,7 +168,7 @@ void CameraComponent::UpdateCameraView(double windowWidth, double windowHeight, 
     UpdateAspectRatio(windowAspect);
 
     if (windowAspect > imageAspect) {
-        SetFOV(2.0 * atan(tan(glm::radians(60.0) / 2.0) * (imageAspect / windowAspect)));
+        SetFOV(2.0 * glm::atan(glm::tan(glm::radians(60.0) / 2.0) * (imageAspect / windowAspect)));
     }
     else {
         SetFOV(glm::radians(60.0));

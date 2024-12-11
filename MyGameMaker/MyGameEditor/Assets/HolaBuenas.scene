@@ -53,7 +53,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_004
   Child1:
@@ -85,7 +85,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_001
   Child2:
@@ -117,7 +117,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_007
   Child3:
@@ -149,7 +149,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_008
   Child4:
@@ -181,7 +181,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: Line002
   Child5:
@@ -213,7 +213,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: Plane001
   Child6:
@@ -245,7 +245,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_010
   Child7:
@@ -277,7 +277,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_011
   Child8:
@@ -309,7 +309,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_013
   Child9:
@@ -341,7 +341,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_014
   Child10:
@@ -373,7 +373,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_016
   Child11:
@@ -405,7 +405,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_017
   Child12:
@@ -437,7 +437,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_022
   Child13:
@@ -469,7 +469,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_023
   Child14:
@@ -501,7 +501,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_024
   Child15:
@@ -533,7 +533,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_026
   Child16:
@@ -565,7 +565,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_028
   Child17:
@@ -597,7 +597,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: Object010
   Child18:
@@ -629,7 +629,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_030
   Child19:
@@ -661,7 +661,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_031
   Child20:
@@ -693,7 +693,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_032
   Child21:
@@ -725,7 +725,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_033
   Child22:
@@ -757,7 +757,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_034
   Child23:
@@ -789,7 +789,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_035
   Child24:
@@ -821,7 +821,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_036
   Child25:
@@ -853,7 +853,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_037
   Child26:
@@ -885,7 +885,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_038
   Child27:
@@ -917,7 +917,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_039
   Child28:
@@ -949,7 +949,7 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_040
   Child29:
@@ -981,35 +981,6 @@ GameObject0:
     MeshRenderer:
       name: MeshRenderer
       enabled: true
-      mesh_path: Library/Mesh/Street environment_V01.FBX.mesh
+      mesh_path: ""
       image_path: Assets/default.png
       mesh_name: City_building_041
-GameObject1:
-  name: MainCamera
-  Transform_Component:
-    name: Transform_Component
-    enabled: true
-    matrix:
-      row0:
-        col0: 1
-        col1: 0
-        col2: 0
-        col3: 0
-      row1:
-        col0: 0
-        col1: 1
-        col2: 0
-        col3: 0
-      row2:
-        col0: 0
-        col1: 0
-        col2: 1
-        col3: 0
-      row3:
-        col0: 0
-        col1: 0
-        col2: 0
-        col3: 1
-  "":
-    name: ""
-    enabled: true

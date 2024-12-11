@@ -62,11 +62,8 @@ public:
     glm::vec3 aabbMin;
     glm::vec3 aabbMax;
 
-    YAML::Node Encode() const;
-    bool Decode(const YAML::Node& node);
-
-    void Save(const std::string& filename);
-    static std::shared_ptr<Mesh> Load(const std::string& filename);
+    void SaveBinary(const std::string& filename) const;
+    static std::shared_ptr<Mesh> LoadBinary(const std::string& filename);
 
 protected:
 

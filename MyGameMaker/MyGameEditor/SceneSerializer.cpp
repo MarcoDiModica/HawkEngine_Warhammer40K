@@ -192,27 +192,14 @@ void SceneSerializer::DeSerialize(std::string path) {
 									std::string meshPath = value["mesh_path"].as<std::string>();
 									std::string node_name = value["mesh_name"].as<std::string>();
 
-									//TODO MARCO , create some file loader / methods module for this
+									_mesh = Mesh::LoadBinary(node_name);
 
-									FILE* file = fopen(meshPath.c_str(), "r");
-
-									// If fopen fails, file will be null
-									if (file == nullptr) { LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str()); }
-									else {
-
-										fclose(file); /*Close file*/
-
-										YAML::Node meshNode = YAML::LoadFile(meshPath);
-
-										if (node_name != "") {
-											_mesh->Decode(meshNode);
-										}
-										else {
-											_mesh->Decode(meshNode[node_name]);
-										}
+									if (_mesh == nullptr) {
+										LOG(LogType::LOG_ERROR, "Error loading mesh %s", node_name.c_str());
 									}
 								}
 							}
+
 							// TODO , add default img
 							Application->root->AddMeshRenderer(*game_obj, _mesh);
 						}
@@ -257,7 +244,6 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 
 					auto _mesh = std::make_shared<Mesh>();
 					if (value["mesh_path"]) {
-
 						std::string path = value["mesh_path"].as<std::string>();
 
 						if (path.substr(0, 6) == "shapes") {
@@ -272,31 +258,13 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 							}
 						}
 						else {
-
 							std::string meshPath = value["mesh_path"].as<std::string>();
 							std::string node_name = value["mesh_name"].as<std::string>();
 
-							//TODO MARCO , create some file loader / methods module for this
+							_mesh = Mesh::LoadBinary(node_name);
 
-							FILE* file = fopen(meshPath.c_str(), "r");
-
-							// If fopen fails, file will be null
-							if (file == nullptr) { LOG(LogType::LOG_ERROR, "Couldn't load file %s", meshPath.c_str()); }
-							else {
-
-								fclose(file); /*Close file*/
-
-								if (strcmp(meshPath.c_str(), _mesh_path.c_str()) != 0) {
-									_mesh_path = meshPath;
-									mesh_root_node = YAML::LoadFile(meshPath);
-								}
-
-								if (node_name == "") {
-									_mesh->Decode(mesh_root_node);
-								}
-								else {
-									_mesh->Decode(mesh_root_node[node_name]);
-								}
+							if (_mesh == nullptr) {
+								LOG(LogType::LOG_ERROR, "Error loading mesh %s", node_name.c_str());
 							}
 						}
 					}

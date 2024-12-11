@@ -48,7 +48,9 @@ bool UIMainMenuBar::Draw()
 				Application->scene_serializer->Serialize("Assets");
 			}
 			if (ImGui::MenuItem("Load Scene")) {
-				Application->scene_serializer->DeSerialize(std::string("Assets/Scene1.scene"));
+				//get current scene name and the deserialize it
+				auto name = Application->root->GetActiveScene()->GetName();
+				Application->scene_serializer->DeSerialize("Assets/" + name + ".scene");
 			}
 			ImGui::EndMenu();
 		}
@@ -66,11 +68,12 @@ bool UIMainMenuBar::Draw()
 		if (ImGui::BeginMenu("Create"))
 		{
 
-			//if (ImGui::MenuItem("EmptyGameObject")) { Application->root->CreateEmptyObject("Empty"); }
+			if (ImGui::MenuItem("EmptyGameObject")) { Application->root->CreateGameObject("EmptyGameObject"); }
 			if (ImGui::MenuItem("Cube")) { Application->root->CreateCube("Cube"); }
 			if (ImGui::MenuItem("Sphere")) { Application->root->CreateSphere("Sphere"); }
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
-			//if (ImGui::MenuItem("SetCheckerTexture")) { Application->input->GetSelectedGameObject()->GetComponent<MeshRenderer>()->GetImage()->LoadCheckerTexture(); }
+			if (ImGui::MenuItem("Camera")) { Application->root->CreateCameraObject("Camera"); }
+			if (ImGui::MenuItem("Light")) { Application->root->CreateLightObject("Light"); }
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))

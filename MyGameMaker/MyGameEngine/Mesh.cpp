@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include "../MyGameEditor/Log.h"
+#include <zlib.h>
 
 #include <queue>
 using namespace std;
@@ -291,10 +292,6 @@ void Mesh::LoadMesh(const char* file_path)
 		}
 
 		aiReleaseImport(scene);
-
-		std::string onlyFans = std::filesystem::path(file_path).filename().string();
-
-		//Save(onlyFans);
 	}
 	else {
 		// Handle error
@@ -390,64 +387,71 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	return mesh;
 }
 
-YAML::Node Mesh::Encode() const
+std::unordered_map<std::string, std::shared_ptr<Mesh>> meshCache;
+
+void Mesh::SaveBinary(const std::string& filename) const
 {
-	YAML::Node node;
-	node["vertices"] = YAML::convert<std::vector<glm::vec3>>::encode(_vertices);
-	node["indices"] = YAML::convert<std::vector<unsigned int>>::encode(_indices);
-	node["normals"] = YAML::convert<std::vector<glm::vec3>>::encode(_normals);
-	node["boundingBox"]["min"] = _boundingBox.min;
-	node["boundingBox"]["max"] = _boundingBox.max;
-	node["filePath"] = filePath;
-	return node;
-}
+	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
 
-bool Mesh::Decode(const YAML::Node& node)
-{
-	_vertices = node["vertices"].as<std::vector<glm::vec3>>();
-	_indices = node["indices"].as<std::vector<unsigned int>>();
-	_normals = node["normals"].as<std::vector<glm::vec3>>();
-	/*_boundingBox.min = node["boundingBox"]["min"].as<glm::vec3>();
-	_boundingBox.max = node["boundingBox"]["max"].as<glm::vec3>();*/
-	filePath = node["filePath"].as<std::string>();
-
-	vertices_buffer.LoadData(_vertices.data(), _vertices.size() * sizeof(glm::vec3));
-	indices_buffer.LoadIndices(_indices.data(), _indices.size());
-	normals_buffer.LoadData(_normals.data(), _normals.size() * sizeof(glm::vec3));
-	
-	return true;
-}
-
-void Mesh::Save(const std::string& filename)  
-{
-	std::string fullPath = "Library/Mesh" + filename + ".mesh";
-
-	if (!std::filesystem::exists("Library")) {
-		std::filesystem::create_directory("Library");
+	if (!std::filesystem::exists("Library/Mesh")) {
+		std::filesystem::create_directory("Library/Mesh");
 	}
-	meshPath = "Library/Mesh" + filename + ".mesh";
 
-	LOG(LogType::LOG_INFO, "Saving mesh in: %s", fullPath.c_str());
+	std::ofstream fout(fullPath, std::ios::binary);
 
-	std::ofstream fout(fullPath);
-	YAML::Emitter out;
-	out << Encode();
-	fout << out.c_str();
+	uint32_t numVertices = _vertices.size();
+	uint32_t numIndices = _indices.size();
+	fout.write(reinterpret_cast<char*>(&numVertices), sizeof(numVertices));
+	fout.write(reinterpret_cast<char*>(&numIndices), sizeof(numIndices));
 
-	LOG(LogType::LOG_INFO, "Mesh correctly saved");
+	fout.write(reinterpret_cast<const char*>(_vertices.data()), numVertices * sizeof(glm::vec3));
+	fout.write(reinterpret_cast<const char*>(_indices.data()), numIndices * sizeof(unsigned int));
+	fout.write(reinterpret_cast<const char*>(_normals.data()), numVertices * sizeof(glm::vec3));
+
+	fout.write(reinterpret_cast<const char*>(&_boundingBox.min), sizeof(glm::dvec3));
+	fout.write(reinterpret_cast<const char*>(&_boundingBox.max), sizeof(glm::dvec3));
+
+	//texcords?colors?
 }
 
-std::shared_ptr<Mesh> Mesh::Load(const std::string& filename) 
+std::shared_ptr<Mesh> Mesh::LoadBinary(const std::string& filename)
 {
-	std::string fullPath = "Library/Mesh" + filename + ".mesh";
+	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
 
-	std::ifstream fin(fullPath);
-	YAML::Node node = YAML::Load(fin);
-	auto mesh = std::make_shared<Mesh>();
-	if (mesh->Decode(node)) {
-		return mesh;
+	auto it = meshCache.find(fullPath);
+	if (it != meshCache.end()) {
+		return it->second;
 	}
-	else {
+
+	std::ifstream fin(fullPath, std::ios::binary);
+	if (!fin.is_open()) {
+		LOG(LogType::LOG_ERROR, "Error al cargar la malla: %s", fullPath.c_str());
 		return nullptr;
 	}
+
+	auto mesh = std::make_shared<Mesh>();
+
+	uint32_t numVertices, numIndices;
+	fin.read(reinterpret_cast<char*>(&numVertices), sizeof(numVertices));
+	fin.read(reinterpret_cast<char*>(&numIndices), sizeof(numIndices));
+
+	mesh->_vertices.resize(numVertices);
+	mesh->_indices.resize(numIndices);
+	mesh->_normals.resize(numVertices);
+	fin.read(reinterpret_cast<char*>(mesh->_vertices.data()), numVertices * sizeof(glm::vec3));
+	fin.read(reinterpret_cast<char*>(mesh->_indices.data()), numIndices * sizeof(unsigned int));
+	fin.read(reinterpret_cast<char*>(mesh->_normals.data()), numVertices * sizeof(glm::vec3));
+
+	fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.min), sizeof(glm::dvec3));
+	fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.max), sizeof(glm::dvec3));
+
+	mesh->vertices_buffer.LoadData(mesh->_vertices.data(), numVertices * sizeof(glm::vec3));
+	mesh->indices_buffer.LoadIndices(mesh->_indices.data(), numIndices);
+	mesh->normals_buffer.LoadData(mesh->_normals.data(), numVertices * sizeof(glm::vec3));
+
+	//texcords?colors?
+
+	meshCache[fullPath] = mesh;
+
+	return mesh;
 }

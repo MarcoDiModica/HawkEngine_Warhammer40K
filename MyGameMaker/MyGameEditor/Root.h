@@ -45,6 +45,8 @@ public:
     std::shared_ptr<GameObject> CreateSphere(const std::string& name);
     std::shared_ptr<GameObject> CreatePlane(const std::string& name);
     std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
+    std::shared_ptr<GameObject> CreateCameraObject(const std::string& name);
+    std::shared_ptr<GameObject> CreateLightObject(const std::string& name);
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png");
 

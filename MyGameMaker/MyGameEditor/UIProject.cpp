@@ -177,13 +177,13 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		{
 			if (name.ends_with(".scene"))
 			{
-				if (ImGui::MenuItem("Save & Load Scene"))
+				if (ImGui::MenuItem("Save & Load"))
 				{
 					Application->scene_serializer->Serialize(currentSceneFile);
 					Application->scene_serializer->DeSerialize(entry.path().string());
 					currentSceneFile = entry.path().string();
 				}
-				if (ImGui::MenuItem("Load Scene without saving"))
+				if (ImGui::MenuItem("Load without saving"))
 				{
 					Application->scene_serializer->DeSerialize(entry.path().string());
 					currentSceneFile = entry.path().string();

@@ -2,6 +2,7 @@
 
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
+#include "MyGameEngine/LightComponent.h"
 #include "MyGameEngine/CameraComponent.h"
 #include "MyGameEngine/Mesh.h"
 #include "MyGameEngine/Scene.h"
@@ -46,10 +47,8 @@ void MakeCity() {
 bool Root::Awake()
 {
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
+    Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     //MakeCity();
-
-    Application->scene_serializer->DeSerialize("Assets/Adios.scene");
-
 
     return true;
 }
@@ -192,6 +191,18 @@ std::shared_ptr<GameObject> Root::CreatePlane(const std::string& name) {
     auto plane = CreateGameObject(name);
     AddMeshRenderer(*plane, Mesh::CreatePlane(), "Assets/default.png");
     return plane;
+}
+
+std::shared_ptr<GameObject> Root::CreateCameraObject(const std::string& name) {
+	auto camera = CreateGameObject(name);
+	camera->AddComponent<CameraComponent>();
+	return camera;
+}
+
+std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
+	auto light = CreateGameObject(name);
+	light->AddComponent<LightComponent>();
+	return light;
 }
 
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath)

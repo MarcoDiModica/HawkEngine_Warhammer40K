@@ -16,7 +16,7 @@ public:
 	~UIHierarchy();
 
 	void RenderSceneHierarchy(Scene* scene);
-	void DrawSceneObject(GameObject& obj);
+	bool DrawSceneObject(GameObject& obj);
 
 	bool Draw();
 };

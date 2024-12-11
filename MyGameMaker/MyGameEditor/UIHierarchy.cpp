@@ -66,7 +66,7 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::End();
 }
 
-void UIHierarchy::DrawSceneObject(GameObject& obj)
+bool UIHierarchy::DrawSceneObject(GameObject& obj)
 {
 	bool color = false;
 
@@ -92,6 +92,10 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 	}
 
+	if (ImGui::IsItemHovered() && Application->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) {
+		LOG(LogType::LOG_INFO, "%s has been touched in the hierarchy ", obj.GetName().c_str());
+	}
+
 	if (obj.isSelected && color) {
 		ImGui::PopStyleColor(); // Orange color for selected
 	}
@@ -111,24 +115,29 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		ImGui::EndDragDropSource(); // Draging context MUST be closed
 	}
 
-	// Drag-and-Drop: Target
-	if (ImGui::BeginDragDropTarget()) {
-		// Retrieve playload, ptr to dragged obj
-		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+	if (draggedObject) {
+		bool ImGuiWorks = false; bool parenting = false;
+		if (ImGui::BeginDragDropTarget()) /*ImGui approach*/ {
+			ImGuiWorks = true;
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+				
+				if (!draggedObject) {
+					draggedObject = *(GameObject**)payload->Data;
+				}
 
-			if (!draggedObject) { 
-				draggedObject = *(GameObject**)payload->Data;
-			}
-
-			if (draggedObject && draggedObject != &obj) {
-
-				std::cout << "dragged " << draggedObject->GetName() << "into " << obj.GetName();
-				//obj.emplaceChild(*draggedObj);
 				Application->root->ParentGameObject(*draggedObject, obj);
 				draggedObject = nullptr;
+				parenting = true;
 			}
+		}/* Approach for when ImGui doesnt work */
+		else if (draggedObject && ImGui::IsItemHovered() && Application->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) {
+			Application->root->ParentGameObject(*draggedObject, obj);
+			draggedObject = nullptr;
+			parenting = true;
 		}
-		ImGui::EndDragDropTarget();
+
+		if (ImGuiWorks) { ImGui::EndDragDropTarget(); }
+
 	}
 
 	if (open) {
@@ -155,4 +164,5 @@ void UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 		ImGui::EndPopup();
 	}
+	return true;
 }

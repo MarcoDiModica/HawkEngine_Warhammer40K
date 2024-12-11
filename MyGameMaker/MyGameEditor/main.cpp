@@ -169,11 +169,11 @@ void Jordi_Code(GameObject* object)
 
 		bbox = object->GetTransform()->GetMatrix() * bbox;
 
-		if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
-								camera->frustum.left, camera->frustum.right,
-								camera->frustum.top, camera->frustum.bot })) {
-			//return; // Aqu� omitimos el objeto si no est� en el frustum
-		}
+		//if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
+		//						camera->frustum.left, camera->frustum.right,
+		//						camera->frustum.top, camera->frustum.bot })) {
+		//	//return; // Aqu� omitimos el objeto si no est� en el frustum
+		//}
 
 		if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
 		{

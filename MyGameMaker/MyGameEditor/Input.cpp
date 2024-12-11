@@ -272,12 +272,10 @@ void Input::HandleFileDrop(const std::string& fileDir)
 
         if (draggedObject != nullptr) {
             auto meshRenderer = draggedObject->GetComponent<MeshRenderer>();
-            auto image = std::make_shared<Image>();
-            auto material = std::make_shared<Material>();
 
-            image->LoadTexture(fileDir);
-            material->setImage(image);
-            meshRenderer->SetMaterial(material);
+            draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(fileDir);
+            //draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->setImage();
+            //meshRenderer->SetMaterial(material);
         }
     }
     else if (fileExt == "image") {

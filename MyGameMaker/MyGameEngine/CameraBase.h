@@ -3,6 +3,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "TransformComponent.h"
 #include "BoundingBox.h"
+#include "../MyGameEditor/Log.h" // Esto hay que quitarlo
+
 
 class CameraBase
 {
@@ -29,6 +31,9 @@ public:
 	void SetOrthoSize(float size);
 
     void UpdateAspectRatio(double aspectRatio);
+
+	void RunTests();
+
 
 	// Serialización de la cámara
 
@@ -88,6 +93,30 @@ public:
 			_near.Normalise();
 			_far.Normalise();
 
+			Log(__FILE__, __LINE__, LogType::LOG_INFO,
+				"Plano Izquierdo: normal=(%.2f, %.2f, %.2f), distancia=%.2f",
+				left.normal.x, left.normal.y, left.normal.z, left.distance);
+
+			Log(__FILE__, __LINE__, LogType::LOG_INFO,
+				"Plano Derecho: normal=(%.2f, %.2f, %.2f), distancia=%.2f",
+				right.normal.x, right.normal.y, right.normal.z, right.distance);
+
+			Log(__FILE__, __LINE__, LogType::LOG_INFO,
+				"Plano Superior: normal=(%.2f, %.2f, %.2f), distancia=%.2f",
+				top.normal.x, top.normal.y, top.normal.z, top.distance);
+
+			Log(__FILE__, __LINE__, LogType::LOG_INFO,
+				"Plano Inferior: normal=(%.2f, %.2f, %.2f), distancia=%.2f",
+				bot.normal.x, bot.normal.y, bot.normal.z, bot.distance);
+
+			Log(__FILE__, __LINE__, LogType::LOG_INFO,
+				"Plano Cercano: normal=(%.2f, %.2f, %.2f), distancia=%.2f",
+				_near.normal.x, _near.normal.y, _near.normal.z, _near.distance);
+
+			Log(__FILE__, __LINE__, LogType::LOG_INFO,
+				"Plano Lejano: normal=(%.2f, %.2f, %.2f), distancia=%.2f",
+				_far.normal.x, _far.normal.y, _far.normal.z, _far.distance);
+
 			CalculateVertices(vpm);
 		}
 
@@ -114,6 +143,7 @@ public:
 				vertices[i] = temp / temp.w;
 			}
 		}
+
 	};
 
 public:
@@ -130,5 +160,5 @@ public:
 	Frustum frustum;
 
 	void DrawFrustrum();
-	bool IsInsideFrustrum(const BoundingBox& bbox);
+	bool IsInsideFrustrum(const BoundingBox& bbox) const;
 };

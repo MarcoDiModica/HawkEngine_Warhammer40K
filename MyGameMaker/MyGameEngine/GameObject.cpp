@@ -222,20 +222,6 @@ void GameObject::Update(float deltaTime)
         return;
     }
 
-    //auto trans = GetComponent<Transform_Component>();
-
-    //if (GetComponent<Transform_Component>() != GetTransform()) {
-    //    int a = 5;
-    //    transform = GetComponent<Transform_Component>();
-    //    if (GetComponent<Transform_Component>() != transform) {
-    //        int b = 8;
-
-    //        if (transform != GetTransform()) {
-    //            int g = 2;
-    //        }
-
-    //    }
-    //}
 
     //check the state of the components and throw an error if they are null
     for (auto& component : components)
@@ -288,7 +274,7 @@ void GameObject::Destroy()
 void GameObject::Draw() const
 {
     //std::cout << "Draw GameObject: " << name << std::endl;
-
+    if (!active) { return; }
 
 
     switch (drawMode)
@@ -437,12 +423,12 @@ void GameObject::AddChild(GameObject* child)
         }
     }
     else {
-        GameObject* prev_father = child->GetParent();
+        GameObject* step_father = child->GetParent();
         /*The problem when you call AddChild when a child childifies its parent is that the paarent is being copied with the child that now parents it*/
         if ( GetParent() == child) {
                 for (size_t i = 0; i < child->children.size(); ++i) {
                     auto& uncle = child->children[i];
-                    prev_father->AddChild(uncle.get());
+                    step_father->AddChild(uncle.get());
                     i--;
                 }
         }
@@ -455,7 +441,7 @@ void GameObject::AddChild(GameObject* child)
 
         children[children.size() -1]->parent = this;
         children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
-        prev_father->RemoveChild(child);
+        step_father->RemoveChild(child);
 
         return;
     }

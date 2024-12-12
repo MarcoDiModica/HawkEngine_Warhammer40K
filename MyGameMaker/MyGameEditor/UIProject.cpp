@@ -14,7 +14,7 @@
 UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 {
 	// Definir el path del directorio (cambiar en types.h)
-	directoryPath = ASSETS_PATH;
+	directoryPath = LIBRARY_PATH;
 	currentSceneFile = "";
 
 	folderIcon = new Image();

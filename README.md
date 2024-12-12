@@ -37,7 +37,7 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - Right click hierarchy to create objects; drag to parent/unparent; right click object to destroy or create empty child
 
-- To add components, click Add Component in the hierarchy
+- To add components, click Add Component in the Inspector. Each component has its own settings in the Inspector
 
 - You can modify the Editor Camera in Settings Panel
 

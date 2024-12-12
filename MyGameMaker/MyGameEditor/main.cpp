@@ -180,7 +180,7 @@ void Jordi_Code(GameObject* object)
 			Application->input->SetDraggedGameObject(object);
 		}
 
-		if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused)
+		if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused )
 			if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
 			{
 				Application->input->ClearSelection();

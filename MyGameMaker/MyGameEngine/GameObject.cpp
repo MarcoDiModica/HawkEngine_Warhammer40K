@@ -222,26 +222,23 @@ void GameObject::Update(float deltaTime)
         return;
     }
 
+    if (isSelected) {
+        LOG(LogType::LOG_INFO, " %s is selected ", GetName().c_str());
+    }
 
     //check the state of the components and throw an error if they are null
     for (auto& component : components)
 	{
-        //if (component.second->GetName() == "Transform_Component") {
-        //    component.second = std::make_unique<Transform_Component>(*transform);
-        //}
 
 		if (!component.second)
 		{
 			throw std::runtime_error("Component is null");
 		}
 	}
-
-    //log size of components
     
     for (auto& component : components)
 	{
 		component.second->Update(deltaTime);
-        //LOG(LogType::LOG_INFO, "GameObject::Update", "GameObject: " + name + " - Update");
 	}
 
     for (auto& child : children)
@@ -260,14 +257,18 @@ void GameObject::Destroy()
 
     destroyed = true;
 
-    for (auto& component : components)
-    {
-        component.second->Destroy();
-    }
+    
 
     for (auto& child : children)
     {
         child->Destroy();
+    }
+
+    return;
+
+    for (auto& component : components)
+    {
+        component.second->Destroy();
     }
 }
 
@@ -392,6 +393,8 @@ void GameObject::SetParent(GameObject* parent)
 
 void GameObject::AddChild(GameObject* child)
 {
+    if (child == this) { return; }
+
     if (child->GetParent() == nullptr)/* If child is in the scene */ {
         if (child->scene) {
 

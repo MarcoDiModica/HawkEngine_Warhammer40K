@@ -45,12 +45,13 @@ bool UIMainMenuBar::Draw()
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("Save Scene")) {
-				Application->scene_serializer->Serialize("Assets");
+				Application->scene_serializer->Serialize("Library/Scenes");
 			}
-			if (ImGui::MenuItem("Load Scene")) {
-				//get current scene name and the deserialize it
-				auto name = Application->root->GetActiveScene()->GetName();
-				Application->scene_serializer->DeSerialize("Assets/" + name + ".scene");
+			if (ImGui::MenuItem("New Scene")) {
+				std::string sceneName = "NewScene" + std::to_string(newSceneCount);
+				Application->root->CreateScene(sceneName);
+				Application->root->SetActiveScene(sceneName);
+				newSceneCount++;
 			}
 			ImGui::EndMenu();
 		}

@@ -201,7 +201,7 @@ static void display_func() {
 	//configureGameCamera();
 	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
 
-	drawFloorGrid(16, 0.25);
+	drawFloorGrid(128, 4);
 
 	
 

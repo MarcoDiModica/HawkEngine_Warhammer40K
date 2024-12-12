@@ -25,41 +25,41 @@ Root::Root(App* app) : Module(app) { ; }
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
-    auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
-    MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+    auto MarcoVicePresidente = Application->root->CreateGameObject("City");
 
     ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/BakerHouse.fbx");
+    meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
 
     for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
         auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
 
         auto go = Application->root->CreateGameObject("GameObject");
         auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
-        Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
+        Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/Baker_house.png");
         go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
     }
+
+    MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
+    MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
+    MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
 }
 
 bool Root::Awake()
 {
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
-    //MakeCity();
+    MakeCity();
 
-    CreateScene("Viernes13");
-    SetActiveScene("Viernes13");
+    /*CreateScene("Viernes13");
+    SetActiveScene("Viernes13");*/
 
     auto MainCamera = CreateCameraObject("MainCamera");
-    MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0, -5));
+    MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
+    MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera;
-
-    auto cube = CreateCube("Cube");
-    cube->GetTransform()->SetPosition(glm::dvec3(0, 0, 0));
-    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");
 
     return true;
 }

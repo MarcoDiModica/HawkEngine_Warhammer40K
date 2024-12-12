@@ -8,6 +8,7 @@
 CameraComponent::CameraComponent(GameObject* owner) : Component(owner), CameraBase()
 {
     name = "CameraComponent";
+    zFar = 500.0;
 }
 
 CameraComponent::CameraComponent(const CameraComponent& other) :

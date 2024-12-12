@@ -8,7 +8,7 @@
 class CameraBase
 {
 public:
-    CameraBase(float fov = glm::radians(60.0), double zNear = 0.1, double zFar = 1000.0, double aspect = 16.0 / 9.0);
+    CameraBase(float fov = glm::radians(60.0), double zNear = 0.1, double zFar = 1000, double aspect = 16.0 / 9.0);
     virtual ~CameraBase() = default;
 
     glm::dmat4 GetProjectionMatrix() const;

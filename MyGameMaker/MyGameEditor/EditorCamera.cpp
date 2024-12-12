@@ -107,14 +107,13 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 
 	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !Application->input->GetSelectedGameObjects().empty()) 
 	{
-		vec3 avgPosition(0.0f);
-		for (GameObject* obj : Application->input->GetSelectedGameObjects()) 
-		{
-			avgPosition += obj->GetTransform()->GetPosition();
-		}
-		avgPosition /= Application->input->GetSelectedGameObjects().size();
+		glm::dvec3 targetPosition = Application->input->GetSelectedGameObjects()[0]->GetTransform()->GetPosition();
+		
+		transform.LookAt(targetPosition);
 
-		transform.LookAt(avgPosition);
+		// add ofset
+		transform.SetPosition(targetPosition - transform.GetForward() * 7.0 + glm::dvec3(0, 2, 0));
+		transform.AlignToGlobalUp();
 	}
 
 	if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT) 

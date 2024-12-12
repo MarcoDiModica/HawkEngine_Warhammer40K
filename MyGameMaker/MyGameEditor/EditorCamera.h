@@ -43,6 +43,13 @@ private:
 	double yaw = 0.0;
 	double pitch = 0.0;
 	double MAX_PITCH = glm::radians(89.0);
+
+	bool isFocusing = false;
+	float focusTime = 0.0f;
+	float focusDuration = 0.5f;
+	glm::dvec3 targetPosition = glm::dvec3(0.0, 0.0, 0.0);
+	glm::dquat targetRotation = glm::dquat(1.0, 0.0, 0.0, 0.0);
+	
 };
 
 #endif

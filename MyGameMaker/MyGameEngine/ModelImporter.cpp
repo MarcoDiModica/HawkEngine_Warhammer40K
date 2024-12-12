@@ -232,7 +232,7 @@ void ModelImporter::loadFromFile(const std::string& path) {
 
 	EncodeFBXScene(path, meshes, fbx_scene);
 
-	const auto materials = createMaterialsFromFBX(*fbx_scene, fs::absolute(path).parent_path());
+	const auto materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/"/*fs::absolute(path).parent_path()*/);
 
 	/*GameObject fbx_obj =*/ graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);
 	aiReleaseImport(fbx_scene);

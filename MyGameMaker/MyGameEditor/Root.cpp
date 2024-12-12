@@ -35,7 +35,7 @@ void MakeCity() {
 
         auto go = Application->root->CreateGameObject("GameObject");
         auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
-        Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/Baker_house.png");
+        Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->image_path);
         go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
@@ -145,7 +145,7 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
 
 void Root::RemoveGameObject(GameObject* gameObject) {
     if (!gameObject) {
-        LOG(LogType::LOG_ERROR, "Error: Se ha intentado eliminar un GameObject nulo.");
+        LOG(LogType::LOG_ERROR, "Error: Is have tried erased a GameObject null.");
         return;
     }
     if (! gameObject->GetParent()) {
@@ -153,7 +153,7 @@ void Root::RemoveGameObject(GameObject* gameObject) {
             [gameObject](const auto& child) { return child.get() == gameObject; });
 
         if (it == currentScene->_children.end()) {
-            LOG(LogType::LOG_ERROR, "Error: El GameObject no se encuentra en la escena.");
+            LOG(LogType::LOG_ERROR, "Error: The GameObject not is find on the scene.");
             return;
         }
 
@@ -167,7 +167,7 @@ void Root::RemoveGameObject(GameObject* gameObject) {
             it = currentScene->_children.erase(it);
         }
         catch (const std::exception& e) {
-            LOG(LogType::LOG_ERROR, "Error al destruir el GameObject: %s", e.what());
+            LOG(LogType::LOG_ERROR, "Error to destroying the GameObject: %s", e.what());
         }
     }
     else {
@@ -243,10 +243,10 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     meshRenderer->SetMaterial(material);
     //meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-    if (material->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
-        material->useShader = true;
-        material->bindShaders();
-    }
+    //if (material->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
+    //    material->useShader = true;
+    //    material->bindShaders();
+    //}
     //meshRenderer->SetImage(image);
 }
 

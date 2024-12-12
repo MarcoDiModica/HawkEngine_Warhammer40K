@@ -267,7 +267,7 @@ void Input::HandleFileDrop(const std::string& fileDir)
         }
 
     }
-    else if (fileExt == "png" || fileExt == "dds") {
+    else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {
         LOG(LogType::LOG_INFO, "Loading Texture: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
 
         if (draggedObject != nullptr) {

@@ -72,6 +72,7 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 		DrawSceneObject(*Application->root->currentScene->children()[i]);
 	}
 
+
 	//ImGui::End();
 }
 
@@ -87,7 +88,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 	bool open = ImGui::TreeNode(obj.GetName().c_str());
 
-	if (ImGui::IsItemClicked(0)) {
+	if (ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)) {
 		if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
 			if (obj.isSelected) {
 				Application->input->RemoveFromSelection(&obj);
@@ -102,9 +103,6 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 	}
 
-	if (ImGui::IsItemHovered() && Application->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) {
-		LOG(LogType::LOG_INFO, "%s has been touched in the hierarchy ", obj.GetName().c_str());
-	}
 
 	if (obj.isSelected && color) {
 		ImGui::PopStyleColor(); // Orange color for selected
@@ -168,7 +166,8 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 	if (ImGui::BeginPopupContextItem(obj.GetName().c_str()))
 	{
-		if (ImGui::MenuItem("Delete"))
+		ImGui::Text(obj.GetName().c_str());
+		if (ImGui::MenuItem("Delete") && ImGui::IsItemHovered() )
 		{
 			Application->input->RemoveFromSelection(&obj);
 			Application->input->ClearSelection();
@@ -183,5 +182,6 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 		ImGui::EndPopup();
 	}
+
 	return should_continue;
 }

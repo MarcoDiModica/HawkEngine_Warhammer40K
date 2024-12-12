@@ -9,6 +9,10 @@
 
 class Scene;
 
+/* TODO must handle cases when object is intersecting multiple nodes */
+
+/* TODO update nodes when objects are moved */
+
 struct OctreeNode {
 
 	OctreeNode(const BoundingBox& bbox) {

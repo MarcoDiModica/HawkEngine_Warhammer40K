@@ -96,7 +96,7 @@ bool Root::Update(double dt) {
     if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
 
         if (currentScene->tree == nullptr) {
-            currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 5);
+            currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
             for (auto child : currentScene->children()) {
                 currentScene->tree->Insert(currentScene->tree->root, *child, 0);
             }
@@ -136,25 +136,33 @@ void Root::RemoveGameObject(GameObject* gameObject) {
         LOG(LogType::LOG_ERROR, "Error: Se ha intentado eliminar un GameObject nulo.");
         return;
     }
+    if (! gameObject->GetParent()) {
+        auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
+            [gameObject](const auto& child) { return child.get() == gameObject; });
 
-    auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
-        [gameObject](const auto& child) { return child.get() == gameObject; });
-
-    if (it == currentScene->_children.end()) {
-        LOG(LogType::LOG_ERROR, "Error: El GameObject no se encuentra en la escena.");
-        return;
-    }
-
-    try {
-        if ((*it)->isSelected) {
-            (*it)->isSelected = false;
-            Application->input->ClearSelection();
+        if (it == currentScene->_children.end()) {
+            LOG(LogType::LOG_ERROR, "Error: El GameObject no se encuentra en la escena.");
+            return;
         }
-        (*it)->Destroy();
-        it = currentScene->_children.erase(it);
+
+
+        try {
+            if ((*it)->isSelected) {
+                (*it)->isSelected = false;
+                Application->input->ClearSelection();
+            }
+            (*it)->Destroy();
+            it = currentScene->_children.erase(it);
+        }
+        catch (const std::exception& e) {
+            LOG(LogType::LOG_ERROR, "Error al destruir el GameObject: %s", e.what());
+        }
     }
-    catch (const std::exception& e) {
-        LOG(LogType::LOG_ERROR, "Error al destruir el GameObject: %s", e.what());
+    else {
+        if (gameObject->isSelected) { Application->input->ClearSelection(); }
+        //currentScene->AddGameObject(gameObject->shared_from_this());
+        gameObject->GetParent()->RemoveChild(gameObject);
+        gameObject->Destroy();
     }
 }
 

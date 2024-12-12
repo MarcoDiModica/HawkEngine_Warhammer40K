@@ -24,9 +24,9 @@ public:
 private:
 	Image* folderIcon;
 
-	Image* fbxIcon;
+	Image* imageIcon;
 	Image* sceneIcon;
-	Image* pngIcon;
+	Image* matIcon;
 	Image* meshIcon;
 
 };

@@ -20,13 +20,13 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 	folderIcon = new Image();
 	folderIcon->LoadTexture("Assets/Icons/folder_icon.png");
 
-	fbxIcon = new Image();
+	matIcon = new Image();
 	//fbxIcon->LoadTexture("Assets/Icons/fbx_icon.png");
-	fbxIcon->LoadTexture("Assets/Icons/folder_icon.png");
+	matIcon->LoadTexture("Assets/Icons/folder_icon.png");
 
-	pngIcon = new Image();
+	imageIcon = new Image();
 	//pngIcon->LoadTexture("Assets/Icons/png_icon.png");
-	pngIcon->LoadTexture("Assets/Icons/folder_icon.png");
+	imageIcon->LoadTexture("Assets/Icons/folder_icon.png");
 
 	sceneIcon = new Image();
 	//sceneIcon->LoadTexture("Assets/Icons/scene_icon.png");
@@ -39,6 +39,11 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 
 UIProject::~UIProject()
 {
+	delete folderIcon;
+	delete matIcon;
+	delete imageIcon;
+	delete sceneIcon;
+	delete meshIcon;
 }
 
 
@@ -58,7 +63,7 @@ bool UIProject::Draw()
 	ImGui::SetNextWindowClass(&windowClass);
 	windowClass.DockingAllowUnclassed = false;
 
-	bool windowActive = ImGui::Begin("Project", &enabled, projectFlags);
+	bool windowActive = ImGui::Begin("Library", &enabled, projectFlags);
 
 	ImGuiDockNode* dockNode = ImGui::GetWindowDockNode();
 	bool isDocked = (dockNode != nullptr);
@@ -146,10 +151,10 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 		{
 			std::string extension = entry.path().extension().string();
 
-			if (extension == ".fbx" || extension == ".FBX")
-				icon = fbxIcon;
-			else if (extension == ".png")
-				icon = pngIcon;
+			if (extension == ".mat" || extension == ".MAT")
+				icon = matIcon;
+			else if (extension == ".image")
+				icon = imageIcon;
 			else if (extension == ".scene")
 				icon = sceneIcon;
 			else if (extension == ".mesh")

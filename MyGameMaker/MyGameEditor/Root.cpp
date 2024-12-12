@@ -47,7 +47,19 @@ bool Root::Awake()
 {
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
-    MakeCity();
+    //MakeCity();
+
+    CreateScene("Viernes13");
+    SetActiveScene("Viernes13");
+
+    auto MainCamera = CreateCameraObject("MainCamera");
+    MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0, -5));
+    auto camera = MainCamera->AddComponent<CameraComponent>();
+    mainCamera = MainCamera;
+
+    auto cube = CreateCube("Cube");
+    cube->GetTransform()->SetPosition(glm::dvec3(0, 0, 0));
+    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");
 
     return true;
 }

@@ -366,10 +366,21 @@ bool GameObject::CompareTag(const std::string& tag) const
 
 BoundingBox GameObject::boundingBox() const
 {
-    BoundingBox bbox = localBoundingBox();
-    if (!mesh && children.size()) bbox = children.front()->boundingBox();
-    for (const auto& child : children) bbox = bbox + child->boundingBox();
-    return GetTransform()->GetMatrix() * bbox;
+    BoundingBox combinedBoundingBox;
+
+    if (HasComponent<MeshRenderer>()) {
+        auto meshRenderer = GetComponent<MeshRenderer>();
+        combinedBoundingBox = meshRenderer->GetMesh()->boundingBox();
+    }
+    else if (!children.empty()) {
+        combinedBoundingBox = children.front()->boundingBox();
+    }
+
+    for (auto it = children.begin() + (HasComponent<MeshRenderer>() || children.empty() ? 0 : 1); it != children.end(); ++it) {
+        combinedBoundingBox = combinedBoundingBox + (*it)->boundingBox();
+    }
+
+    return GetTransform()->GetMatrix() * combinedBoundingBox;
 }
 
 void GameObject::SetParent(GameObject* parent)

@@ -24,6 +24,7 @@ class Mesh {
     std::vector<glm::vec3> _normals;
     std::vector<glm::vec3> _vertices;
     std::vector<unsigned int> _indices;
+	std::vector<glm::vec2> _texCoords;
 
     BoundingBox _boundingBox;
     std::vector<Mesh> subMeshes;

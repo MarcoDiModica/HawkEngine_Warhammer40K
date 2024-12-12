@@ -73,6 +73,7 @@ void Mesh::drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const v
 void Mesh::loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords)
 {
 	texCoords_buffer.LoadData(texCoords, num_texCoords * sizeof(glm::vec2));
+	_texCoords.assign(texCoords, texCoords + num_texCoords);
 }
 
 void Mesh::LoadNormals(const glm::vec3* normals, size_t num_normals)

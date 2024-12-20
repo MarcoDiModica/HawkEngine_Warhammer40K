@@ -77,6 +77,11 @@
   <ItemGroup>
     <ClCompile Include="SkeletalAnimationComponent.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
+      <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

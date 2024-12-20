@@ -106,7 +106,7 @@ void Image::LoadTexture(const std::string& path)
 	image_path = path;
 	auto img = ilGenImage();
 	ilBindImage(img);
-	ilLoadImage((const wchar_t*)path.c_str());
+	ilLoadImage(path.c_str());
 	auto width = ilGetInteger(IL_IMAGE_WIDTH);
 
 	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
@@ -127,7 +127,7 @@ void Image::LoadTextureLocalPath(const std::string& path) {
 	image_path =  absPath.string();
 	auto img = ilGenImage();
 	ilBindImage(img);
-	ilLoadImage((const wchar_t*)image_path.c_str());
+	ilLoadImage(image_path.c_str());
 	auto width = ilGetInteger(IL_IMAGE_WIDTH);
 
 	auto height = ilGetInteger(IL_IMAGE_HEIGHT);

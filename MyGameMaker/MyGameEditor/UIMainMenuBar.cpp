@@ -58,7 +58,7 @@ bool UIMainMenuBar::Draw()
 		if (ImGui::BeginMenu("General"))
 		{
 
-			if (ImGui::MenuItem("About")) { ShellExecute(0, 0, L"https://github.com/CITM-UPC/HawkEngine", 0, 0, SW_SHOW); }
+			if (ImGui::MenuItem("About")) { ShellExecute(0, 0, "https://github.com/CITM-UPC/HawkEngine", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Quit")) {
 				SDL_Quit();
 				exit(0);

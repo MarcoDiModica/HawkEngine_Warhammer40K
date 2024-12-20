@@ -13,8 +13,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</ProjectGuid>
-    <RootNamespace>MyGameEngine</RootNamespace>
+    <ProjectGuid>{c388ebfe-eac1-4564-af3b-8006f3c75204}</ProjectGuid>
+    <RootNamespace>MyShadersEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -48,7 +48,6 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <DisableSpecificWarnings>4251;4275;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -64,7 +63,6 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <DisableSpecificWarnings>4251;4275;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -74,42 +72,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BoundingBox.h" />
-    <ClInclude Include="BufferObject.h" />
-    <ClInclude Include="CameraBase.h" />
-    <ClInclude Include="CameraComponent.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Image.h" />
-    <ClInclude Include="LightComponent.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="MeshRendererComponent.h" />
-    <ClInclude Include="Octree.h" />
-    <ClInclude Include="ModelImporter.h" />
-    <ClInclude Include="readOnlyView.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Shaders.h" />
-    <ClInclude Include="TransformComponent.h" />
-    <ClInclude Include="TreeExt.h" />
-    <ClInclude Include="types.h" />
+    <ClInclude Include="ShaderComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoundingBox.cpp" />
-    <ClCompile Include="BufferObject.cpp" />
-    <ClCompile Include="CameraBase.cpp" />
-    <ClCompile Include="CameraComponent.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Image.cpp" />
-    <ClCompile Include="LightComponent.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="MeshRendererComponent.cpp" />
-    <ClCompile Include="Octree.cpp" />
-    <ClCompile Include="ModelImporter.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Shaders.cpp" />
-    <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="ShaderComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
+      <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

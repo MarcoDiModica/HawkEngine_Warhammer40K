@@ -371,7 +371,7 @@ bool GameObject::CompareTag(const std::string& tag) const
 
 BoundingBox GameObject::boundingBox() const
 {
-    BoundingBox combinedBoundingBox;
+    BoundingBox combinedBoundingBox{};
 
     if (HasComponent<MeshRenderer>()) {
         auto meshRenderer = GetComponent<MeshRenderer>();

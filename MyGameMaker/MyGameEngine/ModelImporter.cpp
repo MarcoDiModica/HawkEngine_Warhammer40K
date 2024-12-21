@@ -56,8 +56,8 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 	mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
 
 	// Descomponer la matriz de transformación
-	vec3 scale, translation, skew;
-	vec4 perspective;
+	vec3 scale, translation;
+	
 	glm::quat rotation;
 	decomposeMatrix(localMatrix, scale, rotation, translation);
 

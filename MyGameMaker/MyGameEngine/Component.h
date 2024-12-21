@@ -44,7 +44,7 @@ public:
 
 	GameObject* owner;
 
-	GameObject* owner2;
+	//GameObject* owner2;
 
 protected:
 

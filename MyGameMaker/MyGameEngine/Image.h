@@ -34,8 +34,6 @@ public:
 
 	void LoadTextureLocalPath(const std::string& path);
 
-	void LoadCheckerTexture();
-
 	void SaveBinary(const std::string& path) const;
 	static std::shared_ptr<Image> LoadBinary(const std::string& path);
 

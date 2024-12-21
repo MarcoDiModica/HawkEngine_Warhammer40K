@@ -19,7 +19,11 @@
 #include <queue>
 using namespace std;
 
-Mesh::Mesh() {}
+Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
+{
+	_boundingBox = BoundingBox();
+}
+
 
 Mesh::~Mesh() {}
 

@@ -6,9 +6,10 @@
 #include "Mesh.h"
 #include "BoundingBox.h"
 
+
 class SceneSerializer;
 class Scene;
-class OctreeNode;
+struct OctreeNode;
 class Shaders;
 
 enum class DrawMode

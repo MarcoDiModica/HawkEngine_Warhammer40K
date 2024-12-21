@@ -9,8 +9,8 @@ using namespace std;
 
 class Mesh;
 class Material;
-class aiScene;
-class aiNode;
+struct aiScene;
+struct aiNode;
 
 class ModelImporter {
 public:

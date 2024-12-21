@@ -9,6 +9,7 @@
 unsigned int Material::next_id = 0;
 
 Material::Material() : gid(next_id++){
+	color = vec4(1.0f);
 }
 
 static auto GLWrapMode(Material::WrapModes mode) {
@@ -138,37 +139,35 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 	}
 
 	std::shared_ptr<Material> mat;
-	try {
-		std::ifstream fin(fullPath, std::ios::binary);
-		if (!fin.is_open()) {
-			throw std::runtime_error("Error opening material file: " + fullPath);
-		}
 
-		mat = std::make_shared<Material>();
-
-		fin.read(reinterpret_cast<char*>(&mat->wrapMode), sizeof(mat->wrapMode));
-		fin.read(reinterpret_cast<char*>(&mat->filter), sizeof(mat->filter));
-		fin.read(reinterpret_cast<char*>(&mat->color), sizeof(mat->color));
-		fin.read(reinterpret_cast<char*>(&mat->useShader), sizeof(mat->useShader));
-
-		char type[4];
-		fin.read(type, 3);
-		type[3] = '\0';
-
-		if (strcmp(type, "IMG") == 0) {
-			std::shared_ptr<Image> img = Image::LoadBinary(filename);
-			mat->setImage(img);
-		}
-
-		if (mat->useShader) {
-			//mat->shader = Shaders::LoadBinary(fin);
-		}
-
-		materialCache[fullPath] = mat;
+	std::ifstream fin(fullPath, std::ios::binary);
+	if (!fin.is_open()) {
+		throw std::runtime_error("Error opening material file: " + fullPath);
 	}
-	catch (const std::exception& e) {
-		return nullptr;
+
+	mat = std::make_shared<Material>();
+
+	fin.read(reinterpret_cast<char*>(&mat->wrapMode), sizeof(mat->wrapMode));
+	fin.read(reinterpret_cast<char*>(&mat->filter), sizeof(mat->filter));
+	fin.read(reinterpret_cast<char*>(&mat->color), sizeof(mat->color));
+	fin.read(reinterpret_cast<char*>(&mat->useShader), sizeof(mat->useShader));
+
+	char type[4];
+	fin.read(type, 3);
+	type[3] = '\0';
+
+	if (strcmp(type, "IMG") == 0) {
+		std::shared_ptr<Image> img = Image::LoadBinary(filename);
+		mat->setImage(img);
 	}
+
+	if (mat->useShader) {
+		//mat->shader = Shaders::LoadBinary(fin);
+	}
+
+	materialCache[fullPath] = mat;
+	
+	
 
 	return mat;
 }

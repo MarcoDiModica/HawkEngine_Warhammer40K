@@ -82,8 +82,8 @@ public:
 
 public:
 
-	bool active;
-	App* Application;
+	bool active = false;
+	App* Application = nullptr;
 };
 
 #endif // !__MODULE_H__

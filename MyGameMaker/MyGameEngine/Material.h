@@ -21,7 +21,7 @@ public:
 	bool useShader = false;
 
 	unsigned int GetId() const { return gid; }
-	void LoadTexture(const std::string& filename);
+	
 	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
 	void bind() const;
 	void setImage(const std::shared_ptr<Image>& img_ptr) { imagePtr = img_ptr; }

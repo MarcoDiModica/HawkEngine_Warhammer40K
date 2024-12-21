@@ -97,12 +97,12 @@ glm::vec3 UISceneWindow::GetMousePickDir(int mouse_x, int mouse_y, int screen_wi
 }
 
 bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox) {
-	float tmin = (bBox.min.x - rayOrigin.x) / rayDir.x;
-	float tmax = (bBox.max.x - rayOrigin.x) / rayDir.x;
+	float tmin = static_cast<float>((bBox.min.x - rayOrigin.x) / rayDir.x);
+	float tmax = static_cast<float>((bBox.max.x - rayOrigin.x) / rayDir.x);
 
 	if (tmin > tmax) std::swap(tmin, tmax);
-	float tymin = (bBox.min.y - rayOrigin.y) / rayDir.y;
-	float tymax = (bBox.max.y - rayOrigin.y) / rayDir.y;
+	float tymin = static_cast<float>((bBox.min.y - rayOrigin.y) / rayDir.y);
+	float tymax = static_cast<float>((bBox.max.y - rayOrigin.y) / rayDir.y);
 	if (tymin > tymax) std::swap(tymin, tymax);
 
 	if ((tmin > tymax) || (tymin > tmax))
@@ -113,8 +113,8 @@ bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm:
 	if (tymax < tmax)
 		tmax = tymax;
 
-	float tzmin = (bBox.min.z - rayOrigin.z) / rayDir.z;
-	float tzmax = (bBox.max.z - rayOrigin.z) / rayDir.z;
+	float tzmin = static_cast<float>((bBox.min.z - rayOrigin.z) / rayDir.z);
+	float tzmax = static_cast<float>((bBox.max.z - rayOrigin.z) / rayDir.z);
 
 	if (tzmin > tzmax) std::swap(tzmin, tzmax);
 	if ((tmin > tzmax) || (tzmin > tmax))

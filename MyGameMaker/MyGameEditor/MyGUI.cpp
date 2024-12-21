@@ -47,35 +47,35 @@ bool MyGUI::Awake() {
 
 	UIHierarchyPanel = new UIHierarchy(UIType::HIERARCHY, "Hierarchy");
 	elements.push_back(UIHierarchyPanel);
-	ret *= isInitialized(UIHierarchyPanel);
+	ret = isInitialized(UIHierarchyPanel);
 
 	UIconsolePanel = new UIConsole(UIType::CONSOLE, "Console");
 	elements.push_back(UIconsolePanel);
-	ret *= isInitialized(UIconsolePanel);
+	ret = isInitialized(UIconsolePanel);
 
 	UIsettingsPanel = new UISettings(UIType::SETTINGS, "Settings");
 	elements.push_back(UIsettingsPanel);
-	ret *= isInitialized(UIsettingsPanel);
+	ret = isInitialized(UIsettingsPanel);
 
 	UIMainMenuBarPanel = new UIMainMenuBar(UIType::DEFAULT, "MainMenuBar");
 	elements.push_back(UIMainMenuBarPanel);
-	ret *= isInitialized(UIMainMenuBarPanel);
+	ret = isInitialized(UIMainMenuBarPanel);
 
 	UIinspectorPanel = new UIInspector(UIType::INSPECTOR, "Inspector");
 	elements.push_back(UIinspectorPanel);
-	ret *= isInitialized(UIinspectorPanel);
+	ret = isInitialized(UIinspectorPanel);
 
 	UIProjectPanel = new UIProject(UIType::PROJECT, "Project");
 	elements.push_back(UIProjectPanel);
-	ret *= isInitialized(UIProjectPanel);
+	ret = isInitialized(UIProjectPanel);
 
 	UISceneWindowPanel = new UISceneWindow(UIType::DEFAULT, "SceneWindow");
 	elements.push_back(UISceneWindowPanel);
-	ret *= isInitialized(UISceneWindowPanel);
+	ret = isInitialized(UISceneWindowPanel);
 
 	UICameraPanel = new UICamera(UIType::CAMERA, "Camera");
 	elements.push_back(UICameraPanel);
-	ret *= isInitialized(UICameraPanel);
+	ret = isInitialized(UICameraPanel);
 
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);

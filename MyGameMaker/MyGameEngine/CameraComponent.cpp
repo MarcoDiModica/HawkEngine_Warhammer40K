@@ -94,9 +94,9 @@ void CameraComponent::Update(float deltaTime)
         static std::mt19937 gen(rd());
         static std::uniform_real_distribution<> dist(-1.0f, 1.0f);
 
-        float shakeX = dist(gen) * shakeIntensity;
-        float shakeY = dist(gen) * shakeIntensity;
-        float shakeZ = dist(gen) * shakeIntensity;
+        float shakeX = static_cast<float>(dist(gen) * shakeIntensity);
+        float shakeY = static_cast<float>(dist(gen) * shakeIntensity);
+        float shakeZ = static_cast<float>(dist(gen) * shakeIntensity);
 
         glm::vec3 currentPosition = owner->GetTransform()->GetPosition();
         owner->GetTransform()->SetPosition(currentPosition + glm::vec3(shakeX, shakeY, shakeZ));
@@ -170,10 +170,10 @@ void CameraComponent::UpdateCameraView(double windowWidth, double windowHeight, 
     UpdateAspectRatio(windowAspect);
 
     if (windowAspect > imageAspect) {
-        SetFOV(2.0 * glm::atan(glm::tan(glm::radians(60.0) / 2.0) * (imageAspect / windowAspect)));
+        SetFOV(2.0f * glm::atan(glm::tan(glm::radians(60.0f) / 2.0f) * static_cast<float>((imageAspect / windowAspect))));
     }
     else {
-        SetFOV(glm::radians(60.0));
+        SetFOV(glm::radians(60.0f));
     }
 }
 

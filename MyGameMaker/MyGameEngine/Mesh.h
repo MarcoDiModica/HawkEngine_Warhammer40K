@@ -95,9 +95,9 @@ namespace YAML {
                 return false;
             }
 
-            rhs.x = node[0].as<double>();
-            rhs.y = node[1].as<double>();
-            rhs.z = node[2].as<double>();
+            rhs.x = static_cast<float>(node[0].as<double>());
+            rhs.y = static_cast<float>(node[1].as<double>());
+            rhs.z = static_cast<float>(node[2].as<double>());
             return true;
 
         }

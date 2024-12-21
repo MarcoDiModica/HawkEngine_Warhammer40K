@@ -327,8 +327,8 @@ glm::vec3 Input::getRayFromMouse(int mouseX, int mouseY, const glm::mat4& projec
 
 glm::vec3 Input::getMousePickRay() 
 {
-    ImVec2 windowPos = ImVec2(Application->gui->UISceneWindowPanel->winPos.x, Application->gui->UISceneWindowPanel->winPos.y);
-    ImVec2 windowSize = ImVec2(Application->gui->UISceneWindowPanel->winSize.x, Application->gui->UISceneWindowPanel->winSize.y);
+    ImVec2 windowPos = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winPos.x), static_cast<float>(Application->gui->UISceneWindowPanel->winPos.y));
+    ImVec2 windowSize = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winSize.x), static_cast<float>(Application->gui->UISceneWindowPanel->winSize.y));
 
     float mouseX = Application->input->GetMouseX() - windowPos.x + 10;
     float mouseY = Application->input->GetMouseY() - windowPos.y + 20;
@@ -340,7 +340,7 @@ glm::vec3 Input::getMousePickRay()
 
     }
    
-    glm::vec3 rayDirection = Application->input->getRayFromMouse(mouseX, mouseY, camera->projection(), camera->view(), size);
+    glm::vec3 rayDirection = Application->input->getRayFromMouse(static_cast<int>(mouseX), static_cast<int>(mouseY), camera->projection(), camera->view(), size);
 	return rayDirection;
 }
 

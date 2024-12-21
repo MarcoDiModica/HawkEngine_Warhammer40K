@@ -174,14 +174,19 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("aPos", glm::vec3(0, 0, 0));
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetTransform()->GetMatrix());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("modColor", glm::vec4(1, 0.2f, 0, 1));
-        glUniform4f(glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader.GetProgram(), "modColor"), GetComponent<MeshRenderer>()->GetMaterial()->GetColor().x, GetComponent<MeshRenderer>()->GetMaterial()->GetColor().y, GetComponent<MeshRenderer>()->GetMaterial()->GetColor().z, GetComponent<MeshRenderer>()->GetMaterial()->GetColor().w);
-        //GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetComponent<Transform_Component>()->GetMatrix());
+        glUniform4f(
+            glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader.GetProgram(), "modColor"),
+            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().x),
+            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().y),
+            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().z),
+            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().w)
+        );        //GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetComponent<Transform_Component>()->GetMatrix());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("view", view);
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("projection", projection);
 
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("viewPos", cameraPosition);
 
-		int numPointLights = lights.size();
+		int numPointLights = static_cast<int>( lights.size());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("numPointLights", numPointLights);
 
         int i = 0;

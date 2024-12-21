@@ -66,7 +66,7 @@ bool UIHierarchy::Draw() {
 
 void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::Begin("Scene Hierarchy");
-	int size = Application->root->currentScene->children().size();
+	int size = static_cast<int>(Application->root->currentScene->children().size());
 
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i) {
 		DrawSceneObject(*Application->root->currentScene->children()[i]);

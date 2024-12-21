@@ -103,7 +103,7 @@ bool Root::Update(double dt) {
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
     currentScene->DebugDrawTree();
 
-    currentScene->Update(dt);
+    currentScene->Update(static_cast<float>(dt));
 
     if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
 

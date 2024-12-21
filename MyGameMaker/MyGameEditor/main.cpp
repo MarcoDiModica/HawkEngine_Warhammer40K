@@ -225,7 +225,7 @@ static void display_func() {
 		
 		object->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights,mainShader);
 		
-		object->Update(Application->GetDt());
+		object->Update(static_cast<float>(Application->GetDt()));
 
 		Jordi_Code(object);
 		for (size_t j = 0; j < object->GetChildren().size(); ++j)

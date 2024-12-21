@@ -27,7 +27,7 @@ public:
 	float GetMovementSpeed() const { return cameraSpeed; }
 	void SetMovementSpeed(float speed) { cameraSpeed = speed; }
 
-	float GetMouseSensitivity() const { return sensitivity; }
+	float GetMouseSensitivity() const { return static_cast<float>(sensitivity); }
 	void SetMouseSensitivity(float sensitivity) { this->sensitivity = sensitivity; }
 
 private:

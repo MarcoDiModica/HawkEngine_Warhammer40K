@@ -37,7 +37,7 @@ void CameraBase::SetFOV(float fov)
 
 float CameraBase::GetFOV() const
 {
-    return fov;
+    return static_cast<float>(fov);
 }
 
 void CameraBase::SetNearPlane(double zNear)

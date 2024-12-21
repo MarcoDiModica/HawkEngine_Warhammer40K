@@ -33,7 +33,7 @@ bool EditorCamera::FixedUpdate()
 
 bool EditorCamera::Update(double dt)
 {
-	move_camera(cameraSpeed, dt);
+	move_camera(cameraSpeed, static_cast<float>(dt));
 
 	return true;
 }
@@ -141,10 +141,10 @@ void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, dou
 
 	if (windowAspect > imageAspect) 
 	{
-		SetFOV(2.0 * atan(tan(glm::radians(60.0) / 2.0) * (imageAspect / windowAspect)));
+		SetFOV(2.0f * atan(tan(glm::radians(60.0f) / 2.0f) * static_cast<float>((imageAspect / windowAspect))));
 	}
 	else 
 	{
-		SetFOV(glm::radians(60.0));
+		SetFOV(glm::radians(60.0f));
 	}
 }

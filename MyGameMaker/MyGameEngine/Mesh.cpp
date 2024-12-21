@@ -400,8 +400,8 @@ void Mesh::SaveBinary(const std::string& filename) const
 
 	std::ofstream fout(fullPath, std::ios::binary);
 
-	uint32_t numVertices = _vertices.size();
-	uint32_t numIndices = _indices.size();
+	uint32_t numVertices = static_cast<uint32_t>(_vertices.size());
+	uint32_t numIndices = static_cast<uint32_t>(_indices.size());
 	fout.write(reinterpret_cast<char*>(&numVertices), sizeof(numVertices));
 	fout.write(reinterpret_cast<char*>(&numIndices), sizeof(numIndices));
 

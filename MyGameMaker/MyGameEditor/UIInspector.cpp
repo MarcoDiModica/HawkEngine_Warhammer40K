@@ -208,7 +208,7 @@ bool UIInspector::Draw() {
                         }
                         ImGui::Image((void*)(intptr_t)textureID, imageSize);
                         vec4 matColor = meshRenderer->GetMaterial()->GetColor();
-                        float colorArray[4] = { matColor.x,matColor.y, matColor.z,matColor.w };
+                        float colorArray[4] = { static_cast<float>(matColor.x),static_cast<float>(matColor.y), static_cast<float>(matColor.z),static_cast<float>(matColor.w) };
 
                         if (ImGui::ColorPicker4("Color", colorArray))
                         {
@@ -250,8 +250,8 @@ bool UIInspector::Draw() {
                     bool frustum = cameraComponent->frustrumCullingEnabled;
 					float orthoSize = cameraComponent->GetOrthoSize();
 					float fov = cameraComponent->GetFOV();
-					float nearPlane = cameraComponent->GetNearPlane();
-					float farPlane = cameraComponent->GetFarPlane();
+					float nearPlane = static_cast<float>(cameraComponent->GetNearPlane());
+					float farPlane =  static_cast<float>(cameraComponent->GetFarPlane() );
 
                     //lookAt & follow settings
 
@@ -338,9 +338,9 @@ bool UIInspector::Draw() {
 
                     if (lightType == LightType::POINT)
                     {
-                        float diffusefloat[3] = { diffuse.x, diffuse.y, diffuse.z };
-                        float specularfloat[3] = { specular.x, specular.y, specular.z };
-                        float ambientfloat[3] = { ambient.x, ambient.y, ambient.z };
+                        float diffusefloat[3] = { static_cast<float>(diffuse.x), static_cast<float>(diffuse.y), static_cast<float>(diffuse.z) };
+                        float specularfloat[3] = { static_cast<float>(specular.x), static_cast<float>(specular.y), static_cast<float>(specular.z) };
+                        float ambientfloat[3] = { static_cast<float>(ambient.x), static_cast<float>(ambient.y), static_cast<float>(ambient.z) };
 
                         if (ImGui::DragFloat("Range", &radius, 0.1f, 0.0f, 1000.0f))
                         {

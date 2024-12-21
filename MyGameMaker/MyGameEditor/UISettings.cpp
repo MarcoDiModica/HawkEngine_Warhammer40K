@@ -20,7 +20,7 @@ UISettings::~UISettings()
 
 void UISettings::AddFpsMark(int fps)
 {
-	fpsRecord.push_back(fps);
+	fpsRecord.push_back(static_cast<float>(fps));
 
 	if (fpsRecord.size() > RECORD_SIZE)
 	{
@@ -44,7 +44,7 @@ bool UISettings::Draw()
 	}
 
 	ImVec2 mainViewportPos = ImGui::GetMainViewport()->GetCenter();
-	ImGui::SetNextWindowPos(ImVec2(mainViewportPos.x, mainViewportPos.y), ImGuiCond_Appearing, ImVec2(0.5, 0.8));
+	ImGui::SetNextWindowPos(ImVec2(mainViewportPos.x, mainViewportPos.y), ImGuiCond_Appearing, ImVec2(0.5f, 0.8f));
 
 	ImGui::SetNextWindowClass(&windowClass);
 	windowClass.DockingAllowUnclassed = false;
@@ -224,14 +224,14 @@ void UISettings::EditorCamData()
 	}
 
 	// Near Plane
-	float zNear = camera->GetNearPlane();
+	float zNear = static_cast<float>(camera->GetNearPlane());
 	if (ImGui::SliderFloat("Near Plane", &zNear, 0.00001f, 100.0f))
 	{
 		camera->SetNearPlane(zNear);
 	}
 
 	// Far Plane
-	float zFar = camera->GetFarPlane();
+	float zFar = static_cast<float>(camera->GetFarPlane());
 	if (ImGui::SliderFloat("Far Plane", &zFar, 100.0f, 10000.0f))
 	{
 		camera->SetFarPlane(zFar);

@@ -165,7 +165,7 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 
 		if (icon)
 		{
-			ImGui::Image(reinterpret_cast<void*>(icon->id()), ImVec2(16, 16));
+			ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())), ImVec2(16, 16));
 			ImGui::SameLine();
 		}
 

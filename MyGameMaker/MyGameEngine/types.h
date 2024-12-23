@@ -4,6 +4,11 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#ifdef YAML_CPP_DLL_EXPORTS
+#define YAML_CPP_API __declspec(dllexport)
+#else
+#define YAML_CPP_API __declspec(dllimport)
+#endif
 #include <yaml-cpp/yaml.h>
 
 

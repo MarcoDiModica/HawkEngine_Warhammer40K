@@ -2,7 +2,6 @@
 #include "GameObject.h"
 #include "../MyGameEditor/Log.h"
 #include "types.h"
-#include <yaml-cpp/yaml.h>
 #include "Component.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>

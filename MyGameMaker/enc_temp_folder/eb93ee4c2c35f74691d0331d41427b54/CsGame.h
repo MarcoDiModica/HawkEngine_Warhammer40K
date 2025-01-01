@@ -30,7 +30,7 @@ public:
 		//m_ptr_MonoDomain = mono_jit_init("csGame");
 	
 		if (m_ptr_MonoDomain) {
-			int y = 0;
+			int i = 0;
 		}
 	}
 

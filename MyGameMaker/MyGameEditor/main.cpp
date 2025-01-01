@@ -43,6 +43,14 @@
 #include "MyGameEngine/Material.h"
 #include "App.h"
 
+//#include <mono/metadata/assembly.h>
+//#include <mono/jit/jit.h>
+
+#include "../MyScriptingEngine/CsGame.h"
+
+
+//TODO BALDAN : xcopy mono / place manually in x64/Debug folder
+
 using namespace std;
 
 enum MainState
@@ -279,13 +287,12 @@ int main(int argc, char** argv) {
 	// The application is created
 	Application = new App();
 
-	/*Application->camera = new Camera(Application);*/
-	
-	//std::shared_ptr<Camera> cameraPtr = std::make_shared<Camera>(Application);
-	//camera = cameraPtr.get();
+	//mono_set_dirs(".", ".");
+	//MonoDomain* m = mono_init("GameInvoker.exe");
 
-	//Application->camera = shared_ptr<Camera>
-	
+
+	//Pu* pu = new Pu();
+	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
 
 	//initialize devil
 	ilInit();

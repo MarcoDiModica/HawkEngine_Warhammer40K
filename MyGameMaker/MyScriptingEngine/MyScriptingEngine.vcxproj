@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -41,6 +41,16 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\lib;$(LibraryPath)</LibraryPath>
+    <PublicIncludeDirectories>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\include;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <IncludePath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\lib;$(LibraryPath)</LibraryPath>
+    <PublicIncludeDirectories>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\include;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <IncludePath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -72,9 +82,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CsGame.h" />
     <ClInclude Include="ScriptComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CsGame.cpp" />
     <ClCompile Include="ScriptComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

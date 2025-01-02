@@ -42,12 +42,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\External\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\External\Mono\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\External\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\External\Mono\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -64,7 +64,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\lib\mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\External\Mono\lib\mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -90,7 +90,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\x64\Debug\Mono\lib\mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\marco\OneDrive\Documentos\GitHub\HawkEngine\MyGameMaker\External\Mono\lib\mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>

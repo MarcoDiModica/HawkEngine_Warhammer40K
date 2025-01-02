@@ -82,11 +82,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CsGame.h" />
+    <ClInclude Include="MonoEnvironment.h" />
     <ClInclude Include="ScriptComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CsGame.cpp" />
+    <ClCompile Include="MonoEnvironment.cpp" />
     <ClCompile Include="ScriptComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

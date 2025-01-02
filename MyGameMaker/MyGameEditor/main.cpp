@@ -46,7 +46,7 @@
 //#include <mono/metadata/assembly.h>
 //#include <mono/jit/jit.h>
 
-#include "../MyScriptingEngine/CsGame.h"
+#include "../MyScriptingEngine/MonoEnvironment.h"
 
 
 //TODO BALDAN : xcopy mono / place manually in x64/Debug folder

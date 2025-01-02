@@ -3,11 +3,21 @@
 #define __MONOENVIRONMENT_H__
 
 #include <mono/metadata/assembly.h>
+#include <Windows.h>
+#include "../External/Mono/include/mono-2.0/mono/metadata/assembly.h"
+//#include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
 #include <mono/jit/jit.h>
 #include <filesystem>
 #include <string>
 
+std::string getExecutablePath() {
+	char buffer[MAX_PATH];
+	GetModuleFileNameA(NULL, buffer, MAX_PATH);
+	std::string fullPath(buffer);
+	size_t lastSlash = fullPath.find_last_of("\\/");
+	return fullPath.substr(0, lastSlash);
+}
 class MonoEnvironment
 {
 public:
@@ -15,10 +25,11 @@ public:
 
 
 
-		mono_set_dirs("C:\\Program Files\\Mono\\lib",
-			"C:\\Program Files\\Mono\\etc");
-		//mono_config_parse(NULL);
-		m_ptr_MonoDomain = mono_jit_init("myapp");
+		std::string path = getExecutablePath() + "\\..\\..\\External\\Mono";
+		mono_set_dirs(std::string(path + "\\lib").c_str(),
+			std::string(path + "\\etc").c_str());
+
+		m_ptr_MonoDomain = mono_jit_init("C#App");
 
 
 		//auto s = std::filesystem::current_path();

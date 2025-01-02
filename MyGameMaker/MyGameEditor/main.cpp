@@ -287,12 +287,8 @@ int main(int argc, char** argv) {
 	// The application is created
 	Application = new App();
 
-	//mono_set_dirs(".", ".");
-	//MonoDomain* m = mono_init("GameInvoker.exe");
-
-
-	//Pu* pu = new Pu();
-	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
+	//MonoEnvironment* mono = new MonoEnvironment();
+//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
 
 	//initialize devil
 	ilInit();

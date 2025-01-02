@@ -11,7 +11,7 @@
 #include "MyGameEngine/ModelImporter.h"
 #include "App.h"
 #include "Input.h"
-
+#include "../MyScriptingEngine/MonoEnvironment.h"
 #include <SDL2/SDL.h>
 
 #include <iostream>
@@ -48,6 +48,7 @@ void MakeCity() {
 
 bool Root::Awake()
 {
+    //MonoEnvironment* env = new MonoEnvironment();
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     MakeCity();

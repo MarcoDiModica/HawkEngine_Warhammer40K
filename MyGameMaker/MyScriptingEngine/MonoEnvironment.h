@@ -11,8 +11,11 @@
 #include <filesystem>
 #include <string>
 
+#include "SharpBinder.h"
 #include "../MyGameEditor/Log.h" // ilegal
 
+
+using namespace SharpBinder;
 
 std::string getExecutablePath() {
 	char buffer[MAX_PATH];
@@ -22,7 +25,7 @@ std::string getExecutablePath() {
 	return fullPath.substr(0, lastSlash);
 }
 
-void HandleConsoleOutput(MonoString* message)
+void HandleConsoleOutput(MonoString* message) /*C# strings are parse by mnono as MonoString */
 {
 	if (message == nullptr)
 		return;
@@ -34,11 +37,13 @@ void HandleConsoleOutput(MonoString* message)
 class MonoEnvironment
 {
 public:
+	// TODO move all of this to cpp
 	MonoEnvironment()
 	{
+		/* Attemot to set up C# debugging, doesn't work */
 		std::string option = "--debugger-agent=transport=dt_socket,address=127.0.0.1:55555,server=y,suspend=n";
-		char* option_cstr = const_cast<char*>(option.c_str()); // Convert std::string to C-style string
-		char* options[] = { option_cstr };                    // Create an array of char*
+		char* option_cstr = const_cast<char*>(option.c_str()); /* Convert std::string to C - style string */
+		char* options[] = { option_cstr };                   
 		mono_jit_parse_options(1, options);
 		//mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 
@@ -108,40 +113,59 @@ public:
 		LOG(LogType::LOG_INFO ,"testValue: %d", value);
 
 
+		CreateGO();
+
 	}
 
 	void LinkEngineMethods() {
 
+		//TODO map cpp methods accesible by the user to C#
 
+		//                   (C#  namespace   class     method)  ( void* to C++ method )
 		mono_add_internal_call("HawkEngine.EngineCalls::print", (const void*)HandleConsoleOutput);
+		//const void* method = Root::CreateGameObject;
+		//mono_add_internal_call("HawkEngine.EngineCalls::CreateGameObject", (const void*) CreateGameObjectSharp );
 
 	}
 
 	~MonoEnvironment() {
 
 		if (m_ptr_MonoDomain) {
+			LOG(LogType::LOG_C_SHARP, "Destroying C# domain");
 			mono_jit_cleanup(m_ptr_MonoDomain);
 		}
 
 	};
 
 
-private:
+	private:
+		// Methods to test C#stuff , delete these at the end
+
+		/// <summary>
+		/// C# whould call theese but we are testing that C# calls them correctl by in C++ calling C# which calls C++
+		/// </summary>
+		void CreateGO() {
+			MonoClass* klass = mono_class_from_name(m_ptr_GameAssemblyImg, "HawkEngine", "EngineCalls");
+			MonoMethod* method = mono_class_get_method_from_name(klass, "CreateGameObject", 1);
+
+			MonoString* arg = mono_string_new(mono_domain_get(), "Samson");
+			void* args[1] = { arg };
+
+			mono_runtime_invoke(method, nullptr, args, nullptr);
+
+		}
+
+public :
 
 
-	MonoDomain* m_ptr_MonoDomain;
-	MonoAssembly* m_ptr_GameAssembly;
-	MonoImage* m_ptr_GameAssemblyImg;
+	inline static MonoDomain* m_ptr_MonoDomain;
+	inline static MonoAssembly* m_ptr_GameAssembly;
+	inline static MonoImage* m_ptr_GameAssemblyImg;
 
-	std::vector<MonoClass*> user_classes;
+	std::vector<MonoClass*> user_classes; // array containing all the C# types metadata
 
 };
 
-class Pu {
-public:
-	Pu();
 
-	int pu = 0;
-};
 
 #endif

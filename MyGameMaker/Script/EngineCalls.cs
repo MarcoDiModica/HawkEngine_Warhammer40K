@@ -11,7 +11,9 @@ namespace HawkEngine
     class EngineCalls
     {
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        // --------------------Marshal - treat string as C const char*
         public static extern void print(string message);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern GameObject CreateGameObject(string name);
     }
 }

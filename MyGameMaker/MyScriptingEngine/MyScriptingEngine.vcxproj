@@ -84,10 +84,12 @@
   <ItemGroup>
     <ClInclude Include="MonoEnvironment.h" />
     <ClInclude Include="ScriptComponent.h" />
+    <ClInclude Include="SharpBinder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MonoEnvironment.cpp" />
     <ClCompile Include="ScriptComponent.cpp" />
+    <ClCompile Include="SharpBinder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

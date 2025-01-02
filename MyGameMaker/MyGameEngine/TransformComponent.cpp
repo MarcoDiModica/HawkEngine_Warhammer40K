@@ -5,6 +5,9 @@
 #include "Component.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/debug-helpers.h>
+#include <mono/jit/jit.h>
 
 static  bool decodeMat(const YAML::Node& node, glm::dmat4& rhs);
 static  YAML::Node encodeMat(const glm::dmat4& rhs);
@@ -33,6 +36,9 @@ Transform_Component& Transform_Component::operator=(const Transform_Component& o
 
         local_matrix = other.local_matrix;
     }
+
+   // mono_add_internal_call("aaa", (const void*) &Transform_Component::SetPosition);
+
     return *this;
 }
 

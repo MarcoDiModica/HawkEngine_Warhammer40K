@@ -22,11 +22,26 @@ std::string getExecutablePath() {
 	return fullPath.substr(0, lastSlash);
 }
 
+void HandleConsoleOutput(MonoString* message)
+{
+	if (message == nullptr)
+		return;
+
+	char* msg = mono_string_to_utf8(message);
+	LOG(LogType::LOG_C_SHARP, msg);
+}
+
 class MonoEnvironment
 {
 public:
 	MonoEnvironment()
 	{
+		std::string option = "--debugger-agent=transport=dt_socket,address=127.0.0.1:55555,server=y,suspend=n";
+		char* option_cstr = const_cast<char*>(option.c_str()); // Convert std::string to C-style string
+		char* options[] = { option_cstr };                    // Create an array of char*
+		mono_jit_parse_options(1, options);
+		//mono_debug_init(MONO_DEBUG_FORMAT_MONO);
+
 		std::string path = getExecutablePath() + "\\..\\..\\External\\Mono";
 		mono_set_dirs(std::string(path + "\\lib").c_str(),
 			std::string(path + "\\etc").c_str());
@@ -70,8 +85,13 @@ public:
 			}
 		}
 
-		MonoMethod* method = mono_class_get_method_from_name(user_classes[0], "Start", 0);
-		MonoObject* instance = mono_object_new(m_ptr_MonoDomain, user_classes[0]);
+
+		LinkEngineMethods();
+
+		/* Test by creating a TestObject and callinf its Start method*/
+
+		MonoMethod* method = mono_class_get_method_from_name(user_classes[user_classes.size()-1], "Start", 0);
+		MonoObject* instance = mono_object_new(m_ptr_MonoDomain, user_classes[user_classes.size() - 1]);
 		if (method)
 		{
 			// Call the Start method
@@ -82,11 +102,19 @@ public:
 			LOG( LogType::LOG_INFO ,"Start method not found!");
 		}
 		/* Test if the value has changed */
-		MonoClassField* field = mono_class_get_field_from_name(user_classes[0], "testValue");
+		MonoClassField* field = mono_class_get_field_from_name(user_classes[user_classes.size() - 1], "testValue");
 		int value = 0;
-		mono_field_static_get_value(mono_class_vtable(m_ptr_MonoDomain, user_classes[0]), field, &value);
+		mono_field_static_get_value(mono_class_vtable(m_ptr_MonoDomain, user_classes[user_classes.size() - 1]), field, &value);
 		LOG(LogType::LOG_INFO ,"testValue: %d", value);
-		
+
+
+	}
+
+	void LinkEngineMethods() {
+
+
+		mono_add_internal_call("HawkEngine.EngineCalls::print", (const void*)HandleConsoleOutput);
+
 	}
 
 	~MonoEnvironment() {

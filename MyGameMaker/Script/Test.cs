@@ -12,7 +12,7 @@ public class Test
         public void Start()
         {
             testValue = 23;
-            Console.WriteLine("hello world");
+            HawkEngine.EngineCalls.print("Hello from C#");
         }
     
 

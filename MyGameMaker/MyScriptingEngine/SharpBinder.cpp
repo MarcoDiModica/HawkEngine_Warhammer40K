@@ -9,6 +9,18 @@
 
 //TODO : cambiar estos metodos a que no usen el root
 
+
+// componentes : Transform, Camera , Mesh etc. (Jordi)
+
+// funciones del engine : (SceneClass )loadScene, DestroyGameObject, (Marco)
+
+// *optional: Break Points in C#
+
+// Separate editor functions to engine 
+
+// lifecycle update of Script Components editor (Didac)
+
+
 MonoObject* SharpBinder::CreateGameObjectSharp(MonoString* name) {
 	char* C_name = mono_string_to_utf8(name);
 	std::shared_ptr<GameObject> obj = Application->root->CreateCameraObject(std::string(C_name));

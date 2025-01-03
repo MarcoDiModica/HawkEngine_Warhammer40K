@@ -19,7 +19,7 @@ MonoObject* SharpBinder::CreateGameObjectSharp(MonoString* name) {
 
 	// assign to C#object its ptr to C++ object
 
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor()", true);
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
 
 	//MonoMethod* ctor = mono_class_get_method_from_name(klass, ".ctor", 1);
@@ -27,9 +27,9 @@ MonoObject* SharpBinder::CreateGameObjectSharp(MonoString* name) {
 
 
 	void* args[1];
-	args[0] = &obj->name;
+	args[0] = mono_string_new( MonoEnvironment::m_ptr_MonoDomain  ,obj->name.c_str() );
 
-	mono_runtime_invoke(method, monoObject, nullptr, NULL);
+	mono_runtime_invoke(method, monoObject, args, NULL);
 
 	//MonoClass* intptrClass = mono_get_intptr_class();
 	//MonoObject* boxedIntPtr = mono_value_box(MonoEnvironment::m_ptr_MonoDomain, intptrClass, &C_Object);

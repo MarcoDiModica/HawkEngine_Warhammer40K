@@ -104,8 +104,9 @@ private:
 
 public:
     std::string name;
-private:
     unsigned int gid;
+private:
+    
     static unsigned int nextGid;
     std::string tag = "Untagged";
     bool active = true;

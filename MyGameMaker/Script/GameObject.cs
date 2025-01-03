@@ -14,6 +14,7 @@ namespace HawkEngine
         public GameObject(string name)
         {
             this.name = name;
+            EngineCalls.print("Ive been called with the name " + name);
             //CplusplusInstance = ptr;
         }
 
@@ -21,6 +22,11 @@ namespace HawkEngine
         {
             EngineCalls.print("I am a go created in C#");
             //CplusplusInstance = ptr;
+        }
+
+        public GameObject(int num)
+        {
+            EngineCalls.print("Ive been called with number " + num);
         }
 
 
@@ -53,14 +59,14 @@ namespace HawkEngine
 
         //--------Fields-----------//
 
+        public string name;
+        //public extern string name
+        //{
+        //    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        //    get; // Get from C++
 
-        public extern string name
-        {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get; // Get from C++
-
-            set; // Set in C#
-        }
+        //    set; // Set in C#
+        //}
         public extern string tag
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]

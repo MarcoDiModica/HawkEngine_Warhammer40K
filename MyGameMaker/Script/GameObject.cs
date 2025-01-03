@@ -9,13 +9,21 @@ namespace HawkEngine
 {
     class GameObject
     {
-        IntPtr CplusplusInstance; /* ptr to C++ instance */
+        UIntPtr CplusplusInstance; /* ptr to C++ instance */
 
+        // most of theese constructors are for testing
         public GameObject(string name)
         {
             this.name = name;
             EngineCalls.print("Ive been called with the name " + name);
             //CplusplusInstance = ptr;
+        }
+
+        public GameObject(string name, UIntPtr C_doppleganger)
+        {
+            this.name = name;
+            EngineCalls.print("Ive been called with the name " + name);
+            CplusplusInstance = C_doppleganger;
         }
 
         public GameObject()
@@ -59,7 +67,7 @@ namespace HawkEngine
 
         //--------Fields-----------//
 
-        public string name;
+        private string name;
         //public extern string name
         //{
         //    [MethodImplAttribute(MethodImplOptions.InternalCall)]

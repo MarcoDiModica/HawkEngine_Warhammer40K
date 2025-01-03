@@ -102,7 +102,6 @@ private:
     void DrawInstancedMatrix() const;
     void DrawPushPopMatrix() const;
 
-public:
     std::string name;
     unsigned int gid;
 private:

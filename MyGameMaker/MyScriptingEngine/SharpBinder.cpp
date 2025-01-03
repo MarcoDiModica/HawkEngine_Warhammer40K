@@ -17,26 +17,16 @@ MonoObject* SharpBinder::CreateGameObjectSharp(MonoString* name) {
 	MonoClass* klass = mono_class_from_name(MonoEnvironment::m_ptr_GameAssemblyImg, "HawkEngine", "GameObject");
 	MonoObject* monoObject = mono_object_new(MonoEnvironment::m_ptr_MonoDomain, klass);
 
-	// assign to C#object its ptr to C++ object
-
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string)", true);
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string,uintptr)", true);
 	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	// assign to C#object its ptr to C++ object
+	uintptr_t goPtr = reinterpret_cast<uintptr_t>(obj.get());
 
-	//MonoMethod* ctor = mono_class_get_method_from_name(klass, ".ctor", 1);
-	// 
-
-
-	void* args[1];
-	args[0] = mono_string_new( MonoEnvironment::m_ptr_MonoDomain  ,obj->name.c_str() );
+	void* args[2];
+	args[0] = mono_string_new( MonoEnvironment::m_ptr_MonoDomain  ,obj->GetName().c_str() );
+	args[1] = &goPtr;
 
 	mono_runtime_invoke(method, monoObject, args, NULL);
-
-	//MonoClass* intptrClass = mono_get_intptr_class();
-	//MonoObject* boxedIntPtr = mono_value_box(MonoEnvironment::m_ptr_MonoDomain, intptrClass, &C_Object);
-	////args[1] = boxedIntPtr;
-
-	///*Calls the C# go constructor passing the parameters */
-	//mono_runtime_invoke(ctor, monoObject, args, nullptr);
 
 	return monoObject;
 }

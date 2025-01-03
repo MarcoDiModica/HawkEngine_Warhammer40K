@@ -59,6 +59,8 @@ public:
     bool ParentGameObjectToScene(GameObject& child);
     bool ParentGameObjectToObject(GameObject& child, GameObject& father);
 
+    std::shared_ptr<GameObject> FindGOByName(char* name);
+
     std::shared_ptr<Scene> currentScene = nullptr;
 
     //main camera

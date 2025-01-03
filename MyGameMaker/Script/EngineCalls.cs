@@ -10,6 +10,7 @@ namespace HawkEngine
 {
     class EngineCalls
     {
+        /* The implementation of theese methods lies in C++ */
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void print(string message);
 

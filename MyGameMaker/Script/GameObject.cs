@@ -11,10 +11,16 @@ namespace HawkEngine
     {
         IntPtr CplusplusInstance; /* ptr to C++ instance */
 
-        public GameObject(string name, IntPtr ptr)
+        public GameObject(string name)
         {
             this.name = name;
-            CplusplusInstance = ptr;
+            //CplusplusInstance = ptr;
+        }
+
+        public GameObject()
+        {
+            EngineCalls.print("I am a go created in C#");
+            //CplusplusInstance = ptr;
         }
 
 

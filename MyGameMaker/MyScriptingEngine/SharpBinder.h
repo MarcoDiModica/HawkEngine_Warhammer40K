@@ -14,6 +14,11 @@ namespace SharpBinder
 
 	MonoObject* CreateGameObjectSharp(MonoString* name);
 
+	MonoObject* FindObjectByName(MonoString* name);
+
+
+	MonoString* GameObjectGetName(MonoObject* sharpRef);
+
 }
 
 

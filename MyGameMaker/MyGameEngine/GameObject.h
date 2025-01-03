@@ -102,8 +102,9 @@ private:
     void DrawInstancedMatrix() const;
     void DrawPushPopMatrix() const;
 
-
+public:
     std::string name;
+private:
     unsigned int gid;
     static unsigned int nextGid;
     std::string tag = "Untagged";

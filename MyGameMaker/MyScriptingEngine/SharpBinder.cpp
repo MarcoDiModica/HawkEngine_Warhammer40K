@@ -42,9 +42,25 @@ MonoObject* SharpBinder::FindObjectByName(MonoString* name){
 	return monoObject;
 }
 
+//               the sharpRef is an automatic parameter from C# with the C#instance of GO
 MonoString* SharpBinder::GameObjectGetName(MonoObject* sharpRef) {
 
+	std::string name = ConvertFromSharp(sharpRef)->GetName();
+
+	MonoString* Mname = mono_string_new(MonoEnvironment::m_ptr_MonoDomain, name.c_str());
+
+	return Mname;
+}
 
 
-	return nullptr;
+GameObject* SharpBinder::ConvertFromSharp(MonoObject* sharpObj)
+{
+	if (sharpObj == nullptr) { return nullptr; }
+
+	uintptr_t Cptr;
+	MonoClass* klass = mono_class_from_name(MonoEnvironment::m_ptr_GameAssemblyImg,"HawkEngine","GameObject");
+
+	// Retrieve the C++ ptr GameObject from the C# gameObject's ptr parameter
+	mono_field_get_value(sharpObj, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
+	return reinterpret_cast<GameObject*>(Cptr);
 }

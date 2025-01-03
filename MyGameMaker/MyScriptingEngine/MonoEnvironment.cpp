@@ -111,8 +111,8 @@ void MonoEnvironment::LinkEngineMethods() {
 	//TODO map cpp methods accesible by the user to C#
 	   //                (C#  namespace   class     method)  ( void* to C++ method )
 	mono_add_internal_call("HawkEngine.EngineCalls::print", (const void*)HandleConsoleOutput);
-
 	mono_add_internal_call("HawkEngine.EngineCalls::CreateGameObject", (const void*) CreateGameObjectSharp );
+	mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
 }
 
 

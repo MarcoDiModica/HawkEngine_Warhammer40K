@@ -19,6 +19,14 @@ namespace SharpBinder
 
 	MonoString* GameObjectGetName(MonoObject* sharpRef);
 
+
+	/// <summary>
+	/// Retrieve the GameObject cpp reference from a C# GameObject
+	/// </summary>
+	/// <param name="sharpObj"></param>
+	/// <returns></returns>
+	GameObject* ConvertFromSharp(MonoObject* sharpObj);
+
 }
 
 

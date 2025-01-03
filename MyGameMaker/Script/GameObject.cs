@@ -22,8 +22,10 @@ namespace HawkEngine
         public GameObject(string name, UIntPtr C_doppleganger)
         {
             this.name = name;
-            EngineCalls.print("Ive been called with the name " + name);
+
             CplusplusInstance = C_doppleganger;
+
+            EngineCalls.print("Ive gotten the name " + GetName());
         }
 
         public GameObject()
@@ -53,6 +55,8 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern bool HasComponent();
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern string GetName();
 
 
         //----LifeCycleMethods----// 

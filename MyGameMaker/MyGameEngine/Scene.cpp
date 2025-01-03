@@ -2,13 +2,13 @@
 
 #include "MeshRendererComponent.h"
 #include "Mesh.h"
-#include "../MyScriptingEngine/MonoEnvironment.h"
+//#include "../MyScriptingEngine/MonoEnvironment.h"
 
 void Scene::Start()
 {
 	int u = 5;
 
-	MonoEnvironment* env = new MonoEnvironment();
+	//MonoEnvironment* env = new MonoEnvironment();
 
 	//for (auto& child : children())
 	//{

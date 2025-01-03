@@ -67,6 +67,9 @@ bool Root::Awake()
 
 bool Root::Start()
 {
+
+    MonoEnvironment* mono = new MonoEnvironment();
+
     /*auto Street = CreateGameObject("Street");
     Street->GetTransform()->GetPosition() = vec3(0, 0, 0);
     ModelImporter meshImp;

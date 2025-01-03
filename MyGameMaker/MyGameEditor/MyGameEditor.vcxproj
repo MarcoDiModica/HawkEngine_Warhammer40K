@@ -101,6 +101,9 @@
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\MyScriptingEngine\MyScriptingEngine.vcxproj">
+      <Project>{c0f74fc2-d269-40d3-bdd1-557d2e8478be}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />

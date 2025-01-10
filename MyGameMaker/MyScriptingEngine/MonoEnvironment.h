@@ -15,8 +15,11 @@ public:
 
 	void LinkEngineMethods();
 
+	// Test methods
+
 	void CreateGO();
 
+	void DestroyGo();
 
 	inline static MonoDomain * m_ptr_MonoDomain;
 	inline static MonoAssembly* m_ptr_GameAssembly;

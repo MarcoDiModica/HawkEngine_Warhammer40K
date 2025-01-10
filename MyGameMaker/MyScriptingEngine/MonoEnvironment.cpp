@@ -113,6 +113,8 @@ void MonoEnvironment::LinkEngineMethods() {
 	mono_add_internal_call("HawkEngine.EngineCalls::print", (const void*)HandleConsoleOutput);
 	mono_add_internal_call("HawkEngine.EngineCalls::CreateGameObject", (const void*) CreateGameObjectSharp );
 	mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
+	mono_add_internal_call("HawkEngine.EngineCalls::Destroy", (const void*)Destroy);
+	mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
 }
 
 
@@ -126,4 +128,14 @@ void MonoEnvironment::CreateGO() {
 
 	mono_runtime_invoke(method, nullptr, args, nullptr);
 
+}
+
+void MonoEnvironment::DestroyGo() {
+	MonoClass* klass = mono_class_from_name(m_ptr_GameAssemblyImg, "HawkEngine", "EngineCalls");
+	MonoMethod* method = mono_class_get_method_from_name(klass, "Destroy", 1);
+
+	MonoString* arg = mono_string_new(mono_domain_get(), "Samson");
+	void* args[1] = { arg };
+
+	mono_runtime_invoke(method, nullptr, args, nullptr);
 }

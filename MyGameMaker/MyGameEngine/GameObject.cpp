@@ -227,9 +227,11 @@ void GameObject::Update(float deltaTime)
         return;
     }
 
-    if (isSelected) {
-        LOG(LogType::LOG_INFO, " %s is selected ", GetName().c_str());
+    // Call C# update
+    if (CsharpReference) {
+
     }
+
 
     //check the state of the components and throw an error if they are null
     for (auto& component : components)

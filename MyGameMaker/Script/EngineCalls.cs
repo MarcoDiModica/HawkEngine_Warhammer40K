@@ -16,5 +16,12 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern GameObject CreateGameObject(string name);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void Destroy(GameObject object_to_destroy);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern void ChangeScene(string scene_name);
+
     }
 }

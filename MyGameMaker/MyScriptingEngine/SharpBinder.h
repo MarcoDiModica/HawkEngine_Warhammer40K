@@ -27,6 +27,14 @@ namespace SharpBinder
 	/// <returns></returns>
 	GameObject* ConvertFromSharp(MonoObject* sharpObj);
 
+	void Destroy(MonoObject* object_to_destroy);
+
+	void ChangeScene(MonoString* scene_name);
+
+	void GameObjectUpdate(GameObject* object);
+
+	void GameObjectAddChild(MonoObject* parent, MonoObject* child);
+
 }
 
 

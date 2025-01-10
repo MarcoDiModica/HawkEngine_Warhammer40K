@@ -40,6 +40,8 @@ MonoObject* SharpBinder::CreateGameObjectSharp(MonoString* name) {
 
 	mono_runtime_invoke(method, monoObject, args, NULL);
 
+	obj->CsharpReference = monoObject; // store ref to C#ref to call lifecycle functions
+
 	return monoObject;
 }
 
@@ -75,4 +77,59 @@ GameObject* SharpBinder::ConvertFromSharp(MonoObject* sharpObj)
 	// Retrieve the C++ ptr GameObject from the C# gameObject's ptr parameter
 	mono_field_get_value(sharpObj, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
 	return reinterpret_cast<GameObject*>(Cptr);
+}
+
+void SharpBinder::Destroy(MonoObject* object_to_destroy){
+
+	if (object_to_destroy == nullptr) { return ; }
+
+	uintptr_t Cptr;
+	MonoClass* klass = mono_class_from_name(MonoEnvironment::m_ptr_GameAssemblyImg, "HawkEngine", "GameObject");
+
+	// Retrieve the C++ ptr GameObject from the C# gameObject's ptr parameter
+	mono_field_get_value(object_to_destroy, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
+	GameObject* actor = reinterpret_cast<GameObject*>(Cptr);
+
+	Application->root->RemoveGameObject(actor);
+
+	//actor->Destroy();
+
+
+}
+
+void SharpBinder::ChangeScene(MonoString* scene_name) {
+
+	char* C_name = mono_string_to_utf8(scene_name);
+
+	Application->scene_serializer->DeSerialize(std::string(C_name));
+
+}
+
+void SharpBinder::GameObjectUpdate(GameObject* object) {
+
+	if (object && object->CsharpReference) {
+		MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:Update", true);
+		MonoClass* klass = mono_class_from_name(MonoEnvironment::m_ptr_GameAssemblyImg, "HawkEngine", "GameObject");
+
+		MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+		// assign to C#object its ptr to C++ object
+		//uintptr_t goPtr = reinterpret_cast<uintptr_t>(obj.get());
+
+		
+
+		mono_runtime_invoke(method, object->CsharpReference, nullptr, NULL);
+	}
+
+}
+
+
+void SharpBinder::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
+
+	if (!parent || !child) { return; }
+
+	GameObject* _parent = ConvertFromSharp(parent);
+	GameObject* _child = ConvertFromSharp(child);
+
+	_parent->AddChild(_child);
+
 }

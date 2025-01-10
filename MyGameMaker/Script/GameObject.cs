@@ -26,6 +26,12 @@ namespace HawkEngine
             CplusplusInstance = C_doppleganger;
 
             EngineCalls.print("Ive gotten the name " + GetName());
+
+            if (name == "Samson") {
+                AddChild(EngineCalls.CreateGameObject("joe"));
+             }
+
+           // EngineCalls.Destroy(this);
         }
 
         public GameObject()
@@ -57,6 +63,9 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern string GetName();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void AddChild(GameObject child);
 
 
         //----LifeCycleMethods----// 

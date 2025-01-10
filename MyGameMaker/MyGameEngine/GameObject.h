@@ -5,6 +5,8 @@
 #include "TreeExt.h"
 #include "Mesh.h"
 #include "BoundingBox.h"
+#include <mono/metadata/object.h>
+
 
 
 class SceneSerializer;
@@ -94,6 +96,8 @@ public:
 
     OctreeNode* node = nullptr;
 
+    MonoObject* CsharpReference;
+
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -118,6 +122,7 @@ private:
 
     //Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
+
 
 
 

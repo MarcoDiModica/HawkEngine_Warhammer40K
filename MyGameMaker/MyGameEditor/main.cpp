@@ -5,7 +5,6 @@
 
 #include <string>
 #include <GL/glew.h>
-#include <chrono>
 #include <thread>
 #include <exception>
 #include <iostream>
@@ -32,6 +31,7 @@
 #include "MyGUI.h"
 #include <ImGuizmo.h>
 #include "UISceneWindow.h"
+#include "MyGameEngine/types.h"
 #include "MyGameEngine/CameraBase.h"
 #include "MyGameEngine/BoundingBox.h"
 #include "MyGameEngine/CameraComponent.h"
@@ -57,12 +57,10 @@ enum MainState
 	EXIT
 };
 
+// Put all global variables into a Global.h file
 GLuint textureID;
 
 using hrclock = chrono::high_resolution_clock;
-using u8vec4 = glm::u8vec4;
-using ivec2 = glm::ivec2;
-using vec3 = glm::dvec3;
 
 static const ivec2 WINDOW_SIZE(1280, 720);
 static const auto FPS = 120;
@@ -73,10 +71,8 @@ int numDirLight = 0;
 
 std::list<GameObject*> lights;
 
-static EditorCamera* camera = nullptr;
-
 Shaders mainShader;
-
+ 
 App* Application = NULL;
 
 static void init_openGL() {
@@ -111,8 +107,8 @@ static void drawFloorGrid(int size, double step) {
 
 // Initializes camera
 void configureCamera() {
-	glm::dmat4 projectionMatrix = camera->projection();
-	glm::dmat4 viewMatrix = camera->view();
+	glm::dmat4 projectionMatrix = Application->camera->projection();
+	glm::dmat4 viewMatrix = Application->camera->view();
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(glm::value_ptr(projectionMatrix));
@@ -120,7 +116,7 @@ void configureCamera() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
-	camera->frustum.Update(projectionMatrix * viewMatrix);
+	Application->camera->frustum.Update(projectionMatrix * viewMatrix);
 }
 
 void configureGameCamera()
@@ -140,28 +136,9 @@ void configureGameCamera()
 	}
 }
 
-void drawFrustum(const CameraBase& camera)
-{
-	//const auto& frustum = camera.frustum;
-
-	//glBegin(GL_LINES);
-	//for (int i = 0; i < 4; i++) {
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[i]));
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[(i + 1) % 4]));
-
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[i + 4]));
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[(i + 1) % 4 + 4]));
-
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[i]));
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[i + 4]));
-	//}
-	//glEnd();
-}
-
-
 void MousePickingCheck(GameObject* object)
 {	
-	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
+	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
 
 	if (object->HasComponent<MeshRenderer>()) {
@@ -194,6 +171,7 @@ void MousePickingCheck(GameObject* object)
 	}
 }
 
+// Move this code inside the core
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
@@ -201,15 +179,8 @@ static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	
 	configureCamera();
-	//drawFrustum(*camera);
-
-	//configureGameCamera();
-	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
 
 	drawFloorGrid(128, 4);
-
-	
-
 
 	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo ma�ana
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
@@ -228,7 +199,7 @@ static void display_func() {
 	{
 		GameObject* object = Application->root->currentScene->children()[i].get();
 		
-		object->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights,mainShader);
+		object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
 		
 		object->Update(static_cast<float>(Application->GetDt()));
 
@@ -236,7 +207,7 @@ static void display_func() {
 		for (size_t j = 0; j < object->GetChildren().size(); ++j)
 		{
 			GameObject* child = object->GetChildren()[j].get();
-			child->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights, mainShader);
+			child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
 			MousePickingCheck(child);
 		}
 	}
@@ -244,29 +215,13 @@ static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
-
-static void display_func2() {
-
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboCamera);
-
-	glViewport(0, 0, Application->window->width(), Application->window->height());
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	configureGameCamera();
-	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
+// Move this code inside the core
 void PauCode2(MyGUI* gui) {
 
 	if (Application->window->IsOpen()) {
 
 		const auto t0 = hrclock::now();
 		display_func();
-		display_func2();
 		gui->Render();
 
 		/*move_camera();*/
@@ -280,30 +235,7 @@ void PauCode2(MyGUI* gui) {
 int main(int argc, char** argv) {
 
 	MainState state = CREATE;
-
-	// The application is created
-	Application = new App();
-
-	/*Application->camera = new Camera(Application);*/
-	
-	//std::shared_ptr<Camera> cameraPtr = std::make_shared<Camera>(Application);
-	//camera = cameraPtr.get();
-
-	//Application->camera = shared_ptr<Camera>
-	
-
-	//initialize devil
-	ilInit();
-	iluInit();
-	ilutInit();
-
-	init_openGL();
-
-	//if (mainShader.LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
-	//
-	//}
-
-	camera = Application->camera;
+	int result = EXIT_FAILURE;
 
 	while (state != EXIT) 
 	{
@@ -312,29 +244,23 @@ int main(int argc, char** argv) {
 
 		case CREATE:
 
-			/*Application = new App();*/
+			Application = new App();	// The application is created
 
-			if (Application) {	
-				state = AWAKE;
+			//initialize devil
+			ilInit();
+			iluInit();
+			ilutInit();
 
-				/*gui = PauCode();*/
-			}
+			init_openGL();
+
+			if (Application) {	state = AWAKE; }
 			else { state = FAIL; printf("Failed on Create"); }
 			break;
 
-
 		case AWAKE:
-			//Application->AddModule(cameraPtr.get(), true);
 
-			camera->GetTransform().GetPosition() = vec3(0, 1, 4);
-			camera->GetTransform().Rotate(glm::radians(180.0), vec3(0, 1, 0));
 			if (Application->Awake()) { state = START; }
-
-			else
-			{
-				printf("Failed on Awake");
-				state = FAIL;
-			}
+			else { printf("Failed on Awake"); state = FAIL; }
 			break;
 
 		case START:
@@ -345,56 +271,31 @@ int main(int argc, char** argv) {
 
 		case LOOP:
 			
-
 			PauCode2(Application->gui);
 
-			if (!Application->Update()) {
-				state = FREE;
-			}
+			if (!Application->Update()) { state = FREE; }
 			break;
-
 
 		case FREE:
 
-			// TODO Free all classes and memory
+			if (Application->CleanUP()) { 
+				state = EXIT;
+				result = EXIT_SUCCESS;
+			}
+			else { state = FAIL; printf("Failed on FREE"); }
 			state = EXIT;
 			break;
-		}
 
+		case FAIL:
+
+			state = EXIT;
+			result = EXIT_FAILURE;
+			break;
+
+		case EXIT:
+			break;
+		}
 	}
 
-
-
-
-
-
-	//initialize devil
-	//ilInit();
-	//iluInit();
-	//ilutInit();
-	//Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
-	//MyGUI gui(window.windowPtr(), window.contextPtr());
-
-	//init_openGL();
-	//camera.transform().pos() = vec3(0, 1, 4);
-	//camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
-
-	//
-
-	//mesh.LoadMesh("BakerHouse.fbx");
-	//mesh.LoadTexture("Baker_house.png");
-	//mesh.LoadCheckerTexture();
-
-	//while (window.processEvents(&gui) && window.isOpen()) {
-	//	const auto t0 = hrclock::now();
-	//display_func();
-	//	gui.render();
-	//	move_camera();
-	//	window.swapBuffers();
-	//	const auto t1 = hrclock::now();
-	//	const auto dt = t1 - t0;
-	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
-	//}
-
-	return 0;
+	return result;
 }

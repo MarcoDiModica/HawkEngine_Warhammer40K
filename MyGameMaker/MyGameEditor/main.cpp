@@ -30,6 +30,7 @@
 #include <IL/ilut.h>
 #include "Input.h"
 #include "MyGUI.h"
+#include <ImGuizmo.h>
 #include "UISceneWindow.h"
 #include "MyGameEngine/CameraBase.h"
 #include "MyGameEngine/BoundingBox.h"
@@ -158,7 +159,7 @@ void drawFrustum(const CameraBase& camera)
 }
 
 
-void Jordi_Code(GameObject* object)
+void MousePickingCheck(GameObject* object)
 {	
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
@@ -178,6 +179,10 @@ void Jordi_Code(GameObject* object)
 		if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
 		{
 			Application->input->SetDraggedGameObject(object);
+		}
+
+		if (ImGuizmo::IsOver()) {
+			return; 
 		}
 
 		if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused )
@@ -227,12 +232,12 @@ static void display_func() {
 		
 		object->Update(static_cast<float>(Application->GetDt()));
 
-		Jordi_Code(object);
+		MousePickingCheck(object);
 		for (size_t j = 0; j < object->GetChildren().size(); ++j)
 		{
 			GameObject* child = object->GetChildren()[j].get();
 			child->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights, mainShader);
-			Jordi_Code(child);
+			MousePickingCheck(child);
 		}
 	}
 

@@ -72,10 +72,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AudioAsset.h" />
     <ClInclude Include="AudioEngine.h" />
     <ClInclude Include="SoundComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioAsset.cpp" />
     <ClCompile Include="AudioEngine.cpp" />
     <ClCompile Include="SoundComponent.cpp" />
   </ItemGroup>

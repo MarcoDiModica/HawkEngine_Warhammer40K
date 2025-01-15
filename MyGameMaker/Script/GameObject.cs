@@ -45,7 +45,6 @@ namespace HawkEngine
             EngineCalls.print("Ive been called with number " + num);
         }
 
-
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         /* This attribute tells the compiler that the method's implementation is external 
          * and typically defined in a low-level or platform-specific library */

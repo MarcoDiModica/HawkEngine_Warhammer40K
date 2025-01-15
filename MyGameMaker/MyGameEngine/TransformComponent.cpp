@@ -130,8 +130,6 @@ void Transform_Component::SetPosition(const glm::dvec3& position)
     HandleLocalUpdate();
 }
 
-
-
 void Transform_Component::Rotate(double rads, const glm::dvec3& axis)
 {
 

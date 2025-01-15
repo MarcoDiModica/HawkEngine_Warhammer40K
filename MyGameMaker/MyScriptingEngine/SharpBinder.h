@@ -35,6 +35,24 @@ namespace SharpBinder
 
 	void GameObjectAddChild(MonoObject* parent, MonoObject* child);
 
+	// Pongo esto aquí pero supongo que lo deberíamos delegar a otro sitio
+	void RegisterTransformBindings();
+
+	void SetPosition(MonoObject* transformRef, float x, float y, float z);
+	void GetPosition(MonoObject* transformRef, glm::vec3* position);
+	void SetRotation(MonoObject* transformRef, float x, float y, float z);
+	void SetRotationQuat(MonoObject* transformRef, glm::quat* rotation);
+	void Rotate(MonoObject* transformRef, float radians, glm::vec3* axis);
+	void RotateLocal(MonoObject* transformRef, float radians, glm::vec3* axis);
+	void LookAt(MonoObject* transformRef, glm::vec3* target);
+	void SetScale(MonoObject* transformRef, float x, float y, float z);
+	void Scale(MonoObject* transformRef, float x, float y, float z);
+	void TranslateLocal(MonoObject* transformRef, float x, float y, float z);
+	void AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp);
+	void SetForward(MonoObject* transformRef, glm::vec3* forward);
+
+	//Transform_Component* ConvertFromSharpTransform(Transform* sharpObj);
+
 }
 
 

@@ -7,6 +7,9 @@
 #include <mono/metadata/object.h>
 #include <string>
 
+#include "../MyGameEngine/TransformComponent.h"
+#include "glm/glm.hpp"
+
 //TODO : cambiar estos metodos a que no usen el root
 
 
@@ -122,7 +125,6 @@ void SharpBinder::GameObjectUpdate(GameObject* object) {
 
 }
 
-
 void SharpBinder::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
 
 	if (!parent || !child) { return; }
@@ -133,3 +135,93 @@ void SharpBinder::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
 	_parent->AddChild(_child);
 
 }
+
+// Estoy bastante seguro de que necesito un transformador de Transform (cs) a TransformComponent (cpp)
+
+//void SharpBinder::RegisterTransformBindings()
+//{
+//	mono_add_internal_call("HawkEngine.Transform::SetPosition", (const void*)&SharpBinder::SetPosition);
+//	mono_add_internal_call("HawkEngine.Transform::GetPosition", (const void*)&SharpBinder::GetPosition);
+//	mono_add_internal_call("HawkEngine.Transform::SetRotation", (const void*)&SharpBinder::SetRotation);
+//	mono_add_internal_call("HawkEngine.Transform::SetRotationQuat", (const void*)&SharpBinder::SetRotationQuat);
+//	mono_add_internal_call("HawkEngine.Transform::Rotate", (const void*)&SharpBinder::Rotate);
+//	mono_add_internal_call("HawkEngine.Transform::RotateLocal", (const void*)&SharpBinder::RotateLocal);
+//	mono_add_internal_call("HawkEngine.Transform::LookAt", (const void*)&SharpBinder::LookAt);
+//	mono_add_internal_call("HawkEngine.Transform::SetScale", (const void*)&SharpBinder::SetScale);
+//	mono_add_internal_call("HawkEngine.Transform::Scale", (const void*)&SharpBinder::Scale);
+//	mono_add_internal_call("HawkEngine.Transform::TranslateLocal", (const void*)&SharpBinder::TranslateLocal);
+//	mono_add_internal_call("HawkEngine.Transform::AlignToGlobalUp", (const void*)&SharpBinder::AlignToGlobalUp);
+//	mono_add_internal_call("HawkEngine.Transform::SetForward", (const void*)&SharpBinder::SetForward);
+//}
+//
+//void SharpBinder::SetPosition(MonoObject* transformRef, float x, float y, float z)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->SetPosition(glm::vec3(x, y, z));
+//}
+//
+//void SharpBinder::GetPosition(MonoObject* transformRef, glm::vec3* position)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) *position = transform->GetPosition();
+//}
+//
+//void SharpBinder::SetRotation(MonoObject* transformRef, float x, float y, float z)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->SetRotation(glm::vec3(x, y, z));
+//}
+//
+//void SharpBinder::SetRotationQuat(MonoObject* transformRef, glm::quat* rotation)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->SetRotation(*rotation);
+//}
+//
+//void SharpBinder::Rotate(MonoObject* transformRef, float radians, glm::vec3* axis)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->Rotate(radians, *axis);
+//}
+//
+//void SharpBinder::RotateLocal(MonoObject* transformRef, float radians, glm::vec3* axis)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->RotateLocal(radians, *axis);
+//}
+//
+//void SharpBinder::LookAt(MonoObject* transformRef, glm::vec3* target)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->LookAt(*target);
+//}
+//
+//void SharpBinder::SetScale(MonoObject* transformRef, float x, float y, float z)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->SetScale(glm::vec3(x, y, z));
+//}
+//
+//void SharpBinder::Scale(MonoObject* transformRef, float x, float y, float z)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->Scale(glm::vec3(x, y, z));
+//}
+//
+//void SharpBinder::TranslateLocal(MonoObject* transformRef, float x, float y, float z)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->TranslateLocal(glm::vec3(x, y, z));
+//}
+//
+//void SharpBinder::AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->AlignToGlobalUp(*worldUp);
+//}
+//
+//void SharpBinder::SetForward(MonoObject* transformRef, glm::vec3* forward)
+//{
+//	Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
+//	if (transform) transform->SetForward(*forward);
+//}

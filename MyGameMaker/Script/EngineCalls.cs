@@ -22,6 +22,7 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void ChangeScene(string scene_name);
+        
 
     }
 }

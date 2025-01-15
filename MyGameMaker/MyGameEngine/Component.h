@@ -22,6 +22,7 @@ enum class ComponentType {
 	TRANSFORM,
 	MESH_RENDERER,
 	CAMERA,
+	SCRIPT,
 	LIGHT
 };
 

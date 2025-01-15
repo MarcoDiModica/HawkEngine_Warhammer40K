@@ -6,6 +6,8 @@
 #include <mono/jit/jit.h>
 #include <filesystem>
 #include <string>
+#include <fstream>
+#include <iostream>
 
 #include "../MyGameEditor/Log.h"// ilegal
 
@@ -84,22 +86,22 @@ MonoEnvironment::MonoEnvironment() {
 	
 	/* Test by creating a TestObject and callinf its Start method*/
 	
-	MonoMethod* method = mono_class_get_method_from_name(user_classes[user_classes.size() - 1], "Start", 0);
-	MonoObject* instance = mono_object_new(m_ptr_MonoDomain, user_classes[user_classes.size() - 1]);
-	if (method)
-	{
-		// Call the Start method
-		mono_runtime_invoke(method, instance, nullptr, nullptr);
-	}
-	else
-	{
-		LOG(LogType::LOG_INFO, "Start method not found!");
-	}
-	/* Test if the value has changed */
-	MonoClassField* field = mono_class_get_field_from_name(user_classes[user_classes.size() - 1], "testValue");
-	int value = 0;
-	mono_field_static_get_value(mono_class_vtable(m_ptr_MonoDomain, user_classes[user_classes.size() - 1]), field, &value);
-	LOG(LogType::LOG_INFO, "testValue: %d", value);
+	//MonoMethod* method = mono_class_get_method_from_name(user_classes[user_classes.size() - 1], "Start", 0);
+	//MonoObject* instance = mono_object_new(m_ptr_MonoDomain, user_classes[user_classes.size() - 1]);
+	//if (method)
+	//{
+	//	// Call the Start method
+	//	mono_runtime_invoke(method, instance, nullptr, nullptr);
+	//}
+	//else
+	//{
+	//	LOG(LogType::LOG_INFO, "Start method not found!");
+	//}
+	///* Test if the value has changed */
+	//MonoClassField* field = mono_class_get_field_from_name(user_classes[user_classes.size() - 1], "testValue");
+	//int value = 0;
+	//mono_field_static_get_value(mono_class_vtable(m_ptr_MonoDomain, user_classes[user_classes.size() - 1]), field, &value);
+	//LOG(LogType::LOG_INFO, "testValue: %d", value);
 	
 	
 	CreateGO();
@@ -138,4 +140,43 @@ void MonoEnvironment::DestroyGo() {
 	void* args[1] = { arg };
 
 	mono_runtime_invoke(method, nullptr, args, nullptr);
+}
+
+std::string generateScriptContent(const std::string& className, const std::string& baseClassName) {
+	std::string content =
+		"using System;\n"
+		"using System.Collections.Generic;\n"
+		"using System.Linq;\n"
+		"using System.Text;\n"
+		"using System.Threading.Tasks;\n\n"
+		"public class " + className + " : " + baseClassName + "\n"
+		"{\n"
+		"    public override void Start()\n"
+		"    {\n"
+		"        HawkEngine.EngineCalls.print(\"Hola desde \" + this.GetType().Name);\n"
+		"    }\n\n"
+		"    public override void Update(float deltaTime)\n"
+		"    {\n"
+		"        // Lógica de actualización\n"
+		"    }\n"
+		"}\n";
+	return content;
+}
+
+bool createCSharpScriptFile(const std::string& className, const std::string& baseClassName, const std::string& filePath) 
+{
+	std::string scriptContent = generateScriptContent(className, baseClassName);
+
+	std::ofstream scriptFile(filePath);
+
+	if (!scriptFile.is_open()) {
+		std::cerr << "Error al crear el archivo: " << filePath << std::endl;
+		return false;
+	}
+
+	scriptFile << scriptContent;
+
+	scriptFile.close();
+
+	return true;
 }

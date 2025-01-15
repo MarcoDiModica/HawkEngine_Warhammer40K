@@ -12,6 +12,7 @@
 #include "App.h"
 #include "Input.h"
 #include "../MyScriptingEngine/MonoEnvironment.h"
+#include "../MyScriptingEngine/ScriptComponent.h"
 #include <SDL2/SDL.h>
 
 #include <iostream>
@@ -54,21 +55,24 @@ bool Root::Awake()
     MakeCity();
 
     /*CreateScene("Viernes13");
-    SetActiveScene("Viernes13");*/
-
+    SetActiveScene("Viernes13");
+    
     auto MainCamera = CreateCameraObject("MainCamera");
     MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
     MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = MainCamera->AddComponent<CameraComponent>();
-    mainCamera = MainCamera;
+    mainCamera = MainCamera; */   
 
     return true;
 }
 
 bool Root::Start()
 {
-
     MonoEnvironment* mono = new MonoEnvironment();
+
+    auto Script = CreateGameObject("Script");
+    auto script = Script->AddComponent<ScriptComponent>();
+    script->LoadScript("Test");
 
     /*auto Street = CreateGameObject("Street");
     Street->GetTransform()->GetPosition() = vec3(0, 0, 0);

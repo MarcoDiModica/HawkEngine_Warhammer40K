@@ -1,21 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
-public class Test
+public class Test : MonoBehaviour
 {
+    private float timer = 0.0f;
+    public override void Start()
+    {
+        Console.WriteLine("Test Start Console.WriteLine");
+        HawkEngine.EngineCalls.print("Hello from C# PrintEngineCall");
+    }
 
-    public static int testValue = 0;
-        public void Start()
+    public override void Update(float deltaTime)
+    {
+        timer += deltaTime;
+        if (timer >= 1.0f)
         {
-            testValue = 23;
-            HawkEngine.EngineCalls.print("Hello from C#");
+            HawkEngine.EngineCalls.print("¡Ha pasado un segundo!");
+            Console.WriteLine("Test Update Console.WriteLine");
+            timer = 0.0f;
         }
-    
-
-
+    }
 }
 

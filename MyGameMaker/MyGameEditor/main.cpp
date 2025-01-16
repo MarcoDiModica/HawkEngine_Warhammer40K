@@ -194,6 +194,31 @@ void MousePickingCheck(GameObject* object)
 	}
 }
 
+void RenderOutline(GameObject* object) {
+	if (!object->isSelected || !object->HasComponent<MeshRenderer>()) return;
+	
+	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT); 
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(-5.0f, -5.0f);
+	
+	glColor3f(0.0f, 0.8f, 1.0f); // Red outline
+
+	glPushMatrix();
+	glMultMatrixf(glm::value_ptr(modelMatrix));
+	object->GetComponent<MeshRenderer>()->Render();
+	glPopMatrix();
+
+
+	glDisable(GL_POLYGON_OFFSET_FILL);
+	glCullFace(GL_BACK);
+	glDisable(GL_CULL_FACE);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+}
+
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
@@ -207,9 +232,6 @@ static void display_func() {
 	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
 
 	drawFloorGrid(128, 4);
-
-	
-
 
 	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo ma�ana
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
@@ -228,6 +250,8 @@ static void display_func() {
 	{
 		GameObject* object = Application->root->currentScene->children()[i].get();
 		
+		RenderOutline(object);
+
 		object->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights,mainShader);
 		
 		object->Update(static_cast<float>(Application->GetDt()));
@@ -236,6 +260,7 @@ static void display_func() {
 		for (size_t j = 0; j < object->GetChildren().size(); ++j)
 		{
 			GameObject* child = object->GetChildren()[j].get();
+			RenderOutline(child);
 			child->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights, mainShader);
 			MousePickingCheck(child);
 		}

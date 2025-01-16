@@ -64,7 +64,7 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 			glm::dvec2 currentMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
 			glm::dvec2 delta = currentMousePos - lastMousePos;
 			lastMousePos = currentMousePos;
-			transform.Translate(glm::vec3(delta.x, delta.y, 0) * 0.01f * deltaTime);
+			transform.Translate(glm::vec3(delta.x, delta.y, 0) * 0.5f * deltaTime);
 		}
 	}
 	else 

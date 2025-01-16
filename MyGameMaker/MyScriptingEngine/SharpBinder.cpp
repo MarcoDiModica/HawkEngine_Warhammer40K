@@ -136,6 +136,38 @@ void SharpBinder::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
 
 }
 
+// Input Class functions
+
+bool SharpBinder::GetKey(int keyID) {
+	
+	if (Application->input->GetKey(keyID) == KEY_REPEAT)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool SharpBinder::GetKeyDown(int keyID) {
+
+	if (Application->input->GetKey(keyID) == KEY_DOWN)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool SharpBinder::GetKeyUp(int keyID) {
+
+	if (Application->input->GetKey(keyID) == KEY_UP)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 // Estoy bastante seguro de que necesito un transformador de Transform (cs) a TransformComponent (cpp)
 
 //void SharpBinder::RegisterTransformBindings()

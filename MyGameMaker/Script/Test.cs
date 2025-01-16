@@ -18,6 +18,13 @@ public class Test : MonoBehaviour
             Console.WriteLine("Test Update Console.WriteLine");
             timer = 0.0f;
         }
+
+        if (HawkEngine.Input.GetKeyDown(Convert.ToInt32(HawkEngine.KeyCode.A)))
+        {
+            HawkEngine.EngineCalls.print("A is pressed");
+        }
+
+       
     }
 }
 

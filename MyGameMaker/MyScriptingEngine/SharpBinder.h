@@ -35,6 +35,11 @@ namespace SharpBinder
 
 	void GameObjectAddChild(MonoObject* parent, MonoObject* child);
 
+	// Input Class
+	bool GetKey(int keyID);
+	bool GetKeyDown(int keyID);
+	bool GetKeyUp(int keyID);
+
 	// Pongo esto aquí pero supongo que lo deberíamos delegar a otro sitio
 	void RegisterTransformBindings();
 

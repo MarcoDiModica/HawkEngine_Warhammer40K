@@ -117,6 +117,9 @@ void MonoEnvironment::LinkEngineMethods() {
 	mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
 	mono_add_internal_call("HawkEngine.EngineCalls::Destroy", (const void*)Destroy);
 	mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
+	mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);
+	mono_add_internal_call("HawkEngine.Input::GetKeyDown", (const void*)GetKeyDown);
+	mono_add_internal_call("HawkEngine.Input::GetKeyUp", (const void*)GetKeyUp);
 }
 
 

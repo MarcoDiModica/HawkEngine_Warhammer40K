@@ -168,6 +168,36 @@ bool SharpBinder::GetKeyUp(int keyID) {
 	return false;
 }
 
+bool SharpBinder::GetMouseButton(int buttonID) {
+
+	if (Application->input->GetMouseButton(buttonID) == KEY_REPEAT)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool SharpBinder::GetMouseButtonDown(int buttonID) {
+
+	if (Application->input->GetMouseButton(buttonID) == KEY_DOWN)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool SharpBinder::GetMouseButtonUp(int buttonID) {
+
+	if (Application->input->GetMouseButton(buttonID) == KEY_UP)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 // Estoy bastante seguro de que necesito un transformador de Transform (cs) a TransformComponent (cpp)
 
 //void SharpBinder::RegisterTransformBindings()

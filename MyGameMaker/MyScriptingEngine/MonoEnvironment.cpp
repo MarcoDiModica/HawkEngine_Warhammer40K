@@ -120,6 +120,9 @@ void MonoEnvironment::LinkEngineMethods() {
 	mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);
 	mono_add_internal_call("HawkEngine.Input::GetKeyDown", (const void*)GetKeyDown);
 	mono_add_internal_call("HawkEngine.Input::GetKeyUp", (const void*)GetKeyUp);
+	mono_add_internal_call("HawkEngine.Input::GetMouseButton", (const void*)GetMouseButton);
+	mono_add_internal_call("HawkEngine.Input::GetMouseButtonDown", (const void*)GetMouseButtonDown);
+	mono_add_internal_call("HawkEngine.Input::GetMouseButtonUp", (const void*)GetMouseButtonUp);
 }
 
 

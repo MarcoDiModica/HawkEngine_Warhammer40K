@@ -21,7 +21,16 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern static bool GetKeyUp(int keyID);
 
-        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetMouseButton(int buttonID);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetMouseButtonDown(int buttonID);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetMouseButtonUp(int buttonID);
+
+
     }
 
     public enum KeyCode

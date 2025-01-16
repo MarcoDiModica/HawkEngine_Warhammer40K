@@ -24,7 +24,11 @@ public class Test : MonoBehaviour
             HawkEngine.EngineCalls.print("A is pressed");
         }
 
-       
+        if (HawkEngine.Input.GetMouseButtonDown(1))
+        {
+            HawkEngine.EngineCalls.print("Left Click is pressed");
+        }
+
     }
 }
 

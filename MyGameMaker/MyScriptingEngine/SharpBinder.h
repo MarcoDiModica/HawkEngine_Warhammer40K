@@ -39,6 +39,9 @@ namespace SharpBinder
 	bool GetKey(int keyID);
 	bool GetKeyDown(int keyID);
 	bool GetKeyUp(int keyID);
+	bool GetMouseButton(int buttonID);
+	bool GetMouseButtonDown(int buttonID);
+	bool GetMouseButtonUp(int buttonID);
 
 	// Pongo esto aquí pero supongo que lo deberíamos delegar a otro sitio
 	void RegisterTransformBindings();

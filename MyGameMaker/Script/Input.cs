@@ -30,6 +30,9 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern static bool GetMouseButtonUp(int buttonID);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static int GetAxis(string axisName);
+
 
     }
 
@@ -84,5 +87,44 @@ namespace HawkEngine
         LEFTBRACKET = 47,
         RIGHTBRACKET = 48,
         BACKSLASH = 49,
+        NONUSHASH = 50,
+        SEMICOLON = 51,
+        APOSTROPHE = 52,
+        GRAVE = 53,
+        COMMA = 54,
+        PERIOD = 55,
+        SLASH = 56,
+
+        CAPSLOCK = 57,
+
+        F1 = 58,
+        F2 = 59,
+        F3 = 60,
+        F4 = 61,
+        F5 = 62,
+        F6 = 63,
+        F7 = 64,
+        F8 = 65,
+        F9 = 66,
+        F10 = 67,
+        F11 = 68,
+        F12 = 69,
+
+        PRINTSCREEN = 70,
+        SCROLLLOCK = 71,
+        PAUSE = 72,
+        INSERT = 73,
+
+        HOME = 74,
+        PAGEUP = 75,
+        DELETE = 76,
+        END = 77,
+        PAGEDOWN = 78,
+        RIGHT = 79,
+        LEFT = 80,
+        DOWN = 81,
+        UP = 82,
+
+        NUMLOCKCLEAR = 83,
     }
 }

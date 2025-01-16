@@ -198,6 +198,14 @@ bool SharpBinder::GetMouseButtonUp(int buttonID) {
 	return false;
 }
 
+int SharpBinder::GetAxis(MonoString* axisName) {
+
+	char* C_name = mono_string_to_utf8(axisName);
+
+	return Application->input->GetAxis(C_name);
+
+}
+
 // Estoy bastante seguro de que necesito un transformador de Transform (cs) a TransformComponent (cpp)
 
 //void SharpBinder::RegisterTransformBindings()

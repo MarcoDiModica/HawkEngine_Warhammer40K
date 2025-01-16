@@ -78,6 +78,8 @@ public:
 		return mouse_y_motion;
 	}
 
+	int GetAxis(const char* axisName) const;
+
 	GameObject* GetDraggedGameObject() const
 	{
 		return draggedObject;

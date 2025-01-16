@@ -392,3 +392,48 @@ bool Input::IsGameObjectSelected(GameObject* gameObject) const {
 	auto it = std::find(selectedObjects.begin(), selectedObjects.end(), gameObject);
 	return it != selectedObjects.end();
 }
+
+int Input::GetAxis(const char* axisName) const {
+    if (strcmp(axisName, "Mouse X") == 0)
+    {
+        return GetMouseXMotion();
+    }
+    else if (strcmp(axisName, "Mouse Y") == 0)
+    {
+        return GetMouseYMotion();
+    }
+    else if (strcmp(axisName, "Horizontal") == 0)
+    {
+        if (GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+        {
+            return -1;
+        }
+        else if (GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else if (strcmp(axisName, "Vertical") == 0)
+    {
+        if (GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+        {
+            return 1;
+        }
+        else if (GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+        {
+            return -1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+}

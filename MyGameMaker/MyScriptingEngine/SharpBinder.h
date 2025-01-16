@@ -42,6 +42,7 @@ namespace SharpBinder
 	bool GetMouseButton(int buttonID);
 	bool GetMouseButtonDown(int buttonID);
 	bool GetMouseButtonUp(int buttonID);
+	int GetAxis(MonoString* axisName);
 
 	// Pongo esto aquí pero supongo que lo deberíamos delegar a otro sitio
 	void RegisterTransformBindings();

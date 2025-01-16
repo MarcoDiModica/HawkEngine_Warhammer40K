@@ -29,6 +29,11 @@ public class Test : MonoBehaviour
             HawkEngine.EngineCalls.print("Left Click is pressed");
         }
 
+        int testAxis = HawkEngine.Input.GetAxis("Horizontal");
+
+        if (testAxis != 0)
+            HawkEngine.EngineCalls.print("Axis Horizontal: " + testAxis);
+
     }
 }
 

@@ -74,6 +74,13 @@ bool Input::Update(double dt)
 }
 std::string CopyFBXFileToProject(const std::string& sourceFilePath);
 
+void SpawnCube() {
+    auto cube = Application->root->CreateCube("PhysicsCube");
+    cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
+    auto t = cube->GetTransform()->GetPosition();
+    Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Masa 1.0f
+}
+
 bool Input::processSDLEvents()
 {
     SDL_PumpEvents();
@@ -129,11 +136,12 @@ bool Input::processSDLEvents()
     while (SDL_PollEvent(&event) != 0)
     {
         Application->gui->processEvent(event);
-
+       
         switch (event.type)
         {
         case SDL_MOUSEWHEEL:
             mouse_z = event.wheel.y;
+            SpawnCube();
             break;
 
         case SDL_MOUSEMOTION:
@@ -148,6 +156,8 @@ bool Input::processSDLEvents()
 
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym) {
+            case SDLK_1:
+                break;
             case SDLK_ESCAPE:
                 return false;
 

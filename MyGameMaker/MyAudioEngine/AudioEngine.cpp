@@ -298,14 +298,14 @@ void AudioEngine::TestPlayAllSupportedFormats() {
     
     // Test WAV format
     std::cout << "\nTesting WAV format:" << std::endl;
-    if (std::filesystem::exists("test_sounds/test.wav")) {
-        TestPlaySoundEffect("test_sounds/test.wav");
+    if (std::filesystem::exists("EngineAssets/Sounds/effect.wav")) {
+        TestPlaySoundEffect("EngineAssets/Sounds/effect.wav");
     } else {
-        std::cout << "WAV test file not found (test_sounds/test.wav)" << std::endl;
+        std::cout << "WAV test file not found (EngineAssets/Sounds/effect.wav)" << std::endl;
+        std::cout << "Please create the EngineAssets/Sounds directory and add test audio files." << std::endl;
     }
 
     // Add more format tests as needed
-    std::cout << "\nNote: Create a 'test_sounds' directory with test audio files to use this function." << std::endl;
 }
 
 void AudioEngine::PrintAudioDeviceInfo() const {

@@ -17,8 +17,8 @@ public:
 
 private:
     std::shared_ptr<MyGameEngine::AudioEngine> m_AudioEngine;
-    char m_MusicPath[256] = "test_sounds/music.wav";
-    char m_SoundEffectPath[256] = "test_sounds/effect.wav";
+    char m_MusicPath[256] = "EngineAssets/Sounds/music.wav";
+    char m_SoundEffectPath[256] = "EngineAssets/Sounds/effect.wav";
     float m_Position[3] = {0.0f, 0.0f, 0.0f};
     float m_ListenerPosition[3] = {0.0f, 0.0f, 0.0f};
     float m_Volume = 1.0f;

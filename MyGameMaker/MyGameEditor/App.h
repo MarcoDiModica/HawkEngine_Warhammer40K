@@ -7,6 +7,7 @@
 #include "SceneSerializer.h"
 #include "Root.h"
 #include "../MyGameEngine/Mesh.h"
+#include "UIAudioTest.h"
 
 #include <chrono>
 
@@ -72,6 +73,9 @@ public:
 	Gizmos* gizmos = nullptr;
 
 	Mesh ElMesh;
+
+	// Audio test UI
+	std::unique_ptr<MyGameEngine::UIAudioTest> m_AudioTestUI;
 
 private:
 

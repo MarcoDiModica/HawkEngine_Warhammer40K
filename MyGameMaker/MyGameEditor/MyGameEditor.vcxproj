@@ -95,6 +95,7 @@
     <ClCompile Include="MyWindow.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
+    <ClCompile Include="UIAudioTest.cpp" />
     <ClCompile Include="UICamera.cpp" />
     <ClCompile Include="UIConsole.cpp" />
     <ClCompile Include="UIElement.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
+    <ClInclude Include="UIAudioTest.h" />
     <ClInclude Include="UICamera.h" />
     <ClInclude Include="UIConsole.h" />
     <ClInclude Include="UIElement.h" />

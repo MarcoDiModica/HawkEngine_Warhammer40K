@@ -81,6 +81,9 @@
     <ClCompile Include="UICamera.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicsModule.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -138,6 +141,9 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UICamera.h">
+      <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsModule.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>

@@ -70,5 +70,7 @@ namespace HawkEngine
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern UIntPtr CreatePlane_Internal();
+
+        // TODO: bindear los métodos en SharpBinder :)
     }
 }

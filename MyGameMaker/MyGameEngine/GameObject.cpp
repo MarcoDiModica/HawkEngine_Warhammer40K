@@ -7,7 +7,13 @@
 #include <iostream>
 #include "LightComponent.h"
 #include "Shaders.h"
+#include "../MyScriptingEngine/SharpBinder.h"
+#include "../MyScriptingEngine/MonoEnvironment.h"
 #include <string>
+#include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/mono-config.h>
+#include <mono/metadata/object.h>
 
 unsigned int GameObject::nextGid = 1;
 
@@ -478,4 +484,13 @@ void GameObject::RemoveChild(GameObject* child)
 			break;
 		}
 	}
+}
+
+
+MonoObject* GameObject::GetSharp() {
+
+    if (CsharpReference) { return CsharpReference; }
+
+    CsharpReference = SharpBinder::CreateGameObjectSharp( mono_string_new(MonoEnvironment::m_ptr_MonoDomain, name.c_str()  ));
+    return CsharpReference;
 }

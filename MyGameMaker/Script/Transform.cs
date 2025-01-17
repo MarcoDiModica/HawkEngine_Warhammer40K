@@ -46,10 +46,17 @@ namespace HawkEngine
         public extern void SetForward(Vector3 forward);
 
         private UIntPtr _nativeTransform;
+        private GameObject owner;
 
-        internal Transform(UIntPtr nativeTransform)
+        public Transform(UIntPtr nativeTransform, GameObject owner)
         {
             _nativeTransform = nativeTransform;
+            this.owner = owner;
+        }
+
+        public Transform()
+        {
+            EngineCalls.print("transform created");
         }
 
         // Probablemente tenga que añadir getters y setters para las propiedades de la transformación

@@ -96,6 +96,8 @@ public:
 
     OctreeNode* node = nullptr;
 
+    MonoObject* GetSharp();
+
     MonoObject* CsharpReference;
 
 private:

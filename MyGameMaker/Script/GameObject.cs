@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HawkEngine
 {
-    class GameObject
+    public class GameObject
     {
         UIntPtr CplusplusInstance; /* ptr to C++ instance */
 

@@ -36,7 +36,7 @@ namespace SharpBinder
 	void GameObjectAddChild(MonoObject* parent, MonoObject* child);
 
 	// Component
-	MonoObject* GetSharpComponent(MonoObject* ref, MonoString comoponent_name);
+	MonoObject* GetSharpComponent(MonoObject* ref, MonoString* comoponent_name);
 
 	// Input Class
 	bool GetKey(int keyID);

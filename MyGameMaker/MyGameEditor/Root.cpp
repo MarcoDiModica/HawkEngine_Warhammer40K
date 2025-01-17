@@ -72,7 +72,7 @@ bool Root::Start()
 
     auto Script = CreateGameObject("Script");
     auto script = Script->AddComponent<ScriptComponent>();
-    script->LoadScript("Test");
+    script->LoadScript("TestingComponent");
 
     /*auto Street = CreateGameObject("Street");
     Street->GetTransform()->GetPosition() = vec3(0, 0, 0);

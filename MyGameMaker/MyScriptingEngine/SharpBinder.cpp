@@ -216,6 +216,21 @@ glm::vec3 SharpBinder::GetMousePosition() {
 	return pos;
 }
 
+MonoObject* SharpBinder::GetSharpComponent(MonoObject* ref, MonoString* comoponent_name) {
+
+	char* C_name = mono_string_to_utf8(comoponent_name);
+	auto GO = ConvertFromSharp(ref);
+
+	/* TODO change this to a dictionary , string component type */
+	std::string componentName = std::string(C_name);
+
+	if (componentName == "HawkEngine.Transform") {
+		return GO->GetTransform()->GetSharp();
+	}
+	// Add other components
+
+}
+
 // Estoy bastante seguro de que necesito un transformador de Transform (cs) a TransformComponent (cpp)
 
 //void SharpBinder::RegisterTransformBindings()

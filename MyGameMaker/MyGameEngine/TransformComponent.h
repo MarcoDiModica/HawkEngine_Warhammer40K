@@ -101,6 +101,8 @@ public:
         local_matrix[3] = glm::dvec4(position, 1.0);
     }
 
+    MonoObject* GetSharp() override;
+
 protected:
     friend class SceneSerializer;
 

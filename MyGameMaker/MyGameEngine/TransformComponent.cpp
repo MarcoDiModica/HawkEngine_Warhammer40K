@@ -3,6 +3,7 @@
 #include "../MyGameEditor/Log.h"
 #include "types.h"
 #include "Component.h"
+#include "../MyScriptingEngine/MonoEnvironment.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/glm.hpp>
 #include <mono/metadata/assembly.h>
@@ -320,4 +321,28 @@ bool Transform_Component::decode(const YAML::Node& node) {
             }
         }
         return true;
+    }
+
+    MonoObject* Transform_Component::GetSharp() {
+
+        if (CsharpReference) { return CsharpReference; }
+
+        // if there is no reference , create the reference
+        intptr_t C_Object = reinterpret_cast<intptr_t>(this);
+        MonoClass* klass = mono_class_from_name(MonoEnvironment::m_ptr_GameAssemblyImg, "HawkEngine", "Transform");
+        MonoObject* monoObject = mono_object_new(MonoEnvironment::m_ptr_MonoDomain, klass);
+        //MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Transform:.ctor", true);
+        MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Transform:.ctor(uintptr,HawkEngine.GameObject)", true);
+        MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+        // assign to C#object its ptr to C++ object
+        uintptr_t goPtr = reinterpret_cast<uintptr_t>(this);
+
+        void* args[2];
+        args[0] = &goPtr;
+        args[1] = owner->CsharpReference; // si existe
+
+        mono_runtime_invoke(method, monoObject, args, NULL);
+
+        CsharpReference = monoObject;
+
     }

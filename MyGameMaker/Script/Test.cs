@@ -34,6 +34,15 @@ public class Test : MonoBehaviour
         if (testAxis != 0)
             HawkEngine.EngineCalls.print("Axis Horizontal: " + testAxis);
 
+        if (HawkEngine.Input.anyKeyDown)
+            HawkEngine.EngineCalls.print(HawkEngine.Input.inputString);
+
+        if (HawkEngine.Input.GetKeyDown(Convert.ToInt32(HawkEngine.KeyCode.SPACE)))
+        {
+            HawkEngine.EngineCalls.print(HawkEngine.Input.GetMousePosition().X.ToString());
+        }
+        
+
     }
 }
 

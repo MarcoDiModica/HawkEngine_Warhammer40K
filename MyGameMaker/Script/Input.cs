@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,60 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern static int GetAxis(string axisName);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static Vector3 GetMousePosition();
+
+        // Static properties
+
+        public static bool anyKey
+        {
+            get
+            {
+                for (int i = 0; i < 84; i++)
+                {
+                    if (GetKey(i))
+                        return true;
+                }
+
+                return false;
+            }
+        }
+
+        public static bool anyKeyDown
+        {
+            get
+            {
+                for (int i = 0; i < 84; i++)
+                {
+                    if (GetKeyDown(i))
+                        return true;
+                }
+
+                return false;
+            }
+        }
+
+        public static string inputString
+        {
+            get
+            {
+                string input = "";
+                for (int i = 0; i < 84; i++)
+                {
+                    if (GetKeyDown(i))
+                    {
+                        KeyCode key = (KeyCode)i;
+                        input += key.ToString();
+                    }
+                       
+                }
+
+                return input;
+            }
+        }
+
+       
 
 
     }

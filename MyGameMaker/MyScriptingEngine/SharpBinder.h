@@ -43,6 +43,7 @@ namespace SharpBinder
 	bool GetMouseButtonDown(int buttonID);
 	bool GetMouseButtonUp(int buttonID);
 	int GetAxis(MonoString* axisName);
+	glm::vec3 GetMousePosition();
 
 	// Pongo esto aquí pero supongo que lo deberíamos delegar a otro sitio
 	void RegisterTransformBindings();

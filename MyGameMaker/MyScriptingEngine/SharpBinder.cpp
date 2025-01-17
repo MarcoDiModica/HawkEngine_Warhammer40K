@@ -206,6 +206,16 @@ int SharpBinder::GetAxis(MonoString* axisName) {
 
 }
 
+glm::vec3 SharpBinder::GetMousePosition() {
+
+	glm::vec3 pos;
+	pos.x = Application->input->GetMouseX();
+	pos.y = Application->input->GetMouseY();
+	pos.z = Application->input->GetMouseZ();
+
+	return pos;
+}
+
 // Estoy bastante seguro de que necesito un transformador de Transform (cs) a TransformComponent (cpp)
 
 //void SharpBinder::RegisterTransformBindings()

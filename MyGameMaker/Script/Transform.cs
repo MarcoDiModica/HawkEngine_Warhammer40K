@@ -10,7 +10,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace HawkEngine
 {
-    public class Transform :  Component
+    public class Transform : Component
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetPosition(float x, float y, float z);
@@ -45,12 +45,9 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetForward(Vector3 forward);
 
-        private UIntPtr _nativeTransform;
-
-        internal Transform(UIntPtr nativeTransform)
-        {
-            _nativeTransform = nativeTransform;
-        }
+        public override void Start() { }
+        public override void Update(float deltaTime) { }
+        public override void Destroy() { }
 
         // Probablemente tenga que añadir getters y setters para las propiedades de la transformación
     }

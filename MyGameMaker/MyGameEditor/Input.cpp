@@ -74,11 +74,10 @@ bool Input::Update(double dt)
 }
 std::string CopyFBXFileToProject(const std::string& sourceFilePath);
 
-void SpawnCube() {
+void SpawnPhysCube() {
     auto cube = Application->root->CreateCube("PhysicsCube");
     cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
-    auto t = cube->GetTransform()->GetPosition();
-    Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Masa 1.0f
+    Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
 }
 
 bool Input::processSDLEvents()
@@ -141,7 +140,7 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             mouse_z = event.wheel.y;
-            SpawnCube();
+            //SpawnPhysCube();
             break;
 
         case SDL_MOUSEMOTION:

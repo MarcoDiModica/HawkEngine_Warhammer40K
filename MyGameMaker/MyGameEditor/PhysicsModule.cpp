@@ -11,52 +11,55 @@ PhysicsModule::~PhysicsModule() {
 }
 
 bool PhysicsModule::Awake() {
+    // Inicialización del sistema de físicas de Bullet
     broadphase = new btDbvtBroadphase();
     collisionConfiguration = new btDefaultCollisionConfiguration();
     dispatcher = new btCollisionDispatcher(collisionConfiguration);
     solver = new btSequentialImpulseConstraintSolver();
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-
-    // Configurar gravedad estándar
     dynamicsWorld->setGravity(btVector3(0, -9.81, 0));
 
-    // Forma del cubo: un cubo de 2x2x2
+    
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
+
+    //Plane functions
+    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+
+    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
+
+    //btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+    //btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+
+    //dynamicsWorld->addRigidBody(groundRigidBody);
+
     return true;
 }
 
 void PhysicsModule::CreatePhysicsForGameObject(GameObject& go, float mass) {
-    // Obtiene la posición inicial del GameObject
-    auto transform = go.GetTransform();
+
+    Transform_Component* transform = go.GetTransform();
     glm::vec3 position = transform->GetPosition();
     glm::quat rotation = transform->GetRotation();
 
-    // Configura el transform inicial de Bullet
     btTransform startTransform;
     startTransform.setIdentity();
     startTransform.setOrigin(btVector3(position.x, position.y, position.z));
     startTransform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
 
-    // Configura el estado de movimiento
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
 
-    // Calcula la inercia si el objeto tiene masa
     btVector3 inertia(0, 0, 0);
     if (mass > 0.0f) {
         cubeShape->calculateLocalInertia(mass, inertia);
     }
 
-    // Configura el cuerpo rígido
     btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState, cubeShape, inertia);
     btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
 
-    // Añade el cuerpo rígido al mundo físico
     dynamicsWorld->addRigidBody(rigidBody);
 
-    // Almacena la relación entre el GameObject y el cuerpo rígido
     gameObjectRigidBodyMap[&go] = rigidBody;
 
-    // Depuración: Imprime la posición inicial
     std::cout << "Physics created for GameObject at position: ("
         << position.x << ", " << position.y << ", " << position.z << ")\n";
 }
@@ -73,10 +76,22 @@ void PhysicsModule::SyncTransforms() {
 
         // Actualiza la posición y rotación del GameObject
         auto goTransform = gameObject->GetTransform();
-        goTransform->SetPosition(glm::vec3(pos.x(), pos.y(), pos.z()));
-        goTransform->SetRotationQuat(glm::quat(rot.w(), rot.x(), rot.y(), rot.z()));
+        glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
+        glm::dvec3 deltaPos = newPosition - goTransform->GetPosition();
+        goTransform->Translate(deltaPos);
+		auto x = pos.x();
+		auto y = pos.y();
+		auto z = pos.z();
+		auto v = glm::vec3(x, y, z);
 
-        // Depuración: Imprime la posición actual
+        glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
+        glm::dvec3 deltaRot = newRotation - glm::dvec3(0.0, 0.0, 0.0); 
+
+        goTransform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+        goTransform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+        goTransform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+
+
         std::cout << "GameObject position updated to: ("
             << pos.x() << ", " << pos.y() << ", " << pos.z() << ")\n";
     }

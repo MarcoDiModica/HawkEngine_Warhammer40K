@@ -19,8 +19,9 @@ public:
     bool PostUpdate() override;
     bool CleanUp() override;
 
-    void CreatePhysicsForGameObject(GameObject& go, float mass); // Vincula físicas a un GameObject
-    void SyncTransforms(); // Sincroniza transformaciones físicas con el motor
+    void CreatePhysicsForGameObject(GameObject& go, float mass);
+    //void CreatePhysicsPlane();
+    void SyncTransforms();
 
 private:
     btDiscreteDynamicsWorld* dynamicsWorld;

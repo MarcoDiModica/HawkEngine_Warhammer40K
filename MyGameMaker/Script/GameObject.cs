@@ -51,14 +51,22 @@ namespace HawkEngine
         public extern T AddComponent<T>();
         /* extern defines a method outside of the current Assembly */
 
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern T GetCompopnent<T>(); 
+        public  T GetComponent<T>()
+        {
+            return TryGetComponent<T>(typeof(T).ToString());
+
+        }
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern T RemoveComponent<T>();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern bool HasComponent();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        //  there is an extra monoComponent, this ptr to the object instance
+        extern internal T TryGetComponent<T>( /* monoObject ,*/ string type, int inputType = 0);
+
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern string GetName();

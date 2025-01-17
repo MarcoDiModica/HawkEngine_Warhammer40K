@@ -6,10 +6,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HawkEngine
 {
-    public class Transform
+    public class Transform :  Component
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetPosition(float x, float y, float z);

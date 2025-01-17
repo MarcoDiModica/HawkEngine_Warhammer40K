@@ -83,6 +83,9 @@
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\MyAudioEngine\MyAudioEngine.vcxproj">
+      <Project>{1603c380-66d8-4904-864c-f7767e2c5f7d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />

@@ -43,9 +43,6 @@ App::App() {
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
 
-	m_AudioTestUI = std::make_unique<MyGameEngine::UIAudioTest>();
-	m_AudioTestUI->Initialize();
-
 };
 
 
@@ -188,8 +185,6 @@ bool App::PostUpdate()
 		if (module->PostUpdate() == false)
 			return false;
 	}
-
-	m_AudioTestUI->OnImGui();
 
 	return true;
 }

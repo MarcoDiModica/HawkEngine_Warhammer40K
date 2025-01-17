@@ -14,7 +14,7 @@ class UIMainMenuBar;
 class UIHierarchy;
 class UISceneWindow;
 class UICamera;
-// class PanelHierarchy;
+class UIAudioTest;
 
 class MyGUI : public IEventProcessor, public Module
 {
@@ -50,6 +50,7 @@ public:
 	UISceneWindow* UISceneWindowPanel = nullptr;
 	UIProject* UIProjectPanel = nullptr;
 	UICamera* UICameraPanel = nullptr;
+	UIAudioTest* UIAudioTestPanel = nullptr;
 
 	bool showHierarchy = true;
 	bool showInspector = true;
@@ -59,6 +60,7 @@ public:
 	bool showSceneWindow = true;
 	bool showProject = true;
 	bool showCamera = true;
+	bool showAudioTest = false;
 
 	GLuint fbo = 0;
 	vec2 camSize = vec2(1280, 720);

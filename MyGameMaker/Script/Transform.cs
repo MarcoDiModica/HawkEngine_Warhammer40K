@@ -1,16 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Numerics;
-using System.Security.Cryptography.X509Certificates;
 
 namespace HawkEngine
 {
-    public class Transform :  Component
+    public class Transform : Component
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetPosition(float x, float y, float z);
@@ -45,6 +39,7 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetForward(Vector3 forward);
 
+
         private UIntPtr _nativeTransform;
         private GameObject owner;
 
@@ -59,6 +54,12 @@ namespace HawkEngine
             EngineCalls.print("transform created");
         }
 
-        // Probablemente tenga que añadir getters y setters para las propiedades de la transformación
+        public override void Start() { }
+        public override void Update(float deltaTime) { }
+        public override void Destroy() { }
+
+
+        // Faltan algunos mï¿½todos 
+        // Probablemente tenga que aï¿½adir getters y setters para las propiedades de la transformaciï¿½n
     }
 }

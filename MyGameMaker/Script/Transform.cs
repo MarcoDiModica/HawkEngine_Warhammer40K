@@ -1,12 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Numerics;
-using System.Security.Cryptography.X509Certificates;
 
 namespace HawkEngine
 {
@@ -49,6 +43,7 @@ namespace HawkEngine
         public override void Update(float deltaTime) { }
         public override void Destroy() { }
 
+        // Faltan algunos métodos 
         // Probablemente tenga que añadir getters y setters para las propiedades de la transformación
     }
 }

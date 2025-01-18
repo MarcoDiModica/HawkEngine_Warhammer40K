@@ -45,6 +45,14 @@ namespace EngineBinds {
     void TranslateLocal(MonoObject* transformRef, float x, float y, float z);
     void AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp);
     void SetForward(MonoObject* transformRef, glm::vec3* forward);
+
+	// Camera
+    void SetCameraFieldOfView(MonoObject* cameraRef, float fov);
+    void SetCameraNearClipPlane(MonoObject* cameraRef, float nearClipPlane);
+    void SetCameraFarClipPlane(MonoObject* cameraRef, float farClipPlane);
+    void SetCameraAspectRatio(MonoObject* cameraRef, float aspectRatio);
+    void SetCameraOrthographicSize(MonoObject* cameraRef, float orthographicSize);
+    void SetCameraProjectionType(MonoObject* cameraRef, int projectionType);
 }
 
 #endif // ENGINE_BINDS_H

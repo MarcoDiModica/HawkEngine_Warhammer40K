@@ -3,6 +3,7 @@
 #include "ComponentMapper.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEditor/Root.h" //QUITAR: CAMBIAR POR ROOT DEL ENGINE
 
 #include <mono/metadata/debug-helpers.h>
@@ -184,6 +185,58 @@ void EngineBinds::SetForward(MonoObject* transformRef, glm::vec3* forward) {
     if (transform) transform->SetForward(*forward);
 }
 
+// Camera Class functions
+
+void EngineBinds::SetCameraFieldOfView(MonoObject* cameraRef, float fov) {
+
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+    camera->fov = fov;
+
+}
+
+void EngineBinds::SetCameraNearClipPlane(MonoObject* cameraRef, float nearClipPlane) {
+
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+    camera->zNear = nearClipPlane;
+
+}
+
+void EngineBinds::SetCameraFarClipPlane(MonoObject* cameraRef, float farClipPlane) {
+
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+    camera->zFar = farClipPlane;
+
+}
+
+void EngineBinds::SetCameraAspectRatio(MonoObject* cameraRef, float aspectRatio) {
+
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+    camera->aspect = aspectRatio;
+
+}
+
+void EngineBinds::SetCameraOrthographicSize(MonoObject* cameraRef, float orthographicSize) {
+
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+    camera->orthoSize = orthographicSize;
+
+}
+
+void EngineBinds::SetCameraProjectionType(MonoObject* cameraRef, int projectionType) {
+
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+
+    if (projectionType == 0) {
+        camera->projectionType = ProjectionType::Perspective;
+    }
+    else {
+        camera->projectionType = ProjectionType::Orthographic;
+    }
+
+}
+
+//
+
 void EngineBinds::BindEngine() {
     // GameObject
     mono_add_internal_call("HawkEngine.EngineCalls::CreateGameObject", (const void*)CreateGameObjectSharp);
@@ -215,6 +268,13 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Transform::TranslateLocal", (const void*)&EngineBinds::TranslateLocal);
     mono_add_internal_call("HawkEngine.Transform::AlignToGlobalUp", (const void*)&EngineBinds::AlignToGlobalUp);
     mono_add_internal_call("HawkEngine.Transform::SetForward", (const void*)&EngineBinds::SetForward);
+
+    mono_add_internal_call("HawkEngine.Camera::SetCameraFieldOfView", (const void*)&EngineBinds::SetCameraFieldOfView);
+    mono_add_internal_call("HawkEngine.Camera::SetCameraNearClipPlane", (const void*)&EngineBinds::SetCameraNearClipPlane);
+    mono_add_internal_call("HawkEngine.Camera::SetCameraFarClipPlane", (const void*)&EngineBinds::SetCameraFarClipPlane);
+    mono_add_internal_call("HawkEngine.Camera::SetCameraAspectRatio", (const void*)&EngineBinds::SetCameraAspectRatio);
+    mono_add_internal_call("HawkEngine.Camera::SetCameraOrthographicSize", (const void*)&EngineBinds::SetCameraOrthographicSize);
+    mono_add_internal_call("HawkEngine.Camera::SetCameraProjectionType", (const void*)&EngineBinds::SetCameraProjectionType);
 }
 
 template <class T>

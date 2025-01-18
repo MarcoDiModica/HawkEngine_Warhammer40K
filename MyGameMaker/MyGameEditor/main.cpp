@@ -79,8 +79,6 @@ Shaders mainShader;
 
 App* Application = NULL;
 
-
-
 static void init_openGL() {
 	glewInit();
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
@@ -232,6 +230,7 @@ void UndoRedo()
 
 #pragma endregion
 
+
 void MousePickingCheck(std::vector<GameObject*> objects)
 {	
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
@@ -255,10 +254,10 @@ void MousePickingCheck(std::vector<GameObject*> objects)
 				BoundingBox bbox = objects[i]->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
 
 				bbox = objects[i]->GetTransform()->GetMatrix() * bbox;
-
-				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+				glm::vec3 collisionPoint;
+				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
 				{
-                    distance = glm::distance(rayOrigin, (glm::vec3)bbox.center());
+                    distance = glm::distance(rayOrigin, collisionPoint);
 					if (distance < closestDistance || closestDistance == 0.0f)
 					{
 						closestDistance = distance;
@@ -375,7 +374,7 @@ static void display_func2() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void PauCode2(MyGUI* gui) {
+void EditorRenderer(MyGUI* gui) {
 
 	if (Application->window->IsOpen()) {
 
@@ -398,14 +397,6 @@ int main(int argc, char** argv) {
 
 	// The application is created
 	Application = new App();
-
-	/*Application->camera = new Camera(Application);*/
-	
-	//std::shared_ptr<Camera> cameraPtr = std::make_shared<Camera>(Application);
-	//camera = cameraPtr.get();
-
-	//Application->camera = shared_ptr<Camera>
-	
 
 	//initialize devil
 	ilInit();
@@ -461,7 +452,7 @@ int main(int argc, char** argv) {
 		case LOOP:
 			
 
-			PauCode2(Application->gui);
+			EditorRenderer(Application->gui);
 			UndoRedo();
 			if (!Application->Update()) {
 				state = FREE;
@@ -477,39 +468,5 @@ int main(int argc, char** argv) {
 		}
 
 	}
-
-
-
-
-
-
-	//initialize devil
-	//ilInit();
-	//iluInit();
-	//ilutInit();
-	//Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);	
-	//MyGUI gui(window.windowPtr(), window.contextPtr());
-
-	//init_openGL();
-	//camera.transform().pos() = vec3(0, 1, 4);
-	//camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
-
-	//
-
-	//mesh.LoadMesh("BakerHouse.fbx");
-	//mesh.LoadTexture("Baker_house.png");
-	//mesh.LoadCheckerTexture();
-
-	//while (window.processEvents(&gui) && window.isOpen()) {
-	//	const auto t0 = hrclock::now();
-	//display_func();
-	//	gui.render();
-	//	move_camera();
-	//	window.swapBuffers();
-	//	const auto t1 = hrclock::now();
-	//	const auto dt = t1 - t0;
-	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
-	//}
-
 	return 0;
 }

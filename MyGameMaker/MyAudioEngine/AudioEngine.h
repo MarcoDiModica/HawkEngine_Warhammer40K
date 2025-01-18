@@ -46,6 +46,14 @@ public:
     bool IsPlaying(ALuint sourceId) const;
     bool IsInitialized() const { return m_Initialized; }
 
+    // Debug/Test functions
+    ALuint TestPlayMusic(const std::string& filePath, bool autoLoop = true);
+    ALuint TestPlaySoundEffect(const std::string& filePath, float x = 0.0f, float y = 0.0f, float z = 0.0f);
+    void TestSetListenerPosition(float x, float y, float z);
+    void TestPlayAllSupportedFormats();
+    void PrintAudioDeviceInfo() const;
+    void PrintActiveSourcesInfo() const;
+
 private:
     ALuint CreateAudioSource();
     void DestroyAudioSource(ALuint sourceId);

@@ -12,7 +12,6 @@
 #include "UIHierarchy.h"
 #include <SDL2/SDL.h>
 
-
 //libraries to open websites
 #include <windows.h>
 #include <shellapi.h>
@@ -21,7 +20,6 @@ void SetRedStyle();
 
 UIMainMenuBar::UIMainMenuBar(UIType type, std::string name) : UIElement(type, name)
 {
-
 	play_image.LoadTextureLocalPath("EngineAssets/plabtn.png");
 	stop_image.LoadTextureLocalPath("EngineAssets/stobtn.png");
 

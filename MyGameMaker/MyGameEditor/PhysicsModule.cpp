@@ -1,6 +1,7 @@
 #include "PhysicsModule.h"
 #include "../MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
+#include "../MyPhysicsEngine/PhysBody3D.h"
 #include <iostream>
 
 PhysicsModule::PhysicsModule(App* app)
@@ -55,8 +56,9 @@ void PhysicsModule::CreatePhysicsForGameObject(GameObject& go, float mass) {
 
     btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState, cubeShape, inertia);
     btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
-
+	//PhysBody3D* body = new PhysBody3D(rigidBody);
     dynamicsWorld->addRigidBody(rigidBody);
+	//body.Push(1, 1, 1);
 
     gameObjectRigidBodyMap[&go] = rigidBody;
 

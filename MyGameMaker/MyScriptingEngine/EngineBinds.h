@@ -53,6 +53,16 @@ namespace EngineBinds {
     void SetCameraAspectRatio(MonoObject* cameraRef, float aspectRatio);
     void SetCameraOrthographicSize(MonoObject* cameraRef, float orthographicSize);
     void SetCameraProjectionType(MonoObject* cameraRef, int projectionType);
+
+    // MeshRenderer
+	void SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef);
+	MonoObject* GetMesh(MonoObject* meshRendererRef);
+    void SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef);
+    MonoObject* GetMaterial(MonoObject* meshRendererRef);
+	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
+    void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
+
+    void Render(MonoObject* meshRendererRef);
 }
 
 #endif // ENGINE_BINDS_H

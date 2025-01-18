@@ -4,6 +4,7 @@
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEditor/Root.h" //QUITAR: CAMBIAR POR ROOT DEL ENGINE
 
 #include <mono/metadata/debug-helpers.h>
@@ -82,6 +83,12 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* comopone
     if (componentName == "HawkEngine.Transform") {
         return GO->GetTransform()->GetSharp();
 	}
+	else if (componentName == "HawkEngine.MeshRenderer") {
+		return GO->GetComponent<MeshRenderer>()->GetSharp();
+	}
+	else if (componentName == "HawkEngine.Camera") {
+		return GO->GetComponent<CameraComponent>()->GetSharp();
+	}
 	
     // Add other components
     return nullptr;
@@ -142,8 +149,8 @@ void EngineBinds::SetRotation(MonoObject* transformRef, float x, float y, float 
 }
 
 void EngineBinds::SetRotationQuat(MonoObject* transformRef, glm::quat* rotation) {
-    /*Transform_Component* transform = ConvertFromSharp<Transform_Component>(transformRef);
-    if (transform) transform->SetRotation(*rotation);*/
+    Transform_Component* transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) transform->SetRotationQuat(*rotation);
 }
 
 void EngineBinds::Rotate(MonoObject* transformRef, float radians, glm::vec3* axis) {
@@ -236,7 +243,70 @@ void EngineBinds::SetCameraProjectionType(MonoObject* cameraRef, int projectionT
 
 }
 
-//
+// MeshRenderer
+void EngineBinds::SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef)
+{
+    if (!meshRendererRef || !meshRef) return;
+
+    MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+	Mesh* mesh = ConvertFromSharpComponent<Mesh>(meshRef);
+
+    if (meshRenderer && mesh)
+    {
+        meshRenderer->SetMesh(std::shared_ptr<Mesh>(mesh));
+    }
+}
+
+MonoObject* EngineBinds::GetMesh(MonoObject* meshRendererRef)
+{
+    if (!meshRendererRef) return nullptr;
+
+	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+    if (!meshRendererRef) return nullptr;
+
+    std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
+	if (!mesh) return nullptr;
+
+	//return Mono::CreateSharpObjectFromCPlusPlus(mesh.get());
+
+}
+
+void EngineBinds::SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef)
+{
+	if (!meshRendererRef || !materialRef) return;
+
+	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+	Material* material = ConvertFromSharpComponent<Material>(materialRef);
+
+	if (meshRenderer && material)
+	{
+		meshRenderer->SetMaterial(std::shared_ptr<Material>(material));
+	}
+}
+
+MonoObject* EngineBinds::GetMaterial(MonoObject* meshRendererRef)
+{
+	if (!meshRendererRef) return nullptr;
+
+	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+	if (!meshRendererRef) return nullptr;
+
+	std::shared_ptr<Material> material = meshRenderer->GetMaterial();
+	if (!material) return nullptr;
+
+	//return Mono::CreateSharpObjectFromCPlusPlus(material.get());
+}
+
+void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
+{
+    if (!meshRendererRef || !color) return;
+
+    MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+    if (meshRenderer) {
+        meshRenderer->SetColor(*color);
+    }
+}
+	
 
 void EngineBinds::BindEngine() {
     // GameObject
@@ -270,12 +340,16 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Transform::AlignToGlobalUp", (const void*)&EngineBinds::AlignToGlobalUp);
     mono_add_internal_call("HawkEngine.Transform::SetForward", (const void*)&EngineBinds::SetForward);
 
+    // Camera
     mono_add_internal_call("HawkEngine.Camera::SetCameraFieldOfView", (const void*)&EngineBinds::SetCameraFieldOfView);
     mono_add_internal_call("HawkEngine.Camera::SetCameraNearClipPlane", (const void*)&EngineBinds::SetCameraNearClipPlane);
     mono_add_internal_call("HawkEngine.Camera::SetCameraFarClipPlane", (const void*)&EngineBinds::SetCameraFarClipPlane);
     mono_add_internal_call("HawkEngine.Camera::SetCameraAspectRatio", (const void*)&EngineBinds::SetCameraAspectRatio);
     mono_add_internal_call("HawkEngine.Camera::SetCameraOrthographicSize", (const void*)&EngineBinds::SetCameraOrthographicSize);
     mono_add_internal_call("HawkEngine.Camera::SetCameraProjectionType", (const void*)&EngineBinds::SetCameraProjectionType);
+
+    // MeshRenderer
+
 }
 
 template <class T>

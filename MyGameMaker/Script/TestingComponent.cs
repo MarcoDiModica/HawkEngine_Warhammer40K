@@ -37,13 +37,6 @@ public class TestingComponent : MonoBehaviour
             EngineCalls.print("pressing a");
             transfr.SetPosition(10, 10, 10);
         }
-
-        if (Input.GetKeyDown((int) KeyCode.SPACE))
-        {
-            cam.SetCameraFieldOfView(40);
-        }
-
-
     }
 }
 

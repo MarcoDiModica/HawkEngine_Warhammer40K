@@ -1,10 +1,31 @@
 #include "SoundComponent.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEditor/Log.h"
 #include <glm/glm.hpp>
 #include <algorithm>
+#include <iostream>
 
 using namespace MyGameEngine;  // For AudioEngine and AudioAsset
+
+// Initialize static member
+std::shared_ptr<AudioEngine> SoundComponent::s_SharedAudioEngine;
+
+void SoundComponent::InitSharedAudioEngine() {
+    if (!s_SharedAudioEngine) {
+        s_SharedAudioEngine = std::make_shared<AudioEngine>();
+        if (!s_SharedAudioEngine->Initialize()) {
+            LOG(LogType::LOG_ERROR, "Failed to initialize shared AudioEngine");
+        }
+    }
+}
+
+void SoundComponent::ShutdownSharedAudioEngine() {
+    if (s_SharedAudioEngine) {
+        s_SharedAudioEngine->Shutdown();
+        s_SharedAudioEngine.reset();
+    }
+}
 
 SoundComponent::SoundComponent(GameObject* owner)
     : Component(owner)
@@ -16,9 +37,8 @@ SoundComponent::SoundComponent(GameObject* owner)
     , m_Loop(false)
 {
     name = "SoundComponent";
-    m_AudioEngine = std::make_shared<AudioEngine>();
-    if (!m_AudioEngine->Initialize()) {
-        enabled = false;
+    if (!s_SharedAudioEngine) {
+        InitSharedAudioEngine();
     }
 }
 
@@ -34,7 +54,7 @@ void SoundComponent::Start() {
 }
 
 void SoundComponent::Update(float deltaTime) {
-    if (!enabled || !m_AudioEngine || !m_AudioEngine->IsInitialized()) return;
+    if (!enabled || !s_SharedAudioEngine || !s_SharedAudioEngine->IsInitialized()) return;
 
     if (m_IsSpatial && m_SourceId != 0) {
         UpdatePosition();
@@ -44,9 +64,6 @@ void SoundComponent::Update(float deltaTime) {
 void SoundComponent::Destroy() {
     if (m_SourceId != 0) {
         Stop();
-    }
-    if (m_AudioEngine) {
-        m_AudioEngine->Shutdown();
     }
 }
 
@@ -67,7 +84,7 @@ std::unique_ptr<Component> SoundComponent::Clone(GameObject* new_owner) {
 }
 
 bool SoundComponent::LoadAudio(const std::string& filePath, bool isMusic) {
-    if (!m_AudioEngine || !m_AudioEngine->IsInitialized()) return false;
+    if (!s_SharedAudioEngine || !s_SharedAudioEngine->IsInitialized()) return false;
 
     m_AudioPath = filePath;
     m_IsMusic = isMusic;
@@ -77,12 +94,12 @@ bool SoundComponent::LoadAudio(const std::string& filePath, bool isMusic) {
         Stop();
     }
 
-    m_AudioAsset = m_AudioEngine->LoadAudioAsset(filePath);
+    m_AudioAsset = s_SharedAudioEngine->LoadAudioAsset(filePath);
     return m_AudioAsset != nullptr;
 }
 
 void SoundComponent::Play(bool loop) {
-    if (!enabled || !m_AudioEngine || !m_AudioAsset) return;
+    if (!enabled || !s_SharedAudioEngine || !m_AudioAsset) return;
 
     m_Loop = loop;
     
@@ -91,10 +108,10 @@ void SoundComponent::Play(bool loop) {
         Stop();
     }
 
-    m_SourceId = m_AudioEngine->PlaySound(m_AudioAsset, loop, m_IsMusic);
+    m_SourceId = s_SharedAudioEngine->PlaySound(m_AudioAsset, loop, m_IsMusic);
     
     if (m_SourceId != 0) {
-        m_AudioEngine->SetVolume(m_SourceId, m_Volume);
+        s_SharedAudioEngine->SetVolume(m_SourceId, m_Volume);
         if (m_IsSpatial) {
             UpdatePosition();
         }
@@ -102,46 +119,46 @@ void SoundComponent::Play(bool loop) {
 }
 
 void SoundComponent::Stop() {
-    if (m_SourceId != 0) {
-        m_AudioEngine->StopSound(m_SourceId);
+    if (m_SourceId != 0 && s_SharedAudioEngine) {
+        s_SharedAudioEngine->StopSound(m_SourceId);
         m_SourceId = 0;
     }
 }
 
 void SoundComponent::Pause() {
-    if (m_SourceId != 0) {
-        m_AudioEngine->PauseSound(m_SourceId);
+    if (m_SourceId != 0 && s_SharedAudioEngine) {
+        s_SharedAudioEngine->PauseSound(m_SourceId);
     }
 }
 
 void SoundComponent::Resume() {
-    if (m_SourceId != 0) {
-        m_AudioEngine->ResumeSound(m_SourceId);
+    if (m_SourceId != 0 && s_SharedAudioEngine) {
+        s_SharedAudioEngine->ResumeSound(m_SourceId);
     }
 }
 
 void SoundComponent::SetVolume(float volume) {
     m_Volume = std::max(0.0f, std::min(volume, 1.0f));
-    if (m_SourceId != 0) {
-        m_AudioEngine->SetVolume(m_SourceId, m_Volume);
+    if (m_SourceId != 0 && s_SharedAudioEngine) {
+        s_SharedAudioEngine->SetVolume(m_SourceId, m_Volume);
     }
 }
 
 bool SoundComponent::IsPlaying() const {
-    if (m_SourceId != 0) {
-        return m_AudioEngine->IsPlaying(m_SourceId);
+    if (m_SourceId != 0 && s_SharedAudioEngine) {
+        return s_SharedAudioEngine->IsPlaying(m_SourceId);
     }
     return false;
 }
 
 void SoundComponent::UpdatePosition() {
-    if (!owner) return;
+    if (!owner || !s_SharedAudioEngine) return;
 
     Transform_Component* transform = owner->GetTransform();
     if (!transform) return;
 
     glm::dvec3 position = transform->GetPosition();
-    m_AudioEngine->SetSourcePosition(m_SourceId, 
+    s_SharedAudioEngine->SetSourcePosition(m_SourceId, 
         static_cast<float>(position.x),
         static_cast<float>(position.y),
         static_cast<float>(position.z));

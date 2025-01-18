@@ -29,13 +29,12 @@ public:
     bool Update(double dt);
     bool PostUpdate() { return true; }
 
-    bool CleanUp() { return true; }
+    bool CleanUp();
 
     void CreateScene(const std::string& name);
     void AddScene(std::shared_ptr<Scene> scene);
     void RemoveScene(const std::string& name);
     void SetActiveScene(const std::string& name);
-
 
     bool ParentGameObject(GameObject& child, GameObject& father);
 

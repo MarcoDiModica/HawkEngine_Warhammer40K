@@ -9,7 +9,6 @@
 #include "Input.h"
 #include "..\MyGameEngine\types.h"
 #include "..\MyGameEngine\MeshRendererComponent.h"
-#include "..\MyGameEngine\Mesh.h"
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
 #include "..\MyGameEngine\LightComponent.h"

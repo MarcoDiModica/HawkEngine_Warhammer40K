@@ -15,6 +15,9 @@ public:
     explicit SoundComponent(GameObject* owner);
     ~SoundComponent() override;
 
+    static void InitSharedAudioEngine();
+    static void ShutdownSharedAudioEngine();
+
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;
@@ -90,7 +93,7 @@ protected:
     }
 
 private:
-    std::shared_ptr<MyGameEngine::AudioEngine> m_AudioEngine;
+    static std::shared_ptr<MyGameEngine::AudioEngine> s_SharedAudioEngine;
     std::shared_ptr<MyGameEngine::AudioAsset> m_AudioAsset;
     ALuint m_SourceId;
     

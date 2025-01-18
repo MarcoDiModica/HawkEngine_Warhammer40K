@@ -51,6 +51,7 @@ bool Root::Awake()
 {
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
+    SoundComponent::InitSharedAudioEngine();
     MakeCity();
 
     /*CreateScene("Viernes13");
@@ -62,6 +63,12 @@ bool Root::Awake()
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera;
 
+    return true;
+}
+
+bool Root::CleanUp()
+{
+    SoundComponent::ShutdownSharedAudioEngine();
     return true;
 }
 

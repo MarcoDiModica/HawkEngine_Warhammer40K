@@ -9,7 +9,7 @@ namespace HawkEngine
 {
     public abstract class Component
     {
-        protected UIntPtr CplusplusInstance;
+        public UIntPtr CplusplusInstance;
 
         public string name { get; private set; }
         public bool enabled { get; private set; }

@@ -22,7 +22,6 @@ public:
     bool CreateNewScript(const std::string& scriptName, const std::string& baseScriptName);
 
     MonoObject* monoScript = nullptr;
-		
-	//int method();
-};
 
+    //int method();
+};

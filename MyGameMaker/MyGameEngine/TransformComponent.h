@@ -101,6 +101,7 @@ public:
         local_matrix[3] = glm::dvec4(position, 1.0);
     }
 
+    MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
 protected:

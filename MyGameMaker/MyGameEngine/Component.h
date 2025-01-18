@@ -57,7 +57,7 @@ public:
 
 protected:
 
-	MonoObject* CsharpReference;
+	MonoObject* CsharpReference = nullptr;
 
 	friend class SceneSerializer;
 

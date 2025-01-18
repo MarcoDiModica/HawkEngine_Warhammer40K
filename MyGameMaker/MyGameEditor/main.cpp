@@ -37,6 +37,7 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
+#include "./MyScriptingEngine/MonoManager.h"
 
 #include "MyGameEngine/LightComponent.h"
 #include "MyGameEngine/Shaders.h"
@@ -289,6 +290,7 @@ int main(int argc, char** argv) {
 
 	//MonoEnvironment* mono = new MonoEnvironment();
 //	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
+	MonoManager::GetInstance().Initialize();
 
 	//initialize devil
 	ilInit();
@@ -362,7 +364,7 @@ int main(int argc, char** argv) {
 	}
 
 
-
+	MonoManager::GetInstance().Shutdown();
 
 
 

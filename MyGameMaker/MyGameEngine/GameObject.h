@@ -5,6 +5,7 @@
 #include "TreeExt.h"
 #include "Mesh.h"
 #include "BoundingBox.h"
+#include "../MyScriptingEngine/EngineBinds.h"
 #include <mono/metadata/object.h>
 
 
@@ -98,7 +99,7 @@ public:
 
     MonoObject* GetSharp();
 
-    MonoObject* CsharpReference;
+    MonoObject* CsharpReference = nullptr;
 
 private:
     friend class SceneSerializer;

@@ -82,16 +82,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ComponentLookUpTable.h" />
+    <ClInclude Include="ComponentMapper.h" />
+    <ClInclude Include="EngineBinds.h" />
+    <ClInclude Include="MonoManager.h" />
     <ClInclude Include="ScriptComponent.h" />
-    <ClInclude Include="SharpBinder.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ComponentLookUpTable.cpp" />
-    <ClCompile Include="MonoEnvironment.cpp" />
-    <ClCompile Include="MonoEnvironment.h" />
+    <ClCompile Include="ComponentMapper.cpp" />
+    <ClCompile Include="EngineBinds.cpp" />
+    <ClCompile Include="MonoManager.cpp" />
     <ClCompile Include="ScriptComponent.cpp" />
-    <ClCompile Include="SharpBinder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

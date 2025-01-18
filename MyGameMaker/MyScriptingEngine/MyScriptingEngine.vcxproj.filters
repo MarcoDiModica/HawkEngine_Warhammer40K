@@ -18,10 +18,13 @@
     <ClInclude Include="ScriptComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SharpBinder.h">
+    <ClInclude Include="ComponentMapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentLookUpTable.h">
+    <ClInclude Include="EngineBinds.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,16 +32,13 @@
     <ClCompile Include="ScriptComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SharpBinder.cpp">
+    <ClCompile Include="ComponentMapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MonoEnvironment.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoEnvironment.cpp">
+    <ClCompile Include="EngineBinds.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentLookUpTable.cpp">
+    <ClCompile Include="MonoManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

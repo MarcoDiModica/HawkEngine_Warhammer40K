@@ -1,5 +1,5 @@
 #include "ScriptComponent.h"
-#include "MonoEnvironment.h"
+#include "MonoManager.h"
 #include <fstream>
 #include <filesystem>
 #include <mono/jit/jit.h>
@@ -33,7 +33,7 @@ void ScriptComponent::Update(float deltaTime) {
     }
 }
 
-bool ScriptComponent::LoadScript(const std::string& scriptName) 
+bool ScriptComponent::LoadScript(const std::string& scriptName)
 {
     std::string scriptPath = "../Script/" + scriptName + ".cs";
 
@@ -42,13 +42,13 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
         return false;
     }
 
-    MonoClass* scriptClass = mono_class_from_name(MonoEnvironment::m_ptr_GameAssemblyImg, "", scriptName.c_str());
+    MonoClass* scriptClass = mono_class_from_name(MonoManager::GetInstance().GetImage(), "", scriptName.c_str());
     if (!scriptClass) {
         LOG(LogType::LOG_ERROR, "No se pudo encontrar la clase %s en el ensamblado.", scriptName.c_str());
         return false;
     }
 
-    monoScript = mono_object_new(MonoEnvironment::m_ptr_MonoDomain, scriptClass);
+    monoScript = mono_object_new(MonoManager::GetInstance().GetDomain(), scriptClass);
     if (!monoScript) {
         LOG(LogType::LOG_ERROR, "No se pudo crear una instancia del script %s.", scriptName.c_str());
         return false;
@@ -60,7 +60,7 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
     return true;
 }
 
-bool ScriptComponent::CreateNewScript(const std::string& scriptName, const std::string& baseScriptName) 
+bool ScriptComponent::CreateNewScript(const std::string& scriptName, const std::string& baseScriptName)
 {
     std::string scriptContent = "using System;\n\n"
         "public class " + scriptName + " : " + baseScriptName + "\n"

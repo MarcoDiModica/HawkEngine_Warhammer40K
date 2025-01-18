@@ -11,7 +11,6 @@
 #include "MyGameEngine/ModelImporter.h"
 #include "App.h"
 #include "Input.h"
-#include "../MyScriptingEngine/MonoEnvironment.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include <SDL2/SDL.h>
 
@@ -68,7 +67,7 @@ bool Root::Awake()
 
 bool Root::Start()
 {
-    MonoEnvironment* mono = new MonoEnvironment();
+    //MonoEnvironment* mono = new MonoEnvironment();
 
     auto Script = CreateGameObject("Script");
     auto script = Script->AddComponent<ScriptComponent>();

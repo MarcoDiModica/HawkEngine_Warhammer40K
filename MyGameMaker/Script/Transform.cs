@@ -40,12 +40,12 @@ namespace HawkEngine
         public extern void SetForward(Vector3 forward);
 
 
-        private UIntPtr _nativeTransform;
+        //private UIntPtr _nativeTransform;
         private GameObject owner;
 
         public Transform(UIntPtr nativeTransform, GameObject owner)
         {
-            _nativeTransform = nativeTransform;
+            CplusplusInstance = nativeTransform;
             this.owner = owner;
         }
 

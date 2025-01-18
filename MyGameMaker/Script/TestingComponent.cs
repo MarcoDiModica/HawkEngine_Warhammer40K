@@ -38,10 +38,6 @@ public class TestingComponent : MonoBehaviour
             transfr.SetPosition(10, 10, 10);
         }
 
-        if (Input.GetKeyDown((int) KeyCode.SPACE))
-        {
-            cam.SetCameraFieldOfView(40);
-        }
 
 
     }

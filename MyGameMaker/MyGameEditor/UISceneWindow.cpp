@@ -125,10 +125,6 @@ bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm:
 
 bool UISceneWindow::Draw()
 {
-	//ImGui::SetNextWindowPos(ImVec2(110, 30), ImGuiCond_Once); // Set the desired initial position
-	//ImGui::SetNextWindowSize(ImVec2(865, 485), ImGuiCond_Once);
-
-
 	// Begin the GameWindow
 	ImGui::Begin("Scene", nullptr, windowFlags);
 	{

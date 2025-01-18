@@ -19,7 +19,6 @@ bool UIHierarchy::Draw() {
 	ImGuiWindowFlags hierarchyFlags = ImGuiWindowFlags_None;
 
 	if (ImGui::Begin("Hierarchy", &enabled, hierarchyFlags)) {
-		ImGuiIO& io = ImGui::GetIO();
 
 		Scene* currentScene = Application->root->currentScene.get();
 

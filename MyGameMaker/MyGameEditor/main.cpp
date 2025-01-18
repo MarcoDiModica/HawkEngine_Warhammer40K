@@ -90,7 +90,7 @@ static void init_openGL() {
 }
 
 static void drawFloorGrid(int size, double step) {
-	//glColor3ub(0, 2, 200);
+	glColor3f(0.5f, 0.5f, 0.5f); // Gray color
 
 	glBegin(GL_LINES);
 	Application->root->currentScene->DebugDrawTree();
@@ -101,7 +101,7 @@ static void drawFloorGrid(int size, double step) {
 		glVertex3d(-size, 0, i);
 		glVertex3d(size, 0, i);
 	}
-	
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glEnd();
 }
 

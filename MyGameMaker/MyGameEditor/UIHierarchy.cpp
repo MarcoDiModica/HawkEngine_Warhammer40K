@@ -82,7 +82,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 	if (obj.isSelected) {
 		color = true;
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f)); // Orange color for selected
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.53f, 0.81f, 0.92f, 1.0f)); // Orange color for selected
 	}
 
 	bool open = ImGui::TreeNode(obj.GetName().c_str());

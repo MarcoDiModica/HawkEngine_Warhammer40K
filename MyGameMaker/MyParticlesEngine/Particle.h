@@ -9,14 +9,18 @@ using namespace std;
 class Particle
 {
 public:
-	Particle();
+    Particle();
+    ~Particle();
 
-	~Particle();
-
-	string name;
-	float lifetime;
-	float rotation;	
-	vector<glm::vec3> position;
-	vector<glm::vec3> speed;
-	
+    void Update();
+    void Spawn();
+    void Save();
+    void Load();
+    void CleanUp();
+    void Start();
+    string name;
+    float lifetime;
+    float rotation;
+    vector<glm::vec3> position;
+    vector<glm::vec3> speed;
 };

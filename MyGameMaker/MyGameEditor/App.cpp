@@ -35,8 +35,6 @@ App::App() {
 
 	scene_serializer = new SceneSerializer(this);
 
-	physicsModule = new PhysicsModule(this);
-
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(hardwareInfo, true);
@@ -45,7 +43,6 @@ App::App() {
 	AddModule(camera, true);
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
-	AddModule(physicsModule, true);
 
 };
 

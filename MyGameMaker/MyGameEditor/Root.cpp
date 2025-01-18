@@ -9,6 +9,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
+#include "MyPhysicsEngine/ColiderComponent.h"
 #include "App.h"
 #include "Input.h"
 
@@ -60,6 +61,9 @@ bool Root::Awake()
     MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera;
+
+	auto Collider = CreateGameObject("Collider");
+    auto colliderComponent = Collider->AddComponent<ColiderComponent>();
 
     return true;
 }

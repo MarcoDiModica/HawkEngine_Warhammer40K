@@ -80,10 +80,12 @@
     <ClInclude Include="ColiderComponent.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="PhysBody3D.h" />
+    <ClInclude Include="PhysicsModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColiderComponent.cpp" />
     <ClCompile Include="PhysBody3D.cpp" />
+    <ClCompile Include="PhysicsModule.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

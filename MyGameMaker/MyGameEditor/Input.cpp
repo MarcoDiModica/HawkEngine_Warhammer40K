@@ -77,7 +77,6 @@ std::string CopyFBXFileToProject(const std::string& sourceFilePath);
 void SpawnPhysCube() {
     auto cube = Application->root->CreateCube("PhysicsCube");
     cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
-    Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
 }
 
 bool Input::processSDLEvents()

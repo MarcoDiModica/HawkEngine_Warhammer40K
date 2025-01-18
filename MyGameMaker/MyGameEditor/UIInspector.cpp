@@ -13,6 +13,7 @@
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
 #include "..\MyGameEngine\LightComponent.h"
+#include "..\MyPhysicsEngine\ColiderComponent.h"
 #include <string>
 
 #include <imgui.h>
@@ -94,6 +95,9 @@ bool UIInspector::Draw() {
 
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
 				selectedGameObject->AddComponent<LightComponent>();
+			}
+            if (!selectedGameObject->HasComponent<ColiderComponent>() && ImGui::MenuItem("Collider")) {
+				//selectedGameObject->AddComponent<ColiderComponent>();
 			}
 
             // More components here

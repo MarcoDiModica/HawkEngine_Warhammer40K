@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyGameEngine", "MyGameEngine\MyGameEngine.vcxproj", "{8C9F68C3-7D4D-4BAF-AF26-EB77A948B534}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyGameEditor", "MyGameEditor\MyGameEditor.vcxproj", "{22E9809E-6393-4901-9A9B-F5924F888CC0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2ADCC106-88F4-4EA9-8174-9E1323E4D869} = {2ADCC106-88F4-4EA9-8174-9E1323E4D869}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyGame", "MyGame\MyGame.vcxproj", "{193896B1-DAFA-493B-A4EC-DF6D0F0EAE7A}"
 EndProject

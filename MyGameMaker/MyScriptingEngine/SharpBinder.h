@@ -26,6 +26,8 @@ namespace SharpBinder
 	/// <param name="sharpObj"></param>
 	/// <returns></returns>
 	GameObject* ConvertFromSharp(MonoObject* sharpObj);
+	template <class T>
+	T* ConvertFromSharp(MonoObject* sharpComp);
 
 	void Destroy(MonoObject* object_to_destroy);
 

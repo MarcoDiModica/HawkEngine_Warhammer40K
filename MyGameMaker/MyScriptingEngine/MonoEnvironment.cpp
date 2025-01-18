@@ -8,7 +8,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-
+#include "ComponentLookUpTable.h"
 #include "../MyGameEditor/Log.h"// ilegal
 
 using namespace SharpBinder;
@@ -81,7 +81,7 @@ MonoEnvironment::MonoEnvironment() {
 		}
 	}
 	
-	
+	SharpBinder::InitializeLookUpTable();
 	LinkEngineMethods();
 	
 	/* Test by creating a TestObject and callinf its Start method*/
@@ -127,6 +127,19 @@ void MonoEnvironment::LinkEngineMethods() {
 	mono_add_internal_call("HawkEngine.Input::GetMouseButtonUp", (const void*)GetMouseButtonUp);
 	mono_add_internal_call("HawkEngine.Input::GetAxis", (const void*)GetAxis);
 	mono_add_internal_call("HawkEngine.Input::GetMousePosition", (const void*)GetMousePosition);
+
+	mono_add_internal_call("HawkEngine.Transform::SetPosition", (const void*)&SharpBinder::SetPosition);
+	mono_add_internal_call("HawkEngine.Transform::GetPosition", (const void*)&SharpBinder::GetPosition);
+	mono_add_internal_call("HawkEngine.Transform::SetRotation", (const void*)&SharpBinder::SetRotation);
+	mono_add_internal_call("HawkEngine.Transform::SetRotationQuat", (const void*)&SharpBinder::SetRotationQuat);
+	mono_add_internal_call("HawkEngine.Transform::Rotate", (const void*)&SharpBinder::Rotate);
+	mono_add_internal_call("HawkEngine.Transform::RotateLocal", (const void*)&SharpBinder::RotateLocal);
+	mono_add_internal_call("HawkEngine.Transform::LookAt", (const void*)&SharpBinder::LookAt);
+	mono_add_internal_call("HawkEngine.Transform::SetScale", (const void*)&SharpBinder::SetScale);
+	mono_add_internal_call("HawkEngine.Transform::Scale", (const void*)&SharpBinder::Scale);
+	mono_add_internal_call("HawkEngine.Transform::TranslateLocal", (const void*)&SharpBinder::TranslateLocal);
+	mono_add_internal_call("HawkEngine.Transform::AlignToGlobalUp", (const void*)&SharpBinder::AlignToGlobalUp);
+	mono_add_internal_call("HawkEngine.Transform::SetForward", (const void*)&SharpBinder::SetForward);
 }
 
 

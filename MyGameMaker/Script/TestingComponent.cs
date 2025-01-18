@@ -28,7 +28,11 @@ public class TestingComponent : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-
+        if (Input.GetKeyDown((int) KeyCode.A) == true)
+        {
+            EngineCalls.print("pressing a");
+            transfr.SetPosition(10, 10, 10);
+        }
 
 
     }

@@ -82,10 +82,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ComponentLookUpTable.h" />
     <ClInclude Include="ScriptComponent.h" />
     <ClInclude Include="SharpBinder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ComponentLookUpTable.cpp" />
     <ClCompile Include="MonoEnvironment.cpp" />
     <ClCompile Include="MonoEnvironment.h" />
     <ClCompile Include="ScriptComponent.cpp" />

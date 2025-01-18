@@ -21,6 +21,9 @@
     <ClInclude Include="SharpBinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentLookUpTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ScriptComponent.cpp">
@@ -33,6 +36,9 @@
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="MonoEnvironment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentLookUpTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

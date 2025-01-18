@@ -4,10 +4,10 @@
 #include <glm/glm.hpp>
 #include <algorithm>
 
-namespace MyGameEngine {
+using namespace MyGameEngine;  // For AudioEngine and AudioAsset
 
-SoundComponent::SoundComponent(::GameObject* owner)
-    : ::Component(owner)
+SoundComponent::SoundComponent(GameObject* owner)
+    : Component(owner)
     , m_SourceId(0)
     , m_Volume(1.0f)
     , m_IsMusic(false)
@@ -50,7 +50,7 @@ void SoundComponent::Destroy() {
     }
 }
 
-std::unique_ptr<::Component> SoundComponent::Clone(::GameObject* new_owner) {
+std::unique_ptr<Component> SoundComponent::Clone(GameObject* new_owner) {
     auto clone = std::make_unique<SoundComponent>(*this);
     clone->owner = new_owner;
     clone->m_SourceId = 0; // Reset source ID as it needs a new one
@@ -145,6 +145,4 @@ void SoundComponent::UpdatePosition() {
         static_cast<float>(position.x),
         static_cast<float>(position.y),
         static_cast<float>(position.z));
-}
-
 }

@@ -10,11 +10,9 @@
 class GameObject;
 class Component;
 
-namespace MyGameEngine {
-
-class SoundComponent : public ::Component {
+class SoundComponent : public Component {
 public:
-    explicit SoundComponent(::GameObject* owner);
+    explicit SoundComponent(GameObject* owner);
     ~SoundComponent() override;
 
     void Start() override;
@@ -22,7 +20,7 @@ public:
     void Destroy() override;
 
     ComponentType GetType() const override { return ComponentType::AUDIO; }
-    std::unique_ptr<::Component> Clone(::GameObject* new_owner) override;
+    std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
     // Audio control methods
     bool LoadAudio(const std::string& filePath, bool isMusic = false);
@@ -45,7 +43,7 @@ private:
     void UpdatePosition();
 
 protected:
-    friend class ::SceneSerializer;
+    friend class SceneSerializer;
 
     YAML::Node encode() override {
         YAML::Node node = Component::encode();
@@ -85,8 +83,8 @@ protected:
     }
 
 private:
-    std::shared_ptr<AudioEngine> m_AudioEngine;
-    std::shared_ptr<AudioAsset> m_AudioAsset;
+    std::shared_ptr<MyGameEngine::AudioEngine> m_AudioEngine;
+    std::shared_ptr<MyGameEngine::AudioAsset> m_AudioAsset;
     ALuint m_SourceId;
     
     std::string m_AudioPath;
@@ -96,5 +94,3 @@ private:
     bool m_AutoPlay;
     bool m_Loop;
 };
-
-}

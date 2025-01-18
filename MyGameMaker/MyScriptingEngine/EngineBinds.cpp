@@ -81,7 +81,8 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* comopone
 
     if (componentName == "HawkEngine.Transform") {
         return GO->GetTransform()->GetSharp();
-    }
+	}
+	
     // Add other components
     return nullptr;
 }

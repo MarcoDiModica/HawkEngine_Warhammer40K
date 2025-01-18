@@ -9,10 +9,12 @@ public class TestingComponent : MonoBehaviour
 {
     GameObject actor;
     Transform transfr;
+   
     public override void Start()
     {
         actor = EngineCalls.CreateGameObject("aaa");
         transfr = actor.GetComponent<Transform>();
+        
 
         if (transfr != null)
         {
@@ -23,6 +25,8 @@ public class TestingComponent : MonoBehaviour
             EngineCalls.print("Waaaawaaaa");
         }
 
+        
+
     }
 
 
@@ -32,6 +36,11 @@ public class TestingComponent : MonoBehaviour
         {
             EngineCalls.print("pressing a");
             transfr.SetPosition(10, 10, 10);
+        }
+
+        if (Input.GetKeyDown((int) KeyCode.SPACE))
+        {
+            cam.SetCameraFieldOfView(40);
         }
 
 

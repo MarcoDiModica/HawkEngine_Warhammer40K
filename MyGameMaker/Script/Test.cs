@@ -37,10 +37,7 @@ public class Test : MonoBehaviour
         if (HawkEngine.Input.anyKeyDown)
             HawkEngine.EngineCalls.print(HawkEngine.Input.inputString);
 
-        if (HawkEngine.Input.GetKeyDown(Convert.ToInt32(HawkEngine.KeyCode.SPACE)))
-        {
-            HawkEngine.EngineCalls.print(HawkEngine.Input.GetMousePosition().X.ToString());
-        }
+        
         
 
     }

@@ -4,6 +4,7 @@
 #include "../MyGameEditor/Log.h"
 #include "Material.h"
 #include "TransformComponent.h"
+#include "CameraComponent.h"
 #include <iostream>
 #include "LightComponent.h"
 #include "Shaders.h"

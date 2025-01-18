@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hawkengine
+namespace HawkEngine
 {
     class Camera : Component
     {
@@ -16,22 +16,22 @@ namespace Hawkengine
         //public extern static void SetMainCamera();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern static void SetCameraFieldOfView(float fieldOfView);
+        public extern void SetCameraFieldOfView(float fieldOfView);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern static void SetCameraNearClipPlane(float nearClipPlane);
+        public extern void SetCameraNearClipPlane(float nearClipPlane);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern static void SetCameraFarClipPlane(float farClipPlane);
+        public extern void SetCameraFarClipPlane(float farClipPlane);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern static void SetCameraAspect(float aspect);
+        public extern void SetCameraAspect(float aspect);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern static void SetCameraOrthographicSize(float orthographicSize);
+        public extern void SetCameraOrthographicSize(float orthographicSize);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern static void SetCameraProjectionType(int projectionType);
+        public extern void SetCameraProjectionType(int projectionType);
 
         public bool ortographic
         {

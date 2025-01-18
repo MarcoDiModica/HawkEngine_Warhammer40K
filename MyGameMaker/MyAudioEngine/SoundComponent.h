@@ -39,6 +39,13 @@ public:
     bool IsPlaying() const;
     bool IsMusic() const { return m_IsMusic; }
 
+    // Additional getters/setters for inspector
+    const std::string& GetAudioPath() const { return m_AudioPath; }
+    void SetAutoPlay(bool autoPlay) { m_AutoPlay = autoPlay; }
+    bool GetAutoPlay() const { return m_AutoPlay; }
+    void SetLoop(bool loop) { m_Loop = loop; }
+    bool GetLoop() const { return m_Loop; }
+
 private:
     void UpdatePosition();
 

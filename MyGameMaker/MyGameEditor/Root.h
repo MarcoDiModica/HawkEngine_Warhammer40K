@@ -1,4 +1,3 @@
-
 #ifndef ROOT_H
 #define ROOT_H
 
@@ -49,6 +48,7 @@ public:
     std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
     std::shared_ptr<GameObject> CreateCameraObject(const std::string& name);
     std::shared_ptr<GameObject> CreateLightObject(const std::string& name);
+    std::shared_ptr<GameObject> CreateAudioObject(const std::string& name);
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr);
 

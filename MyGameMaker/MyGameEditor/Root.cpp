@@ -11,6 +11,7 @@
 #include "MyGameEngine/ModelImporter.h"
 #include "App.h"
 #include "Input.h"
+#include "../MyAudioEngine/SoundComponent.h"
 
 #include <SDL2/SDL.h>
 
@@ -331,4 +332,23 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
     father.AddChild(&child);
 
     return false;
+}
+
+std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
+{
+    auto gameObject = CreateGameObject(name);
+    if (!gameObject) {
+        LOG(LogType::LOG_ERROR, "Failed to create audio object");
+        return nullptr;
+    }
+
+    // Add SoundComponent
+    auto soundComponent = gameObject->AddComponent<SoundComponent>();
+    if (!soundComponent) {
+        LOG(LogType::LOG_ERROR, "Failed to add SoundComponent to audio object");
+        return nullptr;
+    }
+
+    LOG(LogType::LOG_OK, "Created audio object: %s", name.c_str());
+    return gameObject;
 }

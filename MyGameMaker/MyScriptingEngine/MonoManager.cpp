@@ -72,7 +72,7 @@ void MonoManager::Initialize() {
     EngineBinds::BindEngine();
 
     // Set up internal calls
-    mono_add_internal_call("HawkEngine.EngineCalls::print", (const void*)HandleConsoleOutput);
+    mono_add_internal_call("HawkEngine.Engineson::print", (const void*)HandleConsoleOutput);
 
     // Load user classes
     const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);

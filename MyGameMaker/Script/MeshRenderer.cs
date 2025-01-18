@@ -42,7 +42,7 @@ namespace HawkEngine
 
         public MeshRenderer()
         {
-            EngineCalls.print("MeshRenderer created");
+            Engineson.print("MeshRenderer created");
         }
 
         public override void Start() { }

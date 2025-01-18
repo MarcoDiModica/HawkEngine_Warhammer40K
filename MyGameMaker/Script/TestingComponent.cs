@@ -15,21 +15,22 @@ public class TestingComponent : MonoBehaviour
    
     public override void Start()
     {
-        actor = EngineCalls.CreateGameObject("aaa");
+        actor = Engineson.CreateGameObject("aaa");
         transfr = actor.GetComponent<Transform>();
         
 
         if (transfr != null)
         {
-            EngineCalls.print("the transform was gotten");
+            Engineson.print("the transform was gotten");
         }
         else
         {
-            EngineCalls.print("Waaaawaaaa");
+            Engineson.print("Waaaawaaaa");
         }
 
         timer = 0.0f;
 
+        actor.AddComponent<Camera>();
     }
 
 
@@ -37,7 +38,7 @@ public class TestingComponent : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            EngineCalls.print("pressing a");
+            Engineson.print("pressing a");
             transfr.SetPosition(10, 10, 10);
         }
 
@@ -45,8 +46,8 @@ public class TestingComponent : MonoBehaviour
 
         if (timer > 1.0f)
         {
-            EngineCalls.print("1 second has passed");
-            EngineCalls.print("count: " + count);
+            Engineson.print("1 second has passed");
+            Engineson.print("count: " + count);
             count++;
             timer = 0.0f;
         }

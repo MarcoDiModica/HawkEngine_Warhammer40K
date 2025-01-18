@@ -3,6 +3,7 @@
 #include "ComponentMapper.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEditor/Root.h" //QUITAR: CAMBIAR POR ROOT DEL ENGINE
@@ -12,7 +13,7 @@
 // GameObject
 MonoObject* EngineBinds::CreateGameObjectSharp(MonoString* name) {
     char* C_name = mono_string_to_utf8(name);
-    std::shared_ptr<GameObject> obj = Application->root->CreateCameraObject(std::string(C_name)); //SUSTITUIR POR ROOT DEL ENGINE
+    std::shared_ptr<GameObject> obj = Application->root->CreateGameObject(C_name); //SUSTITUIR POR ROOT DEL ENGINE
 
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
     MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
@@ -92,6 +93,24 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* comopone
 	
     // Add other components
     return nullptr;
+}
+
+MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
+
+    Component* _component = nullptr;
+    auto go = ConvertFromSharp(ref);
+
+    switch (component) {
+    case 0: _component = static_cast<Component*>( go->AddComponent<Transform_Component>()); 
+        break;
+    case 1: _component = static_cast<Component*>(go->AddComponent<MeshRenderer>());
+        break;
+    case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
+        break;
+   }
+
+    return _component->GetSharp();
+
 }
 
 // Input
@@ -310,11 +329,12 @@ void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
 
 void EngineBinds::BindEngine() {
     // GameObject
-    mono_add_internal_call("HawkEngine.EngineCalls::CreateGameObject", (const void*)CreateGameObjectSharp);
+    mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
-    mono_add_internal_call("HawkEngine.EngineCalls::Destroy", (const void*)Destroy);
+    mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
+    mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);

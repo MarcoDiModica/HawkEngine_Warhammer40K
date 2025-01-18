@@ -28,6 +28,7 @@ public:
     MonoClass* GetClass(const std::string& namespaceName, const std::string& className) const;
     const ComponentMapper& GetMapper() const { return mapper; }
 
+
     template <typename T>
     T* GetMappedObject(MonoObject* sharpObject) const;
 

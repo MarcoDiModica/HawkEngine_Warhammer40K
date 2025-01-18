@@ -128,6 +128,9 @@ bool Root::Update(double dt) {
         }
     }
 
+    if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+        LOG(LogType::LOG_C_SHARP, "inpuuuuuuuuuuuut \n");
+    }
 
 
     //if press 1 active scene Viernes13 and press 2 active scene Salimos

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HawkEngine
 {
-    class EngineCalls
+    class Engineson
     {
         /* The implementation of theese methods lies in C++ */
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -22,7 +22,25 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void ChangeScene(string scene_name);
-        
+
+
+        public static int MapComponent(Type type)
+        {
+            if(type == typeof(Transform))
+            {
+                return 0;
+            }
+            else if(type == typeof(MeshRenderer))
+            {
+                return 1;
+            }
+            else if(type == typeof(Camera))
+            {
+                return 2;
+            }
+
+            return -1;
+        }
 
     }
 }

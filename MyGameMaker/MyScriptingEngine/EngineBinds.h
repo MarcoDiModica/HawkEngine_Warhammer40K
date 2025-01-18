@@ -19,6 +19,8 @@ namespace EngineBinds {
     void Destroy(MonoObject* object_to_destroy);
     MonoObject* GetSharpComponent(MonoObject* ref, MonoString* comoponent_name);
 
+    MonoObject* AddSharpComponent(MonoObject* ref, int component);
+
     template <class T>
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
 
@@ -54,6 +56,7 @@ namespace EngineBinds {
     void SetCameraOrthographicSize(MonoObject* cameraRef, float orthographicSize);
     void SetCameraProjectionType(MonoObject* cameraRef, int projectionType);
 
+
     // MeshRenderer
 	void SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef);
 	MonoObject* GetMesh(MonoObject* meshRendererRef);
@@ -63,6 +66,7 @@ namespace EngineBinds {
     void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
 
     void Render(MonoObject* meshRendererRef);
+
 }
 
 #endif // ENGINE_BINDS_H

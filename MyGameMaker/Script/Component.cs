@@ -16,7 +16,7 @@ namespace HawkEngine
 
         public Component()
         {
-            EngineCalls.print("component in C#");
+            Engineson.print("component in C#");
             enabled = true;
         }
 

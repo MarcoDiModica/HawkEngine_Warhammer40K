@@ -64,7 +64,7 @@ namespace HawkEngine
 
         public Camera()
         {
-            EngineCalls.print("Camera created");
+            Engineson.print("Camera created");
         }
 
         public override void Start() { }

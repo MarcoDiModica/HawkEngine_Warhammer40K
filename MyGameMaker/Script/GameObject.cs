@@ -15,7 +15,7 @@ namespace HawkEngine
         public GameObject(string name)
         {
             this.name = name;
-            EngineCalls.print("Ive been called with the name " + name);
+            Engineson.print("Ive been called with the name " + name);
             //CplusplusInstance = ptr;
         }
 
@@ -25,10 +25,10 @@ namespace HawkEngine
 
             CplusplusInstance = C_doppleganger;
 
-            EngineCalls.print("Ive gotten the name " + GetName());
+            Engineson.print("Ive gotten the name " + GetName());
 
             if (name == "Samson") {
-                AddChild(EngineCalls.CreateGameObject("joe"));
+                AddChild(Engineson.CreateGameObject("joe"));
              }
 
            // EngineCalls.Destroy(this);
@@ -36,20 +36,15 @@ namespace HawkEngine
 
         public GameObject()
         {
-            EngineCalls.print("I am a go created in C#");
+            Engineson.print("I am a go created in C#");
             //CplusplusInstance = ptr;
         }
 
         public GameObject(int num)
         {
-            EngineCalls.print("Ive been called with number " + num);
+            Engineson.print("Ive been called with number " + num);
         }
 
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        /* This attribute tells the compiler that the method's implementation is external 
-         * and typically defined in a low-level or platform-specific library */
-        public extern T AddComponent<T>();
-        /* extern defines a method outside of the current Assembly */
 
         public  T GetComponent<T>()
         {
@@ -66,6 +61,15 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         //  there is an extra monoComponent, this ptr to the object instance
         extern internal T TryGetComponent<T>( /* monoObject ,*/ string type, int inputType = 0);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        extern internal T TryAddComponent<T>(int type);
+
+        public T AddComponent<T>()
+        {
+            return TryAddComponent<T>( Engineson.MapComponent(typeof(T)) );
+        }
+
 
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]

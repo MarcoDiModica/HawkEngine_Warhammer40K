@@ -9,6 +9,9 @@ public class TestingComponent : MonoBehaviour
 {
     GameObject actor;
     Transform transfr;
+
+    float timer = 0.0f;
+    int count = 0;
    
     public override void Start()
     {
@@ -25,17 +28,27 @@ public class TestingComponent : MonoBehaviour
             EngineCalls.print("Waaaawaaaa");
         }
 
-        
+        timer = 0.0f;
 
     }
 
 
     public override void Update(float deltaTime)
     {
-        if (Input.GetKeyDown((int) KeyCode.A) == true)
+        if (Input.GetKeyDown(KeyCode.A))
         {
             EngineCalls.print("pressing a");
             transfr.SetPosition(10, 10, 10);
+        }
+
+        timer += deltaTime;
+
+        if (timer > 1.0f)
+        {
+            EngineCalls.print("1 second has passed");
+            EngineCalls.print("count: " + count);
+            count++;
+            timer = 0.0f;
         }
     }
 }

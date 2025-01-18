@@ -1,18 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Numerics;
 
 namespace HawkEngine
 {
-    class Input
+    public class Input
     {
-        UIntPtr CplusplusInstance; /* ptr to C++ instance */
-
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern static bool GetKey(int keyID);
 
@@ -21,6 +14,22 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern static bool GetKeyUp(int keyID);
+
+        // Sobrecargas que aceptan KeyCode
+        public static bool GetKey(KeyCode keyID)
+        {
+            return GetKey((int)keyID);
+        }
+
+        public static bool GetKeyDown(KeyCode keyID)
+        {
+            return GetKeyDown((int)keyID);
+        }
+
+        public static bool GetKeyUp(KeyCode keyID)
+        {
+            return GetKeyUp((int)keyID);
+        }
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern static bool GetMouseButton(int buttonID);
@@ -43,9 +52,9 @@ namespace HawkEngine
         {
             get
             {
-                for (int i = 0; i < 84; i++)
+                foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
                 {
-                    if (GetKey(i))
+                    if (GetKey(keyCode))
                         return true;
                 }
 
@@ -57,9 +66,9 @@ namespace HawkEngine
         {
             get
             {
-                for (int i = 0; i < 84; i++)
+                foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
                 {
-                    if (GetKeyDown(i))
+                    if (GetKeyDown(keyCode))
                         return true;
                 }
 
@@ -72,23 +81,17 @@ namespace HawkEngine
             get
             {
                 string input = "";
-                for (int i = 0; i < 84; i++)
+                foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
                 {
-                    if (GetKeyDown(i))
+                    if (GetKeyDown(keyCode))
                     {
-                        KeyCode key = (KeyCode)i;
-                        input += key.ToString();
+                        input += keyCode.ToString();
                     }
-                       
                 }
 
                 return input;
             }
         }
-
-       
-
-
     }
 
     public enum KeyCode

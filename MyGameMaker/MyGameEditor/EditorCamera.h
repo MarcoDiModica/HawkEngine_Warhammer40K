@@ -5,6 +5,7 @@
 
 #include "Module.h"
 #include "../MyGameEngine/CameraBase.h"
+#include "../MyGameEngine/Component.h"
 
 class EditorCamera : public Module, public CameraBase 
 {

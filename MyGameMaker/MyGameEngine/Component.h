@@ -23,7 +23,8 @@ enum class ComponentType {
 	MESH_RENDERER,
 	CAMERA,
 	LIGHT,
-	AUDIO
+	AUDIO,
+	AUDIO_LISTENER
 };
 
 class Component

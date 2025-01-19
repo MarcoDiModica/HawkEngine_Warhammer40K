@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Input.h"
 #include "MyGameEngine/TransformComponent.h"
+#include "MyAudioEngine/AudioListener.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "imgui.h"
 #include <SDL2/SDL.h>
@@ -12,7 +13,10 @@
 
 EditorCamera::EditorCamera(App* app) : Module(app), CameraBase(), transform(Transform_Component(nullptr))
 {
+	GameObject* gameObject = new GameObject("EditorCameraObject");
+	gameObject->AddComponent<AudioListener>();
 }
+
 
 bool EditorCamera::Awake()
 {

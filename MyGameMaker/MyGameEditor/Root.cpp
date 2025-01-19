@@ -12,6 +12,7 @@
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
+#include "../MyAudioEngine/AudioListener.h"
 
 #include <SDL2/SDL.h>
 
@@ -221,9 +222,10 @@ std::shared_ptr<GameObject> Root::CreatePlane(const std::string& name) {
 }
 
 std::shared_ptr<GameObject> Root::CreateCameraObject(const std::string& name) {
-	auto camera = CreateGameObject(name);
-	camera->AddComponent<CameraComponent>();
-	return camera;
+    auto camera = CreateGameObject(name);
+    camera->AddComponent<CameraComponent>();
+    camera->AddComponent<AudioListener>();
+    return camera;
 }
 
 std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {

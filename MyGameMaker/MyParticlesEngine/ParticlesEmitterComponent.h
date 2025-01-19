@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include "Particle.h"
 #include <chrono>
+#include <vector>
 
 class ParticlesEmitterComponent {
 public:
@@ -9,7 +10,8 @@ public:
     ~ParticlesEmitterComponent();
     void Update();
     void Start();
-	Particle* SetParticleVariables(Particle* particle);
+
+	
     glm::vec3 GetPosition() const;
 
 private:
@@ -20,4 +22,7 @@ private:
 	// Variables para el spawn de partículas
     float spawnRate = 1.0f; 
     std::chrono::time_point<std::chrono::steady_clock> lastSpawnTime;
+    std::vector<Particle> particles; // Vector para almacenar las partículas
+
+    Particle* SetParticleVariables(Particle* variablesParticle);
 };;

@@ -20,12 +20,16 @@ using namespace std;
 
 class GameObject;
 
+Shaders shader;
+
 Root::Root(App* app) : Module(app) { ; }
 
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
     auto MarcoVicePresidente = Application->root->CreateGameObject("City");
+
+	shader.LoadShaders("Assets/Shaders/water_vertex_shader.glsl", "Assets/Shaders/water_fragment_shader.glsl");
 
     ModelImporter meshImp;
     meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
@@ -241,13 +245,13 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     }
     material->setImage(image);
     meshRenderer->SetMaterial(material);
-    //meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-    //if (material->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
-    //    material->useShader = true;
-    //    material->bindShaders();
-    //}
-    //meshRenderer->SetImage(image);
+    if (shader.GetProgram()) {
+        material->useShader = true;
+        material->SetShader(shader);
+    }
+    meshRenderer->SetImage(image);
 }
 
 void Root::CreateScene(const std::string& name)

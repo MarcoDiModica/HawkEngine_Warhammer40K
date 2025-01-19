@@ -211,6 +211,12 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.intensity", 3.0f);
 
+        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Time", timeActive);
+        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Amplitude", 0.2f);
+        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Frequency", 2.0f);
+        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_ColorLow", glm::vec3(0.0f, 0.0f, 1.0f));
+        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
+
 	}
 
 	//for (auto& child : children)
@@ -222,6 +228,8 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
 void GameObject::Update(float deltaTime)
 {
     //display();
+    timeActive += deltaTime;
+
     if (!active)
     {
         return;

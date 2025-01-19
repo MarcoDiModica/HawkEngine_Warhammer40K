@@ -72,9 +72,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CanvasComponent.h" />
+    <ClInclude Include="ImageComponent.h" />
     <ClInclude Include="UIComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CanvasComponent.cpp" />
+    <ClCompile Include="ImageComponent.cpp" />
     <ClCompile Include="UIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

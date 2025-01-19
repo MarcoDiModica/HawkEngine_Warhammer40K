@@ -1,7 +1,7 @@
 #include "PhysicsModule.h"
 #include "../MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
-#include "../MyPhysicsEngine/PhysBody3D.h"
+#include "../MyGameEngine/PhysBody3D.h"
 #include <iostream>
 
 PhysicsModule::PhysicsModule(App* app)

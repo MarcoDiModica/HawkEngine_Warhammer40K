@@ -18,7 +18,7 @@ private:
     glm::vec3 position;
 	Particle* emitterParticle = nullptr;
 	int maxParticles = 100;
-
+    float deltaTime;
 	// Variables para el spawn de partículas
     float spawnRate = 1.0f; 
     std::chrono::time_point<std::chrono::steady_clock> lastSpawnTime;

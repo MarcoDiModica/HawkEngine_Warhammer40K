@@ -4,42 +4,40 @@
 Particle* particle = nullptr;
 
 
-void Start() {
+void Particle :: Start() {
     particle = new Particle();
 	
 }
 
-void Update(ParticlesEmitterComponent* component) {
-    if (particle->lifetime <= 0) {
+void Particle::Update(float deltaTime) {
+    if (lifetime > 0) {
+        // Actualizar la posición de la partícula usando su velocidad        
+		position[0] += speed[0] * deltaTime; 
+
+        // Disminuir el tiempo de vida de la partícula
+        lifetime -= deltaTime;
+    }
+    else {
         // Lógica para cuando la vida de la partícula se agota
-		CleanUp();
+        CleanUp();
     }
 }
 
-void Spawn(ParticlesEmitterComponent* component) {
-    // Asumiendo que ParticleEmitterComponent tiene una función para obtener la posición
-    glm::vec3 spawnPosition = component->GetPosition();
-
-    // Crear una nueva partícula
-    Particle* newParticle = new Particle();
-    newParticle->position.push_back(spawnPosition);
-    newParticle->speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f)); // Velocidad inicial
-
-    // Configurar otros parámetros de la partícula
-    newParticle->lifetime = 5.0f; // Duración de la partícula en segundos
-    newParticle->rotation = 0.0f; // Rotación inicial
-
-    // Aquí podrías agregar la nueva partícula a una lista de partículas activas
-    // Por ejemplo:
-    // activeParticles.push_back(newParticle);
-
-    // Lógica de OpenGL para dibujar la partícula
+void Particle:: Spawn() {
+    
+      // Lógica de OpenGL para dibujar la partícula como un plano
     glPushMatrix();
-    glTranslatef(spawnPosition.x, spawnPosition.y, spawnPosition.z);
-    // Aquí podrías dibujar la partícula, por ejemplo, como un punto o un sprite
-    glBegin(GL_POINTS);
-    glVertex3f(0.0f, 0.0f, 0.0f);
+    glTranslatef(position[0].x, position[0].y, position[0].z);
+
+    // Dibujar un plano (por ejemplo, un cuadrado) en la posición de la partícula
+    glBegin(GL_QUADS);
+    // Especificar las cuatro esquinas del plano
+    glVertex3f(-0.5f, -0.5f, 0.0f); // Esquina inferior izquierda
+    glVertex3f(0.5f, -0.5f, 0.0f);  // Esquina inferior derecha
+    glVertex3f(0.5f, 0.5f, 0.0f);   // Esquina superior derecha
+    glVertex3f(-0.5f, 0.5f, 0.0f);  // Esquina superior izquierda
     glEnd();
+
     glPopMatrix();
 }
 void Safe() {

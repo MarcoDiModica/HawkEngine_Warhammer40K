@@ -1,4 +1,5 @@
 #include "ParticlesEmitterComponent.h"
+#include "../MyGameEditor/App.h"
 #include <chrono>
 
 //Inicializar la última vez que se generó una partícula
@@ -8,6 +9,7 @@ ParticlesEmitterComponent::ParticlesEmitterComponent() {
 
 void ParticlesEmitterComponent::Start() {
 	emitterParticle = new Particle();
+	deltaTime = Application->GetDt();
 }
 
 void ParticlesEmitterComponent::Update() {
@@ -26,7 +28,7 @@ void ParticlesEmitterComponent::Update() {
 
     // Actualizar las partículas existentes
     for (auto& particle : particles) {
-        particle.Update();
+        particle.Update(deltaTime);
     }
     // Eliminar partículas que han terminado su vida útil
     particles.erase(

@@ -12,7 +12,7 @@ public:
     Particle();
     ~Particle();
 
-    void Update();
+    void Update(float deltaTime);
     void Spawn();
     void Save();
     void Load();

@@ -211,7 +211,11 @@ std::shared_ptr<GameObject> Root::CreatePlane(const std::string& name) {
     AddMeshRenderer(*plane, Mesh::CreatePlane(), "Assets/default.png");
     return plane;
 }
-
+std::shared_ptr<GameObject> Root::CreateCylinder(const std::string& name) {
+    auto cylinder = CreateGameObject(name);
+    AddMeshRenderer(*cylinder, Mesh::CreateCylinder(), "Assets/default.png");
+    return cylinder;
+}
 std::shared_ptr<GameObject> Root::CreateCameraObject(const std::string& name) {
 	auto camera = CreateGameObject(name);
 	camera->AddComponent<CameraComponent>();

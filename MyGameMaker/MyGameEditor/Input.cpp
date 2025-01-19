@@ -11,10 +11,12 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
+#include "../MyGameEngine/PhysVehicle3D.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
 #include <filesystem>
+#include "glm/glm.hpp"
 
 
 #define MAX_KEYS 300
@@ -79,6 +81,62 @@ void SpawnPhysCube() {
     cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
     Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
 }
+void SpawnCar() {
+    // Configuración del vehículo
+    VehicleInfo car;
+
+    car.chassis_size = glm::vec3(2, 1, 4);
+    car.chassis_offset = glm::vec3(0, 1, 0);
+    car.mass = 500.0f;
+    car.suspensionStiffness = 15.88f;
+    car.suspensionCompression = 0.83f;
+    car.suspensionDamping = 20;
+    car.maxSuspensionTravelCm = 1000.0f;
+    car.frictionSlip = 50.5;
+    car.maxSuspensionForce = 2000.0f;
+
+    // Propiedades de las ruedas
+    float half_width = 1.0f;
+    float wheel_width = 0.5f;
+    float connection_height = 0.5f;
+    float half_length = 2.0f;
+    float wheel_radius = 0.5f;
+    float suspensionRestLength = 0.6f;
+
+    glm::vec3 direction(0, -1, 0); // Dirección de la suspensión
+    glm::vec3 axis(-1, 0, 0);      // Eje de las ruedas
+
+    car.num_wheels = 4;
+    car.wheels = new Wheel[4];
+
+    // Configurar cada rueda
+    car.wheels[0] = { glm::vec3(half_width - 0.3f * wheel_width, connection_height, half_length - wheel_radius), direction, axis, suspensionRestLength, wheel_radius, wheel_width, true, true, true, true };
+    car.wheels[1] = { glm::vec3(-half_width + 0.3f * wheel_width, connection_height, half_length - wheel_radius), direction, axis, suspensionRestLength, wheel_radius, wheel_width, true, true, true, true };
+    car.wheels[2] = { glm::vec3(half_width - 0.3f * wheel_width, connection_height, -half_length + wheel_radius), direction, axis, suspensionRestLength, wheel_radius, wheel_width, false, true, true, false };
+    car.wheels[3] = { glm::vec3(-half_width + 0.3f * wheel_width, connection_height, -half_length + wheel_radius), direction, axis, suspensionRestLength, wheel_radius, wheel_width, false, true, true, false };
+
+    // Crear el vehículo
+    PhysVehicle3D* vehicle = Application->physicsModule->AddVehicle(car);
+    vehicle->SetPos(0, 202, 250); // Posición inicial del vehículo
+
+    // Crear un cubo que represente visualmente el chasis del coche
+    auto chassisCube = Application->root->CreateCube("chassis");
+    chassisCube->GetTransform()->SetPosition(glm::vec3(0, 202, 250)); // Posición inicial del cubo
+
+    // Vincular el cubo a un cuerpo físico
+    Application->physicsModule->CreatePhysicsForGameObject(*chassisCube, 0.1f);
+
+    // Crear un constraint tipo hinge entre el chasis del cubo (GameObject) y algún punto del vehículo
+    Application->physicsModule->AddConstraintHinge(
+        *chassisCube, *chassisCube, // Usamos el cubo para el constraint
+        glm::vec3(0, 1, 0), glm::vec3(0, 0, 6), // Conexión y puntos de pivote
+        glm::vec3(0, 1, 0), glm::vec3(0, 1, 0), // Ejes de rotación
+        false // Colisiones entre los objetos desactivadas
+    );
+
+    std::cout << "Car spawned successfully with chassis linked to physics.\n";
+}
+
 
 bool Input::processSDLEvents()
 {
@@ -140,7 +198,8 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             mouse_z = event.wheel.y;
-            SpawnPhysCube();
+            //SpawnPhysCube();
+			SpawnCar();
             break;
 
         case SDL_MOUSEMOTION:

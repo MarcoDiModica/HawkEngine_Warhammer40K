@@ -332,6 +332,76 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	mesh->filePath = std::string("shapes/cube");
 	return mesh;
 }
+std::shared_ptr<Mesh> Mesh::CreateCylinder() {
+	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+
+	// Valores fijos para el cilindro
+	const float radius = 1.0f;  // Radio del cilindro
+	const float height = 2.0f;  // Altura del cilindro
+	const int slices = 20;      // Número de divisiones
+
+	std::vector<glm::vec3> vertices;
+	std::vector<unsigned int> indices;
+
+	// Altura dividida en dos (para las bases superior e inferior)
+	float halfHeight = height / 2.0f;
+
+	// Generar vértices para las bases superior e inferior
+	for (int i = 0; i <= slices; ++i) {
+		float angle = 2.0f * glm::pi<float>() * i / slices;
+		float x = radius * cos(angle);
+		float z = radius * sin(angle);
+
+		// Base inferior
+		vertices.emplace_back(x, -halfHeight, z);
+
+		// Base superior
+		vertices.emplace_back(x, halfHeight, z);
+	}
+
+	// Añadir los vértices centrales de las bases
+	vertices.emplace_back(0.0f, -halfHeight, 0.0f); // Centro base inferior
+	vertices.emplace_back(0.0f, halfHeight, 0.0f);  // Centro base superior
+
+	// Generar índices para los lados del cilindro
+	for (int i = 0; i < slices; ++i) {
+		int base1 = i * 2;
+		int base2 = base1 + 2;
+
+		indices.push_back(base1);
+		indices.push_back(base2);
+		indices.push_back(base1 + 1);
+
+		indices.push_back(base1 + 1);
+		indices.push_back(base2);
+		indices.push_back(base2 + 1);
+	}
+
+	// Generar índices para las bases
+	int centerBottomIndex = vertices.size() - 2;
+	int centerTopIndex = vertices.size() - 1;
+
+	for (int i = 0; i < slices; ++i) {
+		int baseIndex = i * 2;
+
+		// Base inferior
+		indices.push_back(centerBottomIndex);
+		indices.push_back(baseIndex + 2);
+		indices.push_back(baseIndex);
+
+		// Base superior
+		indices.push_back(centerTopIndex);
+		indices.push_back(baseIndex + 1);
+		indices.push_back(baseIndex + 3);
+	}
+
+	// Cargar los datos en la malla
+	mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
+	mesh->filePath = std::string("shapes/cylinder");
+
+	return mesh;
+}
+
 
 std::shared_ptr<Mesh> Mesh::CreateSphere()
 {

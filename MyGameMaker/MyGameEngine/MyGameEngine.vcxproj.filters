@@ -16,6 +16,8 @@
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="LightComponent.cpp" />
+    <ClCompile Include="PhysVehicle3D.cpp" />
+    <ClCompile Include="PhysBody3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -34,8 +36,11 @@
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TreeExt.h" />
-    <ClInclude Include="types.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="LightComponent.h" />
+    <ClInclude Include="p2List.h" />
+    <ClInclude Include="PhysVehicle3D.h" />
+    <ClInclude Include="types.h" />
+    <ClInclude Include="PhysBody3D.h" />
   </ItemGroup>
 </Project>

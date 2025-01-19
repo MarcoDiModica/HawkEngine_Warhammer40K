@@ -14,6 +14,7 @@ public:
 
     void Update(float deltaTime);
     void Spawn();
+    void Draw();
     void Save();
     void Load();
     void CleanUp();
@@ -23,4 +24,5 @@ public:
     float rotation;
     vector<glm::vec3> position;
     vector<glm::vec3> speed;
+    GLuint textureID;
 };

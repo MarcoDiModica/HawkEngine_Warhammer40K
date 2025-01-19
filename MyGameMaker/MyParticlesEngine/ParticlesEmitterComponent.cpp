@@ -12,23 +12,30 @@ void ParticlesEmitterComponent::Start() {
 	deltaTime = Application->GetDt();
 }
 
+void ParticlesEmitterComponent::EmitParticle() {
+    Particle* newParticle = new Particle();
+    newParticle->Start();
+    particles.push_back(*newParticle);
+
+    std::cout << "Partícula generada" << std::endl;
+}
+
 void ParticlesEmitterComponent::Update() {
+    
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsedTime = now - lastSpawnTime;
 
     if (elapsedTime.count() >= spawnRate && particles.size() < maxParticles) {
         // Crear una nueva partícula
         if (emitterParticle != nullptr) {
-            Particle newParticle = *SetParticleVariables(emitterParticle);
-            newParticle.Spawn();
-            particles.push_back(newParticle);
+			EmitParticle();
         }
         lastSpawnTime = now;
     }
-
     // Actualizar las partículas existentes
     for (auto& particle : particles) {
         particle.Update(deltaTime);
+        particle.Draw();
     }
     // Eliminar partículas que han terminado su vida útil
     particles.erase(
@@ -42,6 +49,7 @@ void ParticlesEmitterComponent::Update() {
 //Destructor
 ParticlesEmitterComponent::~ParticlesEmitterComponent()
 {
+	delete emitterParticle;
 }
 
 glm::vec3 ParticlesEmitterComponent::GetPosition() const {

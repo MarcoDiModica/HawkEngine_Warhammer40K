@@ -38,6 +38,7 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
+#include "MyParticlesEngine/ParticlesEmitterComponent.h"
 
 #include "MyGameEngine/LightComponent.h"
 #include "MyGameEngine/Shaders.h"
@@ -305,6 +306,8 @@ int main(int argc, char** argv) {
 
 	camera = Application->camera;
 
+	ParticlesEmitterComponent* particleEmitter = new ParticlesEmitterComponent();
+
 	while (state != EXIT) 
 	{
 		switch (state)
@@ -348,6 +351,8 @@ int main(int argc, char** argv) {
 
 			PauCode2(Application->gui);
 
+			particleEmitter->EmitParticle();
+
 			if (!Application->Update()) {
 				state = FREE;
 			}
@@ -363,6 +368,7 @@ int main(int argc, char** argv) {
 
 	}
 
+	delete particleEmitter;
 
 
 

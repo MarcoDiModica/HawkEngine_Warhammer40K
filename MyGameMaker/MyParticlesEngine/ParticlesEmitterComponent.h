@@ -10,7 +10,7 @@ public:
     ~ParticlesEmitterComponent();
     void Update();
     void Start();
-
+    void EmitParticle();
 	
     glm::vec3 GetPosition() const;
 

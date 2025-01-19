@@ -13,8 +13,8 @@
 
 EditorCamera::EditorCamera(App* app) : Module(app), CameraBase(), transform(Transform_Component(nullptr))
 {
-	GameObject* gameObject = new GameObject("EditorCameraObject");
-	gameObject->AddComponent<AudioListener>();
+	listenerObject = new GameObject("EditorCameraObject");
+	listenerObject->AddComponent<AudioListener>();
 }
 
 
@@ -38,6 +38,13 @@ bool EditorCamera::FixedUpdate()
 bool EditorCamera::Update(double dt)
 {
 	move_camera(cameraSpeed, static_cast<float>(dt));
+	
+	// Sync listener object position with camera
+	if (listenerObject) {
+		listenerObject->GetTransform()->SetPosition(transform.GetPosition());
+		glm::dvec3 eulerAngles = glm::eulerAngles(transform.GetRotation());
+		listenerObject->GetTransform()->SetRotation(eulerAngles);
+	}
 
 	return true;
 }
@@ -49,6 +56,10 @@ bool EditorCamera::PostUpdate()
 
 bool EditorCamera::CleanUp()
 {
+	if (listenerObject) {
+		delete listenerObject;
+		listenerObject = nullptr;
+	}
 	return true;
 }
 

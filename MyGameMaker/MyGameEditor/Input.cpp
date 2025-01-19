@@ -140,7 +140,7 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             mouse_z = event.wheel.y;
-            //SpawnPhysCube();
+            SpawnPhysCube();
             break;
 
         case SDL_MOUSEMOTION:

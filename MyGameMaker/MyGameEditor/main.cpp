@@ -306,7 +306,7 @@ int main(int argc, char** argv) {
 
 	camera = Application->camera;
 
-	ParticlesEmitterComponent* particleEmitter = new ParticlesEmitterComponent();
+	/*ParticlesEmitterComponent* particleEmitter = new ParticlesEmitterComponent();*/
 
 	while (state != EXIT) 
 	{
@@ -351,7 +351,7 @@ int main(int argc, char** argv) {
 
 			PauCode2(Application->gui);
 
-			particleEmitter->EmitParticle();
+			/*particleEmitter->EmitParticle();*/
 
 			if (!Application->Update()) {
 				state = FREE;
@@ -368,7 +368,6 @@ int main(int argc, char** argv) {
 
 	}
 
-	delete particleEmitter;
 
 
 

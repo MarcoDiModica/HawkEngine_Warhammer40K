@@ -12,6 +12,7 @@ void Start() {
 void Update(ParticlesEmitterComponent* component) {
     if (particle->lifetime <= 0) {
         // Lógica para cuando la vida de la partícula se agota
+		CleanUp();
     }
 }
 

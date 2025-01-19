@@ -113,31 +113,31 @@ bool Root::Update(double dt) {
 
     currentScene->Update(static_cast<float>(dt));
 
-    if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
-
-        if (currentScene->tree == nullptr) {
-            currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
-            for (auto child : currentScene->children()) {
-                currentScene->tree->Insert(currentScene->tree->root, *child, 0);
-            }
-
-        }
-        else {
-            delete currentScene->tree;
-            currentScene->tree = nullptr;
-            int a = 7;
-        }
-    }
-
-
-
-    //if press 1 active scene Viernes13 and press 2 active scene Salimos
-    if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-        Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
-	}
-    else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
-        Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
-    }
+    //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
+    //
+    //    if (currentScene->tree == nullptr) {
+    //        currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
+    //        for (auto child : currentScene->children()) {
+    //            currentScene->tree->Insert(currentScene->tree->root, *child, 0);
+    //        }
+    //
+    //    }
+    //    else {
+    //        delete currentScene->tree;
+    //        currentScene->tree = nullptr;
+    //        int a = 7;
+    //    }
+    //}
+    //
+    //
+    //
+    ////if press 1 active scene Viernes13 and press 2 active scene Salimos
+    //if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+    //    Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
+	//}
+    //else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+    //    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
+    //}
     
 
     return true;

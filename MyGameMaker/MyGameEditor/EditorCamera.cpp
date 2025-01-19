@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyAudioEngine/AudioListener.h"
+#include "MyGameEngine/GameObject.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "imgui.h"
 #include <SDL2/SDL.h>
@@ -42,8 +43,7 @@ bool EditorCamera::Update(double dt)
 	// Sync listener object position with camera
 	if (listenerObject) {
 		listenerObject->GetTransform()->SetPosition(transform.GetPosition());
-		glm::dvec3 eulerAngles = glm::eulerAngles(transform.GetRotation());
-		listenerObject->GetTransform()->SetRotation(eulerAngles);
+		// For now, let's skip rotation sync until we debug the rotation issue
 	}
 
 	return true;

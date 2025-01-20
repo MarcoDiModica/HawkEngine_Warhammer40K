@@ -353,6 +353,8 @@ static void display_func() {
 		}
 	}
 
+	Application->physicsModule->DrawDebugDrawer();
+
 	MousePickingCheck(objects);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

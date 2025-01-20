@@ -79,6 +79,7 @@
     <ClInclude Include="CameraBase.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="DebugDrawerPhysics.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="LightComponent.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="p2List.h" />
     <ClInclude Include="PhysBody3D.h" />
     <ClInclude Include="PhysVehicle3D.h" />
+    <ClInclude Include="Primitive.h" />
     <ClInclude Include="readOnlyView.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shaders.h" />
@@ -102,6 +104,7 @@
     <ClCompile Include="BufferObject.cpp" />
     <ClCompile Include="CameraBase.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="DebugDrawerPhysics.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="LightComponent.cpp" />

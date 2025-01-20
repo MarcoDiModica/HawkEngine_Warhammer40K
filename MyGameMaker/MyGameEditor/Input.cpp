@@ -117,11 +117,11 @@ void SpawnCar() {
 
     // Crear el vehículo
     PhysVehicle3D* vehicle = Application->physicsModule->AddVehicle(car);
-    vehicle->SetPos(0, 202, 250); // Posición inicial del vehículo
+    vehicle->SetPos(0, 29, 1); // Posición inicial del vehículo
 
     // Crear un cubo que represente visualmente el chasis del coche
     auto chassisCube = Application->root->CreateCube("chassis");
-    chassisCube->GetTransform()->SetPosition(glm::vec3(0, 202, 250)); // Posición inicial del cubo
+    chassisCube->GetTransform()->SetPosition(glm::vec3(0, 29, 1)); // Posición inicial del cubo
 
     // Vincular el cubo a un cuerpo físico
     Application->physicsModule->CreatePhysicsForGameObject(*chassisCube, 0.1f);
@@ -198,8 +198,8 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             mouse_z = event.wheel.y;
-            //SpawnPhysCube();
-			SpawnCar();
+            SpawnPhysCube();
+			//SpawnCar();
             break;
 
         case SDL_MOUSEMOTION:

@@ -18,6 +18,7 @@
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="PhysVehicle3D.cpp" />
     <ClCompile Include="PhysBody3D.cpp" />
+    <ClCompile Include="DebugDrawerPhysics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -42,5 +43,7 @@
     <ClInclude Include="PhysVehicle3D.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="PhysBody3D.h" />
+    <ClInclude Include="Primitive.h" />
+    <ClInclude Include="DebugDrawerPhysics.h" />
   </ItemGroup>
 </Project>

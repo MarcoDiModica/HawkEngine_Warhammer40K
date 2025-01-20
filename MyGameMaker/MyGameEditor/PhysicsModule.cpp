@@ -23,6 +23,10 @@ bool PhysicsModule::Awake() {
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
     dynamicsWorld->setGravity(btVector3(0, -9.81, 0));
 
+	//Debug drawer
+    debugDrawer = new DebugDrawerPhysics();
+    dynamicsWorld->setDebugDrawer(debugDrawer);
+
     // Initialize vehicle raycaster
     vehicle_raycaster = new btDefaultVehicleRaycaster(dynamicsWorld);
     
@@ -34,10 +38,10 @@ bool PhysicsModule::Awake() {
 
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 
-    //btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
-    //btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+    btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+    btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 
-    //dynamicsWorld->addRigidBody(groundRigidBody);
+    dynamicsWorld->addRigidBody(groundRigidBody);
 
     return true;
 }
@@ -71,7 +75,6 @@ void PhysicsModule::CreatePhysicsForGameObject(GameObject& go, float mass) {
     std::cout << "Physics created for GameObject at position: ("
         << position.x << ", " << position.y << ", " << position.z << ")\n";
 }
-
 void PhysicsModule::SyncTransforms() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
         btTransform transform;
@@ -87,29 +90,63 @@ void PhysicsModule::SyncTransforms() {
         glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
         glm::dvec3 deltaPos = newPosition - goTransform->GetPosition();
         goTransform->Translate(deltaPos);
-		auto x = pos.x();
-		auto y = pos.y();
-		auto z = pos.z();
-		auto v = glm::vec3(x, y, z);
+        auto x = pos.x();
+        auto y = pos.y();
+        auto z = pos.z();
+        auto v = glm::vec3(x, y, z);
 
+        // Convertir btQuaternion a glm::quat y aplicar rotación
         glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-        glm::dvec3 deltaRot = newRotation - glm::dvec3(0.0, 0.0, 0.0); 
+        glm::dvec3 deltaRot = newRotation - glm::dvec3(0.0, 0.0, 0.0);
 
         goTransform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
         goTransform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
         goTransform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
 
-
         std::cout << "GameObject position updated to: ("
-            << pos.x() << ", " << pos.y() << ", " << pos.z() << ")\n";
+            << pos.getX() << ", " << pos.getY() << ", " << pos.getZ() << ")\n";
     }
 }
+std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWorld) {
+    std::vector<btRigidBody*> rigidBodies;
+    int numCollisionObjects = dynamicsWorld->getNumCollisionObjects();
+
+    for (int i = 0; i < numCollisionObjects; ++i) {
+        btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[i];
+        btRigidBody* body = btRigidBody::upcast(obj);
+        if (body) {
+            rigidBodies.push_back(body);
+        }
+    }
+
+    return rigidBodies;
+}
+void PhysicsModule::DrawDebugDrawer() {
+    if (debugDrawer) {
+
+        
+        //glDisable(GL_LIGHTING);  // Desactiva la iluminación temporalmente
+        auto rigidBodies = GetAllRigidBodies(dynamicsWorld);
+        for (const auto& rigidBody : rigidBodies) {
+            btVector3 min, max;
+            rigidBody->getAabb(min, max);
+            BoundingBox bbox(glm::vec3(min.getX(), min.getY(), min.getZ()), glm::vec3(max.getX(), max.getY(), max.getZ()));
+            debugDrawer->drawBoundingBox(bbox, glm::vec3(1.0f, 0.0f, 0.0f));  // Dibuja la BoundingBox en rojo
+        }
+        //glEnable(GL_LIGHTING);  // Reactiva la iluminación
+    }
+}
+
 
 bool PhysicsModule::Update(double dt) {
     dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 10);
     SyncTransforms();
+
+   
+
     return true;
 }
+
 
 bool PhysicsModule::CleanUp() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {

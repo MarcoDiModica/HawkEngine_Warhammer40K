@@ -5,6 +5,7 @@
 #include <memory>
 #include <glm/glm.hpp>
 #include "../MyGameEngine/p2List.h"
+#include "../MyGameEngine/DebugDrawerPhysics.h"
 
 
 class GameObject;
@@ -22,6 +23,8 @@ public:
     bool Update(double dt) override;
     bool PostUpdate() override;
     bool CleanUp() override;
+
+    void DrawDebugDrawer();
 
     void CreatePhysicsForGameObject(GameObject& go, float mass);
     //void CreatePhysicsPlane();
@@ -48,4 +51,5 @@ private:
 
     // Relación entre GameObject y su cuerpo rígido
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;
+	DebugDrawerPhysics* debugDrawer;
 };

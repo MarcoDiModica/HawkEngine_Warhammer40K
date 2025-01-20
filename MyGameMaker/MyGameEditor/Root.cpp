@@ -9,7 +9,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
-#include"../MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "MyGameEngine/ParticlesEmitterComponent.h"
 #include "App.h"
 #include "Input.h"
 

@@ -16,6 +16,8 @@
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="LightComponent.cpp" />
+    <ClCompile Include="..\MyParticlesEngine\Particle.cpp" />
+    <ClCompile Include="..\MyParticlesEngine\ParticlesEmitterComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -37,5 +39,7 @@
     <ClInclude Include="types.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="LightComponent.h" />
+    <ClInclude Include="..\MyParticlesEngine\Particle.h" />
+    <ClInclude Include="..\MyParticlesEngine\ParticlesEmitterComponent.h" />
   </ItemGroup>
 </Project>

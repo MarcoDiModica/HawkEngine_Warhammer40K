@@ -74,6 +74,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\MyParticlesEngine\Particle.h" />
+    <ClInclude Include="..\MyParticlesEngine\ParticlesEmitterComponent.h" />
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="BufferObject.h" />
     <ClInclude Include="CameraBase.h" />
@@ -95,6 +97,8 @@
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\MyParticlesEngine\Particle.cpp" />
+    <ClCompile Include="..\MyParticlesEngine\ParticlesEmitterComponent.cpp" />
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="BufferObject.cpp" />
     <ClCompile Include="CameraBase.cpp" />

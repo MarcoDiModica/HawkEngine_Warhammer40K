@@ -1,22 +1,25 @@
-#ifndef __INPUT_H__
-#define __INPUT_H__
-
 #pragma once
 
 #include <iostream>
-#include "Module.h"
-#include "../MyGameEngine/InputEngine.h"
+#include "GameObject.h"
+
 
 #define MAX_MOUSE_BUTTONS 5
 
+enum KEY_STATE
+{
+	KEY_IDLE = 0,
+	KEY_DOWN,
+	KEY_REPEAT,
+	KEY_UP
+};
 
-
-class Input : public Module
+class InputEngine
 {
 public:
-	Input(App* Application);
+	InputEngine();
 
-	virtual ~Input();
+	virtual ~InputEngine();
 
 	bool Awake();
 
@@ -26,7 +29,7 @@ public:
 
 	bool processSDLEvents();
 
-	
+
 	//Direction of MousePick Ray
 	glm::vec3 GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y);
 
@@ -38,36 +41,63 @@ public:
 
 	glm::vec3 getMousePickRay();
 
-	KEY_STATE GetKey(int id);
+	KEY_STATE GetKey(int id) const
+	{
+		return keyboard[id];
+	}
 
-	KEY_STATE GetMouseButton(int id);
+	KEY_STATE GetMouseButton(int id) const
+	{
+		return mouse_buttons[id];
+	}
 
-	int GetMouseX();
+	int GetMouseX() const
+	{
+		return mouse_x;
+	}
 
-	int GetMouseY();
+	int GetMouseY() const
+	{
+		return mouse_y;
+	}
 
-	int GetMouseZ();
+	int GetMouseZ() const
+	{
+		return mouse_z;
+	}
 
-	int GetMouseXMotion();
+	int GetMouseXMotion() const
+	{
+		return mouse_x_motion;
+	}
 
-	int GetMouseYMotion();
+	int GetMouseYMotion() const
+	{
+		return mouse_y_motion;
+	}
 
-	int GetAxis(const char* axisName);
+	int GetAxis(const char* axisName) const;
 
-	GameObject* GetDraggedGameObject();
+	GameObject* GetDraggedGameObject() const
+	{
+		return draggedObject;
+	}
 
-	void SetDraggedGameObject(GameObject* gameObject);
+	void SetDraggedGameObject(GameObject* gameObject)
+	{
+		draggedObject = gameObject;
+	}
 
 	void AddToSelection(GameObject* gameObject);
 	void RemoveFromSelection(GameObject* gameObject);
-	std::vector<GameObject*> GetSelectedGameObjects();
+	std::vector<GameObject*> GetSelectedGameObjects() const;
 	void ClearSelection();
-	bool IsGameObjectSelected(GameObject* gameObject);
+	bool IsGameObjectSelected(GameObject* gameObject) const;
 
 	void HandleFileDrop(const std::string& fileDir);
 
-private:
-	/*KEY_STATE* keyboard;
+public:
+	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 	int mouse_x;
 	int mouse_y;
@@ -78,10 +108,9 @@ private:
 	float dy;
 	std::vector<GameObject*> selectedObjects;
 	std::vector<GameObject*> copiedObjects;
-	GameObject* draggedObject;*/
-	EditorCamera* camera;
+	GameObject* draggedObject;
+	
 };
 
-#endif // !__INPUT_H__
-
+extern InputEngine* InputManagement;
 

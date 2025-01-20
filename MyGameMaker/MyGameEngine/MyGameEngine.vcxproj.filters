@@ -17,6 +17,7 @@
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="InputEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -39,5 +40,6 @@
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="InputEngine.h" />
   </ItemGroup>
 </Project>

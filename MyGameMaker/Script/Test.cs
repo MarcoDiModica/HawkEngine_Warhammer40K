@@ -19,7 +19,7 @@ public class Test : MonoBehaviour
             timer = 0.0f;
         }
 
-        if (HawkEngine.Input.GetKeyDown(Convert.ToInt32(HawkEngine.KeyCode.A)))
+        if (HawkEngine.Input.GetKeyDown(HawkEngine.KeyCode.A))
         {
             HawkEngine.Engineson.print("A is pressed");
         }

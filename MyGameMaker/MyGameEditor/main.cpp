@@ -44,6 +44,7 @@
 #include "MyGameEngine/Shaders.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/SceneManager.h"
+#include "MyGameEngine/InputEngine.h"
 #include "App.h"
 
 //#include <mono/metadata/assembly.h>
@@ -89,6 +90,7 @@ Shaders mainShader;
 
 App* Application = NULL;
 SceneManager* SceneManagement = NULL;
+InputEngine* InputManagement = NULL;
 
 static void init_openGL() {
 	glewInit();

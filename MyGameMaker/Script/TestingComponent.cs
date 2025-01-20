@@ -10,8 +10,9 @@ public class TestingComponent : MonoBehaviour
     GameObject actor;
     Transform transfr;
 
-    float timer = 0.0f;
-    int count = 0;
+    public float timer = 0.0f;
+    public int count = 0;
+    public string name = "testing";
    
     public override void Start()
     {
@@ -36,7 +37,7 @@ public class TestingComponent : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        return;
+        //return;
         if (Input.GetKeyDown(KeyCode.A))
         {
             Engineson.print("pressing a");
@@ -47,15 +48,15 @@ public class TestingComponent : MonoBehaviour
 
         if (timer > 1.0f)
         {
-            //Engineson.print("1 second has passed");
+            Engineson.print("1 second has passed");
             //Engineson.print("count: " + count);
             count++;
             timer = 0.0f;
 
-            actor.name = count.ToString();
-            transfr.position = new System.Numerics.Vector3(transfr.position.X + 1, transfr.position.Y, transfr.position.Z);
-            transfr.eulerAngles = new System.Numerics.Vector3(transfr.position.X , transfr.position.Y +1, transfr.position.Z);
-            Engineson.print(transfr.eulerAngles.Y.ToString() + "Yaw !!!!");
+            //actor.name = count.ToString();
+            //transfr.position = new System.Numerics.Vector3(transfr.position.X + 1, transfr.position.Y, transfr.position.Z);
+            //transfr.eulerAngles = new System.Numerics.Vector3(transfr.position.X , transfr.position.Y +1, transfr.position.Z);
+            //Engineson.print(transfr.eulerAngles.Y.ToString() + "Yaw !!!!");
            // Engineson.print(transfr.eulerAngles.ToString() + " euleeers");
         }
     }

@@ -228,7 +228,7 @@ void GameObject::Update(float deltaTime)
     }
 
     if (isSelected) {
-        LOG(LogType::LOG_INFO, " %s is selected ", GetName().c_str());
+        //LOG(LogType::LOG_INFO, " %s is selected ", GetName().c_str());
     }
 
     //check the state of the components and throw an error if they are null

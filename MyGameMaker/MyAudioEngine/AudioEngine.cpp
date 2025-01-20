@@ -1,5 +1,6 @@
 #include "AudioEngine.h"
 #include <iostream>
+#include <filesystem>
 
 namespace MyGameEngine {
 
@@ -220,6 +221,149 @@ void AudioEngine::CleanupStoppedSources() {
         } else {
             ++it;
         }
+    }
+}
+
+ALuint AudioEngine::TestPlayMusic(const std::string& filePath, bool autoLoop) {
+    if (!m_Initialized) {
+        std::cout << "Audio Engine not initialized!" << std::endl;
+        return 0;
+    }
+
+    std::cout << "Testing music playback: " << filePath << std::endl;
+    auto asset = LoadAudioAsset(filePath);
+    if (!asset) {
+        std::cout << "Failed to load music file!" << std::endl;
+        return 0;
+    }
+
+    ALuint sourceId = PlaySound(asset, autoLoop, true);
+    if (sourceId == 0) {
+        std::cout << "Failed to play music!" << std::endl;
+        return 0;
+    }
+
+    std::cout << "Music playing with source ID: " << sourceId << std::endl;
+    std::cout << "Duration: " << asset->GetDuration() << " seconds" << std::endl;
+    std::cout << "Channels: " << asset->GetChannels() << std::endl;
+    std::cout << "Sample Rate: " << asset->GetSampleRate() << " Hz" << std::endl;
+    
+    return sourceId;
+}
+
+ALuint AudioEngine::TestPlaySoundEffect(const std::string& filePath, float x, float y, float z) {
+    if (!m_Initialized) {
+        std::cout << "Audio Engine not initialized!" << std::endl;
+        return 0;
+    }
+
+    std::cout << "Testing sound effect: " << filePath << std::endl;
+    std::cout << "Position: (" << x << ", " << y << ", " << z << ")" << std::endl;
+    
+    auto asset = LoadAudioAsset(filePath);
+    if (!asset) {
+        std::cout << "Failed to load sound effect file!" << std::endl;
+        return 0;
+    }
+
+    ALuint sourceId = PlaySound(asset, false, false);
+    if (sourceId == 0) {
+        std::cout << "Failed to play sound effect!" << std::endl;
+        return 0;
+    }
+
+    SetSourcePosition(sourceId, x, y, z);
+    std::cout << "Sound effect playing with source ID: " << sourceId << std::endl;
+    
+    return sourceId;
+}
+
+void AudioEngine::TestSetListenerPosition(float x, float y, float z) {
+    if (!m_Initialized) {
+        std::cout << "Audio Engine not initialized!" << std::endl;
+        return;
+    }
+
+    std::cout << "Setting listener position to: (" << x << ", " << y << ", " << z << ")" << std::endl;
+    SetListenerPosition(x, y, z);
+}
+
+void AudioEngine::TestPlayAllSupportedFormats() {
+    if (!m_Initialized) {
+        std::cout << "Audio Engine not initialized!" << std::endl;
+        return;
+    }
+
+    std::cout << "\n=== Testing Supported Audio Formats ===" << std::endl;
+    
+    // Test WAV format
+    std::cout << "\nTesting WAV format:" << std::endl;
+    if (std::filesystem::exists("EngineAssets/Sounds/effect.wav")) {
+        TestPlaySoundEffect("EngineAssets/Sounds/effect.wav");
+    } else {
+        std::cout << "WAV test file not found (EngineAssets/Sounds/effect.wav)" << std::endl;
+        std::cout << "Please create the EngineAssets/Sounds directory and add test audio files." << std::endl;
+    }
+
+    // Add more format tests as needed
+}
+
+void AudioEngine::PrintAudioDeviceInfo() const {
+    if (!m_Initialized) {
+        std::cout << "Audio Engine not initialized!" << std::endl;
+        return;
+    }
+
+    std::cout << "\n=== Audio Device Information ===" << std::endl;
+    std::cout << "Default Device: " << alcGetString(m_Device, ALC_DEVICE_SPECIFIER) << std::endl;
+    
+    // Get and display audio device capabilities
+    ALCint major, minor;
+    alcGetIntegerv(m_Device, ALC_MAJOR_VERSION, 1, &major);
+    alcGetIntegerv(m_Device, ALC_MINOR_VERSION, 1, &minor);
+    std::cout << "OpenAL Version: " << major << "." << minor << std::endl;
+
+    // Print max sources information
+    ALCint maxMono, maxStereo;
+    alcGetIntegerv(m_Device, ALC_MONO_SOURCES, 1, &maxMono);
+    alcGetIntegerv(m_Device, ALC_STEREO_SOURCES, 1, &maxStereo);
+    std::cout << "Maximum Mono Sources: " << maxMono << std::endl;
+    std::cout << "Maximum Stereo Sources: " << maxStereo << std::endl;
+}
+
+void AudioEngine::PrintActiveSourcesInfo() const {
+    if (!m_Initialized) {
+        std::cout << "Audio Engine not initialized!" << std::endl;
+        return;
+    }
+
+    std::cout << "\n=== Active Audio Sources ===" << std::endl;
+    std::cout << "Total active sources: " << m_ActiveSources.size() << std::endl;
+
+    for (const auto& [sourceId, source] : m_ActiveSources) {
+        ALint state;
+        alGetSourcei(sourceId, AL_SOURCE_STATE, &state);
+        
+        float x, y, z;
+        alGetSource3f(sourceId, AL_POSITION, &x, &y, &z);
+        
+        float gain;
+        alGetSourcef(sourceId, AL_GAIN, &gain);
+
+        std::cout << "\nSource ID: " << sourceId << std::endl;
+        std::cout << "Type: " << (source.isMusic ? "Music" : "Sound Effect") << std::endl;
+        std::cout << "State: ";
+        switch (state) {
+            case AL_INITIAL: std::cout << "Initial"; break;
+            case AL_PLAYING: std::cout << "Playing"; break;
+            case AL_PAUSED: std::cout << "Paused"; break;
+            case AL_STOPPED: std::cout << "Stopped"; break;
+            default: std::cout << "Unknown";
+        }
+        std::cout << std::endl;
+        std::cout << "Position: (" << x << ", " << y << ", " << z << ")" << std::endl;
+        std::cout << "Volume: " << gain << std::endl;
+        std::cout << "Looping: " << (source.isLooping ? "Yes" : "No") << std::endl;
     }
 }
 

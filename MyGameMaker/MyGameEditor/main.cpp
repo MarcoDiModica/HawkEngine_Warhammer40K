@@ -159,40 +159,147 @@ void drawFrustum(const CameraBase& camera)
 	//glEnd();
 }
 
+//WIP Undo/Redo for transform actions
+#pragma region CTRZ+CTRLY
 
-void MousePickingCheck(GameObject* object)
+struct TransformState {
+	glm::mat4 transform;
+	GameObject* gameObject;
+};
+
+std::stack<TransformState> undoStack;
+std::stack<TransformState> redoStack;
+
+
+void SaveState(GameObject* gameObject, const glm::mat4& currentTransform) {
+	undoStack.push({ currentTransform, gameObject });
+
+	while (!redoStack.empty()) {
+		redoStack.pop();
+	}
+}
+
+void Undo() {
+	if (!undoStack.empty()) {
+		TransformState previousState = undoStack.top();
+		undoStack.pop();
+
+		// Save the current state of the object for redo
+		redoStack.push({ previousState.gameObject->GetTransform()->GetMatrix(), previousState.gameObject });
+
+		// Apply the previous transform to the object
+		previousState.gameObject->GetTransform()->SetMatrix(previousState.transform);
+	}
+}
+
+void Redo() {
+	if (!redoStack.empty()) {
+		TransformState nextState = redoStack.top();
+		redoStack.pop();
+
+		// Save the current state of the object for undo
+		undoStack.push({ nextState.gameObject->GetTransform()->GetMatrix(), nextState.gameObject });
+
+		// Apply the next transform to the object
+		nextState.gameObject->GetTransform()->SetMatrix(nextState.transform);
+	}
+}
+
+void UndoRedo()
+{
+	static bool wasUsingGizmo = false;
+
+	if (ImGuizmo::IsUsing()) {
+		wasUsingGizmo = true;
+	}
+	else if (wasUsingGizmo) {
+		SaveState(Application->input->GetSelectedGameObjects().at(0), Application->input->GetSelectedGameObjects().at(0)->GetTransform()->GetMatrix());
+		wasUsingGizmo = false;
+	}
+
+	// Handle undo/redo input
+	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
+		Undo();
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) {
+		Redo();
+	}
+
+}
+
+
+#pragma endregion
+
+
+void MousePickingCheck(std::vector<GameObject*> objects)
 {	
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
-
-	if (object->HasComponent<MeshRenderer>()) {
-
-		BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-
-		bbox = object->GetTransform()->GetMatrix() * bbox;
-
-		//if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
-		//						camera->frustum.left, camera->frustum.right,
-		//						camera->frustum.top, camera->frustum.bot })) {
-		//	//return; // Aqu� omitimos el objeto si no est� en el frustum
-		//}
-
-		if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
-		{
-			Application->input->SetDraggedGameObject(object);
-		}
+	GameObject* selectedObject = nullptr;
+	bool selecting = false;
+	float distance = 0.0f;
+	float closestDistance = 0.0f;
+	if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused) 
+	{
 
 		if (ImGuizmo::IsOver()) {
-			return; 
+			return;
 		}
 
-		if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused )
-			if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+		selecting = true;
+		for (int i = 0; i < objects.size(); i++)
+		{
+			if (objects[i]->HasComponent<MeshRenderer>()) 
 			{
-				Application->input->ClearSelection();
-				Application->input->AddToSelection(object);
+				BoundingBox bbox = objects[i]->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+
+				bbox = objects[i]->GetTransform()->GetMatrix() * bbox;
+				glm::vec3 collisionPoint;
+				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
+				{
+                    distance = glm::distance(rayOrigin, collisionPoint);
+					if (distance < closestDistance || closestDistance == 0.0f)
+					{
+						closestDistance = distance;
+						selectedObject = objects[i];
+					}
+				}
 			}
+		}
 	}
+
+	if (selectedObject != nullptr && selecting == true)
+	{
+		Application->input->ClearSelection();
+		Application->input->SetDraggedGameObject(selectedObject);
+		Application->input->AddToSelection(selectedObject);
+	}
+}
+
+void RenderOutline(GameObject* object) {
+	if (!object->isSelected || !object->HasComponent<MeshRenderer>()) return;
+	
+	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT); 
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(-5.0f, -5.0f);
+	
+	glColor3f(1.0f, 0.5f, 0.0f); // Red outline
+
+	glPushMatrix();
+	glMultMatrixf(glm::value_ptr(modelMatrix));
+	object->GetComponent<MeshRenderer>()->Render();
+	glPopMatrix();
+
+
+	glDisable(GL_POLYGON_OFFSET_FILL);
+	glCullFace(GL_BACK);
+	glDisable(GL_CULL_FACE);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
 static void display_func() {
@@ -209,8 +316,7 @@ static void display_func() {
 
 	drawFloorGrid(128, 4);
 
-	
-
+	std::vector<GameObject*> objects;
 
 	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo ma�ana
 	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
@@ -229,18 +335,26 @@ static void display_func() {
 	{
 		GameObject* object = Application->root->currentScene->children()[i].get();
 		
+		objects.push_back(object);
+
+		RenderOutline(object);
+
 		object->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights,mainShader);
 		
 		object->Update(static_cast<float>(Application->GetDt()));
 
-		MousePickingCheck(object);
+	
 		for (size_t j = 0; j < object->GetChildren().size(); ++j)
 		{
 			GameObject* child = object->GetChildren()[j].get();
+			objects.push_back(child);
+			RenderOutline(child);
 			child->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights, mainShader);
-			MousePickingCheck(child);
+		
 		}
 	}
+
+	MousePickingCheck(objects);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -261,7 +375,7 @@ static void display_func2() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void PauCode2(MyGUI* gui) {
+void EditorRenderer(MyGUI* gui) {
 
 	if (Application->window->IsOpen()) {
 
@@ -284,14 +398,6 @@ int main(int argc, char** argv) {
 
 	// The application is created
 	Application = new App();
-
-	/*Application->camera = new Camera(Application);*/
-	
-	//std::shared_ptr<Camera> cameraPtr = std::make_shared<Camera>(Application);
-	//camera = cameraPtr.get();
-
-	//Application->camera = shared_ptr<Camera>
-	
 
 	//initialize devil
 	ilInit();
@@ -349,10 +455,8 @@ int main(int argc, char** argv) {
 		case LOOP:
 			
 
-			PauCode2(Application->gui);
-
-			/*particleEmitter->EmitParticle();*/
-
+			EditorRenderer(Application->gui);
+			UndoRedo();
 			if (!Application->Update()) {
 				state = FREE;
 			}
@@ -367,39 +471,5 @@ int main(int argc, char** argv) {
 		}
 
 	}
-
-
-
-
-
-
-	//initialize devil
-	//ilInit();
-	//iluInit();
-	//ilutInit();
-	//Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
-	//MyGUI gui(window.windowPtr(), window.contextPtr());
-
-	//init_openGL();
-	//camera.transform().pos() = vec3(0, 1, 4);
-	//camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
-
-	//
-
-	//mesh.LoadMesh("BakerHouse.fbx");
-	//mesh.LoadTexture("Baker_house.png");
-	//mesh.LoadCheckerTexture();
-
-	//while (window.processEvents(&gui) && window.isOpen()) {
-	//	const auto t0 = hrclock::now();
-	//display_func();
-	//	gui.render();
-	//	move_camera();
-	//	window.swapBuffers();
-	//	const auto t1 = hrclock::now();
-	//	const auto dt = t1 - t0;
-	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
-	//}
-
 	return 0;
 }

@@ -96,8 +96,8 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 		transform.AlignToGlobalUp();
 	}
 
-	if (Application->input->GetMouseZ() > 0) transform.Translate(glm::vec3(0, 0, zoomSpeed * deltaTime));
-	if (Application->input->GetMouseZ() < 0) transform.Translate(glm::vec3(0, 0, -zoomSpeed * deltaTime));
+	if (Application->input->GetMouseZ() > 0) transform.Translate(glm::vec3(0, 0, zoomSpeed*10 * deltaTime));
+	if (Application->input->GetMouseZ() < 0) transform.Translate(glm::vec3(0, 0, -zoomSpeed*10 * deltaTime));
 
 	/*float wheel = Application->input->GetMouseZ();
 	if (wheel != 0) {

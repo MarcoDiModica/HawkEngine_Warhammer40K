@@ -9,6 +9,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
+#include"../MyParticlesEngine/ParticlesEmitterComponent.h"
 #include "App.h"
 #include "Input.h"
 
@@ -22,6 +23,13 @@ class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
 
+void MakeParticlesEmmiter() {
+	auto particlesEmmiter = Application->root->CreateGameObject("ParticlesEmmiter");	
+    particlesEmmiter->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
+    particlesEmmiter->GetTransform()->SetPosition(vec3(0, 0.1, 0));
+    particlesEmmiter->GetTransform()->Rotate(-1.5708, vec3(0, 0, 0));
+    //auto particlesEmmiterComponent = particlesEmmiter->GetComponent<ParticlesEmitterComponent>();
+}
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
@@ -51,6 +59,7 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     MakeCity();
+	MakeParticlesEmmiter();
 
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");*/

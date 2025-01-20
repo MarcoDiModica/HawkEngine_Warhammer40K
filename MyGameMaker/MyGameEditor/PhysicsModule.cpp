@@ -23,7 +23,10 @@ bool PhysicsModule::Awake() {
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
     dynamicsWorld->setGravity(btVector3(0, -9.81, 0));
 
+    // Initialize vehicle raycaster
+    vehicle_raycaster = new btDefaultVehicleRaycaster(dynamicsWorld);
     
+    // Initialize shared collision shapes (e.g., cubeShape)
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
     //Plane functions
@@ -153,32 +156,55 @@ void PhysicsModule::AddConstraintP2P(GameObject& goA, GameObject& goB, const glm
 }
 
 void PhysicsModule::AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB, const glm::vec3& axisA, const glm::vec3& axisB, bool disable_collision) {
-    // Obtén los cuerpos rígidos de los GameObjects
     auto itA = gameObjectRigidBodyMap.find(&goA);
     auto itB = gameObjectRigidBodyMap.find(&goB);
 
     if (itA == gameObjectRigidBodyMap.end() || itB == gameObjectRigidBodyMap.end()) {
-        std::cerr << "Error: Uno o ambos GameObjects no tienen cuerpos rígidos asociados.\n";
+        std::cerr << "Error: One or both GameObjects do not have associated rigid bodies.\n";
         return;
     }
 
     btRigidBody* bodyA = itA->second;
     btRigidBody* bodyB = itB->second;
 
+    // Validate bodies
+    if (bodyA == nullptr || bodyB == nullptr) {
+        std::cerr << "Error: One or both rigid bodies are null.\n";
+        return;
+    }
+
+    if (bodyA == bodyB) {
+        std::cerr << "Error: Attempting to add a hinge constraint to the same rigid body.\n";
+        return;
+    }
+
     btHingeConstraint* hinge = new btHingeConstraint(
-        *bodyA,
-        *bodyB,
+        *bodyA, *bodyB,
         btVector3(anchorA.x, anchorA.y, anchorA.z),
         btVector3(anchorB.x, anchorB.y, anchorB.z),
         btVector3(axisA.x, axisA.y, axisA.z),
-        btVector3(axisB.x, axisB.y, axisB.z));
+        btVector3(axisB.x, axisB.y, axisB.z)
+    );
 
-    dynamicsWorld->addConstraint(hinge, disable_collision);
-    constraints.add(hinge); // Agregar a la lista de constraints para limpieza
-    hinge->setDbgDrawSize(2.0f);
+    // Ensure dynamicsWorld is ready
+    if (dynamicsWorld == nullptr) {
+        std::cerr << "Error: dynamicsWorld is not initialized.\n";
+        delete hinge;
+        return;
+    }
 
-    std::cout << "Hinge Constraint added between GameObjects.\n";
+    try {
+        dynamicsWorld->addConstraint(hinge, disable_collision);
+        constraints.add(hinge);
+        hinge->setDbgDrawSize(2.0f);
+        std::cout << "Hinge Constraint added between GameObjects.\n";
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Exception while adding constraint: " << e.what() << "\n";
+        delete hinge;
+    }
 }
+
 PhysVehicle3D* PhysicsModule::AddVehicle(const VehicleInfo& info)
 {
     btCompoundShape* comShape = new btCompoundShape();

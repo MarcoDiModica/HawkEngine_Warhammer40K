@@ -101,6 +101,9 @@ public:
         local_matrix[3] = glm::dvec4(position, 1.0);
     }
 
+    MonoObject* CsharpReference = nullptr;
+    MonoObject* GetSharp() override;
+
 protected:
     friend class SceneSerializer;
 
@@ -131,7 +134,8 @@ protected:
     bool decode(const YAML::Node& node);
 
 private:
-
+    // wow friends OoO
+    friend class SceneManager;
     friend class Root;
     friend class GameObject;
 

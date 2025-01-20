@@ -5,16 +5,11 @@
 
 #include <iostream>
 #include "Module.h"
+#include "../MyGameEngine/InputEngine.h"
 
 #define MAX_MOUSE_BUTTONS 5
 
-enum KEY_STATE
-{
-	KEY_IDLE = 0,
-	KEY_DOWN,
-	KEY_REPEAT,
-	KEY_UP
-};
+
 
 class Input : public Module
 {
@@ -43,61 +38,36 @@ public:
 
 	glm::vec3 getMousePickRay();
 
-	KEY_STATE GetKey(int id) const
-	{
-		return keyboard[id];
-	}
+	KEY_STATE GetKey(int id);
 
-	KEY_STATE GetMouseButton(int id) const
-	{
-		return mouse_buttons[id];
-	}
+	KEY_STATE GetMouseButton(int id);
 
-	int GetMouseX() const
-	{
-		return mouse_x;
-	}
+	int GetMouseX();
 
-	int GetMouseY() const
-	{
-		return mouse_y;
-	}
+	int GetMouseY();
 
-	int GetMouseZ() const
-	{
-		return mouse_z;
-	}
+	int GetMouseZ();
 
-	int GetMouseXMotion() const
-	{
-		return mouse_x_motion;
-	}
+	int GetMouseXMotion();
 
-	int GetMouseYMotion() const
-	{
-		return mouse_y_motion;
-	}
+	int GetMouseYMotion();
 
-	GameObject* GetDraggedGameObject() const
-	{
-		return draggedObject;
-	}
+	int GetAxis(const char* axisName);
 
-	void SetDraggedGameObject(GameObject* gameObject)
-	{
-		draggedObject = gameObject;
-	}
+	GameObject* GetDraggedGameObject();
+
+	void SetDraggedGameObject(GameObject* gameObject);
 
 	void AddToSelection(GameObject* gameObject);
 	void RemoveFromSelection(GameObject* gameObject);
-	std::vector<GameObject*> GetSelectedGameObjects() const;
+	std::vector<GameObject*> GetSelectedGameObjects();
 	void ClearSelection();
-	bool IsGameObjectSelected(GameObject* gameObject) const;
+	bool IsGameObjectSelected(GameObject* gameObject);
 
 	void HandleFileDrop(const std::string& fileDir);
 
 private:
-	KEY_STATE* keyboard;
+	/*KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 	int mouse_x;
 	int mouse_y;
@@ -108,7 +78,7 @@ private:
 	float dy;
 	std::vector<GameObject*> selectedObjects;
 	std::vector<GameObject*> copiedObjects;
-	GameObject* draggedObject;
+	GameObject* draggedObject;*/
 	EditorCamera* camera;
 };
 

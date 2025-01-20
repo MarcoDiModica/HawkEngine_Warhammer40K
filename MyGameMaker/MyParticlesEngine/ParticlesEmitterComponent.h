@@ -3,15 +3,20 @@
 #include "Particle.h"
 #include <chrono>
 #include <vector>
+#include "../MyGameEngine/Component.h"
+#include "../MyGameEngine/GameObject.h"
 
-class ParticlesEmitterComponent {
+class ParticlesEmitterComponent : public Component{
 public:
-    ParticlesEmitterComponent();
+    ParticlesEmitterComponent(GameObject* owner);
     ~ParticlesEmitterComponent();
-    void Update();
-    void Start();
+    void Start() override;
+    void Update(float deltaTime) override;
+    void Destroy() override;
     void EmitParticle();
 	
+    std::unique_ptr<Component> Clone(GameObject* owner) override;
+    ComponentType GetType() const override { return ComponentType::PARTICLES_EMITTER; }
     glm::vec3 GetPosition() const;
 
 private:

@@ -1,9 +1,14 @@
 #include "ParticlesEmitterComponent.h"
 #include "../MyGameEditor/App.h"
+#include"../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/TransformComponent.h"
+#include <iostream>
 #include <chrono>
 
 //Inicializar la última vez que se generó una partícula
-ParticlesEmitterComponent::ParticlesEmitterComponent() {
+ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner) : Component(owner) 
+{ 
+    name = "ParticleEmmiter"; 
     lastSpawnTime = std::chrono::steady_clock::now();
 }
 
@@ -20,7 +25,7 @@ void ParticlesEmitterComponent::EmitParticle() {
     std::cout << "Partícula generada" << std::endl;
 }
 
-void ParticlesEmitterComponent::Update() {
+void ParticlesEmitterComponent::Update(float deltaTime) {
     
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsedTime = now - lastSpawnTime;

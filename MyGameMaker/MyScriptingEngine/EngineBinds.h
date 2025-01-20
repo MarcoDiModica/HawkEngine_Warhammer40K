@@ -13,7 +13,7 @@ namespace EngineBinds {
 
     // GameObject
     MonoObject* CreateGameObjectSharp(MonoString* name);
-    MonoString* GameObjectGetName(MonoObject* sharpRef);
+
     GameObject* ConvertFromSharp(MonoObject* sharpObj);
     void GameObjectAddChild(MonoObject* parent, MonoObject* child);
     void Destroy(MonoObject* object_to_destroy);
@@ -23,6 +23,9 @@ namespace EngineBinds {
 
     template <class T>
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
+
+    MonoString* GameObjectGetName(MonoObject* sharpRef);
+    void SetName(MonoObject* ref, MonoString* sharpName);
 
     // Input
     bool GetKey(int keyID);

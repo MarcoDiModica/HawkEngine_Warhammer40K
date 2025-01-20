@@ -50,6 +50,9 @@ public class TestingComponent : MonoBehaviour
             Engineson.print("count: " + count);
             count++;
             timer = 0.0f;
+
+            actor.name = count.ToString();
+
         }
     }
 }

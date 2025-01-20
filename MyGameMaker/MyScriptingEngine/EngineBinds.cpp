@@ -113,6 +113,13 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
 
 }
 
+
+void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
+
+    char* C_name = mono_string_to_utf8(sharpName);
+    ConvertFromSharp(ref)->SetName(std::string(C_name));
+}
+
 // Input
 bool EngineBinds::GetKey(int keyID) {
     return Application->input->GetKey(keyID) == KEY_REPEAT;
@@ -331,6 +338,7 @@ void EngineBinds::BindEngine() {
     // GameObject
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
+    mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
     mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
@@ -384,16 +392,16 @@ T* EngineBinds::ConvertFromSharpComponent(MonoObject* sharpComp) {
     uintptr_t Cptr;
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", typeName.c_str());
 
-    std::cerr << "Buscando clase: " << typeName << std::endl;
+    std::cerr << "Looking for class : " << typeName << std::endl;
 
     if (!klass) {
-        throw std::runtime_error("Clase no encontrada en el assembly de C#: " + typeName);
+        throw std::runtime_error("Class not found in the C#: " + typeName);
     }
 
     MonoClassField* field = mono_class_get_field_from_name(klass, "CplusplusInstance");
 
     if (!field) {
-        throw std::runtime_error("Campo CplusplusInstance no encontrado en la clase: " + typeName);
+        throw std::runtime_error("field CplusplusInstance not found: " + typeName);
     }
 
     mono_field_get_value(sharpComp, field, &Cptr);

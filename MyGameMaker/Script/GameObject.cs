@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,20 +12,10 @@ namespace HawkEngine
     {
         UIntPtr CplusplusInstance; /* ptr to C++ instance */
 
-        // most of theese constructors are for testing
-        public GameObject(string name)
-        {
-            this.name = name;
-            Engineson.print("Ive been called with the name " + name);
-            //CplusplusInstance = ptr;
-        }
-
         public GameObject(string name, UIntPtr C_doppleganger)
         {
-            this.name = name;
-
             CplusplusInstance = C_doppleganger;
-
+            this.name = name;
             Engineson.print("Ive gotten the name " + GetName());
 
             if (name == "Samson") {
@@ -33,18 +24,6 @@ namespace HawkEngine
 
            // EngineCalls.Destroy(this);
         }
-
-        public GameObject()
-        {
-            Engineson.print("I am a go created in C#");
-            //CplusplusInstance = ptr;
-        }
-
-        public GameObject(int num)
-        {
-            Engineson.print("Ive been called with number " + num);
-        }
-
 
         public  T GetComponent<T>()
         {
@@ -70,11 +49,6 @@ namespace HawkEngine
             return TryAddComponent<T>( Engineson.MapComponent(typeof(T)) );
         }
 
-
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern string GetName();
-
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddChild(GameObject child);
 
@@ -91,7 +65,7 @@ namespace HawkEngine
 
         //--------Fields-----------//
 
-        private string name;
+       // private string name;
         //public extern string name
         //{
         //    [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -106,6 +80,26 @@ namespace HawkEngine
 
             set; // Set in C#
         }
+
+        public string name
+        {
+            get
+            {
+                  
+                return GetName();
+            }
+            set
+            {
+                SetName(value);
+            }
+        }
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        private  extern string GetName();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        private  extern void SetName(string newTag);
+
 
     }
 }

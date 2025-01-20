@@ -12,6 +12,17 @@
 class GameObject;
 struct VehicleInfo;
 struct PhysVehicle3D;
+
+struct FinalVehicleInfo {
+
+    FinalVehicleInfo(GameObject* chassis, std::vector<GameObject*> wheels, PhysVehicle3D* bulletVehicle) :
+		chassis(chassis), wheels(wheels), bulletVehicle(bulletVehicle) {}
+	GameObject* chassis;
+	std::vector<GameObject*> wheels;
+    PhysVehicle3D* bulletVehicle;
+};  
+
+
 class PhysicsModule : public Module {
 public:
     PhysicsModule(App* app);
@@ -33,12 +44,13 @@ public:
 
     void AddConstraintP2P(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB);
     PhysVehicle3D* AddVehicle(const VehicleInfo& info);
-    void CreateVehicleComponents(PhysVehicle3D* vehicle, const VehicleInfo& info);
+    void SyncVehicleComponents(PhysVehicle3D* vehicle, GameObject* chassis, std::vector<GameObject*> wheels);
     // Añade una restricción de bisagra (Hinge)
     void AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB,
         const glm::vec3& axisA, const glm::vec3& axisB, bool disable_collision = false);
     void SpawnPhysSphereWithForce(const glm::vec3& cameraPosition, float radius, float forceMagnitude);
 
+    p2List<FinalVehicleInfo*> vehicles;
 private:
     btDiscreteDynamicsWorld* dynamicsWorld;
     btBroadphaseInterface* broadphase;
@@ -49,7 +61,6 @@ private:
 	p2List<btCollisionShape*> shapes;
     btCollisionShape* cubeShape;
     btDefaultVehicleRaycaster* vehicle_raycaster;
-    p2List<PhysVehicle3D*> vehicles;
 
     // Relación entre GameObject y su cuerpo rígido
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;

@@ -35,14 +35,14 @@ bool PhysicsModule::Awake() {
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
     //Plane functions
-  /*  btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+   btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 
-    dynamicsWorld->addRigidBody(groundRigidBody);*/
+    dynamicsWorld->addRigidBody(groundRigidBody);
 
     return true;
 }
@@ -228,6 +228,10 @@ bool PhysicsModule::Update(double dt) {
     dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 10);
     SyncTransforms();
 
+    for (p2List_item<FinalVehicleInfo*>* item = vehicles.getFirst(); item != nullptr; item = item->next) {
+        FinalVehicleInfo* vehicle = item->data;
+        SyncVehicleComponents(vehicle->bulletVehicle, vehicle->chassis, vehicle->wheels);
+    }
    
 
     return true;
@@ -328,6 +332,7 @@ void PhysicsModule::AddConstraintHinge(GameObject& goA, GameObject& goB, const g
     }
 }
 
+//Crea el coche en bullet
 PhysVehicle3D* PhysicsModule::AddVehicle(const VehicleInfo& info)
 {
     btCompoundShape* comShape = new btCompoundShape();
@@ -369,85 +374,83 @@ PhysVehicle3D* PhysicsModule::AddVehicle(const VehicleInfo& info)
 
     vehicle->setCoordinateSystem(0, 1, 2);
 
-    for (int i = 0; i < info.num_wheels; ++i)
-    {
+    for (int i = 0; i < info.num_wheels; ++i) {
         btVector3 conn(info.wheels[i].connection.x, info.wheels[i].connection.y, info.wheels[i].connection.z);
-        btVector3 dir(info.wheels[i].direction.x, info.wheels[i].direction.y, info.wheels[i].direction.z);
-        btVector3 axis(info.wheels[i].axis.x, info.wheels[i].axis.y, info.wheels[i].axis.z);
+        btVector3 dir(info.wheels[i].direction.x, info.wheels[i].direction.y, info.wheels[i].direction.z); // Dirección de suspensión
+        btVector3 axis(info.wheels[i].axis.x, info.wheels[i].axis.y, info.wheels[i].axis.z);             // Eje de rotación
 
+        // Asegurarte de que 'axis' sea perpendicular a 'dir'
+        // Por ejemplo: dir es (0, -1, 0), entonces axis debe ser (-1, 0, 0) o (1, 0, 0)
         vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
     }
     // ---------------------
     PhysVehicle3D* pvehicle = new PhysVehicle3D(body, vehicle, info);
     body->setUserPointer(pvehicle);
     dynamicsWorld->addVehicle(vehicle);
-    vehicles.add(pvehicle);
 
     // Crear componentes asociados al vehículo (ruedas y chasis)
-    CreateVehicleComponents(pvehicle, info);
+    //CreateVehicleComponents(pvehicle, info);
 
     return pvehicle;
 }
 
-void PhysicsModule::CreateVehicleComponents(PhysVehicle3D* vehicle, const VehicleInfo& info)
-{
-    // Crear las ruedas como cilindros
-    for (int i = 0; i < info.num_wheels; ++i)
-    {
-        // Crear un cilindro para cada rueda
-        GameObject* wheel = new GameObject("Wheel_" + std::to_string(i));
-        Transform_Component* transform = wheel->GetTransform();
-
-        // Posición inicial de la rueda
-        glm::vec3 position(info.wheels[i].connection.x, info.wheels[i].connection.y, info.wheels[i].connection.z);
-        transform->SetPosition(position);
-
-        // Configurar la forma física del cilindro
-        btCollisionShape* wheelShape = new btCylinderShape(btVector3(info.wheels[i].radius, info.wheels[i].width * 0.5f, info.wheels[i].radius));
-        shapes.add(wheelShape);
-
-        // Crear el cuerpo rígido para la rueda
-        btTransform startTransform;
-        startTransform.setIdentity();
-        startTransform.setOrigin(btVector3(position.x, position.y, position.z));
-
-        btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-        btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, wheelShape, btVector3(0, 0, 0));
-        btRigidBody* rigidBody = new btRigidBody(rbInfo);
-
-        dynamicsWorld->addRigidBody(rigidBody);
-        gameObjectRigidBodyMap[wheel] = rigidBody;
-
-        std::cout << "Wheel_" << i << " created at position: (" << position.x << ", " << position.y << ", " << position.z << ")\n";
+void PhysicsModule::SyncVehicleComponents(PhysVehicle3D* vehicle, GameObject* chassis, std::vector<GameObject*> wheels) {
+    if (!vehicle || !chassis || wheels.size() != vehicle->info.num_wheels) {
+        std::cerr << "Error: Mismatch between vehicle and game objects.\n";
+        return;
     }
 
-    // Crear el chasis como un cubo
-    GameObject* chassis = new GameObject("Chassis");
-    Transform_Component* chassisTransform = chassis->GetTransform();
+    const VehicleInfo& info = vehicle->info;
 
-    // Posición inicial del chasis
-    glm::vec3 chassisPosition(0, 1, 0); // Cambia esto según sea necesario
-    chassisTransform->SetPosition(chassisPosition);
+    // Sincronizar el chasis
+    {
+        const btTransform& chassisTransform = vehicle->vehicle->getChassisWorldTransform();
+        btVector3 chassisPos = chassisTransform.getOrigin();
+        btQuaternion chassisRot = chassisTransform.getRotation();
 
-    // Configurar la forma física del cubo
-    btCollisionShape* chassisShape = new btBoxShape(btVector3(info.chassis_size.x * 0.5f, info.chassis_size.y * 0.5f, info.chassis_size.z * 0.5f));
-    shapes.add(chassisShape);
+        glm::vec3 newChassisPos(chassisPos.getX(), chassisPos.getY(), chassisPos.getZ());
+        glm::quat newChassisRot(chassisRot.getW(), chassisRot.getX(), chassisRot.getY(), chassisRot.getZ());
 
-    // Crear el cuerpo rígido para el chasis
-    btTransform chassisTransformBt;
-    chassisTransformBt.setIdentity();
-    chassisTransformBt.setOrigin(btVector3(chassisPosition.x, chassisPosition.y, chassisPosition.z));
+        glm::dvec3 newPosition = { chassisPos[0], chassisPos[1], chassisPos[2] };
+        glm::dvec3 deltaPos = newPosition - chassis->GetTransform()->GetPosition();
+        chassis->GetTransform()->Translate(deltaPos);
 
-    btDefaultMotionState* chassisMotionState = new btDefaultMotionState(chassisTransformBt);
-    btRigidBody::btRigidBodyConstructionInfo chassisRbInfo(info.mass, chassisMotionState, chassisShape, btVector3(0, 0, 0));
-    btRigidBody* chassisRigidBody = new btRigidBody(chassisRbInfo);
 
-    dynamicsWorld->addRigidBody(chassisRigidBody);
-    gameObjectRigidBodyMap[chassis] = chassisRigidBody;
+        glm::dvec3 newRotation = glm::radians(glm::dvec3(chassisRot[0], chassisRot[1], chassisRot[2]));
+        glm::dvec3 currentRotation = glm::radians(chassis->GetTransform()->GetEulerAngles());
+        glm::dvec3 deltaRot = newRotation - currentRotation;
 
-    std::cout << "Chassis created at position: (" << chassisPosition.x << ", " << chassisPosition.y << ", " << chassisPosition.z << ")\n";
+        chassis->GetTransform()->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+        chassis->GetTransform()->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+        chassis->GetTransform()->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+    }
+
+    // Sincronizar las ruedas
+    for (size_t i = 0; i < wheels.size(); ++i) {
+        btTransform wheelTransform;
+        vehicle->vehicle->updateWheelTransform(static_cast<int>(i), true); // Obtener transformación actualizada
+        wheelTransform = vehicle->vehicle->getWheelTransformWS(static_cast<int>(i));
+
+        btVector3 wheelPos = wheelTransform.getOrigin();
+        btQuaternion wheelRot = wheelTransform.getRotation();
+
+        glm::vec3 newWheelPos(wheelPos.getX(), wheelPos.getY(), wheelPos.getZ());
+        glm::quat newWheelRot(wheelRot.getW(), wheelRot.getX(), wheelRot.getY(), wheelRot.getZ());
+
+        glm::dvec3 newPosition = { wheelPos[0], wheelPos[1], wheelPos[2] };
+        glm::dvec3 deltaPos = newPosition - wheels[i]->GetTransform()->GetPosition();
+        wheels[i]->GetTransform()->Translate(deltaPos);
+
+
+        glm::dvec3 newRotation = glm::radians(glm::dvec3(wheelRot[0], wheelRot[1], wheelRot[2]));
+        glm::dvec3 currentRotation = glm::radians(wheels[i]->GetTransform()->GetEulerAngles());
+        glm::dvec3 deltaRot = newRotation - currentRotation;
+
+        wheels[i]->GetTransform()->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+        wheels[i]->GetTransform()->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+        wheels[i]->GetTransform()->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+    }
 }
-
 void PhysicsModule::SpawnPhysSphereWithForce(const glm::vec3& cameraPosition, float radius, float forceMagnitude) {
     // Crear la esfera como antes
     btSphereShape* sphereShape = new btSphereShape(radius);

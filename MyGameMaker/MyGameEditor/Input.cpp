@@ -18,6 +18,7 @@
 #include <iostream>
 #include <filesystem>
 #include "glm/glm.hpp"
+#include <vector>
 
 
 #define MAX_KEYS 300
@@ -129,12 +130,16 @@ void SpawnCar() {
     chassis->GetTransform()->SetPosition(glm::vec3(0, 29, 1));
     chassis->GetTransform()->SetScale(car.chassis_size);
 
-    // Renderizar las ruedas
+    // Add a member to store the wheels
+    std::vector<std::shared_ptr<GameObject>> wheels;
+
+    // Crear ruedas como shared_ptr y almacenarlas en un vector de punteros sin procesar
+    std::vector<GameObject*> rawWheels;
     for (int i = 0; i < car.num_wheels; ++i) {
         auto wheel = Application->root->CreateCylinder("wheel" + std::to_string(i));
         wheel->GetTransform()->SetPosition(glm::vec3(
             car.wheels[i].connection.x,
-            car.wheels[i].connection.y + 29, // Altura ajustada para coincidir con el chasis
+            car.wheels[i].connection.y + 29, // Altura ajustada
             car.wheels[i].connection.z
         ));
         wheel->GetTransform()->SetScale(glm::vec3(
@@ -142,8 +147,18 @@ void SpawnCar() {
             car.wheels[i].width,
             car.wheels[i].radius * 2
         ));
+
+        // Aplicar rotación inicial para alinear el cilindro al eje X
+		wheel->GetTransform()->Rotate(90, glm::vec3(0, 1, 0));
+
+        // Convertir shared_ptr a puntero sin procesar y agregar al vector
+        rawWheels.push_back(wheel.get());
+        wheels.push_back(std::move(wheel));
     }
 
+    // Crear el objeto FinalVehicleInfo
+    FinalVehicleInfo* finalVehicleInfo = new FinalVehicleInfo(chassis.get(), rawWheels, vehicle);
+    Application->physicsModule->vehicles.add(finalVehicleInfo);
     std::cout << "Car spawned successfully with chassis and wheels rendered.\n";
 }
 

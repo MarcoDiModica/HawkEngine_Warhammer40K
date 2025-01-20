@@ -1,6 +1,7 @@
 #include "Particle.h"
 #include "ParticlesEmitterComponent.h"
 #include "../MyGameEditor/Log.h"
+#include "../MyGameEngine/Image.h"
 
 Particle* particle = nullptr;
 
@@ -15,6 +16,7 @@ void Particle::Update(float deltaTime) {
         // Actualizar la posición de la partícula usando su velocidad        
 		position[0] += speed[0] * deltaTime; 
 
+		Draw();
         // Disminuir el tiempo de vida de la partícula
         lifetime -= deltaTime;
     }
@@ -31,6 +33,10 @@ void Particle::Spawn() {
 }
 
 void Particle::Draw() {
+
+    texture->LoadTexture("../MyGameEditor/Assets/Textures/SmokeParticleTexture.png");
+    textureID = texture->id();
+
     if (textureID == 0) {
         std::cout << "Textura no cargada" << std::endl;
         return; // Asegurarse de que la textura está cargada

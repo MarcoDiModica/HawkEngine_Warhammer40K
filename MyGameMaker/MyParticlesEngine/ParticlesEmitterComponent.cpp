@@ -71,7 +71,8 @@ glm::vec3 ParticlesEmitterComponent::GetPosition() const {
 Particle* ParticlesEmitterComponent::SetParticleVariables(Particle* variablesParticle) {
 	variablesParticle->position.push_back(emmiter->position); // Posición inicial
 	variablesParticle->speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f)); // Velocidad inicial
-	variablesParticle->lifetime = 5.0f; // Duración de la partícula en segundos
+	variablesParticle->lifetime = 10.0f; // Duración de la partícula en segundos
 	variablesParticle->rotation = 0.0f; // Rotación inicial
+    
 	return variablesParticle;
 }

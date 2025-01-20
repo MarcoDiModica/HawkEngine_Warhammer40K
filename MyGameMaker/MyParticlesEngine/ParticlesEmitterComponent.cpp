@@ -15,6 +15,8 @@ ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner) : Compon
 void ParticlesEmitterComponent::Start() {
 	emitterParticle = new Particle();
 	deltaTime = Application->GetDt();
+	position = owner->GetComponent<Transform_Component>()->GetPosition();
+	SetParticleVariables(emitterParticle);
 }
 
 void ParticlesEmitterComponent::EmitParticle() {

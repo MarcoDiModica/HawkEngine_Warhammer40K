@@ -5,17 +5,22 @@
 #include <iostream>
 #include <chrono>
 
+ParticlesEmitterComponent* emmiter = nullptr;
+
 //Inicializar la última vez que se generó una partícula
 ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner) : Component(owner) 
 { 
     name = "ParticleEmmiter"; 
     lastSpawnTime = std::chrono::steady_clock::now();
+    deltaTime = Application->GetDt();
+    position = owner->GetComponent<Transform_Component>()->GetPosition();
 }
 
-void ParticlesEmitterComponent::Start() {
-	emitterParticle = new Particle();
-	deltaTime = Application->GetDt();
-	position = owner->GetComponent<Transform_Component>()->GetPosition();
+void ParticlesEmitterComponent::Start() 
+{
+	emmiter = new ParticlesEmitterComponent(owner);
+	emmiter->position = owner->GetComponent<Transform_Component>()->GetPosition();
+	emitterParticle = new Particle();	
 	SetParticleVariables(emitterParticle);
 }
 
@@ -64,7 +69,7 @@ glm::vec3 ParticlesEmitterComponent::GetPosition() const {
 }
 
 Particle* ParticlesEmitterComponent::SetParticleVariables(Particle* variablesParticle) {
-	variablesParticle->position.push_back(position);
+	variablesParticle->position.push_back(emmiter->position); // Posición inicial
 	variablesParticle->speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f)); // Velocidad inicial
 	variablesParticle->lifetime = 5.0f; // Duración de la partícula en segundos
 	variablesParticle->rotation = 0.0f; // Rotación inicial

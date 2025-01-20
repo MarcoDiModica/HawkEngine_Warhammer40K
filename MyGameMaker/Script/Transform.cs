@@ -10,7 +10,13 @@ namespace HawkEngine
         public extern void SetPosition(float x, float y, float z);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetRotation(float x, float y, float z);
+        public extern Vector3 GetPosition();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetRotation(float pitch, float yaw, float roll);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern Vector3 GetEulerAngles();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetRotationQuat(Quaternion rotation);
@@ -58,8 +64,29 @@ namespace HawkEngine
         public override void Update(float deltaTime) { }
         public override void Destroy() { }
 
+        //-------------Fields ----------------//
+        public Vector3 position
+        {
+            get
+            {
+                return GetPosition();
+            }
+            set
+            {
+                SetPosition(value.X , value.Y, value.Z);
+            }
+        }
 
-        // Faltan algunos m�todos 
-        // Probablemente tenga que a�adir getters y setters para las propiedades de la transformaci�n
+        public Vector3 eulerAngles
+        {
+            get
+            {
+                return GetEulerAngles();
+            }
+            set
+            {
+                SetRotation(value.X, value.Y, value.Z);
+            }
+        }
     }
 }

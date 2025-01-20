@@ -8,6 +8,10 @@
 
 class GameObject;
 
+struct Vector3 {
+    float X, Y, Z; 
+};
+
 namespace EngineBinds {
     void BindEngine();
 
@@ -39,9 +43,10 @@ namespace EngineBinds {
 
     // Transform
     void SetPosition(MonoObject* transformRef, float x, float y, float z);
-    void GetPosition(MonoObject* transformRef, glm::vec3* position);
+    Vector3 GetPosition(MonoObject* transformRef);
     void SetRotation(MonoObject* transformRef, float x, float y, float z);
     void SetRotationQuat(MonoObject* transformRef, glm::quat* rotation);
+    Vector3 GetEulerAngles(MonoObject* transformRef);
     void Rotate(MonoObject* transformRef, float radians, glm::vec3* axis);
     void RotateLocal(MonoObject* transformRef, float radians, glm::vec3* axis);
     void LookAt(MonoObject* transformRef, glm::vec3* target);

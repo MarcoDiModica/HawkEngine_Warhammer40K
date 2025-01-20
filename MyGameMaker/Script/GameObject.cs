@@ -85,7 +85,6 @@ namespace HawkEngine
         {
             get
             {
-                  
                 return GetName();
             }
             set

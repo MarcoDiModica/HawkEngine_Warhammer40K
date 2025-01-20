@@ -164,14 +164,22 @@ void EngineBinds::SetPosition(MonoObject* transformRef, float x, float y, float 
     if (transform) transform->SetPosition(glm::vec3(x, y, z));
 }
 
-void EngineBinds::GetPosition(MonoObject* transformRef, glm::vec3* position) {
+Vector3 EngineBinds::GetPosition(MonoObject* transformRef) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
-    if (transform) *position = transform->GetPosition();
+    glm::dvec3 p = transform->GetPosition();
+    return Vector3 {(float) p.x,(float)p.y,(float)p.z };
 }
 
 void EngineBinds::SetRotation(MonoObject* transformRef, float x, float y, float z) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     if (transform) transform->SetRotation(glm::vec3(x, y, z));
+}
+
+Vector3 EngineBinds::GetEulerAngles(MonoObject* transformRef) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    
+    auto v = transform->GetRotation();
+    return Vector3{(float) v.x,(float)v.y,(float)v.z };
 }
 
 void EngineBinds::SetRotationQuat(MonoObject* transformRef, glm::quat* rotation) {
@@ -358,6 +366,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Transform::SetPosition", (const void*)&EngineBinds::SetPosition);
     mono_add_internal_call("HawkEngine.Transform::GetPosition", (const void*)&EngineBinds::GetPosition);
     mono_add_internal_call("HawkEngine.Transform::SetRotation", (const void*)&EngineBinds::SetRotation);
+    mono_add_internal_call("HawkEngine.Transform::GetEulerAngles", (const void*)&EngineBinds::GetEulerAngles);
     mono_add_internal_call("HawkEngine.Transform::SetRotationQuat", (const void*)&EngineBinds::SetRotationQuat);
     mono_add_internal_call("HawkEngine.Transform::Rotate", (const void*)&EngineBinds::Rotate);
     mono_add_internal_call("HawkEngine.Transform::RotateLocal", (const void*)&EngineBinds::RotateLocal);

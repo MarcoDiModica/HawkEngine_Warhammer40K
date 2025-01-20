@@ -40,7 +40,7 @@ bool UIMainMenuBar::Draw()
 	style.FramePadding = ImVec2(10.0f, 10.f);
 
 	if (ImGui::BeginMainMenuBar()) {
-		// Inicia el menú "General"
+		// Inicia el menï¿½ "General"
 
 		if (ImGui::BeginMenu("File"))
 		{
@@ -83,6 +83,8 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Console")) { Application->gui->showConsole = !Application->gui->showConsole; }
 			if (ImGui::MenuItem("Settings")) { Application->gui->showSettings = !Application->gui->showSettings; }
 			if (ImGui::MenuItem("Inspector")) { Application->gui->showInspector = !Application->gui->showInspector; }
+			if (ImGui::MenuItem("Audio Test", NULL, &Application->gui->showAudioTest)) {}
+
 			ImGui::EndMenu();
 		}
 		//---------Play and Stop Button----------//
@@ -107,7 +109,7 @@ bool UIMainMenuBar::Draw()
 			}
 		}
 
-		// Finaliza la barra de menú principal
+		// Finaliza la barra de menï¿½ principal
 		ImGui::EndMainMenuBar();
 	}
 

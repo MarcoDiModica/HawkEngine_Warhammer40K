@@ -6,6 +6,7 @@
 #include "MyGUI.h"
 #include "Input.h"
 #include "Root.h"
+
 #include "Log.h"
 
 #include "UISettings.h"
@@ -34,6 +35,8 @@ App::App() {
 
 	scene_serializer = new SceneSerializer(this);
 
+	physicsModule = new PhysicsModule(this);
+
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(hardwareInfo, true);
@@ -42,6 +45,7 @@ App::App() {
 	AddModule(camera, true);
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
+	AddModule(physicsModule, true);
 
 };
 
@@ -166,7 +170,7 @@ bool App::DoUpdate()
 			return false;
 	}
 
-
+	
 	
 
 

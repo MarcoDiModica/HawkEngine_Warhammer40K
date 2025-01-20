@@ -191,24 +191,23 @@ GameObject0:
       enabled: true
       matrix:
         row0:
-          col0: 0.5
           col1: 0
           col2: 0
           col3: 0
         row1:
           col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
+          col1: -1.809995069379511e-06
+          col2: -0.50000000000000011
           col3: 0
         row2:
           col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
+          col1: 0.50000000000000011
+          col2: -1.809995069379511e-06
           col3: 0
         row3:
           col0: -0.014301300048828125
-          col1: 0.099999952189396737
-          col2: -0.013016045093448567
+          col1: 0.099999949336051941
+          col2: -0.013016045093536379
           col3: 1
     MeshRenderer:
       name: MeshRenderer
@@ -985,18 +984,15 @@ GameObject0:
       mesh_name: City_building_041
       material_path: material_41.mat
 GameObject1:
-  name: Script
-  "":
-    name: ""
-    enabled: true
+  name: MainCamera
   Transform_Component:
     name: Transform_Component
     enabled: true
     matrix:
       row0:
-        col0: 1
+        col0: -1
         col1: 0
-        col2: 0
+        col2: -1.2246467991473532e-16
         col3: 0
       row1:
         col0: 0
@@ -1004,39 +1000,13 @@ GameObject1:
         col2: 0
         col3: 0
       row2:
-        col0: 0
+        col0: 1.2246467991473532e-16
         col1: 0
-        col2: 1
+        col2: -1
         col3: 0
       row3:
         col0: 0
-        col1: 0
-        col2: 0
-        col3: 1
-GameObject2:
-  name: aaa
-  Transform_Component:
-    name: Transform_Component
-    enabled: true
-    matrix:
-      row0:
-        col0: 1
-        col1: 0
-        col2: 0
-        col3: 0
-      row1:
-        col0: 0
-        col1: 1
-        col2: 0
-        col3: 0
-      row2:
-        col0: 0
-        col1: 0
-        col2: 1
-        col3: 0
-      row3:
-        col0: 0
-        col1: 0
+        col1: 0.5
         col2: 0
         col3: 1
   CameraComponent:

@@ -101,8 +101,13 @@
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>
+
     <ProjectReference Include="..\MyScriptingEngine\MyScriptingEngine.vcxproj">
       <Project>{c0f74fc2-d269-40d3-bdd1-557d2e8478be}</Project>
+
+    <ProjectReference Include="..\MyAudioEngine\MyAudioEngine.vcxproj">
+      <Project>{1603c380-66d8-4904-864c-f7767e2c5f7d}</Project>
+
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -114,8 +119,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGUI.cpp" />
     <ClCompile Include="MyWindow.cpp" />
+    <ClCompile Include="PhysicsModule.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
+    <ClCompile Include="UIAudioTest.cpp" />
     <ClCompile Include="UICamera.cpp" />
     <ClCompile Include="UIConsole.cpp" />
     <ClCompile Include="UIElement.cpp" />
@@ -135,8 +142,10 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="MyGUI.h" />
     <ClInclude Include="MyWindow.h" />
+    <ClInclude Include="PhysicsModule.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
+    <ClInclude Include="UIAudioTest.h" />
     <ClInclude Include="UICamera.h" />
     <ClInclude Include="UIConsole.h" />
     <ClInclude Include="UIElement.h" />

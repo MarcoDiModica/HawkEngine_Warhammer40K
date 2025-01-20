@@ -6,14 +6,16 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
-#include "../MyGameEditor/Root.h" //QUITAR: CAMBIAR POR ROOT DEL ENGINE
+#include "../MyGameEngine/SceneManager.h"
+
+#include "../MyGameEditor/Root.h" // cosa ilegal 
 
 #include <mono/metadata/debug-helpers.h>
 
 // GameObject
 MonoObject* EngineBinds::CreateGameObjectSharp(MonoString* name) {
     char* C_name = mono_string_to_utf8(name);
-    std::shared_ptr<GameObject> obj = Application->root->CreateGameObject(C_name); //SUSTITUIR POR ROOT DEL ENGINE
+    std::shared_ptr<GameObject> obj = SceneManagement->CreateGameObject(C_name); //SUSTITUIR POR ROOT DEL ENGINE
 
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
     MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
@@ -70,7 +72,7 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
     mono_field_get_value(object_to_destroy, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
     GameObject* actor = reinterpret_cast<GameObject*>(Cptr);
-    Application->root->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
+    SceneManagement->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
 }
 
 MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* comoponent_name)

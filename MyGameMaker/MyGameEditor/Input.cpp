@@ -12,6 +12,7 @@
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
 #include "../MyGameEngine/PhysVehicle3D.h"
+#include "PhysicsModule.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -30,6 +31,7 @@ Input::Input(App* app) : Module(app)
     keyboard = new KEY_STATE[MAX_KEYS];
     memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
     memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
+
 }
 
 Input::~Input()
@@ -56,6 +58,7 @@ bool Input::Awake()
 
 	camera = Application->camera;
 
+
     return ret;
 }
 
@@ -77,9 +80,11 @@ bool Input::Update(double dt)
 std::string CopyFBXFileToProject(const std::string& sourceFilePath);
 
 void SpawnPhysCube() {
-    auto cube = Application->root->CreateCube("PhysicsCube");
-    cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
-    Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
+    //auto cube = Application->root->CreateCube("PhysicsCube");
+    //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
+    //Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
+    glm::vec3 cameraPosition = Application->camera->GetPosition(); // Reemplaza con la forma en que obtienes la posición de la cámara
+	Application->physicsModule->SpawnPhysSphereWithForce(cameraPosition, 1.0f, 15.0f);
 }
 void SpawnCar() {
     // Configuración del vehículo
@@ -119,22 +124,27 @@ void SpawnCar() {
     PhysVehicle3D* vehicle = Application->physicsModule->AddVehicle(car);
     vehicle->SetPos(0, 29, 1); // Posición inicial del vehículo
 
-    // Crear un cubo que represente visualmente el chasis del coche
-    auto chassisCube = Application->root->CreateCube("chassis");
-    chassisCube->GetTransform()->SetPosition(glm::vec3(0, 29, 1)); // Posición inicial del cubo
+    // Renderizar el chasis
+    auto chassis = Application->root->CreateCube("chassis");
+    chassis->GetTransform()->SetPosition(glm::vec3(0, 29, 1));
+    chassis->GetTransform()->SetScale(car.chassis_size);
 
-    // Vincular el cubo a un cuerpo físico
-    Application->physicsModule->CreatePhysicsForGameObject(*chassisCube, 0.1f);
+    // Renderizar las ruedas
+    for (int i = 0; i < car.num_wheels; ++i) {
+        auto wheel = Application->root->CreateCylinder("wheel" + std::to_string(i));
+        wheel->GetTransform()->SetPosition(glm::vec3(
+            car.wheels[i].connection.x,
+            car.wheels[i].connection.y + 29, // Altura ajustada para coincidir con el chasis
+            car.wheels[i].connection.z
+        ));
+        wheel->GetTransform()->SetScale(glm::vec3(
+            car.wheels[i].radius * 2,
+            car.wheels[i].width,
+            car.wheels[i].radius * 2
+        ));
+    }
 
-    // Crear un constraint tipo hinge entre el chasis del cubo (GameObject) y algún punto del vehículo
-    Application->physicsModule->AddConstraintHinge(
-        *chassisCube, *chassisCube, // Usamos el cubo para el constraint
-        glm::vec3(0, 1, 0), glm::vec3(0, 0, 6), // Conexión y puntos de pivote
-        glm::vec3(0, 1, 0), glm::vec3(0, 1, 0), // Ejes de rotación
-        false // Colisiones entre los objetos desactivadas
-    );
-
-    std::cout << "Car spawned successfully with chassis linked to physics.\n";
+    std::cout << "Car spawned successfully with chassis and wheels rendered.\n";
 }
 
 
@@ -198,8 +208,8 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             mouse_z = event.wheel.y;
-            SpawnPhysCube();
-			//SpawnCar();
+           // SpawnPhysCube();
+			SpawnCar();
             break;
 
         case SDL_MOUSEMOTION:

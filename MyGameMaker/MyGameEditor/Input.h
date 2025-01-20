@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include "Module.h"
+#include "EditorCamera.h"
+#include "PhysicsModule.h"
 
 #define MAX_MOUSE_BUTTONS 5
 
@@ -110,6 +112,7 @@ private:
 	std::vector<GameObject*> copiedObjects;
 	GameObject* draggedObject;
 	EditorCamera* camera;
+
 };
 
 #endif // !__INPUT_H__

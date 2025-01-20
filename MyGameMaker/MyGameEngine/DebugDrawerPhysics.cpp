@@ -1,5 +1,5 @@
 #include "DebugDrawerPhysics.h"
-
+#include <glm/gtc/constants.hpp>
 DebugDrawerPhysics::DebugDrawerPhysics() : mode(DBG_DrawWireframe) {}
 
 void DebugDrawerPhysics::drawLine(const btVector3& from, const btVector3& to, const btVector3& color) {
@@ -68,6 +68,36 @@ void DebugDrawerPhysics::drawBoundingBox(const BoundingBox& bbox, const glm::vec
     drawWiredLine(bbox.v001(), bbox.v101(), color);
     drawWiredLine(bbox.v011(), bbox.v111(), color);
     drawWiredLine(bbox.v010(), bbox.v110(), color);
+
+    glPopAttrib();
+}
+void DebugDrawerPhysics::drawSphere(const glm::vec3& center, float radius, const glm::vec3& color, int segments) {
+    glPushAttrib(GL_CURRENT_BIT | GL_LINE_BIT);
+
+    glColor3f(color.r, color.g, color.b);
+    glLineWidth(2.0f);
+
+    // Dibujar los círculos en los planos X-Y, Y-Z, y X-Z
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i <= segments; i++) {
+        float angle = glm::two_pi<float>() * i / segments;
+        glVertex3f(center.x + radius * cos(angle), center.y + radius * sin(angle), center.z);
+    }
+    glEnd();
+
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i <= segments; i++) {
+        float angle = glm::two_pi<float>() * i / segments;
+        glVertex3f(center.x, center.y + radius * sin(angle), center.z + radius * cos(angle));
+    }
+    glEnd();
+
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i <= segments; i++) {
+        float angle = glm::two_pi<float>() * i / segments;
+        glVertex3f(center.x + radius * cos(angle), center.y, center.z + radius * sin(angle));
+    }
+    glEnd();
 
     glPopAttrib();
 }

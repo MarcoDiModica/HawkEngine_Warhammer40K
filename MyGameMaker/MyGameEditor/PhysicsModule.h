@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include "../MyGameEngine/p2List.h"
 #include "../MyGameEngine/DebugDrawerPhysics.h"
+//#include "../MyGameEditor/App.h"
 
 
 class GameObject;
@@ -36,6 +37,7 @@ public:
     // Añade una restricción de bisagra (Hinge)
     void AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB,
         const glm::vec3& axisA, const glm::vec3& axisB, bool disable_collision = false);
+    void SpawnPhysSphereWithForce(const glm::vec3& cameraPosition, float radius, float forceMagnitude);
 
 private:
     btDiscreteDynamicsWorld* dynamicsWorld;

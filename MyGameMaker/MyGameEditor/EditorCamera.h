@@ -23,7 +23,9 @@ public:
 
 	glm::dmat4 view() const { return GetViewMatrix(transform); }
 	glm::dmat4 projection() const { return GetProjectionMatrix(); }
-
+	glm::vec3 GetPosition() const {
+		return glm::vec3(transform.GetPosition());
+	}
 	float GetMovementSpeed() const { return cameraSpeed; }
 	void SetMovementSpeed(float speed) { cameraSpeed = speed; }
 

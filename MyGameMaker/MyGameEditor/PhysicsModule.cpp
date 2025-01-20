@@ -5,6 +5,7 @@
 #include "../MyGameEngine/PhysVehicle3D.h"
 #include <iostream>
 #include <glm/glm.hpp>
+#include "App.h"
 
 
 PhysicsModule::PhysicsModule(App* app)
@@ -34,14 +35,14 @@ bool PhysicsModule::Awake() {
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
     //Plane functions
-    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+  /*  btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 
-    dynamicsWorld->addRigidBody(groundRigidBody);
+    dynamicsWorld->addRigidBody(groundRigidBody);*/
 
     return true;
 }
@@ -123,17 +124,53 @@ std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWor
 }
 void PhysicsModule::DrawDebugDrawer() {
     if (debugDrawer) {
-
-        
-        //glDisable(GL_LIGHTING);  // Desactiva la iluminación temporalmente
         auto rigidBodies = GetAllRigidBodies(dynamicsWorld);
+
         for (const auto& rigidBody : rigidBodies) {
-            btVector3 min, max;
-            rigidBody->getAabb(min, max);
-            BoundingBox bbox(glm::vec3(min.getX(), min.getY(), min.getZ()), glm::vec3(max.getX(), max.getY(), max.getZ()));
-            debugDrawer->drawBoundingBox(bbox, glm::vec3(1.0f, 0.0f, 0.0f));  // Dibuja la BoundingBox en rojo
+            if (!rigidBody || !rigidBody->getCollisionShape()) {
+                continue; // Salta si no hay forma de colisión
+            }
+
+            btCollisionShape* shape = rigidBody->getCollisionShape();
+
+            if (shape->getShapeType() == BOX_SHAPE_PROXYTYPE) {
+                // Dibuja un cubo si la forma es un cubo
+                btBoxShape* boxShape = static_cast<btBoxShape*>(shape);
+                btVector3 halfExtents = boxShape->getHalfExtentsWithMargin();
+
+                btTransform transform;
+                rigidBody->getMotionState()->getWorldTransform(transform);
+
+                BoundingBox bbox(
+                    glm::vec3(transform.getOrigin().getX() - halfExtents.getX(),
+                        transform.getOrigin().getY() - halfExtents.getY(),
+                        transform.getOrigin().getZ() - halfExtents.getZ()),
+                    glm::vec3(transform.getOrigin().getX() + halfExtents.getX(),
+                        transform.getOrigin().getY() + halfExtents.getY(),
+                        transform.getOrigin().getZ() + halfExtents.getZ())
+                );
+
+                debugDrawer->drawBoundingBox(bbox, glm::vec3(0.0f, 1.0f, 0.0f)); // Dibuja el cubo en verde
+            }
+            else if (shape->getShapeType() == SPHERE_SHAPE_PROXYTYPE) {
+                // Dibuja una esfera si la forma es una esfera
+                btSphereShape* sphereShape = static_cast<btSphereShape*>(shape);
+                float radius = sphereShape->getRadius();
+
+                btTransform transform;
+                rigidBody->getMotionState()->getWorldTransform(transform);
+
+                glm::vec3 center(transform.getOrigin().getX(),
+                    transform.getOrigin().getY(),
+                    transform.getOrigin().getZ());
+
+                debugDrawer->drawSphere(center, radius, glm::vec3(1.0f, 0.0f, 0.0f), 16); // Dibuja la esfera en rojo
+            }
+            else {
+                // Otros tipos de colisión (por ahora no renderizamos)
+                continue;
+            }
         }
-        //glEnable(GL_LIGHTING);  // Reactiva la iluminación
     }
 }
 
@@ -360,6 +397,34 @@ void PhysicsModule::CreateVehicleComponents(PhysVehicle3D* vehicle, const Vehicl
     gameObjectRigidBodyMap[chassis] = chassisRigidBody;
 
     std::cout << "Chassis created at position: (" << chassisPosition.x << ", " << chassisPosition.y << ", " << chassisPosition.z << ")\n";
+}
+
+void PhysicsModule::SpawnPhysSphereWithForce(const glm::vec3& cameraPosition, float radius, float forceMagnitude) {
+    // Crear la esfera como antes
+    btSphereShape* sphereShape = new btSphereShape(radius);
+    btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(cameraPosition.x, cameraPosition.y, cameraPosition.z)));
+
+    btScalar mass = 1.0f;
+    btVector3 localInertia(0, 0, 0);
+    sphereShape->calculateLocalInertia(mass, localInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, sphereShape, localInertia);
+    btRigidBody* sphereRigidBody = new btRigidBody(rbInfo);
+
+    // Añadir el rigidbody al mundo de física
+    dynamicsWorld->addRigidBody(sphereRigidBody);
+
+    // Obtener la dirección de la cámara
+    glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();// Este método debería devolver la dirección de la cámara
+    btVector3 btCameraDirection(cameraDirection.x, cameraDirection.y, cameraDirection.z);
+
+    // Aplicar una fuerza en la dirección de la cámara
+    btVector3 force = btCameraDirection * forceMagnitude;
+
+    // Aplicar la fuerza al rigidbody de la esfera
+    sphereRigidBody->applyCentralImpulse(force);
+
+   // LOG(LogType::LOG_OK, "Fuerza aplicada a la esfera: [%f, %f, %f]", force.x(), force.y(), force.z());
 }
 
 bool PhysicsModule::Start() {

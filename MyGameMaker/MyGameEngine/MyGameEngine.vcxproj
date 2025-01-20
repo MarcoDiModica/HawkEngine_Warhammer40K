@@ -97,6 +97,7 @@
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="readOnlyView.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TreeExt.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="Octree.cpp" />
     <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>

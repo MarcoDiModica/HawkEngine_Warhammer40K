@@ -43,6 +43,7 @@
 #include "MyGameEngine/LightComponent.h"
 #include "MyGameEngine/Shaders.h"
 #include "MyGameEngine/Material.h"
+#include "MyGameEngine/SceneManager.h"
 #include "App.h"
 
 //#include <mono/metadata/assembly.h>
@@ -87,6 +88,7 @@ static EditorCamera* camera = nullptr;
 Shaders mainShader;
 
 App* Application = NULL;
+SceneManager* SceneManagement = NULL;
 
 static void init_openGL() {
 	glewInit();
@@ -106,7 +108,7 @@ static void drawFloorGrid(int size, double step) {
 	//glColor3ub(0, 2, 200);
 
 	glBegin(GL_LINES);
-	Application->root->currentScene->DebugDrawTree();
+	// CHANGE Application->root->currentScene->DebugDrawTree();
 
 	for (double i = -size; i <= size; i += step) {
 		glVertex3d(i, 0, -size);
@@ -327,9 +329,9 @@ static void display_func() {
 	std::vector<GameObject*> objects;
 
 	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo ma�ana
-	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
 	{
-		GameObject* object = Application->root->currentScene->children()[i].get();
+		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 
 		if (object->HasComponent<LightComponent>()) {
 			auto it = std::find(lights.begin(), lights.end(), object);
@@ -339,9 +341,9 @@ static void display_func() {
 		}
 	}
 
-	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
 	{
-		GameObject* object = Application->root->currentScene->children()[i].get();
+		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 		
 		objects.push_back(object);
 

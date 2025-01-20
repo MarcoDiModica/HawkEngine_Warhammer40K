@@ -1,39 +1,28 @@
-
-#ifndef ROOT_H
-#define ROOT_H
+#pragma once
+#ifndef SCENEMANAGER_H
+#define SCENEMANAGER_H
 
 #pragma once
-#include "Module.h"
-#include "../MyGameEngine/Mesh.h"
-#include "../MyGameEngine/GameObject.h"
-#include "../MyGameEngine/Scene.h"
-#include "../MyGameEditor/App.h"
-#include "../MyGameEditor/Input.h"
-#include "../MyGameEngine/readOnlyView.h"
-#include "../MyGameEngine/SceneManager.h"
-#include "SceneSerializer.h"
+
+#include "Mesh.h"
+#include "GameObject.h"
+#include "Scene.h"
+#include "readOnlyView.h"
+#include "Material.h"
+
 #include <list>
-
-class Material;
-
-class Root : public Module
+#include <string>
+#include <memory>
+class SceneManager
 {
 public:
-    Root(App* app);
 
-    virtual ~Root() {
-        free(SceneManagement);
-    };
-
-    bool Awake();
+    SceneManager() {
+        int i = 8;
+    }
 
     bool Start();
-
-    bool PreUpdate() { return true; }
     bool Update(double dt);
-    bool PostUpdate() { return true; }
-
-    bool CleanUp() { return true; }
 
     void CreateScene(const std::string& name);
     void AddScene(std::shared_ptr<Scene> scene);
@@ -41,7 +30,6 @@ public:
     void SetActiveScene(const std::string& name);
 
 
-    bool ParentGameObject(GameObject& child, GameObject& father);
 
     std::shared_ptr<Scene> GetActiveScene() const;
 
@@ -55,7 +43,7 @@ public:
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr);
 
-    
+    bool ParentGameObject(GameObject& child, GameObject& father);
 
     void RemoveGameObject(GameObject* gameObject);
 
@@ -68,11 +56,12 @@ public:
 
     //main camera
     std::shared_ptr<GameObject> mainCamera = nullptr;
-
-    friend SceneSerializer;
-
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
+
 };
 
+extern SceneManager* SceneManagement;
+
 #endif
+

@@ -134,7 +134,8 @@ protected:
     bool decode(const YAML::Node& node);
 
 private:
-
+    // wow friends OoO
+    friend class SceneManager;
     friend class Root;
     friend class GameObject;
 

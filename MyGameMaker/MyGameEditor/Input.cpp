@@ -190,7 +190,7 @@ bool Input::processSDLEvents()
                         for (auto& copiedObject : copiedObjects) {
                             auto newObject = std::make_shared<GameObject>(*copiedObject);
                             newObject->SetName(copiedObject->GetName() + "_copy");
-                            Application->root->currentScene->AddGameObject(newObject);
+                            Application->root->GetActiveScene()->AddGameObject(newObject);
                         }
                     }
                 }
@@ -203,7 +203,7 @@ bool Input::processSDLEvents()
                         for (auto& selectedObject : selectedObjects) {
                             auto newObject = std::make_shared<GameObject>(*selectedObject);
                             newObject->SetName(selectedObject->GetName() + "_copy");
-                            Application->root->currentScene->AddGameObject(newObject);
+                            Application->root->GetActiveScene()->AddGameObject(newObject);
                         }
                     }
                 }
@@ -268,8 +268,6 @@ void Input::HandleFileDrop(const std::string& fileDir)
             Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
             go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
             go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
-
-            //Application->root->currentScene->AddGameObject(MarcoVicePresidente2);
 
 
             Application->root->ParentGameObject(*go, *MarcoVicePresidente);

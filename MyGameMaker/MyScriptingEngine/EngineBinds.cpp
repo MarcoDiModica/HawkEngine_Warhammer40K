@@ -7,8 +7,7 @@
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/SceneManager.h"
-
-#include "../MyGameEditor/Root.h" // cosa ilegal 
+#include "../MyGameEngine/InputEngine.h"
 
 #include <mono/metadata/debug-helpers.h>
 
@@ -124,39 +123,39 @@ void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
 // Input
 bool EngineBinds::GetKey(int keyID) {
-    return Application->input->GetKey(keyID) == KEY_REPEAT;
+    return InputManagement->GetKey(keyID) == KEY_REPEAT;
 }
 
 bool EngineBinds::GetKeyDown(int keyID) {
-    return Application->input->GetKey(keyID) == KEY_DOWN;
+    return InputManagement->GetKey(keyID) == KEY_DOWN;
 }
 
 bool EngineBinds::GetKeyUp(int keyID) {
-    return Application->input->GetKey(keyID) == KEY_UP;
+    return InputManagement->GetKey(keyID) == KEY_UP;
 }
 
 bool EngineBinds::GetMouseButton(int buttonID) {
-    return Application->input->GetMouseButton(buttonID) == KEY_REPEAT;
+    return InputManagement->GetMouseButton(buttonID) == KEY_REPEAT;
 }
 
 bool EngineBinds::GetMouseButtonDown(int buttonID) {
-    return Application->input->GetMouseButton(buttonID) == KEY_DOWN;
+    return InputManagement->GetMouseButton(buttonID) == KEY_DOWN;
 }
 
 bool EngineBinds::GetMouseButtonUp(int buttonID) {
-    return Application->input->GetMouseButton(buttonID) == KEY_UP;
+    return InputManagement->GetMouseButton(buttonID) == KEY_UP;
 }
 
 int EngineBinds::GetAxis(MonoString* axisName) {
     char* C_name = mono_string_to_utf8(axisName);
-    return Application->input->GetAxis(C_name);
+    return InputManagement->GetAxis(C_name);
 }
 
 glm::vec3 EngineBinds::GetMousePosition() {
     glm::vec3 pos;
-    pos.x = Application->input->GetMouseX();
-    pos.y = Application->input->GetMouseY();
-    pos.z = Application->input->GetMouseZ();
+    pos.x = InputManagement->GetMouseX();
+    pos.y = InputManagement->GetMouseY();
+    pos.z = InputManagement->GetMouseZ();
     return pos;
 }
 

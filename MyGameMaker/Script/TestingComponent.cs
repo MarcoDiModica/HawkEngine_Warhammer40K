@@ -36,6 +36,7 @@ public class TestingComponent : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        return;
         if (Input.GetKeyDown(KeyCode.A))
         {
             Engineson.print("pressing a");

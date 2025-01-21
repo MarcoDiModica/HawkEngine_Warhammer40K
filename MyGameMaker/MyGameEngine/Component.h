@@ -13,7 +13,6 @@
     #define YAML_CPP_API __declspec(dllimport)
   #endif
 #include <yaml-cpp/yaml.h>
-#include <mono/metadata/object.h>
 
 class GameObject;
 class SceneSerializer;
@@ -23,9 +22,8 @@ enum class ComponentType {
 	TRANSFORM,
 	MESH_RENDERER,
 	CAMERA,
-	SCRIPT,
+	LIGHT,
 	PARTICLES_EMITTER,
-	LIGHT
 };
 
 class Component
@@ -54,11 +52,7 @@ public:
 
 	//GameObject* owner2;
 
-	virtual  MonoObject* GetSharp() { return nullptr; }
-
 protected:
-
-	MonoObject* CsharpReference = nullptr;
 
 	friend class SceneSerializer;
 

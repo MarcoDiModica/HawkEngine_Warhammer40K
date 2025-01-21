@@ -5,9 +5,6 @@
 #include "TreeExt.h"
 #include "Mesh.h"
 #include "BoundingBox.h"
-#include "../MyScriptingEngine/EngineBinds.h"
-#include <mono/metadata/object.h>
-
 
 
 class SceneSerializer;
@@ -97,10 +94,6 @@ public:
 
     OctreeNode* node = nullptr;
 
-    MonoObject* GetSharp();
-
-    MonoObject* CsharpReference = nullptr;
-
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -109,10 +102,9 @@ private:
     void DrawInstancedMatrix() const;
     void DrawPushPopMatrix() const;
 
+
     std::string name;
     unsigned int gid;
-private:
-    
     static unsigned int nextGid;
     std::string tag = "Untagged";
     bool active = true;
@@ -125,7 +117,6 @@ private:
 
     //Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
-
 
 
 

@@ -4,6 +4,11 @@
     <Exec Command="$(VcpkgRoot)bootstrap-vcpkg.bat" />
   </Target>
 
+	<Target Name="BuildMono" BeforeTargets="ClCompile" Condition="'$(ProjectName)'=='MyGameEngine'">
+		<Message Text="Building mono..." Importance="high" />
+		<MSBuild Projects="$(MSBuildThisFileDirectory)..\mono\msvc\msvc.sln" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
+	</Target>
+
   <Import Project="$(VcpkgRoot)scripts\buildsystems\msbuild\vcpkg.targets" />
   
 </Project>

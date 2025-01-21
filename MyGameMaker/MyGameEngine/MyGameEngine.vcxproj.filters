@@ -18,6 +18,8 @@
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="..\MyParticlesEngine\Particle.cpp" />
     <ClCompile Include="..\MyParticlesEngine\ParticlesEmitterComponent.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="InputEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -41,5 +43,7 @@
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="..\MyParticlesEngine\Particle.h" />
     <ClInclude Include="..\MyParticlesEngine\ParticlesEmitterComponent.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="InputEngine.h" />
   </ItemGroup>
 </Project>

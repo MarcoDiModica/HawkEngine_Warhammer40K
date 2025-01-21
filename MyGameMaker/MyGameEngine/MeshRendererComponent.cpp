@@ -8,6 +8,10 @@
 #include "Image.h"
 #include "Shaders.h"
 #include <iostream>
+#include "../MyScriptingEngine/MonoManager.h"
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/debug-helpers.h>
+#include <mono/jit/jit.h>
 
 //cosailegal
 #include "../MyGameEditor/App.h"
@@ -82,6 +86,56 @@ void MeshRenderer::SetImage(std::shared_ptr<Image> image)
 //{
 //    return image;
 //}
+
+MonoObject* MeshRenderer::GetSharp()
+{
+    if (CsharpReference) {
+        return CsharpReference;
+    }
+
+    // 1. Obtener la clase de C#
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "MeshRenderer");
+    if (!klass) {
+        // Manejar el error si la clase no se encuentra
+        return nullptr;
+    }
+
+    // 2. Crear una instancia del objeto de C#
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+    if (!monoObject) {
+        // Manejar el error si la instancia no se puede crear
+        return nullptr;
+    }
+
+    // 3. Obtener el constructor correcto
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.MeshRenderer:.ctor(uintptr,HawkEngine.GameObject)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    if (!method)
+    {
+        //Manejar error si el constructor no se encuentra
+        return nullptr;
+    }
+
+    // 4. Preparar los argumentos para el constructor
+    uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this); 
+    MonoObject* ownerGo = owner->GetSharp(); // Obtenemos la instancia del propietario de C#
+    if (!ownerGo)
+    {
+        //Manejar error si el propietario no tiene instancia de C#
+        return nullptr;
+    }
+
+    void* args[2];
+    args[0] = &componentPtr;
+    args[1] = ownerGo;
+
+    // 5. Invocar al constructor
+    mono_runtime_invoke(method, monoObject, args, NULL);
+
+    // 6. Guardar la referencia y devolverla
+    CsharpReference = monoObject;
+    return CsharpReference;
+}
 
 void MeshRenderer::Render() const
 {

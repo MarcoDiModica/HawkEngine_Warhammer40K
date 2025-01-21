@@ -38,12 +38,22 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
-#include "MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "./MyScriptingEngine/MonoManager.h"
 
 #include "MyGameEngine/LightComponent.h"
 #include "MyGameEngine/Shaders.h"
 #include "MyGameEngine/Material.h"
+#include "MyGameEngine/SceneManager.h"
+#include "MyGameEngine/InputEngine.h"
 #include "App.h"
+
+//#include <mono/metadata/assembly.h>
+//#include <mono/jit/jit.h>
+
+//#include "../MyScriptingEngine/MonoEnvironment.h"
+
+
+//TODO BALDAN : xcopy mono / place manually in x64/Debug folder
 
 using namespace std;
 
@@ -79,6 +89,8 @@ static EditorCamera* camera = nullptr;
 Shaders mainShader;
 
 App* Application = NULL;
+SceneManager* SceneManagement = NULL;
+InputEngine* InputManagement = NULL;
 
 static void init_openGL() {
 	glewInit();
@@ -98,7 +110,7 @@ static void drawFloorGrid(int size, double step) {
 	//glColor3ub(0, 2, 200);
 
 	glBegin(GL_LINES);
-	Application->root->currentScene->DebugDrawTree();
+	// CHANGE Application->root->currentScene->DebugDrawTree();
 
 	for (double i = -size; i <= size; i += step) {
 		glVertex3d(i, 0, -size);
@@ -319,9 +331,9 @@ static void display_func() {
 	std::vector<GameObject*> objects;
 
 	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo ma�ana
-	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
 	{
-		GameObject* object = Application->root->currentScene->children()[i].get();
+		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 
 		if (object->HasComponent<LightComponent>()) {
 			auto it = std::find(lights.begin(), lights.end(), object);
@@ -331,9 +343,9 @@ static void display_func() {
 		}
 	}
 
-	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
 	{
-		GameObject* object = Application->root->currentScene->children()[i].get();
+		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 		
 		objects.push_back(object);
 
@@ -398,6 +410,10 @@ int main(int argc, char** argv) {
 
 	// The application is created
 	Application = new App();
+	//MonoEnvironment* mono = new MonoEnvironment();
+//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
+	MonoManager::GetInstance().Initialize();
+
 
 	//initialize devil
 	ilInit();
@@ -471,5 +487,39 @@ int main(int argc, char** argv) {
 		}
 
 	}
+
+
+	MonoManager::GetInstance().Shutdown();
+
+
+
+	//initialize devil
+	//ilInit();
+	//iluInit();
+	//ilutInit();
+	//Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
+	//MyGUI gui(window.windowPtr(), window.contextPtr());
+
+	//init_openGL();
+	//camera.transform().pos() = vec3(0, 1, 4);
+	//camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
+
+	//
+
+	//mesh.LoadMesh("BakerHouse.fbx");
+	//mesh.LoadTexture("Baker_house.png");
+	//mesh.LoadCheckerTexture();
+
+	//while (window.processEvents(&gui) && window.isOpen()) {
+	//	const auto t0 = hrclock::now();
+	//display_func();
+	//	gui.render();
+	//	move_camera();
+	//	window.swapBuffers();
+	//	const auto t1 = hrclock::now();
+	//	const auto dt = t1 - t0;
+	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
+	//}
+
 	return 0;
 }

@@ -37,11 +37,16 @@ public:
 
     void Render() const;
 
+    MonoObject* CsharpReference = nullptr;
+    MonoObject* GetSharp() override;
+
 private:
     std::shared_ptr<Mesh> mesh;
    // std::shared_ptr<Image> image;
     std::shared_ptr<Material> material;
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+
+
 
 protected:
     YAML::Node encode() override {

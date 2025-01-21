@@ -10,6 +10,7 @@
 #include "../MyGameEditor/App.h"
 #include "../MyGameEditor/Input.h"
 #include "../MyGameEngine/readOnlyView.h"
+#include "../MyGameEngine/SceneManager.h"
 #include "SceneSerializer.h"
 #include <list>
 
@@ -20,7 +21,9 @@ class Root : public Module
 public:
     Root(App* app);
 
-    virtual ~Root() = default;
+    virtual ~Root() {
+        free(SceneManagement);
+    };
 
     bool Awake();
 
@@ -58,6 +61,8 @@ public:
 
     bool ParentGameObjectToScene(GameObject& child);
     bool ParentGameObjectToObject(GameObject& child, GameObject& father);
+
+    std::shared_ptr<GameObject> FindGOByName(char* name);
 
     std::shared_ptr<Scene> currentScene = nullptr;
 

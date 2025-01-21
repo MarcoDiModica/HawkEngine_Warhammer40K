@@ -13,10 +13,15 @@
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
 #include "..\MyGameEngine\LightComponent.h"
+#include "..\MyScriptingEngine\ScriptComponent.h"
 #include <string>
 
 #include <imgui.h>
 #include <imgui_internal.h>
+
+#include <mono/jit/jit.h>
+#include <mono/metadata/reflection.h>
+#include "../MyScriptingEngine/MonoManager.h"
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
@@ -298,6 +303,7 @@ bool UIInspector::Draw() {
 				LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
 			}
 		}
+
         ImGui::Separator();
 
         if (selectedGameObject->HasComponent<LightComponent>())
@@ -383,6 +389,106 @@ bool UIInspector::Draw() {
             else
             {
                 LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
+            }
+        }
+
+        ImGui::Separator();
+
+        if (selectedGameObject->HasComponent<ScriptComponent>())
+        {
+            ScriptComponent* scriptComponent = selectedGameObject->GetComponent<ScriptComponent>();
+
+            if (scriptComponent && scriptComponent->monoScript)
+            {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Script"))
+                {
+                    std::string scriptName = scriptComponent->GetName();
+                    ImGui::Text("Script: %s", scriptName.c_str());
+
+                    MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
+
+                    MonoClassField* field = nullptr;
+                    void* iter = nullptr;
+                    while ((field = mono_class_get_fields(scriptClass, &iter)))
+                    {
+                        const char* fieldName = mono_field_get_name(field);
+                        MonoType* fieldType = mono_field_get_type(field);
+                        int typeCode = mono_type_get_type(fieldType);
+
+                        MonoClass* fieldParentClass = mono_field_get_parent(field);
+
+                        ImGui::PushID(field);
+
+                        if (typeCode == MONO_TYPE_STRING)
+                        {
+                            MonoString* monoString = nullptr;
+                            mono_field_get_value(scriptComponent->monoScript, field, &monoString);
+                            std::string value = monoString ? mono_string_to_utf8(monoString) : "";
+
+                            char buffer[128];
+                            strncpy(buffer, value.c_str(), sizeof(buffer));
+                            buffer[sizeof(buffer) - 1] = '\0';
+
+                            if (ImGui::InputText(fieldName, buffer, sizeof(buffer)))
+                            {
+                                value = buffer;
+                                MonoString* newMonoString = mono_string_new(mono_domain_get(), value.c_str());
+                                mono_field_set_value(scriptComponent->monoScript, field, newMonoString);
+                            }
+                        }
+                        else if (typeCode == MONO_TYPE_BOOLEAN)
+                        {
+                            bool value = false;
+                            mono_field_get_value(scriptComponent->monoScript, field, &value);
+                            if (ImGui::Checkbox(fieldName, &value))
+                            {
+                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            }
+                        }
+                        else if (typeCode == MONO_TYPE_I4)
+                        {
+                            int value = 0;
+                            mono_field_get_value(scriptComponent->monoScript, field, &value);
+                            if (ImGui::InputInt(fieldName, &value))
+                            {
+                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            }
+                        }
+                        else if (typeCode == MONO_TYPE_R4)
+                        {
+                            float value = 0.0f;
+                            mono_field_get_value(scriptComponent->monoScript, field, &value);
+                            if (ImGui::InputFloat(fieldName, &value))
+                            {
+                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            }
+                        }
+                        else if (typeCode == MONO_TYPE_R8)
+                        {
+                            double value = 0.0;
+                            mono_field_get_value(scriptComponent->monoScript, field, &value);
+                            if (ImGui::InputDouble(fieldName, &value))
+                            {
+                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            }
+                        }
+
+
+                        ImGui::PopID();
+                    }
+                }
+            }
+            else
+            {
+                if (!scriptComponent)
+                {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: ScriptComponent is nullptr");
+                }
+                else
+                {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
+                }
             }
         }
     }

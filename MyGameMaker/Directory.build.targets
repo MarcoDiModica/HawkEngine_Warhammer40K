@@ -1,0 +1,9 @@
+<Project>
+  
+  <Target Name="VcPkgBootstrap" BeforeTargets="ClCompile" Condition="!Exists('$(VcpkgRoot)vcpkg.exe')">
+    <Exec Command="$(VcpkgRoot)bootstrap-vcpkg.bat" />
+  </Target>
+
+  <Import Project="$(VcpkgRoot)scripts\buildsystems\msbuild\vcpkg.targets" />
+  
+</Project>

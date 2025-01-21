@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
-    <VcpkgRoot>$(MSBuildThisFileDirectory)vcpkg</VcpkgRoot>
+    <VcpkgRoot>$(MSBuildThisFileDirectory)..\vcpkg\</VcpkgRoot>
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
     <VcpkgManifestInstall>true</VcpkgManifestInstall>
     <VcpkgManifestRoot>$(MSBuildThisFileDirectory)</VcpkgManifestRoot>
   </PropertyGroup>
-  <Import Project="$(MSBuildThisFileDirectory)vcpkg\scripts\buildsystems\msbuild\vcpkg.props" />
+  <Import Project="$(VcpkgRoot)scripts\buildsystems\msbuild\vcpkg.props" />
 </Project>

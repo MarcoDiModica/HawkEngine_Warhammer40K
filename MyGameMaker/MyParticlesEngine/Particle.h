@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <vector>
+#include "../MyGameEngine/Image.h"
+
 using namespace std;
 
 class Particle
@@ -24,5 +26,6 @@ public:
     float rotation;
     vector<glm::vec3> position;
     vector<glm::vec3> speed;
-    GLuint textureID;
+    GLuint textureID;	
+	Image* texture;
 };

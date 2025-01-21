@@ -5,18 +5,29 @@
 #include <iostream>
 #include <chrono>
 
-//Inicializar la última vez que se generó una partícula
-ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner) : Component(owner) 
+
+
+//Inicializar la ï¿½ltima vez que se generï¿½ una partï¿½cula
+ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner) : Component(owner)//TODO investigar que hay que poner aqui
 { 
     name = "ParticleEmmiter"; 
     lastSpawnTime = std::chrono::steady_clock::now();
-    position = owner->GetComponent<Transform_Component>()->GetPosition();
     deltaTime = Application->GetDt();
+    position = owner->GetComponent<Transform_Component>()->GetPosition();
 }
 
-void ParticlesEmitterComponent::Start() {
-	emitterParticle = new Particle();
+void ParticlesEmitterComponent::Start() 
+{
+	new ParticlesEmitterComponent(owner);
+	this->position = owner->GetComponent<Transform_Component>()->GetPosition();
+	emitterParticle = new Particle();	
 	SetParticleVariables(emitterParticle);
+}
+
+std::unique_ptr<Component> ParticlesEmitterComponent::Clone(GameObject* owner) {
+    auto emmiter = std::make_unique<ParticlesEmitterComponent>(*this);
+    emmiter->owner = owner;
+    return emmiter;
 }
 
 void ParticlesEmitterComponent::EmitParticle() {
@@ -24,7 +35,7 @@ void ParticlesEmitterComponent::EmitParticle() {
     newParticle->Start();
     particles.push_back(*newParticle);
 
-    std::cout << "Partícula generada" << std::endl;
+    std::cout << "Partï¿½cula generada" << std::endl;
 }
 
 void ParticlesEmitterComponent::Update(float deltaTime) {
@@ -33,21 +44,21 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
     std::chrono::duration<float> elapsedTime = now - lastSpawnTime;
 
     if (elapsedTime.count() >= spawnRate && particles.size() < maxParticles) {
-        // Crear una nueva partícula
+        // Crear una nueva partï¿½cula
         if (emitterParticle != nullptr) {
 			EmitParticle();
         }
         lastSpawnTime = now;
     }
-    // Actualizar las partículas existentes
+    // Actualizar las partï¿½culas existentes
     for (auto& particle : particles) {
         particle.Update(deltaTime);
         particle.Draw();
     }
-    // Eliminar partículas que han terminado su vida útil
+    // Eliminar partï¿½culas que han terminado su vida ï¿½til
     particles.erase(
         std::remove_if(particles.begin(), particles.end(), [](const Particle& p) {
-            return p.lifetime <= 0.0f; // Condición para eliminar la partícula
+            return p.lifetime <= 0.0f; // Condiciï¿½n para eliminar la partï¿½cula
             }),
         particles.end() // Eliminar desde el nuevo final hasta el final original
     );
@@ -57,12 +68,14 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
 ParticlesEmitterComponent::~ParticlesEmitterComponent()
 {
 	delete emitterParticle;
+	delete owner;
 }
 
 Particle* ParticlesEmitterComponent::SetParticleVariables(Particle* variablesParticle) {
-	variablesParticle->position.push_back(position);
+	variablesParticle->position.push_back(this->position); // Posiciï¿½n inicial
 	variablesParticle->speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f)); // Velocidad inicial
-	variablesParticle->lifetime = 5.0f; // Duración de la partícula en segundos
-	variablesParticle->rotation = 0.0f; // Rotación inicial
+	variablesParticle->lifetime = 10.0f; // Duraciï¿½n de la partï¿½cula en segundos
+	variablesParticle->rotation = 0.0f; // Rotaciï¿½n inicial
+    
 	return variablesParticle;
 }

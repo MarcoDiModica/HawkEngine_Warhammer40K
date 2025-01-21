@@ -14,7 +14,6 @@
   #endif
 #include <yaml-cpp/yaml.h>
 #include <mono/metadata/object.h>
-
 class GameObject;
 class SceneSerializer;
 

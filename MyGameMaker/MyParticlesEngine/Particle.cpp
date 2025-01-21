@@ -5,6 +5,18 @@
 
 Particle* particle = nullptr;
 
+Particle::Particle() {
+	lifetime = 5.0f;
+	rotation = 0.0f;
+	position.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+	speed.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+	texture = new Image();
+}
+
+Particle::~Particle() {
+	delete texture;
+	texture = nullptr;
+}
 
 void Particle :: Start() {
     particle = new Particle();
@@ -68,7 +80,8 @@ void Load() {
     // Lógica para cargar el estado
 }
 
-void CleanUp() {
-    delete particle;
-    particle = nullptr;
+void Particle::CleanUp() {
+	// Lógica para liberar recursos
+	delete particle;
+	particle = nullptr;
 }

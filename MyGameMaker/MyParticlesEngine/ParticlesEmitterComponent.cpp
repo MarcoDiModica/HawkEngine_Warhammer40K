@@ -25,9 +25,7 @@ void ParticlesEmitterComponent::Start()
 }
 
 std::unique_ptr<Component> ParticlesEmitterComponent::Clone(GameObject* owner) {
-    auto emmiter = std::make_unique<ParticlesEmitterComponent>(*this);
-    emmiter->owner = owner;
-    return emmiter;
+    return std::make_unique<ParticlesEmitterComponent>(owner);
 }
 
 void ParticlesEmitterComponent::EmitParticle() {
@@ -69,6 +67,13 @@ ParticlesEmitterComponent::~ParticlesEmitterComponent()
 {
 	delete emitterParticle;
 	delete owner;
+}
+
+void ParticlesEmitterComponent::Destroy() {
+    // Libera los recursos aquí
+    particles.clear();
+    delete emitterParticle;
+    emitterParticle = nullptr;
 }
 
 glm::vec3 ParticlesEmitterComponent::GetPosition() const {

@@ -28,7 +28,7 @@ void MakeParticlesEmmiter() {
     particlesEmmiter->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
     particlesEmmiter->GetTransform()->SetPosition(vec3(0, 0.1, -3));
     particlesEmmiter->GetTransform()->Rotate(-1.5708, vec3(0, 0, 0));
-    //ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmmiter->AddComponent<ParticlesEmitterComponent>();
+    ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmmiter->AddComponent<ParticlesEmitterComponent>();
 }
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");

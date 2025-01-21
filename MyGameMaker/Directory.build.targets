@@ -5,8 +5,13 @@
   </Target>
 
 	<Target Name="BuildMono" BeforeTargets="ClCompile" Condition="'$(ProjectName)'=='MyGameEngine'">
-		<Message Text="Building mono-init..." Importance="high" />
-    <Exec ConsoleToMsBuild="true" Command="&quot;$(MSBuildToolsPath)\..\msbuild.exe&quot; -v:m --restore mono.sln /p:Platform=$(Platform) /p:Configuration=$(Configuration) -t:Runtime\libmono-static;Runtime\libmono-dynamic" WorkingDirectory="$(MSBuildThisFileDirectory)..\mono\msvc\" />
+		<Message Text="Building mono..." Importance="high" />
+    <Exec ConsoleToMsBuild="true" Command="&quot;$(MSBuildBinPath)\msbuild.exe&quot; -v:m --restore mono.sln /p:Platform=$(Platform) /p:Configuration=$(Configuration) -t:Runtime\libmono-dynamic" WorkingDirectory="$(MSBuildThisFileDirectory)..\mono\msvc\" />
+  </Target>
+
+  <Target Name="DeployMono" BeforeTargets="ClCompile" DependsOnTargets="BuildMono">
+    <Message Text="Deploying mono..." Importance="high" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)..\mono\msvc\build\sgen\$(Platform)\bin\$(Configuration)\mono-2.0-sgen.dll" DestinationFolder="$(TargetDir)" />
   </Target>
 
   <Import Project="$(VcpkgRoot)scripts\buildsystems\msbuild\vcpkg.targets" />

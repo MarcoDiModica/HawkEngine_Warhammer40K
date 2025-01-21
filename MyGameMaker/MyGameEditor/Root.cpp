@@ -17,8 +17,13 @@
 
 #include <iostream>
 
+#include <vector>
+
+// Add this at the beginning of the file
+
 using namespace std;
 
+std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
 class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
@@ -31,6 +36,8 @@ void MakeCity() {
     ModelImporter meshImp;
     meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
 
+
+    
     for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
         auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
 
@@ -42,15 +49,17 @@ void MakeCity() {
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
         
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
-
-
-        //Add colliders (doesnt works) 
-        // go->AddComponent<ColliderComponent>(Application->physicsModule);
+        // Add the game object to the list
+        gameObjectsWithColliders.push_back(go);
     }
-
+    // Iterate over the list and add colliders
     MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
     MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
-    MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
+    MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1, 0, 0));
+
+    
+    
+    
 }
 
 bool Root::Awake()
@@ -67,6 +76,9 @@ bool Root::Awake()
     MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera;
+    for (auto& go : gameObjectsWithColliders) {
+        go->AddComponent<ColliderComponent>(Application->physicsModule);
+    }
 
     return true;
 }

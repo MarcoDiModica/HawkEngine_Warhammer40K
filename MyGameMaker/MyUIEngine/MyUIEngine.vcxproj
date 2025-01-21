@@ -72,13 +72,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="CanvasComponent.h" />
+    <ClInclude Include="CheckBoxComponent.h" />
     <ClInclude Include="ImageComponent.h" />
+    <ClInclude Include="InputBoxComponent.h" />
     <ClInclude Include="UIComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="CanvasComponent.cpp" />
+    <ClCompile Include="CheckBoxComponent.cpp" />
     <ClCompile Include="ImageComponent.cpp" />
+    <ClCompile Include="InputBoxComponent.cpp" />
     <ClCompile Include="UIComponent.cpp" />
   </ItemGroup>
   <ItemGroup>

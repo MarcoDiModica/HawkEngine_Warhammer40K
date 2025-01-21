@@ -5,9 +5,9 @@
   </Target>
 
 	<Target Name="BuildMono" BeforeTargets="ClCompile" Condition="'$(ProjectName)'=='MyGameEngine'">
-		<Message Text="Building mono..." Importance="high" />
-		<MSBuild Projects="$(MSBuildThisFileDirectory)..\mono\msvc\msvc.sln" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
-	</Target>
+		<Message Text="Building mono-init..." Importance="high" />
+    <Exec ConsoleToMsBuild="true" Command="&quot;$(MSBuildToolsPath)\..\msbuild.exe&quot; -v:m --restore mono.sln /p:Platform=x64 /p:Configuration=Release -t:Runtime\libmono-static;Runtime\libmono-dynamic" WorkingDirectory="$(MSBuildThisFileDirectory)..\mono\msvc\" />
+  </Target>
 
   <Import Project="$(VcpkgRoot)scripts\buildsystems\msbuild\vcpkg.targets" />
   

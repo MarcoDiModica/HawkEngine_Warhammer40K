@@ -6,4 +6,14 @@
     <VcpkgManifestRoot>$(MSBuildThisFileDirectory)</VcpkgManifestRoot>
   </PropertyGroup>
   <Import Project="$(VcpkgRoot)scripts\buildsystems\msbuild\vcpkg.props" />
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)..\mono\msvc\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(MSBuildThisFileDirectory)..\mono\msvc\build\sgen\$(Platform)\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libmono-static-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
 </Project>

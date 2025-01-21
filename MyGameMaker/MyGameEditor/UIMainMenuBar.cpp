@@ -105,7 +105,7 @@ bool UIMainMenuBar::Draw()
 			SetRedStyle();
 			if (ImGui::ImageButton("Stop Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(stop_image.id())), ImVec2(11.0f, 11.0f))) 
 			{
-				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->currentScene->GetName() +".scene");
+				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
 				Application->play = false;
 			}
 		}

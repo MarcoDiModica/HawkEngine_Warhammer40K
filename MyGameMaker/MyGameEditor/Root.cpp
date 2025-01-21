@@ -9,6 +9,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
+#include "MyGameEngine/ColliderComponent.h"
 #include "App.h"
 #include "Input.h"
 
@@ -34,11 +35,17 @@ void MakeCity() {
         auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
 
         auto go = Application->root->CreateGameObject("GameObject");
+        
         auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
         Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->image_path);
         go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+        
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+
+
+        //Add colliders (doesnt works) 
+        // go->AddComponent<ColliderComponent>(Application->physicsModule);
     }
 
     MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));

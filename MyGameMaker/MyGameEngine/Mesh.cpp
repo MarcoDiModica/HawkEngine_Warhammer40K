@@ -154,7 +154,7 @@ void Mesh::Draw() const
 	if (texCoords_buffer.Id()) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	if (drawBoundingbox) {
 
-		drawBoundingBox(_boundingBox);
+		//drawBoundingBox(_boundingBox);
 	}
 	glDisable(GL_TEXTURE_2D);
 	if (drawVertexNormals)

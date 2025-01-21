@@ -19,6 +19,7 @@
     <ClCompile Include="PhysVehicle3D.cpp" />
     <ClCompile Include="PhysBody3D.cpp" />
     <ClCompile Include="DebugDrawerPhysics.cpp" />
+    <ClCompile Include="ColliderComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -45,5 +46,6 @@
     <ClInclude Include="PhysBody3D.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="DebugDrawerPhysics.h" />
+    <ClInclude Include="ColliderComponent.h" />
   </ItemGroup>
 </Project>

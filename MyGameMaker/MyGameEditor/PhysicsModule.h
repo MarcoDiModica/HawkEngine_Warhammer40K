@@ -51,8 +51,8 @@ public:
     void SpawnPhysSphereWithForce(const glm::vec3& cameraPosition, float radius, float forceMagnitude);
 
     p2List<FinalVehicleInfo*> vehicles;
-private:
     btDiscreteDynamicsWorld* dynamicsWorld;
+private:
     btBroadphaseInterface* broadphase;
     btDefaultCollisionConfiguration* collisionConfiguration;
     btCollisionDispatcher* dispatcher;

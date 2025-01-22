@@ -35,6 +35,9 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 	meshIcon = new Image();
 	//meshIcon->LoadTexture("Assets/Icons/mesh_icon.png");
 	meshIcon->LoadTexture("Assets/Icons/folder_icon.png");
+
+	audioIcon = new Image();
+	audioIcon->LoadTexture("Assets/Icons/folder_icon.png");
 }
 
 UIProject::~UIProject()
@@ -44,6 +47,7 @@ UIProject::~UIProject()
 	delete imageIcon;
 	delete sceneIcon;
 	delete meshIcon;
+	delete audioIcon;
 }
 
 
@@ -85,7 +89,7 @@ bool UIProject::Draw()
 		if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
 			uint32_t count = 0;
-			// Esto no sé si está bien
+			// Esto no sï¿½ si estï¿½ bien
 			for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
 			{
 				count++;
@@ -95,7 +99,7 @@ bool UIProject::Draw()
 
 			auto clickState = DirectoryView(directoryPath, &count, &selectionMask);
 
-			if (clickState.first) // Esto es para la selección múltiple
+			if (clickState.first) // Esto es para la selecciï¿½n mï¿½ltiple
 			{
 				if (ImGui::GetIO().KeyCtrl)
 				{
@@ -111,7 +115,7 @@ bool UIProject::Draw()
 
 		ImGui::TableNextColumn();
 
-		// Aquí creo que va algo
+		// Aquï¿½ creo que va algo
 		ImGui::Text("Properties or Preview here...");
 		ImGui::EndTable();
 	}
@@ -159,6 +163,8 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 				icon = sceneIcon;
 			else if (extension == ".mesh")
 				icon = meshIcon;
+			else if (extension == ".wav" || extension == ".ogg" || extension == ".mp3")
+				icon = audioIcon;
 
 			treeFlags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 		}
@@ -176,6 +182,14 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 			nodeClicked = *count;
 			anyNodeClicked = true;
 			HandleFileSelection(entry.path().string());
+		}
+
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+		{
+			// Set payload to carry the file path
+			ImGui::SetDragDropPayload("ASSET_PATH", entry.path().string().c_str(), entry.path().string().length() + 1);
+			ImGui::Text("Dragging %s", name.c_str());
+			ImGui::EndDragDropSource();
 		}
 
 		if (ImGui::BeginPopupContextItem(name.c_str()))

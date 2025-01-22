@@ -28,6 +28,7 @@ private:
 	Image* sceneIcon;
 	Image* matIcon;
 	Image* meshIcon;
+	Image* audioIcon;
 
 };
 

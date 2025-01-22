@@ -1,8 +1,18 @@
 #include "UIInspector.h"
 #include "App.h"
+#include "imgui.h"
+#include "imgui_internal.h"
 #include "MyGUI.h"
+#include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEngine/LightComponent.h"
+#include "../MyAudioEngine/SoundComponent.h"
+#include "../MyGameEditor/Log.h"
+#include <glm/glm.hpp>
+#include <algorithm>
+#include <iostream>
+#include <filesystem>
 
-#include "..\MyGameEngine\TransformComponent.h"
 #include "..\MyGameEngine\CameraComponent.h"
 #include "..\MyGameEngine\Mesh.h"
 #include "EditorCamera.h"
@@ -11,16 +21,10 @@
 #include "..\MyGameEngine\MeshRendererComponent.h"
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
-#include "..\MyGameEngine\LightComponent.h"
-
-#include "..\MyAudioEngine\SoundComponent.h"
 
 #include "..\MyScriptingEngine\ScriptComponent.h"
 
 #include <string>
-
-#include <imgui.h>
-#include <imgui_internal.h>
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/reflection.h>
@@ -408,6 +412,20 @@ bool UIInspector::Draw() {
                     strcpy_s(audioPath, soundComponent->GetAudioPath().c_str());
                     if (ImGui::InputText("Audio File", audioPath, sizeof(audioPath))) {
                         soundComponent->LoadAudio(audioPath);
+                    }
+
+                    // Drag and drop target for audio files
+                    if (ImGui::BeginDragDropTarget()) {
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+                            const char* path = (const char*)payload->Data;
+                            std::string extension = std::filesystem::path(path).extension().string();
+                            std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+                            
+                            if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
+                                soundComponent->LoadAudio(path);
+                            }
+                        }
+                        ImGui::EndDragDropTarget();
                     }
 
                     // Audio Type

@@ -80,7 +80,7 @@ static void init_openGL() {
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(0.2, 0.2, 0.2, 1.0);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

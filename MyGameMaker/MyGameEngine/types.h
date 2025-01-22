@@ -80,6 +80,7 @@ namespace YAML {
 
 enum ShaderType {
     DEFAULT,
+    LIGHT,
     WATER
 };
 

@@ -54,8 +54,8 @@ bool Root::Awake()
 {
 	shaders.resize(3);
     shaders[0].LoadShaders("Assets/Shaders/default_vertex_shader.glsl", "Assets/Shaders/default_fragment_shader.glsl");
-    shaders[1].LoadShaders("Assets/Shaders/water_vertex_shader.glsl", "Assets/Shaders/water_fragment_shader.glsl");
-    shaders[2].LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
+    shaders[1].LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
+    shaders[2].LoadShaders("Assets/Shaders/water_vertex_shader.glsl", "Assets/Shaders/water_fragment_shader.glsl");
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     MakeCity();

@@ -21,6 +21,7 @@
 #include "UISceneWindow.h"
 #include "UIProject.h"
 #include "UICamera.h"
+#include "UIAudioTest.h"
 
 MyGUI::MyGUI(App* app) : Module(app) {
 	ImGui::CreateContext();
@@ -78,6 +79,15 @@ bool MyGUI::Awake() {
 	UICameraPanel = new UICamera(UIType::CAMERA, "Camera");
 	elements.push_back(UICameraPanel);
 	ret = isInitialized(UICameraPanel);
+
+	UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
+	elements.push_back(UIAudioTestPanel);
+	ret = isInitialized(UIAudioTestPanel);
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
+	style.WindowRounding = 5.0f;
+	style.FramePadding = ImVec2(5, 5);
 
 	return ret;
 }
@@ -214,6 +224,10 @@ void MyGUI::Render() {
 
 	if (showProject) {
 		UIProjectPanel->Draw();
+	}
+
+	if (showAudioTest) {
+		UIAudioTestPanel->Draw();
 	}
 
 	//if (showCamera) {

@@ -4,10 +4,17 @@
 #include "../MyGameEditor/Log.h"
 #include "Material.h"
 #include "TransformComponent.h"
+#include "CameraComponent.h"
 #include <iostream>
 #include "LightComponent.h"
 #include "Shaders.h"
+#include "../MyScriptingEngine/MonoManager.h"
+#include "../MyScriptingEngine/EngineBinds.h"
 #include <string>
+#include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/mono-config.h>
+#include <mono/metadata/object.h>
 
 unsigned int GameObject::nextGid = 1;
 
@@ -227,9 +234,11 @@ void GameObject::Update(float deltaTime)
         return;
     }
 
-    if (isSelected) {
-        LOG(LogType::LOG_INFO, " %s is selected ", GetName().c_str());
+    // Call C# update
+    if (CsharpReference) {
+
     }
+
 
     //check the state of the components and throw an error if they are null
     for (auto& component : components)
@@ -476,4 +485,17 @@ void GameObject::RemoveChild(GameObject* child)
 			break;
 		}
 	}
+}
+
+
+MonoObject* GameObject::GetSharp() {
+    if (CsharpReference) {
+        return CsharpReference;
+    }
+
+    //Obtenemos el nombre del GO, creamos el string en mono y llamamos a la funcion que crea el GO
+    MonoString* monoString = mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
+    CsharpReference = EngineBinds::CreateGameObjectSharp(monoString);
+
+    return CsharpReference;
 }

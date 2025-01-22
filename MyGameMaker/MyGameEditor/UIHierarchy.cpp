@@ -21,7 +21,7 @@ bool UIHierarchy::Draw() {
 
 	if (ImGui::Begin("Hierarchy", &enabled, hierarchyFlags)) {
 
-		Scene* currentScene = Application->root->currentScene.get();
+		Scene* currentScene = Application->root->GetActiveScene().get();
 
 		if (currentScene == nullptr) {
 			ImGui::Text("No Scene loaded");
@@ -65,10 +65,10 @@ bool UIHierarchy::Draw() {
 
 void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::Begin("Scene Hierarchy");
-	int size = static_cast<int>(Application->root->currentScene->children().size());
+	int size = static_cast<int>(Application->root->GetActiveScene()->children().size());
 
-	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i) {
-		DrawSceneObject(*Application->root->currentScene->children()[i]);
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
+		DrawSceneObject(*Application->root->GetActiveScene()->children()[i]);
 	}
 	//ImGui::End();
 }

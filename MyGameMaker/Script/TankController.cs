@@ -14,6 +14,8 @@ public class TankController : MonoBehaviour
 {
     GameObject turret;
     Transform transform;
+    GameObject projectile;
+    Transform projTransform;
 
     Vector2 prev_mouse;
     float lookPosX = 0;
@@ -39,5 +41,20 @@ public class TankController : MonoBehaviour
 
             transform.Rotate(delta.X * 0.01f, new Vector3(0, 1, 0));
         }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            GenerateProjectile();
+        }
+    }
+
+    private void GenerateProjectile()
+    {
+        projectile = Engineson.CreateGameObject("Projectile", null);
+        //projectile.AddComponent<ProjectileScript>(); esto da nullptr el ProjectileScript;
+        projTransform = projectile.GetComponent<Transform>();
+
+        projTransform.position = transform.position + transform.forward;
+
     }
 }

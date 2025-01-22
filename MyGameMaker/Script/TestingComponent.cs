@@ -78,16 +78,7 @@ public class TestingComponent : MonoBehaviour
             Engineson.print($"Moved to {transfr.GetLocalPosition()}, facing {forwardDirection}.");
         }
 
-        if (Input.GetKey(KeyCode.E))
-        {
-            //GenerateProjectile();
-        }
-
     }
 
-    private void GenerateProjectile()
-    {
-        //projectile = Engineson.CreateGameObject("Projectile");
-    }
 }
 

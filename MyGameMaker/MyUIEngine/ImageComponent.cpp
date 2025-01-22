@@ -1,7 +1,7 @@
 #include "ImageComponent.h"
 #include <GL/glew.h>
 
-ImageComponent::ImageComponent(GameObject* owner) : UIComponent(owner) {
+ImageComponent::ImageComponent(GameObject* owner){
     // Initialization code here
 }
 

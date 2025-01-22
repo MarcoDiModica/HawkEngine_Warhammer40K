@@ -86,6 +86,9 @@
     <ProjectReference Include="..\MyAudioEngine\MyAudioEngine.vcxproj">
       <Project>{1603c380-66d8-4904-864c-f7767e2c5f7d}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\MyPhysicsEngine\MyPhysicsEngine.vcxproj">
+      <Project>{2adcc106-88f4-4ea9-8174-9e1323e4d869}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />

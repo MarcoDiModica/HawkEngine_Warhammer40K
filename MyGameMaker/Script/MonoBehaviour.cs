@@ -25,4 +25,13 @@ public  class MonoBehaviour
 
     [MethodImpl(MethodImplOptions.InternalCall)]
     public extern GameObject  GetGameObject();
+    public T GetComponent<T>()
+    {
+        return gameObject.GetComponent<T>();
+    }
+
+    public T AddComponent<T>()
+    {
+        return gameObject.AddComponent<T>();
+    }
 }

@@ -123,7 +123,16 @@ bool Root::Update(double dt) {
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
 
     SceneManagement->Update(dt);
-
+    for (auto& child : Application->root->GetActiveScene()->children())
+    {
+        for (auto& childchild : child->GetChildren())
+        {
+            if (childchild->isSelected)
+            {
+                Application->root->ChangeShader(*childchild, ShaderType::WATER);
+            }
+        }
+    }
 
     //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
     //
@@ -195,9 +204,15 @@ std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
     return SceneManagement->CreateLightObject(name);
 }
 
-void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
+void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat, std::vector<Shaders> shaders)
 {
-    return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat);
+    return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat, shaders);
+}
+
+void Root::ChangeShader(GameObject& go, ShaderType shader)
+{
+    go.GetComponent<MeshRenderer>()->GetMaterial()->shaderType = shader;
+    go.GetComponent<MeshRenderer>()->GetMaterial()->SetShader(shaders[shader]);
 }
 
 void Root::CreateScene(const std::string& name)

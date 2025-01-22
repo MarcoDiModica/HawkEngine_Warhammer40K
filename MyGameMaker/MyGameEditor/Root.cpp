@@ -23,13 +23,13 @@ class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
 
-void MakeParticlesEmmiter() {
-	auto particlesEmmiter = Application->root->CreateGameObject("ParticlesEmmiter");	
-    particlesEmmiter->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
-    particlesEmmiter->GetTransform()->SetPosition(vec3(0, 0.1, -3));
-    particlesEmmiter->GetTransform()->Rotate(-1.5708, vec3(0, 0, 0));
-    ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmmiter->AddComponent<ParticlesEmitterComponent>();
-}
+//void MakeParticlesEmmiter() {
+//	auto particlesEmmiter = Application->root->CreateGameObject("ParticlesEmmiter");	
+//    particlesEmmiter->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
+//    particlesEmmiter->GetTransform()->SetPosition(vec3(0, 0.1, -3));
+//    particlesEmmiter->GetTransform()->Rotate(-1.5708, vec3(0, 0, 0));
+//    ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmmiter->AddComponent<ParticlesEmitterComponent>();
+//}
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
@@ -59,7 +59,7 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     MakeCity();
-	MakeParticlesEmmiter();
+	//MakeParticlesEmmiter();
 
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");*/

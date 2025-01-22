@@ -94,6 +94,7 @@ public:
 
     OctreeNode* node = nullptr;
 
+
 private:
     friend class SceneSerializer;
     friend class GameObject;

@@ -1,3 +1,6 @@
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/component_wise.hpp>
+
 #include "UIInspector.h"
 #include "App.h"
 #include "MyGUI.h"
@@ -17,7 +20,7 @@
 
 #include <imgui.h>
 #include <imgui_internal.h>
-
+#include"../MyParticlesEngine/Billboard.h"
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
 	matrixDirty = false;
@@ -95,7 +98,9 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
 				selectedGameObject->AddComponent<LightComponent>();
 			}
-
+            if (!selectedGameObject->HasComponent<Billboard>() && ImGui::MenuItem("Billboard")) {
+                selectedGameObject->AddComponent<Billboard>(selectedGameObject, BillboardType::SCREEN_ALIGNED, glm::vec3(0.0f), glm::vec3(1.0f));
+            }
             // More components here
 
             ImGui::EndPopup();
@@ -141,9 +146,28 @@ bool UIInspector::Draw() {
         else {
             throw std::runtime_error("UIInspector::Draw: Transform component is nullptr");
         }
+        if (Billboard* billboard = selectedGameObject->GetComponent<Billboard>()) {
+            ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+            if (ImGui::CollapsingHeader("Billboard")) {
+                const char* billboardTypes[] = { "Screen Aligned", "World Aligned", "Axis Aligned" };
+                int currentType = static_cast<int>(billboard->GetTypeEnum());
+                if (ImGui::Combo("Type", &currentType, billboardTypes, IM_ARRAYSIZE(billboardTypes))) {
+                    billboard->SetType(static_cast<BillboardType>(currentType));
+                }
+
+                glm::vec3 position = billboard->GetPosition();
+                if (ImGui::DragFloat3("Position", &position.x, 0.1f)) {
+                    billboard->SetPosition(position);
+                }
+
+                glm::vec3 scale = billboard->GetScale();
+                if (ImGui::DragFloat3("Scale", &scale.x, 0.1f)) {
+                    billboard->SetScale(scale);
+                }
+            }
+        }
 
         ImGui::Separator();
-
         if (selectedGameObject->HasComponent<MeshRenderer>()) {
             MeshRenderer* meshRenderer = selectedGameObject->GetComponent<MeshRenderer>();
 

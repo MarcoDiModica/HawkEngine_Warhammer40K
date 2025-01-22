@@ -1,3 +1,6 @@
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/component_wise.hpp>
+
 #include "GameObject.h"
 #include "MeshRendererComponent.h"
 #include "../MyGameEditor/App.h"
@@ -8,6 +11,7 @@
 #include "LightComponent.h"
 #include "Shaders.h"
 #include <string>
+#include"../MyParticlesEngine/Billboard.h"
 
 unsigned int GameObject::nextGid = 1;
 
@@ -61,7 +65,6 @@ GameObject& GameObject::operator=(const GameObject& other) {
         name = other.name;
         gid = nextGid++;
         active = other.active;
-        //transform = other.transform;
         mesh = other.mesh;
         tag = other.tag;
         parent = nullptr;
@@ -80,35 +83,34 @@ GameObject& GameObject::operator=(const GameObject& other) {
         children.clear();
 
         for (const auto& child : other.children)
-		{
-			auto newChild = std::make_shared<GameObject>(*child);
-			newChild->parent = this;
-			children.emplace_back(std::move(newChild));
-		}
+        {
+            auto newChild = std::make_shared<GameObject>(*child);
+            newChild->parent = this;
+            children.emplace_back(std::move(newChild));
+        }
     }
     return *this;
 }
 
 GameObject::GameObject(GameObject&& other) noexcept :
-	name(std::move(other.name)),
-	gid(nextGid++),
-	active(other.active),
-	//transform(std::move(other.transform)),
-	mesh(std::move(other.mesh)),
-	tag(std::move(other.tag)),
-	components(std::move(other.components)),
+    name(std::move(other.name)),
+    gid(nextGid++),
+    active(other.active),
+    mesh(std::move(other.mesh)),
+    tag(std::move(other.tag)),
+    components(std::move(other.components)),
     children(std::move(other.children)),
     parent(other.parent),
-	cachedComponentType(typeid(Component))
+    cachedComponentType(typeid(Component))
 {
     for (auto& child : children) {
         child->parent = this;
     }
-    
+
     for (auto& component : components)
-	{
-		component.second->owner = this;
-	}
+    {
+        component.second->owner = this;
+    }
 
     other.parent = nullptr;
     other.children.clear();
@@ -116,32 +118,31 @@ GameObject::GameObject(GameObject&& other) noexcept :
 
 GameObject& GameObject::operator=(GameObject&& other) noexcept
 {
-	if (this != &other)
-	{
-		name = std::move(other.name);
-		gid = nextGid++;
-		active = other.active;
-		//transform = std::move(other.transform);
-		mesh = std::move(other.mesh);
-		tag = std::move(other.tag);
-		components = std::move(other.components);
+    if (this != &other)
+    {
+        name = std::move(other.name);
+        gid = nextGid++;
+        active = other.active;
+        mesh = std::move(other.mesh);
+        tag = std::move(other.tag);
+        components = std::move(other.components);
         children = std::move(other.children);
         parent = other.parent;
-		cachedComponentType = typeid(Component);
+        cachedComponentType = typeid(Component);
 
         for (auto& child : children) {
             child->parent = this;
         }
         
         for (auto& component : components)
-		{
-			component.second->owner = this;
-		}
+        {
+            component.second->owner = this;
+        }
 
         other.parent = nullptr;
         other.children.clear();
-	}
-	return *this;
+    }
+    return *this;
 }
 
 void GameObject::Start()

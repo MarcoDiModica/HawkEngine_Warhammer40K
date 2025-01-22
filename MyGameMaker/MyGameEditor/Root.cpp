@@ -9,9 +9,11 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
-#include "MyGameEngine/SceneManager.h"
 #include "App.h"
 #include "Input.h"
+#include "../MyAudioEngine/SoundComponent.h"
+#include "../MyAudioEngine/AudioListener.h"
+
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include <SDL2/SDL.h>
 
@@ -54,6 +56,7 @@ bool Root::Awake()
     //MonoEnvironment* env = new MonoEnvironment();
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
+    SoundComponent::InitSharedAudioEngine();
     MakeCity();
 
     /*CreateScene("Viernes13");
@@ -65,6 +68,12 @@ bool Root::Awake()
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera; */   
 
+    return true;
+}
+
+bool Root::CleanUp()
+{
+    SoundComponent::ShutdownSharedAudioEngine();
     return true;
 }
 
@@ -227,4 +236,24 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
 std::shared_ptr<GameObject> Root::FindGOByName(char* name) {
     
     return SceneManagement->FindGOByName(name);
+}
+
+
+std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
+{
+    auto gameObject = CreateGameObject(name);
+    if (!gameObject) {
+        LOG(LogType::LOG_ERROR, "Failed to create audio object");
+        return nullptr;
+    }
+
+    // Add SoundComponent
+    auto soundComponent = gameObject->AddComponent<SoundComponent>();
+    if (!soundComponent) {
+        LOG(LogType::LOG_ERROR, "Failed to add SoundComponent to audio object");
+        return nullptr;
+    }
+
+    LOG(LogType::LOG_OK, "Created audio object: %s", name.c_str());
+    return gameObject;
 }

@@ -100,9 +100,7 @@ bool MyGUI::Start() {
 	IMGUI_CHECKVERSION();
 	LOG(LogType::LOG_OK, "-ImGui Version: %s", IMGUI_VERSION);
 
-	ImGuiContext* contextGUI = ImGui::CreateContext();
-
-	if (!contextGUI)
+	if (!ImGui::GetCurrentContext)
 	{
 		LOG(LogType::LOG_ERROR, "-ImGui Context not created");
 	}
@@ -140,9 +138,8 @@ bool MyGUI::Start() {
 }
 
 
-bool MyGUI::PreUpdate() {
-
-
+bool MyGUI::PreUpdate() 
+{
 	return true;
 }
 
@@ -151,16 +148,8 @@ bool MyGUI::Update(double dt)
 	return true;
 }
 
-bool MyGUI::PostUpdate() {
-
-	/*ImGui::Render();*/
-	//glViewport(100, 300, 100, 100); // Set your viewport
-	//glClearColor(0.45f, 0.55f, 0.60f, 1.00f); // Clear color
-	//glClear(GL_COLOR_BUFFER_BIT);
-
-	//ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	//if (Application) { SDL_GL_SwapWindow(Application->window->windowPtr()); } // Swap the window buffer
-
+bool MyGUI::PostUpdate() 
+{
 	return true;
 }
 
@@ -258,9 +247,9 @@ void MyGUI::SetColorScheme()
 	colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Backgrounds
-	colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);             // Background color for main windows
-	colors[ImGuiCol_ChildBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);              // Background color for child windows/panels
-	colors[ImGuiCol_PopupBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);              // Background color for pop-up windows
+	colors[ImGuiCol_WindowBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);             // Background color for main windows
+	colors[ImGuiCol_ChildBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);              // Background color for child windows/panels
+	colors[ImGuiCol_PopupBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);              // Background color for pop-up windows
 
 	// Headers
 	colors[ImGuiCol_Header] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);               // Background color for headers (hovered or active)
@@ -290,8 +279,8 @@ void MyGUI::SetColorScheme()
 	colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);   // Active tab color when unfocused
 
 	// Titles
-	colors[ImGuiCol_TitleBg] = ImVec4(0.25f, 0.25f, 0.25f, 1.0f);           // Background color for title bar
-	colors[ImGuiCol_TitleBgActive] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);		// Title bar color when active
+	colors[ImGuiCol_TitleBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);				// Background color for title bar
+	colors[ImGuiCol_TitleBgActive] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);		// Title bar color when active
 	colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.0f, 0.0f, 0.0f, 0.5f);     // Title bar color when collapsed
 
 	// Scrollbars
@@ -308,12 +297,12 @@ void MyGUI::SetColorScheme()
 	colors[ImGuiCol_CheckMark] = ImVec4(0.1f, 0.9f, 0.4f, 1.0f);            // Color for checkmark
 
 	// Separators
-	colors[ImGuiCol_Separator] = ImVec4(0.48f, 0.56f, 0.56f, 1.0f);         // Separator color
+	colors[ImGuiCol_Separator] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);         // Separator color
 	colors[ImGuiCol_SeparatorHovered] = ImVec4(0.5f, 0.5f, 0.6f, 1.0f);     // Separator color when hovered
 	colors[ImGuiCol_SeparatorActive] = ImVec4(0.6f, 0.6f, 0.7f, 1.0f);      // Separator color when active
 
 	// Resize grip (used for resizable windows)
-	colors[ImGuiCol_ResizeGrip] = ImVec4(0.48f, 0.56f, 0.56f, 1.0f);        // Resize grip color
+	colors[ImGuiCol_ResizeGrip] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);        // Resize grip color
 	colors[ImGuiCol_ResizeGripHovered] = ImVec4(0.5f, 0.5f, 0.6f, 1.0f);    // Resize grip color when hovered
 	colors[ImGuiCol_ResizeGripActive] = ImVec4(0.6f, 0.6f, 0.7f, 1.0f);     // Resize grip color when active
 

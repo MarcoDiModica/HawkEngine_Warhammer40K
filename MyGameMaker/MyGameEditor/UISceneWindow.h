@@ -28,7 +28,7 @@ public:
     bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox);
 
 private:
-    const float iconSize = 20.0f;
+    const float iconSize = 25.0f;
     const float iconSpacing = 5.0f; //spacing between icons
 
     Image m_Local;

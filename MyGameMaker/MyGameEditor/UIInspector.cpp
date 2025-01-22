@@ -26,6 +26,9 @@
 #include <mono/metadata/reflection.h>
 #include "../MyScriptingEngine/MonoManager.h"
 
+
+#define _CRT_SECURE_NO_WARNINGS
+
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
 	matrixDirty = false;

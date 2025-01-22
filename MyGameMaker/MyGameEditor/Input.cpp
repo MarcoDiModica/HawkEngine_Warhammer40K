@@ -11,6 +11,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
+#include "../MyPhysicsEngine/PhysicsModule.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -92,7 +93,7 @@ void SpawnCube() {
     auto cube = Application->root->CreateCube("PhysicsCube");
     cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
     auto t = cube->GetTransform()->GetPosition();
-    Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Masa 1.0f
+    //Application->physicsModule->CreatePhysicsForCube(*cube, 1.0f); // Masa 1.0f
 }
 
 bool Input::processSDLEvents()

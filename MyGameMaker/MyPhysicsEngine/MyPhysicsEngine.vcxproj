@@ -77,15 +77,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ColiderComponent.h" />
+    <ClCompile Include="ColliderComponent.cpp" />
+    <ClCompile Include="DebugDrawerPhysics.cpp" />
+    <ClCompile Include="PhysBody3D.cpp" />
+    <ClCompile Include="PhysicsModule.cpp" />
+    <ClCompile Include="PhysVehicle3D.cpp" />
+    <ClCompile Include="RigidBodyComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="DebugDrawerPhysics.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="PhysBody3D.h" />
     <ClInclude Include="PhysicsModule.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ColiderComponent.cpp" />
-    <ClCompile Include="PhysBody3D.cpp" />
-    <ClCompile Include="PhysicsModule.cpp" />
+    <ClInclude Include="PhysVehicle3D.h" />
+    <ClInclude Include="Primitive.h" />
+    <ClInclude Include="RigidBodyComponent.h" />
+    <ClInclude Include="types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

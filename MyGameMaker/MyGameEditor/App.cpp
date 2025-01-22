@@ -31,6 +31,8 @@ App::App() {
 
 	camera = new EditorCamera(this);
 
+	/*physicsModule = new PhysicsModule(this);*/
+
 	//gizmos = new Gizmos(this);
 
 	scene_serializer = new SceneSerializer(this);
@@ -43,6 +45,7 @@ App::App() {
 	AddModule(camera, true);
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
+	AddModule(physicsModule, true);
 
 };
 

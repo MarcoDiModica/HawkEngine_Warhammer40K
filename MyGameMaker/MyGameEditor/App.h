@@ -7,6 +7,7 @@
 #include "SceneSerializer.h"
 #include "Root.h"
 #include "../MyGameEngine/Mesh.h"
+#include "../MyPhysicsEngine/PhysicsModule.h"
 
 #include <chrono>
 
@@ -70,6 +71,7 @@ public:
 	EditorCamera* camera = nullptr;
 	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
+	PhysicsModule* physicsModule = nullptr;
 
 	Mesh ElMesh;
 

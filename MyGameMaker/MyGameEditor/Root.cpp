@@ -9,7 +9,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
-#include "MyPhysicsEngine/ColiderComponent.h"
+#include "MyPhysicsEngine/ColliderComponent.h"
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
@@ -69,8 +69,8 @@ bool Root::Awake()
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera; */   
 
-	auto Collider = CreateGameObject("Collider");
-    auto colliderComponent = Collider->AddComponent<ColiderComponent>();
+	//auto Collider = CreateGameObject("Collider");
+    //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
 
     return true;
 }

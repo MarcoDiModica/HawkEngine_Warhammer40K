@@ -43,50 +43,50 @@ void ColliderComponent::Start() {
 void ColliderComponent::Update(float deltaTime) {
     // Sincroniza la posición y rotación entre el GameObject y el colisionador
 
-    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMapForhouse) {
+    //for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMapForhouse) {
 
-        btTransform transform;
-        if (rigidBody->getMotionState()) {
-            rigidBody->getMotionState()->getWorldTransform(transform);
-        }
+    //    btTransform transform;
+    //    if (rigidBody->getMotionState()) {
+    //        rigidBody->getMotionState()->getWorldTransform(transform);
+    //    }
 
-        btVector3 pos = transform.getOrigin();
-        btQuaternion rot = transform.getRotation();
+    //    btVector3 pos = transform.getOrigin();
+    //    btQuaternion rot = transform.getRotation();
 
-        auto goTransform = gameObject->GetTransform();
+    //    auto goTransform = gameObject->GetTransform();
 
-        //TESTING
-        //glm::quat newRotation = glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
-        //goTransform->SetRotationQuat(newRotation);
+    //    //TESTING
+    //    //glm::quat newRotation = glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
+    //    //goTransform->SetRotationQuat(newRotation);
 
-        //// Calcular delta de posición y aplicar traslación
-        //glm::dvec3 newPosition = { pos.getX(), pos.getY(), pos.getZ() };
-        //glm::dvec3 currentPosition = goTransform->GetPosition();
-        //glm::dvec3 deltaPos = newPosition - currentPosition;
+    //    //// Calcular delta de posición y aplicar traslación
+    //    //glm::dvec3 newPosition = { pos.getX(), pos.getY(), pos.getZ() };
+    //    //glm::dvec3 currentPosition = goTransform->GetPosition();
+    //    //glm::dvec3 deltaPos = newPosition - currentPosition;
 
-        //// Aplica la traslación
-        //goTransform->Translate(deltaPos);
+    //    //// Aplica la traslación
+    //    //goTransform->Translate(deltaPos);
 
 
-        glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-        glm::dvec3 deltaPos = newPosition - goTransform->GetPosition();
-        goTransform->Translate(deltaPos);
-        auto x = pos.x();
-        auto y = pos.y();
-        auto z = pos.z();
-        auto v = glm::vec3(x, y, z);
+    //    glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
+    //    glm::dvec3 deltaPos = newPosition - goTransform->GetPosition();
+    //    goTransform->Translate(deltaPos);
+    //    auto x = pos.x();
+    //    auto y = pos.y();
+    //    auto z = pos.z();
+    //    auto v = glm::vec3(x, y, z);
 
-        glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-        glm::dvec3 currentRotation = glm::radians(goTransform->GetEulerAngles());
-        glm::dvec3 deltaRot = newRotation - currentRotation;
+    //    glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
+    //    glm::dvec3 currentRotation = glm::radians(goTransform->GetEulerAngles());
+    //    glm::dvec3 deltaRot = newRotation - currentRotation;
 
-        goTransform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-        goTransform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-        goTransform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+    //    goTransform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+    //    goTransform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+    //    goTransform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
 
-        std::cout << "GameObject position updated to: ("
-            << pos.getX() << ", " << pos.getY() << ", " << pos.getZ() << ")\n";
-    }
+    //    std::cout << "GameObject position updated to: ("
+    //        << pos.getX() << ", " << pos.getY() << ", " << pos.getZ() << ")\n";
+    //}
 
 }
 

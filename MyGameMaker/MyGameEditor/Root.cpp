@@ -24,11 +24,11 @@ class GameObject;
 Root::Root(App* app) : Module(app) { ; }
 
 void MakeParticlesEmmiter() {
-	auto particlesEmmiter = Application->root->CreateGameObject("ParticlesEmmiter");	
-    particlesEmmiter->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
-    particlesEmmiter->GetTransform()->SetPosition(vec3(0, 0.1, -3));
-    particlesEmmiter->GetTransform()->Rotate(-1.5708, vec3(0, 0, 0));
-    ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmmiter->AddComponent<ParticlesEmitterComponent>();
+    auto particlesEmitter = Application->root->CreateGameObject("ParticlesEmitter");
+    auto transform = particlesEmitter->GetTransform();
+    transform->SetPosition(transform->GetPosition() + glm::dvec3(0.01, 0, 0)); // Ejemplo de movimiento en el eje X
+    transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotación en el eje Y
+    ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
 }
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
@@ -113,6 +113,8 @@ bool Root::Update(double dt) {
     currentScene->DebugDrawTree();
 
     currentScene->Update(static_cast<float>(dt));
+
+   
 
     //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
     //

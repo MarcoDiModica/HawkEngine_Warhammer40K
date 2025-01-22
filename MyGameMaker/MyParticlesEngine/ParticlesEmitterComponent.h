@@ -21,6 +21,8 @@ public:
 
 private:
     glm::vec3 position;
+	glm::dquat rotation;
+	glm::vec3 scale;
 	Particle* emitterParticle = nullptr;
 	int maxParticles = 100;
     float deltaTime;

@@ -14,6 +14,8 @@ ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner) : Compon
     lastSpawnTime = std::chrono::steady_clock::now();
     deltaTime = Application->GetDt();
     position = owner->GetComponent<Transform_Component>()->GetPosition();
+	rotation = owner->GetComponent<Transform_Component>()->GetRotation();
+	scale = owner->GetComponent<Transform_Component>()->GetScale();
     emitterParticle = new Particle();
 }
 
@@ -41,6 +43,10 @@ void ParticlesEmitterComponent::EmitParticle() {
 
 void ParticlesEmitterComponent::Update(float deltaTime) {
     
+    this->position = owner->GetComponent<Transform_Component>()->GetPosition();
+	this->rotation = owner->GetComponent<Transform_Component>()->GetRotation();
+	this->scale = owner->GetComponent<Transform_Component>()->GetScale();
+
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsedTime = now - lastSpawnTime;
 

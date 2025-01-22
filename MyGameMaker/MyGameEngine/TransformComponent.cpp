@@ -130,6 +130,7 @@ void Transform_Component::SetPosition(const glm::dvec3& position)
 {
     matrix[3] = glm::dvec4(position, 1);
     HandleLocalUpdate();
+
 }
 
 void Transform_Component::Rotate(double rads, const glm::dvec3& axis)
@@ -165,8 +166,10 @@ void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
 
 void Transform_Component::SetRotationQuat(const glm::dquat& rotation)
 {
+    glm::dvec3 position = matrix[3];
 	matrix = glm::mat4_cast(rotation);
 	HandleLocalUpdate();
+    SetPosition(position);
 }
 
 void Transform_Component::SetScale(const glm::dvec3& scale)

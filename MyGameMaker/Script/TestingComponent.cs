@@ -71,6 +71,9 @@ public class TestingComponent : MonoBehaviour
 
         if (movement != Vector3.Zero)
         {
+
+            //transfr.position += movement;
+
             currentPosition += movement;
 
             transfr.SetPosition(currentPosition.X, currentPosition.Y, currentPosition.Z);
@@ -81,7 +84,7 @@ public class TestingComponent : MonoBehaviour
                 transfr.SetRotationQuat(rotation);
             }
 
-            Engineson.print($"Moved to {currentPosition}, facing {forwardDirection}.");
+            Engineson.print($"Moved to {transfr.GetPosition()}, facing {forwardDirection}.");
         }
 
         if (Input.GetKeyDown(KeyCode.SPACE))

@@ -15,7 +15,7 @@ public class TestingComponent : MonoBehaviour
     Test test;
 
     public float timer = 0.0f;
-    public int count = 0;
+    public int count = 1;
 
     public float moveAmount = 1.0f;
     private Vector3 currentPosition;

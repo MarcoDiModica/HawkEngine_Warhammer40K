@@ -9,6 +9,7 @@
 #include <iostream>
 #include <Windows.h>
 #include "../MyGameEditor/Log.h"
+#include <mono/metadata/class.h>
 
 
 // Este metodo hay que moverlo a engineBinds o ScriptingBinds, segun convenga
@@ -114,4 +115,29 @@ void MonoManager::Shutdown() {
 
 MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const {
     return mono_class_from_name(image, namespaceName.c_str(), className.c_str());
+}
+
+void MonoManager::ReloadAssembly() {
+    Shutdown();
+    Initialize();
+    
+    if (!domain) {
+        LOG(LogType::LOG_ERROR, "Failed to reinitialize Mono domain.");
+        return;
+    }
+
+    std::string assemblyPath = getExecutablePath() + "\\..\\..\\Script\\obj\\Debug\\Script.dll";
+    assembly = mono_domain_assembly_open(domain, assemblyPath.c_str());
+    if (!assembly) {
+        LOG(LogType::LOG_ERROR, "Failed to reload assembly: %s", assemblyPath.c_str());
+        return;
+    }
+
+    image = mono_assembly_get_image(assembly);
+    if (!image) {
+        LOG(LogType::LOG_ERROR, "Failed to retrieve image from reloaded assembly.");
+        return;
+    }
+
+    LOG(LogType::LOG_INFO, "Assembly successfully reloaded.");
 }

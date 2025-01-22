@@ -101,13 +101,11 @@
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>
-
     <ProjectReference Include="..\MyScriptingEngine\MyScriptingEngine.vcxproj">
       <Project>{c0f74fc2-d269-40d3-bdd1-557d2e8478be}</Project>
- </ProjectReference>
+    </ProjectReference>
     <ProjectReference Include="..\MyAudioEngine\MyAudioEngine.vcxproj">
       <Project>{1603c380-66d8-4904-864c-f7767e2c5f7d}</Project>
-
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +130,7 @@
     <ClCompile Include="UIProject.cpp" />
     <ClCompile Include="UISceneWindow.cpp" />
     <ClCompile Include="UISettings.cpp" />
+    <ClCompile Include="UITextEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -155,6 +154,7 @@
     <ClInclude Include="UIProject.h" />
     <ClInclude Include="UISceneWindow.h" />
     <ClInclude Include="UISettings.h" />
+    <ClInclude Include="UITextEditor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

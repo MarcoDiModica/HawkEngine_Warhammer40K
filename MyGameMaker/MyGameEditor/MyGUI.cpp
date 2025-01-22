@@ -22,6 +22,7 @@
 #include "UIProject.h"
 #include "UICamera.h"
 #include "UIAudioTest.h"
+#include "UITextEditor.h"
 
 MyGUI::MyGUI(App* app) : Module(app) {
 	ImGui::CreateContext();
@@ -81,6 +82,10 @@ bool MyGUI::Awake() {
 	UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
 	elements.push_back(UIAudioTestPanel);
 	ret = isInitialized(UIAudioTestPanel);
+
+	UITextEditorPanel = new UITextEditor(UIType::TEXTEDITOR, "TextEditor");
+	elements.push_back(UITextEditorPanel);
+	ret = isInitialized(UITextEditorPanel);
 
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
@@ -242,6 +247,10 @@ void MyGUI::Render() {
 
 	if (showAudioTest) {
 		UIAudioTestPanel->Draw();
+	}
+
+	if (showTextEditor) {
+		UITextEditorPanel->Draw();
 	}
 
 	//if (showCamera) {

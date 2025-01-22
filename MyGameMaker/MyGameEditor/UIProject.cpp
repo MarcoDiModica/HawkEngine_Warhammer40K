@@ -258,8 +258,3 @@ void UIProject::HandleFileSelection(const std::string& filePath)
 		ImGui::EndPopup();
 	}
 }
-
-
-
-
-

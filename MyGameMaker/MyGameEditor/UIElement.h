@@ -13,6 +13,7 @@ enum class UIType
 	HIERARCHY,
 	PROJECT,
 	CAMERA,
+	TEXTEDITOR,
 	UNKNOWN
 };
 

@@ -105,6 +105,21 @@ unsigned int Window::GetDisplayRefreshRate()
     return refreshRate;
 }
 
+void Window::ActivateVSync()
+{
+    VSync = true;
+
+    SDL_GL_SetSwapInterval(1);
+}
+
+void Window::DesactivateVSync()
+{
+    VSync = false;
+
+    SDL_GL_SetSwapInterval(0);
+}
+
+
 void Window::ToggleFullscreen() 
 {
 	if (!_window) return;

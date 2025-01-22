@@ -130,6 +130,20 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 	{
 		lastMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
 	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		if (Application->window->VSync)
+		{
+			Application->window->DesactivateVSync();
+		}
+		else
+		{
+			Application->window->ActivateVSync();
+		}
+		
+	}
+
 }
 
 void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight)

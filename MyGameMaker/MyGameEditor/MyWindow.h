@@ -64,6 +64,12 @@ public:
 	void ToggleFullscreen();
 
 	unsigned int GetDisplayRefreshRate();
+
+	void ActivateVSync();
+
+	void DesactivateVSync();
+
+	bool VSync = true;
 	
 private:
 	unsigned int refreshRate;

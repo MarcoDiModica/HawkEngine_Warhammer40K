@@ -41,6 +41,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)\External\Mono\include;$(SolutionDir)\External\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\External\Mono\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)\External\Mono\include;$(SolutionDir)\External\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\External\Mono\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -54,9 +62,14 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>&amp;(SolutionDir)MyPhysicsEngine\Build\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(SolutionDir)\External\Mono\lib\mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -77,17 +90,22 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(SolutionDir)\External\Mono\lib\mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\MyScriptingEngine\MyScriptingEngine.vcxproj">
+      <Project>{c0f74fc2-d269-40d3-bdd1-557d2e8478be}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\MyAudioEngine\MyAudioEngine.vcxproj">
       <Project>{1603c380-66d8-4904-864c-f7767e2c5f7d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\MyPhysicsEngine\MyPhysicsEngine.vcxproj">
-      <Project>{2adcc106-88f4-4ea9-8174-9e1323e4d869}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +117,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGUI.cpp" />
     <ClCompile Include="MyWindow.cpp" />
+    <ClCompile Include="PhysicsModule.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
     <ClCompile Include="UIAudioTest.cpp" />
@@ -121,6 +140,7 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="MyGUI.h" />
     <ClInclude Include="MyWindow.h" />
+    <ClInclude Include="PhysicsModule.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
     <ClInclude Include="UIAudioTest.h" />

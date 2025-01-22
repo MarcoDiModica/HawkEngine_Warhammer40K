@@ -42,7 +42,7 @@ bool UIConsole::Draw()
             {
             case LogType::LOG_INFO:
                 logType = "INFO";
-                ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "INFO");
+                ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.2f, 1.0f), "INFO");
                 break;
             case LogType::LOG_WARNING:
                 logType = "WARNING";
@@ -59,6 +59,10 @@ bool UIConsole::Draw()
             case LogType::LOG_OK:
                 logType = "OK";
                 ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "OK");
+                break;
+            case LogType::LOG_C_SHARP:
+                logType = "C#";
+                ImGui::TextColored(ImVec4(0.0f, 149.0f/255.0f , 110.0f/255.0f, 1.0f), "C#");
                 break;
             }
 

@@ -3,6 +3,8 @@
 #include "App.h"
 #include "Input.h"
 #include "MyGameEngine/TransformComponent.h"
+#include "MyAudioEngine/AudioListener.h"
+#include "MyGameEngine/GameObject.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include "imgui.h"
 #include <SDL2/SDL.h>
@@ -12,7 +14,10 @@
 
 EditorCamera::EditorCamera(App* app) : Module(app), CameraBase(), transform(Transform_Component(nullptr))
 {
+	listenerObject = new GameObject("EditorCameraObject");
+	listenerObject->AddComponent<AudioListener>();
 }
+
 
 bool EditorCamera::Awake()
 {
@@ -34,6 +39,12 @@ bool EditorCamera::FixedUpdate()
 bool EditorCamera::Update(double dt)
 {
 	move_camera(cameraSpeed, static_cast<float>(dt));
+	
+	// Sync listener object position with camera
+	if (listenerObject) {
+		listenerObject->GetTransform()->SetPosition(transform.GetPosition());
+		// For now, let's skip rotation sync until we debug the rotation issue
+	}
 
 	return true;
 }
@@ -45,6 +56,10 @@ bool EditorCamera::PostUpdate()
 
 bool EditorCamera::CleanUp()
 {
+	if (listenerObject) {
+		delete listenerObject;
+		listenerObject = nullptr;
+	}
 	return true;
 }
 
@@ -96,8 +111,8 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 		transform.AlignToGlobalUp();
 	}
 
-	if (Application->input->GetMouseZ() > 0) transform.Translate(glm::vec3(0, 0, zoomSpeed * deltaTime));
-	if (Application->input->GetMouseZ() < 0) transform.Translate(glm::vec3(0, 0, -zoomSpeed * deltaTime));
+	if (Application->input->GetMouseZ() > 0) transform.Translate(glm::vec3(0, 0, zoomSpeed*10 * deltaTime));
+	if (Application->input->GetMouseZ() < 0) transform.Translate(glm::vec3(0, 0, -zoomSpeed*10 * deltaTime));
 
 	/*float wheel = Application->input->GetMouseZ();
 	if (wheel != 0) {

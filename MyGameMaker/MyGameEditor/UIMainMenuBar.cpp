@@ -75,6 +75,7 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
 			if (ImGui::MenuItem("Camera")) { Application->root->CreateCameraObject("Camera"); }
 			if (ImGui::MenuItem("Light")) { Application->root->CreateLightObject("Light"); }
+			if (ImGui::MenuItem("Audio Source")) { Application->root->CreateAudioObject("Audio Source"); }
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))
@@ -104,7 +105,7 @@ bool UIMainMenuBar::Draw()
 			SetRedStyle();
 			if (ImGui::ImageButton("Stop Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(stop_image.id())), ImVec2(11.0f, 11.0f))) 
 			{
-				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->currentScene->GetName() +".scene");
+				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
 				Application->play = false;
 			}
 		}

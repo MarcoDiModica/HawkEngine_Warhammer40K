@@ -41,6 +41,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)\External\Mono\include;$(SolutionDir)\External\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\External\Mono\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)\External\Mono\include;$(SolutionDir)\External\Mono\include\mono-2.0;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\External\Mono\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -81,6 +89,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="InputEngine.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
@@ -89,6 +98,7 @@
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="readOnlyView.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TreeExt.h" />
@@ -101,6 +111,7 @@
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="InputEngine.cpp" />
     <ClCompile Include="LightComponent.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -108,6 +119,7 @@
     <ClCompile Include="Octree.cpp" />
     <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>

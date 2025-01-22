@@ -9,14 +9,22 @@
 #include "Input.h"
 #include "..\MyGameEngine\types.h"
 #include "..\MyGameEngine\MeshRendererComponent.h"
-#include "..\MyGameEngine\Mesh.h"
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
 #include "..\MyGameEngine\LightComponent.h"
+
+#include "..\MyAudioEngine\SoundComponent.h"
+
+#include "..\MyScriptingEngine\ScriptComponent.h"
+
 #include <string>
 
 #include <imgui.h>
 #include <imgui_internal.h>
+
+#include <mono/jit/jit.h>
+#include <mono/metadata/reflection.h>
+#include "../MyScriptingEngine/MonoManager.h"
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
@@ -298,6 +306,7 @@ bool UIInspector::Draw() {
 				LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
 			}
 		}
+
         ImGui::Separator();
 
         if (selectedGameObject->HasComponent<LightComponent>())
@@ -384,6 +393,181 @@ bool UIInspector::Draw() {
             {
                 LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
             }
+        }
+
+        ImGui::Separator();
+
+        if (selectedGameObject->HasComponent<SoundComponent>()) {
+            SoundComponent* soundComponent = selectedGameObject->GetComponent<SoundComponent>();
+
+            if (soundComponent) {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Sound")) {
+                    // Audio File Path
+                    char audioPath[256];
+                    strcpy_s(audioPath, soundComponent->GetAudioPath().c_str());
+                    if (ImGui::InputText("Audio File", audioPath, sizeof(audioPath))) {
+                        soundComponent->LoadAudio(audioPath);
+                    }
+
+                    // Audio Type
+                    bool isMusic = soundComponent->IsMusic();
+                    if (ImGui::Checkbox("Is Music", &isMusic)) {
+                        if (soundComponent->GetAudioPath().length() > 0) {
+                            soundComponent->LoadAudio(soundComponent->GetAudioPath(), isMusic);
+                        }
+                    }
+
+                    // Spatial Audio
+                    bool isSpatial = soundComponent->IsSpatial();
+                    if (ImGui::Checkbox("3D Sound", &isSpatial)) {
+                        soundComponent->SetSpatial(isSpatial);
+                    }
+
+                    // Volume Control
+                    float volume = soundComponent->GetVolume();
+                    if (ImGui::SliderFloat("Volume", &volume, 0.0f, 1.0f)) {
+                        soundComponent->SetVolume(volume);
+                    }
+
+                    // Loop Setting
+                    bool loop = soundComponent->GetLoop();
+                    if (ImGui::Checkbox("Loop", &loop)) {
+                        soundComponent->SetLoop(loop);
+                    }
+
+                    // Auto-play setting
+                    bool autoPlay = soundComponent->GetAutoPlay();
+                    if (ImGui::Checkbox("Auto Play", &autoPlay)) {
+                        soundComponent->SetAutoPlay(autoPlay);
+                    }
+
+                    ImGui::Separator();
+
+                    // Playback Controls
+                    if (soundComponent->IsPlaying()) {
+                        if (ImGui::Button("Stop")) {
+                            soundComponent->Stop();
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button("Pause")) {
+                            soundComponent->Pause();
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button("Resume")) {
+                            soundComponent->Resume();
+                        }
+                    } else {
+                        if (ImGui::Button("Play")) {
+                            soundComponent->Play(soundComponent->GetLoop());
+                        }
+                    }
+
+                    if (isSpatial) {
+                        ImGui::Text("Position is controlled by Transform component");
+                    }
+                }
+            }
+        }
+        
+        ImGui::Separator();
+        if (selectedGameObject->HasComponent<ScriptComponent>())
+        {
+            ScriptComponent* scriptComponent = selectedGameObject->GetComponent<ScriptComponent>();
+
+            if (scriptComponent && scriptComponent->monoScript)
+            {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Script"))
+                {
+                    std::string scriptName = scriptComponent->GetName();
+                    ImGui::Text("Script: %s", scriptName.c_str());
+
+                    MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
+
+                    MonoClassField* field = nullptr;
+                    void* iter = nullptr;
+                    while ((field = mono_class_get_fields(scriptClass, &iter)))
+                    {
+                        const char* fieldName = mono_field_get_name(field);
+                        MonoType* fieldType = mono_field_get_type(field);
+                        int typeCode = mono_type_get_type(fieldType);
+
+                        MonoClass* fieldParentClass = mono_field_get_parent(field);
+
+                        ImGui::PushID(field);
+
+                        if (typeCode == MONO_TYPE_STRING)
+                        {
+                            MonoString* monoString = nullptr;
+                            mono_field_get_value(scriptComponent->monoScript, field, &monoString);
+                            std::string value = monoString ? mono_string_to_utf8(monoString) : "";
+
+                            char buffer[128];
+                            strncpy(buffer, value.c_str(), sizeof(buffer));
+                            buffer[sizeof(buffer) - 1] = '\0';
+
+                            if (ImGui::InputText(fieldName, buffer, sizeof(buffer)))
+                            {
+                                value = buffer;
+                                MonoString* newMonoString = mono_string_new(mono_domain_get(), value.c_str());
+                                mono_field_set_value(scriptComponent->monoScript, field, newMonoString);
+                            }
+                        }
+                        else if (typeCode == MONO_TYPE_BOOLEAN)
+                        {
+                            bool value = false;
+                            mono_field_get_value(scriptComponent->monoScript, field, &value);
+                            if (ImGui::Checkbox(fieldName, &value))
+                            {
+                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            }
+                        }
+                        else if (typeCode == MONO_TYPE_I4)
+                        {
+                            int value = 0;
+                            mono_field_get_value(scriptComponent->monoScript, field, &value);
+                            if (ImGui::InputInt(fieldName, &value))
+                            {
+                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            }
+                        }
+                        else if (typeCode == MONO_TYPE_R4)
+                        {
+                            float value = 0.0f;
+                            mono_field_get_value(scriptComponent->monoScript, field, &value);
+                            if (ImGui::InputFloat(fieldName, &value))
+                            {
+                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            }
+                        }
+                        else if (typeCode == MONO_TYPE_R8)
+                        {
+                            double value = 0.0;
+                            mono_field_get_value(scriptComponent->monoScript, field, &value);
+                            if (ImGui::InputDouble(fieldName, &value))
+                            {
+                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            }
+                        }
+
+
+                        ImGui::PopID();
+                    }
+                }
+            }
+            else
+            {
+                if (!scriptComponent)
+                {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: ScriptComponent is nullptr");
+                }
+                else
+                {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
+                }
+            }
+
         }
     }
 

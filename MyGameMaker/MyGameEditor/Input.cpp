@@ -303,10 +303,19 @@ void Input::HandleFileDrop(const std::string& fileDir)
     else if (fileExt == "wav" || fileExt == "ogg" || fileExt == "mp3") {
         LOG(LogType::LOG_INFO, "Importing Audio: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
         
+        // Create Audio directory if it doesn't exist
+        fs::path audioDir = fs::path(ASSETS_PATH) / "Audio";
+        if (!fs::exists(audioDir)) {
+            fs::create_directories(audioDir);
+        }
+        
+        // Update target path to Audio subdirectory
+        targetPath = audioDir / fileNameExt;
+        
         if (InputManagement->draggedObject != nullptr) {
             auto soundComponent = InputManagement->draggedObject->GetComponent<SoundComponent>();
             if (soundComponent) {
-                soundComponent->LoadAudio(fileDir);
+                soundComponent->LoadAudio(targetPath.string());
             }
         }
     }

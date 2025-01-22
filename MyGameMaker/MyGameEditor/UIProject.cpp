@@ -186,8 +186,8 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 		{
-			// Set payload to carry the file path
-			ImGui::SetDragDropPayload("ASSET_PATH", entry.path().string().c_str(), entry.path().string().length() + 1);
+			std::string fullPath = entry.path().string();
+			ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
 			ImGui::Text("Dragging %s", name.c_str());
 			ImGui::EndDragDropSource();
 		}

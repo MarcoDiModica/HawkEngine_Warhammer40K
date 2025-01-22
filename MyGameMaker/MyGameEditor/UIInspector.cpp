@@ -113,6 +113,10 @@ bool UIInspector::Draw() {
 				selectedGameObject->AddComponent<SoundComponent>();
 			}
 
+			if (!selectedGameObject->HasComponent<AudioListener>() && ImGui::MenuItem("Audio Listener")) {
+				selectedGameObject->AddComponent<AudioListener>();
+			}
+
 
             // More components here
 

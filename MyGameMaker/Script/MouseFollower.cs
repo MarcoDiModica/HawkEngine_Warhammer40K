@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
         public override void Start()
         {
-            actor = Engineson.CreateGameObject("FuckingTank");
+            actor = Engineson.CreateGameObject("FuckingTank", null);
             transfr = actor.GetComponent<Transform>();
 
             if (transfr != null)

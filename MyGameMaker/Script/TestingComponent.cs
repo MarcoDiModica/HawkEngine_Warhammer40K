@@ -7,6 +7,7 @@ using System.Numerics;
 using HawkEngine;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
+using System.Runtime.CompilerServices;
 
 public class TestingComponent : MonoBehaviour
 {
@@ -14,9 +15,13 @@ public class TestingComponent : MonoBehaviour
     Transform transfr;
     Test test;
     TestingComponent testing1;
+    GameObject projectile;
+    TankController turret;
+    Transform turretTransform;
 
     public float timer = 0.0f;
     public int count = 1;
+    public float projectileSpeed = 10.0f;
 
     public float moveAmount = 1.0f;
     private Vector3 currentPosition;
@@ -26,8 +31,10 @@ public class TestingComponent : MonoBehaviour
     float lookPosX = 0;
     public override void Start()
     {
-        //actor = Engineson.CreateGameObject("FuckingTank");
+        //actor = Engineson.CreateGameObject("FuckingTank", null);
         transfr = gameObject.GetComponent<Transform>();
+
+        transfr.SetScale(2, 2, 2);
 
         timer = 0.0f;
         //lookPosX = transfr.position.X;
@@ -71,21 +78,16 @@ public class TestingComponent : MonoBehaviour
             Engineson.print($"Moved to {transfr.GetLocalPosition()}, facing {forwardDirection}.");
         }
 
-        if (Input.GetKey(KeyCode.SPACE)) /* Tank Rotation */
+        if (Input.GetKey(KeyCode.E))
         {
-            lookPosX++;
-            Vector3 look_position = new Vector3( lookPosX , transfr.position.Y, Input.GetMousePosition().Z);
-
-            transfr.LookAt(  look_position);
-            Engineson.print("Looking at mouse " + transfr.GetEulerAngles());
-
-
-            Vector2 mouse = new Vector2( Input.GetMousePosition().X , Input.GetMousePosition().Y);
-            var delta = mouse - prev_mouse;
-
-            transfr.Rotate(delta.X * 0.01f, new Vector3(0, 1, 0));
+            //GenerateProjectile();
         }
 
+    }
+
+    private void GenerateProjectile()
+    {
+        //projectile = Engineson.CreateGameObject("Projectile");
     }
 }
 

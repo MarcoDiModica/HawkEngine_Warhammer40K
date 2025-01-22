@@ -40,7 +40,7 @@ MonoObject* EngineBinds::CreateGameObjectSharp(MonoString* name, GameObject* Cgo
     char* C_name = mono_string_to_utf8(name);
 
     if (Cgo == nullptr) {
-        auto go = SceneManagement->CreateGameObject(C_name); //SUSTITUIR POR ROOT DEL ENGINE
+        auto go = SceneManagement->CreateGameObject(C_name); 
         Cgo = go.get();
     }
 

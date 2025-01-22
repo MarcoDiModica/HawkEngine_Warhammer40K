@@ -15,7 +15,7 @@ namespace HawkEngine
         public static extern void print(string message);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public static extern GameObject CreateGameObject(string name);
+        public static extern GameObject CreateGameObject(string name, GameObject ola);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void Destroy(GameObject object_to_destroy);

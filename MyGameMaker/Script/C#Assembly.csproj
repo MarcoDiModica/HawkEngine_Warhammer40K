@@ -52,6 +52,7 @@
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="MouseFollower.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TankController.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestingComponent.cs" />
     <Compile Include="Transform.cs" />

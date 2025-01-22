@@ -19,7 +19,7 @@ namespace HawkEngine
             Engineson.print("Ive gotten the name " + GetName());
 
             if (name == "Samson") {
-                AddChild(Engineson.CreateGameObject("joe"));
+                AddChild(Engineson.CreateGameObject("joe", null));
              }
 
            // EngineCalls.Destroy(this);

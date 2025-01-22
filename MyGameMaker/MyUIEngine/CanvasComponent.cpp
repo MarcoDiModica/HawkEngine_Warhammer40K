@@ -1,5 +1,5 @@
 #include "CanvasComponent.h"
-#include "GameObject.h"
+#include "MyGameEngine/Component.h"
 #include <algorithm>
 
 CanvasComponent::CanvasComponent(GameObject* owner) : Component(owner) {

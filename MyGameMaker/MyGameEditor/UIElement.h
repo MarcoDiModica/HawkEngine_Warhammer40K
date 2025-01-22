@@ -24,6 +24,7 @@ public:
 	virtual ~UIElement();
 
 	virtual bool Draw() = 0;
+	virtual void Update(float deltaTime);
 
 	virtual UIType GetType() const;
 	virtual std::string GetName() const;
@@ -31,7 +32,8 @@ public:
 	virtual bool GetState();
 	virtual void SetState(bool state);
 	virtual void SwitchState();
-	
+	bool IsEnabled() const;
+
 	bool firstDraw = true;
 
 protected:

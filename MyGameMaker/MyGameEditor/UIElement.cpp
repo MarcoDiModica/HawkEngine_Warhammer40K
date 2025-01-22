@@ -32,3 +32,13 @@ void UIElement::SwitchState()
 {
 	enabled = !enabled;
 }
+
+void UIElement::Update(float deltaTime)
+{
+	
+}
+
+bool UIElement::IsEnabled() const
+{
+	return enabled;
+}

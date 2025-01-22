@@ -1,27 +1,24 @@
 #include "ButtonComponent.h"
-#include "GameObject.h"
-#include <algorithm>
 
-ButtonComponent::ButtonComponent(GameObject* owner) : Component(owner) {
-    // Initialization code here
+ButtonComponent::ButtonComponent(GameObject* owner)
+    : UIComponent("ButtonComponent"), onClick(nullptr) {
+    // Constructor implementation
 }
 
 ButtonComponent::~ButtonComponent() {
-    // Cleanup code here
+    // Destructor implementation
 }
 
-void ButtonComponent::Start() {
-    // Start code here
+void ButtonComponent::Start()const {
+    // Start implementation
 }
 
-void ButtonComponent::Update(float deltaTime) {
-    for (const auto& button : buttons) {
-        button->Update(deltaTime);
-    }
+void ButtonComponent::Update(float deltaTime)const {
+    // Update implementation
 }
 
-void ButtonComponent::Destroy() {
-    // Destroy code here
+void ButtonComponent::Destroy()const {
+    // Destroy implementation
 }
 
 void ButtonComponent::AddButton(std::shared_ptr<UIElement> button) {
@@ -34,9 +31,7 @@ void ButtonComponent::RemoveButton(std::shared_ptr<UIElement> button) {
 
 void ButtonComponent::Render() {
     for (const auto& button : buttons) {
-        if (button->IsEnabled()) {
-            button->Draw();
-        }
+        button->Draw();
     }
 }
 

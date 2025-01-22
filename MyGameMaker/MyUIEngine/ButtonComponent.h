@@ -2,22 +2,25 @@
 #define __BUTTON_COMPONENT_H__
 #pragma once
 
-#include "Component.h"
-#include "UIElement.h"
+#include "UIComponent.h"
+#include "MyGameEditor/UIElement.h"
+#include "MyGameEngine/Gameobject.h"
+#include "CanvasComponent.h"
 #include <vector>
 #include <memory>
 #include <functional>
 
-class ButtonComponent : public Component {
+
+class ButtonComponent : public UIComponent {
 public:
     ButtonComponent(GameObject* owner);
     ~ButtonComponent() override;
 
-    void Start() override;
-    void Update(float deltaTime) override;
-    void Destroy() override;
+    void Start()const override;
+    void Update(float deltaTime)const override;
+    void Destroy()const override;
 
-    ComponentType GetType() const override { return ComponentType::BUTTON; }
+    CanvasComponent::UIComponentType GetType() const override { return CanvasComponent::UIComponentType::BUTTON; }
 
     void AddButton(std::shared_ptr<UIElement> button);
     void RemoveButton(std::shared_ptr<UIElement> button);

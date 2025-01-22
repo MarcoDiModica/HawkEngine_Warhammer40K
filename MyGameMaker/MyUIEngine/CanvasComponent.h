@@ -2,13 +2,25 @@
 #define __CANVAS_COMPONENT_H__
 #pragma once
 
-#include "Component.h"
-#include "UIElement.h"
+#include "MyGameEngine/Component.h"
+#include "MyGameEditor/UIElement.h"
 #include <vector>
 #include <memory>
 
+
+
 class CanvasComponent : public Component {
 public:
+
+ enum class UIComponentType {
+        BUTTON,
+        CHECKBOX,
+        INPUTBOX,
+        IMAGE,
+        UNKNOWN
+    };
+   
+
     CanvasComponent(GameObject* owner);
     ~CanvasComponent() override;
 

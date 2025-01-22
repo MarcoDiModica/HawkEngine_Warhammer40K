@@ -57,6 +57,15 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
     mono_runtime_object_init(monoScript);
 
     LOG(LogType::LOG_INFO, "Script %s cargado correctamente.", scriptName.c_str());
+
+    //if (std::find(MonoManager::GetInstance().scriptIDs.begin(), MonoManager::GetInstance().scriptIDs.end(), value) != vec.end();
+
+    if (MonoManager::GetInstance().scriptIDs.contains(scriptName) == false) {
+
+        MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
+    }
+
+
     return true;
 }
 

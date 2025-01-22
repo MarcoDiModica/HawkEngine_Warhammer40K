@@ -12,6 +12,7 @@
 
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyGameEditor/Log.h"
+#include "../MyAudioEngine/AudioListener.h"
 
 
 bool SceneManager::Start() {
@@ -156,6 +157,7 @@ std::shared_ptr<GameObject> SceneManager::CreatePlane(const std::string& name) {
 std::shared_ptr<GameObject> SceneManager::CreateCameraObject(const std::string& name) {
     auto camera = CreateGameObject(name);
     camera->AddComponent<CameraComponent>();
+    camera->AddComponent<AudioListener>();
     return camera;
 }
 

@@ -5,6 +5,7 @@
 
 #include "Module.h"
 #include "../MyGameEngine/CameraBase.h"
+#include "../MyGameEngine/Component.h"
 
 class EditorCamera : public Module, public CameraBase 
 {
@@ -33,6 +34,7 @@ public:
 private:
 	glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);
 	Transform_Component transform;
+	GameObject* listenerObject = nullptr;
 
 	void move_camera(float speed, float deltaTime);
 	void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);

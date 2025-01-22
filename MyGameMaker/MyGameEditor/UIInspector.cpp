@@ -9,11 +9,14 @@
 #include "Input.h"
 #include "..\MyGameEngine\types.h"
 #include "..\MyGameEngine\MeshRendererComponent.h"
-#include "..\MyGameEngine\Mesh.h"
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
 #include "..\MyGameEngine\LightComponent.h"
+
+#include "..\MyAudioEngine\SoundComponent.h"
+
 #include "..\MyScriptingEngine\ScriptComponent.h"
+
 #include <string>
 
 #include <imgui.h>
@@ -394,6 +397,80 @@ bool UIInspector::Draw() {
 
         ImGui::Separator();
 
+        if (selectedGameObject->HasComponent<SoundComponent>()) {
+            SoundComponent* soundComponent = selectedGameObject->GetComponent<SoundComponent>();
+
+            if (soundComponent) {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Sound")) {
+                    // Audio File Path
+                    char audioPath[256];
+                    strcpy_s(audioPath, soundComponent->GetAudioPath().c_str());
+                    if (ImGui::InputText("Audio File", audioPath, sizeof(audioPath))) {
+                        soundComponent->LoadAudio(audioPath);
+                    }
+
+                    // Audio Type
+                    bool isMusic = soundComponent->IsMusic();
+                    if (ImGui::Checkbox("Is Music", &isMusic)) {
+                        if (soundComponent->GetAudioPath().length() > 0) {
+                            soundComponent->LoadAudio(soundComponent->GetAudioPath(), isMusic);
+                        }
+                    }
+
+                    // Spatial Audio
+                    bool isSpatial = soundComponent->IsSpatial();
+                    if (ImGui::Checkbox("3D Sound", &isSpatial)) {
+                        soundComponent->SetSpatial(isSpatial);
+                    }
+
+                    // Volume Control
+                    float volume = soundComponent->GetVolume();
+                    if (ImGui::SliderFloat("Volume", &volume, 0.0f, 1.0f)) {
+                        soundComponent->SetVolume(volume);
+                    }
+
+                    // Loop Setting
+                    bool loop = soundComponent->GetLoop();
+                    if (ImGui::Checkbox("Loop", &loop)) {
+                        soundComponent->SetLoop(loop);
+                    }
+
+                    // Auto-play setting
+                    bool autoPlay = soundComponent->GetAutoPlay();
+                    if (ImGui::Checkbox("Auto Play", &autoPlay)) {
+                        soundComponent->SetAutoPlay(autoPlay);
+                    }
+
+                    ImGui::Separator();
+
+                    // Playback Controls
+                    if (soundComponent->IsPlaying()) {
+                        if (ImGui::Button("Stop")) {
+                            soundComponent->Stop();
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button("Pause")) {
+                            soundComponent->Pause();
+                        }
+                        ImGui::SameLine();
+                        if (ImGui::Button("Resume")) {
+                            soundComponent->Resume();
+                        }
+                    } else {
+                        if (ImGui::Button("Play")) {
+                            soundComponent->Play(soundComponent->GetLoop());
+                        }
+                    }
+
+                    if (isSpatial) {
+                        ImGui::Text("Position is controlled by Transform component");
+                    }
+                }
+            }
+        }
+        
+        ImGui::Separator();
         if (selectedGameObject->HasComponent<ScriptComponent>())
         {
             ScriptComponent* scriptComponent = selectedGameObject->GetComponent<ScriptComponent>();
@@ -490,6 +567,7 @@ bool UIInspector::Draw() {
                     LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
                 }
             }
+
         }
     }
 

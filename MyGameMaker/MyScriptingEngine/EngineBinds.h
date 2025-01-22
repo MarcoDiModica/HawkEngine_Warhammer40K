@@ -43,7 +43,9 @@ namespace EngineBinds {
 
     // Transform
     void SetPosition(MonoObject* transformRef, float x, float y, float z);
+    void SetLocalPosition(MonoObject* transformRef, float x, float y, float z);
     Vector3 GetPosition(MonoObject* transformRef);
+    Vector3 GetLocalPosition(MonoObject* transformRef);
     void SetRotation(MonoObject* transformRef, float x, float y, float z);
     void SetRotationQuat(MonoObject* transformRef, glm::quat* rotation);
     Vector3 GetEulerAngles(MonoObject* transformRef);
@@ -54,6 +56,7 @@ namespace EngineBinds {
     void Scale(MonoObject* transformRef, float x, float y, float z);
     void TranslateLocal(MonoObject* transformRef, float x, float y, float z);
     void AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp);
+    Vector3 GetForward(MonoObject* transformRef);
     void SetForward(MonoObject* transformRef, glm::vec3* forward);
 
 	// Camera

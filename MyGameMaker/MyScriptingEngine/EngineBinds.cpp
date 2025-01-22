@@ -165,10 +165,21 @@ void EngineBinds::SetPosition(MonoObject* transformRef, float x, float y, float 
     if (transform) transform->SetPosition(glm::vec3(x, y, z));
 }
 
+void EngineBinds::SetLocalPosition(MonoObject* transformRef, float x, float y, float z) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) transform->SetLocalPosition(glm::vec3(x, y, z));
+}
+
 Vector3 EngineBinds::GetPosition(MonoObject* transformRef) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     glm::dvec3 p = transform->GetPosition();
     return Vector3 {(float) p.x,(float)p.y,(float)p.z };
+}
+
+Vector3 EngineBinds::GetLocalPosition(MonoObject* transformRef) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    glm::dvec3 p = transform->GetLocalPosition()[3];
+    return Vector3{ (float)p.x,(float)p.y,(float)p.z };
 }
 
 void EngineBinds::SetRotation(MonoObject* transformRef, float x, float y, float z) {
@@ -226,6 +237,13 @@ void EngineBinds::AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp) 
 void EngineBinds::SetForward(MonoObject* transformRef, glm::vec3* forward) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     if (transform) transform->SetForward(*forward);
+}
+
+Vector3 EngineBinds::GetForward(MonoObject* transformRef) {
+
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    auto forward = transform->GetForward();
+    return Vector3{ (float) forward.x,(float) forward.y , (float) forward.z };
 }
 
 // Camera Class functions
@@ -366,6 +384,8 @@ void EngineBinds::BindEngine() {
     // Transform
     mono_add_internal_call("HawkEngine.Transform::SetPosition", (const void*)&EngineBinds::SetPosition);
     mono_add_internal_call("HawkEngine.Transform::GetPosition", (const void*)&EngineBinds::GetPosition);
+    mono_add_internal_call("HawkEngine.Transform::SetLocalPosition", (const void*)&EngineBinds::SetLocalPosition);
+    mono_add_internal_call("HawkEngine.Transform::GetLocalPosition", (const void*)&EngineBinds::GetLocalPosition);
     mono_add_internal_call("HawkEngine.Transform::SetRotation", (const void*)&EngineBinds::SetRotation);
     mono_add_internal_call("HawkEngine.Transform::GetEulerAngles", (const void*)&EngineBinds::GetEulerAngles);
     mono_add_internal_call("HawkEngine.Transform::SetRotationQuat", (const void*)&EngineBinds::SetRotationQuat);
@@ -377,6 +397,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Transform::TranslateLocal", (const void*)&EngineBinds::TranslateLocal);
     mono_add_internal_call("HawkEngine.Transform::AlignToGlobalUp", (const void*)&EngineBinds::AlignToGlobalUp);
     mono_add_internal_call("HawkEngine.Transform::SetForward", (const void*)&EngineBinds::SetForward);
+    mono_add_internal_call("HawkEngine.Transform::GetForward", (const void*)&EngineBinds::GetForward);
 
     // Camera
     mono_add_internal_call("HawkEngine.Camera::SetCameraFieldOfView", (const void*)&EngineBinds::SetCameraFieldOfView);

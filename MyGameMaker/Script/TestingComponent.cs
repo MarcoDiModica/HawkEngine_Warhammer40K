@@ -79,18 +79,19 @@ public class TestingComponent : MonoBehaviour
 
             //transfr.position += movement;
 
-            currentPosition += movement;
+            //currentPosition += movement;
 
-            transfr.SetPosition(currentPosition.X, currentPosition.Y, currentPosition.Z);
+            // transfr.SetLocalPosition(currentPosition.X, currentPosition.Y, currentPosition.Z);
+            transfr.position += transfr.forward * 2 * deltaTime;
 
             if (forwardDirection != Vector3.Zero)
             {
                 Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, (float)Math.Atan2(forwardDirection.X,forwardDirection.Z));
                // transfr.SetRotationQuat(rotation);
-                transfr.LookAt(Input.GetMousePosition());
+               // transfr.LookAt(Input.GetMousePosition());
             }
 
-            Engineson.print($"Moved to {transfr.GetPosition()}, facing {forwardDirection}.");
+            Engineson.print($"Moved to {transfr.GetLocalPosition()}, facing {forwardDirection}.");
         }
 
         if (Input.GetKey(KeyCode.SPACE))

@@ -10,7 +10,13 @@ namespace HawkEngine
         public extern void SetPosition(float x, float y, float z);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetLocalPosition(float x, float y, float z);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
         public extern Vector3 GetPosition();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern Vector3 GetLocalPosition();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetRotation(float pitch, float yaw, float roll);
@@ -88,5 +94,15 @@ namespace HawkEngine
                 SetRotation(value.X, value.Y, value.Z);
             }
         }
+
+        public Vector3 forward
+        {
+            get { return GetForward(); }
+            // no setter , read-only property
+        }
+
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern Vector3 GetForward();
     }
 }

@@ -54,6 +54,9 @@ bool App::Awake() {
 
 	targetFrameDuration = (std::chrono::duration<double>)1 / frameRate;
 
+	camera->GetTransform().GetPosition() = vec3(0, 1, 4);
+	camera->GetTransform().Rotate(glm::radians(180.0), vec3(0, 1, 0));
+
 	for (const auto& module : modules) {
 		if (module->Awake()) continue;
 		else {

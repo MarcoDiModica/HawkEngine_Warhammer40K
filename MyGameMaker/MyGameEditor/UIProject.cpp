@@ -15,26 +15,27 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 {
 	// Definir el path del directorio (cambiar en types.h)
 	directoryPath = LIBRARY_PATH;
+	selectedDirectory = directoryPath;
 	currentSceneFile = "";
 
 	folderIcon = new Image();
-	folderIcon->LoadTexture("Assets/Icons/folder_icon.png");
+	folderIcon->LoadTexture("EngineAssets/folder.png");
 
 	matIcon = new Image();
 	//fbxIcon->LoadTexture("Assets/Icons/fbx_icon.png");
-	matIcon->LoadTexture("Assets/Icons/folder_icon.png");
+	matIcon->LoadTexture("EngineAssets/material.png");
 
 	imageIcon = new Image();
 	//pngIcon->LoadTexture("Assets/Icons/png_icon.png");
-	imageIcon->LoadTexture("Assets/Icons/folder_icon.png");
+	imageIcon->LoadTexture("EngineAssets/image.png");
 
 	sceneIcon = new Image();
 	//sceneIcon->LoadTexture("Assets/Icons/scene_icon.png");
-	sceneIcon->LoadTexture("Assets/Icons/folder_icon.png");
+	sceneIcon->LoadTexture("EngineAssets/scene.png");
 
 	meshIcon = new Image();
 	//meshIcon->LoadTexture("Assets/Icons/mesh_icon.png");
-	meshIcon->LoadTexture("Assets/Icons/folder_icon.png");
+	meshIcon->LoadTexture("EngineAssets/mesh.png");
 }
 
 UIProject::~UIProject()
@@ -45,7 +46,6 @@ UIProject::~UIProject()
 	delete sceneIcon;
 	delete meshIcon;
 }
-
 
 bool UIProject::Draw()
 {
@@ -85,7 +85,7 @@ bool UIProject::Draw()
 		if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
 			uint32_t count = 0;
-			// Esto no sé si está bien
+			// Esto no sï¿½ si estï¿½ bien
 			for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
 			{
 				count++;
@@ -95,7 +95,7 @@ bool UIProject::Draw()
 
 			auto clickState = DirectoryView(directoryPath, &count, &selectionMask);
 
-			if (clickState.first) // Esto es para la selección múltiple
+			if (clickState.first) // Esto es para la selecciï¿½n mï¿½ltiple
 			{
 				if (ImGui::GetIO().KeyCtrl)
 				{
@@ -106,13 +106,17 @@ bool UIProject::Draw()
 					selectionMask = BIT(clickState.second);
 				}
 			}
-
 		}
 
 		ImGui::TableNextColumn();
-
-		// Aquí creo que va algo
-		ImGui::Text("Properties or Preview here...");
+		if (selectedDirectory.empty())
+		{
+			ImGui::Text("Select a folder to view contents.");
+		}
+		else
+		{
+			DrawFolderContents(selectedDirectory);
+		}
 		ImGui::EndTable();
 	}
 
@@ -121,9 +125,6 @@ bool UIProject::Draw()
 
 	return true;
 }
-
-
-
 
 std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& path, uint32_t* count, int* selection_mask)
 {
@@ -145,7 +146,7 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 
 		std::string name = entry.path().filename().string();
 		bool entryIsFile = !std::filesystem::is_directory(entry.path());
-		
+
 		auto icon = entryIsFile ? nullptr : folderIcon;
 		if (entryIsFile)
 		{
@@ -171,8 +172,9 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 
 		bool nodeOpen = ImGui::TreeNodeEx((void*)(intptr_t)(*count), treeFlags, name.c_str());
 
-		if (ImGui::IsItemClicked())
+		if (!entryIsFile && ImGui::IsItemClicked())
 		{
+			selectedDirectory = entry.path();
 			nodeClicked = *count;
 			anyNodeClicked = true;
 			HandleFileSelection(entry.path().string());
@@ -202,15 +204,15 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 
 			ImGui::EndPopup();
 		}
-	
+
 		(*count)--;
-		
+
 		if (!entryIsFile)
 		{
 			if (nodeOpen)
 			{
 				auto clickState = DirectoryView(entry.path(), count, selection_mask);
-			
+
 				if (!anyNodeClicked)
 				{
 					anyNodeClicked = clickState.first;
@@ -236,14 +238,6 @@ void UIProject::HandleFileSelection(const std::string& filePath)
 
 	if (ImGui::BeginPopupModal("Load Scene"))
 	{
-		/*if (ImGui::Button("Save & Load"))
-		{
-			Application->scene_serializer->Serialize(currentSceneFile);
-			Application->scene_serializer->DeSerialize(filePath);
-			currentSceneFile = filePath;
-			ImGui::CloseCurrentPopup();
-		}*/
-
 		if (ImGui::Button("Load without saving"))
 		{
 			Application->scene_serializer->DeSerialize(filePath);
@@ -259,7 +253,86 @@ void UIProject::HandleFileSelection(const std::string& filePath)
 	}
 }
 
+void UIProject::DrawFolderContents(const std::filesystem::path& folderPath) {
+	if (!std::filesystem::exists(folderPath) || !std::filesystem::is_directory(folderPath)) {
+		return;
+	}
 
+	// Get the width of the content region
+	float contentRegionWidth = ImGui::GetContentRegionAvail().x;
 
+	// Icon and padding sizes
+	const float iconSize = 64.0f;
+	const float padding = 16.0f;  // Padding between icons
+	const float totalSize = iconSize + padding;  // Total space per item
 
+	// Calculate how many icons fit per row
+	int itemsPerRow = static_cast<int>(contentRegionWidth / totalSize);
+	if (itemsPerRow < 1) itemsPerRow = 1;  // At least one item per row
 
+	int itemIndex = 0;
+
+	for (const auto& entry : std::filesystem::directory_iterator(folderPath)) {
+		bool isDirectory = std::filesystem::is_directory(entry.path());
+		auto icon = isDirectory ? folderIcon : nullptr;
+
+		// Determine the icon based on file type
+		if (!isDirectory) {
+			std::string extension = entry.path().extension().string();
+			if (extension == ".mat" || extension == ".MAT") {
+				icon = matIcon;
+			}
+			else if (extension == ".image") {
+				icon = imageIcon;
+			}
+			else if (extension == ".scene") {
+				icon = sceneIcon;
+			}
+			else if (extension == ".mesh") {
+				icon = meshIcon;
+			}
+		}
+
+		if (icon) {
+			ImGui::BeginGroup();
+
+			// Display the icon as a button
+			if (ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())), ImVec2(iconSize, iconSize))) {
+				if (isDirectory) {
+					selectedDirectory = entry.path();  // Update the selected directory
+				}
+				else {
+					HandleFileSelection(entry.path().string());  // Handle file clicks
+				}
+			}
+
+			// Drag-and-drop support
+			if (ImGui::IsItemHovered() && ImGui::BeginDragDropSource()) {
+				ImGui::SetDragDropPayload("ASSET_PATH", entry.path().string().c_str(), entry.path().string().length() + 1);
+				ImGui::Text("Dragging: %s", entry.path().filename().string().c_str());
+				ImGui::EndDragDropSource();
+			}
+
+			// Constrain text to the icon width
+			float textWidth = iconSize;  // Confine the text to the icon size
+			ImGui::PushTextWrapPos(ImGui::GetCursorPos().x + textWidth);
+
+			// Display the file/folder name (truncate if necessary)
+			std::string filename = entry.path().filename().string();
+			if (filename.size() > 15) {  // Truncate long names with ellipses
+				filename = filename.substr(0, 12) + "...";
+			}
+			ImGui::TextWrapped("%s", filename.c_str());
+
+			ImGui::PopTextWrapPos();  // Restore text wrapping
+
+			ImGui::EndGroup();
+
+			// Move to the next column or row
+			itemIndex++;
+			if (itemIndex % itemsPerRow != 0) {
+				ImGui::SameLine();  // Keep items on the same row
+			}
+		}
+	}
+}

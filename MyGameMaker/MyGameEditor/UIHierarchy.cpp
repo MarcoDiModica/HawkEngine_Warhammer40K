@@ -16,10 +16,10 @@ UIHierarchy::~UIHierarchy() {
 }
 
 bool UIHierarchy::Draw() {
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
 	ImGuiWindowFlags hierarchyFlags = ImGuiWindowFlags_None;
 
 	if (ImGui::Begin("Hierarchy", &enabled, hierarchyFlags)) {
-		ImGuiIO& io = ImGui::GetIO();
 
 		Scene* currentScene = Application->root->GetActiveScene().get();
 
@@ -59,10 +59,9 @@ bool UIHierarchy::Draw() {
 	}
 
 	ImGui::End();
+	ImGui::PopStyleColor();
 	return true;
 }
-
-
 
 void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	//ImGui::Begin("Scene Hierarchy");
@@ -71,117 +70,96 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		DrawSceneObject(*Application->root->GetActiveScene()->children()[i]);
 	}
-
-
 	//ImGui::End();
 }
 
 bool UIHierarchy::DrawSceneObject(GameObject& obj)
 {
-	bool color = false;
-	bool should_continue = true;
+    bool useGray = (obj.GetId() % 2 == 0); // Toggle for alternating colors
+    bool should_continue = true;
 
-	if (obj.isSelected) {
-		color = true;
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.5f, 0.0f, 1.0f)); // Orange color for selected
-	}
+    // Alternate the text color
+    ImVec4 textColor = useGray
+        ? ImVec4(0.6f, 0.6f, 0.6f, 1.0f)  // Gray
+        : ImVec4(0.4f, 0.4f, 0.4f, 1.0f); // Dark gray
 
-	bool open = ImGui::TreeNode(obj.GetName().c_str());
+    if (obj.isSelected) {
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.53f, 0.81f, 0.92f, 1.0f)); // Blue for selected
+    }
+    else {
+        ImGui::PushStyleColor(ImGuiCol_Text, textColor); // Apply alternating colors
+    }
 
-	if (ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)) {
-		if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
-			if (obj.isSelected) {
-				Application->input->RemoveFromSelection(&obj);
-			}
-			else {
-				Application->input->AddToSelection(&obj);
-			}
-		}
-		else {
-			Application->input->ClearSelection();
-			Application->input->AddToSelection(&obj);
-		}
-	}
+    // Draw the tree node
+    bool open = ImGui::TreeNode(obj.GetName().c_str());
 
+    // Selection logic
+    if (ImGui::IsItemClicked(0) || ImGui::IsItemClicked(1)) {
+        if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
+            if (obj.isSelected) {
+                Application->input->RemoveFromSelection(&obj);
+            }
+            else {
+                Application->input->AddToSelection(&obj);
+            }
+        }
+        else {
+            Application->input->ClearSelection();
+            Application->input->AddToSelection(&obj);
+        }
+    }
 
-	if (obj.isSelected && color) {
-		ImGui::PopStyleColor(); // Orange color for selected
-	}
+    ImGui::PopStyleColor(); // Restore the original text color
 
-	// IF the treenode is dragged
-	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)  /*&& obj.isSelected*/) {
-		if (obj.isSelected) {
-			//               type identifier ,  ptr to obj   , size of obj
-			ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
-			/*A payload named "GAMEOBJECT" is created, containing a pointer to obj
-			it can be rerieved at a drop target via ImGui::AcceptDragDropPayload */
-			int id = obj.GetId();
-			ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), id); // text created in drag&drop context follows the cursor be default
-			draggedObject = &obj;
-			//draggedObject->SetName("DraggedFella");
-			//ImGui::Text("Dragging %s, gid %d", draggedObject->GetName().c_str(), draggedObject->GetId());
-			//RenderSceneHierarchy(Application->root->currentScene.get());
-		}
-		ImGui::EndDragDropSource(); // Draging context MUST be closed
-	}
+    // Drag & drop logic
+    if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+        if (obj.isSelected) {
+            ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
+            int id = obj.GetId();
+            ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), id);
+            draggedObject = &obj;
+        }
+        ImGui::EndDragDropSource();
+    }
 
-	if (draggedObject ) {
-		bool ImGuiWorks = false; 
-		if (ImGui::BeginDragDropTarget()) /*ImGui approach*/ {
+    if (draggedObject) {
+        if (ImGui::BeginDragDropTarget()) {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+                if (!draggedObject) {
+                    draggedObject = *(GameObject**)payload->Data;
+                }
+                Application->root->ParentGameObject(*draggedObject, obj);
+                draggedObject = nullptr;
+                should_continue = false;
+            }
+            ImGui::EndDragDropTarget();
+        }
+    }
 
-			if (draggedObject == &obj) {
-				int y = 87;
-			}
-			ImGuiWorks = true;
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
-				
-				if (!draggedObject) {
-					draggedObject = *(GameObject**)payload->Data;
-				}
+    // Recursively draw children
+    if (open) {
+        for (size_t w = 0; w < obj.GetChildren().size(); ++w) {
+            DrawSceneObject(*obj.GetChildren()[w]);
+        }
+        ImGui::TreePop();
+    }
 
-				Application->root->ParentGameObject(*draggedObject, obj);
-				draggedObject = nullptr;
-				should_continue = false;
-			}
-		}/* Approach for when ImGui doesnt work */
-		else if (draggedObject && ImGui::IsItemHovered() && Application->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP) {
-			if (draggedObject == &obj) {
-				int y = 87;
-			}
-			Application->root->ParentGameObject(*draggedObject, obj);
-			draggedObject = nullptr;
-			should_continue = false;
-		}
+    // Context menu logic
+    if (ImGui::BeginPopupContextItem(obj.GetName().c_str())) {
+        ImGui::Text(obj.GetName().c_str());
+        if (ImGui::MenuItem("Delete") && ImGui::IsItemHovered()) {
+            Application->input->RemoveFromSelection(&obj);
+            Application->input->ClearSelection();
+            Application->root->RemoveGameObject(&obj);
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Empty Child")) {
+            auto empty = Application->root->CreateGameObject("Empty");
+            Application->root->ParentGameObject(*empty, obj);
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
 
-		if (ImGuiWorks) { ImGui::EndDragDropTarget(); }
-
-	}
-
-	if (open) {
-		for (size_t w = 0; w < obj.GetChildren().size(); ++w) {
-			DrawSceneObject(* obj.GetChildren()[w]);
-		}
-		ImGui::TreePop();
-	}
-
-	if (ImGui::BeginPopupContextItem(obj.GetName().c_str()))
-	{
-		ImGui::Text(obj.GetName().c_str());
-		if (ImGui::MenuItem("Delete") && ImGui::IsItemHovered() )
-		{
-			Application->input->RemoveFromSelection(&obj);
-			Application->input->ClearSelection();
-			Application->root->RemoveGameObject(&obj);
-			ImGui::CloseCurrentPopup();
-		}
-		if (ImGui::MenuItem("Empty Child"))
-		{
-			auto empty = Application->root->CreateGameObject("Empty");
-			Application->root->ParentGameObject(*empty, obj);
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::EndPopup();
-	}
-
-	return should_continue;
+    return should_continue;
 }

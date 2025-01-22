@@ -12,18 +12,14 @@
 #include "UIHierarchy.h"
 #include <SDL2/SDL.h>
 
-
 //libraries to open websites
 #include <windows.h>
 #include <shellapi.h>
 
-
-void SetColorScheme();
 void SetRedStyle();
 
 UIMainMenuBar::UIMainMenuBar(UIType type, std::string name) : UIElement(type, name)
 {
-
 	play_image.LoadTextureLocalPath("EngineAssets/plabtn.png");
 	stop_image.LoadTextureLocalPath("EngineAssets/stobtn.png");
 
@@ -35,10 +31,6 @@ UIMainMenuBar::~UIMainMenuBar()
 
 bool UIMainMenuBar::Draw()
 {
-	SetColorScheme();
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.FramePadding = ImVec2(10.0f, 10.f);
-
 	if (ImGui::BeginMainMenuBar()) {
 		// Inicia el men� "General"
 
@@ -115,41 +107,6 @@ bool UIMainMenuBar::Draw()
 	}
 
 	return true;
-}
-
-void SetColorScheme()
-{
-	ImGuiStyle& style = ImGui::GetStyle();
-	ImVec4* colors = style.Colors;
-
-	ImGui::StyleColorsDark();
-
-	colors[ImGuiCol_WindowBg] = ImVec4(0.09f, 0.09f, 0.12f, 1.0f); 
-
-	colors[ImGuiCol_Text] = ImVec4(0.93f, 0.93f, 0.93f, 1.0f); 
-
-	colors[ImGuiCol_Button] = ImVec4(0.13f, 0.13f, 0.13f, 1.0f); 
-	colors[ImGuiCol_ButtonHovered] = ImVec4(0.23f, 0.23f, 0.23f, 1.0f);  
-	colors[ImGuiCol_ButtonActive] = ImVec4(0.18f, 0.18f, 0.18f, 1.0f);  
-
-	colors[ImGuiCol_FrameBg] = ImVec4(0.1f, 0.1f, 0.2f, 1.0f); 
-	colors[ImGuiCol_FrameBgHovered] = ImVec4(0.2f, 0.2f, 0.3f, 1.0f);
-	colors[ImGuiCol_FrameBgActive] = ImVec4(0.3f, 0.3f, 0.4f, 1.0f); 
-
-	colors[ImGuiCol_TitleBg] = ImVec4(0.12f, 0.12f, 0.18f, 1.0f);  
-	colors[ImGuiCol_TitleBgActive] = ImVec4(0.17f, 0.17f, 0.22f, 1.0f); 
-	colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.1f, 0.1f, 0.15f, 1.0f);  
-
-	colors[ImGuiCol_Border] = ImVec4(0.48f, 0.48f, 0.48f, 1.0f); 
-
-	colors[ImGuiCol_ScrollbarBg] = ImVec4(0.15f, 0.15f, 0.22f, 1.0f); 
-	colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.25f, 0.25f, 0.35f, 1.0f); 
-	colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.35f, 0.35f, 0.45f, 1.0f); 
-	colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.45f, 0.45f, 0.55f, 1.0f); 
-
-	colors[ImGuiCol_Header] = ImVec4(0.16f, 0.16f, 0.26f, 1.0f); 
-	colors[ImGuiCol_HeaderHovered] = ImVec4(0.25f, 0.25f, 0.35f, 1.0f);  
-	colors[ImGuiCol_HeaderActive] = ImVec4(0.33f, 0.33f, 0.43f, 1.0f);  
 }
 
 void SetRedStyle() {

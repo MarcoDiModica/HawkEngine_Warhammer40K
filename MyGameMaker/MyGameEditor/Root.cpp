@@ -39,7 +39,6 @@ void CreateParticleEmitter(const glm::vec3& position, const std::string& texture
     auto emitterComponent = particleEmitter->AddComponent<ParticlesEmitterComponent>();
     emitterComponent->SetTexture(texturePath); // Asumiendo que el componente tiene un método para establecer la textura
 
-    Application->root->currentScene->AddGameObject(particleEmitter);
 }
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
@@ -122,7 +121,7 @@ bool Root::Update(double dt) {
 
 
     if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-        glm::vec3 particlePosition = glm::vec3(0.0f, 0.0f, 0.0f); // Puedes ajustar la posición según sea necesario
+        glm::vec3 particlePosition = glm::vec3(5.0f, 0.0f, 0.0f); // Puedes ajustar la posición según sea necesario
         std::string texturePath = "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png"; // Reemplaza con la ruta de tu textura
         CreateParticleEmitter(particlePosition, texturePath);
     }

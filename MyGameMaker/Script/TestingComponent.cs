@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 using HawkEngine;
+using System.Diagnostics;
 
 public class TestingComponent : MonoBehaviour
 {
@@ -12,17 +14,19 @@ public class TestingComponent : MonoBehaviour
 
     public float timer = 0.0f;
     public int count = 0;
-    public string name = "testing";
-   
+
+    public float moveAmount = 1.0f;
+    private Vector3 currentPosition;
+
     public override void Start()
     {
-        actor = Engineson.CreateGameObject("aaa");
+        actor = Engineson.CreateGameObject("FuckingTank");
         transfr = actor.GetComponent<Transform>();
-        
 
         if (transfr != null)
         {
             Engineson.print("the transform was gotten");
+            currentPosition = transfr.GetPosition();
         }
         else
         {
@@ -34,15 +38,59 @@ public class TestingComponent : MonoBehaviour
         actor.AddComponent<Camera>();
     }
 
-
     public override void Update(float deltaTime)
     {
-        //return;
-        if (Input.GetKeyDown(KeyCode.A))
+        Vector3 movement = Vector3.Zero;
+        Vector3 forwardDirection = Vector3.Zero;
+
+        //Vector3 currentPosition = transfr.GetPosition();
+        //Engineson.print($"Current position: {currentPosition}");
+
+
+        // Tank controls
+        if (Input.GetKey(KeyCode.UP))
         {
-            Engineson.print("pressing a");
-            transfr.SetPosition(10, 10, 10);
+            movement = new Vector3(0, 0, moveAmount);
+            forwardDirection = new Vector3(0, 0, 1);
         }
+        else if (Input.GetKey(KeyCode.DOWN))
+        {
+            movement = new Vector3(0, 0, -moveAmount);
+            forwardDirection = new Vector3(0, 0, -1);
+        }
+        else if (Input.GetKey(KeyCode.LEFT))
+        {
+            movement = new Vector3(-moveAmount, 0, 0);
+            forwardDirection = new Vector3(-1, 0, 0);
+        }
+        else if (Input.GetKey(KeyCode.RIGHT))
+        {
+            movement = new Vector3(moveAmount, 0, 0);
+            forwardDirection = new Vector3(1, 0, 0);
+        }
+
+        if (movement != Vector3.Zero)
+        {
+            currentPosition += movement;
+
+            transfr.SetPosition(currentPosition.X, currentPosition.Y, currentPosition.Z);
+
+            if (forwardDirection != Vector3.Zero)
+            {
+                Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, (float)Math.Atan2(forwardDirection.X,forwardDirection.Z));
+                transfr.SetRotationQuat(rotation);
+            }
+
+            Engineson.print($"Moved to {currentPosition}, facing {forwardDirection}.");
+        }
+
+        if (Input.GetKeyDown(KeyCode.SPACE))
+        {
+            Vector3 testPosition = new Vector3(10, 0, 0);
+            transfr.SetPosition(testPosition.X, testPosition.Y, testPosition.Z);
+            transfr.GetPosition();
+        }
+
 
         timer += deltaTime;
 

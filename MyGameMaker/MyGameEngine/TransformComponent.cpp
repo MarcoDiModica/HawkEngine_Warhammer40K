@@ -1,6 +1,6 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
-#include "../MyGameEditor/Log.h"
+#include "../MyGameEditor/Log.h" // Esto es ilegal verdad?
 #include "types.h"
 #include "Component.h"
 #include "../MyScriptingEngine/MonoManager.h"

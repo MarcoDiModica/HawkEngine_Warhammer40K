@@ -9,7 +9,7 @@ Particle::Particle() {
     lifetime = 5.0f;
     rotation = 0.0f;
     position.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-    speed.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
     texture = new Image();
     if (texture == nullptr) {
         std::cerr << "Error al inicializar la textura" << std::endl;
@@ -28,10 +28,10 @@ void Particle :: Start() {
 
 void Particle::Update(float deltaTime) {
     if (lifetime > 0) {
-        // Actualizar la posición de la partícula usando su velocidad        
-		position[0] += speed[0] * deltaTime; 
+        // Actualizar la posición de la partícula usando su velocidad
+        position[0] += speed[0] * deltaTime;
 
-		Draw();
+        Draw();
         // Disminuir el tiempo de vida de la partícula
         lifetime -= deltaTime;
     }

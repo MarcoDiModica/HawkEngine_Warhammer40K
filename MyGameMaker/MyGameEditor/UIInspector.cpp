@@ -109,6 +109,11 @@ bool UIInspector::Draw() {
 				selectedGameObject->AddComponent<LightComponent>();
 			}
 
+			if (!selectedGameObject->HasComponent<SoundComponent>() && ImGui::MenuItem("Sound")) {
+				selectedGameObject->AddComponent<SoundComponent>();
+			}
+
+
             // More components here
 
             ImGui::EndPopup();

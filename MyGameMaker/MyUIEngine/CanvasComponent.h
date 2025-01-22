@@ -7,19 +7,15 @@
 #include <vector>
 #include <memory>
 
-
-
 class CanvasComponent : public Component {
 public:
-
- enum class UIComponentType {
+    enum class UIComponentType {
         BUTTON,
         CHECKBOX,
         INPUTBOX,
         IMAGE,
         UNKNOWN
     };
-   
 
     CanvasComponent(GameObject* owner);
     ~CanvasComponent() override;

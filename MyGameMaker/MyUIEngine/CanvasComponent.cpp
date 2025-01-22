@@ -39,3 +39,11 @@ void CanvasComponent::Render() {
         }
     }
 }
+
+std::unique_ptr<Component> CanvasComponent::Clone(GameObject* owner) {
+    auto clone = std::make_unique<CanvasComponent>(owner);
+    for (const auto& element : elements) {
+        //clone->AddElement(element->Clone());
+    }
+    return clone;
+}

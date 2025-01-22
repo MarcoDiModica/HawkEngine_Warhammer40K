@@ -13,6 +13,7 @@
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
 #include "..\MyGameEngine\LightComponent.h"
+#include "..\MyUIEngine\CanvasComponent.h"
 #include <string>
 
 #include <imgui.h>
@@ -95,6 +96,10 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
 				selectedGameObject->AddComponent<LightComponent>();
 			}
+
+            if (!selectedGameObject->HasComponent<CanvasComponent>() && ImGui::MenuItem("Canva")) {
+                selectedGameObject->AddComponent<CanvasComponent>();
+            }
 
             // More components here
 

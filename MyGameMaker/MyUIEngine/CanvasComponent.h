@@ -24,6 +24,8 @@ public:
     void Update(float deltaTime) override;
     void Destroy() override;
 
+     std::unique_ptr<Component> Clone(GameObject* owner) override;
+
     ComponentType GetType() const override { return ComponentType::CANVAS; }
 
     void AddElement(std::shared_ptr<UIElement> element);

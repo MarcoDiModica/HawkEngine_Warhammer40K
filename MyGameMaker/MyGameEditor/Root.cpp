@@ -51,10 +51,12 @@ bool Root::Awake()
 {
    // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
     SceneManagement = new SceneManager();
+    Application->root->CreateScene("HolaBuenas");
+    Application->root->SetActiveScene("HolaBuenas");
     //MonoEnvironment* env = new MonoEnvironment();
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
-    MakeCity();
+     MakeCity();
 
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");
@@ -72,9 +74,13 @@ bool Root::Start()
 {
     //MonoEnvironment* mono = new MonoEnvironment();
 
-    auto Script = CreateGameObject("Script");
-    auto script = Script->AddComponent<ScriptComponent>();
-    script->LoadScript("TestingComponent");
+    //auto Script = CreateGameObject("Script");
+    //auto script = Script->AddComponent<ScriptComponent>();
+    //script->LoadScript("TestingComponent");
+
+    auto BlobFish = CreateGameObject("Script");
+    auto blob = BlobFish->AddComponent<ScriptComponent>();
+    blob->LoadScript("TestingComponent");
 
     /*auto Street = CreateGameObject("Street");
     Street->GetTransform()->GetPosition() = vec3(0, 0, 0);

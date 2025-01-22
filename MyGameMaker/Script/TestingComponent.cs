@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Numerics;
 using HawkEngine;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 public class TestingComponent : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class TestingComponent : MonoBehaviour
     public float moveAmount = 1.0f;
     private Vector3 currentPosition;
 
+    Vector2 prev_mouse;
+
+    float lookPosX = 0;
     public override void Start()
     {
         actor = Engineson.CreateGameObject("FuckingTank");
@@ -34,8 +38,9 @@ public class TestingComponent : MonoBehaviour
         }
 
         timer = 0.0f;
-
+        lookPosX = transfr.position.X;
         actor.AddComponent<Camera>();
+        prev_mouse = new Vector2(0, 0);
     }
 
     public override void Update(float deltaTime)
@@ -81,17 +86,47 @@ public class TestingComponent : MonoBehaviour
             if (forwardDirection != Vector3.Zero)
             {
                 Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, (float)Math.Atan2(forwardDirection.X,forwardDirection.Z));
-                transfr.SetRotationQuat(rotation);
+               // transfr.SetRotationQuat(rotation);
+                transfr.LookAt(Input.GetMousePosition());
             }
 
             Engineson.print($"Moved to {transfr.GetPosition()}, facing {forwardDirection}.");
         }
 
-        if (Input.GetKeyDown(KeyCode.SPACE))
+        if (Input.GetKey(KeyCode.SPACE))
         {
-            Vector3 testPosition = new Vector3(10, 0, 0);
-            transfr.SetPosition(testPosition.X, testPosition.Y, testPosition.Z);
-            transfr.GetPosition();
+            lookPosX++;
+            Vector3 look_position = new Vector3( lookPosX , transfr.position.Y, Input.GetMousePosition().Z);
+
+            transfr.LookAt(  look_position);
+            Engineson.print("Looking at mouse " + transfr.GetEulerAngles());
+
+
+            //glm::dvec2 mousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
+            //glm::dvec2 delta = mousePos - lastMousePos;
+            //lastMousePos = mousePos;
+
+            //yaw += delta.x * sensitivity * deltaTime;
+            //pitch -= delta.y * sensitivity * deltaTime;
+            //if (pitch > MAX_PITCH) pitch = MAX_PITCH;
+            //if (pitch < -MAX_PITCH) pitch = -MAX_PITCH;
+
+            //transform.Rotate(glm::radians(-delta.x * sensitivity * deltaTime), glm::vec3(0, 1, 0));
+            //transform.Rotate(glm::radians(delta.y * sensitivity * deltaTime), glm::vec3(1, 0, 0));
+            //transform.AlignToGlobalUp();
+
+            Vector2 mouse = new Vector2( Input.GetMousePosition().X , Input.GetMousePosition().Y);
+            var delta = mouse - prev_mouse;
+
+            transfr.Rotate(delta.X * 0.01f, new Vector3(0, 1, 0));
+
+
+
+
+
+            //Vector3 testPosition = new Vector3(10, 0, 0);
+            //transfr.SetPosition(testPosition.X, testPosition.Y, testPosition.Z);
+            //transfr.GetPosition();
         }
 
 

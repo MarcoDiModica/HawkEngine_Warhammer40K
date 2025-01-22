@@ -14,6 +14,7 @@ ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner) : Compon
     lastSpawnTime = std::chrono::steady_clock::now();
     deltaTime = Application->GetDt();
     position = owner->GetComponent<Transform_Component>()->GetPosition();
+    emitterParticle = new Particle();
 }
 
 void ParticlesEmitterComponent::Start() 
@@ -22,8 +23,7 @@ void ParticlesEmitterComponent::Start()
 	this->position = owner->GetComponent<Transform_Component>()->GetPosition();
 	if (emitterParticle == nullptr)
     {
-     emitterParticle = new Particle();	
-	 SetParticleVariables(emitterParticle);
+     SetParticleVariables(emitterParticle);
     }  
 }
 
@@ -68,16 +68,17 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
 //Destructor
 ParticlesEmitterComponent::~ParticlesEmitterComponent()
 {
-	delete emitterParticle;
-	//delete owner;
     Destroy();
 }
 
 void ParticlesEmitterComponent::Destroy() {
-    // Libera los recursos aquí
+    
+    if (emitterParticle != nullptr) {
+        delete emitterParticle;
+        emitterParticle = nullptr;
+    }
+
     particles.clear();
-    delete emitterParticle;
-    emitterParticle = nullptr;
 }
 
 glm::vec3 ParticlesEmitterComponent::GetPosition() const {

@@ -6,16 +6,18 @@
 Particle* particle = nullptr;
 
 Particle::Particle() {
-	lifetime = 5.0f;
-	rotation = 0.0f;
-	position.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-	speed.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-	texture = new Image();
+    lifetime = 5.0f;
+    rotation = 0.0f;
+    position.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    speed.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    texture = new Image();
+    if (texture == nullptr) {
+        std::cerr << "Error al inicializar la textura" << std::endl;
+    }
 }
 
 Particle::~Particle() {
-	delete texture;
-	texture = nullptr;
+    
 }
 
 void Particle :: Start() {
@@ -47,6 +49,11 @@ void Particle::Spawn() {
 
 void Particle::Draw() {
 
+    if (texture == nullptr) {
+        std::cout << "Textura no inicializada" << std::endl;
+        return;
+    }
+
     texture->LoadTexture("../MyGameEditor/Assets/Textures/SmokeParticleTexture.png");
     textureID = texture->id();
 
@@ -54,7 +61,7 @@ void Particle::Draw() {
         std::cout << "Textura no cargada" << std::endl;
         return; // Asegurarse de que la textura está cargada
     }
-
+ 
     glPushMatrix();
     glTranslatef(position[0].x, position[0].y, position[0].z);
 
@@ -64,9 +71,9 @@ void Particle::Draw() {
     glBegin(GL_QUADS);
     // Especificar las coordenadas de textura y las cuatro esquinas del plano
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.0f); // Esquina inferior izquierda
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(0.5f, -0.5f, 0.0f);  // Esquina inferior derecha
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(0.5f, 0.5f, 0.0f);   // Esquina superior derecha
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-0.5f, 0.5f, 0.0f);  // Esquina superior izquierda
+    glTexCoord2f(1.0f, 0.0f);  glVertex3f(0.5f, -0.5f, 0.0f);  // Esquina inferior derecha
+    glTexCoord2f(1.0f, 1.0f);  glVertex3f(0.5f, 0.5f, 0.0f);   // Esquina superior derecha
+    glTexCoord2f(0.0f, 1.0f);  glVertex3f(-0.5f, 0.5f, 0.0f);  // Esquina superior izquierda
     glEnd();
 
     glDisable(GL_TEXTURE_2D);
@@ -86,5 +93,10 @@ void Particle::CleanUp() {
     if (particle != nullptr) {
         delete particle;
         particle = nullptr;
+    }
+
+    if (texture != nullptr) {
+        delete texture;
+        texture = nullptr;
     }
 }

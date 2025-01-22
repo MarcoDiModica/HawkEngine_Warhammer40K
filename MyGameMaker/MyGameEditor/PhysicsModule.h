@@ -38,7 +38,7 @@ public:
 
     void DrawDebugDrawer();
 
-    void CreatePhysicsForGameObject(GameObject& go, float mass);
+    void CreatePhysicsForCube(GameObject& go, float mass);
     //void CreatePhysicsPlane();
     void SyncTransforms();
 
@@ -48,7 +48,8 @@ public:
     // Añade una restricción de bisagra (Hinge)
     void AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB,
         const glm::vec3& axisA, const glm::vec3& axisB, bool disable_collision = false);
-    void SpawnPhysSphereWithForce(const glm::vec3& cameraPosition, float radius, float forceMagnitude);
+    void SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& forceDirection, float forceMagnitude);
+    void SetGlobalRestitution(float restitutionValue);
 
     p2List<FinalVehicleInfo*> vehicles;
     btDiscreteDynamicsWorld* dynamicsWorld;

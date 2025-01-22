@@ -34,6 +34,7 @@ bool PhysicsModule::Awake() {
     // Initialize shared collision shapes (e.g., cubeShape)
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
+   
     //Plane functions
    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
@@ -41,13 +42,13 @@ bool PhysicsModule::Awake() {
 
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-
     dynamicsWorld->addRigidBody(groundRigidBody);
-
+	//groundRigidBody->setRestitution(0.8f);
+    SetGlobalRestitution(0.5f);
     return true;
 }
 
-void PhysicsModule::CreatePhysicsForGameObject(GameObject& go, float mass) {
+void PhysicsModule::CreatePhysicsForCube(GameObject& go, float mass) {
 
     Transform_Component* transform = go.GetTransform();
     glm::vec3 position = transform->GetPosition();
@@ -451,32 +452,65 @@ void PhysicsModule::SyncVehicleComponents(PhysVehicle3D* vehicle, GameObject* ch
         wheels[i]->GetTransform()->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
     }
 }
-void PhysicsModule::SpawnPhysSphereWithForce(const glm::vec3& cameraPosition, float radius, float forceMagnitude) {
-    // Crear la esfera como antes
+void PhysicsModule::SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& cameraPosition, float forceMagnitude) {
+    // Obtener el componente Transform del GameObject
+    Transform_Component* transform = go.GetTransform();
+
+    // Establecer la posición inicial del GameObject a la posición de la cámara
+    transform->SetPosition(cameraPosition);
+
+    // Configurar la transformación inicial para el cuerpo rígido
+    btTransform startTransform;
+    startTransform.setIdentity();
+    startTransform.setOrigin(btVector3(cameraPosition.x, cameraPosition.y, cameraPosition.z));
+    startTransform.setRotation(btQuaternion(0, 0, 0, 1)); // Sin rotación inicial
+
+    // Crear la forma de colisión para la esfera
     btSphereShape* sphereShape = new btSphereShape(radius);
-    btDefaultMotionState* motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(cameraPosition.x, cameraPosition.y, cameraPosition.z)));
 
-    btScalar mass = 1.0f;
-    btVector3 localInertia(0, 0, 0);
-    sphereShape->calculateLocalInertia(mass, localInertia);
+    // Crear el estado de movimiento
+    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
 
-    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, sphereShape, localInertia);
-    btRigidBody* sphereRigidBody = new btRigidBody(rbInfo);
+    // Calcular la inercia si el cuerpo tiene masa
+    btVector3 inertia(0, 0, 0);
+    if (mass > 0.0f) {
+        sphereShape->calculateLocalInertia(mass, inertia);
+    }
 
-    // Añadir el rigidbody al mundo de física
-    dynamicsWorld->addRigidBody(sphereRigidBody);
+    // Configurar la información del cuerpo rígido
+    btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState, sphereShape, inertia);
+    btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
 
-    // Obtener la dirección de la cámara
-    glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();// Este método debería devolver la dirección de la cámara
-    btVector3 btCameraDirection(cameraDirection.x, cameraDirection.y, cameraDirection.z);
+    rigidBody->setRestitution(0.7f);
+    // Añadir el cuerpo rígido al mundo de Bullet
+    dynamicsWorld->addRigidBody(rigidBody);
 
-    // Aplicar una fuerza en la dirección de la cámara
-    btVector3 force = btCameraDirection * forceMagnitude;
+    // Asociar el cuerpo rígido con el GameObject en el mapa
+    gameObjectRigidBodyMap[&go] = rigidBody;
 
-    // Aplicar la fuerza al rigidbody de la esfera
-    sphereRigidBody->applyCentralImpulse(force);
+    // Obtener la dirección de la cámara y aplicar una fuerza inicial
+    glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward(); // Dirección de la cámara
+    btVector3 btForce = btVector3(cameraDirection.x, cameraDirection.y, cameraDirection.z) * forceMagnitude;
+    rigidBody->applyCentralImpulse(btForce);
 
-   // LOG(LogType::LOG_OK, "Fuerza aplicada a la esfera: [%f, %f, %f]", force.x(), force.y(), force.z());
+    // Mensaje de confirmación
+    std::cout << "Physics sphere spawned at: ("
+        << cameraPosition.x << ", " << cameraPosition.y << ", " << cameraPosition.z
+        << ") with force: (" << btForce.x() << ", " << btForce.y() << ", " << btForce.z() << ")\n";
+}
+
+void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
+    int numCollisionObjects = dynamicsWorld->getNumCollisionObjects();
+
+    for (int i = 0; i < numCollisionObjects; ++i) {
+        btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[i];
+        btRigidBody* rigidBody = btRigidBody::upcast(obj);
+        if (rigidBody) {
+            rigidBody->setRestitution(restitutionValue);
+        }
+    }
+
+    std::cout << "Global restitution set to: " << restitutionValue << "\n";
 }
 
 bool PhysicsModule::Start() {

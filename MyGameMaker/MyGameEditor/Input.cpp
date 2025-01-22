@@ -85,8 +85,10 @@ void SpawnPhysCube() {
     //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
     //Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
     glm::vec3 cameraPosition = Application->camera->GetPosition(); // Reemplaza con la forma en que obtienes la posición de la cámara
-	Application->physicsModule->SpawnPhysSphereWithForce(cameraPosition, 1.0f, 15.0f);
+	auto sphere = Application->root->CreateSphere("PhysicsSphere");
+	Application->physicsModule->SpawnPhysSphereWithForce(*sphere, 1.0f, 15.0f, cameraPosition,500.0f);
 }
+
 void SpawnCar() {
     // Configuración del vehículo
     VehicleInfo car;
@@ -223,8 +225,8 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             mouse_z = event.wheel.y;
-           // SpawnPhysCube();
-			SpawnCar();
+           SpawnPhysCube();
+			//SpawnCar();
             break;
 
         case SDL_MOUSEMOTION:

@@ -7,6 +7,7 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/LightComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
+#include "../MyAudioEngine/AudioListener.h"
 #include "../MyGameEditor/Log.h"
 #include <glm/glm.hpp>
 #include <algorithm>
@@ -485,6 +486,25 @@ bool UIInspector::Draw() {
                         ImGui::Text("Position is controlled by Transform component");
                     }
                 }
+            }
+        }
+
+        ImGui::Separator();
+        if (selectedGameObject->HasComponent<AudioListener>())
+        {
+            AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
+
+            if (audioListener)
+            {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Audio Listener"))
+                {
+                    ImGui::Text("Audio Listener");
+                }
+            }
+            else
+            {
+                LOG(LogType::LOG_WARNING, "UIInspector::Draw: AudioListener is nullptr");
             }
         }
         

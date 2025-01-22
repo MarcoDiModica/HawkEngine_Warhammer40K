@@ -41,13 +41,13 @@ YAML::Node SceneSerializer::ObjectSerialize(GameObject& child, int num) {
 
 void SceneSerializer::Serialize(const std::string& directoryPath, bool play) {
 
-	std::vector gameObjects = Application->root->GetActiveScene()->_children;
+	std::vector gameObjects = Application->root->currentScene->_children;
 
 	YAML::Emitter emitter;
 	YAML::Node game_object_node;
 
 	if (gameObjects.empty()) {
-		std::string filepath = directoryPath + "/" + Application->root->GetActiveScene()->GetName() + ".scene";
+		std::string filepath = directoryPath + "/" + Application->root->currentScene->GetName() + ".scene";
 		std::ofstream file(filepath);
 		if (file.is_open()) {
 			file << "";
@@ -85,8 +85,8 @@ void SceneSerializer::Serialize(const std::string& directoryPath, bool play) {
 	emitter << game_object_node;
 
 	std::string filepath;
-	if (!play) filepath = directoryPath + "/" + Application->root->GetActiveScene()->GetName() + ".scene";
-	else { filepath = "EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene"; }
+	if (!play) filepath = directoryPath + "/" + Application->root->currentScene->GetName() + ".scene";
+	else { filepath = "EngineAssets/" + Application->root->currentScene->GetName() + ".scene"; }
 
 	try {
 		std::ofstream file(filepath);
@@ -120,7 +120,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 
 	if (Application->root->GetActiveScene() != nullptr)
 	{
-		for (const auto& child : Application->root->GetActiveScene()->_children) {
+		for (const auto& child : Application->root->currentScene->_children) {
 			child->isSelected = false;
 		}
 
@@ -141,7 +141,7 @@ void SceneSerializer::DeSerialize(std::string path) {
 	}
 
 	if (Application->root->GetActiveScene() != nullptr) {
-		Application->root->RemoveScene(Application->root->GetActiveScene()->GetName());
+		Application->root->RemoveScene(Application->root->currentScene->GetName());
 	}
 
 	Application->root->CreateScene(sceneName);

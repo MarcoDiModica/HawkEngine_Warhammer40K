@@ -8,6 +8,7 @@
 #include "../MyGameEngine/LightComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyAudioEngine/AudioListener.h"
+#include "UIAudioTest.h"
 #include "../MyGameEditor/Log.h"
 #include <glm/glm.hpp>
 #include <algorithm>
@@ -504,17 +505,38 @@ bool UIInspector::Draw() {
             AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
 
             if (audioListener)
+            if (selectedGameObject->HasComponent<AudioListener>())
             {
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Audio Listener"))
+                AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
+
+                if (audioListener)
                 {
-                    ImGui::Text("Audio Listener");
+                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                    if (ImGui::CollapsingHeader("Audio Listener"))
+                    {
+                        ImGui::Text("Audio Listener");
+
+                        // Mostrar la posición del Audio Listener
+                        Transform_Component* transform = selectedGameObject->GetTransform();
+                        if (transform)
+                        {
+                            glm::dvec3 position = transform->GetPosition();
+                            float pos[3] = { static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z) };
+                            ImGui::DragFloat3("Position", pos, 0.1f);
+                        }
+                        else
+                        {
+                            ImGui::Text("Error: Transform component is nullptr");
+                        }
+                    }
+                }
+                else
+                {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: AudioListener is nullptr");
                 }
             }
-            else
-            {
-                LOG(LogType::LOG_WARNING, "UIInspector::Draw: AudioListener is nullptr");
-            }
+            
+               
         }
         
         ImGui::Separator();

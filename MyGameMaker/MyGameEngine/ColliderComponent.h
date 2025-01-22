@@ -7,7 +7,7 @@
 
 class ColliderComponent : public Component {
 public:
-    ColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
+    ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet = false);
     ~ColliderComponent() override;
 
     /*ColliderComponent(const ColliderComponent& other, PhysicsModule* physicsModule);
@@ -30,6 +30,10 @@ private:
     PhysicsModule* physics; // Referencia al módulo de físicas
     glm::vec3 size; // Tamaño del Bounding Box
     float mass; // Masa del colisionador
+    bool isForStreetLocal;
+    std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
 
-    void CreateCollider(); // Función para crear el colisionador
+
+    void CreateCollider(bool isForStreet = false); // Función para crear el colisionador
 };
+

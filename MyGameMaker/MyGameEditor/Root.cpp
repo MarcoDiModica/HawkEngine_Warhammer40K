@@ -56,7 +56,9 @@ void MakeCity() {
     MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
     MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
     MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1, 0, 0));
-
+    for (auto& go : gameObjectsWithColliders) {
+        go->AddComponent<ColliderComponent>(Application->physicsModule, true);
+    }
     
     
     
@@ -76,9 +78,7 @@ bool Root::Awake()
     MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera;
-    for (auto& go : gameObjectsWithColliders) {
-        go->AddComponent<ColliderComponent>(Application->physicsModule);
-    }
+    
 
     return true;
 }

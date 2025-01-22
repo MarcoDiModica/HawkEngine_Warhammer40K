@@ -73,7 +73,6 @@ void ColliderComponent::CreateCollider() {
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
     rigidBody = new btRigidBody(rbInfo);
-
     // Añadir el colisionador al mundo de físicas
     physics->dynamicsWorld->addRigidBody(rigidBody);
 }

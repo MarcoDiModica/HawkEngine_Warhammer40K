@@ -217,6 +217,8 @@ bool Input::processSDLEvents()
 
     static SDL_Event event;
 
+    static bool f1Pressed = false;
+
     while (SDL_PollEvent(&event) != 0)
     {
         Application->gui->processEvent(event);
@@ -225,8 +227,13 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             mouse_z = event.wheel.y;
-           SpawnPhysCube();
 			//SpawnCar();
+           if (f1Pressed && mouse_z > 0) {
+               SpawnPhysCube();
+           }
+           if (f1Pressed && mouse_z < 0) {
+			   SpawnCar();
+           }
             break;
 
         case SDL_MOUSEMOTION:
@@ -245,7 +252,15 @@ bool Input::processSDLEvents()
                 break;
             case SDLK_ESCAPE:
                 return false;
+            case SDLK_F1:
+                if (f1Pressed == false) {
+                    f1Pressed = true; // Activar la bandera si F1 fue presionado
 
+                }
+                else {
+					f1Pressed = false; // Desactivar la bandera si F1 fue liberado
+                }
+                break;
             case SDLK_DELETE: {
                 int i = 0;
                 while (i < selectedObjects.size()) {

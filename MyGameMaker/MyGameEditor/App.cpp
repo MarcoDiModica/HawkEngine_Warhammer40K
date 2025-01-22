@@ -30,6 +30,7 @@ App::App() {
 	root = new Root(this);
 
 	camera = new EditorCamera(this);
+	physicsModule = new PhysicsModule();
 
 	//gizmos = new Gizmos(this);
 
@@ -43,6 +44,7 @@ App::App() {
 	AddModule(camera, true);
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
+	AddModule(physicsModule, true);
 
 };
 

@@ -3,8 +3,6 @@
 
 #include "p2List.h"
 #include <Bullet/LinearMath/btVector3.h>
-#include <vector>
-
 class btRigidBody;
 class Module;
 
@@ -28,7 +26,7 @@ private:
 public:
 	btRigidBody* body = nullptr;
 
-	std::vector<Module*> collision_listeners;
+	p2List<Module*> collision_listeners;
 	bool isSensor;
 	int id;
 };

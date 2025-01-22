@@ -20,7 +20,7 @@ Branch created from the Second version (v0.5) of the [HawkEngine](https://github
 
 <img src="https://github.com/user-attachments/assets/e6db36f9-3594-4178-aab0-a1aa1f733e00" alt="Imagen de WhatsApp" width="125" height="125" />
 
-- For this delivery Sergi (Planck) was in charge of creating the car (which he failed to do so). 
+- For this delivery Sergi (Planck) helped implement the constraints in the WorldEnvironment and created the car.
 
 
 # CONTROLS #
@@ -96,6 +96,17 @@ Branch created from the Second version (v0.5) of the [HawkEngine](https://github
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 
 with closed source software. Check our LICENSE* for further details.
 
+## VIDEO & GIFS ##
+
+
+https://github.com/user-attachments/assets/b3d9c1d9-17d8-4cdb-ae7d-bf89fe555000
+
+
+![boing](https://github.com/user-attachments/assets/0b3d2ee4-1a03-4454-a086-c57ab0c95047)
+
+
+![boingboing](https://github.com/user-attachments/assets/0d0b2f73-0ec6-4fa4-8d7c-b8f2c6666878)
+
 ## BULLET 3D LICENSE ##
 
 The files in this repository are licensed under the zlib license, except for the files under 'Extras' and examples/ThirdPartyLibs.
@@ -112,14 +123,3 @@ subject to the following restrictions:
 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
-
-## VIDEO & GIFS ##
-
-
-https://github.com/user-attachments/assets/b3d9c1d9-17d8-4cdb-ae7d-bf89fe555000
-
-
-![boing](https://github.com/user-attachments/assets/0b3d2ee4-1a03-4454-a086-c57ab0c95047)
-
-
-![boingboing](https://github.com/user-attachments/assets/0d0b2f73-0ec6-4fa4-8d7c-b8f2c6666878)

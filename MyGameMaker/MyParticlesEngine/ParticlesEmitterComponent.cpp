@@ -18,10 +18,13 @@ ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner) : Compon
 
 void ParticlesEmitterComponent::Start() 
 {
-	new ParticlesEmitterComponent(owner);
+	//new ParticlesEmitterComponent(owner);
 	this->position = owner->GetComponent<Transform_Component>()->GetPosition();
-	emitterParticle = new Particle();	
-	SetParticleVariables(emitterParticle);
+	if (emitterParticle == nullptr)
+    {
+     emitterParticle = new Particle();	
+	 SetParticleVariables(emitterParticle);
+    }  
 }
 
 std::unique_ptr<Component> ParticlesEmitterComponent::Clone(GameObject* owner) {
@@ -66,7 +69,8 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
 ParticlesEmitterComponent::~ParticlesEmitterComponent()
 {
 	delete emitterParticle;
-	delete owner;
+	//delete owner;
+    Destroy();
 }
 
 void ParticlesEmitterComponent::Destroy() {

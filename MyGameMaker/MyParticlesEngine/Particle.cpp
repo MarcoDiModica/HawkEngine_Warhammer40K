@@ -19,8 +19,9 @@ Particle::~Particle() {
 }
 
 void Particle :: Start() {
-    particle = new Particle();
-	
+    if (particle == nullptr) {
+        particle = new Particle();
+    }	
 }
 
 void Particle::Update(float deltaTime) {
@@ -82,6 +83,8 @@ void Load() {
 
 void Particle::CleanUp() {
 	// Lógica para liberar recursos
-	delete particle;
-	particle = nullptr;
+    if (particle != nullptr) {
+        delete particle;
+        particle = nullptr;
+    }
 }

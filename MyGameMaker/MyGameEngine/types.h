@@ -37,13 +37,11 @@ inline T DegreesToRad(const T deg)
 #define BString 8192
 
 // TypeDefs
-using mat4 = glm::dmat4;
 using vec2 = glm::dvec2;
-using vec3 = glm::dvec3;
+using mat4 = glm::dmat4;
 using vec4 = glm::dvec4;
-using ivec2 = glm::ivec2;
+using vec3 = glm::dvec3;
 using u8vec3 = glm::u8vec3;
-using u8vec4 = glm::u8vec4;
 
 using color1 = glm::u8vec1;
 using color2 = glm::u8vec2;
@@ -75,6 +73,9 @@ namespace YAML {
             return true;
         }
     };
+
+
+
 }
 
 

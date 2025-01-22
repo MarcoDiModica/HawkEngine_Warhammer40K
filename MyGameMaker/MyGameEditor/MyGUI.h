@@ -39,8 +39,6 @@ public:
 
 	void processEvent(const SDL_Event& event) override;
 
-	void SetColorScheme();
-
 public:
 
 	// UI Elements

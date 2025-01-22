@@ -80,7 +80,11 @@ bool Root::Start()
 
     auto BlobFish = CreateGameObject("Script");
     auto blob = BlobFish->AddComponent<ScriptComponent>();
+    auto blob2 = BlobFish->AddComponent<ScriptComponent>();
     blob->LoadScript("TestingComponent");
+    blob2->LoadScript("TestingComponent");
+    
+    //check if blobfish has 2 scripts
 
     /*auto Street = CreateGameObject("Street");
     Street->GetTransform()->GetPosition() = vec3(0, 0, 0);

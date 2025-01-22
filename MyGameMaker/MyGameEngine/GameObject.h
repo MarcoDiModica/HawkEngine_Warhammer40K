@@ -7,6 +7,7 @@
 #include "BoundingBox.h"
 #include "../MyScriptingEngine/EngineBinds.h"
 #include <mono/metadata/object.h>
+#include "../MyScriptingEngine/ScriptComponent.h"
 
 
 
@@ -101,6 +102,8 @@ public:
 
     MonoObject* CsharpReference = nullptr;
 
+    std::vector<std::unique_ptr<ScriptComponent>> scriptComponents;
+
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -126,9 +129,6 @@ private:
     //Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
 
-
-
-
 protected:
     friend class Scene;
 
@@ -140,6 +140,13 @@ protected:
 
 template <IsComponent T, typename... Args>
 T* GameObject::AddComponent(Args&&... args) {
+    if constexpr (std::is_same_v<T, ScriptComponent>) {
+        std::unique_ptr<T> newComponent = std::make_unique<T>(this, std::forward<Args>(args)...);
+        T* result = newComponent.get();
+        scriptComponents.push_back(std::move(newComponent));
+        return result;
+    }
+
     std::unique_ptr<T> newComponent = std::make_unique<T>(this, std::forward<Args>(args)...);
 
     T* result = newComponent.get();

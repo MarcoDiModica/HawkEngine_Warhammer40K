@@ -8,7 +8,7 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
-
+#include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
 
 // GameObject
@@ -91,6 +91,8 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* comopone
 	else if (componentName == "HawkEngine.Camera") {
 		return GO->GetComponent<CameraComponent>()->GetSharp();
 	}
+
+
 	
     // Add other components
     return nullptr;
@@ -109,6 +111,17 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
     case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
         break;
    }
+
+    // loop through all the scripts and grant them unique ids
+    for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it) {
+
+        if (component == it->second) {
+
+            auto script = go->AddComponent<ScriptComponent>();
+            script->LoadScript(it->first);
+        }
+
+    }
 
     return _component->GetSharp();
 

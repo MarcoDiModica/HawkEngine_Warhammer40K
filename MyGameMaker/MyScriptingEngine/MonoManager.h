@@ -6,6 +6,7 @@
 #include <mono/metadata/assembly.h>
 #include <string>
 #include <vector>
+#include <map>
 #include "ComponentMapper.h"
 #include <typeindex>
 #include <stdexcept>
@@ -34,6 +35,13 @@ public:
 
     std::vector<MonoClass*> GetUserClasses() const { return user_classes; }
 
+    std::map<std::string, int> scriptIDs;
+
+    int GetNewScriptClassID() {
+        userScriptID--;
+        return userScriptID;
+    }
+
 private:
     MonoManager();
 
@@ -42,6 +50,8 @@ private:
     MonoImage* image;
     ComponentMapper mapper;
     std::vector<MonoClass*> user_classes;
+
+    int userScriptID = 0;
 };
 
 template <typename T>

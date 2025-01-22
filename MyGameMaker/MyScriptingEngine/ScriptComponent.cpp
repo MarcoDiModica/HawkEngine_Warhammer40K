@@ -75,7 +75,7 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
         MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
         const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
         LOG(LogType::LOG_ERROR, "Error init Script %s: %s", scriptName.c_str(), exceptionStr);
-        mono_free((void*)exceptionStr); // Liberar la memoria asignada por Mono
+        mono_free((void*)exceptionStr);
         return false;
     }
 
@@ -90,6 +90,7 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
 
         MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
     }
+
     uintptr_t goPtr = reinterpret_cast<uintptr_t>(owner);
     MonoClassField* field = mono_class_get_field_from_name(scriptClass, "CplusplusInstance");
     mono_field_set_value(monoScript, field, &goPtr);
@@ -130,4 +131,15 @@ bool ScriptComponent::CreateNewScript(const std::string& scriptName, const std::
 
     LOG(LogType::LOG_INFO, "Script %s creado correctamente en %s.", scriptName.c_str(), scriptPath.c_str());
     return true;
+}
+
+std::string ScriptComponent::GetTypeName() const
+{
+	if (monoScript) {
+		MonoClass* scriptClass = mono_object_get_class(monoScript);
+		const char* name = mono_class_get_name(scriptClass);
+		return std::string(name);
+	}
+
+	return "";
 }

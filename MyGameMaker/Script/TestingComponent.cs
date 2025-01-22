@@ -13,6 +13,7 @@ public class TestingComponent : MonoBehaviour
     GameObject actor;
     Transform transfr;
     Test test;
+    TestingComponent testing1;
 
     public float timer = 0.0f;
     public int count = 1;
@@ -34,6 +35,15 @@ public class TestingComponent : MonoBehaviour
         prev_mouse = new Vector2(0, 0);
 
         //test = actor.AddComponent<Test>();
+        testing1 = gameObject.GetComponent<TestingComponent>();
+        if (testing1 != null)
+        {
+            Engineson.print("I have a TestingComponent");
+        }
+        else
+        {
+            Engineson.print("I dont have a TestingComponent");
+        }
     }
 
     public override void Update(float deltaTime)

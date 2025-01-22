@@ -38,7 +38,7 @@ public:
     template <IsComponent T, typename... Args>
     T* AddComponent(Args&&... args);
 
-    template <IsComponent T>
+    template <typename T>
     T* GetComponent() const;
 
     template <IsComponent T>
@@ -162,15 +162,20 @@ T* GameObject::AddComponent(Args&&... args) {
     }
 }
 
-template <IsComponent T>
+template <typename T>
 T* GameObject::GetComponent() const {
+    for (const auto& scriptComponent : scriptComponents) {
+        if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
+            return dynamic_cast<T*>(scriptComponent.get());
+        }
+    }
+
     auto it = components.find(typeid(T));
     if (it != components.end()) {
         return dynamic_cast<T*>(it->second.get());
     }
-    else {
-        throw std::runtime_error("Component not found on GameObject: " + this->GetName());
-    }
+
+    return nullptr;
 }
 
 template <IsComponent T>

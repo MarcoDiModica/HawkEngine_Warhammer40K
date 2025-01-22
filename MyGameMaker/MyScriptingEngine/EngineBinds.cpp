@@ -11,8 +11,8 @@
 #include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
 
-// GameObject
 
+// GameObject
 
 MonoObject* EngineBinds::GetGameObject(MonoObject* ref) {
 
@@ -98,13 +98,18 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     SceneManagement->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
 }
 
-MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* comoponent_name)
+MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* component_name)
 {
-    char* C_name = mono_string_to_utf8(comoponent_name);
+    char* C_name = mono_string_to_utf8(component_name);
     auto GO = ConvertFromSharp(ref);
 
-    /* TODO change this to a dictionary , string component type */
     std::string componentName = std::string(C_name);
+
+    for (const auto& scriptComponent : GO->scriptComponents) {
+        if (scriptComponent->GetTypeName() == componentName) {
+            return scriptComponent->GetSharpObject();
+        }
+    }
 
     if (componentName == "HawkEngine.Transform") {
         return GO->GetTransform()->GetSharp();

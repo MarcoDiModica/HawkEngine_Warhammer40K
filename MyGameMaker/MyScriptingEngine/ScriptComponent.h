@@ -22,6 +22,9 @@ public:
     bool LoadScript(const std::string& scriptName);
     bool CreateNewScript(const std::string& scriptName, const std::string& baseScriptName);
 
+    MonoObject* GetSharpObject() { return monoScript; }
+    std::string GetTypeName() const;
+
     MonoObject* monoScript = nullptr;
 
     std::filesystem::file_time_type GetLastWriteTime() const { return lastWriteTime; }

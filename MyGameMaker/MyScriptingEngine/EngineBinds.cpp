@@ -90,6 +90,7 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     if (object_to_destroy == nullptr) {
         return;
     }
+	SceneManagement->RemoveGameObject(ConvertFromSharp(object_to_destroy));
 
     uintptr_t Cptr;
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");

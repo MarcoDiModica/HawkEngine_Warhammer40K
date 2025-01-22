@@ -19,6 +19,13 @@ public class TankController : MonoBehaviour
 
     Vector2 prev_mouse;
     float lookPosX = 0;
+    public float projectileSpeed = 0.5f;
+    public float projectileLifeTime = 10.0f;
+    public float projectileCooldown = 0.5f;
+
+    private List<(GameObject, float)> activeProjectiles = new List<(GameObject, float)>();
+    private float timeSinceLastProjectile = 0f;   
+
     public override void Start()
     {
         transform = gameObject.GetComponent<Transform>();
@@ -29,6 +36,8 @@ public class TankController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        timeSinceLastProjectile += deltaTime;
+
         if (Input.GetKey(KeyCode.SPACE))
         {
             lookPosX++;
@@ -42,19 +51,49 @@ public class TankController : MonoBehaviour
             transform.Rotate(delta.X * 0.01f, new Vector3(0, 1, 0));
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && timeSinceLastProjectile >= projectileCooldown)
         {
             GenerateProjectile();
+            timeSinceLastProjectile = 0f;
         }
+
+        //UpdateProjectiles(deltaTime);
     }
 
     private void GenerateProjectile()
     {
         projectile = Engineson.CreateGameObject("Projectile", null);
         //projectile.AddComponent<ProjectileScript>(); esto da nullptr el ProjectileScript;
+        //projectile.AddComponent<MeshRenderer>(); esto da error con los shaders
         projTransform = projectile.GetComponent<Transform>();
 
         projTransform.position = transform.position + transform.forward;
 
+        activeProjectiles.Add((projectile, projectileLifeTime));
+
+        //Engineson.Destroy(projectile); error de memoria
+    }
+
+    private void UpdateProjectiles(float deltaTime)
+    {
+        for (int i = activeProjectiles.Count -1; i>= 0; i--)
+        {
+            var (projectile, lifeTime) = activeProjectiles[i];
+            Transform projTrans = projectile.GetComponent<Transform>();
+
+            projTrans.position += projTrans.forward * projectileSpeed * deltaTime;
+
+            projectileLifeTime -= deltaTime;
+
+            if (projectileLifeTime <= 0f)
+            {
+                activeProjectiles.RemoveAt(i);
+                Engineson.Destroy(projectile);
+            }
+            else
+            {
+                activeProjectiles[i] = (projectile, projectileLifeTime);
+            }
+        }
     }
 }

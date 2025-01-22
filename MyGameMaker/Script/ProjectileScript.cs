@@ -13,4 +13,6 @@ using System.Security.Policy;
 public class ProjectileScript : MonoBehaviour
 {
     Transform transform;
+
+    // Delegar los métodos de TankController sobre los proyectiles
 }

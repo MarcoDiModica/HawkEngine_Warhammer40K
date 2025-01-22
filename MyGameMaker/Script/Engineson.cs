@@ -23,7 +23,6 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public static extern void ChangeScene(string scene_name);
 
-
         public static int MapComponent(Type type)
         {
             if(type == typeof(Transform))

@@ -29,6 +29,15 @@ void ParticlesEmitterComponent::Start()
     }  
 }
 
+void ParticlesEmitterComponent::SetTexture(const std::string& texturePath) {
+    this->texturePath = texturePath;
+    // Aquí puedes añadir lógica adicional para cargar la textura si es necesario
+}
+
+std::string ParticlesEmitterComponent::GetTexture() const {
+    return texturePath;
+}
+
 std::unique_ptr<Component> ParticlesEmitterComponent::Clone(GameObject* owner) {
     return std::make_unique<ParticlesEmitterComponent>(owner);
 }

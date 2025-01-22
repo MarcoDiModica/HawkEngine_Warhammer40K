@@ -30,6 +30,17 @@ void MakeParticlesEmmiter() {
     transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotación en el eje Y
     ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
 }
+
+void CreateParticleEmitter(const glm::vec3& position, const std::string& texturePath) {
+    auto particleEmitter = Application->root->CreateGameObject("ParticleEmitter");
+    auto transform = particleEmitter->GetTransform();
+    transform->SetLocalPosition(position);
+
+    auto emitterComponent = particleEmitter->AddComponent<ParticlesEmitterComponent>();
+    emitterComponent->SetTexture(texturePath); // Asumiendo que el componente tiene un método para establecer la textura
+
+    Application->root->currentScene->AddGameObject(particleEmitter);
+}
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
@@ -109,6 +120,12 @@ bool Root::Start()
 
 bool Root::Update(double dt) {
 
+
+    if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+        glm::vec3 particlePosition = glm::vec3(0.0f, 0.0f, 0.0f); // Puedes ajustar la posición según sea necesario
+        std::string texturePath = "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png"; // Reemplaza con la ruta de tu textura
+        CreateParticleEmitter(particlePosition, texturePath);
+    }
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
     currentScene->DebugDrawTree();
 

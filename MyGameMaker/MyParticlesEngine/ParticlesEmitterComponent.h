@@ -18,8 +18,11 @@ public:
     std::unique_ptr<Component> Clone(GameObject* owner) override;
     ComponentType GetType() const override { return ComponentType::PARTICLES_EMITTER; }
     glm::vec3 GetPosition() const;
+    void SetTexture(const std::string& texturePath);
+    std::string GetTexture() const;
 
 private:
+    std::string texturePath;
     glm::vec3 position;
 	glm::dquat rotation;
 	glm::vec3 scale;

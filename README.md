@@ -1,17 +1,16 @@
 
-# 🦅 HawkEngine 🦅 #
+# 🦅 HawkEngine - Physics Branch 🦅 # 
 
-Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
+Branch created from the Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/tree/PhysicsModule)
 
 ## OUR MEMBERS ##
 
-[Marco Baldán](https://github.com/Marco-v-BaldanII)
+[Samuel Martínez](https://github.com/Samu163)
 
-[Marco di Modica](https://github.com/MarcoDiModica)
+[Àlex Becerra](https://github.com/Bonnie041008)
 
-[Jordi Tur](https://github.com/Jordopol) 
+[Sergi Gantzer](https://github.com/sgantzer12) 
 
-[Pau Mora](https://github.com/Peluchomp)
 
 # CONTROLS #
 
@@ -45,6 +44,12 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - To save a scene, File->Save Scene; To create a scene, File->New Scene; To load a scene, right click the scene in the library and load
 
+## PHYSICS CONTROLS ##
+
+- Press F1 to activate Physics Mode!!
+- Scroll MouseWheel UP to spawn balls (projectiles)
+- Scroll MouseWheel DOWN to spawn the car
+
 ## FEATURES ##
 
 - New revamped dockable UI look
@@ -64,6 +69,16 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 - Shader Module (work in progress - almost finished)
 
 - Octree (work in progress - implemented but not functional)
+
+## PHYSICS FEATURES ##
+
+- The initial scene is loaded with colliders that interact with other rigid bodies
+- The ball spawning acts as a "shooting" system where the ball has initial force, restitution, gravity, etc.
+
+## PHYSICS ISSUES ##
+
+- In the PhysicsTesting branch, the gizmos was visible for all objects. Once we fixed the issues and moved it to the PhysicsModule, the gizmos is no longer visible.
+- When spawning the car, despite (in theory) having the chassis parented  to the wheels and having variables for customization of height, suspension, width, etc, the car collides and clips with the ground plane and/or the wheels, making it fly away really fast.
 
 ## LICENSES ##
 

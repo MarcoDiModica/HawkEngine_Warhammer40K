@@ -28,7 +28,7 @@ public:
     MonoImage* GetImage() const { return image; }
     MonoClass* GetClass(const std::string& namespaceName, const std::string& className) const;
     const ComponentMapper& GetMapper() const { return mapper; }
-
+    void ReloadAssembly();
 
     template <typename T>
     T* GetMappedObject(MonoObject* sharpObject) const;

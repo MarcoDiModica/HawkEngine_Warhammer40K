@@ -23,6 +23,8 @@
 #include <mono/metadata/reflection.h>
 #include "../MyScriptingEngine/MonoManager.h"
 
+#include <Windows.h>
+
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
 	matrixDirty = false;
@@ -400,11 +402,39 @@ bool UIInspector::Draw() {
                 if (scriptComponent && scriptComponent->monoScript) {
                     ImGui::PushID(scriptComponent.get());
                     ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                    // Usamos el nombre del script como etiqueta del CollapsingHeader
                     if (ImGui::CollapsingHeader(scriptComponent->GetName().c_str()))
                     {
-                        std::string scriptName = scriptComponent->GetName();
+                        std::string scriptName = mono_class_get_name(mono_object_get_class(scriptComponent->monoScript));
                         ImGui::Text("Script: %s", scriptName.c_str());
+
+                        if (ImGui::Button("Open Script")) {
+                            std::string scriptPath = std::filesystem::absolute("../Script/" + scriptName + ".cs").string();
+                            LOG(LogType::LOG_INFO, "Absolute script path: %s", scriptPath.c_str());
+
+                            if (!std::filesystem::exists(scriptPath)) {
+                                LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
+                            }
+                            else {
+                                HINSTANCE result = ShellExecuteA(NULL, "open", scriptPath.c_str(), NULL, NULL, SW_SHOW);
+                                if ((int)result <= 32) {
+                                    LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
+                                }
+                                else {
+                                    LOG(LogType::LOG_INFO, "Successfully opened script: %s", scriptPath.c_str());
+                                }
+                            }
+                        }
+
+
+
+                        if (ImGui::Button("Reload Script")) {
+                            if (!scriptComponent->LoadScript(scriptName)) {
+                                LOG(LogType::LOG_ERROR, "Failed to reload script %s.", scriptName.c_str());
+                            }
+                            else {
+                                LOG(LogType::LOG_INFO, "Script %s reloaded successfully.", scriptName.c_str());
+                            }
+                        }
 
                         MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
 

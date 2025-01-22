@@ -56,7 +56,7 @@ bool Root::Awake()
     //MonoEnvironment* env = new MonoEnvironment();
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
-     MakeCity();
+    MakeCity();
 
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");
@@ -78,11 +78,14 @@ bool Root::Start()
     //auto script = Script->AddComponent<ScriptComponent>();
     //script->LoadScript("TestingComponent");
 
-    auto BlobFish = CreateGameObject("Script");
+    auto BlobFish = CreateGameObject("Tank");
     auto blob = BlobFish->AddComponent<ScriptComponent>();
-    auto blob2 = BlobFish->AddComponent<ScriptComponent>();
+    
+    AddMeshRenderer(*BlobFish, Mesh::CreateCube());
+
+    //auto blob2 = BlobFish->AddComponent<ScriptComponent>();
     blob->LoadScript("TestingComponent");
-    blob2->LoadScript("TestingComponent");
+    //blob2->LoadScript("TestingComponent");
     
     //check if blobfish has 2 scripts
 

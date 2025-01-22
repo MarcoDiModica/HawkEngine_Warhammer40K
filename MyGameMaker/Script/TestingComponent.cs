@@ -25,12 +25,12 @@ public class TestingComponent : MonoBehaviour
     float lookPosX = 0;
     public override void Start()
     {
-        actor = Engineson.CreateGameObject("FuckingTank");
-        transfr = actor.GetComponent<Transform>();
+        //actor = Engineson.CreateGameObject("FuckingTank");
+        transfr = gameObject.GetComponent<Transform>();
 
         timer = 0.0f;
-        lookPosX = transfr.position.X;
-        actor.AddComponent<Camera>();
+        //lookPosX = transfr.position.X;
+        //actor.AddComponent<Camera>();
         prev_mouse = new Vector2(0, 0);
 
         //test = actor.AddComponent<Test>();

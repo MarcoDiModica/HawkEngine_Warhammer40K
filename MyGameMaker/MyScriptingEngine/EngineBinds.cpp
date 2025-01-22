@@ -12,27 +12,12 @@
 #include <mono/metadata/debug-helpers.h>
 
 // GameObject
-MonoObject* EngineBinds::CreateGameObjectSharp(MonoString* name) {
-    char* C_name = mono_string_to_utf8(name);
-    std::shared_ptr<GameObject> obj = SceneManagement->CreateGameObject(C_name); //SUSTITUIR POR ROOT DEL ENGINE
 
-    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
 
-    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string,uintptr)", true);
-    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-    // assign to C#object its ptr to C++ object
-    uintptr_t goPtr = reinterpret_cast<uintptr_t>(obj.get());
+MonoObject* EngineBinds::GetGameObject(MonoObject* ref) {
 
-    void* args[2];
-    args[0] = mono_string_new(MonoManager::GetInstance().GetDomain(), obj->GetName().c_str());
-    args[1] = &goPtr;
+    return GetScriptOwner(ref)->GetSharp();
 
-    mono_runtime_invoke(method, monoObject, args, NULL);
-
-    obj->CsharpReference = monoObject; // store ref to C#ref to call lifecycle functions
-
-    return monoObject;
 }
 
 MonoString* EngineBinds::GameObjectGetName(MonoObject* sharpRef) {
@@ -48,6 +33,45 @@ GameObject* EngineBinds::ConvertFromSharp(MonoObject* sharpObj) {
     uintptr_t Cptr;
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
     mono_field_get_value(sharpObj, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
+    return reinterpret_cast<GameObject*>(Cptr);
+}
+
+MonoObject* EngineBinds::CreateGameObjectSharp(MonoString* name, GameObject* Cgo) {
+    char* C_name = mono_string_to_utf8(name);
+
+    if (Cgo == nullptr) {
+        auto go = SceneManagement->CreateGameObject(C_name); //SUSTITUIR POR ROOT DEL ENGINE
+        Cgo = go.get();
+    }
+
+
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string,uintptr)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    // assign to C#object its ptr to C++ object
+    uintptr_t goPtr = reinterpret_cast<uintptr_t>(Cgo);
+
+    void* args[2];
+    args[0] = mono_string_new(MonoManager::GetInstance().GetDomain(), Cgo->GetName().c_str());
+    args[1] = &goPtr;
+
+    mono_runtime_invoke(method, monoObject, args, NULL);
+
+    Cgo->CsharpReference = monoObject; // store ref to C#ref to call lifecycle functions
+
+    return monoObject;
+}
+
+GameObject* EngineBinds::GetScriptOwner(MonoObject* ref) {
+    if (ref == nullptr) {
+        return nullptr;
+    }
+
+    uintptr_t Cptr;
+    MonoClass* klass = MonoManager::GetInstance().GetClass("", "MonoBehaviour");
+    mono_field_get_value(ref, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
     return reinterpret_cast<GameObject*>(Cptr);
 }
 
@@ -375,6 +399,8 @@ void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
 	
 
 void EngineBinds::BindEngine() {
+
+    mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     // GameObject
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);

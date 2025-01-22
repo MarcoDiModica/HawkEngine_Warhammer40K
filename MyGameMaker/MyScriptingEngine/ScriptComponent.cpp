@@ -58,12 +58,15 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
 
     LOG(LogType::LOG_INFO, "Script %s cargado correctamente.", scriptName.c_str());
 
-    //if (std::find(MonoManager::GetInstance().scriptIDs.begin(), MonoManager::GetInstance().scriptIDs.end(), value) != vec.end();
+/*   Setting the cplusplus gameObject reference of the MonoBehaviour scripto        */
 
     if (MonoManager::GetInstance().scriptIDs.contains(scriptName) == false) {
 
         MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
     }
+    uintptr_t goPtr = reinterpret_cast<uintptr_t>(owner);
+    MonoClassField* field = mono_class_get_field_from_name(scriptClass, "CplusplusInstance");
+    mono_field_set_value(monoScript, field, &goPtr);
 
 
     return true;

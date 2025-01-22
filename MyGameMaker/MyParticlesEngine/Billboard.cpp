@@ -1,5 +1,6 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/component_wise.hpp>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/vector_angle.hpp>
@@ -7,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include "../MyGameEngine/Component.h"
+#include <yaml-cpp/yaml.h>
 #include "Billboard.h"
 
 Billboard::Billboard(GameObject* owner, BillboardType type, const glm::vec3& position, const glm::vec3& scale)
@@ -52,64 +54,77 @@ glm::mat4 Billboard::CalculateTransform(const glm::vec3& cameraPosition, const g
 BillboardType Billboard::GetTypeEnum() const { return m_Type; }
 void Billboard::SetType(BillboardType type) { m_Type = type; }
 
-glm::mat4 Billboard::CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) {
-    glm::vec3 lookDirection = glm::normalize(cameraPosition - m_Position);
-    glm::vec3 right = glm::normalize(glm::cross(cameraUp, lookDirection));
+YAML::Node Billboard::encode() {
+    YAML::Node node;
+    node["type"] = static_cast<int>(m_Type);
 
-    // Ensure right is not a zero vector
-    if (glm::length(right) < glm::epsilon<float>()) {
-        right = glm::vec3(1.0f, 0.0f, 0.0f); // Use a default value if cross product is near zero
-    }
+    // Using a YAML Node array for position and scale
+    YAML::Node position;
+    position.push_back(m_Position.x);
+    position.push_back(m_Position.y);
+    position.push_back(m_Position.z);
+    node["position"] = position;
 
-    glm::vec3 up = glm::cross(lookDirection, right);
+    YAML::Node scale;
+    scale.push_back(m_Scale.x);
+    scale.push_back(m_Scale.y);
+    scale.push_back(m_Scale.z);
+    node["scale"] = scale;
 
-    glm::mat4 result;
-    result[0] = glm::vec4(right * m_Scale.x, 0.0f);    // Right vector as a column
-    result[1] = glm::vec4(up * m_Scale.y, 0.0f);       // Up vector as a column
-    result[2] = glm::vec4(-lookDirection * m_Scale.z, 0.0f); // Negative lookDirection as a column
-    result[3] = glm::vec4(m_Position, 1.0f);           // Position as the translation column
-
-    return result;
+    return node;
 }
 
-glm::mat4 Billboard::CalculateWorldAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) {
-    glm::vec3 lookDirection = glm::normalize(cameraPosition - m_Position);
-    glm::vec3 right = glm::normalize(glm::cross(cameraUp, lookDirection));
-
-    // Ensure right is not a zero vector
-    if (glm::length(right) < glm::epsilon<float>()) {
-        right = glm::vec3(1.0f, 0.0f, 0.0f); // Use a default value if cross product is near zero
+bool Billboard::decode(const YAML::Node& node) {
+    if (!node["type"] || !node["position"] || !node["scale"]) {
+        return false;
     }
 
-    glm::vec3 up = glm::cross(lookDirection, right);
+    // Read the type from the node
+    m_Type = static_cast<BillboardType>(node["type"].as<int>());
 
-    glm::mat4 result;
-    result[0] = glm::vec4(right * m_Scale.x, 0.0f);    // Right vector as a column
-    result[1] = glm::vec4(up * m_Scale.y, 0.0f);       // Up vector as a column
-    result[2] = glm::vec4(lookDirection * m_Scale.z, 0.0f); // LookDirection as a column
-    result[3] = glm::vec4(m_Position, 1.0f);           // Position as the translation column
+    // Read the position and scale values as vectors
+    m_Position = glm::vec3(node["position"][0].as<float>(),
+        node["position"][1].as<float>(),
+        node["position"][2].as<float>());
 
-    return result;
+    m_Scale = glm::vec3(node["scale"][0].as<float>(),
+        node["scale"][1].as<float>(),
+        node["scale"][2].as<float>());
+
+    return true;
+}
+glm::mat4 Billboard::CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp)
+{
+    glm::vec3 N = -glm::normalize(glm::vec3(cameraPosition.x, 0, cameraPosition.z));
+    glm::vec3 U = cameraUp;
+    glm::vec3 R = glm::cross(U, N);
+
+    glm::mat4 transform = glm::mat4(glm::vec4(R * m_Scale.x, 0.0f), glm::vec4(U * m_Scale.y, 0.0f), glm::vec4(N * m_Scale.z, 0.0f), glm::vec4(m_Position, 1.0f));
+
+    return transform;
 }
 
-glm::mat4 Billboard::CalculateAxisAligned(const glm::vec3& cameraPosition) {
-    glm::vec3 lookDirection = cameraPosition - m_Position;
-    lookDirection.y = 0.0f; // Constraint to Y-axis for ground plane
+glm::mat4 Billboard::CalculateWorldAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp)
+{
+    glm::vec3 N = glm::normalize(cameraPosition - m_Position);
+    glm::vec3 U = cameraUp;
+    glm::vec3 R = glm::normalize(glm::cross(U, N));
+    U = glm::cross(N, R);
 
-    // Ensure the lookDirection is not a zero vector
-    if (glm::length(lookDirection) < glm::epsilon<float>()) {
-        lookDirection = glm::vec3(1.0f, 0.0f, 0.0f); // Handle case where the look direction is too small
-    }
+    glm::mat4 transform = glm::mat4(glm::vec4(R * m_Scale.x, 0.0f), glm::vec4(U * m_Scale.y, 0.0f), glm::vec4(N * m_Scale.z, 0.0f), glm::vec4(m_Position, 1.0f));
 
-    lookDirection = glm::normalize(lookDirection);
+    return transform;
+}
 
-    glm::vec3 right = glm::vec3(lookDirection.z, 0.0f, -lookDirection.x); // Perpendicular in XZ-plane
+glm::mat4 Billboard::CalculateAxisAligned(const glm::vec3& cameraPosition)
+{
+    glm::vec3 dirToCamera = cameraPosition - m_Position;
+    dirToCamera.y = 0.0f;
+    dirToCamera = glm::normalize(dirToCamera);
 
-    glm::mat4 result;
-    result[0] = glm::vec4(right * m_Scale.x, 0.0f);    // Right vector as a column
-    result[1] = glm::vec4(0.0f, m_Scale.y, 0.0f, 0.0f); // Y-axis as a column
-    result[2] = glm::vec4(lookDirection * m_Scale.z, 0.0f); // Look direction as a column
-    result[3] = glm::vec4(m_Position, 1.0f);             // Position as the translation column
+    glm::vec3 R = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), dirToCamera);
 
-    return result;
+    glm::mat4 transform = glm::mat4(glm::vec4(R * m_Scale.x, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 0.0f) * m_Scale.y, glm::vec4(dirToCamera * m_Scale.z, 0.0f), glm::vec4(m_Position, 1.0f));
+
+    return transform;
 }

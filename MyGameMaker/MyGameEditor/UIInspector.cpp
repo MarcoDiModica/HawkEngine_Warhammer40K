@@ -99,7 +99,7 @@ bool UIInspector::Draw() {
 				selectedGameObject->AddComponent<LightComponent>();
 			}
             if (!selectedGameObject->HasComponent<Billboard>() && ImGui::MenuItem("Billboard")) {
-                selectedGameObject->AddComponent<Billboard>(selectedGameObject, BillboardType::SCREEN_ALIGNED, glm::vec3(0.0f), glm::vec3(1.0f));
+                selectedGameObject->AddComponent<Billboard>(BillboardType::SCREEN_ALIGNED, glm::vec3(0.0f), glm::vec3(1.0f));
             }
             // More components here
 
@@ -146,8 +146,12 @@ bool UIInspector::Draw() {
         else {
             throw std::runtime_error("UIInspector::Draw: Transform component is nullptr");
         }
-        if (Billboard* billboard = selectedGameObject->GetComponent<Billboard>()) {
+        
+        if (selectedGameObject->HasComponent<Billboard>()) {
+            Billboard* billboard = selectedGameObject->GetComponent<Billboard>();
             ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+
+
             if (ImGui::CollapsingHeader("Billboard")) {
                 const char* billboardTypes[] = { "Screen Aligned", "World Aligned", "Axis Aligned" };
                 int currentType = static_cast<int>(billboard->GetTypeEnum());

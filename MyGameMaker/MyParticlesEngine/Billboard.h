@@ -54,7 +54,6 @@ private:
     // The type of the billboard (SCREEN_ALIGNED, etc.)
     BillboardType m_Type;
     // The position of the billboard in world space
-    glm::vec3 m_Position;
-    // The scale of the billboard in world space
-    glm::vec3 m_Scale;
+    glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
+    glm::vec3 m_Scale = { 1.0f, 1.0f, 1.0f };
 };

@@ -90,9 +90,9 @@ void SpawnPhysCube() {
 }
 
 void SpawnCar() {
-    // Configuración del vehículo
     VehicleInfo car;
 
+    // Vehicle chassis properties
     car.chassis_size = glm::vec3(2, 1, 4);
     car.chassis_offset = glm::vec3(0, 1, 0);
     car.mass = 500.0f;
@@ -103,66 +103,66 @@ void SpawnCar() {
     car.frictionSlip = 50.5;
     car.maxSuspensionForce = 2000.0f;
 
-    // Propiedades de las ruedas
-    float half_width = 1.0f;
-    float wheel_width = 0.5f;
-    float connection_height = 0.5f;
-    float half_length = 2.0f;
+    // Wheel properties
+    float half_width = 1.0f; // Separation from the chassis center
+    float wheel_width = 0.4f; // Adjusted width
+    float connection_height = -0.5f; // Directly under the chassis
+    float half_length = 1.8f; // Slightly inward for compact placement
     float wheel_radius = 0.5f;
     float suspensionRestLength = 0.6f;
 
-    glm::vec3 direction(0, -1, 0); // Dirección de la suspensión
-    glm::vec3 axis(-1, 0, 0);      // Eje de las ruedas
+    glm::vec3 direction(-1, 0, 0); // Suspension direction
+    glm::vec3 axis(0, -1, 0);      // Wheel rotation axis
 
     car.num_wheels = 4;
     car.wheels = new Wheel[4];
 
-    // Configurar cada rueda
-    car.wheels[0] = { glm::vec3(half_width - 0.3f * wheel_width, connection_height, half_length - wheel_radius), direction, axis, suspensionRestLength, wheel_radius, wheel_width, true, true, true, true };
-    car.wheels[1] = { glm::vec3(-half_width + 0.3f * wheel_width, connection_height, half_length - wheel_radius), direction, axis, suspensionRestLength, wheel_radius, wheel_width, true, true, true, true };
-    car.wheels[2] = { glm::vec3(half_width - 0.3f * wheel_width, connection_height, -half_length + wheel_radius), direction, axis, suspensionRestLength, wheel_radius, wheel_width, false, true, true, false };
-    car.wheels[3] = { glm::vec3(-half_width + 0.3f * wheel_width, connection_height, -half_length + wheel_radius), direction, axis, suspensionRestLength, wheel_radius, wheel_width, false, true, true, false };
+    // Configure each wheel
+    car.wheels[0] = { glm::vec3(half_width, connection_height, half_length), direction, axis, suspensionRestLength, wheel_radius, wheel_width, true, true, true, true };
+    car.wheels[1] = { glm::vec3(-half_width, connection_height, half_length), direction, axis, suspensionRestLength, wheel_radius, wheel_width, true, true, true, true };
+    car.wheels[2] = { glm::vec3(half_width, connection_height, -half_length), direction, axis, suspensionRestLength, wheel_radius, wheel_width, false, true, true, false };
+    car.wheels[3] = { glm::vec3(-half_width, connection_height, -half_length), direction, axis, suspensionRestLength, wheel_radius, wheel_width, false, true, true, false };
 
-    // Crear el vehículo
+    // Set spawn height above ground
+    float spawnHeight = 5.0f;
+
+    // Create the vehicle in the physics module
     PhysVehicle3D* vehicle = Application->physicsModule->AddVehicle(car);
-    vehicle->SetPos(0, 29, 1); // Posición inicial del vehículo
+    vehicle->SetPos(0, spawnHeight, 0);
 
-    // Renderizar el chasis
+    // Create and configure the chassis
     auto chassis = Application->root->CreateCube("chassis");
-    chassis->GetTransform()->SetPosition(glm::vec3(0, 29, 1));
+    chassis->GetTransform()->SetPosition(glm::vec3(0, spawnHeight, 0));
     chassis->GetTransform()->SetScale(car.chassis_size);
 
-    // Add a member to store the wheels
-    std::vector<std::shared_ptr<GameObject>> wheels;
-
-    // Crear ruedas como shared_ptr y almacenarlas en un vector de punteros sin procesar
-    std::vector<GameObject*> rawWheels;
+    // Parenting for structure consistency
+    std::vector<GameObject*> wheels;
     for (int i = 0; i < car.num_wheels; ++i) {
         auto wheel = Application->root->CreateCylinder("wheel" + std::to_string(i));
-        wheel->GetTransform()->SetPosition(glm::vec3(
-            car.wheels[i].connection.x,
-            car.wheels[i].connection.y + 29, // Altura ajustada
-            car.wheels[i].connection.z
-        ));
-        wheel->GetTransform()->SetScale(glm::vec3(
-            car.wheels[i].radius * 2,
-            car.wheels[i].width,
-            car.wheels[i].radius * 2
-        ));
 
-        // Aplicar rotación inicial para alinear el cilindro al eje X
-		wheel->GetTransform()->Rotate(90, glm::vec3(0, 1, 0));
+        // Position wheel directly under the chassis
+        glm::vec3 wheel_position = car.wheels[i].connection;
+        wheel_position.y += spawnHeight + connection_height; // Adjust height based on chassis
 
-        // Convertir shared_ptr a puntero sin procesar y agregar al vector
-        rawWheels.push_back(wheel.get());
-        wheels.push_back(std::move(wheel));
+        wheel->GetTransform()->SetPosition(wheel_position);
+        wheel->GetTransform()->SetScale(glm::vec3(car.wheels[i].radius * 2, car.wheels[i].width, car.wheels[i].radius * 2));
+
+        // Rotate the wheel 90 degrees on the Z-axis
+        wheel->GetTransform()->Rotate(90, glm::vec3(0, 0, 1));
+
+        Application->root->ParentGameObject(*wheel, *chassis);
+        wheels.push_back(wheel.get());
     }
 
-    // Crear el objeto FinalVehicleInfo
-    FinalVehicleInfo* finalVehicleInfo = new FinalVehicleInfo(chassis.get(), rawWheels, vehicle);
+    // Synchronize collisions and ensure alignment
+    FinalVehicleInfo* finalVehicleInfo = new FinalVehicleInfo(chassis.get(), wheels, vehicle);
     Application->physicsModule->vehicles.add(finalVehicleInfo);
-    std::cout << "Car spawned successfully with chassis and wheels rendered.\n";
+
+    Application->physicsModule->SyncVehicleComponents(vehicle, chassis.get(), wheels);
+
+    std::cout << "Car spawned successfully at height " << spawnHeight << " with wheels aligned and collisions active.\n";
 }
+
 
 
 bool Input::processSDLEvents()

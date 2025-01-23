@@ -59,6 +59,7 @@ void ParticlesEmitterComponent::EmitParticle1(const glm::vec3& speed) {
     newParticle->texture->LoadTexture(texturePath); // Cargar la textura
     newParticle->texture2 = nullptr;
     newParticle->Start();
+	isSmoking = true;
     particles.push_back(*newParticle);
  
     std::cout << "Partícula generada" << std::endl;    
@@ -75,7 +76,7 @@ void ParticlesEmitterComponent::EmitParticle2(const glm::vec3& speed) {
     newParticle->texture2->LoadTexture(texturePath2);// Cargar la textura
     newParticle->Start();
     particles.push_back(*newParticle);
-    isSmoking = true;
+    isSmoking = false;
 
     std::cout << "Partícula generada" << std::endl;
 }

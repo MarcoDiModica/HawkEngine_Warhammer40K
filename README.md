@@ -7,9 +7,16 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 [David Lastra](https://github.com/DavidLastra8)
 
+![WhatsApp Image 2025-01-23 at 23 32 03 (1)](https://github.com/user-attachments/assets/c14bdb56-2bab-4f6e-82bd-7cc2b2b9bf97)
+
 [Daniel Berrio](https://github.com/Onnda)
 
+![WhatsApp Image 2025-01-23 at 23 18 45](https://github.com/user-attachments/assets/215ef3e4-7fd3-4a2e-a06a-841a267813f1)
+
+
 [Oliver Santos](https://github.com/Esnaiper) 
+
+![WhatsApp Image 2025-01-23 at 23 21 11](https://github.com/user-attachments/assets/7561400c-6baf-4138-9210-892d425d026e)
 
 # CONTROLS #
 

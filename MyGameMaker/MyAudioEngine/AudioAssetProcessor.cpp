@@ -1,5 +1,4 @@
 #include "AudioAssetProcessor.h"
-#include "../MyGameEditor/Log.h"
 #include <filesystem>
 #include <fstream>
 
@@ -9,14 +8,12 @@ std::unordered_map<std::string, std::weak_ptr<AudioAsset>> AudioAssetProcessor::
 
 bool AudioAssetProcessor::ProcessAudioFile(const std::string& sourcePath, const std::string& outputPath) {
     if (!IsAudioFile(sourcePath)) {
-        LOG(LogType::LOG_ERROR, "Not a valid audio file: %s", sourcePath.c_str());
         return false;
     }
 
     // Create output directory if it doesn't exist
     std::filesystem::path outputDir = std::filesystem::path(outputPath).parent_path();
     if (!CreateDirectoryIfNotExists(outputDir.string())) {
-        LOG(LogType::LOG_ERROR, "Failed to create output directory: %s", outputDir.string().c_str());
         return false;
     }
 
@@ -24,11 +21,9 @@ bool AudioAssetProcessor::ProcessAudioFile(const std::string& sourcePath, const 
         // For now, we'll just copy the file - in the future we can add format conversion
         std::filesystem::copy_file(sourcePath, outputPath, 
             std::filesystem::copy_options::overwrite_existing);
-        LOG(LogType::LOG_OK, "Processed audio file: %s -> %s", sourcePath.c_str(), outputPath.c_str());
         return true;
     }
     catch (const std::exception& e) {
-        LOG(LogType::LOG_ERROR, "Failed to process audio file: %s", e.what());
         return false;
     }
 }
@@ -42,7 +37,6 @@ std::shared_ptr<AudioAsset> AudioAssetProcessor::LoadProcessedAudio(const std::s
     // Create new asset
     auto asset = std::make_shared<AudioAsset>();
     if (!asset->LoadFromFile(libraryPath)) {
-        LOG(LogType::LOG_ERROR, "Failed to load processed audio: %s", libraryPath.c_str());
         return nullptr;
     }
 
@@ -65,7 +59,6 @@ std::shared_ptr<AudioAsset> AudioAssetProcessor::GetCachedAsset(const std::strin
 
 void AudioAssetProcessor::ClearCache() {
     audioCache.clear();
-    LOG(LogType::LOG_INFO, "Audio asset cache cleared");
 }
 
 void AudioAssetProcessor::UnloadUnused() {
@@ -76,7 +69,6 @@ void AudioAssetProcessor::UnloadUnused() {
             ++it;
         }
     }
-    LOG(LogType::LOG_INFO, "Unused audio assets unloaded");
 }
 
 bool AudioAssetProcessor::CreateDirectoryIfNotExists(const std::string& path) {

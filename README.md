@@ -23,6 +23,8 @@ Implemented Transform and MeshRenderer Components C# translations and bindings, 
 
 ![smaller_github_image_2](https://github.com/user-attachments/assets/8b41f1d5-24c7-457c-9e1d-c0de226f629f)
 
+Implemented Input and Camera class with all their functions
+
 # CONTROLS #
 
 - Press Left Click on the inspector to select an object

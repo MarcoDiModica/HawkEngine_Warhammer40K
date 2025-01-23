@@ -22,6 +22,14 @@ public:
     void SetTexture(const std::string& texturePath);
     std::string GetTexture() const;
 
+
+    float getSpawnRate() const;
+    void setSpawnRate(float spawnRate);
+
+    int getMaxParticles() const;
+    void setMaxParticles(int maxParticles);
+
+
 private:
     std::string texturePath;
     glm::vec3 position;

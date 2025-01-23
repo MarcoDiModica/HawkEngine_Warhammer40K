@@ -21,6 +21,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 #include"../MyParticlesEngine/Billboard.h"
+#include <MyParticlesEngine/ParticlesEmitterComponent.h>
+
+#include "tinyfiledialogs/tinyfiledialogs.h"
+#include <fstream>
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
 	matrixDirty = false;
@@ -47,11 +51,11 @@ bool UIInspector::Draw() {
     ImGui::SetNextWindowClass(&windowClass);
     windowClass.DockingAllowUnclassed = false;
 
-	if (!ImGui::Begin("Inspector", nullptr, inspectorFlags)) {
+    if (!ImGui::Begin("Inspector", nullptr, inspectorFlags)) {
         ImGui::CloseCurrentPopup();
-		ImGui::End();
-		return false;
-	}
+        ImGui::End();
+        return false;
+    }
 
     if (Application->input->GetSelectedGameObjects().empty()) {
         ImGui::Text("No GameObject selected");
@@ -78,7 +82,7 @@ bool UIInspector::Draw() {
         }
         ImGui::SameLine(); ImGui::Checkbox("Static", &selectedGameObject->isStatic);
 
-		ImGui::Separator();
+        ImGui::Separator();
 
         Transform_Component* transform = selectedGameObject->GetTransform();
 
@@ -96,13 +100,15 @@ bool UIInspector::Draw() {
             }
 
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
-				selectedGameObject->AddComponent<LightComponent>();
-			}
+                selectedGameObject->AddComponent<LightComponent>();
+            }
             if (!selectedGameObject->HasComponent<Billboard>() && ImGui::MenuItem("Billboard")) {
                 selectedGameObject->AddComponent<Billboard>(BillboardType::SCREEN_ALIGNED, glm::vec3(0.0f), glm::vec3(1.0f));
             }
             // More components here
-
+            if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
+                selectedGameObject->AddComponent<ParticlesEmitterComponent>();
+            }
             ImGui::EndPopup();
         }
 
@@ -146,6 +152,7 @@ bool UIInspector::Draw() {
         else {
             throw std::runtime_error("UIInspector::Draw: Transform component is nullptr");
         }
+        ImGui::Separator();
 
         if (selectedGameObject->HasComponent<Billboard>()) {
             Billboard* billboard = selectedGameObject->GetComponent<Billboard>();
@@ -157,29 +164,116 @@ bool UIInspector::Draw() {
                 if (ImGui::Combo("Type", &currentType, billboardTypes, IM_ARRAYSIZE(billboardTypes))) {
                     billboard->SetType(static_cast<BillboardType>(currentType));
                 }
+                glm::dvec3 currentPosition = transform->GetPosition();
+                glm::dvec3 currentScale = transform->GetScale();
 
-                glm::vec3 position = billboard->GetPosition();
-                glm::vec3 scale = billboard->GetScale();
+                float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+                float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
 
-                float billPos[3] = { position.x, position.y, position.z };
-                float billScale[3] = { scale.x, scale.y, scale.z };
+
+                glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition();
+                glm::vec3 cameraUp = Application->camera->GetTransform().GetUp();
+
+                glm::mat4 transformMatrix = billboard->CalculateTransform(cameraPosition, cameraUp);
+
+                float billPos[3] = { transformMatrix[0][0], transformMatrix[1][0],transformMatrix[2][0] };
+                float billScale[3] = { transformMatrix[0][1], transformMatrix[1][1],transformMatrix[2][1] };
 
                 if (ImGui::DragFloat3("Position", billPos, 0.1f)) {
-                    glm::vec3 newBillPosition = { billPos[0], billPos[1], billPos[2] };
-                    glm::vec3 deltaBillPos = newBillPosition - position;
-                    transform->Translate(glm::dvec3(deltaBillPos));
-                    billboard->SetPosition(newBillPosition);
+                    glm::dvec3 newBillPosition = { billPos[0], billPos[1], billPos[2] };
+                    glm::dvec3 deltaPos = newBillPosition - currentPosition;
+                    transform->Translate(deltaPos);
+
                 }
 
                 if (ImGui::DragFloat3("Scale", billScale, 0.1f)) {
-                    glm::vec3 newBillScale = { billScale[0], billScale[1], billScale[2] };
-                    glm::vec3 deltaBillScale = newBillScale / scale;
-                    transform->Scale(glm::dvec3(deltaBillScale));
-                    billboard->SetScale(newBillScale);
+                    glm::dvec3 newScale = { billScale[0],  billScale[1],  billScale[2] };
+                    glm::dvec3 deltaScale = newScale / currentScale;
+                    transform->Scale(deltaScale);
+                }
+
+
+
+                ImGui::Text("Transformation Matrix:");
+                for (int i = 0; i < 4; ++i) {
+                    ImGui::Text("[%.2f, %.2f, %.2f, %.2f]",
+                        transformMatrix[i][0],
+                        transformMatrix[i][1],
+                        transformMatrix[i][2],
+                        transformMatrix[i][3]);
                 }
             }
         }
         ImGui::Separator();
+
+        if (selectedGameObject->HasComponent<ParticlesEmitterComponent>()) {
+            ParticlesEmitterComponent* particlesEmitter = selectedGameObject->GetComponent<ParticlesEmitterComponent>();
+            ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+
+            if (ImGui::CollapsingHeader("Particles Emitter")) {
+                float spawnrate = particlesEmitter->getSpawnRate();
+                std::string texturePath = particlesEmitter->GetTexture();
+                int maxParticles = particlesEmitter->getMaxParticles();
+
+                if (ImGui::InputFloat("Spawn Rate", &spawnrate, 0.1f, 0.1f, "%.2f")) {
+                    particlesEmitter->setSpawnRate(spawnrate);
+                }
+                if (ImGui::InputInt("Max Particles", &maxParticles)) {
+                    particlesEmitter->setMaxParticles(maxParticles);
+                }
+                ImGui::TextWrapped("Texture Path: %s", texturePath.c_str());
+
+                if (ImGui::Button("Set Texture")) {
+                    const char* path = tinyfd_openFileDialog("Choose a texture", "", 0, nullptr, nullptr, 0);
+                    if (path && strlen(path) > 0) { // Check if the path is valid
+                        particlesEmitter->SetTexture(std::string(path));
+                    }
+                }
+
+                if (ImGui::Button("Save .part")) {
+                    const char* savePath = tinyfd_saveFileDialog("Save Particles Emitter", "", 0, nullptr, nullptr);
+                    if (savePath && strlen(savePath) > 0) { // Check if the savePath is valid
+                        std::ofstream outFile(savePath, std::ios::binary);
+                        if (outFile.is_open()) {
+                            outFile.write(reinterpret_cast<const char*>(&spawnrate), sizeof(spawnrate));
+                            outFile.write(reinterpret_cast<const char*>(&maxParticles), sizeof(maxParticles));
+                            size_t texturePathSize = texturePath.size();
+                            outFile.write(reinterpret_cast<const char*>(&texturePathSize), sizeof(texturePathSize));
+                            outFile.write(texturePath.c_str(), texturePathSize);
+                            outFile.close();
+                        }
+                        else {
+                            std::cerr << "Failed to open file for saving: " << savePath << std::endl;
+                        }
+                    }
+                }
+
+                if (ImGui::Button("Load .part")) {
+                    const char* loadPath = tinyfd_openFileDialog("Load Particles Emitter", "", 0, nullptr, nullptr, 0);
+                    if (loadPath && strlen(loadPath) > 0) { // Check if the loadPath is valid
+                        std::ifstream inFile(loadPath, std::ios::binary);
+                        if (inFile.is_open()) {
+                            float spawnrate;
+                            int maxParticles;
+                            size_t texturePathSize;
+                            inFile.read(reinterpret_cast<char*>(&spawnrate), sizeof(spawnrate));
+                            inFile.read(reinterpret_cast<char*>(&maxParticles), sizeof(maxParticles));
+                            inFile.read(reinterpret_cast<char*>(&texturePathSize), sizeof(texturePathSize));
+                            std::string texturePath(texturePathSize, '\0');
+                            inFile.read(&texturePath[0], texturePathSize);
+                            inFile.close();
+
+                            particlesEmitter->setSpawnRate(spawnrate);
+                            particlesEmitter->setMaxParticles(maxParticles);
+                            particlesEmitter->SetTexture(texturePath);
+                        }
+                        else {
+                            std::cerr << "Failed to open file for loading: " << loadPath << std::endl;
+                        }
+                    }
+                }
+            }
+        }
 
         if (selectedGameObject->HasComponent<MeshRenderer>()) {
             MeshRenderer* meshRenderer = selectedGameObject->GetComponent<MeshRenderer>();

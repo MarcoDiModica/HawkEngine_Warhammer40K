@@ -37,7 +37,9 @@ public:
     void SetPosition(const glm::vec3& position) { m_Position = position; }
     void SetScale(const glm::vec3& scale) { m_Scale = scale; }
 
-
+    glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
+    glm::vec3 m_Scale = { 1.0f, 1.0f, 1.0f };
+    glm::mat4 m_Transform;
 private:
     // Transformation calculation for different types of billboards
     glm::mat4 CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp);
@@ -46,10 +48,8 @@ private:
     // The type of the billboard (SCREEN_ALIGNED, etc.)
     BillboardType m_Type;
     // The position of the billboard in world space
-    glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
-    glm::vec3 m_Scale = { 1.0f, 1.0f, 1.0f };
 
-    glm::mat4 m_Transform;
+ 
 };
 
 //if (selectedGameObject->HasComponent<Billboard>()) {

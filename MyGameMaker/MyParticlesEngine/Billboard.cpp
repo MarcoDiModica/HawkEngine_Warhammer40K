@@ -49,52 +49,38 @@ BillboardType Billboard::GetTypeEnum() const { return m_Type; }
 void Billboard::SetType(BillboardType type) { m_Type = type; }
 
 
-glm::mat4 Billboard::CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) {
-    glm::vec3 lookDirection = glm::normalize(cameraPosition - m_Position);
-    glm::vec3 right = glm::normalize(glm::cross(cameraUp, lookDirection));
-    // Ensure right is not a zero vector
-    if (glm::length(right) < glm::epsilon<float>()) {
-        right = glm::vec3(1.0f, 0.0f, 0.0f); // Use a default value if cross product is near zero
-    }
-    glm::vec3 up = glm::cross(lookDirection, right);
-    glm::mat4 result;
-    result[0] = glm::vec4(right * m_Scale.x, 0.0f);    // Right vector as a column
-    result[1] = glm::vec4(up * m_Scale.y, 0.0f);       // Up vector as a column
-    result[2] = glm::vec4(-lookDirection * m_Scale.z, 0.0f); // Negative lookDirection as a column
-    result[3] = glm::vec4(m_Position, 1.0f);           // Position as the translation column
+glm::mat4 Billboard::CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp)
+{
+    glm::vec3 N = -glm::normalize(glm::vec3(cameraPosition.x, 0, cameraPosition.z));
+    glm::vec3 U = cameraUp;
+    glm::vec3 R = glm::cross(U, N);
 
-    return result;
+    glm::mat4 transform = glm::mat4(glm::vec4(R * m_Scale.x, 0.0f), glm::vec4(U * m_Scale.y, 0.0f), glm::vec4(N * m_Scale.z, 0.0f), glm::vec4(m_Position, 1.0f));
+
+    return transform;
 }
 
-glm::mat4 Billboard::CalculateWorldAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) {
-    glm::vec3 lookDirection = glm::normalize(cameraPosition - m_Position);
-    glm::vec3 right = glm::normalize(glm::cross(cameraUp, lookDirection));
-    // Ensure right is not a zero vector
-    if (glm::length(right) < glm::epsilon<float>()) {
-        right = glm::vec3(1.0f, 0.0f, 0.0f); // Use a default value if cross product is near zero
-    }
-    glm::vec3 up = glm::cross(lookDirection, right);
-    glm::mat4 result;
-    result[0] = glm::vec4(right * m_Scale.x, 0.0f);    // Right vector as a column
-    result[1] = glm::vec4(up * m_Scale.y, 0.0f);       // Up vector as a column
-    result[2] = glm::vec4(lookDirection * m_Scale.z, 0.0f); // LookDirection as a column
-    result[3] = glm::vec4(m_Position, 1.0f);           // Position as the translation column
-    return result;
+glm::mat4 Billboard::CalculateWorldAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp)
+{
+    glm::vec3 N = glm::normalize(cameraPosition - m_Position);
+    glm::vec3 U = cameraUp;
+    glm::vec3 R = glm::normalize(glm::cross(U, N));
+    U = glm::cross(N, R);
+
+    glm::mat4 transform = glm::mat4(glm::vec4(R * m_Scale.x, 0.0f), glm::vec4(U * m_Scale.y, 0.0f), glm::vec4(N * m_Scale.z, 0.0f), glm::vec4(m_Position, 1.0f));
+
+    return transform;
 }
 
-glm::mat4 Billboard::CalculateAxisAligned(const glm::vec3& cameraPosition) {
-    glm::vec3 lookDirection = cameraPosition - m_Position;
-    lookDirection.y = 0.0f; // Constraint to Y-axis for ground plane
-    // Ensure the lookDirection is not a zero vector
-    if (glm::length(lookDirection) < glm::epsilon<float>()) {
-        lookDirection = glm::vec3(1.0f, 0.0f, 0.0f); // Handle case where the look direction is too small
-    }
-    lookDirection = glm::normalize(lookDirection);
-    glm::vec3 right = glm::vec3(lookDirection.z, 0.0f, -lookDirection.x); // Perpendicular in XZ-plane
-    glm::mat4 result;
-    result[0] = glm::vec4(right * m_Scale.x, 0.0f);    // Right vector as a column
-    result[1] = glm::vec4(0.0f, m_Scale.y, 0.0f, 0.0f); // Y-axis as a column
-    result[2] = glm::vec4(lookDirection * m_Scale.z, 0.0f); // Look direction as a column
-    result[3] = glm::vec4(m_Position, 1.0f);             // Position as the translation column
-    return result;
+glm::mat4 Billboard::CalculateAxisAligned(const glm::vec3& cameraPosition)
+{
+    glm::vec3 dirToCamera = cameraPosition - m_Position;
+    dirToCamera.y = 0.0f;
+    dirToCamera = glm::normalize(dirToCamera);
+
+    glm::vec3 R = glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), dirToCamera);
+
+    glm::mat4 transform = glm::mat4(glm::vec4(R * m_Scale.x, 0.0f), glm::vec4(0.0f, 1.0f, 0.0f, 0.0f) * m_Scale.y, glm::vec4(dirToCamera * m_Scale.z, 0.0f), glm::vec4(m_Position, 1.0f));
+
+    return transform;
 }

@@ -147,3 +147,23 @@ Particle* ParticlesEmitterComponent::SetParticleVariables(Particle* variablesPar
     
 	return variablesParticle;
 }
+
+
+
+float ParticlesEmitterComponent::getSpawnRate() const
+{
+    return spawnRate;
+}
+
+void ParticlesEmitterComponent::setSpawnRate(float newSpawnRate)
+{
+    spawnRate = newSpawnRate;
+}
+
+int ParticlesEmitterComponent::getMaxParticles() const {
+    return maxParticles;
+}
+
+void ParticlesEmitterComponent::setMaxParticles(int newMaxParticles) {
+    maxParticles = newMaxParticles;
+}

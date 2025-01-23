@@ -234,7 +234,7 @@ std::shared_ptr<GameObject> Root::CreateCanvasObject(const std::string& name) {
     // Crear un plano vertical
     auto verticalPlane = CreatePlane("VerticalPlane");
     verticalPlane->GetTransform()->SetPosition(glm::dvec3(0, 3.5, -4)); // Asegúrate de que la posición sea correcta
-    verticalPlane->GetTransform()->SetScale(glm::dvec3(3.0, 3.5, 1.0)); // Cambia los valores según sea necesario
+    verticalPlane->GetTransform()->SetScale(glm::dvec3(6.5, 3.5, 1.0)); // Cambia los valores según sea necesario
     verticalPlane->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
 
     ParentGameObject(*verticalPlane, *canva);
@@ -255,6 +255,37 @@ std::shared_ptr<GameObject> Root::CreateCanvasObject(const std::string& name) {
 
     return canva;
 }
+
+std::shared_ptr<GameObject> Root::CreateButtonObject(const std::string& name) {
+    auto button = CreateGameObject(name);
+    button->AddComponent<CanvasComponent>(); // Assuming CanvasComponent is used for UI elements
+
+    // Crear un plano vertical rojo
+    auto verticalPlane = CreatePlane("VerticalPlane");
+    verticalPlane->GetTransform()->SetPosition(glm::dvec3(0, 3.5, -3.99)); // Ajusta la posición según sea necesario
+    verticalPlane->GetTransform()->SetScale(glm::dvec3(1.0, 1.0, 1.0)); // Ajusta la escala según sea necesario
+    verticalPlane->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+
+    // Asignar un material rojo al plano
+    auto meshRenderer = verticalPlane->GetComponent<MeshRenderer>();
+    if (meshRenderer) {
+        auto material = std::make_shared<Material>();
+        auto image = std::make_shared<Image>();
+        image->LoadTexture("Assets/Button.png"); // Asegúrate de que la textura exista
+        material->setImage(image);
+        meshRenderer->SetMaterial(material);
+    }
+    else {
+        std::cerr << "Error: MeshRenderer no encontrado en el plano vertical." << std::endl;
+    }
+
+    ParentGameObject(*verticalPlane, *button);
+
+
+    // Additional setup for the button can be added here
+    return button;
+}
+
 
 std::shared_ptr<GameObject> Root::CreateImageObject(const std::string& name, const std::string& imagePath) {
     auto gameObject = CreateGameObject(name);

@@ -24,6 +24,8 @@ enum class ComponentType {
 	CAMERA,
 	LIGHT,
 	CANVAS,
+	BUTTON
+	CANVAS,
 	IMAGE
 };
 

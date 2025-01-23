@@ -90,35 +90,51 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 
 	if (Application->input->GetMouseButton(3) == KEY_REPEAT) 
 	{
-		glm::dvec2 currentMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
 
-		// Calcular delta del ratón antes de envolver
-		glm::dvec2 mouseDelta = currentMousePos - lastMousePos;
+		if (infiniteMouse) 
+		{
+			glm::dvec2 currentMousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
 
-		if (currentMousePos.x <= 0) {
-			SDL_WarpMouseInWindow(Application->window->windowPtr(), windowWidth - 1, static_cast<int>(currentMousePos.y));
-			lastMousePos.x = windowWidth - 1;
-			lastMousePos.y = currentMousePos.y;
-		}
-		else if (currentMousePos.x >= windowWidth - 1) {
-			SDL_WarpMouseInWindow(Application->window->windowPtr(), 0, static_cast<int>(currentMousePos.y));
-			lastMousePos.x = 0;
-			lastMousePos.y = currentMousePos.y;
-		}
-		else if (currentMousePos.y <= 0) {
-			SDL_WarpMouseInWindow(Application->window->windowPtr(), static_cast<int>(currentMousePos.x), windowHeight - 1);
-			lastMousePos.x = currentMousePos.x;
-			lastMousePos.y = windowHeight - 1;
-		}
-		else if (currentMousePos.y >= windowHeight - 1) {
-			SDL_WarpMouseInWindow(Application->window->windowPtr(), static_cast<int>(currentMousePos.x), 0);
-			lastMousePos.x = currentMousePos.x;
-			lastMousePos.y = 0;
+			// Calcular delta del ratón antes de envolver
+			glm::dvec2 mouseDelta = currentMousePos - lastMousePos;
+
+			if (currentMousePos.x <= 0) {
+				SDL_WarpMouseInWindow(Application->window->windowPtr(), windowWidth - 1, static_cast<int>(currentMousePos.y));
+				lastMousePos.x = windowWidth - 1;
+				lastMousePos.y = currentMousePos.y;
+			}
+			else if (currentMousePos.x >= windowWidth - 1) {
+				SDL_WarpMouseInWindow(Application->window->windowPtr(), 0, static_cast<int>(currentMousePos.y));
+				lastMousePos.x = 0;
+				lastMousePos.y = currentMousePos.y;
+			}
+			else if (currentMousePos.y <= 0) {
+				SDL_WarpMouseInWindow(Application->window->windowPtr(), static_cast<int>(currentMousePos.x), windowHeight - 1);
+				lastMousePos.x = currentMousePos.x;
+				lastMousePos.y = windowHeight - 1;
+			}
+			else if (currentMousePos.y >= windowHeight - 1) {
+				SDL_WarpMouseInWindow(Application->window->windowPtr(), static_cast<int>(currentMousePos.x), 0);
+				lastMousePos.x = currentMousePos.x;
+				lastMousePos.y = 0;
+			}
+
+
+			// Calcular delta del ratón después de ajustar lastMousePos
+			glm::dvec2 delta = currentMousePos - lastMousePos;
+	
 		}
 
 
-		// Calcular delta del ratón después de ajustar lastMousePos
-		glm::dvec2 delta = currentMousePos - lastMousePos;
+		glm::dvec2 mousePos = glm::dvec2(Application->input->GetMouseX(), Application->input->GetMouseY());
+		glm::dvec2 delta = mousePos - lastMousePos;
+		lastMousePos = mousePos;
+
+		yaw += delta.x * sensitivity * deltaTime;
+		pitch -= delta.y * sensitivity * deltaTime;
+		if (pitch > MAX_PITCH) pitch = MAX_PITCH;
+		if (pitch < -MAX_PITCH) pitch = -MAX_PITCH;
+
 		transform.Rotate(glm::radians(-delta.x * sensitivity * deltaTime), glm::vec3(0, 1, 0));
 		transform.Rotate(glm::radians(delta.y * sensitivity * deltaTime), glm::vec3(1, 0, 0));
 		transform.AlignToGlobalUp();

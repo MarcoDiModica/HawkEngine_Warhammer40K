@@ -38,7 +38,7 @@ private:
 
 	void move_camera(float speed, float deltaTime);
 	void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
-
+	bool infiniteMouse = false;
 	float cameraSpeed = 5.0f;
 	float zoomSpeed = 5.0f;
 	double sensitivity = 5.0f;

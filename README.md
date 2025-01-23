@@ -17,19 +17,19 @@ Marc improved the water shader fixed all the problems with merging the main and 
 
 [Salvador Bernades Iglesias](https://github.com/SalvaBernades)
 
-<img src="https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/Shaders/Salvapfp.jpeg?raw=true"  width="125" height="125">
+<img src="https://github.com/user-attachments/assets/8a6c54bf-d038-4427-9174-2e66982bf848"  width="125" height="125">
 
 Salva made Save Shaders with an array & change GO shaders and helped Joan with integration in the inspector
 
 [Joan Marques Besses](https://github.com/joanmarquesbesses)
 
-<img src="https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/Shaders/Joanpfp.jpeg?raw=true"  width="125" height="125">
+<img src="https://github.com/user-attachments/assets/9b90a359-e898-46ce-9296-c30f7f5cd664"  width="125" height="125">
 
 Joan made the shader template, implementation to the inspector and the shader component
 
 [Justo Jose Tiscornia Sierra](https://github.com/Jusstox)
 
-<img src="https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/Shaders/Jujopfp.jpeg?raw=true" width="125" height="125">
+<img src="https://github.com/user-attachments/assets/7dc35c0a-f959-430d-ae43-226ec5788871" width="125" height="125">
 
 Justo Made the library linking, default shader integration and organizated the readME 
 
@@ -50,4 +50,4 @@ with closed source software. Check our LICENSE* for further details.
 
 [Shader Video!](https://youtu.be/j0p4dMhfLWY)
 
-![gifa](https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/Shaders/Shader%20gif.gif?raw=true)
+![gifa](https://github.com/user-attachments/assets/43ec0552-ac5d-489c-a151-82ceea3b8657)

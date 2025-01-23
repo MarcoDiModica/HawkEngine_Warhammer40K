@@ -109,7 +109,6 @@
     <ClCompile Include="UIAudioTest.cpp" />
     <ClCompile Include="UICamera.cpp" />
     <ClCompile Include="UIConsole.cpp" />
-    <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIHierarchy.cpp" />
     <ClCompile Include="UIInspector.cpp" />
     <ClCompile Include="UIMainMenuBar.cpp" />

@@ -9,7 +9,8 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 ![yiwei photo](https://github.com/user-attachments/assets/cb78a926-4833-4bdc-945c-2d891b20f55f)
 
--
+-Main Designer and Programmer for this AudioEngine, implemented Base OpenAL integration, Music and sound effect playing, SoundComponent, AudioListener, and AudioAsset Processer and its adjacent things.
+
 
 [Biel Liñán](https://github.com/Drauguer)
 
@@ -54,7 +55,7 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 ## AUDIO CONTROLS ##
 
 - Click add component on a gameobject to add audio source or audio listener
-- Drag your audio file to the desired gameobject inside the inspector
+- Drag your audio file to the path on a Sound Component in the desired gameobject inside the inspector
 
 
 ## FEATURES ##
@@ -79,14 +80,34 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 ## AUDIO FEATURES ##
 
-- Audio test window
+### Audio test window ###
+- Test Varaious Core AudioEngine Features, like Play Muisc/Sound clip, stop, pause/resume, Loop, print Device info,  volume control,
+  Customized Effect Position and Audio Listener Position
+  
+### SoundComponent ###
+- Plays Music/Effect sounds
+- Stop and Pause/resume
+- Supports Spatial Audio (toggle)
+- Individual Volume setting field
+- Loop toggle
+- AutoPlay toggle
+- Can be attached to GameObjects
 
-## AUDIO ISSUES ##
+### Audio Listener ###
+- Can be Attacheched to any GameObejct (usually a Camera)
+- the AudioListener component represents the "ears" of the 3D audio system. It updates the audio engine with the position of the listener in 3D space.
+- Only one AudioListener should be active at a time
+
+## AUDIO KNOWN ISSUES##
+
+### Spatial Audio ###
+- No orientation/rotation support yet
+- Due to Unsolved reason we can see the Spatial Audio related system working however we can not hear the 3D sounds in effects.
 
 ## LICENSES ##
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 
-with closed source software. Check our LICENSE* for further details.
+with closed-source software. Check our LICENSE* for further details.
 
 
 ## VIDEOS & GIFS

@@ -9,6 +9,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
+#include "MyUIEngine/CanvasComponent.h"
 #include "App.h"
 #include "Input.h"
 
@@ -222,6 +223,12 @@ std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
 	auto light = CreateGameObject(name);
 	light->AddComponent<LightComponent>();
 	return light;
+}
+
+std::shared_ptr<GameObject> Root::CreateCanvasObject(const std::string& name) {
+    auto canva = CreateGameObject(name);
+    canva->AddComponent<CanvasComponent>();
+    return canva;
 }
 
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)

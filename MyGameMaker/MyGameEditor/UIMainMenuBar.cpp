@@ -75,6 +75,7 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
 			if (ImGui::MenuItem("Camera")) { Application->root->CreateCameraObject("Camera"); }
 			if (ImGui::MenuItem("Light")) { Application->root->CreateLightObject("Light"); }
+			if (ImGui::MenuItem("Canvas")) { Application->root->CreateCanvasObject("Canvas"); }
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("View"))

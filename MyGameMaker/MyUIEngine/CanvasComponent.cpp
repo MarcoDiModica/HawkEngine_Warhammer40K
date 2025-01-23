@@ -3,7 +3,7 @@
 #include <algorithm>
 
 CanvasComponent::CanvasComponent(GameObject* owner) : Component(owner) {
-    // Initialization code here
+   
 }
 
 CanvasComponent::~CanvasComponent() {

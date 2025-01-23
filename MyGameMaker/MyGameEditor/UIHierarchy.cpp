@@ -42,6 +42,7 @@ bool UIHierarchy::Draw() {
 			if (ImGui::MenuItem("Sphere")) { Application->root->CreateSphere("Sphere"); }
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
 			if (ImGui::MenuItem("Empty GameObject")) { Application->root->CreateGameObject("Empty"); }
+			if (ImGui::MenuItem("Canvas")) { Application->root->CreateGameObject("Canvas"); }
 			ImGui::EndPopup();
 		}
 

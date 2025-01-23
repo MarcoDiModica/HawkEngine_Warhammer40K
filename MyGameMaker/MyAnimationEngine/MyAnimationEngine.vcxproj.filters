@@ -18,6 +18,9 @@
     <ClInclude Include="SkeletalAnimationComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SkeletalShaders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SkeletalAnimationComponent.cpp">

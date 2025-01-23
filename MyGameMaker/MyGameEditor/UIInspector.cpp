@@ -17,6 +17,8 @@
 
 #include "..\MyScriptingEngine\ScriptComponent.h"
 
+#include "..\MyAnimationEngine\SkeletalAnimationComponent.h"
+
 #include <string>
 
 #include <imgui.h>
@@ -103,6 +105,10 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
 				selectedGameObject->AddComponent<LightComponent>();
 			}
+
+            if (!selectedGameObject->HasComponent<SkeletalAnimationComponent>() && ImGui::MenuItem("SkeletalAnimation")) {
+                selectedGameObject->AddComponent<SkeletalAnimationComponent>();
+            }
 
             // More components here
 
@@ -567,7 +573,32 @@ bool UIInspector::Draw() {
                     LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
                 }
             }
+        }
 
+        ImGui::Separator();
+
+        if (selectedGameObject->HasComponent<SkeletalAnimationComponent>())
+        {
+            SkeletalAnimationComponent* skeletalAnimationComponent = selectedGameObject->GetComponent<SkeletalAnimationComponent>();
+
+            if (skeletalAnimationComponent)
+            {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+
+                if (ImGui::CollapsingHeader("Skeletal Animation"))
+                {
+                    std::shared_ptr<aiMesh> mesh = skeletalAnimationComponent->GetMesh();
+                    std::shared_ptr<Bone> skeleton = skeletalAnimationComponent->GetSkeleton();
+                    std::shared_ptr<Animation> animation = skeletalAnimationComponent->GetAnimation();
+                    std::vector<Vertex> verticesOutput;
+                    std::vector<uint32_t> indicesOutput;
+                    std::vector<Bone> skeletonOutput;
+                    uint32_t boneCount = 0;
+                    //skeletalAnimationComponent->LoadModel();
+                    //skeletalAnimationComponent->LoadAnimation();
+                    //skeletalAnimationComponent->GetPose();
+                }
+            }
         }
     }
 

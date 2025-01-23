@@ -73,6 +73,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="SkeletalAnimationComponent.h" />
+    <ClInclude Include="SkeletalShaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SkeletalAnimationComponent.cpp" />

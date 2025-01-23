@@ -50,6 +50,16 @@ void MakeSmokerEmmiter() {
 	particlesEmmiterComponent->SetTexture(texturePath);
 }
 
+void MakeSmokerEmiter2() {
+    auto particlesEmitter = Application->root->CreateGameObject("ParticlesEmitter1");
+    auto transform = particlesEmitter->GetTransform();
+    std::string texturePath = "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png";
+    transform->SetPosition(transform->GetPosition() + glm::dvec3(-10, 0, -16)); // Ejemplo de movimiento en el eje X
+    transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotación en el eje Y
+    ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
+    particlesEmmiterComponent->SetTexture(texturePath);
+}
+
 std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, const std::string& texturePath) {
     auto particleEmitter = Application->root->CreateGameObject("ParticleEmitter");
     auto transform = particleEmitter->GetTransform();
@@ -90,7 +100,7 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     MakeCity();
 	MakeSmokerEmmiter();
-
+	MakeSmokerEmiter2();
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");*/
 

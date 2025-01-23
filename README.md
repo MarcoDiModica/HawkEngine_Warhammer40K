@@ -5,13 +5,11 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 ## OUR MEMBERS ##
 
-[Marco Baldán](https://github.com/Marco-v-BaldanII)
+[David Lastra](https://github.com/DavidLastra8)
 
-[Marco di Modica](https://github.com/MarcoDiModica)
+[Daniel Berrio](https://github.com/Onnda)
 
-[Jordi Tur](https://github.com/Jordopol) 
-
-[Pau Mora](https://github.com/Peluchomp)
+[Oliver Santos](https://github.com/Esnaiper) 
 
 # CONTROLS #
 
@@ -65,7 +63,27 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - Octree (work in progress - implemented but not functional)
 
+## PARTICLE CONTROL ##
+
+- Press 1 to spawn a firework in a random place on the scene
+
+- You can add a Particle Component through the inspector to any GameObject that doesn't have one
+
+- You can change values of the particles through the inspector
+
+- You can save and load a custom file format for the particle
+
+## PARTICLE ISSUES ##
+
+- The billboard doesn't work
+
+- The firework emitter doesn't get destroyed after the firework explodes
+
 ## LICENSES ##
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 
 with closed source software. Check our LICENSE* for further details.
+
+## VIDEO AND GIFS ##
+
+

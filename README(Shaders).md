@@ -1,17 +1,22 @@
 
 # 🦅 HawkEngine 🦅 #
 
-Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
+Branch created from the second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
+
+Made in the Videogame Engines the 3rd assignment
 
 ## OUR MEMBERS ##
 
-[Marco Baldán](https://github.com/Marco-v-BaldanII)
+This Shader Sub-system has been worked on by 
 
-[Marco di Modica](https://github.com/MarcoDiModica)
+[Marc Avante Caballe](https://github.com/MarcoXAvante)
 
-[Jordi Tur](https://github.com/Jordopol) 
+[Salvador Bernades Iglesias](https://github.com/SalvaBernades)
 
-[Pau Mora](https://github.com/Peluchomp)
+[Joan Marques Besses](https://github.com/joanmarquesbesses)
+
+[Justo Jose Tiscornia Sierra](https://github.com/Jusstox)
+
 
 # CONTROLS #
 
@@ -47,23 +52,7 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 ## FEATURES ##
 
-- New revamped dockable UI look
-
-- Scene and Camera serialization
-
-- Asset/Library folder to visualise custom file formats
-
-- Model Importer (problems in texture coordinates)
-
-- Parenting and object creation within hierarchy and menu bar
-
-- GameObject components: Camera, Light, MeshRenderer, Transform
-
-- BoundinBoxes, MousePicking, Frustum Culling
-
-- Shader Module (work in progress - almost finished)
-
-- Octree (work in progress - implemented but not functional)
+This branch Includes a new test of a water shader with foam
 
 ## LICENSES ##
 

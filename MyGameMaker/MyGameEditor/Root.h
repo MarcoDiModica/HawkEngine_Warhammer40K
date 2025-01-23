@@ -46,6 +46,7 @@ public:
     std::shared_ptr<GameObject> CreateGameObject(const std::string& name);
     std::shared_ptr<GameObject> CreateCube(const std::string& name);
     std::shared_ptr<GameObject> CreateSphere(const std::string& name);
+    std::shared_ptr<GameObject> CreateCylinder(const std::string& name);
     std::shared_ptr<GameObject> CreatePlane(const std::string& name);
     std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
     std::shared_ptr<GameObject> CreateCameraObject(const std::string& name);

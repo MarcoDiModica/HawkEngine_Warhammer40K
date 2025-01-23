@@ -40,6 +40,8 @@
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "./MyScriptingEngine/MonoManager.h"
+#include "./MyPhysicsEngine/PhysicsModule.h"
+
 
 #include "MyGameEngine/LightComponent.h"
 #include "MyGameEngine/Shaders.h"
@@ -361,6 +363,7 @@ static void display_func() {
 		}
 	}
 
+	Application->physicsModule->Update(Application->GetDt());
 	MousePickingCheck(objects);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -403,6 +406,9 @@ int main(int argc, char** argv) {
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;
+
+	Application->physicsModule->Awake();
+	Application->physicsModule->Start();
 
 	while (state != EXIT) 
 	{

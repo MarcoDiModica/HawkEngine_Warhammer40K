@@ -1,4 +1,4 @@
-Third version of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
+Third version of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine) branch UserInterface
 
 ## OUR MEMBERS ##
 

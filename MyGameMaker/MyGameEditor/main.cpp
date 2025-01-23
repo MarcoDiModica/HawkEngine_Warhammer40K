@@ -407,9 +407,6 @@ int main(int argc, char** argv) {
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;
 
-	Application->physicsModule->Awake();
-	Application->physicsModule->Start();
-
 	while (state != EXIT) 
 	{
 		switch (state)
@@ -419,6 +416,8 @@ int main(int argc, char** argv) {
 
 			// The application is created
 			Application = new App();
+			Application->physicsModule->Awake();
+			Application->physicsModule->Start();
 			// MonoEnvironment* mono = new MonoEnvironment();
 			//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
 			MonoManager::GetInstance().Initialize();

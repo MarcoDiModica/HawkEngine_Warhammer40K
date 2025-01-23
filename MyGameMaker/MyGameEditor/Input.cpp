@@ -13,12 +13,10 @@
 #include "../MyGameEngine/ModelImporter.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyAudioEngine/AudioAssetProcessor.h"
-#include "../MyGameEngine/GameObject.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
 #include <filesystem>
-#include <algorithm>
 
 
 #define MAX_KEYS 300
@@ -185,7 +183,7 @@ bool Input::processSDLEvents()
                     Application->root->RemoveGameObject(selectedObject);
                     i++;
                 }
-                InputManagement->selectedObjects.clear(); // Limpiar la selección después de borrar los objetos
+                InputManagement->selectedObjects.clear(); // Limpiar la selecci�n despu�s de borrar los objetos
                 break;
             }
 
@@ -254,78 +252,128 @@ void Input::HandleFileDrop(const std::string& fileDir)
 {
     std::string fileNameExt = fileDir.substr(fileDir.find_last_of("\\/") + 1);
     std::string fileExt = fileDir.substr(fileDir.find_last_of('.') + 1);
-    std::transform(fileExt.begin(), fileExt.end(), fileExt.begin(), ::tolower);
 
-    // First copy to Assets folder
-    fs::path assetsPath = fs::path(ASSETS_PATH);
-    fs::path targetPath = assetsPath / fileNameExt;
+    fs::path targetPath = fs::path(ASSETS_PATH) / fileNameExt;
 
-    // Create type-specific subdirectories in Assets and Library
-    fs::path libraryPath = fs::path("Library");
-    fs::path assetSubDir;
-    fs::path librarySubDir;
+    if (fileExt == "fbx" || fileExt == "FBX") {
+        LOG(LogType::LOG_ASSIMP, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
 
-    if (fileExt == "fbx" || fileExt == "obj") {
-        assetSubDir = assetsPath / "Meshes";
-        librarySubDir = libraryPath / "Meshes";
-        targetPath = assetSubDir / fileNameExt;
-        LOG(LogType::LOG_ASSIMP, "Importing Mesh: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+ /*       std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+        mesh->LoadMesh(CopyFBXFileToProject(fileDir).c_str());
+
+        auto go = Application->root->CreateGameObject(fileNameExt);
+        Application->root->AddMeshRenderer(*go, mesh, "Assets/default.png");
+*/
+
+
+        // TODO , only save to filesystem if file doesnt exist 
+
+        //new
+        auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
+        MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+
+        ModelImporter meshImp;
+        meshImp.loadFromFile((CopyFBXFileToProject(fileDir).c_str()));
+
+        for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
+            auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
+
+            auto go = Application->root->CreateGameObject("GameObject");
+            auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
+          
+            Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
+            go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
+            go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+
+
+            Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        }
+
     }
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {
-        assetSubDir = assetsPath / "Textures";
-        librarySubDir = libraryPath / "Textures";
-        targetPath = assetSubDir / fileNameExt;
-        LOG(LogType::LOG_INFO, "Importing Texture: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+        LOG(LogType::LOG_INFO, "Loading Texture: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+
+        if (InputManagement->draggedObject != nullptr) {
+            auto meshRenderer = InputManagement->draggedObject->GetComponent<MeshRenderer>();
+
+            InputManagement->draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(fileDir);
+            //draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->setImage();
+            //meshRenderer->SetMaterial(material);
+        }
     }
     else if (fileExt == "wav" || fileExt == "ogg" || fileExt == "mp3") {
-        assetSubDir = assetsPath / "Audio";
-        librarySubDir = libraryPath / "Audio";
-        targetPath = assetSubDir / fileNameExt;
         LOG(LogType::LOG_INFO, "Importing Audio: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
-    }
+        
+        // Create Audio directory if it doesn't exist
+        fs::path audioDir = fs::path(ASSETS_PATH) / "Audio";
+        if (!fs::exists(audioDir)) {
+            fs::create_directories(audioDir);
+        }
+        
+        // Update target path to Audio subdirectory
+        targetPath = audioDir / fileNameExt;
 
-    // Create directories if they don't exist
-    if (!assetSubDir.empty()) {
-        fs::create_directories(assetSubDir);
-        fs::create_directories(librarySubDir);
+        // Process the audio file for Library
+        fs::path libraryPath = fs::path("Library/Audio") / fileNameExt;
+        if (!fs::exists(libraryPath.parent_path())) {
+            fs::create_directories(libraryPath.parent_path());
+        }
+
+        // First copy to Assets
+        try {
+            if (!fs::exists(targetPath) || fs::file_size(fileDir) != fs::file_size(targetPath)) {
+                fs::copy(fileDir, targetPath, fs::copy_options::overwrite_existing);
+                LOG(LogType::LOG_OK, "Audio file copied to Assets: %s", targetPath.string().c_str());
+            }
+
+            // Then process to Library
+            MyGameEngine::AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
+            LOG(LogType::LOG_OK, "Audio file processed to Library: %s", libraryPath.string().c_str());
+        }
+        catch (const std::exception& e) {
+            LOG(LogType::LOG_ERROR, "Error processing audio file: %s", e.what());
+        }
+        
+        if (InputManagement->draggedObject != nullptr) {
+            auto soundComponent = InputManagement->draggedObject->GetComponent<SoundComponent>();
+            if (soundComponent) {
+                soundComponent->LoadAudio(targetPath.string());
+            }
+        }
+    }
+    else if (fileExt == "image") {
+        if (InputManagement->draggedObject != nullptr) {
+            auto meshRenderer = InputManagement->draggedObject->GetComponent<MeshRenderer>();
+            auto image = std::make_shared<Image>();
+            auto material = std::make_shared<Material>();
+
+            image->LoadBinary(fileDir);
+            material->setImage(image);
+            meshRenderer->SetMaterial(material);
+        }
+    }
+    else if (fileExt == "scene")
+    {
+        LOG(LogType::LOG_INFO, "Loading Scene File: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+    }
+    else if (fileExt == "mesh")
+    {
+        LOG(LogType::LOG_INFO, "Detected Custom Mesh: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
     }
 
     try {
-        // Copy to Assets folder
         if (!fs::exists(targetPath) || fs::file_size(fileDir) != fs::file_size(targetPath)) {
             fs::copy(fileDir, targetPath, fs::copy_options::overwrite_existing);
-            LOG(LogType::LOG_OK, "File copied to Assets: %s", targetPath.string().c_str());
+            LOG(LogType::LOG_OK, "File copied to: %s", targetPath.string().c_str());
         }
-
-        // Process the file based on type
-        if (fileExt == "wav" || fileExt == "ogg" || fileExt == "mp3") {
-            fs::path libraryFilePath = librarySubDir / fileNameExt;
-            if (!MyGameEngine::AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryFilePath.string())) {
-                LOG(LogType::LOG_ERROR, "Failed to process audio file: %s", fileNameExt.c_str());
-            }
-        }
-        // Add processing for other asset types here (textures, meshes, etc.)
-
-        // Handle component-specific loading
-        if (InputManagement->draggedObject != nullptr) {
-            if ((fileExt == "wav" || fileExt == "ogg" || fileExt == "mp3") && 
-                InputManagement->draggedObject->HasComponent<SoundComponent>()) {
-                auto soundComponent = InputManagement->draggedObject->GetComponent<SoundComponent>();
-                soundComponent->LoadAudio(fileDir);
-            }
-            else if ((fileExt == "png" || fileExt == "jpg" || fileExt == "jpeg") && 
-                     InputManagement->draggedObject->HasComponent<MeshRenderer>()) {
-                auto meshRenderer = InputManagement->draggedObject->GetComponent<MeshRenderer>();
-                auto material = meshRenderer->GetMaterial();
-                if (material && material->getImg()) {
-                    material->getImg()->LoadTexture(fileDir);
-                }
-            }
+        else {
+            LOG(LogType::LOG_INFO, "File already exists: %s", targetPath.string().c_str());
         }
     }
     catch (const std::exception& e) {
-        LOG(LogType::LOG_ERROR, "Failed to process file: %s - %s", fileNameExt.c_str(), e.what());
+        LOG(LogType::LOG_ERROR, "Failed to copy file: %s - %s", fileNameExt.c_str(), e.what());
     }
+    // L�gica por si la file ya existe
 }
 
 glm::vec3 Input::getMousePickRay()

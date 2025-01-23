@@ -1,17 +1,16 @@
 
-# 🦅 HawkEngine 🦅 #
+# 🦅 HawkEngine - Audio Branch 🦅 #
 
 Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
 
-## OUR MEMBERS ##
+## MEMBERS ##
 
-[Marco Baldán](https://github.com/Marco-v-BaldanII)
+[Yiwei Ye](https://github.com/Yeeway69)
+![yiwei photo](https://github.com/user-attachments/assets/cb78a926-4833-4bdc-945c-2d891b20f55f)
 
-[Marco di Modica](https://github.com/MarcoDiModica)
+[Biel Liñán](https://github.com/Drauguer)
+![yo](https://github.com/user-attachments/assets/df393c8e-9272-418f-ab1c-b5d963bd7647)
 
-[Jordi Tur](https://github.com/Jordopol) 
-
-[Pau Mora](https://github.com/Peluchomp)
 
 # CONTROLS #
 
@@ -45,6 +44,13 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - To save a scene, File->Save Scene; To create a scene, File->New Scene; To load a scene, right click the scene in the library and load
 
+  
+## AUDIO CONTROLS ##
+
+- Click add component on a gameobject to add audio source or audio listener
+- Drag your audio file to the desired gameobject inside the inspector
+
+
 ## FEATURES ##
 
 - New revamped dockable UI look
@@ -65,7 +71,16 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - Octree (work in progress - implemented but not functional)
 
+## AUDIO FEATURES ##
+
+- Audio test window
+
+## AUDIO ISSUES##
+
 ## LICENSES ##
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 
 with closed source software. Check our LICENSE* for further details.
+
+
+## VIDEOS & GIFS

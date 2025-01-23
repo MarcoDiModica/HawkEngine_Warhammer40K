@@ -5,10 +5,5 @@
   </Target>
 
   <Import Project="$(MSBuildThisFileDirectory)vcpkg\scripts\buildsystems\msbuild\vcpkg.targets" />
-
-  <Target Name="DeployMono" BeforeTargets="ClCompile" >
-    <Message Text="Deploying mono..." Importance="high" />
-    <Copy SourceFiles="$(SolutionDir)External\Mono\bin\mono-2.0-sgen.dll" DestinationFolder="$(TargetDir)" />
-  </Target>
   
 </Project>

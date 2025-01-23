@@ -38,22 +38,11 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
-#include "./MyScriptingEngine/MonoManager.h"
 
 #include "MyGameEngine/LightComponent.h"
 #include "MyGameEngine/Shaders.h"
 #include "MyGameEngine/Material.h"
-#include "MyGameEngine/SceneManager.h"
-#include "MyGameEngine/InputEngine.h"
 #include "App.h"
-
-//#include <mono/metadata/assembly.h>
-//#include <mono/jit/jit.h>
-
-//#include "../MyScriptingEngine/MonoEnvironment.h"
-
-
-//TODO BALDAN : xcopy mono / place manually in x64/Debug folder
 
 using namespace std;
 
@@ -89,8 +78,6 @@ static EditorCamera* camera = nullptr;
 Shaders mainShader;
 
 App* Application = NULL;
-SceneManager* SceneManagement = NULL;
-InputEngine* InputManagement = NULL;
 
 static void init_openGL() {
 	glewInit();
@@ -110,7 +97,7 @@ static void drawFloorGrid(int size, double step) {
 	//glColor3ub(0, 2, 200);
 
 	glBegin(GL_LINES);
-	// CHANGE Application->root->currentScene->DebugDrawTree();
+	Application->root->currentScene->DebugDrawTree();
 
 	for (double i = -size; i <= size; i += step) {
 		glVertex3d(i, 0, -size);
@@ -238,54 +225,33 @@ void UndoRedo()
 		Redo();
 	}
 
-}
+	if (object->HasComponent<MeshRenderer>()) {
 
+		BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
 
-#pragma endregion
+		bbox = object->GetTransform()->GetMatrix() * bbox;
 
+		//if (!isInsideFrustum(bbox, { camera->frustum._near, camera->frustum._far,
+		//						camera->frustum.left, camera->frustum.right,
+		//						camera->frustum.top, camera->frustum.bot })) {
+		//	//return; // Aqu� omitimos el objeto si no est� en el frustum
+		//}
 
-void MousePickingCheck(std::vector<GameObject*> objects)
-{	
-	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
-	glm::vec3 rayDirection = Application->input->getMousePickRay();
-	GameObject* selectedObject = nullptr;
-	bool selecting = false;
-	float distance = 0.0f;
-	float closestDistance = 0.0f;
-	if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused) 
-	{
+		if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
+		{
+			Application->input->SetDraggedGameObject(object);
+		}
 
 		if (ImGuizmo::IsOver()) {
-			return;
+			return; 
 		}
 
-		selecting = true;
-		for (int i = 0; i < objects.size(); i++)
-		{
-			if (objects[i]->HasComponent<MeshRenderer>()) 
+		if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused )
+			if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox))
 			{
-				BoundingBox bbox = objects[i]->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-
-				bbox = objects[i]->GetTransform()->GetMatrix() * bbox;
-				glm::vec3 collisionPoint;
-				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
-				{
-                    distance = glm::distance(rayOrigin, collisionPoint);
-					if (distance < closestDistance || closestDistance == 0.0f)
-					{
-						closestDistance = distance;
-						selectedObject = objects[i];
-					}
-				}
+				Application->input->ClearSelection();
+				Application->input->AddToSelection(object);
 			}
-		}
-	}
-
-	if (selectedObject != nullptr && selecting == true)
-	{
-		Application->input->ClearSelection();
-		Application->input->SetDraggedGameObject(selectedObject);
-		Application->input->AddToSelection(selectedObject);
 	}
 }
 
@@ -328,12 +294,10 @@ static void display_func() {
 
 	drawFloorGrid(128, 4);
 
-	std::vector<GameObject*> objects;
-
 	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo ma�ana
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
+	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
-		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+		GameObject* object = Application->root->currentScene->children()[i].get();
 
 		if (object->HasComponent<LightComponent>()) {
 			auto it = std::find(lights.begin(), lights.end(), object);
@@ -343,51 +307,34 @@ static void display_func() {
 		}
 	}
 
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
+	for (size_t i = 0; i < Application->root->currentScene->children().size(); ++i)
 	{
-		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+		GameObject* object = Application->root->currentScene->children()[i].get();
 		
 		objects.push_back(object);
 
 		RenderOutline(object);
 
-		object->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights,mainShader);
+		object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
 		
 		object->Update(static_cast<float>(Application->GetDt()));
 
-	
+		MousePickingCheck(object);
 		for (size_t j = 0; j < object->GetChildren().size(); ++j)
 		{
 			GameObject* child = object->GetChildren()[j].get();
 			objects.push_back(child);
 			RenderOutline(child);
-			child->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights, mainShader);
-		
+			child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
+			MousePickingCheck(child);
 		}
 	}
 
-	MousePickingCheck(objects);
-
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
-
-static void display_func2() {
-
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboCamera);
-
-	glViewport(0, 0, Application->window->width(), Application->window->height());
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	configureGameCamera();
-	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void EditorRenderer(MyGUI* gui) {
+// Move this code inside the core
+void PauCode2(MyGUI* gui) {
 
 	if (Application->window->IsOpen()) {
 
@@ -407,26 +354,7 @@ void EditorRenderer(MyGUI* gui) {
 int main(int argc, char** argv) {
 
 	MainState state = CREATE;
-
-	// The application is created
-	Application = new App();
-	//MonoEnvironment* mono = new MonoEnvironment();
-//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
-	MonoManager::GetInstance().Initialize();
-
-
-	//initialize devil
-	ilInit();
-	iluInit();
-	ilutInit();
-
-	init_openGL();
-
-	//if (mainShader.LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
-	//
-	//}
-
-	camera = Application->camera;
+	int result = EXIT_FAILURE;
 
 	while (state != EXIT) 
 	{
@@ -435,7 +363,19 @@ int main(int argc, char** argv) {
 
 		case CREATE:
 
-			/*Application = new App();*/
+	    // The application is created
+	    Application = new App();
+	    // MonoEnvironment* mono = new MonoEnvironment();
+      //	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
+	    MonoManager::GetInstance().Initialize();
+
+	    //initialize devil
+	    ilInit();
+	    iluInit();
+	    ilutInit();
+
+	    init_openGL();
+
 
 			if (Application) {	
 				state = AWAKE;
@@ -468,7 +408,6 @@ int main(int argc, char** argv) {
 
 		case LOOP:
 			
-
 			EditorRenderer(Application->gui);
 			UndoRedo();
 			if (!Application->Update()) {
@@ -489,35 +428,5 @@ int main(int argc, char** argv) {
 
 	MonoManager::GetInstance().Shutdown();
 
-
-
-	//initialize devil
-	//ilInit();
-	//iluInit();
-	//ilutInit();
-	//Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
-	//MyGUI gui(window.windowPtr(), window.contextPtr());
-
-	//init_openGL();
-	//camera.transform().pos() = vec3(0, 1, 4);
-	//camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
-
-	//
-
-	//mesh.LoadMesh("BakerHouse.fbx");
-	//mesh.LoadTexture("Baker_house.png");
-	//mesh.LoadCheckerTexture();
-
-	//while (window.processEvents(&gui) && window.isOpen()) {
-	//	const auto t0 = hrclock::now();
-	//display_func();
-	//	gui.render();
-	//	move_camera();
-	//	window.swapBuffers();
-	//	const auto t1 = hrclock::now();
-	//	const auto dt = t1 - t0;
-	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
-	//}
-
-	return 0;
+	return result;
 }

@@ -1,27 +1,5 @@
 #pragma once
-
-#include "../MyGameEngine/Component.h"
-#include <mono/metadata/object.h>
-
-class ScriptComponent : public Component
+class ScriptComponent
 {
-public:
-    ScriptComponent(GameObject* owner);
-    ~ScriptComponent() override;
-
-    void Start() override;
-    void Update(float deltaTime) override;
-    void Destroy() override {};
-    ComponentType GetType() const override { return ComponentType::SCRIPT; };
-
-    std::unique_ptr<Component> Clone(GameObject* new_owner) override { return std::make_unique<ScriptComponent>(new_owner); }
-
-    void SetMonoScript(MonoObject* script) { monoScript = script; }
-
-    bool LoadScript(const std::string& scriptName);
-    bool CreateNewScript(const std::string& scriptName, const std::string& baseScriptName);
-
-    MonoObject* monoScript = nullptr;
-
-    //int method();
 };
+

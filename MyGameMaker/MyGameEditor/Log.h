@@ -13,9 +13,7 @@ enum class LogType
 
 	LOG_OK,
 	LOG_WARNING,
-	LOG_ERROR,
-
-	LOG_C_SHARP
+	LOG_ERROR
 };
 
 struct LogInfo

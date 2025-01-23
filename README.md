@@ -119,6 +119,10 @@ Implemented Input and Camera class with all their functions
 
 ## GIFS ##
 
+![2025-01-23 21-28-22](https://github.com/user-attachments/assets/54af0e23-5aab-4898-b67d-9209790702b7)
+
+![2025-01-23 21-27-28](https://github.com/user-attachments/assets/854108ad-ce55-4fe8-a15a-e2accf9d0589)
+
 ## LICENSES ##
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 

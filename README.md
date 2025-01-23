@@ -3,6 +3,16 @@
 
 Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
 
+## Links ## 
+
+### AudioEngine Branch ### 
+
+https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/tree/AudioEngine
+
+### Release ###
+
+https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/releases/tag/v1.0.0_AudioEngine
+
 ## MEMBERS ##
 
 [Yiwei Ye](https://github.com/Yeeway69)

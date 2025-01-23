@@ -10,6 +10,7 @@
 #include "../MyGameEditor/Input.h"
 #include "../MyGameEngine/readOnlyView.h"
 #include "../MyGameEngine/SceneManager.h"
+#include "../MyGameEngine/Shaders.h"
 #include "SceneSerializer.h"
 #include <list>
 #include <vector>
@@ -70,6 +71,8 @@ public:
     std::shared_ptr<GameObject> mainCamera = nullptr;
 
     friend SceneSerializer;
+
+    std::vector<Shaders> shaders;
 
 private:
     std::vector<std::shared_ptr<Scene>> scenes;

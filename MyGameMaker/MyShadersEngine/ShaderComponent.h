@@ -6,8 +6,14 @@
 
 class ShaderComponent : public Component{
 public:
-    ShaderComponent(GameObject* owner);
-    ~ShaderComponent();
+    explicit ShaderComponent(GameObject* owner);
+    ~ShaderComponent() override = default;
+
+    void Start() override;
+    void Update(float deltaTime) override;
+    void Destroy() override;
+
+    std::unique_ptr<Component> Clone(GameObject* owner) override;
 
     void SetShader(Shaders* newShader);
     Shaders* GetShader() const;
@@ -17,6 +23,8 @@ public:
 
     void SetOwnerMaterial(Material* newOwnerMaterial);
     Material* GetOwnerMaterial() const;
+
+    ComponentType GetType() const override { return ComponentType::SHADER; }
 
 private:
     Shaders* shader;

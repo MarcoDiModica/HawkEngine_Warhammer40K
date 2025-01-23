@@ -1,12 +1,25 @@
 #include "ShaderComponent.h"
 
+#include "MyGameEditor/App.h"
+#include "MyGameEditor/Root.h"
 
-ShaderComponent::ShaderComponent(GameObject* owner) : Component(owner)
+ShaderComponent::ShaderComponent(GameObject* owner) : Component(owner) { name = "MeshRenderer"; }
+
+void ShaderComponent::Start()
 {
 }
 
-ShaderComponent::~ShaderComponent()
+void ShaderComponent::Update(float deltaTime)
 {
+}
+
+void ShaderComponent::Destroy()
+{
+}
+
+std::unique_ptr<Component> ShaderComponent::Clone(GameObject* owner)
+{
+	return std::unique_ptr<Component>();
 }
 
 void ShaderComponent::SetShader(Shaders* newShader)
@@ -21,7 +34,10 @@ Shaders* ShaderComponent::GetShader() const
 
 void ShaderComponent::SetShaderType(ShaderType newType)
 {
-	//shader = Application->root->shaders[newType];
+	shader = &Application->root->shaders[newType];
+	ownerMaterial->shader = *shader;
+	ownerMaterial->shaderType = newType;
+	ownerMaterial->useShader = true;
 	type = newType;
 }
 

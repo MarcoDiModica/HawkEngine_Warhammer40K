@@ -23,8 +23,6 @@ using namespace std;
 
 class GameObject;
 
-vector<Shaders> shaders;
-
 Root::Root(App* app) : Module(app) { ; }
 
 void MakeCity() {

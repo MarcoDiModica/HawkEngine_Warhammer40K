@@ -13,6 +13,7 @@
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyGameEditor/Log.h"
 #include "../MyAudioEngine/AudioListener.h"
+#include "../MyShadersEngine/ShaderComponent.h"
 
 
 bool SceneManager::Start() {
@@ -186,7 +187,10 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
     meshRenderer->SetMaterial(material);
     meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-    material->useShader = true;
+    auto shaderComponent = go.AddComponent<ShaderComponent>();
+	shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+	shaderComponent->SetShaderType(ShaderType::WATER);
+
     if (material->useShader) {
         if (!shaders.size() < 1) {
             material->SetShader(shaders[0]);

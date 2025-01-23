@@ -2,6 +2,9 @@
 
 Branch created from the Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/tree/PhysicsModule)
 
+Release link: https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/releases/tag/v1.0.0_Physics
+
+
 ## OUR MEMBERS ##
 
 [Samuel Martínez](https://github.com/Samu163) (aka Kepler)

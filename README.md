@@ -101,4 +101,8 @@ with closed source software. Check our LICENSE* for further details.
 
 ## VIDEO AND GIFS ##
 
+![Humo](https://github.com/user-attachments/assets/b6063668-26e4-4850-bc87-2c2420cfd1b5)
+
+![Firework](https://github.com/user-attachments/assets/fc7d7b31-29c7-4124-a8de-252268e777a8)
+
 

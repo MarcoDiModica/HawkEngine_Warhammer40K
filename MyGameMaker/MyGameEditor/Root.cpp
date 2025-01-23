@@ -12,6 +12,8 @@
 #include "MyUIEngine/CanvasComponent.h"
 #include "MyUIEngine/ImageComponent.h"
 #include "MyUIEngine/CheckBoxComponent.h"
+#include "MyUIEngine/InputBoxComponent.h"
+
 
 #include "App.h"
 #include "Input.h"
@@ -362,6 +364,7 @@ std::shared_ptr<GameObject> Root::CreateCheckBoxObject(const std::string& name) 
         meshRenderer->SetMaterial(material);
     }
     else {
+		
         std::cerr << "Error: MeshRenderer no encontrado en el plano visual de la checkbox." << std::endl;
     }
 
@@ -385,6 +388,35 @@ std::shared_ptr<GameObject> Root::CreateCheckBoxObject(const std::string& name) 
     return checkboxObject;
 }
 
+std::shared_ptr<GameObject> Root::CreateInputBoxObject(const std::string& name) {
+    auto planeObject = CreateGameObject(name);
+    planeObject->AddComponent<CanvasComponent>(); 
+
+    // Crear un plano vertical
+    auto verticalPlane = CreatePlane("VerticalPlane");
+    verticalPlane->GetTransform()->SetPosition(glm::dvec3(0, 3.5, -3.99)); 
+    verticalPlane->GetTransform()->SetScale(glm::dvec3(1.0, 1.0, 1.0)); 
+    verticalPlane->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+
+    // Asignar un material con la imagen al plano
+    auto meshRenderer = verticalPlane->GetComponent<MeshRenderer>();
+    if (meshRenderer) {
+        auto material = std::make_shared<Material>();
+        auto image = std::make_shared<Image>();
+        image->LoadTexture("Assets/InputBox.png"); 
+		material->setImage(image);
+        meshRenderer->SetMaterial(material);
+    }
+    else {
+		
+        std::cerr << "Error: MeshRenderer no encontrado en el plano vertical." << std::endl;
+    }
+
+    ParentGameObject(*verticalPlane, *planeObject);
+
+    // Additional setup for the plane object can be added here
+    return planeObject;
+}
 
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
 {

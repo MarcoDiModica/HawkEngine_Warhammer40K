@@ -2,25 +2,26 @@
 #define __INPUT_BOX_COMPONENT_H__
 #pragma once
 
+#include "MyGameEngine/Component.h"
 #include "MyGameEditor/UIElement.h"
-#include "MyGameEngine/Gameobject.h"
+#include "MyGameEngine/GameObject.h"
 #include "CanvasComponent.h"
-#include "UIComponent.h"
 #include <vector>
 #include <memory>
 #include <functional>
 #include <string>
 
-class InputBoxComponent : public UIComponent {
+class InputBoxComponent : public Component {
 public:
     InputBoxComponent(GameObject* owner);
     ~InputBoxComponent() override;
 
-    void Start() const override;
-    void Update(float deltaTime)const override;
-    void Destroy()const override;
+    void Start() override;
+    void Update(float deltaTime) override;
+    void Destroy() override;
+    std::unique_ptr<Component> Clone(GameObject* owner) override;
 
-    CanvasComponent::UIComponentType GetType() const override { return CanvasComponent::UIComponentType::INPUTBOX; }
+    ComponentType GetType() const override { return ComponentType::INPUTBOX; }
 
     void AddInputBox(std::shared_ptr<UIElement> inputBox);
     void RemoveInputBox(std::shared_ptr<UIElement> inputBox);

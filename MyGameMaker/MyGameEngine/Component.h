@@ -26,7 +26,8 @@ enum class ComponentType {
 	CANVAS,
 	BUTTON,
 	IMAGE,
-	CHECKBOX
+	CHECKBOX,
+	INPUTBOX
 };
 
 class Component

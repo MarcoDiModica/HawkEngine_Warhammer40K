@@ -79,6 +79,7 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Button")) { Application->root->CreateButtonObject("Button"); }
 			if (ImGui::MenuItem("Crosshair")) { Application->root->CreateImageObject("Crosshair"); }
 			if (ImGui::MenuItem("CheckBox")) { Application->root->CreateCheckBoxObject("CheckBox"); }
+			if (ImGui::MenuItem("InputBox")) { Application->root->CreateInputBoxObject("InputBox"); }
 
 			ImGui::EndMenu();
 		}

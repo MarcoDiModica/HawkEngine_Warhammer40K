@@ -14,6 +14,8 @@
 #include "..\MyGameEngine\Material.h"
 #include "..\MyGameEngine\LightComponent.h"
 #include "..\MyUIEngine\CanvasComponent.h"
+#include "..\MyUIEngine\InputBoxComponent.h"
+
 #include <string>
 
 #include <imgui.h>
@@ -102,6 +104,10 @@ bool UIInspector::Draw() {
             }
             if (!selectedGameObject->HasComponent<CanvasComponent>() && ImGui::MenuItem("Button")) {
                 selectedGameObject->AddComponent<CanvasComponent>();
+            }
+
+            if (!selectedGameObject->HasComponent<InputBoxComponent>() && ImGui::MenuItem("Input Box")) {
+                selectedGameObject->AddComponent<InputBoxComponent>();
             }
             // More components here
 

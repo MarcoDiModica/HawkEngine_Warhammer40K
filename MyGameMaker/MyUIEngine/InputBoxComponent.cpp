@@ -1,8 +1,7 @@
 #include "InputBoxComponent.h"
-
 #include <algorithm>
 
-InputBoxComponent::InputBoxComponent(GameObject* owner){
+InputBoxComponent::InputBoxComponent(GameObject* owner) : Component(owner) {
     // Initialization code here
 }
 
@@ -10,17 +9,17 @@ InputBoxComponent::~InputBoxComponent() {
     // Cleanup code here
 }
 
-void InputBoxComponent::Start()const {
+void InputBoxComponent::Start() {
     // Start code here
 }
 
-void InputBoxComponent::Update(float deltaTime)const {
+void InputBoxComponent::Update(float deltaTime) {
     for (const auto& inputBox : inputBoxes) {
         inputBox->Update(deltaTime);
     }
 }
 
-void InputBoxComponent::Destroy()const {
+void InputBoxComponent::Destroy() {
     // Destroy code here
 }
 
@@ -42,4 +41,11 @@ void InputBoxComponent::Render() {
 
 void InputBoxComponent::SetOnTextChanged(std::function<void(const std::string&)> onTextChanged) {
     this->onTextChanged = onTextChanged;
+}
+
+std::unique_ptr<Component> InputBoxComponent::Clone(GameObject* owner) {
+    auto clone = std::make_unique<InputBoxComponent>(owner);
+    clone->onTextChanged = onTextChanged;
+
+    return clone;
 }

@@ -231,8 +231,10 @@ std::shared_ptr<GameObject> Root::CreateCanvasObject(const std::string& name) {
 
     // Crear un plano vertical
     auto verticalPlane = CreatePlane("VerticalPlane");
-    verticalPlane->GetTransform()->SetPosition(glm::dvec3(0, 0, 0)); // Asegúrate de que la posición sea correcta
+    verticalPlane->GetTransform()->SetPosition(glm::dvec3(0, 3.5, -4)); // Asegúrate de que la posición sea correcta
+    verticalPlane->GetTransform()->SetScale(glm::dvec3(3.0, 3.5, 1.0)); // Cambia los valores según sea necesario
     verticalPlane->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+
     ParentGameObject(*verticalPlane, *canva);
 
     // Asegúrate de que el MeshRenderer tenga un material y una textura asignados

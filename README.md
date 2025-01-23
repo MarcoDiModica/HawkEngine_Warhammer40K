@@ -1,17 +1,17 @@
 
-# 🦅 HawkEngine 🦅 #
+# 🦅 HawkEngine - Skeletal Animation Branch🦅 #
 
 Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
 
 ## OUR MEMBERS ##
 
-[Marco Baldán](https://github.com/Marco-v-BaldanII)
+[Marc San José](https://github.com/marcsjm19)
 
-[Marco di Modica](https://github.com/MarcoDiModica)
+![MarcSanJoseFoto1](https://github.com/user-attachments/assets/42dca714-ed9e-470f-a54f-220053572e7e)
 
-[Jordi Tur](https://github.com/Jordopol) 
 
-[Pau Mora](https://github.com/Peluchomp)
+
+...
 
 # CONTROLS #
 
@@ -45,6 +45,12 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - To save a scene, File->Save Scene; To create a scene, File->New Scene; To load a scene, right click the scene in the library and load
 
+## SKELETAL ANIMATION CONTROLS ##
+
+- Click add component on a gameobject to add skeletal animation source in the inspector
+- It should open a window to control the skeleton of the .fbx (not working)
+
+
 ## FEATURES ##
 
 - New revamped dockable UI look
@@ -64,6 +70,18 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 - Shader Module (work in progress - almost finished)
 
 - Octree (work in progress - implemented but not functional)
+
+## SKELETAL ANIMATION FEATURES ##
+
+- Skeletal animation window should be displayed
+
+## SKELETAL ANIMATION ISSUES ##
+
+- Tried to achieve what it was required but it doesn't import correctly the GameObject or the animation
+
+- It gets laggy when pressing the Skeletal Animation Component when clicking Add Component in the inspector UI (code is commented in order to not affect the rest of the engine)
+
+- Needs to be modified to work as expected (we will keep working on it)
 
 ## LICENSES ##
 

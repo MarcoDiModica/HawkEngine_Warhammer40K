@@ -16,6 +16,7 @@
 #include <SDL2/SDL.h>
 
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -151,7 +152,11 @@ bool Root::Update(double dt) {
 
 
     if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-        glm::vec3 particlePosition = glm::vec3(-1.0f, 0.0f, 0.0f); // Puedes ajustar la posición según sea necesario
+        float randomX = static_cast<float>(rand() % 20 - 10); // Rango de -10 a 10
+        float randomY = 0.0f;
+        float randomZ = static_cast<float>(rand() % 20 - 10); // Rango de -10 a 10
+        glm::vec3 particlePosition = glm::vec3(randomX, randomY, randomZ);
+
         std::string texturePath = "../MyGameEditor/Assets/Textures/Esteladeluz.png"; // Reemplaza con la ruta de tu textura
         std::shared_ptr<GameObject> particleEmitter = CreateParticleEmitter(particlePosition, texturePath);
 

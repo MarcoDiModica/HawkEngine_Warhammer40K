@@ -69,6 +69,9 @@ void Particle::Draw() {
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, textureID);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glBegin(GL_QUADS);
     // Especificar las coordenadas de textura y las cuatro esquinas del plano
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-0.5f, -0.5f, 0.0f); // Esquina inferior izquierda
@@ -77,6 +80,7 @@ void Particle::Draw() {
     glTexCoord2f(0.0f, 1.0f);  glVertex3f(-0.5f, 0.5f, 0.0f);  // Esquina superior izquierda
     glEnd();
 
+    glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
 
     glPopMatrix();

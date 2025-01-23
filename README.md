@@ -83,6 +83,10 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - Needs to be modified to work as expected (we will keep working on it)
 
+## LINK TO THE REPOSITORY BRANCH ##
+
+[HawkEngine - Skeletal Animation Branch](https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/tree/Animation)
+
 ## LICENSES ##
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 

@@ -29,8 +29,8 @@ void ParticlesEmitterComponent::Start()
     }  
 }
 
-void ParticlesEmitterComponent::SetTexture(const std::string& texturePath) {
-    this->texturePath = texturePath;
+void ParticlesEmitterComponent::SetTexture(const std::string& newtexturePath) {
+    this->texturePath = newtexturePath;
     // Aquí puedes añadir lógica adicional para cargar la textura si es necesario
 }
 
@@ -56,10 +56,11 @@ void ParticlesEmitterComponent::EmitParticle(/*Particle* emmiterParticle*/) {
     newParticle->speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f)); // Velocidad inicial
     newParticle->lifetime = 10.0f; // Duración de la partícula en segundos
     newParticle->rotation = 0.0f; // Rotación inicial
+    newParticle->texture->LoadTexture(texturePath); // Cargar la textura
     newParticle->Start();
     particles.push_back(*newParticle);
-
-    std::cout << "Partícula generada" << std::endl;
+ 
+    std::cout << "Partícula generada" << std::endl;    
 }
 
 void ParticlesEmitterComponent::Update(float deltaTime) {
@@ -109,7 +110,7 @@ void ParticlesEmitterComponent::Destroy() {
         delete emitterParticle;
         emitterParticle = nullptr;
     }
-
+    
     particles.clear();
 }
 

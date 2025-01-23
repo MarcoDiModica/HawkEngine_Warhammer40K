@@ -27,7 +27,7 @@ private:
 	glm::dquat rotation;
 	glm::vec3 scale;
 	Particle* emitterParticle = nullptr;
-	int maxParticles = 100;
+	int maxParticles = 10;
     float deltaTime;
 	// Variables para el spawn de partículas
     float spawnRate = 1.0f; 

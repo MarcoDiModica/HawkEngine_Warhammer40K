@@ -54,7 +54,7 @@ void Particle::Draw() {
         return;
     }
 
-    texture->LoadTexture("../MyGameEditor/Assets/Textures/SmokeParticleTexture.png");
+    //texture->LoadTexture("../MyGameEditor/Assets/Textures/SmokeParticleTexture.png");
     textureID = texture->id();
 
     if (textureID == 0) {

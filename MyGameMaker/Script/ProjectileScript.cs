@@ -70,7 +70,6 @@ public class ProjectileScript : MonoBehaviour
             UpdateProjectile(deltaTime);
         }
 
-        Engineson.print($"Projectile move to {transform.position}");
     }
 
     private void FireProjectile()

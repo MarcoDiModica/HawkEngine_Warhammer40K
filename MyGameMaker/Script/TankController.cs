@@ -63,16 +63,18 @@ public class TankController : MonoBehaviour
 
     private void GenerateProjectile()
     {
-        projectile = Engineson.CreateGameObject("Projectile", null);
+        // This code is what it actually should look like. However, the functionalities either are not there or are not working properly.
+
+        //projectile = Engineson.CreateGameObject("Projectile", null);
         //projectile.AddComponent<ProjectileScript>(); esto da nullptr el ProjectileScript;
         //projectile.AddComponent<MeshRenderer>(); esto da error con los shaders
-        projTransform = projectile.GetComponent<Transform>();
+        //projTransform = projectile.GetComponent<Transform>();
 
-        projTransform.position = transform.position + transform.forward;
+        //projTransform.position = transform.position + transform.forward;
 
-        activeProjectiles.Add((projectile, projectileLifeTime));
+        //activeProjectiles.Add((projectile, projectileLifeTime));
 
-        //Engineson.Destroy(projectile); error de memoria
+        ////Engineson.Destroy(projectile); error de memoria
     }
 
     private void UpdateProjectiles(float deltaTime)

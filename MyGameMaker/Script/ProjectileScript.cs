@@ -14,5 +14,15 @@ public class ProjectileScript : MonoBehaviour
 {
     Transform transform;
 
+    public override void Start()
+    {
+        transform = GetComponent<Transform>();
+    }
+
+    public override void Update(float deltaTime)
+    {
+      
+    }
+
     // Delegar los métodos de TankController sobre los proyectiles
 }

@@ -80,16 +80,22 @@ bool Root::Start()
 
     auto BlobFish = CreateGameObject("Tank");
     auto blob = BlobFish->AddComponent<ScriptComponent>();
+
 	auto BlobFish2 = CreateGameObject("Turret");
 	auto blob2 = BlobFish2->AddComponent<ScriptComponent>();
+
+    auto BlobFish3 = CreateGameObject("SingleProjectile");
+	auto blob3 = BlobFish3->AddComponent<ScriptComponent>();
     
     AddMeshRenderer(*BlobFish, Mesh::CreateCube());
 	AddMeshRenderer(*BlobFish2, Mesh::CreateCube());
+    AddMeshRenderer(*BlobFish3, Mesh::CreateSphere());
 
     //auto blob2 = BlobFish->AddComponent<ScriptComponent>();
     blob->LoadScript("TestingComponent");
 	blob2->LoadScript("TankController");
-
+	blob3->LoadScript("ProjectileScript");
+    
 	ParentGameObject(*BlobFish2, *BlobFish);
     //blob2->LoadScript("TestingComponent");
     

@@ -103,6 +103,8 @@ Implemented Input and Camera class with all their functions
 
 - Added C# translations for GameObject, TransformComponent, MeshRendererComponent and CameraComponent.
 
+- Added a simple example to portray ScriptComponent functionalities.
+
 ## PROBLEMS TO SOLVE ##
 
 - Some core functionalities need to either be implemented or changed.
@@ -111,7 +113,9 @@ Implemented Input and Camera class with all their functions
 
 - Interactability via the editor is not finished.
 
-- Many improvements for user experienced should be performed.
+- Many improvements for user experience should be performed.
+
+- Scripts work always, including when not in play mode.
 
 ## GIFS ##
 

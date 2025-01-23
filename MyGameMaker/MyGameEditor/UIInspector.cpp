@@ -100,7 +100,9 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<CanvasComponent>() && ImGui::MenuItem("Canva")) {
                 selectedGameObject->AddComponent<CanvasComponent>();
             }
-
+            if (!selectedGameObject->HasComponent<CanvasComponent>() && ImGui::MenuItem("Button")) {
+                selectedGameObject->AddComponent<CanvasComponent>();
+            }
             // More components here
 
             ImGui::EndPopup();

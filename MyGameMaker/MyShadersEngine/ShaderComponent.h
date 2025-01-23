@@ -26,6 +26,9 @@ public:
 
     ComponentType GetType() const override { return ComponentType::SHADER; }
 
+	float frequency = 2.0f;
+    float amplitude = 0.2f;
+
 private:
     Shaders* shader;
     ShaderType type;

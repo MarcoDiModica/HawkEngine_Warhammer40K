@@ -16,6 +16,7 @@
 
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include <SDL2/SDL.h>
+#include "MyShadersEngine/ShaderComponent.h"
 
 #include <iostream>
 
@@ -121,16 +122,6 @@ bool Root::Update(double dt) {
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
 
     SceneManagement->Update(dt);
-    for (auto& child : Application->root->GetActiveScene()->children())
-    {
-        for (auto& childchild : child->GetChildren())
-        {
-            if (childchild->isSelected)
-            {
-                Application->root->ChangeShader(*childchild, ShaderType::WATER);
-            }
-        }
-    }
 
     //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
     //
@@ -209,8 +200,7 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
 
 void Root::ChangeShader(GameObject& go, ShaderType shader)
 {
-    go.GetComponent<MeshRenderer>()->GetMaterial()->shaderType = shader;
-    go.GetComponent<MeshRenderer>()->GetMaterial()->SetShader(shaders[shader]);
+	go.GetComponent<ShaderComponent>()->SetShaderType(shader);
 }
 
 void Root::CreateScene(const std::string& name)

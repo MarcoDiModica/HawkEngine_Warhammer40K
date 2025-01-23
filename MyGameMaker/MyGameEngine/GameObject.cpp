@@ -15,6 +15,7 @@
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/object.h>
+#include "MyShadersEngine/ShaderComponent.h"
 
 unsigned int GameObject::nextGid = 1;
 
@@ -219,8 +220,8 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.intensity", 3.0f);
 
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Time", timeActive);
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Amplitude", 0.2f);
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Frequency", 2.0f);
+        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Amplitude", GetComponent<ShaderComponent>()->amplitude);
+        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Frequency", GetComponent<ShaderComponent>()->frequency);
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_ColorLow", glm::vec3(0.0f, 0.0f, 1.0f));
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Factor", 0.8f);

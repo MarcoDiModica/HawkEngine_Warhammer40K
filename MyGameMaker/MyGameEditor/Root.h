@@ -12,6 +12,7 @@
 #include "../MyGameEngine/SceneManager.h"
 #include "SceneSerializer.h"
 #include <list>
+#include <vector>
 
 class Material;
 

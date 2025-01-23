@@ -21,6 +21,16 @@ using namespace std;
 
 class GameObject;
 
+struct EmitterInfo {
+    std::shared_ptr<GameObject> gameObject;
+    std::chrono::steady_clock::time_point creationTime;
+    float lifetime;
+    float speed;
+};
+
+// Lista para almacenar los emitters activos
+std::vector<EmitterInfo> activeEmitters;
+
 Root::Root(App* app) : Module(app) { ; }
 
 void MakeSmokerEmmiter() {
@@ -31,7 +41,7 @@ void MakeSmokerEmmiter() {
     ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
 }
 
-void CreateParticleEmitter(const glm::vec3& position, const std::string& texturePath) {
+std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, const std::string& texturePath) {
     auto particleEmitter = Application->root->CreateGameObject("ParticleEmitter");
     auto transform = particleEmitter->GetTransform();
     transform->SetLocalPosition(position);
@@ -39,6 +49,7 @@ void CreateParticleEmitter(const glm::vec3& position, const std::string& texture
     auto emitterComponent = particleEmitter->AddComponent<ParticlesEmitterComponent>();
     emitterComponent->SetTexture(texturePath); // Asumiendo que el componente tiene un método para establecer la textura
 
+    return particleEmitter;
 }
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
@@ -123,44 +134,69 @@ bool Root::Update(double dt) {
     if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
         glm::vec3 particlePosition = glm::vec3(5.0f, 0.0f, 0.0f); // Puedes ajustar la posición según sea necesario
         std::string texturePath = "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png"; // Reemplaza con la ruta de tu textura
-        CreateParticleEmitter(particlePosition, texturePath);
+        std::shared_ptr<GameObject> particleEmitter = CreateParticleEmitter(particlePosition, texturePath);
+
+        EmitterInfo emitterInfo;
+        emitterInfo.gameObject = particleEmitter;
+        emitterInfo.creationTime = std::chrono::steady_clock::now();
+        emitterInfo.lifetime = 5.0f; // Tiempo de vida en segundos
+        emitterInfo.speed = 1.0f; // Velocidad de movimiento hacia arriba
+        activeEmitters.push_back(emitterInfo);
     }
-    //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
-    currentScene->DebugDrawTree();
 
-    currentScene->Update(static_cast<float>(dt));
+    for (auto it = activeEmitters.begin(); it != activeEmitters.end(); ) {
+        float elapsedTime = std::chrono::duration<float>(std::chrono::steady_clock::now() - it->creationTime).count();
 
-   
+        if (elapsedTime >= it->lifetime) {
+            // Destruir el emitter
+            it->gameObject->Destroy();
+            it = activeEmitters.erase(it);
+        }
+        else {
+            auto transform = it->gameObject->GetTransform();
+            glm::vec3 position = glm::vec3(transform->GetLocalMatrix()[3]); 
+            position.y += it->speed * static_cast<float>(dt);
+            transform->SetLocalPosition(position);
+            ++it;
+        }
+    }
+        //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
+        currentScene->DebugDrawTree();
 
-    //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
-    //
-    //    if (currentScene->tree == nullptr) {
-    //        currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
-    //        for (auto child : currentScene->children()) {
-    //            currentScene->tree->Insert(currentScene->tree->root, *child, 0);
-    //        }
-    //
-    //    }
-    //    else {
-    //        delete currentScene->tree;
-    //        currentScene->tree = nullptr;
-    //        int a = 7;
-    //    }
-    //}
-    //
-    //
-    //
-    ////if press 1 active scene Viernes13 and press 2 active scene Salimos
-    //if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-    //    Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
-	//}
-    //else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
-    //    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
-    //}
-    
+        currentScene->Update(static_cast<float>(dt));
 
-    return true;
+
+
+        //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
+        //
+        //    if (currentScene->tree == nullptr) {
+        //        currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
+        //        for (auto child : currentScene->children()) {
+        //            currentScene->tree->Insert(currentScene->tree->root, *child, 0);
+        //        }
+        //
+        //    }
+        //    else {
+        //        delete currentScene->tree;
+        //        currentScene->tree = nullptr;
+        //        int a = 7;
+        //    }
+        //}
+        //
+        //
+        //
+        ////if press 1 active scene Viernes13 and press 2 active scene Salimos
+        //if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+        //    Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
+        //}
+        //else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+        //    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
+        //}
+
+
+        return true;
 }
+
 
 shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh)
 {

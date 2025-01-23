@@ -2,6 +2,7 @@
 #include "ParticlesEmitterComponent.h"
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEngine/Image.h"
+#include <random>
 
 Particle* particle = nullptr;
 
@@ -111,6 +112,15 @@ void Particle::Draw2() {
         return; // Asegurarse de que la textura está cargada
     }
 
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    // Definir el rango de números aleatorios (1 a 10)
+    std::uniform_int_distribution<> distrib(0.5f, 3.0f);
+
+    // Generar un número aleatorio
+    i = distrib(gen);
+
     glPushMatrix();
     glTranslatef(position[0].x, position[0].y, position[0].z);
 
@@ -122,10 +132,10 @@ void Particle::Draw2() {
 
     glBegin(GL_QUADS);
     // Especificar las coordenadas de textura y las cuatro esquinas del plano
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.5f, -1.5f, 0.0f); // Esquina inferior izquierda
-    glTexCoord2f(1.0f, 0.0f);  glVertex3f(1.5f, -1.5f, 0.0f);  // Esquina inferior derecha
-    glTexCoord2f(1.0f, 1.0f);  glVertex3f(1.5f, 1.5f, 0.0f);   // Esquina superior derecha
-    glTexCoord2f(0.0f, 1.0f);  glVertex3f(-1.5f, 1.5f, 0.0f);  // Esquina superior izquierda
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-i, -i, 0.0f); // Esquina inferior izquierda
+    glTexCoord2f(1.0f, 0.0f);  glVertex3f(i, -i, 0.0f);  // Esquina inferior derecha
+    glTexCoord2f(1.0f, 1.0f);  glVertex3f(i, i, 0.0f);   // Esquina superior derecha
+    glTexCoord2f(0.0f, 1.0f);  glVertex3f(-i, i, 0.0f);  // Esquina superior izquierda
     glEnd();
 
     glDisable(GL_BLEND);

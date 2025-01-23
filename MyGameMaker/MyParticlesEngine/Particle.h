@@ -27,6 +27,7 @@ public:
     string name;
     float lifetime;
     float rotation;
+    float i;
     vector<glm::vec3> position;
     vector<glm::vec3> speed;
     GLuint textureID;	

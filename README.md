@@ -51,3 +51,5 @@ with closed source software. Check our LICENSE* for further details.
 [Shader Video!](https://youtu.be/j0p4dMhfLWY)
 
 ![gifa](https://github.com/user-attachments/assets/43ec0552-ac5d-489c-a151-82ceea3b8657)
+
+![gifb](https://github.com/user-attachments/assets/07375d54-2e56-41d5-9daa-62ee68266a61)

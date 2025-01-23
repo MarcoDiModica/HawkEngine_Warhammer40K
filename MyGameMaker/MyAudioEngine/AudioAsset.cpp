@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include "../MyGameEditor/Log.h"
 
 namespace MyGameEngine {
 
@@ -30,7 +29,6 @@ bool AudioAsset::LoadFromFile(const std::string& filePath) {
     AudioFile<float> audioFile;
     
     if (!audioFile.load(filePath)) {
-        LOG(LogType::LOG_ERROR, "Failed to load audio file: %s", filePath.c_str());
         return false;
     }
 
@@ -51,7 +49,6 @@ void AudioAsset::SaveBinary(const std::string& filename) const {
 
     std::ofstream file(fullPath, std::ios::binary);
     if (!file.is_open()) {
-        LOG(LogType::LOG_ERROR, "Failed to save audio asset: %s", fullPath.c_str());
         return;
     }
 
@@ -70,7 +67,6 @@ void AudioAsset::SaveBinary(const std::string& filename) const {
     file.write(reinterpret_cast<const char*>(&libraryPathLength), sizeof(libraryPathLength));
     file.write(m_LibraryPath.c_str(), libraryPathLength);
 
-    LOG(LogType::LOG_OK, "Saved audio asset: %s", fullPath.c_str());
 }
 
 std::shared_ptr<AudioAsset> AudioAsset::LoadBinary(const std::string& filename) {
@@ -78,7 +74,6 @@ std::shared_ptr<AudioAsset> AudioAsset::LoadBinary(const std::string& filename) 
     
     std::ifstream file(fullPath, std::ios::binary);
     if (!file.is_open()) {
-        LOG(LogType::LOG_ERROR, "Failed to load audio asset: %s", fullPath.c_str());
         return nullptr;
     }
 
@@ -103,11 +98,9 @@ std::shared_ptr<AudioAsset> AudioAsset::LoadBinary(const std::string& filename) 
 
     // Load the actual audio data
     if (!asset->LoadFromFile(asset->m_SourcePath)) {
-        LOG(LogType::LOG_ERROR, "Failed to load audio data for asset: %s", fullPath.c_str());
         return nullptr;
     }
 
-    LOG(LogType::LOG_OK, "Loaded audio asset: %s", fullPath.c_str());
     return asset;
 }
 
@@ -139,7 +132,6 @@ bool AudioAsset::ProcessAudioFile(AudioFile<float>& audioFile) {
     // Check for errors
     ALenum error = alGetError();
     if (error != AL_NO_ERROR) {
-        LOG(LogType::LOG_ERROR, "OpenAL error while loading audio: %d", error);
         return false;
     }
 

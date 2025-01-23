@@ -11,7 +11,7 @@ This Shader Sub-system has been worked on by
 
 [Marc Avante Caballe](https://github.com/MarcoXAvante)
 
-<img src="https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/Shaders/Marcpfp.jpeg?raw=true"  width="125" height="125">
+<img src="https://github.com/user-attachments/assets/f1aae89c-c225-4486-837c-d07e25270a84"  width="125" height="125">
 
 Marc improved the water shader fixed all the problems with merging the main and mantaining the clean code
 

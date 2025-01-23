@@ -7,6 +7,10 @@ Preliminar approach to the scripting mechanisms of The [Engineson](https://githu
 
 [Marco Baldán](https://github.com/Marco-v-BaldanII)
 
+![406182133-f955f5f8-faa2-436e-9f16-2e8abad89754](https://github.com/user-attachments/assets/c772cb8b-8550-4f84-9078-067bf60e0a97)
+
+Imported mono , managed initialization. Figured out and layed the groundwork for binding classes from C++ to C#. Created and binded the C# GameObject and the Engineson class.
+
 [Marco di Modica](https://github.com/MarcoDiModica)
 
 ![smaller_github_image](https://github.com/user-attachments/assets/f955f5f8-faa2-436e-9f16-2e8abad89754)

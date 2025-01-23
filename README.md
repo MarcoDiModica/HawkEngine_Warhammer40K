@@ -6,10 +6,16 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 ## MEMBERS ##
 
 [Yiwei Ye](https://github.com/Yeeway69)
+
 ![yiwei photo](https://github.com/user-attachments/assets/cb78a926-4833-4bdc-945c-2d891b20f55f)
 
+-
+
 [Biel Liñán](https://github.com/Drauguer)
-![yo](https://github.com/user-attachments/assets/df393c8e-9272-418f-ab1c-b5d963bd7647)
+
+![Proyecto nuevo](https://github.com/user-attachments/assets/e0bfeb15-2245-45f9-b512-d7f967429530)
+
+- In charge of implementing audio components as part of the components that can be added to the game object and updating the info of said components in the inspector.
 
 
 # CONTROLS #

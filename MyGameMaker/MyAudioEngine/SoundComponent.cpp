@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <algorithm>
 #include <iostream>
+#include "AudioAssetProcessor.h"
+#include <filesystem>
 
 using namespace MyGameEngine;  // For AudioEngine and AudioAsset
 
@@ -94,7 +96,16 @@ bool SoundComponent::LoadAudio(const std::string& filePath, bool isMusic) {
         Stop();
     }
 
-    m_AudioAsset = s_SharedAudioEngine->LoadAudioAsset(filePath);
+    // Process the audio file if needed
+    std::string libraryPath = "Library/Audio/" + std::filesystem::path(filePath).filename().string();
+    if (!std::filesystem::exists(libraryPath)) {
+        if (!AudioAssetProcessor::ProcessAudioFile(filePath, libraryPath)) {
+            return false;
+        }
+    }
+
+    // Load the processed audio
+    m_AudioAsset = AudioAssetProcessor::LoadProcessedAudio(libraryPath);
     return m_AudioAsset != nullptr;
 }
 

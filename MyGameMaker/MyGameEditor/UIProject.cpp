@@ -35,7 +35,12 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 
 	meshIcon = new Image();
 	//meshIcon->LoadTexture("Assets/Icons/mesh_icon.png");
+
 	meshIcon->LoadTexture("EngineAssets/mesh.png");
+
+	audioIcon = new Image();
+	audioIcon->LoadTexture("Assets/Icons/folder_icon.png");
+
 }
 
 UIProject::~UIProject()
@@ -45,6 +50,7 @@ UIProject::~UIProject()
 	delete imageIcon;
 	delete sceneIcon;
 	delete meshIcon;
+	delete audioIcon;
 }
 
 bool UIProject::Draw()
@@ -85,6 +91,9 @@ bool UIProject::Draw()
 		if (ImGui::CollapsingHeader("Assets"), ImGuiTreeNodeFlags_DefaultOpen)
 		{
 			uint32_t count = 0;
+
+			// Esto no s� si est� bien
+
 			for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
 			{
 				count++;
@@ -108,6 +117,11 @@ bool UIProject::Draw()
 		}
 
 		ImGui::TableNextColumn();
+
+
+		// Aqu� creo que va algo
+		ImGui::Text("Properties or Preview here...");
+
 		if (selectedDirectory.empty())
 		{
 			ImGui::Text("Select a folder to view contents.");
@@ -116,6 +130,7 @@ bool UIProject::Draw()
 		{
 			DrawFolderContents(selectedDirectory);
 		}
+
 		ImGui::EndTable();
 	}
 
@@ -158,6 +173,8 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 				icon = sceneIcon;
 			else if (extension == ".mesh")
 				icon = meshIcon;
+			else if (extension == ".wav" || extension == ".ogg" || extension == ".mp3")
+				icon = audioIcon;
 
 			treeFlags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
 		}
@@ -176,6 +193,14 @@ std::pair<bool, uint32_t> UIProject::DirectoryView(const std::filesystem::path& 
 			nodeClicked = *count;
 			anyNodeClicked = true;
 			HandleFileSelection(entry.path().string());
+		}
+
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+		{
+			std::string fullPath = entry.path().string();
+			ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
+			ImGui::Text("Dragging %s", name.c_str());
+			ImGui::EndDragDropSource();
 		}
 
 		if (ImGui::BeginPopupContextItem(name.c_str()))

@@ -88,16 +88,16 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
 
     if (elapsedTime.count() >= spawnRate && particles.size() < maxParticles) {
         // Crear una nueva partícula
-        if (emitterParticle != nullptr && isSmoking == true) {
+        if (emitterParticle != nullptr) {
            /* emitterParticle->position.push_back(this->position);*/
             glm::vec3 desiredSpeed = glm::vec3(0.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
             EmitParticle1(desiredSpeed);
         }
-        if (emitterParticle != nullptr && isSmoking == true) {
-            /* emitterParticle->position.push_back(this->position);*/
-            glm::vec3 desiredSpeed = glm::vec3(1.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
-            EmitParticle2(desiredSpeed);
-        }
+        //if (emitterParticle != nullptr && isSmoking == true) {
+        //    /* emitterParticle->position.push_back(this->position);*/
+        //    glm::vec3 desiredSpeed = glm::vec3(1.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
+        //    EmitParticle2(desiredSpeed);
+        //}
         lastSpawnTime = now;
     }
 

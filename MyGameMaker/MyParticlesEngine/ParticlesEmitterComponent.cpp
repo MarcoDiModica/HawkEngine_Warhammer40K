@@ -42,8 +42,20 @@ std::unique_ptr<Component> ParticlesEmitterComponent::Clone(GameObject* owner) {
     return std::make_unique<ParticlesEmitterComponent>(owner);
 }
 
-void ParticlesEmitterComponent::EmitParticle() {
+void ParticlesEmitterComponent::EmitParticle(/*Particle* emmiterParticle*/) {
+   /* Particle* newParticle = new Particle();
+	newParticle = SetParticleVariables(emmiterParticle);
+    newParticle->Start();
+    particles.push_back(*newParticle);
+
+    std::cout << "Partícula generada" << std::endl;*/
+
+	//__________NO ENTIENDO PORQUE ESTO FUNCIONA Y LO DE ARRIBA NO, PERO FUNCIONA___________
     Particle* newParticle = new Particle();
+    newParticle->position.push_back(this->position);  // Posición inicial basada en la posición actual del GameObject
+    newParticle->speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f)); // Velocidad inicial
+    newParticle->lifetime = 10.0f; // Duración de la partícula en segundos
+    newParticle->rotation = 0.0f; // Rotación inicial
     newParticle->Start();
     particles.push_back(*newParticle);
 
@@ -51,10 +63,10 @@ void ParticlesEmitterComponent::EmitParticle() {
 }
 
 void ParticlesEmitterComponent::Update(float deltaTime) {
-    
+    // Actualizar la posición, rotación y escala del emisor de partículas
     this->position = owner->GetComponent<Transform_Component>()->GetPosition();
-	this->rotation = owner->GetComponent<Transform_Component>()->GetRotation();
-	this->scale = owner->GetComponent<Transform_Component>()->GetScale();
+    this->rotation = owner->GetComponent<Transform_Component>()->GetRotation();
+    this->scale = owner->GetComponent<Transform_Component>()->GetScale();
 
     auto now = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsedTime = now - lastSpawnTime;
@@ -62,15 +74,20 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
     if (elapsedTime.count() >= spawnRate && particles.size() < maxParticles) {
         // Crear una nueva partícula
         if (emitterParticle != nullptr) {
-			EmitParticle();
+           /* emitterParticle->position.push_back(this->position);*/
+            EmitParticle();
         }
         lastSpawnTime = now;
     }
+
     // Actualizar las partículas existentes
     for (auto& particle : particles) {
         particle.Update(deltaTime);
+        // Actualizar la posición de la partícula en función de la nueva posición del GameObject
+        /*particle.position.push_back(this->position);*/
         particle.Draw();
     }
+
     // Eliminar partículas que han terminado su vida útil
     particles.erase(
         std::remove_if(particles.begin(), particles.end(), [](const Particle& p) {

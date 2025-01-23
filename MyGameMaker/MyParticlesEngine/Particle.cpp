@@ -8,7 +8,7 @@ Particle* particle = nullptr;
 Particle::Particle() {
     lifetime = 5.0f;
     rotation = 0.0f;
-    position.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+   /* position.push_back(glm::vec3(-14, 1, -10));*/
     speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
     texture = new Image();
     if (texture == nullptr) {

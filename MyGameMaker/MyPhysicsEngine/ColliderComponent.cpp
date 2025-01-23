@@ -41,6 +41,7 @@ void ColliderComponent::Start() {
 }
 
 void ColliderComponent::Update(float deltaTime) {
+    
     // Sincroniza la posición y rotación entre el GameObject y el colisionador
 
     //for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMapForhouse) {

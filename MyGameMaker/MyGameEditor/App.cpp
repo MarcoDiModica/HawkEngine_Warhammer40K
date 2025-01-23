@@ -44,7 +44,6 @@ App::App() {
 	AddModule(camera, true);
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
-	AddModule(physicsModule, true);
 
 };
 

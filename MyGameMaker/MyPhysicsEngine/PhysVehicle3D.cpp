@@ -1,5 +1,4 @@
 #include "PhysVehicle3D.h"
-#include "../MyGameEditor/Root.h"
 #include <Bullet/btBulletDynamicsCommon.h>
 #include <glm/glm.hpp>
 

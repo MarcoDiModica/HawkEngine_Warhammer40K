@@ -1,12 +1,10 @@
 #pragma once
-#include "../MyGameEditor/Module.h"
 #include <bullet/btBulletDynamicsCommon.h>
 #include <unordered_map>
 #include <memory>
 #include <glm/glm.hpp>
 #include "p2List.h"
 #include "DebugDrawerPhysics.h"
-//#include "../MyGameEditor/App.h"
 
 
 class GameObject;
@@ -23,18 +21,18 @@ struct FinalVehicleInfo {
 };  
 
 
-class PhysicsModule : public Module {
+class PhysicsModule{
 public:
     PhysicsModule();
     ~PhysicsModule();
 
-    bool Awake() override;
+    bool Awake() ;
     
-    bool Start() override;
-    bool PreUpdate() override;
-    bool Update(double dt) override;
-    bool PostUpdate() override;
-    bool CleanUp() override;
+    bool Start() ;
+    bool PreUpdate() ;
+    bool Update(double dt) ;
+    bool PostUpdate() ;
+    bool CleanUp();
 
     void DrawDebugDrawer();
 

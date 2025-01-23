@@ -7,8 +7,7 @@
 #include <glm/glm.hpp>
 
 
-PhysicsModule::PhysicsModule()
-    : Module(), dynamicsWorld(nullptr), cubeShape(nullptr) {}
+PhysicsModule::PhysicsModule(): dynamicsWorld(nullptr), cubeShape(nullptr) {}
 
 PhysicsModule::~PhysicsModule() {
     CleanUp();

@@ -93,7 +93,6 @@
     <ClInclude Include="PhysVehicle3D.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="RigidBodyComponent.h" />
-    <ClInclude Include="types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

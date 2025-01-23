@@ -238,7 +238,7 @@ bool Input::processSDLEvents()
 
     static SDL_Event event;
 
-    static bool f1Pressed = false;
+    static bool f12Pressed = false;
 
     while (SDL_PollEvent(&event) != 0)
     {
@@ -248,10 +248,10 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             InputManagement->mouse_z = event.wheel.y;
-            if (f1Pressed && InputManagement->mouse_z > 0) {
+            if (f12Pressed && InputManagement->mouse_z > 0) {
                 SpawnPhysCube();
             }
-            if (f1Pressed && InputManagement->mouse_z < 0) {
+            if (f12Pressed && InputManagement->mouse_z < 0) {
                 SpawnCar();
             }
             break;
@@ -270,13 +270,13 @@ bool Input::processSDLEvents()
             switch (event.key.keysym.sym) {
             case SDLK_1:
                 break;
-            case SDLK_F1:
-                if (f1Pressed == false) {
-                    f1Pressed = true; // Activar la bandera si F1 fue presionado
+            case SDLK_F12:
+                if (f12Pressed == false) {
+                    f12Pressed = true; // Activar la bandera si F12 fue presionado
 
                 }
                 else {
-                    f1Pressed = false; // Desactivar la bandera si F1 fue liberado
+                    f12Pressed = false; // Desactivar la bandera si F12 fue liberado
                 }
                 break;
             case SDLK_ESCAPE:

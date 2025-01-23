@@ -28,17 +28,19 @@ public:
 
     int getMaxParticles() const;
     void setMaxParticles(int maxParticles);
+    bool isSmoking;
 
 
 private:
     std::string texturePath;
+    std::string texturePath2 = "../MyGameEditor/Assets/Textures/Firework.png";
     glm::vec3 position;
 	glm::dquat rotation;
 	glm::vec3 scale;
 	Particle* emitterParticle = nullptr;
 	int maxParticles = 10;
     float deltaTime;
-    bool isSmoking;
+    
 	// Variables para el spawn de partículas
     float spawnRate = 1.0f; 
     std::chrono::time_point<std::chrono::steady_clock> lastSpawnTime;

@@ -12,7 +12,11 @@ Particle::Particle() {
    /* position.push_back(glm::vec3(-14, 1, -10));*/
    /*speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f));*/
     texture = new Image();
+    texture2 = new Image();
     if (texture == nullptr) {
+        std::cerr << "Error al inicializar la textura" << std::endl;
+    }
+    if (texture2 == nullptr) {
         std::cerr << "Error al inicializar la textura" << std::endl;
     }
 }
@@ -32,7 +36,13 @@ void Particle::Update(float deltaTime) {
         // Actualizar la posición de la partícula usando su velocidad
         position[0] += speed[0] * deltaTime;
 
-        Draw();
+        if (texture2 != nullptr && lifetime <= 1.0f) { // Cambia 1.0f por el umbral deseado
+            texture = texture2;
+            Draw2();
+        }
+        else {
+            Draw();
+        }
         // Disminuir el tiempo de vida de la partícula
         lifetime -= deltaTime;
     }
@@ -86,6 +96,44 @@ void Particle::Draw() {
     glPopMatrix();
 }
 
+void Particle::Draw2() {
+
+    if (texture == nullptr) {
+        std::cout << "Textura no inicializada" << std::endl;
+        return;
+    }
+
+    //texture->LoadTexture("../MyGameEditor/Assets/Textures/SmokeParticleTexture.png");
+    textureID = texture->id();
+
+    if (textureID == 0) {
+        std::cout << "Textura no cargada" << std::endl;
+        return; // Asegurarse de que la textura está cargada
+    }
+
+    glPushMatrix();
+    glTranslatef(position[0].x, position[0].y, position[0].z);
+
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glBegin(GL_QUADS);
+    // Especificar las coordenadas de textura y las cuatro esquinas del plano
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.5f, -1.5f, 0.0f); // Esquina inferior izquierda
+    glTexCoord2f(1.0f, 0.0f);  glVertex3f(1.5f, -1.5f, 0.0f);  // Esquina inferior derecha
+    glTexCoord2f(1.0f, 1.0f);  glVertex3f(1.5f, 1.5f, 0.0f);   // Esquina superior derecha
+    glTexCoord2f(0.0f, 1.0f);  glVertex3f(-1.5f, 1.5f, 0.0f);  // Esquina superior izquierda
+    glEnd();
+
+    glDisable(GL_BLEND);
+    glDisable(GL_TEXTURE_2D);
+
+    glPopMatrix();
+}
+
 void Particle::SetParticleSpeed(const glm::vec3& newSpeed) {
     if (!speed.empty()) {
         speed[0] = newSpeed;
@@ -112,5 +160,9 @@ void Particle::CleanUp() {
     if (texture != nullptr) {
         delete texture;
         texture = nullptr;
+    }
+    if (texture2 != nullptr) {
+        delete texture2;
+        texture2 = nullptr;
     }
 }

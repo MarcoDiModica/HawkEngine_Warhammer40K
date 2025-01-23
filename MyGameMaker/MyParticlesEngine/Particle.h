@@ -17,6 +17,7 @@ public:
     void Update(float deltaTime);
     void Spawn();
     void Draw();
+    void Draw2();
     void Save();
     void Load();
     void CleanUp();
@@ -29,7 +30,8 @@ public:
     vector<glm::vec3> position;
     vector<glm::vec3> speed;
     GLuint textureID;	
-	Image* texture;
+	Image* texture = nullptr;
+    Image* texture2 = nullptr;
 };
 
 

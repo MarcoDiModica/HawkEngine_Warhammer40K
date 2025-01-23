@@ -49,6 +49,7 @@ void MakeSmokerEmmiter() {
     transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotación en el eje Y
     ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
 	particlesEmmiterComponent->SetTexture(texturePath);
+    particlesEmmiterComponent->isSmoking = true;
 }
 
 void MakeSmokerEmiter2() {
@@ -59,6 +60,7 @@ void MakeSmokerEmiter2() {
     transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotación en el eje Y
     ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
     particlesEmmiterComponent->SetTexture(texturePath);
+    particlesEmmiterComponent->isSmoking = true;
 }
 
 std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, const std::string& texturePath) {
@@ -68,7 +70,7 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
 
     auto emitterComponent = particleEmitter->AddComponent<ParticlesEmitterComponent>();
     emitterComponent->SetTexture(texturePath); // Establecer la textura
-
+    emitterComponent->isSmoking = false;
     return particleEmitter;
 }
 void MakeCity() {
@@ -165,7 +167,7 @@ bool Root::Update(double dt) {
         emitterInfo.creationTime = std::chrono::steady_clock::now();
         emitterInfo.lifetime = 1.0f;
         emitterInfo.particle = new Particle();
-        emitterInfo.SetSpeed({ glm::vec3(2.0f, 3.0f, -2.0f) });
+        emitterInfo.SetSpeed({ glm::vec3(0.0f, 3.0f, 0.0f) });
         emitterInfo.maxParticles = 3;
         activeEmitters.push_back(emitterInfo);
     }

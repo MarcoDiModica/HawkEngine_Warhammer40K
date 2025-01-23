@@ -57,6 +57,7 @@ void ParticlesEmitterComponent::EmitParticle1(const glm::vec3& speed) {
     newParticle->lifetime = 5.0f; // Duración de la partícula en segundos
     newParticle->rotation = 0.0f; // Rotación inicial
     newParticle->texture->LoadTexture(texturePath); // Cargar la textura
+    newParticle->texture2 = nullptr;
     newParticle->Start();
     particles.push_back(*newParticle);
  
@@ -70,7 +71,8 @@ void ParticlesEmitterComponent::EmitParticle2(const glm::vec3& speed) {
     newParticle->SetParticleSpeed(speed); // Velocidad inicial
     newParticle->lifetime = 5.0f; // Duración de la partícula en segundos
     newParticle->rotation = 0.0f; // Rotación inicial
-    newParticle->texture->LoadTexture(texturePath); // Cargar la textura
+    newParticle->texture->LoadTexture(texturePath);
+    newParticle->texture2->LoadTexture(texturePath2);// Cargar la textura
     newParticle->Start();
     particles.push_back(*newParticle);
     isSmoking = true;
@@ -89,16 +91,17 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
 
     if (elapsedTime.count() >= spawnRate && particles.size() < maxParticles) {
         // Crear una nueva partícula
-        if (emitterParticle != nullptr) {
+       
+       if (emitterParticle != nullptr && isSmoking == true) {
            /* emitterParticle->position.push_back(this->position);*/
-            glm::vec3 desiredSpeed = glm::vec3(0.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
-            EmitParticle1(desiredSpeed);
-        }
-        //if (emitterParticle != nullptr && isSmoking == true) {
-        //    /* emitterParticle->position.push_back(this->position);*/
-        //    glm::vec3 desiredSpeed = glm::vec3(1.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
-        //    EmitParticle2(desiredSpeed);
-        //}
+           glm::vec3 desiredSpeed = glm::vec3(0.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
+           EmitParticle1(desiredSpeed);
+       }
+       else if (emitterParticle != nullptr && isSmoking == false) {
+           glm::vec3 desiredSpeed = glm::vec3(0.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
+           EmitParticle2(desiredSpeed);
+         
+           }
         lastSpawnTime = now;
     }
 

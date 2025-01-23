@@ -42,7 +42,7 @@ std::unique_ptr<Component> ParticlesEmitterComponent::Clone(GameObject* owner) {
     return std::make_unique<ParticlesEmitterComponent>(owner);
 }
 
-void ParticlesEmitterComponent::EmitParticle(/*Particle* emmiterParticle*/) {
+void ParticlesEmitterComponent::EmitParticle(const glm::vec3& speed) {
    /* Particle* newParticle = new Particle();
 	newParticle = SetParticleVariables(emmiterParticle);
     newParticle->Start();
@@ -53,8 +53,8 @@ void ParticlesEmitterComponent::EmitParticle(/*Particle* emmiterParticle*/) {
 	//__________NO ENTIENDO PORQUE ESTO FUNCIONA Y LO DE ARRIBA NO, PERO FUNCIONA___________
     Particle* newParticle = new Particle();
     newParticle->position.push_back(this->position);  // Posición inicial basada en la posición actual del GameObject
-    newParticle->speed.push_back(glm::vec3(0.0f, 1.0f, 0.0f)); // Velocidad inicial
-    newParticle->lifetime = 10.0f; // Duración de la partícula en segundos
+    newParticle->SetParticleSpeed(speed); // Velocidad inicial
+    newParticle->lifetime = 5.0f; // Duración de la partícula en segundos
     newParticle->rotation = 0.0f; // Rotación inicial
     newParticle->texture->LoadTexture(texturePath); // Cargar la textura
     newParticle->Start();
@@ -76,7 +76,8 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
         // Crear una nueva partícula
         if (emitterParticle != nullptr) {
            /* emitterParticle->position.push_back(this->position);*/
-            EmitParticle();
+            glm::vec3 desiredSpeed = glm::vec3(1.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
+            EmitParticle(desiredSpeed);
         }
         lastSpawnTime = now;
     }

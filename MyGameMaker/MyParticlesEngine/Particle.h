@@ -21,6 +21,8 @@ public:
     void Load();
     void CleanUp();
     void Start();
+    void SetParticleSpeed(const glm::vec3& newSpeed);
+
     string name;
     float lifetime;
     float rotation;
@@ -29,3 +31,5 @@ public:
     GLuint textureID;	
 	Image* texture;
 };
+
+

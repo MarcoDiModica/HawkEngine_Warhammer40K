@@ -13,7 +13,7 @@ public:
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;
-    void EmitParticle(/*Particle* emmiterParticle*/);
+    void EmitParticle(const glm::vec3& speed);
 	
     std::unique_ptr<Component> Clone(GameObject* owner) override;
     ComponentType GetType() const override { return ComponentType::PARTICLES_EMITTER; }

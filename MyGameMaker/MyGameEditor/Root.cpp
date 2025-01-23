@@ -24,9 +24,15 @@ class GameObject;
 struct EmitterInfo {
     std::shared_ptr<GameObject> gameObject;
     std::chrono::steady_clock::time_point creationTime;
-    float lifetime;
-    float speed;
-	int maxParticles;
+    float lifetime = 0.0f;
+    Particle* particle = nullptr;
+    int maxParticles = 0;
+
+    void SetSpeed(const glm::vec3& newSpeed) {
+        if (particle) {
+            particle->SetParticleSpeed(newSpeed);
+        }
+    }
 };
 
 // Lista para almacenar los emitters activos
@@ -135,7 +141,6 @@ bool Root::Update(double dt) {
 
 
     if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-
         glm::vec3 particlePosition = glm::vec3(-1.0f, 0.0f, 0.0f); // Puedes ajustar la posición según sea necesario
         std::string texturePath = "../MyGameEditor/Assets/Textures/Esteladeluz.png"; // Reemplaza con la ruta de tu textura
         std::shared_ptr<GameObject> particleEmitter = CreateParticleEmitter(particlePosition, texturePath);
@@ -143,8 +148,9 @@ bool Root::Update(double dt) {
         EmitterInfo emitterInfo;
         emitterInfo.gameObject = particleEmitter;
         emitterInfo.creationTime = std::chrono::steady_clock::now();
-        emitterInfo.lifetime = 1.0f; // Tiempo de vida en segundos
-        emitterInfo.speed = 3.0f; // Velocidad de movimiento hacia arriba
+        emitterInfo.lifetime = 1.0f;
+        emitterInfo.particle = new Particle();
+        emitterInfo.SetSpeed({ glm::vec3(2.0f, 3.0f, -2.0f) });
         emitterInfo.maxParticles = 3;
         activeEmitters.push_back(emitterInfo);
     }
@@ -153,14 +159,13 @@ bool Root::Update(double dt) {
         float elapsedTime = std::chrono::duration<float>(std::chrono::steady_clock::now() - it->creationTime).count();
 
         if (elapsedTime >= it->lifetime) {
-            // Destruir el emitter
             it->gameObject->Destroy();
             it = activeEmitters.erase(it);
         }
         else {
             auto transform = it->gameObject->GetTransform();
-            glm::vec3 position = glm::vec3(transform->GetLocalMatrix()[3]); 
-            position.y += it->speed * static_cast<float>(dt);
+            glm::vec3 position = glm::vec3(transform->GetLocalMatrix()[3]);
+            position += it->particle->speed[0] * static_cast<float>(dt);
             transform->SetLocalPosition(position);
             ++it;
         }

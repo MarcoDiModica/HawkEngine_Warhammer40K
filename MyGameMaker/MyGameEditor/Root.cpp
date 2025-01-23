@@ -11,7 +11,10 @@
 #include "MyGameEngine/ModelImporter.h"
 #include "App.h"
 #include "Input.h"
+#include "../MyAudioEngine/SoundComponent.h"
+#include "../MyAudioEngine/AudioListener.h"
 
+#include "../MyScriptingEngine/ScriptComponent.h"
 #include <SDL2/SDL.h>
 
 #include <iostream>
@@ -48,24 +51,40 @@ void MakeCity() {
 
 bool Root::Awake()
 {
+   // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
+    SceneManagement = new SceneManager();
+    //MonoEnvironment* env = new MonoEnvironment();
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
+    SoundComponent::InitSharedAudioEngine();
     MakeCity();
 
     /*CreateScene("Viernes13");
-    SetActiveScene("Viernes13");*/
-
+    SetActiveScene("Viernes13");
+    
     auto MainCamera = CreateCameraObject("MainCamera");
     MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
     MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = MainCamera->AddComponent<CameraComponent>();
-    mainCamera = MainCamera;
+    mainCamera = MainCamera; */   
 
+    return true;
+}
+
+bool Root::CleanUp()
+{
+    SoundComponent::ShutdownSharedAudioEngine();
     return true;
 }
 
 bool Root::Start()
 {
+    //MonoEnvironment* mono = new MonoEnvironment();
+
+    auto Script = CreateGameObject("Script");
+    auto script = Script->AddComponent<ScriptComponent>();
+    script->LoadScript("TestingComponent");
+
     /*auto Street = CreateGameObject("Street");
     Street->GetTransform()->GetPosition() = vec3(0, 0, 0);
     ModelImporter meshImp;
@@ -86,14 +105,7 @@ bool Root::Start()
     cube->GetTransform()->GetPosition() = vec3(0, 0, 0);
     AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");*/
 
-    for (shared_ptr<GameObject> object : currentScene->_children)
-    {
-        object->Start();
-
-        if (object->HasComponent<CameraComponent>()) {
-            mainCamera = object;
-		}
-    }
+    SceneManagement->Start();
 
     return true;
 }
@@ -101,35 +113,35 @@ bool Root::Start()
 bool Root::Update(double dt) {
 
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
-    currentScene->DebugDrawTree();
 
-    currentScene->Update(static_cast<float>(dt));
-
-    if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
-
-        if (currentScene->tree == nullptr) {
-            currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
-            for (auto child : currentScene->children()) {
-                currentScene->tree->Insert(currentScene->tree->root, *child, 0);
-            }
-
-        }
-        else {
-            delete currentScene->tree;
-            currentScene->tree = nullptr;
-            int a = 7;
-        }
-    }
+    SceneManagement->Update(dt);
 
 
-
-    //if press 1 active scene Viernes13 and press 2 active scene Salimos
-    if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-        Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
-	}
-    else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
-        Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
-    }
+    //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
+    //
+    //    if (currentScene->tree == nullptr) {
+    //        currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
+    //        for (auto child : currentScene->children()) {
+    //            currentScene->tree->Insert(currentScene->tree->root, *child, 0);
+    //        }
+    //
+    //    }
+    //    else {
+    //        delete currentScene->tree;
+    //        currentScene->tree = nullptr;
+    //        int a = 7;
+    //    }
+    //}
+    //
+    //
+    //
+    ////if press 1 active scene Viernes13 and press 2 active scene Salimos
+    //if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+    //    Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
+	//}
+    //else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+    //    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
+    //}
     
 
     return true;
@@ -137,198 +149,111 @@ bool Root::Update(double dt) {
 
 shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh)
 {
-    auto go = CreateGameObject(name);
-    AddMeshRenderer(*go, mesh, "Assets/default.png");
-
-    return nullptr;
+    return SceneManagement->CreateMeshObject(name, mesh);
 }
 
 void Root::RemoveGameObject(GameObject* gameObject) {
-    if (!gameObject) {
-        LOG(LogType::LOG_ERROR, "Error: Is have tried erased a GameObject null.");
-        return;
-    }
-    if (! gameObject->GetParent()) {
-        auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
-            [gameObject](const auto& child) { return child.get() == gameObject; });
-
-        if (it == currentScene->_children.end()) {
-            LOG(LogType::LOG_ERROR, "Error: The GameObject not is find on the scene.");
-            return;
-        }
-
-
-        try {
-            if ((*it)->isSelected) {
-                (*it)->isSelected = false;
-                Application->input->ClearSelection();
-            }
-            (*it)->Destroy();
-            it = currentScene->_children.erase(it);
-        }
-        catch (const std::exception& e) {
-            LOG(LogType::LOG_ERROR, "Error to destroying the GameObject: %s", e.what());
-        }
-    }
-    else {
-        if (gameObject->isSelected) { Application->input->ClearSelection(); }
-        //currentScene->AddGameObject(gameObject->shared_from_this());
-        gameObject->GetParent()->RemoveChild(gameObject);
-        gameObject->Destroy();
-    }
+    
+    SceneManagement->RemoveGameObject(gameObject);
 }
 
 std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name)
 {
-    std::string uniqueName = name;
-    int counter = 1;
-    for (std::shared_ptr<GameObject> child : currentScene->_children) {
-        if (child->GetName() == uniqueName) {
-            uniqueName = name + "_" + std::to_string(counter++);
-        }
-    }
-
-    auto gameObject = std::make_shared<GameObject>(uniqueName);
-    currentScene->AddGameObject(gameObject);
-    //currentScene->_children.push_back(gameObject);
-    return gameObject;
+    return SceneManagement->CreateGameObject(name);
 }
 
 std::shared_ptr<GameObject> Root::CreateCube(const std::string& name) {
-    auto cube = CreateGameObject(name);
-    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");
-    return cube;
+    
+    return SceneManagement->CreateCube(name);
 }
 
 std::shared_ptr<GameObject> Root::CreateSphere(const std::string& name) {
-    auto sphere = CreateGameObject(name);
-    AddMeshRenderer(*sphere, Mesh::CreateSphere(), "Assets/default.png");
-    return sphere;
+    
+    return SceneManagement->CreateSphere(name);
 }
 
 std::shared_ptr<GameObject> Root::CreatePlane(const std::string& name) {
-    auto plane = CreateGameObject(name);
-    AddMeshRenderer(*plane, Mesh::CreatePlane(), "Assets/default.png");
-    return plane;
+    
+       return SceneManagement->CreatePlane(name);
 }
 
 std::shared_ptr<GameObject> Root::CreateCameraObject(const std::string& name) {
-	auto camera = CreateGameObject(name);
-	camera->AddComponent<CameraComponent>();
-	return camera;
+	
+    return SceneManagement->CreateCameraObject(name);
 }
 
 std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
-	auto light = CreateGameObject(name);
-	light->AddComponent<LightComponent>();
-	return light;
+	
+    return SceneManagement->CreateLightObject(name);
 }
 
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
 {
-    auto meshRenderer = go.AddComponent<MeshRenderer>();
-    auto image = std::make_shared<Image>();
-    auto material = std::make_shared<Material>();
-    
-    
-    meshRenderer->SetMesh(mesh);
-    if (mat) {
-        material = mat;
-        image = mat->getImg();
-    }
-    else {
-        image->LoadTexture(texturePath);
-    }
-    material->setImage(image);
-    meshRenderer->SetMaterial(material);
-    //meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
-
-    //if (material->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
-    //    material->useShader = true;
-    //    material->bindShaders();
-    //}
-    //meshRenderer->SetImage(image);
+    return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat);
 }
 
 void Root::CreateScene(const std::string& name)
 {
-    auto scene = make_shared<Scene>( name);
-    scenes.push_back(scene);
+    SceneManagement->CreateScene(name);
 }
 
 void Root::AddScene(std::shared_ptr<Scene> scene)
 {
-    scenes.push_back(scene);
+    SceneManagement->AddScene(scene);
 
 }
 
 void Root::RemoveScene(const std::string& name)
 {
-    for (auto it = scenes.begin(); it != scenes.end(); ) {
-        if ((*it)->name == name) {
-            (*it)->Destroy();
-            it = scenes.erase(it);
-            return;
-        }
-        else {
-            ++it;
-        }
-    }
+    SceneManagement->RemoveScene(name);
 }
 
 void Root::SetActiveScene(const std::string& name)
 {
-    for (auto scene : scenes) {
-        if (scene->name == name) {
-            currentScene = scene;
-            currentScene->Start();
-            return;
-        }
-    }
+    SceneManagement->SetActiveScene(name);
 }
 
 std::shared_ptr<Scene> Root::GetActiveScene() const
 {
-    return currentScene;
+    return SceneManagement->GetActiveScene();
 }
 
 bool Root::ParentGameObjectToScene(GameObject& child) {
-    child.isSelected = false;
-    Application->input->ClearSelection();
-
-    GameObject* currentParent = child.GetParent();
-
-    if (currentParent) {
-        currentParent->RemoveChild(&child);
-    }
-
-    currentScene->_children.push_back(child.shared_from_this());
-    child.SetParent(nullptr);
-
-    return true;
+    return SceneManagement->ParentGameObjectToScene(child);
 }
 
 bool Root::ParentGameObjectToObject(GameObject& child, GameObject& father) {
-    child.isSelected = false;
-    father.isSelected = false;
-    Application->input->ClearSelection();
-
-    auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
-        [&child](const std::shared_ptr<GameObject>& obj) { return obj.get() == &child; });
-    if (it != currentScene->_children.end()) {
-        currentScene->_children.erase(it);
-    }
-
-    child.SetParent(&father);
-    child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
-
-    return true;
+    
+    return SceneManagement->ParentGameObjectToObject(child, father);
 }
 
 
 bool Root::ParentGameObject(GameObject& child, GameObject& father) {
 
-    father.AddChild(&child);
+    return SceneManagement->ParentGameObject(child, father);
+}
 
-    return false;
+std::shared_ptr<GameObject> Root::FindGOByName(char* name) {
+    
+    return SceneManagement->FindGOByName(name);
+}
+
+
+std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
+{
+    auto gameObject = CreateGameObject(name);
+    if (!gameObject) {
+        LOG(LogType::LOG_ERROR, "Failed to create audio object");
+        return nullptr;
+    }
+
+    // Add SoundComponent
+    auto soundComponent = gameObject->AddComponent<SoundComponent>();
+    if (!soundComponent) {
+        LOG(LogType::LOG_ERROR, "Failed to add SoundComponent to audio object");
+        return nullptr;
+    }
+
+    LOG(LogType::LOG_OK, "Created audio object: %s", name.c_str());
+    return gameObject;
 }

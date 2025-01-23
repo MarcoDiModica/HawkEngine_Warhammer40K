@@ -6,6 +6,7 @@
 #include "MyGUI.h"
 #include "Input.h"
 #include "Root.h"
+
 #include "Log.h"
 
 #include "UISettings.h"
@@ -34,6 +35,8 @@ App::App() {
 
 	scene_serializer = new SceneSerializer(this);
 
+	physicsModule = new PhysicsModule(this);
+
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(hardwareInfo, true);
@@ -42,6 +45,7 @@ App::App() {
 	AddModule(camera, true);
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
+	AddModule(physicsModule, true);
 
 };
 
@@ -49,6 +53,9 @@ App::App() {
 bool App::Awake() { 
 
 	targetFrameDuration = (std::chrono::duration<double>)1 / frameRate;
+
+	camera->GetTransform().GetPosition() = vec3(0, 1, 4);
+	camera->GetTransform().Rotate(glm::radians(180.0), vec3(0, 1, 0));
 
 	for (const auto& module : modules) {
 		if (module->Awake()) continue;
@@ -166,7 +173,7 @@ bool App::DoUpdate()
 			return false;
 	}
 
-
+	
 	
 
 

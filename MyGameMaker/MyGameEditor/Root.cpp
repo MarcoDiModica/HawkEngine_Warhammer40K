@@ -10,6 +10,8 @@
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
 #include "MyUIEngine/CanvasComponent.h"
+#include "MyUIEngine/ImageComponent.h"
+
 #include "App.h"
 #include "Input.h"
 
@@ -242,7 +244,7 @@ std::shared_ptr<GameObject> Root::CreateCanvasObject(const std::string& name) {
     if (meshRenderer) {
         auto material = std::make_shared<Material>();
         auto image = std::make_shared<Image>();
-        image->LoadTexture("Assets/default.png"); // Asegúrate de que la textura exista
+        image->LoadTexture("Assets/crosshair.png"); // Asegúrate de que la textura exista
         material->setImage(image);
         meshRenderer->SetMaterial(material);
     }
@@ -252,6 +254,18 @@ std::shared_ptr<GameObject> Root::CreateCanvasObject(const std::string& name) {
 
 
     return canva;
+}
+
+std::shared_ptr<GameObject> Root::CreateImageObject(const std::string& name, const std::string& imagePath) {
+    auto gameObject = CreateGameObject(name);
+    AddMeshRenderer(*gameObject, Mesh::CreatePlane(), "Assets/default.png");
+    auto imageComponent = gameObject->AddComponent<ImageComponent>();
+
+    auto image = std::make_shared<Image>();
+    image->LoadTexture(imagePath);
+    imageComponent->SetImage(image);
+
+    return gameObject;
 }
 
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)

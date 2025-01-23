@@ -2,25 +2,29 @@
 #define __IMAGE_COMPONENT_H__
 #pragma once
 
-#include "UIComponent.h"
+#include "MyGameEngine/Component.h"
 #include "MyGameEngine/Image.h"
 #include "CanvasComponent.h"
 #include "MyGameEngine/GameObject.h"
 #include <memory>
 
-class ImageComponent : public UIComponent {
+class ImageComponent : public Component {
 public:
     ImageComponent(GameObject* owner);
     ~ImageComponent() override;
 
-    void Start() const override;
-    void Update(float deltaTime) const override;
-    void Destroy() const override;
+    void Start() override;
+    void Update(float deltaTime) override;
+    void Destroy() override;
+    std::unique_ptr<Component> Clone(GameObject* owner) override;
 
-    CanvasComponent::UIComponentType GetType() const override { return CanvasComponent::UIComponentType::IMAGE; }
+
+    ComponentType GetType() const override { return ComponentType::IMAGE; }
 
     void SetImage(std::shared_ptr<Image> image);
     std::shared_ptr<Image> GetImage() const;
+
+    bool isInCanvas() const;
 
     void Render() const;
 

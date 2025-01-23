@@ -81,6 +81,7 @@
     <ClInclude Include="ImageComponent.h" />
     <ClInclude Include="InputBoxComponent.h" />
     <ClInclude Include="UIComponent.h" />
+    <ClInclude Include="UIImage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ButtonComponent.cpp" />
@@ -90,6 +91,7 @@
     <ClCompile Include="ImageComponent.cpp" />
     <ClCompile Include="InputBoxComponent.cpp" />
     <ClCompile Include="UIComponent.cpp" />
+    <ClCompile Include="UIImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

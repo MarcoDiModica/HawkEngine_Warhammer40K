@@ -23,7 +23,8 @@ enum class ComponentType {
 	MESH_RENDERER,
 	CAMERA,
 	LIGHT,
-	CANVAS
+	CANVAS,
+	IMAGE
 };
 
 class Component

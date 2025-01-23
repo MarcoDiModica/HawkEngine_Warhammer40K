@@ -1,24 +1,19 @@
 #include "ImageComponent.h"
-#include <GL/glew.h>
 
-ImageComponent::ImageComponent(GameObject* owner){
-    // Initialization code here
+ImageComponent::ImageComponent(GameObject* owner) : Component(owner) {}
+
+ImageComponent::~ImageComponent() {}
+
+void ImageComponent::Start() {
+    // Start implementation
 }
 
-ImageComponent::~ImageComponent() {
-    // Cleanup code here
+void ImageComponent::Update(float deltaTime) {
+    // Update implementation
 }
 
-void ImageComponent::Start()const {
-    // Start code here
-}
-
-void ImageComponent::Update(float deltaTime)const {
-    // Update code here
-}
-
-void ImageComponent::Destroy()const {
-    // Destroy code here
+void ImageComponent::Destroy() {
+    // Destroy implementation
 }
 
 void ImageComponent::SetImage(std::shared_ptr<Image> image) {
@@ -29,16 +24,22 @@ std::shared_ptr<Image> ImageComponent::GetImage() const {
     return image;
 }
 
+bool ImageComponent::isInCanvas() const
+{
+	//check if the parent of its owner has a canvas component
+	return owner->GetParent()->HasComponent<CanvasComponent>();
+}
+
+
 void ImageComponent::Render() const {
-    if (image) {
-        image->bind();
-        // Render the image using OpenGL or your preferred rendering method
-        // For example, you can use a textured quad to display the image
-        glBegin(GL_QUADS);
-        glTexCoord2f(0.0f, 0.0f); glVertex2f(-0.5f, -0.5f);
-        glTexCoord2f(1.0f, 0.0f); glVertex2f(0.5f, -0.5f);
-        glTexCoord2f(1.0f, 1.0f); glVertex2f(0.5f, 0.5f);
-        glTexCoord2f(0.0f, 1.0f); glVertex2f(-0.5f, 0.5f);
-        glEnd();
-    }
+	//if the image is in a canvas, render the image
+	if (isInCanvas()) {
+		//render the image
+
+	}
+}
+std::unique_ptr<Component> ImageComponent::Clone(GameObject* owner) {
+	auto clone = std::make_unique<ImageComponent>(owner);
+	clone->SetImage(image);
+	return clone;
 }

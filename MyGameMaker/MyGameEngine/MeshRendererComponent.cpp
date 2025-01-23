@@ -121,7 +121,8 @@ void MeshRenderer::Render() const
     if (material)
     {
         //color4 newColor = color4(material->color.x, material->color.y, material->color.z, material->color.w);
-        
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glEnable(GL_TEXTURE_2D);
         material->bind();
         //material->setShaderUniform("texture1", 0); // Pasar la unidad de textura al shader
@@ -136,6 +137,7 @@ void MeshRenderer::Render() const
 
     if (material)
     {
+		glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
     }
 }

@@ -77,6 +77,8 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Light")) { Application->root->CreateLightObject("Light"); }
 			if (ImGui::MenuItem("Canvas")) { Application->root->CreateCanvasObject("Canvas"); }
 			if (ImGui::MenuItem("Button")) { Application->root->CreateButtonObject("Button"); }
+			if (ImGui::MenuItem("Image")) { Application->root->CreateImageObject("Crosshair"); }
+
 
 			ImGui::EndMenu();
 		}

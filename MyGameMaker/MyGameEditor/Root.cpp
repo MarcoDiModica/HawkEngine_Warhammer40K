@@ -288,15 +288,48 @@ std::shared_ptr<GameObject> Root::CreateButtonObject(const std::string& name) {
 
 
 std::shared_ptr<GameObject> Root::CreateImageObject(const std::string& name, const std::string& imagePath) {
-    auto gameObject = CreateGameObject(name);
-    AddMeshRenderer(*gameObject, Mesh::CreatePlane(), "Assets/default.png");
-    auto imageComponent = gameObject->AddComponent<ImageComponent>();
+    
+    auto imageObject = CreateGameObject("Crosshair");
 
+    auto verticalPlane = CreatePlane("1");
+    verticalPlane->GetTransform()->SetPosition(glm::dvec3(-0.75, 0, -3.99)); // Asegúrate de que la posición sea correcta
+    verticalPlane->GetTransform()->SetScale(glm::dvec3(0.5, 0.2, 1.0)); // Cambia los valores según sea necesario
+    verticalPlane->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+    AddMeshRenderer(*verticalPlane, Mesh::CreatePlane(), "Assets/default.png");
+    ParentGameObject(*verticalPlane, *imageObject);
+
+
+    auto verticalPlane2 = CreatePlane("2");
+    verticalPlane2->GetTransform()->SetPosition(glm::dvec3(0.75, 0, -3.99)); // Asegúrate de que la posición sea correcta
+    verticalPlane2->GetTransform()->SetScale(glm::dvec3(0.5, 0.2, 1.0)); // Cambia los valores según sea necesario
+    verticalPlane2->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+    AddMeshRenderer(*verticalPlane2, Mesh::CreatePlane(), "Assets/default.png");
+    ParentGameObject(*verticalPlane2, *imageObject);
+
+
+    auto verticalPlane3 = CreatePlane("3");
+    verticalPlane3->GetTransform()->SetPosition(glm::dvec3(0, -0.75, -3.99)); // Asegúrate de que la posición sea correcta
+    verticalPlane3->GetTransform()->SetScale(glm::dvec3(0.2, 0.5, 1.0)); // Cambia los valores según sea necesario
+    verticalPlane3->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+    AddMeshRenderer(*verticalPlane3, Mesh::CreatePlane(), "Assets/default.png");
+    ParentGameObject(*verticalPlane3, *imageObject);
+
+
+    auto verticalPlane4 = CreatePlane("4");
+    verticalPlane4->GetTransform()->SetPosition(glm::dvec3(0, 0.75, -3.99)); // Asegúrate de que la posición sea correcta
+    verticalPlane4->GetTransform()->SetScale(glm::dvec3(0.2, 0.5, 1.0)); // Cambia los valores según sea necesario
+    verticalPlane4->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+    AddMeshRenderer(*verticalPlane4, Mesh::CreatePlane(), "Assets/default.png");
+    ParentGameObject(*verticalPlane4, *imageObject);
+
+	imageObject->GetTransform()->SetPosition(glm::dvec3(0, 1.5, 0));
+
+    auto imageComponent = imageObject->AddComponent<ImageComponent>();
     auto image = std::make_shared<Image>();
     image->LoadTexture(imagePath);
     imageComponent->SetImage(image);
 
-    return gameObject;
+    return verticalPlane;
 }
 
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)

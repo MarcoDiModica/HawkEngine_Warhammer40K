@@ -32,6 +32,7 @@
 #include "MyGUI.h"
 #include <ImGuizmo.h>
 #include "UISceneWindow.h"
+#include "MyGameEngine/types.h"
 #include "MyGameEngine/CameraBase.h"
 #include "MyGameEngine/BoundingBox.h"
 #include "MyGameEngine/CameraComponent.h"
@@ -99,7 +100,7 @@ static void init_openGL() {
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(0.2, 0.2, 0.2, 1.0);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -109,7 +110,7 @@ static void init_openGL() {
 }
 
 static void drawFloorGrid(int size, double step) {
-	//glColor3ub(0, 2, 200);
+	glColor3f(0.5f, 0.5f, 0.5f); // Gray color
 
 	glBegin(GL_LINES);
 	// CHANGE Application->root->currentScene->DebugDrawTree();
@@ -120,14 +121,14 @@ static void drawFloorGrid(int size, double step) {
 		glVertex3d(-size, 0, i);
 		glVertex3d(size, 0, i);
 	}
-	
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glEnd();
 }
 
 // Initializes camera
 void configureCamera() {
-	glm::dmat4 projectionMatrix = camera->projection();
-	glm::dmat4 viewMatrix = camera->view();
+	glm::dmat4 projectionMatrix = Application->camera->projection();
+	glm::dmat4 viewMatrix = Application->camera->view();
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(glm::value_ptr(projectionMatrix));
@@ -135,7 +136,7 @@ void configureCamera() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
-	camera->frustum.Update(projectionMatrix * viewMatrix);
+	Application->camera->frustum.Update(projectionMatrix * viewMatrix);
 }
 
 void configureGameCamera()
@@ -242,13 +243,11 @@ void UndoRedo()
 
 }
 
-
 #pragma endregion
-
 
 void MousePickingCheck(std::vector<GameObject*> objects)
 {	
-	glm::vec3 rayOrigin = glm::vec3(glm::inverse(camera->view()) * glm::vec4(0, 0, 0, 1));
+	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
 	GameObject* selectedObject = nullptr;
 	bool selecting = false;
@@ -323,14 +322,10 @@ static void display_func() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	
 	configureCamera();
-	//drawFrustum(*camera);
-
-	//configureGameCamera();
-	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
 
 	drawFloorGrid(128, 4);
 
-	std::vector<GameObject*> objects;
+	std::vector<GameObject*> objects;	
 
 	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo ma�ana
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
@@ -353,7 +348,7 @@ static void display_func() {
 
 		RenderOutline(object);
 
-		object->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights,mainShader);
+		object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
 		
 		object->Update(static_cast<float>(Application->GetDt()));
 
@@ -363,7 +358,7 @@ static void display_func() {
 			GameObject* child = object->GetChildren()[j].get();
 			objects.push_back(child);
 			RenderOutline(child);
-			child->ShaderUniforms(camera->view(), camera->projection(), camera->GetTransform().GetPosition(), lights, mainShader);
+			child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
 		
 		}
 	}
@@ -410,26 +405,7 @@ void EditorRenderer(MyGUI* gui) {
 int main(int argc, char** argv) {
 
 	MainState state = CREATE;
-
-	// The application is created
-	Application = new App();
-	//MonoEnvironment* mono = new MonoEnvironment();
-//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
-	MonoManager::GetInstance().Initialize();
-
-
-	//initialize devil
-	ilInit();
-	iluInit();
-	ilutInit();
-
-	init_openGL();
-
-	//if (mainShader.LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
-	//
-	//}
-
-	camera = Application->camera;
+	int result = EXIT_FAILURE;
 
 	Application->physicsModule->Awake();
 	Application->physicsModule->Start();
@@ -441,29 +417,30 @@ int main(int argc, char** argv) {
 
 		case CREATE:
 
-			/*Application = new App();*/
+			// The application is created
+			Application = new App();
+			// MonoEnvironment* mono = new MonoEnvironment();
+			//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
+			MonoManager::GetInstance().Initialize();
+
+			//initialize devil
+			ilInit();
+			iluInit();
+			ilutInit();
+
+			init_openGL();
 
 			if (Application) {	
 				state = AWAKE;
-
-				/*gui = PauCode();*/
 			}
 			else { state = FAIL; printf("Failed on Create"); }
 			break;
 
 
 		case AWAKE:
-			//Application->AddModule(cameraPtr.get(), true);
 
-			camera->GetTransform().GetPosition() = vec3(0, 1, 4);
-			camera->GetTransform().Rotate(glm::radians(180.0), vec3(0, 1, 0));
 			if (Application->Awake()) { state = START; }
-
-			else
-			{
-				printf("Failed on Awake");
-				state = FAIL;
-			}
+			else { printf("Failed on Awake"); state = FAIL; }
 			break;
 
 		case START:
@@ -473,57 +450,34 @@ int main(int argc, char** argv) {
 			break;
 
 		case LOOP:
-			
 
 			EditorRenderer(Application->gui);
 			UndoRedo();
-			if (!Application->Update()) {
-				state = FREE;
-			}
+			if (!Application->Update()) { state = FREE; }
 			break;
-
 
 		case FREE:
 
-			// TODO Free all classes and memory
+			if (Application->CleanUP()) {
+				state = EXIT;
+				result = EXIT_SUCCESS;
+			}
+			else { state = FAIL; printf("Failed on FREE"); }
 			state = EXIT;
 			break;
+
+		case FAIL:
+
+			state = EXIT;
+			result = EXIT_FAILURE;
+			break;
+
+		case EXIT:
+			break;
 		}
-
 	}
-
 
 	MonoManager::GetInstance().Shutdown();
 
-
-
-	//initialize devil
-	//ilInit();
-	//iluInit();
-	//ilutInit();
-	//Window window("ImGUI with SDL2 Simple Example", WINDOW_SIZE.x, WINDOW_SIZE.y);
-	//MyGUI gui(window.windowPtr(), window.contextPtr());
-
-	//init_openGL();
-	//camera.transform().pos() = vec3(0, 1, 4);
-	//camera.transform().rotate(glm::radians(180.0), vec3(0, 1, 0));
-
-	//
-
-	//mesh.LoadMesh("BakerHouse.fbx");
-	//mesh.LoadTexture("Baker_house.png");
-	//mesh.LoadCheckerTexture();
-
-	//while (window.processEvents(&gui) && window.isOpen()) {
-	//	const auto t0 = hrclock::now();
-	//display_func();
-	//	gui.render();
-	//	move_camera();
-	//	window.swapBuffers();
-	//	const auto t1 = hrclock::now();
-	//	const auto dt = t1 - t0;
-	//	if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
-	//}
-
-	return 0;
+	return result;
 }

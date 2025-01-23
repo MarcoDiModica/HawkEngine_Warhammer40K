@@ -20,6 +20,7 @@ public:
 	std::string currentSceneFile;
 
 	void HandleFileSelection(const std::string& filePath);
+	void DrawFolderContents(const std::filesystem::path& path);
 
 private:
 	Image* folderIcon;
@@ -29,6 +30,7 @@ private:
 	Image* matIcon;
 	Image* meshIcon;
 
+	std::filesystem::path selectedDirectory;
 };
 
 #endif // !__UI_PROJECT_H__

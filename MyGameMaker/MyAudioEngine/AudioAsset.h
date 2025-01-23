@@ -13,22 +13,19 @@ public:
     AudioAsset();
     ~AudioAsset();
 
-    // Asset management methods
+    // Load audio from file
     bool LoadFromFile(const std::string& filePath);
-    void SaveBinary(const std::string& filename) const;
-    static std::shared_ptr<AudioAsset> LoadBinary(const std::string& filename);
     
-    // Getters
+    // Get the OpenAL buffer ID
     ALuint GetBuffer() const { return m_Buffer; }
+    
+    // Get audio properties
     float GetDuration() const { return m_Duration; }
     int GetSampleRate() const { return m_SampleRate; }
     int GetChannels() const { return m_Channels; }
-    bool IsValid() const { return m_IsValid; }
     
-    // Asset path management
-    std::string GetSourcePath() const { return m_SourcePath; }
-    std::string GetLibraryPath() const { return m_LibraryPath; }
-    uint32_t GetID() const { return m_AssetID; }
+    // Check if the asset is valid
+    bool IsValid() const { return m_IsValid; }
 
 private:
     bool ProcessAudioFile(AudioFile<float>& audioFile);
@@ -38,12 +35,6 @@ private:
     int m_SampleRate;
     int m_Channels;
     bool m_IsValid;
-
-    // Asset management data
-    std::string m_SourcePath;    // Original file path in Assets/
-    std::string m_LibraryPath;   // Processed file path in Library/
-    uint32_t m_AssetID;          // Unique asset identifier
-    static uint32_t s_NextAssetID;
 };
 
 } 

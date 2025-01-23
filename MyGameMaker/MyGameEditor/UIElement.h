@@ -20,23 +20,26 @@ class UIElement
 {
 public:
 
-	UIElement(UIType, std::string name) : type(type), name(name), enabled(false) {}
-	virtual ~UIElement() {}
+	UIElement(UIType, std::string name);
+	virtual ~UIElement();
 
 	virtual bool Draw() = 0;
 
-	UIType GetType() const { return type; }
-	const std::string& GetName() const { return name; }
+	virtual UIType GetType() const;
+	virtual std::string GetName() const;
 
-	bool GetState() { return enabled; }
-	void SetState(bool state) { enabled = state; }
+	virtual bool GetState();
+	virtual void SetState(bool state);
+	virtual void SwitchState();
+	
 	bool firstDraw = true;
 
 protected:
 
 	UIType type = UIType::UNKNOWN;
 	std::string name;
-	bool enabled;
+	bool enabled = false;
+
 };
 
 #endif // !__UIELEMENT_H__

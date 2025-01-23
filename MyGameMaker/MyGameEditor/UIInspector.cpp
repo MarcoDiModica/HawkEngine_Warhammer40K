@@ -1,20 +1,8 @@
 #include "UIInspector.h"
 #include "App.h"
-#include "imgui.h"
-#include "imgui_internal.h"
 #include "MyGUI.h"
-#include "../MyGameEngine/GameObject.h"
-#include "../MyGameEngine/TransformComponent.h"
-#include "../MyGameEngine/LightComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
-#include "../MyAudioEngine/AudioListener.h"
-#include "UIAudioTest.h"
-#include "../MyGameEditor/Log.h"
-#include <glm/glm.hpp>
-#include <algorithm>
-#include <iostream>
-#include <filesystem>
 
+#include "..\MyGameEngine\TransformComponent.h"
 #include "..\MyGameEngine\CameraComponent.h"
 #include "..\MyGameEngine\Mesh.h"
 #include "EditorCamera.h"
@@ -23,10 +11,16 @@
 #include "..\MyGameEngine\MeshRendererComponent.h"
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
+#include "..\MyGameEngine\LightComponent.h"
+
+#include "..\MyAudioEngine\SoundComponent.h"
 
 #include "..\MyScriptingEngine\ScriptComponent.h"
 
 #include <string>
+
+#include <imgui.h>
+#include <imgui_internal.h>
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/reflection.h>
@@ -109,15 +103,6 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
 				selectedGameObject->AddComponent<LightComponent>();
 			}
-
-			if (!selectedGameObject->HasComponent<SoundComponent>() && ImGui::MenuItem("Sound")) {
-				selectedGameObject->AddComponent<SoundComponent>();
-			}
-
-			if (!selectedGameObject->HasComponent<AudioListener>() && ImGui::MenuItem("Audio Listener")) {
-				selectedGameObject->AddComponent<AudioListener>();
-			}
-
 
             // More components here
 
@@ -425,20 +410,6 @@ bool UIInspector::Draw() {
                         soundComponent->LoadAudio(audioPath);
                     }
 
-                    // Drag and drop target for audio files
-                    if (ImGui::BeginDragDropTarget()) {
-                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-                            const char* path = (const char*)payload->Data;
-                            std::string extension = std::filesystem::path(path).extension().string();
-                            std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
-                            
-                            if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
-                                soundComponent->LoadAudio(path);
-                            }
-                        }
-                        ImGui::EndDragDropTarget();
-                    }
-
                     // Audio Type
                     bool isMusic = soundComponent->IsMusic();
                     if (ImGui::Checkbox("Is Music", &isMusic)) {
@@ -497,46 +468,6 @@ bool UIInspector::Draw() {
                     }
                 }
             }
-        }
-
-        ImGui::Separator();
-        if (selectedGameObject->HasComponent<AudioListener>())
-        {
-            AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
-
-            if (audioListener)
-            if (selectedGameObject->HasComponent<AudioListener>())
-            {
-                AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
-
-                if (audioListener)
-                {
-                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                    if (ImGui::CollapsingHeader("Audio Listener"))
-                    {
-                        ImGui::Text("Audio Listener");
-
-                        // Mostrar la posición del Audio Listener
-                        Transform_Component* transform = selectedGameObject->GetTransform();
-                        if (transform)
-                        {
-                            glm::dvec3 position = transform->GetPosition();
-                            float pos[3] = { static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z) };
-                            ImGui::DragFloat3("Position", pos, 0.1f);
-                        }
-                        else
-                        {
-                            ImGui::Text("Error: Transform component is nullptr");
-                        }
-                    }
-                }
-                else
-                {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: AudioListener is nullptr");
-                }
-            }
-            
-               
         }
         
         ImGui::Separator();

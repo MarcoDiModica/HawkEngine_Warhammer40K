@@ -11,11 +11,8 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
-
 #include "../MyPhysicsEngine/PhysVehicle3D.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
-#include "../MyAudioEngine/SoundComponent.h"
-
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -98,7 +95,7 @@ void SpawnPhysCube() {
     //auto cube = Application->root->CreateCube("PhysicsCube");
     //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
     //Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
-    glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posiciï¿½n de la cï¿½mara
+    glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posición de la cámara
     auto sphere = Application->root->CreateSphere("PhysicsSphere");
     glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
     Application->physicsModule->SpawnPhysSphereWithForce(*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
@@ -292,7 +289,7 @@ bool Input::processSDLEvents()
                     Application->root->RemoveGameObject(selectedObject);
                     i++;
                 }
-                InputManagement->selectedObjects.clear(); // Limpiar la selecciï¿½n despuï¿½s de borrar los objetos
+                InputManagement->selectedObjects.clear(); // Limpiar la selección después de borrar los objetos
                 break;
             }
 
@@ -410,25 +407,6 @@ void Input::HandleFileDrop(const std::string& fileDir)
             //meshRenderer->SetMaterial(material);
         }
     }
-    else if (fileExt == "wav" || fileExt == "ogg" || fileExt == "mp3") {
-        LOG(LogType::LOG_INFO, "Importing Audio: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
-        
-        // Create Audio directory if it doesn't exist
-        fs::path audioDir = fs::path(ASSETS_PATH) / "Audio";
-        if (!fs::exists(audioDir)) {
-            fs::create_directories(audioDir);
-        }
-        
-        // Update target path to Audio subdirectory
-        targetPath = audioDir / fileNameExt;
-        
-        if (InputManagement->draggedObject != nullptr) {
-            auto soundComponent = InputManagement->draggedObject->GetComponent<SoundComponent>();
-            if (soundComponent) {
-                soundComponent->LoadAudio(targetPath.string());
-            }
-        }
-    }
     else if (fileExt == "image") {
         if (InputManagement->draggedObject != nullptr) {
             auto meshRenderer = InputManagement->draggedObject->GetComponent<MeshRenderer>();
@@ -461,7 +439,7 @@ void Input::HandleFileDrop(const std::string& fileDir)
     catch (const std::exception& e) {
         LOG(LogType::LOG_ERROR, "Failed to copy file: %s - %s", fileNameExt.c_str(), e.what());
     }
-    // Lï¿½gica por si la file ya existe
+    // Lógica por si la file ya existe
 }
 
 glm::vec3 Input::getMousePickRay()

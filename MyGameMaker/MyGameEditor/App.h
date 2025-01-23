@@ -37,15 +37,19 @@ public:
 
 	bool Awake();
 	bool Start();
-	bool Update();
-	bool CleanUP();
+	bool DoUpdate();
 
 	void PrepareUpdate();
 	bool PreUpdate();
-	bool DoUpdate();
+
+	bool Update();
+
 	bool FixedUpdate();
+
 	bool PostUpdate();
 	void FinishUpdate();
+
+	bool CleanUP();
 
 	std::vector<LogInfo> GetLogs();
 	void AddLog(LogType type, const char* entry);
@@ -53,6 +57,7 @@ public:
 
 	int GetFps() const;
 	void SetFpsCap(int fps);
+
 	double GetDt() const;
 
 	// Add a new module to handle

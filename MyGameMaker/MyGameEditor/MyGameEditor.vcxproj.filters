@@ -48,6 +48,9 @@
     <ClCompile Include="HardwareSettings.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>EditorModules</Filter>
+    </ClCompile>
     <ClCompile Include="UIConsole.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>

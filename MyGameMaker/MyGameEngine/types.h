@@ -21,14 +21,14 @@
 template <class T>
 inline T RadToDegrees(const T rad)
 {
-    return DEGTORAD * rad;
+	return DEGTORAD * rad;
 }
 
 // Deg to rad
 template <class T>
 inline T DegreesToRad(const T deg)
 {
-    return RADTODEG * deg;
+	return RADTODEG * deg;
 }
 
 // String sizes
@@ -37,13 +37,11 @@ inline T DegreesToRad(const T deg)
 #define BString 8192
 
 // TypeDefs
-using mat4 = glm::dmat4;
 using vec2 = glm::dvec2;
-using vec3 = glm::dvec3;
+using mat4 = glm::dmat4;
 using vec4 = glm::dvec4;
-using ivec2 = glm::ivec2;
+using vec3 = glm::dvec3;
 using u8vec3 = glm::u8vec3;
-using u8vec4 = glm::u8vec4;
 
 using color1 = glm::u8vec1;
 using color2 = glm::u8vec2;
@@ -52,7 +50,7 @@ using color4 = glm::u8vec4;
 
 // Specialize YAML::convert for glm::dvec3
 namespace YAML {
-
+    
     template<>
     struct convert<glm::dvec3> {
         static Node encode(const glm::dvec3& rhs) {
@@ -75,6 +73,9 @@ namespace YAML {
             return true;
         }
     };
+
+
+
 }
 
 
@@ -109,17 +110,17 @@ namespace YAML {
 }
 
 namespace Colors {
-    const glm::u8vec3 Red(255, 0, 0);
-    const glm::u8vec3 Green(0, 255, 0);
-    const glm::u8vec3 Blue(0, 0, 255);
+	const glm::u8vec3 Red(255, 0, 0);
+	const glm::u8vec3 Green(0, 255, 0);
+	const glm::u8vec3 Blue(0, 0, 255);
 };
 
 // Join path and file
 inline const char* const PATH(const char* folder, const char* file)
 {
-    static char path[MString];
-    sprintf_s(path, MString, "%s/%s", folder, file);
-    return path;
+	static char path[MString];
+	sprintf_s(path, MString, "%s/%s", folder, file);
+	return path;
 }
 
 // Directories

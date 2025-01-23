@@ -1,5 +1,4 @@
 #include "AudioEngine.h"
-#include "AudioAssetProcessor.h"
 #include <iostream>
 #include <filesystem>
 
@@ -61,9 +60,6 @@ bool AudioEngine::Initialize() {
 }
 
 void AudioEngine::Shutdown() {
-    // Clear audio asset cache
-    AudioAssetProcessor::ClearCache();
-    
     // Stop and destroy all active sources
     for (auto& [sourceId, source] : m_ActiveSources) {
         StopSound(sourceId);
@@ -88,21 +84,23 @@ void AudioEngine::Shutdown() {
 
 std::shared_ptr<AudioAsset> AudioEngine::LoadAudioAsset(const std::string& filePath) {
     // Check if asset is already loaded
-    std::string libraryPath = "Library/Audio/" + std::filesystem::path(filePath).filename().string();
-    auto asset = AudioAssetProcessor::GetCachedAsset(libraryPath);
-    if (asset) {
-        return asset;
-    }
-
-    // Process the audio file if needed
-    if (!std::filesystem::exists(libraryPath)) {
-        if (!AudioAssetProcessor::ProcessAudioFile(filePath, libraryPath)) {
-            return nullptr;
+    auto it = m_AudioAssets.find(filePath);
+    if (it != m_AudioAssets.end()) {
+        if (auto asset = it->second.lock()) {
+            return asset;
         }
+        // If weak_ptr is expired, remove it
+        m_AudioAssets.erase(it);
     }
 
-    // Load the processed audio
-    return AudioAssetProcessor::LoadProcessedAudio(libraryPath);
+    // Create and load new asset
+    auto asset = std::make_shared<AudioAsset>();
+    if (!asset->LoadFromFile(filePath)) {
+        return nullptr;
+    }
+
+    m_AudioAssets[filePath] = asset;
+    return asset;
 }
 
 ALuint AudioEngine::PlaySound(std::shared_ptr<AudioAsset> asset, bool isLooping, bool isMusic) {

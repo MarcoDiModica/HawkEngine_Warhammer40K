@@ -1,7 +1,7 @@
 #include "ShaderComponent.h"
 
 
-ShaderComponent::ShaderComponent()
+ShaderComponent::ShaderComponent(GameObject* owner) : Component(owner)
 {
 }
 
@@ -19,13 +19,13 @@ Shaders* ShaderComponent::GetShader() const
 	return shader;
 }
 
-void ShaderComponent::SetType(ShaderType newType)
+void ShaderComponent::SetShaderType(ShaderType newType)
 {
 	//shader = Application->root->shaders[newType];
 	type = newType;
 }
 
-ShaderType ShaderComponent::GetType() const
+ShaderType ShaderComponent::GetShaderType() const
 {
 	return type;
 }

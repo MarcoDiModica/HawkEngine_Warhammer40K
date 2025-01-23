@@ -42,7 +42,7 @@ std::unique_ptr<Component> ParticlesEmitterComponent::Clone(GameObject* owner) {
     return std::make_unique<ParticlesEmitterComponent>(owner);
 }
 
-void ParticlesEmitterComponent::EmitParticle(const glm::vec3& speed) {
+void ParticlesEmitterComponent::EmitParticle1(const glm::vec3& speed) {
    /* Particle* newParticle = new Particle();
 	newParticle = SetParticleVariables(emmiterParticle);
     newParticle->Start();
@@ -63,6 +63,20 @@ void ParticlesEmitterComponent::EmitParticle(const glm::vec3& speed) {
     std::cout << "Partícula generada" << std::endl;    
 }
 
+void ParticlesEmitterComponent::EmitParticle2(const glm::vec3& speed) {
+   
+    Particle* newParticle = new Particle();
+    newParticle->position.push_back(this->position);  // Posición inicial basada en la posición actual del GameObject
+    newParticle->SetParticleSpeed(speed); // Velocidad inicial
+    newParticle->lifetime = 5.0f; // Duración de la partícula en segundos
+    newParticle->rotation = 0.0f; // Rotación inicial
+    newParticle->texture->LoadTexture(texturePath); // Cargar la textura
+    newParticle->Start();
+    particles.push_back(*newParticle);
+
+    std::cout << "Partícula generada" << std::endl;
+}
+
 void ParticlesEmitterComponent::Update(float deltaTime) {
     // Actualizar la posición, rotación y escala del emisor de partículas
     this->position = owner->GetComponent<Transform_Component>()->GetPosition();
@@ -74,10 +88,15 @@ void ParticlesEmitterComponent::Update(float deltaTime) {
 
     if (elapsedTime.count() >= spawnRate && particles.size() < maxParticles) {
         // Crear una nueva partícula
-        if (emitterParticle != nullptr) {
+        if (emitterParticle != nullptr && isSmoking == true) {
            /* emitterParticle->position.push_back(this->position);*/
+            glm::vec3 desiredSpeed = glm::vec3(0.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
+            EmitParticle1(desiredSpeed);
+        }
+        if (emitterParticle != nullptr && isSmoking == true) {
+            /* emitterParticle->position.push_back(this->position);*/
             glm::vec3 desiredSpeed = glm::vec3(1.0f, 1.0f, 0.0f); // Aquí puedes configurar la velocidad deseada
-            EmitParticle(desiredSpeed);
+            EmitParticle2(desiredSpeed);
         }
         lastSpawnTime = now;
     }

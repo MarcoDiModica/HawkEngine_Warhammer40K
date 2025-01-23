@@ -13,7 +13,8 @@ public:
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;
-    void EmitParticle(const glm::vec3& speed);
+    void EmitParticle1(const glm::vec3& speed);
+    void EmitParticle2(const glm::vec3& speed);
 	
     std::unique_ptr<Component> Clone(GameObject* owner) override;
     ComponentType GetType() const override { return ComponentType::PARTICLES_EMITTER; }
@@ -29,6 +30,7 @@ private:
 	Particle* emitterParticle = nullptr;
 	int maxParticles = 10;
     float deltaTime;
+    bool isSmoking;
 	// Variables para el spawn de partículas
     float spawnRate = 1.0f; 
     std::chrono::time_point<std::chrono::steady_clock> lastSpawnTime;

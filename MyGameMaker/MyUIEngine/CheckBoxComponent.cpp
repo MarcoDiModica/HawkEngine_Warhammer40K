@@ -1,44 +1,48 @@
 #include "CheckBoxComponent.h"
-#include <algorithm>
 
-CheckBoxComponent::CheckBoxComponent(GameObject* owner){
-    // Initialization code here
+CheckBoxComponent::CheckBoxComponent(GameObject* owner)
+    : Component(owner), isChecked(false) {
 }
 
-CheckBoxComponent::~CheckBoxComponent() {
-    // Cleanup code here
+CheckBoxComponent::~CheckBoxComponent() {}
+
+void CheckBoxComponent::Start() {
+    // Inicializar recursos o estado de la checkbox
 }
 
-void CheckBoxComponent::Start()const {
-    // Start code here
+void CheckBoxComponent::Update(float deltaTime) {
+    // Actualizar lógica, como detectar clics
 }
 
-void CheckBoxComponent::Update(float deltaTime)const {
-    for (const auto& checkBox : checkBoxes) {
-        checkBox->Update(deltaTime);
-    }
+void CheckBoxComponent::Destroy() {
+    // Liberar recursos si es necesario
 }
 
-void CheckBoxComponent::Destroy()const {
-    // Destroy code here
+std::unique_ptr<Component> CheckBoxComponent::Clone(GameObject* owner) {
+    auto clone = std::make_unique<CheckBoxComponent>(owner);
+    clone->SetChecked(isChecked);
+    clone->SetOnCheckedChanged(onCheckedChanged);
+    return clone;
 }
 
-void CheckBoxComponent::AddCheckBox(std::shared_ptr<UIElement> checkBox) {
-    checkBoxes.push_back(checkBox);
-}
-
-void CheckBoxComponent::RemoveCheckBox(std::shared_ptr<UIElement> checkBox) {
-    checkBoxes.erase(std::remove(checkBoxes.begin(), checkBoxes.end(), checkBox), checkBoxes.end());
-}
-
-void CheckBoxComponent::Render() {
-    for (const auto& checkBox : checkBoxes) {
-        if (checkBox->IsEnabled()) {
-            checkBox->Draw();
+void CheckBoxComponent::SetChecked(bool checked) {
+    if (isChecked != checked) {
+        isChecked = checked;
+        if (onCheckedChanged) {
+            onCheckedChanged(isChecked);
         }
     }
 }
 
-void CheckBoxComponent::SetOnCheckedChanged(std::function<void(bool)> onCheckedChanged) {
-    this->onCheckedChanged = onCheckedChanged;
+bool CheckBoxComponent::IsChecked() const {
+    return isChecked;
+}
+
+void CheckBoxComponent::SetOnCheckedChanged(std::function<void(bool)> callback) {
+    onCheckedChanged = std::move(callback);
+}
+
+void CheckBoxComponent::Render() {
+    // Aquí podrías implementar el renderizado de la checkbox
+    // usando la lógica que se adapte a tu motor de juego.
 }

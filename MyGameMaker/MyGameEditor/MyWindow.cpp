@@ -110,6 +110,8 @@ void Window::ActivateVSync()
     VSync = true;
 
     SDL_GL_SetSwapInterval(1);
+
+    LOG(LogType::LOG_INFO, "VSync Activated");
 }
 
 void Window::DesactivateVSync()
@@ -117,6 +119,8 @@ void Window::DesactivateVSync()
     VSync = false;
 
     SDL_GL_SetSwapInterval(0);
+
+    LOG(LogType::LOG_INFO, "VSync Desactivated");
 }
 
 

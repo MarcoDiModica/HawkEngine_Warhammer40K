@@ -11,6 +11,7 @@
 #include "MyGameEngine/ModelImporter.h"
 #include "MyUIEngine/CanvasComponent.h"
 #include "MyUIEngine/ImageComponent.h"
+#include "MyUIEngine/CheckBoxComponent.h"
 
 #include "App.h"
 #include "Input.h"
@@ -244,7 +245,7 @@ std::shared_ptr<GameObject> Root::CreateCanvasObject(const std::string& name) {
     if (meshRenderer) {
         auto material = std::make_shared<Material>();
         auto image = std::make_shared<Image>();
-        image->LoadTexture("Assets/crosshair.png"); // Asegúrate de que la textura exista
+        image->LoadTexture("Assets/Default.png"); // Asegúrate de que la textura exista
         material->setImage(image);
         meshRenderer->SetMaterial(material);
     }
@@ -331,6 +332,59 @@ std::shared_ptr<GameObject> Root::CreateImageObject(const std::string& name, con
 
     return verticalPlane;
 }
+
+std::shared_ptr<GameObject> Root::CreateCheckBoxObject(const std::string& name) {
+    // Crear un GameObject para la checkbox
+    auto checkboxObject = CreateGameObject(name);
+
+    // Agregar el componente CheckBoxComponent al objeto
+    auto checkboxComponent = checkboxObject->AddComponent<CheckBoxComponent>();
+
+    // Configurar el callback para manejar los cambios en el estado de la checkbox
+    checkboxComponent->SetOnCheckedChanged([](bool isChecked) {
+        std::cout << "Checkbox " << (isChecked ? "Checked" : "Unchecked") << std::endl;
+        });
+
+    // Crear un plano para representar la checkbox
+    auto checkboxVisual = CreatePlane("CheckboxVisual");
+    checkboxVisual->GetTransform()->SetPosition(glm::dvec3(0, 3.5, -4)); // Ajusta la posición según sea necesario
+    checkboxVisual->GetTransform()->SetScale(glm::dvec3(0.5, 0.5, 1.0)); // Tamaño de la checkbox
+    checkboxVisual->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+    ParentGameObject(*checkboxVisual, *checkboxObject);
+
+    // Asegúrate de que el MeshRenderer tenga un material y una textura asignados para representar la checkbox
+    auto meshRenderer = checkboxVisual->GetComponent<MeshRenderer>();
+    if (meshRenderer) {
+        auto material = std::make_shared<Material>();
+        auto image = std::make_shared<Image>();
+        image->LoadTexture("Assets/CheckBoxEmpty.png"); // Textura para la checkbox desmarcada
+        material->setImage(image);
+        meshRenderer->SetMaterial(material);
+    }
+    else {
+        std::cerr << "Error: MeshRenderer no encontrado en el plano visual de la checkbox." << std::endl;
+    }
+
+    // Callback para cambiar la textura según el estado de la checkbox
+    checkboxComponent->SetOnCheckedChanged([checkboxVisual](bool isChecked) {
+        auto meshRenderer = checkboxVisual->GetComponent<MeshRenderer>();
+        if (meshRenderer) {
+            auto material = std::make_shared<Material>();
+            auto image = std::make_shared<Image>();
+            if (isChecked) {
+                image->LoadTexture("Assets/CheckBoxFull.png"); // Textura marcada
+            }
+            else {
+                image->LoadTexture("Assets/CheckBoxEmpty.png"); // Textura desmarcada
+            }
+            material->setImage(image);
+            meshRenderer->SetMaterial(material);
+        }
+        });
+
+    return checkboxObject;
+}
+
 
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
 {

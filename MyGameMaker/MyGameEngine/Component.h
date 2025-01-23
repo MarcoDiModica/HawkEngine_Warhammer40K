@@ -25,7 +25,8 @@ enum class ComponentType {
 	LIGHT,
 	CANVAS,
 	BUTTON,
-	IMAGE
+	IMAGE,
+	CHECKBOX
 };
 
 class Component

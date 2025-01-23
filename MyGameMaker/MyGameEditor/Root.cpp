@@ -228,6 +228,27 @@ std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
 std::shared_ptr<GameObject> Root::CreateCanvasObject(const std::string& name) {
     auto canva = CreateGameObject(name);
     canva->AddComponent<CanvasComponent>();
+
+    // Crear un plano vertical
+    auto verticalPlane = CreatePlane("VerticalPlane");
+    verticalPlane->GetTransform()->SetPosition(glm::dvec3(0, 0, 0)); // Asegúrate de que la posición sea correcta
+    verticalPlane->GetTransform()->Rotate(glm::radians(90.0), glm::dvec3(1, 0, 0));
+    ParentGameObject(*verticalPlane, *canva);
+
+    // Asegúrate de que el MeshRenderer tenga un material y una textura asignados
+    auto meshRenderer = verticalPlane->GetComponent<MeshRenderer>();
+    if (meshRenderer) {
+        auto material = std::make_shared<Material>();
+        auto image = std::make_shared<Image>();
+        image->LoadTexture("Assets/default.png"); // Asegúrate de que la textura exista
+        material->setImage(image);
+        meshRenderer->SetMaterial(material);
+    }
+    else {
+        std::cerr << "Error: MeshRenderer no encontrado en el plano vertical." << std::endl;
+    }
+
+
     return canva;
 }
 

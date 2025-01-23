@@ -1,7 +1,7 @@
 
-# 🦅 HawkEngine 🦅 #
+# 🦅 HawkEngine Scripting🦅 #
 
-Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
+Preliminar approach to the scripting mechanisms of The Engineson (former HawkEngine). This is the final project for the Game Engines subject, present in Barcelona's Game Development & Design degree, UPC (TTC)
 
 ## OUR MEMBERS ##
 
@@ -9,9 +9,19 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 [Marco di Modica](https://github.com/MarcoDiModica)
 
+![smaller_github_image](https://github.com/user-attachments/assets/f955f5f8-faa2-436e-9f16-2e8abad89754)
+
+Implemented ScriptComponent, refactorised Scripting entire solution for organisation purposes, some C# binding, general cleanup and error solving and Inspector Script visualisation (wip).
+
 [Jordi Tur](https://github.com/Jordopol) 
 
-[Pau Mora](https://github.com/Peluchomp)
+![image](https://github.com/user-attachments/assets/cb62d16b-1dcb-485c-a54f-875e61abd02d)
+
+Implemented Transform and MeshRenderer Components C# translations and bindings, developed various script components and thoroughly tested the functions.
+
+[Dídac García](https://github.com/D1dii)
+
+![smaller_github_image_2](https://github.com/user-attachments/assets/8b41f1d5-24c7-457c-9e1d-c0de226f629f)
 
 # CONTROLS #
 
@@ -45,6 +55,22 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - To save a scene, File->Save Scene; To create a scene, File->New Scene; To load a scene, right click the scene in the library and load
 
+## SCRIPTING CONTROLS ##
+
+- UP ARROW: move tank , move projectile (z positive).
+
+- DOWN ARROW: move tank, move projectile (z negative).
+
+- LEFT ARROW: move tank, move projectile (x positive).
+
+- RIGHT ARROW: move tank, move projectile (x negative).
+
+- D: reset projectile position.
+
+- SPACE (HOLD) + MOVING MOUSE: reorient turret.
+
+- E (DISABLED): instantiate new projectile.
+
 ## FEATURES ##
 
 - New revamped dockable UI look
@@ -64,6 +90,28 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 - Shader Module (work in progress - almost finished)
 
 - Octree (work in progress - implemented but not functional)
+
+## SCRIPTING FEATURES ##
+
+- Added MonoBehaviour environment.
+
+- Added ScriptComponent (editor interactability work in progress).
+
+- Added Engine Binds to translate between Cpp and C# functions.
+
+- Added C# translations for GameObject, TransformComponent, MeshRendererComponent and CameraComponent.
+
+## PROBLEMS TO SOLVE ##
+
+- Some core functionalities need to either be implemented or changed.
+
+- Creating new C# Components is a tedius procedure.
+
+- Interactability via the editor is not finished.
+
+- Many improvements for user experienced should be performed.
+
+## GIFS ##
 
 ## LICENSES ##
 

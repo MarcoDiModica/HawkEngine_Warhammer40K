@@ -6,6 +6,12 @@
 #include "../MyGameEngine/Component.h"
 #include "../MyGameEngine/GameObject.h"
 
+enum class BillboardType
+{
+    SCREEN_ALIGNED,  // Aligned to the camera screen
+    WORLD_ALIGNED,   // Aligned to the world
+    AXIS_ALIGNED     // Aligned to a specific axis (typically the Y-axis)
+};
 class ParticlesEmitterComponent : public Component{
 public:
     ParticlesEmitterComponent(GameObject* owner);
@@ -30,6 +36,17 @@ public:
     void setMaxParticles(int maxParticles);
     bool isSmoking;
 
+    glm::mat4 CalculateScreenAligned(const glm::vec3& particlePosition, const glm::vec3& cameraPosition);
+
+    glm::mat4 CalculateWorldAligned(const glm::vec3& particlePosition, const glm::vec3& cameraPosition);
+
+    glm::mat4 CalculateAxisAligned(const glm::vec3& cameraPosition, const glm::vec3& axis);
+
+    void ApplyTransform(const glm::mat4& transformMatrix);
+
+    BillboardType m_Type;
+    BillboardType GetTypeEnum() const;
+    void SetType(BillboardType type);
 
 private:
     std::string texturePath;

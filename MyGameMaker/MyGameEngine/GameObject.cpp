@@ -11,7 +11,6 @@
 #include "LightComponent.h"
 #include "Shaders.h"
 #include <string>
-#include"../MyParticlesEngine/Billboard.h"
 
 unsigned int GameObject::nextGid = 1;
 

@@ -24,7 +24,6 @@ enum class ComponentType {
 	CAMERA,
 	LIGHT,
 	PARTICLES_EMITTER,
-	BILLBOARD,
 };
 
 class Component

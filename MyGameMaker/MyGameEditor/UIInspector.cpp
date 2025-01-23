@@ -20,7 +20,6 @@
 
 #include <imgui.h>
 #include <imgui_internal.h>
-#include"../MyParticlesEngine/Billboard.h"
 #include <MyParticlesEngine/ParticlesEmitterComponent.h>
 
 #include "tinyfiledialogs/tinyfiledialogs.h"
@@ -102,9 +101,7 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
                 selectedGameObject->AddComponent<LightComponent>();
             }
-            if (!selectedGameObject->HasComponent<Billboard>() && ImGui::MenuItem("Billboard")) {
-                selectedGameObject->AddComponent<Billboard>(BillboardType::SCREEN_ALIGNED, glm::vec3(0.0f), glm::vec3(1.0f));
-            }
+            
             // More components here
             if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
                 selectedGameObject->AddComponent<ParticlesEmitterComponent>();
@@ -154,58 +151,7 @@ bool UIInspector::Draw() {
         }
         ImGui::Separator();
 
-        if (selectedGameObject->HasComponent<Billboard>()) {
-            Billboard* billboard = selectedGameObject->GetComponent<Billboard>();
-            ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-
-            if (ImGui::CollapsingHeader("Billboard")) {
-                const char* billboardTypes[] = { "Screen Aligned", "World Aligned", "Axis Aligned" };
-                int currentType = static_cast<int>(billboard->GetTypeEnum());
-                if (ImGui::Combo("Type", &currentType, billboardTypes, IM_ARRAYSIZE(billboardTypes))) {
-                    billboard->SetType(static_cast<BillboardType>(currentType));
-                }
-                glm::dvec3 currentPosition = transform->GetPosition();
-                glm::dvec3 currentScale = transform->GetScale();
-
-                float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
-                float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
-
-
-                glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition();
-                glm::vec3 cameraUp = Application->camera->GetTransform().GetUp();
-
-                glm::mat4 transformMatrix = billboard->CalculateTransform(cameraPosition, cameraUp);
-
-                float billPos[3] = { transformMatrix[0][0], transformMatrix[1][0],transformMatrix[2][0] };
-                float billScale[3] = { transformMatrix[0][1], transformMatrix[1][1],transformMatrix[2][1] };
-
-                if (ImGui::DragFloat3("Position", billPos, 0.1f)) {
-                    glm::dvec3 newBillPosition = { billPos[0], billPos[1], billPos[2] };
-                    glm::dvec3 deltaPos = newBillPosition - currentPosition;
-                    transform->Translate(deltaPos);
-
-                }
-
-                if (ImGui::DragFloat3("Scale", billScale, 0.1f)) {
-                    glm::dvec3 newScale = { billScale[0],  billScale[1],  billScale[2] };
-                    glm::dvec3 deltaScale = newScale / currentScale;
-                    transform->Scale(deltaScale);
-                }
-
-
-
-                ImGui::Text("Transformation Matrix:");
-                for (int i = 0; i < 4; ++i) {
-                    ImGui::Text("[%.2f, %.2f, %.2f, %.2f]",
-                        transformMatrix[i][0],
-                        transformMatrix[i][1],
-                        transformMatrix[i][2],
-                        transformMatrix[i][3]);
-                }
-            }
-        }
-        ImGui::Separator();
-
+ 
         if (selectedGameObject->HasComponent<ParticlesEmitterComponent>()) {
             ParticlesEmitterComponent* particlesEmitter = selectedGameObject->GetComponent<ParticlesEmitterComponent>();
             ImGui::SetNextItemOpen(true, ImGuiCond_Once);
@@ -221,8 +167,17 @@ bool UIInspector::Draw() {
                 if (ImGui::InputInt("Max Particles", &maxParticles)) {
                     particlesEmitter->setMaxParticles(maxParticles);
                 }
+
+           
+                const char* billboardTypes[] = { "Screen Aligned", "World Aligned", "Axis Aligned" };
+                int currentBillboardType = static_cast<int>(particlesEmitter->GetTypeEnum());
+
+                if (ImGui::Combo("Billboard Type", &currentBillboardType, billboardTypes, IM_ARRAYSIZE(billboardTypes))) {
+                    particlesEmitter->SetType(static_cast<BillboardType>(currentBillboardType));
+                }
                 ImGui::TextWrapped("Texture Path: %s", texturePath.c_str());
 
+            
                 if (ImGui::Button("Set Texture")) {
                     const char* path = tinyfd_openFileDialog("Choose a texture", "", 0, nullptr, nullptr, 0);
                     if (path && strlen(path) > 0) { // Check if the path is valid

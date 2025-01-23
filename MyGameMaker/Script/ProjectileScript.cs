@@ -15,43 +15,77 @@ public class ProjectileScript : MonoBehaviour
     Transform transform;
     Vector3 initialPosition;
     Vector3 direction = Vector3.Zero;
-    bool isMoving = false;
-    public float speed = 0.5f;
-    public float projectileLifeTime = 3.0f;
-    private float lifeTimer = 0f;
-
+    bool isMoving = true;
+    public float speed = 2.0f;
 
     public override void Start()
     {
-        transform = GetComponent<Transform>();
+        transform = gameObject.GetComponent<Transform>();
 
         transform.SetScale(0.3f, 0.3f, 0.3f);
         transform.SetPosition(0.0f, 3.0f, 0.0f);
 
+        Vector2 mousePos = new Vector2(Input.GetMousePosition().X, Input.GetMousePosition().Y);
+        Vector3 worldMousePos = new Vector3(mousePos.X, transform.position.Y, Input.GetMousePosition().Z);
+        direction = new Vector3(0,0,1);
+
         initialPosition = transform.position;
+
+        Engineson.print("Projectile spawned at {transform.position}, moving towards {worldMousePos} with direction {direction}");
     }
 
     public override void Update(float deltaTime)
     {
+        if (Input.GetKey(KeyCode.UP))
+        {
+            direction = new Vector3(0, 0, 1);
+        }
+        else if (Input.GetKey(KeyCode.DOWN))
+        {
+            direction = new Vector3(0, 0, -1);
+        }
+        else if (Input.GetKey(KeyCode.LEFT))
+        {
+            direction = new Vector3(-1, 0, 0);
+        }
+        else if (Input.GetKey(KeyCode.RIGHT))
+        {
+            direction = new Vector3(1, 0, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (isMoving == true)
+            {
+                ResetProjectile();
+            }
+            else
+            {
+                FireProjectile();
+            }
+        }
+
         if (isMoving)
         {
-            transform.position += direction * speed * deltaTime;
-
-            lifeTimer += deltaTime;
-        
+            UpdateProjectile(deltaTime);
         }
+
+        Engineson.print($"Projectile move to {transform.position}");
     }
 
-    public void SetDirection(Vector3 newDirection, float newSpeed)
+    private void FireProjectile()
     {
-        direction = Vector3.Normalize(newDirection);
-        speed = newSpeed;
         isMoving = true;
     }
 
-    public void StopMovement()
+    private void ResetProjectile()
     {
+        transform.position = initialPosition;
         isMoving = false;
-        speed = 0f;
+    }
+
+    private void UpdateProjectile(float deltaTime)
+    {
+        transform.position += direction * speed * deltaTime;
     }
 }

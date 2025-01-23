@@ -73,9 +73,17 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - You can save and load a custom file format for the particle
 
+## PARTICLE FEATURES ##
+
+- You can now create particles around the scene and modify them as you want through the inspector
+
+- You can save and load files of particles already done
+
+- You can spawn fireworks through the scene using your keyboard
+
 ## PARTICLE ISSUES ##
 
-- The billboard doesn't work
+- The billboard calculates but doesn't work
 
 - The firework emitter doesn't get destroyed after the firework explodes
 

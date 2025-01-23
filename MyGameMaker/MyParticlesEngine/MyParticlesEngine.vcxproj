@@ -72,10 +72,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Billboard.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticlesEmitterComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="ParticlesEmitterComponent.cpp" />
     <ClCompile Include="Particle.cpp" />
   </ItemGroup>

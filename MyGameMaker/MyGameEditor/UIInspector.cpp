@@ -1,3 +1,6 @@
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/component_wise.hpp>
+
 #include "UIInspector.h"
 #include "App.h"
 #include "MyGUI.h"
@@ -17,7 +20,7 @@
 
 #include <imgui.h>
 #include <imgui_internal.h>
-
+#include"../MyParticlesEngine/Billboard.h"
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
 	matrixDirty = false;
@@ -95,7 +98,9 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
 				selectedGameObject->AddComponent<LightComponent>();
 			}
-
+            if (!selectedGameObject->HasComponent<Billboard>() && ImGui::MenuItem("Billboard")) {
+                selectedGameObject->AddComponent<Billboard>(BillboardType::SCREEN_ALIGNED, glm::vec3(0.0f), glm::vec3(1.0f));
+            }
             // More components here
 
             ImGui::EndPopup();
@@ -142,6 +147,38 @@ bool UIInspector::Draw() {
             throw std::runtime_error("UIInspector::Draw: Transform component is nullptr");
         }
 
+        if (selectedGameObject->HasComponent<Billboard>()) {
+            Billboard* billboard = selectedGameObject->GetComponent<Billboard>();
+            ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+
+            if (ImGui::CollapsingHeader("Billboard")) {
+                const char* billboardTypes[] = { "Screen Aligned", "World Aligned", "Axis Aligned" };
+                int currentType = static_cast<int>(billboard->GetTypeEnum());
+                if (ImGui::Combo("Type", &currentType, billboardTypes, IM_ARRAYSIZE(billboardTypes))) {
+                    billboard->SetType(static_cast<BillboardType>(currentType));
+                }
+
+                glm::vec3 position = billboard->GetPosition();
+                glm::vec3 scale = billboard->GetScale();
+
+                float billPos[3] = { position.x, position.y, position.z };
+                float billScale[3] = { scale.x, scale.y, scale.z };
+
+                if (ImGui::DragFloat3("Position", billPos, 0.1f)) {
+                    glm::vec3 newBillPosition = { billPos[0], billPos[1], billPos[2] };
+                    glm::vec3 deltaBillPos = newBillPosition - position;
+                    transform->Translate(glm::dvec3(deltaBillPos));
+                    billboard->SetPosition(newBillPosition);
+                }
+
+                if (ImGui::DragFloat3("Scale", billScale, 0.1f)) {
+                    glm::vec3 newBillScale = { billScale[0], billScale[1], billScale[2] };
+                    glm::vec3 deltaBillScale = newBillScale / scale;
+                    transform->Scale(glm::dvec3(deltaBillScale));
+                    billboard->SetScale(newBillScale);
+                }
+            }
+        }
         ImGui::Separator();
 
         if (selectedGameObject->HasComponent<MeshRenderer>()) {

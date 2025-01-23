@@ -1,3 +1,6 @@
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/component_wise.hpp>
+
 #include "GameObject.h"
 #include "MeshRendererComponent.h"
 #include "../MyGameEditor/App.h"
@@ -8,6 +11,7 @@
 #include "LightComponent.h"
 #include "Shaders.h"
 #include <string>
+#include"../MyParticlesEngine/Billboard.h"
 
 unsigned int GameObject::nextGid = 1;
 

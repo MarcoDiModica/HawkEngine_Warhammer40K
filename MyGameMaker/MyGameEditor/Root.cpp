@@ -46,7 +46,7 @@ void MakeSmokerEmmiter() {
     auto transform = particlesEmitter->GetTransform();
     std::string texturePath = "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png";
     transform->SetPosition(transform->GetPosition() + glm::dvec3(-14, 1, -10)); // Ejemplo de movimiento en el eje X
-    transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotación en el eje Y
+    transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotaciï¿½n en el eje Y
     ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
 	particlesEmmiterComponent->SetTexture(texturePath);
     particlesEmmiterComponent->isSmoking = true;
@@ -57,7 +57,7 @@ void MakeSmokerEmiter2() {
     auto transform = particlesEmitter->GetTransform();
     std::string texturePath = "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png";
     transform->SetPosition(transform->GetPosition() + glm::dvec3(-10, 0, -16)); // Ejemplo de movimiento en el eje X
-    transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotación en el eje Y
+    transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotaciï¿½n en el eje Y
     ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
     particlesEmmiterComponent->SetTexture(texturePath);
     particlesEmmiterComponent->isSmoking = true;
@@ -165,7 +165,7 @@ bool Root::Update(double dt) {
         EmitterInfo emitterInfo;
         emitterInfo.gameObject = particleEmitter;
         emitterInfo.creationTime = std::chrono::steady_clock::now();
-        emitterInfo.lifetime = 1.0f;
+        emitterInfo.lifetime = 2.0f;
         emitterInfo.particle = new Particle();
         emitterInfo.SetSpeed({ glm::vec3(0.0f, 3.0f, 0.0f) });
         emitterInfo.maxParticles = 3;

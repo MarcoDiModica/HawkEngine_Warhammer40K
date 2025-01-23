@@ -23,10 +23,10 @@ class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
 
-void MakeParticlesEmmiter() {
+void MakeSmokerEmmiter() {
     auto particlesEmitter = Application->root->CreateGameObject("ParticlesEmitter");
     auto transform = particlesEmitter->GetTransform();
-    transform->SetPosition(transform->GetPosition() + glm::dvec3(0.01, 0, 0)); // Ejemplo de movimiento en el eje X
+    transform->SetPosition(transform->GetPosition() + glm::dvec3(0, 1, -10)); // Ejemplo de movimiento en el eje X
     transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotación en el eje Y
     ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
 }
@@ -69,7 +69,7 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     MakeCity();
-	MakeParticlesEmmiter();
+	MakeSmokerEmmiter();
 
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");*/

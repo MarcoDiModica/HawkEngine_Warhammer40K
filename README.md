@@ -81,7 +81,7 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - Audio test window
 
-## AUDIO ISSUES##
+## AUDIO ISSUES ##
 
 ## LICENSES ##
 

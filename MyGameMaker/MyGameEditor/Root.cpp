@@ -163,9 +163,9 @@ bool Root::Update(double dt) {
         EmitterInfo emitterInfo;
         emitterInfo.gameObject = particleEmitter;
         emitterInfo.creationTime = std::chrono::steady_clock::now();
-        emitterInfo.lifetime = 1.0f;
+        emitterInfo.lifetime = 2.0f;
         emitterInfo.particle = new Particle();
-        emitterInfo.SetSpeed({ glm::vec3(2.0f, 3.0f, -2.0f) });
+        emitterInfo.SetSpeed({ glm::vec3(0.0f, 2.0f, 0.0f) });
         emitterInfo.maxParticles = 3;
         activeEmitters.push_back(emitterInfo);
     }

@@ -97,6 +97,7 @@ bool Root::Start()
 	blob3->LoadScript("ProjectileScript");
     
 	ParentGameObject(*BlobFish2, *BlobFish);
+	ParentGameObject(*BlobFish3, *BlobFish2);
     //blob2->LoadScript("TestingComponent");
     
     //check if blobfish has 2 scripts

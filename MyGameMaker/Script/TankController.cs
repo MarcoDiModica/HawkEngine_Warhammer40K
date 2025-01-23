@@ -32,6 +32,7 @@ public class TankController : MonoBehaviour
         transform.SetPosition(0, 2, 0);
 
         prev_mouse = new Vector2(0,0);
+
     }
 
     public override void Update(float deltaTime)

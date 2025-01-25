@@ -19,7 +19,7 @@ https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/releases/tag/v1.0.0_
 
 ![yiwei photo](https://github.com/user-attachments/assets/cb78a926-4833-4bdc-945c-2d891b20f55f)
 
--Main Designer and Programmer for this AudioEngine, implemented Base OpenAL integration, Music and sound effect playing, SoundComponent, AudioListener, and AudioAsset Processer and its adjacent things.
+-Main Designer and Programmer for this AudioEngine, implemented all its feature examples: Base OpenAL integration, Music and sound effect playing, SoundComponent, AudioListener, and AudioAsset Processer and its adjacent things.
 
 
 [Biel Liñán](https://github.com/Drauguer)

@@ -15,7 +15,7 @@
 #include "../MyPhysicsEngine/PhysVehicle3D.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
 #include "../MyAudioEngine/SoundComponent.h"
-
+#include "../MyAudioEngine/AudioAssetProcessor.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -421,6 +421,27 @@ void Input::HandleFileDrop(const std::string& fileDir)
         
         // Update target path to Audio subdirectory
         targetPath = audioDir / fileNameExt;
+
+        // Process the audio file for Library
+        fs::path libraryPath = fs::path("Library/Audio") / fileNameExt;
+        if (!fs::exists(libraryPath.parent_path())) {
+            fs::create_directories(libraryPath.parent_path());
+        }
+
+        // First copy to Assets
+        try {
+            if (!fs::exists(targetPath) || fs::file_size(fileDir) != fs::file_size(targetPath)) {
+                fs::copy(fileDir, targetPath, fs::copy_options::overwrite_existing);
+                LOG(LogType::LOG_OK, "Audio file copied to Assets: %s", targetPath.string().c_str());
+            }
+
+            // Then process to Library
+            MyGameEngine::AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
+            LOG(LogType::LOG_OK, "Audio file processed to Library: %s", libraryPath.string().c_str());
+        }
+        catch (const std::exception& e) {
+            LOG(LogType::LOG_ERROR, "Error processing audio file: %s", e.what());
+        }
         
         if (InputManagement->draggedObject != nullptr) {
             auto soundComponent = InputManagement->draggedObject->GetComponent<SoundComponent>();

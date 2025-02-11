@@ -365,3 +365,4 @@ FodyWeavers.xsd
 # Installed packages
 /vcpkg_installed
 /MyGameMaker/MyGameEditor/Library
+/MyGameMaker.code-workspace

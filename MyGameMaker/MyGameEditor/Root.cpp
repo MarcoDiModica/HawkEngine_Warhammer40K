@@ -9,6 +9,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
+#include "../MyPhysicsEngine/ColliderComponent.h"
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
@@ -20,6 +21,8 @@
 #include <iostream>
 
 using namespace std;
+
+std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
 
 class GameObject;
 
@@ -42,11 +45,17 @@ void MakeCity() {
         go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        gameObjectsWithColliders.push_back(go);
     }
 
     MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
     MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
     MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
+
+    for (auto& go : gameObjectsWithColliders) {
+        go->AddComponent<ColliderComponent>(Application->physicsModule, true);
+    }
+
 }
 
 bool Root::Awake()
@@ -67,6 +76,9 @@ bool Root::Awake()
     MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera; */   
+
+	auto Collider = CreateGameObject("Collider");
+    //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
 
     return true;
 }
@@ -170,6 +182,10 @@ std::shared_ptr<GameObject> Root::CreateCube(const std::string& name) {
 std::shared_ptr<GameObject> Root::CreateSphere(const std::string& name) {
     
     return SceneManagement->CreateSphere(name);
+}
+std::shared_ptr<GameObject> Root::CreateCylinder(const std::string& name) {
+    
+    return SceneManagement->CreateCylinder(name);
 }
 
 std::shared_ptr<GameObject> Root::CreatePlane(const std::string& name) {

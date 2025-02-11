@@ -87,6 +87,9 @@
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\MyPhysicsEngine\MyPhysicsEngine.vcxproj">
+      <Project>{2adcc106-88f4-4ea9-8174-9e1323e4d869}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\MyScriptingEngine\MyScriptingEngine.vcxproj">
       <Project>{c0f74fc2-d269-40d3-bdd1-557d2e8478be}</Project>
     </ProjectReference>
@@ -103,7 +106,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGUI.cpp" />
     <ClCompile Include="MyWindow.cpp" />
-    <ClCompile Include="PhysicsModule.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
     <ClCompile Include="UIAudioTest.cpp" />
@@ -125,7 +127,6 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="MyGUI.h" />
     <ClInclude Include="MyWindow.h" />
-    <ClInclude Include="PhysicsModule.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
     <ClInclude Include="UIAudioTest.h" />

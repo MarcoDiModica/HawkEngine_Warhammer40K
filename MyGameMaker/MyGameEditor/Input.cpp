@@ -11,10 +11,11 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
+
+#include "../MyPhysicsEngine/PhysVehicle3D.h"
+#include "../MyPhysicsEngine/PhysicsModule.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyAudioEngine/AudioAssetProcessor.h"
-
-
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -92,11 +93,100 @@ std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
 }
 
 
-void SpawnCube() {
-    auto cube = Application->root->CreateCube("PhysicsCube");
-    cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
-    auto t = cube->GetTransform()->GetPosition();
-    Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Masa 1.0f
+
+void SpawnPhysCube() {
+    //auto cube = Application->root->CreateCube("PhysicsCube");
+    //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
+    //Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
+    glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posici�n de la c�mara
+    auto sphere = Application->root->CreateSphere("PhysicsSphere");
+    glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
+    Application->physicsModule->SpawnPhysSphereWithForce(*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
+}
+
+void SpawnCar() {
+    // Perform raycast to get the ground plane intersection point
+    glm::vec3 mouseRay = Application->input->getMousePickRay();
+    glm::vec3 cameraPos = Application->camera->GetTransform().GetPosition();
+    glm::vec3 groundPlaneNormal(0, 1, 0);
+    float groundPlaneD = 0.0f;
+
+    // Calculate intersection using plane equation
+    float t = -(glm::dot(cameraPos, groundPlaneNormal) + groundPlaneD) /
+        glm::dot(mouseRay, groundPlaneNormal);
+    glm::vec3 spawnPosition = cameraPos + t * mouseRay;
+
+    // Ensure the car spawns slightly above the ground
+    float chassisHeightAboveGround = 0.5f; // Offset above the ground
+    spawnPosition.y += chassisHeightAboveGround;
+
+    // Define vehicle properties
+    VehicleInfo car;
+    car.chassis_size = glm::vec3(2.0f, 0.5f, 4.0f);
+    car.chassis_offset = glm::vec3(0, 0.25f, 0); // Centered in height
+    car.mass = 800.0f;
+
+    // Define wheel properties
+    float wheelRadius = 0.4f;
+    float wheelWidth = 0.3f;
+    float wheelSuspensionLength = 0.6f;
+    glm::vec3 wheelDirection(0, -1, 0); // Suspension direction
+    glm::vec3 wheelAxis(1, 0, 0);       // Rotation axis
+
+    car.num_wheels = 4;
+    car.wheels = new Wheel[4];
+
+    // Wheel positions relative to the chassis
+    float halfWidth = car.chassis_size.x / 2.0f + wheelWidth / 2.0f; // Adjusted for wheel width
+    float halfLength = car.chassis_size.z / 2.0f;
+    car.wheels[0] = { glm::vec3(halfWidth, 0, halfLength), wheelDirection, wheelAxis, wheelSuspensionLength, wheelRadius, wheelWidth, true, true, true, true };
+    car.wheels[1] = { glm::vec3(-halfWidth, 0, halfLength), wheelDirection, wheelAxis, wheelSuspensionLength, wheelRadius, wheelWidth, true, true, true, true };
+    car.wheels[2] = { glm::vec3(halfWidth, 0, -halfLength), wheelDirection, wheelAxis, wheelSuspensionLength, wheelRadius, wheelWidth, false, true, true, false };
+    car.wheels[3] = { glm::vec3(-halfWidth, 0, -halfLength), wheelDirection, wheelAxis, wheelSuspensionLength, wheelRadius, wheelWidth, false, true, true, false };
+
+    // Create vehicle in the physics world
+    PhysVehicle3D* vehicle = Application->physicsModule->AddVehicle(car);
+    vehicle->SetPos(spawnPosition.x, spawnPosition.y, spawnPosition.z);
+
+    // Create chassis as a cube
+    auto chassis = Application->root->CreateCube("chassis");
+    chassis->GetTransform()->SetPosition(spawnPosition);
+    chassis->GetTransform()->SetScale(car.chassis_size);
+    Application->physicsModule->CreatePhysicsForCube(*chassis, car.mass);
+
+    // Set chassis to have no initial velocity or force
+    btRigidBody* chassisBody = vehicle->vehicle->getRigidBody();
+    chassisBody->setLinearVelocity(btVector3(0, 0, 0));
+    chassisBody->setAngularVelocity(btVector3(0, 0, 0));
+    chassisBody->clearForces();
+
+    // Create and configure wheels
+    std::vector<GameObject*> wheels;
+    for (int i = 0; i < car.num_wheels; ++i) {
+        auto wheel = Application->root->CreateCylinder("wheel" + std::to_string(i));
+        glm::vec3 wheelPos = glm::vec3(
+            spawnPosition.x + car.wheels[i].connection.x,
+            spawnPosition.y + car.wheels[i].connection.y,
+            spawnPosition.z + car.wheels[i].connection.z
+        );
+        wheelPos.y -= wheelRadius; // Ensure the wheel touches the ground
+
+        wheel->GetTransform()->SetPosition(wheelPos);
+        wheel->GetTransform()->SetScale(glm::vec3(wheelRadius * 2, wheelWidth, wheelRadius * 2));
+        wheel->GetTransform()->Rotate(90, glm::vec3(0, 0, 1));
+
+        Application->physicsModule->CreatePhysicsForCube(*wheel, 50.0f); // Mass of the wheel
+        Application->physicsModule->AddConstraintHinge(
+            *chassis, *wheel, car.wheels[i].connection, glm::vec3(0), wheelAxis, wheelAxis, false);
+
+        Application->root->ParentGameObject(*wheel, *chassis); // Set chassis as parent of the wheel
+        wheels.push_back(wheel.get());
+    }
+
+    // Sync vehicle components for proper collision and movement
+    Application->physicsModule->SyncVehicleComponents(vehicle, chassis.get(), wheels);
+
+    std::cout << "Car spawned successfully at position " << spawnPosition.x << ", " << spawnPosition.y << ", " << spawnPosition.z << std::endl;
 }
 
 bool Input::processSDLEvents()
@@ -151,6 +241,8 @@ bool Input::processSDLEvents()
 
     static SDL_Event event;
 
+    static bool f12Pressed = false;
+
     while (SDL_PollEvent(&event) != 0)
     {
         Application->gui->processEvent(event);
@@ -159,6 +251,12 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             InputManagement->mouse_z = event.wheel.y;
+            if (f12Pressed && InputManagement->mouse_z > 0) {
+                SpawnPhysCube();
+            }
+            if (f12Pressed && InputManagement->mouse_z < 0) {
+                SpawnCar();
+            }
             break;
 
         case SDL_MOUSEMOTION:
@@ -174,6 +272,15 @@ bool Input::processSDLEvents()
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym) {
             case SDLK_1:
+                break;
+            case SDLK_F12:
+                if (f12Pressed == false) {
+                    f12Pressed = true; // Activar la bandera si F12 fue presionado
+
+                }
+                else {
+                    f12Pressed = false; // Desactivar la bandera si F12 fue liberado
+                }
                 break;
             case SDLK_ESCAPE:
                 return false;

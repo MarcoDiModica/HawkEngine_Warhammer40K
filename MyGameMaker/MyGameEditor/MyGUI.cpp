@@ -79,9 +79,9 @@ bool MyGUI::Awake() {
 	elements.push_back(UICameraPanel);
 	ret = isInitialized(UICameraPanel);
 
-	UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
-	elements.push_back(UIAudioTestPanel);
-	ret = isInitialized(UIAudioTestPanel);
+	//UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
+	//elements.push_back(UIAudioTestPanel);
+	//ret = isInitialized(UIAudioTestPanel);
 
 	return ret;
 }
@@ -219,9 +219,9 @@ void MyGUI::Render() {
 		UIProjectPanel->Draw();
 	}
 
-	if (showAudioTest) {
-		UIAudioTestPanel->Draw();
-	}
+	//if (showAudioTest) {
+	//	UIAudioTestPanel->Draw();
+	//}
 
 	//if (showCamera) {
 	//	UICameraPanel->Draw();

@@ -76,7 +76,7 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Console")) { Application->gui->showConsole = !Application->gui->showConsole; }
 			if (ImGui::MenuItem("Settings")) { Application->gui->showSettings = !Application->gui->showSettings; }
 			if (ImGui::MenuItem("Inspector")) { Application->gui->showInspector = !Application->gui->showInspector; }
-			if (ImGui::MenuItem("Audio Test", NULL, &Application->gui->showAudioTest)) {}
+			//if (ImGui::MenuItem("Audio Test", NULL, &Application->gui->showAudioTest)) {}
 
 			ImGui::EndMenu();
 		}

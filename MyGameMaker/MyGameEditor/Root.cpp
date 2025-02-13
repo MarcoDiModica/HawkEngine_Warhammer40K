@@ -62,6 +62,8 @@ bool Root::Awake()
 {
    // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
     SceneManagement = new SceneManager();
+    Application->root->CreateScene("HolaBuenas");
+    Application->root->SetActiveScene("HolaBuenas");
     //MonoEnvironment* env = new MonoEnvironment();
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
@@ -93,9 +95,33 @@ bool Root::Start()
 {
     //MonoEnvironment* mono = new MonoEnvironment();
 
-    auto Script = CreateGameObject("Script");
-    auto script = Script->AddComponent<ScriptComponent>();
-    script->LoadScript("TestingComponent");
+    //auto Script = CreateGameObject("Script");
+    //auto script = Script->AddComponent<ScriptComponent>();
+    //script->LoadScript("TestingComponent");
+
+    auto BlobFish = CreateGameObject("Tank");
+    auto blob = BlobFish->AddComponent<ScriptComponent>();
+
+	auto BlobFish2 = CreateGameObject("Turret");
+	auto blob2 = BlobFish2->AddComponent<ScriptComponent>();
+
+    auto BlobFish3 = CreateGameObject("SingleProjectile");
+	auto blob3 = BlobFish3->AddComponent<ScriptComponent>();
+    
+    AddMeshRenderer(*BlobFish, Mesh::CreateCube());
+	AddMeshRenderer(*BlobFish2, Mesh::CreateCube());
+    AddMeshRenderer(*BlobFish3, Mesh::CreateSphere());
+
+    //auto blob2 = BlobFish->AddComponent<ScriptComponent>();
+    blob->LoadScript("TestingComponent");
+	blob2->LoadScript("TankController");
+	blob3->LoadScript("ProjectileScript");
+    
+	ParentGameObject(*BlobFish2, *BlobFish);
+	ParentGameObject(*BlobFish3, *BlobFish2);
+    //blob2->LoadScript("TestingComponent");
+    
+    //check if blobfish has 2 scripts
 
     /*auto Street = CreateGameObject("Street");
     Street->GetTransform()->GetPosition() = vec3(0, 0, 0);

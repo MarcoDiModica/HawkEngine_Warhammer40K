@@ -158,6 +158,11 @@ void GameObject::Start()
         component.second->Start();
     }
 
+    for (auto& scriptComponent : scriptComponents)
+    {
+        scriptComponent->Start();
+    }
+
     //if (GetName() != "Cube_3") {
     //    scene->tree->Insert(scene->tree->root, *this, 0);
     //}
@@ -255,6 +260,11 @@ void GameObject::Update(float deltaTime)
 		component.second->Update(deltaTime);
 	}
 
+    for (auto& scriptComponent : scriptComponents)
+    {
+        scriptComponent->Update(deltaTime);
+    }
+
     for (auto& child : children)
     {
         child->Update(deltaTime);
@@ -284,6 +294,11 @@ void GameObject::Destroy()
     {
         component.second->Destroy();
     }
+
+    for (auto& scriptComponent : scriptComponents) {
+        scriptComponent->Destroy();
+    }
+    scriptComponents.clear();
 }
 
 void GameObject::Draw() const
@@ -495,7 +510,7 @@ MonoObject* GameObject::GetSharp() {
 
     //Obtenemos el nombre del GO, creamos el string en mono y llamamos a la funcion que crea el GO
     MonoString* monoString = mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
-    CsharpReference = EngineBinds::CreateGameObjectSharp(monoString);
+    CsharpReference = EngineBinds::CreateGameObjectSharp(monoString, this);
 
     return CsharpReference;
 }

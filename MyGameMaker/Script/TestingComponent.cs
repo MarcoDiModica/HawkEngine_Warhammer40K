@@ -3,62 +3,82 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 using HawkEngine;
+using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
+using System.Runtime.CompilerServices;
 
 public class TestingComponent : MonoBehaviour
 {
     GameObject actor;
     Transform transfr;
+    Test test;
+    TestingComponent testing1;
+    GameObject projectile;
+    TankController turret;
+    Transform turretTransform;
 
     public float timer = 0.0f;
-    public int count = 0;
-    public string name = "testing";
-   
+    public int count = 1;
+    public float projectileSpeed = 10.0f;
+
+    public float moveAmount = 1.0f;
+    private Vector3 currentPosition;
+
+    Vector2 prev_mouse;
+
+    float lookPosX = 0;
     public override void Start()
     {
-        actor = Engineson.CreateGameObject("aaa");
-        transfr = actor.GetComponent<Transform>();
-        
+        //actor = Engineson.CreateGameObject("FuckingTank", null);
+        transfr = gameObject.GetComponent<Transform>();
 
-        if (transfr != null)
+        transfr.SetScale(2, 2, 2);
+
+        timer = 0.0f;
+        //lookPosX = transfr.position.X;
+        //actor.AddComponent<Camera>();
+        prev_mouse = new Vector2(0, 0);
+
+        //test = actor.AddComponent<Test>();
+        testing1 = gameObject.GetComponent<TestingComponent>();
+        if (testing1 != null)
         {
-            Engineson.print("the transform was gotten");
+            Engineson.print("I have a TestingComponent");
         }
         else
         {
-            Engineson.print("Waaaawaaaa");
+            Engineson.print("I dont have a TestingComponent");
         }
-
-        timer = 0.0f;
-
-        actor.AddComponent<Camera>();
     }
-
 
     public override void Update(float deltaTime)
     {
-        //return;
-        if (Input.GetKeyDown(KeyCode.A))
+        Vector3 movement = Vector3.Zero;
+        Vector3 forwardDirection = Vector3.Zero;
+
+        // Tank controls
+        if (Input.GetKey(KeyCode.UP))
         {
-            Engineson.print("pressing a");
-            transfr.SetPosition(10, 10, 10);
+            movement = new Vector3(0, 0, moveAmount);
+            forwardDirection = new Vector3(0, 0, 1);
+        }
+        else if (Input.GetKey(KeyCode.DOWN))
+        {
+            movement = new Vector3(0, 0, -moveAmount);
+            forwardDirection = new Vector3(0, 0, -1);
         }
 
-        timer += deltaTime;
 
-        if (timer > 1.0f)
+        if (movement != Vector3.Zero)
         {
-            Engineson.print("1 second has passed");
-            //Engineson.print("count: " + count);
-            count++;
-            timer = 0.0f;
+            transfr.position += transfr.forward * movement.Z * deltaTime;
 
-            //actor.name = count.ToString();
-            //transfr.position = new System.Numerics.Vector3(transfr.position.X + 1, transfr.position.Y, transfr.position.Z);
-            //transfr.eulerAngles = new System.Numerics.Vector3(transfr.position.X , transfr.position.Y +1, transfr.position.Z);
-            //Engineson.print(transfr.eulerAngles.Y.ToString() + "Yaw !!!!");
-           // Engineson.print(transfr.eulerAngles.ToString() + " euleeers");
+            Engineson.print($"Moved to {transfr.GetLocalPosition()}, facing {forwardDirection}.");
         }
+
     }
+
 }
 

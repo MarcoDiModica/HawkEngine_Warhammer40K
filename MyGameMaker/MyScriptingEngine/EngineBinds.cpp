@@ -8,31 +8,16 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
-
+#include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
 
+
 // GameObject
-MonoObject* EngineBinds::CreateGameObjectSharp(MonoString* name) {
-    char* C_name = mono_string_to_utf8(name);
-    std::shared_ptr<GameObject> obj = SceneManagement->CreateGameObject(C_name); //SUSTITUIR POR ROOT DEL ENGINE
 
-    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+MonoObject* EngineBinds::GetGameObject(MonoObject* ref) {
 
-    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string,uintptr)", true);
-    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-    // assign to C#object its ptr to C++ object
-    uintptr_t goPtr = reinterpret_cast<uintptr_t>(obj.get());
+    return GetScriptOwner(ref)->GetSharp();
 
-    void* args[2];
-    args[0] = mono_string_new(MonoManager::GetInstance().GetDomain(), obj->GetName().c_str());
-    args[1] = &goPtr;
-
-    mono_runtime_invoke(method, monoObject, args, NULL);
-
-    obj->CsharpReference = monoObject; // store ref to C#ref to call lifecycle functions
-
-    return monoObject;
 }
 
 MonoString* EngineBinds::GameObjectGetName(MonoObject* sharpRef) {
@@ -51,6 +36,45 @@ GameObject* EngineBinds::ConvertFromSharp(MonoObject* sharpObj) {
     return reinterpret_cast<GameObject*>(Cptr);
 }
 
+MonoObject* EngineBinds::CreateGameObjectSharp(MonoString* name, GameObject* Cgo) {
+    char* C_name = mono_string_to_utf8(name);
+
+    if (Cgo == nullptr) {
+        auto go = SceneManagement->CreateGameObject(C_name); 
+        Cgo = go.get();
+    }
+
+
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.GameObject:.ctor(string,uintptr)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    // assign to C#object its ptr to C++ object
+    uintptr_t goPtr = reinterpret_cast<uintptr_t>(Cgo);
+
+    void* args[2];
+    args[0] = mono_string_new(MonoManager::GetInstance().GetDomain(), Cgo->GetName().c_str());
+    args[1] = &goPtr;
+
+    mono_runtime_invoke(method, monoObject, args, NULL);
+
+    Cgo->CsharpReference = monoObject; // store ref to C#ref to call lifecycle functions
+
+    return monoObject;
+}
+
+GameObject* EngineBinds::GetScriptOwner(MonoObject* ref) {
+    if (ref == nullptr) {
+        return nullptr;
+    }
+
+    uintptr_t Cptr;
+    MonoClass* klass = MonoManager::GetInstance().GetClass("", "MonoBehaviour");
+    mono_field_get_value(ref, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
+    return reinterpret_cast<GameObject*>(Cptr);
+}
+
 void EngineBinds::GameObjectAddChild(MonoObject* parent, MonoObject* child) {
     if (!parent || !child) {
         return;
@@ -66,6 +90,7 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     if (object_to_destroy == nullptr) {
         return;
     }
+	SceneManagement->RemoveGameObject(ConvertFromSharp(object_to_destroy));
 
     uintptr_t Cptr;
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
@@ -74,13 +99,18 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     SceneManagement->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
 }
 
-MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* comoponent_name)
+MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* component_name)
 {
-    char* C_name = mono_string_to_utf8(comoponent_name);
+    char* C_name = mono_string_to_utf8(component_name);
     auto GO = ConvertFromSharp(ref);
 
-    /* TODO change this to a dictionary , string component type */
     std::string componentName = std::string(C_name);
+
+    for (const auto& scriptComponent : GO->scriptComponents) {
+        if (scriptComponent->GetTypeName() == componentName) {
+            return scriptComponent->GetSharpObject();
+        }
+    }
 
     if (componentName == "HawkEngine.Transform") {
         return GO->GetTransform()->GetSharp();
@@ -91,6 +121,8 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* comopone
 	else if (componentName == "HawkEngine.Camera") {
 		return GO->GetComponent<CameraComponent>()->GetSharp();
 	}
+
+
 	
     // Add other components
     return nullptr;
@@ -109,6 +141,17 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
     case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
         break;
    }
+
+    // loop through all the scripts and grant them unique ids
+    for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it) {
+
+        if (component == it->second) {
+
+            auto script = go->AddComponent<ScriptComponent>();
+            script->LoadScript(it->first);
+        }
+
+    }
 
     return _component->GetSharp();
 
@@ -165,10 +208,21 @@ void EngineBinds::SetPosition(MonoObject* transformRef, float x, float y, float 
     if (transform) transform->SetPosition(glm::vec3(x, y, z));
 }
 
+void EngineBinds::SetLocalPosition(MonoObject* transformRef, float x, float y, float z) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) transform->SetLocalPosition(glm::vec3(x, y, z));
+}
+
 Vector3 EngineBinds::GetPosition(MonoObject* transformRef) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     glm::dvec3 p = transform->GetPosition();
     return Vector3 {(float) p.x,(float)p.y,(float)p.z };
+}
+
+Vector3 EngineBinds::GetLocalPosition(MonoObject* transformRef) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    glm::dvec3 p = transform->GetLocalPosition()[3];
+    return Vector3{ (float)p.x,(float)p.y,(float)p.z };
 }
 
 void EngineBinds::SetRotation(MonoObject* transformRef, float x, float y, float z) {
@@ -226,6 +280,13 @@ void EngineBinds::AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp) 
 void EngineBinds::SetForward(MonoObject* transformRef, glm::vec3* forward) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     if (transform) transform->SetForward(*forward);
+}
+
+Vector3 EngineBinds::GetForward(MonoObject* transformRef) {
+
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    auto forward = transform->GetForward();
+    return Vector3{ (float) forward.x,(float) forward.y , (float) forward.z };
 }
 
 // Camera Class functions
@@ -344,6 +405,8 @@ void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
 	
 
 void EngineBinds::BindEngine() {
+
+    mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     // GameObject
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
@@ -366,6 +429,8 @@ void EngineBinds::BindEngine() {
     // Transform
     mono_add_internal_call("HawkEngine.Transform::SetPosition", (const void*)&EngineBinds::SetPosition);
     mono_add_internal_call("HawkEngine.Transform::GetPosition", (const void*)&EngineBinds::GetPosition);
+    mono_add_internal_call("HawkEngine.Transform::SetLocalPosition", (const void*)&EngineBinds::SetLocalPosition);
+    mono_add_internal_call("HawkEngine.Transform::GetLocalPosition", (const void*)&EngineBinds::GetLocalPosition);
     mono_add_internal_call("HawkEngine.Transform::SetRotation", (const void*)&EngineBinds::SetRotation);
     mono_add_internal_call("HawkEngine.Transform::GetEulerAngles", (const void*)&EngineBinds::GetEulerAngles);
     mono_add_internal_call("HawkEngine.Transform::SetRotationQuat", (const void*)&EngineBinds::SetRotationQuat);
@@ -377,6 +442,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Transform::TranslateLocal", (const void*)&EngineBinds::TranslateLocal);
     mono_add_internal_call("HawkEngine.Transform::AlignToGlobalUp", (const void*)&EngineBinds::AlignToGlobalUp);
     mono_add_internal_call("HawkEngine.Transform::SetForward", (const void*)&EngineBinds::SetForward);
+    mono_add_internal_call("HawkEngine.Transform::GetForward", (const void*)&EngineBinds::GetForward);
 
     // Camera
     mono_add_internal_call("HawkEngine.Camera::SetCameraFieldOfView", (const void*)&EngineBinds::SetCameraFieldOfView);

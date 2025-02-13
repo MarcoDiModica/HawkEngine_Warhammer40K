@@ -32,6 +32,8 @@
 #include <mono/metadata/reflection.h>
 #include "../MyScriptingEngine/MonoManager.h"
 
+#include <Windows.h>
+
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
 	matrixDirty = false;
@@ -540,100 +542,114 @@ bool UIInspector::Draw() {
         }
         
         ImGui::Separator();
-        if (selectedGameObject->HasComponent<ScriptComponent>())
-        {
-            ScriptComponent* scriptComponent = selectedGameObject->GetComponent<ScriptComponent>();
-
-            if (scriptComponent && scriptComponent->monoScript)
-            {
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Script"))
-                {
-                    std::string scriptName = scriptComponent->GetName();
-                    ImGui::Text("Script: %s", scriptName.c_str());
-
-                    MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
-
-                    MonoClassField* field = nullptr;
-                    void* iter = nullptr;
-                    while ((field = mono_class_get_fields(scriptClass, &iter)))
+      
+        if (selectedGameObject->scriptComponents.size() > 0) {
+            for (auto& scriptComponent : selectedGameObject->scriptComponents) {
+                if (scriptComponent && scriptComponent->monoScript) {
+                    ImGui::PushID(scriptComponent.get());
+                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                    if (ImGui::CollapsingHeader(scriptComponent->GetName().c_str()))
                     {
-                        const char* fieldName = mono_field_get_name(field);
-                        MonoType* fieldType = mono_field_get_type(field);
-                        int typeCode = mono_type_get_type(fieldType);
+                        std::string scriptName = mono_class_get_name(mono_object_get_class(scriptComponent->monoScript));
+                        ImGui::Text("Script: %s", scriptName.c_str());
 
-                        MonoClass* fieldParentClass = mono_field_get_parent(field);
+                        if (ImGui::Button("Open Script")) {
+                            std::string scriptPath = std::filesystem::absolute("../Script/" + scriptName + ".cs").string();
+                            LOG(LogType::LOG_INFO, "Absolute script path: %s", scriptPath.c_str());
 
-                        ImGui::PushID(field);
-
-                        if (typeCode == MONO_TYPE_STRING)
-                        {
-                            MonoString* monoString = nullptr;
-                            mono_field_get_value(scriptComponent->monoScript, field, &monoString);
-                            std::string value = monoString ? mono_string_to_utf8(monoString) : "";
-
-                            char buffer[128];
-                            strncpy(buffer, value.c_str(), sizeof(buffer));
-                            buffer[sizeof(buffer) - 1] = '\0';
-
-                            if (ImGui::InputText(fieldName, buffer, sizeof(buffer)))
-                            {
-                                value = buffer;
-                                MonoString* newMonoString = mono_string_new(mono_domain_get(), value.c_str());
-                                mono_field_set_value(scriptComponent->monoScript, field, newMonoString);
+                            if (!std::filesystem::exists(scriptPath)) {
+                                LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
                             }
-                        }
-                        else if (typeCode == MONO_TYPE_BOOLEAN)
-                        {
-                            bool value = false;
-                            mono_field_get_value(scriptComponent->monoScript, field, &value);
-                            if (ImGui::Checkbox(fieldName, &value))
-                            {
-                                mono_field_set_value(scriptComponent->monoScript, field, &value);
-                            }
-                        }
-                        else if (typeCode == MONO_TYPE_I4)
-                        {
-                            int value = 0;
-                            mono_field_get_value(scriptComponent->monoScript, field, &value);
-                            if (ImGui::InputInt(fieldName, &value))
-                            {
-                                mono_field_set_value(scriptComponent->monoScript, field, &value);
-                            }
-                        }
-                        else if (typeCode == MONO_TYPE_R4)
-                        {
-                            float value = 0.0f;
-                            mono_field_get_value(scriptComponent->monoScript, field, &value);
-                            if (ImGui::InputFloat(fieldName, &value))
-                            {
-                                mono_field_set_value(scriptComponent->monoScript, field, &value);
-                            }
-                        }
-                        else if (typeCode == MONO_TYPE_R8)
-                        {
-                            double value = 0.0;
-                            mono_field_get_value(scriptComponent->monoScript, field, &value);
-                            if (ImGui::InputDouble(fieldName, &value))
-                            {
-                                mono_field_set_value(scriptComponent->monoScript, field, &value);
+                            else {
+                                HINSTANCE result = ShellExecuteA(NULL, "open", scriptPath.c_str(), NULL, NULL, SW_SHOW);
+                                if ((int)result <= 32) {
+                                    LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
+                                }
+                                else {
+                                    LOG(LogType::LOG_INFO, "Successfully opened script: %s", scriptPath.c_str());
+                                }
                             }
                         }
 
 
-                        ImGui::PopID();
+                        if (ImGui::Button("Reload Script")) {
+                            if (!scriptComponent->LoadScript(scriptName)) {
+                                LOG(LogType::LOG_ERROR, "Failed to reload script %s.", scriptName.c_str());
+                            }
+                            else {
+                                LOG(LogType::LOG_INFO, "Script %s reloaded successfully.", scriptName.c_str());
+                            }
+                        }
+
+                        MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
+
+                        MonoClassField* field = nullptr;
+                        void* iter = nullptr;
+                        while ((field = mono_class_get_fields(scriptClass, &iter))) {
+                            const char* fieldName = mono_field_get_name(field);
+                            MonoType* fieldType = mono_field_get_type(field);
+                            int typeCode = mono_type_get_type(fieldType);
+
+                            MonoClass* fieldParentClass = mono_field_get_parent(field);
+
+                            ImGui::PushID(field);
+
+                            if (typeCode == MONO_TYPE_STRING) {
+                                MonoString* monoString = nullptr;
+                                mono_field_get_value(scriptComponent->monoScript, field, &monoString);
+                                std::string value = monoString ? mono_string_to_utf8(monoString) : "";
+
+                                char buffer[128];
+                                strncpy(buffer, value.c_str(), sizeof(buffer));
+                                buffer[sizeof(buffer) - 1] = '\0';
+
+                                if (ImGui::InputText(fieldName, buffer, sizeof(buffer))) {
+                                    value = buffer;
+                                    MonoString* newMonoString = mono_string_new(mono_domain_get(), value.c_str());
+                                    mono_field_set_value(scriptComponent->monoScript, field, newMonoString);
+                                }
+                            }
+                            else if (typeCode == MONO_TYPE_BOOLEAN) {
+                                bool value = false;
+                                mono_field_get_value(scriptComponent->monoScript, field, &value);
+                                if (ImGui::Checkbox(fieldName, &value)) {
+                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
+                                }
+                            }
+                            else if (typeCode == MONO_TYPE_I4) {
+                                int value = 0;
+                                mono_field_get_value(scriptComponent->monoScript, field, &value);
+                                if (ImGui::InputInt(fieldName, &value)) {
+                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
+                                }
+                            }
+                            else if (typeCode == MONO_TYPE_R4) {
+                                float value = 0.0f;
+                                mono_field_get_value(scriptComponent->monoScript, field, &value);
+                                if (ImGui::InputFloat(fieldName, &value)) {
+                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
+                                }
+                            }
+                            else if (typeCode == MONO_TYPE_R8) {
+                                double value = 0.0;
+                                mono_field_get_value(scriptComponent->monoScript, field, &value);
+                                if (ImGui::InputDouble(fieldName, &value)) {
+                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
+                                }
+                            }
+
+                            ImGui::PopID();
+                        }
                     }
+                    ImGui::PopID();
                 }
-            }
-            else
-            {
-                if (!scriptComponent)
-                {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: ScriptComponent is nullptr");
-                }
-                else
-                {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
+                else {
+                    if (!scriptComponent) {
+                        LOG(LogType::LOG_WARNING, "UIInspector::Draw: ScriptComponent is nullptr");
+                    }
+                    else {
+                        LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
+                    }
                 }
             }
 

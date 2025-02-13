@@ -22,8 +22,17 @@ public:
 
     ComponentType GetType() const override { return ComponentType::COLLIDER; }
 
-    // Clonar el componente
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
+
+    glm::vec3 GetSize() { return size; };
+
+    void SetSize(const glm::vec3& newSize);
+
+    float GetMass() { return mass; };
+
+    void SetMass(float newMass);
+
+    void SetActive(bool active);
 
 private:
     btRigidBody* rigidBody; // Collider en Bullet

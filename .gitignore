@@ -362,7 +362,11 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+.ini
+
 # Installed packages
 /vcpkg_installed
 /MyGameMaker/MyGameEditor/Library
 /MyGameMaker.code-workspace
+/MyGameMaker/MyGameEditor/imgui.ini
+MyGameMaker/MyGameEditor/imgui.ini

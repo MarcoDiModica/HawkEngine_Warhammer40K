@@ -195,6 +195,8 @@ bool Input::processSDLEvents()
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 
+    //const Uint8* controllerKeys = SDL_Getcontroller
+
     for (int i = 0; i < MAX_KEYS; ++i)
     {
         if (keys[i] == 1)
@@ -334,6 +336,72 @@ bool Input::processSDLEvents()
                 }
                 break;
             }
+            break;
+        case SDL_CONTROLLERBUTTONDOWN:
+            // Manejar eventos de botones del controlador aquí
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
+                // Acción para el botón X (Cruz)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
+                // Acción para el botón Círculo
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
+                // Acción para el botón Cuadrado
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
+                // Acción para el botón Triángulo
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+                // Acción para el botón Share
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_GUIDE) {
+                // Acción para el botón PS (Guía)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+                // Acción para el botón Options
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSTICK) {
+                // Acción para el botón del stick izquierdo (L3)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSTICK) {
+                // Acción para el botón del stick derecho (R3)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
+                // Acción para el botón del hombro izquierdo (L1)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
+                // Acción para el botón del hombro derecho (R1)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
+                // Acción para el botón de dirección arriba
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
+                // Acción para el botón de dirección abajo
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
+                // Acción para el botón de dirección izquierda
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
+                // Acción para el botón de dirección derecha
+            }
+			if (event.cbutton.button == SDL_CONTROLLER_BUTTON_MAX) {
+				// Acción para el botón de la derecha del touchpad
+			}
+            break;
+        case SDL_CONTROLLERAXISMOTION:
+            // Manejar eventos de ejes del controlador aquí
+            if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
+                // Acción para el eje izquierdo X
+            }
+			if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
+				// Acción para el eje izquierdo Y
+			}
+			if (event.caxis.axis == SDL_CONTROLLER_AXIS_RIGHTX) {
+				// Acción para el eje derecho X
+			}
+			if (event.caxis.axis == SDL_CONTROLLER_AXIS_RIGHTY) {
+				// Acción para el eje derecho Y
+			}
             break;
 
 

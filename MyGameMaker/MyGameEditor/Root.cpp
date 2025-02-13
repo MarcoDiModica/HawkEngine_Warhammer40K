@@ -9,15 +9,20 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
-#include "MyGameEngine/SceneManager.h"
+#include "../MyPhysicsEngine/ColliderComponent.h"
 #include "App.h"
 #include "Input.h"
+#include "../MyAudioEngine/SoundComponent.h"
+#include "../MyAudioEngine/AudioListener.h"
+
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include <SDL2/SDL.h>
 
 #include <iostream>
 
 using namespace std;
+
+std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
 
 class GameObject;
 
@@ -40,11 +45,17 @@ void MakeCity() {
         go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        gameObjectsWithColliders.push_back(go);
     }
 
     MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
     MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
     MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
+
+    for (auto& go : gameObjectsWithColliders) {
+        go->AddComponent<ColliderComponent>(Application->physicsModule, true);
+    }
+
 }
 
 bool Root::Awake()
@@ -56,6 +67,7 @@ bool Root::Awake()
     //MonoEnvironment* env = new MonoEnvironment();
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
+    SoundComponent::InitSharedAudioEngine();
     MakeCity();
 
     /*CreateScene("Viernes13");
@@ -67,6 +79,15 @@ bool Root::Awake()
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera; */   
 
+	auto Collider = CreateGameObject("Collider");
+    //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
+
+    return true;
+}
+
+bool Root::CleanUp()
+{
+    SoundComponent::ShutdownSharedAudioEngine();
     return true;
 }
 
@@ -188,6 +209,10 @@ std::shared_ptr<GameObject> Root::CreateSphere(const std::string& name) {
     
     return SceneManagement->CreateSphere(name);
 }
+std::shared_ptr<GameObject> Root::CreateCylinder(const std::string& name) {
+    
+    return SceneManagement->CreateCylinder(name);
+}
 
 std::shared_ptr<GameObject> Root::CreatePlane(const std::string& name) {
     
@@ -253,4 +278,24 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
 std::shared_ptr<GameObject> Root::FindGOByName(char* name) {
     
     return SceneManagement->FindGOByName(name);
+}
+
+
+std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
+{
+    auto gameObject = CreateGameObject(name);
+    if (!gameObject) {
+        LOG(LogType::LOG_ERROR, "Failed to create audio object");
+        return nullptr;
+    }
+
+    // Add SoundComponent
+    auto soundComponent = gameObject->AddComponent<SoundComponent>();
+    if (!soundComponent) {
+        LOG(LogType::LOG_ERROR, "Failed to add SoundComponent to audio object");
+        return nullptr;
+    }
+
+    LOG(LogType::LOG_OK, "Created audio object: %s", name.c_str());
+    return gameObject;
 }

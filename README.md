@@ -1,4 +1,3 @@
-
 # 🦅 HawkEngine Scripting🦅 #
 
 Preliminar approach to the scripting mechanisms of The [Engineson](https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/scripting.05) (former HawkEngine). This is the final project for the Game Engines subject, present in Barcelona's Game Development & Design degree, UPC (TTC)

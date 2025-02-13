@@ -14,7 +14,6 @@
   #endif
 #include <yaml-cpp/yaml.h>
 #include <mono/metadata/object.h>
-
 class GameObject;
 class SceneSerializer;
 
@@ -23,8 +22,12 @@ enum class ComponentType {
 	TRANSFORM,
 	MESH_RENDERER,
 	CAMERA,
+	AUDIO,
+	AUDIO_LISTENER,
 	SCRIPT,
+	COLLIDER,
 	LIGHT
+
 };
 
 class Component

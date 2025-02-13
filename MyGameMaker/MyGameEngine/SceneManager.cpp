@@ -12,6 +12,7 @@
 
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyGameEditor/Log.h"
+#include "../MyAudioEngine/AudioListener.h"
 
 
 bool SceneManager::Start() {
@@ -146,7 +147,11 @@ std::shared_ptr<GameObject> SceneManager::CreateSphere(const std::string& name) 
     AddMeshRenderer(*sphere, Mesh::CreateSphere(), "Assets/default.png");
     return sphere;
 }
-
+std::shared_ptr<GameObject> SceneManager::CreateCylinder(const std::string& name) {
+    auto cylinder = CreateGameObject(name);
+    AddMeshRenderer(*cylinder, Mesh::CreateCylinder(), "Assets/default.png");
+    return cylinder;
+}
 std::shared_ptr<GameObject> SceneManager::CreatePlane(const std::string& name) {
     auto plane = CreateGameObject(name);
     AddMeshRenderer(*plane, Mesh::CreatePlane(), "Assets/default.png");
@@ -156,6 +161,7 @@ std::shared_ptr<GameObject> SceneManager::CreatePlane(const std::string& name) {
 std::shared_ptr<GameObject> SceneManager::CreateCameraObject(const std::string& name) {
     auto camera = CreateGameObject(name);
     camera->AddComponent<CameraComponent>();
+    camera->AddComponent<AudioListener>();
     return camera;
 }
 

@@ -26,7 +26,7 @@ void MeshRenderer::Start()
 
 void MeshRenderer::Update(float deltaTime)
 {
-
+    
 }
 
 void MeshRenderer::Destroy()

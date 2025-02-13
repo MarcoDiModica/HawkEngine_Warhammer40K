@@ -1,12 +1,12 @@
 ﻿using System;
-
+using HawkEngine;
 public class Test : MonoBehaviour
 {
     private float timer = 0.0f;
     public override void Start()
     {
         Console.WriteLine("Test Start Console.WriteLine");
-        HawkEngine.Engineson.print("Hello from C# PrintEngineCall");
+        Engineson.print("Hello from C# PrintEngineCall");
     }
 
     public override void Update(float deltaTime)
@@ -14,7 +14,7 @@ public class Test : MonoBehaviour
         timer += deltaTime;
         if (timer >= 1.0f)
         {
-            HawkEngine.Engineson.print("¡Ha pasado un segundo!");
+            Engineson.print("¡Ha pasado un segundo!");
             Console.WriteLine("Test Update Console.WriteLine");
             timer = 0.0f;
         }
@@ -24,18 +24,18 @@ public class Test : MonoBehaviour
         //    HawkEngine.Engineson.print("A is pressed");
         //}
 
-        if (HawkEngine.Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
-            HawkEngine.Engineson.print("Left Click is pressed");
+            Engineson.print("Left Click is pressed");
         }
 
-        int testAxis = HawkEngine.Input.GetAxis("Horizontal");
+        int testAxis = Input.GetAxis("Horizontal");
 
         if (testAxis != 0)
-            HawkEngine.Engineson.print("Axis Horizontal: " + testAxis);
+            Engineson.print("Axis Horizontal: " + testAxis);
 
-        if (HawkEngine.Input.anyKeyDown)
-            HawkEngine.Engineson.print(HawkEngine.Input.inputString);
+        if (Input.anyKeyDown)
+            Engineson.print(Input.inputString);
 
         
         

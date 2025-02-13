@@ -117,6 +117,7 @@
     <ClCompile Include="UIProject.cpp" />
     <ClCompile Include="UISceneWindow.cpp" />
     <ClCompile Include="UISettings.cpp" />
+    <ClCompile Include="UITextEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="UIProject.h" />
     <ClInclude Include="UISceneWindow.h" />
     <ClInclude Include="UISettings.h" />
+    <ClInclude Include="UITextEditor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

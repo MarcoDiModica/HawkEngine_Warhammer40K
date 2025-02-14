@@ -158,7 +158,7 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 		transform.Translate(zoomDirection * wheel * zoomSpeed * deltaTime);
 	}*/
 
-	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !Application->input->GetSelectedGameObjects().empty()) 
+	if (Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !Application->input->GetSelectedGameObjects().empty() && Application->input->GetKey(SDL_SCANCODE_LCTRL) != KEY_REPEAT)
 	{
 		glm::dvec3 targetPosition = Application->input->GetSelectedGameObjects()[0]->GetTransform()->GetPosition();
 		

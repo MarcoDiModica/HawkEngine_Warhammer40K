@@ -245,6 +245,14 @@ void UndoRedo()
 
 #pragma endregion
 
+void ObjectToEditorCamera() 
+{
+	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+		Application->input->GetSelectedGameObjects().at(0)->GetTransform()->SetPosition(Application->camera->GetTransform().GetPosition());
+		Application->input->GetSelectedGameObjects().at(0)->GetTransform()->SetRotationQuat(Application->camera->GetTransform().GetRotation());
+	}
+}
+
 void MousePickingCheck(std::vector<GameObject*> objects)
 {	
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
@@ -452,6 +460,7 @@ int main(int argc, char** argv) {
 
 			EditorRenderer(Application->gui);
 			UndoRedo();
+			ObjectToEditorCamera();
 			if (!Application->Update()) { state = FREE; }
 			break;
 

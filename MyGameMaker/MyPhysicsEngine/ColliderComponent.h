@@ -29,21 +29,13 @@ public:
     void SetSize(const glm::vec3& newSize);
 
     float GetMass() { return mass; };
-    glm::vec3 GetColliderPos() { 
-        
-        btTransform trans;
-        rigidBody->getMotionState()->getWorldTransform(trans);
-        btVector3 pos = trans.getOrigin();
-        return glm::vec3(pos.getX(), pos.getY(), pos.getZ());
-    }
+    glm::vec3 GetColliderPos();
 
-    void SetColliderPos(const glm::vec3& position) {
-        btTransform trans;
-        rigidBody->getMotionState()->getWorldTransform(trans);
-        trans.setOrigin(btVector3(position.x, position.y, position.z));
-        rigidBody->getMotionState()->setWorldTransform(trans);
-        rigidBody->setCenterOfMassTransform(trans);
-    }
+    glm::quat GetColliderRotation();
+
+    void SetColliderRotation(const glm::quat& rotation);
+
+    void SetColliderPos(const glm::vec3& position);
 
     void SetMass(float newMass);
 

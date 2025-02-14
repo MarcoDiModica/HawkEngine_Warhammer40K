@@ -41,6 +41,38 @@ void ColliderComponent::Start() {
     }
 }
 
+glm::vec3 ColliderComponent::GetColliderPos() {
+
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    btVector3 pos = trans.getOrigin();
+    return glm::vec3(pos.getX(), pos.getY(), pos.getZ());
+}
+
+glm::quat ColliderComponent::GetColliderRotation() {
+
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    btQuaternion rot = trans.getRotation();
+    return glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
+}
+
+void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+    rigidBody->getMotionState()->setWorldTransform(trans);
+    rigidBody->setCenterOfMassTransform(trans);
+}
+
+void ColliderComponent::SetColliderPos(const glm::vec3& position) {
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    trans.setOrigin(btVector3(position.x, position.y, position.z));
+    rigidBody->getMotionState()->setWorldTransform(trans);
+    rigidBody->setCenterOfMassTransform(trans);
+}
+
 void ColliderComponent::SetSize(const glm::vec3& newSize) {
     size = newSize;
     if (rigidBody) {

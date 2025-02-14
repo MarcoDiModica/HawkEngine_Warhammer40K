@@ -412,11 +412,22 @@ bool UIInspector::Draw() {
                 if (ImGui::CollapsingHeader("Collider")) {
 
                     // Posición del Collider
+                   
                     glm::vec3 colliderPosition = colliderComponent->GetColliderPos();
                     float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
 
                     if (ImGui::DragFloat3("Position", pos, 0.1f)) {
 						colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
+                    }
+
+                    // Rotación del Collider
+                    glm::quat colliderRotation = colliderComponent->GetColliderRotation();
+                    glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
+                    float rot[3] = { glm::degrees(eulerRotation.x), glm::degrees(eulerRotation.y), glm::degrees(eulerRotation.z) };
+
+                    if (ImGui::DragFloat3("Rotation", rot, 0.1f)) {
+                        glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
+                        colliderComponent->SetColliderRotation(newRotation);
                     }
 
                     // Tamaño del Collider

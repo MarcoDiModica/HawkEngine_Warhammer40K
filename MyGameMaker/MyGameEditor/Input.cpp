@@ -11,6 +11,11 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
+
+#include "../MyPhysicsEngine/PhysVehicle3D.h"
+#include "../MyPhysicsEngine/PhysicsModule.h"
+#include "../MyAudioEngine/SoundComponent.h"
+#include "../MyAudioEngine/AudioAssetProcessor.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -25,14 +30,12 @@ namespace fs = std::filesystem;
 
 Input::Input(App* app) : Module(app)
 {
-    keyboard = new KEY_STATE[MAX_KEYS];
-    memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
-    memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
+	InputManagement = new InputEngine();
 }
 
 Input::~Input()
 {
-    delete[] keyboard;
+    delete[]  InputManagement->keyboard;
 }
 
 bool Input::Awake()
@@ -53,6 +56,7 @@ bool Input::Awake()
     LOG(LogType::LOG_OK, "-File System current path: %s", std::filesystem::current_path().string().c_str());
 
 	camera = Application->camera;
+    
 
     return ret;
 }
@@ -68,17 +72,121 @@ bool Input::PreUpdate()
 
 bool Input::Update(double dt)
 {
-    bool ret = true;
-
-    return ret;
+	return InputManagement->Update(dt);
 }
-std::string CopyFBXFileToProject(const std::string& sourceFilePath);
 
-void SpawnCube() {
-    auto cube = Application->root->CreateCube("PhysicsCube");
-    cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
-    auto t = cube->GetTransform()->GetPosition();
-    Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Masa 1.0f
+std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
+
+
+    std::string fileNameExt = sourceFilePath.substr(sourceFilePath.find_last_of('\\') + 1);
+    fs::path assetsDir = fs::path(ASSETS_PATH) / "Meshes" / fileNameExt;
+
+    try {
+        /* to copy the source file to the destination path, overwriting if it already exists*/
+        std::filesystem::copy(sourceFilePath, assetsDir, std::filesystem::copy_options::overwrite_existing);
+    }
+    catch (std::filesystem::filesystem_error& e) {
+        std::cerr << "Error copying file: " << e.what() << std::endl;
+    }
+    std::cout << (assetsDir.string()).c_str();
+    return assetsDir.string();
+}
+
+
+
+void SpawnPhysCube() {
+    //auto cube = Application->root->CreateCube("PhysicsCube");
+    //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
+    //Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
+    glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posici�n de la c�mara
+    auto sphere = Application->root->CreateSphere("PhysicsSphere");
+    glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
+    Application->physicsModule->SpawnPhysSphereWithForce(*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
+}
+
+void SpawnCar() {
+    // Perform raycast to get the ground plane intersection point
+    glm::vec3 mouseRay = Application->input->getMousePickRay();
+    glm::vec3 cameraPos = Application->camera->GetTransform().GetPosition();
+    glm::vec3 groundPlaneNormal(0, 1, 0);
+    float groundPlaneD = 0.0f;
+
+    // Calculate intersection using plane equation
+    float t = -(glm::dot(cameraPos, groundPlaneNormal) + groundPlaneD) /
+        glm::dot(mouseRay, groundPlaneNormal);
+    glm::vec3 spawnPosition = cameraPos + t * mouseRay;
+
+    // Ensure the car spawns slightly above the ground
+    float chassisHeightAboveGround = 0.5f; // Offset above the ground
+    spawnPosition.y += chassisHeightAboveGround;
+
+    // Define vehicle properties
+    VehicleInfo car;
+    car.chassis_size = glm::vec3(2.0f, 0.5f, 4.0f);
+    car.chassis_offset = glm::vec3(0, 0.25f, 0); // Centered in height
+    car.mass = 800.0f;
+
+    // Define wheel properties
+    float wheelRadius = 0.4f;
+    float wheelWidth = 0.3f;
+    float wheelSuspensionLength = 0.6f;
+    glm::vec3 wheelDirection(0, -1, 0); // Suspension direction
+    glm::vec3 wheelAxis(1, 0, 0);       // Rotation axis
+
+    car.num_wheels = 4;
+    car.wheels = new Wheel[4];
+
+    // Wheel positions relative to the chassis
+    float halfWidth = car.chassis_size.x / 2.0f + wheelWidth / 2.0f; // Adjusted for wheel width
+    float halfLength = car.chassis_size.z / 2.0f;
+    car.wheels[0] = { glm::vec3(halfWidth, 0, halfLength), wheelDirection, wheelAxis, wheelSuspensionLength, wheelRadius, wheelWidth, true, true, true, true };
+    car.wheels[1] = { glm::vec3(-halfWidth, 0, halfLength), wheelDirection, wheelAxis, wheelSuspensionLength, wheelRadius, wheelWidth, true, true, true, true };
+    car.wheels[2] = { glm::vec3(halfWidth, 0, -halfLength), wheelDirection, wheelAxis, wheelSuspensionLength, wheelRadius, wheelWidth, false, true, true, false };
+    car.wheels[3] = { glm::vec3(-halfWidth, 0, -halfLength), wheelDirection, wheelAxis, wheelSuspensionLength, wheelRadius, wheelWidth, false, true, true, false };
+
+    // Create vehicle in the physics world
+    PhysVehicle3D* vehicle = Application->physicsModule->AddVehicle(car);
+    vehicle->SetPos(spawnPosition.x, spawnPosition.y, spawnPosition.z);
+
+    // Create chassis as a cube
+    auto chassis = Application->root->CreateCube("chassis");
+    chassis->GetTransform()->SetPosition(spawnPosition);
+    chassis->GetTransform()->SetScale(car.chassis_size);
+    Application->physicsModule->CreatePhysicsForCube(*chassis, car.mass);
+
+    // Set chassis to have no initial velocity or force
+    btRigidBody* chassisBody = vehicle->vehicle->getRigidBody();
+    chassisBody->setLinearVelocity(btVector3(0, 0, 0));
+    chassisBody->setAngularVelocity(btVector3(0, 0, 0));
+    chassisBody->clearForces();
+
+    // Create and configure wheels
+    std::vector<GameObject*> wheels;
+    for (int i = 0; i < car.num_wheels; ++i) {
+        auto wheel = Application->root->CreateCylinder("wheel" + std::to_string(i));
+        glm::vec3 wheelPos = glm::vec3(
+            spawnPosition.x + car.wheels[i].connection.x,
+            spawnPosition.y + car.wheels[i].connection.y,
+            spawnPosition.z + car.wheels[i].connection.z
+        );
+        wheelPos.y -= wheelRadius; // Ensure the wheel touches the ground
+
+        wheel->GetTransform()->SetPosition(wheelPos);
+        wheel->GetTransform()->SetScale(glm::vec3(wheelRadius * 2, wheelWidth, wheelRadius * 2));
+        wheel->GetTransform()->Rotate(90, glm::vec3(0, 0, 1));
+
+        Application->physicsModule->CreatePhysicsForCube(*wheel, 50.0f); // Mass of the wheel
+        Application->physicsModule->AddConstraintHinge(
+            *chassis, *wheel, car.wheels[i].connection, glm::vec3(0), wheelAxis, wheelAxis, false);
+
+        Application->root->ParentGameObject(*wheel, *chassis); // Set chassis as parent of the wheel
+        wheels.push_back(wheel.get());
+    }
+
+    // Sync vehicle components for proper collision and movement
+    Application->physicsModule->SyncVehicleComponents(vehicle, chassis.get(), wheels);
+
+    std::cout << "Car spawned successfully at position " << spawnPosition.x << ", " << spawnPosition.y << ", " << spawnPosition.z << std::endl;
 }
 
 bool Input::processSDLEvents()
@@ -87,51 +195,55 @@ bool Input::processSDLEvents()
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
 
+    //const Uint8* controllerKeys = SDL_Getcontroller
+
     for (int i = 0; i < MAX_KEYS; ++i)
     {
         if (keys[i] == 1)
         {
-            if (keyboard[i] == KEY_IDLE)
-                keyboard[i] = KEY_DOWN;
+            if (InputManagement->keyboard[i] == KEY_IDLE)
+                InputManagement->keyboard[i] = KEY_DOWN;
             else
-                keyboard[i] = KEY_REPEAT;
+                InputManagement->keyboard[i] = KEY_REPEAT;
         }
         else
         {
-            if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-                keyboard[i] = KEY_UP;
+            if (InputManagement->keyboard[i] == KEY_REPEAT || InputManagement->keyboard[i] == KEY_DOWN)
+                InputManagement->keyboard[i] = KEY_UP;
             else
-                keyboard[i] = KEY_IDLE;
+                InputManagement->keyboard[i] = KEY_IDLE;
         }
     }
 
-    Uint32 buttons = SDL_GetMouseState(&mouse_x, &mouse_y);
+    Uint32 buttons = SDL_GetMouseState(&InputManagement->mouse_x, &InputManagement->mouse_y);
 
-    mouse_x /= SCREEN_SIZE;
-    mouse_y /= SCREEN_SIZE;
-    mouse_z = 0;
+     InputManagement->mouse_x /= SCREEN_SIZE;
+     InputManagement->mouse_y /= SCREEN_SIZE;
+     InputManagement->mouse_z = 0;
 
     for (int i = 0; i < 5; ++i)
     {
         if (buttons & SDL_BUTTON(i))
         {
-            if (mouse_buttons[i] == KEY_IDLE)
-                mouse_buttons[i] = KEY_DOWN;
+            if (InputManagement->mouse_buttons[i] == KEY_IDLE)
+                InputManagement->mouse_buttons[i] = KEY_DOWN;
             else
-                mouse_buttons[i] = KEY_REPEAT;
+                InputManagement->mouse_buttons[i] = KEY_REPEAT;
         }
         else
         {
-            if (mouse_buttons[i] == KEY_REPEAT || mouse_buttons[i] == KEY_DOWN)
-                mouse_buttons[i] = KEY_UP;
+            if (InputManagement->mouse_buttons[i] == KEY_REPEAT || InputManagement->mouse_buttons[i] == KEY_DOWN)
+                InputManagement->mouse_buttons[i] = KEY_UP;
             else
-                mouse_buttons[i] = KEY_IDLE;
+                InputManagement->mouse_buttons[i] = KEY_IDLE;
         }
     }
 
-    mouse_x_motion = mouse_y_motion = 0;
+    InputManagement->mouse_x_motion = InputManagement->mouse_y_motion = 0;
 
     static SDL_Event event;
+
+    static bool f12Pressed = false;
 
     while (SDL_PollEvent(&event) != 0)
     {
@@ -140,15 +252,21 @@ bool Input::processSDLEvents()
         switch (event.type)
         {
         case SDL_MOUSEWHEEL:
-            mouse_z = event.wheel.y;
+            InputManagement->mouse_z = event.wheel.y;
+            if (f12Pressed && InputManagement->mouse_z > 0) {
+                SpawnPhysCube();
+            }
+            if (f12Pressed && InputManagement->mouse_z < 0) {
+                SpawnCar();
+            }
             break;
 
         case SDL_MOUSEMOTION:
-            mouse_x = event.motion.x / SCREEN_SIZE;
-            mouse_y = event.motion.y / SCREEN_SIZE;
+            InputManagement->mouse_x = event.motion.x / SCREEN_SIZE;
+            InputManagement->mouse_y = event.motion.y / SCREEN_SIZE;
 
-            mouse_x_motion = event.motion.xrel / SCREEN_SIZE;
-            mouse_y_motion = event.motion.yrel / SCREEN_SIZE;
+            InputManagement->mouse_x_motion = event.motion.xrel / SCREEN_SIZE;
+            InputManagement->mouse_y_motion = event.motion.yrel / SCREEN_SIZE;
             break;
 
         case SDL_QUIT: return false;
@@ -157,27 +275,36 @@ bool Input::processSDLEvents()
             switch (event.key.keysym.sym) {
             case SDLK_1:
                 break;
+            case SDLK_F12:
+                if (f12Pressed == false) {
+                    f12Pressed = true; // Activar la bandera si F12 fue presionado
+
+                }
+                else {
+                    f12Pressed = false; // Desactivar la bandera si F12 fue liberado
+                }
+                break;
             case SDLK_ESCAPE:
                 return false;
 
             case SDLK_DELETE: {
                 int i = 0;
-                while (i < selectedObjects.size()) {
-                    GameObject* selectedObject = selectedObjects[i];
+                while (i < InputManagement->selectedObjects.size()) {
+                    GameObject* selectedObject = InputManagement->selectedObjects[i];
                     Application->root->RemoveGameObject(selectedObject);
                     i++;
                 }
-                selectedObjects.clear(); // Limpiar la selecci�n despu�s de borrar los objetos
+                InputManagement->selectedObjects.clear(); // Limpiar la selecci�n despu�s de borrar los objetos
                 break;
             }
 
             case SDLK_c: // Ctrl + C
                 if (SDL_GetModState() & KMOD_CTRL) {
-                    LOG(LogType::LOG_INFO, "Copied %d objects", selectedObjects.size());
-                    if (!selectedObjects.empty()) {
-                        copiedObjects.clear();
-                        for (auto& selectedObject : selectedObjects) {
-                            copiedObjects.push_back(selectedObject);
+                    LOG(LogType::LOG_INFO, "Copied %d objects", InputManagement->selectedObjects.size());
+                    if (!InputManagement->selectedObjects.empty()) {
+                        InputManagement->copiedObjects.clear();
+                        for (auto& selectedObject : InputManagement->selectedObjects) {
+                            InputManagement->copiedObjects.push_back(selectedObject);
                         }
                     }
                 }
@@ -185,12 +312,12 @@ bool Input::processSDLEvents()
 
             case SDLK_v: // Ctrl + V
                 if (SDL_GetModState() & KMOD_CTRL) {
-                    LOG(LogType::LOG_INFO, "Pasted %d objects", copiedObjects.size());
-                    if (!copiedObjects.empty()) {
-                        for (auto& copiedObject : copiedObjects) {
+                    LOG(LogType::LOG_INFO, "Pasted %d objects", InputManagement->copiedObjects.size());
+                    if (!InputManagement->copiedObjects.empty()) {
+                        for (auto& copiedObject : InputManagement->copiedObjects) {
                             auto newObject = std::make_shared<GameObject>(*copiedObject);
                             newObject->SetName(copiedObject->GetName() + "_copy");
-                            Application->root->currentScene->AddGameObject(newObject);
+                            Application->root->GetActiveScene()->AddGameObject(newObject);
                         }
                     }
                 }
@@ -198,17 +325,83 @@ bool Input::processSDLEvents()
 
             case SDLK_d: // Ctrl + D
                 if (SDL_GetModState() & KMOD_CTRL) {
-                    LOG(LogType::LOG_INFO, "Duplicated %d objects", selectedObjects.size());
-                    if (!selectedObjects.empty()) {
-                        for (auto& selectedObject : selectedObjects) {
+                    LOG(LogType::LOG_INFO, "Duplicated %d objects", InputManagement->selectedObjects.size());
+                    if (!InputManagement->selectedObjects.empty()) {
+                        for (auto& selectedObject : InputManagement->selectedObjects) {
                             auto newObject = std::make_shared<GameObject>(*selectedObject);
                             newObject->SetName(selectedObject->GetName() + "_copy");
-                            Application->root->currentScene->AddGameObject(newObject);
+                            Application->root->GetActiveScene()->AddGameObject(newObject);
                         }
                     }
                 }
                 break;
             }
+            break;
+        case SDL_CONTROLLERBUTTONDOWN:
+            // Manejar eventos de botones del controlador aquí
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
+                // Acción para el botón X (Cruz)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
+                // Acción para el botón Círculo
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
+                // Acción para el botón Cuadrado
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
+                // Acción para el botón Triángulo
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+                // Acción para el botón Share
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_GUIDE) {
+                // Acción para el botón PS (Guía)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+                // Acción para el botón Options
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSTICK) {
+                // Acción para el botón del stick izquierdo (L3)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSTICK) {
+                // Acción para el botón del stick derecho (R3)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
+                // Acción para el botón del hombro izquierdo (L1)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
+                // Acción para el botón del hombro derecho (R1)
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
+                // Acción para el botón de dirección arriba
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
+                // Acción para el botón de dirección abajo
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
+                // Acción para el botón de dirección izquierda
+            }
+            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
+                // Acción para el botón de dirección derecha
+            }
+			if (event.cbutton.button == SDL_CONTROLLER_BUTTON_MAX) {
+				// Acción para el botón de la derecha del touchpad
+			}
+            break;
+        case SDL_CONTROLLERAXISMOTION:
+            // Manejar eventos de ejes del controlador aquí
+            if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
+                // Acción para el eje izquierdo X
+            }
+			if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
+				// Acción para el eje izquierdo Y
+			}
+			if (event.caxis.axis == SDL_CONTROLLER_AXIS_RIGHTX) {
+				// Acción para el eje derecho X
+			}
+			if (event.caxis.axis == SDL_CONTROLLER_AXIS_RIGHTY) {
+				// Acción para el eje derecho Y
+			}
             break;
 
 
@@ -269,8 +462,6 @@ void Input::HandleFileDrop(const std::string& fileDir)
             go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
             go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
 
-            //Application->root->currentScene->AddGameObject(MarcoVicePresidente2);
-
 
             Application->root->ParentGameObject(*go, *MarcoVicePresidente);
         }
@@ -279,17 +470,57 @@ void Input::HandleFileDrop(const std::string& fileDir)
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {
         LOG(LogType::LOG_INFO, "Loading Texture: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
 
-        if (draggedObject != nullptr) {
-            auto meshRenderer = draggedObject->GetComponent<MeshRenderer>();
+        if (InputManagement->draggedObject != nullptr) {
+            auto meshRenderer = InputManagement->draggedObject->GetComponent<MeshRenderer>();
 
-            draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(fileDir);
+            InputManagement->draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(fileDir);
             //draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->setImage();
             //meshRenderer->SetMaterial(material);
         }
     }
+    else if (fileExt == "wav" || fileExt == "ogg" || fileExt == "mp3") {
+        LOG(LogType::LOG_INFO, "Importing Audio: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+        
+        // Create Audio directory if it doesn't exist
+        fs::path audioDir = fs::path(ASSETS_PATH) / "Audio";
+        if (!fs::exists(audioDir)) {
+            fs::create_directories(audioDir);
+        }
+        
+        // Update target path to Audio subdirectory
+        targetPath = audioDir / fileNameExt;
+
+        // Process the audio file for Library
+        fs::path libraryPath = fs::path("Library/Audio") / fileNameExt;
+        if (!fs::exists(libraryPath.parent_path())) {
+            fs::create_directories(libraryPath.parent_path());
+        }
+
+        // First copy to Assets
+        try {
+            if (!fs::exists(targetPath) || fs::file_size(fileDir) != fs::file_size(targetPath)) {
+                fs::copy(fileDir, targetPath, fs::copy_options::overwrite_existing);
+                LOG(LogType::LOG_OK, "Audio file copied to Assets: %s", targetPath.string().c_str());
+            }
+
+            // Then process to Library
+            MyGameEngine::AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
+            LOG(LogType::LOG_OK, "Audio file processed to Library: %s", libraryPath.string().c_str());
+        }
+        catch (const std::exception& e) {
+            LOG(LogType::LOG_ERROR, "Error processing audio file: %s", e.what());
+        }
+        
+        if (InputManagement->draggedObject != nullptr) {
+            auto soundComponent = InputManagement->draggedObject->GetComponent<SoundComponent>();
+            if (soundComponent) {
+                soundComponent->LoadAudio(targetPath.string());
+            }
+        }
+    }
     else if (fileExt == "image") {
-        if (draggedObject != nullptr) {
-            auto meshRenderer = draggedObject->GetComponent<MeshRenderer>();
+        if (InputManagement->draggedObject != nullptr) {
+            auto meshRenderer = InputManagement->draggedObject->GetComponent<MeshRenderer>();
             auto image = std::make_shared<Image>();
             auto material = std::make_shared<Material>();
 
@@ -319,22 +550,10 @@ void Input::HandleFileDrop(const std::string& fileDir)
     catch (const std::exception& e) {
         LOG(LogType::LOG_ERROR, "Failed to copy file: %s - %s", fileNameExt.c_str(), e.what());
     }
-    // L�gica por si la file ya existe
+    // L�gica por si la file ya existe
 }
 
-glm::vec3 Input::getRayFromMouse(int mouseX, int mouseY, const glm::mat4& projection, const glm::mat4& view, const glm::ivec2& viewportSize) {
-    float x = (2.0f * mouseX) / viewportSize.x - 1.0f;
-    float y = 1.0f - (2.0f * mouseY) / viewportSize.y;
-    glm::vec4 rayClip = glm::vec4(x, y, -1.0f, 1.0f);
-
-    glm::vec4 rayEye = glm::inverse(projection) * rayClip;
-    rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
-
-    glm::vec3 rayWorld = glm::normalize(glm::vec3(glm::inverse(view) * rayEye));
-    return rayWorld;
-}
-
-glm::vec3 Input::getMousePickRay() 
+glm::vec3 Input::getMousePickRay()
 {
     ImVec2 windowPos = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winPos.x), static_cast<float>(Application->gui->UISceneWindowPanel->winPos.y));
     ImVec2 windowSize = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winSize.x), static_cast<float>(Application->gui->UISceneWindowPanel->winSize.y));
@@ -348,56 +567,81 @@ glm::vec3 Input::getMousePickRay()
     if (mouseX >= 0 && mouseX <= windowSize.x && mouseY >= 0 && mouseY <= windowSize.y) {
 
     }
-   
+
     glm::vec3 rayDirection = Application->input->getRayFromMouse(static_cast<int>(mouseX), static_cast<int>(mouseY), camera->projection(), camera->view(), size);
-	return rayDirection;
+    return rayDirection;
 }
 
-std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
-
-
-    std::string fileNameExt = sourceFilePath.substr(sourceFilePath.find_last_of('\\') + 1);
-    fs::path assetsDir = fs::path(ASSETS_PATH) / "Meshes" / fileNameExt;
-
-    try {
-        /* to copy the source file to the destination path, overwriting if it already exists*/
-        std::filesystem::copy(sourceFilePath, assetsDir, std::filesystem::copy_options::overwrite_existing);
-    }
-    catch (std::filesystem::filesystem_error& e) {
-        std::cerr << "Error copying file: " << e.what() << std::endl;
-    }
-    std::cout << (assetsDir.string()).c_str();
-    return assetsDir.string();
+KEY_STATE Input::GetKey(int id)
+{
+	return InputManagement->GetKey(id);
 }
+
+KEY_STATE Input::GetMouseButton(int id)
+{
+	return InputManagement->GetMouseButton(id);
+}
+
+int Input::GetMouseX()
+{
+	return InputManagement->GetMouseX();
+}
+
+int Input::GetMouseY()
+{
+	return InputManagement->GetMouseY();
+}
+
+int Input::GetMouseZ()
+{
+	return InputManagement->GetMouseZ();
+}
+
+int Input::GetMouseXMotion()
+{
+	return InputManagement->GetMouseXMotion();
+}
+
+int Input::GetMouseYMotion()
+{
+	return InputManagement->GetMouseYMotion();
+}
+
+GameObject* Input::GetDraggedGameObject()
+{
+	return InputManagement->GetDraggedGameObject();
+}
+
+void Input::SetDraggedGameObject(GameObject* gameObject)
+{
+	InputManagement->SetDraggedGameObject(gameObject);
+}
+
+glm::vec3 Input::getRayFromMouse(int mouseX, int mouseY, const glm::mat4& projection, const glm::mat4& view, const glm::ivec2& viewportSize) {
+	return InputManagement->getRayFromMouse(mouseX, mouseY, projection, view, viewportSize);
+}
+
 
 void Input::AddToSelection(GameObject* gameObject) {
-    auto it = std::find(selectedObjects.begin(), selectedObjects.end(), gameObject);
-    if (it == selectedObjects.end()) {
-        selectedObjects.push_back(gameObject);
-        gameObject->isSelected = true;
-    }
+	InputManagement->AddToSelection(gameObject);
 }
 
 void Input::RemoveFromSelection(GameObject* gameObject) {
-    auto it = std::find(selectedObjects.begin(), selectedObjects.end(), gameObject);
-    if (it != selectedObjects.end()) {
-        selectedObjects.erase(it);
-        gameObject->isSelected = false;
-    }
+	InputManagement->RemoveFromSelection(gameObject);
 }
 
-std::vector<GameObject*> Input::GetSelectedGameObjects() const {
-    return selectedObjects;
+std::vector<GameObject*> Input::GetSelectedGameObjects() {
+	return InputManagement->GetSelectedGameObjects();
 }
 
 void Input::ClearSelection() {
-	for (auto& selectedObject : selectedObjects) {
-		selectedObject->isSelected = false;
-	}
-	selectedObjects.clear();
+	InputManagement->ClearSelection();
 }
 
-bool Input::IsGameObjectSelected(GameObject* gameObject) const {
-	auto it = std::find(selectedObjects.begin(), selectedObjects.end(), gameObject);
-	return it != selectedObjects.end();
+bool Input::IsGameObjectSelected(GameObject* gameObject) {
+	return InputManagement->IsGameObjectSelected(gameObject);
+}
+
+int Input::GetAxis(const char* axisName) {
+	return InputManagement->GetAxis(axisName);
 }

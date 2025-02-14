@@ -1,22 +1,32 @@
+# 🦅 HawkEngine Scripting🦅 #
 
-# 🦅 HawkEngine 🦅 #
-
-Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
+Preliminar approach to the scripting mechanisms of The [Engineson](https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/scripting.05) (former HawkEngine). This is the final project for the Game Engines subject, present in Barcelona's Game Development & Design degree, UPC (TTC)
 
 ## OUR MEMBERS ##
 
-[David Lastra](https://github.com/DavidLastra8)
+[Marco Baldán](https://github.com/Marco-v-BaldanII)
 
-![WhatsApp Image 2025-01-23 at 23 32 03 (1)](https://github.com/user-attachments/assets/c14bdb56-2bab-4f6e-82bd-7cc2b2b9bf97)
+![406182133-f955f5f8-faa2-436e-9f16-2e8abad89754](https://github.com/user-attachments/assets/c772cb8b-8550-4f84-9078-067bf60e0a97)
 
-[Daniel Berrio](https://github.com/Onnda)
+Imported mono , managed initialization. Figured out and layed the groundwork for binding classes from C++ to C#. Created and binded the C# GameObject and the Engineson class.
 
-![WhatsApp Image 2025-01-23 at 23 18 45](https://github.com/user-attachments/assets/215ef3e4-7fd3-4a2e-a06a-841a267813f1)
+[Marco di Modica](https://github.com/MarcoDiModica)
 
+![smaller_github_image](https://github.com/user-attachments/assets/f955f5f8-faa2-436e-9f16-2e8abad89754)
 
-[Oliver Santos](https://github.com/Esnaiper) 
+Implemented ScriptComponent, refactorised Scripting entire solution for organisation purposes, some C# binding, general cleanup and error solving and Inspector Script visualisation (wip).
 
-![WhatsApp Image 2025-01-23 at 23 21 11](https://github.com/user-attachments/assets/7561400c-6baf-4138-9210-892d425d026e)
+[Jordi Tur](https://github.com/Jordopol) 
+
+![image](https://github.com/user-attachments/assets/cb62d16b-1dcb-485c-a54f-875e61abd02d)
+
+Implemented Transform and MeshRenderer Components C# translations and bindings, developed various script components and thoroughly tested the functions.
+
+[Dídac García](https://github.com/D1dii)
+
+![smaller_github_image_2](https://github.com/user-attachments/assets/8b41f1d5-24c7-457c-9e1d-c0de226f629f)
+
+Implemented Input and Camera class with all their functions
 
 # CONTROLS #
 
@@ -50,6 +60,22 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - To save a scene, File->Save Scene; To create a scene, File->New Scene; To load a scene, right click the scene in the library and load
 
+## SCRIPTING CONTROLS ##
+
+- UP ARROW: move tank , move projectile (z positive).
+
+- DOWN ARROW: move tank, move projectile (z negative).
+
+- LEFT ARROW: move tank, move projectile (x positive).
+
+- RIGHT ARROW: move tank, move projectile (x negative).
+
+- D: reset projectile position.
+
+- SPACE (HOLD) + MOVING MOUSE: reorient turret.
+
+- E (DISABLED): instantiate new projectile.
+
 ## FEATURES ##
 
 - New revamped dockable UI look
@@ -70,42 +96,37 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 
 - Octree (work in progress - implemented but not functional)
 
-## PARTICLE CONTROL ##
+## SCRIPTING FEATURES ##
 
-- Press 1 to spawn a firework in a random place on the scene
+- Added MonoBehaviour environment.
 
-- You can add a Particle Component through the inspector to any GameObject that doesn't have one
+- Added ScriptComponent (editor interactability work in progress).
 
-- You can change values of the particles through the inspector
+- Added Engine Binds to translate between Cpp and C# functions.
 
-- You can save and load a custom file format for the particle
+- Added C# translations for GameObject, TransformComponent, MeshRendererComponent and CameraComponent.
 
-## PARTICLE FEATURES ##
+- Added a simple example to portray ScriptComponent functionalities.
 
-- You can now create particles around the scene and modify them as you want through the inspector
+## PROBLEMS TO SOLVE ##
 
-- You can save and load files of particles already done
+- Some core functionalities need to either be implemented or changed.
 
-- You can spawn fireworks through the scene using your keyboard
+- Creating new C# Components is a tedius procedure.
 
-## PARTICLE ISSUES ##
+- Interactability via the editor is not finished.
 
-- The billboard calculates but doesn't work
+- Many improvements for user experience should be performed.
 
-- The firework emitter doesn't get destroyed after the firework explodes
+- Scripts work always, including when not in play mode.
+
+## GIFS ##
+
+![2025-01-23 21-28-22](https://github.com/user-attachments/assets/54af0e23-5aab-4898-b67d-9209790702b7)
+
+![2025-01-23 21-27-28](https://github.com/user-attachments/assets/854108ad-ce55-4fe8-a15a-e2accf9d0589)
 
 ## LICENSES ##
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 
 with closed source software. Check our LICENSE* for further details.
-
-## VIDEO AND GIFS ##
-
-![Humo](https://github.com/user-attachments/assets/b6063668-26e4-4850-bc87-2c2420cfd1b5)
-
-![Firework](https://github.com/user-attachments/assets/fc7d7b31-29c7-4124-a8de-252268e777a8)
-
-
-https://github.com/user-attachments/assets/d699a6e1-79ae-4c9b-9e90-2f143bf2e678
-
-

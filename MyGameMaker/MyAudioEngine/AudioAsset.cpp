@@ -1,7 +1,11 @@
 #include "AudioAsset.h"
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 
 namespace MyGameEngine {
+
+uint32_t AudioAsset::s_NextAssetID = 1;
 
 AudioAsset::AudioAsset()
     : m_Buffer(0)
@@ -9,6 +13,7 @@ AudioAsset::AudioAsset()
     , m_SampleRate(0)
     , m_Channels(0)
     , m_IsValid(false)
+    , m_AssetID(s_NextAssetID++)
 {
     alGenBuffers(1, &m_Buffer);
 }
@@ -24,11 +29,79 @@ bool AudioAsset::LoadFromFile(const std::string& filePath) {
     AudioFile<float> audioFile;
     
     if (!audioFile.load(filePath)) {
-        std::cout << "Failed to load audio file: " << filePath << std::endl;
         return false;
     }
 
+    m_SourcePath = filePath;
+    m_LibraryPath = "Library/Audio/" + std::filesystem::path(filePath).filename().string();
+
     return ProcessAudioFile(audioFile);
+}
+
+void AudioAsset::SaveBinary(const std::string& filename) const {
+    std::string fullPath = "Library/Audio/" + filename;
+    
+    // Create directory if it doesn't exist
+    std::filesystem::path dir = std::filesystem::path(fullPath).parent_path();
+    if (!std::filesystem::exists(dir)) {
+        std::filesystem::create_directories(dir);
+    }
+
+    std::ofstream file(fullPath, std::ios::binary);
+    if (!file.is_open()) {
+        return;
+    }
+
+    // Write header
+    file.write(reinterpret_cast<const char*>(&m_AssetID), sizeof(m_AssetID));
+    file.write(reinterpret_cast<const char*>(&m_Duration), sizeof(m_Duration));
+    file.write(reinterpret_cast<const char*>(&m_SampleRate), sizeof(m_SampleRate));
+    file.write(reinterpret_cast<const char*>(&m_Channels), sizeof(m_Channels));
+
+    // Write paths
+    size_t sourcePathLength = m_SourcePath.length();
+    file.write(reinterpret_cast<const char*>(&sourcePathLength), sizeof(sourcePathLength));
+    file.write(m_SourcePath.c_str(), sourcePathLength);
+
+    size_t libraryPathLength = m_LibraryPath.length();
+    file.write(reinterpret_cast<const char*>(&libraryPathLength), sizeof(libraryPathLength));
+    file.write(m_LibraryPath.c_str(), libraryPathLength);
+
+}
+
+std::shared_ptr<AudioAsset> AudioAsset::LoadBinary(const std::string& filename) {
+    std::string fullPath = "Library/Audio/" + filename;
+    
+    std::ifstream file(fullPath, std::ios::binary);
+    if (!file.is_open()) {
+        return nullptr;
+    }
+
+    auto asset = std::make_shared<AudioAsset>();
+
+    // Read header
+    file.read(reinterpret_cast<char*>(&asset->m_AssetID), sizeof(asset->m_AssetID));
+    file.read(reinterpret_cast<char*>(&asset->m_Duration), sizeof(asset->m_Duration));
+    file.read(reinterpret_cast<char*>(&asset->m_SampleRate), sizeof(asset->m_SampleRate));
+    file.read(reinterpret_cast<char*>(&asset->m_Channels), sizeof(asset->m_Channels));
+
+    // Read paths
+    size_t sourcePathLength;
+    file.read(reinterpret_cast<char*>(&sourcePathLength), sizeof(sourcePathLength));
+    asset->m_SourcePath.resize(sourcePathLength);
+    file.read(&asset->m_SourcePath[0], sourcePathLength);
+
+    size_t libraryPathLength;
+    file.read(reinterpret_cast<char*>(&libraryPathLength), sizeof(libraryPathLength));
+    asset->m_LibraryPath.resize(libraryPathLength);
+    file.read(&asset->m_LibraryPath[0], libraryPathLength);
+
+    // Load the actual audio data
+    if (!asset->LoadFromFile(asset->m_SourcePath)) {
+        return nullptr;
+    }
+
+    return asset;
 }
 
 bool AudioAsset::ProcessAudioFile(AudioFile<float>& audioFile) {
@@ -59,7 +132,6 @@ bool AudioAsset::ProcessAudioFile(AudioFile<float>& audioFile) {
     // Check for errors
     ALenum error = alGetError();
     if (error != AL_NO_ERROR) {
-        std::cout << "OpenAL error while loading audio: " << error << std::endl;
         return false;
     }
 

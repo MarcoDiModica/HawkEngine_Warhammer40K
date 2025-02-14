@@ -1,4 +1,3 @@
-
 #ifndef ROOT_H
 #define ROOT_H
 
@@ -10,6 +9,7 @@
 #include "../MyGameEditor/App.h"
 #include "../MyGameEditor/Input.h"
 #include "../MyGameEngine/readOnlyView.h"
+#include "../MyGameEngine/SceneManager.h"
 #include "SceneSerializer.h"
 #include <list>
 
@@ -20,7 +20,9 @@ class Root : public Module
 public:
     Root(App* app);
 
-    virtual ~Root() = default;
+    virtual ~Root() {
+        free(SceneManagement);
+    };
 
     bool Awake();
 
@@ -30,13 +32,12 @@ public:
     bool Update(double dt);
     bool PostUpdate() { return true; }
 
-    bool CleanUp() { return true; }
+    bool CleanUp();
 
     void CreateScene(const std::string& name);
     void AddScene(std::shared_ptr<Scene> scene);
     void RemoveScene(const std::string& name);
     void SetActiveScene(const std::string& name);
-
 
     bool ParentGameObject(GameObject& child, GameObject& father);
 
@@ -45,10 +46,12 @@ public:
     std::shared_ptr<GameObject> CreateGameObject(const std::string& name);
     std::shared_ptr<GameObject> CreateCube(const std::string& name);
     std::shared_ptr<GameObject> CreateSphere(const std::string& name);
+    std::shared_ptr<GameObject> CreateCylinder(const std::string& name);
     std::shared_ptr<GameObject> CreatePlane(const std::string& name);
     std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
     std::shared_ptr<GameObject> CreateCameraObject(const std::string& name);
     std::shared_ptr<GameObject> CreateLightObject(const std::string& name);
+    std::shared_ptr<GameObject> CreateAudioObject(const std::string& name);
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr);
 
@@ -58,6 +61,8 @@ public:
 
     bool ParentGameObjectToScene(GameObject& child);
     bool ParentGameObjectToObject(GameObject& child, GameObject& father);
+
+    std::shared_ptr<GameObject> FindGOByName(char* name);
 
     std::shared_ptr<Scene> currentScene = nullptr;
     float emitterLifetime = 5.0f;

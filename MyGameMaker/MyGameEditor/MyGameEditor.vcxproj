@@ -98,6 +98,7 @@
     </ProjectReference>
     <ProjectReference Include="..\MyShadersEngine\MyShadersEngine.vcxproj">
       <Project>{c388ebfe-eac1-4564-af3b-8006f3c75204}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\MyParticlesEngine\MyParticlesEngine.vcxproj">
       <Project>{b258b672-0285-4ccb-9f04-00f753e34951}</Project>
     </ProjectReference>

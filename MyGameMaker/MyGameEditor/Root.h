@@ -10,8 +10,10 @@
 #include "../MyGameEditor/Input.h"
 #include "../MyGameEngine/readOnlyView.h"
 #include "../MyGameEngine/SceneManager.h"
+#include "../MyGameEngine/Shaders.h"
 #include "SceneSerializer.h"
 #include <list>
+#include <vector>
 
 class Material;
 
@@ -53,9 +55,9 @@ public:
     std::shared_ptr<GameObject> CreateLightObject(const std::string& name);
     std::shared_ptr<GameObject> CreateAudioObject(const std::string& name);
 
-    void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr);
+    void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr, std::vector<Shaders> shaders = std::vector<Shaders>());
 
-    
+    void ChangeShader(GameObject& go, ShaderType shader);
 
     void RemoveGameObject(GameObject* gameObject);
 
@@ -70,6 +72,8 @@ public:
     std::shared_ptr<GameObject> mainCamera = nullptr;
 
     friend SceneSerializer;
+
+    std::vector<Shaders> shaders;
 
 private:
     std::vector<std::shared_ptr<Scene>> scenes;

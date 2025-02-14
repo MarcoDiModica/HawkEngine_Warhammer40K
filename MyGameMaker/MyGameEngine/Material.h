@@ -16,6 +16,7 @@ public:
 	Filters filter = Nearest;
 
 	Shaders shader;
+	ShaderType shaderType;
 	vec4 color;
 
 	bool useShader = false;

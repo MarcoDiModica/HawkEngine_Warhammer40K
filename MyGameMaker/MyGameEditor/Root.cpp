@@ -18,6 +18,7 @@
 
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include <SDL2/SDL.h>
+#include "MyShadersEngine/ShaderComponent.h"
 
 #include <iostream>
 
@@ -83,6 +84,8 @@ void MakeCity() {
     Application->root->SetActiveScene("HolaBuenas");
     auto MarcoVicePresidente = Application->root->CreateGameObject("City");
 
+	
+
     ModelImporter meshImp;
     meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
 
@@ -115,6 +118,10 @@ bool Root::Awake()
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
     //MonoEnvironment* env = new MonoEnvironment();
+	shaders.resize(3);
+    shaders[0].LoadShaders("Assets/Shaders/default_vertex_shader.glsl", "Assets/Shaders/default_fragment_shader.glsl");
+    shaders[1].LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
+    shaders[2].LoadShaders("Assets/Shaders/water_vertex_shader.glsl", "Assets/Shaders/water_fragment_shader.glsl");
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
@@ -205,7 +212,6 @@ bool Root::Update(double dt) {
 
     SceneManagement->Update(dt);
 
-
     //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
     //
     //    if (currentScene->tree == nullptr) {
@@ -280,9 +286,14 @@ std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
     return SceneManagement->CreateLightObject(name);
 }
 
-void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
+void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat, std::vector<Shaders> shaders)
 {
-    return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat);
+    return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat, shaders);
+}
+
+void Root::ChangeShader(GameObject& go, ShaderType shader)
+{
+	go.GetComponent<ShaderComponent>()->SetShaderType(shader);
 }
 
 void Root::CreateScene(const std::string& name)

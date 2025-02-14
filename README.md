@@ -1,6 +1,4 @@
-# 🦅 HawkEngine Scripting🦅 #
-
-Preliminar approach to the scripting mechanisms of The [Engineson](https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/scripting.05) (former HawkEngine). This is the final project for the Game Engines subject, present in Barcelona's Game Development & Design degree, UPC (TTC)
+# 🦅 HawkEngine 🦅 #
 
 ## OUR MEMBERS ##
 
@@ -32,33 +30,32 @@ Implemented Input and Camera class with all their functions
 
 - Press Left Click on the inspector to select an object
 
-- Use Mouse Wheel to zoom in and out
+This Shader Sub-system has been worked on by 
 
-- Hold Right Click and use WASD to move freely across the scene + Q/E to make the camera move upwards/downwards
+[Marc Avante Caballe](https://github.com/MarcoXAvante)
 
-- Hold Right Click and Shift to make the camera double the speed
+<img src="https://github.com/user-attachments/assets/f1aae89c-c225-4486-837c-d07e25270a84"  width="125" height="125">
 
-- Press F if an Object is selected to make the camera look at an object
+Marc improved the water shader fixed all the problems with merging the main and mantaining the clean code
 
-- You can press the Middle Mouse Button to move the camera across the screen
+[Salvador Bernades Iglesias](https://github.com/SalvaBernades)
 
-## OTHER CONTROLS ##
+<img src="https://github.com/user-attachments/assets/8a6c54bf-d038-4427-9174-2e66982bf848"  width="125" height="125">
 
-- You can move/rotate the objects with the mouse on the inspector window
+Salva made Save Shaders with an array & change GO shaders and helped Joan with integration in the inspector
 
-- You can delete GameObjects in the hierarchy
+[Joan Marques Besses](https://github.com/joanmarquesbesses)
 
-- You can drag and drop textures and meshes directly on the window
+<img src="https://github.com/user-attachments/assets/9b90a359-e898-46ce-9296-c30f7f5cd664"  width="125" height="125">
 
-- Right click hierarchy to create objects; drag to parent/unparent; right click object to destroy or create empty child
+Joan made the shader template, implementation to the inspector and the shader component
 
-- To add components, click Add Component in the Inspector. Each component has its own settings in the Inspector
+[Justo Jose Tiscornia Sierra](https://github.com/Jusstox)
 
-- You can modify the Editor Camera in Settings Panel
+<img src="https://github.com/user-attachments/assets/7dc35c0a-f959-430d-ae43-226ec5788871" width="125" height="125">
 
-- To open and close tabs, Click view in the GameBar and toggle the desired panels.
+Justo Made the library linking, default shader integration and organizated the readME 
 
-- To save a scene, File->Save Scene; To create a scene, File->New Scene; To load a scene, right click the scene in the library and load
 
 ## SCRIPTING CONTROLS ##
 
@@ -78,23 +75,23 @@ Implemented Input and Camera class with all their functions
 
 ## FEATURES ##
 
-- New revamped dockable UI look
+This branch Includes a new test of a water shader with foam 
 
-- Scene and Camera serialization
+You can chose the tyoe of shader you want!
 
-- Asset/Library folder to visualise custom file formats
+## LICENSES ##
 
-- Model Importer (problems in texture coordinates)
+This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking 
+with closed source software. Check our LICENSE* for further details.
 
-- Parenting and object creation within hierarchy and menu bar
 
-- GameObject components: Camera, Light, MeshRenderer, Transform
+##VIDEO AND GIF##
 
-- BoundinBoxes, MousePicking, Frustum Culling
+[Shader Video!](https://youtu.be/j0p4dMhfLWY)
 
-- Shader Module (work in progress - almost finished)
+![gifa](https://github.com/user-attachments/assets/43ec0552-ac5d-489c-a151-82ceea3b8657)
 
-- Octree (work in progress - implemented but not functional)
+![gifb](https://github.com/user-attachments/assets/07375d54-2e56-41d5-9daa-62ee68266a61)
 
 ## SCRIPTING FEATURES ##
 

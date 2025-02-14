@@ -129,6 +129,8 @@ private:
     //Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
 
+    float timeActive = 0.0f;
+
 protected:
     friend class Scene;
 

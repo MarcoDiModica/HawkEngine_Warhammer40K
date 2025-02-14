@@ -77,6 +77,11 @@ namespace YAML {
     };
 }
 
+enum ShaderType {
+    DEFAULT,
+    LIGHT,
+    WATER
+};
 
 namespace YAML {
     template<>

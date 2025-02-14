@@ -13,6 +13,7 @@
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyGameEditor/Log.h"
 #include "../MyAudioEngine/AudioListener.h"
+#include "../MyShadersEngine/ShaderComponent.h"
 
 
 bool SceneManager::Start() {
@@ -171,7 +172,7 @@ std::shared_ptr<GameObject> SceneManager::CreateLightObject(const std::string& n
     return light;
 }
 
-void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
+void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat, std::vector<Shaders> shaders)
 {
     auto meshRenderer = go.AddComponent<MeshRenderer>();
     auto image = std::make_shared<Image>();
@@ -188,13 +189,14 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
     }
     material->setImage(image);
     meshRenderer->SetMaterial(material);
-    //meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-    //if (material->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl")) {
-    //    material->useShader = true;
-    //    material->bindShaders();
-    //}
-    //meshRenderer->SetImage(image);
+    auto shaderComponent = go.AddComponent<ShaderComponent>();
+	shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+	shaderComponent->SetShaderType(ShaderType::DEFAULT);
+
+    meshRenderer->SetImage(image);
+
 }
 
 //void SceneManager::CreateScene(const std::string& name)

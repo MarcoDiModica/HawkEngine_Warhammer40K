@@ -25,10 +25,10 @@ enum class ComponentType {
 	AUDIO,
 	AUDIO_LISTENER,
 	SCRIPT,
+	SHADER,
 	COLLIDER,
 	PARTICLES_EMITTER,
 	LIGHT
-
 };
 
 class Component

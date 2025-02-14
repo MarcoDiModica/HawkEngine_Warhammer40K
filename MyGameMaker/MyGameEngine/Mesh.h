@@ -44,6 +44,7 @@ public:
 
     static std::shared_ptr<Mesh> CreateCube();
     static std::shared_ptr<Mesh> CreateSphere();
+    static std::shared_ptr<Mesh> CreateCylinder();
     static std::shared_ptr<Mesh> CreatePlane();
 
     void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);

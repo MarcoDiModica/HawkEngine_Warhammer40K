@@ -13,6 +13,7 @@ enum class UIType
 	HIERARCHY,
 	PROJECT,
 	CAMERA,
+	TEXTEDITOR,
 	UNKNOWN
 };
 
@@ -20,26 +21,23 @@ class UIElement
 {
 public:
 
-	UIElement(UIType, std::string name);
-	virtual ~UIElement();
+	UIElement(UIType, std::string name) : type(type), name(name), enabled(false) {}
+	virtual ~UIElement() {}
 
 	virtual bool Draw() = 0;
 
-	virtual UIType GetType() const;
-	virtual std::string GetName() const;
+	UIType GetType() const { return type; }
+	const std::string& GetName() const { return name; }
 
-	virtual bool GetState();
-	virtual void SetState(bool state);
-	virtual void SwitchState();
-	
+	bool GetState() { return enabled; }
+	void SetState(bool state) { enabled = state; }
 	bool firstDraw = true;
 
 protected:
 
 	UIType type = UIType::UNKNOWN;
 	std::string name;
-	bool enabled = false;
-
+	bool enabled;
 };
 
 #endif // !__UIELEMENT_H__

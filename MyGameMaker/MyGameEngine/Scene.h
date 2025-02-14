@@ -40,6 +40,7 @@ private:
 
 	std::string name;
 
+	friend class SceneManager;
 	friend class Root;
 	friend class SceneSerializer;
 

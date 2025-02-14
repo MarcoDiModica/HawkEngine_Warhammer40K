@@ -1,7 +1,6 @@
+# 🦅 HawkEngine Scripting🦅 #
 
-# 🦅 HawkEngine 🦅 #
-
-Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine)
+Preliminar approach to the scripting mechanisms of The [Engineson](https://github.com/CITM-UPC-GameEngines-2024-BCN/HawkEngine/blob/scripting.05) (former HawkEngine). This is the final project for the Game Engines subject, present in Barcelona's Game Development & Design degree, UPC (TTC)
 
 ## OUR MEMBERS ##
 
@@ -49,6 +48,22 @@ Second version (v0.5) of the [HawkEngine](https://github.com/CITM-UPC/HawkEngine
 - To open and close tabs, Click view in the GameBar and toggle the desired panels.
 
 - To save a scene, File->Save Scene; To create a scene, File->New Scene; To load a scene, right click the scene in the library and load
+
+## SCRIPTING CONTROLS ##
+
+- UP ARROW: move tank , move projectile (z positive).
+
+- DOWN ARROW: move tank, move projectile (z negative).
+
+- LEFT ARROW: move tank, move projectile (x positive).
+
+- RIGHT ARROW: move tank, move projectile (x negative).
+
+- D: reset projectile position.
+
+- SPACE (HOLD) + MOVING MOUSE: reorient turret.
+
+- E (DISABLED): instantiate new projectile.
 
 ## FEATURES ##
 

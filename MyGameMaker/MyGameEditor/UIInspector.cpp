@@ -1,8 +1,20 @@
 #include "UIInspector.h"
 #include "App.h"
+#include "imgui.h"
+#include "imgui_internal.h"
 #include "MyGUI.h"
+#include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEngine/LightComponent.h"
+#include "../MyAudioEngine/SoundComponent.h"
+#include "../MyAudioEngine/AudioListener.h"
+#include "UIAudioTest.h"
+#include "../MyGameEditor/Log.h"
+#include <glm/glm.hpp>
+#include <algorithm>
+#include <iostream>
+#include <filesystem>
 
-#include "..\MyGameEngine\TransformComponent.h"
 #include "..\MyGameEngine\CameraComponent.h"
 #include "..\MyGameEngine\Mesh.h"
 #include "EditorCamera.h"
@@ -11,21 +23,17 @@
 #include "..\MyGameEngine\MeshRendererComponent.h"
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
-#include "..\MyGameEngine\LightComponent.h"
-
-#include "..\MyAudioEngine\SoundComponent.h"
 
 #include "..\MyScriptingEngine\ScriptComponent.h"
-
+//#include "..\MyParticlesEngine\ParticlesEmitterComponent.h"
 #include <string>
-
-#include <imgui.h>
-#include <imgui_internal.h>
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/reflection.h>
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+
+#include <Windows.h>
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
@@ -104,6 +112,19 @@ bool UIInspector::Draw() {
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
 				selectedGameObject->AddComponent<LightComponent>();
 			}
+
+			if (!selectedGameObject->HasComponent<SoundComponent>() && ImGui::MenuItem("Sound")) {
+				selectedGameObject->AddComponent<SoundComponent>();
+			}
+
+			if (!selectedGameObject->HasComponent<AudioListener>() && ImGui::MenuItem("Audio Listener")) {
+				selectedGameObject->AddComponent<AudioListener>();
+			}
+
+           /* if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
+                selectedGameObject->AddComponent<ParticlesEmitterComponent>();
+            }*/
+
 
             // More components here
 
@@ -411,6 +432,20 @@ bool UIInspector::Draw() {
                         soundComponent->LoadAudio(audioPath);
                     }
 
+                    // Drag and drop target for audio files
+                    if (ImGui::BeginDragDropTarget()) {
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+                            const char* path = (const char*)payload->Data;
+                            std::string extension = std::filesystem::path(path).extension().string();
+                            std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+                            
+                            if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
+                                soundComponent->LoadAudio(path);
+                            }
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+
                     // Audio Type
                     bool isMusic = soundComponent->IsMusic();
                     if (ImGui::Checkbox("Is Music", &isMusic)) {
@@ -470,102 +505,156 @@ bool UIInspector::Draw() {
                 }
             }
         }
-        
+
         ImGui::Separator();
-        if (selectedGameObject->HasComponent<ScriptComponent>())
+        if (selectedGameObject->HasComponent<AudioListener>())
         {
-            ScriptComponent* scriptComponent = selectedGameObject->GetComponent<ScriptComponent>();
+            AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
 
-            if (scriptComponent && scriptComponent->monoScript)
+            if (audioListener)
+            if (selectedGameObject->HasComponent<AudioListener>())
             {
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Script"))
+                AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
+
+                if (audioListener)
                 {
-                    std::string scriptName = scriptComponent->GetName();
-                    ImGui::Text("Script: %s", scriptName.c_str());
-
-                    MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
-
-                    MonoClassField* field = nullptr;
-                    void* iter = nullptr;
-                    while ((field = mono_class_get_fields(scriptClass, &iter)))
+                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                    if (ImGui::CollapsingHeader("Audio Listener"))
                     {
-                        const char* fieldName = mono_field_get_name(field);
-                        MonoType* fieldType = mono_field_get_type(field);
-                        int typeCode = mono_type_get_type(fieldType);
+                        ImGui::Text("Audio Listener");
 
-                        MonoClass* fieldParentClass = mono_field_get_parent(field);
-
-                        ImGui::PushID(field);
-
-                        if (typeCode == MONO_TYPE_STRING)
+                        // Mostrar la posición del Audio Listener
+                        Transform_Component* transform = selectedGameObject->GetTransform();
+                        if (transform)
                         {
-                            MonoString* monoString = nullptr;
-                            mono_field_get_value(scriptComponent->monoScript, field, &monoString);
-                            std::string value = monoString ? mono_string_to_utf8(monoString) : "";
-
-                            char buffer[128];
-                            strncpy(buffer, value.c_str(), sizeof(buffer));
-                            buffer[sizeof(buffer) - 1] = '\0';
-
-                            if (ImGui::InputText(fieldName, buffer, sizeof(buffer)))
-                            {
-                                value = buffer;
-                                MonoString* newMonoString = mono_string_new(mono_domain_get(), value.c_str());
-                                mono_field_set_value(scriptComponent->monoScript, field, newMonoString);
-                            }
+                            glm::dvec3 position = transform->GetPosition();
+                            float pos[3] = { static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z) };
+                            ImGui::DragFloat3("Position", pos, 0.1f);
                         }
-                        else if (typeCode == MONO_TYPE_BOOLEAN)
+                        else
                         {
-                            bool value = false;
-                            mono_field_get_value(scriptComponent->monoScript, field, &value);
-                            if (ImGui::Checkbox(fieldName, &value))
-                            {
-                                mono_field_set_value(scriptComponent->monoScript, field, &value);
-                            }
+                            ImGui::Text("Error: Transform component is nullptr");
                         }
-                        else if (typeCode == MONO_TYPE_I4)
-                        {
-                            int value = 0;
-                            mono_field_get_value(scriptComponent->monoScript, field, &value);
-                            if (ImGui::InputInt(fieldName, &value))
-                            {
-                                mono_field_set_value(scriptComponent->monoScript, field, &value);
-                            }
-                        }
-                        else if (typeCode == MONO_TYPE_R4)
-                        {
-                            float value = 0.0f;
-                            mono_field_get_value(scriptComponent->monoScript, field, &value);
-                            if (ImGui::InputFloat(fieldName, &value))
-                            {
-                                mono_field_set_value(scriptComponent->monoScript, field, &value);
-                            }
-                        }
-                        else if (typeCode == MONO_TYPE_R8)
-                        {
-                            double value = 0.0;
-                            mono_field_get_value(scriptComponent->monoScript, field, &value);
-                            if (ImGui::InputDouble(fieldName, &value))
-                            {
-                                mono_field_set_value(scriptComponent->monoScript, field, &value);
-                            }
-                        }
-
-
-                        ImGui::PopID();
                     }
-                }
-            }
-            else
-            {
-                if (!scriptComponent)
-                {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: ScriptComponent is nullptr");
                 }
                 else
                 {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: AudioListener is nullptr");
+                }
+            }
+            
+               
+        }
+        
+        ImGui::Separator();
+      
+        if (selectedGameObject->scriptComponents.size() > 0) {
+            for (auto& scriptComponent : selectedGameObject->scriptComponents) {
+                if (scriptComponent && scriptComponent->monoScript) {
+                    ImGui::PushID(scriptComponent.get());
+                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                    if (ImGui::CollapsingHeader(scriptComponent->GetName().c_str()))
+                    {
+                        std::string scriptName = mono_class_get_name(mono_object_get_class(scriptComponent->monoScript));
+                        ImGui::Text("Script: %s", scriptName.c_str());
+
+                        if (ImGui::Button("Open Script")) {
+                            std::string scriptPath = std::filesystem::absolute("../Script/" + scriptName + ".cs").string();
+                            LOG(LogType::LOG_INFO, "Absolute script path: %s", scriptPath.c_str());
+
+                            if (!std::filesystem::exists(scriptPath)) {
+                                LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
+                            }
+                            else {
+                                HINSTANCE result = ShellExecuteA(NULL, "open", scriptPath.c_str(), NULL, NULL, SW_SHOW);
+                                if ((int)result <= 32) {
+                                    LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
+                                }
+                                else {
+                                    LOG(LogType::LOG_INFO, "Successfully opened script: %s", scriptPath.c_str());
+                                }
+                            }
+                        }
+
+
+                        if (ImGui::Button("Reload Script")) {
+                            if (!scriptComponent->LoadScript(scriptName)) {
+                                LOG(LogType::LOG_ERROR, "Failed to reload script %s.", scriptName.c_str());
+                            }
+                            else {
+                                LOG(LogType::LOG_INFO, "Script %s reloaded successfully.", scriptName.c_str());
+                            }
+                        }
+
+                        MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
+
+                        MonoClassField* field = nullptr;
+                        void* iter = nullptr;
+                        while ((field = mono_class_get_fields(scriptClass, &iter))) {
+                            const char* fieldName = mono_field_get_name(field);
+                            MonoType* fieldType = mono_field_get_type(field);
+                            int typeCode = mono_type_get_type(fieldType);
+
+                            MonoClass* fieldParentClass = mono_field_get_parent(field);
+
+                            ImGui::PushID(field);
+
+                            if (typeCode == MONO_TYPE_STRING) {
+                                MonoString* monoString = nullptr;
+                                mono_field_get_value(scriptComponent->monoScript, field, &monoString);
+                                std::string value = monoString ? mono_string_to_utf8(monoString) : "";
+
+                                char buffer[128];
+                                strncpy(buffer, value.c_str(), sizeof(buffer));
+                                buffer[sizeof(buffer) - 1] = '\0';
+
+                                if (ImGui::InputText(fieldName, buffer, sizeof(buffer))) {
+                                    value = buffer;
+                                    MonoString* newMonoString = mono_string_new(mono_domain_get(), value.c_str());
+                                    mono_field_set_value(scriptComponent->monoScript, field, newMonoString);
+                                }
+                            }
+                            else if (typeCode == MONO_TYPE_BOOLEAN) {
+                                bool value = false;
+                                mono_field_get_value(scriptComponent->monoScript, field, &value);
+                                if (ImGui::Checkbox(fieldName, &value)) {
+                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
+                                }
+                            }
+                            else if (typeCode == MONO_TYPE_I4) {
+                                int value = 0;
+                                mono_field_get_value(scriptComponent->monoScript, field, &value);
+                                if (ImGui::InputInt(fieldName, &value)) {
+                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
+                                }
+                            }
+                            else if (typeCode == MONO_TYPE_R4) {
+                                float value = 0.0f;
+                                mono_field_get_value(scriptComponent->monoScript, field, &value);
+                                if (ImGui::InputFloat(fieldName, &value)) {
+                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
+                                }
+                            }
+                            else if (typeCode == MONO_TYPE_R8) {
+                                double value = 0.0;
+                                mono_field_get_value(scriptComponent->monoScript, field, &value);
+                                if (ImGui::InputDouble(fieldName, &value)) {
+                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
+                                }
+                            }
+
+                            ImGui::PopID();
+                        }
+                    }
+                    ImGui::PopID();
+                }
+                else {
+                    if (!scriptComponent) {
+                        LOG(LogType::LOG_WARNING, "UIInspector::Draw: ScriptComponent is nullptr");
+                    }
+                    else {
+                        LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
+                    }
                 }
             }
 

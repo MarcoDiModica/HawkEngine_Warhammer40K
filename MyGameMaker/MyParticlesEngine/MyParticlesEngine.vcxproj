@@ -72,10 +72,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticlesEmitterComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ParticlesEmitterComponent.cpp" />
+    <ClCompile Include="Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

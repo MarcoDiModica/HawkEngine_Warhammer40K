@@ -6,8 +6,8 @@
 #include "EditorCamera.h"
 #include "SceneSerializer.h"
 #include "Root.h"
-#include "PhysicsModule.h"
 #include "../MyGameEngine/Mesh.h"
+#include "../MyPhysicsEngine/PhysicsModule.h"
 
 #include <chrono>
 

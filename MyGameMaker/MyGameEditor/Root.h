@@ -48,6 +48,7 @@ public:
     std::shared_ptr<GameObject> CreateGameObject(const std::string& name);
     std::shared_ptr<GameObject> CreateCube(const std::string& name);
     std::shared_ptr<GameObject> CreateSphere(const std::string& name);
+    std::shared_ptr<GameObject> CreateCylinder(const std::string& name);
     std::shared_ptr<GameObject> CreatePlane(const std::string& name);
     std::shared_ptr<GameObject> CreateMeshObject(std::string name, std::shared_ptr<Mesh> mesh);
     std::shared_ptr<GameObject> CreateCameraObject(const std::string& name);
@@ -66,7 +67,7 @@ public:
     std::shared_ptr<GameObject> FindGOByName(char* name);
 
     std::shared_ptr<Scene> currentScene = nullptr;
-
+    float emitterLifetime = 5.0f;
     //main camera
     std::shared_ptr<GameObject> mainCamera = nullptr;
 

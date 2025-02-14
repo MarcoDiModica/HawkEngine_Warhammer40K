@@ -5,6 +5,7 @@
 #include <mono/metadata/object.h>
 #include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <memory>
 
 class GameObject;
 
@@ -16,15 +17,18 @@ namespace EngineBinds {
     void BindEngine();
 
     // GameObject
-    MonoObject* CreateGameObjectSharp(MonoString* name);
+    //MonoObject* CreateGameObjectSharp(MonoString* name, GameObject* Cgo = nullptr);
+
+    MonoObject* CreateGameObjectSharp(MonoString* name, GameObject* Cgo = nullptr);
+
+    MonoObject* GetGameObject(MonoObject* ref);
 
     GameObject* ConvertFromSharp(MonoObject* sharpObj);
     void GameObjectAddChild(MonoObject* parent, MonoObject* child);
     void Destroy(MonoObject* object_to_destroy);
     MonoObject* GetSharpComponent(MonoObject* ref, MonoString* comoponent_name);
-
     MonoObject* AddSharpComponent(MonoObject* ref, int component);
-
+    GameObject* GetScriptOwner(MonoObject* ref);
     template <class T>
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
 
@@ -43,7 +47,9 @@ namespace EngineBinds {
 
     // Transform
     void SetPosition(MonoObject* transformRef, float x, float y, float z);
+    void SetLocalPosition(MonoObject* transformRef, float x, float y, float z);
     Vector3 GetPosition(MonoObject* transformRef);
+    Vector3 GetLocalPosition(MonoObject* transformRef);
     void SetRotation(MonoObject* transformRef, float x, float y, float z);
     void SetRotationQuat(MonoObject* transformRef, glm::quat* rotation);
     Vector3 GetEulerAngles(MonoObject* transformRef);
@@ -54,6 +60,7 @@ namespace EngineBinds {
     void Scale(MonoObject* transformRef, float x, float y, float z);
     void TranslateLocal(MonoObject* transformRef, float x, float y, float z);
     void AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp);
+    Vector3 GetForward(MonoObject* transformRef);
     void SetForward(MonoObject* transformRef, glm::vec3* forward);
 
 	// Camera

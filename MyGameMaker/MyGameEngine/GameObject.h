@@ -7,6 +7,7 @@
 #include "BoundingBox.h"
 #include "../MyScriptingEngine/EngineBinds.h"
 #include <mono/metadata/object.h>
+#include "../MyScriptingEngine/ScriptComponent.h"
 
 
 
@@ -37,7 +38,7 @@ public:
     template <IsComponent T, typename... Args>
     T* AddComponent(Args&&... args);
 
-    template <IsComponent T>
+    template <typename T>
     T* GetComponent() const;
 
     template <IsComponent T>
@@ -101,6 +102,8 @@ public:
 
     MonoObject* CsharpReference = nullptr;
 
+    std::vector<std::unique_ptr<ScriptComponent>> scriptComponents;
+
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -128,7 +131,6 @@ private:
 
     float timeActive = 0.0f;
 
-
 protected:
     friend class Scene;
 
@@ -140,6 +142,13 @@ protected:
 
 template <IsComponent T, typename... Args>
 T* GameObject::AddComponent(Args&&... args) {
+    if constexpr (std::is_same_v<T, ScriptComponent>) {
+        std::unique_ptr<T> newComponent = std::make_unique<T>(this, std::forward<Args>(args)...);
+        T* result = newComponent.get();
+        scriptComponents.push_back(std::move(newComponent));
+        return result;
+    }
+
     std::unique_ptr<T> newComponent = std::make_unique<T>(this, std::forward<Args>(args)...);
 
     T* result = newComponent.get();
@@ -155,15 +164,20 @@ T* GameObject::AddComponent(Args&&... args) {
     }
 }
 
-template <IsComponent T>
+template <typename T>
 T* GameObject::GetComponent() const {
+    for (const auto& scriptComponent : scriptComponents) {
+        if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
+            return dynamic_cast<T*>(scriptComponent.get());
+        }
+    }
+
     auto it = components.find(typeid(T));
     if (it != components.end()) {
         return dynamic_cast<T*>(it->second.get());
     }
-    else {
-        throw std::runtime_error("Component not found on GameObject: " + this->GetName());
-    }
+
+    return nullptr;
 }
 
 template <IsComponent T>

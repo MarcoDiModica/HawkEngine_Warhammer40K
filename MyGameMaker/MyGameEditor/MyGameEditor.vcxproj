@@ -87,6 +87,9 @@
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\MyPhysicsEngine\MyPhysicsEngine.vcxproj">
+      <Project>{2adcc106-88f4-4ea9-8174-9e1323e4d869}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\MyScriptingEngine\MyScriptingEngine.vcxproj">
       <Project>{c0f74fc2-d269-40d3-bdd1-557d2e8478be}</Project>
     </ProjectReference>
@@ -95,6 +98,8 @@
     </ProjectReference>
     <ProjectReference Include="..\MyShadersEngine\MyShadersEngine.vcxproj">
       <Project>{c388ebfe-eac1-4564-af3b-8006f3c75204}</Project>
+    <ProjectReference Include="..\MyParticlesEngine\MyParticlesEngine.vcxproj">
+      <Project>{b258b672-0285-4ccb-9f04-00f753e34951}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -106,7 +111,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGUI.cpp" />
     <ClCompile Include="MyWindow.cpp" />
-    <ClCompile Include="PhysicsModule.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
     <ClCompile Include="UIAudioTest.cpp" />
@@ -118,6 +122,7 @@
     <ClCompile Include="UIProject.cpp" />
     <ClCompile Include="UISceneWindow.cpp" />
     <ClCompile Include="UISettings.cpp" />
+    <ClCompile Include="UITextEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -128,7 +133,6 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="MyGUI.h" />
     <ClInclude Include="MyWindow.h" />
-    <ClInclude Include="PhysicsModule.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
     <ClInclude Include="UIAudioTest.h" />
@@ -141,6 +145,7 @@
     <ClInclude Include="UIProject.h" />
     <ClInclude Include="UISceneWindow.h" />
     <ClInclude Include="UISettings.h" />
+    <ClInclude Include="UITextEditor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

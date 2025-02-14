@@ -2,6 +2,7 @@
 
 #include "../MyGameEngine/Component.h"
 #include <mono/metadata/object.h>
+#include <filesystem>
 
 class ScriptComponent : public Component
 {
@@ -21,7 +22,15 @@ public:
     bool LoadScript(const std::string& scriptName);
     bool CreateNewScript(const std::string& scriptName, const std::string& baseScriptName);
 
+    MonoObject* GetSharpObject() { return monoScript; }
+    std::string GetTypeName() const;
+
     MonoObject* monoScript = nullptr;
+
+    std::filesystem::file_time_type GetLastWriteTime() const { return lastWriteTime; }
+    void SetLastWriteTime(std::filesystem::file_time_type newTime) { lastWriteTime = newTime; }
+
+    std::filesystem::file_time_type lastWriteTime;
 
     //int method();
 };

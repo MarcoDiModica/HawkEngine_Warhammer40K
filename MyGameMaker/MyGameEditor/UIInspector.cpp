@@ -25,7 +25,7 @@
 #include "..\MyGameEngine\Material.h"
 
 #include "..\MyScriptingEngine\ScriptComponent.h"
-
+//#include "..\MyParticlesEngine\ParticlesEmitterComponent.h"
 #include <string>
 
 #include <mono/jit/jit.h>
@@ -119,6 +119,10 @@ bool UIInspector::Draw() {
 			if (!selectedGameObject->HasComponent<AudioListener>() && ImGui::MenuItem("Audio Listener")) {
 				selectedGameObject->AddComponent<AudioListener>();
 			}
+
+           /* if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
+                selectedGameObject->AddComponent<ParticlesEmitterComponent>();
+            }*/
 
 
             // More components here

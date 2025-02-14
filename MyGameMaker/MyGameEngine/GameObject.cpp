@@ -1,3 +1,6 @@
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/component_wise.hpp>
+
 #include "GameObject.h"
 #include "MeshRendererComponent.h"
 #include "../MyGameEditor/App.h"

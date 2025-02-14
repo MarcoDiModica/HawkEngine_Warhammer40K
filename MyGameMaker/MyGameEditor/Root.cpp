@@ -9,6 +9,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
+#include "../MyParticlesEngine/ParticlesEmitterComponent.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "App.h"
 #include "Input.h"
@@ -26,7 +27,56 @@ std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
 
 class GameObject;
 
+struct EmitterInfo{
+    std::shared_ptr<GameObject> gameObject;
+    std::chrono::steady_clock::time_point creationTime;
+    float lifetime = 0.0f;
+    Particle* particle = nullptr;
+    int maxParticles = 0;
+
+    void SetSpeed(const glm::vec3& newSpeed) {
+        if (particle) {
+            particle->SetParticleSpeed(newSpeed);
+        }
+    }
+};
+
+std::vector<EmitterInfo> activeEmitters;
+
 Root::Root(App* app) : Module(app) { ; }
+
+void MakeSmokerEmmiter() {
+    auto particlesEmitter = Application->root->CreateGameObject("ParticlesEmitter");
+    auto transform = particlesEmitter->GetTransform();
+    std::string texturePath = "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png";
+    transform->SetPosition(transform->GetPosition() + glm::dvec3(-14, 1, -10)); // Ejemplo de movimiento en el eje X
+    transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotaci?n en el eje Y
+    ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
+    particlesEmmiterComponent->SetTexture(texturePath);
+    particlesEmmiterComponent->isSmoking = true;
+}
+
+void MakeSmokerEmiter2() {
+    auto particlesEmitter = Application->root->CreateGameObject("ParticlesEmitter1");
+    auto transform = particlesEmitter->GetTransform();
+    std::string texturePath = "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png";
+    transform->SetPosition(transform->GetPosition() + glm::dvec3(-10, 0, -16)); // Ejemplo de movimiento en el eje X
+    transform->Rotate(glm::radians(1.0), glm::dvec3(0, 1, 0)); // Ejemplo de rotaci?n en el eje Y
+    ParticlesEmitterComponent* particlesEmmiterComponent = particlesEmitter->AddComponent<ParticlesEmitterComponent>();
+    particlesEmmiterComponent->SetTexture(texturePath);
+    particlesEmmiterComponent->isSmoking = true;
+}
+
+std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, const std::string& texturePath) {
+    auto particleEmitter = Application->root->CreateGameObject("ParticleEmitter");
+    auto transform = particleEmitter->GetTransform();
+    transform->SetLocalPosition(position);
+
+    auto emitterComponent = particleEmitter->AddComponent<ParticlesEmitterComponent>();
+    emitterComponent->SetTexture(texturePath); // Establecer la textura
+    emitterComponent->isSmoking = false;
+    return particleEmitter;
+}
 
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
@@ -69,7 +119,8 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
     MakeCity();
-
+    MakeSmokerEmmiter();
+    MakeSmokerEmiter2();
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");
     

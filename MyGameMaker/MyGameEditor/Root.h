@@ -65,7 +65,7 @@ public:
     std::shared_ptr<GameObject> FindGOByName(char* name);
 
     std::shared_ptr<Scene> currentScene = nullptr;
-
+    float emitterLifetime = 5.0f;
     //main camera
     std::shared_ptr<GameObject> mainCamera = nullptr;
 

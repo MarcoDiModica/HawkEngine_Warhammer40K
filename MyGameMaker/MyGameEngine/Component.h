@@ -26,6 +26,7 @@ enum class ComponentType {
 	AUDIO_LISTENER,
 	SCRIPT,
 	COLLIDER,
+	PARTICLES_EMITTER,
 	LIGHT
 
 };

@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "ColliderComponent.h"
@@ -10,6 +11,7 @@ ColliderComponent::~ColliderComponent() {
 }
 
 void ColliderComponent::Start() {
+    mass = 0.0f;
     CreateCollider(isForStreetLocal);
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMapForhouse) {
 
@@ -40,8 +42,76 @@ void ColliderComponent::Start() {
     }
 }
 
+glm::vec3 ColliderComponent::GetColliderPos() {
+
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    btVector3 pos = trans.getOrigin();
+    return glm::vec3(pos.getX(), pos.getY(), pos.getZ());
+}
+
+glm::quat ColliderComponent::GetColliderRotation() {
+
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    btQuaternion rot = trans.getRotation();
+    return glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
+}
+
+void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+
+    btVector3 currentPosition = trans.getOrigin();
+    trans.setOrigin(currentPosition);
+
+    rigidBody->getMotionState()->setWorldTransform(trans);
+    rigidBody->setWorldTransform(trans);;
+}
+
+void ColliderComponent::SetColliderPos(const glm::vec3& position) {
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    trans.setOrigin(btVector3(position.x, position.y, position.z));
+    rigidBody->getMotionState()->setWorldTransform(trans);
+    rigidBody->setCenterOfMassTransform(trans);
+}
+
+void ColliderComponent::SetSize(const glm::vec3& newSize) {
+    size = newSize;
+    if (rigidBody) {
+        btCollisionShape* shape = rigidBody->getCollisionShape();
+        if (shape) {
+            btVector3 newBtSize(newSize.x * 0.5f, newSize.y * 0.5f, newSize.z * 0.5f);
+            shape->setLocalScaling(newBtSize);
+        }
+    }
+}
+void ColliderComponent::SetMass(float newMass) {
+    mass = newMass;
+    if (rigidBody) {
+        physics->dynamicsWorld->removeRigidBody(rigidBody);
+        delete rigidBody->getMotionState();
+        delete rigidBody;
+        rigidBody = nullptr;
+    }
+    CreateCollider(false);
+}
+
+void ColliderComponent::SetActive(bool active) {
+    if (rigidBody) {
+        if (active) {
+            physics->dynamicsWorld->addRigidBody(rigidBody);
+        }
+        else {
+            physics->dynamicsWorld->removeRigidBody(rigidBody);
+        }
+    }
+}
+
 void ColliderComponent::Update(float deltaTime) {
-    
+
     // Sincroniza la posición y rotación entre el GameObject y el colisionador
 
     //for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMapForhouse) {
@@ -112,12 +182,14 @@ void ColliderComponent::CreateCollider(bool isForStreet) {
     BoundingBox bbox = owner->boundingBox();
     size = bbox.size();
 
-    btCollisionShape* shape = new btBoxShape(btVector3(size.x * 0.5f, size.z, size.y * 0.5f));
+
+    btCollisionShape* shape;
 
     btTransform startTransform;
     startTransform.setIdentity();
 
     if (isForStreet) {
+        shape = new btBoxShape(btVector3(size.x * 0.5f, size.z, size.y * 0.5f));
         glm::vec3 localPosition = glm::vec3(transform->GetPosition());
         startTransform.setOrigin(btVector3(localPosition.x, localPosition.z, localPosition.y));
         //glm::quat rotation = transform->GetRotation();
@@ -130,9 +202,13 @@ void ColliderComponent::CreateCollider(bool isForStreet) {
     }
     else
     {
-        glm::vec3 localPosition = glm::vec3(transform->GetLocalMatrix()[3]);
+        shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
+        glm::vec3 localPosition = transform->GetPosition();
         startTransform.setOrigin(btVector3(localPosition.x, localPosition.y, localPosition.z));
-        //startTransform.setRotation(btQuaternion(transform->GetRotation().x, transform->GetRotation().y, transform->GetRotation().z, transform->GetRotation().w));
+        startTransform.setRotation(btQuaternion(transform->GetRotation().x, transform->GetRotation().y, transform->GetRotation().z, transform->GetRotation().w));
+        glm::vec3 scale = transform->GetScale();
+        shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+
     }
 
 
@@ -151,68 +227,8 @@ void ColliderComponent::CreateCollider(bool isForStreet) {
 
     // Añadir el colisionador al mundo de físicas
     physics->dynamicsWorld->addRigidBody(rigidBody);
-    gameObjectRigidBodyMapForhouse[owner] = rigidBody;
-
-
-
-
-
-    //void ColliderComponent::CreateCollider(bool isForStreet) {
-    //    if (!owner) return;
-
-    //    // Obtener el Transform del GameObject
-    //    Transform_Component* transform = owner->GetTransform();
-    //    if (!transform) return;
-
-    //    // Obtener el BoundingBox del GameObject
-    //    BoundingBox bbox = owner->boundingBox(); // Asume que el GameObject tiene un método GetBoundingBox()
-    //    size = bbox.size(); // Tamaño del Bounding Box
-
-    //    // Crear la forma de colisión usando el tamaño del Bounding Box
-    //    btCollisionShape* shape = new btBoxShape(btVector3(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f));
-
-    //    // Configurar la transformación inicial
-    //    btTransform startTransform;
-    //    startTransform.setIdentity();
-
-    //    // Obtener la transformación global
-    //    glm::mat4 globalMatrix = transform->GetMatrix(); // Matriz de transformación global
-    //    glm::vec3 globalPosition(globalMatrix[3]);       // Posición global
-    //    glm::quat globalRotation = transform->GetRotation(); // Rotación global
-
-    //    // Ajustar las transformaciones si es para la calle
-    //    if (isForStreet) {
-    //        // Aplicar las transformaciones específicas de la calle
-    //        glm::vec3 adjustedPosition = globalPosition * glm::vec3(0.5f, 0.5f, 0.5f) + glm::vec3(0, 0.1f, 0);
-    //        globalPosition = adjustedPosition;
-
-    //        // Rotar -90 grados en el eje X
-    //        glm::quat rotationAdjustment = glm::rotate(glm::quat(1, 0, 0, 0), -1.5708f, glm::vec3(1, 0, 0));
-    //        globalRotation = globalRotation * rotationAdjustment;
-    //    }
-
-    //    // Configurar la posición y rotación en Bullet
-    //    startTransform.setOrigin(btVector3(globalPosition.x, globalPosition.y, globalPosition.z));
-    //    startTransform.setRotation(btQuaternion(globalRotation.x, globalRotation.y, globalRotation.z, globalRotation.w));
-
-    //    // Configurar la masa e inercia
-    //    btVector3 localInertia(0, 0, 0);
-    //    if (mass > 0.0f) {
-    //        shape->calculateLocalInertia(mass, localInertia);
-    //    }
-
-    //    // Crear el cuerpo rígido
-    //    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-    //    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
-    //    rigidBody = new btRigidBody(rbInfo);
-
-    //    // Añadir el colisionador al mundo de físicas
-    //    physics->dynamicsWorld->addRigidBody(rigidBody);
-    //}
-
-
-
-
-
+    //gameObjectRigidBodyMapForhouse[owner] = rigidBody;
+    //doesnt works properly
+    physics->gameObjectRigidBodyMap[owner] = rigidBody;
 
 }

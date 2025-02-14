@@ -22,18 +22,34 @@ public:
 
     ComponentType GetType() const override { return ComponentType::COLLIDER; }
 
-    // Clonar el componente
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
+    glm::vec3 GetSize() { return size; };
+
+    void SetSize(const glm::vec3& newSize);
+
+    float GetMass() { return mass; };
+    glm::vec3 GetColliderPos();
+
+    glm::quat GetColliderRotation();
+
+    void SetColliderRotation(const glm::quat& rotation);
+
+    void SetColliderPos(const glm::vec3& position);
+
+    void SetMass(float newMass);
+
+    void SetActive(bool active);
+
 private:
-    btRigidBody* rigidBody; // Collider en Bullet
+    btRigidBody* rigidBody; // Collider
     PhysicsModule* physics; // Referencia al módulo de físicas
     glm::vec3 size; // Tamaño del Bounding Box
-    float mass; // Masa del colisionador
+    float mass;
     bool isForStreetLocal;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
 
 
-    void CreateCollider(bool isForStreet = false); // Función para crear el colisionador
+    void CreateCollider(bool isForStreet = false);
 };
 

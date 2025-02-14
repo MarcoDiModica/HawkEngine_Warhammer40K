@@ -411,19 +411,17 @@ bool UIInspector::Draw() {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
                 if (ImGui::CollapsingHeader("Collider")) {
 
-                    Transform_Component* transform = colliderComponent->GetOwner()->GetTransform();
-
                     // Posición del Collider
-                    glm::vec3 colliderPosition = transform->GetPosition();
+                    glm::vec3 colliderPosition = colliderComponent->GetColliderPos();
                     float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
 
                     if (ImGui::DragFloat3("Position", pos, 0.1f)) {
-                        transform->SetPosition(glm::vec3(pos[0], pos[1], pos[2]));
+						colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
                     }
 
                     // Tamaño del Collider
                     glm::vec3 size = colliderComponent->GetSize();
-                    float sizeArray[3] = { size.x, size.y, size.z };
+                    float sizeArray[3] = { size.x, size.y, size.z }; 
 
                     if (ImGui::DragFloat3("Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
                         colliderComponent->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
@@ -431,7 +429,7 @@ bool UIInspector::Draw() {
 
                     // Masa del Collider
                     float mass = colliderComponent->GetMass();
-                    if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 1000.0f)) {
+                    if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 10.0f)) {
                         colliderComponent->SetMass(mass);
                     }
 
@@ -450,7 +448,7 @@ bool UIInspector::Draw() {
             }
             else
             {
-                LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
+                LOG(LogType::LOG_WARNING, "UIInspector::Draw: ColliderComponent is nullptr");
             }
         }
 

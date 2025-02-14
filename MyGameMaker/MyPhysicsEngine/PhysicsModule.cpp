@@ -156,6 +156,28 @@ void PhysicsModule::SyncTransforms() {
             << pos.getX() << ", " << pos.getY() << ", " << pos.getZ() << ")\n";
     }
 }
+
+void PhysicsModule::SyncCollidersToGameObjects() {   
+    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+        auto goTransform = gameObject->GetTransform();
+        glm::vec3 position = goTransform->GetPosition();
+        glm::quat rotation = goTransform->GetRotation();
+
+        btTransform transform;
+        transform.setIdentity();
+        transform.setOrigin(btVector3(position.x, position.y, position.z));
+        transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+
+        if (rigidBody->getMotionState()) {
+            rigidBody->getMotionState()->setWorldTransform(transform);
+        } else {
+            rigidBody->setWorldTransform(transform);
+        }
+
+        std::cout << "Collider position updated to: ("
+            << position.x << ", " << position.y << ", " << position.z << ")\n";
+    }
+}
 std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWorld) {
     std::vector<btRigidBody*> rigidBodies;
     int numCollisionObjects = dynamicsWorld->getNumCollisionObjects();
@@ -228,6 +250,11 @@ bool PhysicsModule::Update(double dt) {
         dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 10);
         //GameObjectsSync
         SyncTransforms();
+    }
+    else
+    {
+		//Line to sync the colliders to the gameobjects
+		//SyncCollidersToGameObjects();
     }
     DrawDebugDrawer();
     

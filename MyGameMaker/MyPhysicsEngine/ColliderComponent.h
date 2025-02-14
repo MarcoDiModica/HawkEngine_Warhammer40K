@@ -42,14 +42,14 @@ public:
     void SetActive(bool active);
 
 private:
-    btRigidBody* rigidBody; // Collider en Bullet
+    btRigidBody* rigidBody; // Collider
     PhysicsModule* physics; // Referencia al módulo de físicas
     glm::vec3 size; // Tamaño del Bounding Box
-    float mass; // Masa del colisionador
+    float mass; 
     bool isForStreetLocal;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
 
 
-    void CreateCollider(bool isForStreet = false); // Función para crear el colisionador
+    void CreateCollider(bool isForStreet = false); 
 };
 

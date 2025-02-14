@@ -39,6 +39,7 @@ public:
     void CreatePhysicsForCube(GameObject& go, float mass);
     //void CreatePhysicsPlane();
     void SyncTransforms();
+    void SyncCollidersToGameObjects();
 
     void AddConstraintP2P(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB);
     // Añade una restricción de bisagra (Hinge)

@@ -24,6 +24,8 @@
 #include "..\MyGameEngine\Image.h"
 #include "..\MyGameEngine\Material.h"
 
+#include "..\MyPhysicsEngine\ColliderComponent.h"
+
 #include "..\MyScriptingEngine\ScriptComponent.h"
 //#include "..\MyParticlesEngine\ParticlesEmitterComponent.h"
 #include <string>
@@ -120,6 +122,11 @@ bool UIInspector::Draw() {
 			if (!selectedGameObject->HasComponent<AudioListener>() && ImGui::MenuItem("Audio Listener")) {
 				selectedGameObject->AddComponent<AudioListener>();
 			}
+            if (!selectedGameObject->HasComponent<ColliderComponent>() && ImGui::MenuItem("Collider")) {
+                selectedGameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+                selectedGameObject->GetComponent<ColliderComponent>()->Start();
+            }
+
 
            /* if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
                 selectedGameObject->AddComponent<ParticlesEmitterComponent>();
@@ -418,6 +425,69 @@ bool UIInspector::Draw() {
         }
 
         ImGui::Separator();
+
+
+        if (selectedGameObject->HasComponent<ColliderComponent>())
+        {
+            ColliderComponent* colliderComponent = selectedGameObject->GetComponent<ColliderComponent>();
+
+            if (colliderComponent)
+            {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Collider")) {
+
+                    // Posición del Collider
+
+                    glm::vec3 colliderPosition = colliderComponent->GetColliderPos();
+                    float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
+
+                    if (ImGui::DragFloat3("ColliderPosition", pos, 0.1f)) {
+                        colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
+                    }
+
+                    // Rotación del Collider
+                    glm::quat colliderRotation = colliderComponent->GetColliderRotation();
+                    glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
+                    float rot[3] = { glm::degrees(eulerRotation.x), glm::degrees(eulerRotation.y), glm::degrees(eulerRotation.z) };
+
+                    if (ImGui::DragFloat3("ColliderRotation", rot, 0.1f)) {
+                        glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
+                        colliderComponent->SetColliderRotation(newRotation);
+                    }
+
+                    // Tamaño del Collider
+                    glm::vec3 size = colliderComponent->GetSize();
+                    float sizeArray[3] = { size.x, size.y, size.z };
+
+                    if (ImGui::DragFloat3("ColliderSize", sizeArray, 0.1f, 0.1f, 100.0f)) {
+                        colliderComponent->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+                    }
+
+                    // Masa del Collider
+                    float mass = colliderComponent->GetMass();
+                    if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 10.0f)) {
+                        colliderComponent->SetMass(mass);
+                    }
+
+                    //// Checkbox para activar/desactivar collider
+                    //bool isActive = colliderComponent->IsActive();
+                    //if (ImGui::Checkbox("Enabled", &isActive)) {
+                    //    colliderComponent->SetActive(isActive);
+                    //}
+
+                    //// Botón para recrear el collider
+                    //if (ImGui::Button("Recreate Collider")) {
+                    //    colliderComponent->CreateCollider();
+                    //}
+                }
+
+            }
+            else
+            {
+                LOG(LogType::LOG_WARNING, "UIInspector::Draw: ColliderComponent is nullptr");
+            }
+        }
+
 
         if (selectedGameObject->HasComponent<SoundComponent>()) {
             SoundComponent* soundComponent = selectedGameObject->GetComponent<SoundComponent>();

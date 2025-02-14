@@ -1,3 +1,4 @@
+
 #include "PhysicsModule.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
@@ -7,7 +8,7 @@
 #include <glm/glm.hpp>
 
 
-PhysicsModule::PhysicsModule(): dynamicsWorld(nullptr), cubeShape(nullptr) {}
+PhysicsModule::PhysicsModule() : dynamicsWorld(nullptr), cubeShape(nullptr) {}
 
 PhysicsModule::~PhysicsModule() {
     CleanUp();
@@ -22,26 +23,26 @@ bool PhysicsModule::Awake() {
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
     dynamicsWorld->setGravity(btVector3(0, -9.81, 0));
 
-	//Debug drawer
+    //Debug drawer
     debugDrawer = new DebugDrawerPhysics();
     dynamicsWorld->setDebugDrawer(debugDrawer);
 
     // Initialize vehicle raycaster
     vehicle_raycaster = new btDefaultVehicleRaycaster(dynamicsWorld);
-    
+
     // Initialize shared collision shapes (e.g., cubeShape)
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
-   
+
     //Plane functions
-   btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
 
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
     dynamicsWorld->addRigidBody(groundRigidBody);
-	//groundRigidBody->setRestitution(0.8f);
+    //groundRigidBody->setRestitution(0.8f);
     SetGlobalRestitution(0.5f);
     return true;
 }
@@ -66,9 +67,9 @@ void PhysicsModule::CreatePhysicsForCube(GameObject& go, float mass) {
 
     btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState, cubeShape, inertia);
     btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
-	//PhysBody3D* body = new PhysBody3D(rigidBody);
+    //PhysBody3D* body = new PhysBody3D(rigidBody);
     dynamicsWorld->addRigidBody(rigidBody);
-	//body.Push(1, 1, 1);
+    //body.Push(1, 1, 1);
 
     gameObjectRigidBodyMap[&go] = rigidBody;
 
@@ -156,6 +157,29 @@ void PhysicsModule::SyncTransforms() {
             << pos.getX() << ", " << pos.getY() << ", " << pos.getZ() << ")\n";
     }
 }
+
+void PhysicsModule::SyncCollidersToGameObjects() {
+    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+        auto goTransform = gameObject->GetTransform();
+        glm::vec3 position = goTransform->GetPosition();
+        glm::quat rotation = goTransform->GetRotation();
+
+        btTransform transform;
+        transform.setIdentity();
+        transform.setOrigin(btVector3(position.x, position.y, position.z));
+        transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+
+        if (rigidBody->getMotionState()) {
+            rigidBody->getMotionState()->setWorldTransform(transform);
+        }
+        else {
+            rigidBody->setWorldTransform(transform);
+        }
+
+        std::cout << "Collider position updated to: ("
+            << position.x << ", " << position.y << ", " << position.z << ")\n";
+    }
+}
 std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWorld) {
     std::vector<btRigidBody*> rigidBodies;
     int numCollisionObjects = dynamicsWorld->getNumCollisionObjects();
@@ -176,13 +200,13 @@ void PhysicsModule::DrawDebugDrawer() {
 
         for (const auto& rigidBody : rigidBodies) {
             if (!rigidBody || !rigidBody->getCollisionShape()) {
-                continue; // Salta si no hay forma de colisión
+                continue;
             }
 
             btCollisionShape* shape = rigidBody->getCollisionShape();
 
             if (shape->getShapeType() == BOX_SHAPE_PROXYTYPE) {
-                // Dibuja un cubo si la forma es un cubo
+
                 btBoxShape* boxShape = static_cast<btBoxShape*>(shape);
                 btVector3 halfExtents = boxShape->getHalfExtentsWithMargin();
 
@@ -198,10 +222,10 @@ void PhysicsModule::DrawDebugDrawer() {
                         transform.getOrigin().getZ() + halfExtents.getZ())
                 );
 
-                debugDrawer->drawBoundingBox(bbox, glm::vec3(1.0f, 0.0f, 0.0f)); // Dibuja el cubo en verde
+                debugDrawer->drawBoundingBox(bbox, glm::vec3(1.0f, 0.0f, 0.0f));
             }
             else if (shape->getShapeType() == SPHERE_SHAPE_PROXYTYPE) {
-                // Dibuja una esfera si la forma es una esfera
+
                 btSphereShape* sphereShape = static_cast<btSphereShape*>(shape);
                 float radius = sphereShape->getRadius();
 
@@ -212,7 +236,7 @@ void PhysicsModule::DrawDebugDrawer() {
                     transform.getOrigin().getY(),
                     transform.getOrigin().getZ());
 
-                debugDrawer->drawSphere(center, radius, glm::vec3(1.0f, 0.0f, 0.0f), 16); // Dibuja la esfera en rojo
+                debugDrawer->drawSphere(center, radius, glm::vec3(1.0f, 0.0f, 0.0f), 16);
             }
             else {
                 // Otros tipos de colisión (por ahora no renderizamos)
@@ -224,15 +248,19 @@ void PhysicsModule::DrawDebugDrawer() {
 
 
 bool PhysicsModule::Update(double dt) {
-    dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 10);
-    SyncTransforms();
-
-    for (p2List_item<FinalVehicleInfo*>* item = vehicles.getFirst(); item != nullptr; item = item->next) {
-        FinalVehicleInfo* vehicle = item->data;
-        SyncVehicleComponents(vehicle->bulletVehicle, vehicle->chassis, vehicle->wheels);
+    if (linkPhysicsToScene) {
+        dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 10);
+        //GameObjectsSync
+        SyncTransforms();
+    }
+    else
+    {
+        //Line to sync the colliders to the gameobjects
+        //SyncCollidersToGameObjects();
     }
     DrawDebugDrawer();
-   
+
+
 
     return true;
 }
@@ -332,126 +360,8 @@ void PhysicsModule::AddConstraintHinge(GameObject& goA, GameObject& goB, const g
     }
 }
 
-//Crea el coche en bullet
-PhysVehicle3D* PhysicsModule::AddVehicle(const VehicleInfo& info)
-{
-    btCompoundShape* comShape = new btCompoundShape();
-    shapes.add(comShape);
 
-    btCollisionShape* colShape = new btBoxShape(btVector3(info.chassis_size.x * 0.5f, info.chassis_size.y * 0.5f, info.chassis_size.z * 0.5f));
-    shapes.add(colShape);
-
-    btTransform trans;
-    trans.setIdentity();
-    trans.setOrigin(btVector3(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z));
-
-    comShape->addChildShape(trans, colShape);
-
-    btTransform startTransform;
-    startTransform.setIdentity();
-
-    btVector3 localInertia(0, 0, 0);
-    comShape->calculateLocalInertia(info.mass, localInertia);
-
-    btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-    btRigidBody::btRigidBodyConstructionInfo rbInfo(info.mass, myMotionState, comShape, localInertia);
-
-    btRigidBody* body = new btRigidBody(rbInfo);
-    body->setContactProcessingThreshold(BT_LARGE_FLOAT);
-    body->setActivationState(DISABLE_DEACTIVATION);
-
-    dynamicsWorld->addRigidBody(body);
-
-    btRaycastVehicle::btVehicleTuning tuning;
-    tuning.m_frictionSlip = info.frictionSlip;
-    tuning.m_maxSuspensionForce = info.maxSuspensionForce;
-    tuning.m_maxSuspensionTravelCm = info.maxSuspensionTravelCm;
-    tuning.m_suspensionCompression = info.suspensionCompression;
-    tuning.m_suspensionDamping = info.suspensionDamping;
-    tuning.m_suspensionStiffness = info.suspensionStiffness;
-
-    btRaycastVehicle* vehicle = new btRaycastVehicle(tuning, body, vehicle_raycaster);
-
-    vehicle->setCoordinateSystem(0, 1, 2);
-
-    for (int i = 0; i < info.num_wheels; ++i) {
-        btVector3 conn(info.wheels[i].connection.x, info.wheels[i].connection.y, info.wheels[i].connection.z);
-        btVector3 dir(info.wheels[i].direction.x, info.wheels[i].direction.y, info.wheels[i].direction.z); // Dirección de suspensión
-        btVector3 axis(info.wheels[i].axis.x, info.wheels[i].axis.y, info.wheels[i].axis.z);             // Eje de rotación
-
-        // Asegurarte de que 'axis' sea perpendicular a 'dir'
-        // Por ejemplo: dir es (0, -1, 0), entonces axis debe ser (-1, 0, 0) o (1, 0, 0)
-        vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
-    }
-    // ---------------------
-    PhysVehicle3D* pvehicle = new PhysVehicle3D(body, vehicle, info);
-    body->setUserPointer(pvehicle);
-    dynamicsWorld->addVehicle(vehicle);
-
-    // Crear componentes asociados al vehículo (ruedas y chasis)
-    //CreateVehicleComponents(pvehicle, info);
-
-    return pvehicle;
-}
-
-void PhysicsModule::SyncVehicleComponents(PhysVehicle3D* vehicle, GameObject* chassis, std::vector<GameObject*> wheels) {
-    if (!vehicle || !chassis || wheels.size() != vehicle->info.num_wheels) {
-        std::cerr << "Error: Mismatch between vehicle and game objects.\n";
-        return;
-    }
-
-    const VehicleInfo& info = vehicle->info;
-
-    // Sincronizar el chasis
-    {
-        const btTransform& chassisTransform = vehicle->vehicle->getChassisWorldTransform();
-        btVector3 chassisPos = chassisTransform.getOrigin();
-        btQuaternion chassisRot = chassisTransform.getRotation();
-
-        glm::vec3 newChassisPos(chassisPos.getX(), chassisPos.getY(), chassisPos.getZ());
-        glm::quat newChassisRot(chassisRot.getW(), chassisRot.getX(), chassisRot.getY(), chassisRot.getZ());
-
-        glm::dvec3 newPosition = { chassisPos[0], chassisPos[1], chassisPos[2] };
-        glm::dvec3 deltaPos = newPosition - chassis->GetTransform()->GetPosition();
-        chassis->GetTransform()->Translate(deltaPos);
-
-
-        glm::dvec3 newRotation = glm::radians(glm::dvec3(chassisRot[0], chassisRot[1], chassisRot[2]));
-        glm::dvec3 currentRotation = glm::radians(chassis->GetTransform()->GetEulerAngles());
-        glm::dvec3 deltaRot = newRotation - currentRotation;
-
-        chassis->GetTransform()->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-        chassis->GetTransform()->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-        chassis->GetTransform()->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
-    }
-
-    // Sincronizar las ruedas
-    for (size_t i = 0; i < wheels.size(); ++i) {
-        btTransform wheelTransform;
-        vehicle->vehicle->updateWheelTransform(static_cast<int>(i), true); // Obtener transformación actualizada
-        wheelTransform = vehicle->vehicle->getWheelTransformWS(static_cast<int>(i));
-
-        btVector3 wheelPos = wheelTransform.getOrigin();
-        btQuaternion wheelRot = wheelTransform.getRotation();
-
-        glm::vec3 newWheelPos(wheelPos.getX(), wheelPos.getY(), wheelPos.getZ());
-        glm::quat newWheelRot(wheelRot.getW(), wheelRot.getX(), wheelRot.getY(), wheelRot.getZ());
-
-        glm::dvec3 newPosition = { wheelPos[0], wheelPos[1], wheelPos[2] };
-        glm::dvec3 deltaPos = newPosition - wheels[i]->GetTransform()->GetPosition();
-        wheels[i]->GetTransform()->Translate(deltaPos);
-
-
-        glm::dvec3 newRotation = glm::radians(glm::dvec3(wheelRot[0], wheelRot[1], wheelRot[2]));
-        glm::dvec3 currentRotation = glm::radians(wheels[i]->GetTransform()->GetEulerAngles());
-        glm::dvec3 deltaRot = newRotation - currentRotation;
-
-        wheels[i]->GetTransform()->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-        wheels[i]->GetTransform()->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-        wheels[i]->GetTransform()->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
-    }
-}
-void PhysicsModule::SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& cameraPosition, const glm::vec3& cameraDirection, float forceMagnitude){
+void PhysicsModule::SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& cameraPosition, const glm::vec3& cameraDirection, float forceMagnitude) {
     // Obtener el componente Transform del GameObject
     Transform_Component* transform = go.GetTransform();
 
@@ -523,3 +433,5 @@ bool PhysicsModule::PreUpdate() {
 bool PhysicsModule::PostUpdate() {
     return true;
 }
+
+

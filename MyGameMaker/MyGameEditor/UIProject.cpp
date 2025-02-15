@@ -24,6 +24,7 @@ const std::string SCENE_ICON_PATH = "EngineAssets/scene.png";
 const std::string MESH_ICON_PATH = "EngineAssets/mesh.png";
 const std::string AUDIO_ICON_PATH = "EngineAssets/audio.png";
 const std::string DEFAULT_ICON_PATH = "EngineAssets/default.png";
+const std::string SCRIPT_ICON_PATH = "EngineAssets/cscript.png";
 
 UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 {
@@ -43,6 +44,8 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
     iconCache[".mesh"]->LoadTexture(MESH_ICON_PATH);
     iconCache[".audio"] = new Image();
     iconCache[".audio"]->LoadTexture(AUDIO_ICON_PATH);
+    iconCache[".cs"] = new Image();
+    iconCache[".cs"]->LoadTexture(SCRIPT_ICON_PATH);
     iconCache[".default"] = new Image();
     iconCache[".default"]->LoadTexture(DEFAULT_ICON_PATH);
 

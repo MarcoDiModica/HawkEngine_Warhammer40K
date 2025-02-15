@@ -5,6 +5,8 @@
 #include "MyGUI.h"
 #include "MyGameEngine/types.h"
 
+#include "../MyScriptingEngine/ScriptComponent.h"
+
 #include <filesystem>
 #include <string>
 #include <fstream>
@@ -12,6 +14,8 @@
 #include <chrono>
 #include <future>
 #include <functional>
+#define NOMINMAX
+#include <Windows.h>
 
 const std::string FOLDER_ICON_PATH = "EngineAssets/folder.png";
 const std::string MATERIAL_ICON_PATH = "EngineAssets/material.png";
@@ -114,6 +118,32 @@ bool UIProject::Draw()
         }
         ImGui::SameLine();
 
+        if (ImGui::Button("Create CS Script"))
+		{
+            //ask for script name
+			std::string scriptName = "NewScript";
+            std::string scriptPath = selectedDirectory.string() + scriptName + ".cs";
+            std::ofstream scriptFile(scriptPath);
+            
+            std::string scriptContent = "using System;\n\n"
+                "public class " + scriptName + " : MonoBehaviour\n"
+                "{\n"
+                "    public override void Start()\n"
+                "    {\n"
+                "        HawkEngine.EngineCalls.print(\"Hola desde " + scriptName + "!\");\n"
+                "    }\n\n"
+                "    public override void Update(float deltaTime)\n"
+                "    {\n"
+                "        // L�gica de actualizaci�n\n"
+                "    }\n"
+                "}\n";
+
+            scriptFile << scriptContent;
+            scriptFile.close();
+
+            StartDirectoryListing(selectedDirectory);
+		}
+
         if (ImGui::Button("Create")) {
             ImGui::OpenPopup("CreateMenu");
         }
@@ -129,7 +159,6 @@ bool UIProject::Draw()
         }
 
         // --- Folder Contents ---
-        ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(1);
         ImGui::Separator();
 
@@ -496,6 +525,24 @@ void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
 
         ImGui::OpenPopup("Load Scene");
     }
+
+    if (filePath.extension() == ".cs") 
+    {
+        std::string scriptPath = filePath.string();
+        
+        if (!std::filesystem::exists(scriptPath)) {
+            LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
+        }
+        else {
+            HINSTANCE result = ShellExecuteA(NULL, "open", scriptPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
+            if ((int)result <= 32) {
+                LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
+            }
+            else {
+                LOG(LogType::LOG_INFO, "Successfully opened script: %s", scriptPath.c_str());
+            }
+        }
+	}
 
     if (ImGui::BeginPopupModal("Load Scene"))
     {

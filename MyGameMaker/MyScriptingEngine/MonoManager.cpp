@@ -92,7 +92,6 @@ void MonoManager::Initialize() {
             const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
             klass = mono_class_from_name(image, name_space, name);
 
-            // Classes with the Script namespace aren't processed
             if (klass != nullptr && strcmp(mono_class_get_namespace(klass), "Script") != 0)
             {
                 if (!mono_class_is_enum(klass)) {

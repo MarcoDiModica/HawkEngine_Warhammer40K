@@ -692,17 +692,9 @@ void UIProject::ShowContextMenu()
                 renamePath = selectedFile;
             }
             if (ImGui::MenuItem("Delete")) {
-                try {
-                    std::filesystem::remove(selectedFile);
-                    selectedFile.clear();
-                    StartDirectoryListing(selectedDirectory);
-                }
-                catch (const std::filesystem::filesystem_error& ex) {
-                    LOG(LogType::LOG_ERROR, "Error deleting file: %s", ex.what());
-                }
+                showDeletePopup = true;
             }
 
-            // Additional file-specific options
             if (selectedFile.extension() == ".cs" && ImGui::MenuItem("Open in Editor")) {
                 HandleFileSelection(selectedFile);
             }

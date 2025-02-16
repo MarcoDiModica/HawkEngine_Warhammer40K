@@ -92,6 +92,8 @@ bool UIProject::Draw()
         return true;
     }
 
+    HandleShortcuts();
+
     DrawMainLayout();
 
     if (ImGui::BeginPopupModal("Load Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
@@ -698,7 +700,7 @@ void UIProject::ShowContextMenu()
             StartDirectoryListing(selectedDirectory);
         }
 
-        if (!copiedItemPath.empty() && ImGui::MenuItem("Paste")) {
+        if (!copiedItemPath.empty() && ImGui::MenuItem(isCutting ? "Paste (Move)" : "Paste")) {
             PasteItem(selectedDirectory);
         }
     }
@@ -716,11 +718,18 @@ void UIProject::ShowContextMenu()
                 showDeletePopup = true;
             }
             if (ImGui::MenuItem("Copy")) {
-                CopyItem(selectedFile);
+                CopyItem(selectedFile, false);
             }
-            if (!copiedItemPath.empty() && ImGui::MenuItem("Paste")) {
+            if (ImGui::MenuItem("Cut")) {
+                CopyItem(selectedFile, true);
+            }
+            if (ImGui::MenuItem("Duplicate")) {
+                DuplicateItem(selectedFile);
+            }
+            if (!copiedItemPath.empty() && ImGui::MenuItem(isCutting ? "Paste (Move)" : "Paste")) {
                 PasteItem(selectedFile);
             }
+            
         }
         else {
             if (selectedFile.extension() == ".scene" && ImGui::MenuItem("Load without saving")) {
@@ -733,10 +742,15 @@ void UIProject::ShowContextMenu()
             if (ImGui::MenuItem("Delete")) {
                 showDeletePopup = true;
             }
-
             if (ImGui::MenuItem("Copy")) {
-				CopyItem(selectedFile);
-			}
+                CopyItem(selectedFile, false);
+            }
+            if (ImGui::MenuItem("Cut")) {
+                CopyItem(selectedFile, true);
+            }
+            if (ImGui::MenuItem("Duplicate")) {
+                DuplicateItem(selectedFile);
+            }
 
             if (selectedFile.extension() == ".cs" && ImGui::MenuItem("Open in Editor")) {
                 HandleFileSelection(selectedFile);
@@ -745,10 +759,42 @@ void UIProject::ShowContextMenu()
     }
 }
 
-void UIProject::CopyItem(const std::filesystem::path& itemPath)
+void UIProject::CopyItem(const std::filesystem::path& itemPath, bool isCut)
 {
     copiedItemPath = itemPath;
-    isCopying = true;
+    isCopying = !isCut;
+    isCutting = isCut;
+}
+
+void UIProject::DuplicateItem(const std::filesystem::path& itemPath)
+{
+    try {
+        std::filesystem::path destinationPath;
+        std::string stem = itemPath.stem().string();
+        std::string ext = itemPath.extension().string();
+        int counter = 1;
+
+        destinationPath = itemPath.parent_path() / (stem + " - Copy" + ext);
+
+        while (std::filesystem::exists(destinationPath)) {
+            destinationPath = itemPath.parent_path() /
+                (stem + " - Copy (" + std::to_string(counter) + ")" + ext);
+            counter++;
+        }
+
+        if (std::filesystem::is_directory(itemPath)) {
+            std::filesystem::copy(itemPath, destinationPath,
+                std::filesystem::copy_options::recursive);
+        }
+        else {
+            std::filesystem::copy(itemPath, destinationPath);
+        }
+
+        StartDirectoryListing(selectedDirectory);
+    }
+    catch (const std::filesystem::filesystem_error& ex) {
+        LOG(LogType::LOG_ERROR, "Error duplicating item: %s", ex.what());
+    }
 }
 
 void UIProject::PasteItem(const std::filesystem::path& destinationDir)
@@ -777,21 +823,27 @@ void UIProject::PasteItem(const std::filesystem::path& destinationDir)
             }
         }
 
-        if (std::filesystem::is_directory(copiedItemPath)) {
-            std::filesystem::copy(copiedItemPath, destinationPath,
-                std::filesystem::copy_options::recursive);
+        if (isCutting) {
+            std::filesystem::rename(copiedItemPath, destinationPath);
         }
         else {
-            std::filesystem::copy(copiedItemPath, destinationPath);
+            if (std::filesystem::is_directory(copiedItemPath)) {
+                std::filesystem::copy(copiedItemPath, destinationPath,
+                    std::filesystem::copy_options::recursive);
+            }
+            else {
+                std::filesystem::copy(copiedItemPath, destinationPath);
+            }
         }
 
         StartDirectoryListing(destinationDir);
 
         copiedItemPath.clear();
         isCopying = false;
+        isCutting = false;
     }
     catch (const std::filesystem::filesystem_error& ex) {
-        LOG(LogType::LOG_ERROR, "Error copying item: %s", ex.what());
+        LOG(LogType::LOG_ERROR, "Error pasting item: %s", ex.what());
     }
 }
 
@@ -817,4 +869,31 @@ void UIProject::DrawTruncatedLabel(const std::string& filename)
     float cursorX = ImGui::GetCursorPosX();
     ImGui::SetCursorPosX(cursorX + (ICON_SIZE - ImGui::CalcTextSize(shortName.c_str()).x) * 0.5f);
     ImGui::Text("%s", shortName.c_str());
+}
+
+void UIProject::HandleShortcuts()
+{
+    if (ImGui::IsKeyPressed(ImGuiKey_Delete) && !selectedFile.empty()) {
+        showDeletePopup = true;
+    }
+
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_C) && !selectedFile.empty()) {
+        CopyItem(selectedFile, false);
+    }
+
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_X) && !selectedFile.empty()) {
+        CopyItem(selectedFile, true);
+    }
+
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_V) && !copiedItemPath.empty()) {
+        PasteItem(selectedDirectory);
+    }
+
+    if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyPressed(ImGuiKey_D) && !selectedFile.empty()) {
+        DuplicateItem(selectedFile);
+    }
+
+    if (ImGui::IsKeyPressed(ImGuiKey_F2) && !selectedFile.empty()) {
+        renamePath = selectedFile;
+    }
 }

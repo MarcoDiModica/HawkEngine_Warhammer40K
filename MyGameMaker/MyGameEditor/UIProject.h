@@ -43,6 +43,7 @@ private:
     bool isLoading = false;
     bool showDeletePopup = false;
     bool isCopying = false;
+    bool isCutting = false;
     bool isCreatingNewItem;
     bool isNewItemFolder;
     std::string newItemName;
@@ -69,6 +70,9 @@ private:
     void CreateNewItem(const std::filesystem::path& path, bool isFolder);
     Image* GetIconForFile(const std::filesystem::path& filePath);
 
-    void CopyItem(const std::filesystem::path& path);
+    void CopyItem(const std::filesystem::path& path, bool isCut);
     void PasteItem(const std::filesystem::path& path);
+    void DuplicateItem(const std::filesystem::path& path);
+
+    void HandleShortcuts();
 };

@@ -27,7 +27,7 @@
 #include "..\MyPhysicsEngine\ColliderComponent.h"
 
 #include "..\MyScriptingEngine\ScriptComponent.h"
-//#include "..\MyParticlesEngine\ParticlesEmitterComponent.h"
+#include "..\MyParticlesEngine\ParticlesEmitterComponent.h"
 #include <string>
 
 #include <mono/jit/jit.h>
@@ -35,7 +35,9 @@
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 
+
 #include <Windows.h>
+#undef BYTE
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
@@ -128,9 +130,9 @@ bool UIInspector::Draw() {
             }
 
 
-           /* if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
+            if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
                 selectedGameObject->AddComponent<ParticlesEmitterComponent>();
-            }*/
+            }
 
 
             // More components here

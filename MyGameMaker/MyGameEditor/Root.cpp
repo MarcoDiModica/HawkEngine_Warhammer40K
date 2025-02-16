@@ -212,6 +212,7 @@ bool Root::Update(double dt) {
 
     SceneManagement->Update(dt);
 
+    
     //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
     //
     //    if (currentScene->tree == nullptr) {

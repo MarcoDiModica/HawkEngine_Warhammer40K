@@ -55,7 +55,7 @@ void ParticlesEmitterComponent::EmitParticle1(const glm::vec3& speed) {
     std::cout << "Partícula generada" << std::endl;*/
 
 	//__________NO ENTIENDO PORQUE ESTO FUNCIONA Y LO DE ARRIBA NO, PERO FUNCIONA___________
-    Particle* newParticle = new Particle();
+    auto newParticle = std::make_shared<Particle>();
     newParticle->position.push_back(this->position);  // Posición inicial basada en la posición actual del GameObject
     newParticle->SetParticleSpeed(speed); // Velocidad inicial
     newParticle->lifetime = 5.0f; // Duración de la partícula en segundos
@@ -71,7 +71,7 @@ void ParticlesEmitterComponent::EmitParticle1(const glm::vec3& speed) {
 
 void ParticlesEmitterComponent::EmitParticle2(const glm::vec3& speed) {
    
-    Particle* newParticle = new Particle();
+    auto newParticle = std::make_shared<Particle>();
     newParticle->position.push_back(this->position);  // Posición inicial basada en la posición actual del GameObject
     newParticle->SetParticleSpeed(speed); // Velocidad inicial
     newParticle->lifetime = 5.0f; // Duración de la partícula en segundos

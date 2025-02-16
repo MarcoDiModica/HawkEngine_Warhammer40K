@@ -39,6 +39,7 @@ private:
     bool sortAscending;
     bool firstDraw = true;
     bool isLoading = false;
+    bool showDeletePopup = false;
     bool isCreatingNewItem;
     bool isNewItemFolder;
     std::string newItemName;

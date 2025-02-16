@@ -133,6 +133,31 @@ void UIProject::DrawMainLayout()
 
         ImGui::EndTable();
     }
+
+    if (showDeletePopup) {
+        ImGui::OpenPopup("ConfirmDelete");
+    }
+    if (ImGui::BeginPopupModal("ConfirmDelete")) {
+        ImGui::Text("Are you sure you want to delete this %s?", std::filesystem::is_directory(selectedFile) ? "folder" : "file");
+        if (ImGui::Button("OK")) {
+            try {
+                std::filesystem::remove_all(selectedFile);
+                selectedFile.clear();
+                StartDirectoryListing(selectedDirectory);
+            }
+            catch (const std::filesystem::filesystem_error& ex) {
+                LOG(LogType::LOG_ERROR, "Error deleting %s: %s", std::filesystem::is_directory(selectedFile) ? "folder" : "file", ex.what());
+            }
+            showDeletePopup = false;
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel")) {
+            showDeletePopup = false;
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
 }
 
 void UIProject::DrawContentArea()
@@ -636,17 +661,7 @@ void UIProject::ShowContextMenu()
                 renamePath = selectedFile;
             }
             if (ImGui::MenuItem("Delete")) {
-                try {
-                    std::filesystem::remove_all(selectedFile);
-                    selectedFile.clear();
-                    if (selectedDirectory == selectedFile) {
-                        selectedDirectory = directoryPath;
-                    }
-                    StartDirectoryListing(selectedDirectory);
-                }
-                catch (const std::filesystem::filesystem_error& ex) {
-                    LOG(LogType::LOG_ERROR, "Error deleting folder: %s", ex.what());
-                }
+                showDeletePopup = true;
             }
         }
         else {

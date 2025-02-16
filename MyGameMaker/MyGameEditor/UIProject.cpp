@@ -94,7 +94,6 @@ bool UIProject::Draw()
 
     DrawMainLayout();
 
-    // Load Scene Popup
     if (ImGui::BeginPopupModal("Load Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
         ImGui::Text("Do you want to load this scene?");
         ImGui::Separator();
@@ -207,6 +206,22 @@ void UIProject::DrawDirectoryTree()
                     selectedDirectory = entry.path();
                     selectedFile.clear();
                     StartDirectoryListing(selectedDirectory);
+                }
+
+                if (ImGui::BeginDragDropTarget()) {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+                        draggedItemPath = std::filesystem::path((const char*)payload->Data);
+                        if (draggedItemPath != entry.path() && draggedItemPath.parent_path() != entry.path()) {
+                            try {
+                                std::filesystem::rename(draggedItemPath, entry.path() / draggedItemPath.filename());
+                                StartDirectoryListing(selectedDirectory);
+                            }
+                            catch (const std::filesystem::filesystem_error& ex) {
+                                LOG(LogType::LOG_ERROR, "Error moving file: %s", ex.what());
+                            }
+                        }
+                    }
+                    ImGui::EndDragDropTarget();
                 }
 
                 if (nodeOpen) {

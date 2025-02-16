@@ -320,9 +320,14 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
         }
         for (const auto& entry : currentDirectoryEntries) {
             std::string filename = entry.filename().string();
-            if (filter[0] != '\0' && filename.find(filter) == std::string::npos) {
-                continue;
+            if (filter[0] != '\0') {
+                if (std::search(filename.begin(), filename.end(), filter, filter + strlen(filter), [](char a, char b) {
+                    return std::tolower(a) == std::tolower(b);
+                    }) == filename.end()) {
+                    continue;
+                }
             }
+            
             DrawGridItem(entry, filename);
 
             if (std::filesystem::is_directory(entry)) {

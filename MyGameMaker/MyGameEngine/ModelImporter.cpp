@@ -77,7 +77,7 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		glm::mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
 		
 		obj.GetTransform()->SetMatrix(localMatrix * accumulatedTransform);
-
+		obj.SetName(node.mName.data);
 		for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
 			const auto meshIndex = node.mMeshes[i];
 			const auto materialIndex = scene.mMeshes[meshIndex]->mMaterialIndex;

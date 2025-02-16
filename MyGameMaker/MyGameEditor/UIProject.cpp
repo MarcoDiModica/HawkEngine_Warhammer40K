@@ -318,15 +318,26 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
         if (isCreatingNewItem) {
             DrawNewItemCreation();
         }
-
         for (const auto& entry : currentDirectoryEntries) {
             std::string filename = entry.filename().string();
             if (filter[0] != '\0' && filename.find(filter) == std::string::npos) {
                 continue;
             }
             DrawGridItem(entry, filename);
-        }
 
+            if (std::filesystem::is_directory(entry)) {
+                if (ImGui::BeginDragDropTarget()) {
+                    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+                        draggedItemPath = std::filesystem::path((const char*)payload->Data);
+                        if (draggedItemPath != entry && draggedItemPath.parent_path() != entry) {
+                            std::filesystem::rename(draggedItemPath, entry / draggedItemPath.filename());
+                            StartDirectoryListing(selectedDirectory);
+                        }
+                    }
+                    ImGui::EndDragDropTarget();
+                }
+            }
+        }
         ImGui::EndTable();
     }
 }
@@ -438,9 +449,17 @@ void UIProject::HandleItemInteractions(const std::filesystem::path& entry, const
     if (ImGui::BeginDragDropSource()) {
         std::string fullPath = entry.string();
         ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
-        ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),
-            ImVec2(ICON_SIZE / 2, ICON_SIZE / 2));
-        ImGui::Text("%s", filename.c_str());
+
+        if (ImGui::IsMouseDragging(0)) {
+            ImGui::BeginTooltip();
+            ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),
+                ImVec2(ICON_SIZE, ICON_SIZE));
+            ImGui::SameLine();
+            ImGui::Text("%s", filename.c_str());
+            ImGui::EndTooltip();
+        }
+
+        draggedItemPath = entry;
         ImGui::EndDragDropSource();
     }
 }

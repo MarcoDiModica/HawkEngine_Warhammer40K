@@ -26,6 +26,7 @@ public:
 private:
     std::filesystem::path directoryPath;
     std::filesystem::path selectedDirectory;
+    std::filesystem::path draggedItemPath;
     std::filesystem::path selectedFile;
     std::filesystem::path renamePath;
     std::filesystem::path newItemPath;

@@ -1,12 +1,9 @@
-﻿// UIProject.cpp
-#include "UIProject.h"
+﻿#include "UIProject.h"
 #include "App.h"
 #include "imgui.h"
 #include "MyGUI.h"
 #include "MyGameEngine/types.h"
-
 #include "../MyScriptingEngine/ScriptComponent.h"
-
 #include <filesystem>
 #include <string>
 #include <fstream>
@@ -61,16 +58,12 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 UIProject::~UIProject()
 {
     if (directoryListingFuture.valid()) {
-		try 
-        {
-			directoryListingFuture.wait();
-		}
-        catch (...) 
-        {
-            //ignore exceptions
-		}
-	}
-    
+        try {
+            directoryListingFuture.wait();
+        }
+        catch (...) {}
+    }
+
     for (auto& pair : iconCache) {
         delete pair.second;
     }
@@ -82,8 +75,7 @@ bool UIProject::Draw()
     ImGuiWindowFlags projectFlags = ImGuiWindowFlags_NoCollapse;
     ImGuiWindowClass windowClass;
 
-    if (firstDraw)
-    {
+    if (firstDraw) {
         ImGui::SetNextWindowSize(ImVec2(300, 600), ImGuiCond_FirstUseEver);
         firstDraw = false;
     }
@@ -95,16 +87,39 @@ bool UIProject::Draw()
     bool windowActive = ImGui::Begin("Library", &enabled, projectFlags);
     ImGui::PopStyleVar();
 
-    if (!windowActive)
-    {
+    if (!windowActive) {
         ImGui::End();
         return true;
     }
 
+    DrawMainLayout();
+
+    // Load Scene Popup
+    if (ImGui::BeginPopupModal("Load Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+        ImGui::Text("Do you want to load this scene?");
+        ImGui::Separator();
+
+        if (ImGui::Button("Load without saving", ImVec2(150, 0))) {
+            Application->scene_serializer->DeSerialize(currentSceneFile);
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+
+    ImGui::End();
+    return true;
+}
+
+void UIProject::DrawMainLayout()
+{
     static ImGuiTableFlags tableFlags = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit;
 
-    if (ImGui::BeginTable("MainTable", 2, tableFlags))
-    {
+    if (ImGui::BeginTable("MainTable", 2, tableFlags)) {
         ImGui::TableSetupColumn("DirectoryTree", ImGuiTableColumnFlags_WidthFixed, 100.0f);
         ImGui::TableSetupColumn("Content", ImGuiTableColumnFlags_WidthStretch);
 
@@ -114,172 +129,31 @@ bool UIProject::Draw()
         DrawDirectoryTree();
 
         ImGui::TableSetColumnIndex(1);
-        DrawBreadcrumbs();
-
-        ImGui::TableSetColumnIndex(1);
-
-        // --- Buttons ---
-        if (selectedDirectory != directoryPath) {
-            if (ImGui::Button("Back")) {
-                selectedDirectory = selectedDirectory.parent_path();
-                selectedFile.clear();
-                StartDirectoryListing(selectedDirectory);
-            }
-            ImGui::SameLine();
-        }
-
-        if (ImGui::Button("Refresh"))
-        {
-            StartDirectoryListing(selectedDirectory);
-        }
-        ImGui::SameLine();
-
-        if (ImGui::Button("Create CS Script"))
-        {
-            ImGui::OpenPopup("CreateNewScript");
-        }
-        ImGui::SameLine();
-
-        if (ImGui::Button("Create")) {
-            ImGui::OpenPopup("CreateMenu");
-        }
-
-        if (ImGui::BeginPopup("CreateMenu")) {
-            if (ImGui::MenuItem("Folder")) {
-                CreateNewItem(selectedDirectory, true);
-            }
-            if (ImGui::MenuItem("File")) {
-                CreateNewItem(selectedDirectory, false);
-            }
-            ImGui::EndPopup();
-        }
-
-        // --- Folder Contents ---
-        ImGui::TableSetColumnIndex(1);
-        ImGui::Separator();
-
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 8));
-        DrawFolderContents(selectedDirectory);
-
-        // Handle right-click context menu
-        if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !ImGui::IsAnyItemHovered()) {
-            ImGui::OpenPopup("ContextMenu");
-        }
-
-        if (ImGui::BeginPopup("ContextMenu")) {
-            ShowContextMenu();
-            ImGui::EndPopup();
-        }
-        ImGui::PopStyleVar();
+        DrawContentArea();
 
         ImGui::EndTable();
     }
+}
 
-    // Create New Script Popup
-    if (ImGui::BeginPopupModal("CreateNewScript", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
-        static char scriptName[256] = "NewScript";
-        ImGui::InputText("Script Name", scriptName, IM_ARRAYSIZE(scriptName));
+void UIProject::DrawContentArea()
+{
+    DrawBreadcrumbs();
+    DrawActionButtons();
 
-        if (ImGui::Button("Create", ImVec2(120, 0))) {
-            std::string scriptPath = selectedDirectory.string() + "/" + scriptName + ".cs";
-            std::ofstream scriptFile(scriptPath);
+    ImGui::Separator();
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 8));
+    DrawFolderContents(selectedDirectory);
 
-            std::string scriptContent = "using System;\n\n"
-                "public class " + std::string(scriptName) + " : MonoBehaviour\n"
-                "{\n"
-                "    public override void Start()\n"
-                "    {\n"
-                "        HawkEngine.EngineCalls.print(\"Hola desde " + std::string(scriptName) + "!\");\n"
-                "    }\n\n"
-                "    public override void Update(float deltaTime)\n"
-                "    {\n"
-                "        // Lógica de actualización\n"
-                "    }\n"
-                "}\n";
+    if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !ImGui::IsAnyItemHovered()) {
+        ImGui::OpenPopup("ContextMenu");
+    }
 
-            scriptFile << scriptContent;
-            scriptFile.close();
-
-            StartDirectoryListing(selectedDirectory);
-            ImGui::CloseCurrentPopup();
-            strcpy(scriptName, "NewScript");
-        }
-
-        ImGui::SameLine();
-        if (ImGui::Button("Cancel", ImVec2(120, 0))) {
-            ImGui::CloseCurrentPopup();
-            strcpy(scriptName, "NewScript");
-        }
-
+    if (ImGui::BeginPopup("ContextMenu")) {
+        ShowContextMenu();
         ImGui::EndPopup();
     }
 
-    if (ImGui::BeginPopupModal("Rename Item", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
-        static char newName[256] = "";
-        std::filesystem::path originalPath;
-
-        if (std::filesystem::is_directory(renamePath)) {
-            originalPath = renamePath;
-            if (newName[0] == '\0') {  // Only set once when opening
-                strncpy(newName, renamePath.filename().string().c_str(), sizeof(newName) - 1);
-            }
-        }
-        else {
-            originalPath = renamePath;
-            if (newName[0] == '\0') {  // Only set once when opening
-                strncpy(newName, renamePath.filename().string().c_str(), sizeof(newName) - 1);
-            }
-        }
-        newName[sizeof(newName) - 1] = '\0';
-
-        ImGui::InputText("New Name", newName, IM_ARRAYSIZE(newName));
-
-        if (ImGui::Button("Rename", ImVec2(120, 0))) {
-            try {
-                std::filesystem::path newPath = originalPath.parent_path() / newName;
-                std::filesystem::rename(originalPath, newPath);
-                if (selectedFile == originalPath) {
-                    selectedFile = newPath;
-                }
-                StartDirectoryListing(selectedDirectory);
-                ImGui::CloseCurrentPopup();
-                newName[0] = '\0';
-            }
-            catch (const std::filesystem::filesystem_error& ex) {
-                ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Error renaming item: %s", ex.what());
-            }
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("Cancel", ImVec2(120, 0))) {
-            ImGui::CloseCurrentPopup();
-            newName[0] = '\0';
-        }
-        ImGui::EndPopup();
-    }
-
-    // Load Scene Popup
-    if (ImGui::BeginPopupModal("Load Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        ImGui::Text("Do you want to load this scene?");
-        ImGui::Separator();
-
-        if (ImGui::Button("Load without saving", ImVec2(150, 0)))
-        {
-            Application->scene_serializer->DeSerialize(currentSceneFile);
-            ImGui::CloseCurrentPopup();
-        }
-
-        ImGui::SameLine();
-        if (ImGui::Button("Cancel", ImVec2(120, 0)))
-        {
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
-    }
-
-    ImGui::End();
-
-    return true;
+    ImGui::PopStyleVar();
 }
 
 void UIProject::DrawDirectoryTree()
@@ -325,265 +199,6 @@ void UIProject::DrawDirectoryTree()
     }
 }
 
-void UIProject::StartDirectoryListing(const std::filesystem::path& path)
-{
-    isLoading = true;
-    currentDirectoryEntries.clear();
-
-    directoryListingFuture = std::async(std::launch::async, [path]() {
-        std::vector<std::filesystem::path> entries;
-        try
-        {
-            for (const auto& entry : std::filesystem::directory_iterator(path))
-            {
-                entries.push_back(entry.path());
-            }
-        }
-        catch (const std::exception& e)
-        {
-            std::cerr << "Error listing directory: " << e.what() << std::endl;
-        }
-        return entries;
-        });
-}
-
-void UIProject::DrawFolderContents(const std::filesystem::path& path)
-{
-    static char filter[256] = "";
-    ImGui::InputText("Filter", filter, IM_ARRAYSIZE(filter));
-
-    if (isLoading)
-    {
-        if (directoryListingFuture.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready)
-        {
-            currentDirectoryEntries = directoryListingFuture.get();
-            isLoading = false;
-            std::sort(currentDirectoryEntries.begin(), currentDirectoryEntries.end(),
-                [&](const std::filesystem::path& a, const std::filesystem::path& b) {
-                    bool result = false;
-                    switch (currentSortOption) {
-                    case SortOption::Name:
-                        result = a.filename().string() < b.filename().string();
-                        break;
-                    case SortOption::Type:
-                        result = a.extension().string() < b.extension().string();
-                        break;
-                    case SortOption::Size:
-                        if (!std::filesystem::is_directory(a) && !std::filesystem::is_directory(b))
-                        {
-                            result = std::filesystem::file_size(a) < std::filesystem::file_size(b);
-                        }
-                        break;
-                    case SortOption::LastModified:
-                        result = std::filesystem::last_write_time(a) < std::filesystem::last_write_time(b);
-                        break;
-                    }
-                    return sortAscending ? result : !result;
-                });
-        }
-        else
-        {
-            ImGui::Text("Loading...");
-            return;
-        }
-    }
-
-    if (ImGui::Button("Sort"))
-    {
-        ImGui::OpenPopup("SortOptions");
-    }
-    if (ImGui::BeginPopup("SortOptions")) {
-        if (ImGui::Selectable("Name", currentSortOption == SortOption::Name))
-        {
-            currentSortOption = SortOption::Name;
-            StartDirectoryListing(selectedDirectory);
-        }
-        if (ImGui::Selectable("Type", currentSortOption == SortOption::Type))
-        {
-            currentSortOption = SortOption::Type;
-			StartDirectoryListing(selectedDirectory);
-        }
-        if (ImGui::Selectable("Size", currentSortOption == SortOption::Size))
-        {
-            currentSortOption = SortOption::Size;
-			StartDirectoryListing(selectedDirectory);
-        }
-        if (ImGui::Selectable("Last Modified", currentSortOption == SortOption::LastModified))
-        {
-            currentSortOption = SortOption::LastModified;
-            StartDirectoryListing(selectedDirectory);
-        }
-
-        ImGui::Separator();
-        if (ImGui::Checkbox("Ascending", &sortAscending)) {
-            StartDirectoryListing(selectedDirectory);
-        }
-
-        ImGui::EndPopup();
-    }
-
-    float contentRegionWidth = ImGui::GetContentRegionAvail().x;
-    const float iconSize = 64.0f;
-    const float padding = 16.0f;
-    const float totalSize = iconSize + padding;
-    int itemsPerRow = static_cast<int>(std::max(1.0f, (contentRegionWidth - 5.0f) / totalSize));
-    if (itemsPerRow < 1) itemsPerRow = 1;  // Ensure at least one item per row
-
-    int itemIndex = 0;
-
-    // Handle new item creation if active
-    if (isCreatingNewItem) {
-        ImGui::PushID("##NewItemCreation");
-        ImGui::BeginGroup();
-
-        Image* icon = isNewItemFolder ? iconCache[".folder"] : iconCache[".default"];
-        ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())), ImVec2(iconSize, iconSize));
-
-        // Input text field that gets focus
-        ImGui::SetKeyboardFocusHere();
-        char nameBuf[256];
-        strncpy(nameBuf, newItemName.c_str(), sizeof(nameBuf) - 1);
-        nameBuf[sizeof(nameBuf) - 1] = '\0';
-
-        ImGui::PushItemWidth(iconSize + 4);
-        if (ImGui::InputText("##newItemName", nameBuf, IM_ARRAYSIZE(nameBuf),
-            ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) {
-            // Create on Enter key
-            try {
-                newItemName = nameBuf;
-                if (isNewItemFolder) {
-                    std::filesystem::create_directory(newItemPath / newItemName);
-                }
-                else {
-                    std::ofstream newFile(newItemPath / newItemName);
-                    newFile.close();
-                }
-                isCreatingNewItem = false;
-                StartDirectoryListing(selectedDirectory);
-            }
-            catch (const std::filesystem::filesystem_error& ex) {
-                // Handle error
-            }
-        }
-
-        newItemName = nameBuf;
-
-        // Cancel on Escape
-        if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
-            isCreatingNewItem = false;
-        }
-
-        // Handle click outside
-        if (!ImGui::IsItemFocused() && ImGui::IsMouseClicked(0)) {
-            if (!ImGui::IsItemHovered()) {
-                isCreatingNewItem = false;
-            }
-        }
-
-        ImGui::EndGroup();
-        ImGui::PopID();
-
-        itemIndex++;
-        if (itemIndex % itemsPerRow != 0 && itemIndex < currentDirectoryEntries.size()) {
-            ImGui::SameLine();
-        }
-    }
-
-    try
-    {
-        for (const auto& entry : currentDirectoryEntries)
-        {
-            std::string filename = entry.filename().string();
-
-            if (filter[0] != '\0' && filename.find(filter) == std::string::npos) {
-                continue;
-            }
-
-            Image* icon = GetIconForFile(entry);
-
-            ImGui::PushID(filename.c_str());
-
-            // Begin group for this item
-            ImGui::BeginGroup();
-
-            float cursorX = ImGui::GetCursorPosX();
-            float textWidth = ImGui::CalcTextSize(filename.c_str()).x;
-            float offset = (totalSize - std::min(textWidth, iconSize)) * 0.5f;
-
-            // Center the icon
-            ImGui::SetCursorPosX(cursorX + offset);
-
-            if (ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())), ImVec2(iconSize, iconSize)))
-            {
-                selectedFile = entry;
-            }
-
-            if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
-                selectedFile = entry;
-                ImGui::OpenPopup("ContextMenu");
-            }
-
-            if (ImGui::IsItemHovered())
-            {
-                if (ImGui::IsMouseDoubleClicked(0))
-                {
-                    if (std::filesystem::is_directory(entry))
-                    {
-                        selectedDirectory = entry;
-                        selectedFile.clear();
-                        StartDirectoryListing(selectedDirectory);
-                    }
-                    else
-                    {
-                        HandleFileSelection(entry);
-                    }
-                }
-
-                ImGui::BeginTooltip();
-                ImGui::Text("%s", filename.c_str());
-                ImGui::EndTooltip();
-            }
-
-            if (ImGui::BeginDragDropSource())
-            {
-                std::string fullPath = entry.string();
-                ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
-                ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())), ImVec2(iconSize / 2, iconSize / 2));
-                ImGui::Text("%s", filename.c_str());
-                ImGui::EndDragDropSource();
-            }
-
-            // Center the text label
-            ImGui::SetCursorPosX(cursorX + offset);
-            std::string shortName = filename;
-            if (ImGui::CalcTextSize(shortName.c_str()).x > iconSize)
-            {
-                while (ImGui::CalcTextSize((shortName + "...").c_str()).x > iconSize && shortName.length() > 3)
-                {
-                    shortName.pop_back();
-                }
-                shortName += "...";
-            }
-
-            ImGui::Text("%s", shortName.c_str());
-
-            ImGui::EndGroup();
-
-            itemIndex++;
-            if (itemIndex % itemsPerRow != 0 && itemIndex < currentDirectoryEntries.size())
-            {
-                ImGui::SameLine();
-            }
-
-            ImGui::PopID();
-        }
-    }
-    catch (const std::filesystem::filesystem_error& ex)
-    {
-        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Error: %s", ex.what());
-    }
-}
-
 void UIProject::DrawBreadcrumbs()
 {
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
@@ -619,17 +234,318 @@ void UIProject::DrawBreadcrumbs()
     ImGui::PopStyleColor(3);
 }
 
+void UIProject::DrawFolderContents(const std::filesystem::path& path)
+{
+    static char filter[256] = "";
+    ImGui::InputText("Filter", filter, IM_ARRAYSIZE(filter));
+
+    if (isLoading) {
+        if (directoryListingFuture.wait_for(std::chrono::milliseconds(0)) == std::future_status::ready) {
+            currentDirectoryEntries = directoryListingFuture.get();
+            isLoading = false;
+            SortDirectoryEntries();
+        }
+        else {
+            ImGui::Text("Loading...");
+            return;
+        }
+    }
+
+    if (ImGui::Button("Sort")) {
+        ImGui::OpenPopup("SortOptions");
+    }
+
+    if (ImGui::BeginPopup("SortOptions")) {
+        if (ImGui::Selectable("Name", currentSortOption == SortOption::Name)) {
+            currentSortOption = SortOption::Name;
+            SortDirectoryEntries();
+        }
+        if (ImGui::Selectable("Type", currentSortOption == SortOption::Type)) {
+            currentSortOption = SortOption::Type;
+            SortDirectoryEntries();
+        }
+        if (ImGui::Selectable("Size", currentSortOption == SortOption::Size)) {
+            currentSortOption = SortOption::Size;
+            SortDirectoryEntries();
+        }
+        if (ImGui::Selectable("Last Modified", currentSortOption == SortOption::LastModified)) {
+            currentSortOption = SortOption::LastModified;
+            SortDirectoryEntries();
+        }
+
+        ImGui::Separator();
+        if (ImGui::Checkbox("Ascending", &sortAscending)) {
+            SortDirectoryEntries();
+        }
+
+        ImGui::EndPopup();
+    }
+
+    float contentRegionWidth = ImGui::GetContentRegionAvail().x;
+    const float totalSize = ICON_SIZE + 16.0f;
+    int itemsPerRow = static_cast<int>(std::max(1.0f, (contentRegionWidth - 5.0f) / totalSize));
+    if (itemsPerRow < 1) itemsPerRow = 1;
+
+    if (ImGui::BeginTable("FileGrid", itemsPerRow, ImGuiTableFlags_NoBordersInBody)) {
+        if (isCreatingNewItem) {
+            DrawNewItemCreation();
+        }
+
+        for (const auto& entry : currentDirectoryEntries) {
+            std::string filename = entry.filename().string();
+            if (filter[0] != '\0' && filename.find(filter) == std::string::npos) {
+                continue;
+            }
+            DrawGridItem(entry, filename);
+        }
+
+        ImGui::EndTable();
+    }
+}
+
+void UIProject::DrawGridItem(const std::filesystem::path& entry, const std::string& filename)
+{
+    ImGui::TableNextColumn();
+    ImGui::PushID(filename.c_str());
+    ImGui::BeginGroup();
+
+    Image* icon = GetIconForFile(entry);
+    bool isDirectory = std::filesystem::is_directory(entry);
+    bool isBeingRenamed = (entry == renamePath);
+
+    if (isBeingRenamed) {
+        DrawRenamingItem(entry, filename, icon);
+    }
+    else {
+        DrawNormalItem(entry, filename, icon, isDirectory);
+    }
+
+    ImGui::EndGroup();
+    ImGui::PopID();
+}
+
+void UIProject::DrawRenamingItem(const std::filesystem::path& entry, const std::string& filename, Image* icon)
+{
+    static char renameBuf[256];
+    static bool initRename = true;
+
+    ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())), ImVec2(ICON_SIZE, ICON_SIZE));
+
+    if (initRename) {
+        strncpy(renameBuf, filename.c_str(), sizeof(renameBuf) - 1);
+        renameBuf[sizeof(renameBuf) - 1] = '\0';
+        initRename = false;
+        ImGui::SetKeyboardFocusHere();
+    }
+
+    ImGui::PushItemWidth(ICON_SIZE + 4);
+    if (ImGui::InputText("##rename", renameBuf, IM_ARRAYSIZE(renameBuf),
+        ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) {
+        HandleRename(entry, renameBuf);
+        initRename = true;
+    }
+
+    if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+        renamePath.clear();
+        initRename = true;
+    }
+
+    if (!ImGui::IsItemFocused() && ImGui::IsMouseClicked(0)) {
+        if (!ImGui::IsItemHovered()) {
+            renamePath.clear();
+            initRename = true;
+        }
+    }
+    ImGui::PopItemWidth();
+}
+
+void UIProject::DrawNormalItem(const std::filesystem::path& entry, const std::string& filename, Image* icon, bool isDirectory)
+{
+    if (ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),
+        ImVec2(ICON_SIZE, ICON_SIZE))) {
+        selectedFile = entry;
+    }
+
+    HandleItemInteractions(entry, filename, icon, isDirectory);
+    DrawTruncatedLabel(filename);
+}
+
+void UIProject::HandleItemInteractions(const std::filesystem::path& entry, const std::string& filename,
+    Image* icon, bool isDirectory)
+{
+    if (ImGui::IsItemHovered()) {
+        if (ImGui::IsMouseDoubleClicked(0)) {
+            if (isDirectory) {
+                selectedDirectory = entry;
+                selectedFile.clear();
+                StartDirectoryListing(selectedDirectory);
+            }
+            else {
+                HandleFileSelection(entry);
+            }
+        }
+
+        ImGui::BeginTooltip();
+        ImGui::Text("%s", filename.c_str());
+        ImGui::EndTooltip();
+    }
+
+    if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+        selectedFile = entry;
+        ImGui::OpenPopup("ContextMenu");
+    }
+
+    if (ImGui::BeginDragDropSource()) {
+        std::string fullPath = entry.string();
+        ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
+        ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),
+            ImVec2(ICON_SIZE / 2, ICON_SIZE / 2));
+        ImGui::Text("%s", filename.c_str());
+        ImGui::EndDragDropSource();
+    }
+}
+
+void UIProject::DrawNewItemCreation()
+{
+    ImGui::TableNextColumn();
+    ImGui::PushID("##NewItemCreation");
+    ImGui::BeginGroup();
+
+    Image* icon = isNewItemFolder ? iconCache[".folder"] : iconCache[".default"];
+    ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),
+        ImVec2(ICON_SIZE, ICON_SIZE));
+
+    ImGui::SetKeyboardFocusHere();
+    char nameBuf[256];
+    strncpy(nameBuf, newItemName.c_str(), sizeof(nameBuf) - 1);
+    nameBuf[sizeof(nameBuf) - 1] = '\0';
+
+    ImGui::PushItemWidth(ICON_SIZE + 4);
+    if (ImGui::InputText("##newItemName", nameBuf, IM_ARRAYSIZE(nameBuf),
+        ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) {
+        try {
+            newItemName = nameBuf;
+            if (isNewItemFolder) {
+                std::filesystem::create_directory(newItemPath / newItemName);
+            }
+            else {
+                std::ofstream newFile(newItemPath / newItemName);
+                newFile.close();
+            }
+            isCreatingNewItem = false;
+            StartDirectoryListing(selectedDirectory);
+        }
+        catch (const std::filesystem::filesystem_error& ex) {
+            LOG(LogType::LOG_ERROR, "Error creating new item: %s", ex.what());
+        }
+    }
+
+    newItemName = nameBuf;
+
+    if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+        isCreatingNewItem = false;
+    }
+
+    if (!ImGui::IsItemFocused() && ImGui::IsMouseClicked(0)) {
+        if (!ImGui::IsItemHovered()) {
+            isCreatingNewItem = false;
+        }
+    }
+
+    ImGui::PopItemWidth();
+    ImGui::EndGroup();
+    ImGui::PopID();
+}
+
+void UIProject::DrawActionButtons()
+{
+    if (selectedDirectory != directoryPath) {
+        if (ImGui::Button("Back")) {
+            selectedDirectory = selectedDirectory.parent_path();
+            selectedFile.clear();
+            StartDirectoryListing(selectedDirectory);
+        }
+        ImGui::SameLine();
+    }
+
+    if (ImGui::Button("Refresh")) {
+        StartDirectoryListing(selectedDirectory);
+    }
+    ImGui::SameLine();
+
+    if (ImGui::Button("Create")) {
+        ImGui::OpenPopup("CreateMenu");
+    }
+
+    if (ImGui::BeginPopup("CreateMenu")) {
+        if (ImGui::MenuItem("Folder")) {
+            CreateNewItem(selectedDirectory, true);
+        }
+        if (ImGui::MenuItem("File")) {
+            CreateNewItem(selectedDirectory, false);
+        }
+        ImGui::EndPopup();
+    }
+}
+
+void UIProject::StartDirectoryListing(const std::filesystem::path& path)
+{
+    isLoading = true;
+    currentDirectoryEntries.clear();
+
+    directoryListingFuture = std::async(std::launch::async, [path]() {
+        std::vector<std::filesystem::path> entries;
+        try {
+            for (const auto& entry : std::filesystem::directory_iterator(path)) {
+                entries.push_back(entry.path());
+            }
+        }
+        catch (const std::exception& e) {
+            LOG(LogType::LOG_ERROR, "Error listing directory: %s", e.what());
+        }
+        return entries;
+        });
+}
+
+void UIProject::SortDirectoryEntries()
+{
+    std::sort(currentDirectoryEntries.begin(), currentDirectoryEntries.end(),
+        [&](const std::filesystem::path& a, const std::filesystem::path& b) {
+            bool aIsDir = std::filesystem::is_directory(a);
+            bool bIsDir = std::filesystem::is_directory(b);
+
+            if (aIsDir != bIsDir)
+                return aIsDir > bIsDir;
+
+            bool result = false;
+            switch (currentSortOption) {
+            case SortOption::Name:
+                result = a.filename().string() < b.filename().string();
+                break;
+            case SortOption::Type:
+                result = a.extension().string() < b.extension().string();
+                break;
+            case SortOption::Size:
+                if (!std::filesystem::is_directory(a) && !std::filesystem::is_directory(b)) {
+                    result = std::filesystem::file_size(a) < std::filesystem::file_size(b);
+                }
+                break;
+            case SortOption::LastModified:
+                result = std::filesystem::last_write_time(a) < std::filesystem::last_write_time(b);
+                break;
+            }
+            return sortAscending ? result : !result;
+        });
+}
+
 void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
 {
     if (filePath.extension() == ".scene") {
         currentSceneFile = filePath.string();
         ImGui::OpenPopup("Load Scene");
     }
-
-    if (filePath.extension() == ".cs")
-    {
+    else if (filePath.extension() == ".cs") {
         std::string scriptPath = filePath.string();
-
         if (!std::filesystem::exists(scriptPath)) {
             LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
         }
@@ -645,6 +561,22 @@ void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
     }
 }
 
+void UIProject::HandleRename(const std::filesystem::path& entry, const char* newName)
+{
+    try {
+        std::filesystem::path newPath = entry.parent_path() / newName;
+        std::filesystem::rename(entry, newPath);
+        if (selectedFile == entry) {
+            selectedFile = newPath;
+        }
+        renamePath.clear();
+        StartDirectoryListing(selectedDirectory);
+    }
+    catch (const std::filesystem::filesystem_error& ex) {
+        LOG(LogType::LOG_ERROR, "Error renaming item: %s", ex.what());
+    }
+}
+
 Image* UIProject::GetIconForFile(const std::filesystem::path& filePath)
 {
     if (std::filesystem::is_directory(filePath)) {
@@ -657,8 +589,7 @@ Image* UIProject::GetIconForFile(const std::filesystem::path& filePath)
     if (iconCache.count(extension)) {
         return iconCache[extension];
     }
-    else if (extension == ".wav" || extension == ".ogg" || extension == ".mp3")
-    {
+    else if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
         return iconCache[".audio"];
     }
     else {
@@ -676,63 +607,46 @@ void UIProject::ShowContextMenu()
             CreateNewItem(selectedDirectory, false);
         }
     }
-    else
-    {
-        if (std::filesystem::is_directory(selectedFile))
-        {
-            if (ImGui::MenuItem("Open"))
-            {
+    else {
+        if (std::filesystem::is_directory(selectedFile)) {
+            if (ImGui::MenuItem("Open")) {
                 selectedDirectory = selectedFile;
                 selectedFile.clear();
                 StartDirectoryListing(selectedDirectory);
             }
-            if (ImGui::MenuItem("Rename"))
-            {
+            if (ImGui::MenuItem("Rename")) {
                 renamePath = selectedFile;
-                ImGui::OpenPopup("Rename Item");
             }
-
-            if (ImGui::MenuItem("Delete Folder"))
-            {
+            if (ImGui::MenuItem("Delete")) {
                 try {
                     std::filesystem::remove_all(selectedFile);
                     selectedFile.clear();
-                    if (selectedDirectory == selectedFile)
-                    {
+                    if (selectedDirectory == selectedFile) {
                         selectedDirectory = directoryPath;
                     }
                     StartDirectoryListing(selectedDirectory);
                 }
                 catch (const std::filesystem::filesystem_error& ex) {
-                    ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Error deleting folder: %s", ex.what());
+                    LOG(LogType::LOG_ERROR, "Error deleting folder: %s", ex.what());
                 }
             }
         }
-        else
-        {
-            if (selectedFile.extension() == ".scene")
-            {
-                if (ImGui::MenuItem("Load without saving"))
-                {
-                    Application->scene_serializer->DeSerialize(selectedFile.string());
-                    currentSceneFile = selectedFile.string();
-                }
+        else {
+            if (selectedFile.extension() == ".scene" && ImGui::MenuItem("Load without saving")) {
+                Application->scene_serializer->DeSerialize(selectedFile.string());
+                currentSceneFile = selectedFile.string();
             }
             if (ImGui::MenuItem("Rename")) {
                 renamePath = selectedFile;
-                ImGui::OpenPopup("Rename Item");
             }
-            if (ImGui::MenuItem("Delete File"))
-            {
-                try
-                {
+            if (ImGui::MenuItem("Delete")) {
+                try {
                     std::filesystem::remove(selectedFile);
                     selectedFile.clear();
                     StartDirectoryListing(selectedDirectory);
                 }
-                catch (const std::filesystem::filesystem_error& ex)
-                {
-                    ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Error deleting file: %s", ex.what());
+                catch (const std::filesystem::filesystem_error& ex) {
+                    LOG(LogType::LOG_ERROR, "Error deleting file: %s", ex.what());
                 }
             }
         }
@@ -745,4 +659,20 @@ void UIProject::CreateNewItem(const std::filesystem::path& path, bool isFolder)
     isNewItemFolder = isFolder;
     newItemPath = path;
     newItemName = isFolder ? "New Folder" : "New File";
+}
+
+void UIProject::DrawTruncatedLabel(const std::string& filename)
+{
+    std::string shortName = filename;
+    float textWidth = ImGui::CalcTextSize(shortName.c_str()).x;
+    if (textWidth > ICON_SIZE) {
+        while (ImGui::CalcTextSize((shortName + "...").c_str()).x > ICON_SIZE && shortName.length() > 3) {
+            shortName.pop_back();
+        }
+        shortName += "...";
+    }
+
+    float cursorX = ImGui::GetCursorPosX();
+    ImGui::SetCursorPosX(cursorX + (ICON_SIZE - ImGui::CalcTextSize(shortName.c_str()).x) * 0.5f);
+    ImGui::Text("%s", shortName.c_str());
 }

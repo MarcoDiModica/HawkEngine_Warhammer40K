@@ -682,6 +682,10 @@ void UIProject::ShowContextMenu()
         if (ImGui::MenuItem("Refresh")) {
             StartDirectoryListing(selectedDirectory);
         }
+
+        if (!copiedItemPath.empty() && ImGui::MenuItem("Paste")) {
+            PasteItem(selectedDirectory);
+        }
     }
     else {
         if (std::filesystem::is_directory(selectedFile)) {
@@ -696,6 +700,12 @@ void UIProject::ShowContextMenu()
             if (ImGui::MenuItem("Delete")) {
                 showDeletePopup = true;
             }
+            if (ImGui::MenuItem("Copy")) {
+                CopyItem(selectedFile);
+            }
+            if (!copiedItemPath.empty() && ImGui::MenuItem("Paste")) {
+                PasteItem(selectedFile);
+            }
         }
         else {
             if (selectedFile.extension() == ".scene" && ImGui::MenuItem("Load without saving")) {
@@ -709,10 +719,64 @@ void UIProject::ShowContextMenu()
                 showDeletePopup = true;
             }
 
+            if (ImGui::MenuItem("Copy")) {
+				CopyItem(selectedFile);
+			}
+
             if (selectedFile.extension() == ".cs" && ImGui::MenuItem("Open in Editor")) {
                 HandleFileSelection(selectedFile);
             }
         }
+    }
+}
+
+void UIProject::CopyItem(const std::filesystem::path& itemPath)
+{
+    copiedItemPath = itemPath;
+    isCopying = true;
+}
+
+void UIProject::PasteItem(const std::filesystem::path& destinationDir)
+{
+    if (copiedItemPath.empty()) return;
+
+    try {
+        std::filesystem::path destinationPath;
+
+        if (std::filesystem::is_regular_file(destinationDir)) {
+            destinationPath = destinationDir.parent_path() / copiedItemPath.filename();
+        }
+        else {
+            destinationPath = destinationDir / copiedItemPath.filename();
+        }
+
+        if (std::filesystem::exists(destinationPath)) {
+            std::string stem = destinationPath.stem().string();
+            std::string ext = destinationPath.extension().string();
+            int counter = 1;
+
+            while (std::filesystem::exists(destinationPath)) {
+                destinationPath = destinationPath.parent_path() /
+                    (stem + " (" + std::to_string(counter) + ")" + ext);
+                counter++;
+            }
+        }
+
+        if (std::filesystem::is_directory(copiedItemPath)) {
+            std::filesystem::copy(copiedItemPath, destinationPath,
+                std::filesystem::copy_options::recursive);
+        }
+        else {
+            std::filesystem::copy(copiedItemPath, destinationPath);
+        }
+
+        StartDirectoryListing(destinationDir);
+
+        copiedItemPath.clear();
+        isCopying = false;
+    }
+    catch (const std::filesystem::filesystem_error& ex) {
+        LOG(LogType::LOG_ERROR, "Error copying item: %s", ex.what());
     }
 }
 

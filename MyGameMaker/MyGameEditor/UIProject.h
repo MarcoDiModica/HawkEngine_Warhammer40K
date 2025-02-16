@@ -27,6 +27,7 @@ private:
     std::filesystem::path directoryPath;
     std::filesystem::path selectedDirectory;
     std::filesystem::path draggedItemPath;
+    std::filesystem::path copiedItemPath;
     std::filesystem::path selectedFile;
     std::filesystem::path renamePath;
     std::filesystem::path newItemPath;
@@ -41,6 +42,7 @@ private:
     bool firstDraw = true;
     bool isLoading = false;
     bool showDeletePopup = false;
+    bool isCopying = false;
     bool isCreatingNewItem;
     bool isNewItemFolder;
     std::string newItemName;
@@ -66,4 +68,7 @@ private:
     void ShowContextMenu();
     void CreateNewItem(const std::filesystem::path& path, bool isFolder);
     Image* GetIconForFile(const std::filesystem::path& filePath);
+
+    void CopyItem(const std::filesystem::path& path);
+    void PasteItem(const std::filesystem::path& path);
 };

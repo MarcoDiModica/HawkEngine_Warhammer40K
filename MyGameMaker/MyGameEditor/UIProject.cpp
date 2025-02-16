@@ -51,12 +51,26 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 
     currentSortOption = SortOption::Name;
     sortAscending = true;
+    isCreatingNewItem = false;
+    isNewItemFolder = false;
+    newItemName = "New Item";
 
     StartDirectoryListing(directoryPath);
 }
 
 UIProject::~UIProject()
 {
+    if (directoryListingFuture.valid()) {
+		try 
+        {
+			directoryListingFuture.wait();
+		}
+        catch (...) 
+        {
+            //ignore exceptions
+		}
+	}
+    
     for (auto& pair : iconCache) {
         delete pair.second;
     }
@@ -68,8 +82,6 @@ bool UIProject::Draw()
     ImGuiWindowFlags projectFlags = ImGuiWindowFlags_NoCollapse;
     ImGuiWindowClass windowClass;
 
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-
     if (firstDraw)
     {
         ImGui::SetNextWindowSize(ImVec2(300, 600), ImGuiCond_FirstUseEver);
@@ -79,12 +91,13 @@ bool UIProject::Draw()
     ImGui::SetNextWindowClass(&windowClass);
     windowClass.DockingAllowUnclassed = false;
 
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 5));
     bool windowActive = ImGui::Begin("Library", &enabled, projectFlags);
+    ImGui::PopStyleVar();
 
     if (!windowActive)
     {
         ImGui::End();
-        ImGui::PopStyleVar();
         return true;
     }
 
@@ -122,30 +135,10 @@ bool UIProject::Draw()
         ImGui::SameLine();
 
         if (ImGui::Button("Create CS Script"))
-		{
-            //ask for script name
-			std::string scriptName = "NewScript";
-            std::string scriptPath = selectedDirectory.string() + scriptName + ".cs";
-            std::ofstream scriptFile(scriptPath);
-            
-            std::string scriptContent = "using System;\n\n"
-                "public class " + scriptName + " : MonoBehaviour\n"
-                "{\n"
-                "    public override void Start()\n"
-                "    {\n"
-                "        HawkEngine.EngineCalls.print(\"Hola desde " + scriptName + "!\");\n"
-                "    }\n\n"
-                "    public override void Update(float deltaTime)\n"
-                "    {\n"
-                "        // L�gica de actualizaci�n\n"
-                "    }\n"
-                "}\n";
-
-            scriptFile << scriptContent;
-            scriptFile.close();
-
-            StartDirectoryListing(selectedDirectory);
-		}
+        {
+            ImGui::OpenPopup("CreateNewScript");
+        }
+        ImGui::SameLine();
 
         if (ImGui::Button("Create")) {
             ImGui::OpenPopup("CreateMenu");
@@ -153,10 +146,10 @@ bool UIProject::Draw()
 
         if (ImGui::BeginPopup("CreateMenu")) {
             if (ImGui::MenuItem("Folder")) {
-                ImGui::OpenPopup("CreateNewFolder");
+                CreateNewItem(selectedDirectory, true);
             }
             if (ImGui::MenuItem("File")) {
-                ImGui::OpenPopup("CreateNewFile");
+                CreateNewItem(selectedDirectory, false);
             }
             ImGui::EndPopup();
         }
@@ -168,7 +161,8 @@ bool UIProject::Draw()
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 8));
         DrawFolderContents(selectedDirectory);
 
-        if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+        // Handle right-click context menu
+        if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !ImGui::IsAnyItemHovered()) {
             ImGui::OpenPopup("ContextMenu");
         }
 
@@ -181,58 +175,66 @@ bool UIProject::Draw()
         ImGui::EndTable();
     }
 
-    if (ImGui::BeginPopupModal("CreateNewFolder")) {
-        static char newFolderName[256] = "";
-        ImGui::InputText("Folder Name", newFolderName, IM_ARRAYSIZE(newFolderName));
-        if (ImGui::Button("Create")) {
-            CreateNewItem(selectedDirectory, newFolderName, true);
+    // Create New Script Popup
+    if (ImGui::BeginPopupModal("CreateNewScript", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+        static char scriptName[256] = "NewScript";
+        ImGui::InputText("Script Name", scriptName, IM_ARRAYSIZE(scriptName));
+
+        if (ImGui::Button("Create", ImVec2(120, 0))) {
+            std::string scriptPath = selectedDirectory.string() + "/" + scriptName + ".cs";
+            std::ofstream scriptFile(scriptPath);
+
+            std::string scriptContent = "using System;\n\n"
+                "public class " + std::string(scriptName) + " : MonoBehaviour\n"
+                "{\n"
+                "    public override void Start()\n"
+                "    {\n"
+                "        HawkEngine.EngineCalls.print(\"Hola desde " + std::string(scriptName) + "!\");\n"
+                "    }\n\n"
+                "    public override void Update(float deltaTime)\n"
+                "    {\n"
+                "        // Lógica de actualización\n"
+                "    }\n"
+                "}\n";
+
+            scriptFile << scriptContent;
+            scriptFile.close();
+
+            StartDirectoryListing(selectedDirectory);
             ImGui::CloseCurrentPopup();
-            newFolderName[0] = '\0';
+            strcpy(scriptName, "NewScript");
         }
+
         ImGui::SameLine();
-        if (ImGui::Button("Cancel")) {
+        if (ImGui::Button("Cancel", ImVec2(120, 0))) {
             ImGui::CloseCurrentPopup();
-            newFolderName[0] = '\0';
+            strcpy(scriptName, "NewScript");
         }
+
         ImGui::EndPopup();
     }
 
-    if (ImGui::BeginPopupModal("CreateNewFile"))
-    {
-        static char newFileName[256] = "";
-        ImGui::InputText("File Name", newFileName, IM_ARRAYSIZE(newFileName));
-        if (ImGui::Button("Create"))
-        {
-            CreateNewItem(selectedDirectory, newFileName, false);
-            ImGui::CloseCurrentPopup();
-            newFileName[0] = '\0';
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("Cancel"))
-        {
-            ImGui::CloseCurrentPopup();
-            newFileName[0] = '\0';
-        }
-        ImGui::EndPopup();
-    }
-
-    if (ImGui::BeginPopupModal("Rename Item")) {
+    if (ImGui::BeginPopupModal("Rename Item", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
         static char newName[256] = "";
         std::filesystem::path originalPath;
 
         if (std::filesystem::is_directory(renamePath)) {
             originalPath = renamePath;
-            strncpy(newName, renamePath.filename().string().c_str(), sizeof(newName) - 1);
+            if (newName[0] == '\0') {  // Only set once when opening
+                strncpy(newName, renamePath.filename().string().c_str(), sizeof(newName) - 1);
+            }
         }
         else {
             originalPath = renamePath;
-            strncpy(newName, renamePath.filename().string().c_str(), sizeof(newName) - 1);
+            if (newName[0] == '\0') {  // Only set once when opening
+                strncpy(newName, renamePath.filename().string().c_str(), sizeof(newName) - 1);
+            }
         }
         newName[sizeof(newName) - 1] = '\0';
 
         ImGui::InputText("New Name", newName, IM_ARRAYSIZE(newName));
 
-        if (ImGui::Button("Rename")) {
+        if (ImGui::Button("Rename", ImVec2(120, 0))) {
             try {
                 std::filesystem::path newPath = originalPath.parent_path() / newName;
                 std::filesystem::rename(originalPath, newPath);
@@ -248,14 +250,33 @@ bool UIProject::Draw()
             }
         }
         ImGui::SameLine();
-        if (ImGui::Button("Cancel")) {
+        if (ImGui::Button("Cancel", ImVec2(120, 0))) {
             ImGui::CloseCurrentPopup();
             newName[0] = '\0';
         }
         ImGui::EndPopup();
     }
 
-    ImGui::PopStyleVar();
+    // Load Scene Popup
+    if (ImGui::BeginPopupModal("Load Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::Text("Do you want to load this scene?");
+        ImGui::Separator();
+
+        if (ImGui::Button("Load without saving", ImVec2(150, 0)))
+        {
+            Application->scene_serializer->DeSerialize(currentSceneFile);
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel", ImVec2(120, 0)))
+        {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+
     ImGui::End();
 
     return true;
@@ -373,17 +394,29 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
     }
     if (ImGui::BeginPopup("SortOptions")) {
         if (ImGui::Selectable("Name", currentSortOption == SortOption::Name))
+        {
             currentSortOption = SortOption::Name;
+            StartDirectoryListing(selectedDirectory);
+        }
         if (ImGui::Selectable("Type", currentSortOption == SortOption::Type))
+        {
             currentSortOption = SortOption::Type;
+			StartDirectoryListing(selectedDirectory);
+        }
         if (ImGui::Selectable("Size", currentSortOption == SortOption::Size))
+        {
             currentSortOption = SortOption::Size;
+			StartDirectoryListing(selectedDirectory);
+        }
         if (ImGui::Selectable("Last Modified", currentSortOption == SortOption::LastModified))
+        {
             currentSortOption = SortOption::LastModified;
+            StartDirectoryListing(selectedDirectory);
+        }
 
         ImGui::Separator();
         if (ImGui::Checkbox("Ascending", &sortAscending)) {
-
+            StartDirectoryListing(selectedDirectory);
         }
 
         ImGui::EndPopup();
@@ -393,8 +426,68 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
     const float iconSize = 64.0f;
     const float padding = 16.0f;
     const float totalSize = iconSize + padding;
-    int itemsPerRow = static_cast<int>(std::max(1.0f, contentRegionWidth / totalSize));
+    int itemsPerRow = static_cast<int>(std::max(1.0f, (contentRegionWidth - 5.0f) / totalSize));
+    if (itemsPerRow < 1) itemsPerRow = 1;  // Ensure at least one item per row
+
     int itemIndex = 0;
+
+    // Handle new item creation if active
+    if (isCreatingNewItem) {
+        ImGui::PushID("##NewItemCreation");
+        ImGui::BeginGroup();
+
+        Image* icon = isNewItemFolder ? iconCache[".folder"] : iconCache[".default"];
+        ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())), ImVec2(iconSize, iconSize));
+
+        // Input text field that gets focus
+        ImGui::SetKeyboardFocusHere();
+        char nameBuf[256];
+        strncpy(nameBuf, newItemName.c_str(), sizeof(nameBuf) - 1);
+        nameBuf[sizeof(nameBuf) - 1] = '\0';
+
+        ImGui::PushItemWidth(iconSize + 4);
+        if (ImGui::InputText("##newItemName", nameBuf, IM_ARRAYSIZE(nameBuf),
+            ImGuiInputTextFlags_EnterReturnsTrue | ImGuiInputTextFlags_AutoSelectAll)) {
+            // Create on Enter key
+            try {
+                newItemName = nameBuf;
+                if (isNewItemFolder) {
+                    std::filesystem::create_directory(newItemPath / newItemName);
+                }
+                else {
+                    std::ofstream newFile(newItemPath / newItemName);
+                    newFile.close();
+                }
+                isCreatingNewItem = false;
+                StartDirectoryListing(selectedDirectory);
+            }
+            catch (const std::filesystem::filesystem_error& ex) {
+                // Handle error
+            }
+        }
+
+        newItemName = nameBuf;
+
+        // Cancel on Escape
+        if (ImGui::IsKeyPressed(ImGuiKey_Escape)) {
+            isCreatingNewItem = false;
+        }
+
+        // Handle click outside
+        if (!ImGui::IsItemFocused() && ImGui::IsMouseClicked(0)) {
+            if (!ImGui::IsItemHovered()) {
+                isCreatingNewItem = false;
+            }
+        }
+
+        ImGui::EndGroup();
+        ImGui::PopID();
+
+        itemIndex++;
+        if (itemIndex % itemsPerRow != 0 && itemIndex < currentDirectoryEntries.size()) {
+            ImGui::SameLine();
+        }
+    }
 
     try
     {
@@ -410,11 +503,14 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
 
             ImGui::PushID(filename.c_str());
 
+            // Begin group for this item
             ImGui::BeginGroup();
 
             float cursorX = ImGui::GetCursorPosX();
             float textWidth = ImGui::CalcTextSize(filename.c_str()).x;
             float offset = (totalSize - std::min(textWidth, iconSize)) * 0.5f;
+
+            // Center the icon
             ImGui::SetCursorPosX(cursorX + offset);
 
             if (ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())), ImVec2(iconSize, iconSize)))
@@ -424,6 +520,7 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
 
             if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
                 selectedFile = entry;
+                ImGui::OpenPopup("ContextMenu");
             }
 
             if (ImGui::IsItemHovered())
@@ -456,6 +553,7 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
                 ImGui::EndDragDropSource();
             }
 
+            // Center the text label
             ImGui::SetCursorPosX(cursorX + offset);
             std::string shortName = filename;
             if (ImGui::CalcTextSize(shortName.c_str()).x > iconSize)
@@ -472,7 +570,7 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
             ImGui::EndGroup();
 
             itemIndex++;
-            if (itemIndex % itemsPerRow != 0)
+            if (itemIndex % itemsPerRow != 0 && itemIndex < currentDirectoryEntries.size())
             {
                 ImGui::SameLine();
             }
@@ -525,14 +623,13 @@ void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
 {
     if (filePath.extension() == ".scene") {
         currentSceneFile = filePath.string();
-
         ImGui::OpenPopup("Load Scene");
     }
 
-    if (filePath.extension() == ".cs") 
+    if (filePath.extension() == ".cs")
     {
         std::string scriptPath = filePath.string();
-        
+
         if (!std::filesystem::exists(scriptPath)) {
             LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
         }
@@ -545,22 +642,6 @@ void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
                 LOG(LogType::LOG_INFO, "Successfully opened script: %s", scriptPath.c_str());
             }
         }
-	}
-
-    if (ImGui::BeginPopupModal("Load Scene"))
-    {
-        if (ImGui::Button("Load without saving"))
-        {
-            Application->scene_serializer->DeSerialize(filePath.string());
-            currentSceneFile = filePath.string();
-            ImGui::CloseCurrentPopup();
-        }
-
-        if (ImGui::Button("Cancel"))
-        {
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
     }
 }
 
@@ -589,10 +670,10 @@ void UIProject::ShowContextMenu()
 {
     if (selectedFile.empty()) {
         if (ImGui::MenuItem("New Folder")) {
-            ImGui::OpenPopup("CreateNewFolder");
+            CreateNewItem(selectedDirectory, true);
         }
         if (ImGui::MenuItem("New File")) {
-            ImGui::OpenPopup("CreateNewFile");
+            CreateNewItem(selectedDirectory, false);
         }
     }
     else
@@ -635,7 +716,6 @@ void UIProject::ShowContextMenu()
                 {
                     Application->scene_serializer->DeSerialize(selectedFile.string());
                     currentSceneFile = selectedFile.string();
-
                 }
             }
             if (ImGui::MenuItem("Rename")) {
@@ -659,18 +739,10 @@ void UIProject::ShowContextMenu()
     }
 }
 
-void UIProject::CreateNewItem(const std::filesystem::path& path, const std::string& itemName, bool isDirectory)
+void UIProject::CreateNewItem(const std::filesystem::path& path, bool isFolder)
 {
-    try {
-        if (isDirectory) {
-            std::filesystem::create_directory(path / itemName);
-        }
-        else {
-            std::ofstream newFile(path / itemName);
-        }
-        StartDirectoryListing(selectedDirectory);
-    }
-    catch (const std::filesystem::filesystem_error& ex) {
-        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Error: %s", ex.what());
-    }
+    isCreatingNewItem = true;
+    isNewItemFolder = isFolder;
+    newItemPath = path;
+    newItemName = isFolder ? "New Folder" : "New File";
 }

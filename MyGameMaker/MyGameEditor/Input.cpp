@@ -196,8 +196,6 @@ bool Input::processSDLEvents()
                     Application->physicsModule->linkPhysicsToScene = false;
                 }
                 break;
-            case SDLK_ESCAPE:
-                return false;
 
             case SDLK_DELETE: {
                 int i = 0;

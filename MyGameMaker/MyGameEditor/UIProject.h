@@ -26,7 +26,7 @@ private:
     Image* GetIconForFile(const std::filesystem::path& filePath);
     void ShowContextMenu();
     void StartDirectoryListing(const std::filesystem::path& path);
-    void CreateNewItem(const std::filesystem::path& path, const std::string& itemName, bool isDirectory);
+    void CreateNewItem(const std::filesystem::path& path, bool isFolder);
 
     std::filesystem::path directoryPath;
     std::filesystem::path renamePath;
@@ -50,4 +50,9 @@ private:
 
     SortOption currentSortOption;
     bool sortAscending;
+
+    bool isCreatingNewItem;
+    std::string newItemName;
+    bool isNewItemFolder;
+    std::filesystem::path newItemPath;
 };

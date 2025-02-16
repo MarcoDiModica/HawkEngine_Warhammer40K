@@ -532,6 +532,15 @@ void UIProject::DrawActionButtons()
     }
     ImGui::SameLine();
 
+    if (ImGui::Button("Open In Explorer")) {
+		std::string path = selectedDirectory.string();
+		if (!path.empty()) {
+			ShellExecuteA(NULL, "open", path.c_str(), NULL, NULL, SW_SHOWNORMAL);
+		}
+	}
+
+    ImGui::SameLine();
+
     if (ImGui::Button("Create")) {
         ImGui::OpenPopup("CreateMenu");
     }

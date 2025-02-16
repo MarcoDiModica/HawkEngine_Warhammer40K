@@ -144,7 +144,10 @@ void UIProject::DrawContentArea()
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 8));
     DrawFolderContents(selectedDirectory);
 
-    if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !ImGui::IsAnyItemHovered()) {
+    if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
+        if (!ImGui::IsAnyItemHovered()) {
+            selectedFile.clear();
+        }
         ImGui::OpenPopup("ContextMenu");
     }
 
@@ -361,8 +364,20 @@ void UIProject::DrawRenamingItem(const std::filesystem::path& entry, const std::
 
 void UIProject::DrawNormalItem(const std::filesystem::path& entry, const std::string& filename, Image* icon, bool isDirectory)
 {
-    if (ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),
-        ImVec2(ICON_SIZE, ICON_SIZE))) {
+    bool isSelected = (entry == selectedFile);
+
+    if (isSelected) {
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.8f, 0.5f));
+    }
+
+    bool clicked = ImGui::ImageButton(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),
+        ImVec2(ICON_SIZE, ICON_SIZE));
+
+    if (isSelected) {
+        ImGui::PopStyleColor();
+    }
+
+    if (clicked) {
         selectedFile = entry;
     }
 
@@ -606,6 +621,9 @@ void UIProject::ShowContextMenu()
         if (ImGui::MenuItem("New File")) {
             CreateNewItem(selectedDirectory, false);
         }
+        if (ImGui::MenuItem("Refresh")) {
+            StartDirectoryListing(selectedDirectory);
+        }
     }
     else {
         if (std::filesystem::is_directory(selectedFile)) {
@@ -648,6 +666,11 @@ void UIProject::ShowContextMenu()
                 catch (const std::filesystem::filesystem_error& ex) {
                     LOG(LogType::LOG_ERROR, "Error deleting file: %s", ex.what());
                 }
+            }
+
+            // Additional file-specific options
+            if (selectedFile.extension() == ".cs" && ImGui::MenuItem("Open in Editor")) {
+                HandleFileSelection(selectedFile);
             }
         }
     }

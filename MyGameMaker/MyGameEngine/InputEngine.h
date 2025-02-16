@@ -5,6 +5,8 @@
 
 
 #define MAX_MOUSE_BUTTONS 5
+#define MAX_CONTROLLER_BUTTONS 15
+#define MAX_CONTROLLERS 4
 
 enum KEY_STATE
 {
@@ -51,6 +53,7 @@ public:
 		return mouse_buttons[id];
 	}
 
+
 	int GetMouseX() const
 	{
 		return mouse_x;
@@ -96,6 +99,13 @@ public:
 
 	void HandleFileDrop(const std::string& fileDir);
 
+	void InitControllers();
+	void CleanUpControllers();
+	void UpdateControllers();
+	void HandleDeviceConnection(int index);
+	void HandleDeviceRemoval(int index);
+
+
 public:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
@@ -109,7 +119,8 @@ public:
 	std::vector<GameObject*> selectedObjects;
 	std::vector<GameObject*> copiedObjects;
 	GameObject* draggedObject;
-	
+	//GamePad gamepads[MAX_CONTROLLERS];
+
 };
 
 extern InputEngine* InputManagement;

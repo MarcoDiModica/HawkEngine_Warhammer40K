@@ -4,6 +4,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include "Component.h"
 #include "types.h"
+#include <queue>
 #ifdef YAML_CPP_DLL_EXPORTS
 #define YAML_CPP_API __declspec(dllexport)
 #else
@@ -138,6 +139,7 @@ private:
     friend class SceneManager;
     friend class Root;
     friend class GameObject;
+    bool isDirty = true;
 
     union
     {
@@ -173,12 +175,12 @@ private:
         auto buff = matrix;
         matrix = parentWorldMatrix * local_matrix;
         if (buff != matrix) {
-            int u = 7;
+            //int u = 7;
         }
     }
 	friend class GameObject;
     void UpdateLocalMatrix(const glm::dmat4& parentWorldMatrix) {
-        local_matrix = glm::inverse( parentWorldMatrix  ) * matrix;
+        local_matrix = parentWorldMatrix * matrix;
     }
 
     void HandleWorldUpdate();

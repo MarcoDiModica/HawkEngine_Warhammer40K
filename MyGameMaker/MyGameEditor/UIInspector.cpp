@@ -1,43 +1,41 @@
-#include "UIInspector.h"
-#include "App.h"
-#include "imgui.h"
-#include "imgui_internal.h"
-#include "MyGUI.h"
-#include "../MyGameEngine/GameObject.h"
-#include "../MyGameEngine/TransformComponent.h"
-#include "../MyGameEngine/LightComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
-#include "../MyAudioEngine/AudioListener.h"
-#include "UIAudioTest.h"
-#include "../MyGameEditor/Log.h"
-#include <glm/glm.hpp>
 #include <algorithm>
-#include <iostream>
 #include <filesystem>
-
-#include "..\MyGameEngine\CameraComponent.h"
-#include "..\MyGameEngine\Mesh.h"
-#include "EditorCamera.h"
-#include "Input.h"
-#include "..\MyGameEngine\types.h"
-#include "..\MyGameEngine\MeshRendererComponent.h"
-#include "..\MyGameEngine\Image.h"
-#include "..\MyGameEngine\Material.h"
-
-#include "..\MyPhysicsEngine\ColliderComponent.h"
-
-#include "..\MyScriptingEngine\ScriptComponent.h"
-#include "..\MyParticlesEngine\ParticlesEmitterComponent.h"
+#include <iostream>
 #include <string>
 
+#include <glm/glm.hpp>
 #include <mono/jit/jit.h>
 #include <mono/metadata/reflection.h>
-#include "../MyScriptingEngine/MonoManager.h"
-#include "../MyShadersEngine/ShaderComponent.h"
-
-
 #include <Windows.h>
 #undef BYTE
+
+#include "App.h"
+#include "EditorCamera.h"
+#include "imgui.h"
+#include "imgui_internal.h"
+#include "Input.h"
+#include "MyGUI.h"
+#include "UIAudioTest.h"
+#include "UIInspector.h"
+
+#include "../MyAudioEngine/AudioListener.h"
+#include "../MyAudioEngine/SoundComponent.h"
+#include "../MyGameEditor/Log.h"
+#include "../MyGameEngine/CameraComponent.h"
+#include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/Image.h"
+#include "../MyGameEngine/LightComponent.h"
+#include "../MyGameEngine/Material.h"
+#include "../MyGameEngine/Mesh.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
+#include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEngine/types.h"
+
+#include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyScriptingEngine/MonoManager.h"
+#include "../MyScriptingEngine/ScriptComponent.h"
+#include "../MyShadersEngine/ShaderComponent.h"
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {

@@ -428,7 +428,7 @@ int main(int argc, char** argv) {
 			Application->physicsModule->Start();
 			// MonoEnvironment* mono = new MonoEnvironment();
 			//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
-			MonoManager::GetInstance().Initialize();
+			MonoManager::Init();
 
 			//initialize devil
 			ilInit();
@@ -485,7 +485,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	MonoManager::GetInstance().Shutdown();
+	MonoManager::Shutdown();
 
 	return result;
 }

@@ -49,55 +49,55 @@ void ScriptComponent::Update(float deltaTime) {
 
 bool ScriptComponent::LoadScript(const std::string& scriptName)
 {
-    std::string scriptPath = "../Script/" + scriptName + ".cs";
-
-    if (!std::filesystem::exists(scriptPath)) {
-        LOG(LogType::LOG_ERROR, "script %s not found in route %s", scriptName.c_str(), scriptPath.c_str());
-        return false;
-    }
-
-    MonoClass* scriptClass = mono_class_from_name(MonoManager::GetInstance().GetImage(), "", scriptName.c_str());
-    if (!scriptClass) {
-        LOG(LogType::LOG_ERROR, "cant find class %s in assembly.", scriptName.c_str());
-        return false;
-    }
-
-    monoScript = mono_object_new(MonoManager::GetInstance().GetDomain(), scriptClass);
-    if (!monoScript) {
-        LOG(LogType::LOG_ERROR, "not found instance of script %s.", scriptName.c_str());
-        return false;
-    }
-
-    MonoObject* exception = nullptr;
-    mono_runtime_object_init(monoScript);
-
-    if (exception) {
-        MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
-        const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
-        LOG(LogType::LOG_ERROR, "Error init Script %s: %s", scriptName.c_str(), exceptionStr);
-        mono_free((void*)exceptionStr);
-        return false;
-    }
-
-
-/*   Setting the cplusplus gameObject reference of the MonoBehaviour scripto        */
-
-    if (MonoManager::GetInstance().scriptIDs.contains(scriptName) == false) {
-
-     LOG(LogType::LOG_INFO, "Script %s Loaded successfully.", scriptName.c_str());
-
-
-
-        MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
-    }
-
-    uintptr_t goPtr = reinterpret_cast<uintptr_t>(owner);
-    MonoClassField* field = mono_class_get_field_from_name(scriptClass, "CplusplusInstance");
-    mono_field_set_value(monoScript, field, &goPtr);
-
-    if (std::filesystem::exists(scriptPath)) {
-        lastWriteTime = std::filesystem::last_write_time(scriptPath);
-    }
+//    std::string scriptPath = "../Script/" + scriptName + ".cs";
+//
+//    if (!std::filesystem::exists(scriptPath)) {
+//        LOG(LogType::LOG_ERROR, "script %s not found in route %s", scriptName.c_str(), scriptPath.c_str());
+//        return false;
+//    }
+//
+//    MonoClass* scriptClass = mono_class_from_name(MonoManager::GetInstance().GetImage(), "", scriptName.c_str());
+//    if (!scriptClass) {
+//        LOG(LogType::LOG_ERROR, "cant find class %s in assembly.", scriptName.c_str());
+//        return false;
+//    }
+//
+//    monoScript = mono_object_new(MonoManager::GetInstance().GetDomain(), scriptClass);
+//    if (!monoScript) {
+//        LOG(LogType::LOG_ERROR, "not found instance of script %s.", scriptName.c_str());
+//        return false;
+//    }
+//
+//    MonoObject* exception = nullptr;
+//    mono_runtime_object_init(monoScript);
+//
+//    if (exception) {
+//        MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
+//        const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
+//        LOG(LogType::LOG_ERROR, "Error init Script %s: %s", scriptName.c_str(), exceptionStr);
+//        mono_free((void*)exceptionStr);
+//        return false;
+//    }
+//
+//
+///*   Setting the cplusplus gameObject reference of the MonoBehaviour scripto        */
+//
+//    if (MonoManager::GetInstance().scriptIDs.contains(scriptName) == false) {
+//
+//     LOG(LogType::LOG_INFO, "Script %s Loaded successfully.", scriptName.c_str());
+//
+//
+//
+//        MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
+//    }
+//
+//    uintptr_t goPtr = reinterpret_cast<uintptr_t>(owner);
+//    MonoClassField* field = mono_class_get_field_from_name(scriptClass, "CplusplusInstance");
+//    mono_field_set_value(monoScript, field, &goPtr);
+//
+//    if (std::filesystem::exists(scriptPath)) {
+//        lastWriteTime = std::filesystem::last_write_time(scriptPath);
+//    }
 
     return true;
 }

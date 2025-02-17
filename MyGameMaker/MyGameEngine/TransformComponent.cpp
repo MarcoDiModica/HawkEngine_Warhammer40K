@@ -332,46 +332,46 @@ bool Transform_Component::decode(const YAML::Node& node) {
             return CsharpReference;
         }
 
-        // 1. Obtener la clase de C#
-        MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Transform");
-        if (!klass) {
-            // Manejar el error si la clase no se encuentra
-            return nullptr;
-        }
+        //// 1. Obtener la clase de C#
+        //MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Transform");
+        //if (!klass) {
+        //    // Manejar el error si la clase no se encuentra
+        //    return nullptr;
+        //}
 
-        // 2. Crear una instancia del objeto de C#
-        MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
-        if (!monoObject) {
-            // Manejar el error si la instancia no se puede crear
-            return nullptr;
-        }
+        //// 2. Crear una instancia del objeto de C#
+        //MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+        //if (!monoObject) {
+        //    // Manejar el error si la instancia no se puede crear
+        //    return nullptr;
+        //}
 
-        // 3. Obtener el constructor correcto
-        MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Transform:.ctor(uintptr,HawkEngine.GameObject)", true);
-        MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-        if (!method)
-        {
-            //Manejar error si el constructor no se encuentra
-            return nullptr;
-        }
+        //// 3. Obtener el constructor correcto
+        //MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Transform:.ctor(uintptr,HawkEngine.GameObject)", true);
+        //MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+        //if (!method)
+        //{
+        //    //Manejar error si el constructor no se encuentra
+        //    return nullptr;
+        //}
 
-        // 4. Preparar los argumentos para el constructor
-        uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this); // Puntero a la instancia de Transform_Component
-        MonoObject* ownerGo = owner->GetSharp(); // Obtenemos la instancia del propietario de C#
-        if (!ownerGo)
-        {
-            //Manejar error si el propietario no tiene instancia de C#
-            return nullptr;
-        }
+        //// 4. Preparar los argumentos para el constructor
+        //uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this); // Puntero a la instancia de Transform_Component
+        //MonoObject* ownerGo = owner->GetSharp(); // Obtenemos la instancia del propietario de C#
+        //if (!ownerGo)
+        //{
+        //    //Manejar error si el propietario no tiene instancia de C#
+        //    return nullptr;
+        //}
 
-        void* args[2];
-        args[0] = &componentPtr;
-        args[1] = ownerGo;
+        //void* args[2];
+        //args[0] = &componentPtr;
+        //args[1] = ownerGo;
 
-        // 5. Invocar al constructor
-        mono_runtime_invoke(method, monoObject, args, NULL);
+        //// 5. Invocar al constructor
+        //mono_runtime_invoke(method, monoObject, args, NULL);
 
-        // 6. Guardar la referencia y devolverla
-        CsharpReference = monoObject;
+        //// 6. Guardar la referencia y devolverla
+        //CsharpReference = monoObject;
         return CsharpReference;
     }

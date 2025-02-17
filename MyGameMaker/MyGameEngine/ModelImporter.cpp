@@ -7,6 +7,9 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include <assimp/mesh.h>
+#include "MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "MyAnimationEngine/Animation.h"
+
 #include "Material.h"
 #include "MeshRendererComponent.h"
 #include "TransformComponent.h"
@@ -51,7 +54,7 @@ static void decomposeMatrix(const mat4& matrix, vec3& scale, glm::quat& rotation
 	rotation = glm::quat(vec3(0.0f, 0.0f, 0.0f));
 }
 
-void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials) {
+void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, const string& scenePath) {
 	GameObject obj;
 	mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
 
@@ -86,10 +89,16 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		meshGameObjects.push_back(std::make_shared<GameObject>(obj));
 	}
 
+	if (scene.HasAnimations()) {
+		auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
+		Animation* animation = new Animation(scenePath, obj.GetComponent<Mesh>());
+		skeletalAnimationComponent->SetAnimation(animation);
+	}
+
 	for (unsigned int i = 0; i < node.mNumChildren; ++i)
 	{
 
-	 	graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials);
+	 	graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, scenePath);
 		
 	}
 
@@ -234,7 +243,7 @@ void ModelImporter::loadFromFile(const std::string& path) {
 
 	const auto materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/"/*fs::absolute(path).parent_path()*/);
 
-	/*GameObject fbx_obj =*/ graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);
+	/*GameObject fbx_obj =*/ graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials, path);
 	aiReleaseImport(fbx_scene);
 	//return std::make_shared<GameObject>(fbx_obj);
 }

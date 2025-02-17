@@ -32,6 +32,10 @@ public:
     MonoObject* GetSharp() override {
         return CsharpReference;
     }
+
+	void SetAnimation(Animation* animation) {
+		testAnimation = animation;
+	}
     
 private:
 	Animator* animator;

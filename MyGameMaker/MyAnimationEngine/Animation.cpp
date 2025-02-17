@@ -1,7 +1,16 @@
 #include "Animation.h"
 
+Animation::Animation()
+{
+}
 
-Animation::Animation(const std::string& animationPath, Mesh* model)
+
+
+Animation::~Animation()
+{
+}
+
+void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model)
 {
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
@@ -11,10 +20,6 @@ Animation::Animation(const std::string& animationPath, Mesh* model)
     m_TicksPerSecond = animation->mTicksPerSecond;
     ReadHeirarchyData(m_RootNode, scene->mRootNode);
     ReadMissingBones(animation, *model);
-}
-
-Animation::~Animation()
-{
 }
 
 Bone* Animation::FindBone(const std::string& name)

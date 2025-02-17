@@ -6,7 +6,7 @@
 class SkeletalAnimationComponent : public Component
 {
 public:
-    explicit SkeletalAnimationComponent(GameObject* owner, Animation* animation) : Component(owner) {}
+    explicit SkeletalAnimationComponent(GameObject* owner) : Component(owner) {}
     virtual ~SkeletalAnimationComponent() = default;
 
     void Start() override {

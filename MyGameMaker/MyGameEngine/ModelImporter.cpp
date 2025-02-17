@@ -91,7 +91,8 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 
 	if (scene.HasAnimations()) {
 		auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
-		Animation* animation = new Animation(scenePath, obj.GetComponent<Mesh>());
+		Animation* animation = new Animation();
+		animation->SetUpAnimation(scenePath, obj.GetComponent<Mesh>());
 		skeletalAnimationComponent->SetAnimation(animation);
 	}
 

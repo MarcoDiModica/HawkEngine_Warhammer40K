@@ -1,8 +1,8 @@
 #include "SkeletalAnimationComponent.h"
 
-SkeletalAnimationComponent::SkeletalAnimationComponent(GameObject* owner, Animation* animation) : Component(owner)
+SkeletalAnimationComponent::SkeletalAnimationComponent(GameObject* owner) : Component(owner)
 {
-	animator = new Animator(animation);
+	
 }
 
 void SkeletalAnimationComponent::Start()

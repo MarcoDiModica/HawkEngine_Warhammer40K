@@ -27,8 +27,11 @@ private:
 public:
     Animation() = default;
 
-    Animation(const std::string& animationPath, Mesh* model);
+    
     ~Animation();
+
+    void SetUpAnimation(const std::string& animationPath, Mesh* model);
+
 	Bone* FindBone(const std::string& name);
 
     inline float GetTicksPerSecond() { return m_TicksPerSecond; }

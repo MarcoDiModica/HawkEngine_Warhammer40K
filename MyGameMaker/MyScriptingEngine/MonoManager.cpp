@@ -117,6 +117,10 @@ void MonoManager::InitMono() {
 		return;
 	}
     PrintAssemblyTypes(s_ScriptEngineData->CoreAssembly);
+
+    // 1. Build an object, and it will automatically call the constructor
+    // 2. Call a method on the object
+    // 3. Call a method on the object with parameters
 }
 
 void MonoManager::ShutdownMono() {
@@ -125,3 +129,5 @@ void MonoManager::ShutdownMono() {
 
 // he comentado cosas de la anteror implementacion de mono. sobre todo en GameObject, los componenetes 
 // y script component, tambien he comentado el EngineBinds
+
+// video minuto 2:07:00

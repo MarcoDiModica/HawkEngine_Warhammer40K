@@ -17,26 +17,13 @@
 
 namespace fs = std::filesystem;
 
-struct GamePad {
-    SDL_GameController* controller = nullptr;
-    SDL_Haptic* haptic = nullptr;
-    bool enabled = false;
-    int index = -1;
-    float l_x, l_y, r_x, r_y, l2, r2;
-    bool a, b, x, y, l1, r1, l3, r3, up, down, left, right, start, guide, back;
-    float l_dz = 0.1f, r_dz = 0.1f;
-    int rumble_countdown = 0;
-    float rumble_strength = 0.0f;
-};
-
-
 InputEngine::InputEngine()
 {
     keyboard = new KEY_STATE[MAX_KEYS];
     memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
     memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
     memset(&gamepads[0], 0, sizeof(GamePad) * MAX_CONTROLLERS);
-
+    InitControllers();
 }
 
 InputEngine::~InputEngine() {
@@ -145,6 +132,11 @@ void InputEngine::InitControllers()
     if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) < 0)
     {
         std::cerr << "SDL_INIT_GAMECONTROLLER could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+    }
+    const char* ps4Mapping = "030000004c050000c405000011810000,PS4 Controller,a:b1,b:b2,back:b8,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b4,leftstick:b10,lefttrigger:a3,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b11,righttrigger:a4,rightx:a2,righty:a5,start:b9,x:b0,y:b3,platform:Windows,";
+    if (SDL_GameControllerAddMapping(ps4Mapping) == -1)
+    {
+        std::cerr << "Failed to add PS4 controller mapping: " << SDL_GetError() << std::endl;
     }
 
     if (SDL_InitSubSystem(SDL_INIT_HAPTIC) < 0)

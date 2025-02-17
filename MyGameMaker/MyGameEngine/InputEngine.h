@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include "GameObject.h"
+#include "SDL2/SDl_GameController.h"
+#include <vector>
+#include "SDL2/SDL_haptic.h"
 
 
 #define MAX_MOUSE_BUTTONS 5
@@ -15,6 +18,19 @@ enum KEY_STATE
 	KEY_REPEAT,
 	KEY_UP
 };
+
+struct GamePad {
+	SDL_GameController* controller = nullptr;
+	SDL_Haptic* haptic = nullptr;
+	bool enabled = false;
+	int index = -1;
+	float l_x, l_y, r_x, r_y, l2, r2;
+	bool a, b, x, y, l1, r1, l3, r3, up, down, left, right, start, guide, back;
+	float l_dz = 0.1f, r_dz = 0.1f;
+	int rumble_countdown = 0;
+	float rumble_strength = 0.0f;
+};
+
 
 class InputEngine
 {
@@ -119,7 +135,7 @@ public:
 	std::vector<GameObject*> selectedObjects;
 	std::vector<GameObject*> copiedObjects;
 	GameObject* draggedObject;
-	//GamePad gamepads[MAX_CONTROLLERS];
+	GamePad gamepads[MAX_CONTROLLERS];
 
 };
 

@@ -17,7 +17,18 @@
 #include "BufferObject.h"
 #include "BoundingBox.h"
 
+#define MAX_BONE_INFLUENCE 20
+
 class SceneSerializer;
+
+struct Vertex
+{
+    glm::vec3 position;
+
+    int m_BoneIDs[MAX_BONE_INFLUENCE];
+
+    float m_Weights[MAX_BONE_INFLUENCE];
+};
 
 class Mesh {
     BufferObject vertices_buffer;
@@ -27,7 +38,7 @@ class Mesh {
     BufferObject colors_buffer;
 
     std::vector<glm::vec3> _normals;
-    std::vector<glm::vec3> _vertices;
+    std::vector<Vertex> _vertices;
     std::vector<unsigned int> _indices;
 	std::vector<glm::vec2> _texCoords;
 

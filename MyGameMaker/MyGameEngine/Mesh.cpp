@@ -28,7 +28,6 @@ Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 Mesh::~Mesh() {}
 
 
-
 void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs)
 {
 	vertices_buffer.LoadData(vertices, num_verts * sizeof(glm::vec3));
@@ -39,15 +38,18 @@ void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int*
 
 	_vertices.clear();
 	_indices.clear();
-	_vertices.assign(vertices, vertices + num_verts);
+	_vertices.resize(num_verts);
+	for (size_t i = 0; i < num_verts; ++i) {
+		_vertices[i].position = vertices[i];
+	}
 	_indices.assign(indices, indices + num_indexs);
 
-	_boundingBox.min = _vertices.front();
-	_boundingBox.max = _vertices.front();
+	_boundingBox.min = _vertices.front().position;
+	_boundingBox.max = _vertices.front().position;
 
 	for (const auto& v : _vertices) {
-		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v));
-		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v));
+		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v.position));
+		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
 	}
 
 	CalculateNormals();
@@ -95,9 +97,9 @@ void Mesh::CalculateNormals() {
 	_normals.resize(_vertices.size(), glm::vec3(0.0f));
 
 	for (size_t i = 0; i < _indices.size(); i += 3) {
-		glm::vec3 v0 = _vertices[_indices[i]];
-		glm::vec3 v1 = _vertices[_indices[i + 1]];
-		glm::vec3 v2 = _vertices[_indices[i + 2]];
+		glm::vec3 v0 = _vertices[_indices[i]].position;
+		glm::vec3 v1 = _vertices[_indices[i + 1]].position;
+		glm::vec3 v2 = _vertices[_indices[i + 2]].position;
 
 		glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 
@@ -163,8 +165,8 @@ void Mesh::Draw() const
 		glBegin(GL_LINES);
 
 		for (size_t i = 0; i < _vertices.size(); ++i) {
-			glm::vec3 end = _vertices[i] + _normals[i] * 0.2f;
-			glVertex3fv(glm::value_ptr(_vertices[i]));
+			glm::vec3 end = _vertices[i].position + _normals[i] * 0.2f;
+			glVertex3fv(glm::value_ptr(_vertices[i].position));
 			glVertex3fv(glm::value_ptr(end));
 		}
 
@@ -177,9 +179,9 @@ void Mesh::Draw() const
 		glBegin(GL_LINES);
 
 		for (size_t i = 0; i < _indices.size(); i += 3) {
-			glm::vec3 v0 = _vertices[_indices[i]];
-			glm::vec3 v1 = _vertices[_indices[i + 1]];
-			glm::vec3 v2 = _vertices[_indices[i + 2]];
+			glm::vec3 v0 = _vertices[_indices[i]].position;
+			glm::vec3 v1 = _vertices[_indices[i + 1]].position;
+			glm::vec3 v2 = _vertices[_indices[i + 2]].position;
 
 			glm::vec3 center = (v0 + v1 + v2) / 3.0f;
 			glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
@@ -199,9 +201,9 @@ void Mesh::Draw() const
 		glBegin(GL_LINES);
 
 		for (size_t i = 0; i < _indices.size(); i += 3) {
-			glm::vec3 v0 = _vertices[_indices[i]];
-			glm::vec3 v1 = _vertices[_indices[i + 1]];
-			glm::vec3 v2 = _vertices[_indices[i + 2]];
+			glm::vec3 v0 = _vertices[_indices[i]].position;
+			glm::vec3 v1 = _vertices[_indices[i + 1]].position;
+			glm::vec3 v2 = _vertices[_indices[i + 2]].position;
 
 			glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 			glm::vec3 end = center + normal * 0.2f;

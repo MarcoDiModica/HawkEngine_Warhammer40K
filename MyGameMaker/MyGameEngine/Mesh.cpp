@@ -1,23 +1,21 @@
 #include "Mesh.h"
-#include "GameObject.h"
-#include "assimp/scene.h"
-#include "assimp/postprocess.h"
-#include "assimp/cimport.h"
-#include <assimp/Importer.hpp>
-#include <vector>
-#include <string>
-#include <GL/glew.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <unordered_map>
 #include <unordered_set>
-#include "../MyGameEditor/Log.h"
 #include <zlib.h>
-
 #include <queue>
-using namespace std;
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/cimport.h>
+#include <GL/glew.h>
+#include <glm/gtc/type_ptr.hpp>
+
+#include "GameObject.h"
+#include "../MyGameEditor/Log.h"
 
 Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 {
@@ -223,7 +221,7 @@ void Mesh::LoadMesh(const char* file_path)
 
 	filePath = std::string(file_path);
 
-	cout << endl << file_path;
+	std::cout << std::endl << file_path;
 
 	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
 
@@ -312,7 +310,7 @@ void Mesh::LoadMesh(const char* file_path)
 	}
 	else {
 		// Handle error
-		cout << "Error loading mesh: " << file_path << endl;
+		std::cout << "Error loading mesh: " << file_path << std::endl;
 	}
 }
 

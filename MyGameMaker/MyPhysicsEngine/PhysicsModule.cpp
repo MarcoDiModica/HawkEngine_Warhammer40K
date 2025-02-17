@@ -198,47 +198,46 @@ void PhysicsModule::DrawDebugDrawer() {
 
         for (const auto& rigidBody : rigidBodies) {
             if (!rigidBody || !rigidBody->getCollisionShape()) {
-                continue; 
+                continue;
             }
 
             btCollisionShape* shape = rigidBody->getCollisionShape();
 
+            btTransform transform;
+            rigidBody->getMotionState()->getWorldTransform(transform);
+            btQuaternion rotation = transform.getRotation();
+            btMatrix3x3 rotationMatrix(rotation);
+            btVector3 position = transform.getOrigin();
+
             if (shape->getShapeType() == BOX_SHAPE_PROXYTYPE) {
-               
                 btBoxShape* boxShape = static_cast<btBoxShape*>(shape);
                 btVector3 halfExtents = boxShape->getHalfExtentsWithMargin();
 
-                btTransform transform;
-                rigidBody->getMotionState()->getWorldTransform(transform);
+                // Definir las 8 esquinas del BoundingBox en espacio local
+                btVector3 localCorners[8] = {
+                    btVector3(-halfExtents.x(), -halfExtents.y(), -halfExtents.z()),
+                    btVector3(halfExtents.x(), -halfExtents.y(), -halfExtents.z()),
+                    btVector3(halfExtents.x(),  halfExtents.y(), -halfExtents.z()),
+                    btVector3(-halfExtents.x(),  halfExtents.y(), -halfExtents.z()),
+                    btVector3(-halfExtents.x(), -halfExtents.y(),  halfExtents.z()),
+                    btVector3(halfExtents.x(), -halfExtents.y(),  halfExtents.z()),
+                    btVector3(halfExtents.x(),  halfExtents.y(),  halfExtents.z()),
+                    btVector3(-halfExtents.x(),  halfExtents.y(),  halfExtents.z())
+                };
 
-                BoundingBox bbox(
-                    glm::vec3(transform.getOrigin().getX() - halfExtents.getX(),
-                        transform.getOrigin().getY() - halfExtents.getY(),
-                        transform.getOrigin().getZ() - halfExtents.getZ()),
-                    glm::vec3(transform.getOrigin().getX() + halfExtents.getX(),
-                        transform.getOrigin().getY() + halfExtents.getY(),
-                        transform.getOrigin().getZ() + halfExtents.getZ())
-                );
+                glm::vec3 worldCorners[8];
+                for (int i = 0; i < 8; i++) {
+                    btVector3 rotatedCorner = rotationMatrix * localCorners[i] + position;
+                    worldCorners[i] = glm::vec3(rotatedCorner.x(), rotatedCorner.y(), rotatedCorner.z());
+                }
 
-                debugDrawer->drawBoundingBox(bbox, glm::vec3(1.0f, 0.0f, 0.0f));
+                debugDrawer->drawRotatedBoundingBox(worldCorners, glm::vec3(1.0f, 0.0f, 0.0f));
             }
             else if (shape->getShapeType() == SPHERE_SHAPE_PROXYTYPE) {
-                
                 btSphereShape* sphereShape = static_cast<btSphereShape*>(shape);
                 float radius = sphereShape->getRadius();
-
-                btTransform transform;
-                rigidBody->getMotionState()->getWorldTransform(transform);
-
-                glm::vec3 center(transform.getOrigin().getX(),
-                    transform.getOrigin().getY(),
-                    transform.getOrigin().getZ());
-
+                glm::vec3 center(position.x(), position.y(), position.z());
                 debugDrawer->drawSphere(center, radius, glm::vec3(1.0f, 0.0f, 0.0f), 16);
-            }
-            else {
-                // Otros tipos de colisión (por ahora no renderizamos)
-                continue;
             }
         }
     }
@@ -254,7 +253,7 @@ bool PhysicsModule::Update(double dt) {
     else
     {
 		//Line to sync the colliders to the gameobjects
-		//SyncCollidersToGameObjects();
+		SyncCollidersToGameObjects();
     }
     DrawDebugDrawer();
     

@@ -140,6 +140,16 @@ bool UIInspector::Draw() {
                     transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
                     transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
                     transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+
+                    //Collider Rotation
+                    if (selectedGameObject->HasComponent<ColliderComponent>()) {
+                        ColliderComponent* collider = selectedGameObject->GetComponent<ColliderComponent>();
+                        if (collider) {
+                            glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
+                            collider->SetColliderRotation(newRotation);
+                        }
+                    }
+                   
                 }
 
                 if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f)) {
@@ -411,23 +421,21 @@ bool UIInspector::Draw() {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
                 if (ImGui::CollapsingHeader("Collider")) {
 
-                    // Posición del Collider
-                   
+                    // Collider Ofset                
                     glm::vec3 colliderPosition = colliderComponent->GetColliderPos();
                     float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
 
-                    if (ImGui::DragFloat3("ColliderPosition", pos, 0.1f)) {
+                    if (ImGui::DragFloat3("ColliderOfset", pos, 0.1f)) {
 						colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
                     }
 
-                    // Rotación del Collider
-                    glm::quat colliderRotation = colliderComponent->GetColliderRotation();
-                    glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
-                    float rot[3] = { glm::degrees(eulerRotation.x), glm::degrees(eulerRotation.y), glm::degrees(eulerRotation.z) };
-
-                    if (ImGui::DragFloat3("ColliderRotation", rot, 0.1f)) {
-                        glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
-                        colliderComponent->SetColliderRotation(newRotation);
+                    // Checkbox para la posición 
+                    bool snapToPosition = false;
+                    if (ImGui::Checkbox("Snap Position", &snapToPosition)) {
+                        if (snapToPosition) {
+                            glm::vec3 gameObjectPosition = selectedGameObject->GetTransform()->GetPosition();
+                            colliderComponent->SetColliderPos(gameObjectPosition);
+                        }
                     }
 
                     // Tamaño del Collider

@@ -16,6 +16,12 @@
 
 #include "BufferObject.h"
 #include "BoundingBox.h"
+#include <assimp/scene.h>
+#include <vector>
+#include <MyGameEngine/AssimpGLMHelpers.h>
+
+using namespace std;
+
 
 #define MAX_BONE_INFLUENCE 20
 
@@ -30,6 +36,14 @@ struct Vertex
     float m_Weights[MAX_BONE_INFLUENCE];
 };
 
+struct BoneInfo
+{
+    int id;
+
+    glm::mat4 offset;
+
+};
+
 class Mesh {
     BufferObject vertices_buffer;
     BufferObject indices_buffer;
@@ -42,6 +56,9 @@ class Mesh {
     std::vector<unsigned int> _indices;
 	std::vector<glm::vec2> _texCoords;
 
+    std::map<std::string, BoneInfo> m_BoneInfoMap; 
+    int m_BoneCounter = 0;
+
     BoundingBox _boundingBox;
     std::vector<Mesh> subMeshes;
 
@@ -52,6 +69,9 @@ public:
     const auto& vertices() const { return _vertices; }
     const auto& indices() const { return _indices; }
     const auto& boundingBox() const { return _boundingBox; }
+
+    auto& GetBoneInfoMap() { return m_BoneInfoMap; }
+    int& GetBoneCount() { return m_BoneCounter; }
 
     static std::shared_ptr<Mesh> CreateCube();
     static std::shared_ptr<Mesh> CreateSphere();
@@ -70,6 +90,10 @@ public:
     inline static void glVertex3(const vec3& v) { glVertex3dv(&v.x); }
 
     void LoadMesh(const char* file_path);
+
+    void SetVertexBoneDataToDefault(Vertex& vertex);
+    void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
+	void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
 
     bool drawBoundingbox = true;
     bool drawTriangleNormals = false;

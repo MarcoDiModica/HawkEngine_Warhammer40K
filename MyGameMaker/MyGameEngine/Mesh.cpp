@@ -229,6 +229,7 @@ void Mesh::LoadMesh(const char* file_path)
 
 	if (scene != nullptr && scene->HasMeshes()) {
 		std::vector<glm::vec3> all_vertices;
+		std::vector<Vertex> all_vertex;
 		std::vector<unsigned int> all_indices;
 		std::vector<glm::vec2> all_texCoords;
 		std::vector<glm::vec3> all_normals;
@@ -242,6 +243,13 @@ void Mesh::LoadMesh(const char* file_path)
 			// Copy vertices
 			for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
 				all_vertices.push_back(glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z));	
+
+				Vertex vertex;
+
+				SetVertexBoneDataToDefault(vertex);
+
+				vertex.position = AssimpGLMHelpers::GetGLMVec(mesh->mVertices[i]);
+				all_vertex.push_back(vertex);
 
 				if (mesh->HasNormals()) {
 
@@ -257,6 +265,8 @@ void Mesh::LoadMesh(const char* file_path)
 				}
 				
 			}
+			ExtractBoneWeightForVertices(all_vertex, mesh, scene);
+
 			LOG(LogType::LOG_ASSIMP, "Loaded vertices :%d for mesh %d", mesh->mNumVertices, i);
 			// Copy indices
 			for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
@@ -466,6 +476,62 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	return mesh;
 }
 
+void Mesh::SetVertexBoneDataToDefault(Vertex& vertex)
+{
+	for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
+	{
+		vertex.m_BoneIDs[i] = -1;
+		vertex.m_Weights[i] = 0.0f;
+	}
+}
+
+void Mesh::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
+{
+	for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
+	{
+		if (vertex.m_BoneIDs[i] < 0)
+		{
+			vertex.m_Weights[i] = weight;
+			vertex.m_BoneIDs[i] = boneID;
+			break;
+		}
+	}
+}
+
+void Mesh::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene)
+{
+	for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
+	{
+		int boneID = -1;
+		std::string boneName = mesh->mBones[boneIndex]->mName.C_Str();
+		if (m_BoneInfoMap.find(boneName) == m_BoneInfoMap.end())
+		{
+			BoneInfo newBoneInfo;
+			newBoneInfo.id = m_BoneCounter;
+			newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(
+				mesh->mBones[boneIndex]->mOffsetMatrix);
+			m_BoneInfoMap[boneName] = newBoneInfo;
+			boneID = m_BoneCounter;
+			m_BoneCounter++;
+		}
+		else
+		{
+			boneID = m_BoneInfoMap[boneName].id;
+		}
+		assert(boneID != -1);
+		auto weights = mesh->mBones[boneIndex]->mWeights;
+		int numWeights = mesh->mBones[boneIndex]->mNumWeights;
+
+		for (int weightIndex = 0; weightIndex < numWeights; ++weightIndex)
+		{
+			int vertexId = weights[weightIndex].mVertexId;
+			float weight = weights[weightIndex].mWeight;
+			assert(vertexId <= vertices.size());
+			SetVertexBoneData(vertices[vertexId], boneID, weight);
+		}
+	}
+}
+
 std::unordered_map<std::string, std::shared_ptr<Mesh>> meshCache;
 
 void Mesh::SaveBinary(const std::string& filename) const
@@ -534,3 +600,4 @@ std::shared_ptr<Mesh> Mesh::LoadBinary( std::string& filename)
 	mesh->nameM = filename;
 	return mesh;
 }
+

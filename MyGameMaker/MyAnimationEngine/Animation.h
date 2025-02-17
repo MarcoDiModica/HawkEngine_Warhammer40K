@@ -1,18 +1,12 @@
 #pragma once
-#include <GL/glew.h>
+
 #include <string>
 #include <memory>
-#include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/quaternion.hpp>
 #include <vector>
-#include <assimp/scene.h>
-#include <MyGameEngine/AssimpGLMHelpers.h>
-#include <MyGameEngine/Mesh.h>
-#include <assimp/scene.h>
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include "Bone.h"
+#include "MyGameEngine/Mesh.h"
 
 struct AssimpNodeData
 {

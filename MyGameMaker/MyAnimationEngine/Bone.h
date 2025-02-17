@@ -1,15 +1,15 @@
 #pragma once
-#include <GL/glew.h>
+#define GLM_ENABLE_EXPERIMENTAL
+
 #include <string>
 #include <memory>
-#include <glm/glm.hpp>
-#include <glm/gtc/quaternion.hpp>
-#include <glm/gtx/quaternion.hpp>
 #include <vector>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
 #include <assimp/scene.h>
-#include <MyGameEngine/AssimpGLMHelpers.h>
-
-
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include "MyGameEngine/AssimpGLMHelpers.h"
 
 struct KeyPosition
 {

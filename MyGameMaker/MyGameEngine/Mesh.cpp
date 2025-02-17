@@ -1,22 +1,20 @@
-#include "Mesh.h"
-#include "GameObject.h"
-#include "assimp/scene.h"
-#include "assimp/postprocess.h"
-#include "assimp/cimport.h"
-#include <assimp/Importer.hpp>
-#include <vector>
-#include <string>
-#include <GL/glew.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <unordered_map>
 #include <unordered_set>
-#include "../MyGameEditor/Log.h"
-#include <zlib.h>
-
 #include <queue>
+#include <zlib.h>
+#include "assimp/postprocess.h"
+#include "assimp/cimport.h"
+#include <assimp/Importer.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "../MyGameEditor/Log.h"
+#include "Mesh.h"
+#include "GameObject.h"
+
+
+
 using namespace std;
 
 Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))

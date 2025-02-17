@@ -3,24 +3,25 @@
 #pragma once
 
 #include <vector>
-#include <GL/glew.h>
 #include <string>
 #include <memory>
-#include <glm/glm.hpp>
+
+using namespace std;
+
 #ifdef YAML_CPP_DLL_EXPORTS
 #define YAML_CPP_API __declspec(dllexport)
 #else
 #define YAML_CPP_API __declspec(dllimport)
 #endif
 #include <yaml-cpp/yaml.h>
-
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <assimp/scene.h>
 #include "BufferObject.h"
 #include "BoundingBox.h"
-#include <assimp/scene.h>
-#include <vector>
-#include <MyGameEngine/AssimpGLMHelpers.h>
+#include "AssimpGLMHelpers.h"
 
-using namespace std;
+
 
 
 #define MAX_BONE_INFLUENCE 20

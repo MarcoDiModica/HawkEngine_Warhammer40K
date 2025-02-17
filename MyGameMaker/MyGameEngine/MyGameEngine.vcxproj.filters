@@ -41,5 +41,6 @@
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="InputEngine.h" />
+    <ClInclude Include="AssimpGLMHelpers.h" />
   </ItemGroup>
 </Project>

@@ -25,7 +25,6 @@ public:
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
     glm::vec3 GetSize() { return size; };
-
     void SetSize(const glm::vec3& newSize);
 
     float GetMass() { return mass; };
@@ -40,6 +39,9 @@ public:
     void SetMass(float newMass);
 
     void SetActive(bool active);
+
+    void SetTrigger(bool trigger);
+    bool IsTrigger() const;
 
 private:
     btRigidBody* rigidBody; // Collider

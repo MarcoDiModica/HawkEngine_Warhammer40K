@@ -429,6 +429,11 @@ bool UIInspector::Draw() {
 						colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
                     }
 
+                    bool isTrigger = colliderComponent->IsTrigger();
+                    if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+                        colliderComponent->SetTrigger(isTrigger);
+                    }
+
                     // Checkbox para la posición 
                     bool snapToPosition = false;
                     if (ImGui::Checkbox("Snap Position", &snapToPosition)) {

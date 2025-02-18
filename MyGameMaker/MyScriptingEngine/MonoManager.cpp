@@ -5,8 +5,10 @@
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
+#include <mono/metadata/object.h>
 
-struct ScriptEngineData {
+struct ScriptEngineData 
+{
 	MonoDomain* RootDomain = nullptr;
 	MonoDomain* AppDomain = nullptr;
 
@@ -15,13 +17,15 @@ struct ScriptEngineData {
 
 static ScriptEngineData* s_ScriptEngineData = nullptr;
 
-void MonoManager::Init() {
+void MonoManager::Init()
+{
 	s_ScriptEngineData = new ScriptEngineData();
 	
 	InitMono();
 }
 
-void MonoManager::Shutdown() {
+void MonoManager::Shutdown() 
+{
 	delete s_ScriptEngineData;
 }
 
@@ -94,11 +98,13 @@ static void PrintAssemblyTypes(MonoAssembly* assembly)
     }
 }
 
-void MonoManager::InitMono() {
+void MonoManager::InitMono() 
+{
 	mono_set_assemblies_path("../External/Mono/lib");
 
 	MonoDomain* rootDomain = mono_jit_init("HawkJITRuntime");
-	if (!rootDomain) {
+	if (!rootDomain) 
+    {
 		std::cout << "Failed to initialize Mono runtime" << std::endl;
 		return;
 	}
@@ -121,10 +127,26 @@ void MonoManager::InitMono() {
     // 1. Build an object, and it will automatically call the constructor
     // 2. Call a method on the object
     // 3. Call a method on the object with parameters
+
+    // 1. Build an object
+    MonoClass* testClass = mono_class_from_name(mono_assembly_get_image(s_ScriptEngineData->CoreAssembly), "HawkEngine", "CSharpTester");
+    MonoObject* testObject = mono_object_new(s_ScriptEngineData->AppDomain, testClass);
+    mono_runtime_object_init(testObject);
+
+    // 2. Call a method on the object
+    MonoMethod* testMethod = mono_class_get_method_from_name(testClass, "PrintFloatVar", 0);
+    mono_runtime_invoke(testMethod, testObject, nullptr, nullptr);
+
+    // 3. Call a method on the object with parameters
+    MonoMethod* testMethod2 = mono_class_get_method_from_name(testClass, "IncrementFloatVar", 1);
+    float value = 5.0f;
+    void* args[1];
+    args[0] = &value;
+    mono_runtime_invoke(testMethod2, testObject, args, nullptr);
 }
 
-void MonoManager::ShutdownMono() {
-	mono_jit_cleanup(s_ScriptEngineData->RootDomain);
+void MonoManager::ShutdownMono() 
+{
 }
 
 // he comentado cosas de la anteror implementacion de mono. sobre todo en GameObject, los componenetes 

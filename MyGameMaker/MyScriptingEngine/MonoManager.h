@@ -1,6 +1,7 @@
 #pragma once
 
-class MonoManager {
+class MonoManager 
+{
 public:
     static void Init();
     static void Shutdown();

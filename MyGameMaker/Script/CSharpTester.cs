@@ -1,16 +1,20 @@
 ﻿using System;
 
-public class CSharpTester
+namespace HawkEngine
 {
-    public float MyPublicFloatVar = 5.0f;
-
-    public void PrintFloatVar()
+    public class CSharpTester
     {
-        Console.WriteLine("MyPublicFloatVar = {0:F}" + MyPublicFloatVar);
+        public float MyPublicFloatVar = 5.0f;
+
+        public void PrintFloatVar()
+        {
+            Console.WriteLine("MyPublicFloatVar: " + MyPublicFloatVar);
+        }
+
+        private void IncrementFloatVar(float value)
+        {
+            MyPublicFloatVar += value;
+        }
     }
 
-    private void IncrementFloatVar(float value)
-    {
-        MyPublicFloatVar += value;
-    }
 }

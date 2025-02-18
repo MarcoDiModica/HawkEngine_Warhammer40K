@@ -1,4 +1,9 @@
-//#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+#ifdef _DEBUG
+#pragma comment(linker, "/SUBSYSTEM:console /ENTRY:mainCRTStartup")
+#else
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+#endif
+
 #define GLM_ENABLE_EXPERIMENTAL
 #define CHECKERS_HEIGHT 64
 #define CHECKERS_WIDTH 64

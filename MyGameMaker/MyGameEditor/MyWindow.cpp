@@ -2,8 +2,8 @@
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_opengl.h>
-#include "MyWindow.h"
 
+#include "MyWindow.h"
 #include "Log.h"
 
 using namespace std;

@@ -2,18 +2,16 @@
 #define ROOT_H
 
 #pragma once
+#include <vector>
+
 #include "Module.h"
 #include "../MyGameEngine/Mesh.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/Scene.h"
 #include "../MyGameEditor/App.h"
-#include "../MyGameEditor/Input.h"
-#include "../MyGameEngine/readOnlyView.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/Shaders.h"
 #include "SceneSerializer.h"
-#include <list>
-#include <vector>
 
 class Material;
 

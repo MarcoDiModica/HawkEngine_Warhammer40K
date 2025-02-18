@@ -1,11 +1,10 @@
+#include <imgui.h>
+
 #include "UICamera.h"
 #include "MyGUI.h"
-#include "Input.h"
 #include "MyWindow.h"
-
 #include "../MyGameEngine/CameraComponent.h"
 
-#include "imgui.h"
 
 UICamera::UICamera(UIType type, std::string name) : UIElement(type, name)
 {

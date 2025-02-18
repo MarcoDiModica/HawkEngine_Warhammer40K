@@ -3,7 +3,6 @@
 #pragma once
 
 #include "UIElement.h"
-#include "..\MyGameEngine\types.h"
 
 class UIInspector : public UIElement
 {

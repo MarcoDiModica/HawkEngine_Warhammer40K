@@ -1,17 +1,17 @@
 #ifndef __APP_H__
 #define __APP_H__
+#pragma once
+
 #include <vector>
 #include <list>
+#include <chrono>
+
 #include "Log.h"
 #include "EditorCamera.h"
 #include "SceneSerializer.h"
 #include "Root.h"
 #include "../MyGameEngine/Mesh.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
-
-#include <chrono>
-
-#pragma once
 
 #define FIXED_INTERVAL 0.02
 

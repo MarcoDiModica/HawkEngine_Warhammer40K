@@ -1,62 +1,56 @@
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+
 #define GLM_ENABLE_EXPERIMENTAL
 #define CHECKERS_HEIGHT 64
 #define CHECKERS_WIDTH 64
 
 #include <string>
-#include <GL/glew.h>
 #include <chrono>
 #include <thread>
 #include <exception>
 #include <iostream>
+#include <stack>
+
+#include <GL/glew.h>
 #include <glm/glm.hpp>
-#include "MyWindow.h"
-#include "MyGUI.h"
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-#include "assimp/cimport.h" 
-#include "assimp/scene.h" 
-#include "assimp/postprocess.h"
-#include "../MyGameEngine/Mesh.h"
-#include "EditorCamera.h"
-#include "imgui.h"
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/common.hpp>
 #include <IL/il.h>
 #include <IL/ilu.h>
-#include <stack>
 #include <IL/ilut.h>
-#include "Input.h"
-#include "MyGUI.h"
+
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+
+#include "imgui.h"
 #include <ImGuizmo.h>
+
+#include "MyWindow.h"
+#include "MyGUI.h"
+#include "EditorCamera.h"
+#include "Input.h"
 #include "UISceneWindow.h"
-#include "MyGameEngine/types.h"
-#include "MyGameEngine/CameraBase.h"
-#include "MyGameEngine/BoundingBox.h"
-#include "MyGameEngine/CameraComponent.h"
-#include "MyGameEngine/GameObject.h"
-#include "MyGameEngine/TransformComponent.h"
-#include "MyGameEngine/MeshRendererComponent.h"
+#include "App.h"
+#include "../MyGameEngine/Mesh.h"
+#include "../MyGameEngine/types.h"
+#include "../MyGameEngine/CameraBase.h"
+#include "../MyGameEngine/BoundingBox.h"
+#include "../MyGameEngine/CameraComponent.h"
+#include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
+#include "../MyGameEngine/LightComponent.h"
+#include "../MyGameEngine/Shaders.h"
+#include "../MyGameEngine/Material.h"
+#include "../MyGameEngine/SceneManager.h"
+#include "../MyGameEngine/InputEngine.h"
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
 
-
-#include "MyGameEngine/LightComponent.h"
-#include "MyGameEngine/Shaders.h"
-#include "MyGameEngine/Material.h"
-#include "MyGameEngine/SceneManager.h"
-#include "MyGameEngine/InputEngine.h"
-#include "App.h"
-
-//#include <mono/metadata/assembly.h>
-//#include <mono/jit/jit.h>
-
-//#include "../MyScriptingEngine/MonoEnvironment.h"
-
-
-//TODO BALDAN : xcopy mono / place manually in x64/Debug folder
 
 using namespace std;
 

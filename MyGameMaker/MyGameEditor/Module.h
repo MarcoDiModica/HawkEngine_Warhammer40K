@@ -1,9 +1,6 @@
-
 #ifndef __MODULE_H__
 #define __MODULE_H__
-
 #pragma once
-
 
 class App;
 

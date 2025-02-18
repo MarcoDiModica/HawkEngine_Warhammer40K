@@ -13,6 +13,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <functional>
 #include "../MyGameEngine/MeshRendererComponent.h"
+#include "Input.h"
 
 enum class ManipulationOperation { IDLE, TRANSLATE, ROTATE, SCALE };
 enum class TransformSpace { LOCAL, WORLD };

@@ -1,25 +1,19 @@
 #pragma once
-#include "MyGameEngine/Component.h"
+#include "../MyGameEngine/Component.h"
 #include "Animator.h"
 #include "Animation.h"
 
 class SkeletalAnimationComponent : public Component
 {
 public:
-    explicit SkeletalAnimationComponent(GameObject* owner) : Component(owner) {}
+    SkeletalAnimationComponent(GameObject* owner);
     virtual ~SkeletalAnimationComponent() = default;
 
-    void Start() override {
-        // Implementación específica para SkeletalAnimationComponent
-    }
+    void Start() override;
 
-    void Update(float deltaTime) override {
-        // Implementación específica para SkeletalAnimationComponent
-    }
+    void Update(float deltaTime) override;
 
-    void Destroy() override {
-        // Implementación específica para SkeletalAnimationComponent
-    }
+    void Destroy() override;
 
     ComponentType GetType() const override {
         return ComponentType::ANIMATION; // Cambia a un tipo específico si es necesario

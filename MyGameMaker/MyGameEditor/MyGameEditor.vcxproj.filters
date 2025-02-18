@@ -81,9 +81,6 @@
     <ClCompile Include="UIAudioTest.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsModule.cpp">
-      <Filter>EditorModules</Filter>
-    </ClCompile>
     <ClCompile Include="UITextEditor.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
@@ -149,12 +146,8 @@
     <ClInclude Include="UIAudioTest.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsModule.h">
-      <Filter>EditorModules</Filter>
-    </ClInclude>
     <ClInclude Include="UITextEditor.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
-
   </ItemGroup>
 </Project>

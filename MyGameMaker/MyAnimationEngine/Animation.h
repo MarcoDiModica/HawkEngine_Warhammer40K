@@ -19,13 +19,13 @@ struct AssimpNodeData
 class Animation
 {
 private:
-    float m_Duration;
-    int m_TicksPerSecond;
+    float m_Duration = 0;
+    int m_TicksPerSecond = 0;
     std::vector<Bone> m_Bones;
     AssimpNodeData m_RootNode;
     std::map<std::string, BoneInfo> m_BoneInfoMap;
 public:
-    Animation() = default;
+    Animation();
 
     
     ~Animation();

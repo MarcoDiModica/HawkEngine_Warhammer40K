@@ -14,3 +14,7 @@ void SkeletalAnimationComponent::Update(float deltaTime)
 {
 	animator->UpdateAnimation(deltaTime);
 }
+
+void SkeletalAnimationComponent::Destroy()
+{
+}

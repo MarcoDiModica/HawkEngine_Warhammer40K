@@ -1,9 +1,5 @@
-#include "UISceneWindow.h"
-#include "UIInspector.h"
-#include "App.h"
-#include "MyGUI.h"
 #include <imgui.h>
-#include <imgui_internal.h>	
+#include <imgui_internal.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
 #include <SDL2/SDL.h>
@@ -11,7 +7,11 @@
 #include <ImGuizmo.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <functional>
+
+#include "UISceneWindow.h"
+#include "UIInspector.h"
+#include "App.h"
+#include "MyGUI.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "Input.h"
 

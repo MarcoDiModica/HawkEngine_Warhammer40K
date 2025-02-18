@@ -1,7 +1,8 @@
+#include <imgui.h>
+
 #include "UIAudioTest.h"
 #include "App.h"
 #include "MyGUI.h"
-#include <imgui.h>
 
 UIAudioTest::UIAudioTest(UIType type, std::string name) : UIElement(type, name)
 {

@@ -2,9 +2,9 @@
 #define __UI_SCENE_WINDOW_H__
 #pragma once
 
-#include "UIElement.h"
-#include <vector>
 #include <string>
+
+#include "UIElement.h"
 #include "MyGameEngine/types.h"
 #include "MyGameEngine/BoundingBox.h"
 #include "MyGameEngine/Image.h"

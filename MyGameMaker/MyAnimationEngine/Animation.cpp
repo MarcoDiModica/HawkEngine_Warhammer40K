@@ -10,6 +10,29 @@ Animation::~Animation()
 {
 }
 
+Animation::Animation(const Animation& other)
+{
+    m_Duration = other.m_Duration;
+    m_TicksPerSecond = other.m_TicksPerSecond;
+    m_Bones = other.m_Bones;
+    m_RootNode = other.m_RootNode;
+    m_BoneInfoMap = other.m_BoneInfoMap;
+}
+
+Animation& Animation::operator=(const Animation& other)
+{
+    if (this != &other)
+    {
+        m_Duration = other.m_Duration;
+        m_TicksPerSecond = other.m_TicksPerSecond;
+        m_Bones = other.m_Bones;
+        m_RootNode = other.m_RootNode;
+        m_BoneInfoMap = other.m_BoneInfoMap;
+    }
+    return *this;
+}
+
+
 void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model)
 {
     Assimp::Importer importer;

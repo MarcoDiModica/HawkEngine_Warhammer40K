@@ -16,6 +16,7 @@
 #include "../MyPhysicsEngine/PhysicsModule.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyAudioEngine/AudioAssetProcessor.h"
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
 #include <iostream>
@@ -374,6 +375,14 @@ void Input::HandleFileDrop(const std::string& fileDir)
 
 
             Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+
+            if (MarcoVicePresidente2->HasComponent<SkeletalAnimationComponent>()) {
+				auto animation = MarcoVicePresidente2->GetComponent<SkeletalAnimationComponent>();
+				go->AddComponent<SkeletalAnimationComponent>();
+				go->GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation->GetAnimation());
+				go->GetComponent<SkeletalAnimationComponent>()->Start();
+            }
+
         }
 
     }

@@ -26,9 +26,10 @@ private:
     std::map<std::string, BoneInfo> m_BoneInfoMap;
 public:
     Animation();
-
-    
     ~Animation();
+
+    Animation(const Animation& other);
+    Animation& operator=(const Animation& other);
 
     void SetUpAnimation(const std::string& animationPath, Mesh* model);
 

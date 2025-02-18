@@ -468,7 +468,7 @@ T* EngineBinds::ConvertFromSharpComponent(MonoObject* sharpComp) {
     uintptr_t Cptr;
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", typeName.c_str());
 
-    std::cerr << "Looking for class : " << typeName << std::endl;
+    //std::cerr << "Looking for class : " << typeName << std::endl;
 
     if (!klass) {
         throw std::runtime_error("Class not found in the C#: " + typeName);

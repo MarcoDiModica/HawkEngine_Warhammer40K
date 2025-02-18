@@ -75,6 +75,14 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 
 	obj.GetTransform()->SetLocalMatrix(localMatrix);
 
+	if (scene.mNumAnimations > 0) {
+		auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
+		Animation* animation = new Animation();
+		animation->SetUpAnimation(scenePath, obj.GetComponent<Mesh>());
+		skeletalAnimationComponent->SetAnimation(animation);
+		std::cout << node.mName.C_Str() << std::endl;
+	}
+
 	for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
 		const auto meshIndex = node.mMeshes[i];
 		const auto materialIndex = scene.mMeshes[meshIndex]->mMaterialIndex;
@@ -87,13 +95,6 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		meshComponent->GetMaterial()->useShader = false;
 		//meshComponent->GetMaterial()->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
 		meshGameObjects.push_back(std::make_shared<GameObject>(obj));
-	}
-
-	if (scene.HasAnimations()) {
-		auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
-		Animation* animation = new Animation();
-		animation->SetUpAnimation(scenePath, obj.GetComponent<Mesh>());
-		skeletalAnimationComponent->SetAnimation(animation);
 	}
 
 	for (unsigned int i = 0; i < node.mNumChildren; ++i)

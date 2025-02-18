@@ -15,6 +15,26 @@ Animator::~Animator()
 {
 }
 
+Animator::Animator(const Animator& other)
+{
+    m_CurrentTime = other.m_CurrentTime;
+    m_DeltaTime = other.m_DeltaTime;
+    m_CurrentAnimation = other.m_CurrentAnimation;
+    m_FinalBoneMatrices = other.m_FinalBoneMatrices;
+}
+
+Animator& Animator::operator=(const Animator& other)
+{
+    if (this != &other)
+    {
+        m_CurrentTime = other.m_CurrentTime;
+        m_DeltaTime = other.m_DeltaTime;
+        m_CurrentAnimation = other.m_CurrentAnimation;
+        m_FinalBoneMatrices = other.m_FinalBoneMatrices;
+    }
+    return *this;
+}
+
 void Animator::UpdateAnimation(float dt)
 {
     m_DeltaTime = dt;

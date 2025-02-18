@@ -9,6 +9,14 @@ public:
     SkeletalAnimationComponent(GameObject* owner);
     virtual ~SkeletalAnimationComponent() = default;
 
+    SkeletalAnimationComponent(const SkeletalAnimationComponent& other);
+    SkeletalAnimationComponent& operator=(const SkeletalAnimationComponent& other);
+
+
+    SkeletalAnimationComponent(SkeletalAnimationComponent&& other) noexcept;
+    SkeletalAnimationComponent& operator=(SkeletalAnimationComponent&& other) noexcept;
+
+
     void Start() override;
 
     void Update(float deltaTime) override;
@@ -29,6 +37,10 @@ public:
 
 	void SetAnimation(Animation* animation) {
 		testAnimation = animation;
+	}
+
+	Animation* GetAnimation() {
+		return testAnimation;
 	}
     
 private:

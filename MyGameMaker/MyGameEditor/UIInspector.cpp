@@ -34,6 +34,7 @@
 #include <mono/metadata/reflection.h>
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
 #include <Windows.h>
 
@@ -756,6 +757,22 @@ bool UIInspector::Draw() {
             }
         }
 
+        ImGui::Separator();
+
+        if (selectedGameObject->HasComponent<SkeletalAnimationComponent>()) 
+        {
+            SkeletalAnimationComponent* animationComponent = selectedGameObject->GetComponent<SkeletalAnimationComponent>();
+
+            if (animationComponent) 
+            {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Animation"))
+                {
+
+                }
+            }
+
+        }
     }
 
     ImGui::End();

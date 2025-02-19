@@ -1,11 +1,89 @@
-#include "MonoManager.h"
-
 #include <iostream>
 #include <fstream>
 
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/object.h>
+#include <mono/metadata/threads.h>
+
+#include "MonoManager.h"
+#include "ComponentMapper.h"
+#include "EngineBinds.h"
+
+#include "../MyGameEditor/Log.h"
+
+namespace Utils
+{
+    static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize)
+    {
+        std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
+
+        if (!stream)
+        {
+            LOG(LogType::LOG_ERROR, "Failed to open file: %s", filepath.string().c_str());
+            return nullptr;
+        }
+
+        std::streampos end = stream.tellg();
+        stream.seekg(0, std::ios::beg);
+        uint32_t size = end - stream.tellg();
+
+        if (size == 0)
+        {
+            LOG(LogType::LOG_ERROR, "File is empty: %s", filepath.string().c_str());
+            return nullptr;
+        }
+
+        char* buffer = new char[size];
+        stream.read((char*)buffer, size);
+        stream.close();
+
+        *outSize = size;
+        return buffer;
+    }
+    
+    static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath)
+    {
+        uint32_t fileSize = 0;
+        char* fileData = ReadBytes(assemblyPath, &fileSize);
+
+        MonoImageOpenStatus status;
+        MonoImage* image = mono_image_open_from_data_full(fileData, fileSize, 1, &status, 0);
+
+        if (status != MONO_IMAGE_OK)
+        {
+            const char* errorMessage = mono_image_strerror(status);
+            LOG(LogType::LOG_ERROR, "Failed to open image: %s", errorMessage);
+            return nullptr;
+        }
+
+        std::string assemblyName = assemblyPath.string();
+        MonoAssembly* assembly = mono_assembly_load_from_full(image, assemblyName.c_str(), &status, 0);
+        mono_image_close(image);
+
+        delete[] fileData;
+
+        return assembly;
+    }
+
+    static void PrintAssemblyTypes(MonoAssembly* assembly)
+    {
+        MonoImage* image = mono_assembly_get_image(assembly);
+        const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+        int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
+
+        for (int32_t i = 0; i < numTypes; i++)
+        {
+            uint32_t cols[MONO_TYPEDEF_SIZE];
+            mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
+
+            const char* nameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+            const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+
+            LOG(LogType::LOG_INFO, "Type: %s.%s", nameSpace, name);
+        }
+    }
+}
 
 struct ScriptEngineData 
 {
@@ -13,6 +91,15 @@ struct ScriptEngineData
 	MonoDomain* AppDomain = nullptr;
 
     MonoAssembly* CoreAssembly = nullptr;
+    MonoImage* CoreAssemblyImage = nullptr;
+
+    MonoAssembly* AppAssembly = nullptr;
+    MonoImage* AppAssemblyImage = nullptr;
+
+    std::filesystem::path CoreAssemblyFilepath;
+    std::filesystem::path AppAssemblyFilepath;
+
+    bool AssemblyReloadPending = false;
 };
 
 static ScriptEngineData* s_ScriptEngineData = nullptr;
@@ -22,134 +109,45 @@ void MonoManager::Init()
 	s_ScriptEngineData = new ScriptEngineData();
 	
 	InitMono();
+    //EngineBinds::BindEngine();
+
+    bool status = LoadAssembly("../Script/bin/Hawk-ScriptCore.dll");
+    if (!status)
+	{
+		LOG(LogType::LOG_ERROR, "Failed to load CORE assembly");
+		return;
+	}
+
+    //LoadAssemblyClasses();
+
+    //register components
 }
 
 void MonoManager::Shutdown()
 {
 	ShutdownMono();
-
     delete s_ScriptEngineData;
 }
 
-static char* ReadBytes(const std::string& filepath, uint32_t* outSize)
-{
-    std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
 
-    if (!stream)
-    {
-        std::cout << "Failed to open file: " << filepath << std::endl;
-        return nullptr;
-    }
-
-    std::streampos end = stream.tellg();
-    stream.seekg(0, std::ios::beg);
-    uint32_t size = end - stream.tellg();
-
-    if (size == 0)
-    {
-        std::cout << "File is empty: " << filepath << std::endl;
-        return nullptr;
-    }
-
-    char* buffer = new char[size];
-    stream.read((char*)buffer, size);
-    stream.close();
-
-    *outSize = size;
-    return buffer;
-}
-
-static MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath)
-{
-    uint32_t fileSize = 0;
-    char* fileData = ReadBytes(assemblyPath, &fileSize);
-
-    MonoImageOpenStatus status;
-    MonoImage* image = mono_image_open_from_data_full(fileData, fileSize, 1, &status, 0);
-
-    if (status != MONO_IMAGE_OK)
-    {
-        const char* errorMessage = mono_image_strerror(status);
-        std::cout << "Failed to open image: " << errorMessage << std::endl;
-        return nullptr;
-    }
-
-    MonoAssembly* assembly = mono_assembly_load_from_full(image, assemblyPath.c_str(), &status, 0);
-    mono_image_close(image);
-
-    delete[] fileData;
-
-    return assembly;
-}
-
-static void PrintAssemblyTypes(MonoAssembly* assembly)
-{
-    MonoImage* image = mono_assembly_get_image(assembly);
-    const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
-    int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
-
-    for (int32_t i = 0; i < numTypes; i++)
-    {
-        uint32_t cols[MONO_TYPEDEF_SIZE];
-        mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
-
-        const char* nameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
-        const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-
-        printf("%s.%s\n", nameSpace, name);
-    }
-}
 
 void MonoManager::InitMono() 
 {
-	mono_set_assemblies_path("../External/Mono/lib");
+	mono_set_assemblies_path("Mono/lib");
 
 	MonoDomain* rootDomain = mono_jit_init("HawkJITRuntime");
-	if (!rootDomain) 
+	if (!rootDomain)
     {
-		std::cout << "Failed to initialize Mono runtime" << std::endl;
+		LOG(LogType::LOG_ERROR, "Failed to initialize mono runtime");
 		return;
 	}
 
 	s_ScriptEngineData->RootDomain = rootDomain;
 
-	char appDomainName[] = "HawkScriptRuntime";
-	s_ScriptEngineData->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
-	mono_domain_set(s_ScriptEngineData->AppDomain, true);
-
-    // move this maybe
-    s_ScriptEngineData->CoreAssembly = LoadCSharpAssembly("../Script/bin/Hawk-ScriptCore.dll");
-    if (!s_ScriptEngineData->CoreAssembly)
-	{
-		std::cout << "Failed to load core assembly" << std::endl;
-		return;
-	}
-    PrintAssemblyTypes(s_ScriptEngineData->CoreAssembly);
-
-    // 1. Build an object, and it will automatically call the constructor
-    // 2. Call a method on the object
-    // 3. Call a method on the object with parameters
-
-    // 1. Build an object
-    MonoImage* assemblyImage = mono_assembly_get_image(s_ScriptEngineData->CoreAssembly);
-    MonoClass* monoClass = mono_class_from_name(assemblyImage, "HawkScriptCore", "CSharpTester");
-    MonoObject* objectInstance = mono_object_new(s_ScriptEngineData->RootDomain, monoClass);
-    mono_runtime_object_init(objectInstance);
-
-    // 2. Call a method on the object
-    MonoMethod* printMethod = mono_class_get_method_from_name(monoClass, "PrintFloatVar", 0);
-    mono_runtime_invoke(printMethod, objectInstance, nullptr, nullptr);
-
-    // 3. Call a method on the object with parameters
-    MonoMethod* increaseMethod = mono_class_get_method_from_name(monoClass, "IncrementFloatVar", 1);
-    float value = 5.0f;
-    void* args[1] = { &value };
-    mono_runtime_invoke(increaseMethod, objectInstance, args, nullptr);
-    mono_runtime_invoke(printMethod, objectInstance, nullptr, nullptr);
-
+    mono_thread_set_main(mono_thread_current());
 }
 
-void MonoManager::ShutdownMono() 
+void MonoManager::ShutdownMono()
 {
     mono_domain_set(mono_get_root_domain(), false);
 
@@ -158,11 +156,54 @@ void MonoManager::ShutdownMono()
 
     mono_jit_cleanup(s_ScriptEngineData->RootDomain);
     s_ScriptEngineData->RootDomain = nullptr;
+}
 
-    std::cout << "Mono shutdown" << std::endl;
+bool MonoManager::LoadAssembly(const std::filesystem::path& filepath)
+{
+    char appDomainName[] = "HawkScriptRuntime";
+    s_ScriptEngineData->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
+    mono_domain_set(s_ScriptEngineData->AppDomain, true);
+
+    s_ScriptEngineData->CoreAssemblyFilepath = filepath;
+    s_ScriptEngineData->CoreAssembly = Utils::LoadMonoAssembly(filepath);
+    if (!s_ScriptEngineData->CoreAssembly)
+    {
+        LOG(LogType::LOG_ERROR, "Failed to load assembly: %s", filepath.string().c_str());
+        return false;
+    }
+
+    s_ScriptEngineData->CoreAssemblyImage = mono_assembly_get_image(s_ScriptEngineData->CoreAssembly);
+
+    return true;
+}
+
+bool MonoManager::LoadAppAssembly(const std::filesystem::path& filepath)
+{
+	s_ScriptEngineData->AppAssemblyFilepath = filepath;
+	s_ScriptEngineData->AppAssembly = Utils::LoadMonoAssembly(filepath);
+	if (!s_ScriptEngineData->AppAssembly)
+	{
+		LOG(LogType::LOG_ERROR, "Failed to load assembly: %s", filepath.string().c_str());
+		return false;
+	}
+
+	s_ScriptEngineData->AppAssemblyImage = mono_assembly_get_image(s_ScriptEngineData->AppAssembly);
+
+	return true;
+}
+
+void MonoManager::ReloadAssembly()
+{
+    mono_domain_set(mono_get_root_domain(), false);
+
+    mono_domain_unload(s_ScriptEngineData->AppDomain);
+
+    LoadAssembly(s_ScriptEngineData->CoreAssemblyFilepath);
+    LoadAppAssembly(s_ScriptEngineData->AppAssemblyFilepath);
+    //LoadAssemblyClasses();
+
+    //EngineBinds::BindEngine();
 }
 
 // he comentado cosas de la anteror implementacion de mono. sobre todo en GameObject, los componenetes 
-// y script component, tambien he comentado el EngineBinds
-
-// video minuto 2:07:00
+// y script component, tambien he comentado el EngineBinds completo

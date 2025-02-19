@@ -24,12 +24,14 @@ void MonoManager::Init()
 	InitMono();
 }
 
-void MonoManager::Shutdown() 
+void MonoManager::Shutdown()
 {
-	delete s_ScriptEngineData;
+	ShutdownMono();
+
+    delete s_ScriptEngineData;
 }
 
-char* ReadBytes(const std::string& filepath, uint32_t* outSize)
+static char* ReadBytes(const std::string& filepath, uint32_t* outSize)
 {
     std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
 
@@ -57,7 +59,7 @@ char* ReadBytes(const std::string& filepath, uint32_t* outSize)
     return buffer;
 }
 
-MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath)
+static MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath)
 {
     uint32_t fileSize = 0;
     char* fileData = ReadBytes(assemblyPath, &fileSize);
@@ -129,24 +131,35 @@ void MonoManager::InitMono()
     // 3. Call a method on the object with parameters
 
     // 1. Build an object
-    MonoClass* testClass = mono_class_from_name(mono_assembly_get_image(s_ScriptEngineData->CoreAssembly), "HawkEngine", "CSharpTester");
-    MonoObject* testObject = mono_object_new(s_ScriptEngineData->AppDomain, testClass);
-    mono_runtime_object_init(testObject);
+    MonoImage* assemblyImage = mono_assembly_get_image(s_ScriptEngineData->CoreAssembly);
+    MonoClass* monoClass = mono_class_from_name(assemblyImage, "HawkScriptCore", "CSharpTester");
+    MonoObject* objectInstance = mono_object_new(s_ScriptEngineData->RootDomain, monoClass);
+    mono_runtime_object_init(objectInstance);
 
     // 2. Call a method on the object
-    MonoMethod* testMethod = mono_class_get_method_from_name(testClass, "PrintFloatVar", 0);
-    mono_runtime_invoke(testMethod, testObject, nullptr, nullptr);
+    MonoMethod* printMethod = mono_class_get_method_from_name(monoClass, "PrintFloatVar", 0);
+    mono_runtime_invoke(printMethod, objectInstance, nullptr, nullptr);
 
     // 3. Call a method on the object with parameters
-    MonoMethod* testMethod2 = mono_class_get_method_from_name(testClass, "IncrementFloatVar", 1);
+    MonoMethod* increaseMethod = mono_class_get_method_from_name(monoClass, "IncrementFloatVar", 1);
     float value = 5.0f;
-    void* args[1];
-    args[0] = &value;
-    mono_runtime_invoke(testMethod2, testObject, args, nullptr);
+    void* args[1] = { &value };
+    mono_runtime_invoke(increaseMethod, objectInstance, args, nullptr);
+    mono_runtime_invoke(printMethod, objectInstance, nullptr, nullptr);
+
 }
 
 void MonoManager::ShutdownMono() 
 {
+    mono_domain_set(mono_get_root_domain(), false);
+
+    mono_domain_unload(s_ScriptEngineData->AppDomain);
+    s_ScriptEngineData->AppDomain = nullptr;
+
+    mono_jit_cleanup(s_ScriptEngineData->RootDomain);
+    s_ScriptEngineData->RootDomain = nullptr;
+
+    std::cout << "Mono shutdown" << std::endl;
 }
 
 // he comentado cosas de la anteror implementacion de mono. sobre todo en GameObject, los componenetes 

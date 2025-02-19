@@ -1,10 +1,20 @@
 ﻿using System;
 
-namespace HawkEngine
+namespace HawkScriptCore
 {
     public class CSharpTester
     {
         public float MyPublicFloatVar = 5.0f;
+
+        CSharpTester()
+        {
+            Console.WriteLine("CSharpTester Constructor");
+        }
+
+        ~CSharpTester()
+        {
+            Console.WriteLine("CSharpTester Destructor");
+        }
 
         public void PrintFloatVar()
         {

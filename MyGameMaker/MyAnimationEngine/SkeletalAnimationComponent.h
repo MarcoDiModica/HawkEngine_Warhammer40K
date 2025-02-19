@@ -39,13 +39,16 @@ public:
 		testAnimation = animation;
 	}
 
-	Animation* GetAnimation() {
+	Animation* GetAnimation() const{
 		return testAnimation;
 	}
-    
+    Animation animationTest;
+    float patatudo;
 private:
 	Animator* animator;
 	Animation* testAnimation;
+    
+ 
 
 protected:
     YAML::Node encode() override {

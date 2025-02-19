@@ -377,9 +377,10 @@ void Input::HandleFileDrop(const std::string& fileDir)
             Application->root->ParentGameObject(*go, *MarcoVicePresidente);
 
             if (MarcoVicePresidente2->HasComponent<SkeletalAnimationComponent>()) {
+
 				auto animation = MarcoVicePresidente2->GetComponent<SkeletalAnimationComponent>();
 				go->AddComponent<SkeletalAnimationComponent>();
-				go->GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation->GetAnimation());
+                go->GetComponent<SkeletalAnimationComponent>()->SetAnimation(meshImp.animations[0].get());
 				go->GetComponent<SkeletalAnimationComponent>()->Start();
             }
 

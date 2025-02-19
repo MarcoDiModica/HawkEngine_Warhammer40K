@@ -78,8 +78,15 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 	if (scene.mNumAnimations > 0) {
 		auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
 		Animation* animation = new Animation();
+		Animation animation2 = Animation();
 		animation->SetUpAnimation(scenePath, obj.GetComponent<Mesh>());
+		animation2 = *animation;
+		obj.GetComponent<SkeletalAnimationComponent>()->animationTest = animation2;
+		obj.GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation);
+		obj.GetComponent<SkeletalAnimationComponent>()->patatudo = 43.0f;
+		skeletalAnimationComponent->animationTest = animation2;
 		skeletalAnimationComponent->SetAnimation(animation);
+		animations.push_back(std::make_shared<Animation>(*animation));
 		std::cout << node.mName.C_Str() << std::endl;
 	}
 

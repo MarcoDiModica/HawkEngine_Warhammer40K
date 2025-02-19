@@ -32,6 +32,27 @@ Animation& Animation::operator=(const Animation& other)
     return *this;
 }
 
+Animation::Animation(Animation&& other) noexcept
+{
+    m_Duration = other.m_Duration;
+    m_TicksPerSecond = other.m_TicksPerSecond;
+    m_Bones = std::move(other.m_Bones);
+    m_RootNode = std::move(other.m_RootNode);
+    m_BoneInfoMap = std::move(other.m_BoneInfoMap);
+}
+
+Animation& Animation::operator=(Animation&& other) noexcept
+{
+    if (this != &other)
+    {
+        m_Duration = other.m_Duration;
+        m_TicksPerSecond = other.m_TicksPerSecond;
+        m_Bones = std::move(other.m_Bones);
+        m_RootNode = std::move(other.m_RootNode);
+        m_BoneInfoMap = std::move(other.m_BoneInfoMap);
+    }
+    return *this;
+}
 
 void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model)
 {

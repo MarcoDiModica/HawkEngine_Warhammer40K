@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include <vector>
 #include <iostream>
+#include "../MyAnimationEngine/Animation.h"
 
 using namespace std;
 
@@ -21,4 +22,6 @@ public:
 	void EncodeFBXScene(const std::string path, std::vector<std::shared_ptr<Mesh>> meshes, const aiScene* fbx_scene);
 	std::vector<std::shared_ptr<Mesh>> meshes;
 	std::vector<std::shared_ptr<GameObject>> meshGameObjects;
+
+	std::vector<std::shared_ptr<Animation>> animations;
 };

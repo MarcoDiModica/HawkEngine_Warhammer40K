@@ -35,6 +35,28 @@ Animator& Animator::operator=(const Animator& other)
     return *this;
 }
 
+Animator::Animator(Animator&& other) noexcept
+{
+    m_CurrentTime = other.m_CurrentTime;
+    m_DeltaTime = other.m_DeltaTime;
+    m_CurrentAnimation = other.m_CurrentAnimation;
+    m_FinalBoneMatrices = std::move(other.m_FinalBoneMatrices);
+    other.m_CurrentAnimation = nullptr;
+}
+
+Animator& Animator::operator=(Animator&& other) noexcept
+{
+    if (this != &other)
+    {
+        m_CurrentTime = other.m_CurrentTime;
+        m_DeltaTime = other.m_DeltaTime;
+        m_CurrentAnimation = other.m_CurrentAnimation;
+        m_FinalBoneMatrices = std::move(other.m_FinalBoneMatrices);
+        other.m_CurrentAnimation = nullptr;
+    }
+    return *this;
+}
+
 void Animator::UpdateAnimation(float dt)
 {
     m_DeltaTime = dt;
@@ -42,6 +64,7 @@ void Animator::UpdateAnimation(float dt)
     {
         m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt;
         m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
+        //Peta Aqui
         CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
     }
 }

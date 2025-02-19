@@ -20,6 +20,9 @@ public:
     Animator(const Animator& other);
     Animator& operator=(const Animator& other);
 
+    Animator(Animator&& other) noexcept;
+    Animator& operator=(Animator&& other) noexcept;
+
 	void UpdateAnimation(float dt);
 	void PlayAnimation(Animation* pAnimation);
     void CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform);

@@ -31,6 +31,9 @@ public:
     Animation(const Animation& other);
     Animation& operator=(const Animation& other);
 
+    Animation(Animation&& other) noexcept;
+    Animation& operator=(Animation&& other) noexcept;
+
     void SetUpAnimation(const std::string& animationPath, Mesh* model);
 
 	Bone* FindBone(const std::string& name);

@@ -82,13 +82,9 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
 
 /*   Setting the cplusplus gameObject reference of the MonoBehaviour scripto        */
 
-    if (MonoManager::GetInstance().scriptIDs.contains(scriptName) == false) {
-
-     LOG(LogType::LOG_INFO, "Script %s Loaded successfully.", scriptName.c_str());
-
-
-
-        MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
+    if (!MonoManager::GetInstance().HasScriptID(scriptName)) {
+        LOG(LogType::LOG_INFO, "Script %s Loaded successfully.", scriptName.c_str());
+        MonoManager::GetInstance().AddScriptID(scriptName);
     }
 
     uintptr_t goPtr = reinterpret_cast<uintptr_t>(owner);

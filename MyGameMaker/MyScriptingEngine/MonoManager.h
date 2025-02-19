@@ -1,82 +1,53 @@
 #pragma once
-#ifndef MONO_MANAGER_H
-#define MONO_MANAGER_H
-
-#include <mono/jit/jit.h>
-#include <mono/metadata/assembly.h>
 #include <string>
 #include <vector>
 #include <map>
+#include <filesystem>
+#include <mono/jit/jit.h>
+
 #include "ComponentMapper.h"
-#include <typeindex>
-#include <stdexcept>
 
 class MonoManager {
 public:
+    MonoManager() = default;
     static MonoManager& GetInstance();
-
     MonoManager(const MonoManager&) = delete;
     MonoManager& operator=(const MonoManager&) = delete;
 
-    ~MonoManager();
-
     void Initialize();
     void Shutdown();
-
-    MonoDomain* GetDomain() const { return domain; }
-    MonoAssembly* GetAssembly() const { return assembly; }
-    MonoImage* GetImage() const { return image; }
-    MonoClass* GetClass(const std::string& namespaceName, const std::string& className) const;
-    const ComponentMapper& GetMapper() const { return mapper; }
     void ReloadAssembly();
 
-    template <typename T>
-    T* GetMappedObject(MonoObject* sharpObject) const;
+    MonoDomain* GetDomain() const { return m_AppDomain; }
+    MonoAssembly* GetAssembly() const { return m_AppAssembly; }
+    MonoImage* GetImage() const { return m_AppAssemblyImage; }
+    MonoClass* GetClass(const std::string& namespaceName, const std::string& className) const;
+    const ComponentMapper& GetMapper() const { return m_Mapper; }
+    std::vector<MonoClass*> GetUserClasses() const { return m_UserClasses; }
 
-    std::vector<MonoClass*> GetUserClasses() const { return user_classes; }
-
-    std::map<std::string, int> scriptIDs;
-
-    int GetNewScriptClassID() {
-        userScriptID--;
-        return userScriptID;
-    }
+    const std::unordered_map<std::string, int>& GetScriptIDs() const { return m_ScriptIDs; }
+    bool HasScriptID(const std::string& scriptName) const { return m_ScriptIDs.contains(scriptName); }
+    void AddScriptID(const std::string& scriptName) { m_ScriptIDs.emplace(scriptName, --m_UserScriptID); }
+    int GetScriptID(const std::string& scriptName) const { return m_ScriptIDs.at(scriptName); }
 
 private:
-    MonoManager();
+    bool LoadCoreAssembly(const std::filesystem::path& filepath);
+    bool LoadAppAssembly(const std::filesystem::path& filepath);
+    void InitMono();
+    void ShutdownMono();
 
-    MonoDomain* domain;
-    MonoAssembly* assembly;
-    MonoImage* image;
-    ComponentMapper mapper;
-    std::vector<MonoClass*> user_classes;
+    MonoDomain* m_RootDomain = nullptr;
+    MonoDomain* m_AppDomain = nullptr;
+    MonoAssembly* m_CoreAssembly = nullptr;
+    MonoImage* m_CoreAssemblyImage = nullptr;
+    MonoAssembly* m_AppAssembly = nullptr;
+    MonoImage* m_AppAssemblyImage = nullptr;
+    std::filesystem::path m_CoreAssemblyPath;
+    std::filesystem::path m_AppAssemblyPath;
 
-    int userScriptID = 0;
+    ComponentMapper m_Mapper;
+    std::vector<MonoClass*> m_UserClasses;
+
+    std::unordered_map<std::string, int> m_ScriptIDs;
+    int m_UserScriptID = 0;
 };
-
-template <typename T>
-T* MonoManager::GetMappedObject(MonoObject* sharpObject) const {
-    if (sharpObject == nullptr) {
-        return nullptr;
-    }
-
-    std::string typeName = mapper.GetMappedName(std::type_index(typeid(T)));
-
-    uintptr_t Cptr;
-    MonoClass* klass = GetClass("HawkEngine", typeName.c_str());
-
-    if (!klass) {
-        throw std::runtime_error("NO class C#: " + typeName);
-    }
-
-    MonoClassField* field = mono_class_get_field_from_name(klass, "CplusplusInstance");
-
-    if (!field) {
-        throw std::runtime_error("CplusplusInstance not found in: " + typeName);
-    }
-
-    mono_field_get_value(sharpObject, field, &Cptr);
-    return reinterpret_cast<T*>(Cptr);
-}
-
-#endif // MONO_MANAGER_H

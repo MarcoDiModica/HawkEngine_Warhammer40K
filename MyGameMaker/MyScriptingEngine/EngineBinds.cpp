@@ -143,14 +143,11 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
    }
 
     // loop through all the scripts and grant them unique ids
-    for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it) {
-
-        if (component == it->second) {
-
+    for (const auto& [scriptName, id] : MonoManager::GetInstance().GetScriptIDs()) {
+        if (component == id) {
             auto script = go->AddComponent<ScriptComponent>();
-            script->LoadScript(it->first);
+            script->LoadScript(scriptName);
         }
-
     }
 
     return _component->GetSharp();

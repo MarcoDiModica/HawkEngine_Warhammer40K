@@ -43,6 +43,9 @@ public:
     void SetTrigger(bool trigger);
     bool IsTrigger() const;
 
+    bool GetSnapToPosition() const { return snapToPosition; }
+    void SetSnapToPosition(bool value) { snapToPosition = value; }
+
 private:
     btRigidBody* rigidBody; // Collider
     PhysicsModule* physics; // Referencia al módulo de físicas
@@ -51,6 +54,7 @@ private:
     bool isForStreetLocal;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
 
+	bool snapToPosition = false;    
 
     void CreateCollider(bool isForStreet = false); 
 };

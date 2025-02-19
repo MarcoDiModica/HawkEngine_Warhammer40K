@@ -111,6 +111,8 @@ void PhysicsModule::CreatePhysicsForCube(GameObject& go, float mass) {
 //    }
 //}
 
+
+
 void PhysicsModule::SyncTransforms() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
         btTransform transform;
@@ -249,11 +251,6 @@ bool PhysicsModule::Update(double dt) {
         dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 10);
         //GameObjectsSync
         SyncTransforms();
-    }
-    else
-    {
-		//Line to sync the colliders to the gameobjects
-		SyncCollidersToGameObjects();
     }
     DrawDebugDrawer();
     

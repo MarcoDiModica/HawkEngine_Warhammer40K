@@ -435,12 +435,9 @@ bool UIInspector::Draw() {
                     }
 
                     // Checkbox para la posición 
-                    bool snapToPosition = false;
+                    bool snapToPosition = colliderComponent->GetSnapToPosition();
                     if (ImGui::Checkbox("Snap Position", &snapToPosition)) {
-                        if (snapToPosition) {
-                            glm::vec3 gameObjectPosition = selectedGameObject->GetTransform()->GetPosition();
-                            colliderComponent->SetColliderPos(gameObjectPosition);
-                        }
+						colliderComponent->SetSnapToPosition(snapToPosition);
                     }
 
                     // Tamaño del Collider

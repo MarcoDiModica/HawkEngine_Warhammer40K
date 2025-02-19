@@ -3,7 +3,7 @@
 
 SkeletalAnimationComponent::SkeletalAnimationComponent(GameObject* owner) : Component(owner)
 {
-	
+    name = "SkeletalAnimation_Component";
 }
 
 SkeletalAnimationComponent::SkeletalAnimationComponent(const SkeletalAnimationComponent& other) : Component(other)
@@ -27,8 +27,6 @@ SkeletalAnimationComponent::SkeletalAnimationComponent(SkeletalAnimationComponen
 {
     animator = other.animator;
     testAnimation = other.testAnimation;
-    other.animator = nullptr;
-    other.testAnimation = nullptr;
 }
 
 SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(SkeletalAnimationComponent&& other) noexcept
@@ -47,6 +45,7 @@ SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(SkeletalAnimat
 
 void SkeletalAnimationComponent::Start()
 {
+	animator = new Animator(testAnimation);
 	animator->PlayAnimation(testAnimation);
 }
 

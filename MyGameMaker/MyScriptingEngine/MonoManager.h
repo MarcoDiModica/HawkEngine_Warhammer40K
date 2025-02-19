@@ -3,9 +3,28 @@
 #include <vector>
 #include <map>
 #include <filesystem>
+
 #include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
+#include <mono/metadata/object.h>
+#include <mono/metadata/threads.h>
 
 #include "ComponentMapper.h"
+
+struct ScriptEngineData
+{
+    MonoDomain* RootDomain = nullptr;
+    MonoDomain* AppDomain = nullptr;
+
+    MonoAssembly* CoreAssembly = nullptr;
+    MonoImage* CoreAssemblyImage = nullptr;
+
+    MonoAssembly* AppAssembly = nullptr;
+    MonoImage* AppAssemblyImage = nullptr;
+
+    std::filesystem::path CoreAssemblyPath;
+    std::filesystem::path AppAssemblyPath;
+};
 
 class MonoManager {
 public:
@@ -18,9 +37,12 @@ public:
     void Shutdown();
     void ReloadAssembly();
 
-    MonoDomain* GetDomain() const { return m_AppDomain; }
-    MonoAssembly* GetAssembly() const { return m_AppAssembly; }
-    MonoImage* GetImage() const { return m_AppAssemblyImage; }
+    MonoDomain* GetDomain() const { return s_Data->AppDomain; }
+    MonoDomain* GetRootDomain() const { return s_Data->RootDomain; }
+    MonoAssembly* GetAssembly() const { return s_Data->AppAssembly; }
+    MonoAssembly* GetCoreAssembly() const { return s_Data->CoreAssembly; }
+    MonoImage* GetImage() const { return s_Data->AppAssemblyImage; }
+    MonoImage* GetCoreImage() const { return s_Data->CoreAssemblyImage; }
     MonoClass* GetClass(const std::string& namespaceName, const std::string& className) const;
     const ComponentMapper& GetMapper() const { return m_Mapper; }
     std::vector<MonoClass*> GetUserClasses() const { return m_UserClasses; }
@@ -36,14 +58,7 @@ private:
     void InitMono();
     void ShutdownMono();
 
-    MonoDomain* m_RootDomain = nullptr;
-    MonoDomain* m_AppDomain = nullptr;
-    MonoAssembly* m_CoreAssembly = nullptr;
-    MonoImage* m_CoreAssemblyImage = nullptr;
-    MonoAssembly* m_AppAssembly = nullptr;
-    MonoImage* m_AppAssemblyImage = nullptr;
-    std::filesystem::path m_CoreAssemblyPath;
-    std::filesystem::path m_AppAssemblyPath;
+    ScriptEngineData* s_Data = nullptr;
 
     ComponentMapper m_Mapper;
     std::vector<MonoClass*> m_UserClasses;

@@ -1,4 +1,4 @@
-#ifdef DEBUG
+#ifdef _DEBUG
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #else
 #pragma comment(linker, "/SUBSYSTEM:console /ENTRY:mainCRTStartup")

@@ -3,7 +3,6 @@
 #include <fstream>
 #include <filesystem>
 #include <mono/jit/jit.h>
-
 #include "../MyGameEditor/Log.h"
 
 ScriptComponent::ScriptComponent(GameObject* owner) : Component(owner) {}
@@ -47,8 +46,7 @@ void ScriptComponent::Update(float deltaTime) {
     }
 }
 
-bool ScriptComponent::LoadScript(const std::string& scriptName)
-{
+bool ScriptComponent::LoadScript(const std::string& scriptName) {
     std::string scriptPath = "../Script/" + scriptName + ".cs";
 
     if (!std::filesystem::exists(scriptPath)) {
@@ -78,9 +76,6 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
         mono_free((void*)exceptionStr);
         return false;
     }
-
-
-/*   Setting the cplusplus gameObject reference of the MonoBehaviour scripto        */
 
     if (!MonoManager::GetInstance().HasScriptID(scriptName)) {
         LOG(LogType::LOG_INFO, "Script %s Loaded successfully.", scriptName.c_str());

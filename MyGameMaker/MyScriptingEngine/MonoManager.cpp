@@ -1,8 +1,7 @@
 #include <Windows.h>
-#include <mono/jit/jit.h>
-#include <mono/metadata/assembly.h>
-#include <mono/metadata/object.h>
-#include <mono/metadata/threads.h>
+#include <string>
+#include <fstream>
+#include <iostream>
 
 #include "EngineBinds.h"
 #include "MonoManager.h"
@@ -15,88 +14,167 @@ std::string getExecutablePath() {
     return fullPath.substr(0, lastSlash);
 }
 
+static char* ReadBytes(const std::string& filepath, uint32_t* outSize)
+{
+    std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
+
+    if (!stream)
+    {
+        return nullptr;
+    }
+
+    std::streampos end = stream.tellg();
+    stream.seekg(0, std::ios::beg);
+    uint32_t size = end - stream.tellg();
+
+    if (size == 0)
+    {
+        return nullptr;
+    }
+
+    char* buffer = new char[size];
+    stream.read((char*)buffer, size);
+    stream.close();
+
+    *outSize = size;
+    return buffer;
+}
+
+static MonoAssembly* LoadMonoAssembly(const std::string& assemblyPath)
+{
+    uint32_t fileSize = 0;
+    char* fileData = ReadBytes(assemblyPath, &fileSize);
+
+    MonoImageOpenStatus status;
+    MonoImage* image = mono_image_open_from_data_full(fileData, fileSize, 1, &status, 0);
+
+    if (status != MONO_IMAGE_OK)
+    {
+        const char* errorMessage = mono_image_strerror(status);
+        return nullptr;
+    }
+
+    MonoAssembly* assembly = mono_assembly_load_from_full(image, assemblyPath.c_str(), &status, 0);
+    mono_image_close(image);
+
+    delete[] fileData;
+
+    return assembly;
+}
+
+void PrintAssemblyTypes(MonoAssembly* assembly)
+{
+    MonoImage* image = mono_assembly_get_image(assembly);
+    const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+    int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
+
+    for (int32_t i = 0; i < numTypes; i++)
+    {
+        uint32_t cols[MONO_TYPEDEF_SIZE];
+        mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
+
+        const char* nameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+        const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+
+        printf("%s.%s\n", nameSpace, name);
+    }
+}
+
 MonoManager& MonoManager::GetInstance() {
     static MonoManager instance;
     return instance;
 }
 
-void MonoManager::InitMono() 
-{
-    mono_set_assemblies_path("Mono/lib");
-
-    MonoDomain* rootDomain = mono_jit_init("HawkJITRuntime");
-    m_RootDomain = rootDomain;
-    if (!m_RootDomain) {
-        // Handle error
-        return;
-    }
-
-    char domainName[] = "MyGameApp";
-    m_AppDomain = mono_domain_create_appdomain(domainName, nullptr);
-    mono_domain_set(m_AppDomain, true);
-}
-
 void MonoManager::Initialize()
 {
+    s_Data = new ScriptEngineData();
+
     InitMono();
+    EngineBinds::BindEngine();
 
-    std::string corePath = getExecutablePath() + "\\..\\..\\External\\Mono\\lib\\MyGameCore.dll";
-    if (!LoadCoreAssembly(corePath)) {
-        // Handle error
+    bool coreStatus = LoadCoreAssembly("../Script/bin/Script.dll");
+    if (!coreStatus)
+    {
+		return;
+	}
+
+    PrintAssemblyTypes(s_Data->CoreAssembly);
+
+    bool appStatus = LoadAppAssembly("../Script/bin/Script.dll");
+    if (!appStatus)
+    {
         return;
     }
 
-    std::string appPath = getExecutablePath() + "\\..\\..\\Script\\obj\\Debug\\Script.dll";
-    if (!LoadAppAssembly(appPath)) {
-        // Handle error
+    PrintAssemblyTypes(s_Data->AppAssembly);
+}
+
+void MonoManager::Shutdown() 
+{
+    ShutdownMono();
+    delete s_Data;
+}
+
+void MonoManager::InitMono() 
+{
+    mono_set_assemblies_path("../External/Mono/lib");
+
+    MonoDomain* rootDomain = mono_jit_init("HawkJITRuntime");
+    s_Data->RootDomain = rootDomain;
+    if (!s_Data->RootDomain) {
+
         return;
     }
+
+    mono_thread_set_main(mono_thread_current());
 }
 
-bool MonoManager::LoadCoreAssembly(const std::filesystem::path& filepath) {
-    m_CoreAssemblyPath = filepath;
-    m_CoreAssembly = mono_domain_assembly_open(m_AppDomain, filepath.string().c_str());
-    if (!m_CoreAssembly) return false;
+void MonoManager::ShutdownMono() {
+    mono_domain_set(mono_get_root_domain(), false);
 
-    m_CoreAssemblyImage = mono_assembly_get_image(m_CoreAssembly);
-    return m_CoreAssemblyImage != nullptr;
+    mono_domain_unload(s_Data->AppDomain);
+    s_Data->AppDomain = nullptr;
+
+    mono_jit_cleanup(s_Data->RootDomain);
+    s_Data->RootDomain = nullptr;
 }
 
-bool MonoManager::LoadAppAssembly(const std::filesystem::path& filepath) {
-    m_AppAssemblyPath = filepath;
-    m_AppAssembly = mono_domain_assembly_open(m_AppDomain, filepath.string().c_str());
-    if (!m_AppAssembly) return false;
+bool MonoManager::LoadCoreAssembly(const std::filesystem::path& filepath) 
+{
+    char appDomainName[] = "HawkJITCoreDomain";
+    s_Data->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
+    mono_domain_set(s_Data->AppDomain, true);
+    
+    s_Data->CoreAssemblyPath = filepath;
+    s_Data->CoreAssembly = LoadMonoAssembly(filepath.string());
+    if (!s_Data->CoreAssembly) return false;
 
-    m_AppAssemblyImage = mono_assembly_get_image(m_AppAssembly);
-    return m_AppAssemblyImage != nullptr;
+    s_Data->CoreAssemblyImage = mono_assembly_get_image(s_Data->CoreAssembly);
+    return true;
+}
+
+bool MonoManager::LoadAppAssembly(const std::filesystem::path& filepath) 
+{
+    s_Data->AppAssemblyPath = filepath;
+	s_Data->AppAssembly = LoadMonoAssembly(filepath.string());
+	if (!s_Data->AppAssembly) return false;
+
+	s_Data->AppAssemblyImage = mono_assembly_get_image(s_Data->AppAssembly);
+	return true;
 }
 
 void MonoManager::ReloadAssembly() {
     mono_domain_set(mono_get_root_domain(), false);
-    mono_domain_unload(m_AppDomain);
 
-    InitMono();
-    LoadCoreAssembly(m_CoreAssemblyPath);
-    LoadAppAssembly(m_AppAssemblyPath);
+    mono_domain_unload(s_Data->AppDomain);
+
+    LoadCoreAssembly(s_Data->CoreAssemblyPath);
+    LoadAppAssembly(s_Data->AppAssemblyPath);
+
+    EngineBinds::BindEngine();
 }
 
-void MonoManager::ShutdownMono() {
-    if (m_AppDomain) {
-        mono_domain_set(mono_get_root_domain(), false);
-        mono_domain_unload(m_AppDomain);
-        m_AppDomain = nullptr;
-    }
-
-    if (m_RootDomain) {
-        mono_jit_cleanup(m_RootDomain);
-        m_RootDomain = nullptr;
-    }
-}
-
-void MonoManager::Shutdown() {
-    ShutdownMono();
-}
-
-MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const {
-    return mono_class_from_name(m_AppAssemblyImage, namespaceName.c_str(), className.c_str());
+MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const 
+{
+    return mono_class_from_name(s_Data->AppAssemblyImage, namespaceName.c_str(), className.c_str());
 }

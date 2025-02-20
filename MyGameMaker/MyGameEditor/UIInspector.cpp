@@ -20,6 +20,7 @@
 #include "../MyAudioEngine/AudioListener.h"
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEngine/CameraComponent.h"
+#include "../MyParticlesEngine/ParticlesEmitterComponent.h"
 #include "../MyGameEngine/Mesh.h"
 #include "Input.h"
 #include "../MyGameEngine/types.h"
@@ -57,11 +58,11 @@ bool UIInspector::Draw() {
     ImGui::SetNextWindowClass(&windowClass);
     windowClass.DockingAllowUnclassed = false;
 
-	if (!ImGui::Begin("Inspector", nullptr, inspectorFlags)) {
+    if (!ImGui::Begin("Inspector", nullptr, inspectorFlags)) {
         ImGui::CloseCurrentPopup();
-		ImGui::End();
-		return false;
-	}
+        ImGui::End();
+        return false;
+    }
 
     if (Application->input->GetSelectedGameObjects().empty()) {
         ImGui::Text("No GameObject selected");
@@ -88,7 +89,7 @@ bool UIInspector::Draw() {
         }
         ImGui::SameLine(); ImGui::Checkbox("Static", &selectedGameObject->isStatic);
 
-		ImGui::Separator();
+        ImGui::Separator();
 
         Transform_Component* transform = selectedGameObject->GetTransform();
 
@@ -106,25 +107,25 @@ bool UIInspector::Draw() {
             }
 
             if (!selectedGameObject->HasComponent<LightComponent>() && ImGui::MenuItem("Light")) {
-				selectedGameObject->AddComponent<LightComponent>();
-			}
+                selectedGameObject->AddComponent<LightComponent>();
+            }
 
-			if (!selectedGameObject->HasComponent<SoundComponent>() && ImGui::MenuItem("Sound")) {
-				selectedGameObject->AddComponent<SoundComponent>();
-			}
+            if (!selectedGameObject->HasComponent<SoundComponent>() && ImGui::MenuItem("Sound")) {
+                selectedGameObject->AddComponent<SoundComponent>();
+            }
 
-			if (!selectedGameObject->HasComponent<AudioListener>() && ImGui::MenuItem("Audio Listener")) {
-				selectedGameObject->AddComponent<AudioListener>();
-			}
+            if (!selectedGameObject->HasComponent<AudioListener>() && ImGui::MenuItem("Audio Listener")) {
+                selectedGameObject->AddComponent<AudioListener>();
+            }
             if (!selectedGameObject->HasComponent<ColliderComponent>() && ImGui::MenuItem("Collider")) {
                 selectedGameObject->AddComponent<ColliderComponent>(Application->physicsModule);
                 selectedGameObject->GetComponent<ColliderComponent>()->Start();
             }
 
 
-           /* if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
+            if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
                 selectedGameObject->AddComponent<ParticlesEmitterComponent>();
-            }*/
+            }
 
 
             // More components here
@@ -265,70 +266,70 @@ bool UIInspector::Draw() {
         ImGui::Separator();
 
         if (selectedGameObject->HasComponent<CameraComponent>()) {
-			CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
+            CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
 
             // Verificar si cameraComponent es v�lido
             if (!cameraComponent) {
-				LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
-				ImGui::Text("Error: Invalid CameraComponent component");
-				return false;
-			}
+                LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
+                ImGui::Text("Error: Invalid CameraComponent component");
+                return false;
+            }
 
-			if (cameraComponent) {
+            if (cameraComponent) {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-				if (ImGui::CollapsingHeader("Camera")) {
-					bool orthographic = cameraComponent->IsOrthographic();
+                if (ImGui::CollapsingHeader("Camera")) {
+                    bool orthographic = cameraComponent->IsOrthographic();
                     bool frustum = cameraComponent->frustrumCullingEnabled;
-					float orthoSize = cameraComponent->GetOrthoSize();
-					float fov = cameraComponent->GetFOV();
-					float nearPlane = static_cast<float>(cameraComponent->GetNearPlane());
-					float farPlane =  static_cast<float>(cameraComponent->GetFarPlane() );
+                    float orthoSize = cameraComponent->GetOrthoSize();
+                    float fov = cameraComponent->GetFOV();
+                    float nearPlane = static_cast<float>(cameraComponent->GetNearPlane());
+                    float farPlane = static_cast<float>(cameraComponent->GetFarPlane());
 
                     //lookAt & follow settings
 
-					if (ImGui::Checkbox("Orthographic", &orthographic)) {
-						cameraComponent->orthographic = orthographic;
-					}
+                    if (ImGui::Checkbox("Orthographic", &orthographic)) {
+                        cameraComponent->orthographic = orthographic;
+                    }
 
-					if (orthographic) {
-						if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
-							cameraComponent->SetOrthoSize(orthoSize);
-						}
-					}
-					else {
+                    if (orthographic) {
+                        if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
+                            cameraComponent->SetOrthoSize(orthoSize);
+                        }
+                    }
+                    else {
                         float fovDeg = cameraComponent->GetFOV();
                         fovDeg = glm::degrees(fovDeg);
                         if (ImGui::SliderFloat("FOV", &fovDeg, 1.0f, 179.0f))
                         {
                             cameraComponent->SetFOV(glm::radians(fovDeg));
                         }
-					}
+                    }
 
-					if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
-						cameraComponent->SetNearPlane(nearPlane);
-					}
+                    if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
+                        cameraComponent->SetNearPlane(nearPlane);
+                    }
 
-					if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
-						cameraComponent->SetFarPlane(farPlane);
-					}
+                    if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
+                        cameraComponent->SetFarPlane(farPlane);
+                    }
 
                     //frustrum settings
                     if (ImGui::Checkbox("Frustrum Culling", &frustum)) {
-						cameraComponent->frustrumCullingEnabled = frustum;
-					}
+                        cameraComponent->frustrumCullingEnabled = frustum;
+                    }
 
-					if (frustum) {
-						bool frustumRepresentation = cameraComponent->frustrumRepresentation;
-						if (ImGui::Checkbox("Frustrum Representation", &frustumRepresentation)) {
-							cameraComponent->frustrumRepresentation = frustumRepresentation;
-						}
-					}
-				}
-			}
-			else {
-				LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
-			}
-		}
+                    if (frustum) {
+                        bool frustumRepresentation = cameraComponent->frustrumRepresentation;
+                        if (ImGui::Checkbox("Frustrum Representation", &frustumRepresentation)) {
+                            cameraComponent->frustrumRepresentation = frustumRepresentation;
+                        }
+                    }
+                }
+            }
+            else {
+                LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
+            }
+        }
 
         ImGui::Separator();
 
@@ -502,7 +503,7 @@ bool UIInspector::Draw() {
                             const char* path = (const char*)payload->Data;
                             std::string extension = std::filesystem::path(path).extension().string();
                             std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
-                            
+
                             if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
                                 soundComponent->LoadAudio(path);
                             }
@@ -557,7 +558,8 @@ bool UIInspector::Draw() {
                         if (ImGui::Button("Resume")) {
                             soundComponent->Resume();
                         }
-                    } else {
+                    }
+                    else {
                         if (ImGui::Button("Play")) {
                             soundComponent->Play(soundComponent->GetLoop());
                         }
@@ -571,47 +573,104 @@ bool UIInspector::Draw() {
         }
 
         ImGui::Separator();
+
+        if (selectedGameObject->HasComponent<ParticlesEmitterComponent>()) {
+            ParticlesEmitterComponent* particlesEmitterComponent = selectedGameObject->GetComponent<ParticlesEmitterComponent>();
+
+            if (particlesEmitterComponent)
+            {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Particles Emitter"))
+                {
+                    float spawnrate = particlesEmitterComponent->getSpawnRate();
+                    std::string texturePath = particlesEmitterComponent->GetTexture();
+                    int maxParticles = particlesEmitterComponent->getMaxParticles();
+
+                    if (ImGui::InputFloat("Spawn Rate", &spawnrate, 0.1f, 0.1f, "%.2f")) {
+                        particlesEmitterComponent->setSpawnRate(spawnrate);
+                    }
+                    if (ImGui::InputInt("Max Particles", &maxParticles)) {
+                        particlesEmitterComponent->setMaxParticles(maxParticles);
+                    }
+
+
+                    const char* billboardTypes[] = { "Screen Aligned", "World Aligned", "Axis Aligned" };
+                    int currentBillboardType = static_cast<int>(particlesEmitterComponent->GetTypeEnum());
+
+                    if (ImGui::Combo("Billboard Type", &currentBillboardType, billboardTypes, IM_ARRAYSIZE(billboardTypes))) {
+                        particlesEmitterComponent->SetType(static_cast<BillboardType>(currentBillboardType));
+                    }
+                    ImGui::TextWrapped("Texture Path: %s", texturePath.c_str());
+
+
+                    if (ImGui::Button("Set Texture")) {
+                        //const char* path = tinyfd_openFileDialog("Choose a texture", "", 0, nullptr, nullptr, 0);
+                        //if (path && strlen(path) > 0) { // Check if the path is valid
+                        //    particlesEmitterComponent->SetTexture(std::string(path));
+                        //}
+                    }
+
+                    if (ImGui::Button("Save .part")) {
+                        //const char* savePath = tinyfd_saveFileDialog("Save Particles Emitter", "", 0, nullptr, nullptr);
+                        //if (savePath && strlen(savePath) > 0) { // Check if the savePath is valid
+                        //    std::ofstream outFile(savePath, std::ios::binary);
+                        //    if (outFile.is_open()) {
+                        //        outFile.write(reinterpret_cast<const char*>(&spawnrate), sizeof(spawnrate));
+                        //        outFile.write(reinterpret_cast<const char*>(&maxParticles), sizeof(maxParticles));
+                        //        size_t texturePathSize = texturePath.size();
+                        //        outFile.write(reinterpret_cast<const char*>(&texturePathSize), sizeof(texturePathSize));
+                        //        outFile.write(texturePath.c_str(), texturePathSize);
+                        //        outFile.close();
+                        //    }
+                        //    else {
+                        //        std::cerr << "Failed to open file for saving: " << savePath << std::endl;
+                        //    }
+                        //}
+                    }
+                }
+            }
+        }
         if (selectedGameObject->HasComponent<AudioListener>())
         {
             AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
 
             if (audioListener)
-            if (selectedGameObject->HasComponent<AudioListener>())
-            {
-                AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
-
-                if (audioListener)
+                if (selectedGameObject->HasComponent<AudioListener>())
                 {
-                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                    if (ImGui::CollapsingHeader("Audio Listener"))
-                    {
-                        ImGui::Text("Audio Listener");
+                    AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
 
-                        // Mostrar la posición del Audio Listener
-                        Transform_Component* transform = selectedGameObject->GetTransform();
-                        if (transform)
+                    if (audioListener)
+                    {
+                        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                        if (ImGui::CollapsingHeader("Audio Listener"))
                         {
-                            glm::dvec3 position = transform->GetPosition();
-                            float pos[3] = { static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z) };
-                            ImGui::DragFloat3("Position", pos, 0.1f);
-                        }
-                        else
-                        {
-                            ImGui::Text("Error: Transform component is nullptr");
+                            ImGui::Text("Audio Listener");
+
+                            // Mostrar la posición del Audio Listener
+                            Transform_Component* transform = selectedGameObject->GetTransform();
+                            if (transform)
+                            {
+                                glm::dvec3 position = transform->GetPosition();
+                                float pos[3] = { static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z) };
+                                ImGui::DragFloat3("Position", pos, 0.1f);
+                            }
+                            else
+                            {
+                                ImGui::Text("Error: Transform component is nullptr");
+                            }
                         }
                     }
+                    else
+                    {
+                        LOG(LogType::LOG_WARNING, "UIInspector::Draw: AudioListener is nullptr");
+                    }
                 }
-                else
-                {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: AudioListener is nullptr");
-                }
-            }
-            
-               
+
+
         }
-        
+
         ImGui::Separator();
-      
+
         if (selectedGameObject->scriptComponents.size() > 0) {
             for (auto& scriptComponent : selectedGameObject->scriptComponents) {
                 if (scriptComponent && scriptComponent->monoScript) {
@@ -742,7 +801,8 @@ bool UIInspector::Draw() {
                         shaderComponent->SetShaderType(static_cast<ShaderType>(shaderType));
                     }
 
-                    if (currentType == ShaderType::WATER) {;
+                    if (currentType == ShaderType::WATER) {
+                        ;
                         if (ImGui::DragFloat("Amplitude", &shaderComponent->amplitude, 0.1f, 0.1f, 10.0f));
                         if (ImGui::DragFloat("Frequency", &shaderComponent->frequency, 0.1f, 0.1f, 10.0f));
                     }

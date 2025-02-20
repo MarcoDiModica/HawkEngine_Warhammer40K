@@ -90,13 +90,14 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     if (object_to_destroy == nullptr) {
         return;
     }
+
 	SceneManagement->RemoveGameObject(ConvertFromSharp(object_to_destroy));
 
-    uintptr_t Cptr;
-    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    mono_field_get_value(object_to_destroy, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
-    GameObject* actor = reinterpret_cast<GameObject*>(Cptr);
-    SceneManagement->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
+    //uintptr_t Cptr;
+    //MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    //mono_field_get_value(object_to_destroy, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
+    //GameObject* actor = reinterpret_cast<GameObject*>(Cptr);
+    //SceneManagement->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
 }
 
 MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* component_name)

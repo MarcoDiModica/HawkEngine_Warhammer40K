@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
     private const float DASH_RECHARGE_RATE = 2.0f;
     #endregion
 
-    #region Unity Lifecycle
+    #region Lifecycle
     public override void Start()
     {
         InitializeComponents();
@@ -80,13 +80,11 @@ public class PlayerController : MonoBehaviour
             UpdateMovement(moveDirection, deltaTime);
             UpdateRotation(moveDirection, deltaTime);
 
-            // Handle dash input
             if (Input.GetKey(KeyCode.SPACE) && CanDash() && moveDirection != Vector3.Zero)
             {
                 InitiateDash(moveDirection);
             }
 
-            // Handle shooting
             UpdateShooting(deltaTime);
         }
         else
@@ -138,14 +136,11 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateMovement(Vector3 moveDirection, float deltaTime)
     {
-        // Calculate target velocity
         targetVelocity = moveDirection * moveSpeed;
 
-        // Smoothly interpolate current velocity towards target
         float smoothFactor = moveDirection != Vector3.Zero ? acceleration : deceleration;
         currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, smoothFactor * deltaTime);
 
-        // Apply movement
         if (currentVelocity.LengthSquared() > 0.01f)
         {
             transform.position += currentVelocity * deltaTime;
@@ -156,20 +151,15 @@ public class PlayerController : MonoBehaviour
     {
         if (moveDirection != Vector3.Zero)
         {
-            // Calculate target angle in radians
             float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
 
-            // Convert to degrees for smoother interpolation
             float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-            // Normalize angles to prevent spinning
             while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
             while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
 
-            // Smoothly interpolate the rotation
             currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
 
-            // Convert back to radians for the transform
             float angleRadians = currentRotationAngle * ((float)Math.PI / 180.0f);
             transform.SetRotation(0, angleRadians, 0);
         }
@@ -240,13 +230,11 @@ public class PlayerController : MonoBehaviour
                 Transform projTransform = projectile.GetComponent<Transform>();
                 if (projTransform != null)
                 {
-                    // Calculate spawn position and direction
                     Vector3 forward = transform.forward;
                     Vector3 spawnPos = transform.position + forward * 1.0f;
                     projTransform.position = spawnPos;
                     projTransform.SetScale(0.3f, 0.3f, 0.3f);
 
-                    // Store projectile info
                     ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
                     activeProjectiles.Add(projInfo);
 
@@ -291,19 +279,20 @@ public class PlayerController : MonoBehaviour
 
     private void CleanupProjectiles()
     {
-        for (int i = activeProjectiles.Count - 1; i >= 0; i--)
+        foreach (var proj in activeProjectiles)
         {
-            if (activeProjectiles[i].markedForDestruction)
+            if (proj.markedForDestruction)
             {
                 try
                 {
-                    Engineson.Destroy(activeProjectiles[i].gameObject);
-                    activeProjectiles.RemoveAt(i);
+                    var index = activeProjectiles.IndexOf(proj);
+                    Engineson.Destroy(proj.gameObject);
+                    activeProjectiles.RemoveAt(index);
                 }
                 catch (System.Exception e)
                 {
                     Engineson.print($"Error destroying projectile: {e.Message}");
-                    activeProjectiles.RemoveAt(i);
+                    activeProjectiles.Remove(proj);
                 }
             }
         }

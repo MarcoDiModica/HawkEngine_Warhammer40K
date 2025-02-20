@@ -2,11 +2,13 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEditor/Log.h" //QUITAR
+#include <iostream>
 
 ComponentMapper::ComponentMapper() {
     AddMapping(std::type_index(typeid(Transform_Component)), "Transform");
 	AddMapping(std::type_index(typeid(MeshRenderer)), "MeshRenderer");
     // mas components
+    std::cout << "ComponentMapper created" << std::endl;
 }
 
 ComponentMapper::~ComponentMapper() {}

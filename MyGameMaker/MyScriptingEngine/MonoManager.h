@@ -55,6 +55,9 @@ public:
 private:
     bool LoadCoreAssembly(const std::filesystem::path& filepath);
     bool LoadAppAssembly(const std::filesystem::path& filepath);
+
+    void LoadScriptClasses();
+    
     void InitMono();
     void ShutdownMono();
 

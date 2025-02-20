@@ -64,67 +64,27 @@ static MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespa
     return klass;
 }
 
-bool ScriptComponent::LoadScript(const std::string& scriptName) {
-    MonoDomain* currentDomain = mono_domain_get();
-    MonoDomain* appDomain = MonoManager::GetInstance().GetDomain();
+bool ScriptComponent::LoadScript(const std::string& scriptName) 
+{
+    MonoManager& monoManager = MonoManager::GetInstance();
+	MonoAssembly* assembly = monoManager.GetAssembly();
+	MonoClass* scriptClass = GetClassInAssembly(assembly, "", scriptName.c_str());
 
-    LOG(LogType::LOG_INFO, "Current Domain: %p", currentDomain);
-    LOG(LogType::LOG_INFO, "App Domain: %p", appDomain);
+	if (scriptClass == nullptr) {
+		LOG(LogType::LOG_ERROR, "No se ha encontrado la clase %s en el ensamblado.", scriptName.c_str());
+		return false;
+	}
 
-    if (currentDomain != appDomain) {
-        LOG(LogType::LOG_ERROR, "Domain mismatch - attempting to set correct domain");
-        mono_domain_set(appDomain, false);
-        currentDomain = mono_domain_get();
-        LOG(LogType::LOG_INFO, "New Current Domain: %p", currentDomain);
-    }
-
-    MonoAssembly* assembly = MonoManager::GetInstance().GetAssembly();
-    MonoImage* image = mono_assembly_get_image(assembly);
-
-    LOG(LogType::LOG_INFO, "Assembly: %p", assembly);
-    LOG(LogType::LOG_INFO, "Image: %p", image);
-
-    MonoClass* scriptClass = mono_class_from_name(image, "", scriptName.c_str());
-    LOG(LogType::LOG_INFO, "Script Class: %p", scriptClass);
-
-    if (!scriptClass) {
-        LOG(LogType::LOG_ERROR, "Script class not found");
+	MonoObject* scriptObject = mono_object_new(monoManager.GetDomain(), scriptClass);
+	if (scriptObject == nullptr) {
+        LOG(LogType::LOG_ERROR, "No se ha podido crear la instancia de la clase %s.", scriptName.c_str());
         return false;
     }
+    mono_runtime_object_init(scriptObject);
 
-    LOG(LogType::LOG_INFO, "Class name: %s", mono_class_get_name(scriptClass));
-    LOG(LogType::LOG_INFO, "Class namespace: %s", mono_class_get_namespace(scriptClass));
-    LOG(LogType::LOG_INFO, "Parent class: %s", mono_class_get_name(mono_class_get_parent(scriptClass)));
+	monoScript = scriptObject;
 
-    if (!mono_class_init(scriptClass)) {
-        LOG(LogType::LOG_ERROR, "Failed to initialize class");
-        return false;
-    }
-
-    LOG(LogType::LOG_INFO, "Attempting to create instance...");
-    monoScript = mono_object_new(appDomain, scriptClass);
-    LOG(LogType::LOG_INFO, "Instance created: %p", monoScript);
-
-    if (!monoScript) {
-        LOG(LogType::LOG_ERROR, "Failed to create instance");
-        return false;
-    }
-
-    MonoObject* exception = nullptr;
-    mono_runtime_invoke(mono_class_get_method_from_name(scriptClass, ".ctor", 0), monoScript, nullptr, &exception);
-
-    if (exception) {
-        MonoString* msg = mono_object_to_string(exception, nullptr);
-        const char* str = mono_string_to_utf8(msg);
-        LOG(LogType::LOG_ERROR, "Constructor error: %s", str);
-        mono_free((void*)str);
-        return false;
-    }
-
-    uintptr_t goPtr = reinterpret_cast<uintptr_t>(owner);
-    mono_field_set_value(monoScript, mono_class_get_field_from_name(scriptClass, "CplusplusInstance"), &goPtr);
-
-    return true;
+	return true;
 }
 
 bool ScriptComponent::CreateNewScript(const std::string& scriptName, const std::string& baseScriptName)

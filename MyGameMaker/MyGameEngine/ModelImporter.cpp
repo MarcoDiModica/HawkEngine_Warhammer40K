@@ -75,21 +75,6 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 
 	obj.GetTransform()->SetLocalMatrix(localMatrix);
 
-	if (scene.mNumAnimations > 0) {
-		auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
-		Animation* animation = new Animation();
-		Animation animation2 = Animation();
-		animation->SetUpAnimation(scenePath, obj.GetComponent<Mesh>());
-		animation2 = *animation;
-		obj.GetComponent<SkeletalAnimationComponent>()->animationTest = animation2;
-		obj.GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation);
-		obj.GetComponent<SkeletalAnimationComponent>()->patatudo = 43.0f;
-		skeletalAnimationComponent->animationTest = animation2;
-		skeletalAnimationComponent->SetAnimation(animation);
-		animations.push_back(std::make_shared<Animation>(*animation));
-		std::cout << node.mName.C_Str() << std::endl;
-	}
-
 	for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
 		const auto meshIndex = node.mMeshes[i];
 		const auto materialIndex = scene.mMeshes[meshIndex]->mMaterialIndex;
@@ -101,9 +86,20 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		meshComponent->SetMaterial(materials[materialIndex]);
 		meshComponent->GetMaterial()->useShader = false;
 		//meshComponent->GetMaterial()->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
-		if (obj.HasComponent<SkeletalAnimationComponent>()) 
+		if (scene.mNumAnimations > 0 ) 
 		{
-			//obj.GetComponent<SkeletalAnimationComponent>()->GetAnimation()->SetUpAnimation(scenePath, meshComponent->GetMesh().get());
+			auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
+			Animation* animation = new Animation();
+			Animation animation2 = Animation();
+			animation->SetUpAnimation(scenePath, meshComponent->GetMesh().get());
+			animation2 = *animation;
+			obj.GetComponent<SkeletalAnimationComponent>()->animationTest = animation2;
+			obj.GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation);
+			obj.GetComponent<SkeletalAnimationComponent>()->patatudo = 43.0f;
+			skeletalAnimationComponent->animationTest = animation2;
+			skeletalAnimationComponent->SetAnimation(animation);
+			animations.push_back(std::make_shared<Animation>(*animation));
+			std::cout << node.mName.C_Str() << std::endl;
 		}
 		meshGameObjects.push_back(std::make_shared<GameObject>(obj));
 	}

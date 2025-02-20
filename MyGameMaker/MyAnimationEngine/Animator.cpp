@@ -64,7 +64,6 @@ void Animator::UpdateAnimation(float dt)
     {
         m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt;
         m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
-        //Peta Aqui
         CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
     }
 }

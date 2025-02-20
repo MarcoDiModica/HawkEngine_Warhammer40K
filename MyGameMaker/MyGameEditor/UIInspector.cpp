@@ -31,6 +31,7 @@
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "tinyfiledialogs/tinyfiledialogs.h"
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
@@ -604,28 +605,28 @@ bool UIInspector::Draw() {
 
 
                     if (ImGui::Button("Set Texture")) {
-                        //const char* path = tinyfd_openFileDialog("Choose a texture", "", 0, nullptr, nullptr, 0);
-                        //if (path && strlen(path) > 0) { // Check if the path is valid
-                        //    particlesEmitterComponent->SetTexture(std::string(path));
-                        //}
+                        const char* path = tinyfd_openFileDialog("Choose a texture", "", 0, nullptr, nullptr, 0);
+                        if (path && strlen(path) > 0) { // Check if the path is valid
+                            particlesEmitterComponent->SetTexture(std::string(path));
+                        }
                     }
 
                     if (ImGui::Button("Save .part")) {
-                        //const char* savePath = tinyfd_saveFileDialog("Save Particles Emitter", "", 0, nullptr, nullptr);
-                        //if (savePath && strlen(savePath) > 0) { // Check if the savePath is valid
-                        //    std::ofstream outFile(savePath, std::ios::binary);
-                        //    if (outFile.is_open()) {
-                        //        outFile.write(reinterpret_cast<const char*>(&spawnrate), sizeof(spawnrate));
-                        //        outFile.write(reinterpret_cast<const char*>(&maxParticles), sizeof(maxParticles));
-                        //        size_t texturePathSize = texturePath.size();
-                        //        outFile.write(reinterpret_cast<const char*>(&texturePathSize), sizeof(texturePathSize));
-                        //        outFile.write(texturePath.c_str(), texturePathSize);
-                        //        outFile.close();
-                        //    }
-                        //    else {
-                        //        std::cerr << "Failed to open file for saving: " << savePath << std::endl;
-                        //    }
-                        //}
+                        const char* savePath = tinyfd_saveFileDialog("Save Particles Emitter", "", 0, nullptr, nullptr);
+                        if (savePath && strlen(savePath) > 0) { // Check if the savePath is valid
+                            std::ofstream outFile(savePath, std::ios::binary);
+                            if (outFile.is_open()) {
+                                outFile.write(reinterpret_cast<const char*>(&spawnrate), sizeof(spawnrate));
+                                outFile.write(reinterpret_cast<const char*>(&maxParticles), sizeof(maxParticles));
+                                size_t texturePathSize = texturePath.size();
+                                outFile.write(reinterpret_cast<const char*>(&texturePathSize), sizeof(texturePathSize));
+                                outFile.write(texturePath.c_str(), texturePathSize);
+                                outFile.close();
+                            }
+                            else {
+                                std::cerr << "Failed to open file for saving: " << savePath << std::endl;
+                            }
+                        }
                     }
                 }
             }

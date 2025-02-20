@@ -45,6 +45,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="ElMasterController.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Input.cs" />

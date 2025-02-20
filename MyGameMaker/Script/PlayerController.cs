@@ -225,6 +225,9 @@ public class PlayerController : MonoBehaviour
         try
         {
             GameObject projectile = Engineson.CreateGameObject("Projectile", null);
+
+            //create a mesh renderer
+
             if (projectile != null)
             {
                 Transform projTransform = projectile.GetComponent<Transform>();

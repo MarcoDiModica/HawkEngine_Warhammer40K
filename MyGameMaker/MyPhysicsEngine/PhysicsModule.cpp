@@ -161,8 +161,8 @@ void PhysicsModule::SyncTransforms() {
 void PhysicsModule::SyncCollidersToGameObjects() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
         auto goTransform = gameObject->GetTransform();
-        glm::vec3 position = goTransform->GetPosition();
-        glm::quat rotation = goTransform->GetRotation();
+        glm::vec3 position = goTransform->GetLocalPosition();
+        glm::quat rotation = goTransform->GetLocalRotation();
 
         btTransform transform;
         transform.setIdentity();

@@ -94,7 +94,7 @@ void MakeCity() {
         //go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
         go->GetTransform()->SetMatrix(MarcoVicePresidente2->GetTransform()->GetMatrix());
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
-        //gameObjectsWithColliders.push_back(go);
+        gameObjectsWithColliders.push_back(go);
     }
 
     auto grid = Application->root->CreatePlane("Grid");

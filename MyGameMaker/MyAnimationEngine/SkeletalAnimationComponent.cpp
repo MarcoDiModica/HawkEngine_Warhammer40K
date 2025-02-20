@@ -6,10 +6,13 @@ SkeletalAnimationComponent::SkeletalAnimationComponent(GameObject* owner) : Comp
     name = "SkeletalAnimation_Component";
 }
 
-SkeletalAnimationComponent::SkeletalAnimationComponent(const SkeletalAnimationComponent& other) : Component(other)
-{
-    animator = other.animator;
-    testAnimation = other.testAnimation;
+SkeletalAnimationComponent::SkeletalAnimationComponent(const SkeletalAnimationComponent& other) : Component(other) {
+    if (other.animator) {
+        animator = std::make_unique<Animator>(*other.animator);
+    }
+    if (other.testAnimation) {
+        testAnimation = std::make_unique<Animation>(*other.testAnimation);
+    }
 }
 
 SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(const SkeletalAnimationComponent& other)
@@ -17,36 +20,39 @@ SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(const Skeletal
     if (this != &other)
     {
         Component::operator=(other);
-        animator = other.animator;
-        testAnimation = other.testAnimation;
+        if (other.animator) {
+            animator = std::make_unique<Animator>(*other.animator);
+        } else {
+            animator.reset();
+        }
+        if (other.testAnimation) {
+            testAnimation = std::make_unique<Animation>(*other.testAnimation);
+        } else {
+            testAnimation.reset();
+        }
     }
     return *this;
 }
 
-SkeletalAnimationComponent::SkeletalAnimationComponent(SkeletalAnimationComponent&& other) noexcept : Component(std::move(other))
-{
-    animator = other.animator;
-    testAnimation = other.testAnimation;
+SkeletalAnimationComponent::SkeletalAnimationComponent(SkeletalAnimationComponent&& other) noexcept : Component(std::move(other)) {
+    animator = std::move(other.animator);
+    testAnimation = std::move(other.testAnimation);
 }
 
-SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(SkeletalAnimationComponent&& other) noexcept
-{
-    if (this != &other)
-    {
+
+SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(SkeletalAnimationComponent&& other) noexcept {
+    if (this != &other) {
         Component::operator=(std::move(other));
-        animator = other.animator;
-        testAnimation = other.testAnimation;
-        other.animator = nullptr;
-        other.testAnimation = nullptr;
+        animator = std::move(other.animator);
+        testAnimation = std::move(other.testAnimation);
     }
     return *this;
 }
-
 
 void SkeletalAnimationComponent::Start()
 {
-	animator = new Animator(testAnimation);
-	animator->PlayAnimation(testAnimation);
+    animator = std::make_unique<Animator>(testAnimation.get());
+    animator->PlayAnimation(testAnimation.get());
 }
 
 void SkeletalAnimationComponent::Update(float deltaTime)

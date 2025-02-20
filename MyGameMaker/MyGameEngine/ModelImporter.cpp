@@ -101,13 +101,17 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		meshComponent->SetMaterial(materials[materialIndex]);
 		meshComponent->GetMaterial()->useShader = false;
 		//meshComponent->GetMaterial()->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
+		if (obj.HasComponent<SkeletalAnimationComponent>()) 
+		{
+			//obj.GetComponent<SkeletalAnimationComponent>()->GetAnimation()->SetUpAnimation(scenePath, meshComponent->GetMesh().get());
+		}
 		meshGameObjects.push_back(std::make_shared<GameObject>(obj));
 	}
 
 	for (unsigned int i = 0; i < node.mNumChildren; ++i)
 	{
 
-	 	graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, scenePath);
+			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, scenePath);
 		
 	}
 

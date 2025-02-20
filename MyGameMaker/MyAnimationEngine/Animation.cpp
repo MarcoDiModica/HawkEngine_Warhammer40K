@@ -63,7 +63,7 @@ void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model)
     m_Duration = animation->mDuration;
     m_TicksPerSecond = animation->mTicksPerSecond;
     ReadHeirarchyData(m_RootNode, scene->mRootNode);
-//    ReadMissingBones(animation, *model);
+    //ReadMissingBones(animation, *model);
 }
 
 Bone* Animation::FindBone(const std::string& name)

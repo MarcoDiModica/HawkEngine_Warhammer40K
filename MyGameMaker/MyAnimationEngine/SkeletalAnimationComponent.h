@@ -35,18 +35,18 @@ public:
         return CsharpReference;
     }
 
-	void SetAnimation(Animation* animation) {
-		testAnimation = animation;
-	}
+    void SetAnimation(Animation* animation) {
+        testAnimation = std::make_unique<Animation>(*animation);
+    }
 
-	Animation* GetAnimation() const{
-		return testAnimation;
-	}
+    Animation* GetAnimation() const {
+        return testAnimation.get();
+    }
     Animation animationTest;
     float patatudo;
 private:
-	Animator* animator;
-	Animation* testAnimation;
+    std::unique_ptr<Animator> animator;
+    std::unique_ptr<Animation> testAnimation;
     
  
 

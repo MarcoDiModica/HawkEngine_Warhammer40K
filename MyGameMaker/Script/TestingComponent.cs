@@ -22,6 +22,8 @@ public class TestingComponent : MonoBehaviour
     public float timer = 0.0f;
     public int count = 1;
     public float projectileSpeed = 10.0f;
+    public float marco = 0.1f;
+    public float marco2 = 0.1f;
 
     public float moveAmount = 1.0f;
     private Vector3 currentPosition;
@@ -61,7 +63,7 @@ public class TestingComponent : MonoBehaviour
         // Tank controls
         if (Input.GetKey(KeyCode.UP))
         {
-            movement = new Vector3(0, 0, moveAmount);
+            movement = new Vector3(0, 0, moveAmount + 2);
             forwardDirection = new Vector3(0, 0, 1);
         }
         else if (Input.GetKey(KeyCode.DOWN))
@@ -69,6 +71,7 @@ public class TestingComponent : MonoBehaviour
             movement = new Vector3(0, 0, -moveAmount);
             forwardDirection = new Vector3(0, 0, -1);
         }
+        
 
 
         if (movement != Vector3.Zero)

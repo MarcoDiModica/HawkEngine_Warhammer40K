@@ -642,12 +642,8 @@ bool UIInspector::Draw() {
 
 
                         if (ImGui::Button("Reload Script")) {
-                            if (!scriptComponent->LoadScript(scriptName)) {
-                                LOG(LogType::LOG_ERROR, "Failed to reload script %s.", scriptName.c_str());
-                            }
-                            else {
-                                LOG(LogType::LOG_INFO, "Script %s reloaded successfully.", scriptName.c_str());
-                            }
+							MonoManager::GetInstance().ReloadAssembly();
+							scriptComponent->LoadScript(scriptName);
                         }
 
                         MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);

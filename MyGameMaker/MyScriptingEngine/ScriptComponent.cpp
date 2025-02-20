@@ -84,10 +84,7 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
 
     if (MonoManager::GetInstance().scriptIDs.contains(scriptName) == false) {
 
-     LOG(LogType::LOG_INFO, "Script %s Loaded successfully.", scriptName.c_str());
-
-
-
+        LOG(LogType::LOG_INFO, "Script %s Loaded successfully.", scriptName.c_str());
         MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
     }
 

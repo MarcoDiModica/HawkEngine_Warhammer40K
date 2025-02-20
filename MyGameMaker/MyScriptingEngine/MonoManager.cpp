@@ -40,7 +40,6 @@ MonoManager& MonoManager::GetInstance() {
 MonoManager::MonoManager() : domain(nullptr), assembly(nullptr), image(nullptr) {}
 
 MonoManager::~MonoManager() {
-    Shutdown();
 }
 
 void MonoManager::Initialize() {
@@ -49,7 +48,7 @@ void MonoManager::Initialize() {
     mono_set_dirs(std::string(path + "\\lib").c_str(),
         std::string(path + "\\etc").c_str());
 
-    domain = mono_jit_init("MyGameDomain");
+    domain = mono_jit_init("JITRuntime");
     if (!domain) {
         std::cerr << "Error initializing Mono" << std::endl;
         return;
@@ -103,13 +102,12 @@ void MonoManager::Initialize() {
     }
 }
 
-void MonoManager::Shutdown() {
-    if (domain) {
-        mono_jit_cleanup(domain);
-        domain = nullptr;
-        assembly = nullptr;
-        image = nullptr;
-    }
+void MonoManager::Shutdown()
+{
+    mono_domain_set(mono_get_root_domain(), false);
+
+    mono_domain_unload(domain);
+    domain = nullptr;
 }
 
 MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const {
@@ -117,26 +115,54 @@ MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::st
 }
 
 void MonoManager::ReloadAssembly() {
-    Shutdown();
-    Initialize();
-    
-    if (!domain) {
-        LOG(LogType::LOG_ERROR, "Failed to reinitialize Mono domain.");
-        return;
-    }
+    // Deshabilitamos el dominio actual, pero no lo descargamos.
+    mono_domain_set(mono_get_root_domain(), false);
 
-    std::string assemblyPath = getExecutablePath() + "\\..\\..\\Script\\obj\\Debug\\Script.dll";
+    // Volver a cargar el ensamblado
+    std::string assemblyPath = std::string(getExecutablePath() + "\\..\\..\\Script\\obj\\Debug\\Script.dll").c_str();
     assembly = mono_domain_assembly_open(domain, assemblyPath.c_str());
     if (!assembly) {
-        LOG(LogType::LOG_ERROR, "Failed to reload assembly: %s", assemblyPath.c_str());
+		LOG(LogType::LOG_ERROR, "Error loading assembly: %s", assemblyPath.c_str());
         return;
     }
 
     image = mono_assembly_get_image(assembly);
     if (!image) {
-        LOG(LogType::LOG_ERROR, "Failed to retrieve image from reloaded assembly.");
+		LOG(LogType::LOG_ERROR, "Error getting image from assembly");
         return;
     }
 
-    LOG(LogType::LOG_INFO, "Assembly successfully reloaded.");
+    // Vuelve a vincular las funciones internas
+    EngineBinds::BindEngine();
+    mono_add_internal_call("HawkEngine.Engineson::print", (const void*)HandleConsoleOutput);
+
+    // Recargar las clases de usuario
+    const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+    int rows = mono_table_info_get_rows(table_info);
+
+    MonoClass* klass = nullptr;
+
+    user_classes.clear();
+    for (int i = rows - 1; i > 0; --i)
+    {
+        uint32_t cols[MONO_TYPEDEF_SIZE];
+        mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
+        const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+        if (name[0] != '<')
+        {
+            const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+            klass = mono_class_from_name(image, name_space, name);
+
+            if (klass != nullptr && strcmp(mono_class_get_namespace(klass), "Script") != 0)
+            {
+                if (!mono_class_is_enum(klass)) {
+                    user_classes.push_back(klass);
+                }
+            }
+        }
+    }
+
+    // Vuelve a activar el dominio
+    mono_domain_set(domain, true);
+	LOG(LogType::LOG_INFO, "Assembly reloaded");
 }

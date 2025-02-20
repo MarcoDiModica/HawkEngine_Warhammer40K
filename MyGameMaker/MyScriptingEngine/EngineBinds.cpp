@@ -221,7 +221,7 @@ Vector3 EngineBinds::GetPosition(MonoObject* transformRef) {
 
 Vector3 EngineBinds::GetLocalPosition(MonoObject* transformRef) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
-    glm::dvec3 p = transform->GetLocalPosition()[3];
+    glm::dvec3 p = transform->GetLocalPosition();
     return Vector3{ (float)p.x,(float)p.y,(float)p.z };
 }
 

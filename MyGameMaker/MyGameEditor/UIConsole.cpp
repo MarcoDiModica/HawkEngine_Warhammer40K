@@ -1,8 +1,8 @@
+#include <imgui.h>
+
 #include "UIConsole.h"
 #include "App.h"
 #include "MyGUI.h"
-#include <imgui.h>
-
 #include "Log.h"
 
 UIConsole::UIConsole(UIType type, std::string name) : UIElement(type, name)

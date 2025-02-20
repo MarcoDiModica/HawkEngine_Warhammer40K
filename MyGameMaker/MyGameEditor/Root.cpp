@@ -1,5 +1,7 @@
-#include "Root.h"
+#include <SDL2/SDL.h>
+#include <iostream>
 
+#include "Root.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/LightComponent.h"
@@ -14,15 +16,9 @@
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
-#include "../MyAudioEngine/AudioListener.h"
-
 #include "../MyScriptingEngine/ScriptComponent.h"
-#include <SDL2/SDL.h>
 #include "MyShadersEngine/ShaderComponent.h"
 
-#include <iostream>
-
-using namespace std;
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
 

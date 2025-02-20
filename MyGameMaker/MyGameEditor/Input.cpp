@@ -1,8 +1,14 @@
+#include <SDL2/SDL.h>
+#include <string>
+#include <iostream>
+#include <filesystem>
+
+#include "imgui.h"
+
 #include "MyGameEngine/Mesh.h"
 #include "App.h"
 #include "Log.h"
 #include "MyGUI.h"
-#include "imgui.h"
 #include "UiSceneWindow.h"
 #include "Input.h"
 #include "EditorCamera.h"
@@ -11,15 +17,10 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
-
 #include "../MyPhysicsEngine/PhysVehicle3D.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyAudioEngine/AudioAssetProcessor.h"
-#include <SDL2/SDL.h> // idk what to do to remove this
-#include <string>
-#include <iostream>
-#include <filesystem>
 
 
 #define MAX_KEYS 300
@@ -196,8 +197,6 @@ bool Input::processSDLEvents()
                     Application->physicsModule->linkPhysicsToScene = false;
                 }
                 break;
-            case SDLK_ESCAPE:
-                return false;
 
             case SDLK_DELETE: {
                 int i = 0;

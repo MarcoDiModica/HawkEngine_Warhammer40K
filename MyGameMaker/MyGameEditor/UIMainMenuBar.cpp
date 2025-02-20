@@ -1,20 +1,14 @@
+#include <imgui.h>
+#include <SDL2/SDL.h>
+#include <windows.h>
+#include <shellapi.h>
+
 #include "UIMainMenuBar.h"
 #include "App.h"
 #include "MyGUI.h"
-#include <imgui.h>
 #include "Input.h"
-#include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/Image.h"
 #include "Log.h"
-#include "UIConsole.h"
-#include "UISettings.h"
-#include "UIInspector.h"
-#include "UIHierarchy.h"
-#include <SDL2/SDL.h>
-
-//libraries to open websites
-#include <windows.h>
-#include <shellapi.h>
 
 void SetRedStyle();
 

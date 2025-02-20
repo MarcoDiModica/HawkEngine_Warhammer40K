@@ -1,13 +1,11 @@
 #include <windows.h>
 #include <stdio.h>
-#include <vector>
 #include <tchar.h>
+
 #include "Log.h"
 #include "App.h"
 
-
 #define BUFFER_SIZE 4096
-
 
 void Log(const char file[], int line, LogType type, const char* format, ...)
 {

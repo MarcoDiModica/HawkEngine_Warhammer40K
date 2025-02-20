@@ -2,10 +2,10 @@
 #define __UI_MAIN_MENU_BAR_H__
 #pragma once
 
+#include <string>
+
 #include "UIElement.h"
 #include "MyGameEngine/Image.h"
-#include <vector>
-#include <string>
 
 class Image;
 

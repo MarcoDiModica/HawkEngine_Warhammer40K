@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include "../MyGameEngine/CameraComponent.h"
+#include "Input.h"
 
 
 class MeshRenderer;

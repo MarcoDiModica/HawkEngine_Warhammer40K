@@ -1,37 +1,80 @@
-#ifndef __UI_PROJECT_H__
-#define __UI_PROJECT_H__
 #pragma once
 
-#include "UIElement.h"
-#include "MyGameEngine/Image.h"
 #include <filesystem>
+#include <vector>
+#include <map>
+#include <future>
 
-class UIProject : public UIElement
-{
+#include "UIElement.h"
+
+#define ICON_SIZE 64.0f
+
+class Image;
+
+class UIProject : public UIElement {
 public:
-	UIProject(UIType type, std::string name);
-	~UIProject();
+    enum class SortOption {
+        Name,
+        Type,
+        Size,
+        LastModified
+    };
 
-	bool Draw() override;
-	std::pair<bool, uint32_t> DirectoryView(const std::filesystem::path& path, uint32_t* count, int* selection_mask);
+    UIProject(UIType type, std::string name);
+    ~UIProject();
 
-public:
-	std::string directoryPath;
-	std::string currentSceneFile;
-
-	void HandleFileSelection(const std::string& filePath);
-	void DrawFolderContents(const std::filesystem::path& path);
+    bool Draw() override;
 
 private:
-	Image* folderIcon;
+    std::filesystem::path directoryPath;
+    std::filesystem::path selectedDirectory;
+    std::filesystem::path draggedItemPath;
+    std::filesystem::path copiedItemPath;
+    std::filesystem::path selectedFile;
+    std::filesystem::path renamePath;
+    std::filesystem::path newItemPath;
+    std::string currentSceneFile;
+    std::vector<std::filesystem::path> currentDirectoryEntries;
+    std::future<std::vector<std::filesystem::path>> directoryListingFuture;
 
-	Image* imageIcon;
-	Image* sceneIcon;
-	Image* matIcon;
-	Image* meshIcon;
-	Image* audioIcon;
+    std::map<std::string, Image*> iconCache;
 
-	std::filesystem::path selectedDirectory;
+    SortOption currentSortOption;
+    bool sortAscending;
+    bool firstDraw = true;
+    bool isLoading = false;
+    bool showDeletePopup = false;
+    bool isCopying = false;
+    bool isCutting = false;
+    bool isCreatingNewItem;
+    bool isNewItemFolder;
+    std::string newItemName;
+
+    void DrawMainLayout();
+    void DrawContentArea();
+    void DrawDirectoryTree();
+    void DrawBreadcrumbs();
+    void DrawFolderContents(const std::filesystem::path& path);
+    void DrawActionButtons();
+    void DrawGridItem(const std::filesystem::path& entry, const std::string& filename);
+    void DrawRenamingItem(const std::filesystem::path& entry, const std::string& filename, Image* icon);
+    void DrawNormalItem(const std::filesystem::path& entry, const std::string& filename, Image* icon, bool isDirectory);
+    void DrawNewItemCreation();
+    void DrawTruncatedLabel(const std::string& filename);
+
+    void HandleItemInteractions(const std::filesystem::path& entry, const std::string& filename, Image* icon, bool isDirectory);
+    void HandleFileSelection(const std::filesystem::path& filePath);
+    void HandleRename(const std::filesystem::path& entry, const char* newName);
+
+    void StartDirectoryListing(const std::filesystem::path& path);
+    void SortDirectoryEntries();
+    void ShowContextMenu();
+    void CreateNewItem(const std::filesystem::path& path, bool isFolder);
+    Image* GetIconForFile(const std::filesystem::path& filePath);
+
+    void CopyItem(const std::filesystem::path& path, bool isCut);
+    void PasteItem(const std::filesystem::path& path);
+    void DuplicateItem(const std::filesystem::path& path);
+
+    void HandleShortcuts();
 };
-
-#endif // !__UI_PROJECT_H__

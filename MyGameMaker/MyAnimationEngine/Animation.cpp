@@ -17,6 +17,7 @@ Animation::Animation(const Animation& other)
     m_Bones = other.m_Bones;
     m_RootNode = other.m_RootNode;
     m_BoneInfoMap = other.m_BoneInfoMap;
+	m_Animations = other.m_Animations;
 }
 
 Animation& Animation::operator=(const Animation& other)
@@ -28,6 +29,7 @@ Animation& Animation::operator=(const Animation& other)
         m_Bones = other.m_Bones;
         m_RootNode = other.m_RootNode;
         m_BoneInfoMap = other.m_BoneInfoMap;
+        m_Animations = other.m_Animations;
     }
     return *this;
 }
@@ -39,6 +41,7 @@ Animation::Animation(Animation&& other) noexcept
     m_Bones = std::move(other.m_Bones);
     m_RootNode = std::move(other.m_RootNode);
     m_BoneInfoMap = std::move(other.m_BoneInfoMap);
+	m_Animations = std::move(other.m_Animations);
 }
 
 Animation& Animation::operator=(Animation&& other) noexcept
@@ -50,6 +53,7 @@ Animation& Animation::operator=(Animation&& other) noexcept
         m_Bones = std::move(other.m_Bones);
         m_RootNode = std::move(other.m_RootNode);
         m_BoneInfoMap = std::move(other.m_BoneInfoMap);
+		m_Animations = std::move(other.m_Animations);
     }
     return *this;
 }
@@ -61,6 +65,10 @@ void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model)
     assert(scene && scene->mRootNode);
     auto animation = scene->mAnimations[0];
     m_Duration = animation->mDuration;
+    for (int i = 0; i < animation->mNumChannels; i++)
+    {
+        m_Animations.push_back(animation->mChannels[i]->mNodeName.C_Str());
+    }
     m_TicksPerSecond = animation->mTicksPerSecond;
     ReadHeirarchyData(m_RootNode, scene->mRootNode);
     ReadMissingBones(animation, *model);
@@ -68,14 +76,14 @@ void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model)
 
 Bone* Animation::FindBone(const std::string& name)
 {
-    auto iter = std::find_if(m_Bones.begin(), m_Bones.end(),
-        [&](const Bone& Bone)
+    for (int i = 0; i < m_Animations.size(); i++)
+    {
+        if (m_Animations[i] == name)
         {
-            return Bone.GetBoneName() == name;
+            return &m_Bones[i];
         }
-    );
-    if (iter == m_Bones.end()) return nullptr;
-    else return &(*iter);
+    }
+    return nullptr;
 }
 
 void Animation::ReadMissingBones(const aiAnimation* animation, Mesh& model)

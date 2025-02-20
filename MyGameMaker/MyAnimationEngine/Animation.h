@@ -24,6 +24,7 @@ private:
     std::vector<Bone> m_Bones;
     AssimpNodeData m_RootNode;
     std::map<std::string, BoneInfo> m_BoneInfoMap;
+    std::vector<std::string> m_Animations;
 public:
     Animation();
     ~Animation();

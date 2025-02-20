@@ -54,18 +54,13 @@ Animation& Animation::operator=(Animation&& other) noexcept
     return *this;
 }
 
-void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model, aiAnimation **const aiAnimationn)
+void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model)
 {
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
     assert(scene && scene->mRootNode);
     auto animation = scene->mAnimations[0];
     m_Duration = animation->mDuration;
-
-    for (int i = 0; i < animation->mNumChannels; i++)
-    {
-        m_Animations.push_back(animation->mChannels[i]->mNodeName.C_Str());
-    }
     m_TicksPerSecond = animation->mTicksPerSecond;
     ReadHeirarchyData(m_RootNode, scene->mRootNode);
     ReadMissingBones(animation, *model);
@@ -73,23 +68,14 @@ void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model, ai
 
 Bone* Animation::FindBone(const std::string& name)
 {
-
-    for (int i = 0; i < m_Animations.size(); i++)
-    {
-        if (m_Animations[i] == name)
+    auto iter = std::find_if(m_Bones.begin(), m_Bones.end(),
+        [&](const Bone& Bone)
         {
-            return &m_Bones[i];
+            return Bone.GetBoneName() == name;
         }
-    }
-    return nullptr;
-    //auto iter = std::find_if(m_Animations.mChannels .begin(), m_Bones.end(),
-    //    [&](const Bone& Bone)
-    //    {
-    //        return Bone.GetBoneName() == name;
-    //    }
-    //);
-  /*  if (iter == m_Bones.end()) return nullptr;
-    else return &(*iter);*/
+    );
+    if (iter == m_Bones.end()) return nullptr;
+    else return &(*iter);
 }
 
 void Animation::ReadMissingBones(const aiAnimation* animation, Mesh& model)

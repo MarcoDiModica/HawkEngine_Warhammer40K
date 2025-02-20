@@ -22,7 +22,6 @@ private:
     float m_Duration = 0;
     int m_TicksPerSecond = 0;
     std::vector<Bone> m_Bones;
-    std::vector<std::string> m_Animations;
     AssimpNodeData m_RootNode;
     std::map<std::string, BoneInfo> m_BoneInfoMap;
 public:
@@ -35,7 +34,7 @@ public:
     Animation(Animation&& other) noexcept;
     Animation& operator=(Animation&& other) noexcept;
 
-    void SetUpAnimation(const std::string& animationPath, Mesh* model,aiAnimation **const aiAnimation);
+    void SetUpAnimation(const std::string& animationPath, Mesh* model);
 
 	Bone* FindBone(const std::string& name);
 

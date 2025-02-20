@@ -88,17 +88,17 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		//meshComponent->GetMaterial()->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
 		if (scene.mNumAnimations > 0 ) 
 		{
+			scene.mAnimations[0]->mChannels[0]->mNodeName;
+			
 			auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
 			Animation* animation = new Animation();
 			Animation animation2 = Animation();
-			animation->SetUpAnimation(scenePath, meshComponent->GetMesh().get());
-			animation2 = *animation;
-			obj.GetComponent<SkeletalAnimationComponent>()->animationTest = animation2;
+			animation->SetUpAnimation(scenePath, meshComponent->GetMesh().get(), scene.mAnimations);
+			
+			
 			obj.GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation);
 			obj.GetComponent<SkeletalAnimationComponent>()->patatudo = 43.0f;
-			skeletalAnimationComponent->animationTest = animation2;
-			skeletalAnimationComponent->SetAnimation(animation);
-			animations.push_back(std::make_shared<Animation>(*animation));
+
 			std::cout << node.mName.C_Str() << std::endl;
 		}
 		meshGameObjects.push_back(std::make_shared<GameObject>(obj));
@@ -107,7 +107,7 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 	for (unsigned int i = 0; i < node.mNumChildren; ++i)
 	{
 
-			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, scenePath);
+		graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, scenePath);
 		
 	}
 

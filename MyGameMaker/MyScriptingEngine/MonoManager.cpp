@@ -62,7 +62,7 @@ static MonoAssembly* LoadMonoAssembly(const std::string& assemblyPath)
     return assembly;
 }
 
-void PrintAssemblyTypes(MonoAssembly* assembly)
+static void PrintAssemblyTypes(MonoAssembly* assembly)
 {
     MonoImage* image = mono_assembly_get_image(assembly);
     const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
@@ -144,6 +144,7 @@ bool MonoManager::LoadCoreAssembly(const std::filesystem::path& filepath)
     char appDomainName[] = "HawkJITCoreDomain";
     s_Data->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
     mono_domain_set(s_Data->AppDomain, true);
+    mono_thread_attach(s_Data->AppDomain);
     
     s_Data->CoreAssemblyPath = filepath;
     s_Data->CoreAssembly = LoadMonoAssembly(filepath.string());
@@ -174,7 +175,11 @@ void MonoManager::ReloadAssembly() {
     EngineBinds::BindEngine();
 }
 
-MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const 
+MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const
 {
-    return mono_class_from_name(s_Data->AppAssemblyImage, namespaceName.c_str(), className.c_str());
+    MonoClass* result = mono_class_from_name(s_Data->CoreAssemblyImage, namespaceName.c_str(), className.c_str());
+    if (!result) {
+        result = mono_class_from_name(s_Data->AppAssemblyImage, namespaceName.c_str(), className.c_str());
+    }
+    return result;
 }

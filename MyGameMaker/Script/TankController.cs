@@ -12,6 +12,8 @@ using System.Security.Policy;
 
 public class TankController : MonoBehaviour
 {
+    public TankController() {}
+    
     GameObject turret;
     Transform transform;
     GameObject projectile;

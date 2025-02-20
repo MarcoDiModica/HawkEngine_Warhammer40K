@@ -1,30 +1,22 @@
 ﻿using HawkEngine;
-using System;
-using System.Numerics;
 using System.Runtime.CompilerServices;
+using System;
 
-public  class MonoBehaviour
+public abstract class MonoBehaviour
 {
+    private UIntPtr CplusplusInstance;
+
     public GameObject gameObject
     {
         get { return GetGameObject(); }
     }
 
-    public UIntPtr CplusplusInstance;
-
-    public virtual void Start()
-    {
-        
-    }
-
-    public virtual void Update(float deltaTime)
-    {
-        
-    }
-
+    public virtual void Start() { }
+    public virtual void Update(float deltaTime) { }
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern GameObject  GetGameObject();
+    private extern GameObject GetGameObject();
+
     public T GetComponent<T>()
     {
         return gameObject.GetComponent<T>();

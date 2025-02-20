@@ -46,6 +46,7 @@ public:
     MonoClass* GetClass(const std::string& namespaceName, const std::string& className) const;
     const ComponentMapper& GetMapper() const { return m_Mapper; }
     std::vector<MonoClass*> GetUserClasses() const { return m_UserClasses; }
+    static void PrintAssemblyTypes(MonoAssembly* assembly);
 
     const std::unordered_map<std::string, int>& GetScriptIDs() const { return m_ScriptIDs; }
     bool HasScriptID(const std::string& scriptName) const { return m_ScriptIDs.contains(scriptName); }

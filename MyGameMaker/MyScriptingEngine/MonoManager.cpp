@@ -64,7 +64,7 @@ static MonoAssembly* LoadMonoAssembly(const std::string& assemblyPath)
     return assembly;
 }
 
-static void PrintAssemblyTypes(MonoAssembly* assembly)
+void MonoManager::PrintAssemblyTypes(MonoAssembly* assembly)
 {
     MonoImage* image = mono_assembly_get_image(assembly);
     const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
@@ -170,7 +170,35 @@ bool MonoManager::LoadAppAssembly(const std::filesystem::path& filepath)
 
 void MonoManager::LoadScriptClasses()
 {
-    m_UserClasses.clear();
+	//load all clases not only MonoBehaviours
+	m_UserClasses.clear();
+
+	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_Data->AppAssemblyImage, MONO_TABLE_TYPEDEF);
+	int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
+	MonoClass* monoBehaviourClass = mono_class_from_name(s_Data->CoreAssemblyImage, "", "MonoBehaviour");
+
+    for (int32_t i = 0; i < numTypes; i++)
+    {
+        uint32_t cols[MONO_TYPEDEF_SIZE];
+        mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
+        const char* nameSpace = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAMESPACE]);
+        const char* className = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAME]);
+        MonoClass* monoClass = mono_class_from_name(s_Data->AppAssemblyImage, nameSpace, className);
+        if (monoClass == monoBehaviourClass)
+            continue;
+        bool isMonoBehaviour = mono_class_is_subclass_of(monoClass, monoBehaviourClass, false);
+        if (!isMonoBehaviour)
+            continue;
+        if (!mono_class_is_enum(monoClass)) {
+            m_UserClasses.push_back(monoClass);
+            LOG(LogType::LOG_INFO, "Found script class: %s%s%s",
+                nameSpace[0] ? nameSpace : "",
+                nameSpace[0] ? "." : "",
+                className);
+        }
+    }
+    
+    /*m_UserClasses.clear();
 
     const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_Data->AppAssemblyImage, MONO_TABLE_TYPEDEF);
     int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
@@ -191,7 +219,7 @@ void MonoManager::LoadScriptClasses()
 
         bool isMonoBehaviour = mono_class_is_subclass_of(monoClass, monoBehaviourClass, false);
         if (!isMonoBehaviour)
-            continue;
+            continue;   
 
         if (!mono_class_is_enum(monoClass)) {
             m_UserClasses.push_back(monoClass);
@@ -200,7 +228,7 @@ void MonoManager::LoadScriptClasses()
                 nameSpace[0] ? "." : "",
                 className);
         }
-    }
+    }*/
 }
 
 void MonoManager::ReloadAssembly() {

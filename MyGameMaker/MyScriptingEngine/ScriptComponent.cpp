@@ -64,27 +64,48 @@ static MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespa
     return klass;
 }
 
-bool ScriptComponent::LoadScript(const std::string& scriptName) 
+bool ScriptComponent::LoadScript(const std::string& scriptName)
 {
     MonoManager& monoManager = MonoManager::GetInstance();
-	MonoAssembly* assembly = monoManager.GetAssembly();
-	MonoClass* scriptClass = GetClassInAssembly(assembly, "", scriptName.c_str());
+    MonoDomain* domain = monoManager.GetDomain();
+    if (!domain) {
+        LOG(LogType::LOG_ERROR, "El dominio de Mono no está inicializado.");
+        return false;
+    }
 
+    MonoAssembly* assembly = monoManager.GetAssembly();
+    if (!assembly) {
+        LOG(LogType::LOG_ERROR, "No se ha podido cargar el ensamblado.");
+        return false;
+    }
+
+	MonoManager::PrintAssemblyTypes(assembly);
+    
+	MonoClass* scriptClass = MonoManager::GetInstance().GetClass("", scriptName.c_str());
 	if (scriptClass == nullptr) {
-		LOG(LogType::LOG_ERROR, "No se ha encontrado la clase %s en el ensamblado.", scriptName.c_str());
+		LOG(LogType::LOG_ERROR, "No se ha podido encontrar la clase %s.", scriptName.c_str());
 		return false;
 	}
 
-	MonoObject* scriptObject = mono_object_new(monoManager.GetDomain(), scriptClass);
-	if (scriptObject == nullptr) {
+    MonoThread* currentThread = mono_thread_attach(domain);
+    if (!currentThread) {
+        LOG(LogType::LOG_ERROR, "No se ha podido adjuntar el hilo al dominio de Mono.");
+        return false;
+    }
+
+    MonoObject* scriptObject = mono_object_new(domain, scriptClass);
+    if (scriptObject == nullptr) {
         LOG(LogType::LOG_ERROR, "No se ha podido crear la instancia de la clase %s.", scriptName.c_str());
         return false;
     }
+
     mono_runtime_object_init(scriptObject);
+    monoScript = scriptObject;
 
-	monoScript = scriptObject;
+    mono_thread_detach(currentThread);
 
-	return true;
+    LOG(LogType::LOG_INFO, "Script %s cargado correctamente.", scriptName.c_str());
+    return true;
 }
 
 bool ScriptComponent::CreateNewScript(const std::string& scriptName, const std::string& baseScriptName)

@@ -19,6 +19,7 @@
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/object.h>
 #include "MyShadersEngine/ShaderComponent.h"
+#include "MyAnimationEngine/SkeletalAnimationComponent.h"
 
 unsigned int GameObject::nextGid = 1;
 
@@ -201,7 +202,13 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("projection", projection);
 
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("viewPos", cameraPosition);
-
+        if (HasComponent<SkeletalAnimationComponent>()) 
+        {
+            auto transforms = GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices();
+            for (int i = 0; i < transforms.size(); ++i)
+                GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("finalBonesMatrices[" + std::to_string(i) + "]",transforms[i]);
+        }
+      
 		int numPointLights = static_cast<int>( lights.size());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("numPointLights", numPointLights);
 

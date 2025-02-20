@@ -78,7 +78,7 @@ public:
     void loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords);
     void LoadNormals(const glm::vec3* normals, size_t num_normals);
     void LoadColors(const glm::u8vec3* colors, size_t num_colors);
- 
+    void LoadBones();
     void CalculateNormals();
     void Draw() const;
     static void drawBoundingBox(const BoundingBox& bbox);

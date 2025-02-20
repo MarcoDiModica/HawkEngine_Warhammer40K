@@ -97,8 +97,8 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 			obj.GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation);
 			obj.GetComponent<SkeletalAnimationComponent>()->patatudo = 43.0f;
 			skeletalAnimationComponent->animationTest = animation2;
-			skeletalAnimationComponent->SetAnimation(animation);
 			animations.push_back(std::make_shared<Animation>(*animation));
+			skeletalAnimationComponent->SetAnimation(animation);
 			std::cout << node.mName.C_Str() << std::endl;
 		}
 		meshGameObjects.push_back(std::make_shared<GameObject>(obj));
@@ -124,7 +124,7 @@ vector<shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 			// Handle error: scene.mMeshes[i] is null
 			continue;
 		}
-		const aiMesh* fbx_mesh = scene.mMeshes[i];
+		aiMesh* fbx_mesh = scene.mMeshes[i];
 		auto mesh_ptr = make_shared<Mesh>();
 
 		vector<unsigned int> indices(fbx_mesh->mNumFaces * 3);
@@ -148,12 +148,30 @@ vector<shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 			for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) colors[j] = glm::u8vec3(fbx_mesh->mColors[0][j].r * 255, fbx_mesh->mColors[0][j].g * 255, fbx_mesh->mColors[0][j].b * 255);
 			mesh_ptr->LoadColors(colors.data(), colors.size());
 		}
+		
+		vector<Vertex> vertices;
+		for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) 
+		{
+			Vertex vertex;
+
+			mesh_ptr->SetVertexBoneDataToDefault(vertex);
+			vertices.push_back(vertex);
+		}
+
+
+        mesh_ptr->ExtractBoneWeightForVertices(vertices, fbx_mesh, &scene);
+
+		mesh_ptr->LoadBones();
+
 		meshess.push_back(mesh_ptr);
 	}
 	return meshess;
 }
 
-static vector<shared_ptr<Material>> createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath) {
+
+
+
+vector<shared_ptr<Material>> createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath) {
 
 	vector<shared_ptr<Material>> materials;
 	map<string, shared_ptr<Image>> images;

@@ -42,6 +42,16 @@ public:
     Animation* GetAnimation() const {
         return testAnimation.get();
     }
+
+    void SetAnimator(Animator* animatorr) {
+        animator = std::make_unique<Animator>(*animatorr);
+    }
+
+    Animator* GetAnimator() const {
+        return animator.get();
+    }
+
+
     Animation animationTest;
     float patatudo;
 private:

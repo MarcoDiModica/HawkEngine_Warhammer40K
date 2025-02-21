@@ -6,13 +6,13 @@ using System;
 public class PlayerController : MonoBehaviour
 {
     #region Movement Settings
-    public float moveSpeed = 5.0f;
-    public float rotationSpeed = 8.0f;
+    public float moveSpeed = 9.0f;
+    public float rotationSpeed = 14.0f;
     public float acceleration = 20.0f;
     public float deceleration = 15.0f;
 
-    public float dashSpeed = 15.0f;
-    public float dashDuration = 0.2f;
+    public float dashSpeed = 45.0f;
+    public float dashDuration = 0.15f;
     public float dashCooldown = 1.0f;
     public int maxDashCharges = 2;
 
@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
         {
             GameObject projectile = Engineson.CreateGameObject("Projectile", null);
 
-            //create a mesh renderer
+            // TODO: add mesh to the projectile
 
             if (projectile != null)
             {

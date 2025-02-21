@@ -461,6 +461,19 @@ bool UIInspector::Draw() {
                         colliderComponent->SetSnapToPosition(snapToPosition);
 					}
 
+                    float rot[3] = { 0.0f, 0.0f, 0.0f }; // Define the rot array
+                    if (ImGui::DragFloat3("ColliderRotation", rot, 0.1f)) { 
+                        if (selectedGameObject->HasComponent<ColliderComponent>()) {
+                            ColliderComponent* collider = selectedGameObject->GetComponent<ColliderComponent>();
+                            if (collider) {
+                                glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
+                                collider->SetColliderRotation(newRotation);
+                            }
+                        }
+                    }
+
+                    
+
                     // Tamaño del Collider
                     glm::vec3 size = colliderComponent->GetSize();
                     float sizeArray[3] = { size.x, size.y, size.z };

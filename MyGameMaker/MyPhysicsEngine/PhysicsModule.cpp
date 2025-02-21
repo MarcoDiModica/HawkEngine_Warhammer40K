@@ -76,7 +76,6 @@ void PhysicsModule::CreatePhysicsForCube(GameObject& go, float mass) {
     std::cout << "Physics created for GameObject at position: ("
         << position.x << ", " << position.y << ", " << position.z << ")\n";
 }
-
 void PhysicsModule::SyncTransforms() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
         btTransform transform;
@@ -89,24 +88,27 @@ void PhysicsModule::SyncTransforms() {
 
         auto goTransform = gameObject->GetTransform();
 
-        glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-        glm::dvec3 deltaPos = newPosition - goTransform->GetPosition();
-        goTransform->Translate(deltaPos);
-        auto x = pos.x();
-        auto y = pos.y();
-        auto z = pos.z();
-        auto v = glm::vec3(x, y, z);
+        // Obtener la posición y rotación inicial de gameObject solo si no están almacenadas
+        static std::unordered_map<GameObject*, glm::dvec3> initialOffsets;
+        static std::unordered_map<GameObject*, glm::dquat> initialRotations;
+        if (initialOffsets.find(gameObject) == initialOffsets.end()) {
+            glm::dvec3 initialPos = goTransform->GetPosition();
+            glm::dvec3 rigidBodyInitialPos = { pos[0], pos[1], pos[2] };
+            initialOffsets[gameObject] = initialPos - rigidBodyInitialPos;
 
-        glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-        glm::dvec3 currentRotation = glm::radians(goTransform->GetEulerAngles());
-        glm::dvec3 deltaRot = newRotation - currentRotation;
+            glm::dquat initialRot = goTransform->GetRotation();
+            glm::dquat rigidBodyInitialRot = glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
+            initialRotations[gameObject] = glm::inverse(rigidBodyInitialRot) * initialRot;
+        }
 
-        goTransform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-        goTransform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-        goTransform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+        // Aplicar el desplazamiento inicial a la nueva posición del collider
+        glm::dvec3 adjustedPosition = glm::dvec3(pos[0], pos[1], pos[2]) + initialOffsets[gameObject];
+        goTransform->SetPosition(adjustedPosition);
 
-        std::cout << "GameObject position updated to: ("
-            << pos.getX() << ", " << pos.getY() << ", " << pos.getZ() << ")\n";
+        // Aplicar la rotación relativa inicial
+        glm::dquat newRotation = glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
+        glm::dquat adjustedRotation = newRotation * initialRotations[gameObject];
+        goTransform->SetRotationQuat(adjustedRotation);
     }
 }
 
@@ -145,7 +147,9 @@ std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWor
     }
 
     return rigidBodies;
-}void PhysicsModule::DrawDebugDrawer() {
+}
+
+void PhysicsModule::DrawDebugDrawer() {
     if (debugDrawer) {
         auto rigidBodies = GetAllRigidBodies(dynamicsWorld);
 
@@ -158,34 +162,43 @@ std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWor
 
             btTransform transform;
             rigidBody->getMotionState()->getWorldTransform(transform);
-            btVector3 position = transform.getOrigin();
             btQuaternion rotation = transform.getRotation();
-            glm::mat4 modelMatrix = glm::mat4(1.0f);
-            modelMatrix = glm::translate(modelMatrix, glm::vec3(position.getX(), position.getY(), position.getZ()));
-            modelMatrix *= glm::mat4_cast(glm::quat(rotation.getW(), rotation.getX(), rotation.getY(), rotation.getZ()));
+            btMatrix3x3 rotationMatrix(rotation);
+            btVector3 position = transform.getOrigin();
 
             if (shape->getShapeType() == BOX_SHAPE_PROXYTYPE) {
                 btBoxShape* boxShape = static_cast<btBoxShape*>(shape);
                 btVector3 halfExtents = boxShape->getHalfExtentsWithMargin();
-                glm::vec3 minPoint = glm::vec3(-halfExtents.getX(), -halfExtents.getY(), -halfExtents.getZ());
-                glm::vec3 maxPoint = glm::vec3(halfExtents.getX(), halfExtents.getY(), halfExtents.getZ());
 
-                BoundingBox bbox(
-                    glm::vec3(modelMatrix * glm::vec4(minPoint, 1.0f)),
-                    glm::vec3(modelMatrix * glm::vec4(maxPoint, 1.0f))
-                );
+                // Definir las 8 esquinas del BoundingBox en espacio local
+                btVector3 localCorners[8] = {
+                    btVector3(-halfExtents.x(), -halfExtents.y(), -halfExtents.z()),
+                    btVector3(halfExtents.x(), -halfExtents.y(), -halfExtents.z()),
+                    btVector3(halfExtents.x(),  halfExtents.y(), -halfExtents.z()),
+                    btVector3(-halfExtents.x(),  halfExtents.y(), -halfExtents.z()),
+                    btVector3(-halfExtents.x(), -halfExtents.y(),  halfExtents.z()),
+                    btVector3(halfExtents.x(), -halfExtents.y(),  halfExtents.z()),
+                    btVector3(halfExtents.x(),  halfExtents.y(),  halfExtents.z()),
+                    btVector3(-halfExtents.x(),  halfExtents.y(),  halfExtents.z())
+                };
 
-                debugDrawer->drawBoundingBox(bbox, glm::vec3(1.0f, 0.0f, 0.0f));
-            } else if (shape->getShapeType() == SPHERE_SHAPE_PROXYTYPE) {
+                glm::vec3 worldCorners[8];
+                for (int i = 0; i < 8; i++) {
+                    btVector3 rotatedCorner = rotationMatrix * localCorners[i] + position;
+                    worldCorners[i] = glm::vec3(rotatedCorner.x(), rotatedCorner.y(), rotatedCorner.z());
+                }
+
+                debugDrawer->drawRotatedBoundingBox(worldCorners, glm::vec3(1.0f, 0.0f, 0.0f));
+            }
+            else if (shape->getShapeType() == SPHERE_SHAPE_PROXYTYPE) {
                 btSphereShape* sphereShape = static_cast<btSphereShape*>(shape);
                 float radius = sphereShape->getRadius();
-                glm::vec3 center = glm::vec3(modelMatrix * glm::vec4(0, 0, 0, 1));
+                glm::vec3 center(position.x(), position.y(), position.z());
                 debugDrawer->drawSphere(center, radius, glm::vec3(1.0f, 0.0f, 0.0f), 16);
             }
         }
     }
 }
-
 bool PhysicsModule::Update(double dt) {
     if (linkPhysicsToScene) {
         dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 10);

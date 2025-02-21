@@ -1,21 +1,17 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+
 #include "App.h"
 #include "MyWindow.h"
 #include "HardwareSettings.h"
 #include "MyGUI.h"
 #include "Input.h"
 #include "Root.h"
-
 #include "Log.h"
-
 #include "UISettings.h"
-
 
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
-
-
 
 App::App() {
 

@@ -1,42 +1,36 @@
+#include <glm/glm.hpp>
+#include <algorithm>
+#include <iostream>
+#include <filesystem>
+#include <string>
+#include <mono/jit/jit.h>
+#include <mono/metadata/reflection.h>
+#include <Windows.h>
+
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include "UIInspector.h"
 #include "App.h"
-#include "imgui.h"
-#include "imgui_internal.h"
 #include "MyGUI.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/LightComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyAudioEngine/AudioListener.h"
-#include "UIAudioTest.h"
 #include "../MyGameEditor/Log.h"
-#include <glm/glm.hpp>
-#include <algorithm>
-#include <iostream>
-#include <filesystem>
-
-#include "..\MyGameEngine\CameraComponent.h"
-#include "..\MyGameEngine\Mesh.h"
-#include "EditorCamera.h"
+#include "../MyGameEngine/CameraComponent.h"
+#include "../MyGameEngine/Mesh.h"
 #include "Input.h"
-#include "..\MyGameEngine\types.h"
-#include "..\MyGameEngine\MeshRendererComponent.h"
-#include "..\MyGameEngine\Image.h"
-#include "..\MyGameEngine\Material.h"
-
-#include "..\MyPhysicsEngine\ColliderComponent.h"
-
-#include "..\MyScriptingEngine\ScriptComponent.h"
-//#include "..\MyParticlesEngine\ParticlesEmitterComponent.h"
-#include <string>
-
-#include <mono/jit/jit.h>
-#include <mono/metadata/reflection.h>
+#include "../MyGameEngine/types.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
+#include "../MyGameEngine/Image.h"
+#include "../MyGameEngine/Material.h"
+#include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
-
-#include <Windows.h>
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {

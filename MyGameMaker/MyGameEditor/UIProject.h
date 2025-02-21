@@ -1,9 +1,11 @@
 #pragma once
-#include "UIElement.h"
+
 #include <filesystem>
 #include <vector>
 #include <map>
 #include <future>
+
+#include "UIElement.h"
 
 #define ICON_SIZE 64.0f
 

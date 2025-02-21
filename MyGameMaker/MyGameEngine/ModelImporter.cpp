@@ -34,7 +34,7 @@ static mat4 aiMat4ToMat4(const aiMatrix4x4& aiMat) {
 
 
 static void decomposeMatrix(const mat4& matrix, vec3& scale, glm::quat& rotation, vec3& translation) {
-	// Extraer la traslación
+	// Extraer la traslaciï¿½n
 	translation = vec3(matrix[3]);
 
 	// Extraer la escala
@@ -50,66 +50,75 @@ static void decomposeMatrix(const mat4& matrix, vec3& scale, glm::quat& rotation
 	rotationMatrix[1] /= scale.y;
 	rotationMatrix[2] /= scale.z;
 
-	// Extraer la rotación
-	rotation = glm::quat(vec3(0.0f, 0.0f, 0.0f));
+	// Extraer la rotaciï¿½n
+	rotation = glm::quat(rotationMatrix);
 }
 
-void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, const string& scenePath) {
+bool hasSubstring(const std::string& str, const std::string& substr) {
+	return str.find(substr) != std::string::npos;
+}
+
+glm::mat4 accumulatedTransform;
+
+void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, glm::mat4 accumulatedTransform = glm::mat4(1.0f)) {
 	GameObject obj;
-	mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
+	if (hasSubstring(node.mName.data, "$AssimpFbx$")) {
 
-	// Descomponer la matriz de transformación
-	vec3 scale, translation;
-	
-	glm::quat rotation;
-	decomposeMatrix(localMatrix, scale, rotation, translation);
+		// Accumulate the transformation.
+		glm::mat4 nodeTransform = aiMat4ToMat4(node.mTransformation);
 
-	// Ajustar la escala a 1, 1, 1
-	scale = vec3(1.0f, 1.0f, 1.0f);
-
-	// Volver a componer la matriz de transformación
-	mat4 rotationMatrix = glm::mat4_cast(rotation);
-	mat4 scaleMatrix = glm::scale(mat4(1.0f), scale);
-	mat4 translationMatrix = glm::translate(mat4(1.0f), translation);
-	localMatrix = translationMatrix * rotationMatrix * scaleMatrix;
-
-	obj.GetTransform()->SetLocalMatrix(localMatrix);
-
-	for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
-		const auto meshIndex = node.mMeshes[i];
-		const auto materialIndex = scene.mMeshes[meshIndex]->mMaterialIndex;
-
-		//auto& child = i == 0 ? obj : obj.emplaceChild();
 		
-		auto meshComponent = obj.AddComponent<MeshRenderer>();
-		meshComponent->SetMesh(meshes[meshIndex]);
-		meshComponent->SetMaterial(materials[materialIndex]);
-		meshComponent->GetMaterial()->useShader = false;
-		//meshComponent->GetMaterial()->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
-		if (scene.mNumAnimations > 0 ) 
-		{
-			auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
-			Animation* animation = new Animation();
-			Animation animation2 = Animation();
-			animation->SetUpAnimation(scenePath, meshComponent->GetMesh().get());
-			animation2 = *animation;
-			obj.GetComponent<SkeletalAnimationComponent>()->animationTest = animation2;
-			obj.GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation);
-			obj.GetComponent<SkeletalAnimationComponent>()->patatudo = 43.0f;
-			skeletalAnimationComponent->animationTest = animation2;
-			animations.push_back(std::make_shared<Animation>(*animation));
-			skeletalAnimationComponent->SetAnimation(animation);
-			std::cout << node.mName.C_Str() << std::endl;
+		accumulatedTransform = accumulatedTransform * nodeTransform;
+
+		// Recurse for the child nodes, passing the accumulated transformation.
+		for (unsigned int i = 0; i < node.mNumChildren; ++i) {
+			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
 		}
-		meshGameObjects.push_back(std::make_shared<GameObject>(obj));
 	}
 
-	for (unsigned int i = 0; i < node.mNumChildren; ++i)
-	{
-
-			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, scenePath);
+	if (!hasSubstring(node.mName.data, "$AssimpFbx$")) {
+		glm::mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
 		
+		obj.GetTransform()->SetMatrix(localMatrix * accumulatedTransform);
+		obj.SetName(node.mName.data);
+		for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
+			const auto meshIndex = node.mMeshes[i];
+			const auto materialIndex = scene.mMeshes[meshIndex]->mMaterialIndex;
+
+			//auto& child = i == 0 ? obj : obj.emplaceChild();
+
+			auto meshComponent = obj.AddComponent<MeshRenderer>();
+			meshComponent->SetMesh(meshes[meshIndex]);
+			meshComponent->SetMaterial(materials[materialIndex]);
+
+			if (scene.mNumAnimations > 0 ) 
+			{
+				auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
+				Animation* animation = new Animation();
+				Animation animation2 = Animation();
+				animation->SetUpAnimation(scenePath, meshComponent->GetMesh().get());
+				animation2 = *animation;
+				obj.GetComponent<SkeletalAnimationComponent>()->animationTest = animation2;
+				obj.GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation);
+				obj.GetComponent<SkeletalAnimationComponent>()->patatudo = 43.0f;
+				skeletalAnimationComponent->animationTest = animation2;
+				animations.push_back(std::make_shared<Animation>(*animation));
+				skeletalAnimationComponent->SetAnimation(animation);
+				std::cout << node.mName.C_Str() << std::endl;
+			}
+
+			//meshComponent->GetMaterial()->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
+			meshGameObjects.push_back(std::make_shared<GameObject>(obj));
+		}
+
+		for (unsigned int i = 0; i < node.mNumChildren; ++i)
+		{
+
+			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
+
+		}
 	}
+
 
 }
 
@@ -145,7 +154,7 @@ vector<shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 		if (fbx_mesh->HasNormals()) mesh_ptr->LoadNormals(reinterpret_cast<glm::vec3*>(fbx_mesh->mNormals), fbx_mesh->mNumVertices);
 		if (fbx_mesh->HasVertexColors(0)) {
 			vector<glm::u8vec3> colors(fbx_mesh->mNumVertices);
-			for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) colors[j] = glm::u8vec3(fbx_mesh->mColors[0][j].r * 255, fbx_mesh->mColors[0][j].g * 255, fbx_mesh->mColors[0][j].b * 255);
+			for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) colors[j] = glm::u8vec3(fbx_mesh->mColors[0][j].r, fbx_mesh->mColors[0][j].g, fbx_mesh->mColors[0][j].b);
 			mesh_ptr->LoadColors(colors.data(), colors.size());
 		}
 		
@@ -251,7 +260,7 @@ vector<shared_ptr<Material>> createMaterialsFromFBX(const aiScene& scene, const 
 }
 
 void ModelImporter::loadFromFile(const std::string& path) {
-	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_SortByPType | aiProcess_JoinIdenticalVertices | 
+	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_CalcTangentSpace |aiProcess_Triangulate | aiProcess_SortByPType | aiProcess_JoinIdenticalVertices | 
 		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
 	aiGetErrorString();
 	meshes = createMeshesFromFBX(*fbx_scene);

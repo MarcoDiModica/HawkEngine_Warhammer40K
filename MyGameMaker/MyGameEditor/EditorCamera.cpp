@@ -1,16 +1,14 @@
-#include "EditorCamera.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <SDL2/SDL.h>
 
+#include "EditorCamera.h"
 #include "App.h"
 #include "Input.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyAudioEngine/AudioListener.h"
 #include "MyGameEngine/GameObject.h"
-#include <glm/gtc/matrix_transform.hpp>
-#include "imgui.h"
-#include <SDL2/SDL.h>
 #include "MyWindow.h"
 #include "MyGUI.h"
-#include "UISceneWindow.h"
 
 EditorCamera::EditorCamera(App* app) : Module(app), CameraBase(), transform(Transform_Component(nullptr))
 {

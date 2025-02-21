@@ -1,10 +1,4 @@
-﻿#include "UIProject.h"
-#include "App.h"
-#include "imgui.h"
-#include "MyGUI.h"
-#include "MyGameEngine/types.h"
-#include "../MyScriptingEngine/ScriptComponent.h"
-#include <filesystem>
+﻿#include <filesystem>
 #include <string>
 #include <fstream>
 #include <algorithm>
@@ -13,6 +7,13 @@
 #include <functional>
 #define NOMINMAX
 #include <Windows.h>
+
+#include <imgui.h>
+
+#include "UIProject.h"
+#include "App.h"
+#include "MyGUI.h"
+#include "MyGameEngine/types.h"
 
 const std::string FOLDER_ICON_PATH = "EngineAssets/folder.png";
 const std::string MATERIAL_ICON_PATH = "EngineAssets/material.png";

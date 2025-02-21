@@ -1,5 +1,7 @@
-#include "Root.h"
+#include <SDL2/SDL.h>
+#include <iostream>
 
+#include "Root.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/LightComponent.h"
@@ -14,15 +16,9 @@
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
-#include "../MyAudioEngine/AudioListener.h"
-
 #include "../MyScriptingEngine/ScriptComponent.h"
-#include <SDL2/SDL.h>
 #include "MyShadersEngine/ShaderComponent.h"
 
-#include <iostream>
-
-using namespace std;
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
 
@@ -87,23 +83,25 @@ void MakeCity() {
 	
 
     ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
+    meshImp.loadFromFile("Assets/Meshes/street2.FBX");
 
     for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
         auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
 
-        auto go = Application->root->CreateGameObject("GameObject");
-        auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
+        auto go = Application->root->CreateGameObject(meshImp.meshGameObjects[i]->GetName());
+        //auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
         Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->image_path);
-        go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
-        go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+        //go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
+        go->GetTransform()->SetMatrix(MarcoVicePresidente2->GetTransform()->GetMatrix());
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
         gameObjectsWithColliders.push_back(go);
     }
 
-    MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
-    MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
-    MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
+    auto grid = Application->root->CreatePlane("Grid");
+
+    //MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
+    //MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
+    //MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
 
     for (auto& go : gameObjectsWithColliders) {
         go->AddComponent<ColliderComponent>(Application->physicsModule, true);
@@ -126,8 +124,8 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
     MakeCity();
-    MakeSmokerEmmiter();
-    MakeSmokerEmiter2();
+    //MakeSmokerEmmiter();
+    //MakeSmokerEmiter2();
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");
     
@@ -137,7 +135,7 @@ bool Root::Awake()
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera; */   
 
-	auto Collider = CreateGameObject("Collider");
+	//auto Collider = CreateGameObject("Collider");
     //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
 
     return true;
@@ -156,7 +154,7 @@ bool Root::Start()
     //auto Script = CreateGameObject("Script");
     //auto script = Script->AddComponent<ScriptComponent>();
     //script->LoadScript("TestingComponent");
-
+    /*
     auto BlobFish = CreateGameObject("Tank");
     auto blob = BlobFish->AddComponent<ScriptComponent>();
 
@@ -177,6 +175,7 @@ bool Root::Start()
     
 	ParentGameObject(*BlobFish2, *BlobFish);
 	ParentGameObject(*BlobFish3, *BlobFish2);
+    */
     //blob2->LoadScript("TestingComponent");
     
     //check if blobfish has 2 scripts

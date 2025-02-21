@@ -192,7 +192,7 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetTransform()->GetMatrix());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("modColor", glm::vec4(1, 0.2f, 0, 1));
         glUniform4f(
-            glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader.GetProgram(), "modColor"),
+            glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader->GetProgram(), "modColor"),
             static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().x),
             static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().y),
             static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().z),

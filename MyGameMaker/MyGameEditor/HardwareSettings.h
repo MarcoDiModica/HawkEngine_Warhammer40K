@@ -2,10 +2,10 @@
 #define __HARDWARE_SETTINGS_H__
 #pragma once
 
+#include <string>
+
 #include "Module.h"
 #include "MyGameEngine/types.h"
-
-#include <string>
 
 struct HardwareSettings
 {

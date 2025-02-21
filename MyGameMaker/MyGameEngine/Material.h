@@ -15,7 +15,7 @@ public:
 	enum Filters { Nearest, Linear };
 	Filters filter = Nearest;
 
-	Shaders shader;
+	Shaders * shader;
 	ShaderType shaderType;
 	vec4 color;
 
@@ -38,7 +38,7 @@ public:
 	vec4 GetColor();
 	void SetColor(const vec4& color);
 	void SetShader(Shaders& shader);
-	Shaders GetShader();
+	Shaders* GetShader();
 
 	void SaveBinary(const std::string& filename) const;
 	static std::shared_ptr<Material> LoadBinary(const std::string& filename);

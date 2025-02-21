@@ -188,28 +188,14 @@ void ColliderComponent::CreateCollider(bool isForStreet) {
     btTransform startTransform;
     startTransform.setIdentity();
 
-    if (isForStreet) {
-        shape = new btBoxShape(btVector3(size.x * 0.5f, size.z, size.y * 0.5f));
-        glm::vec3 localPosition = glm::vec3(transform->GetPosition());
-        startTransform.setOrigin(btVector3(localPosition.x, localPosition.z, localPosition.y));
-        //glm::quat rotation = transform->GetRotation();
-        //startTransform.setRotation(btQuaternion(btVector3(1, 0, 0), glm::radians(180.0f)));
 
-        //auto x = transform->GetRotation().y;
-        //auto z = transform->GetRotation().z;
-        glm::vec3 scale = transform->GetScale();
-        shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
-    }
-    else
-    {
-        shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
-        glm::vec3 localPosition = transform->GetPosition();
-        startTransform.setOrigin(btVector3(localPosition.x, localPosition.y, localPosition.z));
-        startTransform.setRotation(btQuaternion(transform->GetRotation().x, transform->GetRotation().y, transform->GetRotation().z, transform->GetRotation().w));
-        glm::vec3 scale = transform->GetScale();
-        shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+    shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
+    glm::vec3 localPosition = transform->GetLocalPosition();
+    startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
+    startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
+    glm::vec3 scale = transform->GetScale();
+    shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
 
-    }
 
 
     // Configurar la masa e inercia

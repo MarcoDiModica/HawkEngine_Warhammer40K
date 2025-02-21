@@ -131,6 +131,7 @@ void Mesh::Draw() const
 	//display();
 
 	glEnable(GL_TEXTURE_2D);
+
 	if (texCoords_buffer.Id()) {
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		texCoords_buffer.bind();

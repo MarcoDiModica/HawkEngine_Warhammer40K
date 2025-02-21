@@ -158,6 +158,16 @@ bool UIInspector::Draw() {
                     transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
                     transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
                     transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+
+                    //Collider Rotation
+                    if (selectedGameObject->HasComponent<ColliderComponent>()) {
+                        ColliderComponent* collider = selectedGameObject->GetComponent<ColliderComponent>();
+                        if (collider) {
+                            glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
+                            collider->SetColliderRotation(newRotation);
+                        }
+                    }
+
                 }
 
                 if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f)) {
@@ -439,15 +449,17 @@ bool UIInspector::Draw() {
                         colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
                     }
 
-                    // Rotación del Collider
-                    glm::quat colliderRotation = colliderComponent->GetColliderRotation();
-                    glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
-                    float rot[3] = { glm::degrees(eulerRotation.x), glm::degrees(eulerRotation.y), glm::degrees(eulerRotation.z) };
-
-                    if (ImGui::DragFloat3("ColliderRotation", rot, 0.1f)) {
-                        glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
-                        colliderComponent->SetColliderRotation(newRotation);
+                    //Trigger collider
+                    bool isTrigger = colliderComponent->IsTrigger();
+                    if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+                        colliderComponent->SetTrigger(isTrigger);
                     }
+
+                    // Checkbox para la posición 
+                    bool snapToPosition = colliderComponent->GetSnapToPosition();
+                    if (ImGui::Checkbox("Snap Position", &snapToPosition)) {
+                        colliderComponent->SetSnapToPosition(snapToPosition);
+					}
 
                     // Tamaño del Collider
                     glm::vec3 size = colliderComponent->GetSize();

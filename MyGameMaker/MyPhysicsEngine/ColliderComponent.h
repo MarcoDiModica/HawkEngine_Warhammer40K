@@ -17,6 +17,7 @@ public:
     ColliderComponent& operator=(ColliderComponent&& other) noexcept;*/
 
     void Start() override;
+    void SetTrigger(bool trigger);
     void Update(float deltaTime) override;
     void Destroy() override;
 
@@ -29,6 +30,7 @@ public:
     void SetSize(const glm::vec3& newSize);
 
     float GetMass() { return mass; };
+    bool IsTrigger() const;
     glm::vec3 GetColliderPos();
 
     glm::quat GetColliderRotation();
@@ -41,6 +43,10 @@ public:
 
     void SetActive(bool active);
 
+    bool GetSnapToPosition() const { return snapToPosition; }
+    void SetSnapToPosition(bool value) { snapToPosition = value; }
+
+
 private:
     btRigidBody* rigidBody; // Collider
     PhysicsModule* physics; // Referencia al módulo de físicas
@@ -49,6 +55,7 @@ private:
     bool isForStreetLocal;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
 
+	bool snapToPosition = false;
 
     void CreateCollider(bool isForStreet = false);
 };

@@ -13,33 +13,21 @@ ColliderComponent::~ColliderComponent() {
 void ColliderComponent::Start() {
     mass = 0.0f;
     CreateCollider(isForStreetLocal);
-    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMapForhouse) {
+}
 
-        btTransform transform;
-        if (rigidBody->getMotionState()) {
-            rigidBody->getMotionState()->getWorldTransform(transform);
+void ColliderComponent::SetTrigger(bool trigger) {
+    if (rigidBody) {
+        if (trigger) {
+            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
         }
-
-        btVector3 pos = transform.getOrigin();
-        btQuaternion rot = transform.getRotation();
-
-        auto goTransform = gameObject->GetTransform();
-
-        glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-        glm::dvec3 deltaPos = newPosition - goTransform->GetPosition();
-        goTransform->Translate(deltaPos);
-
-        glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-        glm::dvec3 currentRotation = glm::radians(goTransform->GetEulerAngles());
-        glm::dvec3 deltaRot = newRotation - currentRotation;
-
-        goTransform->Rotate(glm::radians(-90.0), glm::dvec3(1, 0, 0));
-        goTransform->Rotate(glm::radians(0.0), glm::dvec3(0, 1, 0));
-        goTransform->Rotate(glm::radians(0.0), glm::dvec3(0, 0, 1));
-
-        std::cout << "GameObject position updated to: ("
-            << pos.getX() << ", " << pos.getY() << ", " << pos.getZ() << ")\n";
+        else {
+            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+        }
     }
+}
+
+bool ColliderComponent::IsTrigger() const {
+    return (rigidBody && (rigidBody->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE));
 }
 
 glm::vec3 ColliderComponent::GetColliderPos() {
@@ -111,55 +99,28 @@ void ColliderComponent::SetActive(bool active) {
 }
 
 void ColliderComponent::Update(float deltaTime) {
+    if (snapToPosition && owner) {
+        auto goTransform = owner->GetTransform();
+        glm::vec3 position = goTransform->GetPosition();
+        glm::quat rotation = goTransform->GetRotation();
 
-    // Sincroniza la posición y rotación entre el GameObject y el colisionador
+        btTransform transform;
+        transform.setIdentity();
+        transform.setOrigin(btVector3(position.x, position.y, position.z));
+        transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
 
-    //for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMapForhouse) {
+        if (rigidBody->getMotionState()) {
+            rigidBody->getMotionState()->setWorldTransform(transform);
+        }
+        else {
+            rigidBody->setWorldTransform(transform);
+        }
 
-    //    btTransform transform;
-    //    if (rigidBody->getMotionState()) {
-    //        rigidBody->getMotionState()->getWorldTransform(transform);
-    //    }
-
-    //    btVector3 pos = transform.getOrigin();
-    //    btQuaternion rot = transform.getRotation();
-
-    //    auto goTransform = gameObject->GetTransform();
-
-    //    //TESTING
-    //    //glm::quat newRotation = glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
-    //    //goTransform->SetRotationQuat(newRotation);
-
-    //    //// Calcular delta de posición y aplicar traslación
-    //    //glm::dvec3 newPosition = { pos.getX(), pos.getY(), pos.getZ() };
-    //    //glm::dvec3 currentPosition = goTransform->GetPosition();
-    //    //glm::dvec3 deltaPos = newPosition - currentPosition;
-
-    //    //// Aplica la traslación
-    //    //goTransform->Translate(deltaPos);
-
-
-    //    glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-    //    glm::dvec3 deltaPos = newPosition - goTransform->GetPosition();
-    //    goTransform->Translate(deltaPos);
-    //    auto x = pos.x();
-    //    auto y = pos.y();
-    //    auto z = pos.z();
-    //    auto v = glm::vec3(x, y, z);
-
-    //    glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-    //    glm::dvec3 currentRotation = glm::radians(goTransform->GetEulerAngles());
-    //    glm::dvec3 deltaRot = newRotation - currentRotation;
-
-    //    goTransform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-    //    goTransform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-    //    goTransform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
-
-    //    std::cout << "GameObject position updated to: ("
-    //        << pos.getX() << ", " << pos.getY() << ", " << pos.getZ() << ")\n";
-    //}
-
+        std::cout << "Collider position snapped to: ("
+            << position.x << ", " << position.y << ", " << position.z << ")\n";
+    }
 }
+
 
 void ColliderComponent::Destroy() {
     if (rigidBody) {

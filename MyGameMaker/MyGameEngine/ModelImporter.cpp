@@ -11,6 +11,10 @@
 #include "MeshRendererComponent.h"
 #include "TransformComponent.h"
 #include "Image.h"
+#include "Model.h"
+#include "../MyShadersEngine/ShaderComponent.h"
+#include "../MyGameEditor/App.h"
+#include "SceneManager.h"
 
 //#include "ImageImporter.h"
 #include "GameObject.h"
@@ -57,112 +61,166 @@ bool hasSubstring(const std::string& str, const std::string& substr) {
 
 glm::mat4 accumulatedTransform;
 
-void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, glm::mat4 accumulatedTransform = glm::mat4(1.0f)) {
-	GameObject obj;
+std::shared_ptr<GameObject> graphicObjectFromNode(const aiScene& scene,
+	const aiNode& node,
+	const vector<shared_ptr<Model>>& meshes,
+	const vector<shared_ptr<Material>>& materials,
+	glm::mat4 accumulatedTransform = glm::mat4(1.0f),
+	std::shared_ptr<GameObject> root = nullptr) {
+	
+	// Check if the node has the suffix indicating it is an Assimp transformation node
 	if (hasSubstring(node.mName.data, "$AssimpFbx$")) {
 
 		// Accumulate the transformation.
 		glm::mat4 nodeTransform = aiMat4ToMat4(node.mTransformation);
-
-		
 		accumulatedTransform = accumulatedTransform * nodeTransform;
 
 		// Recurse for the child nodes, passing the accumulated transformation.
 		for (unsigned int i = 0; i < node.mNumChildren; ++i) {
-			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
+			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform, root);
 		}
+
+		// Return nullptr since we don't create a GameObject for transformation nodes.
+		return nullptr;
 	}
 
+	// If the current node is not a transformation node, create a GameObject
 	if (!hasSubstring(node.mName.data, "$AssimpFbx$")) {
-		glm::mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
-		
-		obj.GetTransform()->SetMatrix(localMatrix * accumulatedTransform);
-		obj.SetName(node.mName.data);
+		cout << node.mName.data << endl;
+		std::shared_ptr<GameObject> obj = std::make_shared<GameObject>(node.mName.data);
+
+		// Apply the accumulated transformation and set the transform
+		glm::mat4 nodeTransform = aiMat4ToMat4(node.mTransformation);
+		obj->GetTransform()->SetMatrix(nodeTransform * accumulatedTransform);
+
+		if (root == nullptr) {
+			root = obj;
+			auto rootObject = Application->root->CreateGameObject("City");
+			Application->root->ParentGameObject(*root, *rootObject);
+		}
+		else {
+			// Add this object as a child of the root
+			SceneManagement->currentScene->AddGameObject(obj);
+			root->AddChild(obj.get());
+		}
+
+		// Add mesh and material components
 		for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
 			const auto meshIndex = node.mMeshes[i];
-			const auto materialIndex = scene.mMeshes[meshIndex]->mMaterialIndex;
+			const auto& model = meshes[meshIndex];
 
-			//auto& child = i == 0 ? obj : obj.emplaceChild();
+			obj->SetName(model->GetMeshName());
+			obj->AddComponent<MeshRenderer>();
 
-			auto meshComponent = obj.AddComponent<MeshRenderer>();
-			meshComponent->SetMesh(meshes[meshIndex]);
-			meshComponent->SetMaterial(materials[materialIndex]);
-			//meshComponent->GetMaterial()->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
-			meshGameObjects.push_back(std::make_shared<GameObject>(obj));
+			const auto& mesh = std::make_shared<Mesh>();
+			obj->GetComponent<MeshRenderer>()->SetMesh(mesh);
+			obj->GetComponent<MeshRenderer>()->GetMesh()->setModel(model);
+			obj->GetComponent<MeshRenderer>()->SetMaterial(materials[model->GetMaterialIndex()]);
+			if(materials[model->GetMaterialIndex()]->getImg()->image_path != "")
+			obj->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(materials[model->GetMaterialIndex()]->getImg()->image_path);
+			obj->AddComponent<ShaderComponent>();
+			obj->GetComponent<ShaderComponent>()->SetOwnerMaterial(obj->GetComponent<MeshRenderer>()->GetMaterial().get());
+			obj->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::DEFAULT);
+			obj->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
+
+			BoundingBox meshBBox;
+
+			meshBBox.min = meshes[meshIndex].get()->GetModelData().vertexData.front();
+			meshBBox.max = meshes[meshIndex].get()->GetModelData().vertexData.front();
+
+			for (const auto& v : meshes[meshIndex].get()->GetModelData().vertexData) {
+				meshBBox.min = glm::min(meshBBox.min, glm::dvec3(v));
+				meshBBox.max = glm::max(meshBBox.max, glm::dvec3(v));
+			}
+
+			obj->setBoundingBox(meshBBox);
 		}
 
-		for (unsigned int i = 0; i < node.mNumChildren; ++i)
-		{
-
-			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
-
+		// Process and add children as children of the current node
+		for (unsigned int i = 0; i < node.mNumChildren; ++i) {
+			auto child = graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform, root);
 		}
+
+		return obj;
 	}
 
+	// For nodes with the $AssimpFbx$ suffix, process children but do not create GameObjects
+	for (unsigned int i = 0; i < node.mNumChildren; ++i) {
+		graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
+	}
+
+	return nullptr; // Return nullptr for transformation nodes as they do not create GameObjects
 
 }
 
-vector<shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
-	vector<shared_ptr<Mesh>> meshess;
-	if (!scene.mMeshes) {
-		// Handle error: scene.mMeshes is null
-		return meshess;
-	}
-	for (unsigned int i = 0; i < scene.mNumMeshes; ++i) {
-		if (!scene.mMeshes[i]) {
-			// Handle error: scene.mMeshes[i] is null
-			continue;
-		}
-		const aiMesh* fbx_mesh = scene.mMeshes[i];
-		auto mesh_ptr = make_shared<Mesh>();
+void createMeshesFromFBX(const aiScene& scene, std::vector<std::shared_ptr<Model>>& models) {
+	
+	models.resize(scene.mNumMeshes);
 
-		vector<unsigned int> indices(fbx_mesh->mNumFaces * 3);
-		for (unsigned int j = 0; j < fbx_mesh->mNumFaces; ++j) {
-			indices[j * 3 + 0] = fbx_mesh->mFaces[j].mIndices[0];
-			indices[j * 3 + 1] = fbx_mesh->mFaces[j].mIndices[1];
-			indices[j * 3 + 2] = fbx_mesh->mFaces[j].mIndices[2];
+	std::vector<std::shared_ptr<ModelData>> modelsData;
+	modelsData.resize(scene.mNumMeshes);
+
+	for (unsigned int i = 0; i < scene.mNumMeshes; i++) {
+		aiMesh* mesh = scene.mMeshes[i];
+		modelsData[i] = std::make_shared<ModelData>();
+		models[i] = std::make_shared<Model>();
+		models[i]->SetMeshName(mesh->mName.C_Str());
+		models[i]->SetMaterialIndex(mesh->mMaterialIndex);
+
+		for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
+
+			// Coordenadas de los vértices
+			aiVector3D vertex = mesh->mVertices[j];
+			vec3 aux = vec3(vertex.x, vertex.y, vertex.z);
+			modelsData[i]->vertexData.push_back(aux);
+
+			// Coordenadas UV (si existen)
+			if (mesh->mTextureCoords[0]) {  // Comprueba si hay UVs
+				aiVector3D uv = mesh->mTextureCoords[0][j];
+				aux.x = uv.x;  // Solo X y Y
+				aux.y = uv.y;
+			}
+			modelsData[i]->vertex_texCoords.push_back(aux);
+
+			if (mesh->HasNormals()) {  // Verifica si hay normales
+				aiVector3D normal = mesh->mNormals[j];
+				vec3 auxNormal(normal.x, normal.y, normal.z);
+				modelsData[i]->vertex_normals.push_back(auxNormal);
+			}
+
+			if (mesh->HasVertexColors(0)) {  // Verifica si hay colores
+				aiColor4D color = mesh->mColors[0][j];
+				vec3 auxColor(color.r, color.g, color.b);
+				modelsData[i]->vertex_colors.push_back(auxColor);
+			}
+
 		}
 
-		mesh_ptr->Load(reinterpret_cast<const glm::vec3*>(fbx_mesh->mVertices), fbx_mesh->mNumVertices, indices.data(), indices.size());
-		if (fbx_mesh->HasTextureCoords(0)) {
-			vector<glm::vec2> texCoords(fbx_mesh->mNumVertices);
-			for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) texCoords[j] = glm::vec2(fbx_mesh->mTextureCoords[0][j].x, fbx_mesh->mTextureCoords[0][j].y);
-			mesh_ptr->loadTexCoords(texCoords.data(), texCoords.size());
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), (void*)0);
-			glEnableVertexAttribArray(1);
+		for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
+			aiFace face = mesh->mFaces[j];
+			for (unsigned int k = 0; k < face.mNumIndices; k++) {
+				modelsData[i]->indexData.push_back(face.mIndices[k]);
+			}
 		}
-		if (fbx_mesh->HasNormals()) mesh_ptr->LoadNormals(reinterpret_cast<glm::vec3*>(fbx_mesh->mNormals), fbx_mesh->mNumVertices);
-		if (fbx_mesh->HasVertexColors(0)) {
-			vector<glm::u8vec3> colors(fbx_mesh->mNumVertices);
-			for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) colors[j] = glm::u8vec3(fbx_mesh->mColors[0][j].r, fbx_mesh->mColors[0][j].g, fbx_mesh->mColors[0][j].b);
-			mesh_ptr->LoadColors(colors.data(), colors.size());
-		}
-		meshess.push_back(mesh_ptr);
+
+		models[i]->SetModelData(*modelsData[i]);
 	}
-	return meshess;
 }
 
-static vector<shared_ptr<Material>> createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath) {
+void createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath, std::vector<std::shared_ptr<Material>>& materials) {
 
-	vector<shared_ptr<Material>> materials;
-	map<string, shared_ptr<Image>> images;
+	materials.resize(scene.mNumMaterials);
 
 	for (unsigned int i = 0; i < scene.mNumMaterials; ++i) {
 		const auto* fbx_material = scene.mMaterials[i];
-		auto material = make_shared<Material>();
+		materials[i] = std::make_shared<Material>();
+		materials[i]->imagePtr = std::make_shared<Image>();
 
 		if (fbx_material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 			aiString texturePath;
 			fbx_material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-			const string textureFileName = fs::path(texturePath.C_Str()).filename().string();
-			const auto image_itr = images.find(textureFileName);
-			if (image_itr != images.end()) material->setImage(image_itr->second);
-			else {
-				shared_ptr<Image> image = std::make_shared<Image>();
-				//images.insert({ textureFileName, LoadTexture((basePath / textureFileName).string()) });
-				image->LoadTexture((basePath / textureFileName).string());
-				material->setImage(image);
-			}
+			const string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
+			materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
 
 			auto uWrapMode = aiTextureMapMode_Wrap;
 			auto vWrapMode = aiTextureMapMode_Wrap;
@@ -175,75 +233,36 @@ static vector<shared_ptr<Material>> createMaterialsFromFBX(const aiScene& scene,
 			fbx_material->Get(AI_MATKEY_TEXFLAGS_DIFFUSE(0), flags);
 			assert(flags == 0);
 		}
-		else
-		{
-			aiString texturePath;
-			fbx_material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-			const string textureFileName = fs::path(texturePath.C_Str()).filename().string();
-			const auto image_itr = images.find(textureFileName);
-			if (image_itr != images.end()) material->setImage(image_itr->second);
-			else {
-				shared_ptr<Image> image = std::make_shared<Image>();
-				//images.insert({ textureFileName, LoadTexture((basePath / textureFileName).string()) });
-				image->LoadTexture((basePath / textureFileName).string());
-				material->setImage(image);
-			}
-
-			auto uWrapMode = aiTextureMapMode_Wrap;
-			auto vWrapMode = aiTextureMapMode_Wrap;
-			fbx_material->Get(AI_MATKEY_MAPPINGMODE_U_DIFFUSE(0), uWrapMode);
-			fbx_material->Get(AI_MATKEY_MAPPINGMODE_V_DIFFUSE(0), vWrapMode);
-			assert(uWrapMode == aiTextureMapMode_Wrap);
-			assert(vWrapMode == aiTextureMapMode_Wrap);
-
-			unsigned int flags = 0;
-			fbx_material->Get(AI_MATKEY_TEXFLAGS_DIFFUSE(0), flags);
-			assert(flags == 0);
+		else {
+			materials[i]->imagePtr->image_path = "";
 		}
 
 		aiColor4D color;
 		fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-		material->color = vec4(color.r , color.g , color.b , color.a );
+		materials[i]->color = vec4(color.r, color.g, color.b, color.a);
 
-		LOG(LogType::LOG_ASSIMP, "color %f %f %f %f ", color.r, color.g, color.b, color.a);
-
-		if (material == nullptr) {
-
-			materials;
-		}
-
-		if (material->image().id() != NULL) {
-
-		}
-
-		materials.push_back(material);
 	}
-	return materials;
 }
 
-void ModelImporter::loadFromFile(const std::string& path) {
+std::shared_ptr<GameObject> ModelImporter::loadFromFile(const std::string& path) {
 	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_CalcTangentSpace |aiProcess_Triangulate | aiProcess_SortByPType | aiProcess_JoinIdenticalVertices | 
 		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
 	aiGetErrorString();
-	meshes = createMeshesFromFBX(*fbx_scene);
+	
+	// Create models and materials from FBX
+	std::vector<std::shared_ptr<Model>> models;
+	createMeshesFromFBX(*fbx_scene, models);
+	std::vector<std::shared_ptr<Material>> materials;
+	createMaterialsFromFBX(*fbx_scene, std::filesystem::absolute(path).parent_path(), materials);
 
-	// must giv name to the meshes
-
-	for (unsigned int i = 0; i < fbx_scene->mNumMeshes; ++i) {
-
-		const aiMesh* mesh = fbx_scene->mMeshes[i];
-
-		meshes[i]->nameM = std::string(mesh->mName.C_Str());
-
-	}
-
-	EncodeFBXScene(path, meshes, fbx_scene);
-
-	const auto materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/"/*fs::absolute(path).parent_path()*/);
-
-	/*GameObject fbx_obj =*/ graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);
+	// Create the GameObject hierarchy
+	std::shared_ptr<GameObject> fbx_obj = graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, models, materials);
 	aiReleaseImport(fbx_scene);
-	//return std::make_shared<GameObject>(fbx_obj);
+
+	// Assign name and return
+	//fbx_obj->name() = std::filesystem::path(filename).stem().string();
+	return fbx_obj;
+
 }
 
 void ModelImporter::EncodeFBXScene(const std::string path, std::vector<std::shared_ptr<Mesh>> meshes, const aiScene* fbx_scene) {

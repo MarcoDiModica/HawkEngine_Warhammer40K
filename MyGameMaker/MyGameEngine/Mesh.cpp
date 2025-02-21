@@ -31,17 +31,6 @@ Mesh::~Mesh() {}
 
 void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs)
 {
-	vertices_buffer.LoadData(vertices, num_verts * sizeof(glm::vec3));
-	indices_buffer.LoadIndices(indices, num_indexs);
-	texCoords_buffer.UnLoad();
-	normals_buffer.UnLoad();
-	colors_buffer.UnLoad();
-
-	_vertices.clear();
-	_indices.clear();
-	_vertices.assign(vertices, vertices + num_verts);
-	_indices.assign(indices, indices + num_indexs);
-
 	_boundingBox.min = _vertices.front();
 	_boundingBox.max = _vertices.front();
 
@@ -74,23 +63,6 @@ void Mesh::drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const v
 
 }
 
-void Mesh::loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords)
-{
-	texCoords_buffer.LoadData(texCoords, num_texCoords * sizeof(glm::vec2));
-	_texCoords.assign(texCoords, texCoords + num_texCoords);
-}
-
-void Mesh::LoadNormals(const glm::vec3* normals, size_t num_normals)
-{
-	normals_buffer.LoadData(normals, num_normals * sizeof(glm::vec3));
-	_normals.assign(normals, normals + num_normals);
-}
-
-void Mesh::LoadColors(const glm::u8vec3* colors, size_t num_colors)
-{
-	colors_buffer.LoadData(colors, num_colors * sizeof(glm::u8vec3));
-}
-
 void Mesh::CalculateNormals() {
 	_normals.resize(_vertices.size(), glm::vec3(0.0f));
 
@@ -110,54 +82,15 @@ void Mesh::CalculateNormals() {
 		normal = glm::normalize(normal);
 	}
 
-	normals_buffer.LoadData(_normals.data(), _normals.size() * sizeof(glm::vec3));
+	//normals_buffer.LoadData(_normals.data(), _normals.size() * sizeof(glm::vec3));
 }
 
 void Mesh::Draw() const
 {
 	//display();
 
-	glEnable(GL_TEXTURE_2D);
+	
 
-	if (texCoords_buffer.Id()) {
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		texCoords_buffer.bind();
-		glTexCoordPointer(2, GL_FLOAT, 0, nullptr);
-	}
-
-	if (normals_buffer.Id()) {
-		glEnableClientState(GL_NORMAL_ARRAY);
-		normals_buffer.bind();
-		glNormalPointer(GL_FLOAT, 0, nullptr);
-	}
-
-	if (colors_buffer.Id()) {
-		glEnableClientState(GL_COLOR_ARRAY);
-		colors_buffer.bind();
-		glColorPointer(3, GL_UNSIGNED_BYTE, 0, nullptr);
-	}
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	vertices_buffer.bind();
-	glVertexPointer(3, GL_FLOAT, 0, nullptr);
-
-	indices_buffer.bind();
-
-	if (drawWireframe) {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
-
-	glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(_indices.size()), GL_UNSIGNED_INT, nullptr);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	if (colors_buffer.Id()) glDisableClientState(GL_COLOR_ARRAY);
-	if (normals_buffer.Id()) glDisableClientState(GL_NORMAL_ARRAY);
-	if (texCoords_buffer.Id()) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	if (drawBoundingbox) {
-
-		drawBoundingBox(_boundingBox);
-	}
-	glDisable(GL_TEXTURE_2D);
 	if (drawVertexNormals)
 	{
 		glColor3f(0.0f, 0.0f, 1.0f); // Blue color for vertex normals
@@ -215,94 +148,6 @@ void Mesh::Draw() const
 		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
 	}
 
-}
-
-void Mesh::LoadMesh(const char* file_path)
-{
-
-	filePath = std::string(file_path);
-
-	cout << endl << file_path;
-
-	const aiScene* scene = aiImportFile(file_path, aiProcessPreset_TargetRealtime_MaxQuality);
-
-	if (scene != nullptr && scene->HasMeshes()) {
-		std::vector<glm::vec3> all_vertices;
-		std::vector<unsigned int> all_indices;
-		std::vector<glm::vec2> all_texCoords;
-		std::vector<glm::vec3> all_normals;
-		std::vector<glm::u8vec3> all_colors;
-
-		unsigned int vertex_offset = 0;
-
-		for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
-			aiMesh* mesh = scene->mMeshes[i];
-
-			// Copy vertices
-			for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
-				all_vertices.push_back(glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z));	
-
-				if (mesh->HasNormals()) {
-
-						all_normals.push_back(glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z));
-					
-				}
-
-				// Copy colors
-				if (mesh->HasVertexColors(0)) {
-				
-						all_colors.push_back(glm::u8vec3(mesh->mColors[0][j].r * 255, mesh->mColors[0][j].g * 255, mesh->mColors[0][j].b * 255));
-					
-				}
-				
-			}
-			LOG(LogType::LOG_ASSIMP, "Loaded vertices :%d for mesh %d", mesh->mNumVertices, i);
-			// Copy indices
-			for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
-				aiFace& face = mesh->mFaces[j];
-				for (unsigned int k = 0; k < face.mNumIndices; k++) {
-					all_indices.push_back(face.mIndices[k] + vertex_offset);
-				}
-			}
-			LOG(LogType::LOG_ASSIMP, "Loaded faces :%d for mesh %d", mesh->mNumFaces, i);
-			// Copy texture coordinates
-			if (mesh->HasTextureCoords(0)) {
-				for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
-					all_texCoords.push_back(glm::vec2(mesh->mTextureCoords[0][j].x, -mesh->mTextureCoords[0][j].y));
-				}
-			}
-
-
-			
-			// Copy normals
-		
-
-			vertex_offset += mesh->mNumVertices;
-		}
-
-		// Load the combined mesh data
-		Load(all_vertices.data(), all_vertices.size(), all_indices.data(), all_indices.size());
-
-		if (!all_texCoords.empty()) {
-			loadTexCoords(all_texCoords.data(), all_texCoords.size());
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), (void*)0);
-			glEnableVertexAttribArray(1);
-		}
-
-		if (!all_normals.empty()) {
-			LoadNormals(all_normals.data(), all_normals.size());
-		}
-
-		if (!all_colors.empty()) {
-			LoadColors(all_colors.data(), all_colors.size());
-		}
-
-		aiReleaseImport(scene);
-	}
-	else {
-		// Handle error
-		cout << "Error loading mesh: " << file_path << endl;
-	}
 }
 
 std::shared_ptr<Mesh> Mesh::CreateCube()
@@ -523,13 +368,65 @@ std::shared_ptr<Mesh> Mesh::LoadBinary( std::string& filename)
 	fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.min), sizeof(glm::dvec3));
 	fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.max), sizeof(glm::dvec3));
 
-	mesh->vertices_buffer.LoadData(mesh->_vertices.data(), numVertices * sizeof(glm::vec3));
+	/*mesh->vertices_buffer.LoadData(mesh->_vertices.data(), numVertices * sizeof(glm::vec3));
 	mesh->indices_buffer.LoadIndices(mesh->_indices.data(), numIndices);
-	mesh->normals_buffer.LoadData(mesh->_normals.data(), numVertices * sizeof(glm::vec3));
+	mesh->normals_buffer.LoadData(mesh->_normals.data(), numVertices * sizeof(glm::vec3));*/
 
 	//texcords?colors?
 
 	meshCache[fullPath] = mesh;
 	mesh->nameM = filename;
 	return mesh;
+}
+
+void Mesh::loadToOpenGL()
+{
+	(glGenVertexArrays(1, &model->GetModelData().vA));
+	(glBindVertexArray(model->GetModelData().vA));
+
+	//buffer de positions
+	(glGenBuffers(1, &model->GetModelData().vBPosID));
+	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
+	(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertexData.size() * sizeof(vec3), model->GetModelData().vertexData.data(), GL_STATIC_DRAW));
+
+	//position layout
+	(glEnableVertexAttribArray(0));
+	(glVertexAttribPointer(0, 3, GL_DOUBLE, GL_FALSE, sizeof(vec3), (const void*)0));
+
+	//buffer de coordenades de textura
+	if (model->GetModelData().vertex_texCoords.size() > 0)
+	{
+		(glGenBuffers(1, &model->GetModelData().vBTCoordsID));
+		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBTCoordsID));
+		(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_texCoords.size() * sizeof(vec2), model->GetModelData().vertex_texCoords.data(), GL_STATIC_DRAW));
+
+		//tex coord layout
+		(glEnableVertexAttribArray(1));
+		(glVertexAttribPointer(1, 2, GL_DOUBLE, GL_FALSE, sizeof(vec2), (const void*)0));
+	}
+
+	//buffer de normals
+	if (model->GetModelData().vertex_normals.size() > 0)
+	{
+		(glGenBuffers(1, &model->GetModelData().vBNormalsID));
+		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBNormalsID));
+		(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_normals.size() * sizeof(vec3), model->GetModelData().vertex_normals.data(), GL_STATIC_DRAW));
+
+		//normal layout
+		(glEnableVertexAttribArray(2));
+		(glVertexAttribPointer(2, 3, GL_DOUBLE, GL_FALSE, sizeof(vec3), (const void*)0));
+
+		//load normals lines for debugging
+		//loadNormalsToOpenGL();
+		//loadFaceNormalsToOpenGL();
+	}
+
+	//buffer de index
+	(glCreateBuffers(1, &model->GetModelData().iBID));
+	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().iBID));
+	(glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().indexData.size() * sizeof(unsigned int), model->GetModelData().indexData.data(), GL_STATIC_DRAW));
+
+	(glBindBuffer(GL_ARRAY_BUFFER, 0));
+	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+	(glBindVertexArray(0));
 }

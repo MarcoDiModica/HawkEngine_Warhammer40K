@@ -26,7 +26,7 @@ public:
 	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
 	void bind() const;
 	void setImage(const std::shared_ptr<Image>& img_ptr) { imagePtr = img_ptr; }
-	const auto& image() const { return *imagePtr; }
+	auto& image() { return *imagePtr; }
 	std::shared_ptr<Image> getImg() { return imagePtr; }
 	bool loadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile);
 	void bindShaders() const;
@@ -42,11 +42,11 @@ public:
 
 	void SaveBinary(const std::string& filename) const;
 	static std::shared_ptr<Material> LoadBinary(const std::string& filename);
-
+	std::shared_ptr<Image> imagePtr;
 private:
 
 
-	std::shared_ptr<Image> imagePtr;
+	
 	std::string image_path;
 
 	unsigned int gid;

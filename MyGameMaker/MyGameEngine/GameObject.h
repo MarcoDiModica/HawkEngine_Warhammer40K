@@ -104,6 +104,8 @@ public:
 
     std::vector<std::unique_ptr<ScriptComponent>> scriptComponents;
 
+    void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
+
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -114,6 +116,7 @@ private:
 
     std::string name;
     unsigned int gid;
+    BoundingBox _boundingBox;
 private:
     
     static unsigned int nextGid;

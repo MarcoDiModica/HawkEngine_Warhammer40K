@@ -7,7 +7,7 @@
 #include <IL/ilu.h>
 #include <glm/glm.hpp>
 
-class Image : public std::enable_shared_from_this<Image> {
+class Image{
 
 	unsigned int _id = 0;
 	unsigned short _width = 0;

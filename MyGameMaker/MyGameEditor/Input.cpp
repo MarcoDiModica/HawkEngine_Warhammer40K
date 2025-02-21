@@ -363,19 +363,19 @@ void Input::HandleFileDrop(const std::string& fileDir)
         ModelImporter meshImp;
         meshImp.loadFromFile((CopyFBXFileToProject(fileDir).c_str()));
 
-        for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
-            auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
+        //for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
+        //    auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
 
-            auto go = Application->root->CreateGameObject("GameObject");
-            auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
-          
-            Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
-            go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
-            go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+        //    auto go = Application->root->CreateGameObject("GameObject");
+        //    auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
+        //  
+        //    Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
+        //    go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
+        //    go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
 
 
-            Application->root->ParentGameObject(*go, *MarcoVicePresidente);
-        }
+        //    Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        //}
 
     }
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {

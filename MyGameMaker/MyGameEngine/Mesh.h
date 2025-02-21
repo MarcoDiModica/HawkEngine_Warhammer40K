@@ -16,15 +16,11 @@
 
 #include "BufferObject.h"
 #include "BoundingBox.h"
+#include "Model.h"
 
 class SceneSerializer;
 
 class Mesh {
-    BufferObject vertices_buffer;
-    BufferObject indices_buffer;
-    BufferObject texCoords_buffer;
-    BufferObject normals_buffer;
-    BufferObject colors_buffer;
 
     std::vector<glm::vec3> _normals;
     std::vector<glm::vec3> _vertices;
@@ -33,6 +29,7 @@ class Mesh {
 
     BoundingBox _boundingBox;
     std::vector<Mesh> subMeshes;
+    std::shared_ptr<Model> model;
 
 public:
     Mesh();
@@ -58,7 +55,7 @@ public:
     static void drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3);
     inline static void glVertex3(const vec3& v) { glVertex3dv(&v.x); }
 
-    void LoadMesh(const char* file_path);
+    //void LoadMesh(const char* file_path);
 
     bool drawBoundingbox = true;
     bool drawTriangleNormals = false;
@@ -71,6 +68,10 @@ public:
 
     void SaveBinary(const std::string& filename) const;
     static std::shared_ptr<Mesh> LoadBinary( std::string& filename);
+
+    void setModel(std::shared_ptr<Model> model) { this->model = model; }
+
+    void loadToOpenGL();
 
 protected:
     friend class SceneSerializer;

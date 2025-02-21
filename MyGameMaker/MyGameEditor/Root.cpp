@@ -78,26 +78,11 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
-    auto MarcoVicePresidente = Application->root->CreateGameObject("City");
-
-	
 
     ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/street2.FBX");
+    std::shared_ptr<GameObject> sceneobj = meshImp.loadFromFile("Assets/Meshes/street2.FBX");
 
-    for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
-        auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
-
-        auto go = Application->root->CreateGameObject(meshImp.meshGameObjects[i]->GetName());
-        //auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
-        Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->image_path);
-        //go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
-        go->GetTransform()->SetMatrix(MarcoVicePresidente2->GetTransform()->GetMatrix());
-        Application->root->ParentGameObject(*go, *MarcoVicePresidente);
-        gameObjectsWithColliders.push_back(go);
-    }
-
-    auto grid = Application->root->CreatePlane("Grid");
+   // auto grid = Application->root->CreatePlane("Grid");
 
     //MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
     //MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));

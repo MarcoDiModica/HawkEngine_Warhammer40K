@@ -116,27 +116,35 @@ MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::st
     return mono_class_from_name(image, namespaceName.c_str(), className.c_str());
 }
 
-void MonoManager::ReloadAssembly() {
-    Shutdown();
-    Initialize();
-    
-    if (!domain) {
-        LOG(LogType::LOG_ERROR, "Failed to reinitialize Mono domain.");
-        return;
-    }
-
-    std::string assemblyPath = getExecutablePath() + "\\..\\..\\Script\\obj\\Debug\\Script.dll";
-    assembly = mono_domain_assembly_open(domain, assemblyPath.c_str());
-    if (!assembly) {
-        LOG(LogType::LOG_ERROR, "Failed to reload assembly: %s", assemblyPath.c_str());
-        return;
-    }
-
+void MonoManager::ReloadAssembly() 
+{
+    //reload assembly
+    mono_assembly_close(assembly);
+    assembly = mono_domain_assembly_open(domain, "Script.dll");
     image = mono_assembly_get_image(assembly);
-    if (!image) {
-        LOG(LogType::LOG_ERROR, "Failed to retrieve image from reloaded assembly.");
-        return;
-    }
+    user_classes.clear();
+    const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+    int rows = mono_table_info_get_rows(table_info);
 
-    LOG(LogType::LOG_INFO, "Assembly successfully reloaded.");
+    MonoClass* klass = nullptr;
+
+    for (int i = rows - 1; i > 0; --i)
+	{
+		uint32_t cols[MONO_TYPEDEF_SIZE];
+		mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
+		const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+		if (name[0] != '<')
+		{
+			const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
+			klass = mono_class_from_name(image, name_space, name);
+
+			if (klass != nullptr && strcmp(mono_class_get_namespace(klass), "Script") != 0)
+			{
+				if (!mono_class_is_enum(klass)) {
+					user_classes.push_back(klass);
+				}
+				//LOG("%s", mono_class_get_name(_class));
+			}
+		}
+	}
 }

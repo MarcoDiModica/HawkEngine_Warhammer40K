@@ -189,7 +189,7 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
 
         GetComponent<MeshRenderer>()->GetMaterial()->bindShaders();
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetTransform()->GetMatrix());
+
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("modColor", glm::vec4(1, 0.2f, 0, 1));
         glUniform4f(
             glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader->GetProgram(), "modColor"),
@@ -208,7 +208,7 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
             for (int i = 0; i < transforms.size(); ++i)
                 GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("finalBonesMatrices[" + std::to_string(i) + "]",transforms[i]);
         }
-      
+        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetTransform()->GetMatrix());
 		int numPointLights = static_cast<int>( lights.size());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("numPointLights", numPointLights);
 

@@ -60,7 +60,7 @@ bool hasSubstring(const std::string& str, const std::string& substr) {
 
 glm::mat4 accumulatedTransform;
 
-void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, glm::mat4 accumulatedTransform = glm::mat4(1.0f)) {
+void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, const string& scenePath, glm::mat4 accumulatedTransform = glm::mat4(1.0f)) {
 	GameObject obj;
 	if (hasSubstring(node.mName.data, "$AssimpFbx$")) {
 
@@ -72,7 +72,7 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 
 		// Recurse for the child nodes, passing the accumulated transformation.
 		for (unsigned int i = 0; i < node.mNumChildren; ++i) {
-			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
+			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, scenePath, accumulatedTransform);
 		}
 	}
 
@@ -114,7 +114,7 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		for (unsigned int i = 0; i < node.mNumChildren; ++i)
 		{
 
-			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
+			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, scenePath, accumulatedTransform);
 
 		}
 	}
@@ -171,6 +171,7 @@ vector<shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
         mesh_ptr->ExtractBoneWeightForVertices(vertices, fbx_mesh, &scene);
 
 		mesh_ptr->LoadBones();
+
 
 		meshess.push_back(mesh_ptr);
 	}
@@ -279,7 +280,7 @@ void ModelImporter::loadFromFile(const std::string& path) {
 
 	const auto materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/"/*fs::absolute(path).parent_path()*/);
 
-	/*GameObject fbx_obj =*/ graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials, path);
+	/*GameObject fbx_obj =*/ graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials, path, glm::mat4(1.0f));
 	aiReleaseImport(fbx_scene);
 	//return std::make_shared<GameObject>(fbx_obj);
 }

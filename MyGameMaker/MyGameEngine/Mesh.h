@@ -19,7 +19,7 @@
 #include "BufferObject.h"
 #include "BoundingBox.h"
 
-#define MAX_BONE_INFLUENCE 20
+#define MAX_BONE_INFLUENCE 10
 
 class SceneSerializer;
 

@@ -190,8 +190,8 @@ bool UIInspector::Draw() {
             if (mesh) {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
                 if (ImGui::CollapsingHeader("Mesh")) {
-                    ImGui::Text("Vertices: %d", mesh->vertices().size());
-                    ImGui::Text("Indices: %d", mesh->indices().size());
+                    ImGui::Text("Vertices: %d", mesh->getModel()->GetModelData().vertexData.size());
+                    ImGui::Text("Indices: %d", mesh->getModel()->GetModelData().indexData.size());
 
                     auto v = selectedGameObject->boundingBox().min;
                     ImGui::Text("BB min: %f", (float)v.x);

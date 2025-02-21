@@ -45,9 +45,6 @@ public:
     static std::shared_ptr<Mesh> CreatePlane();
 
     void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);
-    void loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords);
-    void LoadNormals(const glm::vec3* normals, size_t num_normals);
-    void LoadColors(const glm::u8vec3* colors, size_t num_colors);
  
     void CalculateNormals();
     void Draw() const;
@@ -70,6 +67,7 @@ public:
     static std::shared_ptr<Mesh> LoadBinary( std::string& filename);
 
     void setModel(std::shared_ptr<Model> model) { this->model = model; }
+	std::shared_ptr<Model> getModel() { return model; }
 
     void loadToOpenGL();
 

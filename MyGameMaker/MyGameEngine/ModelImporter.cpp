@@ -60,14 +60,10 @@ bool hasSubstring(const std::string& str, const std::string& substr) {
 }
 
 glm::mat4 accumulatedTransform;
+std::shared_ptr<GameObject> rootObject;
 
-std::shared_ptr<GameObject> graphicObjectFromNode(const aiScene& scene,
-	const aiNode& node,
-	const vector<shared_ptr<Model>>& meshes,
-	const vector<shared_ptr<Material>>& materials,
-	glm::mat4 accumulatedTransform = glm::mat4(1.0f),
-	std::shared_ptr<GameObject> root = nullptr) {
-	
+void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, glm::mat4 accumulatedTransform = glm::mat4(1.0f)) {
+	GameObject obj;
 	// Check if the node has the suffix indicating it is an Assimp transformation node
 	if (hasSubstring(node.mName.data, "$AssimpFbx$")) {
 
@@ -77,51 +73,38 @@ std::shared_ptr<GameObject> graphicObjectFromNode(const aiScene& scene,
 
 		// Recurse for the child nodes, passing the accumulated transformation.
 		for (unsigned int i = 0; i < node.mNumChildren; ++i) {
-			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform, root);
+			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
 		}
-
-		// Return nullptr since we don't create a GameObject for transformation nodes.
-		return nullptr;
 	}
 
 	// If the current node is not a transformation node, create a GameObject
 	if (!hasSubstring(node.mName.data, "$AssimpFbx$")) {
-		cout << node.mName.data << endl;
-		std::shared_ptr<GameObject> obj = std::make_shared<GameObject>(node.mName.data);
+		glm::mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
+
+		obj.GetTransform()->SetMatrix(localMatrix * accumulatedTransform);
 
 		// Apply the accumulated transformation and set the transform
 		glm::mat4 nodeTransform = aiMat4ToMat4(node.mTransformation);
-		obj->GetTransform()->SetMatrix(nodeTransform * accumulatedTransform);
-
-		if (root == nullptr) {
-			root = obj;
-			auto rootObject = Application->root->CreateGameObject("City");
-			Application->root->ParentGameObject(*root, *rootObject);
-		}
-		else {
-			// Add this object as a child of the root
-			SceneManagement->currentScene->AddGameObject(obj);
-			root->AddChild(obj.get());
-		}
-
+		obj.GetTransform()->SetMatrix(nodeTransform * accumulatedTransform);
+		
 		// Add mesh and material components
 		for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
+
 			const auto meshIndex = node.mMeshes[i];
 			const auto& model = meshes[meshIndex];
 
-			obj->SetName(model->GetMeshName());
-			obj->AddComponent<MeshRenderer>();
+			obj.SetName(node.mName.data);
 
-			const auto& mesh = std::make_shared<Mesh>();
-			obj->GetComponent<MeshRenderer>()->SetMesh(mesh);
-			obj->GetComponent<MeshRenderer>()->GetMesh()->setModel(model);
-			obj->GetComponent<MeshRenderer>()->SetMaterial(materials[model->GetMaterialIndex()]);
+			/*const auto& mesh = std::make_shared<Mesh>();
+			obj.GetComponent<MeshRenderer>()->SetMesh(mesh);
+			obj.GetComponent<MeshRenderer>()->GetMesh()->setModel(model);
+			obj.GetComponent<MeshRenderer>()->SetMaterial(materials[model->GetMaterialIndex()]);
 			if(materials[model->GetMaterialIndex()]->getImg()->image_path != "")
-			obj->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(materials[model->GetMaterialIndex()]->getImg()->image_path);
-			obj->AddComponent<ShaderComponent>();
-			obj->GetComponent<ShaderComponent>()->SetOwnerMaterial(obj->GetComponent<MeshRenderer>()->GetMaterial().get());
-			obj->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::DEFAULT);
-			obj->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
+			obj.GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(materials[model->GetMaterialIndex()]->getImg()->image_path);
+			obj.AddComponent<ShaderComponent>();
+			obj.GetComponent<ShaderComponent>()->SetOwnerMaterial(obj.GetComponent<MeshRenderer>()->GetMaterial().get());
+			obj.GetComponent<ShaderComponent>()->SetShaderType(ShaderType::DEFAULT);
+			obj.GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
 
 			BoundingBox meshBBox;
 
@@ -133,28 +116,28 @@ std::shared_ptr<GameObject> graphicObjectFromNode(const aiScene& scene,
 				meshBBox.max = glm::max(meshBBox.max, glm::dvec3(v));
 			}
 
-			obj->setBoundingBox(meshBBox);
+			obj.setBoundingBox(meshBBox);*/
+
+			fbx_object.push_back(std::make_shared<GameObject>(obj));
 		}
 
 		// Process and add children as children of the current node
 		for (unsigned int i = 0; i < node.mNumChildren; ++i) {
-			auto child = graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform, root);
+			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
 		}
-
-		return obj;
 	}
 
 	// For nodes with the $AssimpFbx$ suffix, process children but do not create GameObjects
 	for (unsigned int i = 0; i < node.mNumChildren; ++i) {
 		graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
 	}
-
-	return nullptr; // Return nullptr for transformation nodes as they do not create GameObjects
-
 }
 
-void createMeshesFromFBX(const aiScene& scene, std::vector<std::shared_ptr<Model>>& models) {
-	
+std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
+	std::vector<std::shared_ptr<Mesh>> meshes;
+	meshes.resize(scene.mNumMeshes);
+
+	std::vector<std::shared_ptr<Model>> models;
 	models.resize(scene.mNumMeshes);
 
 	std::vector<std::shared_ptr<ModelData>> modelsData;
@@ -205,10 +188,17 @@ void createMeshesFromFBX(const aiScene& scene, std::vector<std::shared_ptr<Model
 
 		models[i]->SetModelData(*modelsData[i]);
 	}
+
+	for (int i = 0; i < models.size(); i++) {
+		meshes[i] = std::make_shared<Mesh>();
+		meshes[i]->setModel(models[i]);
+	}
+
+	return meshes;
 }
 
-void createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath, std::vector<std::shared_ptr<Material>>& materials) {
-
+std::vector<std::shared_ptr<Material>>createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath) {
+	std::vector<std::shared_ptr<Material>> materials;
 	materials.resize(scene.mNumMaterials);
 
 	for (unsigned int i = 0; i < scene.mNumMaterials; ++i) {
@@ -221,6 +211,7 @@ void createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath, std:
 			fbx_material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
 			const string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
 			materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
+			materials[i]->imagePtr->LoadTexture((basePath / textureFileName).string());
 
 			auto uWrapMode = aiTextureMapMode_Wrap;
 			auto vWrapMode = aiTextureMapMode_Wrap;
@@ -242,26 +233,23 @@ void createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath, std:
 		materials[i]->color = vec4(color.r, color.g, color.b, color.a);
 
 	}
+
+	return materials;
 }
 
-std::shared_ptr<GameObject> ModelImporter::loadFromFile(const std::string& path) {
+void ModelImporter::loadFromFile(const std::string& path) {
 	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_CalcTangentSpace |aiProcess_Triangulate | aiProcess_SortByPType | aiProcess_JoinIdenticalVertices | 
 		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
 	aiGetErrorString();
 	
 	// Create models and materials from FBX
-	std::vector<std::shared_ptr<Model>> models;
-	createMeshesFromFBX(*fbx_scene, models);
-	std::vector<std::shared_ptr<Material>> materials;
-	createMaterialsFromFBX(*fbx_scene, std::filesystem::absolute(path).parent_path(), materials);
+	meshes = createMeshesFromFBX(*fbx_scene);
+
+	materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/");
 
 	// Create the GameObject hierarchy
-	std::shared_ptr<GameObject> fbx_obj = graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, models, materials);
+	graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);
 	aiReleaseImport(fbx_scene);
-
-	// Assign name and return
-	//fbx_obj->name() = std::filesystem::path(filename).stem().string();
-	return fbx_obj;
 
 }
 

@@ -78,15 +78,41 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
 void MakeCity() {
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
+    auto MarcoVicePresidente = Application->root->CreateGameObject("City");
 
     ModelImporter meshImp;
-    std::shared_ptr<GameObject> sceneobj = meshImp.loadFromFile("Assets/Meshes/street2.FBX");
+    meshImp.loadFromFile("Assets/Meshes/street2.FBX");
+
+    for (int i = 0; i < meshImp.meshes.size(); i++) {
+
+        auto MarcoVicePresidente2 = meshImp.fbx_object[i];
+
+        auto go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
+        go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
+
+        auto meshRenderer = go->AddComponent<MeshRenderer>();
+        auto image = std::make_shared<Image>();
+        auto material = std::make_shared<Material>();
+
+        meshRenderer->SetMesh(meshImp.meshes[i]);
+        material = meshImp.materials[meshImp.meshes[i]->getModel()->GetMaterialIndex()];
+        image = material->getImg();
+
+        meshRenderer->SetMaterial(material);
+        meshRenderer->GetMaterial()->SetColor(material->GetColor());
+
+        auto shaderComponent = go->AddComponent<ShaderComponent>();
+        shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+        shaderComponent->SetShaderType(ShaderType::DEFAULT);
+
+        go->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
+
+        go->GetTransform()->SetMatrix(MarcoVicePresidente2->GetTransform()->GetMatrix());
+        Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        gameObjectsWithColliders.push_back(go);
+    }
 
    // auto grid = Application->root->CreatePlane("Grid");
-
-    //MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
-    //MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
-    //MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
 
     for (auto& go : gameObjectsWithColliders) {
         go->AddComponent<ColliderComponent>(Application->physicsModule, true);

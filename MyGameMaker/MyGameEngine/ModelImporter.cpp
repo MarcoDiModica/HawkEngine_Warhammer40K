@@ -133,8 +133,31 @@ vector<shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 			indices[j * 3 + 1] = fbx_mesh->mFaces[j].mIndices[1];
 			indices[j * 3 + 2] = fbx_mesh->mFaces[j].mIndices[2];
 		}
+		std::vector<Vertex> all_vertex;
 
-		mesh_ptr->Load(reinterpret_cast<const glm::vec3*>(fbx_mesh->mVertices), fbx_mesh->mNumVertices, indices.data(), indices.size());
+		for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) {
+			Vertex vertex;
+
+			mesh_ptr->SetVertexBoneDataToDefault(vertex);
+
+			vertex.position = AssimpGLMHelpers::GetGLMVec(fbx_mesh->mVertices[j]);
+
+			all_vertex.push_back(vertex);
+		}
+
+		mesh_ptr->ExtractBoneWeightForVertices(all_vertex, fbx_mesh, &scene);
+
+		// Prepare BoneIDs and Weights arrays
+		std::vector<int> boneIDs;
+		std::vector<float> weights;
+		for (const auto& vertex : all_vertex) {
+			for (int k = 0; k < MAX_BONE_INFLUENCE; ++k) {
+				boneIDs.push_back(vertex.m_BoneIDs[k]);
+				weights.push_back(vertex.m_Weights[k]);
+			}
+		}
+
+		mesh_ptr->Load(reinterpret_cast<const glm::vec3*>(fbx_mesh->mVertices), fbx_mesh->mNumVertices, indices.data(), indices.size(), boneIDs.data(), weights.data());
 		if (fbx_mesh->HasTextureCoords(0)) {
 			vector<glm::vec2> texCoords(fbx_mesh->mNumVertices);
 			for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) texCoords[j] = glm::vec2(fbx_mesh->mTextureCoords[0][j].x, fbx_mesh->mTextureCoords[0][j].y);
@@ -148,18 +171,6 @@ vector<shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 			for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) colors[j] = glm::u8vec3(fbx_mesh->mColors[0][j].r * 255, fbx_mesh->mColors[0][j].g * 255, fbx_mesh->mColors[0][j].b * 255);
 			mesh_ptr->LoadColors(colors.data(), colors.size());
 		}
-		
-		vector<Vertex> vertices;
-		for (unsigned int j = 0; j < fbx_mesh->mNumVertices; ++j) 
-		{
-			Vertex vertex;
-
-			mesh_ptr->SetVertexBoneDataToDefault(vertex);
-			vertices.push_back(vertex);
-		}
-
-
-        mesh_ptr->ExtractBoneWeightForVertices(vertices, fbx_mesh, &scene);
 
 		mesh_ptr->LoadBones();
 

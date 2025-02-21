@@ -26,7 +26,7 @@ Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 Mesh::~Mesh() {}
 
 
-void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs)
+void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs, const int* boneIDs, const float* weights)
 {
 	vertices_buffer.LoadData(vertices, num_verts * sizeof(glm::vec3));
 	indices_buffer.LoadIndices(indices, num_indexs);
@@ -39,6 +39,10 @@ void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int*
 	_vertices.resize(num_verts);
 	for (size_t i = 0; i < num_verts; ++i) {
 		_vertices[i].position = vertices[i];
+		for (int j = 0; j < MAX_BONE_INFLUENCE; ++j) {
+			_vertices[i].m_BoneIDs[j] = boneIDs[i * MAX_BONE_INFLUENCE + j];
+			_vertices[i].m_Weights[j] = weights[i * MAX_BONE_INFLUENCE + j];
+		}
 	}
 	_indices.assign(indices, indices + num_indexs);
 
@@ -50,17 +54,11 @@ void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int*
 		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
 	}
 
-	// ids
-	glEnableVertexAttribArray(3);
-	glVertexAttribIPointer(3, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));
-
-	// weights
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-		(void*)offsetof(Vertex, m_Weights));
+	
 
 	CalculateNormals();
 }
+
 
 void Mesh::drawBoundingBox(const BoundingBox& bbox) {
 	glLineWidth(2.0);
@@ -102,7 +100,25 @@ void Mesh::LoadColors(const glm::u8vec3* colors, size_t num_colors)
 
 void Mesh::LoadBones() 
 {
+	// Check if the mesh has bone data before enabling the attributes
+	bool hasBoneData = false;
+	for (const auto& vertex : _vertices) {
+		if (vertex.m_BoneIDs[0] != -1) {
+			hasBoneData = true;
+			break;
+		}
+	}
 
+	if (hasBoneData) {
+
+		// ids
+		glEnableVertexAttribArray(3);
+		glVertexAttribIPointer(3, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));
+
+		// weights
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
+	}
 }
 
 void Mesh::CalculateNormals() {
@@ -304,7 +320,7 @@ void Mesh::LoadMesh(const char* file_path)
 		}
 
 		// Load the combined mesh data
-		Load(all_vertices.data(), all_vertices.size(), all_indices.data(), all_indices.size());
+		//Load(all_vertices.data(), all_vertices.size(), all_indices.data(), all_indices.size());
 
 		if (!all_texCoords.empty()) {
 			loadTexCoords(all_texCoords.data(), all_texCoords.size());
@@ -352,7 +368,7 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 		4, 5, 1, 4, 1, 0
 	};
 
-	mesh->Load(vertices, 8, indices, 36);
+	//mesh->Load(vertices, 8, indices, 36);
 	mesh->filePath = std::string("shapes/cube");
 	return mesh;
 }
@@ -422,7 +438,7 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 	}
 
 	// Cargar los datos en la malla
-	mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
+	//mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
 	mesh->filePath = std::string("shapes/cylinder");
 
 	return mesh;
@@ -464,7 +480,7 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 		indices.push_back(i + 1);
 	}
 
-	mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
+	//mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
 	mesh->filePath = std::string("shapes/sphere");
 	return mesh;
 }
@@ -483,7 +499,7 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 		0, 1, 2, 0, 2, 3
 	};
 
-	mesh->Load(vertices, 4, indices, 6);
+	//mesh->Load(vertices, 4, indices, 6);
 	mesh->filePath = std::string("shapes/plane");
 	return mesh;
 }

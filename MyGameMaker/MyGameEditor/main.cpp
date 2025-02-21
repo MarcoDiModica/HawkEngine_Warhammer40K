@@ -353,7 +353,7 @@ static void display_func() {
 
 		RenderOutline(object);
 
-		object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
+		//object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
 		
 		object->Update(static_cast<float>(Application->GetDt()));
 
@@ -363,7 +363,7 @@ static void display_func() {
 			GameObject* child = object->GetChildren()[j].get();
 			objects.push_back(child);
 			RenderOutline(child);
-			child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
+			//child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
 		
 		}
 	}

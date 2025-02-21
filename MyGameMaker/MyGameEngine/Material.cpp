@@ -58,6 +58,11 @@ void Material::bind() const {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4f);
 }
 
+void Material::unbind() const
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 bool Material::loadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {
 	return shader->LoadShaders(vertexShaderFile, fragmentShaderFile);
 }

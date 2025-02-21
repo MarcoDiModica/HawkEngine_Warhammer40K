@@ -27,7 +27,7 @@ public:
 	Image& operator=(Image&& other) noexcept = delete;
 	~Image();
 
-	void bind() const;
+	void bind(unsigned int slot = 0) const;
 	void load(int width, int height, int channels, void* data);
 	// Load Texture
 	void LoadTexture(const std::string& path);

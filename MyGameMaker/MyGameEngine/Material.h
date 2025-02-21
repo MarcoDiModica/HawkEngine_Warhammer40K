@@ -25,6 +25,7 @@ public:
 	
 	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
 	void bind() const;
+	void unbind() const;
 	void setImage(const std::shared_ptr<Image>& img_ptr) { imagePtr = img_ptr; }
 	auto& image() { return *imagePtr; }
 	std::shared_ptr<Image> getImg() { return imagePtr; }

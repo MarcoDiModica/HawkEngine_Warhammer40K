@@ -43,6 +43,10 @@ void Shaders::Bind() const {
     glUseProgram(_program);
 }
 
+void Shaders::UnBind() const {
+    glUseProgram(0);
+}
+
 GLuint Shaders::GetProgram() const {
     return _program;
 }

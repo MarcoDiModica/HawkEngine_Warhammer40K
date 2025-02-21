@@ -91,12 +91,10 @@ void MakeCity() {
         go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
 
         auto meshRenderer = go->AddComponent<MeshRenderer>();
-        auto image = std::make_shared<Image>();
         auto material = std::make_shared<Material>();
 
         meshRenderer->SetMesh(meshImp.meshes[i]);
         material = meshImp.materials[meshImp.meshes[i]->getModel()->GetMaterialIndex()];
-        image = material->getImg();
 
         meshRenderer->SetMaterial(material);
         meshRenderer->GetMaterial()->SetColor(material->GetColor());
@@ -107,7 +105,7 @@ void MakeCity() {
 
         go->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
 
-        go->GetTransform()->SetMatrix(MarcoVicePresidente2->GetTransform()->GetMatrix());
+        go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
         gameObjectsWithColliders.push_back(go);
     }

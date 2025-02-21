@@ -24,7 +24,8 @@ Image::Image(Image&& other) noexcept :
 	other._id = 0;
 }
 
-void Image::bind() const {
+void Image::bind(unsigned int slot) const {
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, _id);
 }
 

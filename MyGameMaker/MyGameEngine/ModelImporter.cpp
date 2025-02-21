@@ -82,10 +82,6 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		glm::mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
 
 		obj.GetTransform()->SetMatrix(localMatrix * accumulatedTransform);
-
-		// Apply the accumulated transformation and set the transform
-		glm::mat4 nodeTransform = aiMat4ToMat4(node.mTransformation);
-		obj.GetTransform()->SetMatrix(nodeTransform * accumulatedTransform);
 		
 		// Add mesh and material components
 		for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
@@ -125,11 +121,6 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		for (unsigned int i = 0; i < node.mNumChildren; ++i) {
 			graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
 		}
-	}
-
-	// For nodes with the $AssimpFbx$ suffix, process children but do not create GameObjects
-	for (unsigned int i = 0; i < node.mNumChildren; ++i) {
-		graphicObjectFromNode(scene, *node.mChildren[i], meshes, materials, accumulatedTransform);
 	}
 }
 

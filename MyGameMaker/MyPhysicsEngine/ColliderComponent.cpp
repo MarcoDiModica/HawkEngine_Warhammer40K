@@ -101,7 +101,7 @@ void ColliderComponent::SetActive(bool active) {
 void ColliderComponent::Update(float deltaTime) {
     if (snapToPosition && owner) {
         auto goTransform = owner->GetTransform();
-        glm::vec3 position = goTransform->GetPosition();
+        glm::vec3 position = owner->boundingBox().center();
         glm::quat rotation = goTransform->GetRotation();
 
         btTransform transform;
@@ -116,7 +116,7 @@ void ColliderComponent::Update(float deltaTime) {
             rigidBody->setWorldTransform(transform);
         }
 
-        std::cout << "Collider position snapped to: ("
+        std::cout << "Collider position snapped to bounding box center: ("
             << position.x << ", " << position.y << ", " << position.z << ")\n";
     }
 }
@@ -172,6 +172,8 @@ void ColliderComponent::CreateCollider(bool isForStreet) {
 
     //rigidBody->setRestitution(0.5f);
 
+    glm::quat newRotation = glm::quat(glm::radians(glm::vec3(0, 0, 0)));
+    SetColliderRotation(newRotation);
     // Añadir el colisionador al mundo de físicas
     physics->dynamicsWorld->addRigidBody(rigidBody);
     //gameObjectRigidBodyMapForhouse[owner] = rigidBody;

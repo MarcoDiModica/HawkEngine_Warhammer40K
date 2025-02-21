@@ -19,25 +19,22 @@ uniform mat4 finalBonesMatrices[MAX_BONES];
 
 void main()
 {
-    vec4 totalPosition = vec4(0.0f);
-    vec3 totalNormal = vec3(0.0f);
+       vec4 totalPosition = vec4(0.0f);
     for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
     {
         if(boneIds[i] == -1) 
             continue;
-        if(boneIds[i] >= MAX_BONES) 
+        if(boneIds[i] >=MAX_BONES) 
         {
-            totalPosition = vec4(aPos, 1.0f);
-            totalNormal = aNormal;
+            totalPosition = vec4(aPos,1.0f);
             break;
         }
-        vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos, 1.0f);
+        vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos,1.0f);
         totalPosition += localPosition * weights[i];
         vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
-        totalNormal += localNormal * weights[i];
     }
+		
 
     gl_Position = projection * view * model * totalPosition;
     TexCoord = aTexCoord;
-    Normal = normalize(totalNormal);
 };

@@ -50,14 +50,7 @@ void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int*
 		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
 	}
 
-	// ids
-	glEnableVertexAttribArray(3);
-	glVertexAttribIPointer(3, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));
-
-	// weights
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
-		(void*)offsetof(Vertex, m_Weights));
+	
 
 	CalculateNormals();
 }
@@ -102,7 +95,13 @@ void Mesh::LoadColors(const glm::u8vec3* colors, size_t num_colors)
 
 void Mesh::LoadBones() 
 {
+	// ids
+	glEnableVertexAttribArray(3);
+	glVertexAttribIPointer(3, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));
 
+	// weights
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),	(void*)offsetof(Vertex, m_Weights));
 }
 
 void Mesh::CalculateNormals() {

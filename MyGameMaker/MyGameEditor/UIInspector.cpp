@@ -425,6 +425,25 @@ bool UIInspector::Draw() {
 
         ImGui::Separator();
 
+        if (selectedGameObject->HasComponent<RigidbodyComponent>())
+        {
+			RigidbodyComponent* rigidbodyComponent = selectedGameObject->GetComponent<RigidbodyComponent>();
+
+            if (rigidbodyComponent)
+            {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Rigidbody"))
+                {
+                    //do something
+                }
+                else
+                {
+                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: RigidbodyComponent is nullptr");
+                }
+            }
+        }
+
+        ImGui::Separator();
 
         if (selectedGameObject->HasComponent<ColliderComponent>())
         {
@@ -433,9 +452,14 @@ bool UIInspector::Draw() {
             if (colliderComponent)
             {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Collider")) {
+                if (ImGui::CollapsingHeader("Collider"))
+                {
+                    bool isStatic = colliderComponent->IsStatic();
+                    if (ImGui::Checkbox("Static", &isStatic)) {
+						colliderComponent->SetStatic(isStatic);
+					}
+     //               // Posición del 
 
-     //               // Posición del Collider
 
      //               glm::vec3 colliderPosition = colliderComponent->GetColliderPos();
      //               float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };

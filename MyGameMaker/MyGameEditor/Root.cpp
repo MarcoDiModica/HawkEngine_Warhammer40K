@@ -18,6 +18,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
+#include "../MyPhysicsEngine/RigidBodyComponent.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -136,6 +137,12 @@ bool Root::Awake()
 
 	//auto Collider = CreateGameObject("Collider");
     //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
+
+    auto PhysicsCube = CreateGameObject("PhysicsCube");
+    PhysicsCube->GetTransform()->GetPosition() = vec3(0, 0, 0);
+    AddMeshRenderer(*PhysicsCube, Mesh::CreateCube(), "Assets/default.png");
+    PhysicsCube->AddComponent<ColliderComponent>(Application->physicsModule);
+    PhysicsCube->AddComponent<RigidbodyComponent>(Application->physicsModule);
 
     return true;
 }

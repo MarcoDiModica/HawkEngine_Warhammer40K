@@ -10,7 +10,9 @@ ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsMo
     , rigidBody(nullptr)
     , isTrigger(false)
     , size(1.0f)
-    , isStatic(true) {
+    , initialized(false)
+    , isStatic(true) 
+{
     name = "ColliderComponent";
 }
 
@@ -18,8 +20,15 @@ ColliderComponent::~ColliderComponent() {
     Destroy();
 }
 
+void ColliderComponent::Initialize() {
+	if (!initialized) {
+		CreateCollisionBody();
+		initialized = true;
+	}
+}
+
 void ColliderComponent::Start() {
-    CreateCollisionBody();
+    Initialize();
 }
 
 void ColliderComponent::Update(float deltaTime) {
@@ -35,7 +44,7 @@ void ColliderComponent::Destroy() {
         delete rigidBody;
         rigidBody = nullptr;
     }
-    if (collisionShape) {
+    else if (collisionShape) {
         delete collisionShape;
         collisionShape = nullptr;
     }
@@ -44,7 +53,7 @@ void ColliderComponent::Destroy() {
 void ColliderComponent::SetSize(const glm::vec3& newSize) {
     size = newSize;
     if (collisionShape) {
-        btVector3 halfExtents(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f);
+        btVector3 halfExtents(size.x, size.y, size.z);
         static_cast<btBoxShape*>(collisionShape)->setImplicitShapeDimensions(halfExtents);
 
         if (rigidBody && !isStatic) {
@@ -73,7 +82,7 @@ void ColliderComponent::CreateCollisionBody() {
     BoundingBox bbox = owner->boundingBox();
     size = bbox.size();
 
-    btVector3 halfExtents(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f);
+    btVector3 halfExtents(size.x, size.y, size.z);
     collisionShape = new btBoxShape(halfExtents);
 
     btTransform startTransform;

@@ -11,7 +11,8 @@ RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physics
     , mass(10.0f)
     , useGravity(true)
     , kinematic(false)
-    , initialized(false) {
+    , initialized(false) 
+{
     name = "RigidbodyComponent";
 }
 
@@ -21,14 +22,25 @@ RigidbodyComponent::~RigidbodyComponent() {
 
 void RigidbodyComponent::Start() {
     if (!initialized) {
-        InitializeRigidbody();
-        initialized = true;
+        ColliderComponent* collider = GetOrCreateCollider();
+        if (collider) {
+            collider->Initialize();
+            if (collider->IsInitialized()) {
+                InitializeRigidbody();
+                initialized = true;
+            }
+        }
     }
 }
 
 void RigidbodyComponent::InitializeRigidbody() {
     ColliderComponent* collider = GetOrCreateCollider();
-    if (!collider || !collider->GetCollisionShape()) return;
+    if (!collider || !collider->IsInitialized() || !collider->GetCollisionShape()) {
+        std::cout << "Failed to initialize RigidbodyComponent: ColliderComponent not ready" << std::endl;
+        return;
+    }
+
+    collider->Destroy();
 
     auto transform = owner->GetTransform();
     if (!transform) return;
@@ -42,8 +54,6 @@ void RigidbodyComponent::InitializeRigidbody() {
     glm::quat rotation = transform->GetRotation();
     startTransform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
 
-    collider->Destroy();
-
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
 
     btVector3 localInertia(0, 0, 0);
@@ -55,12 +65,9 @@ void RigidbodyComponent::InitializeRigidbody() {
     rigidBody = new btRigidBody(rbInfo);
 
     rigidBody->setGravity(useGravity ? btVector3(0, -9.81f, 0) : btVector3(0, 0, 0));
-
     if (kinematic) {
         rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
     }
-
-    rigidBody->setActivationState(DISABLE_DEACTIVATION);
 
     physics->dynamicsWorld->addRigidBody(rigidBody);
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
@@ -73,6 +80,7 @@ ColliderComponent* RigidbodyComponent::GetOrCreateCollider() {
     else
     {
         ColliderComponent* collider = owner->AddComponent<ColliderComponent>(physics);
+        collider->Initialize();
         return collider;
     }
 
@@ -125,25 +133,12 @@ void RigidbodyComponent::AddTorque(const glm::vec3& torque) {
 
 void RigidbodyComponent::SetVelocity(const glm::vec3& velocity) {
     if (rigidBody && !kinematic) {
-        rigidBody->activate(true);
+        rigidBody->activate(true); 
         rigidBody->setLinearVelocity(btVector3(velocity.x, velocity.y, velocity.z));
     }
 }
 
 void RigidbodyComponent::Update(float deltaTime) {
-    if (!rigidBody || !owner) return;
-
-    auto transform = owner->GetTransform();
-    if (!transform) return;
-
-    btTransform btTrans;
-    rigidBody->getMotionState()->getWorldTransform(btTrans);
-
-    btVector3 pos = btTrans.getOrigin();
-    transform->SetPosition(glm::dvec3(pos.x(), pos.y(), pos.z()));
-
-    btQuaternion rot = btTrans.getRotation();
-    transform->SetRotationQuat(glm::dquat(rot.w(), rot.x(), rot.y(), rot.z()));
 }
 
 void RigidbodyComponent::Destroy() {
@@ -157,46 +152,4 @@ void RigidbodyComponent::Destroy() {
 
 std::unique_ptr<Component> RigidbodyComponent::Clone(GameObject* new_owner) {
     return std::make_unique<RigidbodyComponent>(new_owner, physics);
-}
-
-void RigidbodyComponent::SetPosition(const glm::vec3& position) {
-    if (!rigidBody) return;
-
-    btTransform transform;
-    rigidBody->getMotionState()->getWorldTransform(transform);
-    transform.setOrigin(btVector3(position.x, position.y, position.z));
-    rigidBody->getMotionState()->setWorldTransform(transform);
-    rigidBody->setWorldTransform(transform);
-
-    rigidBody->activate(true);
-}
-
-glm::vec3 RigidbodyComponent::GetPosition() const {
-    if (!rigidBody) return glm::vec3(0.0f);
-
-    btTransform transform;
-    rigidBody->getMotionState()->getWorldTransform(transform);
-    btVector3 pos = transform.getOrigin();
-    return glm::vec3(pos.x(), pos.y(), pos.z());
-}
-
-void RigidbodyComponent::SetRotation(const glm::quat& rotation) {
-    if (!rigidBody) return;
-
-    btTransform transform;
-    rigidBody->getMotionState()->getWorldTransform(transform);
-    transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
-    rigidBody->getMotionState()->setWorldTransform(transform);
-    rigidBody->setWorldTransform(transform);
-
-    rigidBody->activate(true);
-}
-
-glm::quat RigidbodyComponent::GetRotation() const {
-    if (!rigidBody) return glm::quat();
-
-    btTransform transform;
-    rigidBody->getMotionState()->getWorldTransform(transform);
-    btQuaternion rot = transform.getRotation();
-    return glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
 }

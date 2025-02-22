@@ -19,6 +19,9 @@ public:
     ComponentType GetType() const override { return ComponentType::COLLIDER; }
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
+    void Initialize();
+    bool IsInitialized() const { return initialized; }
+
     void SetTrigger(bool isTrigger);
     bool IsTrigger() const { return isTrigger; }
 
@@ -33,6 +36,9 @@ public:
     glm::vec3 GetColliderPosition() const;
     glm::quat GetColliderRotation() const;
 
+    void SetStatic(bool isStatic) { this->isStatic = isStatic; }
+    bool IsStatic() const { return isStatic; }
+
 private:
     void CreateCollisionBody();
     void UpdateTransform();
@@ -43,4 +49,5 @@ private:
     glm::vec3 size;
     bool isTrigger;
     bool isStatic;
+    bool initialized;
 };

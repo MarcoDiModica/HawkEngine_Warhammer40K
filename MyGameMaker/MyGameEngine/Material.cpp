@@ -41,7 +41,7 @@ void Material::SetColor(const vec4& color) {
 	this->color = color;
 }
 
-vec4 Material::GetColor() {
+const glm::vec4& Material::GetColor() const {
 	return this->color;
 }
 

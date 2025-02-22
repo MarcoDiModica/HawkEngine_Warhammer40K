@@ -36,7 +36,7 @@ public:
 	void setShaderUniform(const std::string& name, const glm::vec3& value);
 	void setShaderUniform(const std::string& name, const glm::vec4& value);
 	void setShaderUniform(const std::string& name, const glm::mat4& value);
-	vec4 GetColor();
+	const glm::vec4& GetColor() const;
 	void SetColor(const vec4& color);
 	void SetShader(Shaders& shader);
 	Shaders* GetShader();

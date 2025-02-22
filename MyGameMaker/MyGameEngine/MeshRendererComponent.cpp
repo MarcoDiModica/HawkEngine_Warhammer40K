@@ -139,10 +139,11 @@ MonoObject* MeshRenderer::GetSharp()
 
 void MeshRenderer::Render() const
 {
-    glBindVertexArray(mesh->model.get()->GetModelData().vA);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
-   
+
     material->shader->Bind();
+
+    glm::vec4 color(material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
+    material->shader->SetUniform("modColor", color);
 
     if (material->image().image_path != "") {
         material->image().bind();
@@ -156,6 +157,9 @@ void MeshRenderer::Render() const
     material->shader->SetUniform("model", owner->GetTransform()->GetMatrix());
     material->shader->SetUniform("view", Application->camera->view());
     material->shader->SetUniform("projection", Application->camera->projection());
+
+    glBindVertexArray(mesh->model.get()->GetModelData().vA);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
 
     glDrawElements(GL_TRIANGLES, mesh->model->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
 

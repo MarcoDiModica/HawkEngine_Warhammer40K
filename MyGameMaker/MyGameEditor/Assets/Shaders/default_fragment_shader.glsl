@@ -7,14 +7,15 @@ out vec4 FragColor;  // Color final del fragmento
 
 uniform sampler2D texture1;   // Textura del agua
 uniform bool u_HasTexture;
+uniform vec4 modColor;
 
 void main()
 {
 	if(u_HasTexture){
 		vec4 texColor = texture(texture1, TexCoord);
 		FragColor = texColor;
-		//color = vec4(Normal, 1.0); //debug normals
+		//color = vec4(Normal, 1.0) * modColor; //debug normals
 	}else{
-		FragColor = vec4(0.8, 0.8, 0.8, 1.0);
+		FragColor = modColor;
 	}
 };

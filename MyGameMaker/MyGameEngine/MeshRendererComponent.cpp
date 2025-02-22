@@ -9,6 +9,7 @@
 #include "Shaders.h"
 #include <iostream>
 #include "../MyScriptingEngine/MonoManager.h"
+#include "../MyShadersEngine/ShaderComponent.h"
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
 #include <mono/jit/jit.h>
@@ -158,6 +159,22 @@ void MeshRenderer::Render() const
     material->shader->SetUniform("view", Application->camera->view());
     material->shader->SetUniform("projection", Application->camera->projection());
 
+    switch (material->shaderType)
+    {
+    case LIGHT:
+        break;
+    case WATER:
+        material->shader->SetUniform("u_Time", owner->GetTimeActive());
+        material->shader->SetUniform("u_Amplitude", owner->GetComponent<ShaderComponent>()->amplitude);
+        material->shader->SetUniform("u_Frequency", owner->GetComponent<ShaderComponent>()->frequency);
+        material->shader->SetUniform("u_ColorLow", glm::vec3(0.0f, 0.0f, 1.0f));
+        material->shader->SetUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
+        material->shader->SetUniform("u_Factor", 0.8f);
+        break;
+    default:
+        break;
+    }
+
     glBindVertexArray(mesh->model.get()->GetModelData().vA);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
 
@@ -171,28 +188,6 @@ void MeshRenderer::Render() const
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-
-    /*switch (material->shaderType)
-    {
-    case DEFAULT:
-        material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
-
-        break;
-    case LIGHT:
-        break;
-    case WATER:
-        break;
-    default:
-        break;
-    }*/
-
-    //material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-    //material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
-    //material->setShaderUniform("modColor", glm::vec4( 1,0.2f,0,1));
-    //glUniform4f(glGetUniformLocation(material->shader.GetProgram(), "modColor"), material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
-    ////material->setShaderUniform("model", owner->GetComponent<Transform_Component>()->GetMatrix());
-    //material->setShaderUniform("view", Application->camera->view());
-    //material->setShaderUniform("projection", Application->camera->projection());
 
     //material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
     //material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));

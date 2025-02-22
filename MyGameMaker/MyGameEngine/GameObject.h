@@ -106,6 +106,8 @@ public:
 
     void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
 
+	float GetTimeActive() const { return timeActive; }
+
 private:
     friend class SceneSerializer;
     friend class GameObject;

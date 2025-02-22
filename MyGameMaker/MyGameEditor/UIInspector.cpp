@@ -581,8 +581,7 @@ bool UIInspector::Draw() {
             if (particlesEmitterComponent)
             {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Particles Emitter"))
-                {
+                if (ImGui::CollapsingHeader("Particles Emitter")) {
                     float spawnrate = particlesEmitterComponent->getSpawnRate();
                     std::string texturePath = particlesEmitterComponent->GetTexture();
                     int maxParticles = particlesEmitterComponent->getMaxParticles();
@@ -625,6 +624,31 @@ bool UIInspector::Draw() {
                             }
                             else {
                                 std::cerr << "Failed to open file for saving: " << savePath << std::endl;
+                            }
+                        }
+                    }
+
+                    if (ImGui::Button("Load .part")) {
+                        const char* loadPath = tinyfd_openFileDialog("Load Particles Emitter", "", 0, nullptr, nullptr, 0);
+                        if (loadPath && strlen(loadPath) > 0) { // Check if the loadPath is valid
+                            std::ifstream inFile(loadPath, std::ios::binary);
+                            if (inFile.is_open()) {
+                                float spawnrate;
+                                int maxParticles;
+                                size_t texturePathSize;
+                                inFile.read(reinterpret_cast<char*>(&spawnrate), sizeof(spawnrate));
+                                inFile.read(reinterpret_cast<char*>(&maxParticles), sizeof(maxParticles));
+                                inFile.read(reinterpret_cast<char*>(&texturePathSize), sizeof(texturePathSize));
+                                std::string texturePath(texturePathSize, '\0');
+                                inFile.read(&texturePath[0], texturePathSize);
+                                inFile.close();
+
+                                particlesEmitterComponent->setSpawnRate(spawnrate);
+                                particlesEmitterComponent->setMaxParticles(maxParticles);
+                                particlesEmitterComponent->SetTexture(texturePath);
+                            }
+                            else {
+                                std::cerr << "Failed to open file for loading: " << loadPath << std::endl;
                             }
                         }
                     }

@@ -104,9 +104,8 @@ void MakeCity() {
     //MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
 
     for (auto& go : gameObjectsWithColliders) {
-        go->AddComponent<ColliderComponent>(Application->physicsModule, true);
+        go->AddComponent<ColliderComponent>(Application->physicsModule);
     }
-
 }
 
 bool Root::Awake()

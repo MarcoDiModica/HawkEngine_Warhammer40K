@@ -187,7 +187,7 @@ bool Input::processSDLEvents()
             switch (event.key.keysym.sym) {
             case SDLK_1:
                 break;
-            case SDLK_F12:
+            case SDLK_l:
                 if (f12Pressed == false) {
                     f12Pressed = true; // Activar la bandera si F12 fue presionado
                     Application->physicsModule->linkPhysicsToScene = true;

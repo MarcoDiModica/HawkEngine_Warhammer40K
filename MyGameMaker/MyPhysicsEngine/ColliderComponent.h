@@ -1,63 +1,46 @@
 #pragma once
-
 #include "../MyGameEngine/Component.h"
-#include "PhysicsModule.h"
 #include <glm/glm.hpp>
 #include <memory>
 
+class PhysicsModule;
+class btCollisionShape;
+class btRigidBody;
+
 class ColliderComponent : public Component {
 public:
-    ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet = false);
+    ColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
     ~ColliderComponent() override;
 
-    /*ColliderComponent(const ColliderComponent& other, PhysicsModule* physicsModule);
-    ColliderComponent& operator=(const ColliderComponent& other);
-
-    ColliderComponent(ColliderComponent&& other, PhysicsModule* physicsModule) noexcept;
-    ColliderComponent& operator=(ColliderComponent&& other) noexcept;*/
-
     void Start() override;
-    void SetTrigger(bool trigger);
     void Update(float deltaTime) override;
     void Destroy() override;
 
     ComponentType GetType() const override { return ComponentType::COLLIDER; }
-
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
-    glm::vec3 GetSize();
+    void SetTrigger(bool isTrigger);
+    bool IsTrigger() const { return isTrigger; }
 
     void SetSize(const glm::vec3& newSize);
+    glm::vec3 GetSize() const { return size; }
 
-    float GetMass() { return mass; };
-    bool IsTrigger() const;
-    glm::vec3 GetColliderPos();
+    btCollisionShape* GetCollisionShape() const { return collisionShape; }
+    btRigidBody* GetRigidBody() const { return rigidBody; }
 
-    glm::quat GetColliderRotation();
-
+    void SetColliderPosition(const glm::vec3& position);
     void SetColliderRotation(const glm::quat& rotation);
-
-    void SetColliderPos(const glm::vec3& position);
-
-    void SetMass(float newMass);
-
-    void SetActive(bool active);
-
-    bool GetSnapToPosition() const { return snapToPosition; }
-    void SetSnapToPosition(bool value) { snapToPosition = value; }
-    void SnapToPosition();
-
+    glm::vec3 GetColliderPosition() const;
+    glm::quat GetColliderRotation() const;
 
 private:
-    btRigidBody* rigidBody; // Collider
-    PhysicsModule* physics; // Referencia al módulo de físicas
-    glm::vec3 size; // Tamaño del Bounding Box
-    float mass;
-    bool isForStreetLocal;
-    std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
+    void CreateCollisionBody();
+    void UpdateTransform();
 
-	bool snapToPosition = false;
-
-    void CreateCollider(bool isForStreet = false);
+    PhysicsModule* physics;
+    btCollisionShape* collisionShape;
+    btRigidBody* rigidBody;
+    glm::vec3 size;
+    bool isTrigger;
+    bool isStatic;
 };
-

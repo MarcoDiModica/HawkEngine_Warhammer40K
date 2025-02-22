@@ -1,21 +1,62 @@
-
-#pragma once
-
 #include "ColliderComponent.h"
+#include "PhysicsModule.h"
 #include "../MyGameEngine/GameObject.h"
+#include <bullet/btBulletDynamicsCommon.h>
 
-ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) { name = "ColliderComponent"; physics = physicsModule; isForStreetLocal = isForStreet; }
+ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule)
+    : Component(owner)
+    , physics(physicsModule)
+    , collisionShape(nullptr)
+    , rigidBody(nullptr)
+    , isTrigger(false)
+    , size(1.0f)
+    , isStatic(true) {
+    name = "ColliderComponent";
+}
 
 ColliderComponent::~ColliderComponent() {
     Destroy();
 }
 
 void ColliderComponent::Start() {
-    mass = 0.0f;
-    CreateCollider(isForStreetLocal);
+    CreateCollisionBody();
+}
+
+void ColliderComponent::Update(float deltaTime) {
+    if (isStatic) {
+        UpdateTransform();
+    }
+}
+
+void ColliderComponent::Destroy() {
+    if (rigidBody) {
+        physics->dynamicsWorld->removeRigidBody(rigidBody);
+        delete rigidBody->getMotionState();
+        delete rigidBody;
+        rigidBody = nullptr;
+    }
+    if (collisionShape) {
+        delete collisionShape;
+        collisionShape = nullptr;
+    }
+}
+
+void ColliderComponent::SetSize(const glm::vec3& newSize) {
+    size = newSize;
+    if (collisionShape) {
+        btVector3 halfExtents(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f);
+        static_cast<btBoxShape*>(collisionShape)->setImplicitShapeDimensions(halfExtents);
+
+        if (rigidBody && !isStatic) {
+            btVector3 localInertia(0, 0, 0);
+            collisionShape->calculateLocalInertia(rigidBody->getMass(), localInertia);
+            rigidBody->setMassProps(rigidBody->getMass(), localInertia);
+        }
+    }
 }
 
 void ColliderComponent::SetTrigger(bool trigger) {
+    isTrigger = trigger;
     if (rigidBody) {
         if (trigger) {
             rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
@@ -26,171 +67,101 @@ void ColliderComponent::SetTrigger(bool trigger) {
     }
 }
 
-bool ColliderComponent::IsTrigger() const {
-    return (rigidBody && (rigidBody->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE));
-}
-
-glm::vec3 ColliderComponent::GetColliderPos() {
-
-    btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
-    btVector3 pos = trans.getOrigin();
-    return glm::vec3(pos.getX(), pos.getY(), pos.getZ());
-}
-
-glm::quat ColliderComponent::GetColliderRotation() {
-
-    btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
-    btQuaternion rot = trans.getRotation();
-    return glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
-}
-
-void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
-    btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
-    trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
-
-    btVector3 currentPosition = trans.getOrigin();
-    trans.setOrigin(currentPosition);
-
-    rigidBody->getMotionState()->setWorldTransform(trans);
-    rigidBody->setWorldTransform(trans);
-}
-
-void ColliderComponent::SetColliderPos(const glm::vec3& position) {
-    btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
-    trans.setOrigin(btVector3(position.x, position.y, position.z));
-    rigidBody->getMotionState()->setWorldTransform(trans);
-    rigidBody->setCenterOfMassTransform(trans);
-}
-
-glm::vec3 ColliderComponent::GetSize() {
-    if (rigidBody) {
-        btCollisionShape* shape = rigidBody->getCollisionShape();
-        if (shape) {
-            btVector3 scale = shape->getLocalScaling();
-            return glm::vec3(scale.getX() * 2.0f, scale.getY() * 2.0f, scale.getZ() * 2.0f);
-        }
-    }
-    return size;
-}
-
-void ColliderComponent::SetSize(const glm::vec3& newSize) {
-    size = newSize;
-    if (rigidBody) {
-        btCollisionShape* shape = rigidBody->getCollisionShape();
-        if (shape) {
-            btVector3 newBtSize(newSize.x * 0.5f, newSize.y * 0.5f, newSize.z * 0.5f);
-            shape->setLocalScaling(newBtSize);
-        }
-    }
-}
-void ColliderComponent::SetMass(float newMass) {
-    mass = newMass;
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
-    }
-    CreateCollider(false);
-	
-}
-
-void ColliderComponent::SetActive(bool active) {
-    if (rigidBody) {
-        if (active) {
-            physics->dynamicsWorld->addRigidBody(rigidBody);
-        }
-        else {
-            physics->dynamicsWorld->removeRigidBody(rigidBody);
-        }
-    }
-}
-
-
-void ColliderComponent::SnapToPosition() {
-    glm::vec3 position = owner->boundingBox().center();
-    auto goTransform = owner->GetTransform();
-    //for parenting works bad 
-    glm::quat rotation = goTransform->GetRotation();
-
-    btTransform transform;
-    transform.setIdentity();
-    transform.setOrigin(btVector3(position.x, position.y, position.z));
-    transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
-
-    if (rigidBody->getMotionState()) {
-        rigidBody->getMotionState()->setWorldTransform(transform);
-    }
-    else {
-        rigidBody->setWorldTransform(transform);
-    }
-    std::cout << "Collider position snapped to bounding box center: ("
-        << position.x << ", " << position.y << ", " << position.z << ")\n";
-}
-
-void ColliderComponent::Update(float deltaTime) {
-    if (snapToPosition && owner) {
-		SnapToPosition();
-    }
-}
-
-
-void ColliderComponent::Destroy() {
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
-    }
-}
-
-std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
-    return std::make_unique<ColliderComponent>(new_owner, physics);
-}
-void ColliderComponent::CreateCollider(bool isForStreet) {
+void ColliderComponent::CreateCollisionBody() {
     if (!owner) return;
-
-    Transform_Component* transform = owner->GetTransform();
-    if (!transform) return;
 
     BoundingBox bbox = owner->boundingBox();
     size = bbox.size();
 
-    btCollisionShape* shape;
+    btVector3 halfExtents(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f);
+    collisionShape = new btBoxShape(halfExtents);
 
     btTransform startTransform;
     startTransform.setIdentity();
 
-    shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
-    glm::vec3 localPosition = transform->GetLocalPosition();
-    startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
-    startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
-    glm::vec3 scale = transform->GetScale();
-    shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+    auto transform = owner->GetTransform();
+    if (transform) {
+        glm::vec3 position = transform->GetPosition();
+        glm::quat rotation = transform->GetRotation();
 
-    // Configurar la masa e inercia
-    btVector3 localInertia(0, 0, 0);
-    if (mass > 0.0f) {
-        shape->calculateLocalInertia(mass, localInertia);
+        startTransform.setOrigin(btVector3(position.x, position.y, position.z));
+        startTransform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
     }
 
-    // Crear el cuerpo rígido
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
+
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, motionState, collisionShape, btVector3(0, 0, 0));
     rigidBody = new btRigidBody(rbInfo);
 
-    //rigidBody->setRestitution(0.5f);
+    rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
 
-    glm::quat newRotation = glm::quat(glm::radians(glm::vec3(0, 0, 0)));
-    SetColliderRotation(newRotation);
-    // Añadir el colisionador al mundo de físicas
+    if (isTrigger) {
+        rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    }
+
     physics->dynamicsWorld->addRigidBody(rigidBody);
-    //gameObjectRigidBodyMapForhouse[owner] = rigidBody;
-    //doesnt works properly
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
+}
 
+void ColliderComponent::UpdateTransform() {
+    if (!rigidBody || !owner) return;
+
+    auto transform = owner->GetTransform();
+    if (!transform) return;
+
+    btTransform btTrans;
+    rigidBody->getMotionState()->getWorldTransform(btTrans);
+
+    glm::vec3 position = transform->GetPosition();
+    glm::quat rotation = transform->GetRotation();
+
+    btTrans.setOrigin(btVector3(position.x, position.y, position.z));
+    btTrans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+
+    rigidBody->getMotionState()->setWorldTransform(btTrans);
+    rigidBody->setWorldTransform(btTrans);
+}
+
+void ColliderComponent::SetColliderPosition(const glm::vec3& position) {
+    if (rigidBody) {
+        btTransform transform;
+        rigidBody->getMotionState()->getWorldTransform(transform);
+        transform.setOrigin(btVector3(position.x, position.y, position.z));
+        rigidBody->getMotionState()->setWorldTransform(transform);
+        rigidBody->setWorldTransform(transform);
+    }
+}
+
+void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
+    if (rigidBody) {
+        btTransform transform;
+        rigidBody->getMotionState()->getWorldTransform(transform);
+        transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+        rigidBody->getMotionState()->setWorldTransform(transform);
+        rigidBody->setWorldTransform(transform);
+    }
+}
+
+glm::vec3 ColliderComponent::GetColliderPosition() const {
+    if (rigidBody) {
+        btTransform transform;
+        rigidBody->getMotionState()->getWorldTransform(transform);
+        btVector3 pos = transform.getOrigin();
+        return glm::vec3(pos.x(), pos.y(), pos.z());
+    }
+    return glm::vec3(0.0f);
+}
+
+glm::quat ColliderComponent::GetColliderRotation() const {
+    if (rigidBody) {
+        btTransform transform;
+        rigidBody->getMotionState()->getWorldTransform(transform);
+        btQuaternion rot = transform.getRotation();
+        return glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
+    }
+    return glm::quat();
+}
+
+std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
+    return std::make_unique<ColliderComponent>(new_owner, physics);
 }

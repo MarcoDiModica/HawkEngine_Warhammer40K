@@ -55,7 +55,7 @@ void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
     trans.setOrigin(currentPosition);
 
     rigidBody->getMotionState()->setWorldTransform(trans);
-    rigidBody->setWorldTransform(trans);;
+    rigidBody->setWorldTransform(trans);
 }
 
 void ColliderComponent::SetColliderPos(const glm::vec3& position) {
@@ -64,6 +64,17 @@ void ColliderComponent::SetColliderPos(const glm::vec3& position) {
     trans.setOrigin(btVector3(position.x, position.y, position.z));
     rigidBody->getMotionState()->setWorldTransform(trans);
     rigidBody->setCenterOfMassTransform(trans);
+}
+
+glm::vec3 ColliderComponent::GetSize() {
+    if (rigidBody) {
+        btCollisionShape* shape = rigidBody->getCollisionShape();
+        if (shape) {
+            btVector3 scale = shape->getLocalScaling();
+            return glm::vec3(scale.getX() * 2.0f, scale.getY() * 2.0f, scale.getZ() * 2.0f);
+        }
+    }
+    return size;
 }
 
 void ColliderComponent::SetSize(const glm::vec3& newSize) {
@@ -85,6 +96,7 @@ void ColliderComponent::SetMass(float newMass) {
         rigidBody = nullptr;
     }
     CreateCollider(false);
+	
 }
 
 void ColliderComponent::SetActive(bool active) {
@@ -98,26 +110,31 @@ void ColliderComponent::SetActive(bool active) {
     }
 }
 
+
+void ColliderComponent::SnapToPosition() {
+    glm::vec3 position = owner->boundingBox().center();
+    auto goTransform = owner->GetTransform();
+    //for parenting works bad 
+    glm::quat rotation = goTransform->GetRotation();
+
+    btTransform transform;
+    transform.setIdentity();
+    transform.setOrigin(btVector3(position.x, position.y, position.z));
+    transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+
+    if (rigidBody->getMotionState()) {
+        rigidBody->getMotionState()->setWorldTransform(transform);
+    }
+    else {
+        rigidBody->setWorldTransform(transform);
+    }
+    std::cout << "Collider position snapped to bounding box center: ("
+        << position.x << ", " << position.y << ", " << position.z << ")\n";
+}
+
 void ColliderComponent::Update(float deltaTime) {
     if (snapToPosition && owner) {
-        auto goTransform = owner->GetTransform();
-        glm::vec3 position = owner->boundingBox().center();
-        glm::quat rotation = goTransform->GetRotation();
-
-        btTransform transform;
-        transform.setIdentity();
-        transform.setOrigin(btVector3(position.x, position.y, position.z));
-        transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
-
-        if (rigidBody->getMotionState()) {
-            rigidBody->getMotionState()->setWorldTransform(transform);
-        }
-        else {
-            rigidBody->setWorldTransform(transform);
-        }
-
-        std::cout << "Collider position snapped to bounding box center: ("
-            << position.x << ", " << position.y << ", " << position.z << ")\n";
+		SnapToPosition();
     }
 }
 
@@ -143,12 +160,10 @@ void ColliderComponent::CreateCollider(bool isForStreet) {
     BoundingBox bbox = owner->boundingBox();
     size = bbox.size();
 
-
     btCollisionShape* shape;
 
     btTransform startTransform;
     startTransform.setIdentity();
-
 
     shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
     glm::vec3 localPosition = transform->GetLocalPosition();
@@ -156,8 +171,6 @@ void ColliderComponent::CreateCollider(bool isForStreet) {
     startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
     glm::vec3 scale = transform->GetScale();
     shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
-
-
 
     // Configurar la masa e inercia
     btVector3 localInertia(0, 0, 0);

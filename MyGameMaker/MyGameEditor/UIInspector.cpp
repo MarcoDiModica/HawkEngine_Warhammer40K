@@ -449,6 +449,17 @@ bool UIInspector::Draw() {
                         colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
                     }
 
+
+                    // Rotation del Collider
+                    glm::quat colliderRotation = colliderComponent->GetColliderRotation();
+                    glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
+                    float rot[3] = { glm::degrees(eulerRotation.x), glm::degrees(eulerRotation.y), glm::degrees(eulerRotation.z) };
+
+                    if (ImGui::DragFloat3("ColliderRotation", rot, 0.1f)) {
+                        glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
+                        colliderComponent->SetColliderRotation(newRotation);
+                    }
+
                     //Trigger collider
                     bool isTrigger = colliderComponent->IsTrigger();
                     if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
@@ -464,17 +475,16 @@ bool UIInspector::Draw() {
                     bool resetRotation = false; // Define the resetRotation variable
                     if (ImGui::Checkbox("Reset Rotation", &resetRotation)) {
                         if (resetRotation) {
-                            float rot[3] = { 0.0f, 0.0f, 0.0f }; // Reset the rot array
                             if (selectedGameObject->HasComponent<ColliderComponent>()) {
                                 ColliderComponent* collider = selectedGameObject->GetComponent<ColliderComponent>();
                                 if (collider) {
-                                    glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
+                                    glm::quat newRotation = glm::quat(glm::radians(glm::vec3(0, 0, 0)));
                                     collider->SetColliderRotation(newRotation);
                                 }
                             }
-                            resetRotation = false; // Reset the checkbox
                         }
                     }
+                    
 
                     // Tamaño del Collider
                     glm::vec3 size = colliderComponent->GetSize();

@@ -25,7 +25,7 @@ public:
 
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
-    glm::vec3 GetSize() { return size; };
+    glm::vec3 GetSize();
 
     void SetSize(const glm::vec3& newSize);
 
@@ -45,6 +45,7 @@ public:
 
     bool GetSnapToPosition() const { return snapToPosition; }
     void SetSnapToPosition(bool value) { snapToPosition = value; }
+    void SnapToPosition();
 
 
 private:

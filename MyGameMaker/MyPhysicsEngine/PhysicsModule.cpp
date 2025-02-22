@@ -88,29 +88,31 @@ void PhysicsModule::SyncTransforms() {
 
         auto goTransform = gameObject->GetTransform();
 
-        // Obtener la posición y rotación inicial de gameObject solo si no están almacenadas
+        // Obtener la posición inicial de gameObject solo si no está almacenada
         static std::unordered_map<GameObject*, glm::dvec3> initialOffsets;
-        static std::unordered_map<GameObject*, glm::dquat> initialRotations;
         if (initialOffsets.find(gameObject) == initialOffsets.end()) {
             glm::dvec3 initialPos = goTransform->GetPosition();
             glm::dvec3 rigidBodyInitialPos = { pos[0], pos[1], pos[2] };
             initialOffsets[gameObject] = initialPos - rigidBodyInitialPos;
-
-            glm::dquat initialRot = goTransform->GetRotation();
-            glm::dquat rigidBodyInitialRot = glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
-            initialRotations[gameObject] = glm::inverse(rigidBodyInitialRot) * initialRot;
         }
 
-        // Aplicar el desplazamiento inicial a la nueva posición del collider
         glm::dvec3 adjustedPosition = glm::dvec3(pos[0], pos[1], pos[2]) + initialOffsets[gameObject];
         goTransform->SetPosition(adjustedPosition);
 
-        // Aplicar la rotación relativa inicial
+        // Aplicar la rotación solo si ha cambiado
+        static std::unordered_map<GameObject*, glm::dquat> previousRotations;
         glm::dquat newRotation = glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
-        glm::dquat adjustedRotation = newRotation * initialRotations[gameObject];
-        goTransform->SetRotationQuat(adjustedRotation);
+
+        if (previousRotations.find(gameObject) != previousRotations.end()) {
+            if (previousRotations[gameObject] != newRotation) {
+                glm::dquat deltaRotation = glm::inverse(previousRotations[gameObject]) * newRotation;
+                goTransform->SetRotationQuat(goTransform->GetRotation() * deltaRotation);
+            }
+        }
+        previousRotations[gameObject] = newRotation;
     }
 }
+
 
 void PhysicsModule::SyncCollidersToGameObjects() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {

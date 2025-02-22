@@ -21,10 +21,13 @@ public:
 	auto channels() const { return _channels; }
 
 	Image() = default;
-	Image(const Image&) = delete;
-	Image& operator=(const Image&) = delete;
+
+	Image(const Image& other);
+
+	Image& operator=(const Image& other);
+
 	Image(Image&& other) noexcept;
-	Image& operator=(Image&& other) noexcept = delete;
+	Image& operator=(Image&& other) noexcept;
 	~Image();
 
 	void bind() const;

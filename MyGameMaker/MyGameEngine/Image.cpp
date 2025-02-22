@@ -12,8 +12,91 @@ namespace fs = std::filesystem;
 #define CHECKERS_WIDTH 64
 #define CHECKERS_HEIGHT 64
 
+static auto formatFromChannels(int channels) {
+	switch (channels) {
+	case 1: return GL_LUMINANCE;
+	case 2: return GL_LUMINANCE_ALPHA;
+	case 3: return GL_RGB;
+	case 4: return GL_RGBA;
+	default: return GL_RGB;
+	}
+}
+
 Image::~Image() {
 	if (_id) glDeleteTextures(1, &_id);
+}
+
+Image::Image(const Image& other) :
+	_width(other._width),
+	_height(other._height),
+	_channels(other._channels),
+	image_path(other.image_path) {
+
+	if (other._id != 0) 
+	{
+		glGenTextures(1, &_id);
+
+		GLint previousTexture;
+		glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
+
+		glBindTexture(GL_TEXTURE_2D, other._id);
+		std::vector<unsigned char> pixels(_width * _height * _channels);
+		glGetTexImage(GL_TEXTURE_2D, 0, formatFromChannels(_channels), GL_UNSIGNED_BYTE, pixels.data());
+
+		glBindTexture(GL_TEXTURE_2D, _id);
+		glTexImage2D(GL_TEXTURE_2D, 0, _channels, _width, _height, 0, formatFromChannels(_channels), GL_UNSIGNED_BYTE, pixels.data());
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		glBindTexture(GL_TEXTURE_2D, previousTexture);
+	}
+}
+
+Image& Image::operator=(const Image& other) {
+	if (this != &other) {
+		if (_id != 0) {
+			glDeleteTextures(1, &_id);
+		}
+
+		_width = other._width;
+		_height = other._height;
+		_channels = other._channels;
+		image_path = other.image_path;
+
+		if (other._id != 0) {
+			glGenTextures(1, &_id);
+
+			GLint previousTexture;
+			glGetIntegerv(GL_TEXTURE_BINDING_2D, &previousTexture);
+
+			glBindTexture(GL_TEXTURE_2D, other._id);
+			std::vector<unsigned char> pixels(_width * _height * _channels);
+			glGetTexImage(GL_TEXTURE_2D, 0, formatFromChannels(_channels), GL_UNSIGNED_BYTE, pixels.data());
+
+			glBindTexture(GL_TEXTURE_2D, _id);
+			glTexImage2D(GL_TEXTURE_2D, 0, _channels, _width, _height, 0, formatFromChannels(_channels), GL_UNSIGNED_BYTE, pixels.data());
+			glGenerateMipmap(GL_TEXTURE_2D);
+
+			glBindTexture(GL_TEXTURE_2D, previousTexture);
+		}
+	}
+	return *this;
+}
+
+Image& Image::operator=(Image&& other) noexcept {
+	if (this != &other) {
+		if (_id != 0) {
+			glDeleteTextures(1, &_id);
+		}
+
+		_id = other._id;
+		_width = other._width;
+		_height = other._height;
+		_channels = other._channels;
+		image_path = std::move(other.image_path);
+
+		other._id = 0;
+	}
+	return *this;
 }
 
 Image::Image(Image&& other) noexcept :
@@ -26,16 +109,6 @@ Image::Image(Image&& other) noexcept :
 
 void Image::bind() const {
 	glBindTexture(GL_TEXTURE_2D, _id);
-}
-
-static auto formatFromChannels(int channels) {
-	switch (channels) {
-	case 1: return GL_LUMINANCE;
-	case 2: return GL_LUMINANCE_ALPHA;
-	case 3: return GL_RGB;
-	case 4: return GL_RGBA;
-	default: return GL_RGB;
-	}
 }
 
 static int rowAlignment(int width, int channels) {

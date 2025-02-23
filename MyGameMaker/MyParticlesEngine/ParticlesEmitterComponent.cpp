@@ -11,7 +11,7 @@ ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner)
     , lastSpawnTime(std::chrono::steady_clock::now())
     , deltaTime(Application->GetDt())
     , isSmoking(true)
-    , m_Type(BillboardType::AXIS_ALIGNED)
+    , m_Type(BillboardType::WORLD_ALIGNED)
 {
     name = "ParticleEmitter";
     position = owner->GetComponent<Transform_Component>()->GetPosition();

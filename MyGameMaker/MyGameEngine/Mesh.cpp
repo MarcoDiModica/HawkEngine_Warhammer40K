@@ -89,7 +89,10 @@ void Mesh::Draw() const
 {
 	//display();
 
-	
+	//if (drawBoundingbox) {
+
+		
+	//}
 
 	if (drawVertexNormals)
 	{
@@ -154,42 +157,61 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 {
 
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-	const glm::vec3 vertices[] = {
-		glm::vec3(-1.0f, -1.0f, 1.0f),
-		glm::vec3(1.0f, -1.0f, 1.0f),
-		glm::vec3(1.0f, 1.0f, 1.0f),
-		glm::vec3(-1.0f, 1.0f, 1.0f),
-		glm::vec3(-1.0f, -1.0f, -1.0f),
-		glm::vec3(1.0f, -1.0f, -1.0f),
-		glm::vec3(1.0f, 1.0f, -1.0f),
-		glm::vec3(-1.0f, 1.0f, -1.0f)
+	std::shared_ptr<Model> model = std::make_shared<Model>();
+
+	model->GetModelData().vertexData = {
+		// Front face
+		vec3(-1.0f, -1.0f, 1.0f),
+		vec3(1.0f, -1.0f, 1.0f),
+		vec3(1.0f, 1.0f, 1.0f),
+		vec3(-1.0f, 1.0f, 1.0f),
+		// Back face
+		vec3(-1.0f, -1.0f, -1.0f),
+		vec3(1.0f, -1.0f, -1.0f),
+		vec3(1.0f, 1.0f, -1.0f),
+		vec3(-1.0f, 1.0f, -1.0f),
 	};
 
-	const unsigned int indices[] = {
-		0, 1, 2, 0, 2, 3,
-		1, 5, 6, 1, 6, 2,
-		5, 4, 7, 5, 7, 6,
-		4, 0, 3, 4, 3, 7,
-		3, 2, 6, 3, 6, 7,
-		4, 5, 1, 4, 1, 0
+	model->GetModelData().indexData = {
+		0, 1, 2, 0, 2, 3,       // Front face
+		1, 5, 6, 1, 6, 2,       // Right face
+		5, 4, 7, 5, 7, 6,       // Back face
+		4, 0, 3, 4, 3, 7,       // Left face
+		3, 2, 6, 3, 6, 7,       // Top face
+		4, 5, 1, 4, 1, 0        // Bottom face
 	};
 
-	mesh->Load(vertices, 8, indices, 36);
-	mesh->filePath = std::string("shapes/cube");
+	model->SetMeshName("Cube");
+
+	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
+
+
+	meshBBox->min = model->GetModelData().vertexData.front();
+	meshBBox->max = model->GetModelData().vertexData.front();
+
+	for (const auto& v : model->GetModelData().vertexData) {
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+	}
+
+	mesh->setBoundingBox(*meshBBox);
+
+	mesh->setModel(model);
+	mesh->filePath = std::string("Shapes/Cube");
+	mesh->loadToOpenGL();
+
 	return mesh;
 }
 
 
 std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+	std::shared_ptr<Model> model = std::make_shared<Model>();
 
 	// Valores fijos para el cilindro
 	const float radius = 1.0f;  // Radio del cilindro
 	const float height = 2.0f;  // Altura del cilindro
 	const int slices = 20;      // Número de divisiones
-
-	std::vector<glm::vec3> vertices;
-	std::vector<unsigned int> indices;
 
 	// Altura dividida en dos (para las bases superior e inferior)
 	float halfHeight = height / 2.0f;
@@ -201,51 +223,66 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		float z = radius * sin(angle);
 
 		// Base inferior
-		vertices.emplace_back(x, -halfHeight, z);
+		model->GetModelData().vertexData.emplace_back(x, -halfHeight, z);
 
 		// Base superior
-		vertices.emplace_back(x, halfHeight, z);
+		model->GetModelData().vertexData.emplace_back(x, halfHeight, z);
 	}
 
 	// Añadir los vértices centrales de las bases
-	vertices.emplace_back(0.0f, -halfHeight, 0.0f); // Centro base inferior
-	vertices.emplace_back(0.0f, halfHeight, 0.0f);  // Centro base superior
+	model->GetModelData().vertexData.emplace_back(0.0f, -halfHeight, 0.0f); // Centro base inferior
+	model->GetModelData().vertexData.emplace_back(0.0f, halfHeight, 0.0f);  // Centro base superior
 
 	// Generar índices para los lados del cilindro
 	for (int i = 0; i < slices; ++i) {
 		int base1 = i * 2;
 		int base2 = base1 + 2;
 
-		indices.push_back(base1);
-		indices.push_back(base2);
-		indices.push_back(base1 + 1);
+		model->GetModelData().indexData.push_back(base1);
+		model->GetModelData().indexData.push_back(base2);
+		model->GetModelData().indexData.push_back(base1 + 1);
 
-		indices.push_back(base1 + 1);
-		indices.push_back(base2);
-		indices.push_back(base2 + 1);
+		model->GetModelData().indexData.push_back(base1 + 1);
+		model->GetModelData().indexData.push_back(base2);
+		model->GetModelData().indexData.push_back(base2 + 1);
 	}
 
 	// Generar índices para las bases
-	int centerBottomIndex = vertices.size() - 2;
-	int centerTopIndex = vertices.size() - 1;
+	int centerBottomIndex = model->GetModelData().vertexData.size() - 2;
+	int centerTopIndex = model->GetModelData().vertexData.size() - 1;
 
 	for (int i = 0; i < slices; ++i) {
 		int baseIndex = i * 2;
 
 		// Base inferior
-		indices.push_back(centerBottomIndex);
-		indices.push_back(baseIndex + 2);
-		indices.push_back(baseIndex);
+		model->GetModelData().indexData.push_back(centerBottomIndex);
+		model->GetModelData().indexData.push_back(baseIndex + 2);
+		model->GetModelData().indexData.push_back(baseIndex);
 
 		// Base superior
-		indices.push_back(centerTopIndex);
-		indices.push_back(baseIndex + 1);
-		indices.push_back(baseIndex + 3);
+		model->GetModelData().indexData.push_back(centerTopIndex);
+		model->GetModelData().indexData.push_back(baseIndex + 1);
+		model->GetModelData().indexData.push_back(baseIndex + 3);
 	}
 
-	// Cargar los datos en la malla
-	mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
-	mesh->filePath = std::string("shapes/cylinder");
+	model->SetMeshName("Cylinder");
+
+	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
+
+
+	meshBBox->min = model->GetModelData().vertexData.front();
+	meshBBox->max = model->GetModelData().vertexData.front();
+
+	for (const auto& v : model->GetModelData().vertexData) {
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+	}
+
+	mesh->setBoundingBox(*meshBBox);
+
+	mesh->setModel(model);
+	mesh->filePath = std::string("Shapes/Cylinder");
+	mesh->loadToOpenGL();
 
 	return mesh;
 }
@@ -257,8 +294,8 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 	const int stacks = 20;
 	const int slices = 20;
 	const float radius = 1.0f;
-	std::vector<glm::vec3> vertices;
-	std::vector<unsigned int> indices;
+
+	std::shared_ptr<Model> model = std::make_shared<Model>();
 
 	for (int i = 0; i <= stacks; ++i) {
 		float V = i / (float)stacks;
@@ -272,41 +309,77 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 			float y = cos(phi);
 			float z = sin(theta) * sin(phi);
 
-			vertices.push_back(glm::vec3(x, y, z) * radius);
+			model->GetModelData().vertexData.push_back(glm::vec3(x, y, z) * radius);
 		}
 	}
 
 	for (int i = 0; i < slices * stacks + slices; ++i) {
-		indices.push_back(i);
-		indices.push_back(i + slices + 1);
-		indices.push_back(i + slices);
+		model->GetModelData().indexData.push_back(i);
+		model->GetModelData().indexData.push_back(i + slices + 1);
+		model->GetModelData().indexData.push_back(i + slices);
 
-		indices.push_back(i + slices + 1);
-		indices.push_back(i);
-		indices.push_back(i + 1);
+		model->GetModelData().indexData.push_back(i + slices + 1);
+		model->GetModelData().indexData.push_back(i);
+		model->GetModelData().indexData.push_back(i + 1);
 	}
 
-	mesh->Load(vertices.data(), vertices.size(), indices.data(), indices.size());
-	mesh->filePath = std::string("shapes/sphere");
+	model->SetMeshName("Sphere");
+
+	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
+
+
+	meshBBox->min = model->GetModelData().vertexData.front();
+	meshBBox->max = model->GetModelData().vertexData.front();
+
+	for (const auto& v : model->GetModelData().vertexData) {
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+	}
+
+	mesh->setBoundingBox(*meshBBox);
+
+	mesh->setModel(model);
+	mesh->filePath = std::string("Shapes/Sphere");
+	mesh->loadToOpenGL();
+
 	return mesh;
 }
 
 std::shared_ptr<Mesh> Mesh::CreatePlane()
 {
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-	const glm::vec3 vertices[] = {
-		glm::vec3(-1.0f, 0.0f, 1.0f),
-		glm::vec3(1.0f, 0.0f, 1.0f),
-		glm::vec3(1.0f, 0.0f, -1.0f),
-		glm::vec3(-1.0f, 0.0f, -1.0f)
+	std::shared_ptr<Model> model = std::make_shared<Model>();
+
+	model->GetModelData().vertexData = {
+		vec3(-1.0f, 0.0f, 1.0f),
+		vec3(1.0f, 0.0f, 1.0f),
+		vec3(1.0f, 0.0f, -1.0f),
+		vec3(-1.0f, 0.0f, -1.0f)
 	};
 
-	const unsigned int indices[] = {
+	model->GetModelData().indexData = {
 		0, 1, 2, 0, 2, 3
 	};
 
-	mesh->Load(vertices, 4, indices, 6);
-	mesh->filePath = std::string("shapes/plane");
+	model->SetMeshName("Plane");
+
+	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
+
+
+	meshBBox->min = model->GetModelData().vertexData.front();
+	meshBBox->max = model->GetModelData().vertexData.front();
+
+	for (const auto& v : model->GetModelData().vertexData) {
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+	}
+
+	mesh->setBoundingBox(*meshBBox);
+
+	mesh->setModel(model);
+	mesh->filePath = std::string("Shapes/Plane");
+	mesh->loadToOpenGL();
+
 	return mesh;
 }
 

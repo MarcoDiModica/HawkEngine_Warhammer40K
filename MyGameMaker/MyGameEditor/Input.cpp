@@ -21,6 +21,7 @@
 #include "../MyPhysicsEngine/PhysicsModule.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyAudioEngine/AudioAssetProcessor.h"
+#include "../MyShadersEngine/ShaderComponent.h"
 
 
 #define MAX_KEYS 300
@@ -345,37 +346,43 @@ void Input::HandleFileDrop(const std::string& fileDir)
 
     if (fileExt == "fbx" || fileExt == "FBX") {
         LOG(LogType::LOG_ASSIMP, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
-
- /*       std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-        mesh->LoadMesh(CopyFBXFileToProject(fileDir).c_str());
-
-        auto go = Application->root->CreateGameObject(fileNameExt);
-        Application->root->AddMeshRenderer(*go, mesh, "Assets/default.png");
-*/
-
-
         // TODO , only save to filesystem if file doesnt exist 
 
         //new
-        auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
-        MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+        //auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
+        //MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
 
-        ModelImporter meshImp;
-        meshImp.loadFromFile((CopyFBXFileToProject(fileDir).c_str()));
+        //ModelImporter meshImp;
+        //meshImp.loadFromFile((CopyFBXFileToProject(fileDir).c_str()));
 
-        //for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
-        //    auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
+        //for (int i = 0; i < meshImp.meshes.size(); i++) {
 
-        //    auto go = Application->root->CreateGameObject("GameObject");
-        //    auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
-        //  
-        //    Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
-        //    go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
+        //    auto MarcoVicePresidente2 = meshImp.fbx_object[i];
+
+        //    auto go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
+        //    go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
+
+        //    auto meshRenderer = go->AddComponent<MeshRenderer>();
+        //    auto material = std::make_shared<Material>();
+
+        //    meshRenderer->SetMesh(meshImp.meshes[i]);
+        //    material = meshImp.materials[meshImp.meshes[i]->getModel()->GetMaterialIndex()];
+
+        //    meshRenderer->SetMaterial(material);
+        //    meshRenderer->GetMaterial()->SetColor(material->GetColor());
+
+        //    auto shaderComponent = go->AddComponent<ShaderComponent>();
+        //    shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+        //    shaderComponent->SetShaderType(ShaderType::DEFAULT);
+
+        //    go->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
+
         //    go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
-
-
         //    Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        //   // Application->root->gameObjectsWithColliders.push_back(go);
         //}
+
+        Application->root->CreateGameObjectWithPath(fileDir);
 
     }
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {

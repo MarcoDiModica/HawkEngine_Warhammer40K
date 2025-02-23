@@ -300,8 +300,6 @@ void RenderOutline(GameObject* object) {
 	
 	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT); 
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	glPolygonOffset(-5.0f, -5.0f);
 	
@@ -314,8 +312,6 @@ void RenderOutline(GameObject* object) {
 
 
 	glDisable(GL_POLYGON_OFFSET_FILL);
-	glCullFace(GL_BACK);
-	glDisable(GL_CULL_FACE);
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
@@ -340,7 +336,7 @@ static void display_func() {
 		if (object->HasComponent<LightComponent>()) {
 			auto it = std::find(lights.begin(), lights.end(), object);
 			if (it == lights.end()) {
-				lights.push_back(object);
+				Application->root->GetActiveScene()->_lights.push_back(object->shared_from_this());
 			}
 		}
 	}
@@ -388,6 +384,8 @@ static void display_func2() {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	Application->root->GetActiveScene()->_lights.clear();
 }
 
 void EditorRenderer(MyGUI* gui) {

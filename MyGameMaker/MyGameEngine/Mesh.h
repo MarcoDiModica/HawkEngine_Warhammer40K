@@ -71,6 +71,8 @@ public:
 
     void loadToOpenGL();
 
+	void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
+
 protected:
     friend class SceneSerializer;
     friend class MeshRenderer;

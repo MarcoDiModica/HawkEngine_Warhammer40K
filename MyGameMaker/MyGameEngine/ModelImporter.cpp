@@ -91,29 +91,6 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 
 			obj.SetName(node.mName.data);
 
-			/*const auto& mesh = std::make_shared<Mesh>();
-			obj.GetComponent<MeshRenderer>()->SetMesh(mesh);
-			obj.GetComponent<MeshRenderer>()->GetMesh()->setModel(model);
-			obj.GetComponent<MeshRenderer>()->SetMaterial(materials[model->GetMaterialIndex()]);
-			if(materials[model->GetMaterialIndex()]->getImg()->image_path != "")
-			obj.GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(materials[model->GetMaterialIndex()]->getImg()->image_path);
-			obj.AddComponent<ShaderComponent>();
-			obj.GetComponent<ShaderComponent>()->SetOwnerMaterial(obj.GetComponent<MeshRenderer>()->GetMaterial().get());
-			obj.GetComponent<ShaderComponent>()->SetShaderType(ShaderType::DEFAULT);
-			obj.GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
-
-			BoundingBox meshBBox;
-
-			meshBBox.min = meshes[meshIndex].get()->GetModelData().vertexData.front();
-			meshBBox.max = meshes[meshIndex].get()->GetModelData().vertexData.front();
-
-			for (const auto& v : meshes[meshIndex].get()->GetModelData().vertexData) {
-				meshBBox.min = glm::min(meshBBox.min, glm::dvec3(v));
-				meshBBox.max = glm::max(meshBBox.max, glm::dvec3(v));
-			}
-
-			obj.setBoundingBox(meshBBox);*/
-
 			fbx_object.push_back(std::make_shared<GameObject>(obj));
 		}
 

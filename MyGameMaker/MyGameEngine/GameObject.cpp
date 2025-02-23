@@ -497,6 +497,8 @@ void GameObject::AddChild(GameObject* child)
 
 void GameObject::RemoveChild(GameObject* child)
 {
+    if (child == nullptr) { return; }
+    if (children.empty()) { return; }
     for (auto it = children.begin(); it != children.end(); ++it)
 	{
 		if ((*it).get() == child)

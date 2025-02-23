@@ -115,6 +115,12 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
+    auto Player = CreateGameObject("Player");
+    auto mesh = Mesh::CreateCube();
+    AddMeshRenderer(*Player, mesh);
+    auto script = Player->AddComponent<ScriptComponent>();
+    script->LoadScript("PlayerController");
+    
     //MonoEnvironment* mono = new MonoEnvironment();
 
     //auto Script = CreateGameObject("Script");

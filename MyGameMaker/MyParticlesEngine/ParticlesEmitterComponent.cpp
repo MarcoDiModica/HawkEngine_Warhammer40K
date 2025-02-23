@@ -11,7 +11,7 @@ ParticlesEmitterComponent::ParticlesEmitterComponent(GameObject* owner)
     , lastSpawnTime(std::chrono::steady_clock::now())
     , deltaTime(Application->GetDt())
     , isSmoking(true)
-    , m_Type(BillboardType::WORLD_ALIGNED)
+    , m_Type(BillboardType::AXIS_ALIGNED)
 {
     name = "ParticleEmitter";
     position = owner->GetComponent<Transform_Component>()->GetPosition();
@@ -37,27 +37,29 @@ void ParticlesEmitterComponent::EmitParticle1(const glm::vec3& speed) {
         if (!texturePath.empty()) {
             try {
                 newParticle.texture->LoadTexture(texturePath);
-                std::cout << "Texture loaded successfully from: " << texturePath << std::endl;
-                std::cout << "Texture ID: " << newParticle.texture->id() << std::endl;
+                GLuint id = newParticle.texture->id();
+                if (id == 0) {
+                    LOG(LogType::LOG_ERROR, "Texture loaded but ID is 0 for: %s", texturePath.c_str());
+                    return;
+                }
+                newParticle.textureID = id;
             }
             catch (const std::exception& e) {
-                std::cerr << "Failed to load texture: " << e.what() << std::endl;
-                //default texture here
+                LOG(LogType::LOG_ERROR, "Failed to load texture: %s", e.what());
+                return;
             }
         }
         else {
-            std::cerr << "No texture path specified!" << std::endl;
+            LOG(LogType::LOG_WARNING, "No texture path specified!");
+            return;
         }
 
         newParticle.Start();
         isSmoking = true;
         particles.push_back(std::move(newParticle));
-
-        std::cout << "Particle generated successfully at position: "
-            << position.x << ", " << position.y << ", " << position.z << std::endl;
     }
     catch (const std::exception& e) {
-        std::cerr << "Error generating particle: " << e.what() << std::endl;
+        LOG(LogType::LOG_ERROR, "Error generating particle: %s", e.what());
     }
 }
 
@@ -99,7 +101,7 @@ void ParticlesEmitterComponent::SetType(BillboardType type) {
     m_Type = type;
 }
 
-void ParticlesEmitterComponent::Update(float deltaTime) 
+void ParticlesEmitterComponent::Update(float deltaTime)
 {
     auto transformComponent = owner->GetComponent<Transform_Component>();
     if (transformComponent) {
@@ -122,8 +124,6 @@ void ParticlesEmitterComponent::Update(float deltaTime)
         lastSpawnTime = now;
     }
 
-    std::cout << "Active particles: " << particles.size() << std::endl;
-
     glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition();
     glm::vec3 cameraUp = Application->camera->GetTransform().GetUp();
 
@@ -132,27 +132,37 @@ void ParticlesEmitterComponent::Update(float deltaTime)
     glDisable(GL_CULL_FACE);
 
     for (auto it = particles.begin(); it != particles.end();) {
-        glm::mat4 transformMatrix;
+        glm::mat4 billboardMatrix;
 
         switch (m_Type) {
         case BillboardType::SCREEN_ALIGNED:
-            transformMatrix = CalculateScreenAligned(cameraPosition, cameraUp);
+            billboardMatrix = CalculateScreenAligned(cameraPosition, cameraUp);
             break;
         case BillboardType::WORLD_ALIGNED:
-            transformMatrix = CalculateWorldAligned(cameraPosition, cameraUp);
+            billboardMatrix = CalculateWorldAligned(cameraPosition, cameraUp);
             break;
         case BillboardType::AXIS_ALIGNED:
-            transformMatrix = CalculateAxisAligned(cameraPosition, glm::vec3(0.0f, 1.0f, 0.0f));
+            billboardMatrix = CalculateAxisAligned(cameraPosition, glm::vec3(0.0f, 1.0f, 0.0f));
             break;
+        }
+
+        if (!it->position.empty()) {
+            billboardMatrix[3] = glm::vec4(it->position[0], 1.0f);
         }
 
         it->Update(deltaTime);
 
-        if (it->lifetime <= 0.0f) {
-            it = particles.erase(it);
+        if (it->lifetime > 0.0f) {
+            if (isSmoking) {
+                it->Draw(billboardMatrix);
+            }
+            else {
+                it->Draw2(billboardMatrix);
+            }
+            ++it;
         }
         else {
-            ++it;
+            it = particles.erase(it);
         }
     }
 

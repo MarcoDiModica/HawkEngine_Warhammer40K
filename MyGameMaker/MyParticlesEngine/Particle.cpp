@@ -4,6 +4,7 @@
 #include "ParticlesEmitterComponent.h"
 
 #include "../MyGameEditor/Log.h"
+#include <glm/gtc/type_ptr.hpp>
 
 Particle::Particle()
     : lifetime(1.0f)
@@ -11,6 +12,8 @@ Particle::Particle()
     , textureID(0)
     , texture(std::make_unique<Image>())
     , texture2(std::make_unique<Image>())
+    , modelMatrix(glm::mat4(1.0f))
+    , i(0.0f)
 {
     if (!texture || !texture2) {
         throw std::runtime_error("Failed to initialize textures");
@@ -26,35 +29,39 @@ void Particle::Update(float deltaTime) {
         }
 
         if (texture2 && lifetime <= 1.0f) {
+            GLuint oldId = texture2->id();
             texture = std::move(texture2);
-            Draw2();
+
+            if (texture->id() != oldId) {
+                textureID = oldId;
+            }
         }
-        else {
-            Draw();
-        }
+
         lifetime -= deltaTime;
     }
 }
 
-void Particle::Draw() {
-    if (!texture) {
-        std::cerr << "Texture not initialized" << std::endl;
+void Particle::Draw(const glm::mat4& billboardMatrix) {
+    if (!texture || lifetime <= 0.0f) {
         return;
     }
 
-    textureID = texture->id();
     if (textureID == 0) {
-        std::cerr << "Texture not loaded" << std::endl;
-        return;
+        textureID = texture->id();
+        if (textureID == 0) {
+            return;
+        }
     }
-
-    std::cout << "Drawing particle at position: " << position[0].x << ", " << position[0].y << ", " << position[0].z << std::endl;
-    std::cout << "Using texture ID: " << textureID << std::endl;
 
     glPushAttrib(GL_ALL_ATTRIB_BITS);
     glPushMatrix();
 
-    glTranslatef(position[0].x, position[0].y, position[0].z);
+    float modelMatrixArray[16]{};
+    const float* billboardMatrixArray = glm::value_ptr(billboardMatrix);
+    for (int i = 0; i < 16; i++) {
+        modelMatrixArray[i] = billboardMatrixArray[i];
+    }
+    glMultMatrixf(modelMatrixArray);
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, textureID);
@@ -62,14 +69,14 @@ void Particle::Draw() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    glEnable(GL_POINT_SPRITE);
-    glTexEnvi(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
-
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
 
     float size = 1.0f;
     float alpha = std::min(1.0f, lifetime);
+    if (lifetime < 0.1f) {
+        alpha *= (lifetime / 0.1f);
+    }
 
     glBegin(GL_QUADS);
     glColor4f(1.0f, 1.0f, 1.0f, alpha);
@@ -81,7 +88,6 @@ void Particle::Draw() {
     glEnd();
 
     glDepthMask(GL_TRUE);
-    glDisable(GL_POINT_SPRITE);
     glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
 
@@ -89,24 +95,27 @@ void Particle::Draw() {
     glPopAttrib();
 }
 
-void Particle::Draw2() {
-    if (!texture) {
-        std::cerr << "Texture not initialized" << std::endl;
+void Particle::Draw2(const glm::mat4& billboardMatrix) {
+    if (!texture || lifetime <= 0.0f) {
         return;
     }
 
-    textureID = texture->id();
     if (textureID == 0) {
-        std::cerr << "Texture not loaded" << std::endl;
-        return;
+        textureID = texture->id();
+        if (textureID == 0) {
+            return;
+        }
     }
-
-    std::cout << "Drawing particle type 2 at position: " << position[0].x << ", " << position[0].y << ", " << position[0].z << std::endl;
 
     glPushAttrib(GL_ALL_ATTRIB_BITS);
     glPushMatrix();
 
-    glTranslatef(position[0].x, position[0].y, position[0].z);
+    float modelMatrixArray[16]{};
+    const float* billboardMatrixArray = glm::value_ptr(billboardMatrix);
+    for (int i = 0; i < 16; i++) {
+        modelMatrixArray[i] = billboardMatrixArray[i];
+    }
+    glMultMatrixf(modelMatrixArray);
 
     glRotatef(rotation, 0.0f, 0.0f, 1.0f);
 
@@ -121,6 +130,9 @@ void Particle::Draw2() {
 
     float randomSize = ((float)rand() / RAND_MAX) * 2.5f + 0.5f;
     float alpha = std::min(1.0f, lifetime);
+    if (lifetime < 0.1f) {
+        alpha *= (lifetime / 0.1f);
+    }
 
     glBegin(GL_QUADS);
     glColor4f(1.0f, 1.0f, 1.0f, alpha);

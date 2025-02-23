@@ -46,9 +46,9 @@ public:
     void setMaxParticles(int maxParticles);
 
     //billboard
-    glm::mat4 CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp);
-    glm::mat4 CalculateWorldAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp);
-    glm::mat4 CalculateAxisAligned(const glm::vec3& cameraPosition, const glm::vec3& axis);
+    glm::mat4 CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) const;
+    glm::mat4 CalculateWorldAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) const;
+    glm::mat4 CalculateAxisAligned(const glm::vec3& cameraPosition, const glm::vec3& axis) const;
 
     BillboardType GetTypeEnum() const;
     void SetType(BillboardType type);

@@ -127,6 +127,7 @@ void ParticlesEmitterComponent::Update(float deltaTime)
     glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition();
     glm::vec3 cameraUp = Application->camera->GetTransform().GetUp();
 
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glDisable(GL_CULL_FACE);
@@ -196,27 +197,38 @@ void ParticlesEmitterComponent::setMaxParticles(int newMaxParticles) {
     maxParticles = newMaxParticles;
 }
 
-glm::mat4 ParticlesEmitterComponent::CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) {
-    glm::vec3 forward = glm::normalize(cameraPosition - this->position);
-    glm::vec3 right = glm::normalize(glm::cross(cameraUp, forward));
-    glm::vec3 up = glm::cross(forward, right);
+glm::mat4 ParticlesEmitterComponent::CalculateScreenAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) const {
+    glm::vec3 look = glm::normalize(cameraPosition - position);
+    glm::vec3 right = glm::normalize(glm::cross(cameraUp, look));
+    glm::vec3 up = glm::cross(look, right);
 
     glm::mat4 billboardMatrix(1.0f);
     billboardMatrix[0] = glm::vec4(right, 0.0f);
     billboardMatrix[1] = glm::vec4(up, 0.0f);
-    billboardMatrix[2] = glm::vec4(forward, 0.0f);
-    billboardMatrix[3] = glm::vec4(this->position, 1.0f);
+    billboardMatrix[2] = glm::vec4(look, 0.0f);
+    billboardMatrix[3] = glm::vec4(position, 1.0f);
 
     return billboardMatrix;
 }
 
-glm::mat4 ParticlesEmitterComponent::CalculateWorldAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) {
+glm::mat4 ParticlesEmitterComponent::CalculateWorldAligned(const glm::vec3& cameraPosition, const glm::vec3& cameraUp) const {
+    glm::vec3 look = glm::normalize(cameraPosition - position);
+    look.y = 0.0f;
+    look = glm::normalize(look);
+
+    glm::vec3 right = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), look));
+    glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+
     glm::mat4 billboardMatrix(1.0f);
-    billboardMatrix[3] = glm::vec4(this->position, 1.0f);
+    billboardMatrix[0] = glm::vec4(right, 0.0f);
+    billboardMatrix[1] = glm::vec4(up, 0.0f);
+    billboardMatrix[2] = glm::vec4(look, 0.0f);
+    billboardMatrix[3] = glm::vec4(position, 1.0f);
+
     return billboardMatrix;
 }
 
-glm::mat4 ParticlesEmitterComponent::CalculateAxisAligned(const glm::vec3& cameraPosition, const glm::vec3& axis) {
+glm::mat4 ParticlesEmitterComponent::CalculateAxisAligned(const glm::vec3& cameraPosition, const glm::vec3& axis) const {
     glm::vec3 forward = glm::normalize(cameraPosition - this->position);
     glm::vec3 right = glm::normalize(glm::cross(axis, forward));
     glm::vec3 up = glm::cross(forward, right);

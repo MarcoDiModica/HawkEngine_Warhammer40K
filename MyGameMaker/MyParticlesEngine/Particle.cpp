@@ -28,15 +28,6 @@ void Particle::Update(float deltaTime) {
             position[0] += speed[0] * deltaTime;
         }
 
-        if (texture2 && lifetime <= 1.0f) {
-            GLuint oldId = texture2->id();
-            texture = std::move(texture2);
-
-            if (texture->id() != oldId) {
-                textureID = oldId;
-            }
-        }
-
         lifetime -= deltaTime;
     }
 }
@@ -73,13 +64,9 @@ void Particle::Draw(const glm::mat4& billboardMatrix) {
     glDepthMask(GL_FALSE);
 
     float size = 1.0f;
-    float alpha = std::min(1.0f, lifetime);
-    if (lifetime < 0.1f) {
-        alpha *= (lifetime / 0.1f);
-    }
 
     glBegin(GL_QUADS);
-    glColor4f(1.0f, 1.0f, 1.0f, alpha);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-size / 2, -size / 2, 0.0f);
     glTexCoord2f(1.0f, 0.0f); glVertex3f(size / 2, -size / 2, 0.0f);
@@ -129,13 +116,9 @@ void Particle::Draw2(const glm::mat4& billboardMatrix) {
     glDepthMask(GL_FALSE);
 
     float randomSize = ((float)rand() / RAND_MAX) * 2.5f + 0.5f;
-    float alpha = std::min(1.0f, lifetime);
-    if (lifetime < 0.1f) {
-        alpha *= (lifetime / 0.1f);
-    }
 
     glBegin(GL_QUADS);
-    glColor4f(1.0f, 1.0f, 1.0f, alpha);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
     glTexCoord2f(0.0f, 0.0f); glVertex3f(-randomSize / 2, -randomSize / 2, 0.0f);
     glTexCoord2f(1.0f, 0.0f); glVertex3f(randomSize / 2, -randomSize / 2, 0.0f);

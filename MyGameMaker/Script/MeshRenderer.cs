@@ -15,6 +15,9 @@ namespace HawkEngine
         public extern void SetMesh(UIntPtr rendererInstance, UIntPtr meshInstance);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetCubeMesh(UIntPtr rendererInstance);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
         public extern UIntPtr GetMesh(UIntPtr rendererInstance);
 
         [MethodImpl(MethodImplOptions.InternalCall)]

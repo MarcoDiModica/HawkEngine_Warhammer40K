@@ -194,6 +194,23 @@ int EngineBinds::GetAxis(MonoString* axisName) {
     return InputManagement->GetAxis(C_name);
 }
 
+// Controller
+bool EngineBinds::GetControllerButton(int buttonID) {
+    return InputManagement->controller_buttons[buttonID] == KEY_REPEAT;
+}
+
+bool EngineBinds::GetControllerButtonDown(int buttonID) {
+    return InputManagement->controller_buttons[buttonID] == KEY_DOWN;
+}
+
+bool EngineBinds::GetControllerButtonUp(int buttonID) {
+    return InputManagement->controller_buttons[buttonID] == KEY_UP;
+}
+
+int EngineBinds::GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis) {
+    return (InputManagement->gamepads[gamepadIndex].axes[axis] / 32767.0f) * 100;
+}
+
 glm::vec3 EngineBinds::GetMousePosition() {
     glm::vec3 pos;
     pos.x = InputManagement->GetMouseX();
@@ -468,7 +485,7 @@ T* EngineBinds::ConvertFromSharpComponent(MonoObject* sharpComp) {
     uintptr_t Cptr;
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", typeName.c_str());
 
-    std::cerr << "Looking for class : " << typeName << std::endl;
+    //std::cerr << "Looking for class : " << typeName << std::endl;
 
     if (!klass) {
         throw std::runtime_error("Class not found in the C#: " + typeName);

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <filesystem>
 #include "../MyGameEditor/Log.h"
+#include <imgui_impl_sdl2.h>
 
 #define MAX_KEYS 300
 #define MAX_CONTROLLERS 4
@@ -21,6 +22,8 @@ InputEngine::InputEngine()
 {
     keyboard = new KEY_STATE[MAX_KEYS];
     memset(keyboard, KEY_IDLE, sizeof(KEY_STATE) * MAX_KEYS);
+	controller_buttons = new KEY_STATE[MAX_CONTROLLER_BUTTONS];
+	memset(controller_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_CONTROLLER_BUTTONS);
     memset(mouse_buttons, KEY_IDLE, sizeof(KEY_STATE) * MAX_MOUSE_BUTTONS);
     memset(&gamepads[0], 0, sizeof(GamePad) * MAX_CONTROLLERS);
     InitControllers();
@@ -28,6 +31,7 @@ InputEngine::InputEngine()
 
 InputEngine::~InputEngine() {
     delete[] keyboard;
+	delete[] controller_buttons;
     CleanUpControllers();
 }
 
@@ -161,11 +165,17 @@ void InputEngine::CleanUpControllers()
     SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
 }
 
+void InputEngine::CheckSDLEvent(SDL_Event tempEvent)
+{
+    ImGui_ImplSDL2_ProcessEvent(&tempEvent);
+}
+
 void InputEngine::UpdateControllers()
 {
-    SDL_Event event;
+    CheckSDLEvent(event);
     while (SDL_PollEvent(&event) != 0)
     {
+       
         switch (event.type)
         {
         case(SDL_CONTROLLERDEVICEADDED):
@@ -174,8 +184,8 @@ void InputEngine::UpdateControllers()
         case(SDL_CONTROLLERDEVICEREMOVED):
             HandleDeviceRemoval(event.cdevice.which);
             break;
-        }
-    }
+		}
+	}
 
     for (int i = 0; i < MAX_CONTROLLERS; ++i)
     {

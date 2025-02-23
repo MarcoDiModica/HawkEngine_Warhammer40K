@@ -38,6 +38,8 @@ public:
 
 	glm::vec3 getMousePickRay();
 
+	KEY_STATE GetControllerKey(int id);
+
 	KEY_STATE GetKey(int id);
 
 	KEY_STATE GetMouseButton(int id);
@@ -53,6 +55,8 @@ public:
 	int GetMouseYMotion();
 
 	int GetAxis(const char* axisName);
+
+	int GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis);
 
 	GameObject* GetDraggedGameObject();
 

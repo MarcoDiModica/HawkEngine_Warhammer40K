@@ -45,6 +45,13 @@ namespace EngineBinds {
     int GetAxis(MonoString* axisName);
     glm::vec3 GetMousePosition();
 
+    // Controller
+    static bool GetControllerButton(int buttonID);
+    static bool GetControllerButtonDown(int buttonID);
+    static bool GetControllerButtonUp(int buttonID);
+    static int GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis);
+
+
     // Transform
     void SetPosition(MonoObject* transformRef, float x, float y, float z);
     void SetLocalPosition(MonoObject* transformRef, float x, float y, float z);

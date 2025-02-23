@@ -5,10 +5,10 @@
 #include "SDL2/SDl_GameController.h"
 #include <vector>
 #include "SDL2/SDL_haptic.h"
-
+#include "SDL2/SDL_events.h"
 
 #define MAX_MOUSE_BUTTONS 5
-#define MAX_CONTROLLER_BUTTONS 15
+#define MAX_CONTROLLER_BUTTONS 21
 #define MAX_CONTROLLERS 4
 
 enum KEY_STATE
@@ -29,6 +29,8 @@ struct GamePad {
 	float l_dz = 0.1f, r_dz = 0.1f;
 	int rumble_countdown = 0;
 	float rumble_strength = 0.0f;
+	int buttons[SDL_CONTROLLER_BUTTON_MAX];
+	int axes[SDL_CONTROLLER_AXIS_MAX];
 };
 
 
@@ -120,10 +122,12 @@ public:
 	void UpdateControllers();
 	void HandleDeviceConnection(int index);
 	void HandleDeviceRemoval(int index);
+	void CheckSDLEvent(SDL_Event tempEvent);
 
 
 public:
 	KEY_STATE* keyboard;
+	KEY_STATE* controller_buttons;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
 	int mouse_x;
 	int mouse_y;
@@ -136,6 +140,7 @@ public:
 	std::vector<GameObject*> copiedObjects;
 	GameObject* draggedObject;
 	GamePad gamepads[MAX_CONTROLLERS];
+	SDL_Event event;
 
 };
 

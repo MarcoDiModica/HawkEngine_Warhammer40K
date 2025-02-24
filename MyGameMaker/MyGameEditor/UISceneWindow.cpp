@@ -345,3 +345,18 @@ bool UISceneWindow::Draw()
 
     return true;
 }
+
+bool UISceneWindow::IsMouseOverWindow() const
+{
+    ImVec2 mousePos = ImGui::GetMousePos();
+
+    float minX = winPos.x;
+    float minY = winPos.y;
+    float maxX = winPos.x + winSize.x;
+    float maxY = winPos.y + winSize.y;
+
+    bool isOverWindow = (mousePos.x >= minX && mousePos.x <= maxX &&
+        mousePos.y >= minY && mousePos.y <= maxY);
+
+    return isOverWindow;
+}

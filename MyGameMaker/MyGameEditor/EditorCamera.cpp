@@ -9,6 +9,7 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyWindow.h"
 #include "MyGUI.h"
+#include "UISceneWindow.h"
 
 EditorCamera::EditorCamera(App* app) : Module(app), CameraBase(), transform(Transform_Component(nullptr))
 {
@@ -36,7 +37,10 @@ bool EditorCamera::FixedUpdate()
 
 bool EditorCamera::Update(double dt)
 {
-	move_camera(cameraSpeed, static_cast<float>(dt));
+	if (Application->gui->UISceneWindowPanel->IsMouseOverWindow())
+	{
+		move_camera(cameraSpeed, static_cast<float>(dt));
+	}
 	
 	// Sync listener object position with camera
 	if (listenerObject) {

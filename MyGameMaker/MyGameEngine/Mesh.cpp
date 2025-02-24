@@ -184,15 +184,15 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 
 	model->GetModelData().vertexData = {
 		// Front face
-		Vertex{glm::vec3(-1.0f, -1.0f, 1.0f)},
-		Vertex{glm::vec3(1.0f, -1.0f, 1.0f)},
-		Vertex{glm::vec3(1.0f, 1.0f, 1.0f)},
-		Vertex{glm::vec3(-1.0f, 1.0f, 1.0f)},
+		Vertex{vec3(-1.0f, -1.0f, 1.0f)},
+		Vertex{vec3(1.0f, -1.0f, 1.0f)},
+		Vertex{vec3(1.0f, 1.0f, 1.0f)},
+		Vertex{vec3(-1.0f, 1.0f, 1.0f)},
 		// Back face
-		Vertex{glm::vec3(-1.0f, -1.0f, -1.0f)},
-		Vertex{glm::vec3(1.0f, -1.0f, -1.0f)},
-		Vertex{glm::vec3(1.0f, 1.0f, -1.0f)},
-		Vertex{glm::vec3(-1.0f, 1.0f, -1.0f)},
+		Vertex{vec3(-1.0f, -1.0f, -1.0f)},
+		Vertex{vec3(1.0f, -1.0f, -1.0f)},
+		Vertex{vec3(1.0f, 1.0f, -1.0f)},
+		Vertex{vec3(-1.0f, 1.0f, -1.0f)}
 	};
 
 	model->GetModelData().indexData = {
@@ -254,20 +254,17 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		vertexHigh.position = glm::vec3(x, halfHeight, z);
 
 		// Base inferior
-		model->GetModelData().vertexData.emplace_back(vertexLow);
+		//model->GetModelData().vertexData.emplace_back(x, -halfHeight, z);
 
-		// Base superior
-		model->GetModelData().vertexData.emplace_back(vertexHigh);
+		//// Base superior
+		//model->GetModelData().vertexData.emplace_back(x, halfHeight, z);
 	}
 	Vertex vertexLow;
 	Vertex vertexHigh;
 
-	vertexLow.position = glm::vec3(0, -halfHeight, 0);
-	vertexHigh.position = glm::vec3(0, halfHeight, 0);
-	
 	// A�adir los v�rtices centrales de las bases
-	model->GetModelData().vertexData.emplace_back(vertexLow); // Centro base inferior
-	model->GetModelData().vertexData.emplace_back(vertexHigh);  // Centro base superior
+	//model->GetModelData().vertexData.emplace_back(0.0f, -halfHeight, 0.0f); // Centro base inferior
+	//model->GetModelData().vertexData.emplace_back(0.0f, halfHeight, 0.0f);  // Centro base superior
 
 	// Generar �ndices para los lados del cilindro
 	for (int i = 0; i < slices; ++i) {
@@ -393,10 +390,10 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	//inject vertex positions to create a plane
 
 	model->GetModelData().vertexData = {
-		Vertex{glm::vec3(-1.0f, 0.0f, 1.0f)},
-		Vertex{glm::vec3(1.0f, 0.0f, 1.0f)},
-		Vertex{glm::vec3(1.0f, 0.0f, -1.0f)},
-		Vertex{glm::vec3(-1.0f, 0.0f, -1.0f)}
+		Vertex {vec3(-1.0f, 0.0f, 1.0f)},
+		Vertex {vec3(1.0f, 0.0f, 1.0f)},
+		Vertex {vec3(1.0f, 0.0f, -1.0f)},
+		Vertex {vec3(-1.0f, 0.0f, -1.0f)}
 	};
 
 
@@ -502,15 +499,17 @@ void Mesh::loadToOpenGL()
 	(glGenVertexArrays(1, &model->GetModelData().vA));
 	(glBindVertexArray(model->GetModelData().vA));
 
-	std::vector<glm::vec3> positions;
-	positions.reserve(model->GetModelData().vertexData.size());
-	for (const auto& vertex : model->GetModelData().vertexData) {
-		positions.push_back(vertex.position);
+	std::vector<vec3> positions;
+
+	for (int i = 0; i < model->GetModelData().vertexData.size(); i++)
+	{
+		positions.push_back(model->GetModelData().vertexData[i].position);
 	}
+
 	//buffer de positions
 	(glGenBuffers(1, &model->GetModelData().vBPosID));
 	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
-	glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_DYNAMIC_DRAW);
+	(glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_STATIC_DRAW));
 
 	//position layout
 	(glEnableVertexAttribArray(0));
@@ -545,27 +544,6 @@ void Mesh::loadToOpenGL()
 	}
 
 
-	//Bones
-	if (model->GetModelData().vertexData[0].m_BoneIDs[0] != -1)
-	{
-		// ids
-		(glGenBuffers(1, &model->GetModelData().vBonesID));
-		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBonesID));
-		glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(int), model->GetModelData().vertexData.data()->m_BoneIDs, GL_STATIC_DRAW);
-
-		glEnableVertexAttribArray(3);
-		glVertexAttribIPointer(3, 4, GL_INT, sizeof(int), (const void*)0);
-
-		// weights
-		(glGenBuffers(1, &model->GetModelData().vWeights));
-		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vWeights));
-		glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(float), model->GetModelData().vertexData.data()->m_Weights, GL_STATIC_DRAW);
-
-		glEnableVertexAttribArray(4);
-		glVertexAttribPointer(4, 4, GL_DOUBLE, GL_FALSE, sizeof(float), (const void*)0);
-	}
-	
-	
 	//buffer de index
 	(glCreateBuffers(1, &model->GetModelData().iBID));
 	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().iBID));

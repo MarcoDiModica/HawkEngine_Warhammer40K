@@ -10,7 +10,7 @@
 #include "EditorCamera.h"
 #include "SceneSerializer.h"
 #include "Root.h"
-#include "../MyGameEngine/Mesh.h"
+//#include "../MyGameEngine/Mesh.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
 
 #define FIXED_INTERVAL 0.02

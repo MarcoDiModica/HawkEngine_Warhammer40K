@@ -32,7 +32,7 @@ struct BoneInfo
 
 struct Vertex
 {
-	glm::vec3 position;
+	vec3 position;
 
 	int m_BoneIDs[MAX_BONE_INFLUENCE];
 
@@ -41,7 +41,7 @@ struct Vertex
 
 struct ModelData
 {
-	unsigned int vBPosID = -1, vBNormalsID = -1, vBColorsID = -1, vBTCoordsID = -1, iBID = -1, vA = -1, vBonesID = -1, vWeights = -1;
+	unsigned int vBPosID = -1, vBNormalsID = -1, vBColorsID = -1, vBTCoordsID = -1, iBID = -1, vA = -1;
 	std::vector<Vertex> vertexData;
 	std::vector<unsigned int> indexData;
 	std::vector<vec2> vertex_texCoords;
@@ -63,7 +63,7 @@ public:
 
 	void SetModelData(const ModelData& modelData) {
 		this->modelData = modelData;
-		calculateBoundingBox(); // Recalcula la bounding box al actualizar los datos
+		//calculateBoundingBox(); // Recalcula la bounding box al actualizar los datos
 	}
 
 	void SetMaterialIndex(int index) { materialIndex = index; }
@@ -90,6 +90,6 @@ private:
 
 	BoundingBox m_BoundingBox; // Bounding box de la malla
 
-	void calculateBoundingBox(); // Método privado para calcular la bounding box
+	//void calculateBoundingBox(); // Mï¿½todo privado para calcular la bounding box
 };
 

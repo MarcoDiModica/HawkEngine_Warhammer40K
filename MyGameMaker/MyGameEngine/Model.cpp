@@ -4,10 +4,10 @@
 void Model::calculateBoundingBox()
 {
     //if (modelData.vertexData.empty()) {
-    //    m_BoundingBox = BoundingBox(); // Bounding box vacía si no hay vértices
+    //    m_BoundingBox = BoundingBox(); // Bounding box vacï¿½a si no hay vï¿½rtices
     //    return;
     //}
-    //// Calcula la bounding box a partir de los vértices
+    //// Calcula la bounding box a partir de los vï¿½rtices
     //m_BoundingBox = BoundingBox(modelData.vertexData.data()->position, modelData.vertexData.size());
 }
 

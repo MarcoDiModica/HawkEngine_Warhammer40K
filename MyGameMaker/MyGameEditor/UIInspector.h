@@ -13,13 +13,12 @@ public:
 	~UIInspector();
 
 	bool Draw();
+	void DrawGameObjectHeader(GameObject* gameObject);
 	bool snap = false;
 	float snapValue = 1;
 	bool once = false;
 
 private:
-	void DrawParticleEmitterInspector(GameObject* selectedGameObject);
-
 	bool matrixDirty;
 
 	glm::vec3 position;

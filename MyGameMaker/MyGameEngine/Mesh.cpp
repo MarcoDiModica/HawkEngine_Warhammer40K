@@ -161,15 +161,15 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 
 	model->GetModelData().vertexData = {
 		// Front face
-		vec3(-1.0f, -1.0f, 1.0f),
-		vec3(1.0f, -1.0f, 1.0f),
-		vec3(1.0f, 1.0f, 1.0f),
-		vec3(-1.0f, 1.0f, 1.0f),
+		Vertex{vec3(-1.0f, -1.0f, 1.0f)},
+		Vertex{vec3(1.0f, -1.0f, 1.0f)},
+		Vertex{vec3(1.0f, 1.0f, 1.0f)},
+		Vertex{vec3(-1.0f, 1.0f, 1.0f)},
 		// Back face
-		vec3(-1.0f, -1.0f, -1.0f),
-		vec3(1.0f, -1.0f, -1.0f),
-		vec3(1.0f, 1.0f, -1.0f),
-		vec3(-1.0f, 1.0f, -1.0f),
+		Vertex{vec3(-1.0f, -1.0f, -1.0f)},
+		Vertex{vec3(1.0f, -1.0f, -1.0f)},
+		Vertex{vec3(1.0f, 1.0f, -1.0f)},
+		Vertex{vec3(-1.0f, 1.0f, -1.0f)}
 	};
 
 	model->GetModelData().indexData = {
@@ -186,12 +186,12 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 
 
-	meshBBox->min = model->GetModelData().vertexData.front();
-	meshBBox->max = model->GetModelData().vertexData.front();
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
 
 	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
 	mesh->setBoundingBox(*meshBBox);
@@ -223,15 +223,15 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		float z = radius * sin(angle);
 
 		// Base inferior
-		model->GetModelData().vertexData.emplace_back(x, -halfHeight, z);
+		//model->GetModelData().vertexData.emplace_back(x, -halfHeight, z);
 
-		// Base superior
-		model->GetModelData().vertexData.emplace_back(x, halfHeight, z);
+		//// Base superior
+		//model->GetModelData().vertexData.emplace_back(x, halfHeight, z);
 	}
 
 	// Añadir los vértices centrales de las bases
-	model->GetModelData().vertexData.emplace_back(0.0f, -halfHeight, 0.0f); // Centro base inferior
-	model->GetModelData().vertexData.emplace_back(0.0f, halfHeight, 0.0f);  // Centro base superior
+	//model->GetModelData().vertexData.emplace_back(0.0f, -halfHeight, 0.0f); // Centro base inferior
+	//model->GetModelData().vertexData.emplace_back(0.0f, halfHeight, 0.0f);  // Centro base superior
 
 	// Generar índices para los lados del cilindro
 	for (int i = 0; i < slices; ++i) {
@@ -270,12 +270,12 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 
 
-	meshBBox->min = model->GetModelData().vertexData.front();
-	meshBBox->max = model->GetModelData().vertexData.front();
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
 
 	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
 	mesh->setBoundingBox(*meshBBox);
@@ -309,7 +309,11 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 			float y = cos(phi);
 			float z = sin(theta) * sin(phi);
 
-			model->GetModelData().vertexData.push_back(glm::vec3(x, y, z) * radius);
+			Vertex vertex;
+
+			vertex.position = glm::vec3(x, y, z) * radius;
+
+			model->GetModelData().vertexData.push_back(vertex);
 		}
 	}
 
@@ -328,12 +332,12 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 
 
-	meshBBox->min = model->GetModelData().vertexData.front();
-	meshBBox->max = model->GetModelData().vertexData.front();
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
 
 	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
 	mesh->setBoundingBox(*meshBBox);
@@ -351,10 +355,10 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 
 	model->GetModelData().vertexData = {
-		vec3(-1.0f, 0.0f, 1.0f),
-		vec3(1.0f, 0.0f, 1.0f),
-		vec3(1.0f, 0.0f, -1.0f),
-		vec3(-1.0f, 0.0f, -1.0f)
+		Vertex {vec3(-1.0f, 0.0f, 1.0f)},
+		Vertex {vec3(1.0f, 0.0f, 1.0f)},
+		Vertex {vec3(1.0f, 0.0f, -1.0f)},
+		Vertex {vec3(-1.0f, 0.0f, -1.0f)}
 	};
 
 	model->GetModelData().indexData = {
@@ -366,12 +370,12 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 
 
-	meshBBox->min = model->GetModelData().vertexData.front();
-	meshBBox->max = model->GetModelData().vertexData.front();
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
 
 	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
 	mesh->setBoundingBox(*meshBBox);
@@ -457,10 +461,17 @@ void Mesh::loadToOpenGL()
 	(glGenVertexArrays(1, &model->GetModelData().vA));
 	(glBindVertexArray(model->GetModelData().vA));
 
+	std::vector<vec3> positions;
+
+	for (int i = 0; i < model->GetModelData().vertexData.size(); i++)
+	{
+		positions.push_back(model->GetModelData().vertexData[i].position);
+	}
+
 	//buffer de positions
 	(glGenBuffers(1, &model->GetModelData().vBPosID));
 	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
-	(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertexData.size() * sizeof(vec3), model->GetModelData().vertexData.data(), GL_STATIC_DRAW));
+	(glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_STATIC_DRAW));
 
 	//position layout
 	(glEnableVertexAttribArray(0));
@@ -493,6 +504,8 @@ void Mesh::loadToOpenGL()
 		//loadNormalsToOpenGL();
 		//loadFaceNormalsToOpenGL();
 	}
+
+
 
 	//buffer de index
 	(glCreateBuffers(1, &model->GetModelData().iBID));

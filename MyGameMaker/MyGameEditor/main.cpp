@@ -1,4 +1,8 @@
+#ifndef _DEBUG
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+#else
+#pragma comment(linker, "/SUBSYSTEM:console /ENTRY:mainCRTStartup")
+#endif
 
 #define GLM_ENABLE_EXPERIMENTAL
 #define CHECKERS_HEIGHT 64
@@ -92,34 +96,88 @@ InputEngine* InputManagement = NULL;
 static void init_openGL() {
 	glewInit();
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
+
+	glEnable(GL_MULTISAMPLE);
+
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glEnable(GL_CULL_FACE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glClearColor(0.2, 0.2, 0.2, 1.0);
+	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glScaled(1.0, (double)WINDOW_SIZE.x/WINDOW_SIZE.y, 1.0);
-	
+	glScaled(1.0, (double)WINDOW_SIZE.x / WINDOW_SIZE.y, 1.0);
+
 	glMatrixMode(GL_MODELVIEW);
 }
 
 static void drawFloorGrid(int size, double step) {
-	glColor3f(0.5f, 0.5f, 0.5f); // Gray color
+	glPushAttrib(GL_ENABLE_BIT);
+	glEnable(GL_LINE_SMOOTH);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	const glm::vec2 cameraPos2D(Application->camera->GetTransform().GetPosition().x,
+		Application->camera->GetTransform().GetPosition().z);
+
+	const float fadeRadius = size * 0.8f;
+	const int segmentCount = 8;
+
+	auto calculateFade = [&](const glm::vec2& pos) {
+		float distance = glm::length(cameraPos2D - pos);
+		return glm::clamp(pow(1.0f - (distance / fadeRadius), 0.75f), 0.0f, 1.0f);
+		};
+
+	auto drawSegmentedLine = [&](double x1, double z1, double x2, double z2, float baseAlpha, const glm::vec3& color) {
+		for (int i = 0; i < segmentCount; i++) {
+			float t1 = static_cast<float>(i) / segmentCount;
+			float t2 = static_cast<float>(i + 1) / segmentCount;
+
+			glm::vec2 pos1(glm::mix(x1, x2, t1), glm::mix(z1, z2, t1));
+			glm::vec2 pos2(glm::mix(x1, x2, t2), glm::mix(z1, z2, t2));
+
+			float fade1 = calculateFade(pos1);
+			float fade2 = calculateFade(pos2);
+
+			glColor4f(color.r, color.g, color.b, baseAlpha * fade1);
+			glVertex3d(pos1.x, 0, pos1.y);
+			glColor4f(color.r, color.g, color.b, baseAlpha * fade2);
+			glVertex3d(pos2.x, 0, pos2.y);
+		}
+		};
+
+	glLineWidth(1.0f);
 	glBegin(GL_LINES);
-	// CHANGE Application->root->currentScene->DebugDrawTree();
-
 	for (double i = -size; i <= size; i += step) {
-		glVertex3d(i, 0, -size);
-		glVertex3d(i, 0, size);
-		glVertex3d(-size, 0, i);
-		glVertex3d(size, 0, i);
+		glm::vec3 gridColor(0.5f, 0.5f, 0.5f);
+		drawSegmentedLine(i, -size, i, size, 0.4f, gridColor);
+		drawSegmentedLine(-size, i, size, i, 0.4f, gridColor);
 	}
-	glColor3f(1.0f, 1.0f, 1.0f);
 	glEnd();
+
+	glLineWidth(2.0f);
+	glBegin(GL_LINES);
+	for (double i = -size; i <= size; i += step * 10) {
+		glm::vec3 mainGridColor(0.6f, 0.6f, 0.6f);
+		drawSegmentedLine(i, -size, i, size, 0.6f, mainGridColor);
+		drawSegmentedLine(-size, i, size, i, 0.6f, mainGridColor);
+	}
+	glEnd();
+
+	glLineWidth(2.5f);
+	glBegin(GL_LINES);
+	drawSegmentedLine(-size, 0, size, 0, 0.9f, glm::vec3(0.9f, 0.2f, 0.2f));
+	drawSegmentedLine(0, -size, 0, size, 0.9f, glm::vec3(0.2f, 0.2f, 0.9f));
+	glEnd();
+
+	glPopAttrib();
+	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
 // Initializes camera

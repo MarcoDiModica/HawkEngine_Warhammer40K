@@ -346,12 +346,12 @@ void Root::CreateGameObjectWithPath(const std::string& path)
 		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 		
 
-        meshBBox->min = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front();
-        meshBBox->max = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front();
+        meshBBox->min = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front().position;
+        meshBBox->max = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front().position;
 
         for (const auto& v : meshRenderer->GetMesh()->getModel()->GetModelData().vertexData) {
-            meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-            meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+            meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+            meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
         }
 
         go->GetComponent<MeshRenderer>()->GetMesh()->setBoundingBox(*meshBBox);

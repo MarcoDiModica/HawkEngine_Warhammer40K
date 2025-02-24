@@ -5,6 +5,8 @@
 #include <filesystem>
 #include <string>
 #include <mono/jit/jit.h>
+#include <mono/metadata/attrdefs.h>
+#include <mono/metadata/class.h> 
 #include <mono/metadata/reflection.h>
 #include <Windows.h>
 
@@ -32,6 +34,8 @@
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+
+typedef unsigned int guint32;
 #pragma endregion
 
 class ComponentDrawer {
@@ -497,6 +501,11 @@ private:
         MonoClassField* field = nullptr;
 
         while ((field = mono_class_get_fields(scriptClass, &iter))) {
+            guint32 flags = mono_field_get_flags(field);
+            if (flags & MONO_FIELD_ATTR_STATIC) {
+                continue;
+            }
+
             const char* fieldName = mono_field_get_name(field);
             MonoType* fieldType = mono_field_get_type(field);
             int typeCode = mono_type_get_type(fieldType);
@@ -508,6 +517,10 @@ private:
     }
 
     static void DrawScriptField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, int typeCode) {
+        if (mono_field_get_flags(field) & MONO_FIELD_ATTR_STATIC) {
+            return;
+        }
+
         switch (typeCode) {
         case MONO_TYPE_STRING:
             DrawStringField(monoScript, field, fieldName);
@@ -838,6 +851,15 @@ public:
 		if (gameObject->HasComponent<ParticlesEmitterComponent>()) {
 			ParticlesEmitterComponent* emitter = gameObject->GetComponent<ParticlesEmitterComponent>();
 			DrawParticleEmitterComponent(emitter);
+		}
+
+        if (gameObject->HasComponent<ShaderComponent>()) {
+            ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
+            DrawShaderComponent(shader);
+        }
+
+        if (gameObject->scriptComponents.size() > 0) {
+			DrawScriptComponents(gameObject);
 		}
 
 		//Aqui mas componentes

@@ -53,4 +53,6 @@ private:
 	//bools for propierties;
     bool isKinematic;
     bool isFreezed;
+
+    void SetRigidBody(btRigidBody* rigidBody);
 };

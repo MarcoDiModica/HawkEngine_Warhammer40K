@@ -8,6 +8,10 @@
 #include <glm/glm.hpp>
 
 
+constexpr float fixedDeltaTime = 1.0f / 60.0f; // 60 updates per second
+float accumulatedTime = 0.0f;
+
+
 PhysicsModule::PhysicsModule() : dynamicsWorld(nullptr), cubeShape(nullptr) {}
 
 PhysicsModule::~PhysicsModule() {
@@ -47,35 +51,6 @@ bool PhysicsModule::Awake() {
     return true;
 }
 
-void PhysicsModule::CreatePhysicsForCube(GameObject& go, float mass) {
-
-    Transform_Component* transform = go.GetTransform();
-    glm::vec3 position = transform->GetPosition();
-    glm::quat rotation = transform->GetRotation();
-
-    btTransform startTransform;
-    startTransform.setIdentity();
-    startTransform.setOrigin(btVector3(position.x, position.y, position.z));
-    startTransform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
-
-    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-
-    btVector3 inertia(0, 0, 0);
-    if (mass > 0.0f) {
-        cubeShape->calculateLocalInertia(mass, inertia);
-    }
-
-    btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState, cubeShape, inertia);
-    btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
-    //PhysBody3D* body = new PhysBody3D(rigidBody);
-    dynamicsWorld->addRigidBody(rigidBody);
-    //body.Push(1, 1, 1);
-
-    gameObjectRigidBodyMap[&go] = rigidBody;
-
-    std::cout << "Physics created for GameObject at position: ("
-        << position.x << ", " << position.y << ", " << position.z << ")\n";
-}
 void PhysicsModule::SyncTransforms() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
         btTransform transform;
@@ -113,7 +88,6 @@ void PhysicsModule::SyncTransforms() {
     }
 }
 
-
 void PhysicsModule::SyncCollidersToGameObjects() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
         auto goTransform = gameObject->GetTransform();
@@ -136,6 +110,7 @@ void PhysicsModule::SyncCollidersToGameObjects() {
             << position.x << ", " << position.y << ", " << position.z << ")\n";
     }
 }
+
 std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWorld) {
     std::vector<btRigidBody*> rigidBodies;
     int numCollisionObjects = dynamicsWorld->getNumCollisionObjects();
@@ -201,23 +176,20 @@ void PhysicsModule::DrawDebugDrawer() {
         }
     }
 }
+
 bool PhysicsModule::Update(double dt) {
-    if (linkPhysicsToScene) {
-        dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 10);
-        //GameObjectsSync
-        SyncTransforms();
-    }
-    else
+	if (linkPhysicsToScene)
     {
-        //Line to sync the colliders to the gameobjects
-        //SyncCollidersToGameObjects();
+        accumulatedTime += dt;
+        while (accumulatedTime >= fixedDeltaTime) {
+            dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 10);
+            SyncTransforms();
+            accumulatedTime -= fixedDeltaTime;
+        }
     }
     DrawDebugDrawer();
-
     return true;
 }
-
-
 
 void PhysicsModule::AddForceToCollider(GameObject& go, const glm::vec3& force) {
     auto it = gameObjectRigidBodyMap.find(&go);
@@ -251,50 +223,34 @@ bool PhysicsModule::CleanUp() {
 }
 
 void PhysicsModule::SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& cameraPosition, const glm::vec3& cameraDirection, float forceMagnitude) {
-    // Obtener el componente Transform del GameObject
     Transform_Component* transform = go.GetTransform();
-
-    // Establecer la posición inicial del GameObject a la posición de la cámara
     transform->SetPosition(cameraPosition);
 
-    // Configurar la transformación inicial para el cuerpo rígido
     btTransform startTransform;
     startTransform.setIdentity();
     startTransform.setOrigin(btVector3(cameraPosition.x, cameraPosition.y, cameraPosition.z));
     startTransform.setRotation(btQuaternion(0, 0, 0, 1)); // Sin rotación inicial
 
-    // Crear la forma de colisión para la esfera
     btSphereShape* sphereShape = new btSphereShape(radius);
 
-    // Crear el estado de movimiento
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
 
-    // Calcular la inercia si el cuerpo tiene masa
     btVector3 inertia(0, 0, 0);
     if (mass > 0.0f) {
         sphereShape->calculateLocalInertia(mass, inertia);
     }
 
-    // Configurar la información del cuerpo rígido
     btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState, sphereShape, inertia);
     btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
 
     rigidBody->setRestitution(0.7f);
-    // Añadir el cuerpo rígido al mundo de Bullet
     dynamicsWorld->addRigidBody(rigidBody);
-
-    // Asociar el cuerpo rígido con el GameObject en el mapa
     gameObjectRigidBodyMap[&go] = rigidBody;
 
     // Obtener la dirección de la cámara y aplicar una fuerza inicial
     //glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward(); // Dirección de la cámara
     btVector3 btForce = btVector3(cameraDirection.x, cameraDirection.y, cameraDirection.z) * forceMagnitude;
     rigidBody->applyCentralImpulse(btForce);
-
-    // Mensaje de confirmación
-    std::cout << "Physics sphere spawned at: ("
-        << cameraPosition.x << ", " << cameraPosition.y << ", " << cameraPosition.z
-        << ") with force: (" << btForce.x() << ", " << btForce.y() << ", " << btForce.z() << ")\n";
 }
 
 void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
@@ -321,58 +277,12 @@ void PhysicsModule::SetColliderFriction(GameObject& go, float friction) {
     }
 }
 
-
-void PhysicsModule::FreezeRotations(GameObject& go) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-        rigidBody->setAngularFactor(btVector3(0, 0, 0)); // Lock all rotations
-        std::cout << "Rotations frozen for GameObject.\n";
-    }
-}
-
-
-void PhysicsModule::UnlockRotations(GameObject& go) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-        rigidBody->setAngularFactor(btVector3(1, 1, 1)); // Unlock all rotations
-        std::cout << "Rotations unlocked for GameObject.\n";
-    }
-}
-
-void PhysicsModule::SetGravity(GameObject& go, const glm::vec3& gravity) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-        rigidBody->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
-        std::cout << "Gravity set for GameObject: " << gravity.x << ", " << gravity.y << ", " << gravity.z << "\n";
-    }
-}
-
 void PhysicsModule::SetBounciness(GameObject& go, float restitution) {
     auto it = gameObjectRigidBodyMap.find(&go);
     if (it != gameObjectRigidBodyMap.end()) {
         btRigidBody* rigidBody = it->second;
         rigidBody->setRestitution(restitution);
         std::cout << "Bounciness set to " << restitution << " for GameObject.\n";
-    }
-}
-
-void PhysicsModule::SetKinematic(GameObject& go, bool isKinematic) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-
-        if (isKinematic) {
-            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
-            rigidBody->setActivationState(DISABLE_DEACTIVATION);
-        }
-        else {
-            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() & ~btCollisionObject::CF_KINEMATIC_OBJECT);
-        }
-
-        std::cout << "GameObject set to " << (isKinematic ? "kinematic" : "dynamic") << ".\n";
     }
 }
 

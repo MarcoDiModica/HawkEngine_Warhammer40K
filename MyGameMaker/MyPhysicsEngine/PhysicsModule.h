@@ -29,16 +29,7 @@ public:
 
     bool Awake();
 
-	//Helper Functions
-    void FreezeRotations(GameObject& go);
-
-    void UnlockRotations(GameObject& go);
-
-    void SetGravity(GameObject& go, const glm::vec3& gravity);
-
     void SetBounciness(GameObject& go, float restitution);
-
-    void SetKinematic(GameObject& go, bool isKinematic);
 
     void EnableContinuousCollision(GameObject& go);
 
@@ -51,7 +42,6 @@ public:
 
     void DrawDebugDrawer();
 
-    void CreatePhysicsForCube(GameObject& go, float mass);
     //void CreatePhysicsPlane();
     void SyncTransforms();
     void SyncCollidersToGameObjects();

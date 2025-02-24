@@ -18,8 +18,13 @@ void RigidbodyComponent::Start() {
 		collider->Start();
     }
 	collider->SetMass(mass);
-    rigidBody = collider->GetRigidBody();
+	SetRigidBody(collider->GetRigidBody());
     
+}
+
+void RigidbodyComponent::SetRigidBody(btRigidBody* rigidBody) {
+	this->rigidBody = rigidBody;
+	rigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
 void RigidbodyComponent::Update(float deltaTime) {}
@@ -33,15 +38,12 @@ void RigidbodyComponent::Destroy() {
     }
 }
 
-void RigidbodyComponent::CreateRigidbody() {
-    
-}
-
 void RigidbodyComponent::SetMass(float newMass) {
 	mass = newMass;
     ColliderComponent* collider = owner->GetComponent<ColliderComponent>();
 	collider->SetMass(newMass);
-    rigidBody = collider->GetRigidBody();
+    SetRigidBody(collider->GetRigidBody());
+	SetFreezeRotations(false);
 }
 
 float RigidbodyComponent::GetMass() const {

@@ -126,6 +126,7 @@ void ColliderComponent::SnapToPosition() {
     else {
         rigidBody->setWorldTransform(transform);
     }
+    rigidBody->setCenterOfMassTransform(transform);
     std::cout << "Collider position snapped to bounding box center: ("
         << position.x << ", " << position.y << ", " << position.z << ")\n";
 }

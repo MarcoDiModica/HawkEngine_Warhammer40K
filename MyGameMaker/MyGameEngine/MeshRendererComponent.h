@@ -47,7 +47,6 @@ private:
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 
-
 protected:
     YAML::Node encode() override {
 
@@ -91,7 +90,7 @@ protected:
             }
         }
         else {
-             _mesh->LoadMesh(path.c_str());
+             //_mesh->LoadMesh(path.c_str());
         }
         SetMesh(_mesh);
 

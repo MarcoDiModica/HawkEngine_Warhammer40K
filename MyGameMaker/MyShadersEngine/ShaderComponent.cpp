@@ -15,6 +15,10 @@ void ShaderComponent::Update(float deltaTime)
 
 void ShaderComponent::Destroy()
 {
+	shader = nullptr;
+	ownerMaterial->shader = nullptr;
+	ownerMaterial->useShader = false;
+
 }
 
 std::unique_ptr<Component> ShaderComponent::Clone(GameObject* owner)
@@ -35,7 +39,7 @@ Shaders* ShaderComponent::GetShader() const
 void ShaderComponent::SetShaderType(ShaderType newType)
 {
 	shader = &Application->root->shaders[newType];
-	ownerMaterial->shader = *shader;
+	ownerMaterial->shader = shader;
 	ownerMaterial->shaderType = newType;
 	ownerMaterial->useShader = true;
 	type = newType;

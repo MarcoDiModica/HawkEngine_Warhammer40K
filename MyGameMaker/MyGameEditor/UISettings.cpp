@@ -1,12 +1,12 @@
+#include <assimp/version.h>
+#include <IL/il.h>
+#include <imgui.h>
+
 #include "UISettings.h"
 #include "App.h"
 #include "MyGUI.h"
 #include "Input.h"
 #include "HardwareSettings.h"
-#include "assimp/version.h"
-#include "IL/il.h"
-
-#include "imgui.h"
 
 
 UISettings::UISettings(UIType type, std::string name) : UIElement(type, name), fpsRecord(RECORD_SIZE), msRecord(RECORD_SIZE)

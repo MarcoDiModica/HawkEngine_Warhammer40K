@@ -4,10 +4,10 @@
 
 #include <GL/glew.h>
 #include <GL/gl.h>
+#include <string>
+
 #include "MyGameEngine/types.h"
 #include "UIElement.h"
-#include <vector>
-#include <string>
 
 
 class UICamera : public UIElement

@@ -192,7 +192,7 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetTransform()->GetMatrix());
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("modColor", glm::vec4(1, 0.2f, 0, 1));
         glUniform4f(
-            glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader.GetProgram(), "modColor"),
+            glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader->GetProgram(), "modColor"),
             static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().x),
             static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().y),
             static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().z),
@@ -233,14 +233,6 @@ void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dve
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
         GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.intensity", 3.0f);
-
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Time", timeActive);
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Amplitude", GetComponent<ShaderComponent>()->amplitude);
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Frequency", GetComponent<ShaderComponent>()->frequency);
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_ColorLow", glm::vec3(0.0f, 0.0f, 1.0f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("u_Factor", 0.8f);
-
 	}
 
 	//for (auto& child : children)
@@ -512,6 +504,8 @@ void GameObject::AddChild(GameObject* child)
 
 void GameObject::RemoveChild(GameObject* child)
 {
+    if (child == nullptr) { return; }
+    if (children.empty()) { return; }
     for (auto it = children.begin(); it != children.end(); ++it)
 	{
 		if ((*it).get() == child)

@@ -1,7 +1,8 @@
+#include <SDL2/SDL.h>
+#include <GL/glew.h>
+
 #include "App.h"
 #include "HardwareSettings.h"
-#include "SDL2/SDL.h"
-#include "GL/glew.h"
 
 
 HardwareInfo::HardwareInfo(App* app) : Module(app)

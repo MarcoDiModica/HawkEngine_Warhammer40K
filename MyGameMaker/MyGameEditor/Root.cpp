@@ -1,5 +1,7 @@
-#include "Root.h"
+#include <SDL2/SDL.h>
+#include <iostream>
 
+#include "Root.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/LightComponent.h"
@@ -14,15 +16,9 @@
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
-#include "../MyAudioEngine/AudioListener.h"
-
 #include "../MyScriptingEngine/ScriptComponent.h"
-#include <SDL2/SDL.h>
 #include "MyShadersEngine/ShaderComponent.h"
 
-#include <iostream>
-
-using namespace std;
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
 
@@ -79,38 +75,6 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
     return particleEmitter;
 }
 
-void MakeCity() {
-    Application->root->CreateScene("HolaBuenas");
-    Application->root->SetActiveScene("HolaBuenas");
-    auto MarcoVicePresidente = Application->root->CreateGameObject("City");
-
-	
-
-    ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/Street environment_V01.FBX");
-
-    for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
-        auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
-
-        auto go = Application->root->CreateGameObject("GameObject");
-        auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
-        Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->image_path);
-        go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
-        go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
-        Application->root->ParentGameObject(*go, *MarcoVicePresidente);
-        gameObjectsWithColliders.push_back(go);
-    }
-
-    MarcoVicePresidente->GetTransform()->SetScale(vec3(0.5, 0.5, 0.5));
-    MarcoVicePresidente->GetTransform()->SetPosition(vec3(0, 0.1, 0));
-    MarcoVicePresidente->GetTransform()->Rotate(-1.5708, vec3(1,0,0));
-
-    for (auto& go : gameObjectsWithColliders) {
-        go->AddComponent<ColliderComponent>(Application->physicsModule, true);
-    }
-
-}
-
 bool Root::Awake()
 {
    // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
@@ -125,7 +89,7 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
-    MakeCity();
+    CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();
     /*CreateScene("Viernes13");
@@ -137,7 +101,7 @@ bool Root::Awake()
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera; */   
 
-	auto Collider = CreateGameObject("Collider");
+	//auto Collider = CreateGameObject("Collider");
     //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
 
     return true;
@@ -151,12 +115,18 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
+    auto Player = CreateGameObject("Player");
+    auto mesh = Mesh::CreateCube();
+    AddMeshRenderer(*Player, mesh);
+    auto script = Player->AddComponent<ScriptComponent>();
+    script->LoadScript("PlayerController");
+    
     //MonoEnvironment* mono = new MonoEnvironment();
 
     //auto Script = CreateGameObject("Script");
     //auto script = Script->AddComponent<ScriptComponent>();
     //script->LoadScript("TestingComponent");
-
+    /*
     auto BlobFish = CreateGameObject("Tank");
     auto blob = BlobFish->AddComponent<ScriptComponent>();
 
@@ -177,6 +147,7 @@ bool Root::Start()
     
 	ParentGameObject(*BlobFish2, *BlobFish);
 	ParentGameObject(*BlobFish3, *BlobFish2);
+    */
     //blob2->LoadScript("TestingComponent");
     
     //check if blobfish has 2 scripts
@@ -210,7 +181,7 @@ bool Root::Update(double dt) {
 
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
 
-    SceneManagement->Update(dt);
+    //SceneManagement->Update(dt);
 
     //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
     //
@@ -289,6 +260,58 @@ std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
 void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat, std::vector<Shaders> shaders)
 {
     return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat, shaders);
+}
+
+void Root::CreateGameObjectWithPath(const std::string& path)
+{
+    auto MarcoVicePresidente = Application->root->CreateGameObject(path);
+
+    ModelImporter meshImp;
+    meshImp.loadFromFile(path);
+
+    for (int i = 0; i < meshImp.meshes.size(); i++) {
+
+        auto MarcoVicePresidente2 = meshImp.fbx_object[i];
+
+        auto go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
+        go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
+
+        auto meshRenderer = go->AddComponent<MeshRenderer>();
+        auto material = std::make_shared<Material>();
+
+        meshRenderer->SetMesh(meshImp.meshes[i]);
+        material = meshImp.materials[meshImp.meshes[i]->getModel()->GetMaterialIndex()];
+
+        meshRenderer->SetMaterial(material);
+        meshRenderer->GetMaterial()->SetColor(material->GetColor());
+
+        auto shaderComponent = go->AddComponent<ShaderComponent>();
+        shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+        shaderComponent->SetShaderType(ShaderType::LIGHT);
+
+		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
+		
+
+        meshBBox->min = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front();
+        meshBBox->max = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front();
+
+        for (const auto& v : meshRenderer->GetMesh()->getModel()->GetModelData().vertexData) {
+            meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
+            meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+        }
+
+        go->GetComponent<MeshRenderer>()->GetMesh()->setBoundingBox(*meshBBox);
+
+        go->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
+
+        go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+        Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        //gameObjectsWithColliders.push_back(go);
+    }
+
+    //for (auto& go : gameObjectsWithColliders) {
+    //    go->AddComponent<ColliderComponent>(Application->physicsModule, true);
+    //}
 }
 
 void Root::ChangeShader(GameObject& go, ShaderType shader)

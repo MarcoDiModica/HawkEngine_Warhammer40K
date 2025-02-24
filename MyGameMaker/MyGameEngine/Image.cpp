@@ -24,7 +24,8 @@ Image::Image(Image&& other) noexcept :
 	other._id = 0;
 }
 
-void Image::bind() const {
+void Image::bind(unsigned int slot) const {
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, _id);
 }
 
@@ -55,12 +56,13 @@ void Image::load(int width, int height, int channels, void* data) {
 
 	bind();
 	glPixelStorei(GL_UNPACK_ALIGNMENT, rowAlignment(width, channels));
-	glTexImage2D(GL_TEXTURE_2D, 0, channels, width, height, 0, formatFromChannels(channels), GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, channels, width, height, 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 struct ImageDTO {
@@ -107,11 +109,13 @@ void Image::LoadTexture(const std::string& path)
 	auto img = ilGenImage();
 	ilBindImage(img);
 	ilLoadImage(path.c_str());
+	const auto origin = ilGetInteger(IL_IMAGE_ORIGIN);
+	if (origin != IL_ORIGIN_UPPER_LEFT) iluFlipImage();
 	auto width = ilGetInteger(IL_IMAGE_WIDTH);
 
 	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
 
-	auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
+	auto channels = ilGetInteger(IL_IMAGE_BPP);
 	auto data = ilGetData();
 
 	//load image as a texture in VRAM
@@ -128,11 +132,13 @@ void Image::LoadTextureLocalPath(const std::string& path) {
 	auto img = ilGenImage();
 	ilBindImage(img);
 	ilLoadImage(image_path.c_str());
+	const auto origin = ilGetInteger(IL_IMAGE_ORIGIN);
+	if (origin != IL_ORIGIN_UPPER_LEFT) iluFlipImage();
 	auto width = ilGetInteger(IL_IMAGE_WIDTH);
 
 	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
 
-	auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
+	auto channels = ilGetInteger(IL_IMAGE_BPP);
 	auto data = ilGetData();
 
 	//load image as a texture in VRAM

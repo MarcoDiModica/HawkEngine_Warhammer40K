@@ -4,59 +4,52 @@
 #define CHECKERS_WIDTH 64
 
 #include <string>
-#include <GL/glew.h>
 #include <chrono>
 #include <thread>
 #include <exception>
 #include <iostream>
+#include <stack>
+
+#include <GL/glew.h>
 #include <glm/glm.hpp>
-#include "MyWindow.h"
-#include "MyGUI.h"
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-#include "assimp/cimport.h" 
-#include "assimp/scene.h" 
-#include "assimp/postprocess.h"
-#include "../MyGameEngine/Mesh.h"
-#include "EditorCamera.h"
-#include "imgui.h"
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/common.hpp>
 #include <IL/il.h>
 #include <IL/ilu.h>
-#include <stack>
 #include <IL/ilut.h>
-#include "Input.h"
-#include "MyGUI.h"
+
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+
+#include "imgui.h"
 #include <ImGuizmo.h>
+
+#include "MyWindow.h"
+#include "MyGUI.h"
+#include "EditorCamera.h"
+#include "Input.h"
 #include "UISceneWindow.h"
-#include "MyGameEngine/types.h"
-#include "MyGameEngine/CameraBase.h"
-#include "MyGameEngine/BoundingBox.h"
-#include "MyGameEngine/CameraComponent.h"
-#include "MyGameEngine/GameObject.h"
-#include "MyGameEngine/TransformComponent.h"
-#include "MyGameEngine/MeshRendererComponent.h"
+#include "App.h"
+#include "../MyGameEngine/Mesh.h"
+#include "../MyGameEngine/types.h"
+#include "../MyGameEngine/CameraBase.h"
+#include "../MyGameEngine/BoundingBox.h"
+#include "../MyGameEngine/CameraComponent.h"
+#include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
+#include "../MyGameEngine/LightComponent.h"
+#include "../MyGameEngine/Shaders.h"
+#include "../MyGameEngine/Material.h"
+#include "../MyGameEngine/SceneManager.h"
+#include "../MyGameEngine/InputEngine.h"
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
 
-
-#include "MyGameEngine/LightComponent.h"
-#include "MyGameEngine/Shaders.h"
-#include "MyGameEngine/Material.h"
-#include "MyGameEngine/SceneManager.h"
-#include "MyGameEngine/InputEngine.h"
-#include "App.h"
-
-//#include <mono/metadata/assembly.h>
-//#include <mono/jit/jit.h>
-
-//#include "../MyScriptingEngine/MonoEnvironment.h"
-
-
-//TODO BALDAN : xcopy mono / place manually in x64/Debug folder
 
 using namespace std;
 
@@ -100,6 +93,9 @@ static void init_openGL() {
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glEnable(GL_CULL_FACE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(0.2, 0.2, 0.2, 1.0);
 
 	glMatrixMode(GL_PROJECTION);
@@ -303,8 +299,6 @@ void RenderOutline(GameObject* object) {
 	
 	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT); 
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	glPolygonOffset(-5.0f, -5.0f);
 	
@@ -317,8 +311,6 @@ void RenderOutline(GameObject* object) {
 
 
 	glDisable(GL_POLYGON_OFFSET_FILL);
-	glCullFace(GL_BACK);
-	glDisable(GL_CULL_FACE);
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
@@ -343,7 +335,7 @@ static void display_func() {
 		if (object->HasComponent<LightComponent>()) {
 			auto it = std::find(lights.begin(), lights.end(), object);
 			if (it == lights.end()) {
-				lights.push_back(object);
+				Application->root->GetActiveScene()->_lights.push_back(object->shared_from_this());
 			}
 		}
 	}
@@ -356,7 +348,7 @@ static void display_func() {
 
 		RenderOutline(object);
 
-		object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
+		//object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
 		
 		object->Update(static_cast<float>(Application->GetDt()));
 
@@ -366,7 +358,7 @@ static void display_func() {
 			GameObject* child = object->GetChildren()[j].get();
 			objects.push_back(child);
 			RenderOutline(child);
-			child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
+			//child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
 		
 		}
 	}
@@ -391,6 +383,8 @@ static void display_func2() {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	Application->root->GetActiveScene()->_lights.clear();
 }
 
 void EditorRenderer(MyGUI* gui) {

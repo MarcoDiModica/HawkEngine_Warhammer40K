@@ -2,9 +2,9 @@
 #define __UI_CONSOLE_H__
 #pragma once
 
-#include "UIElement.h"
-#include <vector>
 #include <string>
+
+#include "UIElement.h"
 
 class UIConsole : public UIElement
 {

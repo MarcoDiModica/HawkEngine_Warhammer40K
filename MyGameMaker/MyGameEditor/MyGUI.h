@@ -1,7 +1,8 @@
+#include <list>
+
 #include "Module.h"
 #include "MyWindow.h"
 #include "App.h"
-#include <list>
 
 #pragma once
 

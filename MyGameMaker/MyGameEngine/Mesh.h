@@ -18,6 +18,7 @@
 
 #include "BufferObject.h"
 #include "BoundingBox.h"
+#include "Model.h"
 
 #define MAX_BONES 100
 #define MAX_BONE_INFLUENCE 4
@@ -42,11 +43,6 @@ struct BoneInfo
 };
 
 class Mesh {
-    BufferObject vertices_buffer;
-    BufferObject indices_buffer;
-    BufferObject texCoords_buffer;
-    BufferObject normals_buffer;
-    BufferObject colors_buffer;
 
     std::vector<glm::vec3> _normals;
     std::vector<Vertex> _vertices;
@@ -58,6 +54,7 @@ class Mesh {
 
     BoundingBox _boundingBox;
     std::vector<Mesh> subMeshes;
+    std::shared_ptr<Model> model;
 
 public:
     Mesh();
@@ -75,18 +72,16 @@ public:
     static std::shared_ptr<Mesh> CreateCylinder();
     static std::shared_ptr<Mesh> CreatePlane();
 
-    void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs, const int* boneIDs, const float* weights);
-    void loadTexCoords(const glm::vec2* texCoords, size_t num_texCoords);
-    void LoadNormals(const glm::vec3* normals, size_t num_normals);
-    void LoadColors(const glm::u8vec3* colors, size_t num_colors);
-    void LoadBones();
+    void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);
+ 
+    void LoadBones();    
     void CalculateNormals();
     void Draw() const;
     static void drawBoundingBox(const BoundingBox& bbox);
     static void drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3);
     inline static void glVertex3(const vec3& v) { glVertex3dv(&v.x); }
 
-    void LoadMesh(const char* file_path);
+    //void LoadMesh(const char* file_path);
 
     void SetVertexBoneDataToDefault(Vertex& vertex);
     void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
@@ -103,6 +98,13 @@ public:
 
     void SaveBinary(const std::string& filename) const;
     static std::shared_ptr<Mesh> LoadBinary( std::string& filename);
+
+    void setModel(std::shared_ptr<Model> model) { this->model = model; }
+	std::shared_ptr<Model> getModel() { return model; }
+
+    void loadToOpenGL();
+
+	void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
 
 protected:
     friend class SceneSerializer;

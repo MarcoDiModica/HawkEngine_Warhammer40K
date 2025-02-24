@@ -509,7 +509,7 @@ void Mesh::loadToOpenGL()
 	//buffer de positions
 	(glGenBuffers(1, &model->GetModelData().vBPosID));
 	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
-	(glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_STATIC_DRAW));
+	(glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_DYNAMIC_DRAW));
 
 	//position layout
 	(glEnableVertexAttribArray(0));
@@ -541,6 +541,45 @@ void Mesh::loadToOpenGL()
 		//load normals lines for debugging
 		//loadNormalsToOpenGL();
 		//loadFaceNormalsToOpenGL();
+	}
+
+	if (model->GetModelData().vertexData.size() > 0 && model->GetModelData().vertexData[0].m_BoneIDs[0] != -1) {
+		// Crear arrays para almacenar IDs y pesos
+		std::vector<glm::ivec4> boneIDs;
+		std::vector<glm::vec4> weights;
+
+		for (const auto& vertex : model->GetModelData().vertexData) {
+			glm::ivec4 ids;
+			glm::vec4 vertexWeights;
+
+			for (int i = 0; i < MAX_BONE_INFLUENCE; i++) {
+				ids[i] = vertex.m_BoneIDs[i];
+				vertexWeights[i] = vertex.m_Weights[i];
+			}
+
+			boneIDs.push_back(ids);
+			weights.push_back(vertexWeights);
+		}
+
+		// Crear buffer para bone IDs
+		GLuint boneIDBuffer;
+		glGenBuffers(1, &boneIDBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, boneIDBuffer);
+		glBufferData(GL_ARRAY_BUFFER, boneIDs.size() * sizeof(glm::ivec4), boneIDs.data(), GL_STATIC_DRAW);
+
+		// Configurar atributo para bone IDs
+		glEnableVertexAttribArray(3);
+		glVertexAttribIPointer(3, 4, GL_INT, sizeof(glm::ivec4), (void*)0);
+
+		// Crear buffer para weights
+		GLuint weightBuffer;
+		glGenBuffers(1, &weightBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, weightBuffer);
+		glBufferData(GL_ARRAY_BUFFER, weights.size() * sizeof(glm::vec4), weights.data(), GL_STATIC_DRAW);
+
+		// Configurar atributo para weights
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)0);
 	}
 
 

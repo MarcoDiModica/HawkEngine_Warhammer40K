@@ -205,16 +205,18 @@ void MeshRenderer::Render() const
 
         break;
     case DEFAULT:
-        if (owner->HasComponent<SkeletalAnimationComponent>())
-        {
-            auto transforms = owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices();
-            for (int i = 0; i < transforms.size(); ++i)
-                material->setShaderUniform("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
-        }
         break;
     default:
         break;
     }
+
+    if (owner->HasComponent<SkeletalAnimationComponent>() &&
+        owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()) {
+        auto transforms = owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices();
+        for (int i = 0; i < transforms.size(); ++i)
+            material->setShaderUniform("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+    }
+
 
     glBindVertexArray(mesh->model.get()->GetModelData().vA);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);

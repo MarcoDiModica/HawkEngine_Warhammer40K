@@ -27,10 +27,12 @@
 #include "../MyGameEngine/Image.h"
 #include "../MyGameEngine/Material.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
@@ -121,6 +123,11 @@ bool UIInspector::Draw() {
                 selectedGameObject->AddComponent<ColliderComponent>(Application->physicsModule);
                 selectedGameObject->GetComponent<ColliderComponent>()->Start();
             }
+            if (!selectedGameObject->HasComponent<RigidbodyComponent>() && ImGui::MenuItem("Rigidbody")) {
+                selectedGameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
+                selectedGameObject->GetComponent<RigidbodyComponent>()->Start();
+            }
+            
             if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("ParticleEmitter")) {
                 selectedGameObject->AddComponent<ParticlesEmitterComponent>();
             }
@@ -429,48 +436,33 @@ bool UIInspector::Draw() {
         ImGui::Separator();
 
 
-        if (selectedGameObject->HasComponent<ColliderComponent>())
-        {
+        if (selectedGameObject->HasComponent<ColliderComponent>()) {
             ColliderComponent* colliderComponent = selectedGameObject->GetComponent<ColliderComponent>();
 
-            if (colliderComponent)
-            {
+            if (colliderComponent) {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
                 if (ImGui::CollapsingHeader("Collider")) {
 
-                    // Posición del Collider
-
                     glm::vec3 colliderPosition = colliderComponent->GetColliderPos();
                     float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
-
-                    if (ImGui::DragFloat3("ColliderPosition", pos, 0.1f)) {
+                    if (ImGui::DragFloat3("Collider Position", pos, 0.1f)) {
                         colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
                     }
 
-
-                    // Rotation del Collider
                     glm::quat colliderRotation = colliderComponent->GetColliderRotation();
                     glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
                     float rot[3] = { glm::degrees(eulerRotation.x), glm::degrees(eulerRotation.y), glm::degrees(eulerRotation.z) };
-
-                    if (ImGui::DragFloat3("ColliderRotation", rot, 0.1f)) {
+                    if (ImGui::DragFloat3("Collider Rotation", rot, 0.1f)) {
                         glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
                         colliderComponent->SetColliderRotation(newRotation);
                     }
 
-                    //Trigger collider
-                    bool isTrigger = colliderComponent->IsTrigger();
-                    if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
-                        colliderComponent->SetTrigger(isTrigger);
-                    }
-
-                    // Checkbox para la posición 
                     bool snapToPosition = colliderComponent->GetSnapToPosition();
                     if (ImGui::Checkbox("Snap Position", &snapToPosition)) {
                         colliderComponent->SetSnapToPosition(snapToPosition);
-					}
+                    }
 
-                    bool resetRotation = false; // Define the resetRotation variable
+                    bool resetRotation = false;
                     if (ImGui::Checkbox("Reset Rotation", &resetRotation)) {
                         if (resetRotation) {
                             if (selectedGameObject->HasComponent<ColliderComponent>()) {
@@ -482,38 +474,60 @@ bool UIInspector::Draw() {
                             }
                         }
                     }
-                    
 
-                    // Tamaño del Collider
+                    bool isTrigger = colliderComponent->IsTrigger();
+                    if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+                        colliderComponent->SetTrigger(isTrigger);
+                    }
+
                     glm::vec3 size = colliderComponent->GetSize();
                     float sizeArray[3] = { size.x, size.y, size.z };
-
-                    if (ImGui::DragFloat3("ColliderSize", sizeArray, 0.1f, 0.1f, 100.0f)) {
+                    if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
                         colliderComponent->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
                     }
+                }
+            }
+        }
+        ImGui::Separator();
 
-                    // Masa del Collider
-                    float mass = colliderComponent->GetMass();
+        // Draw RigidbodyComponent
+        if (selectedGameObject->HasComponent<RigidbodyComponent>()) {
+            RigidbodyComponent* rigidbodyComponent = selectedGameObject->GetComponent<RigidbodyComponent>();
+
+            if (rigidbodyComponent) {
+                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+                if (ImGui::CollapsingHeader("Rigidbody")) {
+
+                    float mass = rigidbodyComponent->GetMass();
                     if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 10.0f)) {
-                        colliderComponent->SetMass(mass);
+                        rigidbodyComponent->SetMass(mass);
                     }
 
-                    //// Checkbox para activar/desactivar collider
-                    //bool isActive = colliderComponent->IsActive();
-                    //if (ImGui::Checkbox("Enabled", &isActive)) {
-                    //    colliderComponent->SetActive(isActive);
-                    //}
+                    bool freezeRotation = rigidbodyComponent->IsFreezed();
+                    if (ImGui::Checkbox("Freeze Rotation", &freezeRotation)) {
+                        rigidbodyComponent->SetFreezeRotations(freezeRotation);
+                        
+                    }
 
-                    //// Botón para recrear el collider
-                    //if (ImGui::Button("Recreate Collider")) {
-                    //    colliderComponent->CreateCollider();
-                    //}
+                    float friction = rigidbodyComponent->GetFriction();
+                    if (ImGui::DragFloat("Friction", &friction, 0.1f, 0.0f, 10.0f)) {
+                        rigidbodyComponent->SetFriction(friction);
+                    }
+
+                    float damping[2] = { rigidbodyComponent->GetDamping().x, rigidbodyComponent->GetDamping().y };
+                    if (ImGui::DragFloat2("Damping (Linear, Angular)", damping, 0.1f, 0.0f, 10.0f)) {
+                        rigidbodyComponent->SetDamping(damping[0], damping[1]);
+                    }
+
+                    bool isKinematic = rigidbodyComponent->IsKinematic();
+                    if (ImGui::Checkbox("Is Kinematic", &isKinematic)) {
+                        rigidbodyComponent->SetKinematic(isKinematic);
+                    }
+                    glm::vec3 gravity = rigidbodyComponent->GetGravity();  
+                    if (ImGui::DragFloat3("Gravity", &gravity[0], 0.1f)) {  
+                        rigidbodyComponent->SetGravity(gravity);  
+                    }
                 }
-
-            }
-            else
-            {
-                LOG(LogType::LOG_WARNING, "UIInspector::Draw: ColliderComponent is nullptr");
             }
         }
 

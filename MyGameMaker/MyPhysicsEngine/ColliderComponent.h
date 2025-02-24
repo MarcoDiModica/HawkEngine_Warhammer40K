@@ -10,12 +10,6 @@ public:
     ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet = false);
     ~ColliderComponent() override;
 
-    /*ColliderComponent(const ColliderComponent& other, PhysicsModule* physicsModule);
-    ColliderComponent& operator=(const ColliderComponent& other);
-
-    ColliderComponent(ColliderComponent&& other, PhysicsModule* physicsModule) noexcept;
-    ColliderComponent& operator=(ColliderComponent&& other) noexcept;*/
-
     void Start() override;
     void SetTrigger(bool trigger);
     void Update(float deltaTime) override;
@@ -51,15 +45,15 @@ public:
 
 
 private:
-    btRigidBody* rigidBody; // Collider
-    PhysicsModule* physics; // Referencia al módulo de físicas
-    glm::vec3 size; // Tamaño del Bounding Box
+    btRigidBody* rigidBody; 
+    PhysicsModule* physics;
+    glm::vec3 size; 
     float mass;
     bool isForStreetLocal;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
 
 	bool snapToPosition = false;
 
-    void CreateCollider(bool isForStreet = false);
+    void CreateCollider();
 };
 

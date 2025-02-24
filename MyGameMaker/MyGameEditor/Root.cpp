@@ -13,6 +13,7 @@
 #include "MyGameEngine/ModelImporter.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
@@ -51,26 +52,14 @@ void CreatePlayer() {
     player = Application->root->CreateCube("Player");
     auto transform = player->GetTransform();
     transform->SetPosition(glm::vec3(0, 5, 0));
-    transform->SetScale(glm::vec3(1, 1, 1));
-
-    player->AddComponent<ColliderComponent>(Application->physicsModule, false);
-    ColliderComponent* collider = player->GetComponent<ColliderComponent>();
-    collider->Start();
+    transform->SetScale(glm::vec3(1, 1, 1)); 
 }
 
 void HandleInput(float dt) {
     if (!player) return;
 
-    auto collider = player->GetComponent<ColliderComponent>();
+    auto collider = player->GetComponent<RigidbodyComponent>();
     if (!collider) return;
-
-	//Set up player physics
-    if (collider->GetMass() == 0.0f) {
-        collider->SetMass(2.0f);
-        Application->physicsModule->FreezeRotations(*player);
-        Application->physicsModule->SetColliderFriction(*player, 10.0f);
-        Application->physicsModule->SetGravity(*player, glm::vec3(0.0f, -29.8f, 0.0f));
-    }
 
     auto rigidBody = collider->GetRigidBody();
     if (!rigidBody) return;

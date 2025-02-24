@@ -11,8 +11,7 @@ ColliderComponent::~ColliderComponent() {
 }
 
 void ColliderComponent::Start() {
-    mass = 0.0f;
-    CreateCollider(isForStreetLocal);
+    CreateCollider();
 }
 
 void ColliderComponent::SetTrigger(bool trigger) {
@@ -95,8 +94,7 @@ void ColliderComponent::SetMass(float newMass) {
         delete rigidBody;
         rigidBody = nullptr;
     }
-    CreateCollider(false);
-	
+    CreateCollider();
 }
 
 void ColliderComponent::SetActive(bool active) {
@@ -151,7 +149,9 @@ void ColliderComponent::Destroy() {
 std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
     return std::make_unique<ColliderComponent>(new_owner, physics);
 }
-void ColliderComponent::CreateCollider(bool isForStreet) {
+
+
+void ColliderComponent::CreateCollider() {
     if (!owner) return;
 
     Transform_Component* transform = owner->GetTransform();

@@ -90,7 +90,7 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
-    CreateGameObjectWithPath("Assets/Meshes/rabbit.FBX");
+    //CreateGameObjectWithPath("Assets/Meshes/rabbit.FBX");
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();
     /*CreateScene("Viernes13");

@@ -10,6 +10,7 @@
 #include <iostream>
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "LightComponent.h"
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
@@ -202,6 +203,14 @@ void MeshRenderer::Render() const
         material->shader->SetUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
         material->shader->SetUniform("u_Factor", 0.8f);
 
+        break;
+    case DEFAULT:
+        if (owner->HasComponent<SkeletalAnimationComponent>())
+        {
+            auto transforms = owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices();
+            for (int i = 0; i < transforms.size(); ++i)
+                material->setShaderUniform("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+        }
         break;
     default:
         break;

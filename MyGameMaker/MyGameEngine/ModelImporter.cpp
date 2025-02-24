@@ -137,6 +137,9 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 			aiVector3D vertex = mesh->mVertices[j];
 			vec3 aux = vec3(vertex.x, vertex.y, vertex.z);
 
+			Vertex vertexData;
+			vertexData.position = aux;
+
 			// Coordenadas UV (si existen)
 			if (mesh->mTextureCoords[0]) {  // Comprueba si hay UVs
 				aiVector3D uv = mesh->mTextureCoords[0][j];
@@ -157,8 +160,7 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 				modelsData[i]->vertex_colors.push_back(auxColor);
 			}
 
-			Vertex vertexData;
-			vertexData.position = aux;
+			
 
 			if (mesh->HasBones()) 
 			{

@@ -217,6 +217,8 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
+	model->SetVertexBoneDataToDefault(model->GetModelData().vertexData[0]);
+
 	mesh->setBoundingBox(*meshBBox);
 
 	mesh->setModel(model);
@@ -508,7 +510,7 @@ void Mesh::loadToOpenGL()
 	//buffer de positions
 	(glGenBuffers(1, &model->GetModelData().vBPosID));
 	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
-	glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(glm::vec3), positions.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_DYNAMIC_DRAW);
 
 	//position layout
 	(glEnableVertexAttribArray(0));
@@ -544,13 +546,25 @@ void Mesh::loadToOpenGL()
 
 
 	//Bones
-	// ids
-	glEnableVertexAttribArray(3);
-	glVertexAttribIPointer(3, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));
+	if (model->GetModelData().vertexData[0].m_BoneIDs[0] != -1)
+	{
+		// ids
+		(glGenBuffers(1, &model->GetModelData().vBonesID));
+		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBonesID));
+		glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(int), model->GetModelData().vertexData.data()->m_BoneIDs, GL_STATIC_DRAW);
 
-	// weights
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
+		glEnableVertexAttribArray(3);
+		glVertexAttribIPointer(3, 4, GL_INT, sizeof(int), (const void*)0);
+
+		// weights
+		(glGenBuffers(1, &model->GetModelData().vWeights));
+		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vWeights));
+		glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(float), model->GetModelData().vertexData.data()->m_Weights, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 4, GL_DOUBLE, GL_FALSE, sizeof(float), (const void*)0);
+	}
+	
 	
 	//buffer de index
 	(glCreateBuffers(1, &model->GetModelData().iBID));

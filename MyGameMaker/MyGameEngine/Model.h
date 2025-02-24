@@ -7,8 +7,8 @@
 
 #include "types.h"
 
-#define MAX_BONES 200
-#define MAX_BONE_INFLUENCE 20
+#define MAX_BONES 100
+#define MAX_BONE_INFLUENCE 4
 
 enum class Shapes
 {
@@ -41,7 +41,7 @@ struct Vertex
 
 struct ModelData
 {
-	unsigned int vBPosID = -1, vBNormalsID = -1, vBColorsID = -1, vBTCoordsID = -1, iBID = -1, vA = -1;
+	unsigned int vBPosID = -1, vBNormalsID = -1, vBColorsID = -1, vBTCoordsID = -1, iBID = -1, vA = -1, vBonesID = -1, vWeights = -1;
 	std::vector<Vertex> vertexData;
 	std::vector<unsigned int> indexData;
 	std::vector<vec2> vertex_texCoords;
@@ -78,6 +78,8 @@ public:
 	void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
 
 	const BoundingBox& getBoundingBox() const { return m_BoundingBox; }
+
+	bool isAnimated = true;
 private:
 	std::string meshName;
 	ModelData modelData;

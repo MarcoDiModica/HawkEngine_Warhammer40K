@@ -6,7 +6,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include "Bone.h"
-#include "MyGameEngine/Mesh.h"
+#include "MyGameEngine/Model.h"
 
 struct AssimpNodeData
 {
@@ -35,7 +35,7 @@ public:
     Animation(Animation&& other) noexcept;
     Animation& operator=(Animation&& other) noexcept;
 
-    void SetUpAnimation(const std::string& animationPath, Mesh* model);
+    void SetUpAnimation(const std::string& animationPath, Model* model);
 
 	Bone* FindBone(const std::string& name);
 
@@ -51,7 +51,7 @@ public:
     }
     
 private:
-    void ReadMissingBones(const aiAnimation* animation, Mesh& model);
+    void ReadMissingBones(const aiAnimation* animation, Model& model);
     void ReadHeirarchyData(AssimpNodeData& dest, const aiNode* src);
 };
 

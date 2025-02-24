@@ -26,26 +26,26 @@ Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 Mesh::~Mesh() {}
 
 
-void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs, const int* boneIDs, const float* weights)
-{
-	_boundingBox.min = _vertices.front();
-	_boundingBox.max = _vertices.front();
-
-	for (const auto& v : _vertices) {
-		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v.position));
-		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
-	}
-	for (size_t i = 0; i < num_verts; ++i) {
-		_vertices[i].position = vertices[i];
-		for (int j = 0; j < MAX_BONE_INFLUENCE; ++j) {
-			_vertices[i].m_BoneIDs[j] = boneIDs[i * MAX_BONE_INFLUENCE + j];
-			_vertices[i].m_Weights[j] = weights[i * MAX_BONE_INFLUENCE + j];
-		}
-	}
-	
-
-	CalculateNormals();
-}
+//void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs, const int* boneIDs, const float* weights)
+//{
+//	_boundingBox.min = _vertices.front();
+//	_boundingBox.max = _vertices.front();
+//
+//	for (const auto& v : _vertices) {
+//		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v.position));
+//		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
+//	}
+//	for (size_t i = 0; i < num_verts; ++i) {
+//		_vertices[i].position = vertices[i];
+//		for (int j = 0; j < MAX_BONE_INFLUENCE; ++j) {
+//			_vertices[i].m_BoneIDs[j] = boneIDs[i * MAX_BONE_INFLUENCE + j];
+//			_vertices[i].m_Weights[j] = weights[i * MAX_BONE_INFLUENCE + j];
+//		}
+//	}
+//	
+//
+//	CalculateNormals();
+//}
 
 
 void Mesh::drawBoundingBox(const BoundingBox& bbox) {
@@ -104,13 +104,7 @@ void Mesh::LoadBones()
 
 	if (hasBoneData) {
 
-		// ids
-		glEnableVertexAttribArray(3);
-		glVertexAttribIPointer(3, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));
-
-		// weights
-		glEnableVertexAttribArray(4);
-		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
+		
 	}
 }
 
@@ -190,15 +184,15 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 
 	model->GetModelData().vertexData = {
 		// Front face
-		vec3(-1.0f, -1.0f, 1.0f),
-		vec3(1.0f, -1.0f, 1.0f),
-		vec3(1.0f, 1.0f, 1.0f),
-		vec3(-1.0f, 1.0f, 1.0f),
+		Vertex{glm::vec3(-1.0f, -1.0f, 1.0f)},
+		Vertex{glm::vec3(1.0f, -1.0f, 1.0f)},
+		Vertex{glm::vec3(1.0f, 1.0f, 1.0f)},
+		Vertex{glm::vec3(-1.0f, 1.0f, 1.0f)},
 		// Back face
-		vec3(-1.0f, -1.0f, -1.0f),
-		vec3(1.0f, -1.0f, -1.0f),
-		vec3(1.0f, 1.0f, -1.0f),
-		vec3(-1.0f, 1.0f, -1.0f),
+		Vertex{glm::vec3(-1.0f, -1.0f, -1.0f)},
+		Vertex{glm::vec3(1.0f, -1.0f, -1.0f)},
+		Vertex{glm::vec3(1.0f, 1.0f, -1.0f)},
+		Vertex{glm::vec3(-1.0f, 1.0f, -1.0f)},
 	};
 
 	model->GetModelData().indexData = {
@@ -215,12 +209,12 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 
 
-	meshBBox->min = model->GetModelData().vertexData.front();
-	meshBBox->max = model->GetModelData().vertexData.front();
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
 
 	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
 	mesh->setBoundingBox(*meshBBox);
@@ -251,16 +245,27 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		float x = radius * cos(angle);
 		float z = radius * sin(angle);
 
+		Vertex vertexLow;
+		Vertex vertexHigh;
+
+		vertexLow.position = glm::vec3(x, -halfHeight, z);
+		vertexHigh.position = glm::vec3(x, halfHeight, z);
+
 		// Base inferior
-		model->GetModelData().vertexData.emplace_back(x, -halfHeight, z);
+		model->GetModelData().vertexData.emplace_back(vertexLow);
 
 		// Base superior
-		model->GetModelData().vertexData.emplace_back(x, halfHeight, z);
+		model->GetModelData().vertexData.emplace_back(vertexHigh);
 	}
+	Vertex vertexLow;
+	Vertex vertexHigh;
 
+	vertexLow.position = glm::vec3(0, -halfHeight, 0);
+	vertexHigh.position = glm::vec3(0, halfHeight, 0);
+	
 	// A�adir los v�rtices centrales de las bases
-	model->GetModelData().vertexData.emplace_back(0.0f, -halfHeight, 0.0f); // Centro base inferior
-	model->GetModelData().vertexData.emplace_back(0.0f, halfHeight, 0.0f);  // Centro base superior
+	model->GetModelData().vertexData.emplace_back(vertexLow); // Centro base inferior
+	model->GetModelData().vertexData.emplace_back(vertexHigh);  // Centro base superior
 
 	// Generar �ndices para los lados del cilindro
 	for (int i = 0; i < slices; ++i) {
@@ -299,12 +304,12 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 
 
-	meshBBox->min = model->GetModelData().vertexData.front();
-	meshBBox->max = model->GetModelData().vertexData.front();
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
 
 	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
 	mesh->setBoundingBox(*meshBBox);
@@ -338,7 +343,11 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 			float y = cos(phi);
 			float z = sin(theta) * sin(phi);
 
-			model->GetModelData().vertexData.push_back(glm::vec3(x, y, z) * radius);
+			Vertex vertex;
+
+			vertex.position = glm::vec3(x, y, z) * radius;
+
+			model->GetModelData().vertexData.push_back(vertex);
 		}
 	}
 
@@ -357,12 +366,12 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 
 
-	meshBBox->min = model->GetModelData().vertexData.front();
-	meshBBox->max = model->GetModelData().vertexData.front();
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
 
 	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
 	mesh->setBoundingBox(*meshBBox);
@@ -379,12 +388,17 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 
+	//inject vertex positions to create a plane
+
 	model->GetModelData().vertexData = {
-		vec3(-1.0f, 0.0f, 1.0f),
-		vec3(1.0f, 0.0f, 1.0f),
-		vec3(1.0f, 0.0f, -1.0f),
-		vec3(-1.0f, 0.0f, -1.0f)
+		Vertex{glm::vec3(-1.0f, 0.0f, 1.0f)},
+		Vertex{glm::vec3(1.0f, 0.0f, 1.0f)},
+		Vertex{glm::vec3(1.0f, 0.0f, -1.0f)},
+		Vertex{glm::vec3(-1.0f, 0.0f, -1.0f)}
 	};
+
+
+
 
 	model->GetModelData().indexData = {
 		0, 1, 2, 0, 2, 3
@@ -395,12 +409,12 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 
 
-	meshBBox->min = model->GetModelData().vertexData.front();
-	meshBBox->max = model->GetModelData().vertexData.front();
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
 
 	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 	}
 
 	mesh->setBoundingBox(*meshBBox);
@@ -410,62 +424,6 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	mesh->loadToOpenGL();
 
 	return mesh;
-}
-
-void Mesh::SetVertexBoneDataToDefault(Vertex& vertex)
-{
-	for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
-	{
-		vertex.m_BoneIDs[i] = -1;
-		vertex.m_Weights[i] = 0.0f;
-	}
-}
-
-void Mesh::SetVertexBoneData(Vertex& vertex, int boneID, float weight)
-{
-	for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
-	{
-		if (vertex.m_BoneIDs[i] < 0)
-		{
-			vertex.m_Weights[i] = weight;
-			vertex.m_BoneIDs[i] = boneID;
-			break;
-		}
-	}
-}
-
-void Mesh::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene)
-{
-	for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
-	{
-		int boneID = -1;
-		std::string boneName = mesh->mBones[boneIndex]->mName.C_Str();
-		if (m_BoneInfoMap.find(boneName) == m_BoneInfoMap.end())
-		{
-			BoneInfo newBoneInfo;
-			newBoneInfo.id = m_BoneCounter;
-			newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(
-				mesh->mBones[boneIndex]->mOffsetMatrix);
-			m_BoneInfoMap[boneName] = newBoneInfo;
-			boneID = m_BoneCounter;
-			m_BoneCounter++;
-		}
-		else
-		{
-			boneID = m_BoneInfoMap[boneName].id;
-		}
-		assert(boneID != -1);
-		auto weights = mesh->mBones[boneIndex]->mWeights;
-		int numWeights = mesh->mBones[boneIndex]->mNumWeights;
-
-		for (int weightIndex = 0; weightIndex < numWeights; ++weightIndex)
-		{
-			int vertexId = weights[weightIndex].mVertexId;
-			float weight = weights[weightIndex].mWeight;
-			assert(vertexId <= vertices.size());
-			SetVertexBoneData(vertices[vertexId], boneID, weight);
-		}
-	}
 }
 
 std::unordered_map<std::string, std::shared_ptr<Mesh>> meshCache;
@@ -542,10 +500,15 @@ void Mesh::loadToOpenGL()
 	(glGenVertexArrays(1, &model->GetModelData().vA));
 	(glBindVertexArray(model->GetModelData().vA));
 
+	std::vector<glm::vec3> positions;
+	positions.reserve(model->GetModelData().vertexData.size());
+	for (const auto& vertex : model->GetModelData().vertexData) {
+		positions.push_back(vertex.position);
+	}
 	//buffer de positions
 	(glGenBuffers(1, &model->GetModelData().vBPosID));
 	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
-	(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertexData.size() * sizeof(vec3), model->GetModelData().vertexData.data(), GL_STATIC_DRAW));
+	glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(glm::vec3), positions.data(), GL_DYNAMIC_DRAW);
 
 	//position layout
 	(glEnableVertexAttribArray(0));
@@ -579,6 +542,16 @@ void Mesh::loadToOpenGL()
 		//loadFaceNormalsToOpenGL();
 	}
 
+
+	//Bones
+	// ids
+	glEnableVertexAttribArray(3);
+	glVertexAttribIPointer(3, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));
+
+	// weights
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
+	
 	//buffer de index
 	(glCreateBuffers(1, &model->GetModelData().iBID));
 	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().iBID));

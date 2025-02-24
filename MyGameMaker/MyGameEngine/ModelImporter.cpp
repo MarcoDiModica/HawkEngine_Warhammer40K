@@ -36,7 +36,6 @@ static mat4 aiMat4ToMat4(const aiMatrix4x4& aiMat) {
 	return mat;
 }
 
-
 static void decomposeMatrix(const mat4& matrix, vec3& scale, glm::quat& rotation, vec3& translation) {
 	// Extraer la traslaci�n
 	translation = vec3(matrix[3]);
@@ -86,29 +85,22 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 
 		obj.GetTransform()->SetMatrix(localMatrix * accumulatedTransform);
 		
-
-		//meshComponent->GetMaterial()->loadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
-		if (scene.mNumAnimations > 0 ) 
-		{
-			auto skeletalAnimationComponent = obj.AddComponent<SkeletalAnimationComponent>();
-			Animation* animation = new Animation();
-			Animation animation2 = Animation();
-			animation->SetUpAnimation(scenePath, meshComponent->GetMesh().get());
-			animation2 = *animation;
-			obj.GetComponent<SkeletalAnimationComponent>()->animationTest = animation2;
-			obj.GetComponent<SkeletalAnimationComponent>()->SetAnimation(animation);
-			obj.GetComponent<SkeletalAnimationComponent>()->patatudo = 43.0f;
-			skeletalAnimationComponent->animationTest = animation2;
-			animations.push_back(std::make_shared<Animation>(*animation));
-			skeletalAnimationComponent->SetAnimation(animation);
-			std::cout << node.mName.C_Str() << std::endl;
-		}
-
 		// Add mesh and material components
 		for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
 
 			const auto meshIndex = node.mMeshes[i];
 			const auto& model = meshes[meshIndex];
+
+
+			if (scene.mNumAnimations > 0)
+			{
+				Animation* animation = new Animation();
+
+				animation->SetUpAnimation(scenePath, model->getModel().get());
+		
+				animations.push_back(std::shared_ptr<Animation>(animation));
+				std::cout << node.mName.C_Str() << std::endl;
+			}
 
 			obj.SetName(node.mName.data);
 
@@ -144,7 +136,6 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 			// Coordenadas de los v�rtices
 			aiVector3D vertex = mesh->mVertices[j];
 			vec3 aux = vec3(vertex.x, vertex.y, vertex.z);
-			modelsData[i]->vertexData.push_back(aux);
 
 			// Coordenadas UV (si existen)
 			if (mesh->mTextureCoords[0]) {  // Comprueba si hay UVs
@@ -166,8 +157,19 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 				modelsData[i]->vertex_colors.push_back(auxColor);
 			}
 
+			Vertex vertexData;
+			vertexData.position = aux;
+
+			if (mesh->HasBones()) 
+			{
+				models[i]->SetVertexBoneDataToDefault(vertexData);
+
+			}
+
+			modelsData[i]->vertexData.push_back(vertexData);
 		}
-		std::vector<Vertex> all_vertex;
+
+		models[i]->ExtractBoneWeightForVertices(modelsData[i]->vertexData, mesh, &scene);
 
 		for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
 			aiFace face = mesh->mFaces[j];
@@ -236,6 +238,8 @@ void ModelImporter::loadFromFile(const std::string& path) {
 	meshes = createMeshesFromFBX(*fbx_scene);
 
 	materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/");
+
+	scenePath = path;
 
 	// Create the GameObject hierarchy
 	graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);

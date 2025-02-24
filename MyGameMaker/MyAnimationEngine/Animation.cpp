@@ -58,7 +58,7 @@ Animation& Animation::operator=(Animation&& other) noexcept
     return *this;
 }
 
-void Animation::SetUpAnimation(const std::string& animationPath, Mesh* model)
+void Animation::SetUpAnimation(const std::string& animationPath, Model* model)
 {
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
@@ -86,7 +86,7 @@ Bone* Animation::FindBone(const std::string& name)
     return nullptr;
 }
 
-void Animation::ReadMissingBones(const aiAnimation* animation, Mesh& model)
+void Animation::ReadMissingBones(const aiAnimation* animation, Model& model)
 {
     int size = animation->mNumChannels;
 

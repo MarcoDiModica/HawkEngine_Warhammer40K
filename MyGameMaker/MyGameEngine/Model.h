@@ -3,8 +3,12 @@
 #include <vector>
 #include <string>
 #include "BoundingBox.h"
+#include "assimp/scene.h"
 
 #include "types.h"
+
+#define MAX_BONES 200
+#define MAX_BONE_INFLUENCE 20
 
 enum class Shapes
 {
@@ -18,10 +22,27 @@ enum class Shapes
 	MESH
 };
 
+struct BoneInfo
+{
+	int id;
+
+	glm::mat4 offset;
+
+};
+
+struct Vertex
+{
+	glm::vec3 position;
+
+	int m_BoneIDs[MAX_BONE_INFLUENCE];
+
+	float m_Weights[MAX_BONE_INFLUENCE];
+};
+
 struct ModelData
 {
 	unsigned int vBPosID = -1, vBNormalsID = -1, vBColorsID = -1, vBTCoordsID = -1, iBID = -1, vA = -1;
-	std::vector<vec3> vertexData;
+	std::vector<Vertex> vertexData;
 	std::vector<unsigned int> indexData;
 	std::vector<vec2> vertex_texCoords;
 	std::vector<vec3> vertex_normals;
@@ -49,11 +70,21 @@ public:
 
 	int& GetMaterialIndex() { return materialIndex; }
 
+	auto& GetBoneInfoMap() { return m_BoneInfoMap; }
+	int& GetBoneCount() { return m_BoneCounter; }
+
+	void SetVertexBoneDataToDefault(Vertex& vertex);
+	void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
+	void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
+
 	const BoundingBox& getBoundingBox() const { return m_BoundingBox; }
 private:
 	std::string meshName;
 	ModelData modelData;
 	int materialIndex = -1;
+
+	std::map<std::string, BoneInfo> m_BoneInfoMap;
+	int m_BoneCounter = 0;
 
 	BoundingBox m_BoundingBox; // Bounding box de la malla
 

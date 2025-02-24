@@ -20,27 +20,9 @@
 #include "BoundingBox.h"
 #include "Model.h"
 
-#define MAX_BONES 100
-#define MAX_BONE_INFLUENCE 4
 
 class SceneSerializer;
 
-struct Vertex
-{
-    glm::vec3 position;
-
-    int m_BoneIDs[MAX_BONE_INFLUENCE];
-
-    float m_Weights[MAX_BONE_INFLUENCE];
-};
-
-struct BoneInfo
-{
-    int id;
-
-    glm::mat4 offset;
-
-};
 
 class Mesh {
 
@@ -48,9 +30,6 @@ class Mesh {
     std::vector<Vertex> _vertices;
     std::vector<unsigned int> _indices;
 	std::vector<glm::vec2> _texCoords;
-
-    std::map<std::string, BoneInfo> m_BoneInfoMap; 
-    int m_BoneCounter = 0;
 
     BoundingBox _boundingBox;
     std::vector<Mesh> subMeshes;
@@ -64,15 +43,12 @@ public:
     const auto& indices() const { return _indices; }
     const auto& boundingBox() const { return _boundingBox; }
 
-    auto& GetBoneInfoMap() { return m_BoneInfoMap; }
-    int& GetBoneCount() { return m_BoneCounter; }
-
     static std::shared_ptr<Mesh> CreateCube();
     static std::shared_ptr<Mesh> CreateSphere();
     static std::shared_ptr<Mesh> CreateCylinder();
     static std::shared_ptr<Mesh> CreatePlane();
 
-    void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);
+    //void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);
  
     void LoadBones();    
     void CalculateNormals();
@@ -82,10 +58,6 @@ public:
     inline static void glVertex3(const vec3& v) { glVertex3dv(&v.x); }
 
     //void LoadMesh(const char* file_path);
-
-    void SetVertexBoneDataToDefault(Vertex& vertex);
-    void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
-	void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
 
     bool drawBoundingbox = true;
     bool drawTriangleNormals = false;

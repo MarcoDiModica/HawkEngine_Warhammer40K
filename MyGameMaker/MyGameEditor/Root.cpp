@@ -18,6 +18,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -89,7 +90,7 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
-    CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
+    CreateGameObjectWithPath("Assets/Meshes/rabbit.FBX");
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();
     /*CreateScene("Viernes13");
@@ -287,18 +288,25 @@ void Root::CreateGameObjectWithPath(const std::string& path)
 
         auto shaderComponent = go->AddComponent<ShaderComponent>();
         shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-        shaderComponent->SetShaderType(ShaderType::LIGHT);
+        shaderComponent->SetShaderType(ShaderType::DEFAULT);
 
 		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 		
 
-        meshBBox->min = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front();
-        meshBBox->max = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front();
+        meshBBox->min = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front().position;
+        meshBBox->max = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front().position;
 
         for (const auto& v : meshRenderer->GetMesh()->getModel()->GetModelData().vertexData) {
-            meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v));
-            meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v));
+            meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+            meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
         }
+
+
+		if (meshImp.animations.size() > 0) {
+			auto animationComponent = go->AddComponent<SkeletalAnimationComponent>();
+            animationComponent->SetAnimation(meshImp.animations[0].get());
+            animationComponent->Start();
+		}
 
         go->GetComponent<MeshRenderer>()->GetMesh()->setBoundingBox(*meshBBox);
 

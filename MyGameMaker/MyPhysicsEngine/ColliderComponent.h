@@ -47,6 +47,8 @@ public:
     void SetSnapToPosition(bool value) { snapToPosition = value; }
     void SnapToPosition();
 
+    btRigidBody* GetRigidBody() const { return rigidBody; }
+
 
 private:
     btRigidBody* rigidBody; // Collider

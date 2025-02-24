@@ -42,6 +42,67 @@ std::vector<EmitterInfo> activeEmitters;
 
 Root::Root(App* app) : Module(app) { ; }
 
+
+std::shared_ptr<GameObject> player;
+const float moveSpeed = 100.0f;
+const float jumpForce = 10.0f;
+
+void CreatePlayer() {
+    player = Application->root->CreateCube("Player");
+    auto transform = player->GetTransform();
+    transform->SetPosition(glm::vec3(0, 5, 0));
+    transform->SetScale(glm::vec3(1, 1, 1));
+
+    player->AddComponent<ColliderComponent>(Application->physicsModule, false);
+    ColliderComponent* collider = player->GetComponent<ColliderComponent>();
+    collider->Start();
+}
+
+void HandleInput(float dt) {
+    if (!player) return;
+
+    auto collider = player->GetComponent<ColliderComponent>();
+    if (!collider) return;
+
+	//Set up player physics
+    if (collider->GetMass() == 0.0f) {
+        collider->SetMass(2.0f);
+        Application->physicsModule->FreezeRotations(*player);
+        Application->physicsModule->SetColliderFriction(*player, 10.0f);
+        Application->physicsModule->SetGravity(*player, glm::vec3(0.0f, -29.8f, 0.0f));
+    }
+
+    auto rigidBody = collider->GetRigidBody();
+    if (!rigidBody) return;
+
+    btVector3 desiredVelocity(0, rigidBody->getLinearVelocity().getY(), 0);
+
+    //input
+    const Uint8* keys = SDL_GetKeyboardState(NULL);
+    if (keys[SDL_SCANCODE_L]) desiredVelocity.setX(moveSpeed); 
+    if (keys[SDL_SCANCODE_J]) desiredVelocity.setX(-moveSpeed);
+    if (keys[SDL_SCANCODE_K]) desiredVelocity.setZ(moveSpeed); 
+    if (keys[SDL_SCANCODE_I]) desiredVelocity.setZ(-moveSpeed); 
+
+    //Apply acceleration + force
+    if (desiredVelocity.length2() > 0) {
+        desiredVelocity.setX(desiredVelocity.getX() * moveSpeed / desiredVelocity.length());
+        desiredVelocity.setZ(desiredVelocity.getZ() * moveSpeed / desiredVelocity.length());
+    }
+    btVector3 currentVelocity = rigidBody->getLinearVelocity();
+    float acceleration = 10.0f * dt; 
+    btVector3 newVelocity = currentVelocity.lerp(desiredVelocity, acceleration);
+    rigidBody->setLinearVelocity(btVector3(newVelocity.getX(), currentVelocity.getY(), newVelocity.getZ()));
+
+    // Jumping 
+    if (keys[SDL_SCANCODE_SPACE]) {
+        if (currentVelocity.getY() < 0.1f && currentVelocity.getY() > -0.1f) {
+            rigidBody->setLinearVelocity(btVector3(currentVelocity.getX(), jumpForce, currentVelocity.getZ()));
+        }
+    }
+}
+
+
 void MakeSmokerEmmiter() {
     auto particlesEmitter = Application->root->CreateGameObject("ParticlesEmitter");
     auto transform = particlesEmitter->GetTransform();
@@ -149,11 +210,13 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto Player = CreateGameObject("Player");
+	CreatePlayer();
+
+    /*auto Player = CreateGameObject("Player");
     auto mesh = Mesh::CreateCube();
     AddMeshRenderer(*Player, mesh);
     auto script = Player->AddComponent<ScriptComponent>();
-    script->LoadScript("PlayerController");
+    script->LoadScript("PlayerController");*/
     
     //MonoEnvironment* mono = new MonoEnvironment();
 
@@ -212,6 +275,8 @@ bool Root::Start()
 }
 
 bool Root::Update(double dt) {
+
+    HandleInput(dt);
 
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
 

@@ -102,7 +102,7 @@ void PhysicsModule::SyncTransforms() {
         // Aplicar la rotación solo si ha cambiado
         static std::unordered_map<GameObject*, glm::dquat> previousRotations;
         glm::dquat newRotation = glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
-
+        
         if (previousRotations.find(gameObject) != previousRotations.end()) {
             if (previousRotations[gameObject] != newRotation) {
                 glm::dquat deltaRotation = glm::inverse(previousRotations[gameObject]) * newRotation;
@@ -218,6 +218,20 @@ bool PhysicsModule::Update(double dt) {
 }
 
 
+
+void PhysicsModule::AddForceToCollider(GameObject& go, const glm::vec3& force) {
+    auto it = gameObjectRigidBodyMap.find(&go);
+    if (it != gameObjectRigidBodyMap.end()) {
+        btRigidBody* rigidBody = it->second;
+        btVector3 btForce(force.x, force.y, force.z);
+        rigidBody->applyCentralForce(btForce);
+        std::cout << "Force applied to GameObject: ("
+            << force.x << ", " << force.y << ", " << force.z << ")\n";
+    } else {
+        std::cerr << "GameObject not found in physics world.\n";
+    }
+}
+
 bool PhysicsModule::CleanUp() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
         dynamicsWorld->removeRigidBody(rigidBody);
@@ -296,6 +310,82 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
 
     std::cout << "Global restitution set to: " << restitutionValue << "\n";
 }
+void PhysicsModule::SetColliderFriction(GameObject& go, float friction) {
+    auto it = gameObjectRigidBodyMap.find(&go);
+    if (it != gameObjectRigidBodyMap.end()) {
+        btRigidBody* rigidBody = it->second;
+        rigidBody->setFriction(friction);
+        rigidBody->setRollingFriction(friction);
+        rigidBody->setSpinningFriction(friction);
+        std::cout << "Friction set to " << friction << " for GameObject.\n";
+    }
+}
+
+
+void PhysicsModule::FreezeRotations(GameObject& go) {
+    auto it = gameObjectRigidBodyMap.find(&go);
+    if (it != gameObjectRigidBodyMap.end()) {
+        btRigidBody* rigidBody = it->second;
+        rigidBody->setAngularFactor(btVector3(0, 0, 0)); // Lock all rotations
+        std::cout << "Rotations frozen for GameObject.\n";
+    }
+}
+
+
+void PhysicsModule::UnlockRotations(GameObject& go) {
+    auto it = gameObjectRigidBodyMap.find(&go);
+    if (it != gameObjectRigidBodyMap.end()) {
+        btRigidBody* rigidBody = it->second;
+        rigidBody->setAngularFactor(btVector3(1, 1, 1)); // Unlock all rotations
+        std::cout << "Rotations unlocked for GameObject.\n";
+    }
+}
+
+void PhysicsModule::SetGravity(GameObject& go, const glm::vec3& gravity) {
+    auto it = gameObjectRigidBodyMap.find(&go);
+    if (it != gameObjectRigidBodyMap.end()) {
+        btRigidBody* rigidBody = it->second;
+        rigidBody->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
+        std::cout << "Gravity set for GameObject: " << gravity.x << ", " << gravity.y << ", " << gravity.z << "\n";
+    }
+}
+
+void PhysicsModule::SetBounciness(GameObject& go, float restitution) {
+    auto it = gameObjectRigidBodyMap.find(&go);
+    if (it != gameObjectRigidBodyMap.end()) {
+        btRigidBody* rigidBody = it->second;
+        rigidBody->setRestitution(restitution);
+        std::cout << "Bounciness set to " << restitution << " for GameObject.\n";
+    }
+}
+
+void PhysicsModule::SetKinematic(GameObject& go, bool isKinematic) {
+    auto it = gameObjectRigidBodyMap.find(&go);
+    if (it != gameObjectRigidBodyMap.end()) {
+        btRigidBody* rigidBody = it->second;
+
+        if (isKinematic) {
+            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+            rigidBody->setActivationState(DISABLE_DEACTIVATION);
+        }
+        else {
+            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() & ~btCollisionObject::CF_KINEMATIC_OBJECT);
+        }
+
+        std::cout << "GameObject set to " << (isKinematic ? "kinematic" : "dynamic") << ".\n";
+    }
+}
+
+void PhysicsModule::EnableContinuousCollision(GameObject& go) {
+    auto it = gameObjectRigidBodyMap.find(&go);
+    if (it != gameObjectRigidBodyMap.end()) {
+        btRigidBody* rigidBody = it->second;
+        rigidBody->setCcdMotionThreshold(0.01);
+        rigidBody->setCcdSweptSphereRadius(0.05);
+        std::cout << "Continuous collision detection enabled for GameObject.\n";
+    }
+}
+
 
 bool PhysicsModule::Start() {
     return true;

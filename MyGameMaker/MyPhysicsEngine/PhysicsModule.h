@@ -29,10 +29,24 @@ public:
 
     bool Awake();
 
+	//Helper Functions
+    void FreezeRotations(GameObject& go);
+
+    void UnlockRotations(GameObject& go);
+
+    void SetGravity(GameObject& go, const glm::vec3& gravity);
+
+    void SetBounciness(GameObject& go, float restitution);
+
+    void SetKinematic(GameObject& go, bool isKinematic);
+
+    void EnableContinuousCollision(GameObject& go);
+
     bool Start();
     bool PreUpdate();
     bool Update(double dt);
     bool PostUpdate();
+    void AddForceToCollider(GameObject& go, const glm::vec3& force);
     bool CleanUp();
 
     void DrawDebugDrawer();
@@ -48,6 +62,8 @@ public:
         const glm::vec3& axisA, const glm::vec3& axisB, bool disable_collision = false);
     void SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& cameraPosition, const glm::vec3& cameraDirection, float forceMagnitude);
     void SetGlobalRestitution(float restitutionValue);
+
+    void SetColliderFriction(GameObject& go, float friction);
 
     p2List<FinalVehicleInfo*> vehicles;
     btDiscreteDynamicsWorld* dynamicsWorld;

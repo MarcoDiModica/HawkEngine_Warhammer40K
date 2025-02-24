@@ -497,6 +497,8 @@ private:
 
         ImGui::Separator();
 
+		auto selectedGameObject = Application->input->GetSelectedGameObjects()[0];
+
         if (selectedGameObject->HasComponent<CameraComponent>()) {
 			CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
 
@@ -504,7 +506,7 @@ private:
             if (!cameraComponent) {
 				LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
 				ImGui::Text("Error: Invalid CameraComponent component");
-				return false;
+				//return false;
 			}
 
 			if (cameraComponent) {
@@ -719,7 +721,7 @@ private:
 
         if (selectedGameObject->HasComponent<ParticlesEmitterComponent>())
         {
-            DrawParticleEmitterInspector(selectedGameObject);
+            //DrawParticleEmitterInspector(selectedGameObject);
         }
 
         ImGui::Separator();

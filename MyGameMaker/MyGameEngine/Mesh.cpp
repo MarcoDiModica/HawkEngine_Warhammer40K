@@ -122,11 +122,11 @@ void Mesh::Draw() const
 		glColor3f(0.0f, 0.0f, 1.0f); // Blue color for vertex normals
 		glBegin(GL_LINES);
 
-		for (size_t i = 0; i < _vertices.size(); ++i) {
+		/*for (size_t i = 0; i < _vertices.size(); ++i) {
 			glm::vec3 end = _vertices[i].position + _normals[i] * 0.2f;
 			glVertex3fv(glm::value_ptr(_vertices[i].position));
 			glVertex3fv(glm::value_ptr(end));
-		}
+		}*/
 
 		glEnd();
 		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white

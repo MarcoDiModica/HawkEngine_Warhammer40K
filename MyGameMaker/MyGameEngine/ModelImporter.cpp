@@ -159,16 +159,6 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 				vec3 auxColor(color.r, color.g, color.b);
 				modelsData[i]->vertex_colors.push_back(auxColor);
 			}
-
-			
-
-			if (mesh->HasBones()) 
-			{
-				models[i]->SetVertexBoneDataToDefault(vertexData);
-
-			}
-
-			modelsData[i]->vertexData.push_back(vertexData);
 		}
 
 		models[i]->ExtractBoneWeightForVertices(modelsData[i]->vertexData, mesh, &scene);

@@ -13,6 +13,8 @@ UIHierarchy::UIHierarchy(UIType type, std::string name) : UIElement(type, name) 
 }
 
 UIHierarchy::~UIHierarchy() {
+    delete draggedObject;
+    draggedObject = nullptr;
 }
 
 bool UIHierarchy::Draw() {

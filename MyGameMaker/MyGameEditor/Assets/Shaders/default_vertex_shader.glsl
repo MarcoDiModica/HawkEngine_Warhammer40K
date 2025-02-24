@@ -19,8 +19,8 @@ uniform mat4 finalBonesMatrices[MAX_BONES];
 
 void main()
 {
-    vec4 totalPosition = vec4(0.0f);
-    vec3 totalNormal = vec3(0.0f);
+    vec4 totalPosition = vec4(aPos, 1.0f);
+    vec3 totalNormal = aNormal;
     for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
     {
         if(boneIds[i] == -1) 

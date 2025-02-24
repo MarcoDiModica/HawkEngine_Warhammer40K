@@ -76,14 +76,14 @@ void Animation::SetUpAnimation(const std::string& animationPath, Model* model)
 
 Bone* Animation::FindBone(const std::string& name)
 {
-    for (int i = 0; i < m_Animations.size(); i++)
-    {
-        if (m_Animations[i] == name)
+    auto iter = std::find_if(m_Bones.begin(), m_Bones.end(),
+        [&](const Bone& Bone)
         {
-            return &m_Bones[i];
+            return Bone.GetBoneName() == name;
         }
-    }
-    return nullptr;
+    );
+    if (iter == m_Bones.end()) return nullptr;
+    else return &(*iter);
 }
 
 void Animation::ReadMissingBones(const aiAnimation* animation, Model& model)

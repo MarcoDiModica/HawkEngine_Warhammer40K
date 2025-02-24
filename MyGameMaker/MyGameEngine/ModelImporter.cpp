@@ -137,8 +137,8 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 			aiVector3D vertex = mesh->mVertices[j];
 			vec3 aux = vec3(vertex.x, vertex.y, vertex.z);
 			Vertex v;
-			v.position = aux;
 			models[i]->SetVertexBoneDataToDefault(v);
+			v.position = AssimpGLMHelpers::GetGLMVec(vertex);
 			modelsData[i]->vertexData.push_back(v);
 			
 

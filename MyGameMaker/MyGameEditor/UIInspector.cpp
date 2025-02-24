@@ -373,6 +373,17 @@ private:
     }
     #pragma endregion 
 
+    #pragma region SkeletalAnimation
+    static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal) 
+    {
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("Animation")) return;
+
+		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetAnimations()[0].c_str());
+		ImGui::Text("Time: %.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
+    }
+    #pragma endregion 
+
     #pragma region Collider
     static void DrawColliderComponent(ColliderComponent* collider) {
         if (!collider) return;
@@ -1339,6 +1350,11 @@ public:
 		if (gameObject->HasComponent<MeshRenderer>()) {
 			MeshRenderer* meshRenderer = gameObject->GetComponent<MeshRenderer>();
 			DrawMeshRendererComponent(meshRenderer);
+		}
+
+		if (gameObject->HasComponent<SkeletalAnimationComponent>()) {
+			SkeletalAnimationComponent* animationComponent = gameObject->GetComponent<SkeletalAnimationComponent>();
+			DrawSkeletalAnimationComponent(animationComponent);
 		}
 
         if (gameObject->HasComponent<CameraComponent>()) {

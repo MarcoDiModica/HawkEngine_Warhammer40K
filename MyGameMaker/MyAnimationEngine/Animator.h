@@ -27,6 +27,16 @@ public:
 	void PlayAnimation(Animation* pAnimation);
     void CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform);
 
+    float GetCurrentMTime()
+    {
+		return m_CurrentTime;
+    }
+
+	Animation* GetCurrentAnimation()
+	{
+		return m_CurrentAnimation;
+	}
+
     std::vector<glm::mat4> GetFinalBoneMatrices()
     {
         return m_FinalBoneMatrices;

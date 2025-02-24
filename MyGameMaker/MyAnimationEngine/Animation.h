@@ -50,6 +50,11 @@ public:
         return m_BoneInfoMap;
     }
     
+	std::vector<std::string>& GetAnimations()
+	{
+		return m_Animations;
+	}
+
 private:
     void ReadMissingBones(const aiAnimation* animation, Model& model);
     void ReadHeirarchyData(AssimpNodeData& dest, const aiNode* src);

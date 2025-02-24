@@ -569,7 +569,7 @@ void Mesh::loadToOpenGL()
 
 		// Configurar atributo para bone IDs
 		glEnableVertexAttribArray(3);
-		glVertexAttribIPointer(3, 4, GL_INT, sizeof(glm::ivec4), (void*)0);
+		glVertexAttribIPointer(3, 4, GL_INT, sizeof(glm::ivec4), (const void*)0);
 
 		// Crear buffer para weights
 		GLuint weightBuffer;
@@ -579,7 +579,7 @@ void Mesh::loadToOpenGL()
 
 		// Configurar atributo para weights
 		glEnableVertexAttribArray(4);
-		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (void*)0);
+		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
 	}
 
 

@@ -23,6 +23,7 @@
 #include "UICamera.h"
 #include "UIAudioTest.h"
 #include "UITextEditor.h"
+#include "UIGameView.h"
 
 MyGUI::MyGUI(App* app) : Module(app) {
 	ImGui::CreateContext();
@@ -39,11 +40,10 @@ MyGUI::~MyGUI() {
 
 struct SceneObject {
 	const char* name;
-	std::vector<SceneObject> children; // List of child objects
+	std::vector<SceneObject> children;
 };
 
 bool MyGUI::Awake() {
-	// Example UI
 	LOG(LogType::LOG_INFO, "UI Awake");
 
 	bool ret = true;
@@ -87,6 +87,10 @@ bool MyGUI::Awake() {
 	UITextEditorPanel = new UITextEditor(UIType::TEXTEDITOR, "TextEditor");
 	elements.push_back(UITextEditorPanel);
 	ret = isInitialized(UITextEditorPanel);
+
+	UIGameViewPanel = new UIGameView(UIType::DEFAULT, "GameView");
+	elements.push_back(UIGameViewPanel);
+	ret = isInitialized(UIGameViewPanel);
 
 	ImGuiStyle& style = ImGui::GetStyle();
 	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
@@ -149,9 +153,9 @@ bool MyGUI::Start() {
 	Application->gui->UIinspectorPanel->SetState(true);
 	Application->gui->UIMainMenuBarPanel->SetState(true);
 	Application->gui->UISceneWindowPanel->SetState(true);
-	//Application->gui->UICameraPanel->SetState(true);
+	Application->gui->UIGameViewPanel->SetState(true);
+	UIGameViewPanel->Init();
 	UISceneWindowPanel->Init();
-	//UICameraPanel->Init();
 
 	return true;
 }
@@ -242,9 +246,9 @@ void MyGUI::Render() {
 		UITextEditorPanel->Draw();
 	}
 
-	//if (showCamera) {
-	//	UICameraPanel->Draw();
-	//}
+	if (showGameView) {
+		UIGameViewPanel->Draw();
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

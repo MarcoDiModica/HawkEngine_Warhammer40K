@@ -120,6 +120,12 @@ bool Root::Start()
     AddMeshRenderer(*Player, mesh);
     auto script = Player->AddComponent<ScriptComponent>();
     script->LoadScript("PlayerController");
+
+    auto objMainCamera = CreateCameraObject("MainCamera");
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
+    objMainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
+    auto camera = objMainCamera->AddComponent<CameraComponent>();
+    mainCamera = objMainCamera;
     
     //MonoEnvironment* mono = new MonoEnvironment();
 

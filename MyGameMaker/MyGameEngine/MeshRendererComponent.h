@@ -36,6 +36,7 @@ public:
     glm::vec3 GetColor() const;
 
     void Render() const;
+    void RenderMainCamera() const;
 
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;

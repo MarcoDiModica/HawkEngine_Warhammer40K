@@ -34,5 +34,6 @@ private:
     Image m_Trans;
     Image m_Rot;
     Image m_Sca;
+    Image m_Setting;
 };
 #endif // !__UI_SCENE_WINDOW_H__

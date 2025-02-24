@@ -22,6 +22,5 @@ public:
 private:
     vec2 winSize = vec2(0, 0);
     vec2 winPos = vec2(0, 0);
-    bool isPlaying = false;
 };
 #endif // !__UI_GAME_VIEW_H__

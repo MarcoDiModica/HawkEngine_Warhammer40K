@@ -185,17 +185,9 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 
 void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight)
 {
-	double windowAspect = windowWidth / windowHeight;
-	double imageAspect = imageWidth / imageHeight;
+	double aspectRatio = windowWidth / windowHeight;
 
-	UpdateAspectRatio(windowAspect);
+	UpdateAspectRatio(aspectRatio);
 
-	if (windowAspect > imageAspect) 
-	{
-		SetFOV(2.0f * atan(tan(glm::radians(60.0f) / 2.0f) * static_cast<float>((imageAspect / windowAspect))));
-	}
-	else 
-	{
-		SetFOV(glm::radians(60.0f));
-	}
+	SetFOV(glm::radians(60.0f));
 }

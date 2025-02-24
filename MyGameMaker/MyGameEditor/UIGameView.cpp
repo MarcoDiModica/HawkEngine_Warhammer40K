@@ -73,13 +73,6 @@ bool UIGameView::Draw()
             return true;
         }
 
-        ImGui::PushStyleColor(ImGuiCol_Button, isPlaying ? ImVec4(0.8f, 0.2f, 0.2f, 1.0f) : ImVec4(0.2f, 0.8f, 0.2f, 1.0f));
-        if (ImGui::Button(isPlaying ? "  STOP  " : "  PLAY  "))
-        {
-            isPlaying = !isPlaying;
-        }
-        ImGui::PopStyleColor();
-
         ImVec2 windowPos = ImGui::GetWindowPos();
         ImVec2 windowSize = ImGui::GetWindowSize();
 
@@ -88,32 +81,20 @@ bool UIGameView::Draw()
 
         ImVec2 availableSize = ImGui::GetContentRegionAvail();
 
-        float aspectRatio = static_cast<float>(Application->window->width()) / Application->window->height();
+        const float targetAspectRatio = 16.0f / 9.0f; //fixed aspect ratio
 
         float width = availableSize.x;
-        float height = width / aspectRatio;
+        float height = width / targetAspectRatio;
 
         if (height > availableSize.y)
         {
             height = availableSize.y;
-            width = height * aspectRatio;
+            width = height * targetAspectRatio;
         }
-
-        float offsetX = (availableSize.x - width) * 0.5f;
-        float offsetY = (availableSize.y - height) * 0.5f;
-
-        ImGui::SetCursorPos(ImVec2(offsetX, offsetY));
 
         ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTextureGame,
             ImVec2(width, height),
             ImVec2(0, 1), ImVec2(1, 0));
-
-        if (isPlaying)
-        {
-            ImVec2 textSize = ImGui::CalcTextSize("PLAYING");
-            ImGui::SetCursorPos(ImVec2(offsetX + width - textSize.x - 10, offsetY + 10));
-            ImGui::TextColored(ImVec4(0.2f, 0.8f, 0.2f, 1.0f), "PLAYING");
-        }
 
         ImGui::End();
     }

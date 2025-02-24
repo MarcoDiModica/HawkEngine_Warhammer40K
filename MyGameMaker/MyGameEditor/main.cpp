@@ -414,7 +414,6 @@ static void RenderOutline(GameObject* object) {
 	object->GetComponent<MeshRenderer>()->Render();
 	glPopMatrix();
 
-
 	glDisable(GL_POLYGON_OFFSET_FILL);
 
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -422,8 +421,8 @@ static void RenderOutline(GameObject* object) {
 
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
-	glViewport(0, 0, Application->window->width(), Application->window->height());
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	configureCamera();

@@ -20,7 +20,6 @@
 #include "UIHierarchy.h"
 #include "UISceneWindow.h"
 #include "UIProject.h"
-#include "UICamera.h"
 #include "UIAudioTest.h"
 #include "UITextEditor.h"
 #include "UIGameView.h"
@@ -33,6 +32,17 @@ MyGUI::MyGUI(App* app) : Module(app) {
 }
 
 MyGUI::~MyGUI() {
+	for (auto& element : elements)
+	{
+		if (element)
+		{
+			delete element;
+			element = nullptr;
+		}
+	}
+
+	elements.clear();
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
@@ -75,10 +85,6 @@ bool MyGUI::Awake() {
 	UISceneWindowPanel = new UISceneWindow(UIType::DEFAULT, "SceneWindow");
 	elements.push_back(UISceneWindowPanel);
 	ret = isInitialized(UISceneWindowPanel);
-
-	UICameraPanel = new UICamera(UIType::CAMERA, "Camera");
-	elements.push_back(UICameraPanel);
-	ret = isInitialized(UICameraPanel);
 
 	UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
 	elements.push_back(UIAudioTestPanel);
@@ -175,7 +181,24 @@ bool MyGUI::PostUpdate()
 {
 	return true;
 }
-bool MyGUI::CleanUp() { return true; }
+bool MyGUI::CleanUp() {
+	for (auto& element : elements)
+	{
+		if (element)
+		{
+			delete element;
+			element = nullptr;
+		}
+	}
+
+	elements.clear();
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
+	return true;
+}
 
 void MyGUI::Render() {
 	ImGui_ImplOpenGL3_NewFrame();

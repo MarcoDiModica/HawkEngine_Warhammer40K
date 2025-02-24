@@ -4,6 +4,8 @@
 
 #include "UIElement.h"
 
+class GameObject;
+
 class UIInspector : public UIElement
 {
 public:
@@ -16,8 +18,9 @@ public:
 	bool once = false;
 
 private:
+	void DrawParticleEmitterInspector(GameObject* selectedGameObject);
+
 	bool matrixDirty;
-	
 
 	glm::vec3 position;
 	glm::vec3 rotationDegrees = glm::vec3(0,0,0);

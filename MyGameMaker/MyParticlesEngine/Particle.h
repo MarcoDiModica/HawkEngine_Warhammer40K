@@ -22,8 +22,8 @@ public:
 
     void Update(float deltaTime);
     void Spawn();
-    void Draw();
-    void Draw2();
+    void Draw(const glm::mat4& billboardMatrix);
+    void Draw2(const glm::mat4& billboardMatrix);
     void Start();
     void SetParticleSpeed(const glm::vec3& newSpeed);
 
@@ -35,8 +35,10 @@ public:
     std::vector<glm::vec3> speed;
     GLuint textureID;
 
-    std::unique_ptr<Image> texture;
-    std::unique_ptr<Image> texture2;
+    std::unique_ptr<Image> texture = nullptr;
+    std::unique_ptr<Image> texture2 = nullptr;
+
+    glm::mat4 modelMatrix;
 
 private:
     std::string goodmorning = "Good Morning";

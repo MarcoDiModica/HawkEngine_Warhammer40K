@@ -41,7 +41,7 @@ void Material::SetColor(const vec4& color) {
 	this->color = color;
 }
 
-vec4 Material::GetColor() {
+const glm::vec4& Material::GetColor() const {
 	return this->color;
 }
 
@@ -56,6 +56,11 @@ void Material::bind() const {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Magnification filter
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4f);
+}
+
+void Material::unbind() const
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 bool Material::loadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {

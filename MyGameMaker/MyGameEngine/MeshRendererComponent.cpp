@@ -9,6 +9,8 @@
 #include "Shaders.h"
 #include <iostream>
 #include "../MyScriptingEngine/MonoManager.h"
+#include "../MyShadersEngine/ShaderComponent.h"
+#include "LightComponent.h"
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
 #include <mono/jit/jit.h>
@@ -139,57 +141,85 @@ MonoObject* MeshRenderer::GetSharp()
 
 void MeshRenderer::Render() const
 {
+    material->shader->Bind();
 
-    if (material && material->useShader)
-    {
-        material->bindShaders();
+    glm::vec4 color(material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
+    material->shader->SetUniform("modColor", color);
 
-        //material->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-        material->setShaderUniform("model", owner->GetTransform()->GetMatrix());
-        //material->setShaderUniform("modColor", glm::vec4( 1,0.2f,0,1));
-        //glUniform4f(glGetUniformLocation(material->shader.GetProgram(), "modColor"), material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
-        ////material->setShaderUniform("model", owner->GetComponent<Transform_Component>()->GetMatrix());
-        //material->setShaderUniform("view", Application->camera->view());
-        //material->setShaderUniform("projection", Application->camera->projection());
-
-        //material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        //material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        //material->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        //material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-        //material->setShaderUniform("dirLight.intensity", 3.0f);
-
-        //material->setShaderUniform("viewPos", Application->camera->GetTransform().GetPosition());
-
-        //material->setShaderUniform("pointLights.position",   glm::vec3(0.0f, 0.0f, 0.0f));
-        //material->setShaderUniform("pointLights.ambient",    glm::vec3(0.2f, 0.8f, 0.2f));
-        //material->setShaderUniform("pointLights.diffuse",    glm::vec3(0.5f, 0.5f, 0.5f));
-        //material->setShaderUniform("pointLights.specular",   glm::vec3(1.0f, 1.0f, 1.0f));
-        //material->setShaderUniform("pointLights.constant",   1.0f);
-        //material->setShaderUniform("pointLights.linear",     0.09f);
-        //material->setShaderUniform("pointLights.quadratic",  0.032f);
-        //material->setShaderUniform("pointLights.radius",     1.0f);
-        //material->setShaderUniform("pointLights.intensity",  2.5f);
-
+    if (material->image().image_path != "") {
+        material->image().bind();
+        material->shader->SetUniform("u_HasTexture", true);
+        material->shader->SetUniform("texture1", 0);
+    }
+    else {
+        material->shader->SetUniform("u_HasTexture", false);
     }
 
-    if (material)
+    material->shader->SetUniform("model", owner->GetTransform()->GetMatrix());
+    material->shader->SetUniform("view", Application->camera->view());
+    material->shader->SetUniform("projection", Application->camera->projection());
+
+    int numPointLights = static_cast<int>(Application->root->GetActiveScene()->_lights.size());
+    int i = 0;
+
+    switch (material->shaderType)
     {
-        //color4 newColor = color4(material->color.x, material->color.y, material->color.z, material->color.w);
+    case LIGHT:
+
+        material->setShaderUniform("viewPos", Application->camera->GetTransform().GetPosition());
         
-        glEnable(GL_TEXTURE_2D);
-        material->bind();
-        //material->setShaderUniform("texture1", 0); // Pasar la unidad de textura al shader
+        material->setShaderUniform("numPointLights", numPointLights);
+        
+        
+        for (const auto& light : Application->root->GetActiveScene()->_lights)
+        {
+            std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
+            material->setShaderUniform(pointLightstr + ".position", light->GetComponent<Transform_Component>()->GetPosition());
+            material->setShaderUniform(pointLightstr + ".ambient", light->GetComponent<LightComponent>()->GetAmbient());
+            material->setShaderUniform(pointLightstr + ".diffuse", light->GetComponent<LightComponent>()->GetDiffuse());
+            material->setShaderUniform(pointLightstr + ".specular", light->GetComponent<LightComponent>()->GetSpecular());
+            material->setShaderUniform(pointLightstr + ".constant", light->GetComponent<LightComponent>()->GetConstant());
+            material->setShaderUniform(pointLightstr + ".linear", light->GetComponent<LightComponent>()->GetLinear());
+            material->setShaderUniform(pointLightstr + ".quadratic", light->GetComponent<LightComponent>()->GetQuadratic());
+            material->setShaderUniform(pointLightstr + ".radius", light->GetComponent<LightComponent>()->GetRadius());
+            material->setShaderUniform(pointLightstr + ".intensity", light->GetComponent<LightComponent>()->GetIntensity());
+            i++;
+        }
 
+        material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        material->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+        material->setShaderUniform("dirLight.intensity", 3.0f);
+
+        break;
+    case WATER:
+
+        material->shader->SetUniform("u_Time", owner->GetTimeActive());
+        material->shader->SetUniform("u_Amplitude", owner->GetComponent<ShaderComponent>()->amplitude);
+        material->shader->SetUniform("u_Frequency", owner->GetComponent<ShaderComponent>()->frequency);
+        material->shader->SetUniform("u_ColorLow", glm::vec3(0.0f, 0.0f, 1.0f));
+        material->shader->SetUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
+        material->shader->SetUniform("u_Factor", 0.8f);
+
+        break;
+    default:
+        break;
     }
 
-    if (mesh)
-    {
-        mesh->Draw();
+    glBindVertexArray(mesh->model.get()->GetModelData().vA);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
+
+    glDrawElements(GL_TRIANGLES, mesh->model->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
+
+    material->shader->UnBind();
+
+    if (material->image().image_path != "") {
+        material->unbind();
     }
 
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0); 
 
-    if (material)
-    {
-        glDisable(GL_TEXTURE_2D);
-    }
+    mesh->drawBoundingBox(mesh->_boundingBox);
 }

@@ -11,6 +11,7 @@ public:
 
     bool LoadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile);
     void Bind() const;
+	void UnBind() const;
     GLuint GetProgram() const;
 
     void SetUniform(const std::string& name, int value);

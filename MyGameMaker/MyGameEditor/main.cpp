@@ -94,6 +94,9 @@ static void init_openGL() {
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glEnable(GL_CULL_FACE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(0.2, 0.2, 0.2, 1.0);
 
 	glMatrixMode(GL_PROJECTION);
@@ -297,8 +300,6 @@ void RenderOutline(GameObject* object) {
 	
 	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT); 
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	glPolygonOffset(-5.0f, -5.0f);
 	
@@ -311,8 +312,6 @@ void RenderOutline(GameObject* object) {
 
 
 	glDisable(GL_POLYGON_OFFSET_FILL);
-	glCullFace(GL_BACK);
-	glDisable(GL_CULL_FACE);
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
@@ -337,7 +336,7 @@ static void display_func() {
 		if (object->HasComponent<LightComponent>()) {
 			auto it = std::find(lights.begin(), lights.end(), object);
 			if (it == lights.end()) {
-				lights.push_back(object);
+				Application->root->GetActiveScene()->_lights.push_back(object->shared_from_this());
 			}
 		}
 	}
@@ -350,7 +349,7 @@ static void display_func() {
 
 		RenderOutline(object);
 
-		object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
+		//object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
 		
 		object->Update(static_cast<float>(Application->GetDt()));
 
@@ -360,7 +359,7 @@ static void display_func() {
 			GameObject* child = object->GetChildren()[j].get();
 			objects.push_back(child);
 			RenderOutline(child);
-			child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
+			//child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
 		
 		}
 	}
@@ -385,6 +384,8 @@ static void display_func2() {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	Application->root->GetActiveScene()->_lights.clear();
 }
 
 void EditorRenderer(MyGUI* gui) {

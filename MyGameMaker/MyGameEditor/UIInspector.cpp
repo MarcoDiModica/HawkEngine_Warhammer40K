@@ -30,6 +30,7 @@
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "../MyParticlesEngine/ParticlesEmitterComponent.h"
 
 UIInspector::UIInspector(UIType type, std::string name) : UIElement(type, name)
 {
@@ -120,12 +121,9 @@ bool UIInspector::Draw() {
                 selectedGameObject->AddComponent<ColliderComponent>(Application->physicsModule);
                 selectedGameObject->GetComponent<ColliderComponent>()->Start();
             }
-
-
-           /* if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("Particles")) {
+            if (!selectedGameObject->HasComponent<ParticlesEmitterComponent>() && ImGui::MenuItem("ParticleEmitter")) {
                 selectedGameObject->AddComponent<ParticlesEmitterComponent>();
-            }*/
-
+            }
 
             // More components here
 
@@ -200,8 +198,8 @@ bool UIInspector::Draw() {
             if (mesh) {
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
                 if (ImGui::CollapsingHeader("Mesh")) {
-                    ImGui::Text("Vertices: %d", mesh->vertices().size());
-                    ImGui::Text("Indices: %d", mesh->indices().size());
+                    ImGui::Text("Vertices: %d", mesh->getModel()->GetModelData().vertexData.size());
+                    ImGui::Text("Indices: %d", mesh->getModel()->GetModelData().indexData.size());
 
                     auto v = selectedGameObject->boundingBox().min;
                     ImGui::Text("BB min: %f", (float)v.x);
@@ -519,6 +517,14 @@ bool UIInspector::Draw() {
             }
         }
 
+        ImGui::Separator();
+
+        if (selectedGameObject->HasComponent<ParticlesEmitterComponent>())
+        {
+            DrawParticleEmitterInspector(selectedGameObject);
+        }
+
+        ImGui::Separator();
 
         if (selectedGameObject->HasComponent<SoundComponent>()) {
             SoundComponent* soundComponent = selectedGameObject->GetComponent<SoundComponent>();
@@ -791,4 +797,116 @@ bool UIInspector::Draw() {
 
     ImGui::End();
     return true;
+}
+
+void UIInspector::DrawParticleEmitterInspector(GameObject* selectedGameObject) {
+    if (!selectedGameObject || !selectedGameObject->HasComponent<ParticlesEmitterComponent>()) {
+        return;
+    }
+
+    auto* particlesEmitter = selectedGameObject->GetComponent<ParticlesEmitterComponent>();
+    if (!particlesEmitter) {
+        return;
+    }
+
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
+    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+    bool isOpen = ImGui::CollapsingHeader("Particle Emitter", ImGuiTreeNodeFlags_DefaultOpen);
+    ImGui::PopStyleVar();
+
+    if (!isOpen) {
+        return;
+    }
+
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 8));
+    ImGui::Indent(10.0f);
+
+    if (ImGui::TreeNodeEx("Emission Settings", ImGuiTreeNodeFlags_DefaultOpen)) {
+        ImGui::BeginGroup();
+        float spawnRate = particlesEmitter->getSpawnRate();
+        if (ImGui::DragFloat("Spawn Rate##spawner", &spawnRate, 0.1f, 0.1f, 100.0f, "%.1f")) {
+            particlesEmitter->setSpawnRate(spawnRate);
+        }
+        if (ImGui::IsItemHovered()) {
+            ImGui::SetTooltip("Number of particles spawned per second");
+        }
+
+        int maxParticles = particlesEmitter->getMaxParticles();
+        if (ImGui::DragInt("Max Particles##count", &maxParticles, 1, 1, 1000)) {
+            particlesEmitter->setMaxParticles(maxParticles);
+        }
+        if (ImGui::IsItemHovered()) {
+            ImGui::SetTooltip("Maximum number of particles allowed at once");
+        }
+        ImGui::EndGroup();
+
+        ImGui::TreePop();
+    }
+
+    if (ImGui::TreeNodeEx("Rendering Settings", ImGuiTreeNodeFlags_DefaultOpen)) {
+        ImGui::BeginGroup();
+        BillboardType billboardType = particlesEmitter->GetTypeEnum();
+        const char* billboardItems[] = {
+            "Screen Aligned - Always faces camera",
+            "World Aligned - Maintains up vector",
+            "Axis Aligned - Rotates around specified axis"
+        };
+
+        if (ImGui::Combo("Billboard Type##alignment", (int*)&billboardType, billboardItems, IM_ARRAYSIZE(billboardItems))) {
+            particlesEmitter->SetType(billboardType);
+        }
+
+        ImGui::Spacing();
+        ImGui::TextUnformatted("Texture");
+        ImGui::SameLine();
+        ImGui::TextDisabled("(?)");
+        if (ImGui::IsItemHovered()) {
+            ImGui::BeginTooltip();
+            ImGui::TextUnformatted("Supported formats: .png, .jpg, .jpeg, .bmp");
+            ImGui::TextUnformatted("Drag and drop a texture file here");
+            ImGui::EndTooltip();
+        }
+
+        std::string texturePath = particlesEmitter->GetTexture();
+        char texturePathBuffer[256];
+        strncpy_s(texturePathBuffer, sizeof(texturePathBuffer), texturePath.c_str(), _TRUNCATE);
+
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
+        bool textureChanged = ImGui::InputText("##TexturePath", texturePathBuffer, sizeof(texturePathBuffer));
+        ImGui::PopStyleVar();
+
+        if (!texturePath.empty()) {
+            ImGui::SameLine();
+            if (ImGui::Button("Preview##texture")) {
+            }
+        }
+
+        if (textureChanged) {
+            particlesEmitter->SetTexture(texturePathBuffer);
+        }
+
+        ImGui::Button("Drop Texture Here", ImVec2(ImGui::GetContentRegionAvail().x, 30));
+        if (ImGui::BeginDragDropTarget()) {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+                const char* path = static_cast<const char*>(payload->Data);
+                std::string extension = std::filesystem::path(path).extension().string();
+                std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+                const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".image"};
+                if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
+                    particlesEmitter->SetTexture(path);
+                }
+                else {
+                    LOG(LogType::LOG_WARNING, "Invalid texture format: %s", extension.c_str());
+                }
+            }
+            ImGui::EndDragDropTarget();
+        }
+
+        ImGui::EndGroup();
+        ImGui::TreePop();
+    }
+
+    ImGui::Unindent(10.0f);
+    ImGui::PopStyleVar();
 }

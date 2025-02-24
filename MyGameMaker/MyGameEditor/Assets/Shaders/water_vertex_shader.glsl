@@ -6,7 +6,6 @@ layout(location = 2) in vec3 aNormal; // Normal attribute
 out vec2 TexCoord; // Texture coordinate of the fragment
 out vec3 FragPos; // Position of the fragment
 out vec3 Normal; // Normal of the fragment
-out vec4 ExtraColor;
 out float offset;
 
 uniform float u_Time;
@@ -16,7 +15,6 @@ uniform float u_Frequency;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec4 aColor;
 
 void main() {
 	// Pass the texture coordinates to the fragment shader
@@ -24,8 +22,6 @@ void main() {
 
     // Pass the fragment position to the fragment shader
     FragPos = vec3(model * vec4(aPos, 1.0));
-
-    ExtraColor = aColor;
 
     // Pass the normal to the fragment shader
     Normal = mat3(transpose(inverse(model))) * aNormal;

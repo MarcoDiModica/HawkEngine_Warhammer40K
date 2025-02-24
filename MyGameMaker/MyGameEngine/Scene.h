@@ -35,6 +35,8 @@ public:
 
 	Octree* tree = nullptr; // change to unique
 
+	std::vector<std::shared_ptr<GameObject>> _lights;
+
 private:
 	friend class GameObject;
 

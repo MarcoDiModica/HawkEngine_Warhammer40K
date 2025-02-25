@@ -288,7 +288,7 @@ void Root::CreateGameObjectWithPath(const std::string& path)
 
         auto shaderComponent = go->AddComponent<ShaderComponent>();
         shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-        shaderComponent->SetShaderType(ShaderType::DEFAULT);
+        shaderComponent->SetShaderType(ShaderType::LIGHT);
 
 		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 		

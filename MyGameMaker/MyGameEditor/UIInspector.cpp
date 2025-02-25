@@ -381,6 +381,9 @@ private:
 
 		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetAnimations()[0].c_str());
 		ImGui::Text("Time: %.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
+        float playSpeed = skeletal->GetAnimator()->GetPlaySpeed();
+        ImGui::DragFloat("Speed", &playSpeed, 0.1f, -10.0f, 10.0f);
+        skeletal->GetAnimator()->SetPlaySpeed(playSpeed);
     }
     #pragma endregion 
 

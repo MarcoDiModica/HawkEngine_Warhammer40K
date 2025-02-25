@@ -12,6 +12,7 @@ private:
     Animation* m_CurrentAnimation;
     float m_CurrentTime;
     float m_DeltaTime;
+	float m_PlaySpeed = 1;
 
 public:
     Animator(Animation* Animation);
@@ -41,5 +42,16 @@ public:
     {
         return m_FinalBoneMatrices;
     }
+
+    void SetPlaySpeed(float playSpeed) 
+    {
+		m_PlaySpeed = playSpeed;
+    }
+
+    float GetPlaySpeed()
+    {
+        return m_PlaySpeed;
+    }
+
 };
 

@@ -31,13 +31,13 @@ public:
 	float GetMouseSensitivity() const { return static_cast<float>(sensitivity); }
 	void SetMouseSensitivity(float sensitivity) { this->sensitivity = sensitivity; }
 
+	void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
 private:
 	glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);
 	Transform_Component transform;
 	GameObject* listenerObject = nullptr;
 
 	void move_camera(float speed, float deltaTime);
-	void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
 	bool infiniteMouse = false;
 	float cameraSpeed = 5.0f;
 	float zoomSpeed = 5.0f;
@@ -45,8 +45,10 @@ private:
 	double yaw = 0.0;
 	double pitch = 0.0;
 	double MAX_PITCH = glm::radians(89.0);
+	glm::dvec3 orbitPoint = glm::dvec3(0.0, 0.0, 0.0);
 
 	bool isFocusing = false;
+	bool mouseHidden = false;
 	float focusTime = 0.0f;
 	float focusDuration = 0.5f;
 	glm::dvec3 targetPosition = glm::dvec3(0.0, 0.0, 0.0);

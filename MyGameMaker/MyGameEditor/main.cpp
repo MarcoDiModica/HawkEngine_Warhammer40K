@@ -180,8 +180,7 @@ static void drawFloorGrid(int size, double step) {
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
-// Initializes camera
-void configureCamera() {
+static void configureCamera() {
 	glm::dmat4 projectionMatrix = Application->camera->projection();
 	glm::dmat4 viewMatrix = Application->camera->view();
 
@@ -192,23 +191,70 @@ void configureCamera() {
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
 	Application->camera->frustum.Update(projectionMatrix * viewMatrix);
-}
+}	
 
-void configureGameCamera()
-{
-	if (Application->root->mainCamera != nullptr)
-	{
-		glm::dmat4 projectionMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->projection();
-		glm::dmat4 viewMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->view();
-
-		glMatrixMode(GL_PROJECTION);
-		glLoadMatrixd(glm::value_ptr(projectionMatrix));
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadMatrixd(glm::value_ptr(viewMatrix));
-
-		Application->root->mainCamera->GetComponent<CameraComponent>()->frustum.Update(projectionMatrix * viewMatrix);
+static void RenderGameView() {
+	if (Application->root->mainCamera == nullptr) {
+		return;
 	}
+
+	CameraComponent* gameCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
+	if (!gameCamera) {
+		return;
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
+	glViewport(0, 0, Application->window->width(), Application->window->height());
+
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	glm::dmat4 projectionMatrix = gameCamera->projection();
+	glm::dmat4 viewMatrix = gameCamera->view();
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glLoadMatrixd(glm::value_ptr(projectionMatrix));
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glLoadMatrixd(glm::value_ptr(viewMatrix));
+
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
+		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+
+		if (object->HasComponent<MeshRenderer>()) {
+			object->GetComponent<MeshRenderer>()->RenderMainCamera();
+		}
+
+		for (size_t j = 0; j < object->GetChildren().size(); ++j) {
+			GameObject* child = object->GetChildren()[j].get();
+
+			if (child->HasComponent<MeshRenderer>()) {
+				child->GetComponent<MeshRenderer>()->RenderMainCamera();
+			}
+		}
+	}
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glPopAttrib();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }
 
 void drawFrustum(const CameraBase& camera)
@@ -300,7 +346,7 @@ void UndoRedo()
 
 #pragma endregion
 
-void ObjectToEditorCamera() 
+static void ObjectToEditorCamera() 
 {
 	if (!Application->input->GetSelectedGameObjects().empty() && Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		Application->input->GetSelectedGameObjects().at(0)->GetTransform()->SetPosition(Application->camera->GetTransform().GetPosition());
@@ -308,7 +354,7 @@ void ObjectToEditorCamera()
 	}
 }
 
-void MousePickingCheck(std::vector<GameObject*> objects)
+static void MousePickingCheck(std::vector<GameObject*> objects)
 {	
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
@@ -353,7 +399,7 @@ void MousePickingCheck(std::vector<GameObject*> objects)
 	}
 }
 
-void RenderOutline(GameObject* object) {
+static void RenderOutline(GameObject* object) {
 	if (!object->isSelected || !object->HasComponent<MeshRenderer>()) return;
 	
 	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
@@ -368,7 +414,6 @@ void RenderOutline(GameObject* object) {
 	object->GetComponent<MeshRenderer>()->Render();
 	glPopMatrix();
 
-
 	glDisable(GL_POLYGON_OFFSET_FILL);
 
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -376,87 +421,48 @@ void RenderOutline(GameObject* object) {
 
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
-	glViewport(0, 0, Application->window->width(), Application->window->height());
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-	
+	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	configureCamera();
+	drawFloorGrid(256, 4);
 
-	drawFloorGrid(128, 4);
+	std::vector<GameObject*> objects;
 
-	std::vector<GameObject*> objects;	
-
-	//no me gusta como esta hecho pero me encuentro fatal pensar de como cambiarlo ma�ana
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
-	{
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
-
-		if (object->HasComponent<LightComponent>()) {
-			auto it = std::find(lights.begin(), lights.end(), object);
-			if (it == lights.end()) {
-				Application->root->GetActiveScene()->_lights.push_back(object->shared_from_this());
-			}
-		}
-	}
-
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
-	{
-		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
-		
 		objects.push_back(object);
-
 		RenderOutline(object);
-
-		//object->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights,mainShader);
-		
 		object->Update(static_cast<float>(Application->GetDt()));
 
-	
-		for (size_t j = 0; j < object->GetChildren().size(); ++j)
-		{
+		for (size_t j = 0; j < object->GetChildren().size(); ++j) {
 			GameObject* child = object->GetChildren()[j].get();
 			objects.push_back(child);
 			RenderOutline(child);
-			//child->ShaderUniforms(Application->camera->view(), Application->camera->projection(), Application->camera->GetTransform().GetPosition(), lights, mainShader);
-		
 		}
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
 	MousePickingCheck(objects);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-static void display_func2() {
-
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboCamera);
-
-	glViewport(0, 0, Application->window->width(), Application->window->height());
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	configureGameCamera();
-	//drawFrustum(*Application->root->mainCamera->GetComponent<CameraComponent>());
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	Application->root->GetActiveScene()->_lights.clear();
-}
-
-void EditorRenderer(MyGUI* gui) {
-
+static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
-
 		const auto t0 = hrclock::now();
+
 		display_func();
-		display_func2();
+		
+		RenderGameView();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		gui->Render();
 
 		/*move_camera();*/
 		Application->window->SwapBuffers();
+
 		const auto t1 = hrclock::now();
 		const auto dt = t1 - t0;
 		if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
@@ -475,15 +481,11 @@ int main(int argc, char** argv) {
 
 		case CREATE:
 
-			// The application is created
 			Application = new App();
 			Application->physicsModule->Awake();
 			Application->physicsModule->Start();
-			// MonoEnvironment* mono = new MonoEnvironment();
-			//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
 			MonoManager::GetInstance().Initialize();
 
-			//initialize devil
 			ilInit();
 			iluInit();
 			ilutInit();

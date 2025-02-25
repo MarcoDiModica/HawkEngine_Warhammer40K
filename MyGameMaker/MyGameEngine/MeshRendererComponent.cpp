@@ -18,6 +18,8 @@
 //cosailegal
 #include "../MyGameEditor/App.h"
 #include "../MyGameEditor/EditorCamera.h"
+#include "../MyGameEditor/Root.h"
+#include "../MyGameEngine/CameraComponent.h"
 
 MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) { name = "MeshRenderer"; }
 
@@ -222,4 +224,87 @@ void MeshRenderer::Render() const
     glBindVertexArray(0); 
 
     mesh->drawBoundingBox(mesh->_boundingBox);
+}
+
+void MeshRenderer::RenderMainCamera() const
+{
+    material->shader->Bind();
+
+    glm::vec4 color(material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
+    material->shader->SetUniform("modColor", color);
+
+    if (material->image().image_path != "") {
+        material->image().bind();
+        material->shader->SetUniform("u_HasTexture", true);
+        material->shader->SetUniform("texture1", 0);
+    }
+    else {
+        material->shader->SetUniform("u_HasTexture", false);
+    }
+
+    material->shader->SetUniform("model", owner->GetTransform()->GetMatrix());
+    material->shader->SetUniform("view", Application->root->mainCamera->GetComponent<CameraComponent>()->view());
+    material->shader->SetUniform("projection", Application->root->mainCamera->GetComponent<CameraComponent>()->projection());
+
+    int numPointLights = static_cast<int>(Application->root->GetActiveScene()->_lights.size());
+    int i = 0;
+
+    switch (material->shaderType)
+    {
+    case LIGHT:
+
+        material->setShaderUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
+
+        material->setShaderUniform("numPointLights", numPointLights);
+
+
+        for (const auto& light : Application->root->GetActiveScene()->_lights)
+        {
+            std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
+            material->setShaderUniform(pointLightstr + ".position", light->GetComponent<Transform_Component>()->GetPosition());
+            material->setShaderUniform(pointLightstr + ".ambient", light->GetComponent<LightComponent>()->GetAmbient());
+            material->setShaderUniform(pointLightstr + ".diffuse", light->GetComponent<LightComponent>()->GetDiffuse());
+            material->setShaderUniform(pointLightstr + ".specular", light->GetComponent<LightComponent>()->GetSpecular());
+            material->setShaderUniform(pointLightstr + ".constant", light->GetComponent<LightComponent>()->GetConstant());
+            material->setShaderUniform(pointLightstr + ".linear", light->GetComponent<LightComponent>()->GetLinear());
+            material->setShaderUniform(pointLightstr + ".quadratic", light->GetComponent<LightComponent>()->GetQuadratic());
+            material->setShaderUniform(pointLightstr + ".radius", light->GetComponent<LightComponent>()->GetRadius());
+            material->setShaderUniform(pointLightstr + ".intensity", light->GetComponent<LightComponent>()->GetIntensity());
+            i++;
+        }
+
+        material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+        material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+        material->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+        material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+        material->setShaderUniform("dirLight.intensity", 3.0f);
+
+        break;
+    case WATER:
+
+        material->shader->SetUniform("u_Time", owner->GetTimeActive());
+        material->shader->SetUniform("u_Amplitude", owner->GetComponent<ShaderComponent>()->amplitude);
+        material->shader->SetUniform("u_Frequency", owner->GetComponent<ShaderComponent>()->frequency);
+        material->shader->SetUniform("u_ColorLow", glm::vec3(0.0f, 0.0f, 1.0f));
+        material->shader->SetUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
+        material->shader->SetUniform("u_Factor", 0.8f);
+
+        break;
+    default:
+        break;
+    }
+
+    glBindVertexArray(mesh->model.get()->GetModelData().vA);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
+
+    glDrawElements(GL_TRIANGLES, mesh->model->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
+
+    material->shader->UnBind();
+
+    if (material->image().image_path != "") {
+        material->unbind();
+    }
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }

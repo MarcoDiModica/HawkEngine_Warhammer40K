@@ -75,14 +75,14 @@
     <ClCompile Include="UIProject.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
-    <ClCompile Include="UICamera.cpp">
-      <Filter>EditorModules</Filter>
-    </ClCompile>
     <ClCompile Include="UIAudioTest.cpp">
       <Filter>EditorModules</Filter>
     </ClCompile>
     <ClCompile Include="UITextEditor.cpp">
       <Filter>EditorModules</Filter>
+    </ClCompile>
+    <ClCompile Include="UIGameView.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,14 +140,14 @@
     <ClInclude Include="UIProject.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
-    <ClInclude Include="UICamera.h">
-      <Filter>EditorModules</Filter>
-    </ClInclude>
     <ClInclude Include="UIAudioTest.h">
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UITextEditor.h">
       <Filter>EditorModules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIGameView.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

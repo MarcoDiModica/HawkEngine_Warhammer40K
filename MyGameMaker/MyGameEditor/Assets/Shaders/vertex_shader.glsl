@@ -35,7 +35,7 @@ void main()
     Normal = mat3(transpose(inverse(model))) * aNormal;
 
     vec4 totalPosition = vec4(aPos,1.0f);
-    vec3 totalNormal = aNormal;
+    vec3 totalNormal = mat3(transpose(inverse(model))) * aNormal;
     for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
     {
         if(boneIds[i] == -1) 

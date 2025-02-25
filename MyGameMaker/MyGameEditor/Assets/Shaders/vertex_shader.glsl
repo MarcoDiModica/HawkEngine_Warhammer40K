@@ -35,7 +35,7 @@ void main()
     Normal = mat3(transpose(inverse(model))) * aNormal;
 
     vec4 totalPosition = vec4(aPos,1.0f);
-    vec3 totalNormal = mat3(transpose(inverse(model))) * aNormal;
+    vec3 totalNormal =  vec3(0.0f);
     for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
     {
         if(boneIds[i] == -1) 
@@ -55,5 +55,5 @@ void main()
 
     // Transform the vertex position to clip space
     gl_Position = projection * view * model * totalPosition;
-    Normal = normalize(totalNormal);
+    //Normal = normalize(totalNormal);
 }

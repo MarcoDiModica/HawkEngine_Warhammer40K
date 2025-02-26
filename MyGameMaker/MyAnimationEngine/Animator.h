@@ -33,6 +33,17 @@ public:
 		return m_CurrentTime;
     }
 
+	void SetCurrentMTime(float time)
+	{
+		m_CurrentTime = time;
+	}
+
+    void UpdateAnimTime(float time)
+    {
+		m_CurrentTime = time;
+		UpdateAnimation(m_CurrentTime);
+    }
+
 	Animation* GetCurrentAnimation()
 	{
 		return m_CurrentAnimation;

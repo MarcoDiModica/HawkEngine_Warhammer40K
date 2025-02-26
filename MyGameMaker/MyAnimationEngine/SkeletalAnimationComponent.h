@@ -51,13 +51,20 @@ public:
         return animator.get();
     }
 
+	void SetAnimationPlayState(bool play) 
+    {
+		isPlaying = play;
+	}
 
-    Animation animationTest;
-    float patatudo;
+	bool GetAnimationPlayState() const 
+    {
+		return isPlaying;
+	}
+
 private:
     std::unique_ptr<Animator> animator;
     std::unique_ptr<Animation> testAnimation;
-    
+	bool isPlaying = true;
  
 
 protected:

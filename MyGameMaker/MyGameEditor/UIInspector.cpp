@@ -381,9 +381,20 @@ private:
 
 		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetAnimations()[0].c_str());
 		ImGui::Text("Time: %.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
+        
         float playSpeed = skeletal->GetAnimator()->GetPlaySpeed();
         ImGui::DragFloat("Speed", &playSpeed, 0.1f, -10.0f, 10.0f);
         skeletal->GetAnimator()->SetPlaySpeed(playSpeed);
+		
+        bool isPlaying = skeletal->GetAnimationPlayState();
+        ImGui::Checkbox("IsPlaying", &isPlaying);
+		skeletal->SetAnimationPlayState(isPlaying);
+		
+        float time = skeletal->GetAnimator()->GetCurrentMTime();
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+        ImGui::SliderFloat("Timeline", &time, 0, skeletal->GetAnimator()->GetCurrentAnimation()->GetDuration());
+        ImGui::PopItemFlag();
+
     }
     #pragma endregion 
 

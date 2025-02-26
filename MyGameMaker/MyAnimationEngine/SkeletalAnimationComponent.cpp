@@ -57,7 +57,10 @@ void SkeletalAnimationComponent::Start()
 
 void SkeletalAnimationComponent::Update(float deltaTime)
 {
-	animator->UpdateAnimation(deltaTime);
+    if (isPlaying) 
+    {
+        animator->UpdateAnimation(deltaTime);
+    }
 }
 
 void SkeletalAnimationComponent::Destroy()

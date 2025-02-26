@@ -174,7 +174,7 @@ bool Root::Start()
 {
 	CreatePlayer();
 
-    script->LoadScript("PlayerController");
+    /*script->LoadScript("PlayerController");*/
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));

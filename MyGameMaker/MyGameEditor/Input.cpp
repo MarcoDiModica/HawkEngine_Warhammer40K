@@ -100,10 +100,10 @@ void SpawnPhysCube() {
     //auto cube = Application->root->CreateCube("PhysicsCube");
     //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
     //Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
-    glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posici�n de la c�mara
-    auto sphere = Application->root->CreateSphere("PhysicsSphere");
-    glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
-    Application->physicsModule->SpawnPhysSphereWithForce(*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
+    //glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posici�n de la c�mara
+    //auto sphere = Application->root->CreateSphere("PhysicsSphere");
+    //glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
+    //Application->physicsModule->SpawnPhysSphereWithForce(,*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
 }
 bool Input::processSDLEvents()
 {

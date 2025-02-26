@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 
 
-constexpr float fixedDeltaTime = 1.0f / 60.0f; // 60 updates per second
+constexpr float fixedDeltaTime = 0.005; // 60 updates per second
 float accumulatedTime = 0.0f;
 
 
@@ -37,15 +37,13 @@ bool PhysicsModule::Awake() {
     // Initialize shared collision shapes (e.g., cubeShape)
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
-
     //Plane functions
     btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
-
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
-
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
     dynamicsWorld->addRigidBody(groundRigidBody);
+
     //groundRigidBody->setRestitution(0.8f);
     SetGlobalRestitution(0.5f);
     return true;
@@ -222,14 +220,21 @@ bool PhysicsModule::CleanUp() {
     return true;
 }
 
-void PhysicsModule::SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& cameraPosition, const glm::vec3& cameraDirection, float forceMagnitude) {
-    Transform_Component* transform = go.GetTransform();
-    transform->SetPosition(cameraPosition);
+void PhysicsModule::SpawnPhysSphereWithForce(GameObject& launcher, GameObject& sphere, float radius, float mass, float forceMagnitude) {
+    Transform_Component* transform = launcher.GetTransform();
+    glm::vec3 spawnPosition = transform->GetPosition();
+
+    glm::vec3 spawnDirection = glm::vec3(transform->GetForward().x, 0.0f, transform->GetForward().z);
+    float offsetDistance = 1.0f;
+    spawnPosition += spawnDirection * offsetDistance;
+
+    Transform_Component* sphereTransform = sphere.GetTransform();
+    sphereTransform->SetPosition(spawnPosition);
 
     btTransform startTransform;
     startTransform.setIdentity();
-    startTransform.setOrigin(btVector3(cameraPosition.x, cameraPosition.y, cameraPosition.z));
-    startTransform.setRotation(btQuaternion(0, 0, 0, 1)); // Sin rotación inicial
+    startTransform.setOrigin(btVector3(spawnPosition.x, spawnPosition.y, spawnPosition.z));
+    startTransform.setRotation(btQuaternion(0, 0, 0, 1)); 
 
     btSphereShape* sphereShape = new btSphereShape(radius);
 
@@ -245,13 +250,12 @@ void PhysicsModule::SpawnPhysSphereWithForce(GameObject& go, float radius, float
 
     rigidBody->setRestitution(0.7f);
     dynamicsWorld->addRigidBody(rigidBody);
-    gameObjectRigidBodyMap[&go] = rigidBody;
+    gameObjectRigidBodyMap[&sphere] = rigidBody;
 
-    // Obtener la dirección de la cámara y aplicar una fuerza inicial
-    //glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward(); // Dirección de la cámara
-    btVector3 btForce = btVector3(cameraDirection.x, cameraDirection.y, cameraDirection.z) * forceMagnitude;
+    btVector3 btForce = btVector3(spawnDirection.x * forceMagnitude, 0.0f, spawnDirection.z * forceMagnitude);
     rigidBody->applyCentralImpulse(btForce);
 }
+
 
 void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     int numCollisionObjects = dynamicsWorld->getNumCollisionObjects();

@@ -50,7 +50,7 @@ public:
     // Añade una restricción de bisagra (Hinge)
     void AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB,
         const glm::vec3& axisA, const glm::vec3& axisB, bool disable_collision = false);
-    void SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& cameraPosition, const glm::vec3& cameraDirection, float forceMagnitude);
+    void SpawnPhysSphereWithForce(GameObject& launcher, GameObject& sphere, float radius, float mass, float forceMagnitude);
     void SetGlobalRestitution(float restitutionValue);
 
     void SetColliderFriction(GameObject& go, float friction);

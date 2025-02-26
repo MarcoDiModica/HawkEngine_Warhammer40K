@@ -73,6 +73,13 @@ void HandleInput(float dt) {
     if (keys[SDL_SCANCODE_K]) desiredVelocity.setZ(moveSpeed); 
     if (keys[SDL_SCANCODE_I]) desiredVelocity.setZ(-moveSpeed); 
 
+    // Spawn sphere if E is pressed
+    if (keys[SDL_SCANCODE_E]) {
+
+        auto sphere = Application->root->CreateSphere("PhysicsSphere");
+        Application->physicsModule->SpawnPhysSphereWithForce(*player, *sphere, 1.0f, 15.0f, 500.0f);
+    }
+
     //Apply acceleration + force
     if (desiredVelocity.length2() > 0) {
         desiredVelocity.setX(desiredVelocity.getX() * moveSpeed / desiredVelocity.length());

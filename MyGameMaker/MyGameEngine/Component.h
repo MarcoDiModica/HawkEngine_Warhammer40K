@@ -28,6 +28,7 @@ enum class ComponentType {
 	SHADER,
 	COLLIDER,
 	PARTICLES_EMITTER,
+	UI,
 	LIGHT
 };
 

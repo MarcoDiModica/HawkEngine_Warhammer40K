@@ -172,8 +172,11 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	CreatePlayer();
+	//CreatePlayer();
 
+    auto player = CreateCube("Player");
+    player->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
     /*script->LoadScript("PlayerController");*/
 
     auto objMainCamera = CreateCameraObject("MainCamera");

@@ -136,15 +136,15 @@ bool Input::processSDLEvents()
         }
     }
         
-	if (GetControllerKey(SDL_CONTROLLER_BUTTON_A) == KEY_UP)
+	/*if (GetControllerKey(SDL_CONTROLLER_BUTTON_A) == KEY_UP)
 	{
 		LOG(LogType::LOG_INFO, "A button pressed");
 	}
 
-    if (int leftXAxisValue = GetJoystickAxis(0, SDL_CONTROLLER_AXIS_LEFTX)) 
-    {
+	if (int leftXAxisValue = GetJoystickAxis(0, SDL_CONTROLLER_AXIS_LEFTX))
+	{
 		LOG(LogType::LOG_INFO, "Left X Axis Value: %d", leftXAxisValue);
-    }
+	}*/
 
     //const Uint8* controllerKeys = SDL_Getcontroller
 
@@ -294,20 +294,50 @@ bool Input::processSDLEvents()
             InputManagement->HandleDeviceRemoval(event.cdevice.which);
             break;
 
-        case SDL_CONTROLLERBUTTONDOWN:
-        case SDL_CONTROLLERBUTTONUP:
-            // Actualizar el estado del botón del gamepad
-            gamepadIndex = event.cbutton.which;
-            button = event.cbutton.button;
-            if (event.type == SDL_CONTROLLERBUTTONDOWN)
-            {
-                InputManagement->gamepads[gamepadIndex].buttons[button] = KEY_DOWN;
-            }
-            else
-            {
-                InputManagement->gamepads[gamepadIndex].buttons[button] = KEY_UP;
-            }
-            break;
+		case SDL_CONTROLLERBUTTONDOWN:
+		case SDL_CONTROLLERBUTTONUP:
+			// Update gamepad button state
+			gamepadIndex = event.cbutton.which;
+			button = event.cbutton.button;
+
+			// Map the button correctly based on SDL_GameControllerButton enum
+			switch (button) {
+			case SDL_CONTROLLER_BUTTON_A:
+				// Handle A button (already working)
+				break;
+			case SDL_CONTROLLER_BUTTON_B:
+				// Handle B button (already working)
+				break;
+			case SDL_CONTROLLER_BUTTON_X:
+				// Handle X button (already working)
+				break;
+			case SDL_CONTROLLER_BUTTON_Y:
+				// Handle Y button (already working)
+				break;
+			case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
+				// This should be treated as left bumper/shoulder
+				break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+				// This should be treated as right bumper/shoulder
+				break;
+			case SDL_CONTROLLER_BUTTON_LEFTSTICK:
+				// Left stick press
+				break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSTICK:
+				// Right stick press
+				break;
+				// Add other buttons as needed
+			}
+
+			if (event.type == SDL_CONTROLLERBUTTONDOWN)
+			{
+				InputManagement->gamepads[gamepadIndex].buttons[button] = KEY_DOWN;
+			}
+			else
+			{
+				InputManagement->gamepads[gamepadIndex].buttons[button] = KEY_UP;
+			}
+			break;
         case SDL_CONTROLLERAXISMOTION:
             // Manejar eventos de ejes del controlador aquí
             switch (event.caxis.axis) {
@@ -517,7 +547,7 @@ KEY_STATE Input::GetControllerKey(int id)
 }
 
 int Input::GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis) {
-    return (InputManagement->gamepads[gamepadIndex].axes[axis]/ 32767.0f) * 100;
+    return (InputManagement->gamepads[gamepadIndex].axes[axis]/ 32767.0f);
 }
 
 KEY_STATE Input::GetMouseButton(int id)

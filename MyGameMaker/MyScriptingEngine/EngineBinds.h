@@ -50,8 +50,7 @@ namespace EngineBinds {
     bool GetControllerButton(int buttonID);
     bool GetControllerButtonDown(int buttonID);
     bool GetControllerButtonUp(int buttonID);
-    int GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis);
-
+    float GetJoystickAxis(int gamepadIndex, int axis);
 
     // Transform
     void SetPosition(MonoObject* transformRef, float x, float y, float z);

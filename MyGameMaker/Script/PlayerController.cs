@@ -95,6 +95,84 @@ public class PlayerController : MonoBehaviour
         UpdateDashRecharge(deltaTime);
         UpdateProjectiles(deltaTime);
         CleanupProjectiles();
+
+        if (Input.GetControllerButtonDown(ControllerButton.A))
+        {
+            Engineson.print("A button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.B))
+        {
+            Engineson.print("B button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.X))
+        {
+            Engineson.print("X button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.Y))
+        {
+            Engineson.print("Y button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.Back))
+        {
+            Engineson.print("Back button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.XboxPS))
+        {
+            Engineson.print("Xbox/PS button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.Start))
+        {
+            Engineson.print("Start button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.LeftStick))
+        {
+            Engineson.print("Left Stick button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.RightStick))
+        {
+            Engineson.print("Right Stick button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.LeftShoulder))
+        {
+            Engineson.print("Left Shoulder button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.RightShoulder))
+        {
+            Engineson.print("Right Shoulder button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.DPadUp))
+        {
+            Engineson.print("DPadUp button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.DPadDown))
+        {
+            Engineson.print("DPadDown button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.DPadLeft))
+        {
+            Engineson.print("DPadLeft button pressed!");
+        }
+        if (Input.GetControllerButtonDown(ControllerButton.DPadRight))
+        {
+            Engineson.print("DPadRight button pressed!");
+        }
+        //if (Input.GetAxis(ControllerAxis.LeftX) != 0)
+        //{
+        //    Engineson.print($"Left Stick X: {Input.GetAxis(ControllerAxis.LeftX)}");
+        //}
+        //if (Input.GetControllerAxis(ControllerAxis.LeftY) != 0)
+        //{
+        //    Engineson.print($"Left Stick Y: {Input.GetControllerAxis(ControllerAxis.LeftY)}");
+        //}
+        //if (Input.GetControllerAxis(ControllerAxis.RightX) != 0)
+        //{
+        //    Engineson.print($"Right Stick X: {Input.GetControllerAxis(ControllerAxis.RightX)}");
+        //}
+        //if (Input.GetControllerAxis(ControllerAxis.RightY) != 0)
+        //{
+        //    Engineson.print($"Right Stick Y: {Input.GetControllerAxis(ControllerAxis.RightY)}");
+        //}
+
     }
     #endregion
 

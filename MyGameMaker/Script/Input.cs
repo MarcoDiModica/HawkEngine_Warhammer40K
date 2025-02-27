@@ -102,8 +102,8 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern static bool GetControllerButtonUp(int buttonId);
 
-        //[MethodImplAttribute(MethodImplOptions.InternalCall)]
-        //public extern static int GetControllerAxis(int axisId);
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static float GetControllerAxis(int gamepad, int axisId);
 
         public static bool GetControllerButton(ControllerButton button)
         {
@@ -120,6 +120,26 @@ namespace HawkEngine
             return GetControllerButtonUp((int)button);
         }
 
+        public static float GetAxis(ControllerAxis axis)
+        {
+            return GetControllerAxis(0, (int)axis);
+        }
+
+        public static Vector2 GetLeftStick()
+        {
+            return new Vector2(
+                GetAxis(ControllerAxis.LeftX),
+                GetAxis(ControllerAxis.LeftY)
+            );
+        }
+
+        public static Vector2 GetRightStick()
+        {
+            return new Vector2(
+                GetAxis(ControllerAxis.RightX),
+                GetAxis(ControllerAxis.RightY)
+            );
+        }
     }
 
     public enum ControllerButton
@@ -128,16 +148,27 @@ namespace HawkEngine
         B = 1,
         X = 2,
         Y = 3,
-        LeftBumper = 4,
-        RightBumper = 5,
-        Back = 6,
-        Start = 7,
-        LeftStick = 8,
-        RightStick = 9,
-        DPadUp = 10,
-        DPadDown = 11,
-        DPadLeft = 12,
-        DPadRight = 13,
+        Back = 4,
+        XboxPS = 5,
+        Start = 6,
+        LeftStick = 7,
+        RightStick = 8,
+        LeftShoulder = 9, 
+        RightShoulder = 10,
+        DPadUp = 11,
+        DPadDown = 12,
+        DPadLeft = 13,
+        DPadRight = 14,
+    }
+
+    public enum ControllerAxis
+    {
+        LeftX = 0,
+        LeftY = 1,
+        RightX = 2,
+        RightY = 3,
+        TriggerLeft = 4,
+        TriggerRight = 5
     }
 
     public enum KeyCode

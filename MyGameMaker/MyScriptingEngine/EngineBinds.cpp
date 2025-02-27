@@ -208,8 +208,28 @@ bool EngineBinds::GetControllerButtonUp(int buttonID) {
     return InputManagement->controller_buttons[buttonID] == KEY_UP;
 }
 
-int EngineBinds::GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis) {
-    return (InputManagement->gamepads[gamepadIndex].axes[axis] / 32767.0f) * 100;
+float EngineBinds::GetJoystickAxis(int gamepadIndex, int axis) {
+    if (axis == 0) {
+        return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_LEFTX] / 32767.0f);
+    }
+	else if (axis == 1) {
+		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_LEFTY] / 32767.0f);
+	}
+	else if (axis == 2) {
+		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_RIGHTX] / 32767.0f);
+	}
+	else if (axis == 3) {
+		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_RIGHTY] / 32767.0f);
+	}
+	else if (axis == 4) {
+		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_TRIGGERLEFT] / 32767.0f);
+	}
+	else if (axis == 5) {
+		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_TRIGGERRIGHT] / 32767.0f);
+	}
+	else {
+		return 0.0f;
+	}
 }
 
 glm::vec3 EngineBinds::GetMousePosition() {

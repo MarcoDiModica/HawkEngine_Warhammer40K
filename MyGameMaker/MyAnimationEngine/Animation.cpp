@@ -99,7 +99,7 @@ void Animation::ReadMissingBones(const aiAnimation* animation, Model& model)
         auto channel = animation->mChannels[i];
         std::string boneName = channel->mNodeName.data;
 
-        //ERROR HERE
+        //
         if (boneInfoMap.find(boneName) == boneInfoMap.end())
         {
             boneInfoMap[boneName].id = boneCount;

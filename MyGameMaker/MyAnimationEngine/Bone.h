@@ -9,6 +9,8 @@
 #include <assimp/scene.h>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "MyGameEngine/AssimpGLMHelpers.h"
 
 struct KeyPosition
@@ -55,6 +57,8 @@ public:
     glm::mat4 GetLocalTransform() { return m_LocalTransform; }
     std::string GetBoneName() const { return m_Name; }
     int GetBoneID() { return m_ID; }
+
+    void DrawTriangle();
 
 private:
 	float GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime);

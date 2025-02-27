@@ -221,6 +221,7 @@ void MeshRenderer::Render() const
     glBindVertexArray(mesh->model.get()->GetModelData().vA);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
 
+    // Esto dibuja las caras!!
     glDrawElements(GL_TRIANGLES, mesh->model->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
 
     material->shader->UnBind();

@@ -313,7 +313,7 @@ void Root::CreateGameObjectWithPath(const std::string& path)
         go->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
 
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
-        Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        //Application->root->ParentGameObject(*go, *MarcoVicePresidente);
         //gameObjectsWithColliders.push_back(go);
     }
 

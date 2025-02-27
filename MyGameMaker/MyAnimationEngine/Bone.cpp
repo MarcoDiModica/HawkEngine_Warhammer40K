@@ -48,11 +48,52 @@ Bone::~Bone()
 
 void Bone::Update(float animationTime)
 {
+    if (m_Name == "Armature")
+        return;
 	glm::mat4 translation = InterpolatePosition(animationTime);
 	glm::mat4 rotation = InterpolateRotation(animationTime);
 	glm::mat4 scale = InterpolateScaling(animationTime);
 
+    glm::mat4 identityMatrix = glm::mat4(1.0f);
+
+    // Crear una matriz identidad con valores de 2 en la diagonal
+    glm::mat4 identityMatrixWithTwos = glm::mat4(1.0f);
+    identityMatrixWithTwos[0][0] = 2.0f;
+    identityMatrixWithTwos[1][1] = 2.0f;
+    identityMatrixWithTwos[2][2] = 2.0f;
+    identityMatrixWithTwos[3][3] = 1;
+
+    glm::mat4 customMatrix = glm::mat4(1.0f);
+    customMatrix[0][0] = 0.0f; customMatrix[0][1] = 0.0f; customMatrix[0][2] = 0.0f; customMatrix[0][3] = 0.0f;
+    customMatrix[1][0] = 1.0f; customMatrix[1][1] = 1.0f; customMatrix[1][2] = -1.0f; customMatrix[1][3] = 0.0f;
+    customMatrix[2][0] = 0.0f; customMatrix[2][1] = 0.0f; customMatrix[2][2] = 0.0f; customMatrix[2][3] = 0.0f;
+    customMatrix[3][0] = 0.0f; customMatrix[3][1] = 0.0f; customMatrix[3][2] = 0.0f; customMatrix[3][3] = 1.0f;
+
+    glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(20.0f, 20.0f, 20.0f));
+
+
 	m_LocalTransform = translation * rotation * scale;
+
+	DrawTriangle();
+}
+
+void Bone::DrawTriangle()
+{
+    // Apply the local transform matrix
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glMultMatrixf(glm::value_ptr(m_LocalTransform));
+
+    // Draw the triangle
+	glColor3b(255, 0, 0);
+    glBegin(GL_TRIANGLES);
+    glVertex3f(0.0f, 1.0f, 0.0f); // Top vertex
+    glVertex3f(-1.0f, -1.0f, 0.0f); // Bottom left vertex
+    glVertex3f(1.0f, -1.0f, 0.0f); // Bottom right vertex
+    glEnd();
+
+    // Restore the previous matrix
+    glPopMatrix();
 }
 
 int Bone::GetPositionIndex(float animationTime)

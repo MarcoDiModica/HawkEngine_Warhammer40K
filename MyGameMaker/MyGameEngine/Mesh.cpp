@@ -365,6 +365,13 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 		0, 1, 2, 0, 2, 3
 	};
 
+	model->GetModelData().vertex_texCoords = {
+		vec2(0.0f, 0.0f),
+		vec2(1.0f, 0.0f),
+		vec2(1.0f, 1.0f),
+		vec2(0.0f, 1.0f)
+	};
+
 	model->SetMeshName("Plane");
 
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();

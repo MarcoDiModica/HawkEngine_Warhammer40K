@@ -75,6 +75,29 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
     return particleEmitter;
 }
 
+std::shared_ptr<GameObject> CreateCanvasInScene(const std::string& name, const glm::vec3& position, const std::string& texturePath) {
+    
+    auto planeObject = Application->root->CreatePlane(name);
+    auto transform = planeObject->GetTransform();
+    transform->SetPosition(position);
+    transform->Rotate(glm::radians(90.0f), glm::vec3(1, 0, 0));
+    
+    auto material = std::make_shared<Material>();
+	material->imagePtr = std::make_shared<Image>();
+	material->imagePtr->LoadTexture(texturePath);
+
+    
+    auto mesh = Mesh::CreatePlane();
+    auto meshRenderer = planeObject->AddComponent<MeshRenderer>();
+    meshRenderer->SetMesh(mesh);
+    meshRenderer->SetMaterial(material);
+
+    auto shaderComponent = planeObject->AddComponent<ShaderComponent>();
+    shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+    shaderComponent->SetShaderType(ShaderType::LIGHT);
+
+    return planeObject;
+}
 bool Root::Awake()
 {
    // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
@@ -92,6 +115,8 @@ bool Root::Awake()
     CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();
+    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -5.0f), "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png");
+
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");
     

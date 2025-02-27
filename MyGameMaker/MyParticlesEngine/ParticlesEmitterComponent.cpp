@@ -130,7 +130,7 @@ void ParticlesEmitterComponent::Update(float deltaTime)
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glDisable(GL_CULL_FACE);
+    //glDisable(GL_CULL_FACE);
 
     for (auto it = particles.begin(); it != particles.end();) {
         glm::mat4 billboardMatrix;
@@ -168,7 +168,7 @@ void ParticlesEmitterComponent::Update(float deltaTime)
     }
 
     glEnable(GL_CULL_FACE);
-    glDisable(GL_BLEND);
+    //glDisable(GL_BLEND);
 }
 
 void ParticlesEmitterComponent::Destroy() {

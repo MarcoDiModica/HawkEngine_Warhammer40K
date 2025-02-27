@@ -9,7 +9,7 @@ out vec4 FragColor;
 
 uniform sampler2D texture1; // Texture sampler
 uniform vec4 modColor; // New uniform for color modifier
-
+uniform bool u_HasTexture;
 
 struct PointLight {
     vec3 position;
@@ -58,8 +58,12 @@ void main()
     
     
     // Sample the texture using the texture coordinates
-    vec4 texColor = texture(texture1, TexCoord);
-    FragColor = vec4(result, 1.0) * texColor * modColor;
+	if(u_HasTexture){
+		vec4 texColor = texture(texture1, TexCoord);
+		FragColor = vec4(result, 1.0) * texColor * modColor;
+	}else{
+		FragColor = vec4(result,1.0) * modColor;
+	}
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)

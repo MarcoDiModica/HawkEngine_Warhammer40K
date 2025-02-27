@@ -2,12 +2,12 @@
 #define __UI_HIERARCHY_H__
 #pragma once
 
-#include "UIElement.h"
-//#include "MyGameEngine/Scene.h"
-#include "Root.h"
 #include <vector>
 #include <string>
 #include <memory>
+
+#include "UIElement.h"
+#include "Root.h"
 
 class GameObject;
 
@@ -22,6 +22,6 @@ public:
 
 	bool Draw();
 
-	GameObject* draggedObject;
+	GameObject* draggedObject = nullptr;
 };
 #endif // !__UI_HIERARCHY_H__

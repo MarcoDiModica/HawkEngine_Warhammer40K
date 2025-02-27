@@ -1,7 +1,8 @@
+#include <imgui.h>
+
 #include "UIAudioTest.h"
 #include "App.h"
 #include "MyGUI.h"
-#include <imgui.h>
 
 UIAudioTest::UIAudioTest(UIType type, std::string name) : UIElement(type, name)
 {
@@ -18,6 +19,16 @@ UIAudioTest::~UIAudioTest()
     if (m_AudioEngine) {
         m_AudioEngine->Shutdown();
     }
+
+    m_AudioEngine = nullptr;
+
+    if (m_CurrentMusicSource != 0) {
+		m_AudioEngine->StopSound(m_CurrentMusicSource);
+	}
+
+    if (m_CurrentEffectSource != 0) {
+		m_AudioEngine->StopSound(m_CurrentEffectSource);
+	}
 }
 
 bool UIAudioTest::Draw()

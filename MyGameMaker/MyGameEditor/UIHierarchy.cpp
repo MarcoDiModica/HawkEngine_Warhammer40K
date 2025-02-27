@@ -1,18 +1,20 @@
-#include "UIHierarchy.h"
-
-#include "App.h"
-#include "Root.h"
-#include "MyGameEditor/Input.h"
-#include "MyGameEngine/GameObject.h"
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <iostream>
 #include <SDL2/SDL.h>
 
+#include "UIHierarchy.h"
+#include "App.h"
+#include "Root.h"
+#include "MyGameEditor/Input.h"
+#include "MyGameEngine/GameObject.h"
+
 UIHierarchy::UIHierarchy(UIType type, std::string name) : UIElement(type, name) {
 }
 
 UIHierarchy::~UIHierarchy() {
+    delete draggedObject;
+    draggedObject = nullptr;
 }
 
 bool UIHierarchy::Draw() {

@@ -24,6 +24,8 @@ void Scene::Update(float deltaTime)
 		child->Update(deltaTime);
 	}
 
+
+
 }
 
 void Scene::Destroy()

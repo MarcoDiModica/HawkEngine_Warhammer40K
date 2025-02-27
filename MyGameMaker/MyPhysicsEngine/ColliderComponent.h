@@ -10,13 +10,8 @@ public:
     ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet = false);
     ~ColliderComponent() override;
 
-    /*ColliderComponent(const ColliderComponent& other, PhysicsModule* physicsModule);
-    ColliderComponent& operator=(const ColliderComponent& other);
-
-    ColliderComponent(ColliderComponent&& other, PhysicsModule* physicsModule) noexcept;
-    ColliderComponent& operator=(ColliderComponent&& other) noexcept;*/
-
     void Start() override;
+    void SetTrigger(bool trigger);
     void Update(float deltaTime) override;
     void Destroy() override;
 
@@ -24,11 +19,12 @@ public:
 
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
-    glm::vec3 GetSize() { return size; };
+    glm::vec3 GetSize();
 
     void SetSize(const glm::vec3& newSize);
 
     float GetMass() { return mass; };
+    bool IsTrigger() const;
     glm::vec3 GetColliderPos();
 
     glm::quat GetColliderRotation();
@@ -41,15 +37,23 @@ public:
 
     void SetActive(bool active);
 
+    bool GetSnapToPosition() const { return snapToPosition; }
+    void SetSnapToPosition(bool value) { snapToPosition = value; }
+    void SnapToPosition();
+
+    btRigidBody* GetRigidBody() const { return rigidBody; }
+
+
 private:
-    btRigidBody* rigidBody; // Collider
-    PhysicsModule* physics; // Referencia al módulo de físicas
-    glm::vec3 size; // Tamaño del Bounding Box
+    btRigidBody* rigidBody; 
+    PhysicsModule* physics;
+    glm::vec3 size; 
     float mass;
     bool isForStreetLocal;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
 
+	bool snapToPosition = false;
 
-    void CreateCollider(bool isForStreet = false);
+    void CreateCollider();
 };
 

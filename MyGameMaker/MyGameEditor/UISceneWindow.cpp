@@ -1,9 +1,5 @@
-#include "UISceneWindow.h"
-#include "UIInspector.h"
-#include "App.h"
-#include "MyGUI.h"
 #include <imgui.h>
-#include <imgui_internal.h>	
+#include <imgui_internal.h>
 #include <imgui_impl_sdl2.h>
 #include <imgui_impl_opengl3.h>
 #include <SDL2/SDL.h>
@@ -11,8 +7,13 @@
 #include <ImGuizmo.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <functional>
+
+#include "UISceneWindow.h"
+#include "UIInspector.h"
+#include "App.h"
+#include "MyGUI.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
+#include "Input.h"
 
 enum class ManipulationOperation { IDLE, TRANSLATE, ROTATE, SCALE };
 enum class TransformSpace { LOCAL, WORLD };
@@ -24,6 +25,7 @@ UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, na
 	m_Trans.LoadTextureLocalPath("EngineAssets/trans.png");
 	m_Rot.LoadTextureLocalPath("EngineAssets/rot.png");
 	m_Sca.LoadTextureLocalPath("EngineAssets/sca.png");
+    m_Setting.LoadTextureLocalPath("EngineAssets/settings.png");
 }
 
 UISceneWindow::~UISceneWindow()
@@ -32,11 +34,9 @@ UISceneWindow::~UISceneWindow()
 
 void UISceneWindow::Init()
 {
-	// Generate and bind the FBO
 	glGenFramebuffers(1, &Application->gui->fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 
-	// Create the texture to render to
 	glGenTextures(1, &Application->gui->fboTexture);
 	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Application->window->width(), Application->window->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -44,17 +44,14 @@ void UISceneWindow::Init()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, Application->gui->fboTexture, 0);
 
-	// Create a renderbuffer object for depth and stencil attachments
 	glGenRenderbuffers(1, &Application->gui->rbo);
 	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Application->window->width(), Application->window->height());
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, Application->gui->rbo);
 
-	// Check if framebuffer is complete
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		std::cerr << "Error: Framebuffer is not complete!" << std::endl;
 
-	// Unbind the framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;;
@@ -149,172 +146,217 @@ bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm:
 
 bool UISceneWindow::Draw()
 {
-	// Begin the GameWindow
-	ImGui::Begin("Scene", nullptr, windowFlags);
-	{
-		bool isViewportHovered = ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup);
-		// Get the current window's position and size
-		ImVec2 windowPos = ImGui::GetWindowPos();
-		ImVec2 windowSize = ImGui::GetWindowSize();
+    ImGui::Begin("Scene", nullptr, windowFlags);
+    {
+        bool isViewportHovered = ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup);
+        ImVec2 windowPos = ImGui::GetWindowPos();
+        ImVec2 windowSize = ImGui::GetWindowSize();
+        ImVec2 contentRegionSize = ImGui::GetContentRegionAvail();
 
-		winPos = vec2(windowPos.x, windowPos.y);
-		winSize = vec2(windowSize.x, windowSize.y);
-		// Define the title bar rectangle
-		ImRect titleBarRect(windowPos, ImVec2(windowPos.x + windowSize.x, windowPos.y + ImGui::GetFrameHeight()));
+        winPos = vec2(windowPos.x, windowPos.y);
+        
+        if (winSize.x != contentRegionSize.x || winSize.y != contentRegionSize.y)
+        {
+            winSize = vec2(contentRegionSize.x, contentRegionSize.y);
+            
+            glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)winSize.x, (int)winSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+            
+            glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
+            
+            Application->camera->UpdateCameraView(winSize.x, winSize.y, winSize.x, winSize.y);
+            
+            Application->gui->camSize = winSize;
+        }
 
-		// Get the current mouse position
-		ImVec2 mousePos = ImGui::GetMousePos();
+        ImRect titleBarRect(windowPos, ImVec2(windowPos.x + windowSize.x, windowPos.y + ImGui::GetFrameHeight()));
 
-		// Check if the mouse is over the title bar of the GameWindow
-		bool isMouseOverTitleBar = (mousePos.x >= titleBarRect.Min.x && mousePos.x <= titleBarRect.Max.x &&
-			mousePos.y >= titleBarRect.Min.y && mousePos.y <= titleBarRect.Max.y);
+        ImVec2 mousePos = ImGui::GetMousePos();
 
-		// If the mouse is over the title bar, allow the window to be moved
-		if (isMouseOverTitleBar) {
-			windowFlags &= ~ImGuiWindowFlags_NoMove;
-		}
-		else {
-			windowFlags |= ImGuiWindowFlags_NoMove;
-		}
+        bool isMouseOverTitleBar = (mousePos.x >= titleBarRect.Min.x && mousePos.x <= titleBarRect.Max.x &&
+            mousePos.y >= titleBarRect.Min.y && mousePos.y <= titleBarRect.Max.y);
 
-		ImVec2 availableSize = ImGui::GetContentRegionAvail();
+        if (isMouseOverTitleBar) {
+            windowFlags &= ~ImGuiWindowFlags_NoMove;
+        }
+        else {
+            windowFlags |= ImGuiWindowFlags_NoMove;
+        }
 
-		// Original image size (replace with your actual image size)
-		float originalWidth = 1280.0f; // Example width
-		float originalHeight = 720.0f; // Example height
+        ImVec2 viewportPosition = ImGui::GetCursorScreenPos();
+        
+        ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, contentRegionSize, ImVec2(0, 1), ImVec2(1, 0));
 
-		// Calculate the aspect ratio of the original image
-		float aspectRatio = originalWidth / originalHeight;
+        ImGuizmo::SetDrawlist();
 
-		// Calculate the new size for the image that fits within the GameWindow while maintaining the aspect ratio
-		ImVec2 imageSize = ImVec2(windowSize.x, windowSize.y);
+        ImGuizmo::SetRect(viewportPosition.x, viewportPosition.y, contentRegionSize.x, contentRegionSize.y);
 
-		// Calculate the offset needed to center the image
-		float offsetX = (availableSize.x - imageSize.x) / 2.0f;
-		float offsetY = (availableSize.y - imageSize.y) / 2.0f;
+        glm::mat4 viewMatrix = Application->camera->view();
+        glm::mat4 projectionMatrix = Application->camera->projection();
 
-		// Set the cursor position to the calculated offset
-		ImGui::SetCursorPos(ImVec2(offsetX, offsetY));
+        auto setActiveButtonColor = [](bool isActive) {
+            if (isActive) {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.53f, 0.81f, 0.92f, 0.75f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.31f, 0.26f, 0.71f, 1.0f));
+            }
+            else {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.15f, 0.15f, 0.75f));
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
+            }
+        };
+        
+        ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 190, viewportPosition.y + 15));
+        static TransformSpace transformSpace = TransformSpace::LOCAL;
+        
+        setActiveButtonColor(transformSpace == TransformSpace::WORLD);
+        if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_World.id())), ImVec2(15, 15))) {
+            transformSpace = (transformSpace == TransformSpace::LOCAL) ? TransformSpace::WORLD : TransformSpace::LOCAL;
+        }
+        ImGui::PopStyleColor(2);
+        ImGui::SameLine(0, iconSpacing);
+        setActiveButtonColor(transformSpace == TransformSpace::LOCAL);
+        if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Local.id())), ImVec2(15, 15))) {
+            transformSpace = (transformSpace == TransformSpace::WORLD) ? TransformSpace::LOCAL : TransformSpace::WORLD;
+        }
+        ImGui::PopStyleColor(2);
+        ImGui::SameLine(0, iconSpacing);
+        ImGui::Text(transformSpace == TransformSpace::LOCAL ? "local" : "global");
+        ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 20, viewportPosition.y + 10)); 
+        
+        static ManipulationOperation operation = ManipulationOperation::IDLE;
+        
+        setActiveButtonColor(operation == ManipulationOperation::TRANSLATE);
+        if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Trans.id())), ImVec2(iconSize, iconSize))) {
+            operation = (operation == ManipulationOperation::TRANSLATE) ? ManipulationOperation::IDLE : ManipulationOperation::TRANSLATE;
+        }
+        ImGui::PopStyleColor(2);
+        ImGui::SameLine(0, iconSpacing);
+        
+        setActiveButtonColor(operation == ManipulationOperation::ROTATE);
+        if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Rot.id())), ImVec2(iconSize, iconSize))) {
+            operation = (operation == ManipulationOperation::ROTATE) ? ManipulationOperation::IDLE : ManipulationOperation::ROTATE;
+        }
+        ImGui::PopStyleColor(2);
+        ImGui::SameLine(0, iconSpacing);
+        
+        setActiveButtonColor(operation == ManipulationOperation::SCALE);
+        if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Sca.id())), ImVec2(iconSize, iconSize))) {
+            operation = (operation == ManipulationOperation::SCALE) ? ManipulationOperation::IDLE : ManipulationOperation::SCALE;
+        }
+        ImGui::PopStyleColor(2);
 
-		// Position of the viewport in screen coordinates
-		ImVec2 viewportPosition = ImGui::GetCursorScreenPos();
-		// Because I use the texture from OpenGL, I need to invert the V from the UV.
-		ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, imageSize, ImVec2(0, 1), ImVec2(1, 0));
+        ImGui::SameLine(0, iconSpacing);
+        setActiveButtonColor(false);
+        if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Setting.id())), ImVec2(iconSize, iconSize))) {
+            ImGui::OpenPopup("CameraConfigPopup");
+        }
+        ImGui::PopStyleColor(2);
 
-		ImGuizmo::SetDrawlist();
+        if (ImGui::BeginPopup("CameraConfigPopup")) {
+            ImGui::Text("Camera Settings");
+            ImGui::Separator();
 
-		// Set the ImGuizmo viewport
-		ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
+            static int msaaSamples = 4;
+            const char* msaaOptions[] = { "Off", "2x", "4x", "8x" };
+            if (ImGui::Combo("Antialiasing", &msaaSamples, msaaOptions, IM_ARRAYSIZE(msaaOptions))) {
+                int actualSamples = (msaaSamples == 0) ? 0 : (1 << msaaSamples);
+                //update renderer setting probably on MyWindow
+            }
 
-		// Define the view and projection matrices
-		glm::mat4 viewMatrix = Application->camera->view();
-		glm::mat4 projectionMatrix = Application->camera->projection();
+            static float resolutionScale = 1.0f;
+            if (ImGui::SliderFloat("Resolution Scale", &resolutionScale, 0.5f, 2.0f, "%.2fx")) {
+                int newWidth = static_cast<int>(winSize.x * resolutionScale);
+                int newHeight = static_cast<int>(winSize.y * resolutionScale);
 
-		// Function to set button colors based on the active state
-		auto setActiveButtonColor = [](bool isActive) {
-			if (isActive) {
-				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.53f, 0.81f, 0.92f, 0.75f)); // Active state color
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.31f, 0.26f, 0.71f, 1.0f));
-			}
-			else {
-				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.15f, 0.15f, 0.75f)); // Default
-				ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
-			}
-			};
-		// Position buttons at the top of the viewport
-		ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 180, viewportPosition.y + 60)); // Offset from top-left
-		static TransformSpace transformSpace = TransformSpace::LOCAL;
-		// World/Local button
-		setActiveButtonColor(transformSpace == TransformSpace::WORLD);
-		if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_World.id())), ImVec2(15, 15))) {
-			transformSpace = (transformSpace == TransformSpace::LOCAL) ? TransformSpace::WORLD : TransformSpace::LOCAL;
-		}
-		ImGui::PopStyleColor(2);
-		ImGui::SameLine(0, iconSpacing);
-		setActiveButtonColor(transformSpace == TransformSpace::LOCAL);
-		if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Local.id())), ImVec2(15, 15))) {
-			transformSpace = (transformSpace == TransformSpace::WORLD) ? TransformSpace::LOCAL : TransformSpace::WORLD;
-		}
-		ImGui::PopStyleColor(2);
-		ImGui::SameLine(0, iconSpacing);
-		ImGui::Text(transformSpace == TransformSpace::LOCAL ? "local" : "global");
-		ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 20, viewportPosition.y + 55)); // Offset from top-left
-		// Manipulation types (idle, translate, rotate, scale)
-		static ManipulationOperation operation = ManipulationOperation::IDLE;
-		// Translate button
-		setActiveButtonColor(operation == ManipulationOperation::TRANSLATE);
-		if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Trans.id())), ImVec2(iconSize, iconSize))) {
-			operation = (operation == ManipulationOperation::TRANSLATE) ? ManipulationOperation::IDLE : ManipulationOperation::TRANSLATE;
-		}
-		ImGui::PopStyleColor(2);
-		ImGui::SameLine(0, iconSpacing);
-		// Rotate button
-		setActiveButtonColor(operation == ManipulationOperation::ROTATE);
-		if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Rot.id())), ImVec2(iconSize, iconSize))) {
-			operation = (operation == ManipulationOperation::ROTATE) ? ManipulationOperation::IDLE : ManipulationOperation::ROTATE;
-		}
-		ImGui::PopStyleColor(2);
-		ImGui::SameLine(0, iconSpacing);
-		// Scale button
-		setActiveButtonColor(operation == ManipulationOperation::SCALE);
-		if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Sca.id())), ImVec2(iconSize, iconSize))) {
-			operation = (operation == ManipulationOperation::SCALE) ? ManipulationOperation::IDLE : ManipulationOperation::SCALE;
-		}
-		ImGui::PopStyleColor(2);
-		if (isViewportHovered && !ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
-			if (ImGui::IsKeyPressed(ImGuiKey_W)) operation = ManipulationOperation::TRANSLATE;
-			if (ImGui::IsKeyPressed(ImGuiKey_E)) operation = ManipulationOperation::ROTATE;
-			if (ImGui::IsKeyPressed(ImGuiKey_R)) operation = ManipulationOperation::SCALE;
-			if (ImGui::IsKeyPressed(ImGuiKey_Q)) operation = ManipulationOperation::IDLE;
-		}
-		// Convert matrices to float arrays
-		float view[16];
-		float projection[16];
-		memcpy(view, &viewMatrix, sizeof(float) * 16);
-		memcpy(projection, &projectionMatrix, sizeof(float) * 16);
+                glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, newWidth, newHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
-		for (auto& selectedObject : Application->input->GetSelectedGameObjects())
-		{
-			if (operation != ManipulationOperation::IDLE && selectedObject != nullptr) {
-				glm::mat4 matrix = selectedObject->GetTransform()->GetMatrix();
+                glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+                glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, newWidth, newHeight);
+            }
 
-				ImGuizmo::OPERATION guizmoOperation;
-				switch (operation)
-				{
-				case ManipulationOperation::TRANSLATE: guizmoOperation = ImGuizmo::TRANSLATE; break;
-				case ManipulationOperation::ROTATE:    guizmoOperation = ImGuizmo::ROTATE;    break;
-				case ManipulationOperation::SCALE:     guizmoOperation = ImGuizmo::SCALE;     break;
-				default: guizmoOperation = ImGuizmo::TRANSLATE; break; // Fallback
-				}
-				ImGuizmo::MODE guizmoMode = (transformSpace == TransformSpace::LOCAL) ? ImGuizmo::LOCAL : ImGuizmo::WORLD;
-				float objectMatrix[16];
-				memcpy(objectMatrix, &matrix, sizeof(float) * 16);
+            static int shadowQuality = 1;
+            const char* shadowOptions[] = { "Off", "Low", "Medium", "High" };
+            if (ImGui::Combo("Shadow Quality", &shadowQuality, shadowOptions, IM_ARRAYSIZE(shadowOptions))) {
+                //update shadows, not implemented yet
+            }
 
-				float snap[3] = { 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue };
+            static bool enableBloom = true;
+            if (ImGui::Checkbox("Bloom", &enableBloom)) {
+                //these will be the post =processing toggles not implemented yet
+            }
 
-				ImGuizmo::Manipulate(view, projection, guizmoOperation, guizmoMode, objectMatrix, NULL, Application->gui->UIinspectorPanel->snap ? snap : nullptr);
+            static bool enableSSAO = false;
+            if (ImGui::Checkbox("Ambient Occlusion (SSAO)", &enableSSAO)) {
+                //these will be the post processing toggles not implemented yet
+            }
 
-				glm::vec3 position, rotation, scale;
-				ImGuizmo::DecomposeMatrixToComponents(objectMatrix, glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale));
+            ImGui::EndPopup();
+        }
+        
+        if (isViewportHovered && !ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
+            if (ImGui::IsKeyPressed(ImGuiKey_W)) operation = ManipulationOperation::TRANSLATE;
+            if (ImGui::IsKeyPressed(ImGuiKey_E)) operation = ManipulationOperation::ROTATE;
+            if (ImGui::IsKeyPressed(ImGuiKey_R)) operation = ManipulationOperation::SCALE;
+            if (ImGui::IsKeyPressed(ImGuiKey_Q)) operation = ManipulationOperation::IDLE;
+        }
+        
+        float view[16];
+        float projection[16];
+        memcpy(view, &viewMatrix, sizeof(float) * 16);
+        memcpy(projection, &projectionMatrix, sizeof(float) * 16);
 
-				ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale), objectMatrix);
+        for (auto& selectedObject : Application->input->GetSelectedGameObjects())
+        {
+            if (operation != ManipulationOperation::IDLE && selectedObject != nullptr) {
+                glm::mat4 matrix = selectedObject->GetTransform()->GetMatrix();
 
-				glm::mat4 newMatrix = glm::make_mat4(objectMatrix);
+                ImGuizmo::OPERATION guizmoOperation;
+                switch (operation)
+                {
+                case ManipulationOperation::TRANSLATE: guizmoOperation = ImGuizmo::TRANSLATE; break;
+                case ManipulationOperation::ROTATE:    guizmoOperation = ImGuizmo::ROTATE;    break;
+                case ManipulationOperation::SCALE:     guizmoOperation = ImGuizmo::SCALE;     break;
+                default: guizmoOperation = ImGuizmo::TRANSLATE; break;
+                }
+                ImGuizmo::MODE guizmoMode = (transformSpace == TransformSpace::LOCAL) ? ImGuizmo::LOCAL : ImGuizmo::WORLD;
+                float objectMatrix[16];
+                memcpy(objectMatrix, &matrix, sizeof(float) * 16);
 
-				selectedObject->GetTransform()->SetMatrix(newMatrix);
-			}
-		}
+                float snap[3] = { 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue };
 
-		if (ImGui::IsWindowHovered())
-		{
-			isFoucused = true;
-		}
-		else
-		{
-			isFoucused = false;
-		}
-	}
-	ImGui::End();
+                ImGuizmo::Manipulate(view, projection, guizmoOperation, guizmoMode, objectMatrix, NULL, Application->gui->UIinspectorPanel->snap ? snap : nullptr);
 
-	return true;
+                glm::vec3 position, rotation, scale;
+                ImGuizmo::DecomposeMatrixToComponents(objectMatrix, glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale));
+
+                ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale), objectMatrix);
+
+                glm::mat4 newMatrix = glm::make_mat4(objectMatrix);
+
+                selectedObject->GetTransform()->SetMatrix(newMatrix);
+            }
+        }
+
+        isFoucused = ImGui::IsWindowHovered();
+    }
+    ImGui::End();
+
+    return true;
+}
+
+bool UISceneWindow::IsMouseOverWindow() const
+{
+    ImVec2 mousePos = ImGui::GetMousePos();
+
+    float minX = winPos.x;
+    float minY = winPos.y;
+    float maxX = winPos.x + winSize.x;
+    float maxY = winPos.y + winSize.y;
+
+    bool isOverWindow = (mousePos.x >= minX && mousePos.x <= maxX &&
+        mousePos.y >= minY && mousePos.y <= maxY);
+
+    return isOverWindow;
 }

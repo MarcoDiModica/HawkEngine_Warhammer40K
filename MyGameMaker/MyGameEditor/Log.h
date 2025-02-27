@@ -3,6 +3,7 @@
 #pragma once
 
 #include <string>
+
 #include "UIConsole.h"
 
 enum class LogType

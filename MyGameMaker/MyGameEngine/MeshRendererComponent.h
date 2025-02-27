@@ -36,6 +36,7 @@ public:
     glm::vec3 GetColor() const;
 
     void Render() const;
+    void RenderMainCamera() const;
 
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
@@ -45,7 +46,6 @@ private:
    // std::shared_ptr<Image> image;
     std::shared_ptr<Material> material;
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
-
 
 
 protected:
@@ -91,7 +91,7 @@ protected:
             }
         }
         else {
-             _mesh->LoadMesh(path.c_str());
+             //_mesh->LoadMesh(path.c_str());
         }
         SetMesh(_mesh);
 

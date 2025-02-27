@@ -82,6 +82,7 @@ namespace EngineBinds {
 
     // MeshRenderer
 	void SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef);
+    void SetCubeMesh(MonoObject* meshRendererRef);
 	MonoObject* GetMesh(MonoObject* meshRendererRef);
     void SetMaterial(MonoObject* meshRendererRef, MonoObject* materialRef);
     MonoObject* GetMaterial(MonoObject* meshRendererRef);

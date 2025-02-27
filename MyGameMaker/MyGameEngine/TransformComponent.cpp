@@ -159,7 +159,6 @@ void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
     if (rotationMatrix != matrix) {
         matrix = rotationMatrix;
         matrix[3] = glm::dvec4(position, 1);
-        LOG(LogType::LOG_ERROR, "Attempting to rotate");
         HandleLocalUpdate();
     }
 }

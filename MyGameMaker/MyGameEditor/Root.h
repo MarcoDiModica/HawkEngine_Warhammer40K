@@ -2,18 +2,16 @@
 #define ROOT_H
 
 #pragma once
+#include <vector>
+
 #include "Module.h"
 #include "../MyGameEngine/Mesh.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/Scene.h"
 #include "../MyGameEditor/App.h"
-#include "../MyGameEditor/Input.h"
-#include "../MyGameEngine/readOnlyView.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/Shaders.h"
 #include "SceneSerializer.h"
-#include <list>
-#include <vector>
 
 class Material;
 
@@ -56,6 +54,8 @@ public:
     std::shared_ptr<GameObject> CreateAudioObject(const std::string& name);
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr, std::vector<Shaders> shaders = std::vector<Shaders>());
+
+    void CreateGameObjectWithPath(const std::string& path);
 
     void ChangeShader(GameObject& go, ShaderType shader);
 

@@ -27,6 +27,7 @@ enum class ComponentType {
 	SCRIPT,
 	SHADER,
 	COLLIDER,
+	RIGIDBODY,
 	PARTICLES_EMITTER,
 	LIGHT
 };

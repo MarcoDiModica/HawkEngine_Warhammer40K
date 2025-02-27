@@ -41,7 +41,7 @@ void Material::SetColor(const vec4& color) {
 	this->color = color;
 }
 
-vec4 Material::GetColor() {
+const glm::vec4& Material::GetColor() const {
 	return this->color;
 }
 
@@ -58,16 +58,21 @@ void Material::bind() const {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4f);
 }
 
+void Material::unbind() const
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 bool Material::loadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {
-	return shader.LoadShaders(vertexShaderFile, fragmentShaderFile);
+	return shader->LoadShaders(vertexShaderFile, fragmentShaderFile);
 }
 
 void Material::SetShader(Shaders& shader) 
 {
-	this->shader = shader;
+	this->shader = &shader;
 }
 
-Shaders Material::GetShader() 
+Shaders * Material::GetShader() 
 {
 	return this->shader;
 }
@@ -75,28 +80,28 @@ Shaders Material::GetShader()
 
 // Function to bind shaders
 void Material::bindShaders() const {
-	shader.Bind();
+	shader->Bind();
 }
 
 // Function to set shader uniforms
 void Material::setShaderUniform(const std::string& name, int value) {
-	shader.SetUniform(name, value);
+	shader->SetUniform(name, value);
 }
 
 void Material::setShaderUniform(const std::string& name, float value) {
-	shader.SetUniform(name, value);
+	shader->SetUniform(name, value);
 }
 
 void Material::setShaderUniform(const std::string& name, const glm::vec3& value) {
-	shader.SetUniform(name, value);
+	shader->SetUniform(name, value);
 }
 
 void Material::setShaderUniform(const std::string& name, const glm::vec4& value) {
-	shader.SetUniform(name, value);
+	shader->SetUniform(name, value);
 }
 
 void Material::setShaderUniform(const std::string& name, const glm::mat4& value) {
-	shader.SetUniform(name, value);
+	shader->SetUniform(name, value);
 }
 
 std::unordered_map<std::string, std::shared_ptr<Material>> materialCache;

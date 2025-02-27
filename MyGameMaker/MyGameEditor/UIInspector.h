@@ -3,7 +3,8 @@
 #pragma once
 
 #include "UIElement.h"
-#include "..\MyGameEngine\types.h"
+
+class GameObject;
 
 class UIInspector : public UIElement
 {
@@ -12,13 +13,13 @@ public:
 	~UIInspector();
 
 	bool Draw();
+	void DrawGameObjectHeader(GameObject* gameObject);
 	bool snap = false;
 	float snapValue = 1;
 	bool once = false;
 
 private:
 	bool matrixDirty;
-	
 
 	glm::vec3 position;
 	glm::vec3 rotationDegrees = glm::vec3(0,0,0);

@@ -90,13 +90,14 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
     if (object_to_destroy == nullptr) {
         return;
     }
+
 	SceneManagement->RemoveGameObject(ConvertFromSharp(object_to_destroy));
 
-    uintptr_t Cptr;
-    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    mono_field_get_value(object_to_destroy, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
-    GameObject* actor = reinterpret_cast<GameObject*>(Cptr);
-    SceneManagement->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
+    //uintptr_t Cptr;
+    //MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    //mono_field_get_value(object_to_destroy, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
+    //GameObject* actor = reinterpret_cast<GameObject*>(Cptr);
+    //SceneManagement->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
 }
 
 MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* component_name)
@@ -238,7 +239,7 @@ Vector3 EngineBinds::GetPosition(MonoObject* transformRef) {
 
 Vector3 EngineBinds::GetLocalPosition(MonoObject* transformRef) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
-    glm::dvec3 p = transform->GetLocalPosition()[3];
+    glm::dvec3 p = transform->GetLocalPosition();
     return Vector3{ (float)p.x,(float)p.y,(float)p.z };
 }
 
@@ -370,6 +371,16 @@ void EngineBinds::SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef)
     }
 }
 
+void EngineBinds::SetCubeMesh(MonoObject* meshRendererRef)
+{
+    if (!meshRendererRef) return;
+
+	MeshRenderer* meshRenderer = ConvertFromSharpComponent<MeshRenderer>(meshRendererRef);
+	if (!meshRenderer) return;
+
+	meshRenderer->SetMesh(Mesh::CreateCube());
+}
+
 MonoObject* EngineBinds::GetMesh(MonoObject* meshRendererRef)
 {
     if (!meshRendererRef) return nullptr;
@@ -476,7 +487,12 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Camera::SetCameraProjectionType", (const void*)&EngineBinds::SetCameraProjectionType);
 
     // MeshRenderer
-
+    mono_add_internal_call("HawkEngine.MeshRenderer::SetMesh", (const void*)&EngineBinds::SetMesh);
+    mono_add_internal_call("HawkEngine.MeshRenderer::SetCubeMesh", (const void*)&EngineBinds::SetCubeMesh);
+    mono_add_internal_call("HawkEngine.MeshRenderer::GetMesh", (const void*)&EngineBinds::GetMesh);
+    mono_add_internal_call("HawkEngine.MeshRenderer::SetMaterial", (const void*)&EngineBinds::SetMaterial);
+    mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
+    mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
 }
 
 template <class T>

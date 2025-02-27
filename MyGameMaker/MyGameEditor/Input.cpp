@@ -1,8 +1,14 @@
+#include <SDL2/SDL.h>
+#include <string>
+#include <iostream>
+#include <filesystem>
+
+#include "imgui.h"
+
 #include "MyGameEngine/Mesh.h"
 #include "App.h"
 #include "Log.h"
 #include "MyGUI.h"
-#include "imgui.h"
 #include "UiSceneWindow.h"
 #include "Input.h"
 #include "EditorCamera.h"
@@ -11,15 +17,11 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "../MyGameEngine/ModelImporter.h"
-
 #include "../MyPhysicsEngine/PhysVehicle3D.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyAudioEngine/AudioAssetProcessor.h"
-#include <SDL2/SDL.h> // idk what to do to remove this
-#include <string>
-#include <iostream>
-#include <filesystem>
+#include "../MyShadersEngine/ShaderComponent.h"
 
 
 #define MAX_KEYS 300
@@ -98,10 +100,10 @@ void SpawnPhysCube() {
     //auto cube = Application->root->CreateCube("PhysicsCube");
     //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
     //Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
-    glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posici�n de la c�mara
-    auto sphere = Application->root->CreateSphere("PhysicsSphere");
-    glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
-    Application->physicsModule->SpawnPhysSphereWithForce(*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
+    //glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posici�n de la c�mara
+    //auto sphere = Application->root->CreateSphere("PhysicsSphere");
+    //glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
+    //Application->physicsModule->SpawnPhysSphereWithForce(,*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
 }
 bool Input::processSDLEvents()
 {
@@ -192,7 +194,7 @@ bool Input::processSDLEvents()
 
     static SDL_Event event;
 
-    static bool f12Pressed = false;
+    static bool pPressed = false;
 
     int gamepadIndex = event.cbutton.which;
 	int button = event.cbutton.button;
@@ -205,7 +207,7 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             InputManagement->mouse_z = event.wheel.y;
-            if (f12Pressed && InputManagement->mouse_z > 0) {
+            if (pPressed && InputManagement->mouse_z > 0) {
                 SpawnPhysCube();
             }
             break;
@@ -224,19 +226,6 @@ bool Input::processSDLEvents()
             switch (event.key.keysym.sym) {
             case SDLK_1:
                 break;
-            case SDLK_F12:
-                if (f12Pressed == false) {
-                    f12Pressed = true; // Activar la bandera si F12 fue presionado
-                    Application->physicsModule->linkPhysicsToScene = true;
-                }
-                else {
-                    f12Pressed = false; // Desactivar la bandera si F12 fue liberado
-                    Application->physicsModule->linkPhysicsToScene = false;
-                }
-                break;
-            case SDLK_ESCAPE:
-                return false;
-
             case SDLK_DELETE: {
                 int i = 0;
                 while (i < InputManagement->selectedObjects.size()) {
@@ -283,6 +272,16 @@ bool Input::processSDLEvents()
                             Application->root->GetActiveScene()->AddGameObject(newObject);
                         }
                     }
+                }
+                break; 
+            case SDLK_p: // P
+                if (pPressed == false) {
+                    pPressed = true; // Activar la bandera si P fue presionado
+                    Application->physicsModule->linkPhysicsToScene = true;
+                }
+                else {
+                    pPressed = false; // Desactivar la bandera si P fue liberado
+                    Application->physicsModule->linkPhysicsToScene = false;
                 }
                 break;
             }
@@ -363,37 +362,43 @@ void Input::HandleFileDrop(const std::string& fileDir)
 
     if (fileExt == "fbx" || fileExt == "FBX") {
         LOG(LogType::LOG_ASSIMP, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
-
- /*       std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-        mesh->LoadMesh(CopyFBXFileToProject(fileDir).c_str());
-
-        auto go = Application->root->CreateGameObject(fileNameExt);
-        Application->root->AddMeshRenderer(*go, mesh, "Assets/default.png");
-*/
-
-
         // TODO , only save to filesystem if file doesnt exist 
 
         //new
-        auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
-        MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
+        //auto MarcoVicePresidente = Application->root->CreateGameObject("BakerHouse");
+        //MarcoVicePresidente->GetTransform()->GetPosition() = vec3(0, 0, 0);
 
-        ModelImporter meshImp;
-        meshImp.loadFromFile((CopyFBXFileToProject(fileDir).c_str()));
+        //ModelImporter meshImp;
+        //meshImp.loadFromFile((CopyFBXFileToProject(fileDir).c_str()));
 
-        for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
-            auto MarcoVicePresidente2 = meshImp.meshGameObjects[i];
+        //for (int i = 0; i < meshImp.meshes.size(); i++) {
 
-            auto go = Application->root->CreateGameObject("GameObject");
-            auto color = MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMaterial()->color;
-          
-            Application->root->AddMeshRenderer(*go, MarcoVicePresidente2->GetComponent<MeshRenderer>()->GetMesh(), "Assets/default.png");
-            go->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(color);
-            go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+        //    auto MarcoVicePresidente2 = meshImp.fbx_object[i];
 
+        //    auto go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
+        //    go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
 
-            Application->root->ParentGameObject(*go, *MarcoVicePresidente);
-        }
+        //    auto meshRenderer = go->AddComponent<MeshRenderer>();
+        //    auto material = std::make_shared<Material>();
+
+        //    meshRenderer->SetMesh(meshImp.meshes[i]);
+        //    material = meshImp.materials[meshImp.meshes[i]->getModel()->GetMaterialIndex()];
+
+        //    meshRenderer->SetMaterial(material);
+        //    meshRenderer->GetMaterial()->SetColor(material->GetColor());
+
+        //    auto shaderComponent = go->AddComponent<ShaderComponent>();
+        //    shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+        //    shaderComponent->SetShaderType(ShaderType::DEFAULT);
+
+        //    go->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
+
+        //    go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
+        //    Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        //   // Application->root->gameObjectsWithColliders.push_back(go);
+        //}
+
+        Application->root->CreateGameObjectWithPath(fileDir);
 
     }
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {

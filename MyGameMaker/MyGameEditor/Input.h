@@ -1,15 +1,13 @@
 #ifndef __INPUT_H__
 #define __INPUT_H__
-
 #pragma once
 
 #include <iostream>
+
 #include "Module.h"
 #include "../MyGameEngine/InputEngine.h"
 
 #define MAX_MOUSE_BUTTONS 5
-
-
 
 class Input : public Module
 {

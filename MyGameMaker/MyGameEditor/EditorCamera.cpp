@@ -1,13 +1,12 @@
-#include "EditorCamera.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <SDL2/SDL.h>
 
+#include "EditorCamera.h"
 #include "App.h"
 #include "Input.h"
 #include "MyGameEngine/TransformComponent.h"
 #include "MyAudioEngine/AudioListener.h"
 #include "MyGameEngine/GameObject.h"
-#include <glm/gtc/matrix_transform.hpp>
-#include "imgui.h"
-#include <SDL2/SDL.h>
 #include "MyWindow.h"
 #include "MyGUI.h"
 #include "UISceneWindow.h"
@@ -38,7 +37,10 @@ bool EditorCamera::FixedUpdate()
 
 bool EditorCamera::Update(double dt)
 {
-	move_camera(cameraSpeed, static_cast<float>(dt));
+	if (Application->gui->UISceneWindowPanel->IsMouseOverWindow())
+	{
+		move_camera(cameraSpeed, static_cast<float>(dt));
+	}
 	
 	// Sync listener object position with camera
 	if (listenerObject) {
@@ -187,17 +189,9 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 
 void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight)
 {
-	double windowAspect = windowWidth / windowHeight;
-	double imageAspect = imageWidth / imageHeight;
+	double aspectRatio = windowWidth / windowHeight;
 
-	UpdateAspectRatio(windowAspect);
+	UpdateAspectRatio(aspectRatio);
 
-	if (windowAspect > imageAspect) 
-	{
-		SetFOV(2.0f * atan(tan(glm::radians(60.0f) / 2.0f) * static_cast<float>((imageAspect / windowAspect))));
-	}
-	else 
-	{
-		SetFOV(glm::radians(60.0f));
-	}
+	SetFOV(glm::radians(60.0f));
 }

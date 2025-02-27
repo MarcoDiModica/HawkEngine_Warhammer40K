@@ -18,6 +18,7 @@ public:
     int getDebugMode() const override;
 
     void drawBoundingBox(const BoundingBox& bbox, const glm::vec3& color);
+    void drawRotatedBoundingBox(const glm::vec3 corners[8], const glm::vec3& color);
     void drawSphere(const glm::vec3& center, float radius, const glm::vec3& color, int segments);
 
 private:

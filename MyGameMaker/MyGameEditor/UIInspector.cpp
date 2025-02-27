@@ -30,6 +30,7 @@
 #include "../MyGameEngine/Image.h"
 #include "../MyGameEngine/Material.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
@@ -399,6 +400,16 @@ private:
             glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
             collider->SetColliderRotation(newRotation);
         }
+
+        bool snapToPosition = collider->GetSnapToPosition();
+        if (ImGui::Checkbox("Snap Position", &snapToPosition)) {
+            collider->SetSnapToPosition(snapToPosition);
+        }
+
+        bool resetRotation = false;
+        if (ImGui::Checkbox("Reset Rotation", &resetRotation) && resetRotation) {
+            collider->SetColliderRotation(glm::quat(glm::radians(glm::vec3(0, 0, 0))));
+        }
     }
 
     static void DrawColliderProperties(ColliderComponent* collider) {
@@ -407,13 +418,59 @@ private:
         if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
             collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
         }
-
-        float mass = collider->GetMass();
-        if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 10.0f)) {
-            collider->SetMass(mass);
+        bool isTrigger = collider->IsTrigger();
+        if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+            collider->SetTrigger(isTrigger);
         }
     }
     #pragma endregion
+
+
+#pragma region Rigidbody
+    static void DrawRigidbodyComponent(RigidbodyComponent* rigidbody) {
+        if (!rigidbody) return;
+
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("Rigidbody")) return;
+
+        DrawRigidbodyProperties(rigidbody);
+        DrawRigidbodyPhysics(rigidbody);
+    }
+
+    static void DrawRigidbodyProperties(RigidbodyComponent* rigidbody) {
+        float mass = rigidbody->GetMass();
+        if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 10.0f)) {
+            rigidbody->SetMass(mass);
+        }
+
+        bool isKinematic = rigidbody->IsKinematic();
+        if (ImGui::Checkbox("Is Kinematic", &isKinematic)) {
+            rigidbody->SetKinematic(isKinematic);
+        }
+
+        bool freezeRotation = rigidbody->IsFreezed();
+        if (ImGui::Checkbox("Freeze Rotation", &freezeRotation)) {
+            rigidbody->SetFreezeRotations(freezeRotation);
+        }
+    }
+
+    static void DrawRigidbodyPhysics(RigidbodyComponent* rigidbody) {
+        float friction = rigidbody->GetFriction();
+        if (ImGui::DragFloat("Friction", &friction, 0.1f, 0.0f, 10.0f)) {
+            rigidbody->SetFriction(friction);
+        }
+
+        float damping[2] = { rigidbody->GetDamping().x, rigidbody->GetDamping().y };
+        if (ImGui::DragFloat2("Damping (Linear, Angular)", damping, 0.1f, 0.0f, 10.0f)) {
+            rigidbody->SetDamping(damping[0], damping[1]);
+        }
+
+        glm::vec3 gravity = rigidbody->GetGravity();
+        if (ImGui::DragFloat3("Gravity", &gravity[0], 0.1f)) {
+            rigidbody->SetGravity(gravity);
+        }
+    }
+#pragma endregion
 
     #pragma region Shaders
     static void DrawShaderComponent(ShaderComponent* shader) {
@@ -847,6 +904,11 @@ public:
 			ColliderComponent* collider = gameObject->GetComponent<ColliderComponent>();
 			DrawColliderComponent(collider);
 		}
+        
+        if (gameObject->HasComponent<RigidbodyComponent>()) {
+            RigidbodyComponent* rigidbody = gameObject->GetComponent<RigidbodyComponent>();
+			DrawRigidbodyComponent(rigidbody);
+		}
 
 		if (gameObject->HasComponent<ParticlesEmitterComponent>()) {
 			ParticlesEmitterComponent* emitter = gameObject->GetComponent<ParticlesEmitterComponent>();
@@ -914,6 +976,13 @@ private:
 			if (ImGui::MenuItem("Collider")) {
 				gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
 				gameObject->GetComponent<ColliderComponent>()->Start();
+			}
+		}
+        
+        if (!gameObject->HasComponent<RigidbodyComponent>()) {
+			if (ImGui::MenuItem("RigidBody")) {
+				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
+				gameObject->GetComponent<RigidbodyComponent>()->Start();
 			}
 		}
 

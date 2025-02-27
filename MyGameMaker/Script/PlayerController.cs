@@ -156,22 +156,32 @@ public class PlayerController : MonoBehaviour
         {
             Engineson.print("DPadRight button pressed!");
         }
-        //if (Input.GetAxis(ControllerAxis.LeftX) != 0)
-        //{
-        //    Engineson.print($"Left Stick X: {Input.GetAxis(ControllerAxis.LeftX)}");
-        //}
-        //if (Input.GetControllerAxis(ControllerAxis.LeftY) != 0)
-        //{
-        //    Engineson.print($"Left Stick Y: {Input.GetControllerAxis(ControllerAxis.LeftY)}");
-        //}
-        //if (Input.GetControllerAxis(ControllerAxis.RightX) != 0)
-        //{
-        //    Engineson.print($"Right Stick X: {Input.GetControllerAxis(ControllerAxis.RightX)}");
-        //}
-        //if (Input.GetControllerAxis(ControllerAxis.RightY) != 0)
-        //{
-        //    Engineson.print($"Right Stick Y: {Input.GetControllerAxis(ControllerAxis.RightY)}");
-        //}
+
+        //axis
+        if (Input.GetAxis(ControllerAxis.LeftX) != 0)
+        {
+            Engineson.print("LeftX axis: " + Input.GetAxis(ControllerAxis.LeftX));
+        }
+        if (Input.GetAxis(ControllerAxis.LeftY) != 0)
+        {
+            Engineson.print("LeftY axis: " + Input.GetAxis(ControllerAxis.LeftY));
+        }
+        if (Input.GetAxis(ControllerAxis.RightX) != 0)
+        {
+            Engineson.print("RightX axis: " + Input.GetAxis(ControllerAxis.RightX));
+        }
+        if (Input.GetAxis(ControllerAxis.RightY) != 0)
+        {
+            Engineson.print("RightY axis: " + Input.GetAxis(ControllerAxis.RightY));
+        }
+        if (Input.GetAxis(ControllerAxis.TriggerLeft) != 0)
+        {
+            Engineson.print("LeftTrigger axis: " + Input.GetAxis(ControllerAxis.TriggerLeft));
+        }
+        if (Input.GetAxis(ControllerAxis.TriggerRight) != 0)
+        {
+            Engineson.print("RightTrigger axis: " + Input.GetAxis(ControllerAxis.TriggerRight));
+        }
 
     }
     #endregion

@@ -208,28 +208,39 @@ bool EngineBinds::GetControllerButtonUp(int buttonID) {
     return InputManagement->controller_buttons[buttonID] == KEY_UP;
 }
 
-float EngineBinds::GetJoystickAxis(int gamepadIndex, int axis) {
-    if (axis == 0) {
-        return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_LEFTX] / 32767.0f);
-    }
-	else if (axis == 1) {
-		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_LEFTY] / 32767.0f);
+float EngineBinds::GetControllerAxis(int gamepadIndex, int axis) {
+	const float DEADZONE = 0.2f;
+
+	float rawValue = 0.0f;
+
+	switch (axis) {
+	case 0:
+		rawValue = InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_LEFTX] / 32767.0f;
+		break;
+	case 1:
+		rawValue = InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_LEFTY] / 32767.0f;
+		break;
+	case 2:
+		rawValue = InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_RIGHTX] / 32767.0f;
+		break;
+	case 3:
+		rawValue = InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_RIGHTY] / 32767.0f;
+		break;
+	case 4:
+		rawValue = InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_TRIGGERLEFT] / 32767.0f;
+		break;
+	case 5:
+		rawValue = InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_TRIGGERRIGHT] / 32767.0f;
+		break;
 	}
-	else if (axis == 2) {
-		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_RIGHTX] / 32767.0f);
-	}
-	else if (axis == 3) {
-		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_RIGHTY] / 32767.0f);
-	}
-	else if (axis == 4) {
-		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_TRIGGERLEFT] / 32767.0f);
-	}
-	else if (axis == 5) {
-		return (InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_TRIGGERRIGHT] / 32767.0f);
-	}
-	else {
+
+	float absValue = std::abs(rawValue);
+	if (absValue < DEADZONE) {
 		return 0.0f;
 	}
+
+	float normalizedValue = (absValue - DEADZONE) / (1.0f - DEADZONE);
+	return (rawValue > 0) ? normalizedValue : -normalizedValue;
 }
 
 glm::vec3 EngineBinds::GetMousePosition() {
@@ -478,7 +489,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.Input::GetControllerButton", (const void*)GetControllerButton);
 	mono_add_internal_call("HawkEngine.Input::GetControllerButtonDown", (const void*)GetControllerButtonDown);
 	mono_add_internal_call("HawkEngine.Input::GetControllerButtonUp", (const void*)GetControllerButtonUp);
-	mono_add_internal_call("HawkEngine.Input::GetJoystickAxis", (const void*)GetJoystickAxis);
+	mono_add_internal_call("HawkEngine.Input::GetControllerAxis", (const void*)GetControllerAxis);
 
     // Transform
     mono_add_internal_call("HawkEngine.Transform::SetPosition", (const void*)&EngineBinds::SetPosition);

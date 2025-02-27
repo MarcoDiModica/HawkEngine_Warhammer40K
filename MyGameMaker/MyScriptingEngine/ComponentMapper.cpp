@@ -1,11 +1,13 @@
 #include "ComponentMapper.h"
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
+#include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyGameEditor/Log.h" //QUITAR
 
 ComponentMapper::ComponentMapper() {
     AddMapping(std::type_index(typeid(Transform_Component)), "Transform");
 	AddMapping(std::type_index(typeid(MeshRenderer)), "MeshRenderer");
+    AddMapping(std::type_index(typeid(ColliderComponent)), "Collider");
     // mas components
 }
 

@@ -8,6 +8,7 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
+#include "../MyPhysicsEngine/ColliderComponent.h"
 #include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
 
@@ -122,6 +123,12 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.Camera") {
 		return GO->GetComponent<CameraComponent>()->GetSharp();
 	}
+    else if (componentName == "HawkEngine.Collider") {
+		return GO->GetComponent<ColliderComponent>()->GetSharp();
+	}
+	/*else if (componentName == "HawkEngine.ScriptComponent") {
+		return GO->GetComponent<ScriptComponent>()->GetSharp();
+	}*/
 
 
 	
@@ -415,6 +422,18 @@ void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
 }
 	
 
+bool EngineBinds::IsTrigger(MonoObject* colliderRef)
+{
+    if (!colliderRef) return false;
+
+	ColliderComponent* collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+	if (collider) {
+		return collider->IsTrigger();
+	}
+
+    return false;
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -470,6 +489,9 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.MeshRenderer::SetMaterial", (const void*)&EngineBinds::SetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
+
+    // Physics Collider
+    mono_add_internal_call("HawkEngine.Collider::IsTrigger", (const void*)&EngineBinds::IsTrigger);
 }
 
 template <class T>

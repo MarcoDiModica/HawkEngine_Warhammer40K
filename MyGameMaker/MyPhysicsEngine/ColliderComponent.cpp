@@ -3,6 +3,8 @@
 
 #include "ColliderComponent.h"
 #include "../MyGameEngine/GameObject.h"
+#include "MyScriptingEngine/MonoManager.h"
+#include "mono/metadata/debug-helpers.h"
 
 ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) { name = "ColliderComponent"; physics = physicsModule; isForStreetLocal = isForStreet; }
 
@@ -129,6 +131,46 @@ void ColliderComponent::SnapToPosition() {
     rigidBody->setCenterOfMassTransform(transform);
     std::cout << "Collider position snapped to bounding box center: ("
         << position.x << ", " << position.y << ", " << position.z << ")\n";
+}
+
+MonoObject* ColliderComponent::GetSharp()
+{
+	if (CsharpReference) {
+		return CsharpReference;
+	}
+
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
+	if (!klass) {
+		return nullptr;
+	}
+
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		return nullptr;
+	}
+
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Collider:.ctor(uintptr,HawkEngine.GameObject)", true);
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	if (!method)
+	{
+		return nullptr;
+	}
+
+	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+	MonoObject* ownerGo = owner->GetSharp();
+	if (!ownerGo)
+	{
+		return nullptr;
+	}
+
+    void* args[2]{};
+	args[0] = &componentPtr;
+	args[1] = ownerGo;
+
+	mono_runtime_invoke(method, monoObject, args, nullptr);
+
+	CsharpReference = monoObject;
+	return CsharpReference;
 }
 
 void ColliderComponent::Update(float deltaTime) {

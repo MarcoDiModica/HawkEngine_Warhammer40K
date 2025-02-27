@@ -25,7 +25,7 @@ namespace HawkEngine
            // EngineCalls.Destroy(this);
         }
 
-        public  T GetComponent<T>()
+        public T GetComponent<T>()
         {
             return TryGetComponent<T>(typeof(T).ToString());
         }

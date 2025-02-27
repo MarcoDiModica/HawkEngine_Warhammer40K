@@ -172,15 +172,19 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	CreatePlayer();
+	//CreatePlayer();
 
+    auto player = CreateCube("player");
+    player->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+    player->AddComponent<ColliderComponent>(Application->physicsModule)->Start();
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
     /*script->LoadScript("PlayerController");*/
 
-    auto objMainCamera = CreateCameraObject("MainCamera");
+    /*auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
     objMainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
-    mainCamera = objMainCamera;
+    mainCamera = objMainCamera;*/
     
     //MonoEnvironment* mono = new MonoEnvironment();
 

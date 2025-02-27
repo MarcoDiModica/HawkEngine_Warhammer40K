@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="ElMasterController.cs" />
     <Compile Include="Engineson.cs" />

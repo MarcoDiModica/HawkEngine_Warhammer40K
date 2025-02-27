@@ -37,6 +37,10 @@ namespace HawkEngine
             {
                 return 2;
             }
+            else if(type == typeof(Collider))
+            {
+                return 3;
+            }
 
             return -1;
         }

@@ -80,9 +80,11 @@ namespace EngineBinds {
     MonoObject* GetMaterial(MonoObject* meshRendererRef);
 	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
-
     void Render(MonoObject* meshRendererRef);
 
+    //Physics Collider
+    bool IsTrigger(MonoObject* colliderRef);
+    
 }
 
 #endif // ENGINE_BINDS_H

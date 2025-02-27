@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviour
     private int currentDashCharges;
     private float lastDashRechargeTime;
     private const float DASH_RECHARGE_RATE = 2.0f;
+
+    //Collider
+    private Collider collider;
     #endregion
 
     #region Lifecycle
@@ -95,6 +98,8 @@ public class PlayerController : MonoBehaviour
         UpdateDashRecharge(deltaTime);
         UpdateProjectiles(deltaTime);
         CleanupProjectiles();
+
+        //Engineson.print("Is Trigger:" + collider.IsTrigger());
     }
     #endregion
 
@@ -111,6 +116,13 @@ public class PlayerController : MonoBehaviour
         currentVelocity = Vector3.Zero;
         targetVelocity = Vector3.Zero;
         currentRotationAngle = transform.eulerAngles.Y;
+
+        collider = gameObject.GetComponent<Collider>();
+        if (collider == null)
+        {
+            Engineson.print("ERROR: PlayerController requires a Collider component!");
+            return;
+        }
     }
 
     private void ResetDashCharges()

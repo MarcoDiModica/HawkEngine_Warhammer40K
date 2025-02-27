@@ -92,6 +92,52 @@ namespace HawkEngine
                 return input;
             }
         }
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetControllerButton(int buttonId);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetControllerButtonDown(int buttonId);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetControllerButtonUp(int buttonId);
+
+        //[MethodImplAttribute(MethodImplOptions.InternalCall)]
+        //public extern static int GetControllerAxis(int axisId);
+
+        public static bool GetControllerButton(ControllerButton button)
+        {
+            return GetControllerButton((int)button);
+        }
+
+        public static bool GetControllerButtonDown(ControllerButton button)
+        {
+            return GetControllerButtonDown((int)button);
+        }
+
+        public static bool GetControllerButtonUp(ControllerButton button)
+        {
+            return GetControllerButtonUp((int)button);
+        }
+
+    }
+
+    public enum ControllerButton
+    {
+        A = 0,
+        B = 1,
+        X = 2,
+        Y = 3,
+        LeftBumper = 4,
+        RightBumper = 5,
+        Back = 6,
+        Start = 7,
+        LeftStick = 8,
+        RightStick = 9,
+        DPadUp = 10,
+        DPadDown = 11,
+        DPadLeft = 12,
+        DPadRight = 13,
     }
 
     public enum KeyCode
@@ -185,4 +231,6 @@ namespace HawkEngine
 
         NUMLOCKCLEAR = 83,
     }
+
+    
 }

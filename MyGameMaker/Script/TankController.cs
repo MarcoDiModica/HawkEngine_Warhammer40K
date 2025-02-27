@@ -59,6 +59,12 @@ public class TankController : MonoBehaviour
         }
 
         //UpdateProjectiles(deltaTime);
+
+        //controller input
+        if (Input.GetControllerButtonDown(ControllerButton.A))
+        {
+            Engineson.print("A pressed");
+        }
     }
 
     private void GenerateProjectile()

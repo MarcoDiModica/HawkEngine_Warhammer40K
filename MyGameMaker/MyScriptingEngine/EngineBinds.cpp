@@ -443,6 +443,12 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Input::GetAxis", (const void*)GetAxis);
     mono_add_internal_call("HawkEngine.Input::GetMousePosition", (const void*)GetMousePosition);
 
+	// Controller
+	mono_add_internal_call("HawkEngine.Input::GetControllerButton", (const void*)GetControllerButton);
+	mono_add_internal_call("HawkEngine.Input::GetControllerButtonDown", (const void*)GetControllerButtonDown);
+	mono_add_internal_call("HawkEngine.Input::GetControllerButtonUp", (const void*)GetControllerButtonUp);
+	mono_add_internal_call("HawkEngine.Input::GetJoystickAxis", (const void*)GetJoystickAxis);
+
     // Transform
     mono_add_internal_call("HawkEngine.Transform::SetPosition", (const void*)&EngineBinds::SetPosition);
     mono_add_internal_call("HawkEngine.Transform::GetPosition", (const void*)&EngineBinds::GetPosition);

@@ -6,6 +6,7 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <memory>
+#include <SDL2/SDL_gamecontroller.h>
 
 class GameObject;
 
@@ -45,11 +46,11 @@ namespace EngineBinds {
     int GetAxis(MonoString* axisName);
     glm::vec3 GetMousePosition();
 
-    // Controller
-    static bool GetControllerButton(int buttonID);
-    static bool GetControllerButtonDown(int buttonID);
-    static bool GetControllerButtonUp(int buttonID);
-    static int GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis);
+     // Controller
+    bool GetControllerButton(int buttonID);
+    bool GetControllerButtonDown(int buttonID);
+    bool GetControllerButtonUp(int buttonID);
+    int GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis);
 
 
     // Transform

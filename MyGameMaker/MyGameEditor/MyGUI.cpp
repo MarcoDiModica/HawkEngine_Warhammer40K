@@ -201,6 +201,8 @@ bool MyGUI::CleanUp() {
 }
 
 void MyGUI::Render() {
+	glFinish();
+
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
@@ -274,7 +276,12 @@ void MyGUI::Render() {
 	}
 
 	ImGui::Render();
+
+	glFinish();
+
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+	glFinish();
 }
 
 void MyGUI::processEvent(const SDL_Event& event) {

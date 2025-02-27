@@ -203,6 +203,8 @@ static void RenderGameView() {
 		return;
 	}
 
+	glFinish();
+
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
 
@@ -251,6 +253,9 @@ static void RenderGameView() {
 	glPopMatrix();
 
 	glPopAttrib();
+
+	//barrera
+	glFinish();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -445,22 +450,30 @@ static void display_func() {
 
 	Application->physicsModule->Update(Application->GetDt());
 	MousePickingCheck(objects);
+
+	//esto es como una barrera de sincronizacion
+	glFinish(); //garantiza que las operaciones de opengl se completen antes de continuar
 }
+
 
 static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
 		const auto t0 = hrclock::now();
 
 		display_func();
-		
+
 		RenderGameView();
 
+		glFinish();
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		gui->Render();
 
-		/*move_camera();*/
+		glFinish();
+
 		Application->window->SwapBuffers();
 
 		const auto t1 = hrclock::now();

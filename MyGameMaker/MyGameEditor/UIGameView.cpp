@@ -21,6 +21,8 @@ UIGameView::~UIGameView()
 
 void UIGameView::Init()
 {
+    glFinish();
+
     glGenFramebuffers(1, &Application->gui->fboGame);
     glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
 
@@ -41,6 +43,8 @@ void UIGameView::Init()
         LOG(LogType::LOG_ERROR, "Game View Framebuffer is not complete!");
     }
 
+    glFinish();
+
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -49,11 +53,15 @@ void UIGameView::UpdateFramebuffer()
     int newWidth = Application->window->width();
     int newHeight = Application->window->height();
 
+    glFinish();
+
     glBindTexture(GL_TEXTURE_2D, Application->gui->fboTextureGame);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, newWidth, newHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
     glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rboGame);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, newWidth, newHeight);
+
+    glFinish();
 }
 
 bool UIGameView::Draw()
@@ -91,6 +99,8 @@ bool UIGameView::Draw()
             height = availableSize.y;
             width = height * targetAspectRatio;
         }
+
+        glFinish();
 
         ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTextureGame,
             ImVec2(width, height),

@@ -34,6 +34,8 @@ UISceneWindow::~UISceneWindow()
 
 void UISceneWindow::Init()
 {
+	glFinish();
+
 	glGenFramebuffers(1, &Application->gui->fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 
@@ -52,8 +54,11 @@ void UISceneWindow::Init()
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		std::cerr << "Error: Framebuffer is not complete!" << std::endl;
 
+	glFinish();
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
 ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;;
 
 glm::vec3 UISceneWindow::ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y)
@@ -158,6 +163,8 @@ bool UISceneWindow::Draw()
         if (winSize.x != contentRegionSize.x || winSize.y != contentRegionSize.y)
         {
             winSize = vec2(contentRegionSize.x, contentRegionSize.y);
+
+            glFinish();
             
             glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)winSize.x, (int)winSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
@@ -168,6 +175,8 @@ bool UISceneWindow::Draw()
             Application->camera->UpdateCameraView(winSize.x, winSize.y, winSize.x, winSize.y);
             
             Application->gui->camSize = winSize;
+
+            glFinish();
         }
 
         ImRect titleBarRect(windowPos, ImVec2(windowPos.x + windowSize.x, windowPos.y + ImGui::GetFrameHeight()));
@@ -185,6 +194,8 @@ bool UISceneWindow::Draw()
         }
 
         ImVec2 viewportPosition = ImGui::GetCursorScreenPos();
+
+        glFinish();
         
         ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, contentRegionSize, ImVec2(0, 1), ImVec2(1, 0));
 

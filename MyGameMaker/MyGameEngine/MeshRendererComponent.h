@@ -4,6 +4,7 @@
 #include "Material.h"
 #include "Image.h"
 #include <glm/glm.hpp>
+#include "../MyGameEditor/Log.h"
 
 class Mesh;
 class Material;
@@ -49,63 +50,124 @@ private:
 
 
 protected:
-    YAML::Node encode() override {
+	YAML::Node encode() override {
+		YAML::Node node = Component::encode();
 
-        YAML::Node node = Component::encode();
+		if (mesh) {
+			node["mesh_path"] = mesh->filePath;
+			node["mesh_name"] = mesh->nameM;
+		}
 
-        node["mesh_path"] = mesh->filePath;
-        //node["image_path"] = image->image_path;
-        node["mesh_name"] = mesh->nameM;
+		if (material) {
+			std::string materialFilename = "material_" + std::to_string(material->GetId());
+			material->SaveBinary(materialFilename);
 
-        if (material) {
-            std::string materialFilename = "material_" + std::to_string(material->GetId());
-            material->SaveBinary(materialFilename);
+			node["material_path"] = materialFilename;
 
-            node["material_path"] = materialFilename + ".mat";
-        }
+			YAML::Node colorNode;
+			colorNode.push_back(material->GetColor().r);
+			colorNode.push_back(material->GetColor().g);
+			colorNode.push_back(material->GetColor().b);
+			colorNode.push_back(material->GetColor().a);
+			node["color"] = colorNode;
 
-        return node;
-    }
+			if (material->imagePtr && !material->imagePtr->image_path.empty()) {
+				node["image_path"] = material->imagePtr->image_path;
+			}
+		}
 
-    bool decode(const YAML::Node& node) {
+		return node;
+	}
 
-        Component::decode(node);
+	bool decode(const YAML::Node& node) {
+		if (!Component::decode(node)) {
+			return false;
+		}
 
-        if (!node["mesh_path"] || !node["image_path"])
-            return false;
+		if (!node["mesh_path"]) {
+			LOG(LogType::LOG_ERROR, "MeshRenderer: Missing mesh_path in node");
+			return false;
+		}
 
-        // node["mesh_path"].as<std::string>();
+		std::string path = node["mesh_path"].as<std::string>();
+		std::shared_ptr<Mesh> _mesh = nullptr;
 
-        auto _mesh = std::make_shared<Mesh>();
-        std::string path = node["mesh_path"].as<std::string>();
+		if (path.substr(0, 6) == "shapes" || path.substr(0, 5) == "shape") {
+			if (path.find("cube") != std::string::npos) {
+				_mesh = Mesh::CreateCube();
+				LOG(LogType::LOG_INFO, "MeshRenderer: Created cube mesh");
+			}
+			else if (path.find("sphere") != std::string::npos) {
+				_mesh = Mesh::CreateSphere();
+				LOG(LogType::LOG_INFO, "MeshRenderer: Created sphere mesh");
+			}
+			else if (path.find("plane") != std::string::npos) {
+				_mesh = Mesh::CreatePlane();
+				LOG(LogType::LOG_INFO, "MeshRenderer: Created plane mesh");
+			}
+			else if (path.find("cylinder") != std::string::npos) {
+				_mesh = Mesh::CreateCylinder();
+				LOG(LogType::LOG_INFO, "MeshRenderer: Created cylinder mesh");
+			}
+		}
+		else if (node["mesh_name"]) {
+			std::string meshName = node["mesh_name"].as<std::string>();
+			_mesh = Mesh::LoadBinary(meshName);
 
-        if (path.substr(0, 6) == "shape") {
-            if (path.find("cube")) {
-                _mesh = Mesh::CreateCube();
-            }
-            else if (path.find("sphere")) {
-                _mesh = Mesh::CreateSphere();
-            }
-            else if (path.find("plane")) {
-                _mesh = Mesh::CreatePlane();
-            }
-        }
-        else {
-             //_mesh->LoadMesh(path.c_str());
-        }
-        SetMesh(_mesh);
+			if (!_mesh) {
+				LOG(LogType::LOG_ERROR, "MeshRenderer: Failed to load mesh %s", meshName.c_str());
+				_mesh = Mesh::CreateCube();
+			}
+		}
 
-        if (node["material_path"]) {
-            std::string materialPath = node["material_path"].as<std::string>();
-            material = Material::LoadBinary(materialPath);
+		if (_mesh) {
+			SetMesh(_mesh);
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "MeshRenderer: Failed to create or load mesh");
+			return false;
+		}
 
-            if (!material) {
-                //log error
-            }
-        }
-        SetMaterial(material);
+		std::shared_ptr<Material> _material = std::make_shared<Material>();
 
-        return true;
-    }
+		if (node["material_path"]) {
+			std::string materialPath = node["material_path"].as<std::string>();
+			try {
+				_material = Material::LoadBinary(materialPath);
+				LOG(LogType::LOG_INFO, "MeshRenderer: Loaded material %s", materialPath.c_str());
+			}
+			catch (const std::exception& e) {
+				LOG(LogType::LOG_ERROR, "MeshRenderer: Error loading material %s: %s",
+					materialPath.c_str(), e.what());
+				_material = std::make_shared<Material>();
+			}
+		}
+
+		if (node["color"] && node["color"].IsSequence() && node["color"].size() == 4) {
+			glm::vec4 color;
+			color.r = node["color"][0].as<float>();
+			color.g = node["color"][1].as<float>();
+			color.b = node["color"][2].as<float>();
+			color.a = node["color"][3].as<float>();
+			_material->SetColor(color);
+		}
+
+		if (node["image_path"]) {
+			std::string imagePath = node["image_path"].as<std::string>();
+			auto image = std::make_shared<Image>();
+			image->LoadTexture(imagePath);
+
+			if (image->id() != 0) {
+				_material->setImage(image);
+				LOG(LogType::LOG_INFO, "MeshRenderer: Loaded image %s", imagePath.c_str());
+			}
+			else {
+				LOG(LogType::LOG_ERROR, "MeshRenderer: Failed to load image %s", imagePath.c_str());
+			}
+		}
+
+		SetMaterial(_material);
+		return true;
+	}
 
 };

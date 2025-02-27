@@ -48,8 +48,8 @@ void AudioListener::UpdateListenerPosition() {
     
     // Debug log every few frames
     static int frameCount = 0;
-    if (++frameCount % 60 == 0) { // Log every 60 frames
-        LOG(LogType::LOG_INFO, "AudioListener position updated on %s: (%.2f, %.2f, %.2f)", 
+    if (++frameCount % 60 == 0) {
+        //LOG(LogType::LOG_INFO, "AudioListener position updated on %s: (%.2f, %.2f, %.2f)", 
             owner->GetName().c_str(), 
             static_cast<float>(position.x),
             static_cast<float>(position.y),

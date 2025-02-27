@@ -113,28 +113,6 @@ protected:
 
     YAML::Node encode();
 
-    YAML::Node encodePosition() {
-        YAML::Node node;
-        auto position = GetPosition();
-
-        return YAML::convert<glm::dvec3>::encode(position);
-    }
-
-    YAML::Node encodeRotation() {
-        YAML::Node node;
-        auto rotation = GetEulerAngles();
-
-        return YAML::convert<glm::dvec3>::encode(rotation);
-
-    }
-
-    YAML::Node encodeScale() {
-        YAML::Node node;
-        auto scale = GetScale();
-
-        return YAML::convert<glm::dvec3>::encode(scale);
-    }
-
     bool decode(const YAML::Node& node);
 
 private:

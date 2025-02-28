@@ -13,6 +13,12 @@ ColliderComponent::~ColliderComponent() {
 }
 
 void ColliderComponent::Start() {
+	if (rigidBody) {
+		physics->dynamicsWorld->removeRigidBody(rigidBody);
+		delete rigidBody->getMotionState();
+		delete rigidBody;
+		rigidBody = nullptr;
+	}
     CreateCollider();
 }
 

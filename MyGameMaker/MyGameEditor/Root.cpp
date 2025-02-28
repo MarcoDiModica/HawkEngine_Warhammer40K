@@ -176,7 +176,7 @@ bool Root::Start()
 
     auto player = CreateCube("player");
     player->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
-    player->AddComponent<ColliderComponent>(Application->physicsModule)->Start();
+    player->AddComponent<RigidbodyComponent>(Application->physicsModule);
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
     /*script->LoadScript("PlayerController");*/
 

@@ -2,6 +2,7 @@
 using HawkEngine;
 using System.Collections.Generic;
 using System;
+using Script;
 
 public class PlayerController : MonoBehaviour
 {
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
 
     //Collider
     private Collider collider;
+    private Rigidbody rb;
     #endregion
 
     #region Lifecycle
@@ -122,6 +124,12 @@ public class PlayerController : MonoBehaviour
         {
             Engineson.print("ERROR: PlayerController requires a Collider component!");
             return;
+        } 
+        rb = gameObject.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Engineson.print("ERROR: PlayerController requires a Rigidbody component!");
+            return;
         }
     }
 
@@ -148,15 +156,27 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateMovement(Vector3 moveDirection, float deltaTime)
     {
-        targetVelocity = moveDirection * moveSpeed;
+        //targetVelocity = moveDirection * moveSpeed;
 
-        float smoothFactor = moveDirection != Vector3.Zero ? acceleration : deceleration;
-        currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, smoothFactor * deltaTime);
+        //float smoothFactor = moveDirection != Vector3.Zero ? acceleration : deceleration;
+        //currentVelocity = Vector3.Lerp(currentVelocity, targetVelocity, smoothFactor * deltaTime);
 
-        if (currentVelocity.LengthSquared() > 0.01f)
+        //if (currentVelocity.LengthSquared() > 0.01f)
+        //{
+        //    transform.position += currentVelocity * deltaTime;
+        //}
+
+        Vector3 currentVelocity = rb.GetVelocity();
+        Vector3 desiredVelocity = moveDirection * moveSpeed;
+
+        if (desiredVelocity.LengthSquared() > 0)
         {
-            transform.position += currentVelocity * deltaTime;
+            desiredVelocity = Vector3.Normalize(desiredVelocity) * moveSpeed;
         }
+
+        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+        rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+
     }
 
     private void UpdateRotation(Vector3 moveDirection, float deltaTime)

@@ -82,8 +82,42 @@ namespace EngineBinds {
     void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void Render(MonoObject* meshRendererRef);
 
+
     //Physics Collider
+    void SetTrigger(MonoObject* colliderRef, bool trigger);
     bool IsTrigger(MonoObject* colliderRef);
+
+    glm::vec3 GetColliderPosition(MonoObject* colliderRef);
+
+    void SetColliderPosition(MonoObject* colliderRef, glm::vec3* position);
+
+    glm::quat GetColliderRotation(MonoObject* colliderRef);
+
+    void SetColliderRotation(MonoObject* colliderRef, glm::quat* rotation);
+
+    glm::vec3 GetColliderSize(MonoObject* colliderRef);
+
+    void SetColliderSize(MonoObject* colliderRef, glm::vec3* size);
+
+    void SetColliderActive(MonoObject* colliderRef, bool active);
+
+    void SnapColliderToPosition(MonoObject* colliderRef);
+
+    //Physics Rigidbody
+    void SetVelocity(MonoObject* rigidbodyRef, glm::vec3* velocity);
+    glm::vec3 GetVelocity(MonoObject* rigidbodyRef);
+    void AddForce(MonoObject* rigidbodyRef, glm::vec3* force);
+    void SetMass(MonoObject* rigidbodyRef, float mass);
+    float GetMass(MonoObject* rigidbodyRef);
+    void SetFriction(MonoObject* rigidbodyRef, float friction);
+    float GetFriction(MonoObject* rigidbodyRef);
+    void SetGravity(MonoObject* rigidbodyRef, glm::vec3* gravity);
+    glm::vec3 GetGravity(MonoObject* rigidbodyRef);
+    void SetDamping(MonoObject* rigidbodyRef, float linearDamping, float angularDamping);
+    glm::vec2 GetDamping(MonoObject* rigidbodyRef);
+    void SetKinematic(MonoObject* rigidbodyRef, bool isKinematic);
+    bool IsKinematic(MonoObject* rigidbodyRef);
+    void EnableContinuousCollision(MonoObject* rigidbodyRef);
     
 }
 

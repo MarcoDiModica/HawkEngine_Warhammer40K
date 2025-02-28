@@ -193,6 +193,10 @@ void ColliderComponent::Destroy() {
         delete rigidBody;
         rigidBody = nullptr;
     }
+
+    if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
+        physics->gameObjectRigidBodyMap.erase(owner);
+    }
 }
 
 std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {

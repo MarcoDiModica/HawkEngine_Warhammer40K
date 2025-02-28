@@ -30,14 +30,7 @@ void RigidbodyComponent::SetRigidBody(btRigidBody* rigidBody) {
 
 void RigidbodyComponent::Update(float deltaTime) {}
 
-void RigidbodyComponent::Destroy() {
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
-    }
-}
+void RigidbodyComponent::Destroy() {}
 
 void RigidbodyComponent::SetMass(float newMass) {
 	mass = newMass;

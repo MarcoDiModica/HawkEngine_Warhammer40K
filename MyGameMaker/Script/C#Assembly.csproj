@@ -54,6 +54,10 @@
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="MouseFollower.cs" />
     <Compile Include="PlayerController.cs" />
+    <Compile Include="PlayerDash.cs" />
+    <Compile Include="PlayerInput.cs" />
+    <Compile Include="PlayerMovement.cs" />
+    <Compile Include="PlayerShooting.cs" />
     <Compile Include="ProjectileScript.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rigidbody.cs" />

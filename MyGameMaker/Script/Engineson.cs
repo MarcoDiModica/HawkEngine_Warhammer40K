@@ -1,11 +1,5 @@
-﻿using Script;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HawkEngine
 {
@@ -38,13 +32,13 @@ namespace HawkEngine
             {
                 return 2;
             }
-            //else if(type == typeof(Collider))
-            //{
-            //    return 3;
-            //}
-            else if(type == typeof(Rigidbody))
+            else if(type == typeof(Collider))
             {
                 return 3;
+            }
+            else if(type == typeof(Rigidbody))
+            {
+                return 4;
             }
 
             return -1;

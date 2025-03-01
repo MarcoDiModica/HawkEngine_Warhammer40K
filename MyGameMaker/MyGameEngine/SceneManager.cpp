@@ -178,7 +178,6 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
     auto image = std::make_shared<Image>();
     auto material = std::make_shared<Material>();
 
-
     meshRenderer->SetMesh(mesh);
     if (mat) {
         material = mat;
@@ -189,7 +188,7 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
     }
     material->setImage(image);
     meshRenderer->SetMaterial(material);
-    meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    meshRenderer->GetMaterial()->SetColor(vec4(0.5f, 0.5f, 0.5f, 1.0f));
 
     auto shaderComponent = go.AddComponent<ShaderComponent>();
 	shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());

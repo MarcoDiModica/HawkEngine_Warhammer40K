@@ -4,6 +4,7 @@
 #include "Material.h"
 #include "Image.h"
 #include <glm/glm.hpp>
+#include <memory>
 
 class Mesh;
 class Material;
@@ -42,9 +43,8 @@ public:
     MonoObject* GetSharp() override;
 
 private:
-    std::shared_ptr<Mesh> mesh;
-   // std::shared_ptr<Image> image;
-    std::shared_ptr<Material> material;
+    std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+    std::shared_ptr<Material> material = std::make_shared<Material>();
     glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 

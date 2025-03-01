@@ -21,7 +21,18 @@
 #include "../MyGameEditor/Root.h"
 #include "../MyGameEngine/CameraComponent.h"
 
-MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) { name = "MeshRenderer"; }
+MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
+    name = "MeshRenderer";
+    mesh = Mesh::CreateCube();
+    auto image = std::make_shared<Image>();
+    image->LoadTexture("default.png");
+    material->setImage(image);
+    material->SetColor(glm::dvec4(0.7f, 0.7f, 0.7f, 1.0f));
+
+    owner->AddComponent<ShaderComponent>();
+    owner->GetComponent<ShaderComponent>()->SetOwnerMaterial(material.get());
+    owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::LIGHT);
+}
 
 void MeshRenderer::Start()
 {
@@ -148,7 +159,7 @@ void MeshRenderer::Render() const
     glm::vec4 color(material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
     material->shader->SetUniform("modColor", color);
 
-    if (material->image().image_path != "") {
+    if (!material->image().image_path.empty()) {
         material->image().bind();
         material->shader->SetUniform("u_HasTexture", true);
         material->shader->SetUniform("texture1", 0);

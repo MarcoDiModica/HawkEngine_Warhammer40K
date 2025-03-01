@@ -119,6 +119,14 @@ namespace EngineBinds {
     bool IsKinematic(MonoObject* rigidbodyRef);
     void EnableContinuousCollision(MonoObject* rigidbodyRef);
     
+    //Audio
+    void InitSharedAudioEngine();
+    void ShutDownSharedAudioEngine();
+    bool LoadAudio(std::string filePath, bool isMusic = false);
+    void Play(bool loop = false);
+    void Stop();
+    void Pause();
+    bool Resume();
 }
 
 #endif // ENGINE_BINDS_H

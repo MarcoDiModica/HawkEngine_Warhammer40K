@@ -9,9 +9,11 @@
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyAudioEngine/SoundComponent.h"
 #include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
 #include <MyPhysicsEngine/RigidBodyComponent.h>
+#include <MyAudioEngine/SoundComponent.h>
 
 
 // GameObject
@@ -130,6 +132,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.Rigidbody") {
 		return GO->GetComponent<RigidbodyComponent>()->GetSharp();
 	}
+    else if (componentName == "HawkEngine.Audio") {
+        return GO->GetComponent<SoundComponent>()->GetSharp();
+    }
 	/*else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}*/
@@ -151,6 +156,8 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
     case 1: _component = static_cast<Component*>(go->AddComponent<MeshRenderer>());
         break;
     case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
+        break;
+    case 5: _component = static_cast<Component*>(go->AddComponent<SoundComponent>());
         break;
    }
 
@@ -676,6 +683,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Rigidbody::IsKinematic", (const void*)&EngineBinds::IsKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::EnableContinuousCollision", (const void*)&EngineBinds::EnableContinuousCollision);
 
+    // Audio
+    mono_add_internal_call("HawkEngine.Audio.InitSharedAudioEngine", (const void*)&EngineBinds::InitSharedAudioEngine);
 }
 
 template <class T>

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />

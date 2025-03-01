@@ -40,6 +40,12 @@ public class PlayerShooting
 
                 activeProjectiles.Add(projectile);
             }
+            Audio sound = projectile.AddComponent<Audio>();
+            if (sound != null)
+            {
+                sound.LoadAudio("Library/Audio/Menu Confirm.wav");
+                sound.Play();
+            }
         }
     }
 

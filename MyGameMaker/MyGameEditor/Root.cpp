@@ -81,6 +81,7 @@ std::shared_ptr<GameObject> CreateCanvasInScene(const std::string& name, const g
     auto transform = planeObject->GetTransform();
     transform->SetPosition(position);
     transform->Rotate(glm::radians(90.0f), glm::vec3(1, 0, 0));
+	transform->Rotate(glm::radians(180.0f), glm::vec3(0, 1, 0));
     
     auto material = std::make_shared<Material>();
 	material->imagePtr = std::make_shared<Image>();
@@ -115,7 +116,7 @@ bool Root::Awake()
     CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();
-    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -5.0f), "../MyGameEditor/Assets/Textures/SmokeParticleTexture.png");
+    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -5.0f), "../MyGameEditor/Assets/Textures/UItest1.png");
 
     /*CreateScene("Viernes13");
     SetActiveScene("Viernes13");

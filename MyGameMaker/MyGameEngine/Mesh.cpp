@@ -366,10 +366,10 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	};
 
 	model->GetModelData().vertex_texCoords = {
-		vec2(0.0f, 0.0f),
 		vec2(1.0f, 0.0f),
-		vec2(1.0f, 1.0f),
-		vec2(0.0f, 1.0f)
+		vec2(0.0f, 0.0f),
+		vec2(0.0f, 1.0f),
+		vec2(1.0f, 1.0f)
 	};
 
 	model->SetMeshName("Plane");

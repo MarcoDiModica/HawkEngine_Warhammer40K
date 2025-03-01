@@ -51,10 +51,8 @@ public class PlayerShooting
                 activeProjectiles.Add(projectile);
             }
             
-            if (sound != null)
-            {
-                sound.Play();
-            }
+            sound?.SetVolume(0.5f);
+            sound?.Play();
         }
     }
 

@@ -607,6 +607,44 @@ void EngineBinds::Play(MonoObject* audioRef, bool loop /*= false*/)
 
 }
 
+void EngineBinds::Stop(MonoObject* audioRef)
+{
+    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->Stop();
+	}
+}
+
+void EngineBinds::Pause(MonoObject* audioRef)
+{
+	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->Pause();
+	}
+}
+
+void EngineBinds::Resume(MonoObject* audioRef)
+{
+	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->Resume();
+	}
+}
+
+void EngineBinds::SetVolume(MonoObject* audioRef, float volume)
+{
+	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->SetVolume(volume);
+	}
+}
+
+float EngineBinds::GetVolume(MonoObject* audioRef)
+{
+    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+    return sound ? sound->GetVolume() : 0.0f;
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -694,6 +732,11 @@ void EngineBinds::BindEngine() {
 
     // Audio
     mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);
+    mono_add_internal_call("HawkEngine.Audio::Stop", (const void*)&EngineBinds::Stop);
+    mono_add_internal_call("HawkEngine.Audio::Pause", (const void*)&EngineBinds::Pause);
+    mono_add_internal_call("HawkEngine.Audio::Resume", (const void*)&EngineBinds::Resume);
+    mono_add_internal_call("HawkEngine.Audio::SetVolume", (const void*)&EngineBinds::SetVolume);
+    mono_add_internal_call("HawkEngine.Audio::GetVolume", (const void*)&EngineBinds::GetVolume);
 }
 
 template <class T>

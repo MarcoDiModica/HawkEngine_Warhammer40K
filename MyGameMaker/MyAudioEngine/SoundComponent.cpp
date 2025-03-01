@@ -69,6 +69,9 @@ void SoundComponent::Destroy() {
     if (m_SourceId != 0) {
         Stop();
     }
+
+    m_AudioAsset.reset();
+    m_SourceId = 0;
 }
 
 std::unique_ptr<Component> SoundComponent::Clone(GameObject* new_owner) {
@@ -138,13 +141,13 @@ void SoundComponent::Stop() {
     }
 }
 
-void SoundComponent::Pause() {
+void SoundComponent::Pause() const {
     if (m_SourceId != 0 && s_SharedAudioEngine) {
         s_SharedAudioEngine->PauseSound(m_SourceId);
     }
 }
 
-void SoundComponent::Resume() {
+void SoundComponent::Resume() const {
     if (m_SourceId != 0 && s_SharedAudioEngine) {
         s_SharedAudioEngine->ResumeSound(m_SourceId);
     }

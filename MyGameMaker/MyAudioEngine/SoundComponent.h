@@ -30,8 +30,8 @@ public:
     bool LoadAudio(const std::string& filePath, bool isMusic = false);
     void Play(bool loop = false);
     void Stop();
-    void Pause();
-    void Resume();
+    void Pause() const;
+    void Resume() const;
 
     // Audio properties
     void SetVolume(float volume);  // 0.0f to 1.0f

@@ -17,6 +17,12 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern bool Resume();
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetVolume(float volume);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern float GetVolume();
+
         private GameObject owner;
         public Audio(UIntPtr nativeAudio, GameObject owner)
         {

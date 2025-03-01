@@ -19,6 +19,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
+#include "../MyAudioEngine/SoundComponent.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -178,6 +179,7 @@ bool Root::Start()
     player->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
     player->AddComponent<RigidbodyComponent>(Application->physicsModule);
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
     /*script->LoadScript("PlayerController");*/
 
     /*auto objMainCamera = CreateCameraObject("MainCamera");

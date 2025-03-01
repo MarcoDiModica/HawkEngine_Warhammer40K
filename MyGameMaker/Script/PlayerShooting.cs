@@ -10,10 +10,20 @@ public class PlayerShooting
     private float projectileLifetime = 1.0f;
     private float shootTimer = 0f;
     private List<GameObject> activeProjectiles = new List<GameObject>();
+    private Audio sound;
 
     public PlayerShooting(GameObject player)
     {
         this.player = player;
+        sound = player.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
+        else
+        {
+           Engineson.print("PlayerShooting: Audio component found");
+        }
     }
 
     public void UpdateShooting(float deltaTime)
@@ -40,10 +50,9 @@ public class PlayerShooting
 
                 activeProjectiles.Add(projectile);
             }
-            Audio sound = projectile.AddComponent<Audio>();
+            
             if (sound != null)
             {
-                sound.LoadAudio("Library/Audio/Menu Confirm.wav");
                 sound.Play();
             }
         }

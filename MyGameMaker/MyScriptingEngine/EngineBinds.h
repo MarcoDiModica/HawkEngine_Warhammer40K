@@ -120,10 +120,7 @@ namespace EngineBinds {
     void EnableContinuousCollision(MonoObject* rigidbodyRef);
     
     //Audio
-    void InitSharedAudioEngine();
-    void ShutDownSharedAudioEngine();
-    bool LoadAudio(std::string filePath, bool isMusic = false);
-    void Play(bool loop = false);
+    void Play(MonoObject* audioRef, bool loop = false);
     void Stop();
     void Pause();
     bool Resume();

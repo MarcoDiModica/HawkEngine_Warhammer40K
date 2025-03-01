@@ -50,6 +50,9 @@ public:
     void SetLoop(bool loop) { m_Loop = loop; }
     bool GetLoop() const { return m_Loop; }
 
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
+
 private:
     void UpdatePosition();
 

@@ -598,6 +598,15 @@ void EngineBinds::EnableContinuousCollision(MonoObject* rigidbodyRef) {
 }
 
 
+void EngineBinds::Play(MonoObject* audioRef, bool loop /*= false*/)
+{
+    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->Play(loop);
+	}
+
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -684,7 +693,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Rigidbody::EnableContinuousCollision", (const void*)&EngineBinds::EnableContinuousCollision);
 
     // Audio
-    mono_add_internal_call("HawkEngine.Audio.InitSharedAudioEngine", (const void*)&EngineBinds::InitSharedAudioEngine);
+    mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);
 }
 
 template <class T>

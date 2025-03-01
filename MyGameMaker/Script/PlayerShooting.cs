@@ -68,6 +68,7 @@ public class PlayerShooting : MonoBehaviour
 
             // TODO: add mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
+            projectile.AddComponent<Collider>();
 
             if (projectile != null)
             {

@@ -12,6 +12,7 @@
 #include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
 #include <MyPhysicsEngine/RigidBodyComponent.h>
+#include "../MyGameEditor/App.h"
 
 
 // GameObject
@@ -151,6 +152,10 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
     case 1: _component = static_cast<Component*>(go->AddComponent<MeshRenderer>());
         break;
     case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
+        break;
+    case 3: _component = static_cast<Component*>(go->AddComponent<ColliderComponent>(Application->physicsModule));
+		break;
+    case 4: _component = static_cast<Component*>(go->AddComponent<RigidbodyComponent>(Application->physicsModule));
         break;
    }
 

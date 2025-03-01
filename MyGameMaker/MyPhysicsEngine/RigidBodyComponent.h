@@ -34,6 +34,8 @@ public:
 
     void AddForce(const glm::vec3& force);
 
+    void AddImpulse(const glm::vec3& force);
+
     glm::vec3 GetGravity() const;
     void SetGravity(const glm::vec3& gravity);
     

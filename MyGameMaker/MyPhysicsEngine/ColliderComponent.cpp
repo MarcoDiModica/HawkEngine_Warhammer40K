@@ -6,7 +6,12 @@
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 
-ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) { name = "ColliderComponent"; physics = physicsModule; isForStreetLocal = isForStreet; }
+ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner)
+{
+    name = "ColliderComponent"; 
+    physics = physicsModule;
+    isForStreetLocal = isForStreet; 
+}
 
 ColliderComponent::~ColliderComponent() {
     Destroy();

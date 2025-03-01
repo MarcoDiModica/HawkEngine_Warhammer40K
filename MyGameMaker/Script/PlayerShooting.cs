@@ -6,7 +6,10 @@ public class PlayerShooting : MonoBehaviour
 {
     public float shootCooldown = 0.2f;
     public float projectileSpeed = 20.0f;
-    public float projectileLifetime = 1.0f;
+    public float projectileLifetime = 3.0f;
+    public Vector3 bulletColor = new Vector3(0.0f, 1.0f, 1.0f);
+    public float bulletMass = 0.5f;
+    public float bulletScale = 0.3f;
 
     private PlayerInput playerInput;
     private Transform transform;
@@ -16,16 +19,14 @@ public class PlayerShooting : MonoBehaviour
     private class ProjectileInfo
     {
         public GameObject gameObject;
-        public Transform transform;
+        public Rigidbody rigidbody;
         public float lifetime;
-        public Vector3 direction;
         public bool markedForDestruction;
 
-        public ProjectileInfo(GameObject obj, Transform trans, Vector3 dir)
+        public ProjectileInfo(GameObject obj, Rigidbody rb)
         {
             gameObject = obj;
-            transform = trans;
-            direction = dir;
+            rigidbody = rb;
             lifetime = 0f;
             markedForDestruction = false;
         }
@@ -35,15 +36,11 @@ public class PlayerShooting : MonoBehaviour
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
         if (playerInput == null)
-        {
             Engineson.print("ERROR: PlayerShooting requires a PlayerInput component!");
-        }
 
         transform = gameObject.GetComponent<Transform>();
         if (transform == null)
-        {
             Engineson.print("ERROR: PlayerShooting requires a Transform component!");
-        }
     }
 
     public override void Update(float deltaTime)
@@ -64,27 +61,31 @@ public class PlayerShooting : MonoBehaviour
     {
         try
         {
+            //TODO: Research why the mesh doesnt scales 
             GameObject projectile = Engineson.CreateGameObject("Projectile", null);
+            if (projectile == null) return;
 
-            // TODO: add mesh to the projectile
+            // TODO: add specific mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
+            projectile.AddComponent<Collider>();
+            Rigidbody rigidbody = projectile.AddComponent<Rigidbody>();
 
-            if (projectile != null)
+            Transform projTransform = projectile.GetComponent<Transform>();
+            if (projTransform == null) return;
+
+            Vector3 forward = transform.forward;
+            Vector3 spawnPos = transform.position + forward * 1.0f;
+            projTransform.position = spawnPos;
+            //projTransform.SetScale(bulletScale, bulletScale, bulletScale);
+
+            if (rigidbody != null)
             {
-                Transform projTransform = projectile.GetComponent<Transform>();
-                if (projTransform != null)
-                {
-                    Vector3 forward = transform.forward;
-                    Vector3 spawnPos = transform.position + forward * 1.0f;
-                    projTransform.position = spawnPos;
-                    projTransform.SetScale(0.3f, 0.3f, 0.3f);
-
-                    ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
-                    activeProjectiles.Add(projInfo);
-
-                    Engineson.print("Projectile fired!");
-                }
+                rigidbody.SetMass(bulletMass);
+                rigidbody.AddForce(forward * projectileSpeed);
+                activeProjectiles.Add(new ProjectileInfo(projectile, rigidbody));
             }
+
+            Engineson.print("Projectile fired!");
         }
         catch (System.Exception e)
         {
@@ -101,23 +102,7 @@ public class PlayerShooting : MonoBehaviour
             proj.lifetime += deltaTime;
 
             if (proj.lifetime >= projectileLifetime)
-            {
                 proj.markedForDestruction = true;
-                continue;
-            }
-
-            try
-            {
-                if (proj.transform != null)
-                {
-                    proj.transform.position += proj.direction * projectileSpeed * deltaTime;
-                }
-            }
-            catch (System.Exception e)
-            {
-                proj.markedForDestruction = true;
-                Engineson.print($"Error updating projectile: {e.Message}");
-            }
         }
     }
 

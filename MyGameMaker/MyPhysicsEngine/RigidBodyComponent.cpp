@@ -49,6 +49,11 @@ void RigidbodyComponent::AddForce(const glm::vec3& force) {
         rigidBody->applyCentralForce(btVector3(force.x, force.y, force.z));
     }
 }
+void RigidbodyComponent::AddImpulse(const glm::vec3& force) {
+    if (rigidBody) {
+        rigidBody->applyCentralImpulse(btVector3(force.x, force.y, force.z));
+    }
+}
 
 glm::vec3 RigidbodyComponent::GetGravity() const {
     if (rigidBody) {

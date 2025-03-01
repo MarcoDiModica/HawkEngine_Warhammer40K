@@ -9,9 +9,12 @@
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/RigidBodyComponent.h"
+#include "../MyGameEditor/App.h"
 #include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
-#include <MyPhysicsEngine/RigidBodyComponent.h>
+
+
 
 
 // GameObject
@@ -146,11 +149,23 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
     auto go = ConvertFromSharp(ref);
 
     switch (component) {
-    case 0: _component = static_cast<Component*>( go->AddComponent<Transform_Component>()); 
+    case 0: 
+        _component = static_cast<Component*>( go->AddComponent<Transform_Component>()); 
         break;
-    case 1: _component = static_cast<Component*>(go->AddComponent<MeshRenderer>());
+    case 1: 
+        Application->root->AddMeshRenderer(*go, Mesh::CreateCube(), "Assets/default.png");
+		_component = go->GetComponent<MeshRenderer>();
         break;
-    case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
+    case 2: 
+        _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
+        break;
+    case 3:
+        _component = static_cast<Component*>(go->AddComponent<ColliderComponent>(Application->physicsModule));
+		go->GetComponent<ColliderComponent>()->Start();
+        break; 
+    case 4: 
+        _component = static_cast<Component*>(go->AddComponent<RigidbodyComponent>(Application->physicsModule));
+        go->GetComponent<RigidbodyComponent>()->Start();
         break;
    }
 
@@ -519,7 +534,7 @@ glm::vec3 EngineBinds::GetVelocity(MonoObject* rigidbodyRef) {
 void EngineBinds::AddForce(MonoObject* rigidbodyRef, glm::vec3* force) {
     auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
     if (rigidbody) {
-        rigidbody->AddForce(*force);
+        rigidbody->AddImpulse(*force);
     }
 }
 

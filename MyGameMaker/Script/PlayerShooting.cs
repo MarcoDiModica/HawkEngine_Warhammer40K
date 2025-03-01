@@ -67,7 +67,6 @@ public class PlayerShooting : MonoBehaviour
             GameObject projectile = Engineson.CreateGameObject("Projectile", null);
 
             // TODO: add mesh to the projectile
-            projectile.AddComponent<MeshRenderer>();
 
             if (projectile != null)
             {

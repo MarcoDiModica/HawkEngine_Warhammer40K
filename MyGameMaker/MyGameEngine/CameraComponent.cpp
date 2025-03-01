@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include <random>
 #include <functional>
+#include "../MyGameEditor/App.h"
 
 CameraComponent::CameraComponent(GameObject* owner) : Component(owner), CameraBase()
 {
@@ -52,6 +53,15 @@ CameraComponent& CameraComponent::operator=(CameraComponent&& other) noexcept
 void CameraComponent::Start()
 {
 	UpdateCameraView(1280, 720, 1280, 720);
+    for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i)
+    {
+        GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+
+        if (object->GetName() == "Player") {
+			followTarget = object;
+			lookAtTarget = object;
+        }
+    }
 }
 
 void CameraComponent::Update(float deltaTime)
@@ -71,21 +81,21 @@ void CameraComponent::Update(float deltaTime)
             desiredPosition.z = currentPosition.z;
         }
 
-        double t = glm::clamp(followSmoothness * deltaTime, 0.0, 1.0);
-        glm::dvec3 newPosition = glm::mix(currentPosition, desiredPosition, followSmoothness * deltaTime);
-        owner->GetTransform()->SetPosition(newPosition);
+        /*double t = glm::clamp(followSmoothness * deltaTime, 0.0, 1.0);
+        glm::dvec3 newPosition = glm::mix(currentPosition, desiredPosition, followSmoothness * deltaTime);*/
+        owner->GetTransform()->SetPosition(glm::dvec3(targetPosition.x, targetPosition.y + 10, targetPosition.z -10));
     }
 
     if (lookAtTarget != nullptr) {
         glm::dvec3 targetPosition = lookAtTarget->GetTransform()->GetPosition();
         glm::dvec3 lookAtPosition = targetPosition + lookAtOffset;
 
-        glm::dvec3 direction = glm::normalize(lookAtPosition - owner->GetTransform()->GetPosition());
+        glm::dvec3 direction = glm::normalize(owner->GetTransform()->GetPosition() - lookAtPosition);
         glm::quat newRotation = glm::quatLookAt(direction, owner->GetTransform()->GetUp());
 
         glm::quat currentRotation = owner->GetTransform()->GetRotation();
-        glm::quat smoothedRotation = glm::slerp(currentRotation, newRotation, lookAtSmoothness * deltaTime);
-        owner->GetTransform()->SetRotationQuat(smoothedRotation);
+        //glm::quat smoothedRotation = glm::slerp(currentRotation, newRotation, lookAtSmoothness * deltaTime);
+        owner->GetTransform()->SetRotationQuat(newRotation);
     }
 
     if (ShakeEnabled)

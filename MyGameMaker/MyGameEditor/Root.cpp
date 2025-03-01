@@ -178,6 +178,12 @@ bool Root::Start()
     player->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
     player->AddComponent<RigidbodyComponent>(Application->physicsModule);
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+
+
     /*script->LoadScript("PlayerController");*/
 
     /*auto objMainCamera = CreateCameraObject("MainCamera");

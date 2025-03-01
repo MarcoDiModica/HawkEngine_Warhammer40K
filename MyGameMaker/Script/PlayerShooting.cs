@@ -2,57 +2,143 @@
 using System.Numerics;
 using HawkEngine;
 
-public class PlayerShooting
+public class PlayerShooting : MonoBehaviour
 {
-    private GameObject player;
-    private float shootCooldown = 0.2f;
-    private float projectileSpeed = 20.0f;
-    private float projectileLifetime = 1.0f;
-    private float shootTimer = 0f;
-    private List<GameObject> activeProjectiles = new List<GameObject>();
+    public float shootCooldown = 0.2f;
+    public float projectileSpeed = 20.0f;
+    public float projectileLifetime = 1.0f;
 
-    public PlayerShooting(GameObject player)
+    private PlayerInput playerInput;
+    private Transform transform;
+    private float shootTimer = 0f;
+    private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
+
+    private class ProjectileInfo
     {
-        this.player = player;
+        public GameObject gameObject;
+        public Transform transform;
+        public float lifetime;
+        public Vector3 direction;
+        public bool markedForDestruction;
+
+        public ProjectileInfo(GameObject obj, Transform trans, Vector3 dir)
+        {
+            gameObject = obj;
+            transform = trans;
+            direction = dir;
+            lifetime = 0f;
+            markedForDestruction = false;
+        }
     }
 
-    public void UpdateShooting(float deltaTime)
+    public override void Start()
+    {
+        playerInput = gameObject.GetComponent<PlayerInput>();
+        if (playerInput == null)
+        {
+            Engineson.print("ERROR: PlayerShooting requires a PlayerInput component!");
+        }
+
+        transform = gameObject.GetComponent<Transform>();
+        if (transform == null)
+        {
+            Engineson.print("ERROR: PlayerShooting requires a Transform component!");
+        }
+    }
+
+    public override void Update(float deltaTime)
     {
         shootTimer -= deltaTime;
-        if (Input.GetKey(KeyCode.J) && shootTimer <= 0)
+
+        if (playerInput != null && playerInput.IsShooting() && shootTimer <= 0)
         {
             Shoot();
             shootTimer = shootCooldown;
         }
+
+        UpdateProjectiles(deltaTime);
+        CleanupProjectiles();
     }
 
     private void Shoot()
     {
-        GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-        if (projectile != null)
+        try
         {
-            Transform projTransform = projectile.GetComponent<Transform>();
-            if (projTransform != null)
-            {
-                Vector3 forward = player.GetComponent<Transform>().forward;
-                projTransform.position = player.GetComponent<Transform>().position + forward * 1.0f;
-                projTransform.SetScale(0.3f, 0.3f, 0.3f);
+            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
 
-                activeProjectiles.Add(projectile);
+            // TODO: add mesh to the projectile
+            projectile.AddComponent<MeshRenderer>();
+
+            if (projectile != null)
+            {
+                Transform projTransform = projectile.GetComponent<Transform>();
+                if (projTransform != null)
+                {
+                    Vector3 forward = transform.forward;
+                    Vector3 spawnPos = transform.position + forward * 1.0f;
+                    projTransform.position = spawnPos;
+                    projTransform.SetScale(0.3f, 0.3f, 0.3f);
+
+                    ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
+                    activeProjectiles.Add(projInfo);
+
+                    Engineson.print("Projectile fired!");
+                }
+            }
+        }
+        catch (System.Exception e)
+        {
+            Engineson.print($"Error creating projectile: {e.Message}");
+        }
+    }
+
+    private void UpdateProjectiles(float deltaTime)
+    {
+        foreach (var proj in activeProjectiles)
+        {
+            if (proj.markedForDestruction) continue;
+
+            proj.lifetime += deltaTime;
+
+            if (proj.lifetime >= projectileLifetime)
+            {
+                proj.markedForDestruction = true;
+                continue;
+            }
+
+            try
+            {
+                if (proj.transform != null)
+                {
+                    proj.transform.position += proj.direction * projectileSpeed * deltaTime;
+                }
+            }
+            catch (System.Exception e)
+            {
+                proj.markedForDestruction = true;
+                Engineson.print($"Error updating projectile: {e.Message}");
             }
         }
     }
 
-    public void UpdateProjectiles(float deltaTime)
+    private void CleanupProjectiles()
     {
-        foreach (var proj in activeProjectiles)
+        for (int i = activeProjectiles.Count - 1; i >= 0; i--)
         {
-            proj.GetComponent<Transform>().position += proj.GetComponent<Transform>().forward * projectileSpeed * deltaTime;
+            var proj = activeProjectiles[i];
+            if (proj.markedForDestruction)
+            {
+                try
+                {
+                    Engineson.Destroy(proj.gameObject);
+                    activeProjectiles.RemoveAt(i);
+                }
+                catch (System.Exception e)
+                {
+                    Engineson.print($"Error destroying projectile: {e.Message}");
+                    activeProjectiles.RemoveAt(i);
+                }
+            }
         }
-    }
-
-    public void CleanupProjectiles()
-    {
-        activeProjectiles.RemoveAll(proj => proj == null);
     }
 }

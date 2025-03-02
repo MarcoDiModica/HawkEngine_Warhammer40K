@@ -75,13 +75,13 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
     return particleEmitter;
 }
 
-std::shared_ptr<GameObject> CreateCanvasInScene(const std::string& name, const glm::vec3& position, const std::string& texturePath) {
+std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, const glm::vec3& position, const std::string& texturePath) {
     
     auto planeObject = Application->root->CreatePlane(name);
     auto transform = planeObject->GetTransform();
     transform->SetPosition(position);
     transform->Rotate(glm::radians(90.0f), glm::vec3(1, 0, 0));
-	transform->Rotate(glm::radians(180.0f), glm::vec3(0, 1, 0));
+    transform->Rotate(glm::radians(180.0f), glm::vec3(0, 1, 0));
     
     auto material = std::make_shared<Material>();
 	material->imagePtr = std::make_shared<Image>();
@@ -97,8 +97,35 @@ std::shared_ptr<GameObject> CreateCanvasInScene(const std::string& name, const g
     shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
     shaderComponent->SetShaderType(ShaderType::LIGHT);
 
+    if (mainCamera) {
+        initialCanvasOffset = glm::dvec3(position) - mainCamera->GetTransform()->GetPosition();
+        initialCanvasRotationOffset = glm::inverse(mainCamera->GetTransform()->GetRotation()) * transform->GetRotation();
+        UpdateCanvasTransform(planeObject, mainCamera);
+    }
+    else {
+        std::cerr << "Error: mainCamera es nullptr." << std::endl;
+    }
+
     return planeObject;
 }
+
+void Root::UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared_ptr<GameObject> mainCamera) {
+    if (!canvas || !mainCamera) {
+        std::cerr << "Error: canvas or mainCamera is null." << std::endl;
+        return;
+    }
+
+    auto cameraTransform = mainCamera->GetTransform();
+    auto canvasTransform = canvas->GetTransform();
+
+    if (cameraTransform && canvasTransform) {
+        glm::dvec3 newPosition = cameraTransform->GetPosition() + initialCanvasOffset;
+        canvasTransform->SetPosition(newPosition);
+        glm::dquat newRotation = cameraTransform->GetRotation() * initialCanvasRotationOffset;
+        canvasTransform->SetRotationQuat(newRotation);
+    }
+}
+
 bool Root::Awake()
 {
    // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
@@ -116,17 +143,17 @@ bool Root::Awake()
     CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();
-    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -5.0f), "../MyGameEditor/Assets/Textures/UItest1.png");
-
+   
     /*CreateScene("Viernes13");
-    SetActiveScene("Viernes13");
+    SetActiveScene("Viernes13");*/
     
-    auto MainCamera = CreateCameraObject("MainCamera");
+    /*auto MainCamera = CreateCameraObject("MainCamera");
     MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
     MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera; */   
 
+   
 	//auto Collider = CreateGameObject("Collider");
     //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
 
@@ -153,6 +180,8 @@ bool Root::Start()
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     mainCamera = objMainCamera;
     
+    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -5.0f), "../MyGameEditor/Assets/Textures/UItest1.png");
+
     //MonoEnvironment* mono = new MonoEnvironment();
 
     //auto Script = CreateGameObject("Script");
@@ -209,7 +238,13 @@ bool Root::Start()
     return true;
 }
 
-bool Root::Update(double dt) {
+bool Root::Update(double dt) 
+{
+
+        auto canvas = FindGOByName(const_cast<char*>("UICanvas"));
+        if (canvas) {
+            UpdateCanvasTransform(canvas, mainCamera);
+        }
 
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
 

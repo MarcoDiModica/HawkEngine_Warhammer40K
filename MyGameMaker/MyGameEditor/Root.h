@@ -83,6 +83,7 @@ private:
     std::vector<std::shared_ptr<Scene>> scenes;
     glm::dvec3 initialCanvasOffset;
     glm::dquat initialCanvasRotationOffset;
+	glm::dvec3 initialCanvasScaleOffset;
     std::vector<std::shared_ptr<GameObject>> renderFirstObjects;
 };
 

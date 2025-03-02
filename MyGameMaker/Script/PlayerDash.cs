@@ -3,8 +3,8 @@ using HawkEngine;
 
 public class PlayerDash : MonoBehaviour
 {
-    public float dashSpeed = 45.0f;
-    public float dashDuration = 0.15f;
+    public float dashSpeed = 3000.0f;
+    public float dashDuration = 0.05f;
     public int maxDashCharges = 2;
     public float dashRechargeRate = 2.0f;
 

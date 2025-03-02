@@ -15,8 +15,8 @@ public class PlayerInput : MonoBehaviour
     {
         UpdateMovementDirection();
 
-        isDashPressed = Input.GetKeyDown(KeyCode.SPACE);
-        isShootPressed = Input.GetKey(KeyCode.J);
+        isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
+        isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerButton(ControllerButton.X);
     }
 
     private void UpdateMovementDirection()
@@ -27,6 +27,12 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.S)) direction -= Vector3.UnitZ;
         if (Input.GetKey(KeyCode.D)) direction += Vector3.UnitX;
         if (Input.GetKey(KeyCode.A)) direction -= Vector3.UnitX;
+
+        if (Input.GetLeftStick() != Vector2.Zero)
+        {
+            Vector2 leftStickInput = Input.GetLeftStick();
+            direction = new Vector3(leftStickInput.X, 0, leftStickInput.Y);
+        }
 
         currentMoveDirection = direction != Vector3.Zero ? Vector3.Normalize(direction) : direction;
     }

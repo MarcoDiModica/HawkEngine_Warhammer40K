@@ -4,8 +4,8 @@ using HawkEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public float shootCooldown = 0.2f;
-    public float projectileSpeed = 20.0f;
+    public float shootCooldown = 0.01f;
+    public float projectileSpeed = 90.0f;
     public float projectileLifetime = 1.0f;
 
     private PlayerInput playerInput;

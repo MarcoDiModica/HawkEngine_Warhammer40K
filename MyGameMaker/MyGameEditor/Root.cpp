@@ -174,14 +174,20 @@ bool Root::Start()
 {
 	//CreatePlayer();
 
-    auto player = CreateCube("player");
-    player->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+    auto player = CreateGameObject("Player");
+    player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
     player->AddComponent<RigidbodyComponent>(Application->physicsModule);
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+
+    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+    playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+    playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+    ParentGameObject(*playerMesh, *player);
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -340,7 +346,7 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat, shaders);
 }
 
-void Root::CreateGameObjectWithPath(const std::string& path)
+std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& path)
 {
     auto MarcoVicePresidente = Application->root->CreateGameObject(path);
 
@@ -390,6 +396,13 @@ void Root::CreateGameObjectWithPath(const std::string& path)
     //for (auto& go : gameObjectsWithColliders) {
     //    go->AddComponent<ColliderComponent>(Application->physicsModule, true);
     //}
+
+    if (meshImp.meshes.size() > 0) {
+		return MarcoVicePresidente;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void Root::ChangeShader(GameObject& go, ShaderType shader)

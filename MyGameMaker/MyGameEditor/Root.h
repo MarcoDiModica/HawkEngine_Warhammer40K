@@ -55,7 +55,7 @@ public:
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr, std::vector<Shaders> shaders = std::vector<Shaders>());
 
-    void CreateGameObjectWithPath(const std::string& path);
+    std::shared_ptr<GameObject> CreateGameObjectWithPath(const std::string& path);
 
     void ChangeShader(GameObject& go, ShaderType shader);
 

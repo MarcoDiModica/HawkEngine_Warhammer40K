@@ -24,20 +24,10 @@ public class PlayerController : MonoBehaviour
     public override void Update(float deltaTime)
     {
         Vector3 moveDirection = playerInput.GetCurrentMoveDirection();
-        
-        if (playerInput.IsShooting())
-        {
-            if (moveDirection != Vector3.Zero)
-            {
-                moveDirection /= 2;
-            }
-            else
-            {
-                moveDirection = Vector3.Zero;
-            }
-        }
+        Vector3 lookDirection = playerInput.GetCurrentLookDirection();
 
         playerMovement.SetMoveDirection(moveDirection);
+        playerMovement.SetLookDirection(lookDirection);
 
         if (playerInput.IsDashPressed() && playerDash.CanDash() && moveDirection != Vector3.Zero)
         {

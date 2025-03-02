@@ -66,7 +66,7 @@ public class PlayerShooting : MonoBehaviour
         {
             GameObject projectile = Engineson.CreateGameObject("Projectile", null);
 
-            // TODO: add mesh to the projectile
+            // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
             projectile.AddComponent<Collider>();
 
@@ -78,7 +78,7 @@ public class PlayerShooting : MonoBehaviour
                     Vector3 forward = transform.forward;
                     Vector3 spawnPos = transform.position + forward * 1.0f;
                     projTransform.position = spawnPos;
-                    projTransform.SetScale(0.3f, 0.3f, 0.3f);
+                    projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                     ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
                     activeProjectiles.Add(projInfo);

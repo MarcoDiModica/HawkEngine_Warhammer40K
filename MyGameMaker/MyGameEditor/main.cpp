@@ -191,7 +191,17 @@ static void configureCamera() {
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
 	Application->camera->frustum.Update(projectionMatrix * viewMatrix);
-}	
+}
+
+static void RenderObjectAndChildren(GameObject* object) {
+	if (object->HasComponent<MeshRenderer>()) {
+		object->GetComponent<MeshRenderer>()->RenderMainCamera();
+	}
+
+	for (const auto& child : object->GetChildren()) {
+		RenderObjectAndChildren(child.get());
+	}
+}
 
 static void RenderGameView() {
 	if (Application->root->mainCamera == nullptr) {
@@ -230,18 +240,7 @@ static void RenderGameView() {
 
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
-
-		if (object->HasComponent<MeshRenderer>()) {
-			object->GetComponent<MeshRenderer>()->RenderMainCamera();
-		}
-
-		for (size_t j = 0; j < object->GetChildren().size(); ++j) {
-			GameObject* child = object->GetChildren()[j].get();
-
-			if (child->HasComponent<MeshRenderer>()) {
-				child->GetComponent<MeshRenderer>()->RenderMainCamera();
-			}
-		}
+		RenderObjectAndChildren(object);
 	}
 
 	glMatrixMode(GL_PROJECTION);

@@ -127,6 +127,13 @@ namespace EngineBinds {
     bool IsKinematic(MonoObject* rigidbodyRef);
     void EnableContinuousCollision(MonoObject* rigidbodyRef);
     
+    //Audio
+    void Play(MonoObject* audioRef, bool loop = false);
+    void Stop(MonoObject* audioRef);
+    void Pause(MonoObject* audioRef);
+    void Resume(MonoObject* audioRef);
+    void SetVolume(MonoObject* audioRef, float volume);
+    float GetVolume(MonoObject* audioRef);
 }
 
 #endif // ENGINE_BINDS_H

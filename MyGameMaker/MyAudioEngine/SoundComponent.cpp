@@ -7,6 +7,8 @@
 #include <iostream>
 #include "AudioAssetProcessor.h"
 #include <filesystem>
+#include "MyScriptingEngine/MonoManager.h"
+#include "mono/metadata/debug-helpers.h"
 
 using namespace MyGameEngine;  // For AudioEngine and AudioAsset
 
@@ -67,6 +69,9 @@ void SoundComponent::Destroy() {
     if (m_SourceId != 0) {
         Stop();
     }
+
+    m_AudioAsset.reset();
+    m_SourceId = 0;
 }
 
 std::unique_ptr<Component> SoundComponent::Clone(GameObject* new_owner) {
@@ -136,13 +141,13 @@ void SoundComponent::Stop() {
     }
 }
 
-void SoundComponent::Pause() {
+void SoundComponent::Pause() const {
     if (m_SourceId != 0 && s_SharedAudioEngine) {
         s_SharedAudioEngine->PauseSound(m_SourceId);
     }
 }
 
-void SoundComponent::Resume() {
+void SoundComponent::Resume() const {
     if (m_SourceId != 0 && s_SharedAudioEngine) {
         s_SharedAudioEngine->ResumeSound(m_SourceId);
     }
@@ -160,6 +165,46 @@ bool SoundComponent::IsPlaying() const {
         return s_SharedAudioEngine->IsPlaying(m_SourceId);
     }
     return false;
+}
+
+MonoObject* SoundComponent::GetSharp()
+{
+	if (CsharpReference) {
+		return CsharpReference;
+	}
+
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Audio");
+	if (!klass) {
+		return nullptr;
+	}
+
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		return nullptr;
+	}
+
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Audio:.ctor(uintptr,HawkEngine.GameObject)", true);
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	if (!method)
+	{
+		return nullptr;
+	}
+
+	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+	MonoObject* ownerGo = owner->GetSharp();
+	if (!ownerGo)
+	{
+		return nullptr;
+	}
+
+	void* args[2]{};
+	args[0] = &componentPtr;
+	args[1] = ownerGo;
+
+	mono_runtime_invoke(method, monoObject, args, nullptr);
+
+	CsharpReference = monoObject;
+	return CsharpReference;
 }
 
 void SoundComponent::UpdatePosition() {

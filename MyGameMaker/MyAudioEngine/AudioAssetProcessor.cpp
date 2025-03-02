@@ -58,7 +58,9 @@ std::shared_ptr<AudioAsset> AudioAssetProcessor::GetCachedAsset(const std::strin
 }
 
 void AudioAssetProcessor::ClearCache() {
-    audioCache.clear();
+    for (auto& pair : audioCache) {
+		pair.second.reset();
+	}
 }
 
 void AudioAssetProcessor::UnloadUnused() {

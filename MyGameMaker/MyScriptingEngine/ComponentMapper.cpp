@@ -4,12 +4,14 @@
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyGameEditor/Log.h" //QUITAR
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
+#include "../MyAudioEngine/SoundComponent.h"
 
 ComponentMapper::ComponentMapper() {
     AddMapping(std::type_index(typeid(Transform_Component)), "Transform");
 	AddMapping(std::type_index(typeid(MeshRenderer)), "MeshRenderer");
     AddMapping(std::type_index(typeid(ColliderComponent)), "Collider");
     AddMapping(std::type_index(typeid(RigidbodyComponent)), "Rigidbody");
+    AddMapping(std::type_index(typeid(SoundComponent)), "Audio");
     // mas components
 }
 

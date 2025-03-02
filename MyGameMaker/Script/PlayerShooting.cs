@@ -6,12 +6,13 @@ public class PlayerShooting : MonoBehaviour
 {
     public float shootCooldown = 0.01f;
     public float projectileSpeed = 90.0f;
-    public float projectileLifetime = 1.0f;
-
+    public float projectileLifetime = 0.5f;
     private PlayerInput playerInput;
     private Transform transform;
     private float shootTimer = 0f;
     private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
+    
+    private Audio sound;
 
     private class ProjectileInfo
     {
@@ -44,13 +45,19 @@ public class PlayerShooting : MonoBehaviour
         {
             Engineson.print("ERROR: PlayerShooting requires a Transform component!");
         }
+
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
     }
 
     public override void Update(float deltaTime)
     {
         shootTimer -= deltaTime;
 
-        if (playerInput != null && playerInput.IsShooting() && shootTimer <= 0)
+        if (playerInput?.IsShooting() == true && shootTimer <= 0)
         {
             Shoot();
             shootTimer = shootCooldown;
@@ -69,6 +76,8 @@ public class PlayerShooting : MonoBehaviour
             // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
             projectile.AddComponent<Collider>();
+
+            sound?.Play();
 
             if (projectile != null)
             {

@@ -19,6 +19,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
+#include "../MyAudioEngine/SoundComponent.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -182,6 +183,8 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+
 
     auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
     playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));

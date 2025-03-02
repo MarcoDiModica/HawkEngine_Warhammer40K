@@ -54,6 +54,6 @@ void main()
 
 
     // Transform the vertex position to clip space
-    gl_Position = projection * view * model * totalPosition;
+    gl_Position = (projection * view * model) * totalPosition;
     //Normal = normalize(totalNormal);
 }

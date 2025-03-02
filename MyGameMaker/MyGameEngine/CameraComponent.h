@@ -62,6 +62,9 @@ public:
 
     ProjectionType projectionType = ProjectionType::Perspective;
 
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
+
 private:
 
     void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);

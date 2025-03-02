@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace HawkEngine
@@ -27,6 +28,9 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetCameraProjectionType(int projectionType);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void SetFollowTarget(GameObject target, Vector3 offset, float distance, bool followX, bool followY, bool followZ, float smoothness);
+
         public bool ortographic
         {
             get
@@ -47,12 +51,11 @@ namespace HawkEngine
             }
         }
 
-        private UIntPtr _nativeCamera;
         private GameObject owner;
 
         public Camera(UIntPtr nativeCamera, GameObject owner)
         {
-            _nativeCamera = nativeCamera;
+            CplusplusInstance = nativeCamera;
             this.owner = owner;
         }
 

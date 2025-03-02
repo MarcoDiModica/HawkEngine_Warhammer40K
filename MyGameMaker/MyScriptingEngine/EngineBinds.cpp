@@ -418,6 +418,13 @@ void EngineBinds::SetCameraProjectionType(MonoObject* cameraRef, int projectionT
 
 }
 
+void EngineBinds::SetFollowTarget(MonoObject* cameraRef, MonoObject* target, glm::vec3* offset, float distance, bool followX, bool followY, bool followZ, float smoothness)
+{
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+	GameObject* targetGO = ConvertFromSharp(target);
+	camera->FollowTarget(targetGO, distance, *offset, smoothness, followX, followY, followZ);
+}
+
 // MeshRenderer
 void EngineBinds::SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef)
 {
@@ -759,6 +766,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Camera::SetCameraAspectRatio", (const void*)&EngineBinds::SetCameraAspectRatio);
     mono_add_internal_call("HawkEngine.Camera::SetCameraOrthographicSize", (const void*)&EngineBinds::SetCameraOrthographicSize);
     mono_add_internal_call("HawkEngine.Camera::SetCameraProjectionType", (const void*)&EngineBinds::SetCameraProjectionType);
+    mono_add_internal_call("HawkEngine.Camera::SetFollowTarget", (const void*)&EngineBinds::SetFollowTarget);
 
     // MeshRenderer
     mono_add_internal_call("HawkEngine.MeshRenderer::SetMesh", (const void*)&EngineBinds::SetMesh);

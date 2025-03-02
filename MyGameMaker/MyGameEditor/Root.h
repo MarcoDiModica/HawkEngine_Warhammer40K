@@ -64,6 +64,7 @@ public:
     bool ParentGameObjectToScene(GameObject& child);
     bool ParentGameObjectToObject(GameObject& child, GameObject& father);
     void UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared_ptr<GameObject> mainCamera);
+    void RenderScene();
 
     std::shared_ptr<GameObject> FindGOByName(char* name);
 
@@ -82,6 +83,7 @@ private:
     std::vector<std::shared_ptr<Scene>> scenes;
     glm::dvec3 initialCanvasOffset;
     glm::dquat initialCanvasRotationOffset;
+    std::vector<std::shared_ptr<GameObject>> renderFirstObjects;
 };
 
 #endif

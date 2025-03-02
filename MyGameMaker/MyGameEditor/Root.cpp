@@ -82,7 +82,8 @@ std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, c
     transform->SetPosition(position);
     transform->Rotate(glm::radians(90.0f), glm::vec3(1, 0, 0));
     transform->Rotate(glm::radians(180.0f), glm::vec3(0, 1, 0));
-    
+    transform->SetScale(glm::dvec3(2.0, 1.0, 1.0));
+
     auto material = std::make_shared<Material>();
 	material->imagePtr = std::make_shared<Image>();
 	material->imagePtr->LoadTexture(texturePath);
@@ -100,11 +101,14 @@ std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, c
     if (mainCamera) {
         initialCanvasOffset = glm::dvec3(position) - mainCamera->GetTransform()->GetPosition();
         initialCanvasRotationOffset = glm::inverse(mainCamera->GetTransform()->GetRotation()) * transform->GetRotation();
+        /*initialCanvasScaleOffset = transform->GetScale();*/
         UpdateCanvasTransform(planeObject, mainCamera);
     }
     else {
         std::cerr << "Error: mainCamera es nullptr." << std::endl;
     }
+
+    renderFirstObjects.push_back(planeObject);
 
     return planeObject;
 }
@@ -119,13 +123,28 @@ void Root::UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared
     auto canvasTransform = canvas->GetTransform();
 
     if (cameraTransform && canvasTransform) {
-        glm::dvec3 newPosition = cameraTransform->GetPosition() + initialCanvasOffset;
+        glm::dvec3 cameraPosition = cameraTransform->GetPosition();
+        glm::dvec3 cameraForward = cameraTransform->GetForward();
+        glm::dvec3 newPosition = cameraPosition + cameraForward * glm::length(initialCanvasOffset);
         canvasTransform->SetPosition(newPosition);
         glm::dquat newRotation = cameraTransform->GetRotation() * initialCanvasRotationOffset;
         canvasTransform->SetRotationQuat(newRotation);
+        /*glm::dvec3 newScale = initialCanvasScaleOffset;
+        canvasTransform->SetScale(newScale);*/
     }
 }
 
+void Root::RenderScene() {
+    // Renderizar primero los objetos en renderFirstObjects
+    for (const auto& obj : renderFirstObjects) {
+        obj->Render();
+    }
+
+    // Renderizar el resto de los objetos de la escena
+    for (const auto& obj : gameObjectsWithColliders) {
+        obj->Render();
+    }
+}
 bool Root::Awake()
 {
    // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
@@ -180,7 +199,7 @@ bool Root::Start()
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     mainCamera = objMainCamera;
     
-    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -5.0f), "../MyGameEditor/Assets/Textures/UItest1.png");
+    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -2.0f), "../MyGameEditor/Assets/Textures/UItest1.png");
 
     //MonoEnvironment* mono = new MonoEnvironment();
 
@@ -246,6 +265,7 @@ bool Root::Update(double dt)
             UpdateCanvasTransform(canvas, mainCamera);
         }
 
+        RenderScene();
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
 
     //SceneManagement->Update(dt);

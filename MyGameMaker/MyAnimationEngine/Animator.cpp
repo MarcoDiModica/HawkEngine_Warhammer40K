@@ -63,8 +63,9 @@ void Animator::UpdateAnimation(float dt)
     if (m_CurrentAnimation)
     {
         m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt * m_PlaySpeed;
-        m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
-        CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
+		m_CurrentAnimation->skeletalModel->BoneTransform(m_CurrentTime,m_BoneMatrices);
+        //m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
+        //CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
     }
 }
 

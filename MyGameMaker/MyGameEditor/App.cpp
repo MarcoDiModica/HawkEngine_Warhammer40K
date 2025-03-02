@@ -10,6 +10,8 @@
 #include "Log.h"
 #include "UISettings.h"
 
+
+
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
 
@@ -27,6 +29,8 @@ App::App() {
 
 	camera = new EditorCamera(this);
 	physicsModule = new PhysicsModule();
+
+	skeletalModel = new SkeletalModel();
 
 	//gizmos = new Gizmos(this);
 

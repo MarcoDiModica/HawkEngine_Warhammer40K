@@ -7,6 +7,7 @@
 #include <assimp/postprocess.h>
 #include "Bone.h"
 #include "MyGameEngine/Model.h"
+#include "SkeletalModel.h"
 
 struct AssimpNodeData
 {
@@ -26,6 +27,10 @@ private:
     std::map<std::string, BoneInfo> m_BoneInfoMap;
     std::vector<std::string> m_Animations;
 public:
+
+    SkeletalModel* skeletalModel;
+
+
     Animation();
     ~Animation();
 

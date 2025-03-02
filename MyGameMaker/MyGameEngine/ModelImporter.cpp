@@ -9,6 +9,7 @@
 #include <assimp/mesh.h>
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "MyAnimationEngine/Animation.h"
+#include "MyAnimationEngine/SkeletalModel.h"
 
 #include "Material.h"
 #include "MeshRendererComponent.h"
@@ -26,6 +27,7 @@
 #include "glm/gtx/matrix_decompose.hpp"
 // cosa ilegal
 #include "../MyGameEditor/Log.h"
+#include "../MyGameEditor/App.h"
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -92,15 +94,7 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 			const auto& model = meshes[meshIndex];
 
 
-			if (scene.mNumAnimations > 0)
-			{
-				Animation* animation = new Animation();
-
-				animation->SetUpAnimation(scenePath, model->getModel().get());
-		
-				animations.push_back(std::shared_ptr<Animation>(animation));
-				std::cout << node.mName.C_Str() << std::endl;
-			}
+			
 
 			obj.SetName(node.mName.data);
 
@@ -114,7 +108,7 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 	}
 }
 
-std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
+std::vector<std::shared_ptr<Mesh>>ModelImporter::createMeshesFromFBX(const aiScene& scene) {
 	std::vector<std::shared_ptr<Mesh>> meshes;
 	meshes.resize(scene.mNumMeshes);
 
@@ -124,6 +118,13 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 	std::vector<std::shared_ptr<ModelData>> modelsData;
 	modelsData.resize(scene.mNumMeshes);
 
+	std::vector<VertexStruct> vertices;
+	std::vector<VertexBoneData> bones;
+	std::vector<unsigned int> Indices;
+
+	unsigned int NumVertices = 0;
+	unsigned int NumIndices = 0;
+
 	for (unsigned int i = 0; i < scene.mNumMeshes; i++) {
 		aiMesh* mesh = scene.mMeshes[i];
 		modelsData[i] = std::make_shared<ModelData>();
@@ -131,13 +132,15 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 		models[i]->SetMeshName(mesh->mName.C_Str());
 		models[i]->SetMaterialIndex(mesh->mMaterialIndex);
 
+		NumVertices += scene.mMeshes[i]->mNumVertices;
+		NumIndices += scene.mMeshes[i]->mNumFaces * 3;
 		for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
 
 			// Coordenadas de los v�rtices
 			aiVector3D vertex = mesh->mVertices[j];
 			vec3 aux = vec3(vertex.x, vertex.y, vertex.z);
 			Vertex v;
-			models[i]->SetVertexBoneDataToDefault(v);
+			//models[i]->SetVertexBoneDataToDefault(v);
 			v.position = AssimpGLMHelpers::GetGLMVec(vertex);
 			modelsData[i]->vertexData.push_back(v);
 			
@@ -163,7 +166,7 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 			}
 		}
 
-		models[i]->ExtractBoneWeightForVertices(modelsData[i]->vertexData, mesh, &scene);
+		//models[i]->ExtractBoneWeightForVertices(modelsData[i]->vertexData, mesh, &scene);
 
 		for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
 			aiFace face = mesh->mFaces[j];
@@ -173,6 +176,24 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 		}
 
 		models[i]->SetModelData(*modelsData[i]);
+	}
+	vertices.reserve(NumVertices);
+	bones.resize(NumVertices);
+	Indices.reserve(NumIndices);
+
+	for (unsigned int i = 0; i < scene.mNumMeshes; i++) {
+		const aiMesh* paiMesh = scene.mMeshes[i];
+
+		if (scene.mNumAnimations > 0)
+		{
+			Animation* animation = new Animation();
+			//animation->SetUpAnimation(scenePath, model->getModel().get());
+			animation->skeletalModel->InitMesh(i, paiMesh, vertices, Indices, bones);
+			animations.push_back(std::shared_ptr<Animation>(animation));
+			//std::cout << node.mName.C_Str() << std::endl;
+		}
+
+		
 	}
 
 	for (int i = 0; i < models.size(); i++) {

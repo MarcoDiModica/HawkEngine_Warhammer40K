@@ -9,6 +9,7 @@ class Animator
 {
 private:
     std::vector<glm::mat4> m_FinalBoneMatrices;
+	std::vector<Matrix4f> m_BoneMatrices;
     Animation* m_CurrentAnimation;
     float m_CurrentTime;
     float m_DeltaTime;

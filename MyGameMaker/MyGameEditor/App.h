@@ -13,6 +13,9 @@
 //#include "../MyGameEngine/Mesh.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
 
+//cosa no tan ilegal pero si ilegal
+#include "MyAnimationEngine/SkeletalModel.h"
+
 #define FIXED_INTERVAL 0.02
 
 class  Module;
@@ -67,6 +70,7 @@ public:
 	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
 	PhysicsModule* physicsModule = nullptr;
+	SkeletalModel* skeletalModel = nullptr;
 
 	Mesh ElMesh;
 

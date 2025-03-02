@@ -61,7 +61,7 @@ void PhysicsModule::SyncTransforms() {
 
         auto goTransform = gameObject->GetTransform();
 
-        // Obtener la posición inicial de gameObject solo si no está almacenada
+        //// ------------------------- POSITION -------------------------
         static std::unordered_map<GameObject*, glm::dvec3> initialOffsets;
         if (initialOffsets.find(gameObject) == initialOffsets.end()) {
             glm::dvec3 initialPos = goTransform->GetPosition();
@@ -72,7 +72,7 @@ void PhysicsModule::SyncTransforms() {
         glm::dvec3 adjustedPosition = glm::dvec3(pos[0], pos[1], pos[2]) + initialOffsets[gameObject];
         goTransform->SetPosition(adjustedPosition);
 
-        // Aplicar la rotación solo si ha cambiado
+        //// ------------------------- ROTATION -------------------------
         static std::unordered_map<GameObject*, glm::dquat> previousRotations;
         glm::dquat newRotation = glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
         
@@ -83,6 +83,21 @@ void PhysicsModule::SyncTransforms() {
             }
         }
         previousRotations[gameObject] = newRotation;
+
+        //// ------------------------- SCALE -------------------------
+       /* static std::unordered_map<GameObject*, glm::vec3> initialScales;
+        if (initialScales.find(gameObject) == initialScales.end()) {
+            initialScales[gameObject] = goTransform->GetScale();
+        }
+
+        glm::vec3 currentScale = goTransform->GetScale();
+        glm::vec3 originalScale = initialScales[gameObject];
+
+        if (currentScale != originalScale) {
+            glm::vec3 deltaScale = originalScale / currentScale;
+            goTransform->Scale(deltaScale);
+        }*/
+
     }
 }
 

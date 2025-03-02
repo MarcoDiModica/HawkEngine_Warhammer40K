@@ -223,7 +223,7 @@ void ColliderComponent::CreateCollider() {
     startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
     startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
     glm::vec3 scale = transform->GetScale();
-    shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+    //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
 
     // Configurar la masa e inercia
     btVector3 localInertia(0, 0, 0);
@@ -242,8 +242,6 @@ void ColliderComponent::CreateCollider() {
     SetColliderRotation(newRotation);
     // Añadir el colisionador al mundo de físicas
     physics->dynamicsWorld->addRigidBody(rigidBody);
-    //gameObjectRigidBodyMapForhouse[owner] = rigidBody;
-    //doesnt works properly
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
 
 }

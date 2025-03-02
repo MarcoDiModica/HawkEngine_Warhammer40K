@@ -183,14 +183,11 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 
-
-    /*script->LoadScript("PlayerController");*/
-
-    /*auto objMainCamera = CreateCameraObject("MainCamera");
-    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
-    objMainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
+    auto objMainCamera = CreateCameraObject("MainCamera");
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5f, 0));
+    objMainCamera->GetTransform()->Rotate(glm::radians(180.0f), glm::dvec3(0, 1, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
-    mainCamera = objMainCamera;*/
+    mainCamera = objMainCamera;
     
     //MonoEnvironment* mono = new MonoEnvironment();
 

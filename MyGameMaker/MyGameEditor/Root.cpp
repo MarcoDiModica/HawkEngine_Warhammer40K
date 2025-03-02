@@ -132,6 +132,7 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
     emitterComponent->isSmoking = false;
     return particleEmitter;
 }
+std::shared_ptr<GameObject> environment = nullptr;
 
 bool Root::Awake()
 {
@@ -147,20 +148,18 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
-    CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
+   /* CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
     MakeSmokerEmmiter();
-    MakeSmokerEmiter2();
-    /*CreateScene("Viernes13");
-    SetActiveScene("Viernes13");
-    
-    auto MainCamera = CreateCameraObject("MainCamera");
-    MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
-    MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
-    auto camera = MainCamera->AddComponent<CameraComponent>();
-    mainCamera = MainCamera; */   
+    MakeSmokerEmiter2();*/
 
-	//auto Collider = CreateGameObject("Collider");
-    //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
+	auto blockout = CreateGameObject("Blockout");
+	blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));
+
+    environment = CreateGameObjectWithPath("Assets/Meshes/environmentTest.fbx");
+    ParentGameObject(*environment, *blockout);
+    blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));
+
+
 
     return true;
 }
@@ -170,6 +169,7 @@ bool Root::CleanUp()
     SoundComponent::ShutdownSharedAudioEngine();
     return true;
 }
+
 
 bool Root::Start()
 {
@@ -192,8 +192,13 @@ bool Root::Start()
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
-    auto environmentMesh = CreateGameObjectWithPath("Assets/Meshes/environment.fbx");
-    environmentMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+   /*
+    for (auto& go : environment->GetChildren())
+    {
+        auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+		collider->Start();
+        collider->SetSize(glm::vec3(2, 2, 2));
+    }*/
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));

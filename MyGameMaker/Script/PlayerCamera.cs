@@ -33,7 +33,7 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
 
-        cameraRef.SetFollowTarget(playerRef, new Vector3(0, 15, 0), 10, true, true, true, smoothness);
+        cameraRef.SetFollowTarget(playerRef, new Vector3(0, 15, -10), -5, true, true, true, smoothness);
     }
 
     public override void Update(float deltaTime)

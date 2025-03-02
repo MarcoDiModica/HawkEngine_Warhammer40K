@@ -278,12 +278,11 @@ bool SceneManager::ParentGameObject(GameObject& child, GameObject& father) {
     return false;
 }
 
-std::shared_ptr<GameObject> SceneManager::FindGOByName(char* name) {
-    std::string _name = std::string(name);
-
-    for (int i = 0; i < currentScene->children().size(); ++i) {
-        if (currentScene->_children[i]->GetName() == _name) {
-            return currentScene->_children[i];
-        }
-    }
+std::shared_ptr<GameObject> SceneManager::FindGOByName(std::string name) const {
+    for (auto go : currentScene->_children) {
+		if (go->GetName() == name) {
+			return go;
+		}
+	}
+	return nullptr;
 }

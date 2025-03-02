@@ -51,6 +51,9 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddChild(GameObject child);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public static extern GameObject Find(string name);
+
 
         //----LifeCycleMethods----// 
         //these will be called from C++ editor

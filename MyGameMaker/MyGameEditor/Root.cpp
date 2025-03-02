@@ -184,10 +184,18 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 
     auto objMainCamera = CreateCameraObject("MainCamera");
-    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5f, 0));
-    objMainCamera->GetTransform()->Rotate(glm::radians(180.0f), glm::dvec3(0, 1, 0));
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+    objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     mainCamera = objMainCamera;
+
+    /*auto refCamera = FindGOByName("MainCamera")->GetComponent<CameraComponent>();
+    if (refCamera) {
+		LOG(LogType::LOG_INFO, "Camera found");
+	}
+	else {
+        LOG(LogType::LOG_ERROR, "Camera not found");
+	}*/
     
     //MonoEnvironment* mono = new MonoEnvironment();
 
@@ -430,7 +438,7 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
     return SceneManagement->ParentGameObject(child, father);
 }
 
-std::shared_ptr<GameObject> Root::FindGOByName(char* name) {
+std::shared_ptr<GameObject> Root::FindGOByName(std::string name) {
     
     return SceneManagement->FindGOByName(name);
 }

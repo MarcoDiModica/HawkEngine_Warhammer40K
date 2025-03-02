@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 moveDirection = Vector3.Zero;
     private PlayerDash playerDash;
 
+    private GameObject playerCamera;
+
     public override void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -40,6 +42,13 @@ public class PlayerMovement : MonoBehaviour
         if (transform != null)
         {
             currentRotationAngle = transform.eulerAngles.Y;
+        }
+
+        playerCamera = GameObject.Find("MainCamera");
+        if (playerCamera == null)
+        {
+            Engineson.print("ERROR: playerCamera is NULL!");
+            return;
         }
     }
 

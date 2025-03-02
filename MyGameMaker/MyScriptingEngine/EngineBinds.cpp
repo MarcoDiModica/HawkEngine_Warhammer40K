@@ -181,6 +181,13 @@ void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
     ConvertFromSharp(ref)->SetName(std::string(C_name));
 }
 
+MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
+{
+    char* C_name = mono_string_to_utf8(name);
+	GameObject* go = SceneManagement->FindGOByName(std::string(C_name)).get();
+    return go ? go->GetSharp() : nullptr;
+}
+
 // Input
 bool EngineBinds::GetKey(int keyID) {
     return InputManagement->GetKey(keyID) == KEY_REPEAT;
@@ -655,6 +662,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
+    mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);

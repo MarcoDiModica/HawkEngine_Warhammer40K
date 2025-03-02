@@ -7,13 +7,12 @@ public class PlayerCamera : MonoBehaviour
     private Camera cameraRef;
     private PlayerInput playerInput;
 
-    public float smoothness = 0.99f;
+    public float smoothness = 9.0f;
 
     public override void Start()
     {
         playerRef = GameObject.Find("Player");
         cameraRef = gameObject.GetComponent<Camera>();
-        playerInput = playerRef?.GetComponent<PlayerInput>();
 
         if (playerRef == null)
         {
@@ -27,21 +26,22 @@ public class PlayerCamera : MonoBehaviour
             return;
         }
 
-        if (playerInput == null)
-        {
-            Engineson.print("ERROR: PlayerCamera requires a PlayerInput component on the player!");
-            return;
-        }
-
-        cameraRef.SetFollowTarget(playerRef, new Vector3(0, 15, -10), -5, true, true, true, smoothness);
+        cameraRef.SetFollowTarget(playerRef, new Vector3(0, 20, -10), 0, true, true, true, smoothness);
     }
 
     public override void Update(float deltaTime)
     {
-
-    }
-
-    public void LookDirection(Vector3 lookDirection)
-    {
+        if (Input.GetLeftStick() != Vector2.Zero)
+        {
+            cameraRef?.SetDistance(-4);
+        }
+        else if (Input.GetRightStick() != Vector2.Zero)
+        {
+            cameraRef?.SetDistance(-4);
+        }
+        else
+        {
+           cameraRef?.SetDistance(0);
+        }
     }
 }

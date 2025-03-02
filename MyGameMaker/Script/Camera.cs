@@ -31,6 +31,12 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetFollowTarget(GameObject target, Vector3 offset, float distance, bool followX, bool followY, bool followZ, float smoothness);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void SetDistance(float distance);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void SetOffset(Vector3 offset);
+
         public bool ortographic
         {
             get

@@ -194,7 +194,7 @@ bool Root::Start()
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-    objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+    objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;

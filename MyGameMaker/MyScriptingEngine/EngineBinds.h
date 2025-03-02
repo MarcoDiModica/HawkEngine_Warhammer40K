@@ -79,6 +79,8 @@ namespace EngineBinds {
     void SetCameraOrthographicSize(MonoObject* cameraRef, float orthographicSize);
     void SetCameraProjectionType(MonoObject* cameraRef, int projectionType);
     void SetFollowTarget(MonoObject* cameraRef, MonoObject* target, glm::vec3* offset, float distance, bool followX, bool followY, bool followZ, float smoothness);
+    void SetDistance(MonoObject* cameraRef, float distance);
+    void SetOffset(MonoObject* cameraRef, glm::vec3* offset);
 
     // MeshRenderer
 	void SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef);

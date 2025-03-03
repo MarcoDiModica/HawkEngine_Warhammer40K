@@ -139,9 +139,9 @@ std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, c
     auto planeObject = Application->root->CreatePlane(name);
     auto transform = planeObject->GetTransform();
     transform->SetPosition(position);
-    transform->Rotate(glm::radians(90.0f), glm::vec3(1, 0, 0));
-    transform->Rotate(glm::radians(180.0f), glm::vec3(0, 1, 0));
-    /*transform->SetScale(glm::dvec3(1.5f, 1.5f, 1.5f));*/
+    /*transform->Rotate(glm::radians(90.0f), glm::vec3(1, 0, 0));
+    transform->Rotate(glm::radians(180.0f), glm::vec3(0, 1, 0));*/
+    /*transform->SetScale(glm::dvec3(1.2f, 1.2f, 1.2f));*/
 
     auto material = std::make_shared<Material>();
 	material->imagePtr = std::make_shared<Image>();
@@ -186,8 +186,8 @@ void Root::UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared
         glm::dvec3 cameraForward = cameraTransform->GetForward();
         glm::dvec3 newPosition = cameraPosition + cameraForward * glm::length(initialCanvasOffset);
         canvasTransform->SetPosition(newPosition);
-        glm::dquat newRotation = cameraTransform->GetRotation() * initialCanvasRotationOffset;
-        canvasTransform->SetRotationQuat(newRotation);
+        /*glm::dquat newRotation = cameraTransform->GetRotation() * initialCanvasRotationOffset;
+        canvasTransform->SetRotationQuat(newRotation);*/
         /*glm::dvec3 newScale = initialCanvasScaleOffset;
         canvasTransform->SetScale(newScale);*/
     }
@@ -271,7 +271,7 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
   
-    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -2.0f), "../MyGameEditor/Assets/Textures/UI_Final.png");
+    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 20.f, -11.75f), "../MyGameEditor/Assets/Textures/UI_Final.png");
 
     SceneManagement->Start();
 

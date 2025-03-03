@@ -8,6 +8,7 @@
 
 UIGameView::UIGameView(UIType type, std::string name) : UIElement(type, name)
 {
+	Init();
 }
 
 UIGameView::~UIGameView()

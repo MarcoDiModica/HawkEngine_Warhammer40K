@@ -12,7 +12,7 @@
 class UIGameView : public UIElement
 {
 public:
-    UIGameView(UIType type, std::string name);
+    UIGameView(UIType type = UIType::CAMERA, std::string name = "Samuel");
     ~UIGameView();
 
     void Init();

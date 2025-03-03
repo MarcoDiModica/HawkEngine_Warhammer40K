@@ -118,10 +118,10 @@ void CameraComponent::Update(float deltaTime)
         glm::mat4 vpm = projection * view;
 		frustum.Update(vpm);
 
-        if (frustrumRepresentation)
+		/*if (frustrumRepresentation)
 		{
-            DrawFrustrum();
-		}
+			DrawFrustrum();
+		}*/
 
         std::function<void(std::shared_ptr<GameObject>)> checkGameObject = [&](std::shared_ptr<GameObject> gameObject) {
             if (gameObject.get() == owner) {

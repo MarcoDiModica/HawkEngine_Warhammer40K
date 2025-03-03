@@ -275,7 +275,7 @@ void GameObject::Update(float deltaTime)
         child->Update(deltaTime);
     }
 
-    Draw();
+    //Draw();
 }
 
 void GameObject::Destroy()

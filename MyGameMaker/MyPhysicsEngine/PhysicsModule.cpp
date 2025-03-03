@@ -20,7 +20,7 @@ PhysicsModule::~PhysicsModule() {
 }
 
 bool PhysicsModule::Awake() {
-    // Inicialización del sistema de físicas de Bullet
+    // Inicializaciï¿½n del sistema de fï¿½sicas de Bullet
     broadphase = new btDbvtBroadphase();
     collisionConfiguration = new btDefaultCollisionConfiguration();
     dispatcher = new btCollisionDispatcher(collisionConfiguration);
@@ -195,9 +195,9 @@ void PhysicsModule::DrawDebugDrawer() {
 }
 
 bool PhysicsModule::Update(double dt) {
-    dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 1, dt);
-    SyncTransforms();
-    DrawDebugDrawer();
+	dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 1, fixedDeltaTime);
+	SyncTransforms();
+    //DrawDebugDrawer();
     return true;
 }
 

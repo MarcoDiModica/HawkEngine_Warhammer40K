@@ -15,9 +15,9 @@ public:
 	enum Filters { Nearest, Linear };
 	Filters filter = Nearest;
 
-	Shaders * shader;
-	ShaderType shaderType;
-	vec4 color;
+	Shaders* shader = nullptr;
+	ShaderType shaderType = ShaderType::LIGHT;
+	vec4 color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	bool useShader = false;
 
@@ -43,7 +43,7 @@ public:
 
 	void SaveBinary(const std::string& filename) const;
 	static std::shared_ptr<Material> LoadBinary(const std::string& filename);
-	std::shared_ptr<Image> imagePtr;
+	std::shared_ptr<Image> imagePtr = std::make_shared<Image>();
 private:
 
 

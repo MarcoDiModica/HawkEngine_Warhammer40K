@@ -4,11 +4,12 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
+#include "RigidBodyComponent.h"
 #include <iostream>
 #include <glm/glm.hpp>
 
 
-constexpr float fixedDeltaTime = 0.005; // 60 updates per second
+constexpr float fixedDeltaTime = 0.02; // 60 updates per second
 float accumulatedTime = 0.0f;
 
 
@@ -51,6 +52,9 @@ bool PhysicsModule::Awake() {
 
 void PhysicsModule::SyncTransforms() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+        if (!gameObject->HasComponent<RigidbodyComponent>()) {
+            continue;
+        }
         btTransform transform;
         if (rigidBody->getMotionState()) {
             rigidBody->getMotionState()->getWorldTransform(transform);
@@ -61,7 +65,7 @@ void PhysicsModule::SyncTransforms() {
 
         auto goTransform = gameObject->GetTransform();
 
-        // Obtener la posición inicial de gameObject solo si no está almacenada
+        //// ------------------------- POSITION -------------------------
         static std::unordered_map<GameObject*, glm::dvec3> initialOffsets;
         if (initialOffsets.find(gameObject) == initialOffsets.end()) {
             glm::dvec3 initialPos = goTransform->GetPosition();
@@ -72,7 +76,7 @@ void PhysicsModule::SyncTransforms() {
         glm::dvec3 adjustedPosition = glm::dvec3(pos[0], pos[1], pos[2]) + initialOffsets[gameObject];
         goTransform->SetPosition(adjustedPosition);
 
-        // Aplicar la rotación solo si ha cambiado
+        //// ------------------------- ROTATION -------------------------
         static std::unordered_map<GameObject*, glm::dquat> previousRotations;
         glm::dquat newRotation = glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
         
@@ -83,6 +87,21 @@ void PhysicsModule::SyncTransforms() {
             }
         }
         previousRotations[gameObject] = newRotation;
+
+        //// ------------------------- SCALE -------------------------
+       /*static std::unordered_map<GameObject*, glm::vec3> initialScales;
+        if (initialScales.find(gameObject) == initialScales.end()) {
+            initialScales[gameObject] = goTransform->GetScale();
+        }
+
+        glm::vec3 currentScale = goTransform->GetScale();
+        glm::vec3 originalScale = initialScales[gameObject];
+
+        if (currentScale != originalScale) {
+            glm::vec3 deltaScale = originalScale / currentScale;
+            goTransform->Scale(deltaScale);
+        }*/
+
     }
 }
 
@@ -178,12 +197,8 @@ void PhysicsModule::DrawDebugDrawer() {
 bool PhysicsModule::Update(double dt) {
 	if (linkPhysicsToScene)
     {
-        accumulatedTime += dt;
-        while (accumulatedTime >= fixedDeltaTime) {
-            dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 10);
-            SyncTransforms();
-            accumulatedTime -= fixedDeltaTime;
-        }
+        dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 1, dt);
+        SyncTransforms();
     }
     DrawDebugDrawer();
     return true;

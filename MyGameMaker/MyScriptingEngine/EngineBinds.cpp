@@ -8,8 +8,13 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
+#include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyAudioEngine/SoundComponent.h"
 #include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
+#include <MyPhysicsEngine/RigidBodyComponent.h>
+#include "../MyGameEditor/App.h"
+#include "../MyAudioEngine/SoundComponent.h"
 
 
 // GameObject
@@ -122,6 +127,18 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.Camera") {
 		return GO->GetComponent<CameraComponent>()->GetSharp();
 	}
+    else if (componentName == "HawkEngine.Collider") {
+		return GO->GetComponent<ColliderComponent>()->GetSharp();
+	}
+    else if (componentName == "HawkEngine.Rigidbody") {
+		return GO->GetComponent<RigidbodyComponent>()->GetSharp();
+	}
+    else if (componentName == "HawkEngine.Audio") {
+        return GO->GetComponent<SoundComponent>()->GetSharp();
+    }
+	/*else if (componentName == "HawkEngine.ScriptComponent") {
+		return GO->GetComponent<ScriptComponent>()->GetSharp();
+	}*/
 
 
 	
@@ -140,6 +157,12 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
     case 1: _component = static_cast<Component*>(go->AddComponent<MeshRenderer>());
         break;
     case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
+        break;
+    case 3: _component = static_cast<Component*>(go->AddComponent<ColliderComponent>(Application->physicsModule));
+		break;
+    case 4: _component = static_cast<Component*>(go->AddComponent<RigidbodyComponent>(Application->physicsModule));
+        break;
+    case 5: _component = static_cast<Component*>(go->AddComponent<SoundComponent>());
         break;
    }
 
@@ -163,6 +186,13 @@ void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
     char* C_name = mono_string_to_utf8(sharpName);
     ConvertFromSharp(ref)->SetName(std::string(C_name));
+}
+
+MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
+{
+    char* C_name = mono_string_to_utf8(name);
+	GameObject* go = SceneManagement->FindGOByName(std::string(C_name)).get();
+    return go ? go->GetSharp() : nullptr;
 }
 
 // Input
@@ -388,6 +418,25 @@ void EngineBinds::SetCameraProjectionType(MonoObject* cameraRef, int projectionT
 
 }
 
+void EngineBinds::SetFollowTarget(MonoObject* cameraRef, MonoObject* target, glm::vec3* offset, float distance, bool followX, bool followY, bool followZ, float smoothness)
+{
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+	GameObject* targetGO = ConvertFromSharp(target);
+	camera->FollowTarget(targetGO, distance, *offset, smoothness, followX, followY, followZ);
+}
+
+void EngineBinds::SetDistance(MonoObject* cameraRef, float distance)
+{
+    CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+	camera->SetDistance(distance);
+}
+
+void EngineBinds::SetOffset(MonoObject* cameraRef, glm::vec3* offset)
+{
+	CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
+	camera->SetOffset(*offset);
+}
+
 // MeshRenderer
 void EngineBinds::SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef)
 {
@@ -462,6 +511,218 @@ void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
     }
 }
 	
+// Physics Collider
+void EngineBinds::SetTrigger(MonoObject* colliderRef, bool trigger) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    if (collider) {
+        collider->SetTrigger(trigger);
+    }
+}
+
+bool EngineBinds::IsTrigger(MonoObject* colliderRef)
+{
+    if (!colliderRef) return false;
+
+	ColliderComponent* collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+	if (collider) {
+		return collider->IsTrigger();
+	}
+
+    return false;
+}
+
+glm::vec3 EngineBinds::GetColliderPosition(MonoObject* colliderRef) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    return collider ? collider->GetColliderPos() : glm::vec3(0.0f);
+}
+
+void EngineBinds::SetColliderPosition(MonoObject* colliderRef, glm::vec3* position) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    if (collider) {
+        collider->SetColliderPos(*position);
+    }
+}
+
+glm::quat EngineBinds::GetColliderRotation(MonoObject* colliderRef) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    return collider ? collider->GetColliderRotation() : glm::quat();
+}
+
+void EngineBinds::SetColliderRotation(MonoObject* colliderRef, glm::quat* rotation) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    if (collider) {
+        collider->SetColliderRotation(*rotation);
+    }
+}
+
+glm::vec3 EngineBinds::GetColliderSize(MonoObject* colliderRef) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    return collider ? collider->GetSize() : glm::vec3(0.0f);
+}
+
+void EngineBinds::SetColliderSize(MonoObject* colliderRef, glm::vec3* size) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    if (collider) {
+        collider->SetSize(*size);
+    }
+}
+
+void EngineBinds::SetColliderActive(MonoObject* colliderRef, bool active) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    if (collider) {
+        collider->SetActive(active);
+    }
+}
+
+void EngineBinds::SnapColliderToPosition(MonoObject* colliderRef) {
+    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    if (collider) {
+        collider->SnapToPosition();
+    }
+}
+
+
+//Rigidbody
+void EngineBinds::SetVelocity(MonoObject* rigidbodyRef, glm::vec3* velocity) {
+    
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        auto btRigidBody = rigidbody->GetRigidBody();
+        btRigidBody->setLinearVelocity(btVector3(velocity->x, velocity->y, velocity->z));
+    }
+}
+
+glm::vec3 EngineBinds::GetVelocity(MonoObject* rigidbodyRef) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        auto btRigidBody = rigidbody->GetRigidBody();
+        auto velocity = btRigidBody->getLinearVelocity();
+        return glm::vec3(velocity.getX(), velocity.getY(), velocity.getZ());
+    }
+    return glm::vec3(0.0f);
+}
+
+void EngineBinds::AddForce(MonoObject* rigidbodyRef, glm::vec3* force) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        rigidbody->AddForce(*force);
+    }
+}
+
+void EngineBinds::SetMass(MonoObject* rigidbodyRef, float mass) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        rigidbody->SetMass(mass);
+    }
+}
+
+float EngineBinds::GetMass(MonoObject* rigidbodyRef) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    return rigidbody ? rigidbody->GetMass() : 0.0f;
+}
+
+void EngineBinds::SetFriction(MonoObject* rigidbodyRef, float friction) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        rigidbody->SetFriction(friction);
+    }
+}
+
+float EngineBinds::GetFriction(MonoObject* rigidbodyRef) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    return rigidbody ? rigidbody->GetFriction() : 0.0f;
+}
+
+void EngineBinds::SetGravity(MonoObject* rigidbodyRef, glm::vec3* gravity) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        rigidbody->SetGravity(*gravity);
+    }
+}
+
+glm::vec3 EngineBinds::GetGravity(MonoObject* rigidbodyRef) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    return rigidbody ? rigidbody->GetGravity() : glm::vec3(0.0f);
+}
+
+void EngineBinds::SetDamping(MonoObject* rigidbodyRef, float linearDamping, float angularDamping) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        rigidbody->SetDamping(linearDamping, angularDamping);
+    }
+}
+
+glm::vec2 EngineBinds::GetDamping(MonoObject* rigidbodyRef) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    return rigidbody ? rigidbody->GetDamping() : glm::vec2(0.0f);
+}
+
+void EngineBinds::SetKinematic(MonoObject* rigidbodyRef, bool isKinematic) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        rigidbody->SetKinematic(isKinematic);
+    }
+}
+
+bool EngineBinds::IsKinematic(MonoObject* rigidbodyRef) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    return rigidbody ? rigidbody->IsKinematic() : false;
+}
+
+void EngineBinds::EnableContinuousCollision(MonoObject* rigidbodyRef) {
+    auto rigidbody = ConvertFromSharpComponent<RigidbodyComponent>(rigidbodyRef);
+    if (rigidbody) {
+        rigidbody->EnableContinuousCollision();
+    }
+}
+
+
+void EngineBinds::Play(MonoObject* audioRef, bool loop /*= false*/)
+{
+    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->Play(loop);
+	}
+
+}
+
+void EngineBinds::Stop(MonoObject* audioRef)
+{
+    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->Stop();
+	}
+}
+
+void EngineBinds::Pause(MonoObject* audioRef)
+{
+	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->Pause();
+	}
+}
+
+void EngineBinds::Resume(MonoObject* audioRef)
+{
+	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->Resume();
+	}
+}
+
+void EngineBinds::SetVolume(MonoObject* audioRef, float volume)
+{
+	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->SetVolume(volume);
+	}
+}
+
+float EngineBinds::GetVolume(MonoObject* audioRef)
+{
+    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+    return sound ? sound->GetVolume() : 0.0f;
+}
 
 void EngineBinds::BindEngine() {
 
@@ -474,6 +735,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
+    mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);
@@ -516,6 +778,9 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Camera::SetCameraAspectRatio", (const void*)&EngineBinds::SetCameraAspectRatio);
     mono_add_internal_call("HawkEngine.Camera::SetCameraOrthographicSize", (const void*)&EngineBinds::SetCameraOrthographicSize);
     mono_add_internal_call("HawkEngine.Camera::SetCameraProjectionType", (const void*)&EngineBinds::SetCameraProjectionType);
+    mono_add_internal_call("HawkEngine.Camera::SetFollowTarget", (const void*)&EngineBinds::SetFollowTarget);
+    mono_add_internal_call("HawkEngine.Camera::SetDistance", (const void*)&EngineBinds::SetDistance);
+    mono_add_internal_call("HawkEngine.Camera::SetOffset", (const void*)&EngineBinds::SetOffset);
 
     // MeshRenderer
     mono_add_internal_call("HawkEngine.MeshRenderer::SetMesh", (const void*)&EngineBinds::SetMesh);
@@ -524,6 +789,43 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.MeshRenderer::SetMaterial", (const void*)&EngineBinds::SetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
+
+    // Physics Collider
+    mono_add_internal_call("HawkEngine.Collider::SetTrigger", (const void*)&EngineBinds::SetTrigger);
+    mono_add_internal_call("HawkEngine.Collider::IsTrigger", (const void*)&EngineBinds::IsTrigger);
+    mono_add_internal_call("HawkEngine.Collider::GetPosition", (const void*)&EngineBinds::GetColliderPosition);
+    mono_add_internal_call("HawkEngine.Collider::SetPosition", (const void*)&EngineBinds::SetColliderPosition);
+    mono_add_internal_call("HawkEngine.Collider::GetRotation", (const void*)&EngineBinds::GetColliderRotation);
+    mono_add_internal_call("HawkEngine.Collider::SetRotation", (const void*)&EngineBinds::SetColliderRotation);
+    mono_add_internal_call("HawkEngine.Collider::GetSize", (const void*)&EngineBinds::GetColliderSize);
+    mono_add_internal_call("HawkEngine.Collider::SetSize", (const void*)&EngineBinds::SetColliderSize);
+    mono_add_internal_call("HawkEngine.Collider::SetActive", (const void*)&EngineBinds::SetColliderActive);
+    mono_add_internal_call("HawkEngine.Collider::SnapToPosition", (const void*)&EngineBinds::SnapColliderToPosition);
+
+
+    // Physics Rigidbody
+    mono_add_internal_call("HawkEngine.Rigidbody::SetVelocity", (const void*)&EngineBinds::SetVelocity);
+    mono_add_internal_call("HawkEngine.Rigidbody::GetVelocity", (const void*)&EngineBinds::GetVelocity);
+    mono_add_internal_call("HawkEngine.Rigidbody::AddForce", (const void*)&EngineBinds::AddForce);
+    mono_add_internal_call("HawkEngine.Rigidbody::SetMass", (const void*)&EngineBinds::SetMass);
+    mono_add_internal_call("HawkEngine.Rigidbody::GetMass", (const void*)&EngineBinds::GetMass);
+    mono_add_internal_call("HawkEngine.Rigidbody::SetFriction", (const void*)&EngineBinds::SetFriction);
+    mono_add_internal_call("HawkEngine.Rigidbody::GetFriction", (const void*)&EngineBinds::GetFriction);
+    mono_add_internal_call("HawkEngine.Rigidbody::SetGravity", (const void*)&EngineBinds::SetGravity);
+    mono_add_internal_call("HawkEngine.Rigidbody::GetGravity", (const void*)&EngineBinds::GetGravity);
+    mono_add_internal_call("HawkEngine.Rigidbody::SetDamping", (const void*)&EngineBinds::SetDamping);
+    mono_add_internal_call("HawkEngine.Rigidbody::GetDamping", (const void*)&EngineBinds::GetDamping);
+    mono_add_internal_call("HawkEngine.Rigidbody::SetKinematic", (const void*)&EngineBinds::SetKinematic);
+    mono_add_internal_call("HawkEngine.Rigidbody::IsKinematic", (const void*)&EngineBinds::IsKinematic);
+    mono_add_internal_call("HawkEngine.Rigidbody::EnableContinuousCollision", (const void*)&EngineBinds::EnableContinuousCollision);
+
+    // Audio
+    mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);
+    mono_add_internal_call("HawkEngine.Audio::Stop", (const void*)&EngineBinds::Stop);
+    mono_add_internal_call("HawkEngine.Audio::Pause", (const void*)&EngineBinds::Pause);
+    mono_add_internal_call("HawkEngine.Audio::Resume", (const void*)&EngineBinds::Resume);
+    mono_add_internal_call("HawkEngine.Audio::SetVolume", (const void*)&EngineBinds::SetVolume);
+    mono_add_internal_call("HawkEngine.Audio::GetVolume", (const void*)&EngineBinds::GetVolume);
 }
 
 template <class T>

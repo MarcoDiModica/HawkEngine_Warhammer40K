@@ -2,6 +2,8 @@
 #include "RigidbodyComponent.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
+#include <MyScriptingEngine/MonoManager.h>
+#include <mono/metadata/debug-helpers.h>
 
 RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physicsModule)
     : Component(owner), physics(physicsModule), mass(1.0f) {}
@@ -15,10 +17,9 @@ void RigidbodyComponent::Start() {
     if (!collider) {
         owner->AddComponent<ColliderComponent>(physics);
         collider = owner->GetComponent<ColliderComponent>();
-		collider->Start();
     }
 	collider->SetMass(mass);
-	SetRigidBody(collider->GetRigidBody());
+    SetRigidBody(collider->GetRigidBody());
     
 }
 
@@ -29,14 +30,7 @@ void RigidbodyComponent::SetRigidBody(btRigidBody* rigidBody) {
 
 void RigidbodyComponent::Update(float deltaTime) {}
 
-void RigidbodyComponent::Destroy() {
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
-    }
-}
+void RigidbodyComponent::Destroy() {}
 
 void RigidbodyComponent::SetMass(float newMass) {
 	mass = newMass;
@@ -138,4 +132,45 @@ void RigidbodyComponent::EnableContinuousCollision() {
 
 std::unique_ptr<Component> RigidbodyComponent::Clone(GameObject* new_owner) {
 	return std::make_unique<RigidbodyComponent>(new_owner, physics);
+}
+
+
+MonoObject* RigidbodyComponent::GetSharp()
+{
+    if (CsharpReference) {
+        return CsharpReference;
+    }
+
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Rigidbody");
+    if (!klass) {
+        return nullptr;
+    }
+
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+    if (!monoObject) {
+        return nullptr;
+    }
+
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Rigidbody:.ctor(uintptr,HawkEngine.GameObject)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    if (!method)
+    {
+        return nullptr;
+    }
+
+    uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+    MonoObject* ownerGo = owner->GetSharp();
+    if (!ownerGo)
+    {
+        return nullptr;
+    }
+
+    void* args[2]{};
+    args[0] = &componentPtr;
+    args[1] = ownerGo;
+
+    mono_runtime_invoke(method, monoObject, args, nullptr);
+
+    CsharpReference = monoObject;
+    return CsharpReference;
 }

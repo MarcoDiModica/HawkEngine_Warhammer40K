@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HawkEngine
 {
@@ -36,6 +31,18 @@ namespace HawkEngine
             else if(type == typeof(Camera))
             {
                 return 2;
+            }
+            else if(type == typeof(Collider))
+            {
+                return 3;
+            }
+            else if(type == typeof(Rigidbody))
+            {
+                return 4;
+            }
+            else if(type == typeof(Audio))
+            {
+                return 5;
             }
 
             return -1;

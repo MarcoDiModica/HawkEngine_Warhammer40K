@@ -26,6 +26,8 @@ public:
 
     bool Awake();
 
+    void CreateSceneColliders();
+
     bool Start();
 
     bool PreUpdate() { return true; }
@@ -55,7 +57,7 @@ public:
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr, std::vector<Shaders> shaders = std::vector<Shaders>());
 
-    void CreateGameObjectWithPath(const std::string& path);
+    std::shared_ptr<GameObject> CreateGameObjectWithPath(const std::string& path);
 
     void ChangeShader(GameObject& go, ShaderType shader);
 
@@ -64,7 +66,7 @@ public:
     bool ParentGameObjectToScene(GameObject& child);
     bool ParentGameObjectToObject(GameObject& child, GameObject& father);
 
-    std::shared_ptr<GameObject> FindGOByName(char* name);
+    std::shared_ptr<GameObject> FindGOByName(std::string name);
 
     std::shared_ptr<Scene> currentScene = nullptr;
     float emitterLifetime = 5.0f;

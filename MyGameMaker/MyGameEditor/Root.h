@@ -26,6 +26,8 @@ public:
 
     bool Awake();
 
+    void CreateSceneColliders();
+
     bool Start();
 
     bool PreUpdate() { return true; }

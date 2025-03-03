@@ -155,7 +155,7 @@ bool Root::Awake()
 	auto blockout = CreateGameObject("Blockout");
 	blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));
 
-    environment = CreateGameObjectWithPath("Assets/Meshes/environmentTest.fbx");
+    environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
     ParentGameObject(*environment, *blockout);
     blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));
 
@@ -169,6 +169,20 @@ bool Root::CleanUp()
     SoundComponent::ShutdownSharedAudioEngine();
     return true;
 }
+
+bool hasCreatedCollider = false;
+
+
+void Root::CreateSceneColliders() {
+	if (hasCreatedCollider) return;
+    for (auto& go : environment->GetChildren())
+    {
+        auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+        collider->Start();
+    }
+	hasCreatedCollider = true;
+}
+
 
 
 bool Root::Start()
@@ -192,13 +206,8 @@ bool Root::Start()
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
-   /*
-    for (auto& go : environment->GetChildren())
-    {
-        auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
-		collider->Start();
-        collider->SetSize(glm::vec3(2, 2, 2));
-    }*/
+   
+    
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));

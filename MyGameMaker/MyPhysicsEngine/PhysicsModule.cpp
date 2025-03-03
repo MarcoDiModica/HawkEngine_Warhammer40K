@@ -4,6 +4,7 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
+#include "RigidBodyComponent.h"
 #include <iostream>
 #include <glm/glm.hpp>
 
@@ -51,6 +52,9 @@ bool PhysicsModule::Awake() {
 
 void PhysicsModule::SyncTransforms() {
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+        if (!gameObject->HasComponent<RigidbodyComponent>()) {
+            continue;
+        }
         btTransform transform;
         if (rigidBody->getMotionState()) {
             rigidBody->getMotionState()->getWorldTransform(transform);
@@ -85,7 +89,7 @@ void PhysicsModule::SyncTransforms() {
         previousRotations[gameObject] = newRotation;
 
         //// ------------------------- SCALE -------------------------
-       /* static std::unordered_map<GameObject*, glm::vec3> initialScales;
+       /*static std::unordered_map<GameObject*, glm::vec3> initialScales;
         if (initialScales.find(gameObject) == initialScales.end()) {
             initialScales[gameObject] = goTransform->GetScale();
         }

@@ -51,6 +51,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
+    <Compile Include="PlayerCamera.cs" />
     <Compile Include="PlayerController.cs" />
     <Compile Include="PlayerDash.cs" />
     <Compile Include="PlayerInput.cs" />

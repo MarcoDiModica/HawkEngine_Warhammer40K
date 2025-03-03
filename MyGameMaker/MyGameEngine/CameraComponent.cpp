@@ -4,6 +4,8 @@
 #include "Scene.h"
 #include <random>
 #include <functional>
+#include "MyScriptingEngine/MonoManager.h"
+#include "mono/metadata/debug-helpers.h"
 
 CameraComponent::CameraComponent(GameObject* owner) : Component(owner), CameraBase()
 {
@@ -216,4 +218,44 @@ void CameraComponent::Shake(float intensity, float duration, float frequency)
 	shakeDuration = duration;
 	shakeFrequency = frequency;
 	ShakeEnabled = true;
+}
+
+MonoObject* CameraComponent::GetSharp()
+{
+	if (CsharpReference) {
+		return CsharpReference;
+	}
+
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Camera");
+	if (!klass) {
+		return nullptr;
+	}
+
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		return nullptr;
+	}
+
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Camera:.ctor(uintptr,HawkEngine.GameObject)", true);
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	if (!method)
+	{
+		return nullptr;
+	}
+
+	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+	MonoObject* ownerGo = owner->GetSharp();
+	if (!ownerGo)
+	{
+		return nullptr;
+	}
+
+	void* args[2];
+	args[0] = &componentPtr;
+	args[1] = ownerGo;
+
+	mono_runtime_invoke(method, monoObject, args, NULL);
+
+	CsharpReference = monoObject;
+	return CsharpReference;
 }

@@ -31,6 +31,8 @@ public:
 
     void UpdateAspectRatio(double aspectRatio);
 
+	void UpdateCameraView(double width, double height, double camWidth, double camHeight);
+
 	// Serialización de la cámara
 
 

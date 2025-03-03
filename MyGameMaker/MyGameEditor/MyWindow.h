@@ -15,8 +15,8 @@ class Window : public Module {
 	SDL_Window* _window = nullptr;
 	void* _ctx = nullptr;
 
-	unsigned short _width = 1280;
-	unsigned short _height = 720;
+	int _width = 1280;
+	int _height = 720;
 
 	bool isFullscreen = false;
 
@@ -31,9 +31,9 @@ public:
 	//bool createSdlGlContext();
 	//bool initOpenGL();
 
-	int width() const { return _width; }
+	int width();
 
-	int height() const { return _height; }
+	int height();
 
 	double aspect() const { return static_cast<double>(_width) / _height; }
 
@@ -67,5 +67,6 @@ public:
 	
 private:
 	unsigned int refreshRate;
+	SDL_DisplayMode displayMode;
 
 };

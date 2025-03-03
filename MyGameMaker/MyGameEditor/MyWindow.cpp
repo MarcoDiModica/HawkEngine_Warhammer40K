@@ -36,6 +36,18 @@ bool Window::Awake()
     return true;
 }
 
+int Window::width()
+{
+    SDL_GetWindowSize(static_cast<SDL_Window*>(_window), &_width, &_height);
+    return _width;
+}
+
+int Window::height()
+{
+	SDL_GetWindowSize(static_cast<SDL_Window*>(_window), &_width, &_height);
+    return _height;
+}
+
 void Window::Open(const char* title, unsigned short width, unsigned short height) {
     if (IsOpen()) return;
 
@@ -57,7 +69,7 @@ void Window::Open(const char* title, unsigned short width, unsigned short height
 
     _window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         width, height,
-        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
 
     _width = width;
     _height = height;

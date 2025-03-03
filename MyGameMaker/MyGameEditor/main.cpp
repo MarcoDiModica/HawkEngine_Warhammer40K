@@ -66,7 +66,7 @@ using u8vec4 = glm::u8vec4;
 using ivec2 = glm::ivec2;
 using vec3 = glm::dvec3;
 
-static const ivec2 WINDOW_SIZE(1280, 720);
+static const ivec2 WINDOW_SIZE(1920, 1080);
 static const auto FPS = 120;
 static const auto FRAME_DT = 1.0s / FPS;
 
@@ -136,6 +136,7 @@ static void RenderGameView() {
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 
+	gameCamera->UpdateCameraView((double)Application->window->width(), (double)Application->window->height(), 1920, 1080);
 	glm::dmat4 projectionMatrix = gameCamera->projection();
 	glm::dmat4 viewMatrix = gameCamera->view();
 

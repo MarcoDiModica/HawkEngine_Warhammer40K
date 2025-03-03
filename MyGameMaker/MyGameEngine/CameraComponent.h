@@ -71,9 +71,9 @@ public:
 	MonoObject* CsharpReference = nullptr;
 	MonoObject* GetSharp() override;
 
+    void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
 private:
 
-    void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
 
 protected:
 

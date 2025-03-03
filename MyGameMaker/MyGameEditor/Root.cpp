@@ -208,7 +208,7 @@ bool Root::Start()
 
     auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
     playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-    playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+    //playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 

@@ -115,3 +115,17 @@ bool CameraBase::IsInsideFrustrum(const BoundingBox& bbox) const
     return true;
 }
 
+void CameraBase::UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight)
+{
+    double windowAspect = windowWidth / windowHeight;
+    double imageAspect = imageWidth / imageHeight;
+
+    UpdateAspectRatio(windowAspect);
+
+    if (windowAspect > imageAspect) {
+        SetFOV(2.0f * glm::atan(glm::tan(glm::radians(60.0f) / 2.0f) * static_cast<float>((imageAspect / windowAspect))));
+    }
+    else {
+        SetFOV(glm::radians(60.0f));
+    }
+}

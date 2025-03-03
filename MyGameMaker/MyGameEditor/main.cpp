@@ -166,11 +166,85 @@ static void RenderGameView() {
 	glPopAttrib();
 }
 
+GLuint uiTextureID = 0;
+
+bool LoadUITexture(const char* filepath) {
+	ILuint imageID;
+	ilGenImages(1, &imageID);
+	ilBindImage(imageID);
+
+	bool success = ilLoadImage(filepath);
+	if (!success) {
+		printf("Error cargando la imagen UI: %s\n", filepath);
+		ilDeleteImages(1, &imageID);
+		return false;
+	}
+
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+
+	glGenTextures(1, &uiTextureID);
+	glBindTexture(GL_TEXTURE_2D, uiTextureID);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	int width = ilGetInteger(IL_IMAGE_WIDTH);
+	int height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+		GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
+
+	ilDeleteImages(1, &imageID);
+	return true;
+}
+
+void RenderUI() {
+	if (uiTextureID == 0) return;
+
+	int screenWidth = Application->window->width();
+	int screenHeight = Application->window->height();
+
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, screenWidth, screenHeight, 0, -1, 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, uiTextureID);
+
+	glBegin(GL_QUADS);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex2i(0, 0);
+	glTexCoord2f(1.0f, 0.0f); glVertex2i(screenWidth, 0);
+	glTexCoord2f(1.0f, 1.0f); glVertex2i(screenWidth, screenHeight);
+	glTexCoord2f(0.0f, 1.0f); glVertex2i(0, screenHeight);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	glPopAttrib();
+}
+
 static void GameRenderer() {
 	if (Application->window->IsOpen()) {
 		const auto t0 = hrclock::now();
 
 		RenderGameView();
+		RenderUI();
+
 		Application->window->SwapBuffers();
 
 		const auto t1 = hrclock::now();
@@ -207,6 +281,7 @@ int main(int argc, char** argv) {
 			break;
 
 		case AWAKE:
+			LoadUITexture("Assets/Textures/UI_Final.png");
 			if (Application->Awake()) {
 				state = START;
 			}

@@ -869,7 +869,7 @@ private:
 
     #pragma region UI
 
-	static void DrawUIComponent(UIComponent* uiComponent) {
+	/*static void DrawUIComponent(UIComponent* uiComponent) {
 		if (!uiComponent) return;
 
         ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
@@ -894,7 +894,8 @@ private:
         if (!ImGui::TreeNodeEx("UI Properties", ImGuiTreeNodeFlags_DefaultOpen)) return;
 
         ImGui::BeginGroup();
-    }
+    }*/
+
     #pragma endregion
 
 public:
@@ -951,10 +952,10 @@ public:
             DrawShaderComponent(shader);
         }
 
-		if (gameObject->HasComponent<UIComponent>()) {
+		/*if (gameObject->HasComponent<UIComponent>()) {
 			UIComponent* uiComponent = gameObject->GetComponent<UIComponent>();
 			DrawUIComponent(uiComponent);
-		}
+		}*/
         if (gameObject->scriptComponents.size() > 0) {
 			DrawScriptComponents(gameObject);
 		}

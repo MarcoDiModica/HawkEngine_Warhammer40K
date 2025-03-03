@@ -108,7 +108,7 @@ std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, c
         std::cerr << "Error: mainCamera es nullptr." << std::endl;
     }
 
-    renderFirstObjects.push_back(planeObject);
+   /* renderFirstObjects.push_back(planeObject);*/
 
     return planeObject;
 }

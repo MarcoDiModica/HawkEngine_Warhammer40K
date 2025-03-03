@@ -100,16 +100,51 @@ void SpawnPhysCube() {
     //auto cube = Application->root->CreateCube("PhysicsCube");
     //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
     //Application->physicsModule->CreatePhysicsForGameObject(*cube, 1.0f); // Mass
-    glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posici�n de la c�mara
-    auto sphere = Application->root->CreateSphere("PhysicsSphere");
-    glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
-    Application->physicsModule->SpawnPhysSphereWithForce(*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
+    //glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition(); // Reemplaza con la forma en que obtienes la posici�n de la c�mara
+    //auto sphere = Application->root->CreateSphere("PhysicsSphere");
+    //glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
+    //Application->physicsModule->SpawnPhysSphereWithForce(,*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
 }
 bool Input::processSDLEvents()
 {
     SDL_PumpEvents();
 
     const Uint8* keys = SDL_GetKeyboardState(NULL);
+
+    for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j) {
+        if (SDL_GameControllerGetButton(InputManagement->gamepads[0].controller, (SDL_GameControllerButton)j))
+        {
+            if (InputManagement->controller_buttons[j] == KEY_IDLE)
+            {
+                InputManagement->controller_buttons[j] = KEY_DOWN;
+            }
+            else
+            {
+                InputManagement->controller_buttons[j] = KEY_REPEAT;
+            }
+        }
+        else
+        {
+            if (InputManagement->controller_buttons[j] == KEY_REPEAT || InputManagement->controller_buttons[j] == KEY_DOWN)
+            {
+                InputManagement->controller_buttons[j] = KEY_UP;
+            }
+            else
+            {
+                InputManagement->controller_buttons[j] = KEY_IDLE;
+            }
+        }
+    }
+        
+	/*if (GetControllerKey(SDL_CONTROLLER_BUTTON_A) == KEY_UP)
+	{
+		LOG(LogType::LOG_INFO, "A button pressed");
+	}
+
+	if (int leftXAxisValue = GetJoystickAxis(0, SDL_CONTROLLER_AXIS_LEFTX))
+	{
+		LOG(LogType::LOG_INFO, "Left X Axis Value: %d", leftXAxisValue);
+	}*/
 
     //const Uint8* controllerKeys = SDL_Getcontroller
 
@@ -159,7 +194,10 @@ bool Input::processSDLEvents()
 
     static SDL_Event event;
 
-    static bool f12Pressed = false;
+    static bool pPressed = false;
+
+    int gamepadIndex = event.cbutton.which;
+	int button = event.cbutton.button;
 
     while (SDL_PollEvent(&event) != 0)
     {
@@ -169,7 +207,7 @@ bool Input::processSDLEvents()
         {
         case SDL_MOUSEWHEEL:
             InputManagement->mouse_z = event.wheel.y;
-            if (f12Pressed && InputManagement->mouse_z > 0) {
+            if (pPressed && InputManagement->mouse_z > 0) {
                 SpawnPhysCube();
             }
             break;
@@ -188,17 +226,6 @@ bool Input::processSDLEvents()
             switch (event.key.keysym.sym) {
             case SDLK_1:
                 break;
-            case SDLK_F12:
-                if (f12Pressed == false) {
-                    f12Pressed = true; // Activar la bandera si F12 fue presionado
-                    Application->physicsModule->linkPhysicsToScene = true;
-                }
-                else {
-                    f12Pressed = false; // Desactivar la bandera si F12 fue liberado
-                    Application->physicsModule->linkPhysicsToScene = false;
-                }
-                break;
-
             case SDLK_DELETE: {
                 int i = 0;
                 while (i < InputManagement->selectedObjects.size()) {
@@ -246,74 +273,93 @@ bool Input::processSDLEvents()
                         }
                     }
                 }
+                break; 
+            case SDLK_p: // P
+                if (pPressed == false) {
+                    pPressed = true; // Activar la bandera si P fue presionado
+                    Application->physicsModule->linkPhysicsToScene = true;
+                }
+                else {
+                    pPressed = false; // Desactivar la bandera si P fue liberado
+                    Application->physicsModule->linkPhysicsToScene = false;
+                }
                 break;
             }
             break;
-        case SDL_CONTROLLERBUTTONDOWN:
-            // Manejar eventos de botones del controlador aquí
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-                // Acción para el botón X (Cruz)
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-                // Acción para el botón Círculo
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-                // Acción para el botón Cuadrado
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-                // Acción para el botón Triángulo
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-                // Acción para el botón Share
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_GUIDE) {
-                // Acción para el botón PS (Guía)
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
-                // Acción para el botón Options
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSTICK) {
-                // Acción para el botón del stick izquierdo (L3)
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSTICK) {
-                // Acción para el botón del stick derecho (R3)
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
-                // Acción para el botón del hombro izquierdo (L1)
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
-                // Acción para el botón del hombro derecho (R1)
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-                // Acción para el botón de dirección arriba
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-                // Acción para el botón de dirección abajo
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
-                // Acción para el botón de dirección izquierda
-            }
-            if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
-                // Acción para el botón de dirección derecha
-            }
-			if (event.cbutton.button == SDL_CONTROLLER_BUTTON_MAX) {
-				// Acción para el botón de la derecha del touchpad
-			}
+
+        case(SDL_CONTROLLERDEVICEADDED):
+            InputManagement->HandleDeviceConnection(event.cdevice.which);
             break;
+        case(SDL_CONTROLLERDEVICEREMOVED):
+            InputManagement->HandleDeviceRemoval(event.cdevice.which);
+            break;
+
+		case SDL_CONTROLLERBUTTONDOWN:
+		case SDL_CONTROLLERBUTTONUP:
+			// Update gamepad button state
+			gamepadIndex = event.cbutton.which;
+			button = event.cbutton.button;
+
+			// Map the button correctly based on SDL_GameControllerButton enum
+			switch (button) {
+			case SDL_CONTROLLER_BUTTON_A:
+				// Handle A button (already working)
+				break;
+			case SDL_CONTROLLER_BUTTON_B:
+				// Handle B button (already working)
+				break;
+			case SDL_CONTROLLER_BUTTON_X:
+				// Handle X button (already working)
+				break;
+			case SDL_CONTROLLER_BUTTON_Y:
+				// Handle Y button (already working)
+				break;
+			case SDL_CONTROLLER_BUTTON_LEFTSHOULDER:
+				// This should be treated as left bumper/shoulder
+				break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
+				// This should be treated as right bumper/shoulder
+				break;
+			case SDL_CONTROLLER_BUTTON_LEFTSTICK:
+				// Left stick press
+				break;
+			case SDL_CONTROLLER_BUTTON_RIGHTSTICK:
+				// Right stick press
+				break;
+				// Add other buttons as needed
+			}
+
+			if (event.type == SDL_CONTROLLERBUTTONDOWN)
+			{
+				InputManagement->gamepads[gamepadIndex].buttons[button] = KEY_DOWN;
+			}
+			else
+			{
+				InputManagement->gamepads[gamepadIndex].buttons[button] = KEY_UP;
+			}
+			break;
         case SDL_CONTROLLERAXISMOTION:
             // Manejar eventos de ejes del controlador aquí
-            if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
-                // Acción para el eje izquierdo X
+            switch (event.caxis.axis) {
+            case SDL_CONTROLLER_AXIS_LEFTX:
+                InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_LEFTX] = event.caxis.value;
+                break;
+            case SDL_CONTROLLER_AXIS_LEFTY:
+                InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_LEFTY] = event.caxis.value;
+                break;
+            case SDL_CONTROLLER_AXIS_RIGHTX:
+                InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_RIGHTX] = event.caxis.value;
+                break;
+            case SDL_CONTROLLER_AXIS_RIGHTY:
+                InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_RIGHTY] = event.caxis.value;
+                break;
+            case SDL_CONTROLLER_AXIS_TRIGGERLEFT:
+                InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_TRIGGERLEFT] = event.caxis.value;
+                break;
+            case SDL_CONTROLLER_AXIS_TRIGGERRIGHT:
+                InputManagement->gamepads[gamepadIndex].axes[SDL_CONTROLLER_AXIS_TRIGGERRIGHT] = event.caxis.value;
+                break;
             }
-			if (event.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
-				// Acción para el eje izquierdo Y
-			}
-			if (event.caxis.axis == SDL_CONTROLLER_AXIS_RIGHTX) {
-				// Acción para el eje derecho X
-			}
-			if (event.caxis.axis == SDL_CONTROLLER_AXIS_RIGHTY) {
-				// Acción para el eje derecho Y
-			}
             break;
 
 
@@ -493,6 +539,15 @@ glm::vec3 Input::getMousePickRay()
 KEY_STATE Input::GetKey(int id)
 {
 	return InputManagement->GetKey(id);
+}
+
+KEY_STATE Input::GetControllerKey(int id) 
+{
+	return InputManagement->controller_buttons[id];
+}
+
+int Input::GetJoystickAxis(int gamepadIndex, SDL_GameControllerAxis axis) {
+    return (InputManagement->gamepads[gamepadIndex].axes[axis]/ 32767.0f);
 }
 
 KEY_STATE Input::GetMouseButton(int id)

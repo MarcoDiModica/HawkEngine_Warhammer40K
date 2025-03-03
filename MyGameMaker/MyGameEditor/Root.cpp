@@ -13,6 +13,7 @@
 #include "MyGameEngine/ModelImporter.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
@@ -41,6 +42,62 @@ struct EmitterInfo{
 std::vector<EmitterInfo> activeEmitters;
 
 Root::Root(App* app) : Module(app) { ; }
+
+
+std::shared_ptr<GameObject> player;
+const float moveSpeed = 100.0f;
+const float jumpForce = 10.0f;
+
+void CreatePlayer() {
+    player = Application->root->CreateCube("Player");
+    auto transform = player->GetTransform();
+    transform->SetPosition(glm::vec3(0, 5, 0));
+    transform->SetScale(glm::vec3(1, 1, 1)); 
+}
+
+void HandleInput(float dt) {
+    if (!player) return;
+
+    auto collider = player->GetComponent<RigidbodyComponent>();
+    if (!collider) return;
+
+    auto rigidBody = collider->GetRigidBody();
+    if (!rigidBody) return;
+
+    btVector3 desiredVelocity(0, rigidBody->getLinearVelocity().getY(), 0);
+
+    //input
+    const Uint8* keys = SDL_GetKeyboardState(NULL);
+    if (keys[SDL_SCANCODE_L]) desiredVelocity.setX(moveSpeed); 
+    if (keys[SDL_SCANCODE_J]) desiredVelocity.setX(-moveSpeed);
+    if (keys[SDL_SCANCODE_K]) desiredVelocity.setZ(moveSpeed); 
+    if (keys[SDL_SCANCODE_I]) desiredVelocity.setZ(-moveSpeed); 
+
+    // Spawn sphere if E is pressed
+    if (keys[SDL_SCANCODE_E]) {
+
+        auto sphere = Application->root->CreateSphere("PhysicsSphere");
+        Application->physicsModule->SpawnPhysSphereWithForce(*player, *sphere, 1.0f, 15.0f, 500.0f);
+    }
+
+    //Apply acceleration + force
+    if (desiredVelocity.length2() > 0) {
+        desiredVelocity.setX(desiredVelocity.getX() * moveSpeed / desiredVelocity.length());
+        desiredVelocity.setZ(desiredVelocity.getZ() * moveSpeed / desiredVelocity.length());
+    }
+    btVector3 currentVelocity = rigidBody->getLinearVelocity();
+    float acceleration = 10.0f * dt; 
+    btVector3 newVelocity = currentVelocity.lerp(desiredVelocity, acceleration);
+    rigidBody->setLinearVelocity(btVector3(newVelocity.getX(), currentVelocity.getY(), newVelocity.getZ()));
+
+    // Jumping 
+    if (keys[SDL_SCANCODE_SPACE]) {
+        if (currentVelocity.getY() < 0.1f && currentVelocity.getY() > -0.1f) {
+            rigidBody->setLinearVelocity(btVector3(currentVelocity.getX(), jumpForce, currentVelocity.getZ()));
+        }
+    }
+}
+
 
 void MakeSmokerEmmiter() {
     auto particlesEmitter = Application->root->CreateGameObject("ParticlesEmitter");
@@ -187,11 +244,12 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto Player = CreateGameObject("Player");
-    auto mesh = Mesh::CreateCube();
-    AddMeshRenderer(*Player, mesh);
-    auto script = Player->AddComponent<ScriptComponent>();
-    script->LoadScript("PlayerController");
+	//CreatePlayer();
+
+    auto player = CreateCube("Player");
+    player->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+    /*script->LoadScript("PlayerController");*/
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
@@ -266,6 +324,8 @@ bool Root::Update(double dt)
         }
 
         RenderScene();
+    HandleInput(dt);
+
     //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
 
     //SceneManagement->Update(dt);

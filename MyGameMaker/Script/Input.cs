@@ -92,6 +92,83 @@ namespace HawkEngine
                 return input;
             }
         }
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetControllerButton(int buttonId);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetControllerButtonDown(int buttonId);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static bool GetControllerButtonUp(int buttonId);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern static float GetControllerAxis(int gamepad, int axisId);
+
+        public static bool GetControllerButton(ControllerButton button)
+        {
+            return GetControllerButton((int)button);
+        }
+
+        public static bool GetControllerButtonDown(ControllerButton button)
+        {
+            return GetControllerButtonDown((int)button);
+        }
+
+        public static bool GetControllerButtonUp(ControllerButton button)
+        {
+            return GetControllerButtonUp((int)button);
+        }
+
+        public static float GetAxis(ControllerAxis axis)
+        {
+            return GetControllerAxis(0, (int)axis);
+        }
+
+        public static Vector2 GetLeftStick()
+        {
+            return new Vector2(
+                GetAxis(ControllerAxis.LeftX),
+                GetAxis(ControllerAxis.LeftY)
+            );
+        }
+
+        public static Vector2 GetRightStick()
+        {
+            return new Vector2(
+                GetAxis(ControllerAxis.RightX),
+                GetAxis(ControllerAxis.RightY)
+            );
+        }
+    }
+
+    public enum ControllerButton
+    {
+        A = 0,
+        B = 1,
+        X = 2,
+        Y = 3,
+        Back = 4,
+        XboxPS = 5,
+        Start = 6,
+        LeftStick = 7,
+        RightStick = 8,
+        LeftShoulder = 9, 
+        RightShoulder = 10,
+        DPadUp = 11,
+        DPadDown = 12,
+        DPadLeft = 13,
+        DPadRight = 14,
+    }
+
+    public enum ControllerAxis
+    {
+        LeftX = 0,
+        LeftY = 1,
+        RightX = 2,
+        RightY = 3,
+        TriggerLeft = 4,
+        TriggerRight = 5
     }
 
     public enum KeyCode
@@ -185,4 +262,6 @@ namespace HawkEngine
 
         NUMLOCKCLEAR = 83,
     }
+
+    
 }

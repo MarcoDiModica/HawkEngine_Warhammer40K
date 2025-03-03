@@ -51,58 +51,33 @@ bool PhysicsModule::Awake() {
 }
 
 void PhysicsModule::SyncTransforms() {
-    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
-        if (!gameObject->HasComponent<RigidbodyComponent>()) {
-            continue;
-        }
-        btTransform transform;
-        if (rigidBody->getMotionState()) {
-            rigidBody->getMotionState()->getWorldTransform(transform);
-        }
+	for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+		if (!gameObject->HasComponent<RigidbodyComponent>()) {
+			continue;
+		}
 
-        btVector3 pos = transform.getOrigin();
-        btQuaternion rot = transform.getRotation();
+		btTransform transform;
+		if (rigidBody->getMotionState()) {
+			rigidBody->getMotionState()->getWorldTransform(transform);
+		}
+		else {
+			transform = rigidBody->getWorldTransform();
+		}
 
-        auto goTransform = gameObject->GetTransform();
+		btVector3 pos = transform.getOrigin();
+		btQuaternion rot = transform.getRotation();
 
-        //// ------------------------- POSITION -------------------------
-        static std::unordered_map<GameObject*, glm::dvec3> initialOffsets;
-        if (initialOffsets.find(gameObject) == initialOffsets.end()) {
-            glm::dvec3 initialPos = goTransform->GetPosition();
-            glm::dvec3 rigidBodyInitialPos = { pos[0], pos[1], pos[2] };
-            initialOffsets[gameObject] = initialPos - rigidBodyInitialPos;
-        }
+		auto goTransform = gameObject->GetTransform();
 
-        glm::dvec3 adjustedPosition = glm::dvec3(pos[0], pos[1], pos[2]) + initialOffsets[gameObject];
-        goTransform->SetPosition(adjustedPosition);
+		glm::dvec3 currentPos = goTransform->GetPosition();
 
-        //// ------------------------- ROTATION -------------------------
-        static std::unordered_map<GameObject*, glm::dquat> previousRotations;
-        glm::dquat newRotation = glm::quat(rot.w(), rot.x(), rot.y(), rot.z());
-        
-        if (previousRotations.find(gameObject) != previousRotations.end()) {
-            if (previousRotations[gameObject] != newRotation) {
-                glm::dquat deltaRotation = glm::inverse(previousRotations[gameObject]) * newRotation;
-                goTransform->SetRotationQuat(goTransform->GetRotation() * deltaRotation);
-            }
-        }
-        previousRotations[gameObject] = newRotation;
+		float interp = 0.7f;
+		glm::dvec3 newPos = currentPos * (1.0 - interp) + glm::dvec3(pos.x(), pos.y(), pos.z()) * (double)interp;
 
-        //// ------------------------- SCALE -------------------------
-       /*static std::unordered_map<GameObject*, glm::vec3> initialScales;
-        if (initialScales.find(gameObject) == initialScales.end()) {
-            initialScales[gameObject] = goTransform->GetScale();
-        }
+		goTransform->SetPosition(newPos);
 
-        glm::vec3 currentScale = goTransform->GetScale();
-        glm::vec3 originalScale = initialScales[gameObject];
-
-        if (currentScale != originalScale) {
-            glm::vec3 deltaScale = originalScale / currentScale;
-            goTransform->Scale(deltaScale);
-        }*/
-
-    }
+		goTransform->SetRotationQuat(glm::dquat(rot.w(), rot.x(), rot.y(), rot.z()));
+	}
 }
 
 void PhysicsModule::SyncCollidersToGameObjects() {
@@ -195,7 +170,7 @@ void PhysicsModule::DrawDebugDrawer() {
 }
 
 bool PhysicsModule::Update(double dt) {
-	dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 1, fixedDeltaTime);
+	dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 4, fixedDeltaTime);
 	SyncTransforms();
     //DrawDebugDrawer();
     return true;

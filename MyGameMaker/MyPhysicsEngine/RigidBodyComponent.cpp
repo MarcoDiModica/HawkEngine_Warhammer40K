@@ -6,7 +6,11 @@
 #include <mono/metadata/debug-helpers.h>
 
 RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physicsModule)
-    : Component(owner), physics(physicsModule), mass(1.0f) {}
+    : Component(owner), physics(physicsModule), mass(1.0f) 
+{
+    SetDamping(0.1f, 0.1f);
+    SetFriction(0.5f);
+}
 
 RigidbodyComponent::~RigidbodyComponent() {
     Destroy();

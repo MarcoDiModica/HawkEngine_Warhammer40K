@@ -277,14 +277,18 @@ bool Input::processSDLEvents()
             case SDLK_p: // P
                 if (pPressed == false) {
                     pPressed = true; // Activar la bandera si P fue presionado
+                    Application->root->CreateSceneColliders();
                     Application->physicsModule->linkPhysicsToScene = true;
                 }
                 else {
                     pPressed = false; // Desactivar la bandera si P fue liberado
                     Application->physicsModule->linkPhysicsToScene = false;
                 }
-                break;
+                break; 
+
+                
             }
+            
             break;
 
         case(SDL_CONTROLLERDEVICEADDED):

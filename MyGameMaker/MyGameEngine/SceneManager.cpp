@@ -178,7 +178,6 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
     auto image = std::make_shared<Image>();
     auto material = std::make_shared<Material>();
 
-
     meshRenderer->SetMesh(mesh);
     if (mat) {
         material = mat;
@@ -189,7 +188,7 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
     }
     material->setImage(image);
     meshRenderer->SetMaterial(material);
-    meshRenderer->GetMaterial()->SetColor(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    meshRenderer->GetMaterial()->SetColor(vec4(0.5f, 0.5f, 0.5f, 1.0f));
 
     auto shaderComponent = go.AddComponent<ShaderComponent>();
 	shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
@@ -279,12 +278,11 @@ bool SceneManager::ParentGameObject(GameObject& child, GameObject& father) {
     return false;
 }
 
-std::shared_ptr<GameObject> SceneManager::FindGOByName(char* name) {
-    std::string _name = std::string(name);
-
-    for (int i = 0; i < currentScene->children().size(); ++i) {
-        if (currentScene->_children[i]->GetName() == _name) {
-            return currentScene->_children[i];
-        }
-    }
+std::shared_ptr<GameObject> SceneManager::FindGOByName(std::string name) const {
+    for (auto go : currentScene->_children) {
+		if (go->GetName() == name) {
+			return go;
+		}
+	}
+	return nullptr;
 }

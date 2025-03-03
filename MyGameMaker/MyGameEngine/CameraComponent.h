@@ -39,6 +39,12 @@ public:
 
     void Shake(float intensity, float duration, float frequency);
 
+    void SetDistance(float distance) { followDistance = distance; }
+    float GetDistance() const { return followDistance; }
+
+    void SetOffset(const glm::vec3& offset) { followOffset = offset; }
+    glm::vec3 GetOffset() const { return followOffset; }
+
     GameObject* followTarget = nullptr;
     double followDistance = 5.0f;
     glm::dvec3 followOffset = glm::dvec3(0.0f);
@@ -61,6 +67,9 @@ public:
     bool frustrumRepresentation = true;
 
     ProjectionType projectionType = ProjectionType::Perspective;
+
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
 
 private:
 

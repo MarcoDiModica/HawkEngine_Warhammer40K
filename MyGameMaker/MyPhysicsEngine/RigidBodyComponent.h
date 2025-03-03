@@ -43,6 +43,10 @@ public:
 
     btRigidBody* GetRigidBody() const { return rigidBody; }
 
+    MonoObject* CsharpReference = nullptr;
+    MonoObject* GetSharp() override;
+
+
 private:
     btRigidBody* rigidBody;
     btMotionState* motionState;

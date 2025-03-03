@@ -88,7 +88,7 @@ public class PlayerShooting : MonoBehaviour
                     Vector3 offsetY = new Vector3(0, 3.5f, 0);
                     Vector3 spawnPos = transform.position + forward * 1.0f;
                     projTransform.position = spawnPos;
-                    projTransform.position += offsetY;
+                    //projTransform.position += offsetY;
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                     ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);

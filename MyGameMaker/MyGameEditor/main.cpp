@@ -148,9 +148,21 @@ static void RenderGameView() {
 	glLoadIdentity();
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
+	GameObject* UICamera = nullptr; 
+
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
-		RenderObjectAndChildren(object);
+		if (object->GetName() == "UICanvas")
+		{
+			UICamera = object;
+		}
+		else {
+			RenderObjectAndChildren(object);
+		}
+	}
+
+	if (UICamera != nullptr) {
+		RenderObjectAndChildren(UICamera);
 	}
 
 	//for all obj in scene and call update

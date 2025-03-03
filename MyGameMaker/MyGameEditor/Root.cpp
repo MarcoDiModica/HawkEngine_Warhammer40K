@@ -89,7 +89,7 @@ std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, c
     transform->SetPosition(position);
    /* transform->Rotate(glm::radians(90.0f), glm::vec3(1, 0, 0));
     //transform->Rotate(glm::radians(180.0f), glm::vec3(0, 1, 0));*/
-    /*transform->SetScale(glm::dvec3(1.5f, 1.5f, 1.5f));*/
+   // transform->SetScale(glm::dvec3(4.0f, 4.0f, 4.0f));
 
     auto material = std::make_shared<Material>();
 	material->imagePtr = std::make_shared<Image>();
@@ -218,8 +218,8 @@ bool Root::Start()
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
-  
     auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 20.0f, -11.75f), "../MyGameEditor/Assets/Textures/UI_Final.png");
+  
 
     SceneManagement->Start();
 

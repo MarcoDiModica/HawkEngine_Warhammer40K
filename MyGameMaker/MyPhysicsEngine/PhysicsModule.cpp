@@ -9,7 +9,7 @@
 #include <glm/glm.hpp>
 
 
-constexpr float fixedDeltaTime = 0.005; // 60 updates per second
+constexpr float fixedDeltaTime = 0.02; // 60 updates per second
 float accumulatedTime = 0.0f;
 
 
@@ -197,12 +197,8 @@ void PhysicsModule::DrawDebugDrawer() {
 bool PhysicsModule::Update(double dt) {
 	if (linkPhysicsToScene)
     {
-        accumulatedTime += dt;
-        while (accumulatedTime >= fixedDeltaTime) {
-            dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 10);
-            SyncTransforms();
-            accumulatedTime -= fixedDeltaTime;
-        }
+        dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 1, dt);
+        SyncTransforms();
     }
     DrawDebugDrawer();
     return true;

@@ -57,7 +57,7 @@ void Window::Open(const char* title, unsigned short width, unsigned short height
 
     _window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         width, height,
-        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
+        SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 
     _width = width;
     _height = height;

@@ -195,12 +195,9 @@ void PhysicsModule::DrawDebugDrawer() {
 }
 
 bool PhysicsModule::Update(double dt) {
-	if (linkPhysicsToScene)
-    {
-        dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 1, dt);
-        SyncTransforms();
-    }
-    DrawDebugDrawer();
+	dynamicsWorld->stepSimulation(static_cast<btScalar>(dt), 1, fixedDeltaTime);
+	SyncTransforms();
+    //DrawDebugDrawer();
     return true;
 }
 

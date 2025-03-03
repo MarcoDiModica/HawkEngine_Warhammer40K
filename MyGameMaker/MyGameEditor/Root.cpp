@@ -218,7 +218,7 @@ bool Root::Start()
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
-    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 20.0f, -11.75f), "../MyGameEditor/Assets/Textures/UI_Final.png");
+    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 20.0f, -11.75f), "Assets/Textures/UI_Final.png");
   
 
     SceneManagement->Start();

@@ -74,7 +74,7 @@ void Bone::Update(float animationTime)
 
 	m_LocalTransform = translation * rotation * scale;
 
-	DrawTriangle();
+	//DrawTriangle();
 }
 
 void Bone::DrawTriangle()

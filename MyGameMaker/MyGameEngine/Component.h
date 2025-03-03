@@ -29,6 +29,7 @@ enum class ComponentType {
 	COLLIDER,
 	RIGIDBODY,
 	PARTICLES_EMITTER,
+	UI,
 	LIGHT
 };
 

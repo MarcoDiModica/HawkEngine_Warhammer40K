@@ -212,7 +212,7 @@ void MeshRenderer::Render() const
 
     if (owner->HasComponent<SkeletalAnimationComponent>() &&
         owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()) {
-        auto transforms = owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices();
+        auto transforms = owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetBoneMatrices();
         for (int i = 0; i < transforms.size(); ++i)
             material->setShaderUniform("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
     }

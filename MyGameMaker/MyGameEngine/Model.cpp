@@ -41,7 +41,7 @@ void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* 
 		std::string boneName = mesh->mBones[boneIndex]->mName.C_Str();
 		if (m_BoneInfoMap.find(boneName) == m_BoneInfoMap.end())
 		{
-			BoneInfo newBoneInfo;
+			BoneInfo2 newBoneInfo;
 			newBoneInfo.id = m_BoneCounter;
 			newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(
 				mesh->mBones[boneIndex]->mOffsetMatrix);

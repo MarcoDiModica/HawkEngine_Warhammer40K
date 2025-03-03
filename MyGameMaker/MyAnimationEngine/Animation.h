@@ -24,7 +24,7 @@ private:
     int m_TicksPerSecond = 0;
     std::vector<Bone> m_Bones;
     AssimpNodeData m_RootNode;
-    std::map<std::string, BoneInfo> m_BoneInfoMap;
+    std::map<std::string, BoneInfo2> m_BoneInfoMap;
     std::vector<std::string> m_Animations;
 public:
 
@@ -50,7 +50,7 @@ public:
 
     inline const AssimpNodeData& GetRootNode() { return m_RootNode; }
 
-    inline const std::map<std::string, BoneInfo>& GetBoneIDMap()
+    inline const std::map<std::string, BoneInfo2>& GetBoneIDMap()
     {
         return m_BoneInfoMap;
     }

@@ -93,9 +93,6 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 			const auto meshIndex = node.mMeshes[i];
 			const auto& model = meshes[meshIndex];
 
-
-			
-
 			obj.SetName(node.mName.data);
 
 			fbx_object.push_back(std::make_shared<GameObject>(obj));
@@ -108,7 +105,7 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 	}
 }
 
-std::vector<std::shared_ptr<Mesh>>ModelImporter::createMeshesFromFBX(const aiScene& scene) {
+std::vector<std::shared_ptr<Mesh>>ModelImporter::createMeshesFromFBX(const aiScene& scene, const std::string& scinPath) {
 	std::vector<std::shared_ptr<Mesh>> meshes;
 	meshes.resize(scene.mNumMeshes);
 
@@ -188,7 +185,21 @@ std::vector<std::shared_ptr<Mesh>>ModelImporter::createMeshesFromFBX(const aiSce
 		{
 			Animation* animation = new Animation();
 			//animation->SetUpAnimation(scenePath, model->getModel().get());
-			animation->skeletalModel->InitMesh(i, paiMesh, vertices, Indices, bones);
+			animation->skeletalModel->m_Entries.resize(scene.mNumMeshes);
+          /*  animation->skeletalModel->gScene = scene;
+			animation->skeletalModel->sScene = std::make_shared<const aiScene>(scene);
+			animation->skeletalModel->animation = std::make_shared<aiAnimation>(*scene.mAnimations[0]);
+			animation->skeletalModel->rootNode = std::make_shared<aiNode>(*scene.mRootNode);
+			animation->skeletalModel->nodeAnims.resize(scene.mAnimations[0]->mNumChannels);
+			for (unsigned int j = 0; j < scene.mAnimations[0]->mNumChannels; j++) {
+				animation->skeletalModel->nodeAnims[j] = std::make_shared<aiNodeAnim>(*scene.mAnimations[0]->mChannels[j]);
+			}
+			animation->skeletalModel->childrenNodes.resize(scene.mRootNode->mNumChildren);
+			for (unsigned int j = 0; j < scene.mRootNode->mNumChildren; j++) {
+				animation->skeletalModel->childrenNodes[j] = std::make_shared<aiNode>(*scene.mRootNode->mChildren[j]);
+			}*/
+
+			animation->skeletalModel->InitMesh(i, paiMesh, vertices, Indices, bones,scinPath);
 			animations.push_back(std::shared_ptr<Animation>(animation));
 			//std::cout << node.mName.C_Str() << std::endl;
 		}
@@ -250,7 +261,7 @@ void ModelImporter::loadFromFile(const std::string& path) {
 	aiGetErrorString();
 	
 	// Create models and materials from FBX
-	meshes = createMeshesFromFBX(*fbx_scene);
+	meshes = createMeshesFromFBX(*fbx_scene,path);
 
 	materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/");
 

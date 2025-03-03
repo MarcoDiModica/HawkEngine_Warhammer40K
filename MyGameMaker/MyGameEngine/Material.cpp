@@ -104,6 +104,10 @@ void Material::setShaderUniform(const std::string& name, const glm::mat4& value)
 	shader->SetUniform(name, value);
 }
 
+void Material::setShaderUniform(const std::string& name, const Matrix4f& matIn) {
+	shader->SetUniform(name, matIn);
+}
+
 std::unordered_map<std::string, std::shared_ptr<Material>> materialCache;
 
 void Material::SaveBinary(const std::string& filename) const {

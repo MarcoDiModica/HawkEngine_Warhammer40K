@@ -36,24 +36,15 @@ void main()
 
     vec4 totalPosition = vec4(aPos,1.0f);
     vec3 totalNormal =  vec3(0.0f);
-    for(int i = 0 ; i < MAX_BONE_INFLUENCE ; i++)
-    {
-        if(boneIds[i] == -1) 
-            continue;
-        if(boneIds[i] >= MAX_BONES) 
-        {
-            totalPosition = vec4(aPos, 1.0f);
-            totalNormal = aNormal;
-            break;
-        }
-        vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos, 1.0f);
-        totalPosition += localPosition * weights[i];
-        vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;
-        totalNormal += localNormal * weights[i];
-    }
+   	mat4 BoneTransform = finalBonesMatrices[ boneIds[0] ] * weights[0];
+	BoneTransform += finalBonesMatrices[ boneIds[1] ] * weights[1];
+    BoneTransform += finalBonesMatrices[ boneIds[2] ] * weights[2];
+    BoneTransform += finalBonesMatrices[ boneIds[3] ] * weights[3];
 
+	// Transformed vertex position 
+	vec4 tPos = BoneTransform * vec4(aPos, 1.0);
 
     // Transform the vertex position to clip space
-    gl_Position = (projection * view * model) * totalPosition;
+    gl_Position = projection * view * model * tPos;
     //Normal = normalize(totalNormal);
 }

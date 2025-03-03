@@ -55,6 +55,11 @@ public:
         return m_FinalBoneMatrices;
     }
 
+	std::vector<Matrix4f> GetBoneMatrices()
+	{
+		return m_BoneMatrices;
+	}
+
     void SetPlaySpeed(float playSpeed) 
     {
 		m_PlaySpeed = playSpeed;

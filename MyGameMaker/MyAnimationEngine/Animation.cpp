@@ -2,6 +2,7 @@
 
 Animation::Animation()
 {
+	skeletalModel = new SkeletalModel();
 }
 
 
@@ -18,6 +19,7 @@ Animation::Animation(const Animation& other)
     m_RootNode = other.m_RootNode;
     m_BoneInfoMap = other.m_BoneInfoMap;
 	m_Animations = other.m_Animations;
+	skeletalModel = other.skeletalModel;
 }
 
 Animation& Animation::operator=(const Animation& other)
@@ -30,6 +32,7 @@ Animation& Animation::operator=(const Animation& other)
         m_RootNode = other.m_RootNode;
         m_BoneInfoMap = other.m_BoneInfoMap;
         m_Animations = other.m_Animations;
+        skeletalModel = other.skeletalModel;
     }
     return *this;
 }
@@ -42,6 +45,7 @@ Animation::Animation(Animation&& other) noexcept
     m_RootNode = std::move(other.m_RootNode);
     m_BoneInfoMap = std::move(other.m_BoneInfoMap);
 	m_Animations = std::move(other.m_Animations);
+	skeletalModel = std::move(other.skeletalModel);
 }
 
 Animation& Animation::operator=(Animation&& other) noexcept
@@ -54,6 +58,7 @@ Animation& Animation::operator=(Animation&& other) noexcept
         m_RootNode = std::move(other.m_RootNode);
         m_BoneInfoMap = std::move(other.m_BoneInfoMap);
 		m_Animations = std::move(other.m_Animations);
+		skeletalModel = std::move(other.skeletalModel);
     }
     return *this;
 }

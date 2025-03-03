@@ -376,7 +376,7 @@ private:
     #pragma region SkeletalAnimation
     static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal) 
     {
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+      /*  ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Animation")) return;
 
 		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetAnimations()[0].c_str());
@@ -393,7 +393,7 @@ private:
         float time = skeletal->GetAnimator()->GetCurrentMTime();
         ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
         ImGui::SliderFloat("Timeline", &time, 0, skeletal->GetAnimator()->GetCurrentAnimation()->GetDuration());
-        ImGui::PopItemFlag();
+        ImGui::PopItemFlag();*/
 
     }
     #pragma endregion 

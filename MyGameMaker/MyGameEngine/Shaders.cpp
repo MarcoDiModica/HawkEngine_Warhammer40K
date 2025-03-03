@@ -4,6 +4,7 @@
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 
+
 Shaders::Shaders() : _program(0) {}
 
 Shaders::~Shaders() {
@@ -68,6 +69,10 @@ void Shaders::SetUniform(const std::string& name, const glm::vec4& value) {
 
 void Shaders::SetUniform(const std::string& name, const glm::mat4& value) {
     glUniformMatrix4fv(glGetUniformLocation(_program, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void Shaders::SetUniform(const std::string& name, const Matrix4f& matIn) {
+    glUniformMatrix4fv(glGetUniformLocation(_program, name.c_str()), 1, GL_TRUE, &matIn.m[0][0]);
 }
 
 GLuint Shaders::CompileShader(const std::string& shaderSource, GLenum shaderType) {

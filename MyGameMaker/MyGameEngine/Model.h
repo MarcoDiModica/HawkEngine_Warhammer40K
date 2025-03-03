@@ -22,7 +22,7 @@ enum class Shapes
 	MESH
 };
 
-struct BoneInfo
+struct BoneInfo2
 {
 	int id;
 
@@ -85,7 +85,7 @@ private:
 	ModelData modelData;
 	int materialIndex = -1;
 
-	std::map<std::string, BoneInfo> m_BoneInfoMap;
+	std::map<std::string, BoneInfo2> m_BoneInfoMap;
 	int m_BoneCounter = 0;
 
 	BoundingBox m_BoundingBox; // Bounding box de la malla

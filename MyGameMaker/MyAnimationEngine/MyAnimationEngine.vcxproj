@@ -83,6 +83,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Bone.cpp" />
+    <ClCompile Include="Math3D.cpp" />
     <ClCompile Include="SkeletalAnimationComponent.cpp" />
     <ClCompile Include="SkeletalModel.cpp" />
   </ItemGroup>

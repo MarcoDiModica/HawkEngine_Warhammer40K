@@ -246,9 +246,9 @@ bool Root::Start()
 {
 	//CreatePlayer();
 
-    auto player = CreateCube("Player");
+   /* auto player = CreateCube("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 1, 0));
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");*/
     /*script->LoadScript("PlayerController");*/
 
     auto objMainCamera = CreateCameraObject("MainCamera");

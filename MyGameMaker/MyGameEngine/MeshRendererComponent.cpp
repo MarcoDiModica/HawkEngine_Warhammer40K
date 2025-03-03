@@ -216,6 +216,11 @@ void MeshRenderer::Render() const
         material->shader->SetUniform("u_Factor", 0.8f);
 
         break;
+    case UI:
+
+        material->shader->SetUniform("view", Application->root->mainCamera->GetComponent<CameraComponent>()->view());
+        material->shader->SetUniform("projection", Application->root->mainCamera->GetComponent<CameraComponent>()->projection());
+        break;
     default:
         break;
     }
@@ -301,6 +306,16 @@ void MeshRenderer::RenderMainCamera() const
         material->shader->SetUniform("u_Factor", 0.8f);
 
         break;
+    case UI:
+
+        //material->shader->SetUniform("view", Application->root->mainCamera->GetComponent<CameraComponent>()->view());
+        //material->shader->SetUniform("projection", Application->root->mainCamera->GetComponent<CameraComponent>()->projection());
+
+        material->shader->SetUniform("view", Application->camera->view());
+        material->shader->SetUniform("projection", Application->camera->projection());
+
+        break;
+
     default:
         break;
     }

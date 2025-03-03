@@ -159,10 +159,19 @@ bool Root::Awake()
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
     //MonoEnvironment* env = new MonoEnvironment();
-	shaders.resize(3);
+	shaders.resize(4);
     shaders[0].LoadShaders("Assets/Shaders/default_vertex_shader.glsl", "Assets/Shaders/default_fragment_shader.glsl");
     shaders[1].LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
     shaders[2].LoadShaders("Assets/Shaders/water_vertex_shader.glsl", "Assets/Shaders/water_fragment_shader.glsl");
+	shaders[3].LoadShaders("Assets/Shaders/UI_vertex_shader.glsl", "Assets/Shaders/UI_fragment_shader.glsl");
+
+    auto UI = Application->root->CreatePlane("Plane");
+
+	UI->GetTransform()->SetPosition(glm::vec3(0.0f,0.0f, 0.0f));
+	UI->GetComponent<MeshRenderer>()->GetMaterial()->SetColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	UI->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::UI);
+    UI->GetComponent<MeshRenderer>()->GetMaterial()->imagePtr->LoadTexture("../MyGameEditor/Assets/Textures/UI_Final.png");
+
     //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();

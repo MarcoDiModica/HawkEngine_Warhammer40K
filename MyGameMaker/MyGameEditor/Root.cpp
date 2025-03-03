@@ -170,17 +170,15 @@ bool Root::CleanUp()
     return true;
 }
 
-bool hasCreatedCollider = false;
+
 
 
 void Root::CreateSceneColliders() {
-	if (hasCreatedCollider) return;
     for (auto& go : environment->GetChildren())
     {
         auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
         collider->Start();
     }
-	hasCreatedCollider = true;
 }
 
 
@@ -279,7 +277,14 @@ bool Root::Start()
     return true;
 }
 
+bool hasCreatedCollider = false;
+
 bool Root::Update(double dt) {
+
+    if (!hasCreatedCollider) {
+        CreateSceneColliders();
+        hasCreatedCollider = true;
+    }
 
     HandleInput(dt);
 

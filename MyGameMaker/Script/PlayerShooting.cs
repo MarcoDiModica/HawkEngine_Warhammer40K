@@ -85,14 +85,20 @@ public class PlayerShooting : MonoBehaviour
                 if (projTransform != null)
                 {
                     Vector3 forward = transform.forward;
+                    Vector3 offsetY = new Vector3(0, 3.5f, 0);
                     Vector3 spawnPos = transform.position + forward * 1.0f;
                     projTransform.position = spawnPos;
+                    projTransform.position += offsetY;
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                     ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
                     activeProjectiles.Add(projInfo);
 
                     Engineson.print("Projectile fired!");
+                }
+                else 
+                {                     
+                    Engineson.print("Error creating projectile: Transform component not found");
                 }
             }
         }

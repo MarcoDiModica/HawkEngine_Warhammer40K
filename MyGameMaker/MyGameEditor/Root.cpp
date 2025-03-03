@@ -159,8 +159,6 @@ bool Root::Awake()
     ParentGameObject(*environment, *blockout);
     blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));
 
-
-
     return true;
 }
 
@@ -170,9 +168,6 @@ bool Root::CleanUp()
     return true;
 }
 
-
-
-
 void Root::CreateSceneColliders() {
     for (auto& go : environment->GetChildren())
     {
@@ -181,12 +176,8 @@ void Root::CreateSceneColliders() {
     }
 }
 
-
-
 bool Root::Start()
 {
-	//CreatePlayer();
-
     auto player = CreateGameObject("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
     player->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -197,15 +188,11 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
     player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-
     auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
     playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
     playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-
-   
-    
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -213,65 +200,6 @@ bool Root::Start()
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
-
-    /*auto refCamera = FindGOByName("MainCamera")->GetComponent<CameraComponent>();
-    if (refCamera) {
-		LOG(LogType::LOG_INFO, "Camera found");
-	}
-	else {
-        LOG(LogType::LOG_ERROR, "Camera not found");
-	}*/
-    
-    //MonoEnvironment* mono = new MonoEnvironment();
-
-    //auto Script = CreateGameObject("Script");
-    //auto script = Script->AddComponent<ScriptComponent>();
-    //script->LoadScript("TestingComponent");
-    /*
-    auto BlobFish = CreateGameObject("Tank");
-    auto blob = BlobFish->AddComponent<ScriptComponent>();
-
-	auto BlobFish2 = CreateGameObject("Turret");
-	auto blob2 = BlobFish2->AddComponent<ScriptComponent>();
-
-    auto BlobFish3 = CreateGameObject("SingleProjectile");
-	auto blob3 = BlobFish3->AddComponent<ScriptComponent>();
-    
-    AddMeshRenderer(*BlobFish, Mesh::CreateCube());
-	AddMeshRenderer(*BlobFish2, Mesh::CreateCube());
-    AddMeshRenderer(*BlobFish3, Mesh::CreateSphere());
-
-    //auto blob2 = BlobFish->AddComponent<ScriptComponent>();
-    blob->LoadScript("TestingComponent");
-	blob2->LoadScript("TankController");
-	blob3->LoadScript("ProjectileScript");
-    
-	ParentGameObject(*BlobFish2, *BlobFish);
-	ParentGameObject(*BlobFish3, *BlobFish2);
-    */
-    //blob2->LoadScript("TestingComponent");
-    
-    //check if blobfish has 2 scripts
-
-    /*auto Street = CreateGameObject("Street");
-    Street->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/ff.fbx");
-
-    for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
-        auto& Street2 = meshImp.meshGameObjects[i];
-        currentScene->AddGameObject(Street2);
-        ParentGameObject(*Street2, *Street);
-    }*/
-
-    /*auto MainCamera = CreateGameObject("MainCamera");
-    MainCamera->GetTransform()->GetPosition() = vec3(0, 0, -10);
-    auto camera = MainCamera->AddComponent<CameraComponent>();
-    mainCamera = MainCamera;
-
-    auto cube = CreateCube("Cube");
-    cube->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");*/
 
     SceneManagement->Start();
 
@@ -287,38 +215,7 @@ bool Root::Update(double dt) {
         hasCreatedCollider = true;
     }
 
-    HandleInput(dt);
-
-    //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
-
-    //SceneManagement->Update(dt);
-
-    //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
-    //
-    //    if (currentScene->tree == nullptr) {
-    //        currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
-    //        for (auto child : currentScene->children()) {
-    //            currentScene->tree->Insert(currentScene->tree->root, *child, 0);
-    //        }
-    //
-    //    }
-    //    else {
-    //        delete currentScene->tree;
-    //        currentScene->tree = nullptr;
-    //        int a = 7;
-    //    }
-    //}
-    //
-    //
-    //
-    ////if press 1 active scene Viernes13 and press 2 active scene Salimos
-    //if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-    //    Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
-	//}
-    //else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
-    //    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
-    //}
-    
+    HandleInput(dt);    
 
     return true;
 }

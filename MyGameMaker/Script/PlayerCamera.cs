@@ -33,11 +33,11 @@ public class PlayerCamera : MonoBehaviour
     {
         if (Input.GetLeftStick() != Vector2.Zero)
         {
-            cameraRef?.SetDistance(-4);
+            cameraRef?.SetDistance(-2);
         }
         else if (Input.GetRightStick() != Vector2.Zero)
         {
-            cameraRef?.SetDistance(-4);
+            cameraRef?.SetDistance(-2);
         }
         else
         {

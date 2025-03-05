@@ -1,60 +1,127 @@
-#pragma region Includes
-#define _CRT_SECURE_NO_WARNINGS
+// Last update: 2021/10/12 - 20:00
+#include <iostream>
+#include <fstream>
+
 #include "SceneSerializer.h"
 #include "App.h"
 #include "Root.h"
-#include "../MyGameEngine/Material.h"
-#include <vector>
-#include <memory>
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <fstream>
-#include "../MyGameEngine/CameraComponent.h"
 #include "Input.h"
-#pragma endregion
+#include "Log.h"
 
-class MeshRenderer;
+#include "../MyGameEngine/CameraComponent.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
+#include "../MyGameEngine/LightComponent.h"
+#include "../MyShadersEngine/ShaderComponent.h"
 
-YAML::Node SceneSerializer::ObjectSerialize(GameObject& child, int num) {
-	YAML::Node node;
-	node["name"] = child.GetName();
-	node["tag"] = child.tag;
-	node["active"] = child.IsActive();
-	node["isStatic"] = child.isStatic;
+SceneSerializer::SceneSerializer(App* app) : Module(app) {
+	RegisterComponentType("Transform_Component", [](GameObject* gameObject, const YAML::Node& node) {
+		gameObject->GetTransform()->decode(node);
+		});
 
-	for (auto& component : child.components) {
-		if (component.second) {
-			YAML::Node node2 = component.second->encode();
-			node[component.second->GetName()] = node2;
-		}
-	}
+	RegisterComponentType("MeshRenderer", [this](GameObject* gameObject, const YAML::Node& node) {
+		auto _mesh = std::make_shared<Mesh>();
+		auto _material = std::make_shared<Material>();
 
-	if (!child.scriptComponents.empty()) {
-		YAML::Node scriptsNode;
-		for (size_t i = 0; i < child.scriptComponents.size(); ++i) {
-			if (child.scriptComponents[i]) {
-				YAML::Node scriptNode = child.scriptComponents[i]->encode();
-				scriptsNode["Script" + std::to_string(i)] = scriptNode;
+		if (node["mesh_path"]) {
+			auto path = node["mesh_path"].as<std::string>();
+
+			if (path.substr(0, 6) == "shapes" || path.substr(0, 5) == "shape") {
+				if (path.find("cube") != std::string::npos) {
+					_mesh = Mesh::CreateCube();
+					LOG(LogType::LOG_INFO, "MeshRenderer: Created cube mesh");
+				}
+				else if (path.find("sphere") != std::string::npos) {
+					_mesh = Mesh::CreateSphere();
+					LOG(LogType::LOG_INFO, "MeshRenderer: Created sphere mesh");
+				}
+				else if (path.find("plane") != std::string::npos) {
+					_mesh = Mesh::CreatePlane();
+					LOG(LogType::LOG_INFO, "MeshRenderer: Created plane mesh");
+				}
+				else if (path.find("cylinder") != std::string::npos) {
+					_mesh = Mesh::CreateCylinder();
+					LOG(LogType::LOG_INFO, "MeshRenderer: Created cylinder mesh");
+				}
+			}
+			else if (node["mesh_name"]) {
+				std::string meshName = node["mesh_name"].as<std::string>();
+				_mesh = Mesh::LoadBinary(meshName);
+
+				if (!_mesh) {
+					LOG(LogType::LOG_ERROR, "MeshRenderer: Failed to load mesh %s", meshName.c_str());
+					_mesh = Mesh::CreateCube();
+				}
 			}
 		}
-		node["ScriptComponents"] = scriptsNode;
-	}
 
-	int j = 0;
-	for (const auto& childObj : child.GetChildren()) {
-		node["Child" + std::to_string(j)] = ObjectSerialize(*childObj, j);
-		j++;
-	}
+		if (node["material_path"]) {
+			std::string materialPath = node["material_path"].as<std::string>();
+			try {
+				_material = Material::LoadBinary(materialPath);
+				LOG(LogType::LOG_INFO, "MeshRenderer: Loaded material %s", materialPath.c_str());
+			}
+			catch (const std::exception& e) {
+				LOG(LogType::LOG_ERROR, "MeshRenderer: Error loading material %s: %s",
+					materialPath.c_str(), e.what());
+				_material = std::make_shared<Material>();
+			}
+		}
 
-	return node;
+		if (node["color"] && node["color"].IsSequence() && node["color"].size() == 4) {
+			glm::vec4 color;
+			color.r = node["color"][0].as<float>();
+			color.g = node["color"][1].as<float>();
+			color.b = node["color"][2].as<float>();
+			color.a = node["color"][3].as<float>();
+			_material->SetColor(color);
+		}
+
+		std::string texturePath = "default.png";
+		if (node["image_path"]) {
+			texturePath = node["image_path"].as<std::string>();
+			auto image = std::make_shared<Image>();
+			image->LoadTexture(texturePath);
+
+			if (image->id() != 0) {
+				_material->setImage(image);
+				LOG(LogType::LOG_INFO, "MeshRenderer: Loaded image %s", texturePath.c_str());
+			}
+			else {
+				LOG(LogType::LOG_ERROR, "MeshRenderer: Failed to load image %s", texturePath.c_str());
+			}
+		}
+
+		auto meshRenderer = gameObject->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(_mesh);
+		meshRenderer->SetMaterial(_material);
+
+		if (!texturePath.empty() && texturePath != "default.png") {
+			auto image = std::make_shared<Image>();
+			image->LoadTexture(texturePath);
+			meshRenderer->SetImage(image);
+		}
+		});
+
+	RegisterComponentType("CameraComponent", [this](GameObject* gameObject, const YAML::Node& node) {
+		gameObject->AddComponent<CameraComponent>()->decode(node);
+		});
+
+	RegisterComponentType("LightComponent", [this](GameObject* gameObject, const YAML::Node& node) {
+		gameObject->AddComponent<LightComponent>()->decode(node);
+		});
+
+	RegisterComponentType("ShaderComponent", [this](GameObject* gameObject, const YAML::Node& node) {
+		gameObject->AddComponent<ShaderComponent>()->decode(node);
+		});
+}
+
+void SceneSerializer::RegisterComponentType(const std::string& typeName,
+	ComponentDeserializeFunc deserializeFunc) {
+	m_componentRegistry[typeName] = deserializeFunc;
 }
 
 void SceneSerializer::Serialize(const std::string& directoryPath, bool play) {
 	std::vector<std::shared_ptr<GameObject>> gameObjects = Application->root->GetActiveScene()->_children;
-
-	YAML::Emitter emitter;
-	YAML::Node game_object_node;
 
 	if (gameObjects.empty()) {
 		std::string filepath = directoryPath + "/" + Application->root->GetActiveScene()->GetName() + ".scene";
@@ -66,45 +133,18 @@ void SceneSerializer::Serialize(const std::string& directoryPath, bool play) {
 		return;
 	}
 
+	YAML::Node rootNode;
+
 	YAML::Node sceneMetaNode;
 	sceneMetaNode["SceneName"] = Application->root->GetActiveScene()->GetName();
-	game_object_node["SceneMetadata"] = sceneMetaNode;
+	rootNode["SceneMetadata"] = sceneMetaNode;
 
 	for (size_t i = 0; i < gameObjects.size(); ++i) {
-		YAML::Node node;
-		node["name"] = gameObjects[i]->GetName();
-		node["tag"] = gameObjects[i]->tag;
-		node["active"] = gameObjects[i]->IsActive();
-		node["isStatic"] = gameObjects[i]->isStatic;
-
-		for (auto& component : gameObjects[i]->components) {
-			if (component.second) {
-				YAML::Node node2 = component.second->encode();
-				node[component.second->GetName()] = node2;
-			}
-		}
-
-		if (!gameObjects[i]->scriptComponents.empty()) {
-			YAML::Node scriptsNode;
-			for (size_t j = 0; j < gameObjects[i]->scriptComponents.size(); ++j) {
-				if (gameObjects[i]->scriptComponents[j]) {
-					YAML::Node scriptNode = gameObjects[i]->scriptComponents[j]->encode();
-					scriptsNode["Script" + std::to_string(j)] = scriptNode;
-				}
-			}
-			node["ScriptComponents"] = scriptsNode;
-		}
-
-		int j = 0;
-		for (const auto& child : gameObjects[i]->GetChildren()) {
-			node["Child" + std::to_string(j)] = ObjectSerialize(*child, j);
-			j++;
-		}
-
-		game_object_node["GameObject" + std::to_string(i)] = node;
+		rootNode["GameObject" + std::to_string(i)] = SerializeGameObject(*gameObjects[i]);
 	}
 
-	emitter << game_object_node;
+	YAML::Emitter emitter;
+	emitter << rootNode;
 
 	std::string filepath;
 	if (!play) {
@@ -130,14 +170,51 @@ void SceneSerializer::Serialize(const std::string& directoryPath, bool play) {
 	}
 }
 
+YAML::Node SceneSerializer::SerializeGameObject(GameObject& gameObject, int depth) {
+	YAML::Node node;
 
-void SceneSerializer::DeSerialize(std::string path) {
+	node["name"] = gameObject.GetName();
+	node["tag"] = gameObject.tag;
+	node["active"] = gameObject.IsActive();
+	node["isStatic"] = gameObject.isStatic;
+
+	for (auto& component : gameObject.components) {
+		if (component.second) {
+			YAML::Node componentNode = component.second->encode();
+			node[component.second->GetName()] = componentNode;
+		}
+	}
+
+	if (!gameObject.scriptComponents.empty()) {
+		YAML::Node scriptsNode;
+		for (size_t i = 0; i < gameObject.scriptComponents.size(); ++i) {
+			if (gameObject.scriptComponents[i]) {
+				YAML::Node scriptNode = gameObject.scriptComponents[i]->encode();
+				scriptsNode["Script" + std::to_string(i)] = scriptNode;
+			}
+		}
+		node["ScriptComponents"] = scriptsNode;
+	}
+
+	SerializeChildren(node, gameObject, depth + 1);
+
+	return node;
+}
+
+void SceneSerializer::SerializeChildren(YAML::Node& parentNode, GameObject& gameObject, int depth) {
+	const auto& children = gameObject.GetChildren();
+	for (size_t i = 0; i < children.size(); ++i) {
+		parentNode["Child" + std::to_string(i)] = SerializeGameObject(*children[i], depth);
+	}
+}
+
+void SceneSerializer::DeSerialize(const std::string& path) {
 	try {
-		YAML::Node root = YAML::LoadFile(path);
+		YAML::Node rootNode = YAML::LoadFile(path);
 
 		LOG(LogType::LOG_INFO, "Deserializing scene: %s", path.c_str());
 
-		if (root.IsNull()) {
+		if (rootNode.IsNull()) {
 			LOG(LogType::LOG_ERROR, "Error loading the scene: file is empty or invalid.");
 			return;
 		}
@@ -152,8 +229,8 @@ void SceneSerializer::DeSerialize(std::string path) {
 		std::string sceneName = path.substr(path.find_last_of("/\\") + 1);
 		sceneName = sceneName.substr(0, sceneName.find_last_of('.'));
 
-		if (root["SceneMetadata"] && root["SceneMetadata"]["SceneName"]) {
-			sceneName = root["SceneMetadata"]["SceneName"].as<std::string>();
+		if (rootNode["SceneMetadata"] && rootNode["SceneMetadata"]["SceneName"]) {
+			sceneName = rootNode["SceneMetadata"]["SceneName"].as<std::string>();
 		}
 
 		LOG(LogType::LOG_INFO, "Loading Scene: %s", sceneName.c_str());
@@ -168,140 +245,14 @@ void SceneSerializer::DeSerialize(std::string path) {
 		LOG(LogType::LOG_INFO, "Scene created: %s", sceneName.c_str());
 
 		for (int i = 0; ; i++) {
-			YAML::Node _node = root["GameObject" + std::to_string(i)];
-			if (!_node || !_node["name"].IsDefined()) {
+			YAML::Node objectNode = rootNode["GameObject" + std::to_string(i)];
+			if (!objectNode || !objectNode["name"].IsDefined()) {
 				break;
 			}
 
-			auto objectName = _node["name"].as<std::string>();
-			std::shared_ptr<GameObject> game_obj = Application->root->CreateGameObject(objectName);
+			auto gameObject = DeserializeGameObject(objectNode);
 
-			if (_node["tag"].IsDefined()) {
-				game_obj->tag = _node["tag"].as<std::string>();
-			}
-
-			if (_node["active"].IsDefined()) {
-				game_obj->SetActive(_node["active"].as<bool>());
-			}
-
-			if (_node["isStatic"].IsDefined()) {
-				game_obj->isStatic = _node["isStatic"].as<bool>();
-			}
-
-			for (YAML::const_iterator it = _node.begin(); it != _node.end(); ++it) {
-				const auto key = it->first.as<std::string>();
-				const YAML::Node& value = it->second;
-
-				if (key == "Transform_Component" || key == "MeshRenderer" || key == "CameraComponent" ||
-					key == "LightComponent" || key == "ShaderComponent") {
-					if (value["name"].IsDefined()) {
-						auto component_name = value["name"].as<std::string>();
-
-						if (component_name == "Transform_Component") {
-							game_obj->GetTransform()->decode(value);
-						}
-						else if (component_name == "MeshRenderer") {
-							auto _mesh = std::make_shared<Mesh>();
-							auto _material = std::make_shared<Material>();
-
-							if (value["mesh_path"]) {
-								auto path = value["mesh_path"].as<std::string>();
-
-								if (path.substr(0, 6) == "Shapes") {
-									if (path.find("Cube") != std::string::npos) {
-										_mesh = Mesh::CreateCube();
-									}
-									else if (path.find("Sphere") != std::string::npos) {
-										_mesh = Mesh::CreateSphere();
-									}
-									else if (path.find("Plane") != std::string::npos) {
-										_mesh = Mesh::CreatePlane();
-									}
-								}
-								else {
-									auto meshPath = value["mesh_path"].as<std::string>();
-									auto node_name = value["mesh_name"].as<std::string>();
-									_mesh->nameM = node_name;
-
-									_mesh = Mesh::LoadBinary(node_name);
-
-									if (_mesh == nullptr) {
-										LOG(LogType::LOG_ERROR, "Error loading mesh %s", node_name.c_str());
-										_mesh = Mesh::CreateCube();
-									}
-								}
-							}
-
-							if (value["material_path"]) {
-								auto path = value["material_path"].as<std::string>();
-								//_material = _material->LoadBinary(path);
-
-								if (!_material) {
-									LOG(LogType::LOG_ERROR, "Error loading material %s", path.c_str());
-									_material = std::make_shared<Material>();
-								}
-							}
-
-							std::string texturePath = "default.png";
-							if (value["image_path"]) {
-								texturePath = value["image_path"].as<std::string>();
-							}
-
-							Application->root->AddMeshRenderer(*game_obj, _mesh/*, texturePath, _material*/);
-						}
-						else if (component_name == "CameraComponent") {
-							game_obj->AddComponent<CameraComponent>()->decode(value);
-						}
-						else if (component_name == "LightComponent") {
-							//game_obj->AddComponent<LightComponent>()->decode(value);
-						}
-						else if (component_name == "ShaderComponent") {
-							//game_obj->AddComponent<ShaderComponent>()->decode(value);
-						}
-					}
-				}
-				else if (key == "ScriptComponents" && value.IsMap()) {
-					for (YAML::const_iterator scriptIt = value.begin(); scriptIt != value.end(); ++scriptIt) {
-						const YAML::Node& scriptNode = scriptIt->second;
-						if (scriptNode["name"].IsDefined()) {
-							auto scriptName = scriptNode["name"].as<std::string>();
-							//game_obj->AddScriptComponent(scriptName)->decode(scriptNode);
-						}
-					}
-				}
-				else if (key.substr(0, 5) == "Child") {
-					// do nothin here, we will deserialize children later
-				}
-			}
-		}
-
-		for (int i = 0; ; i++) {
-			YAML::Node _node = root["GameObject" + std::to_string(i)];
-			if (!_node || !_node["name"].IsDefined()) {
-				break;
-			}
-
-			auto objectName = _node["name"].as<std::string>();
-
-			std::shared_ptr<GameObject> parent_obj = nullptr;
-			for (const auto& obj : Application->root->GetActiveScene()->_children) {
-				if (obj->GetName() == objectName) {
-					parent_obj = obj;
-					break;
-				}
-			}
-
-			if (parent_obj) {
-				for (YAML::const_iterator it = _node.begin(); it != _node.end(); ++it) {
-					const auto key = it->first.as<std::string>();
-					const YAML::Node& value = it->second;
-
-					if (key.substr(0, 5) == "Child") {
-						GameObject& child = DeSerializeChild(value, root);
-						parent_obj->AddChild(&child);
-					}
-				}
-			}
+			DeserializeChildren(gameObject.get(), objectNode);
 		}
 
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
@@ -314,113 +265,76 @@ void SceneSerializer::DeSerialize(std::string path) {
 	}
 }
 
-GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh_root_node) {
-	if (!_node["name"].IsDefined()) {
-		LOG(LogType::LOG_ERROR, "Child node doesn't have a name defined!");
-		return *Application->root->CreateGameObject("Error_MissingName");
+std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::Node& node) {
+	if (!node["name"].IsDefined()) {
+		LOG(LogType::LOG_ERROR, "GameObject node doesn't have a name defined!");
+		return Application->root->CreateGameObject("Error_MissingName");
 	}
 
-	auto objectName = _node["name"].as<std::string>();
-	std::shared_ptr<GameObject> game_obj = Application->root->CreateGameObject(objectName);
+	auto objectName = node["name"].as<std::string>();
+	std::shared_ptr<GameObject> gameObject = Application->root->CreateGameObject(objectName);
 
-	// Set common properties
-	if (_node["tag"].IsDefined()) {
-		game_obj->tag = _node["tag"].as<std::string>();
+	if (node["tag"].IsDefined()) {
+		gameObject->tag = node["tag"].as<std::string>();
 	}
 
-	if (_node["active"].IsDefined()) {
-		game_obj->SetActive(_node["active"].as<bool>());
+	if (node["active"].IsDefined()) {
+		gameObject->SetActive(node["active"].as<bool>());
 	}
 
-	if (_node["isStatic"].IsDefined()) {
-		game_obj->isStatic = _node["isStatic"].as<bool>();
+	if (node["isStatic"].IsDefined()) {
+		gameObject->isStatic = node["isStatic"].as<bool>();
 	}
 
-	for (YAML::const_iterator it = _node.begin(); it != _node.end(); ++it) {
+	DeserializeComponents(gameObject.get(), node);
+
+	ProcessScriptComponents(gameObject.get(), node);
+
+	return gameObject;
+}
+
+void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::Node& node) {
+	for (YAML::const_iterator it = node.begin(); it != node.end(); ++it) {
 		const auto key = it->first.as<std::string>();
 		const YAML::Node& value = it->second;
 
-		if (key == "Transform_Component" || key == "MeshRenderer" || key == "CameraComponent" ||
-			key == "LightComponent" || key == "ShaderComponent") {
-			if (value["name"].IsDefined()) {
-				auto component_name = value["name"].as<std::string>();
-
-				if (component_name == "Transform_Component") {
-					game_obj->GetTransform()->decode(value);
-				}
-				else if (component_name == "MeshRenderer") {
-					auto _mesh = std::make_shared<Mesh>();
-					auto _material = std::make_shared<Material>();
-
-					if (value["mesh_path"]) {
-						auto path = value["mesh_path"].as<std::string>();
-
-						if (path.substr(0, 6) == "shapes") {
-							if (path.find("cube") != std::string::npos) {
-								_mesh = Mesh::CreateCube();
-							}
-							else if (path.find("sphere") != std::string::npos) {
-								_mesh = Mesh::CreateSphere();
-							}
-							else if (path.find("plane") != std::string::npos) {
-								_mesh = Mesh::CreatePlane();
-							}
-						}
-						else {
-							auto meshPath = value["mesh_path"].as<std::string>();
-							auto node_name = value["mesh_name"].as<std::string>();
-							_mesh->nameM = node_name;
-							_mesh = Mesh::LoadBinary(node_name);
-
-							if (_mesh == nullptr) {
-								LOG(LogType::LOG_ERROR, "Error loading mesh %s", node_name.c_str());
-								_mesh = Mesh::CreateCube();
-							}
-						}
-					}
-
-					if (value["material_path"]) {
-						auto path = value["material_path"].as<std::string>();
-						_material = _material->LoadBinary(path);
-
-						if (!_material) {
-							LOG(LogType::LOG_ERROR, "Error loading material %s", path.c_str());
-							_material = std::make_shared<Material>();
-						}
-					}
-
-					std::string texturePath = "default.png";
-					if (value["image_path"]) {
-						texturePath = value["image_path"].as<std::string>();
-					}
-
-					Application->root->AddMeshRenderer(*game_obj, _mesh, texturePath, _material);
-				}
-				else if (component_name == "CameraComponent") {
-					game_obj->AddComponent<CameraComponent>()->decode(value);
-				}
-				else if (component_name == "LightComponent") {
-					//game_obj->AddComponent<LightComponent>()->decode(value);
-				}
-				else if (component_name == "ShaderComponent") {
-					//game_obj->AddComponent<ShaderComponent>()->decode(value);
-				}
-			}
+		if (key == "name" || key == "tag" || key == "active" || key == "isStatic" ||
+			key.substr(0, 5) == "Child" || key == "ScriptComponents") {
+			continue;
 		}
-		else if (key == "ScriptComponents" && value.IsMap()) {
-			for (YAML::const_iterator scriptIt = value.begin(); scriptIt != value.end(); ++scriptIt) {
-				const YAML::Node& scriptNode = scriptIt->second;
-				if (scriptNode["name"].IsDefined()) {
-					auto scriptName = scriptNode["name"].as<std::string>();
-					// Example: game_obj->AddScriptComponent(scriptName)->decode(scriptNode);
-				}
-			}
+
+		if (m_componentRegistry.find(key) != m_componentRegistry.end()) {
+			m_componentRegistry[key](gameObject, value);
 		}
-		else if (key.substr(0, 5) == "Child") {
-			GameObject& child = DeSerializeChild(value, mesh_root_node);
-			game_obj->AddChild(&child);
+		else {
+			LOG(LogType::LOG_WARNING, "Unknown component type: %s", key.c_str());
 		}
 	}
+}
 
-	return *game_obj;
+void SceneSerializer::ProcessScriptComponents(GameObject* gameObject, const YAML::Node& node) {
+	if (node["ScriptComponents"] && node["ScriptComponents"].IsMap()) {
+		for (YAML::const_iterator scriptIt = node["ScriptComponents"].begin();
+			scriptIt != node["ScriptComponents"].end(); ++scriptIt) {
+			const YAML::Node& scriptNode = scriptIt->second;
+			if (scriptNode["name"].IsDefined()) {
+				auto scriptName = scriptNode["name"].as<std::string>();
+				// gameObject->AddScriptComponent(scriptName)->decode(scriptNode);
+			}
+		}
+	}
+}
+
+void SceneSerializer::DeserializeChildren(GameObject* parentObject, const YAML::Node& node) {
+	for (YAML::const_iterator it = node.begin(); it != node.end(); ++it) {
+		const auto key = it->first.as<std::string>();
+		const YAML::Node& value = it->second;
+
+		if (key.substr(0, 5) == "Child") {
+			auto childObject = DeserializeGameObject(value);
+			parentObject->AddChild(childObject.get());
+
+			DeserializeChildren(childObject.get(), value);
+		}
+	}
 }

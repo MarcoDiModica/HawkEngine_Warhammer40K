@@ -341,11 +341,6 @@ void EngineBinds::SetScale(MonoObject* transformRef, float x, float y, float z) 
     if (transform) transform->SetScale(glm::vec3(x, y, z));
 }
 
-void EngineBinds::Scale(MonoObject* transformRef, float x, float y, float z) {
-    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
-    if (transform) transform->Scale(glm::vec3(x, y, z));
-}
-
 void EngineBinds::TranslateLocal(MonoObject* transformRef, float x, float y, float z) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     if (transform) transform->TranslateLocal(glm::vec3(x, y, z));
@@ -356,9 +351,9 @@ void EngineBinds::AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp) 
     if (transform) transform->AlignToGlobalUp(*worldUp);
 }
 
-void EngineBinds::SetForward(MonoObject* transformRef, glm::vec3* forward) {
+void EngineBinds::SetForward(MonoObject* transformRef, glm::vec3* newFwd) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
-    if (transform) transform->SetForward(*forward);
+    if (transform) transform->SetForward(*newFwd);
 }
 
 Vector3 EngineBinds::GetForward(MonoObject* transformRef) {
@@ -765,7 +760,6 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Transform::RotateLocal", (const void*)&EngineBinds::RotateLocal);
     mono_add_internal_call("HawkEngine.Transform::LookAt", (const void*)&EngineBinds::LookAt);
     mono_add_internal_call("HawkEngine.Transform::SetScale", (const void*)&EngineBinds::SetScale);
-    mono_add_internal_call("HawkEngine.Transform::Scale", (const void*)&EngineBinds::Scale);
     mono_add_internal_call("HawkEngine.Transform::TranslateLocal", (const void*)&EngineBinds::TranslateLocal);
     mono_add_internal_call("HawkEngine.Transform::AlignToGlobalUp", (const void*)&EngineBinds::AlignToGlobalUp);
     mono_add_internal_call("HawkEngine.Transform::SetForward", (const void*)&EngineBinds::SetForward);

@@ -88,6 +88,7 @@
     <ClCompile Include="Math3D.cpp" />
     <ClCompile Include="SkeletalAnimationComponent.cpp" />
     <ClCompile Include="SkeletalModel.cpp" />
+    <ClCompile Include="TemporalFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

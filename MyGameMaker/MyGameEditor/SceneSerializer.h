@@ -2,21 +2,14 @@
 #ifndef SCENE_SERIALIZER_H
 #define SCENE_SERIALIZER_H
 
-#include <functional>
-#include <unordered_map>
-#include <memory>
-
-#include <yaml-cpp/yaml.h>
-
 #include "Module.h"
 #include "../MyGameEngine/GameObject.h"
+#include <yaml-cpp/yaml.h>
+#include <string>
+#include <memory>
 
-class Component;
-class GameObject;
 class App;
-
-using ComponentSerializeFunc = std::function<YAML::Node(Component*)>;
-using ComponentDeserializeFunc = std::function<void(GameObject*, const YAML::Node&)>;
+class Scene;
 
 class SceneSerializer : public Module
 {
@@ -27,20 +20,19 @@ public:
 	void Serialize(const std::string& directoryPath, bool play = false);
 	void DeSerialize(const std::string& path);
 
-	void RegisterComponentType(const std::string& typeName,
-		ComponentDeserializeFunc deserializeFunc);
-
 private:
-
-	YAML::Node SerializeGameObject(GameObject& gameObject, int depth = 0);
-	void SerializeChildren(YAML::Node& parentNode, GameObject& gameObject, int depth);
+	YAML::Node SerializeGameObject(GameObject& gameObject);
+	YAML::Node SerializeComponents(GameObject& gameObject);
+	void SerializeChildren(YAML::Node& parentNode, GameObject& gameObject);
 
 	std::shared_ptr<GameObject> DeserializeGameObject(const YAML::Node& node);
 	void DeserializeComponents(GameObject* gameObject, const YAML::Node& node);
-	void DeserializeChildren(GameObject* parentObject, const YAML::Node& node);
-	void ProcessScriptComponents(GameObject* gameObject, const YAML::Node& node);
+	void DeserializeChildren(GameObject* parentGameObject, const YAML::Node& node);
 
-	std::unordered_map<std::string, ComponentDeserializeFunc> m_componentRegistry;
+	void SaveToFile(const YAML::Node& root, const std::string& filepath);
+	YAML::Node LoadFromFile(const std::string& filepath);
+	std::string GetComponentTypeName(ComponentType type);
+	ComponentType GetComponentTypeFromName(const std::string& name);
 };
 
 #endif // SCENE_SERIALIZER_H

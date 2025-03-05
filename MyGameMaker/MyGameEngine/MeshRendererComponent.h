@@ -50,6 +50,8 @@ private:
 
 
 protected:
+	friend class SceneSerializer;
+
 	YAML::Node encode() override {
 		YAML::Node node = Component::encode();
 

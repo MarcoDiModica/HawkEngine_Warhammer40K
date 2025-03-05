@@ -45,28 +45,30 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto player = CreateGameObject("Player");
-    player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-    player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+	auto player = CreateGameObject("Player");
+	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-    playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-    playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-    ParentGameObject(*playerMesh, *player);
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+	playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
-    auto objMainCamera = CreateCameraObject("MainCamera");
-    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-    objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
-    auto camera = objMainCamera->AddComponent<CameraComponent>();
-    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-    mainCamera = objMainCamera;
+	auto objMainCamera = CreateCameraObject("MainCamera");
+	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+	objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
+	auto camera = objMainCamera->AddComponent<CameraComponent>();
+	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+	mainCamera = objMainCamera;
+
+    auto cube = CreateCube("Cube");
   
     SceneManagement->Start();
 

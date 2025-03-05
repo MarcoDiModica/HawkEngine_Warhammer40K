@@ -33,4 +33,34 @@ private:
     Shaders* shader;
     ShaderType type;
     Material* ownerMaterial;
+
+protected:
+	friend class SceneSerializer;
+
+	YAML::Node encode() override {
+		YAML::Node node = Component::encode();
+
+		node["shaderType"] = static_cast<int>(type);
+
+		node["frequency"] = frequency;
+		node["amplitude"] = amplitude;
+
+		return node;
+	}
+
+	bool decode(const YAML::Node& node) override {
+		if (!Component::decode(node)) {
+			return false;
+		}
+
+		if (node["frequency"]) {
+			frequency = node["frequency"].as<float>();
+		}
+
+		if (node["amplitude"]) {
+			amplitude = node["amplitude"].as<float>();
+		}
+
+		return true;
+	}
 };

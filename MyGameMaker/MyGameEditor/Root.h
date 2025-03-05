@@ -24,17 +24,15 @@ public:
         free(SceneManagement);
     };
 
-    bool Awake();
+    bool Awake() override;
 
-    void CreateSceneColliders();
+    bool Start() override;
 
-    bool Start();
+    bool PreUpdate() override;
+    bool Update(double dt) override;
+    bool PostUpdate() override;
 
-    bool PreUpdate() { return true; }
-    bool Update(double dt);
-    bool PostUpdate() { return true; }
-
-    bool CleanUp();
+    bool CleanUp() override;
 
     void CreateScene(const std::string& name);
     void AddScene(std::shared_ptr<Scene> scene);
@@ -65,27 +63,14 @@ public:
 
     bool ParentGameObjectToScene(GameObject& child);
     bool ParentGameObjectToObject(GameObject& child, GameObject& father);
-    void UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared_ptr<GameObject> mainCamera);
-    void RenderScene();
 
     std::shared_ptr<GameObject> FindGOByName(std::string name);
 
-    std::shared_ptr<Scene> currentScene = nullptr;
-    float emitterLifetime = 5.0f;
-    //main camera
     std::shared_ptr<GameObject> mainCamera = nullptr;
-    std::shared_ptr<GameObject> CreateCanvasInScene(const std::string& name, const glm::vec3& position, const std::string& texturePath);
-
 
     friend SceneSerializer;
 
     std::vector<Shaders> shaders;
-
-private:
-    std::vector<std::shared_ptr<Scene>> scenes;
-    glm::dvec3 initialCanvasOffset;
-    glm::dquat initialCanvasRotationOffset;
-    std::vector<std::shared_ptr<GameObject>> renderFirstObjects;
 };
 
 #endif

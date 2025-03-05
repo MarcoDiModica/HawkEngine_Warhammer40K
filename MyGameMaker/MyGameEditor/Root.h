@@ -12,6 +12,7 @@
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/Shaders.h"
 #include "SceneSerializer.h"
+#include "../MyAnimationEngine/glslprogram.h"
 
 class Material;
 
@@ -75,6 +76,7 @@ public:
 
     std::vector<Shaders> shaders;
 
+    GLSLProgram* prog;
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
 };

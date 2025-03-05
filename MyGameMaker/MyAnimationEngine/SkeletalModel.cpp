@@ -4,7 +4,7 @@
 #include <assimp/cimport.h>
 
 
-SkeletalModel::SkeletalModel()
+SkeletalModel::SkeletalModel(GLSLProgram* shaderProgIn)
 {
 	m_VAO = 0;
 
@@ -14,6 +14,8 @@ SkeletalModel::SkeletalModel()
 	m_NumBones = 0;
 
 	// Obtain pointer to shader program to use for rendering. 
+	m_pShaderProg = shaderProgIn;
+
 
 }
 
@@ -391,7 +393,7 @@ void SkeletalModel::SetBoneTransform(unsigned int Index, const Matrix4f& Transfo
 {
 	assert(Index < 100);
 
-	//m_pShaderProg->setUniformIndex(Index, Transform);
+	m_pShaderProg->setUniformIndex(Index, Transform);
 }
 
 void SkeletalModel::render() const

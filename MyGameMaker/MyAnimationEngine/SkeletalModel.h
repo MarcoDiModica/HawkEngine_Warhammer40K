@@ -11,7 +11,7 @@
 #include <GL/glew.h>
 #include "Math3D.h"
 
-
+#include "glslprogram.h"
 
 
 struct VertexStruct
@@ -103,7 +103,7 @@ class SkeletalModel
 {
 public:
 
-	SkeletalModel(); //!< Constructor 
+	SkeletalModel(GLSLProgram* shaderProgIn); //!< Constructor 
 
 	~SkeletalModel(); //!< Destructor 
 
@@ -137,6 +137,7 @@ private:
 	
 	void Clear(); //!< Deletes the vertex array object. 
 
+	GLSLProgram* m_pShaderProg;
 
 
 	GLuint m_VAO; // Vertex array object. 

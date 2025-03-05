@@ -30,8 +30,6 @@ App::App() {
 	camera = new EditorCamera(this);
 	physicsModule = new PhysicsModule();
 
-	skeletalModel = new SkeletalModel();
-
 	//gizmos = new Gizmos(this);
 
 	scene_serializer = new SceneSerializer(this);

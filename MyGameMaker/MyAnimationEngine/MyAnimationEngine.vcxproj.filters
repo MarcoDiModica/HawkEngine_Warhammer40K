@@ -33,6 +33,9 @@
     <ClInclude Include="Math3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="glslprogram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SkeletalAnimationComponent.cpp">
@@ -51,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Math3D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glslprogram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

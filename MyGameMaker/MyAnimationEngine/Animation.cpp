@@ -2,7 +2,7 @@
 
 Animation::Animation()
 {
-	skeletalModel = new SkeletalModel();
+	//skeletalModel = new SkeletalModel();
 }
 
 

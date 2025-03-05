@@ -59,7 +59,7 @@ void SkeletalAnimationComponent::Update(float deltaTime)
 {
     if (isPlaying) 
     {
-        animator->UpdateAnimation(deltaTime);
+        //animator->UpdateAnimation(deltaTime);
     }
 }
 

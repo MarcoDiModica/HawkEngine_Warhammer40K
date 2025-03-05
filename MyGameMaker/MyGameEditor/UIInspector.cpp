@@ -35,6 +35,7 @@
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "../MyUIEngine/UIComponent.h"
 
 typedef unsigned int guint32;
 #pragma endregion
@@ -866,6 +867,37 @@ private:
 
     //Aqui mas componentes
 
+    #pragma region UI
+
+	/*static void DrawUIComponent(UIComponent* uiComponent) {
+		if (!uiComponent) return;
+
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        bool isOpen = ImGui::CollapsingHeader("UI", ImGuiTreeNodeFlags_DefaultOpen);
+        ImGui::PopStyleVar();
+
+        if (!isOpen) return;
+
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 8));
+        ImGui::Indent(10.0f);
+
+		DrawUIProperties(uiComponent);
+
+		ImGui::Unindent(10.0f);
+		ImGui::PopStyleVar();
+
+
+	}
+
+    static void DrawUIProperties(UIComponent* uiComponent) {
+        if (!ImGui::TreeNodeEx("UI Properties", ImGuiTreeNodeFlags_DefaultOpen)) return;
+
+        ImGui::BeginGroup();
+    }*/
+
+    #pragma endregion
+
 public:
     static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
 		if (!gameObject) return;
@@ -920,6 +952,10 @@ public:
             DrawShaderComponent(shader);
         }
 
+		/*if (gameObject->HasComponent<UIComponent>()) {
+			UIComponent* uiComponent = gameObject->GetComponent<UIComponent>();
+			DrawUIComponent(uiComponent);
+		}*/
         if (gameObject->scriptComponents.size() > 0) {
 			DrawScriptComponents(gameObject);
 		}

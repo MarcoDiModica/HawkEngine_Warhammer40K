@@ -102,6 +102,9 @@
     <ProjectReference Include="..\MyParticlesEngine\MyParticlesEngine.vcxproj">
       <Project>{b258b672-0285-4ccb-9f04-00f753e34951}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\MyUIEngine\MyUIEngine.vcxproj">
+      <Project>{f0b3a276-113a-4cd4-948a-329c847e7743}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />

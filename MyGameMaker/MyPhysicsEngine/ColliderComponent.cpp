@@ -3,6 +3,8 @@
 
 #include "ColliderComponent.h"
 #include "../MyGameEngine/GameObject.h"
+#include "MyScriptingEngine/MonoManager.h"
+#include "mono/metadata/debug-helpers.h"
 
 ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) { name = "ColliderComponent"; physics = physicsModule; isForStreetLocal = isForStreet; }
 
@@ -11,6 +13,12 @@ ColliderComponent::~ColliderComponent() {
 }
 
 void ColliderComponent::Start() {
+	if (rigidBody) {
+		physics->dynamicsWorld->removeRigidBody(rigidBody);
+		delete rigidBody->getMotionState();
+		delete rigidBody;
+		rigidBody = nullptr;
+	}
     CreateCollider();
 }
 
@@ -131,6 +139,46 @@ void ColliderComponent::SnapToPosition() {
         << position.x << ", " << position.y << ", " << position.z << ")\n";
 }
 
+MonoObject* ColliderComponent::GetSharp()
+{
+	if (CsharpReference) {
+		return CsharpReference;
+	}
+
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
+	if (!klass) {
+		return nullptr;
+	}
+
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		return nullptr;
+	}
+
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Collider:.ctor(uintptr,HawkEngine.GameObject)", true);
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	if (!method)
+	{
+		return nullptr;
+	}
+
+	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+	MonoObject* ownerGo = owner->GetSharp();
+	if (!ownerGo)
+	{
+		return nullptr;
+	}
+
+    void* args[2]{};
+	args[0] = &componentPtr;
+	args[1] = ownerGo;
+
+	mono_runtime_invoke(method, monoObject, args, nullptr);
+
+	CsharpReference = monoObject;
+	return CsharpReference;
+}
+
 void ColliderComponent::Update(float deltaTime) {
     if (snapToPosition && owner) {
 		SnapToPosition();
@@ -144,6 +192,10 @@ void ColliderComponent::Destroy() {
         delete rigidBody->getMotionState();
         delete rigidBody;
         rigidBody = nullptr;
+    }
+
+    if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
+        physics->gameObjectRigidBodyMap.erase(owner);
     }
 }
 
@@ -171,7 +223,7 @@ void ColliderComponent::CreateCollider() {
     startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
     startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
     glm::vec3 scale = transform->GetScale();
-    shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+    //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
 
     // Configurar la masa e inercia
     btVector3 localInertia(0, 0, 0);
@@ -190,8 +242,6 @@ void ColliderComponent::CreateCollider() {
     SetColliderRotation(newRotation);
     // Añadir el colisionador al mundo de físicas
     physics->dynamicsWorld->addRigidBody(rigidBody);
-    //gameObjectRigidBodyMapForhouse[owner] = rigidBody;
-    //doesnt works properly
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
 
 }

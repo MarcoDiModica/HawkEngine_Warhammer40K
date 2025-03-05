@@ -75,7 +75,7 @@ void Particle::Draw(const glm::mat4& billboardMatrix) {
     glEnd();
 
     glDepthMask(GL_TRUE);
-    glDisable(GL_BLEND);
+    //glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
 
     glPopMatrix();
@@ -127,7 +127,7 @@ void Particle::Draw2(const glm::mat4& billboardMatrix) {
     glEnd();
 
     glDepthMask(GL_TRUE);
-    glDisable(GL_BLEND);
+    //glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
 
     glPopMatrix();

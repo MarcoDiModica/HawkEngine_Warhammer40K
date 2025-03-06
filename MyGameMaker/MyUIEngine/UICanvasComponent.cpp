@@ -4,6 +4,8 @@
 #include "../MyGameEditor/MyWindow.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
+#include "../MyGameEditor/Root.h"
+#include "../MyGameEngine/CameraComponent.h"
 
 #include "UIImageComponent.h"
 
@@ -36,7 +38,10 @@ UICanvasComponent::UICanvasComponent(GameObject* owner)	: Component(owner)
 
 void UICanvasComponent::Start()
 {
-	
+	//owner->GetComponent<Transform_Component>()->SetPosition(glm::vec3(Application->root->mainCamera->GetTransform()->GetPosition()));
+    //owner->GetComponent<Transform_Component>()->SetRotationQuat((Application->root->mainCamera->GetTransform()->GetRotation()));
+    owner->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0,20,-10));
+    owner->GetComponent<Transform_Component>()->SetRotation(glm::vec3(-30, 0, 0));
 }
 
 void UICanvasComponent::Update(float deltaTime)

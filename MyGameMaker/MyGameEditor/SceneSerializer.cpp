@@ -6,10 +6,15 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+
 #include "MyGameEngine/MeshRendererComponent.h"
 #include "MyGameEngine/CameraComponent.h"
 #include "MyGameEngine/LightComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
+#include "MyAudioEngine/SoundComponent.h"
+#include "MyAudioEngine/AudioListener.h"
+#include "MyPhysicsEngine/ColliderComponent.h"
+#include "MyPhysicsEngine/RigidBodyComponent.h"
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -219,6 +224,22 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto shader = gameObject->AddComponent<ShaderComponent>();
 			shader->decode(componentData);
 		}
+		else if (componentName == "SoundComponent") {
+			auto sound = gameObject->AddComponent<SoundComponent>();
+			sound->decode(componentData);
+		}
+		else if (componentName == "AudioListener") {
+			auto listener = gameObject->AddComponent<AudioListener>();
+			listener->decode(componentData);
+		}
+		else if (componentName == "ColliderComponent") {
+			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+			collider->decode(componentData);
+		}
+		else if (componentName == "RigidbodyComponent") {
+			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
+			rb->decode(componentData);
+		}
 		//mas componentes aqui
 		else {
 			LOG(LogType::LOG_WARNING, "Unknown component type: %s", componentName.c_str());
@@ -290,6 +311,10 @@ std::string SceneSerializer::GetComponentTypeName(ComponentType type) {
 	case ComponentType::CAMERA: return "CameraComponent";
 	case ComponentType::LIGHT: return "LightComponent";
 	case ComponentType::SHADER: return "ShaderComponent";
+	case ComponentType::AUDIO: return "SoundComponent";
+	case ComponentType::AUDIO_LISTENER: return "AudioListener";
+	case ComponentType::COLLIDER: return "ColliderComponent";
+	case ComponentType::RIGIDBODY: return "RigidbodyComponent";
 	//mas casos/componentes
 	default: return "Unknown";
 	}
@@ -301,6 +326,8 @@ ComponentType SceneSerializer::GetComponentTypeFromName(const std::string& name)
 	if (name == "CameraComponent") return ComponentType::CAMERA;
 	if (name == "LightComponent") return ComponentType::LIGHT;
 	if (name == "ShaderComponent") return ComponentType::SHADER;
+	if (name == "SoundComponent") return ComponentType::AUDIO;
+	if (name == "AudioListener") return ComponentType::AUDIO_LISTENER;
 	//mas mapeos aqui
 	return ComponentType::NONE;
 }

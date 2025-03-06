@@ -52,8 +52,9 @@ GameObject0:
           col2: 0
           col3: 1
     "":
-      name: ""
-      enabled: true
+      mass: 1
+      isKinematic: false
+      isFreezed: false
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -63,25 +64,13 @@ GameObject0:
       is_spatial: false
       auto_play: false
       loop: false
-    ColliderComponent:
-      name: ColliderComponent
-      enabled: true
+    ColliderComponent: ~
     ScriptComponents:
-      Script0:
-        name: ""
-        enabled: true
-      Script1:
-        name: ""
-        enabled: true
-      Script2:
-        name: ""
-        enabled: true
-      Script3:
-        name: ""
-        enabled: true
-      Script4:
-        name: ""
-        enabled: true
+      Script0: ~
+      Script1: ~
+      Script2: ~
+      Script3: ~
+      Script4: ~
   Children:
     Child0:
       name: Assets/Meshes/player.fbx
@@ -220,7 +209,7 @@ GameObject1:
         row3:
           col0: 0
           col1: 20
-          col2: -10.000000002057259
+          col2: -10.000000000000007
           col3: 1
       local_matrix:
         row0:
@@ -241,7 +230,7 @@ GameObject1:
         row3:
           col0: 0
           col1: 20
-          col2: -10.000000002057259
+          col2: -10.000000000000007
           col3: 1
     CameraComponent:
       name: CameraComponent
@@ -251,13 +240,9 @@ GameObject1:
       size: 0
       near_plane: 0.10000000000000001
       far_plane: 500
-    AudioListener:
-      name: AudioListener
-      enabled: true
+    AudioListener: ~
     ScriptComponents:
-      Script0:
-        name: ""
-        enabled: true
+      Script0: ~
 GameObject2:
   name: Cube
   tag: Untagged

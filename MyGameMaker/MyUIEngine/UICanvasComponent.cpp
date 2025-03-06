@@ -5,6 +5,8 @@
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
 
+#include "UIImageComponent.h"
+
 
 UICanvasComponent::UICanvasComponent(GameObject* owner)	: Component(owner)
 {
@@ -39,7 +41,14 @@ void UICanvasComponent::Start()
 
 void UICanvasComponent::Update(float deltaTime)
 {
+    for (size_t i = 0; i < owner->GetChildren().size(); ++i) {
+        GameObject* object = owner->GetChildren()[i].get();
 
+		if (object->HasComponent<UIImageComponent>())
+		{
+			object->GetComponent<UIImageComponent>()->Update(deltaTime);
+		}
+    }
 }
 
 void UICanvasComponent::Destroy()

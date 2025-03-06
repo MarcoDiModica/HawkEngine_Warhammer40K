@@ -2,6 +2,11 @@
 
 #include "../MyGameEngine/Component.h"
 #include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/Image.h"
+#include "../MyGameEngine/Mesh.h"
+#include "../MyGameEngine/Shaders.h"
+
+#include <string>
 
 class UIImageComponent : public Component
 {
@@ -23,7 +28,16 @@ public:
 
 	ComponentType GetType() const override { return ComponentType::IMAGE; }
 
+	void SetTexture(std::string path);
+
+	std::shared_ptr<Image> GetTexture() const { return texture; }
+
+	void LoadMesh();
+
 private:
 	//texture
+	std::shared_ptr<Image> texture;
+	std::shared_ptr<Mesh> mesh;
+	Shaders * shader;
 };
 

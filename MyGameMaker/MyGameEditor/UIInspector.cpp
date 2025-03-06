@@ -35,6 +35,8 @@
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "../MyUIEngine/UICanvasComponent.h"
+#include "../MyUIEngine/UIImageComponent.h"
 
 typedef unsigned int guint32;
 #pragma endregion
@@ -866,36 +868,27 @@ private:
 
     //Aqui mas componentes
 
-    #pragma region UI
+#pragma region Canvas
+    static void DrawCanvasComponent(UICanvasComponent* canvas) {
+        if (!canvas) return;
 
-	/*static void DrawUIComponent(UIComponent* uiComponent) {
-		if (!uiComponent) return;
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("Canvas")) return;
 
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        bool isOpen = ImGui::CollapsingHeader("UI", ImGuiTreeNodeFlags_DefaultOpen);
-        ImGui::PopStyleVar();
+        ImGui::Text("Canvas");
+    }
+#pragma endregion
 
-        if (!isOpen) return;
+#pragma region Image
+    static void DrawImageComponent(UIImageComponent* image) {
+        if (!image) return;
 
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 8));
-        ImGui::Indent(10.0f);
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("Image")) return;
 
-		DrawUIProperties(uiComponent);
-
-		ImGui::Unindent(10.0f);
-		ImGui::PopStyleVar();
-
-
-	}
-
-    static void DrawUIProperties(UIComponent* uiComponent) {
-        if (!ImGui::TreeNodeEx("UI Properties", ImGuiTreeNodeFlags_DefaultOpen)) return;
-
-        ImGui::BeginGroup();
-    }*/
-
-    #pragma endregion
+        ImGui::Text("Image");
+    }
+#pragma endregion
 
 public:
     static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
@@ -951,10 +944,16 @@ public:
             DrawShaderComponent(shader);
         }
 
-		/*if (gameObject->HasComponent<UIComponent>()) {
-			UIComponent* uiComponent = gameObject->GetComponent<UIComponent>();
-			DrawUIComponent(uiComponent);
-		}*/
+		if (gameObject->HasComponent<UICanvasComponent>()) {
+            UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
+			DrawCanvasComponent(uiCanvasComponent);
+		}
+
+        if (gameObject->HasComponent<UIImageComponent>()) {
+            UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
+            DrawImageComponent(uiImageComponent);
+        }
+
         if (gameObject->scriptComponents.size() > 0) {
 			DrawScriptComponents(gameObject);
 		}

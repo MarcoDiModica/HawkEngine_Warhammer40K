@@ -21,6 +21,7 @@
 #include "MyShadersEngine/ShaderComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
+#include "../MyUIEngine/UIImageComponent.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -275,6 +276,12 @@ bool Root::Start()
     //auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -2.0f), "../MyGameEditor/Assets/Textures/UI_Final.png");
     auto canvas = CreateGameObject("Canvas");
 	canvas->AddComponent<UICanvasComponent>();
+
+    auto image = CreateGameObject("Image");
+    Application->root->ParentGameObject(*image, *canvas);
+    image->AddComponent<UIImageComponent>();
+	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/UI_Final.png");
+
 
     SceneManagement->Start();
 

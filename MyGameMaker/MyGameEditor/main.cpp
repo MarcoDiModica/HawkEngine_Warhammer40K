@@ -54,6 +54,7 @@
 #include "../MyGameEngine/InputEngine.h"
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
+#include "../MyUIEngine/UICanvasComponent.h"
 
 
 using namespace std;
@@ -196,6 +197,10 @@ static void configureCamera() {
 static void RenderObjectAndChildren(GameObject* object) {
 	if (object->HasComponent<MeshRenderer>()) {
 		object->GetComponent<MeshRenderer>()->RenderMainCamera();
+	}
+
+	if (object->HasComponent<UICanvasComponent>()) {
+		object->GetComponent<UICanvasComponent>()->Update(Application->GetDt());
 	}
 
 	for (const auto& child : object->GetChildren()) {

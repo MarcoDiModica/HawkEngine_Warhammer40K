@@ -374,6 +374,8 @@ void RenderOutline(GameObject* object) {
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
+auto startTime = std::chrono::high_resolution_clock::now();
+
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
@@ -425,6 +427,15 @@ static void display_func() {
 	Application->physicsModule->Update(Application->GetDt());
 	MousePickingCheck(objects);
 
+
+	auto now = std::chrono::high_resolution_clock::now();
+
+	auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - startTime);
+
+
+	Application->root->animationScene->update(0,duration.count()/0.001);
+	Application->root->animationScene->render();
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
@@ -467,6 +478,7 @@ int main(int argc, char** argv) {
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;
+
 
 	while (state != EXIT) 
 	{

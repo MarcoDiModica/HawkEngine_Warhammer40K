@@ -199,7 +199,7 @@ std::vector<std::shared_ptr<Mesh>>ModelImporter::createMeshesFromFBX(const aiSce
 				animation->skeletalModel->childrenNodes[j] = std::make_shared<aiNode>(*scene.mRootNode->mChildren[j]);
 			}*/
 
-			animation->skeletalModel->InitMesh(i, paiMesh, vertices, Indices, bones,scinPath);
+			//animation->skeletalModel->InitMesh(i, paiMesh, vertices, Indices, bones,scinPath);
 			animations.push_back(std::shared_ptr<Animation>(animation));
 			//std::cout << node.mName.C_Str() << std::endl;
 		}

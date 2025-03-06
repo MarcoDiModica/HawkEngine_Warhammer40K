@@ -73,6 +73,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationScene.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Bone.h" />
     <ClInclude Include="glslprogram.h" />
@@ -82,13 +83,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationScene.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="glslprogram.cpp" />
     <ClCompile Include="Math3D.cpp" />
     <ClCompile Include="SkeletalAnimationComponent.cpp" />
     <ClCompile Include="SkeletalModel.cpp" />
-    <ClCompile Include="TemporalFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

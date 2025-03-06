@@ -102,6 +102,9 @@ bool Root::Awake()
     auto camera = MainCamera->AddComponent<CameraComponent>();
     mainCamera = MainCamera; */   
 
+	animationScene = new AnimationScene();
+    animationScene->initScene();
+
 	//auto Collider = CreateGameObject("Collider");
     //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
 
@@ -180,36 +183,8 @@ bool Root::Start()
 
 bool Root::Update(double dt) {
 
-    //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
-
-    //SceneManagement->Update(dt);
-
-    //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
-    //
-    //    if (currentScene->tree == nullptr) {
-    //        currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
-    //        for (auto child : currentScene->children()) {
-    //            currentScene->tree->Insert(currentScene->tree->root, *child, 0);
-    //        }
-    //
-    //    }
-    //    else {
-    //        delete currentScene->tree;
-    //        currentScene->tree = nullptr;
-    //        int a = 7;
-    //    }
-    //}
-    //
-    //
-    //
-    ////if press 1 active scene Viernes13 and press 2 active scene Salimos
-    //if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-    //    Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
-	//}
-    //else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
-    //    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
-    //}
-    
+    //animationScene->render();
+    int u = 0;
 
     return true;
 }

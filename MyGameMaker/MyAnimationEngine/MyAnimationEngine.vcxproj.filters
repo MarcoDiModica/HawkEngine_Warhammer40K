@@ -36,6 +36,9 @@
     <ClInclude Include="glslprogram.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SkeletalAnimationComponent.cpp">
@@ -59,7 +62,7 @@
     <ClCompile Include="glslprogram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TemporalFile.cpp">
+    <ClCompile Include="AnimationScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

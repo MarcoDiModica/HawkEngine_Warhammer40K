@@ -32,132 +32,120 @@ void SkeletalModel::Clear()
 	}
 }
 
-//void SkeletalModel::LoadMesh(const std::string& Filename)
-//{
-//	// Release the previously loaded mesh (if it exists)
-//	Clear();
-//
-//	// Create the VAO
-//    glGenVertexArrays(1, &m_VAO);
-//	glBindVertexArray(m_VAO);
-//
-//	// Generate the buffers for the vertices atttributes
-//	glGenBuffers(1, &vbo);
-//	glGenBuffers(1, &ebo);
-//	glGenBuffers(1, &boneBo);
-//
-//	pScene = Importer.ReadFile(Filename.c_str(),
-//		aiProcess_JoinIdenticalVertices |
-//		aiProcess_SortByPType |
-//		aiProcess_Triangulate |
-//		aiProcess_GenSmoothNormals |
-//		aiProcess_FlipUVs |
-//		aiProcess_LimitBoneWeights);
-//
-//	if (pScene) {
-//
-//		m_GlobalInverseTransform = pScene->mRootNode->mTransformation;
-//		m_GlobalInverseTransform.Inverse();
-//
-//		InitFromScene(pScene, Filename);
-//	}
-//	else {
-//		printf("Error parsing '%s': '%s'\n", Filename.c_str(), Importer.GetErrorString());
-//	}
-//
-//	glBindVertexArray(0);
-//}
-
-//void SkeletalModel::InitFromScene(const aiScene* pScene, const std::string& Filename)
-//{
-//	m_Entries.resize(pScene->mNumMeshes);
-//	//m_Textures.resize(pScene->mNumMaterials);
-//
-//	// Prepare vectors for vertex attributes and indices
-//	std::vector<VertexStruct> vertices;
-//	std::vector<VertexBoneData> bones;
-//	std::vector<unsigned int> Indices;
-//
-//	unsigned int NumVertices = 0;
-//	unsigned int NumIndices = 0;
-//
-//	for (unsigned int i = 0; i < m_Entries.size(); i++) {
-//		m_Entries[i].MaterialIndex = pScene->mMeshes[i]->mMaterialIndex;
-//
-//		// Total mesh indices. 
-//		m_Entries[i].NumIndices = pScene->mMeshes[i]->mNumFaces * 3;
-//
-//		// Set the base vertex of this mesh (initial vertex for this mesh within the vertices array) to the current total vertices. 
-//		m_Entries[i].BaseVertex = NumVertices;
-//
-//		// Set the base index of this mesh (initial index for this mesh within the indices array) to the current total indices. 
-//		m_Entries[i].BaseIndex = NumIndices;
-//
-//		// Increment total vertices and indices. 
-//		NumVertices += pScene->mMeshes[i]->mNumVertices;
-//		NumIndices += m_Entries[i].NumIndices;
-//	}
-//
-//	// Reserve space in the vectors for the vertex attributes and indices
-//	vertices.reserve(NumVertices);
-//	bones.resize(NumVertices);
-//	Indices.reserve(NumIndices);
-//
-//	// Initialize the meshes in the scene one by one
-//	for (unsigned int i = 0; i < m_Entries.size(); i++) {
-//		const aiMesh* paiMesh = pScene->mMeshes[i];
-//		InitMesh(i, paiMesh, vertices, Indices, bones,path);
-//	}
-//
-//
-//// Generate and populate the buffers with vertex attributes and the indices
-//glBindBuffer(GL_ARRAY_BUFFER, vbo);
-//glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(VertexStruct), &vertices[0], GL_STATIC_DRAW);
-//
-//// Vertex positions 
-//glEnableVertexAttribArray(0);
-//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (GLvoid*)0);
-//
-//// Vertex Normals
-//glEnableVertexAttribArray(1);
-//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (GLvoid*)offsetof(VertexStruct, normal));
-//
-////// Vertex Texture Coords
-////glEnableVertexAttribArray(2);
-////glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (GLvoid*)offsetof(VertexStruct, uvs));
-//
-//// Bind the bone data buffer object
-//glBindBuffer(GL_ARRAY_BUFFER, boneBo);
-//glBufferData(GL_ARRAY_BUFFER, sizeof(bones[0]) * bones.size(), &bones[0], GL_STATIC_DRAW);
-//
-//glEnableVertexAttribArray(2);
-//glVertexAttribIPointer(2, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
-//
-//glEnableVertexAttribArray(3);
-//glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
-//
-//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices[0]) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
-//
-//	vertices.clear();
-//	Indices.clear();
-//	bones.clear();
-//}
-
-void SkeletalModel::InitMesh(unsigned int index, const aiMesh* paiMesh, std::vector<VertexStruct>& Vertices, std::vector<GLuint>& Indices, std::vector<VertexBoneData>& Bones, std::string path)
+void SkeletalModel::LoadMesh(const std::string& Filename)
 {
+	// Release the previously loaded mesh (if it exists)
+	Clear();
 
-		pScene = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_SortByPType |
-		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs);
-	aiGetErrorString();
+	// Create the VAO
+    glGenVertexArrays(1, &m_VAO);
+	glBindVertexArray(m_VAO);
+
+	// Generate the buffers for the vertices atttributes
+	glGenBuffers(1, &vbo);
+	glGenBuffers(1, &ebo);
+	glGenBuffers(1, &boneBo);
+
+	pScene = Importer.ReadFile(Filename.c_str(),
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_SortByPType |
+		aiProcess_Triangulate |
+		aiProcess_GenSmoothNormals |
+		aiProcess_FlipUVs |
+		aiProcess_LimitBoneWeights);
 
 	if (pScene) {
-	
+
 		m_GlobalInverseTransform = pScene->mRootNode->mTransformation;
 		m_GlobalInverseTransform.Inverse();
-	
+
+		InitFromScene(pScene, Filename);
+	}
+	else {
+		printf("Error parsing '%s': '%s'\n", Filename.c_str(), Importer.GetErrorString());
 	}
 
+	glBindVertexArray(0);
+}
+
+void SkeletalModel::InitFromScene(const aiScene* pScene, const std::string& Filename)
+{
+	m_Entries.resize(pScene->mNumMeshes);
+	//m_Textures.resize(pScene->mNumMaterials);
+
+	// Prepare vectors for vertex attributes and indices
+	std::vector<VertexStruct> vertices;
+	std::vector<VertexBoneData> bones;
+	std::vector<unsigned int> Indices;
+
+	unsigned int NumVertices = 0;
+	unsigned int NumIndices = 0;
+
+	for (unsigned int i = 0; i < m_Entries.size(); i++) {
+		m_Entries[i].MaterialIndex = pScene->mMeshes[i]->mMaterialIndex;
+
+		// Total mesh indices. 
+		m_Entries[i].NumIndices = pScene->mMeshes[i]->mNumFaces * 3;
+
+		// Set the base vertex of this mesh (initial vertex for this mesh within the vertices array) to the current total vertices. 
+		m_Entries[i].BaseVertex = NumVertices;
+
+		// Set the base index of this mesh (initial index for this mesh within the indices array) to the current total indices. 
+		m_Entries[i].BaseIndex = NumIndices;
+
+		// Increment total vertices and indices. 
+		NumVertices += pScene->mMeshes[i]->mNumVertices;
+		NumIndices += m_Entries[i].NumIndices;
+	}
+
+	// Reserve space in the vectors for the vertex attributes and indices
+	vertices.reserve(NumVertices);
+	bones.resize(NumVertices);
+	Indices.reserve(NumIndices);
+
+	// Initialize the meshes in the scene one by one
+	for (unsigned int i = 0; i < m_Entries.size(); i++) {
+		const aiMesh* paiMesh = pScene->mMeshes[i];
+		InitMesh(i, paiMesh, vertices, Indices, bones);
+	}
+
+
+// Generate and populate the buffers with vertex attributes and the indices
+glBindBuffer(GL_ARRAY_BUFFER, vbo);
+glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(VertexStruct), &vertices[0], GL_STATIC_DRAW);
+
+// Vertex positions 
+glEnableVertexAttribArray(0);
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (GLvoid*)0);
+
+// Vertex Normals
+glEnableVertexAttribArray(1);
+glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (GLvoid*)offsetof(VertexStruct, normal));
+
+//// Vertex Texture Coords
+//glEnableVertexAttribArray(2);
+//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexStruct), (GLvoid*)offsetof(VertexStruct, uvs));
+
+// Bind the bone data buffer object
+glBindBuffer(GL_ARRAY_BUFFER, boneBo);
+glBufferData(GL_ARRAY_BUFFER, sizeof(bones[0]) * bones.size(), &bones[0], GL_STATIC_DRAW);
+
+glEnableVertexAttribArray(2);
+glVertexAttribIPointer(2, 4, GL_INT, sizeof(VertexBoneData), (const GLvoid*)0);
+
+glEnableVertexAttribArray(3);
+glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)16);
+
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices[0]) * Indices.size(), &Indices[0], GL_STATIC_DRAW);
+
+	vertices.clear();
+	Indices.clear();
+	bones.clear();
+}
+
+void SkeletalModel::InitMesh(unsigned int index, const aiMesh* paiMesh, std::vector<VertexStruct>& Vertices, std::vector<GLuint>& Indices, std::vector<VertexBoneData>& Bones)
+{
 	const aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
 
 	// Populate the vertex attribute vectors

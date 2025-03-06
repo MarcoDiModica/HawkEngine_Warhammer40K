@@ -13,6 +13,7 @@
 #include "../MyGameEngine/Shaders.h"
 #include "SceneSerializer.h"
 #include "../MyAnimationEngine/glslprogram.h"
+#include "../MyAnimationEngine/AnimationScene.h"
 
 class Material;
 
@@ -77,6 +78,8 @@ public:
     std::vector<Shaders> shaders;
 
     GLSLProgram* prog;
+
+	AnimationScene* animationScene = nullptr;
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
 };

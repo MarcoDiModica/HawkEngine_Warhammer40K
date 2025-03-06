@@ -116,7 +116,7 @@ public:
 	void render() const; //!< Renders each mesh in the model. 
 
 	void InitMesh(unsigned int index, const aiMesh* paiMesh, std::vector<VertexStruct>& Vertices,
-		std::vector<GLuint>& Indices, std::vector<VertexBoneData>& Bones, std::string path); //!< Fetches mesh data from given Assimp mesh. 
+		std::vector<GLuint>& Indices, std::vector<VertexBoneData>& Bones); //!< Fetches mesh data from given Assimp mesh. 
 
 	std::vector<MeshEntry> m_Entries; //!< Array of mesh entries 
 private:

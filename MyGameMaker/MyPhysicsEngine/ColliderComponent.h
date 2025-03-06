@@ -41,6 +41,11 @@ public:
     void SetSnapToPosition(bool value) { snapToPosition = value; }
     void SnapToPosition();
 
+
+    //OnCollisionEnter
+    virtual void OnCollisionEnter(ColliderComponent* other);
+
+
     btRigidBody* GetRigidBody() const { return rigidBody; }
 
 	MonoObject* CsharpReference = nullptr;

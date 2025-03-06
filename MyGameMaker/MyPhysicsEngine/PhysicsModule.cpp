@@ -199,6 +199,7 @@ bool PhysicsModule::Update(double dt) {
     {
         dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 1, dt);
         SyncTransforms();
+        //CheckCollisions();
     }
     DrawDebugDrawer();
     return true;

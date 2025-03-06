@@ -6,6 +6,30 @@
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 
+struct CollisionCallback : public btCollisionWorld::ContactResultCallback {
+    ColliderComponent* colliderComponent;
+
+    CollisionCallback(ColliderComponent* component) : colliderComponent(component) {}
+
+    virtual btScalar addSingleResult(btManifoldPoint& cp,
+        const btCollisionObjectWrapper* colObj0, int partId0, int index0,
+        const btCollisionObjectWrapper* colObj1, int partId1, int index1) override {
+        const btCollisionObject* otherObject = (colliderComponent->GetRigidBody() == colObj0->getCollisionObject())
+            ? colObj1->getCollisionObject()
+            : colObj0->getCollisionObject();
+
+        GameObject* otherGameObject = static_cast<GameObject*>(otherObject->getUserPointer());
+
+        if (otherGameObject) {
+            colliderComponent->OnCollisionEnter(otherGameObject->GetComponent<ColliderComponent>());
+        }
+
+        return 0;
+    }
+};
+
+
+
 ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) { name = "ColliderComponent"; physics = physicsModule; isForStreetLocal = isForStreet; }
 
 ColliderComponent::~ColliderComponent() {
@@ -179,9 +203,19 @@ MonoObject* ColliderComponent::GetSharp()
 	return CsharpReference;
 }
 
+
+void ColliderComponent::OnCollisionEnter(ColliderComponent* other) {
+    std::cout << "hello" << std::endl;
+}
+
+
 void ColliderComponent::Update(float deltaTime) {
     if (snapToPosition && owner) {
 		SnapToPosition();
+    }
+    if (rigidBody) {
+        CollisionCallback collisionCallback(this);
+        physics->dynamicsWorld->contactTest(rigidBody, collisionCallback);
     }
 }
 
@@ -203,6 +237,9 @@ std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
     return std::make_unique<ColliderComponent>(new_owner, physics);
 }
 
+
+//Local BBox Adjusted (doesnt works with the blocking)
+/*
 void ColliderComponent::CreateCollider() {
     if (!owner) return;
 
@@ -242,3 +279,52 @@ void ColliderComponent::CreateCollider() {
     physics->dynamicsWorld->addRigidBody(rigidBody);
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
 }
+*/
+
+
+
+//Previous Create Collider (doesn´t adjust to local bbx
+
+
+void ColliderComponent::CreateCollider() {
+    if (!owner) return;
+
+    Transform_Component* transform = owner->GetTransform();
+    if (!transform) return;
+
+    BoundingBox bbox = owner->boundingBox();
+    size = bbox.size();
+
+    btCollisionShape* shape;
+
+    btTransform startTransform;
+    startTransform.setIdentity();
+
+    shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
+    glm::vec3 localPosition = transform->GetLocalPosition();
+    startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
+    startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
+    glm::vec3 scale = transform->GetScale();
+    //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+
+    // Configurar la masa e inercia
+    btVector3 localInertia(0, 0, 0);
+    if (mass > 0.0f) {
+        shape->calculateLocalInertia(mass, localInertia);
+    }
+
+    // Crear el cuerpo rígido
+    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
+    rigidBody = new btRigidBody(rbInfo);
+
+    //rigidBody->setRestitution(0.5f);
+
+    glm::quat newRotation = glm::quat(glm::radians(glm::vec3(0, 0, 0)));
+    SetColliderRotation(newRotation);
+    // Añadir el colisionador al mundo de físicas
+    physics->dynamicsWorld->addRigidBody(rigidBody);
+    physics->gameObjectRigidBodyMap[owner] = rigidBody;
+
+}
+

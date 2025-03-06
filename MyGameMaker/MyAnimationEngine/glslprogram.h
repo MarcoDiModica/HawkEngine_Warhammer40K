@@ -43,7 +43,7 @@ class GLSLProgram
 {
 private:
 
-    static const unsigned int ui_BoneArraySize = 70;
+    static const unsigned int ui_BoneArraySize = 200;
 
     GLint m_boneLocation[ui_BoneArraySize]; //!< Bone uniform locations 
 

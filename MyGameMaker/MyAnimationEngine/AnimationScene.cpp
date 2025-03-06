@@ -13,6 +13,7 @@ using std::endl;
 
 //cosa ilegal
 #include "MyGameEditor/App.h"
+#include "MyGameEditor/MyGui.h"
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Default constructor
@@ -42,7 +43,7 @@ void AnimationScene::initScene()
 	m_AnimatedModel = new SkeletalModel(prog);
 
 	// Load the model from the given path. 
-	m_AnimatedModel->LoadMesh("Assets/Meshes/rabbitSizeFix.fbx");
+	m_AnimatedModel->LoadMesh("Assets/Meshes/Minotaur@Jump.FBX");
 	//m_AnimatedModel->LoadMesh("Assets/astroBoy_walk_Maya.dae");
 	//m_AnimatedModel->LoadMesh("Assets/mech.fbx");
 }
@@ -81,6 +82,11 @@ void AnimationScene::setLightParams()
 /////////////////////////////////////////////////////////////////////////////////////////////
 void AnimationScene::render()
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	glViewport(0, 0, Application->window->width(), Application->window->height());
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Model matrix 
@@ -98,6 +104,8 @@ void AnimationScene::render()
 
 	m_AnimatedModel->render();
 
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

@@ -379,13 +379,16 @@ void SkeletalModel::CalcInterpolatedTranslation(aiVector3D& Out, float Animation
 
 void SkeletalModel::SetBoneTransform(unsigned int Index, const Matrix4f& Transform)
 {
-	assert(Index < 100);
+	assert(Index < 200);
 
 	m_pShaderProg->setUniformIndex(Index, Transform);
 }
 
 void SkeletalModel::render() const
 {
+
+	m_pShaderProg->use();
+
 	glBindVertexArray(m_VAO);
 
 	// Render all the model's meshes.

@@ -375,6 +375,18 @@ void RenderOutline(GameObject* object) {
 }
 
 auto startTime = std::chrono::high_resolution_clock::now();
+float tim2e = 0.0f;
+static void display_func3() 
+{
+
+	//auto now = std::chrono::high_resolution_clock::now();
+	//
+	//auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - startTime);
+
+	tim2e += Application->GetDt();
+	Application->root->animationScene->update(0, tim2e);
+	Application->root->animationScene->render();
+}
 
 static void display_func() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
@@ -433,7 +445,7 @@ static void display_func() {
 	auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - startTime);
 
 
-	Application->root->animationScene->update(0,duration.count()/0.001);
+	Application->root->animationScene->update(0, duration.count() * 0.001);
 	Application->root->animationScene->render();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -462,8 +474,9 @@ void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
 
 		const auto t0 = hrclock::now();
-		display_func();
-		display_func2();
+		//display_func();
+		//display_func2();
+		display_func3();
 		gui->Render();
 
 		/*move_camera();*/

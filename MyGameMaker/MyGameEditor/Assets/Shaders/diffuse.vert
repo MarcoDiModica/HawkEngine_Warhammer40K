@@ -14,7 +14,7 @@ uniform mat4 M; // Model matrix
 uniform mat4 V; // View matrix 
 uniform mat4 P; // Projection matrix 
 
-const int MAX_BONES = 70; // Max number of bones
+const int MAX_BONES = 200; // Max number of bones
 uniform mat4 gBones[MAX_BONES]; // Bone transformations 
 
 void main()

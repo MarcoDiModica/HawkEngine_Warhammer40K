@@ -9,6 +9,10 @@
 
 #include "UIImageComponent.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp> 
+#include <glm/gtc/matrix_transform.hpp>
+
 
 UICanvasComponent::UICanvasComponent(GameObject* owner)	: Component(owner)
 {
@@ -40,12 +44,15 @@ void UICanvasComponent::Start()
 {
 	//owner->GetComponent<Transform_Component>()->SetPosition(glm::vec3(Application->root->mainCamera->GetTransform()->GetPosition()));
     //owner->GetComponent<Transform_Component>()->SetRotationQuat((Application->root->mainCamera->GetTransform()->GetRotation()));
-    owner->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0,20,-10));
-    owner->GetComponent<Transform_Component>()->SetRotation(glm::vec3(-30, 0, 0));
+    //owner->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0,20,-10));
+    //owner->GetComponent<Transform_Component>()->SetRotation(glm::vec3(-30, 0, 0));
 }
 
 void UICanvasComponent::Update(float deltaTime)
 {
+
+    glDisable(GL_DEPTH_TEST);
+
     for (size_t i = 0; i < owner->GetChildren().size(); ++i) {
         GameObject* object = owner->GetChildren()[i].get();
 
@@ -54,6 +61,8 @@ void UICanvasComponent::Update(float deltaTime)
 			object->GetComponent<UIImageComponent>()->Update(deltaTime);
 		}
     }
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 void UICanvasComponent::Destroy()

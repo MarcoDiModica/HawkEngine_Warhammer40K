@@ -280,7 +280,7 @@ bool Root::Start()
     auto image = CreateGameObject("Image");
     Application->root->ParentGameObject(*image, *canvas);
     image->AddComponent<UIImageComponent>();
-	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/UI_Final.png");
+	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Baker_house.png");
 
 
     SceneManagement->Start();

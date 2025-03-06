@@ -4,6 +4,7 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEditor/Root.h"
 #include "../MyGameEngine/CameraComponent.h"
+#include "../MyGameEditor/MyWindow.h"
 
 UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
@@ -32,7 +33,20 @@ void UIImageComponent::Update(float deltaTime)
 		shader->SetUniform("u_HasTexture", false);
 	}
 
-	shader->SetUniform("model", owner->GetTransform()->GetMatrix());
+	glm::mat4 projectionMatrix = glm::ortho(
+		0.0f, static_cast<float>(Application->window->width()),
+		static_cast<float>(Application->window->height()), 0.0f,
+		-1.0f, 1.0f);
+
+	glm::mat4 viewMatrix = glm::mat4(1.0f); // Identidad porque la UI no usa vista 3D
+
+	glm::vec3 worldPos = owner->GetComponent<Transform_Component>()->GetPosition();
+	glm::vec2 scale = owner->GetComponent<Transform_Component>()->GetScale();
+
+	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(worldPos.x, worldPos.y, 0.0f)) *
+		glm::scale(glm::mat4(1.0f), glm::vec3(scale.x, scale.y, 1.0f));
+
+	shader->SetUniform("model", modelMatrix);
 	shader->SetUniform("view", Application->root->mainCamera->GetComponent<CameraComponent>()->view());
 	shader->SetUniform("projection", Application->root->mainCamera->GetComponent<CameraComponent>()->projection());
 

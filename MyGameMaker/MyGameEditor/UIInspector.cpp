@@ -35,7 +35,6 @@
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
-#include "../MyUIEngine/UIComponent.h"
 
 typedef unsigned int guint32;
 #pragma endregion

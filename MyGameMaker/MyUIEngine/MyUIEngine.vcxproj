@@ -72,10 +72,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="UIComponent.h" />
+    <ClInclude Include="UICanvasComponent.h" />
+    <ClInclude Include="UIImageComponent.h" />
+    <ClInclude Include="UITransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UIComponent.cpp" />
+    <ClCompile Include="UICanvasComponent.cpp" />
+    <ClCompile Include="UIImageComponent.cpp" />
+    <ClCompile Include="UITransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

@@ -30,7 +30,10 @@ enum class ComponentType {
 	RIGIDBODY,
 	PARTICLES_EMITTER,
 	UI,
-	LIGHT
+	LIGHT,
+	CANVAS,
+	UITRANSFORM,
+	IMAGE
 };
 
 class Component

@@ -69,7 +69,7 @@ public:
     bool CompareTag(const std::string& tag) const;
 
     BoundingBox boundingBox() const;
-    BoundingBox localBoundingBox() const { return mesh ? mesh->boundingBox() : BoundingBox(); }
+    BoundingBox localBoundingBox() const;
 
     Transform_Component* GetTransform() const { return GetComponent<Transform_Component>(); }
 

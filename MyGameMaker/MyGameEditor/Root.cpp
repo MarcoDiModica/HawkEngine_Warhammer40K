@@ -239,11 +239,11 @@ bool Root::CleanUp()
 }
 
 void Root::CreateSceneColliders() {
-    for (auto& go : environment->GetChildren())
+   /* for (auto& go : environment->GetChildren())
     {
         auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
         collider->Start();
-    }
+    }*/
 }
 
 bool Root::Start()

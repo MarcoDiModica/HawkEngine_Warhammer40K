@@ -417,6 +417,26 @@ BoundingBox GameObject::boundingBox() const
     return GetTransform()->GetMatrix() * combinedBoundingBox;
 }
 
+
+BoundingBox GameObject::localBoundingBox() const {
+    BoundingBox combinedBoundingBox{};
+
+    if (HasComponent<MeshRenderer>()) {
+        auto meshRenderer = GetComponent<MeshRenderer>();
+        combinedBoundingBox = meshRenderer->GetMesh()->boundingBox();
+    }
+    else if (!children.empty()) {
+        combinedBoundingBox = children.front()->boundingBox();
+    }
+
+    for (auto it = children.begin() + (HasComponent<MeshRenderer>() || children.empty() ? 0 : 1); it != children.end(); ++it) {
+        combinedBoundingBox = combinedBoundingBox + (*it)->boundingBox();
+    }
+
+    return combinedBoundingBox;
+}
+
+
 void GameObject::SetParent(GameObject* parent)
 {
     if (this->parent == parent)

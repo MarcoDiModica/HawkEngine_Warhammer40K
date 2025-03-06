@@ -203,45 +203,42 @@ std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
     return std::make_unique<ColliderComponent>(new_owner, physics);
 }
 
-
 void ColliderComponent::CreateCollider() {
     if (!owner) return;
 
     Transform_Component* transform = owner->GetTransform();
     if (!transform) return;
 
-    BoundingBox bbox = owner->boundingBox();
+    BoundingBox bbox = owner->localBoundingBox();
     size = bbox.size();
 
-    btCollisionShape* shape;
+    glm::vec3 bboxCenter = owner->boundingBox().center();
 
+    btCollisionShape* shape;
     btTransform startTransform;
     startTransform.setIdentity();
 
-    shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
-    glm::vec3 localPosition = transform->GetLocalPosition();
-    startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
-    startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
-    glm::vec3 scale = transform->GetScale();
-    //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+    glm::quat localRotation = transform->GetLocalRotation();
+    btQuaternion btLocalRotation(localRotation.x, localRotation.y, localRotation.z, localRotation.w);
 
-    // Configurar la masa e inercia
+    shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
+
+    startTransform.setOrigin(btVector3(bboxCenter.x, bboxCenter.y, bboxCenter.z));
+    startTransform.setRotation(btLocalRotation);
+
+    glm::vec3 scale = transform->GetScale();
+    shape->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
+
     btVector3 localInertia(0, 0, 0);
     if (mass > 0.0f) {
         shape->calculateLocalInertia(mass, localInertia);
     }
 
-    // Crear el cuerpo rígido
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
     rigidBody = new btRigidBody(rbInfo);
 
-    //rigidBody->setRestitution(0.5f);
-
-    glm::quat newRotation = glm::quat(glm::radians(glm::vec3(0, 0, 0)));
-    SetColliderRotation(newRotation);
-    // Añadir el colisionador al mundo de físicas
+    // Add the collider to the physics world
     physics->dynamicsWorld->addRigidBody(rigidBody);
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
-
 }

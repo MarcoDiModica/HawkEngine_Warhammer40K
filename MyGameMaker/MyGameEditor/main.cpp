@@ -442,6 +442,8 @@ static void display_func() {
 		}
 	}
 
+	//render lights
+
 	Application->physicsModule->Update(Application->GetDt());
 	MousePickingCheck(objects);
 }

@@ -5,6 +5,7 @@
 #include "TreeExt.h"
 #include "Mesh.h"
 #include "BoundingBox.h"
+#include "Material.h"
 #include "../MyScriptingEngine/EngineBinds.h"
 #include <mono/metadata/object.h>
 #include "../MyScriptingEngine/ScriptComponent.h"
@@ -12,6 +13,7 @@
 
 
 class SceneSerializer;
+class Material;
 class Scene;
 struct OctreeNode;
 class Shaders;
@@ -63,6 +65,8 @@ public:
     
 	void ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dvec3 cameraPosition, std::list<GameObject*> lights, Shaders useShader);
 
+    void ConfigurePBRUniforms(Shaders* shader, std::shared_ptr<Material> material);
+    void ConfigureLights(Shaders* shader, const std::list<GameObject*>& lights);
     std::string GetName() const;
     void SetName(const std::string& name);
 

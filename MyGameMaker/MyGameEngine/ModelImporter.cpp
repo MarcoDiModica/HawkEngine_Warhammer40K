@@ -62,7 +62,7 @@ bool hasSubstring(const std::string& str, const std::string& substr) {
 glm::mat4 accumulatedTransform;
 std::shared_ptr<GameObject> rootObject;
 
-void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, glm::mat4 accumulatedTransform = glm::mat4(1.0f)) {
+void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, glm::mat4 accumulatedTransform) {
 	GameObject obj;
 	// Check if the node has the suffix indicating it is an Assimp transformation node
 	if (hasSubstring(node.mName.data, "$AssimpFbx$")) {
@@ -82,7 +82,7 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 		glm::mat4 localMatrix = aiMat4ToMat4(node.mTransformation);
 
 		obj.GetTransform()->SetMatrix(localMatrix * accumulatedTransform);
-		
+
 		// Add mesh and material components
 		for (unsigned int i = 0; i < node.mNumMeshes; ++i) {
 
@@ -125,14 +125,30 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 			vec3 aux = vec3(vertex.x, vertex.y, vertex.z);
 			Vertex v;
 			v.position = aux;
-			modelsData[i]->vertexData.push_back(v);
 
 			// Coordenadas UV (si existen)
 			if (mesh->mTextureCoords[0]) {  // Comprueba si hay UVs
 				aiVector3D uv = mesh->mTextureCoords[0][j];
+				v.texCoords = vec2(uv.x, uv.y);
 				aux.x = uv.x;  // Solo X y Y
 				aux.y = uv.y;
 			}
+
+			// Normales (si existen)
+			if (mesh->HasNormals()) {  // Verifica si hay normales
+				aiVector3D normal = mesh->mNormals[j];
+				v.normal = vec3(normal.x, normal.y, normal.z);
+			}
+
+			// Tangentes y bitangentes (para normal mapping)
+			if (mesh->HasTangentsAndBitangents()) {
+				aiVector3D tangent = mesh->mTangents[j];
+				aiVector3D bitangent = mesh->mBitangents[j];
+				v.tangent = vec3(tangent.x, tangent.y, tangent.z);
+				v.bitangent = vec3(bitangent.x, bitangent.y, bitangent.z);
+			}
+
+			modelsData[i]->vertexData.push_back(v);
 			modelsData[i]->vertex_texCoords.push_back(aux);
 
 			if (mesh->HasNormals()) {  // Verifica si hay normales
@@ -146,7 +162,6 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 				vec3 auxColor(color.r, color.g, color.b);
 				modelsData[i]->vertex_colors.push_back(auxColor);
 			}
-
 		}
 
 		for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
@@ -167,6 +182,23 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 	return meshes;
 }
 
+// Check if a texture path exists and return a valid path or empty string
+std::string findTexturePath(const aiString& texturePath, const fs::path& basePath) {
+	// Try to find texture with original path
+	if (fs::exists(basePath / texturePath.C_Str())) {
+		return (basePath / texturePath.C_Str()).string();
+	}
+
+	// Try with just the filename
+	std::string filename = std::filesystem::path(texturePath.C_Str()).filename().string();
+	if (fs::exists(basePath / filename)) {
+		return (basePath / filename).string();
+	}
+
+	LOG(LogType::LOG_WARNING, "Texture not found: %s", texturePath.C_Str());
+	return "";
+}
+
 std::vector<std::shared_ptr<Material>>createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath) {
 	std::vector<std::shared_ptr<Material>> materials;
 	materials.resize(scene.mNumMaterials);
@@ -174,57 +206,179 @@ std::vector<std::shared_ptr<Material>>createMaterialsFromFBX(const aiScene& scen
 	for (unsigned int i = 0; i < scene.mNumMaterials; ++i) {
 		const auto* fbx_material = scene.mMaterials[i];
 		materials[i] = std::make_shared<Material>();
-		materials[i]->imagePtr = std::make_shared<Image>();
 
+		// Set shader type to PBR by default
+		materials[i]->SetShaderType(PBR);
+
+		// Extract albedo/diffuse texture and color
 		if (fbx_material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
 			aiString texturePath;
 			fbx_material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-			const string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
-			materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
-			materials[i]->imagePtr->LoadTexture((basePath / textureFileName).string());
 
-			auto uWrapMode = aiTextureMapMode_Wrap;
-			auto vWrapMode = aiTextureMapMode_Wrap;
-			fbx_material->Get(AI_MATKEY_MAPPINGMODE_U_DIFFUSE(0), uWrapMode);
-			fbx_material->Get(AI_MATKEY_MAPPINGMODE_V_DIFFUSE(0), vWrapMode);
-			assert(uWrapMode == aiTextureMapMode_Wrap);
-			assert(vWrapMode == aiTextureMapMode_Wrap);
-
-			unsigned int flags = 0;
-			fbx_material->Get(AI_MATKEY_TEXFLAGS_DIFFUSE(0), flags);
-			assert(flags == 0);
-		}
-		else {
-			materials[i]->imagePtr->image_path = "";
+			std::string fullPath = findTexturePath(texturePath, basePath);
+			if (!fullPath.empty()) {
+				auto albedoMap = std::make_shared<Image>();
+				if (albedoMap->LoadTexture(fullPath)) {
+					materials[i]->SetAlbedoMap(albedoMap);
+				}
+			}
 		}
 
-		aiColor4D color;
-		fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-		materials[i]->color = vec4(color.r, color.g, color.b, color.a);
+		// Extract normal map if available
+		if (fbx_material->GetTextureCount(aiTextureType_NORMALS) > 0) {
+			aiString texturePath;
+			fbx_material->GetTexture(aiTextureType_NORMALS, 0, &texturePath);
 
+			std::string fullPath = findTexturePath(texturePath, basePath);
+			if (!fullPath.empty()) {
+				auto normalMap = std::make_shared<Image>();
+				if (normalMap->LoadTexture(fullPath)) {
+					materials[i]->SetNormalMap(normalMap);
+				}
+			}
+		}
+
+		// Extract roughness map if available (might be in SHININESS or METALNESS)
+		if (fbx_material->GetTextureCount(aiTextureType_SHININESS) > 0) {
+			aiString texturePath;
+			fbx_material->GetTexture(aiTextureType_SHININESS, 0, &texturePath);
+
+			std::string fullPath = findTexturePath(texturePath, basePath);
+			if (!fullPath.empty()) {
+				auto roughnessMap = std::make_shared<Image>();
+				if (roughnessMap->LoadTexture(fullPath)) {
+					materials[i]->SetRoughnessMap(roughnessMap);
+				}
+			}
+		}
+
+		// Extract metalness map if available
+		if (fbx_material->GetTextureCount(aiTextureType_METALNESS) > 0) {
+			aiString texturePath;
+			fbx_material->GetTexture(aiTextureType_METALNESS, 0, &texturePath);
+
+			std::string fullPath = findTexturePath(texturePath, basePath);
+			if (!fullPath.empty()) {
+				auto metalnessMap = std::make_shared<Image>();
+				if (metalnessMap->LoadTexture(fullPath)) {
+					materials[i]->SetMetalnessMap(metalnessMap);
+				}
+			}
+		}
+
+		// Extract ambient occlusion map if available
+		if (fbx_material->GetTextureCount(aiTextureType_AMBIENT) > 0) {
+			aiString texturePath;
+			fbx_material->GetTexture(aiTextureType_AMBIENT, 0, &texturePath);
+
+			std::string fullPath = findTexturePath(texturePath, basePath);
+			if (!fullPath.empty()) {
+				auto aoMap = std::make_shared<Image>();
+				if (aoMap->LoadTexture(fullPath)) {
+					materials[i]->SetAOMap(aoMap);
+				}
+			}
+		}
+
+		// Extract emissive map if available
+		if (fbx_material->GetTextureCount(aiTextureType_EMISSIVE) > 0) {
+			aiString texturePath;
+			fbx_material->GetTexture(aiTextureType_EMISSIVE, 0, &texturePath);
+
+			std::string fullPath = findTexturePath(texturePath, basePath);
+			if (!fullPath.empty()) {
+				auto emissiveMap = std::make_shared<Image>();
+				if (emissiveMap->LoadTexture(fullPath)) {
+					materials[i]->SetEmissiveMap(emissiveMap);
+				}
+			}
+		}
+
+		// Extract material properties
+		aiColor4D color(1.0f, 1.0f, 1.0f, 1.0f);
+		if (fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS) {
+			materials[i]->SetColor(vec4(color.r, color.g, color.b, color.a));
+		}
+
+		// Extract PBR values if available
+		float roughnessValue = 0.5f;
+		if (fbx_material->Get(AI_MATKEY_ROUGHNESS_FACTOR, roughnessValue) == AI_SUCCESS) {
+			materials[i]->SetRoughness(roughnessValue);
+		}
+
+		float metalnessValue = 0.0f;
+		if (fbx_material->Get(AI_MATKEY_METALLIC_FACTOR, metalnessValue) == AI_SUCCESS) {
+			materials[i]->SetMetalness(metalnessValue);
+		}
+
+		// Extract emissive properties
+		aiColor3D emissiveColor(0.0f, 0.0f, 0.0f);
+		if (fbx_material->Get(AI_MATKEY_COLOR_EMISSIVE, emissiveColor) == AI_SUCCESS) {
+			materials[i]->SetEmissiveColor(vec3(emissiveColor.r, emissiveColor.g, emissiveColor.b));
+
+			// If there's emissive color, set a default intensity
+			if (emissiveColor.r > 0.0f || emissiveColor.g > 0.0f || emissiveColor.b > 0.0f) {
+				materials[i]->SetEmissiveIntensity(1.0f);
+			}
+		}
 	}
 
 	return materials;
 }
 
 void ModelImporter::loadFromFile(const std::string& path) {
-	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_CalcTangentSpace |aiProcess_Triangulate | aiProcess_SortByPType | aiProcess_JoinIdenticalVertices | 
-		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
-	aiGetErrorString();
-	
+	const aiScene* fbx_scene = aiImportFile(path.c_str(),
+		aiProcess_CalcTangentSpace |
+		aiProcess_Triangulate |
+		aiProcess_SortByPType |
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_GenUVCoords |
+		aiProcess_TransformUVCoords |
+		aiProcess_FlipUVs);
+
+	if (!fbx_scene) {
+		LOG(LogType::LOG_ERROR, "Failed to load model: %s", path.c_str());
+		LOG(LogType::LOG_ERROR, "Assimp error: %s", aiGetErrorString());
+		return;
+	}
+
 	// Create models and materials from FBX
 	meshes = createMeshesFromFBX(*fbx_scene);
 
 	materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/");
 
 	// Create the GameObject hierarchy
-	graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);
-	aiReleaseImport(fbx_scene);
+	graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials, glm::mat4(1.0f));
 
+	// Link meshes with materials in the fbx objects
+	for (auto& obj : fbx_object) {
+		auto meshRenderer = obj->AddComponent<MeshRenderer>();
+
+		// Find the mesh for this object
+		for (unsigned int i = 0; i < fbx_scene->mRootNode->mNumMeshes; ++i) {
+			auto meshIndex = fbx_scene->mRootNode->mMeshes[i];
+			if (meshIndex < meshes.size()) {
+				meshRenderer->SetMesh(meshes[meshIndex]);
+
+				// Find the corresponding material
+				auto materialIndex = fbx_scene->mMeshes[meshIndex]->mMaterialIndex;
+				if (materialIndex < materials.size()) {
+					meshRenderer->SetMaterial(materials[materialIndex]);
+
+					// Add shader component
+					auto shaderComp = obj->AddComponent<ShaderComponent>();
+					shaderComp->SetShaderType(materials[materialIndex]->GetShaderType());
+					shaderComp->SetOwnerMaterial(materials[materialIndex].get());
+				}
+				break;
+			}
+		}
+	}
+
+	aiReleaseImport(fbx_scene);
 }
 
 void ModelImporter::EncodeFBXScene(const std::string path, std::vector<std::shared_ptr<Mesh>> meshes, const aiScene* fbx_scene) {
-
 	std::string name = path;
 	name.erase(0, 14);
 	std::string fullPath = "Library/Mesh/" + name + ".mesh";

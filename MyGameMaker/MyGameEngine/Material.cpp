@@ -5,180 +5,358 @@
 #include <unordered_map>
 #include <filesystem>
 #include "../MyGameEditor/Log.h"
+#include "LightComponent.h"
+#include "../MyGameEditor/App.h"
 
-unsigned int Material::next_id = 0;
-
-Material::Material() : gid(next_id++){
-	color = vec4(1.0f);
-	imagePtr = std::make_shared<Image>();
+Material::Material() :
+	shaderType(UNLIT),
+	albedoColor(1.0f),
+	shader(nullptr),
+	roughnessValue(0.5f),
+	metalnessValue(0.0f),
+	aoValue(1.0f),
+	emissiveColor(0.0f),
+	emissiveIntensity(0.0f),
+	hasAlbedoMap(false),
+	hasNormalMap(false),
+	hasRoughnessMap(false),
+	hasMetalnessMap(false),
+	hasAOMap(false),
+	hasEmissiveMap(false)
+{
 }
 
-static auto GLWrapMode(Material::WrapModes mode) {
-	switch (mode) {
-	case Material::Repeat: return GL_REPEAT;
-	case Material::MirroredRepeat: return GL_MIRRORED_REPEAT;
-	case Material::Clamp: return GL_CLAMP_TO_EDGE;
-	default: return GL_REPEAT;
-	}
+void Material::SetShader(Shaders* shader) {
+	this->shader = shader;
 }
 
-static auto GLMagFilter(Material::Filters filter) {
-	switch (filter) {
-	case Material::Nearest: return GL_NEAREST;
-	case Material::Linear: return GL_LINEAR;
-	default: return GL_NEAREST;
-	}
+Shaders* Material::GetShader() const {
+	return shader;
 }
 
-static auto GLMinFilter(Material::Filters filter) {
-	switch (filter) {
-	case Material::Nearest: return GL_NEAREST_MIPMAP_NEAREST;
-	case Material::Linear: return GL_LINEAR_MIPMAP_LINEAR;
-	default: return GL_NEAREST_MIPMAP_LINEAR;
-	}
+void Material::SetShaderType(ShaderType type) {
+	shaderType = type;
 }
 
-void Material::SetColor(const vec4& color) {
-	this->color = color;
+ShaderType Material::GetShaderType() const {
+	return shaderType;
+}
+
+void Material::SetColor(const glm::vec4& color) {
+	albedoColor = color;
 }
 
 const glm::vec4& Material::GetColor() const {
-	return this->color;
+	return albedoColor;
 }
 
-void Material::bind() const {
-	glBindTexture(GL_TEXTURE_2D, imagePtr->id());
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLWrapMode(wrapMode));
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GLWrapMode(wrapMode));
-
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Magnification filter
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4f);
+void Material::SetAlbedoMap(const std::shared_ptr<Image>& image) {
+	albedoMap = image;
+	hasAlbedoMap = (image != nullptr && image->id() != 0);
 }
 
-void Material::unbind() const
+void Material::SetNormalMap(const std::shared_ptr<Image>& image) {
+	normalMap = image;
+	hasNormalMap = (image != nullptr && image->id() != 0);
+}
+
+void Material::SetRoughnessMap(const std::shared_ptr<Image>& image) {
+	roughnessMap = image;
+	hasRoughnessMap = (image != nullptr && image->id() != 0);
+}
+
+void Material::SetMetalnessMap(const std::shared_ptr<Image>& image) {
+	metalnessMap = image;
+	hasMetalnessMap = (image != nullptr && image->id() != 0);
+}
+
+void Material::SetAOMap(const std::shared_ptr<Image>& image) {
+	aoMap = image;
+	hasAOMap = (image != nullptr && image->id() != 0);
+}
+
+void Material::SetEmissiveMap(const std::shared_ptr<Image>& image) {
+	emissiveMap = image;
+	hasEmissiveMap = (image != nullptr && image->id() != 0);
+}
+
+void Material::SetRoughness(float value) {
+	roughnessValue = value;
+}
+
+void Material::SetMetalness(float value) {
+	metalnessValue = value;
+}
+
+void Material::SetAmbientOcclusion(float value) {
+	aoValue = value;
+}
+
+void Material::SetEmissiveColor(const glm::vec3& color) {
+	emissiveColor = color;
+}
+
+void Material::SetEmissiveIntensity(float intensity) {
+	emissiveIntensity = intensity;
+}
+
+std::shared_ptr<Image> Material::GetAlbedoMap() const
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
+	return albedoMap;
 }
 
-bool Material::loadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {
-	return shader->LoadShaders(vertexShaderFile, fragmentShaderFile);
-}
-
-void Material::SetShader(Shaders& shader) 
+std::shared_ptr<Image> Material::GetNormalMap() const
 {
-	this->shader = &shader;
+	return normalMap;
 }
 
-Shaders * Material::GetShader() 
+std::shared_ptr<Image> Material::GetRoughnessMap() const
 {
-	return this->shader;
+	return roughnessMap;
 }
 
-
-// Function to bind shaders
-void Material::bindShaders() const {
-	shader->Bind();
+std::shared_ptr<Image> Material::GetMetalnessMap() const
+{
+	return metalnessMap;
 }
 
-// Function to set shader uniforms
-void Material::setShaderUniform(const std::string& name, int value) {
-	shader->SetUniform(name, value);
+std::shared_ptr<Image> Material::GetAOMap() const
+{
+	return aoMap;
 }
 
-void Material::setShaderUniform(const std::string& name, float value) {
-	shader->SetUniform(name, value);
+std::shared_ptr<Image> Material::GetEmissiveMap() const
+{
+	return emissiveMap;
 }
 
-void Material::setShaderUniform(const std::string& name, const glm::vec3& value) {
-	shader->SetUniform(name, value);
+float Material::GetRoughnessValue() const
+{
+	return roughnessValue;
 }
 
-void Material::setShaderUniform(const std::string& name, const glm::vec4& value) {
-	shader->SetUniform(name, value);
+float Material::GetMetalnessValue() const
+{
+	return metalnessValue;
 }
 
-void Material::setShaderUniform(const std::string& name, const glm::mat4& value) {
-	shader->SetUniform(name, value);
+float Material::GetAmbientOcclusionValue() const
+{
+	return aoValue;
 }
 
-std::unordered_map<std::string, std::shared_ptr<Material>> materialCache;
+glm::vec3 Material::GetEmissiveColor() const
+{
+	return emissiveColor;
+}
 
-void Material::SaveBinary(const std::string& filename) const {
-	
-	std::string fullPath = "Library/Materials/" + filename + ".mat";
-	LOG(LogType::LOG_INFO, "Saving material to: %s", fullPath.c_str());
+float Material::GetEmissiveIntensity() const
+{
+	return emissiveIntensity;
+}
 
-	if (!std::filesystem::exists("Library/Materials")) {
-
-		std::filesystem::create_directory("Library/Materials");
-	}
-
-	std::ofstream fout(fullPath + ".mat", std::ios::binary);
-	if (!fout.is_open()) {
-		return;
-	}
-
-	fout.write(reinterpret_cast<const char*>(&wrapMode), sizeof(wrapMode));
-	fout.write(reinterpret_cast<const char*>(&filter), sizeof(filter));
-	fout.write(reinterpret_cast<const char*>(&color), sizeof(color));
-	fout.write(reinterpret_cast<const char*>(&useShader), sizeof(useShader));
-
-	if (imagePtr) {
-		fout.write("IMG", 3);
-		imagePtr->SaveBinary(filename);
+void Material::Bind() {
+	// Bind albedo texture to texture unit 0
+	glActiveTexture(GL_TEXTURE0);
+	if (hasAlbedoMap) {
+		glBindTexture(GL_TEXTURE_2D, albedoMap->id());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	}
 	else {
-		fout.write("NOI", 3);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	if (useShader) {
-		//shader.SaveBinary(fout);
+	// Only bind PBR textures if we're using PBR shader
+	if (shaderType == PBR) {
+		// Normal map - texture unit 1
+		glActiveTexture(GL_TEXTURE1);
+		if (hasNormalMap) {
+			glBindTexture(GL_TEXTURE_2D, normalMap->id());
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glGenerateMipmap(GL_TEXTURE_2D);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
+		else {
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		// Roughness map - texture unit 2
+		glActiveTexture(GL_TEXTURE2);
+		if (hasRoughnessMap) {
+			glBindTexture(GL_TEXTURE_2D, roughnessMap->id());
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glGenerateMipmap(GL_TEXTURE_2D);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
+		else {
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		// Metalness map - texture unit 3
+		glActiveTexture(GL_TEXTURE3);
+		if (hasMetalnessMap) {
+			glBindTexture(GL_TEXTURE_2D, metalnessMap->id());
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glGenerateMipmap(GL_TEXTURE_2D);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
+		else {
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		// Ambient Occlusion map - texture unit 4
+		glActiveTexture(GL_TEXTURE4);
+		if (hasAOMap) {
+			glBindTexture(GL_TEXTURE_2D, aoMap->id());
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glGenerateMipmap(GL_TEXTURE_2D);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
+		else {
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		// Emissive map - texture unit 5
+		glActiveTexture(GL_TEXTURE5);
+		if (hasEmissiveMap) {
+			glBindTexture(GL_TEXTURE_2D, emissiveMap->id());
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glGenerateMipmap(GL_TEXTURE_2D);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
+		else {
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 }
 
-std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
-	std::string fullPath = "Library/Materials/" + filename + ".mat";
-	LOG(LogType::LOG_INFO, "Loading material from: %s", fullPath.c_str());
+void Material::Unbind() {
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
-	auto it = materialCache.find(fullPath);
-	if (it != materialCache.end()) {
-		return it->second;
+	if (shaderType == PBR) {
+		for (int i = 1; i <= 5; i++) {
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 
-	std::shared_ptr<Material> mat;
+	glActiveTexture(GL_TEXTURE0);
+}
 
-	std::ifstream fin(fullPath, std::ios::binary);
-	if (!fin.is_open()) {
-		throw std::runtime_error("Error opening material file: " + fullPath);
+void Material::ApplyShaderUniforms(Shaders* shader,
+	const glm::mat4& model,
+	const glm::mat4& view,
+	const glm::mat4& projection,
+	const glm::vec3& viewPos) {
+	if (!shader) return;
+
+	// Common uniforms for both shader types
+	shader->SetUniform("model", model);
+	shader->SetUniform("view", view);
+	shader->SetUniform("projection", projection);
+	shader->SetUniform("modColor", albedoColor);
+	shader->SetUniform("u_HasTexture", hasAlbedoMap);
+	shader->SetUniform("texture1", 0); // Albedo texture
+
+	// Additional uniforms for PBR shader
+	if (shaderType == PBR) {
+		shader->SetUniform("viewPos", viewPos);
+
+		// Material parameters
+		shader->SetUniform("material.albedoMap", 0);
+		shader->SetUniform("material.albedoColor", albedoColor);
+
+		// Normal mapping
+		shader->SetUniform("material.useNormalMap", hasNormalMap);
+		if (hasNormalMap) {
+			shader->SetUniform("material.normalMap", 1);
+		}
+
+		// Roughness
+		shader->SetUniform("material.useRoughnessMap", hasRoughnessMap);
+		if (hasRoughnessMap) {
+			shader->SetUniform("material.roughnessMap", 2);
+		}
+		else {
+			shader->SetUniform("material.roughnessValue", roughnessValue);
+		}
+
+		// Metalness
+		shader->SetUniform("material.useMetalnessMap", hasMetalnessMap);
+		if (hasMetalnessMap) {
+			shader->SetUniform("material.metalnessMap", 3);
+		}
+		else {
+			shader->SetUniform("material.metalnessValue", metalnessValue);
+		}
+
+		// Ambient Occlusion
+		shader->SetUniform("material.useAOMap", hasAOMap);
+		if (hasAOMap) {
+			shader->SetUniform("material.aoMap", 4);
+		}
+		else {
+			shader->SetUniform("material.aoValue", aoValue);
+		}
+
+		// Emissive
+		shader->SetUniform("material.useEmissiveMap", hasEmissiveMap);
+		if (hasEmissiveMap) {
+			shader->SetUniform("material.emissiveMap", 5);
+		}
+		else {
+			shader->SetUniform("material.emissiveColor", emissiveColor);
+		}
+		shader->SetUniform("material.emissiveIntensity", emissiveIntensity);
+	}
+}
+
+void Material::ConfigureLighting(Shaders* shader,
+	const std::vector<std::shared_ptr<GameObject>>& lights,
+	const glm::vec3& viewPos) {
+	if (!shader || shaderType != PBR) return;
+
+	int numLights = lights.size();
+	shader->SetUniform("numPointLights", numLights);
+
+	for (int i = 0; i < numLights; i++) {
+		auto light = lights[i];
+		auto lightComp = light->GetComponent<LightComponent>();
+		auto transform = light->GetComponent<Transform_Component>();
+
+		if (!lightComp || !transform) continue;
+
+		std::string prefix = "pointLights[" + std::to_string(i) + "]";
+
+		shader->SetUniform(prefix + ".position", transform->GetPosition());
+		shader->SetUniform(prefix + ".ambient", lightComp->GetAmbient());
+		shader->SetUniform(prefix + ".diffuse", lightComp->GetDiffuse());
+		shader->SetUniform(prefix + ".specular", lightComp->GetSpecular());
+		shader->SetUniform(prefix + ".constant", lightComp->GetConstant());
+		shader->SetUniform(prefix + ".linear", lightComp->GetLinear());
+		shader->SetUniform(prefix + ".quadratic", lightComp->GetQuadratic());
+		shader->SetUniform(prefix + ".radius", lightComp->GetRadius());
+		shader->SetUniform(prefix + ".intensity", lightComp->GetIntensity());
 	}
 
-	mat = std::make_shared<Material>();
-
-	fin.read(reinterpret_cast<char*>(&mat->wrapMode), sizeof(mat->wrapMode));
-	fin.read(reinterpret_cast<char*>(&mat->filter), sizeof(mat->filter));
-	fin.read(reinterpret_cast<char*>(&mat->color), sizeof(mat->color));
-	fin.read(reinterpret_cast<char*>(&mat->useShader), sizeof(mat->useShader));
-
-	char type[4];
-	fin.read(type, 3);
-	type[3] = '\0';
-
-	if (strcmp(type, "IMG") == 0) {
-		std::shared_ptr<Image> img = Image::LoadBinary(filename);
-		mat->setImage(img);
-	}
-
-	if (mat->useShader) {
-		//mat->shader = Shaders::LoadBinary(fin);
-	}
-
-	materialCache[fullPath] = mat;
-	
-	
-
-	return mat;
+	shader->SetUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+	shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+	shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+	shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+	shader->SetUniform("dirLight.intensity", 3.0f);
 }

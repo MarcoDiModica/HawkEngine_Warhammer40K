@@ -179,59 +179,135 @@ void GameObject::Start()
 
 void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dvec3 cameraPosition, std::list<GameObject*> lights, Shaders useShader)
 {
+	if (!HasComponent<MeshRenderer>())
+		return;
 
-	if (HasComponent<MeshRenderer>() == true ) 
-    {
-		//if (GetComponent<MeshRenderer>()->GetMaterial()->GetShader().GetProgram()  == 0) {
-        //    GetComponent<MeshRenderer>()->GetMaterial()->SetShader(useShader);
-		//}
+	auto meshRenderer = GetComponent<MeshRenderer>();
+	auto material = meshRenderer->GetMaterial();
 
-        GetComponent<MeshRenderer>()->GetMaterial()->bindShaders();
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetTransform()->GetMatrix());
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("modColor", glm::vec4(1, 0.2f, 0, 1));
-        glUniform4f(
-            glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader->GetProgram(), "modColor"),
-            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().x),
-            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().y),
-            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().z),
-            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().w)
-        );        //GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetComponent<Transform_Component>()->GetMatrix());
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("view", view);
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("projection", projection);
+	if (!material || !material->GetShader())
+		return;
 
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("viewPos", cameraPosition);
+	// Bind the material's shader
+	Shaders* shader = useShader.GetProgram() != 0 ? &useShader : material->GetShader();
+	shader->Bind();
 
-		int numPointLights = static_cast<int>( lights.size());
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("numPointLights", numPointLights);
+	// Set common uniforms for all shader types
+	shader->SetUniform("model", GetTransform()->GetMatrix());
+	shader->SetUniform("view", view);
+	shader->SetUniform("projection", projection);
+	shader->SetUniform("viewPos", cameraPosition);
+	shader->SetUniform("modColor", material->GetColor());
 
-        int i = 0;
-        for (const auto& light : lights)
-        {
-            std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".position", light->GetComponent<Transform_Component>()->GetPosition());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".ambient", light->GetComponent<LightComponent>()->GetAmbient());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".diffuse", light->GetComponent<LightComponent>()->GetDiffuse());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".specular", light->GetComponent<LightComponent>()->GetSpecular());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".constant", light->GetComponent<LightComponent>()->GetConstant());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".linear", light->GetComponent<LightComponent>()->GetLinear());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".quadratic", light->GetComponent<LightComponent>()->GetQuadratic());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".radius", light->GetComponent<LightComponent>()->GetRadius());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".intensity", light->GetComponent<LightComponent>()->GetIntensity());
-            i++;
-        }
+	// Check if we have a texture and set the flag
+	bool hasTexture = material->GetAlbedoMap() && material->GetAlbedoMap()->id() != 0;
+	shader->SetUniform("u_HasTexture", hasTexture);
 
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.intensity", 3.0f);
+	// Bind textures - this already handles the different types of shader
+	material->Bind();
+
+	// Configure specific shader types
+	if (material->GetShaderType() == UNLIT) {
+		// Nothing special to do for UNLIT shaders beyond what's already set
+	}
+	else if (material->GetShaderType() == PBR) {
+		// Setup PBR material properties
+		ConfigurePBRUniforms(shader, material);
+
+		// Setup lights
+		ConfigureLights(shader, lights);
+	}
+}
+
+// Helper function to set up PBR material properties
+void GameObject::ConfigurePBRUniforms(Shaders* shader, std::shared_ptr<Material> material) {
+	// Set material.albedoMap and material.albedoColor
+	shader->SetUniform("material.albedoMap", 0);  // Texture unit 0
+	shader->SetUniform("material.albedoColor", material->GetColor());
+
+	// Normal map
+	bool hasNormalMap = material->GetNormalMap() && material->GetNormalMap()->id() != 0;
+	shader->SetUniform("material.useNormalMap", hasNormalMap);
+	if (hasNormalMap) {
+		shader->SetUniform("material.normalMap", 1);  // Texture unit 1
 	}
 
-	//for (auto& child : children)
-	//{
-	//	child->ShaderUniforms(view,projection,cameraPosition,lights,useShader);
-	//}
+	// Roughness
+	bool hasRoughnessMap = material->GetRoughnessMap() && material->GetRoughnessMap()->id() != 0;
+	shader->SetUniform("material.useRoughnessMap", hasRoughnessMap);
+	if (hasRoughnessMap) {
+		shader->SetUniform("material.roughnessMap", 2);  // Texture unit 2
+	}
+	else {
+		shader->SetUniform("material.roughnessValue", material->GetRoughnessValue());
+	}
+
+	// Metalness
+	bool hasMetalnessMap = material->GetMetalnessMap() && material->GetMetalnessMap()->id() != 0;
+	shader->SetUniform("material.useMetalnessMap", hasMetalnessMap);
+	if (hasMetalnessMap) {
+		shader->SetUniform("material.metalnessMap", 3);  // Texture unit 3
+	}
+	else {
+		shader->SetUniform("material.metalnessValue", material->GetMetalnessValue());
+	}
+
+	// Ambient Occlusion
+	bool hasAOMap = material->GetAOMap() && material->GetAOMap()->id() != 0;
+	shader->SetUniform("material.useAOMap", hasAOMap);
+	if (hasAOMap) {
+		shader->SetUniform("material.aoMap", 4);  // Texture unit 4
+	}
+	else {
+		shader->SetUniform("material.aoValue", material->GetAmbientOcclusionValue());
+	}
+
+	// Emissive
+	bool hasEmissiveMap = material->GetEmissiveMap() && material->GetEmissiveMap()->id() != 0;
+	shader->SetUniform("material.useEmissiveMap", hasEmissiveMap);
+	if (hasEmissiveMap) {
+		shader->SetUniform("material.emissiveMap", 5);  // Texture unit 5
+	}
+	else {
+		shader->SetUniform("material.emissiveColor", material->GetEmissiveColor());
+	}
+
+	shader->SetUniform("material.emissiveIntensity", material->GetEmissiveIntensity());
+}
+
+// Helper function to configure lights
+void GameObject::ConfigureLights(Shaders* shader, const std::list<GameObject*>& lights) {
+	int numLights = static_cast<int>(lights.size());
+	shader->SetUniform("numPointLights", numLights);
+
+	int i = 0;
+	for (const auto& light : lights) {
+		if (!light->HasComponent<LightComponent>() || !light->HasComponent<Transform_Component>())
+			continue;
+
+		auto lightComp = light->GetComponent<LightComponent>();
+		auto transform = light->GetComponent<Transform_Component>();
+
+		std::string prefix = "pointLights[" + std::to_string(i) + "]";
+
+		shader->SetUniform(prefix + ".position", transform->GetPosition());
+		shader->SetUniform(prefix + ".ambient", lightComp->GetAmbient());
+		shader->SetUniform(prefix + ".diffuse", lightComp->GetDiffuse());
+		shader->SetUniform(prefix + ".specular", lightComp->GetSpecular());
+		shader->SetUniform(prefix + ".constant", lightComp->GetConstant());
+		shader->SetUniform(prefix + ".linear", lightComp->GetLinear());
+		shader->SetUniform(prefix + ".quadratic", lightComp->GetQuadratic());
+		shader->SetUniform(prefix + ".radius", lightComp->GetRadius());
+		shader->SetUniform(prefix + ".intensity", lightComp->GetIntensity());
+		i++;
+	}
+
+	// Setup directional light with constant values (could be made configurable)
+	shader->SetUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+	shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+	shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+	shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+	shader->SetUniform("dirLight.intensity", 3.0f);
 }
 
 void GameObject::Update(float deltaTime)

@@ -20,16 +20,19 @@
 
 class SceneSerializer;
 
-class Mesh {
+class Mesh 
+{
+	std::vector<vec3> _normals;
+	std::vector<vec3> _vertices;
+	std::vector<unsigned int> _indices;
+	std::vector<vec2> _texCoords;
+	std::vector<vec3> _tangents;
+	std::vector<vec3> _bitangents;
 
-    std::vector<glm::vec3> _normals;
-    std::vector<glm::vec3> _vertices;
-    std::vector<unsigned int> _indices;
-	std::vector<glm::vec2> _texCoords;
+	BoundingBox _boundingBox;
 
-    BoundingBox _boundingBox;
-    std::vector<Mesh> subMeshes;
-    std::shared_ptr<Model> model;
+	std::vector<Mesh> subMeshes;
+	std::shared_ptr<Model> model;
 
 public:
     Mesh();
@@ -47,18 +50,21 @@ public:
     void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);
  
     void CalculateNormals();
+    void calculateTangentSpace();
     void Draw() const;
     static void drawBoundingBox(const BoundingBox& bbox);
     static void drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3);
     inline static void glVertex3(const vec3& v) { glVertex3dv(&v.x); }
 
+    void LoadMeshWithTangentSpace(const char* file_path);
+    void UpdateForPBR();
     //void LoadMesh(const char* file_path);
 
-    bool drawBoundingbox = true;
-    bool drawTriangleNormals = false;
-    bool drawVertexNormals = false;
-    bool drawFaceNormals = false;
-    bool drawWireframe = false;
+	bool drawBoundingbox = true;
+	bool drawTriangleNormals = false;
+	bool drawVertexNormals = false;
+	bool drawFaceNormals = false;
+	bool drawWireframe = false;
 
     glm::vec3 aabbMin;
     glm::vec3 aabbMax;

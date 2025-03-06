@@ -2,6 +2,7 @@
 #include <string>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include "types.h"
 
 class Shaders
 {

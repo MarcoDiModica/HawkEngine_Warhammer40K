@@ -78,9 +78,10 @@ namespace YAML {
 }
 
 enum ShaderType {
-    DEFAULT,
-    LIGHT,
-    WATER
+    UNLIT,
+    PBR,
+	PARTICLE,
+	SKYBOX
 };
 
 namespace YAML {

@@ -277,7 +277,7 @@ bool Input::processSDLEvents()
             case SDLK_p: // P
                 if (pPressed == false) {
                     pPressed = true; // Activar la bandera si P fue presionado
-                    Application->root->CreateSceneColliders();
+                    //Application->root->CreateSceneColliders();
                     Application->physicsModule->linkPhysicsToScene = true;
                 }
                 else {
@@ -441,7 +441,7 @@ void Input::HandleFileDrop(const std::string& fileDir)
         if (InputManagement->draggedObject != nullptr) {
             auto meshRenderer = InputManagement->draggedObject->GetComponent<MeshRenderer>();
 
-            InputManagement->draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->getImg()->LoadTexture(fileDir);
+            InputManagement->draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->GetAlbedoMap()->LoadTexture(fileDir);
             //draggedObject->GetComponent<MeshRenderer>()->GetMaterial()->setImage();
             //meshRenderer->SetMaterial(material);
         }
@@ -493,7 +493,7 @@ void Input::HandleFileDrop(const std::string& fileDir)
             auto material = std::make_shared<Material>();
 
             image->LoadBinary(fileDir);
-            material->setImage(image);
+            material->SetAlbedoMap(image);
             meshRenderer->SetMaterial(material);
         }
     }

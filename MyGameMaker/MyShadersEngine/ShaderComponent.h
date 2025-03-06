@@ -1,36 +1,37 @@
 #pragma once
+#include "../MyGameEngine/Component.h"
+#include "../MyGameEngine/types.h"
+#include "../MyGameEngine/Shaders.h"
+#include "../MyGameEngine/Material.h"
+#include <memory>
+#include <string>
 
-#include "MyGameEngine/Component.h"
-#include "MyGameEngine/Material.h"
-#include "MyGameEngine/types.h"
+class Material;
 
-class ShaderComponent : public Component{
+class ShaderComponent : public Component {
 public:
-    explicit ShaderComponent(GameObject* owner);
-    ~ShaderComponent() override = default;
+	explicit ShaderComponent(GameObject* owner);
+	~ShaderComponent() override = default;
 
-    void Start() override;
-    void Update(float deltaTime) override;
-    void Destroy() override;
+	void Start() override;
+	void Update(float deltaTime) override;
+	void Destroy() override;
 
-    std::unique_ptr<Component> Clone(GameObject* owner) override;
+	ComponentType GetType() const override { return ComponentType::SHADER; }
 
-    void SetShader(Shaders* newShader);
-    Shaders* GetShader() const;
+	std::unique_ptr<Component> Clone(GameObject* owner) override;
 
-    void SetShaderType(ShaderType newType);
-    ShaderType GetShaderType() const;
+	void SetShaderType(ShaderType type);
+	ShaderType GetShaderType() const;
 
-    void SetOwnerMaterial(Material* newOwnerMaterial);
-    Material* GetOwnerMaterial() const;
+	bool LoadShaders(const std::string& vertexShaderPath, const std::string& fragmentShaderPath);
 
-    ComponentType GetType() const override { return ComponentType::SHADER; }
-
-	float frequency = 2.0f;
-    float amplitude = 0.2f;
+	void SetOwnerMaterial(Material* material);
 
 private:
-    Shaders* shader;
-    ShaderType type;
-    Material* ownerMaterial;
+	void LoadDefaultShaders();
+
+	ShaderType shaderType;
+	std::unique_ptr<Shaders> shaders;
+	Material* ownerMaterial;
 };

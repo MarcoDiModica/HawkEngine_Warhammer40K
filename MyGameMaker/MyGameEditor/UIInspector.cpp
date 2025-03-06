@@ -139,7 +139,7 @@ private:
             DrawMeshProperties(mesh);
         }
 
-        std::shared_ptr<Image> image = meshRenderer->GetMaterial()->getImg();
+        std::shared_ptr<Image> image = meshRenderer->GetMaterial()->GetAlbedoMap();
         if (image) {
             DrawMaterialProperties(meshRenderer, image);
         }
@@ -426,8 +426,7 @@ private:
     }
     #pragma endregion
 
-
-#pragma region Rigidbody
+    #pragma region Rigidbody
     static void DrawRigidbodyComponent(RigidbodyComponent* rigidbody) {
         if (!rigidbody) return;
 
@@ -483,13 +482,8 @@ private:
         ShaderType currentType = shader->GetShaderType();
         int shaderType = static_cast<int>(currentType);
 
-        if (ImGui::Combo("Shader Type", &shaderType, "Default\0Light\0Water\0")) {
+        if (ImGui::Combo("Shader Type", &shaderType, "UNLIT\0PBR\0")) {
             shader->SetShaderType(static_cast<ShaderType>(shaderType));
-        }
-
-        if (currentType == ShaderType::WATER) {
-            ImGui::DragFloat("Amplitude", &shader->amplitude, 0.1f, 0.1f, 10.0f);
-            ImGui::DragFloat("Frequency", &shader->frequency, 0.1f, 0.1f, 10.0f);
         }
     }
     #pragma endregion

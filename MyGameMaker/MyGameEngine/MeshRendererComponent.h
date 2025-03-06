@@ -13,34 +13,60 @@ class Shaders;
 
 class MeshRenderer : public Component {
 public:
-    explicit MeshRenderer(GameObject* owner);
-    ~MeshRenderer() override = default;
+	explicit MeshRenderer(GameObject* owner);
+	~MeshRenderer() override = default;
 
-    void Start() override;
-    void Update(float deltaTime) override;
-    void Destroy() override;
+	void Start() override;
+	void Update(float deltaTime) override;
+	void Destroy() override;
 
-    ComponentType GetType() const override { return ComponentType::MESH_RENDERER; }
+	ComponentType GetType() const override { return ComponentType::MESH_RENDERER; }
 
-    std::unique_ptr<Component> Clone(GameObject* owner) override;
+	std::unique_ptr<Component> Clone(GameObject* owner) override;
 
-    void SetMesh(std::shared_ptr<Mesh> mesh);
-    std::shared_ptr<Mesh> GetMesh() const;
+	void SetMesh(std::shared_ptr<Mesh> mesh);
+	std::shared_ptr<Mesh> GetMesh() const;
 
-    void SetMaterial(std::shared_ptr<Material> material);
-    std::shared_ptr<Material> GetMaterial() const;
+	void SetMaterial(std::shared_ptr<Material> material);
+	std::shared_ptr<Material> GetMaterial() const;
 
-    void SetImage(std::shared_ptr<Image> image);
-//std::shared_ptr<Image> GetImage() const;
+	void SetImage(std::shared_ptr<Image> image);
 
-    void SetColor(const glm::vec3& color);
-    glm::vec3 GetColor() const;
+	void SetColor(const glm::vec3& color);
+	glm::vec3 GetColor() const;
 
-    void Render() const;
-    void RenderMainCamera() const;
+	void SetNormalMap(std::shared_ptr<Image> normalMap);
+	void SetRoughnessMap(std::shared_ptr<Image> roughnessMap);
+	void SetMetalnessMap(std::shared_ptr<Image> metalnessMap);
+	void SetAmbientOcclusionMap(std::shared_ptr<Image> aoMap);
+	void SetEmissiveMap(std::shared_ptr<Image> emissiveMap);
 
-    MonoObject* CsharpReference = nullptr;
-    MonoObject* GetSharp() override;
+	void SetRoughnessValue(float value);
+	void SetMetalnessValue(float value);
+	void SetAmbientOcclusionValue(float value);
+	void SetEmissiveColor(const glm::vec3& color);
+	void SetEmissiveIntensity(float intensity);
+
+	std::shared_ptr<Image> GetNormalMap() const;
+	std::shared_ptr<Image> GetRoughnessMap() const;
+	std::shared_ptr<Image> GetMetalnessMap() const;
+	std::shared_ptr<Image> GetAmbientOcclusionMap() const;
+	std::shared_ptr<Image> GetEmissiveMap() const;
+
+	float GetRoughnessValue() const;
+	float GetMetalnessValue() const;
+	float GetAmbientOcclusionValue() const;
+	glm::vec3 GetEmissiveColor() const;
+	float GetEmissiveIntensity() const;
+
+	void Render() const;
+	void ConfigureLights() const;
+	void ConfigurePBRLights() const;
+	void ConfigureTraditionalShader() const;
+	void RenderMainCamera() const;
+
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
 
 private:
     std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
@@ -49,26 +75,24 @@ private:
 
 
 protected:
-    YAML::Node encode() override {
+    YAML::Node encode() override 
+	{
+		YAML::Node node = Component::encode();
 
-        YAML::Node node = Component::encode();
+		node["mesh_path"] = mesh->filePath;
+		node["mesh_name"] = mesh->nameM;
 
-        node["mesh_path"] = mesh->filePath;
-        //node["image_path"] = image->image_path;
-        node["mesh_name"] = mesh->nameM;
+		if (material) {
+			/*std::string materialFilename = "material_" + std::to_string(material->id());
+			material->SaveBinary(materialFilename);
+			node["material_path"] = materialFilename + ".mat";*/
+		}
 
-        if (material) {
-            std::string materialFilename = "material_" + std::to_string(material->GetId());
-            material->SaveBinary(materialFilename);
-
-            node["material_path"] = materialFilename + ".mat";
-        }
-
-        return node;
+		return node;
     }
 
-    bool decode(const YAML::Node& node) {
-
+    bool decode(const YAML::Node& node) 
+	{
         Component::decode(node);
 
         if (!node["mesh_path"] || !node["image_path"])
@@ -96,12 +120,12 @@ protected:
         SetMesh(_mesh);
 
         if (node["material_path"]) {
-            std::string materialPath = node["material_path"].as<std::string>();
-            material = Material::LoadBinary(materialPath);
+            //std::string materialPath = node["material_path"].as<std::string>();
+            //material = Material::LoadBinary(materialPath);
 
-            if (!material) {
-                //log error
-            }
+            //if (!material) {
+            //    //log error
+            //}
         }
         SetMaterial(material);
 

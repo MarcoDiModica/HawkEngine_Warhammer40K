@@ -181,18 +181,18 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
     meshRenderer->SetMesh(mesh);
     if (mat) {
         material = mat;
-        image = mat->getImg();
+        image = mat->GetAlbedoMap();
     }
     else {
         image->LoadTexture(texturePath);
     }
-    material->setImage(image);
+    material->SetAlbedoMap(image);
     meshRenderer->SetMaterial(material);
     meshRenderer->GetMaterial()->SetColor(vec4(0.5f, 0.5f, 0.5f, 1.0f));
 
     auto shaderComponent = go.AddComponent<ShaderComponent>();
 	shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-	shaderComponent->SetShaderType(ShaderType::LIGHT);
+	shaderComponent->SetShaderType(ShaderType::PBR);
 
     meshRenderer->SetImage(image);
 

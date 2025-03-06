@@ -26,12 +26,12 @@ MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
     mesh = Mesh::CreateCube();
     auto image = std::make_shared<Image>();
     image->LoadTexture("default.png");
-    material->setImage(image);
+    material->SetAlbedoMap(image);
     material->SetColor(glm::dvec4(0.7f, 0.7f, 0.7f, 1.0f));
 
     owner->AddComponent<ShaderComponent>();
     owner->GetComponent<ShaderComponent>()->SetOwnerMaterial(material.get());
-    owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::LIGHT);
+    owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::PBR);
 }
 
 void MeshRenderer::Start()
@@ -81,6 +81,106 @@ glm::vec3 MeshRenderer::GetColor() const
     return color;
 }
 
+void MeshRenderer::SetNormalMap(std::shared_ptr<Image> normalMap)
+{
+    material->SetNormalMap(normalMap);
+}
+
+void MeshRenderer::SetRoughnessMap(std::shared_ptr<Image> roughnessMap)
+{
+	material->SetRoughnessMap(roughnessMap);
+}
+
+void MeshRenderer::SetMetalnessMap(std::shared_ptr<Image> metalnessMap)
+{
+	material->SetMetalnessMap(metalnessMap);
+}
+
+void MeshRenderer::SetAmbientOcclusionMap(std::shared_ptr<Image> aoMap)
+{
+	material->SetAOMap(aoMap);
+}
+
+void MeshRenderer::SetEmissiveMap(std::shared_ptr<Image> emissiveMap)
+{
+	material->SetEmissiveMap(emissiveMap);
+}
+
+void MeshRenderer::SetRoughnessValue(float value)
+{
+    material->SetRoughness(value);
+}
+
+void MeshRenderer::SetMetalnessValue(float value)
+{
+	material->SetMetalness(value);
+}
+
+void MeshRenderer::SetAmbientOcclusionValue(float value)
+{
+	material->SetAmbientOcclusion(value);
+}
+
+void MeshRenderer::SetEmissiveColor(const glm::vec3& color)
+{
+	material->SetEmissiveColor(color);
+}
+
+void MeshRenderer::SetEmissiveIntensity(float intensity)
+{
+	material->SetEmissiveIntensity(intensity);
+}
+
+std::shared_ptr<Image> MeshRenderer::GetNormalMap() const
+{
+	return material->GetNormalMap();
+}
+
+std::shared_ptr<Image> MeshRenderer::GetRoughnessMap() const
+{
+	return material->GetRoughnessMap();
+}
+
+std::shared_ptr<Image> MeshRenderer::GetMetalnessMap() const
+{
+	return material->GetMetalnessMap();
+}
+
+std::shared_ptr<Image> MeshRenderer::GetAmbientOcclusionMap() const
+{
+	return material->GetAOMap();
+}
+
+std::shared_ptr<Image> MeshRenderer::GetEmissiveMap() const
+{
+	return material->GetEmissiveMap();
+}
+
+float MeshRenderer::GetRoughnessValue() const
+{
+    return material->GetRoughnessValue();
+}
+
+float MeshRenderer::GetMetalnessValue() const
+{
+	return material->GetMetalnessValue();
+}
+
+float MeshRenderer::GetAmbientOcclusionValue() const
+{
+	return material->GetAmbientOcclusionValue();
+}
+
+glm::vec3 MeshRenderer::GetEmissiveColor() const
+{
+	return material->GetEmissiveColor();
+}
+
+float MeshRenderer::GetEmissiveIntensity() const
+{
+    return material->GetEmissiveIntensity();
+}
+
 void MeshRenderer::SetMaterial(std::shared_ptr<Material> material)
 {
     this->material = material;
@@ -93,8 +193,7 @@ std::shared_ptr<Material> MeshRenderer::GetMaterial() const
 
 void MeshRenderer::SetImage(std::shared_ptr<Image> image)
 {
-    material->setImage(image);
-   // this->image = image;
+    material->SetAlbedoMap(image);
 }
 
 //std::shared_ptr<Image> MeshRenderer::GetImage() const
@@ -152,170 +251,78 @@ MonoObject* MeshRenderer::GetSharp()
     return CsharpReference;
 }
 
-void MeshRenderer::Render() const
-{
-    material->shader->Bind();
-
-    glm::vec4 color(material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
-    material->shader->SetUniform("modColor", color);
-
-    if (!material->image().image_path.empty()) {
-        material->image().bind();
-        material->shader->SetUniform("u_HasTexture", true);
-        material->shader->SetUniform("texture1", 0);
+void MeshRenderer::Render() const {
+    if (!mesh || !material || !material->GetShader()) 
+        return;
+    
+    Shaders* shader = material->GetShader();
+    shader->Bind();
+    
+    // Apply all material uniforms to shader
+    material->ApplyShaderUniforms(
+        shader,
+        owner->GetTransform()->GetMatrix(),
+        Application->camera->view(),
+        Application->camera->projection(),
+        Application->camera->GetTransform().GetPosition()
+    );
+    
+    // Configure lights if using PBR shader
+    if (material->GetShaderType() == PBR) {
+        auto& lights = Application->root->GetActiveScene()->_lights;
+        material->ConfigureLighting(shader, lights, Application->camera->GetTransform().GetPosition());
     }
-    else {
-        material->shader->SetUniform("u_HasTexture", false);
-    }
-
-    material->shader->SetUniform("model", owner->GetTransform()->GetMatrix());
-    material->shader->SetUniform("view", Application->camera->view());
-    material->shader->SetUniform("projection", Application->camera->projection());
-
-    int numPointLights = static_cast<int>(Application->root->GetActiveScene()->_lights.size());
-    int i = 0;
-
-    switch (material->shaderType)
-    {
-    case LIGHT:
-
-        material->setShaderUniform("viewPos", Application->camera->GetTransform().GetPosition());
-        
-        material->setShaderUniform("numPointLights", numPointLights);
-        
-        
-        for (const auto& light : Application->root->GetActiveScene()->_lights)
-        {
-            std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
-            material->setShaderUniform(pointLightstr + ".position", light->GetComponent<Transform_Component>()->GetPosition());
-            material->setShaderUniform(pointLightstr + ".ambient", light->GetComponent<LightComponent>()->GetAmbient());
-            material->setShaderUniform(pointLightstr + ".diffuse", light->GetComponent<LightComponent>()->GetDiffuse());
-            material->setShaderUniform(pointLightstr + ".specular", light->GetComponent<LightComponent>()->GetSpecular());
-            material->setShaderUniform(pointLightstr + ".constant", light->GetComponent<LightComponent>()->GetConstant());
-            material->setShaderUniform(pointLightstr + ".linear", light->GetComponent<LightComponent>()->GetLinear());
-            material->setShaderUniform(pointLightstr + ".quadratic", light->GetComponent<LightComponent>()->GetQuadratic());
-            material->setShaderUniform(pointLightstr + ".radius", light->GetComponent<LightComponent>()->GetRadius());
-            material->setShaderUniform(pointLightstr + ".intensity", light->GetComponent<LightComponent>()->GetIntensity());
-            i++;
-        }
-
-        material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        material->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-        material->setShaderUniform("dirLight.intensity", 3.0f);
-
-        break;
-    case WATER:
-
-        material->shader->SetUniform("u_Time", owner->GetTimeActive());
-        material->shader->SetUniform("u_Amplitude", owner->GetComponent<ShaderComponent>()->amplitude);
-        material->shader->SetUniform("u_Frequency", owner->GetComponent<ShaderComponent>()->frequency);
-        material->shader->SetUniform("u_ColorLow", glm::vec3(0.0f, 0.0f, 1.0f));
-        material->shader->SetUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
-        material->shader->SetUniform("u_Factor", 0.8f);
-
-        break;
-    default:
-        break;
-    }
-
+    
+    // Bind material textures
+    material->Bind();
+    
+    // Render the mesh
     glBindVertexArray(mesh->model.get()->GetModelData().vA);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
-
     glDrawElements(GL_TRIANGLES, mesh->model->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
-
-    material->shader->UnBind();
-
-    if (material->image().image_path != "") {
-        material->unbind();
-    }
-
+    
+    // Cleanup
+    material->Unbind();
+    shader->UnBind();
+    
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindVertexArray(0); 
-
+    glBindVertexArray(0);
+    
+    // Render bounding box if enabled
     mesh->drawBoundingBox(mesh->_boundingBox);
 }
 
-void MeshRenderer::RenderMainCamera() const
-{
-    material->shader->Bind();
+void MeshRenderer::RenderMainCamera() const {
+    if (!mesh || !material || !material->GetShader())
+        return;
 
-    glm::vec4 color(material->GetColor().x, material->GetColor().y, material->GetColor().z, material->GetColor().w);
-    material->shader->SetUniform("modColor", color);
+    Shaders* shader = material->GetShader();
+    shader->Bind();
 
-    if (material->image().image_path != "") {
-        material->image().bind();
-        material->shader->SetUniform("u_HasTexture", true);
-        material->shader->SetUniform("texture1", 0);
+    material->ApplyShaderUniforms(
+        shader,
+        owner->GetTransform()->GetMatrix(),
+        Application->root->mainCamera->GetComponent<CameraComponent>()->view(),
+        Application->root->mainCamera->GetComponent<CameraComponent>()->projection(),
+        Application->root->mainCamera->GetTransform()->GetPosition()
+    );
+
+    if (material->GetShaderType() == PBR) {
+        auto& lights = Application->root->GetActiveScene()->_lights;
+        material->ConfigureLighting(shader, lights, Application->root->mainCamera->GetTransform()->GetPosition());
     }
-    else {
-        material->shader->SetUniform("u_HasTexture", false);
-    }
 
-    material->shader->SetUniform("model", owner->GetTransform()->GetMatrix());
-    material->shader->SetUniform("view", Application->root->mainCamera->GetComponent<CameraComponent>()->view());
-    material->shader->SetUniform("projection", Application->root->mainCamera->GetComponent<CameraComponent>()->projection());
-
-    int numPointLights = static_cast<int>(Application->root->GetActiveScene()->_lights.size());
-    int i = 0;
-
-    switch (material->shaderType)
-    {
-    case LIGHT:
-
-        material->setShaderUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
-
-        material->setShaderUniform("numPointLights", numPointLights);
-
-
-        for (const auto& light : Application->root->GetActiveScene()->_lights)
-        {
-            std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
-            material->setShaderUniform(pointLightstr + ".position", light->GetComponent<Transform_Component>()->GetPosition());
-            material->setShaderUniform(pointLightstr + ".ambient", light->GetComponent<LightComponent>()->GetAmbient());
-            material->setShaderUniform(pointLightstr + ".diffuse", light->GetComponent<LightComponent>()->GetDiffuse());
-            material->setShaderUniform(pointLightstr + ".specular", light->GetComponent<LightComponent>()->GetSpecular());
-            material->setShaderUniform(pointLightstr + ".constant", light->GetComponent<LightComponent>()->GetConstant());
-            material->setShaderUniform(pointLightstr + ".linear", light->GetComponent<LightComponent>()->GetLinear());
-            material->setShaderUniform(pointLightstr + ".quadratic", light->GetComponent<LightComponent>()->GetQuadratic());
-            material->setShaderUniform(pointLightstr + ".radius", light->GetComponent<LightComponent>()->GetRadius());
-            material->setShaderUniform(pointLightstr + ".intensity", light->GetComponent<LightComponent>()->GetIntensity());
-            i++;
-        }
-
-        material->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        material->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        material->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        material->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-        material->setShaderUniform("dirLight.intensity", 3.0f);
-
-        break;
-    case WATER:
-
-        material->shader->SetUniform("u_Time", owner->GetTimeActive());
-        material->shader->SetUniform("u_Amplitude", owner->GetComponent<ShaderComponent>()->amplitude);
-        material->shader->SetUniform("u_Frequency", owner->GetComponent<ShaderComponent>()->frequency);
-        material->shader->SetUniform("u_ColorLow", glm::vec3(0.0f, 0.0f, 1.0f));
-        material->shader->SetUniform("u_ColorHigh", glm::vec3(1.0f, 1.0f, 1.0f));
-        material->shader->SetUniform("u_Factor", 0.8f);
-
-        break;
-    default:
-        break;
-    }
+    material->Bind();
 
     glBindVertexArray(mesh->model.get()->GetModelData().vA);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
-
     glDrawElements(GL_TRIANGLES, mesh->model->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
 
-    material->shader->UnBind();
-
-    if (material->image().image_path != "") {
-        material->unbind();
-    }
+    material->Unbind();
+    shader->UnBind();
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    //mesh->drawBoundingBox(mesh->_boundingBox);
 }

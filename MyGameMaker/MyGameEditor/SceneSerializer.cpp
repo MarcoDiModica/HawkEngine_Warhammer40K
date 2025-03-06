@@ -206,8 +206,8 @@ void SceneSerializer::DeSerialize(std::string path) {
 
 							if (value["material_path"]) {
 
-								std::string path = value["material_path"].as<std::string>();
-								_material = _material->LoadBinary(path);
+								/*std::string path = value["material_path"].as<std::string>();
+								_material = _material->LoadBinary(path);*/
 							}
 
 							Application->root->AddMeshRenderer(*game_obj, _mesh, "default.png", _material);
@@ -281,8 +281,8 @@ GameObject& SceneSerializer::DeSerializeChild(YAML::Node _node, YAML::Node& mesh
 
 					if (value["material_path"]) {
 
-						std::string path = value["material_path"].as<std::string>();
-						_material = _material->LoadBinary(path);
+						/*std::string path = value["material_path"].as<std::string>();
+						_material = _material->LoadBinary(path);*/
 					}
 
 					Application->root->AddMeshRenderer(*game_obj, _mesh,"default.png", _material);

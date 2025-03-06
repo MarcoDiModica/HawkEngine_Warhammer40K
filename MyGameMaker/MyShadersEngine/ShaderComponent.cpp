@@ -1,61 +1,80 @@
 #include "ShaderComponent.h"
+#include "../MyGameEngine/GameObject.h"
 
-#include "MyGameEditor/App.h"
-#include "MyGameEditor/Root.h"
-
-ShaderComponent::ShaderComponent(GameObject* owner) : Component(owner) { name = "MeshRenderer"; }
-
-void ShaderComponent::Start()
+ShaderComponent::ShaderComponent(GameObject* owner)
+	: Component(owner),
+	shaderType(UNLIT),
+	shaders(std::make_unique<Shaders>()),
+	ownerMaterial(nullptr)
 {
+	name = "ShaderComponent";
 }
 
-void ShaderComponent::Update(float deltaTime)
-{
+void ShaderComponent::Start() {
+	LoadDefaultShaders();
+
+	if (ownerMaterial) {
+		ownerMaterial->SetShaderType(shaderType);
+		ownerMaterial->SetShader(shaders.get());
+	}
 }
 
-void ShaderComponent::Destroy()
-{
-	shader = nullptr;
-	ownerMaterial->shader = nullptr;
-	ownerMaterial->useShader = false;
-
+void ShaderComponent::Update(float deltaTime) {
 }
 
-std::unique_ptr<Component> ShaderComponent::Clone(GameObject* owner)
-{
+void ShaderComponent::Destroy() {
+}
+
+std::unique_ptr<Component> ShaderComponent::Clone(GameObject* owner) {
 	return std::unique_ptr<Component>();
 }
 
-void ShaderComponent::SetShader(Shaders* newShader)
-{
-	shader = newShader;
+void ShaderComponent::SetShaderType(ShaderType type) {
+	if (shaderType != type) {
+		shaderType = type;
+		LoadDefaultShaders();
+
+		if (ownerMaterial) {
+			ownerMaterial->SetShaderType(shaderType);
+		}
+	}
 }
 
-Shaders* ShaderComponent::GetShader() const
-{
-	return shader;
+ShaderType ShaderComponent::GetShaderType() const {
+	return shaderType;
 }
 
-void ShaderComponent::SetShaderType(ShaderType newType)
-{
-	shader = &Application->root->shaders[newType];
-	ownerMaterial->shader = shader;
-	ownerMaterial->shaderType = newType;
-	ownerMaterial->useShader = true;
-	type = newType;
+bool ShaderComponent::LoadShaders(const std::string& vertexShaderPath, const std::string& fragmentShaderPath) {
+	bool success = shaders->LoadShaders(vertexShaderPath, fragmentShaderPath);
+
+	if (success && ownerMaterial) {
+		ownerMaterial->SetShader(shaders.get());
+	}
+
+	return success;
 }
 
-ShaderType ShaderComponent::GetShaderType() const
-{
-	return type;
+void ShaderComponent::SetOwnerMaterial(Material* material) {
+	ownerMaterial = material;
+
+	if (ownerMaterial && shaders) {
+		ownerMaterial->SetShader(shaders.get());
+		ownerMaterial->SetShaderType(shaderType);
+	}
 }
 
-void ShaderComponent::SetOwnerMaterial(Material* newOwnerMaterial)
-{
-	ownerMaterial = newOwnerMaterial;
-}
+void ShaderComponent::LoadDefaultShaders() {
+	switch (shaderType) {
+	case UNLIT:
+		shaders->LoadShaders("Shaders/unlit_vertex.glsl", "Shaders/unlit_fragment.glsl");
+		break;
 
-Material* ShaderComponent::GetOwnerMaterial() const
-{
-	return ownerMaterial;
+	case PBR:
+		shaders->LoadShaders("Shaders/pbr_vertex.glsl", "Shaders/pbr_fragment.glsl");
+		break;
+
+	default:
+		shaders->LoadShaders("Shaders/unlit_vertex.glsl", "Shaders/unlit_fragment.glsl");
+		break;
+	}
 }

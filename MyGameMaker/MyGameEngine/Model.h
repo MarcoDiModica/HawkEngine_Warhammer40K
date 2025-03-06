@@ -23,21 +23,37 @@ enum class Shapes
 
 struct Vertex
 {
-	vec3 position;
+	vec3 position{};
+	vec3 normal{};
+	vec2 texCoords{};
+	vec3 tangent{};
+	vec3 bitangent{};
+	int m_BoneIDs[MAX_BONE_INFLUENCE]{};
+	float m_Weights[MAX_BONE_INFLUENCE]{};
 
-	int m_BoneIDs[MAX_BONE_INFLUENCE];
+	Vertex() : position(0.0f), normal(0.0f), texCoords(0.0f), tangent(0.0f), bitangent(0.0f) {
+		for (int i = 0; i < MAX_BONE_INFLUENCE; i++) {
+			m_BoneIDs[i] = -1;
+			m_Weights[i] = 0.0f;
+		}
+	}
 
-	float m_Weights[MAX_BONE_INFLUENCE];
+	Vertex(vec3 pos) : position(pos), normal(0.0f), texCoords(0.0f), tangent(0.0f), bitangent(0.0f) {
+		for (int i = 0; i < MAX_BONE_INFLUENCE; i++) {
+			m_BoneIDs[i] = -1;
+			m_Weights[i] = 0.0f;
+		}
+	}
 };
 
 struct ModelData
 {
 	unsigned int vBPosID = -1, vBNormalsID = -1, vBColorsID = -1, vBTCoordsID = -1, iBID = -1, vA = -1;
-	std::vector<Vertex> vertexData;
-	std::vector<unsigned int> indexData;
-	std::vector<vec2> vertex_texCoords;
-	std::vector<vec3> vertex_normals;
-	std::vector<vec3> vertex_colors;
+	std::vector<Vertex> vertexData{};
+	std::vector<unsigned int> indexData{};
+	std::vector<vec2> vertex_texCoords{};
+	std::vector<vec3> vertex_normals{};
+	std::vector<vec3> vertex_colors{};
 };
 
 class Model

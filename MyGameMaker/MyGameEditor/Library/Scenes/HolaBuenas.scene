@@ -220,7 +220,7 @@ GameObject1:
         row3:
           col0: 0
           col1: 20
-          col2: -10.000000011102198
+          col2: -10.000000002057259
           col3: 1
       local_matrix:
         row0:
@@ -241,7 +241,7 @@ GameObject1:
         row3:
           col0: 0
           col1: 20
-          col2: -10.000000011102198
+          col2: -10.000000002057259
           col3: 1
     CameraComponent:
       name: CameraComponent

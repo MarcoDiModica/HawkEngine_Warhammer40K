@@ -1,12 +1,15 @@
 #version 450 core
 
-layout(location = 0) in vec3 aPos; // Position attribute
-layout(location = 1) in vec2 aTexCoord; // Texture coordinate attribute
-layout(location = 2) in vec3 aNormal; // Normal attribute
+layout(location = 0) in vec3 aPos;
+layout(location = 1) in vec2 aTexCoord;
+layout(location = 2) in vec3 aNormal;
+layout(location = 3) in vec3 aTangent;
+layout(location = 4) in vec3 aBitangent;
 
-out vec2 TexCoord; // Texture coordinate of the fragment
-out vec3 FragPos; // Position of the fragment
-out vec3 Normal; // Normal of the fragment
+out vec2 TexCoord;
+out vec3 FragPos;
+out vec3 Normal;
+out mat3 TBN;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -17,12 +20,41 @@ void main()
     // Pass the texture coordinates to the fragment shader
     TexCoord = aTexCoord;
 
-    // Pass the fragment position to the fragment shader
+    // Calculate world-space fragment position
     FragPos = vec3(model * vec4(aPos, 1.0));
 
-    // Pass the normal to the fragment shader
-    Normal = mat3(transpose(inverse(model))) * aNormal;
-
-    // Transform the vertex position to clip space
+    // Calculate normal matrix (properly handles non-uniform scaling)
+    mat3 normalMatrix = transpose(inverse(mat3(model)));
+    
+    // Transform normal, tangent and bitangent to world space
+    vec3 N = normalize(normalMatrix * aNormal);
+    
+    // Check if we have tangent/bitangent data
+    vec3 T = vec3(0.0);
+    vec3 B = vec3(0.0);
+    
+    // Only build TBN if we have valid tangent data
+    if(length(aTangent) > 0.0) {
+        T = normalize(normalMatrix * aTangent);
+        // Re-orthogonalize T with respect to N
+        T = normalize(T - dot(T, N) * N);
+        // Calculate B from T and N for consistency
+        B = normalize(cross(N, T));
+    } else {
+        // Create arbitrary TBN (less accurate but functional)
+        T = normalize(cross(N, vec3(0.0, 1.0, 0.0)));
+        if(length(T) < 0.01) {
+            T = normalize(cross(N, vec3(1.0, 0.0, 0.0)));
+        }
+        B = normalize(cross(N, T));
+    }
+    
+    // Output TBN matrix for normal mapping
+    TBN = mat3(T, B, N);
+    
+    // Output regular normal for fallback
+    Normal = N;
+    
+    // Transform vertex position
     gl_Position = projection * view * model * vec4(aPos, 1.0);
 }

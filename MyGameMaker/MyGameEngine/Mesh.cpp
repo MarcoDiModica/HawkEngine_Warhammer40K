@@ -85,6 +85,128 @@ void Mesh::CalculateNormals() {
 	//normals_buffer.LoadData(_normals.data(), _normals.size() * sizeof(glm::vec3));
 }
 
+void Mesh::CalculateTangents() {
+	// Resize tangent and bitangent arrays to match vertices
+	std::vector<glm::vec3> tangents(_vertices.size(), glm::vec3(0.0f));
+	std::vector<glm::vec3> bitangents(_vertices.size(), glm::vec3(0.0f));
+
+	// Calculate tangents and bitangents for each triangle
+	for (size_t i = 0; i < _indices.size(); i += 3) {
+		unsigned int idx0 = _indices[i];
+		unsigned int idx1 = _indices[i + 1];
+		unsigned int idx2 = _indices[i + 2];
+
+		glm::vec3& v0 = _vertices[idx0];
+		glm::vec3& v1 = _vertices[idx1];
+		glm::vec3& v2 = _vertices[idx2];
+
+		// Get texture coordinates
+		glm::vec2 uv0, uv1, uv2;
+		if (i < model->GetModelData().vertex_texCoords.size()) {
+			uv0 = model->GetModelData().vertex_texCoords[idx0];
+			uv1 = model->GetModelData().vertex_texCoords[idx1];
+			uv2 = model->GetModelData().vertex_texCoords[idx2];
+		}
+		else {
+			// If no texture coordinates, use default
+			uv0 = glm::vec2(0.0f, 0.0f);
+			uv1 = glm::vec2(1.0f, 0.0f);
+			uv2 = glm::vec2(0.0f, 1.0f);
+		}
+
+		// Calculate edges of the triangle
+		glm::vec3 edge1 = v1 - v0;
+		glm::vec3 edge2 = v2 - v0;
+
+		// Calculate UV deltas
+		glm::vec2 deltaUV1 = uv1 - uv0;
+		glm::vec2 deltaUV2 = uv2 - uv0;
+
+		// Calculate tangent and bitangent
+		float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+
+		glm::vec3 tangent, bitangent;
+
+		tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+		tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+		tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+
+		bitangent.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
+		bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
+		bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
+
+		// Add to vertices (for averaging)
+		tangents[idx0] += tangent;
+		tangents[idx1] += tangent;
+		tangents[idx2] += tangent;
+
+		bitangents[idx0] += bitangent;
+		bitangents[idx1] += bitangent;
+		bitangents[idx2] += bitangent;
+	}
+
+	// Add calculated tangents and bitangents to model data
+	model->GetModelData().vertex_tangents.resize(_vertices.size());
+	model->GetModelData().vertex_bitangents.resize(_vertices.size());
+
+	// Normalize all tangents and bitangents
+	for (size_t i = 0; i < _vertices.size(); i++) {
+		// Gram-Schmidt orthogonalization to make tangent perpendicular to normal
+		glm::vec3 normal = glm::vec3(0.0f);
+		if (i < model->GetModelData().vertex_normals.size()) {
+			normal = model->GetModelData().vertex_normals[i];
+		}
+		else if (i < _normals.size()) {
+			normal = _normals[i];
+		}
+
+		if (glm::length(normal) > 0.0f && glm::length(tangents[i]) > 0.0f) {
+			// Orthogonalize tangent
+			glm::vec3 t = glm::normalize(tangents[i]);
+			t = glm::normalize(t - normal * glm::dot(normal, t));
+
+			// Calculate handedness
+			float handedness = (glm::dot(glm::cross(normal, t), bitangents[i]) < 0.0f) ? -1.0f : 1.0f;
+
+			// Store final tangent and bitangent
+			model->GetModelData().vertex_tangents[i] = t;
+			model->GetModelData().vertex_bitangents[i] = handedness * glm::normalize(glm::cross(normal, t));
+		}
+		else {
+			// Fallback to default tangent space
+			model->GetModelData().vertex_tangents[i] = glm::vec3(1.0f, 0.0f, 0.0f);
+			model->GetModelData().vertex_bitangents[i] = glm::vec3(0.0f, 1.0f, 0.0f);
+		}
+	}
+
+	// Update OpenGL buffers with tangent and bitangent data
+	glGenBuffers(1, &model->GetModelData().vBTangentsID);
+	glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBTangentsID);
+	glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_tangents.size() * sizeof(glm::vec3),
+		model->GetModelData().vertex_tangents.data(), GL_STATIC_DRAW);
+
+	glGenBuffers(1, &model->GetModelData().vBBitangentsID);
+	glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBBitangentsID);
+	glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_bitangents.size() * sizeof(glm::vec3),
+		model->GetModelData().vertex_bitangents.data(), GL_STATIC_DRAW);
+
+	// Update VAO to include tangent and bitangent attributes
+	glBindVertexArray(model->GetModelData().vA);
+
+	// Tangent (attribute 3)
+	glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBTangentsID);
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+
+	// Bitangent (attribute 4)
+	glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBBitangentsID);
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+
 void Mesh::Draw() const
 {
 	//display();
@@ -511,8 +633,6 @@ void Mesh::loadToOpenGL()
 		//loadNormalsToOpenGL();
 		//loadFaceNormalsToOpenGL();
 	}
-
-
 
 	//buffer de index
 	(glCreateBuffers(1, &model->GetModelData().iBID));

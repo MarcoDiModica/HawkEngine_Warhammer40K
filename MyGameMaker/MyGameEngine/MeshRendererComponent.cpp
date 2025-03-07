@@ -124,50 +124,31 @@ MonoObject* MeshRenderer::GetSharp() {
 }
 
 void MeshRenderer::Render() const {
-	Shaders* shader = ShaderManager::GetInstance().GetShader(material->GetShaderType());
-	if (!shader) {
-		std::cerr << "Shader not found for type " << static_cast<int>(material->GetShaderType()) << std::endl;
-		return;
-	}
+	if (!mesh || !material || !owner) return;
 
-	shader->Bind();
+	material->ApplyShader(owner->GetTransform()->GetMatrix(),
+		Application->camera->view(),
+		Application->camera->projection());
 
-	if (!material->image().image_path.empty()) {
-		material->bind();
-		shader->SetUniform("u_HasTexture", 1);
-		shader->SetUniform("texture1", 0);
-	}
-	else {
-		shader->SetUniform("u_HasTexture", 0);
-	}
-
-	shader->SetUniform("modColor", glm::vec4(material->GetColor()));
-	shader->SetUniform("model", owner->GetTransform()->GetMatrix());
-
-	glm::mat4 viewMatrix = Application->camera->view();
-	glm::mat4 projectionMatrix = Application->camera->projection();
-
-	switch (material->GetShaderType()) {
-	case ShaderType::UNLIT:
-		RenderWithUnlitShader(shader, viewMatrix, projectionMatrix);
-		break;
-	case ShaderType::PBR:
-		RenderWithPBRShader(shader, viewMatrix, projectionMatrix);
-		break;
-	}
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glBindVertexArray(mesh->model.get()->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
 	glDrawElements(GL_TRIANGLES, mesh->model->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
 
-	shader->UnBind();
-	if (!material->image().image_path.empty()) {
-		material->unbind();
-	}
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	mesh->drawBoundingBox(mesh->_boundingBox);
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	if (mesh->drawBoundingbox) {
+		mesh->drawBoundingBox(mesh->_boundingBox);
+	}
 }
 
 void MeshRenderer::RenderWithUnlitShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const {

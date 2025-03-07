@@ -10,9 +10,9 @@
 unsigned int Material::next_id = 0;
 
 Material::Material() : gid(next_id++) {
-	color = vec4(1.0f);
+	color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	imagePtr = std::make_shared<Image>();
-	shaderType = ShaderType::UNLIT;
+	shaderType = ShaderType::PBR;
 }
 
 static auto GLWrapMode(Material::WrapModes mode) {
@@ -51,20 +51,66 @@ const glm::vec4& Material::GetColor() const {
 void Material::bind() const {
 	if (!imagePtr || imagePtr->id() == 0) return;
 
+	// Albedo texture (unit 0)
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, imagePtr->id());
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLWrapMode(wrapMode));
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GLWrapMode(wrapMode));
-
 	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GLMinFilter(filter));
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GLMagFilter(filter));
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	// Normal map (unit 1)
+	if (normalMapPtr && normalMapPtr->id() != 0) {
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, normalMapPtr->id());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLWrapMode(wrapMode));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GLWrapMode(wrapMode));
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GLMinFilter(filter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GLMagFilter(filter));
+	}
 
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4f);
+	// Metallic map (unit 2)
+	if (metallicMapPtr && metallicMapPtr->id() != 0) {
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, metallicMapPtr->id());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLWrapMode(wrapMode));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GLWrapMode(wrapMode));
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GLMinFilter(filter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GLMagFilter(filter));
+	}
+
+	// Roughness map (unit 3)
+	if (roughnessMapPtr && roughnessMapPtr->id() != 0) {
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, roughnessMapPtr->id());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLWrapMode(wrapMode));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GLWrapMode(wrapMode));
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GLMinFilter(filter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GLMagFilter(filter));
+	}
+
+	// AO map (unit 4)
+	if (aoMapPtr && aoMapPtr->id() != 0) {
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, aoMapPtr->id());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLWrapMode(wrapMode));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GLWrapMode(wrapMode));
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GLMinFilter(filter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GLMagFilter(filter));
+	}
 }
 
 void Material::unbind() const {
-	glBindTexture(GL_TEXTURE_2D, 0);
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
 }
 
 void Material::ApplyShader(const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection) const {
@@ -80,14 +126,65 @@ void Material::ApplyShader(const glm::mat4& model, const glm::mat4& view, const 
 	shader->SetUniform("model", model);
 	shader->SetUniform("view", view);
 	shader->SetUniform("projection", projection);
-	shader->SetUniform("modColor", color);
 
-	bool hasTexture = imagePtr && !imagePtr->image_path.empty();
-	shader->SetUniform("u_HasTexture", hasTexture ? 1 : 0);
+	// Check if we have textures and bind them
+	bool hasAlbedoMap = imagePtr && imagePtr->id() != 0;
+	bool hasNormalMap = normalMapPtr && normalMapPtr->id() != 0;
+	bool hasMetallicMap = metallicMapPtr && metallicMapPtr->id() != 0;
+	bool hasRoughnessMap = roughnessMapPtr && roughnessMapPtr->id() != 0;
+	bool hasAoMap = aoMapPtr && aoMapPtr->id() != 0;
 
-	if (hasTexture) {
-		shader->SetUniform("texture1", 0);
+	// Bind albedo texture (unit 0)
+	if (hasAlbedoMap) {
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, imagePtr->id());
 	}
+
+	if (shaderType == ShaderType::UNLIT) {
+		shader->SetUniform("modColor", color);
+		shader->SetUniform("u_HasTexture", hasAlbedoMap);
+		shader->SetUniform("texture1", 0); // Unit 0
+	}
+	else if (shaderType == ShaderType::PBR) {
+		if (hasNormalMap) {
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, normalMapPtr->id());
+		}
+
+		if (hasMetallicMap) {
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, metallicMapPtr->id());
+		}
+
+		if (hasRoughnessMap) {
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, roughnessMapPtr->id());
+		}
+
+		if (hasAoMap) {
+			glActiveTexture(GL_TEXTURE4);
+			glBindTexture(GL_TEXTURE_2D, aoMapPtr->id());
+		}
+
+		shader->SetUniform("albedoColor", color);
+		shader->SetUniform("metallicFactor", metallic);
+		shader->SetUniform("roughnessFactor", roughness);
+		shader->SetUniform("aoFactor", ao);
+
+		shader->SetUniform("u_HasAlbedoMap", hasAlbedoMap ? 1 : 0);
+		shader->SetUniform("u_HasNormalMap", hasNormalMap ? 1 : 0);
+		shader->SetUniform("u_HasMetallicMap", hasMetallicMap ? 1 : 0);
+		shader->SetUniform("u_HasRoughnessMap", hasRoughnessMap ? 1 : 0);
+		shader->SetUniform("u_HasAoMap", hasAoMap ? 1 : 0);
+
+		shader->SetUniform("albedoMap", 0);  // Unit 0
+		shader->SetUniform("normalMap", 1);  // Unit 1
+		shader->SetUniform("metallicMap", 2); // Unit 2
+		shader->SetUniform("roughnessMap", 3); // Unit 3 
+		shader->SetUniform("aoMap", 4);     // Unit 4
+	}
+
+	glActiveTexture(GL_TEXTURE0);
 }
 
 std::unordered_map<std::string, std::shared_ptr<Material>> materialCache;

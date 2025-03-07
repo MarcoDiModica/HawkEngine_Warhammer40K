@@ -26,10 +26,23 @@ public:
 	void SetVec4(const std::string& name, const glm::vec4& value);
 	void SetMatrix(const std::string& name, const glm::mat4& value);
 
-	// Shader-specific properties that can be exposed to the editor
-	// These will be moved to shader-specific components in the future
-	float frequency = 2.0f;
-	float amplitude = 0.2f;
+	void SetMetallic(float value);
+	void SetRoughness(float value);
+	void SetAO(float value);
+
+	void SetNormalMap(const std::string& path);
+	void SetMetallicMap(const std::string& path);
+	void SetRoughnessMap(const std::string& path);
+	void SetAOMap(const std::string& path);
+
+	float GetMetallic() const;
+	float GetRoughness() const;
+	float GetAO() const;
+
+	bool HasNormalMap() const;
+	bool HasMetallicMap() const;
+	bool HasRoughnessMap() const;
+	bool HasAOMap() const;
 
 	ComponentType GetType() const override { return ComponentType::SHADER; }
 

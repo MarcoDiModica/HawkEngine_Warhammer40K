@@ -194,12 +194,44 @@ void PhysicsModule::DrawDebugDrawer() {
     }
 }
 
+void PhysicsModule::CheckCollisions() {
+    int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
+    for (int i = 0; i < numManifolds; i++) {
+        btPersistentManifold* contactManifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+        const btCollisionObject* btObjA = contactManifold->getBody0();
+        const btCollisionObject* btObjB = contactManifold->getBody1();
+
+        // Buscar los GameObjects en el mapa gameObjectRigidBodyMap
+        GameObject* objA = nullptr;
+        GameObject* objB = nullptr;
+
+        for (const auto& pair : gameObjectRigidBodyMap) {
+            if (pair.second == btObjA) objA = pair.first;
+            if (pair.second == btObjB) objB = pair.first;
+        }
+
+        // Si encontramos los GameObjects correspondientes
+        if (objA && objB) {
+            // Obtener ColliderComponent de cada objeto
+            ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
+            ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+
+            if (colliderA) {
+                colliderA->OnCollisionEnter(colliderB);
+            }
+            if (colliderB) {
+                colliderB->OnCollisionEnter(colliderA);
+            }
+        }
+    }
+}
+
 bool PhysicsModule::Update(double dt) {
 	if (linkPhysicsToScene)
     {
         dynamicsWorld->stepSimulation(static_cast<btScalar>(fixedDeltaTime), 1, dt);
         SyncTransforms();
-        //CheckCollisions();
+        CheckCollisions();
     }
     DrawDebugDrawer();
     return true;
@@ -285,16 +317,6 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     }
 
     std::cout << "Global restitution set to: " << restitutionValue << "\n";
-}
-void PhysicsModule::SetColliderFriction(GameObject& go, float friction) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-        rigidBody->setFriction(friction);
-        rigidBody->setRollingFriction(friction);
-        rigidBody->setSpinningFriction(friction);
-        std::cout << "Friction set to " << friction << " for GameObject.\n";
-    }
 }
 
 void PhysicsModule::SetBounciness(GameObject& go, float restitution) {

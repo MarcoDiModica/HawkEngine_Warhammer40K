@@ -6,30 +6,6 @@
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 
-struct CollisionCallback : public btCollisionWorld::ContactResultCallback {
-    ColliderComponent* colliderComponent;
-
-    CollisionCallback(ColliderComponent* component) : colliderComponent(component) {}
-
-    virtual btScalar addSingleResult(btManifoldPoint& cp,
-        const btCollisionObjectWrapper* colObj0, int partId0, int index0,
-        const btCollisionObjectWrapper* colObj1, int partId1, int index1) override {
-        const btCollisionObject* otherObject = (colliderComponent->GetRigidBody() == colObj0->getCollisionObject())
-            ? colObj1->getCollisionObject()
-            : colObj0->getCollisionObject();
-
-        GameObject* otherGameObject = static_cast<GameObject*>(otherObject->getUserPointer());
-
-        if (otherGameObject) {
-            colliderComponent->OnCollisionEnter(otherGameObject->GetComponent<ColliderComponent>());
-        }
-
-        return 0;
-    }
-};
-
-
-
 ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) { name = "ColliderComponent"; physics = physicsModule; isForStreetLocal = isForStreet; }
 
 ColliderComponent::~ColliderComponent() {
@@ -45,6 +21,81 @@ void ColliderComponent::Start() {
 	}
     CreateCollider();
 }
+
+
+
+void ColliderComponent::OnCollisionEnter(ColliderComponent* other) {
+    std::cout << "hello" << std::endl;
+}
+
+
+void ColliderComponent::Update(float deltaTime) {
+    if (snapToPosition && owner) {
+		SnapToPosition();
+    }
+}
+
+
+void ColliderComponent::Destroy() {
+    if (rigidBody) {
+        physics->dynamicsWorld->removeRigidBody(rigidBody);
+        delete rigidBody->getMotionState();
+        delete rigidBody;
+        rigidBody = nullptr;
+    }
+
+    if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
+        physics->gameObjectRigidBodyMap.erase(owner);
+    }
+}
+
+std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
+    return std::make_unique<ColliderComponent>(new_owner, physics);
+}
+
+
+
+MonoObject* ColliderComponent::GetSharp()
+{
+    if (CsharpReference) {
+        return CsharpReference;
+    }
+
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
+    if (!klass) {
+        return nullptr;
+    }
+
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+    if (!monoObject) {
+        return nullptr;
+    }
+
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Collider:.ctor(uintptr,HawkEngine.GameObject)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    if (!method)
+    {
+        return nullptr;
+    }
+
+    uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+    MonoObject* ownerGo = owner->GetSharp();
+    if (!ownerGo)
+    {
+        return nullptr;
+    }
+
+    void* args[2]{};
+    args[0] = &componentPtr;
+    args[1] = ownerGo;
+
+    mono_runtime_invoke(method, monoObject, args, nullptr);
+
+    CsharpReference = monoObject;
+    return CsharpReference;
+}
+
+
 
 void ColliderComponent::SetTrigger(bool trigger) {
     if (rigidBody) {
@@ -161,80 +212,6 @@ void ColliderComponent::SnapToPosition() {
     rigidBody->setCenterOfMassTransform(transform);
     std::cout << "Collider position snapped to bounding box center: ("
         << position.x << ", " << position.y << ", " << position.z << ")\n";
-}
-
-MonoObject* ColliderComponent::GetSharp()
-{
-	if (CsharpReference) {
-		return CsharpReference;
-	}
-
-	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
-	if (!klass) {
-		return nullptr;
-	}
-
-	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
-	if (!monoObject) {
-		return nullptr;
-	}
-
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Collider:.ctor(uintptr,HawkEngine.GameObject)", true);
-	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-	if (!method)
-	{
-		return nullptr;
-	}
-
-	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
-	MonoObject* ownerGo = owner->GetSharp();
-	if (!ownerGo)
-	{
-		return nullptr;
-	}
-
-    void* args[2]{};
-	args[0] = &componentPtr;
-	args[1] = ownerGo;
-
-	mono_runtime_invoke(method, monoObject, args, nullptr);
-
-	CsharpReference = monoObject;
-	return CsharpReference;
-}
-
-
-void ColliderComponent::OnCollisionEnter(ColliderComponent* other) {
-    std::cout << "hello" << std::endl;
-}
-
-
-void ColliderComponent::Update(float deltaTime) {
-    if (snapToPosition && owner) {
-		SnapToPosition();
-    }
-    if (rigidBody) {
-        CollisionCallback collisionCallback(this);
-        physics->dynamicsWorld->contactTest(rigidBody, collisionCallback);
-    }
-}
-
-
-void ColliderComponent::Destroy() {
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
-    }
-
-    if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
-        physics->gameObjectRigidBodyMap.erase(owner);
-    }
-}
-
-std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
-    return std::make_unique<ColliderComponent>(new_owner, physics);
 }
 
 

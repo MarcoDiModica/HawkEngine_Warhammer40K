@@ -1,61 +1,87 @@
 #include "ShaderComponent.h"
+#include "../MyGameEngine/ShaderManager.h"
 
-#include "MyGameEditor/App.h"
-#include "MyGameEditor/Root.h"
-
-ShaderComponent::ShaderComponent(GameObject* owner) : Component(owner) { name = "MeshRenderer"; }
-
-void ShaderComponent::Start()
-{
+ShaderComponent::ShaderComponent(GameObject* owner)
+	: Component(owner), shaderType(ShaderType::UNLIT), ownerMaterial(nullptr) {
+	name = "Shader";
 }
 
-void ShaderComponent::Update(float deltaTime)
-{
+void ShaderComponent::Start() {
+	// Initialize shader component
 }
 
-void ShaderComponent::Destroy()
-{
-	shader = nullptr;
-	ownerMaterial->shader = nullptr;
-	ownerMaterial->useShader = false;
-
+void ShaderComponent::Update(float deltaTime) {
+	// Update shader parameters if needed
 }
 
-std::unique_ptr<Component> ShaderComponent::Clone(GameObject* owner)
-{
-	return std::unique_ptr<Component>();
+void ShaderComponent::Destroy() {
+	ownerMaterial = nullptr;
 }
 
-void ShaderComponent::SetShader(Shaders* newShader)
-{
-	shader = newShader;
+std::unique_ptr<Component> ShaderComponent::Clone(GameObject* owner) {
+	auto component = std::make_unique<ShaderComponent>(owner);
+	component->shaderType = this->shaderType;
+	component->frequency = this->frequency;
+	component->amplitude = this->amplitude;
+	// Material connection must be set separately
+	return component;
 }
 
-Shaders* ShaderComponent::GetShader() const
-{
-	return shader;
+void ShaderComponent::SetShaderType(ShaderType type) {
+	shaderType = type;
+
+	if (ownerMaterial) {
+		ownerMaterial->SetShaderType(type);
+	}
 }
 
-void ShaderComponent::SetShaderType(ShaderType newType)
-{
-	shader = &Application->root->shaders[newType];
-	ownerMaterial->shader = shader;
-	ownerMaterial->shaderType = newType;
-	ownerMaterial->useShader = true;
-	type = newType;
+ShaderType ShaderComponent::GetShaderType() const {
+	return shaderType;
 }
 
-ShaderType ShaderComponent::GetShaderType() const
-{
-	return type;
+void ShaderComponent::SetOwnerMaterial(Material* material) {
+	ownerMaterial = material;
+	if (ownerMaterial) {
+		ownerMaterial->SetShaderType(shaderType);
+	}
 }
 
-void ShaderComponent::SetOwnerMaterial(Material* newOwnerMaterial)
-{
-	ownerMaterial = newOwnerMaterial;
-}
-
-Material* ShaderComponent::GetOwnerMaterial() const
-{
+Material* ShaderComponent::GetOwnerMaterial() const {
 	return ownerMaterial;
+}
+
+void ShaderComponent::SetFloat(const std::string& name, float value) {
+	Shaders* shader = ShaderManager::GetInstance().GetShader(shaderType);
+	if (shader) {
+		shader->Bind();
+		shader->SetUniform(name, value);
+		shader->UnBind();
+	}
+}
+
+void ShaderComponent::SetVec3(const std::string& name, const glm::vec3& value) {
+	Shaders* shader = ShaderManager::GetInstance().GetShader(shaderType);
+	if (shader) {
+		shader->Bind();
+		shader->SetUniform(name, value);
+		shader->UnBind();
+	}
+}
+
+void ShaderComponent::SetVec4(const std::string& name, const glm::vec4& value) {
+	Shaders* shader = ShaderManager::GetInstance().GetShader(shaderType);
+	if (shader) {
+		shader->Bind();
+		shader->SetUniform(name, value);
+		shader->UnBind();
+	}
+}
+
+void ShaderComponent::SetMatrix(const std::string& name, const glm::mat4& value) {
+	Shaders* shader = ShaderManager::GetInstance().GetShader(shaderType);
+	if (shader) {
+		shader->Bind();
+		shader->SetUniform(name, value);
+		shader->UnBind();
+	}
 }

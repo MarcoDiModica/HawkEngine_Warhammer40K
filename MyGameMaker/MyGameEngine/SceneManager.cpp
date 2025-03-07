@@ -172,7 +172,7 @@ std::shared_ptr<GameObject> SceneManager::CreateLightObject(const std::string& n
     return light;
 }
 
-void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat, std::vector<Shaders> shaders)
+void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
 {
     auto meshRenderer = go.AddComponent<MeshRenderer>();
     auto image = std::make_shared<Image>();
@@ -192,7 +192,7 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
 
     auto shaderComponent = go.AddComponent<ShaderComponent>();
 	shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-	shaderComponent->SetShaderType(ShaderType::LIGHT);
+	shaderComponent->SetShaderType(ShaderType::UNLIT);
 
     meshRenderer->SetImage(image);
 

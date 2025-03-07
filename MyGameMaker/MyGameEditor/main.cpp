@@ -54,6 +54,7 @@
 #include "../MyGameEngine/InputEngine.h"
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
+#include "MyGameEngine/ShaderManager.h"
 
 
 using namespace std;
@@ -86,8 +87,6 @@ int numDirLight = 0;
 std::list<GameObject*> lights;
 
 static EditorCamera* camera = nullptr;
-
-Shaders mainShader;
 
 App* Application = NULL;
 SceneManager* SceneManagement = NULL;
@@ -485,6 +484,11 @@ int main(int argc, char** argv) {
 			Application->physicsModule->Start();
 			MonoManager::GetInstance().Initialize();
 
+			/*if (!ShaderManager::GetInstance().Initialize()) {
+				LOG(LogType::LOG_ERROR, "Failed to initialize shader manager");
+				return false;
+			}*/
+
 			ilInit();
 			iluInit();
 			ilutInit();
@@ -540,6 +544,7 @@ int main(int argc, char** argv) {
 	}
 
 	MonoManager::GetInstance().Shutdown();
+	ShaderManager::GetInstance().Cleanup();
 
 	return result;
 }

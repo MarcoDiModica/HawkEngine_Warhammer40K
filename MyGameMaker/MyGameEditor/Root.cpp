@@ -20,6 +20,7 @@
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
+#include "MyGameEngine/ShaderManager.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -155,7 +156,7 @@ std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, c
 
     auto shaderComponent = planeObject->AddComponent<ShaderComponent>();
     shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-    shaderComponent->SetShaderType(ShaderType::LIGHT);
+    shaderComponent->SetShaderType(ShaderType::UNLIT);
 
     if (mainCamera) {
         initialCanvasOffset = glm::dvec3(position) - mainCamera->GetTransform()->GetPosition();
@@ -210,17 +211,8 @@ bool Root::Awake()
     SceneManagement = new SceneManager();
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
-    //MonoEnvironment* env = new MonoEnvironment();
-	shaders.resize(3);
-    shaders[0].LoadShaders("Assets/Shaders/default_vertex_shader.glsl", "Assets/Shaders/default_fragment_shader.glsl");
-    shaders[1].LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
-    shaders[2].LoadShaders("Assets/Shaders/water_vertex_shader.glsl", "Assets/Shaders/water_fragment_shader.glsl");
-    //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
-    //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
-   /* CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
-    MakeSmokerEmmiter();
-    MakeSmokerEmiter2();*/
+    ShaderManager::GetInstance().Initialize();
 
 	auto blockout = CreateGameObject("Blockout");
 	blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));
@@ -341,9 +333,9 @@ std::shared_ptr<GameObject> Root::CreateLightObject(const std::string& name) {
     return SceneManagement->CreateLightObject(name);
 }
 
-void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat, std::vector<Shaders> shaders)
+void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
 {
-    return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat, shaders);
+    return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat);
 }
 
 std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& path)
@@ -371,7 +363,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
         auto shaderComponent = go->AddComponent<ShaderComponent>();
         shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-        shaderComponent->SetShaderType(ShaderType::LIGHT);
+        shaderComponent->SetShaderType(ShaderType::UNLIT);
 
 		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 		

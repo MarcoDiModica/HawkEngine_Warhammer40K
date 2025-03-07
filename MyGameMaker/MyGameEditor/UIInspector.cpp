@@ -483,13 +483,8 @@ private:
         ShaderType currentType = shader->GetShaderType();
         int shaderType = static_cast<int>(currentType);
 
-        if (ImGui::Combo("Shader Type", &shaderType, "Default\0Light\0Water\0")) {
+        if (ImGui::Combo("Shader Type", &shaderType, "UNLIT\0PBRLIT\0")) {
             shader->SetShaderType(static_cast<ShaderType>(shaderType));
-        }
-
-        if (currentType == ShaderType::WATER) {
-            ImGui::DragFloat("Amplitude", &shader->amplitude, 0.1f, 0.1f, 10.0f);
-            ImGui::DragFloat("Frequency", &shader->frequency, 0.1f, 0.1f, 10.0f);
         }
     }
     #pragma endregion

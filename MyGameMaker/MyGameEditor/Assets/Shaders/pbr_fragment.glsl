@@ -4,11 +4,10 @@ in vec2 TexCoord; // Texture coordinate of the fragment
 in vec3 FragPos; // Position of the fragment
 in vec3 Normal; // Normal of the fragment
 
-
 out vec4 FragColor;
 
 uniform sampler2D texture1; // Texture sampler
-uniform vec4 modColor; // New uniform for color modifier
+uniform vec4 modColor; // Color modifier
 uniform bool u_HasTexture;
 
 struct PointLight {
@@ -31,7 +30,7 @@ struct DirLight {
     float intensity;
 };
 
-#define MAX_POINT_LIGHTS 100 // Max number of point lights, cant be changed dinamically so use we should plan the maximum amountof them 
+#define MAX_POINT_LIGHTS 100 // Max number of point lights
 
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform DirLight dirLight;
@@ -56,14 +55,13 @@ void main()
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     }
     
-    
-    // Sample the texture using the texture coordinates
-	if(u_HasTexture){
-		vec4 texColor = texture(texture1, TexCoord);
-		FragColor = vec4(result, 1.0) * texColor * modColor;
-	}else{
-		FragColor = vec4(result,1.0) * modColor;
-	}
+    // Apply texture if available
+    if(u_HasTexture){
+        vec4 texColor = texture(texture1, TexCoord);
+        FragColor = vec4(result, 1.0) * texColor * modColor;
+    }else{
+        FragColor = vec4(result, 1.0) * modColor;
+    }
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)

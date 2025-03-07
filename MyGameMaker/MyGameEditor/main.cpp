@@ -439,6 +439,14 @@ static void display_func() {
 			objects.push_back(child);
 			RenderOutline(child);
 		}
+
+		if (object->HasComponent<LightComponent>()) {
+			auto& lights = Application->root->GetActiveScene()->_lights;
+			auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
+			if (it == lights.end()) {
+				lights.push_back(object->shared_from_this());
+			}
+		}
 	}
 
 	Application->physicsModule->Update(Application->GetDt());

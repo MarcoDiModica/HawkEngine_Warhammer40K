@@ -214,12 +214,12 @@ bool Root::Awake()
     SoundComponent::InitSharedAudioEngine();
     ShaderManager::GetInstance().Initialize();
 
-	auto blockout = CreateGameObject("Blockout");
+	/*auto blockout = CreateGameObject("Blockout");
 	blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));
 
-    environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
-    ParentGameObject(*environment, *blockout);
-    blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));
+	environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
+	ParentGameObject(*environment, *blockout);
+	blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));*/
 
     return true;
 }
@@ -263,7 +263,7 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
   
-    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -2.0f), "../MyGameEditor/Assets/Textures/UI_Final.png");
+    //auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -2.0f), "../MyGameEditor/Assets/Textures/UI_Final.png");
 
     SceneManagement->Start();
 
@@ -279,10 +279,10 @@ bool Root::Update(double dt)
         UpdateCanvasTransform(canvas, mainCamera);
     }
 
-    if (!hasCreatedCollider) {
+   /* if (!hasCreatedCollider) {
         CreateSceneColliders();
         hasCreatedCollider = true;
-    }
+    }*/
 
     HandleInput(dt);    
 

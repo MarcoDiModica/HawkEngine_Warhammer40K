@@ -13,30 +13,39 @@ Shaders::~Shaders() {
 }
 
 bool Shaders::LoadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile) {
-    std::string vertexShaderSource = LoadShaderSource(vertexShaderFile);
-    std::string fragmentShaderSource = LoadShaderSource(fragmentShaderFile);
+	try {
+		std::string vertexShaderSource = LoadShaderSource(vertexShaderFile);
+		std::string fragmentShaderSource = LoadShaderSource(fragmentShaderFile);
 
-    GLuint vertexShader = CompileShader(vertexShaderSource, GL_VERTEX_SHADER);
-    GLuint fragmentShader = CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+		GLuint vertexShader = CompileShader(vertexShaderSource, GL_VERTEX_SHADER);
+		GLuint fragmentShader = CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
 
-    _program = glCreateProgram();
-    glAttachShader(_program, vertexShader);
-    glAttachShader(_program, fragmentShader);
-    glLinkProgram(_program);
+		_program = glCreateProgram();
+		glAttachShader(_program, vertexShader);
+		glAttachShader(_program, fragmentShader);
+		glLinkProgram(_program);
 
-    GLint success;
-    glGetProgramiv(_program, GL_LINK_STATUS, &success);
-    if (!success) {
-        char infoLog[512];
-        glGetProgramInfoLog(_program, 512, nullptr, infoLog);
-        std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-        return false;
-    }
+		GLint success;
+		glGetProgramiv(_program, GL_LINK_STATUS, &success);
+		if (!success) {
+			char infoLog[512];
+			glGetProgramInfoLog(_program, 512, nullptr, infoLog);
+			std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+			glDeleteShader(vertexShader);
+			glDeleteShader(fragmentShader);
+			return false;
+		}
 
-    return true;
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+
+		return true;
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Exception while loading shaders: " << e.what() << std::endl;
+		return false;
+	}
 }
 
 void Shaders::Bind() const {
@@ -71,25 +80,48 @@ void Shaders::SetUniform(const std::string& name, const glm::mat4& value) {
 }
 
 GLuint Shaders::CompileShader(const std::string& shaderSource, GLenum shaderType) {
-    GLuint shader = glCreateShader(shaderType);
-    const char* sourceCStr = shaderSource.c_str();
-    glShaderSource(shader, 1, &sourceCStr, nullptr);
-    glCompileShader(shader);
+	GLuint shader = glCreateShader(shaderType);
+	const char* sourceCStr = shaderSource.c_str();
+	glShaderSource(shader, 1, &sourceCStr, nullptr);
+	glCompileShader(shader);
 
-    GLint success;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        char infoLog[512];
-        glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-        std::cerr << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
+	GLint success;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		char infoLog[512];
+		glGetShaderInfoLog(shader, 512, nullptr, infoLog);
+		std::cerr << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
 
-    return shader;
+		// Incluir información sobre el tipo de shader
+		std::string shaderTypeStr = (shaderType == GL_VERTEX_SHADER) ? "VERTEX" :
+			((shaderType == GL_FRAGMENT_SHADER) ? "FRAGMENT" : "UNKNOWN");
+		std::cerr << "SHADER TYPE: " << shaderTypeStr << std::endl;
+
+		// Mostrar las primeras líneas del código del shader para depuración
+		std::istringstream sourceStream(shaderSource);
+		std::string line;
+		int lineNum = 1;
+		std::cerr << "SHADER SOURCE:\n";
+		while (std::getline(sourceStream, line) && lineNum <= 10) {
+			std::cerr << lineNum++ << ": " << line << std::endl;
+		}
+
+		// Limpiar recursos y lanzar un error para detener el proceso
+		glDeleteShader(shader);
+		throw std::runtime_error("Shader compilation failed");
+	}
+
+	return shader;
 }
 
 std::string Shaders::LoadShaderSource(const std::string& shaderFile) {
-    std::ifstream file(shaderFile);
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    return buffer.str();
+	std::ifstream file(shaderFile);
+	if (!file.is_open()) {
+		std::cerr << "ERROR::SHADER::FILE_NOT_FOUND: " << shaderFile << std::endl;
+		throw std::runtime_error("Failed to open shader file: " + shaderFile);
+	}
+
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	return buffer.str();
 }

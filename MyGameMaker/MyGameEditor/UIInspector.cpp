@@ -12,6 +12,7 @@
 
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <functional>
 
 #include "UIInspector.h"
 #include "App.h"
@@ -83,67 +84,309 @@ private:
     #pragma endregion
 
     #pragma region MeshRenderer
-    static void DrawMeshProperties(std::shared_ptr<Mesh> mesh) {
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Mesh")) return;
+	static void DrawMeshProperties(std::shared_ptr<Mesh> mesh) {
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Mesh")) return;
 
-        ImGui::Text("Vertices: %d", mesh->getModel()->GetModelData().vertexData.size());
-        ImGui::Text("Indices: %d", mesh->getModel()->GetModelData().indexData.size());
+		ImGui::Text("Vertices: %d", mesh->getModel()->GetModelData().vertexData.size());
+		ImGui::Text("Indices: %d", mesh->getModel()->GetModelData().indexData.size());
 
-        bool& triNormals = mesh->drawTriangleNormals;
-        bool& vertexNormals = mesh->drawVertexNormals;
+		// Add mesh selection dropdown or drag-drop area
+		ImGui::Button("Change Mesh...", ImVec2(ImGui::GetContentRegionAvail().x, 0));
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				std::string path = static_cast<const char*>(payload->Data);
+				std::string extension = std::filesystem::path(path).extension().string();
+				std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 
-        ImGui::Checkbox("Triangle Normals", &triNormals);
-        ImGui::Checkbox("Vertex Normals", &vertexNormals);
-    }
+				if (extension == ".mesh" || extension == ".fbx" || extension == ".obj") {
+					// Load the mesh - This would need to be implemented
+					LOG(LogType::LOG_INFO, "Loading mesh from: %s", path.c_str());
+					// mesh->LoadMesh(path.c_str());
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+	}
 
-    static void DrawTexturePreview(std::shared_ptr<Image> image) {
-        ImGui::Text("Preview:");
-        ImVec2 imageSize = CalculatePreviewSize(image->width(), image->height());
-        ImGui::Image((void*)(intptr_t)image->id(), imageSize);
-    }
+	static void DrawTexturePreview(std::shared_ptr<Image> image) {
+		// Only show a compact preview to prevent lag
+		const float previewSize = 64.0f; // Small fixed size preview
+		ImVec2 imageSize(previewSize, previewSize);
 
-    static void DrawColorPicker(MeshRenderer* meshRenderer) {
-        vec4 matColor = meshRenderer->GetMaterial()->GetColor();
-        float colorArray[4] = {
-            static_cast<float>(matColor.x),
-            static_cast<float>(matColor.y),
-            static_cast<float>(matColor.z),
-            static_cast<float>(matColor.w)
-        };
+		ImGui::Text("Preview:");
+		ImGui::Image((void*)(intptr_t)image->id(), imageSize);
 
-        if (ImGui::ColorPicker4("Color", colorArray)) {
-            vec4 newColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
-            meshRenderer->GetMaterial()->SetColor(newColor);
-        }
-    }
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			float tooltipSize = 128.0f; // Larger preview on hover
+			float aspect = (float)image->width() / image->height();
+			ImVec2 tooltipImageSize;
 
-    static void DrawMaterialProperties(MeshRenderer* meshRenderer, std::shared_ptr<Image> image) {
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Material")) return;
+			if (aspect > 1.0f) {
+				tooltipImageSize = ImVec2(tooltipSize, tooltipSize / aspect);
+			}
+			else {
+				tooltipImageSize = ImVec2(tooltipSize * aspect, tooltipSize);
+			}
 
-        ImGui::Text("Dimensions: %dx%d", image->width(), image->height());
+			ImGui::Image((void*)(intptr_t)image->id(), tooltipImageSize);
+			ImGui::Text("%dx%d", image->width(), image->height());
+			ImGui::EndTooltip();
+		}
+	}
 
-        auto textureID = image->id();
-        if (textureID) {
-            DrawTexturePreview(image);
-            DrawColorPicker(meshRenderer);
-        }
-    }
+	static void DrawMaterialProperties(MeshRenderer* meshRenderer) {
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Material")) return;
 
-    static void DrawMeshRendererComponent(MeshRenderer* meshRenderer) {
-        if (!meshRenderer) return;
+		auto material = meshRenderer->GetMaterial();
+		if (!material) return;
 
-        std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
-        if (mesh) {
-            DrawMeshProperties(mesh);
-        }
+		// Material type indicator and shader selection
+		ShaderType shaderType = material->GetShaderType();
+		const char* shaderTypeStr = (shaderType == UNLIT) ? "UNLIT" : "PBR";
 
-        std::shared_ptr<Image> image = meshRenderer->GetMaterial()->GetAlbedoMap();
-        if (image) {
-            DrawMaterialProperties(meshRenderer, image);
-        }
-    }
+		ImGui::Text("Shader Type: %s", shaderTypeStr);
+
+		// Color picker for material
+		vec4 matColor = material->GetColor();
+		float colorArray[4] = {
+			static_cast<float>(matColor.x),
+			static_cast<float>(matColor.y),
+			static_cast<float>(matColor.z),
+			static_cast<float>(matColor.w)
+		};
+
+		if (ImGui::ColorEdit4("Color", colorArray)) {
+			vec4 newColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+			material->SetColor(newColor);
+		}
+
+		// Albedo/Base texture
+		ImGui::Separator();
+		ImGui::Text("Albedo Texture:");
+
+		auto albedoMap = material->GetAlbedoMap();
+		if (albedoMap && albedoMap->id() != 0) {
+			DrawTexturePreview(albedoMap);
+		}
+		else {
+			ImGui::Text("None");
+		}
+
+		// Texture drop target
+		ImGui::Button("Drop Texture Here", ImVec2(ImGui::GetContentRegionAvail().x, 30));
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				std::string path = static_cast<const char*>(payload->Data);
+				std::string extension = std::filesystem::path(path).extension().string();
+				std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+				if (extension == ".png" || extension == ".jpg" || extension == ".jpeg" || extension == ".bmp") {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						material->SetAlbedoMap(newImage);
+					}
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		// Only show PBR options if the material is PBR
+		if (shaderType == PBR) {
+			DrawPBRMaterialProperties(meshRenderer);
+		}
+	}
+
+	static void DrawPBRMaterialProperties(MeshRenderer* meshRenderer) {
+		auto material = meshRenderer->GetMaterial();
+		if (!material) return;
+
+		ImGui::Separator();
+		if (!ImGui::TreeNodeEx("PBR Properties", ImGuiTreeNodeFlags_DefaultOpen)) {
+			return;
+		}
+
+		// Roughness
+		float roughness = meshRenderer->GetRoughnessValue();
+		if (ImGui::SliderFloat("Roughness", &roughness, 0.0f, 1.0f)) {
+			meshRenderer->SetRoughnessValue(roughness);
+		}
+
+		// Metalness
+		float metalness = meshRenderer->GetMetalnessValue();
+		if (ImGui::SliderFloat("Metalness", &metalness, 0.0f, 1.0f)) {
+			meshRenderer->SetMetalnessValue(metalness);
+		}
+
+		// Ambient Occlusion
+		float ao = meshRenderer->GetAmbientOcclusionValue();
+		if (ImGui::SliderFloat("Ambient Occlusion", &ao, 0.0f, 1.0f)) {
+			meshRenderer->SetAmbientOcclusionValue(ao);
+		}
+
+		// Emissive properties
+		glm::vec3 emissiveColor = meshRenderer->GetEmissiveColor();
+		float emissiveArray[3] = {
+			emissiveColor.x,
+			emissiveColor.y,
+			emissiveColor.z
+		};
+
+		if (ImGui::ColorEdit3("Emissive Color", emissiveArray)) {
+			meshRenderer->SetEmissiveColor(glm::vec3(
+				emissiveArray[0],
+				emissiveArray[1],
+				emissiveArray[2]
+			));
+		}
+
+		float emissiveIntensity = meshRenderer->GetEmissiveIntensity();
+		if (ImGui::SliderFloat("Emissive Intensity", &emissiveIntensity, 0.0f, 5.0f)) {
+			meshRenderer->SetEmissiveIntensity(emissiveIntensity);
+		}
+
+		// PBR Maps section with compact preview
+		if (ImGui::TreeNodeEx("PBR Maps", ImGuiTreeNodeFlags_DefaultOpen)) {
+			// Normal map
+			ImGui::Text("Normal Map:");
+			auto normalMap = meshRenderer->GetNormalMap();
+			if (normalMap && normalMap->id() != 0) {
+				DrawTexturePreview(normalMap);
+			}
+			else {
+				ImGui::Text("None");
+			}
+
+			// Normal map drop target
+			ImGui::Button("Drop Normal Map Here", ImVec2(ImGui::GetContentRegionAvail().x, 20));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+					LoadMapTexture(payload, [meshRenderer](std::shared_ptr<Image> img) {
+						meshRenderer->SetNormalMap(img);
+						});
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			// Roughness map
+			ImGui::Separator();
+			ImGui::Text("Roughness Map:");
+			auto roughnessMap = meshRenderer->GetRoughnessMap();
+			if (roughnessMap && roughnessMap->id() != 0) {
+				DrawTexturePreview(roughnessMap);
+			}
+			else {
+				ImGui::Text("None");
+			}
+
+			// Roughness map drop target
+			ImGui::Button("Drop Roughness Map Here", ImVec2(ImGui::GetContentRegionAvail().x, 20));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+					LoadMapTexture(payload, [meshRenderer](std::shared_ptr<Image> img) {
+						meshRenderer->SetRoughnessMap(img);
+						});
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			// Metalness map
+			ImGui::Separator();
+			ImGui::Text("Metalness Map:");
+			auto metalnessMap = meshRenderer->GetMetalnessMap();
+			if (metalnessMap && metalnessMap->id() != 0) {
+				DrawTexturePreview(metalnessMap);
+			}
+			else {
+				ImGui::Text("None");
+			}
+
+			// Metalness map drop target
+			ImGui::Button("Drop Metalness Map Here", ImVec2(ImGui::GetContentRegionAvail().x, 20));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+					LoadMapTexture(payload, [meshRenderer](std::shared_ptr<Image> img) {
+						meshRenderer->SetMetalnessMap(img);
+						});
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			// AO map
+			ImGui::Separator();
+			ImGui::Text("Ambient Occlusion Map:");
+			auto aoMap = meshRenderer->GetAmbientOcclusionMap();
+			if (aoMap && aoMap->id() != 0) {
+				DrawTexturePreview(aoMap);
+			}
+			else {
+				ImGui::Text("None");
+			}
+
+			// AO map drop target
+			ImGui::Button("Drop AO Map Here", ImVec2(ImGui::GetContentRegionAvail().x, 20));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+					LoadMapTexture(payload, [meshRenderer](std::shared_ptr<Image> img) {
+						meshRenderer->SetAmbientOcclusionMap(img);
+						});
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			// Emissive map
+			ImGui::Separator();
+			ImGui::Text("Emissive Map:");
+			auto emissiveMap = meshRenderer->GetEmissiveMap();
+			if (emissiveMap && emissiveMap->id() != 0) {
+				DrawTexturePreview(emissiveMap);
+			}
+			else {
+				ImGui::Text("None");
+			}
+
+			// Emissive map drop target
+			ImGui::Button("Drop Emissive Map Here", ImVec2(ImGui::GetContentRegionAvail().x, 20));
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+					LoadMapTexture(payload, [meshRenderer](std::shared_ptr<Image> img) {
+						meshRenderer->SetEmissiveMap(img);
+						});
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			ImGui::TreePop();
+		}
+
+		ImGui::TreePop();
+	}
+
+	static void LoadMapTexture(const ImGuiPayload* payload, std::function<void(std::shared_ptr<Image>)> setFunc) {
+		std::string path = static_cast<const char*>(payload->Data);
+		std::string extension = std::filesystem::path(path).extension().string();
+		std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+		if (extension == ".png" || extension == ".jpg" || extension == ".jpeg" || extension == ".bmp") {
+			auto newImage = std::make_shared<Image>();
+			if (newImage->LoadTexture(path)) {
+				setFunc(newImage);
+			}
+		}
+	}
+
+	static void DrawMeshRendererComponent(MeshRenderer* meshRenderer) {
+		if (!meshRenderer) return;
+
+		std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
+		if (mesh) {
+			DrawMeshProperties(mesh);
+		}
+
+		DrawMaterialProperties(meshRenderer);
+	}
     #pragma endregion
 
     #pragma region Camera
@@ -473,19 +716,73 @@ private:
 #pragma endregion
 
     #pragma region Shaders
-    static void DrawShaderComponent(ShaderComponent* shader) {
-        if (!shader) return;
+	static void DrawShaderComponent(ShaderComponent* shader) {
+		if (!shader) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Shader")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Shader")) return;
 
-        ShaderType currentType = shader->GetShaderType();
-        int shaderType = static_cast<int>(currentType);
+		ShaderType currentType = shader->GetShaderType();
+		int shaderType = static_cast<int>(currentType);
 
-        if (ImGui::Combo("Shader Type", &shaderType, "UNLIT\0PBR\0")) {
-            shader->SetShaderType(static_cast<ShaderType>(shaderType));
-        }
-    }
+		if (ImGui::Combo("Shader Type", &shaderType, "UNLIT\0PBR\0")) {
+			shader->SetShaderType(static_cast<ShaderType>(shaderType));
+		}
+
+		ImGui::Text("Shader Paths:");
+
+		static char vertexPath[256] = "";
+		static char fragmentPath[256] = "";
+
+		ImGui::InputText("Vertex Shader", vertexPath, sizeof(vertexPath));
+		ImGui::InputText("Fragment Shader", fragmentPath, sizeof(fragmentPath));
+
+		if (ImGui::Button("Load Custom Shaders", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			if (strlen(vertexPath) > 0 && strlen(fragmentPath) > 0) {
+				shader->LoadShaders(vertexPath, fragmentPath);
+			}
+		}
+
+		ImGui::Button("Drop Vertex Shader Here", ImVec2(ImGui::GetContentRegionAvail().x, 25));
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				std::string path = static_cast<const char*>(payload->Data);
+				std::string extension = std::filesystem::path(path).extension().string();
+				std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+				if (extension == ".glsl" || extension == ".vert") {
+					strncpy_s(vertexPath, sizeof(vertexPath), path.c_str(), _TRUNCATE);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		ImGui::Button("Drop Fragment Shader Here", ImVec2(ImGui::GetContentRegionAvail().x, 25));
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				std::string path = static_cast<const char*>(payload->Data);
+				std::string extension = std::filesystem::path(path).extension().string();
+				std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+				if (extension == ".glsl" || extension == ".frag") {
+					strncpy_s(fragmentPath, sizeof(fragmentPath), path.c_str(), _TRUNCATE);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (ImGui::Button("Reset to Default Shaders", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			shader->SetShaderType(currentType);
+		}
+
+		// Additional shader parameters for specific types
+		if (currentType == UNLIT) {
+			// UNLIT shader doesn't have additional parameters
+		}
+		else if (currentType == PBR) {
+			// PBR specific parameters would go here
+		}
+	}
     #pragma endregion
 
     #pragma region Scripting

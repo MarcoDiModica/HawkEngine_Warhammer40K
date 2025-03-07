@@ -47,10 +47,19 @@ void UIImageComponent::Update(float deltaTime)
 
 	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
 
-	glm::vec3 worldPos = owner->GetComponent<Transform_Component>()->GetPosition();
-	glm::vec2 scale = owner->GetComponent<Transform_Component>()->GetScale();
+	//glm::vec3 translation = owner->GetComponent<Transform_Component>()->GetPosition();
+	//glm::vec3 rotation = owner->GetComponent<Transform_Component>()->GetRotation(); // Rotación en grados
+	//glm::vec3 scale = owner->GetComponent<Transform_Component>()->GetScale();
 
-	glm::mat4 modelMatrix = (glm::translate(glm::mat4(1.0f), glm::vec3(100.0f, 100.0f, 0)));
+	glm::vec3 translation = glm::vec3(0, 0, 0);
+	glm::vec3 rotation = glm::vec3(0, 0, 0); // Rotación en grados
+	glm::vec3 scale = glm::vec3(1, 1, 1);
+
+	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
+		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *
+		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *
+		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
+		glm::scale(glm::mat4(1.0f), scale);
 
 	shader->SetUniform("model", modelMatrix);
 	shader->SetUniform("view", viewMatrix);
@@ -95,10 +104,10 @@ void UIImageComponent::LoadMesh()
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 
 	model->GetModelData().vertexData = {
-		Vertex {vec3(-100.0f, -100.0f, 0.0f)},
-		Vertex {vec3(100.0f, -100.0f, 0.0f)},
-		Vertex {vec3(100.0f, 100.0f, 0.0f)},
-		Vertex {vec3(-100.0f, 100.0f, 0.0f)}
+		Vertex {vec3(0.0f, 0.0f, 0.0f)},
+		Vertex {vec3(200.0f, 0.0f, 0.0f)},
+		Vertex {vec3(200.0f, 200.0f, 0.0f)},
+		Vertex {vec3(0.0f, 200.0f, 0.0f)}
 	};
 
 	model->GetModelData().indexData = {
@@ -106,10 +115,10 @@ void UIImageComponent::LoadMesh()
 	};
 
 	model->GetModelData().vertex_texCoords = {
-		vec2(1.0f, 0.0f),
 		vec2(0.0f, 0.0f),
-		vec2(0.0f, 1.0f),
-		vec2(1.0f, 1.0f)
+		vec2(1.0f, 0.0f),
+		vec2(1.0f, 1.0f),
+		vec2(0.0f, 1.0f)
 	};
 
 	model->SetMeshName("Plane");

@@ -7,6 +7,7 @@
 #include "../MyGameEditor/UIGameView.h"
 #include "../MyGameEditor/MyGUI.h"
 #include "../MyGameEditor/UISceneWindow.h"
+#include "../MyUIEngine/UITransformComponent.h"
 
 UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
@@ -50,10 +51,11 @@ void UIImageComponent::Update(float deltaTime)
 	//glm::vec3 translation = owner->GetComponent<Transform_Component>()->GetPosition();
 	//glm::vec3 rotation = owner->GetComponent<Transform_Component>()->GetRotation(); // Rotación en grados
 	//glm::vec3 scale = owner->GetComponent<Transform_Component>()->GetScale();
+	auto rectTransform = owner->GetComponent<UITransformComponent>();
 
-	glm::vec3 translation = glm::vec3(0, 0, 0);
-	glm::vec3 rotation = glm::vec3(0, 0, 0); // Rotación en grados
-	glm::vec3 scale = glm::vec3(1, 1, 1);
+	glm::vec3 translation = rectTransform->GetPosition();
+	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
+	glm::vec3 scale = glm::vec3(1.0f,1.0f,1.0f);
 
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *
@@ -105,9 +107,9 @@ void UIImageComponent::LoadMesh()
 
 	model->GetModelData().vertexData = {
 		Vertex {vec3(0.0f, 0.0f, 0.0f)},
-		Vertex {vec3(200.0f, 0.0f, 0.0f)},
-		Vertex {vec3(200.0f, 200.0f, 0.0f)},
-		Vertex {vec3(0.0f, 200.0f, 0.0f)}
+		Vertex {vec3(1024.0f, 0.0f, 0.0f)},
+		Vertex {vec3(1024.0f, 1024.0f, 0.0f)},
+		Vertex {vec3(0.0f, 1024.0f, 0.0f)}
 	};
 
 	model->GetModelData().indexData = {

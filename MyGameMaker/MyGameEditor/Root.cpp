@@ -22,6 +22,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
+#include "../MyUIEngine/UITransformComponent.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -281,8 +282,8 @@ bool Root::Start()
     Application->root->ParentGameObject(*image, *canvas);
     image->AddComponent<UIImageComponent>();
 	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Baker_house.png");
-
-
+    image->AddComponent<UITransformComponent>();
+	
     SceneManagement->Start();
 
     return true;

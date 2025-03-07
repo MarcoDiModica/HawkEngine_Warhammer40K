@@ -19,6 +19,9 @@ public:
     void UpdateFramebuffer();
     bool Draw();
 
+	vec2 GetWinSize() { return winSize; }
+	vec2 GetWinPos() { return winPos; }
+
 private:
     vec2 winSize = vec2(0, 0);
     vec2 winPos = vec2(0, 0);

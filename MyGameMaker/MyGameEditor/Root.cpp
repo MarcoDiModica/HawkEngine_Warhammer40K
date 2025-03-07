@@ -224,12 +224,12 @@ bool Root::Awake()
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();*/
 
-	auto blockout = CreateGameObject("Blockout");
-	blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));
+	/*auto blockout = CreateGameObject("Blockout");
+	blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));*/
 
-    environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
+    /*environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
     ParentGameObject(*environment, *blockout);
-    blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));
+    blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));*/
 
     return true;
 }
@@ -241,11 +241,11 @@ bool Root::CleanUp()
 }
 
 void Root::CreateSceneColliders() {
-    for (auto& go : environment->GetChildren())
+    /*for (auto& go : environment->GetChildren())
     {
         auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
         collider->Start();
-    }
+    }*/
 }
 
 bool Root::Start()

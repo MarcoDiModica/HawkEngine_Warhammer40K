@@ -4,7 +4,9 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEditor/Root.h"
 #include "../MyGameEngine/CameraComponent.h"
-#include "../MyGameEditor/MyWindow.h"
+#include "../MyGameEditor/UIGameView.h"
+#include "../MyGameEditor/MyGUI.h"
+#include "../MyGameEditor/UISceneWindow.h"
 
 UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
@@ -33,22 +35,26 @@ void UIImageComponent::Update(float deltaTime)
 		shader->SetUniform("u_HasTexture", false);
 	}
 
-	glm::mat4 projectionMatrix = glm::ortho(
-		0.0f, static_cast<float>(Application->window->width()),
-		static_cast<float>(Application->window->height()), 0.0f,
+	/*glm::mat4 projection = glm::ortho(
+		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().x),
+		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().y),
+		-1.0f, 1.0f);*/
+
+	glm::mat4 projection = glm::ortho(
+		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().x),
+		static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().y), 0.0f,
 		-1.0f, 1.0f);
 
-	glm::mat4 viewMatrix = glm::mat4(1.0f); // Identidad porque la UI no usa vista 3D
+	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
 
 	glm::vec3 worldPos = owner->GetComponent<Transform_Component>()->GetPosition();
 	glm::vec2 scale = owner->GetComponent<Transform_Component>()->GetScale();
 
-	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(worldPos.x, worldPos.y, 0.0f)) *
-		glm::scale(glm::mat4(1.0f), glm::vec3(scale.x, scale.y, 1.0f));
+	glm::mat4 modelMatrix = (glm::translate(glm::mat4(1.0f), glm::vec3(100.0f, 100.0f, 0)));
 
 	shader->SetUniform("model", modelMatrix);
-	shader->SetUniform("view", Application->root->mainCamera->GetComponent<CameraComponent>()->view());
-	shader->SetUniform("projection", Application->root->mainCamera->GetComponent<CameraComponent>()->projection());
+	shader->SetUniform("view", viewMatrix);
+	shader->SetUniform("projection", projection);
 
 	glBindVertexArray(mesh->getModel()->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getModel()->GetModelData().iBID);
@@ -89,14 +95,14 @@ void UIImageComponent::LoadMesh()
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 
 	model->GetModelData().vertexData = {
-		Vertex {vec3(-1.0f, 0.0f, 1.0f)},
-		Vertex {vec3(1.0f, 0.0f, 1.0f)},
-		Vertex {vec3(1.0f, 0.0f, -1.0f)},
-		Vertex {vec3(-1.0f, 0.0f, -1.0f)}
+		Vertex {vec3(-100.0f, -100.0f, 0.0f)},
+		Vertex {vec3(100.0f, -100.0f, 0.0f)},
+		Vertex {vec3(100.0f, 100.0f, 0.0f)},
+		Vertex {vec3(-100.0f, 100.0f, 0.0f)}
 	};
 
 	model->GetModelData().indexData = {
-		0, 1, 2, 0, 2, 3
+		0, 2, 1, 0, 3, 2
 	};
 
 	model->GetModelData().vertex_texCoords = {

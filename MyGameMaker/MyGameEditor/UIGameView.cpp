@@ -83,8 +83,8 @@ bool UIGameView::Draw()
 
         const float targetAspectRatio = 16.0f / 9.0f; //fixed aspect ratio
 
-        float width = availableSize.x;
-        float height = width / targetAspectRatio;
+        width = availableSize.x;
+        height = width / targetAspectRatio;
 
         if (height > availableSize.y)
         {

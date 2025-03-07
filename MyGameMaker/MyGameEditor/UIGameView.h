@@ -22,8 +22,14 @@ public:
 	vec2 GetWinSize() { return winSize; }
 	vec2 GetWinPos() { return winPos; }
 
+	float GetWidth() { return width; }
+	float GetHeight() { return height; }
+
 private:
     vec2 winSize = vec2(0, 0);
     vec2 winPos = vec2(0, 0);
+
+    float width;
+    float height;
 };
 #endif // !__UI_GAME_VIEW_H__

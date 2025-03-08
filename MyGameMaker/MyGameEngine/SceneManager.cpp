@@ -265,7 +265,7 @@ bool SceneManager::ParentGameObjectToObject(GameObject& child, GameObject& fathe
     }
 
     child.SetParent(&father);
-    child.GetTransform()->UpdateLocalMatrix(father.GetTransform()->GetMatrix());
+    child.GetTransform()->UpdateLocalMatrix();
 
     return true;
 }

@@ -8,6 +8,7 @@
 #include "../MyGameEditor/MyGUI.h"
 #include "../MyGameEditor/UISceneWindow.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyUIEngine/UICanvasComponent.h"
 
 UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
@@ -36,13 +37,16 @@ void UIImageComponent::Update(float deltaTime)
 		shader->SetUniform("u_HasTexture", false);
 	}
 
-	glm::mat4 projection = glm::ortho(
-		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetHeight()),
-		static_cast<float>(Application->gui->UIGameViewPanel->GetWidth()), 0.0f,
-		-1.0f, 1.0f);
+	auto width = Application->gui->UIGameViewPanel->GetWidth();
+	auto height = Application->gui->UIGameViewPanel->GetHeight();
 
-	std::cout << "Width: " << Application->gui->UIGameViewPanel->GetWidth() << std::endl;
-	std::cout << "Height: " << Application->gui->UIGameViewPanel->GetHeight() << std::endl;
+	auto winWidth = owner->GetParent()->GetComponent<UICanvasComponent>()->GetWinWidth();
+	auto winHeight = owner->GetParent()->GetComponent<UICanvasComponent>()->GetWinHeight();
+
+	glm::mat4 projection = glm::ortho(
+		0.0f, static_cast<float>(winWidth - width),
+		static_cast<float>(winHeight - height), 0.0f,
+		-1.0f, 1.0f);
 
 	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
 

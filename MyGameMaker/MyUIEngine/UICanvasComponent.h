@@ -23,9 +23,10 @@ public:
 
 	ComponentType GetType() const override { return ComponentType::CANVAS; }
 
+	float GetWinWidth() const { return winWidth; }
+	float GetWinHeight() const { return winHeight; }	
+
 private:
-	//Render Mode: screenspace - overlay
-	GLuint fboUI = -1;
-	GLuint fboTextureUI = 0;
-	GLuint rboUI = 0;
+	float winWidth;
+	float winHeight;
 };

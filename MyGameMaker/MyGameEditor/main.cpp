@@ -445,10 +445,6 @@ static void display_func() {
 			objects.push_back(child);
 			RenderOutline(child);
 		}
-
-		if (object->HasComponent<UICanvasComponent>()) {
-			object->GetComponent<UICanvasComponent>()->Update(Application->GetDt());
-		}
 	}
 
 	Application->physicsModule->Update(Application->GetDt());

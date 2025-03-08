@@ -43,7 +43,9 @@ void UITransformComponent::Rotate(double rads, const glm::dvec3& axis)
 
 void UITransformComponent::Scale(const glm::dvec3& scale)
 {
-    matrix = glm::scale(matrix, scale);
+    if (scale.x != 0.0f && scale.y != 0.0f && scale.z != 0.0f) {
+        this->scale *= scale;
+    }
 }
 
 void UITransformComponent::SetTransform(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale)

@@ -33,7 +33,8 @@ enum class ComponentType {
 	LIGHT,
 	CANVAS,
 	UITRANSFORM,
-	IMAGE
+	IMAGE,
+	BUTTON
 };
 
 class Component

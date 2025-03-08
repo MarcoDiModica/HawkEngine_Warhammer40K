@@ -42,12 +42,8 @@ public:
 	glm::dquat GetRotation() const {
 		return glm::quat_cast(matrix);
 	}
-	glm::dvec3 GetScale() const {
-		return glm::dvec3(
-			glm::length(left),
-			glm::length(up),
-			glm::length(forward)
-		);
+	glm::vec3 GetScale() const {
+		return scale;
 	}
 
 private:

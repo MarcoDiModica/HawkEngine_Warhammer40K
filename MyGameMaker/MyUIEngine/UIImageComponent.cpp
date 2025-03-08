@@ -42,8 +42,8 @@ void UIImageComponent::Update(float deltaTime)
 		-1.0f, 1.0f);*/
 
 	glm::mat4 projection = glm::ortho(
-		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWidth()),
-		static_cast<float>(Application->gui->UIGameViewPanel->GetHeight()), 0.0f,
+		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().x),
+		static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().y), 0.0f,
 		-1.0f, 1.0f);
 
 	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
@@ -55,7 +55,7 @@ void UIImageComponent::Update(float deltaTime)
 
 	glm::vec3 translation = rectTransform->GetPosition();
 	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
-	glm::vec3 scale = glm::vec3(1.0f,1.0f,1.0f);
+	glm::vec3 scale = rectTransform->GetScale();
 
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *
@@ -107,9 +107,9 @@ void UIImageComponent::LoadMesh()
 
 	model->GetModelData().vertexData = {
 		Vertex {vec3(0.0f, 0.0f, 0.0f)},
-		Vertex {vec3(1024.0f, 0.0f, 0.0f)},
-		Vertex {vec3(1024.0f, 1024.0f, 0.0f)},
-		Vertex {vec3(0.0f, 1024.0f, 0.0f)}
+		Vertex {vec3(texture->width(), 0.0f, 0.0f)},
+		Vertex {vec3(texture->width(), texture->height(), 0.0f)},
+		Vertex {vec3(0.0f, texture->height(), 0.0f)}
 	};
 
 	model->GetModelData().indexData = {

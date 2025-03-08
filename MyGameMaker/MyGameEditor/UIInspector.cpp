@@ -908,13 +908,13 @@ private:
         float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
         float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
 
-        if (ImGui::DragFloat3("Position", pos, 0.1f)) {
+        if (ImGui::DragFloat3("Position", pos, -1.0f)) {
             glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
             glm::dvec3 deltaPos = newPosition - currentPosition;
             transform->Translate(deltaPos);
         }
 
-        if (ImGui::DragFloat3("Rotation", rot, 0.1f)) {
+        if (ImGui::DragFloat3("Rotation", rot, -1.0f)) {
             glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
             glm::dvec3 deltaRot = newRotation - currentRotation;
             transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
@@ -922,7 +922,7 @@ private:
             transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
         }
 
-        if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f)) {
+        if (ImGui::DragFloat3("Scale", sca, 0.001f, -1.0f, 10.0f)) {
             glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
             glm::dvec3 deltaScale = newScale / currentScale;
             transform->Scale(deltaScale);

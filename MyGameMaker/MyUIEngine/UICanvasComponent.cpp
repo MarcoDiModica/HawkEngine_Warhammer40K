@@ -8,6 +8,7 @@
 #include "../MyGameEngine/CameraComponent.h"
 
 #include "UIImageComponent.h"
+#include "UIButtonComponent.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp> 
@@ -42,10 +43,6 @@ UICanvasComponent::UICanvasComponent(GameObject* owner)	: Component(owner)
 
 void UICanvasComponent::Start()
 {
-	//owner->GetComponent<Transform_Component>()->SetPosition(glm::vec3(Application->root->mainCamera->GetTransform()->GetPosition()));
-    //owner->GetComponent<Transform_Component>()->SetRotationQuat((Application->root->mainCamera->GetTransform()->GetRotation()));
-    //owner->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0,20,-10));
-    //owner->GetComponent<Transform_Component>()->SetRotation(glm::vec3(-30, 0, 0));
 }
 
 void UICanvasComponent::Update(float deltaTime)
@@ -60,6 +57,12 @@ void UICanvasComponent::Update(float deltaTime)
 		{
 			object->GetComponent<UIImageComponent>()->Update(deltaTime);
 		}
+
+		if (object->HasComponent<UIButtonComponent>())
+		{
+			object->GetComponent<UIButtonComponent>()->Update(deltaTime);
+		}
+
     }
 
     glEnable(GL_DEPTH_TEST);

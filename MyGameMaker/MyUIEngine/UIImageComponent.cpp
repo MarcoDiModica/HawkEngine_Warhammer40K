@@ -36,21 +36,16 @@ void UIImageComponent::Update(float deltaTime)
 		shader->SetUniform("u_HasTexture", false);
 	}
 
-	/*glm::mat4 projection = glm::ortho(
-		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().x),
-		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().y),
-		-1.0f, 1.0f);*/
-
 	glm::mat4 projection = glm::ortho(
-		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().x),
-		static_cast<float>(Application->gui->UIGameViewPanel->GetWinSize().y), 0.0f,
+		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetHeight()),
+		static_cast<float>(Application->gui->UIGameViewPanel->GetWidth()), 0.0f,
 		-1.0f, 1.0f);
+
+	std::cout << "Width: " << Application->gui->UIGameViewPanel->GetWidth() << std::endl;
+	std::cout << "Height: " << Application->gui->UIGameViewPanel->GetHeight() << std::endl;
 
 	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
 
-	//glm::vec3 translation = owner->GetComponent<Transform_Component>()->GetPosition();
-	//glm::vec3 rotation = owner->GetComponent<Transform_Component>()->GetRotation(); // Rotación en grados
-	//glm::vec3 scale = owner->GetComponent<Transform_Component>()->GetScale();
 	auto rectTransform = owner->GetComponent<UITransformComponent>();
 
 	glm::vec3 translation = rectTransform->GetPosition();

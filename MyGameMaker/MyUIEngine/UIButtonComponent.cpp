@@ -25,8 +25,11 @@ void UIButtonComponent::Update(float deltaTime)
 	auto mousePosX = Application->input->GetMouseX();
 	auto mousePosY = Application->input->GetMouseY();
 
-	if (mousePosX >= Tposition.x && mousePosX <= Tposition.x + width * Tscale.x &&
-		mousePosY >= Tposition.y && mousePosY <= Tposition.y + height * Tscale.y)
+	auto offsetX = 7.0f;
+	auto offsetY = 56.0f;
+
+	if (mousePosX >= Tposition.x + offsetX && mousePosX <= Tposition.x + offsetX + width * Tscale.x &&
+		mousePosY >= Tposition.y + offsetY && mousePosY <= Tposition.y + offsetY + height * Tscale.y)
 	{
 		//std::cout << "Mouse is over the button" << std::endl;
 	}

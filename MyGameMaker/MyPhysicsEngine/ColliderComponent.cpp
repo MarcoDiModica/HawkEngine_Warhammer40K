@@ -275,7 +275,7 @@ void ColliderComponent::CreateCollider() {
 	Transform_Component* transform = owner->GetTransform();
 	if (!transform) return;
 
-	BoundingBox localBBox = owner->localBoundingBox();
+	BoundingBox localBBox = owner->boundingBox();
 	size = localBBox.size();
 	glm::dvec3 localCenter = localBBox.center();
 

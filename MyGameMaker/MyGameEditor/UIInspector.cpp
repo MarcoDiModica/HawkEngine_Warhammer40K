@@ -1312,4 +1312,11 @@ void UIInspector::DrawGameObjectHeader(GameObject* gameObject) {
 
     ImGui::SameLine();
     ImGui::Checkbox("Static", &gameObject->isStatic);
+
+    ImGui::Separator();
+
+    bool isActive = gameObject->IsActive();
+    if (ImGui::Checkbox("Active", &isActive)) {
+		gameObject->SetActive(isActive);
+	}
 }

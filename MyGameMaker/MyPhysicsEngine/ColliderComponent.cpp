@@ -6,7 +6,13 @@
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 
-ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) { name = "ColliderComponent"; physics = physicsModule; isForStreetLocal = isForStreet; }
+ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) 
+{ 
+    name = "ColliderComponent"; 
+    physics = physicsModule; 
+    isForStreetLocal = isForStreet;
+    snapToPosition = true;
+}
 
 ColliderComponent::~ColliderComponent() {
     Destroy();
@@ -131,7 +137,7 @@ glm::quat ColliderComponent::GetColliderRotation() {
 void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
     btTransform trans;
     rigidBody->getMotionState()->getWorldTransform(trans);
-    trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+	trans.setRotation(btQuaternion(rotation.w, rotation.x, rotation.y, rotation.z));
 
     btVector3 currentPosition = trans.getOrigin();
     trans.setOrigin(currentPosition);
@@ -264,44 +270,38 @@ void ColliderComponent::CreateCollider() {
 
 
 void ColliderComponent::CreateCollider() {
-    if (!owner) return;
+	if (!owner) return;
 
-    Transform_Component* transform = owner->GetTransform();
-    if (!transform) return;
+	Transform_Component* transform = owner->GetTransform();
+	if (!transform) return;
 
-    BoundingBox bbox = owner->boundingBox();
-    size = bbox.size();
+	BoundingBox localBBox = owner->localBoundingBox();
+	size = localBBox.size();
+	glm::dvec3 localCenter = localBBox.center();
 
-    btCollisionShape* shape;
+	glm::dvec3 worldPosition = transform->GetPosition();
+	glm::dquat worldRotation = transform->GetRotation();
+	glm::dvec3 worldScale = transform->GetScale();
 
-    btTransform startTransform;
-    startTransform.setIdentity();
+	btCollisionShape* shape = new btBoxShape(btVector3(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f));
+	shape->setLocalScaling(btVector3(worldScale.x, worldScale.y, worldScale.z));
 
-    shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
-    glm::vec3 localPosition = transform->GetLocalPosition();
-    startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
-    startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
-    glm::vec3 scale = transform->GetScale();
-    //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+	glm::vec3 rotatedCenter = worldPosition + worldRotation * (localCenter - transform->GetLocalPosition());
 
-    // Configurar la masa e inercia
-    btVector3 localInertia(0, 0, 0);
-    if (mass > 0.0f) {
-        shape->calculateLocalInertia(mass, localInertia);
-    }
+	btTransform startTransform;
+	startTransform.setIdentity();
+	startTransform.setOrigin(btVector3(rotatedCenter.x, rotatedCenter.y, rotatedCenter.z));
+	startTransform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
 
-    // Crear el cuerpo rígido
-    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
-    rigidBody = new btRigidBody(rbInfo);
+	btVector3 localInertia(0, 0, 0);
+	if (mass > 0.0f) {
+		shape->calculateLocalInertia(mass, localInertia);
+	}
 
-    //rigidBody->setRestitution(0.5f);
+	btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
+	rigidBody = new btRigidBody(rbInfo);
 
-    glm::quat newRotation = glm::quat(glm::radians(glm::vec3(0, 0, 0)));
-    SetColliderRotation(newRotation);
-    // Añadir el colisionador al mundo de físicas
-    physics->dynamicsWorld->addRigidBody(rigidBody);
-    physics->gameObjectRigidBodyMap[owner] = rigidBody;
-
+	physics->dynamicsWorld->addRigidBody(rigidBody);
+	physics->gameObjectRigidBodyMap[owner] = rigidBody;
 }
-

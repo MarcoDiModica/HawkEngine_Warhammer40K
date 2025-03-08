@@ -191,10 +191,10 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 		glm::dquat yawRotation = glm::angleAxis(glm::radians(-delta.x * sensitivity * deltaTime), glm::dvec3(0, 1, 0));
 
 		// Calculate pitch (up/down) rotation using local right vector
-		glm::dquat pitchRotation = glm::angleAxis(glm::radians(delta.y * sensitivity * deltaTime), right);
+		glm::dquat pitchRotation = glm::angleAxis(glm::radians(-delta.y * sensitivity * deltaTime), right);
 
 		// Apply the rotations: pitch first, then yaw
-		glm::dquat newRotation = yawRotation * transform.GetRotation() * -pitchRotation;
+		glm::dquat newRotation = transform.GetRotation() * yawRotation * pitchRotation;
 		transform.SetRotationQuat(newRotation);
 
 	}

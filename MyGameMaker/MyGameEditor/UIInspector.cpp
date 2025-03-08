@@ -49,6 +49,14 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Transform")) return;
 
+        //reset transform with right click
+        if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Reset Transform")) {
+				transform->ResetTransform();
+			}
+			ImGui::EndPopup();
+		}
+
         glm::dvec3 currentPosition = transform->GetPosition();
         glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
         glm::dvec3 currentScale = transform->GetScale();
@@ -82,7 +90,7 @@ private:
     }
     #pragma endregion
 
-#pragma region MeshRenderer
+    #pragma region MeshRenderer
 	static void DrawMeshProperties(std::shared_ptr<Mesh> mesh) {
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (!ImGui::CollapsingHeader("Mesh")) return;
@@ -256,6 +264,14 @@ private:
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Camera")) return;
+
+        //remove component with right click
+        if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				camera->GetOwner()->RemoveComponent<CameraComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
         bool orthographic = camera->IsOrthographic();
         bool frustum = camera->frustrumCullingEnabled;
@@ -530,8 +546,7 @@ private:
     }
     #pragma endregion
 
-
-#pragma region Rigidbody
+    #pragma region Rigidbody
     static void DrawRigidbodyComponent(RigidbodyComponent* rigidbody) {
         if (!rigidbody) return;
 
@@ -577,7 +592,7 @@ private:
     }
 #pragma endregion
 
-#pragma region Shaders
+    #pragma region Shaders
 	static void DrawShaderComponent(ShaderComponent* shader) {
 		if (!shader) return;
 

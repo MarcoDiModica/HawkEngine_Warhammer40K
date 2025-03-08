@@ -82,6 +82,11 @@ public:
         HandleWorldUpdate();
     }
 
+    void ResetTransform() {
+		matrix = glm::dmat4(1.0);
+		local_matrix = glm::dmat4(1.0);
+	}
+
     ComponentType GetType() const override { return ComponentType::TRANSFORM; }
 
     Transform_Component operator*(const glm::dmat4& other) const {

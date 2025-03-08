@@ -66,13 +66,12 @@ public:
     void Translate(const glm::dvec3& translation);
     void SetPosition(const glm::dvec3& position);
     void Rotate(double rads, const glm::dvec3& axis);
-    void Scale(const glm::dvec3& scale);
     void LookAt(const glm::dvec3& target);
     void AlignToGlobalUp(const glm::vec3& worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
     void SetRotation(const glm::dvec3& eulerAngles);
     void SetRotationQuat(const glm::dquat& rotation);
     void SetScale(const glm::dvec3& scale);
-    void SetForward(const glm::dvec3& forward);
+    void SetForward(const glm::dvec3& newFwd);
     void SetMatrix(const glm::dmat4& newMatrix) {
         matrix = newMatrix;
         HandleLocalUpdate();
@@ -174,17 +173,9 @@ private:
     // glm::dmat4 local_matrix = glm::dmat4(1.0);
 
     /* Update the world matrix based on the parent's world matrix */
-    void UpdateWorldMatrix(const glm::dmat4& parentWorldMatrix) {
-        auto buff = matrix;
-        matrix = parentWorldMatrix * local_matrix;
-        if (buff != matrix) {
-            //int u = 7;
-        }
-    }
+    void UpdateWorldMatrix(const glm::dmat4& parentWorldMatrix);
 	friend class GameObject;
-    void UpdateLocalMatrix(const glm::dmat4& parentWorldMatrix) {
-        local_matrix = parentWorldMatrix * matrix;
-    }
+    void UpdateLocalMatrix(const glm::dmat4& parentWorldMatrix);
 
     void HandleWorldUpdate();
 

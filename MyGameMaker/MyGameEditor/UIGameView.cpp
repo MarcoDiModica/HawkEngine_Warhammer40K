@@ -73,15 +73,19 @@ bool UIGameView::Draw()
             return true;
         }
 
-        ImVec2 windowPos = ImGui::GetWindowPos();
-        ImVec2 windowSize = ImGui::GetWindowSize();
+		ImVec2 windowPos = ImGui::GetWindowPos();
+		ImVec2 windowSize = ImGui::GetWindowSize();
 
-        winPos = vec2(windowPos.x, windowPos.y);
-        winSize = vec2(windowSize.x, windowSize.y);
+		winPos = vec2(windowPos.x, windowPos.y);
+		winSize = vec2(windowSize.x, windowSize.y);
+
+        //debug viewport size and position
+        ImGui::Text("Viewport Size: %f, %f", width, height);
+        ImGui::Text("Viewport Pos: %f, %f", GetViewportPos().x, GetViewportPos().y);
 
         ImVec2 availableSize = ImGui::GetContentRegionAvail();
 
-        const float targetAspectRatio = 16.0f / 9.0f; //fixed aspect ratio
+        const float targetAspectRatio = 16.0f / 9.0f;
 
         width = availableSize.x;
         height = width / targetAspectRatio;
@@ -96,8 +100,22 @@ bool UIGameView::Draw()
             ImVec2(width, height),
             ImVec2(0, 1), ImVec2(1, 0));
 
+		ImVec2 viewportMin = ImGui::GetItemRectMin();
+		viewportPos = vec2(viewportMin.x, viewportMin.y);
+		viewportSize = vec2(width, height);
+
         ImGui::End();
     }
 
     return true;
+}
+
+vec2 UIGameView::GetViewportSize()
+{
+    return viewportSize;
+}
+
+vec2 UIGameView::GetViewportPos()
+{
+	return viewportPos;
 }

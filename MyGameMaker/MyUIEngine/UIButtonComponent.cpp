@@ -4,6 +4,8 @@
 #include "../MyUIEngine/UITransformComponent.h"
 #include "../MyGameEditor/App.h"
 #include "../MyGameEditor/Input.h"
+#include "../MyGameEditor/MyGUI.h"
+#include "../MyGameEditor/UIGameView.h"
 
 UIButtonComponent::UIButtonComponent(GameObject* owner) : Component(owner)
 {
@@ -24,14 +26,8 @@ void UIButtonComponent::Update(float deltaTime)
 	auto mousePosX = Application->input->GetMouseX();
 	auto mousePosY = Application->input->GetMouseY();
 
-	auto offsetX = 7.0f;
-	auto offsetY = 56.0f;
-
-	if (mousePosX >= buttonPos.x + offsetX && mousePosX <= buttonPos.x + offsetX + buttonSize.x &&
-		mousePosY >= buttonPos.y + offsetY && mousePosY <= buttonPos.y + offsetY + buttonSize.y)
-	{
-		//std::cout << "Mouse is over the button" << std::endl;
-	}
+	double offsetX = Application->gui->UIGameViewPanel->GetViewportPos().x;
+    double offsetY = Application->gui->UIGameViewPanel->GetViewportPos().y;
 
     if (mousePosX >= buttonPos.x + offsetX && mousePosX <= buttonPos.x + offsetX + buttonSize.x &&
         mousePosY >= buttonPos.y + offsetY && mousePosY <= buttonPos.y + offsetY + buttonSize.y)

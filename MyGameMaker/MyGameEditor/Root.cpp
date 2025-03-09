@@ -278,6 +278,7 @@ bool Root::Start()
     //auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -2.0f), "../MyGameEditor/Assets/Textures/UI_Final.png");
     auto canvas = CreateGameObject("Canvas");
 	canvas->AddComponent<UICanvasComponent>();
+    canvas->AddComponent<UITransformComponent>();
 
     auto image = CreateGameObject("Image");
     Application->root->ParentGameObject(*image, *canvas);

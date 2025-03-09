@@ -1,7 +1,5 @@
 #include "UIImageComponent.h"
 #include "../MyGameEditor/App.h"
-#include "../MyGameEngine/GameObject.h"
-#include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEditor/Root.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEditor/UIGameView.h"
@@ -37,24 +35,13 @@ void UIImageComponent::Update(float deltaTime)
 		shader->SetUniform("u_HasTexture", false);
 	}
 
-	auto width = Application->gui->UIGameViewPanel->GetWidth();
-	auto height = Application->gui->UIGameViewPanel->GetHeight();
-
-	auto winWidth = owner->GetParent()->GetComponent<UICanvasComponent>()->GetWinWidth();
-	auto winHeight = owner->GetParent()->GetComponent<UICanvasComponent>()->GetWinHeight();
-
-	glm::mat4 projection = glm::ortho(
-		0.0f, static_cast<float>(winWidth - width),
-		static_cast<float>(winHeight - height), 0.0f,
-		-1.0f, 1.0f);
-
 	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
 
-	auto rectTransform = owner->GetComponent<UITransformComponent>();
+	auto uiTransform = owner->GetComponent<UITransformComponent>();
 
-	glm::vec3 translation = rectTransform->GetPosition();
+	glm::vec3 translation = uiTransform->getCanvasPosition() + (uiTransform->GetPosition() * uiTransform->getCanvasSize());
 	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
-	glm::vec3 scale = rectTransform->GetScale();
+	glm::vec3 scale = uiTransform->GetScale() * uiTransform->getCanvasSize();
 
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *
@@ -106,9 +93,9 @@ void UIImageComponent::LoadMesh()
 
 	model->GetModelData().vertexData = {
 		Vertex {vec3(0.0f, 0.0f, 0.0f)},
-		Vertex {vec3(texture->width(), 0.0f, 0.0f)},
-		Vertex {vec3(texture->width(), texture->height(), 0.0f)},
-		Vertex {vec3(0.0f, texture->height(), 0.0f)}
+		Vertex {vec3(1.0f, 0.0f, 0.0f)},
+		Vertex {vec3(1.0f, 1.0f, 0.0f)},
+		Vertex {vec3(0.0f, 1.0f, 0.0f)}
 	};
 
 	model->GetModelData().indexData = {

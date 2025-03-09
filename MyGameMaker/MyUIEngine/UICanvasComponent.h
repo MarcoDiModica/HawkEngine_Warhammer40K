@@ -23,10 +23,14 @@ public:
 
 	ComponentType GetType() const override { return ComponentType::CANVAS; }
 
-	float GetWinWidth() const { return winWidth; }
-	float GetWinHeight() const { return winHeight; }	
+	float GetMonitorWidth() const { return monitorHeight; }
+	float GetMonitorHeight() const { return monitorHeight; }
 
 private:
-	float winWidth;
-	float winHeight;
+	float monitorWidth;
+	float monitorHeight;
+
+	float width;
+	float height;
+	
 };

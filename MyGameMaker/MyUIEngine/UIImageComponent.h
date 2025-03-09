@@ -35,11 +35,14 @@ public:
 
 	void LoadMesh();
 
+	void SetProjection(const glm::mat4& proj) { projection = proj; }
+
 private:
 	//texture
 	std::string texturePath;
 	std::shared_ptr<Image> texture;
 	std::shared_ptr<Mesh> mesh;
 	Shaders * shader;
+	glm::mat4 projection;
 };
 

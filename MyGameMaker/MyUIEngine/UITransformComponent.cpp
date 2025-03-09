@@ -1,7 +1,6 @@
 #include "UITransformComponent.h"
 #include "../MyGameEditor/App.h"
 #include "../MyGameEngine/GameObject.h"
-#include "../MyGameEngine/TransformComponent.h"
 
 UITransformComponent::UITransformComponent(GameObject* owner) : Component(owner)
 {

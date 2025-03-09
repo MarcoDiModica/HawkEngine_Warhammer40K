@@ -16,11 +16,10 @@ void UIButtonComponent::Start()
 
 void UIButtonComponent::Update(float deltaTime)
 {
-	auto width = owner->GetComponent<UIImageComponent>()->GetTexture()->width();
-	auto height = owner->GetComponent<UIImageComponent>()->GetTexture()->height();
+	auto rectTransform = owner->GetComponent<UITransformComponent>();
 
-	auto Tposition = owner->GetComponent<UITransformComponent>()->GetPosition();
-	auto Tscale = owner->GetComponent<UITransformComponent>()->GetScale();
+	auto buttonSize = rectTransform->getCanvasSize() * rectTransform->GetScale();
+	auto buttonPos = rectTransform->getCanvasPosition() + (rectTransform->GetPosition() * rectTransform->getCanvasSize());
 
 	auto mousePosX = Application->input->GetMouseX();
 	auto mousePosY = Application->input->GetMouseY();
@@ -28,10 +27,10 @@ void UIButtonComponent::Update(float deltaTime)
 	auto offsetX = 7.0f;
 	auto offsetY = 56.0f;
 
-	if (mousePosX >= Tposition.x + offsetX && mousePosX <= Tposition.x + offsetX + width * Tscale.x &&
-		mousePosY >= Tposition.y + offsetY && mousePosY <= Tposition.y + offsetY + height * Tscale.y)
+	if (mousePosX >= buttonPos.x + offsetX && mousePosX <= buttonPos.x + offsetX + buttonSize.x &&
+		mousePosY >= buttonPos.y + offsetY && mousePosY <= buttonPos.y + offsetY + buttonSize.y)
 	{
-		//std::cout << "Mouse is over the button" << std::endl;
+		std::cout << "Mouse is over the button" << std::endl;
 	}
 
 	//std::cout << "Mouse position: " << mousePosX << ", " << mousePosY << std::endl;

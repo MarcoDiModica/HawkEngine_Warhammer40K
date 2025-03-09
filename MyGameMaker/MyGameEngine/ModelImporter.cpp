@@ -109,17 +109,45 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 			const aiMesh* mesh = scene.mMeshes[node.mMeshes[i]];
 			int numBones = mesh->mNumBones;
 
-			std::vector<std::shared_ptr<GameObject>> bonesThisMesh;
+			std::vector<std::shared_ptr<GameObject>> boneVector;
 			for (int j = 0; j < numBones; ++j)
 			{
 				aiBone* bone = mesh->mBones[j];
 				std::string boneName = bone->mName.C_Str();
 				std::shared_ptr<GameObject> boneGameObject = std::make_shared<GameObject>();
 				boneGameObject->SetName(boneName);
-				//boneGameObject->GetTransform()->SetMatrix(accumulatedTransform * aiMat4ToMat4(bone->mOffsetMatrix));
-				bonesThisMesh.push_back(boneGameObject);
+				boneGameObject->GetTransform()->SetMatrix(aiMat4ToMat4(bone->mOffsetMatrix));
+				
+				boneVector.push_back(boneGameObject);
 			}
-			bonesGameObjects.push_back(bonesThisMesh);
+			bonesGameObjects.push_back(boneVector);
+
+			// Establish parent-child relationships
+			/*for (int j = 0; j < numBones; ++j)
+			{
+				aiBone* bone = mesh->mBones[j];
+				std::string boneName = bone->mName.C_Str();
+				std::shared_ptr<GameObject> boneGameObject = boneMap[boneName];
+
+				aiNode* boneNode = scene.mRootNode->FindNode(bone->mName);
+				if (boneNode && boneNode->mParent)
+				{
+					std::string parentName = boneNode->mParent->mName.C_Str();
+					if (boneMap[i].find(parentName) != boneMap[i].end())
+					{
+						boneMap[i][parentName]->AddChild(boneGameObject);
+					}
+				}
+			}*/
+
+			// Add the root bones to the bonesGameObjects list
+			/*for (const auto& pair : boneMap)
+			{
+				if (!pair.second->GetParent())
+				{
+					bonesGameObjects.push_back(pair.second);
+				}
+			}*/
 		}
 
 		// Process and add children as children of the current node

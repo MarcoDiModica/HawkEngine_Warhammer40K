@@ -26,6 +26,9 @@ struct BoneInfo
 {
 	int id;
 
+	std::string name;
+	std::string parentName;
+
 	glm::mat4 offset;
 
 };

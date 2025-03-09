@@ -43,10 +43,11 @@ private:
 
     glm::mat4 m_LocalTransform;
     std::string m_Name;
+	std::string m_ParentName;
     int m_ID;
 
 public:
-    Bone(const std::string& name, int ID, const aiNodeAnim* channel);
+    Bone(const std::string& name, const std::string& parentName, int ID, const aiNodeAnim* channel);
 	~Bone();
 
 	void Update(float animationTime);
@@ -56,6 +57,7 @@ public:
 
     glm::mat4 GetLocalTransform() { return m_LocalTransform; }
     std::string GetBoneName() const { return m_Name; }
+	std::string GetParentName() const { return m_ParentName; }
     int GetBoneID() { return m_ID; }
 
     void DrawTriangle();

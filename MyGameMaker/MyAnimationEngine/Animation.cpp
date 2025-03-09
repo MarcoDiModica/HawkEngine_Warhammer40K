@@ -86,6 +86,10 @@ Bone* Animation::FindBone(const std::string& name)
     else return &(*iter);
 }
 
+bool containsWord(const std::string& str, const std::string& word) {
+    return str.find(word) != std::string::npos;
+}
+
 void Animation::ReadMissingBones(const aiAnimation* animation, Model& model)
 {
     int size = animation->mNumChannels;
@@ -103,10 +107,24 @@ void Animation::ReadMissingBones(const aiAnimation* animation, Model& model)
         if (boneInfoMap.find(boneName) == boneInfoMap.end())
         {
             boneInfoMap[boneName].id = boneCount;
+			boneInfoMap[boneName].name = boneName;
+            
+			boneInfoMap[boneName].parentName = model.GetBoneInfoMap()[channel->mNodeName.data].parentName;
             boneCount++;
         }
-        m_Bones.push_back(Bone(channel->mNodeName.data,
-            boneInfoMap[channel->mNodeName.data].id, channel));
+
+        boneInfoMap[boneName].name = boneName;
+        if (containsWord(model.GetBoneInfoMap()[channel->mNodeName.data].parentName, "Armature"))
+        {
+            boneInfoMap[boneName].parentName = "";
+        }
+        else
+        {
+            boneInfoMap[boneName].parentName = model.GetBoneInfoMap()[channel->mNodeName.data].parentName;
+        }
+
+		m_Bones.push_back(Bone(channel->mNodeName.data, model.GetBoneInfoMap()[channel->mNodeName.data].parentName, model.GetBoneInfoMap()[channel->mNodeName.data].id, channel));
+            
     }
 
     m_BoneInfoMap = boneInfoMap;

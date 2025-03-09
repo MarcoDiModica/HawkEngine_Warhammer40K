@@ -43,6 +43,21 @@ void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* 
 		{
 			BoneInfo newBoneInfo;
 			newBoneInfo.id = m_BoneCounter;
+			newBoneInfo.name = boneName;
+
+			// Quiero conseguir el nombre del parent
+			aiNode* node = scene->mRootNode->FindNode(mesh->mBones[boneIndex]->mName);
+			aiNode* parent = node->mParent;
+			if (parent != nullptr)
+			{
+				newBoneInfo.parentName = parent->mName.C_Str();
+			}
+			else
+			{
+				newBoneInfo.parentName = "";
+			}
+			
+			
 			newBoneInfo.offset = AssimpGLMHelpers::ConvertMatrixToGLMFormat(
 				mesh->mBones[boneIndex]->mOffsetMatrix);
 			m_BoneInfoMap[boneName] = newBoneInfo;

@@ -394,13 +394,28 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
             animationComponent->SetAnimation(meshImp.animations[0].get());
             animationComponent->Start();
 
-			for (auto& bone : meshImp.bonesGameObjects[i]) {
-				auto boneGO = CreateGameObject(bone->GetName());
+            std::unordered_map<std::string, std::shared_ptr<GameObject>> boneMap;
 
+            // Create GameObjects for each bone and store them in the map
+            for (auto& bone : meshImp.bonesGameObjects[i]) {
+                auto boneGO = CreateGameObject(bone->GetName());
                 Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
-				boneGO->GetTransform()->SetLocalMatrix(boneTransform->GetLocalTransform());
-				ParentGameObject(*boneGO, *go);
-			}
+                boneGO->GetTransform()->SetLocalMatrix(boneTransform->GetLocalTransform());
+                boneMap[bone->GetName()] = boneGO;
+            }
+
+            // Establish parent-child relationships
+            for (auto& bone : meshImp.bonesGameObjects[i]) {
+                auto boneGO = boneMap[bone->GetName()];
+                Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+                if (boneTransform->GetParentName() != "") {
+                    auto parentGO = boneMap[boneTransform->GetParentName()];
+                    ParentGameObject(*boneGO, *parentGO);
+                }
+                else {
+                    ParentGameObject(*boneGO, *go);
+                }
+            }
 		}
 
         go->GetComponent<MeshRenderer>()->GetMesh()->setBoundingBox(*meshBBox);

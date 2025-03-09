@@ -1,9 +1,10 @@
 #include "Bone.h"
 #include<glm/common.hpp>
 
-Bone::Bone(const std::string& name, int ID, const aiNodeAnim* channel)
+Bone::Bone(const std::string& name, const std::string& parentName, int ID, const aiNodeAnim* channel)
     :
     m_Name(name),
+	m_ParentName(parentName),
     m_ID(ID),
     m_LocalTransform(1.0f)
 {

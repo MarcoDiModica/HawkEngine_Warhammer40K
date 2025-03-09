@@ -382,9 +382,9 @@ float tim2e = 0.0f;
 static void display_func3() 
 {
 
-	//auto now = std::chrono::high_resolution_clock::now();
-	//
-	//auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - startTime);
+	auto now = std::chrono::high_resolution_clock::now();
+	
+	auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - startTime);
 
 	tim2e += Application->GetDt();
 	Application->root->animationScene->update(0, tim2e);

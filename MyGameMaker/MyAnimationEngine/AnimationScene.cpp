@@ -44,7 +44,7 @@ void AnimationScene::initScene()
 	m_AnimatedModel = new SkeletalModel(prog);
 
 	// Load the model from the given path. 
-	m_AnimatedModel->LoadMesh("Assets/Meshes/Minotaur@Jump.FBX");
+	m_AnimatedModel->LoadMesh("Assets/Meshes/rabbitSizefix.FBX");
 	//m_AnimatedModel->LoadMesh("Assets/astroBoy_walk_Maya.dae");
 	//m_AnimatedModel->LoadMesh("Assets/mech.fbx");
 }
@@ -63,7 +63,6 @@ void AnimationScene::update(long long f_StartTime, float f_Interval)
 	// Passes each new bone transformation into the shader. 
 	for (unsigned int i = 0; i < Transforms.size(); i++) {
 
-		Transforms[i].Inverse();
 		if (!first) {
 			Transforms[i].Print();
 		}

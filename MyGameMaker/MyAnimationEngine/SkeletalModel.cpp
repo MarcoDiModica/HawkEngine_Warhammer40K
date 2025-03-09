@@ -305,10 +305,10 @@ unsigned int SkeletalModel::FindTranslation(float AnimationTime, const aiNodeAni
 void SkeletalModel::CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	//if (pNodeAnim->mNumRotationKeys == 1) {
+	if (pNodeAnim->mNumRotationKeys == 1) {
 		Out = pNodeAnim->mRotationKeys[0].mValue;
 		return;
-	//}
+	}
 	// Obtain the current rotation keyframe. 
 	unsigned int RotationIndex = FindRotation(AnimationTime, pNodeAnim);
 
@@ -337,10 +337,10 @@ void SkeletalModel::CalcInterpolatedRotation(aiQuaternion& Out, float AnimationT
 void SkeletalModel::CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	//if (pNodeAnim->mNumScalingKeys == 1) {
+	if (pNodeAnim->mNumScalingKeys == 1) {
 		Out = pNodeAnim->mScalingKeys[0].mValue;
 		return;
-	//}
+	}
 
 	unsigned int ScalingIndex = FindScale(AnimationTime, pNodeAnim);
 	unsigned int NextScalingIndex = (ScalingIndex + 1);
@@ -358,10 +358,10 @@ void SkeletalModel::CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime
 void SkeletalModel::CalcInterpolatedTranslation(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	//if (pNodeAnim->mNumPositionKeys == 1) {
+	if (pNodeAnim->mNumPositionKeys == 1) {
 		Out = pNodeAnim->mPositionKeys[0].mValue;
 		return;
-	//}
+	}
 
 
 	unsigned int PositionIndex = FindTranslation(AnimationTime, pNodeAnim);

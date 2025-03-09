@@ -224,7 +224,7 @@ void App::FinishUpdate()
 		dtCount = 0;
 	}
 
-	Application->gui->UIsettingsPanel->AddFpsMark(fps);
+	//Application->gui->UIsettingsPanel->AddFpsMark(fps);
 
 }
 

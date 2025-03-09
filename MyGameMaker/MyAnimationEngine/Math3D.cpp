@@ -17,8 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <assert.h>
 #include "Math3D.h"
 
+#define PI 3.141592653589793
 
-const float PI = 3.14159265359f;
 Vector3f Vector3f::Cross(const Vector3f& v) const
 {
 	const float _x = y * v.z - z * v.y;

@@ -78,29 +78,29 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
 
 bool Root::Awake()
 {
-   // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
-    SceneManagement = new SceneManager();
-    Application->root->CreateScene("HolaBuenas");
-    Application->root->SetActiveScene("HolaBuenas");
-    //MonoEnvironment* env = new MonoEnvironment();
-	shaders.resize(3);
-    shaders[0].LoadShaders("Assets/Shaders/default_vertex_shader.glsl", "Assets/Shaders/default_fragment_shader.glsl");
-    shaders[1].LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
-    shaders[2].LoadShaders("Assets/Shaders/water_vertex_shader.glsl", "Assets/Shaders/water_fragment_shader.glsl");
-    //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
-    //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
-    SoundComponent::InitSharedAudioEngine();
-    //CreateGameObjectWithPath("Assets/Meshes/rabbit.FBX");
-    MakeSmokerEmmiter();
-    MakeSmokerEmiter2();
-    /*CreateScene("Viernes13");
-    SetActiveScene("Viernes13");
-    
-    auto MainCamera = CreateCameraObject("MainCamera");
-    MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
-    MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
-    auto camera = MainCamera->AddComponent<CameraComponent>();
-    mainCamera = MainCamera; */   
+ //  // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
+ //   SceneManagement = new SceneManager();
+ //   Application->root->CreateScene("HolaBuenas");
+ //   Application->root->SetActiveScene("HolaBuenas");
+ //   //MonoEnvironment* env = new MonoEnvironment();
+	//shaders.resize(3);
+ //   shaders[0].LoadShaders("Assets/Shaders/default_vertex_shader.glsl", "Assets/Shaders/default_fragment_shader.glsl");
+ //   shaders[1].LoadShaders("Assets/Shaders/vertex_shader.glsl", "Assets/Shaders/fragment_shader.glsl");
+ //   shaders[2].LoadShaders("Assets/Shaders/water_vertex_shader.glsl", "Assets/Shaders/water_fragment_shader.glsl");
+ //   //Application->scene_serializer->DeSerialize("Assets/Adios.scene");
+ //   //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
+ //   SoundComponent::InitSharedAudioEngine();
+ //   //CreateGameObjectWithPath("Assets/Meshes/rabbit.FBX");
+ //   MakeSmokerEmmiter();
+ //   MakeSmokerEmiter2();
+ //   /*CreateScene("Viernes13");
+ //   SetActiveScene("Viernes13");
+ //   
+ //   auto MainCamera = CreateCameraObject("MainCamera");
+ //   MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
+ //   MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
+ //   auto camera = MainCamera->AddComponent<CameraComponent>();
+ //   mainCamera = MainCamera; */   
 
 	animationScene = new AnimationScene();
     animationScene->initScene();
@@ -119,64 +119,64 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto Player = CreateGameObject("Player");
-    auto mesh = Mesh::CreateCube();
-    AddMeshRenderer(*Player, mesh);
-    auto script = Player->AddComponent<ScriptComponent>();
-    script->LoadScript("PlayerController");
-    
-    //MonoEnvironment* mono = new MonoEnvironment();
+ //   auto Player = CreateGameObject("Player");
+ //   auto mesh = Mesh::CreateCube();
+ //   AddMeshRenderer(*Player, mesh);
+ //   auto script = Player->AddComponent<ScriptComponent>();
+ //   script->LoadScript("PlayerController");
+ //   
+ //   //MonoEnvironment* mono = new MonoEnvironment();
 
-    //auto Script = CreateGameObject("Script");
-    //auto script = Script->AddComponent<ScriptComponent>();
-    //script->LoadScript("TestingComponent");
-    /*
-    auto BlobFish = CreateGameObject("Tank");
-    auto blob = BlobFish->AddComponent<ScriptComponent>();
+ //   //auto Script = CreateGameObject("Script");
+ //   //auto script = Script->AddComponent<ScriptComponent>();
+ //   //script->LoadScript("TestingComponent");
+ //   /*
+ //   auto BlobFish = CreateGameObject("Tank");
+ //   auto blob = BlobFish->AddComponent<ScriptComponent>();
 
-	auto BlobFish2 = CreateGameObject("Turret");
-	auto blob2 = BlobFish2->AddComponent<ScriptComponent>();
+	//auto BlobFish2 = CreateGameObject("Turret");
+	//auto blob2 = BlobFish2->AddComponent<ScriptComponent>();
 
-    auto BlobFish3 = CreateGameObject("SingleProjectile");
-	auto blob3 = BlobFish3->AddComponent<ScriptComponent>();
-    
-    AddMeshRenderer(*BlobFish, Mesh::CreateCube());
-	AddMeshRenderer(*BlobFish2, Mesh::CreateCube());
-    AddMeshRenderer(*BlobFish3, Mesh::CreateSphere());
+ //   auto BlobFish3 = CreateGameObject("SingleProjectile");
+	//auto blob3 = BlobFish3->AddComponent<ScriptComponent>();
+ //   
+ //   AddMeshRenderer(*BlobFish, Mesh::CreateCube());
+	//AddMeshRenderer(*BlobFish2, Mesh::CreateCube());
+ //   AddMeshRenderer(*BlobFish3, Mesh::CreateSphere());
 
-    //auto blob2 = BlobFish->AddComponent<ScriptComponent>();
-    blob->LoadScript("TestingComponent");
-	blob2->LoadScript("TankController");
-	blob3->LoadScript("ProjectileScript");
-    
-	ParentGameObject(*BlobFish2, *BlobFish);
-	ParentGameObject(*BlobFish3, *BlobFish2);
-    */
-    //blob2->LoadScript("TestingComponent");
-    
-    //check if blobfish has 2 scripts
+ //   //auto blob2 = BlobFish->AddComponent<ScriptComponent>();
+ //   blob->LoadScript("TestingComponent");
+	//blob2->LoadScript("TankController");
+	//blob3->LoadScript("ProjectileScript");
+ //   
+	//ParentGameObject(*BlobFish2, *BlobFish);
+	//ParentGameObject(*BlobFish3, *BlobFish2);
+ //   */
+ //   //blob2->LoadScript("TestingComponent");
+ //   
+ //   //check if blobfish has 2 scripts
 
-    /*auto Street = CreateGameObject("Street");
-    Street->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/ff.fbx");
+ //   /*auto Street = CreateGameObject("Street");
+ //   Street->GetTransform()->GetPosition() = vec3(0, 0, 0);
+ //   ModelImporter meshImp;
+ //   meshImp.loadFromFile("Assets/Meshes/ff.fbx");
 
-    for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
-        auto& Street2 = meshImp.meshGameObjects[i];
-        currentScene->AddGameObject(Street2);
-        ParentGameObject(*Street2, *Street);
-    }*/
+ //   for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
+ //       auto& Street2 = meshImp.meshGameObjects[i];
+ //       currentScene->AddGameObject(Street2);
+ //       ParentGameObject(*Street2, *Street);
+ //   }*/
 
-    /*auto MainCamera = CreateGameObject("MainCamera");
-    MainCamera->GetTransform()->GetPosition() = vec3(0, 0, -10);
-    auto camera = MainCamera->AddComponent<CameraComponent>();
-    mainCamera = MainCamera;
+ //   /*auto MainCamera = CreateGameObject("MainCamera");
+ //   MainCamera->GetTransform()->GetPosition() = vec3(0, 0, -10);
+ //   auto camera = MainCamera->AddComponent<CameraComponent>();
+ //   mainCamera = MainCamera;
 
-    auto cube = CreateCube("Cube");
-    cube->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");*/
+ //   auto cube = CreateCube("Cube");
+ //   cube->GetTransform()->GetPosition() = vec3(0, 0, 0);
+ //   AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");*/
 
-    SceneManagement->Start();
+ //   SceneManagement->Start();
 
     return true;
 }

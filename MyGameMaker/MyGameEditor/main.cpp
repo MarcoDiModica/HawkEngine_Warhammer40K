@@ -15,6 +15,8 @@
 #include <iostream>
 #include <stack>
 
+
+
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -97,24 +99,25 @@ static void init_openGL() {
 	glewInit();
 	if (!GLEW_VERSION_3_0) throw exception("OpenGL 3.0 API is not available.");
 
-	glEnable(GL_MULTISAMPLE);
+	//glEnable(GL_MULTISAMPLE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	//glEnable(GL_DEPTH_TEST);
+	//glDepthFunc(GL_LEQUAL);
+	//glEnable(GL_TEXTURE_2D);
+	//glEnable(GL_BLEND);
+	//glEnable(GL_CULL_FACE);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glEnable(GL_CULL_FACE);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//glScaled(1.0, (double)WINDOW_SIZE.x / WINDOW_SIZE.y, 1.0);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glScaled(1.0, (double)WINDOW_SIZE.x / WINDOW_SIZE.y, 1.0);
-
-	glMatrixMode(GL_MODELVIEW);
+	//glMatrixMode(GL_MODELVIEW);
 }
 
 static void drawFloorGrid(int size, double step) {
@@ -477,7 +480,7 @@ void EditorRenderer(MyGUI* gui) {
 		//display_func();
 		//display_func2();
 		display_func3();
-		gui->Render();
+		//gui->Render();
 
 		/*move_camera();*/
 		Application->window->SwapBuffers();
@@ -502,16 +505,16 @@ int main(int argc, char** argv) {
 
 			// The application is created
 			Application = new App();
-			Application->physicsModule->Awake();
-			Application->physicsModule->Start();
+			//Application->physicsModule->Awake();
+			//Application->physicsModule->Start();
 			// MonoEnvironment* mono = new MonoEnvironment();
 			//	MonoEnvironment* monoEnvironmanet = new MonoEnvironment();
-			MonoManager::GetInstance().Initialize();
+			//MonoManager::GetInstance().Initialize();
 
 			//initialize devil
-			ilInit();
-			iluInit();
-			ilutInit();
+			//ilInit();
+			//iluInit();
+			//ilutInit();
 
 			init_openGL();
 

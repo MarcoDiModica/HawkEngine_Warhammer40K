@@ -1,8 +1,6 @@
 #include "SkeletalModel.h"
-#include <GL/glew.h>
-#include <assimp/Importer.hpp>
-#include <assimp/cimport.h>
-
+#include <iostream>
+#include <assimp/Version.h>
 
 SkeletalModel::SkeletalModel(GLSLProgram* shaderProgIn)
 {
@@ -15,7 +13,6 @@ SkeletalModel::SkeletalModel(GLSLProgram* shaderProgIn)
 
 	// Obtain pointer to shader program to use for rendering. 
 	m_pShaderProg = shaderProgIn;
-
 
 }
 
@@ -219,8 +216,11 @@ void SkeletalModel::LoadBones(unsigned int MeshIndex, const aiMesh* pMesh, std::
 
 		// Obtains the offset matrix which transforms the bone from mesh space into bone space. 
 		m_BoneInfo[BoneIndex].BoneOffset = pMesh->mBones[i]->mOffsetMatrix;
-
-
+		
+		int u = aiGetVersionMajor();
+		int v = aiGetVersionMinor();
+	
+		
 		// Iterate over all the affected vertices by this bone i.e weights. 
 		for (unsigned int j = 0; j < pMesh->mBones[i]->mNumWeights; j++) {
 
@@ -305,10 +305,10 @@ unsigned int SkeletalModel::FindTranslation(float AnimationTime, const aiNodeAni
 void SkeletalModel::CalcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	if (pNodeAnim->mNumRotationKeys == 1) {
+	//if (pNodeAnim->mNumRotationKeys == 1) {
 		Out = pNodeAnim->mRotationKeys[0].mValue;
 		return;
-	}
+	//}
 	// Obtain the current rotation keyframe. 
 	unsigned int RotationIndex = FindRotation(AnimationTime, pNodeAnim);
 
@@ -337,10 +337,10 @@ void SkeletalModel::CalcInterpolatedRotation(aiQuaternion& Out, float AnimationT
 void SkeletalModel::CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	if (pNodeAnim->mNumScalingKeys == 1) {
+	//if (pNodeAnim->mNumScalingKeys == 1) {
 		Out = pNodeAnim->mScalingKeys[0].mValue;
 		return;
-	}
+	//}
 
 	unsigned int ScalingIndex = FindScale(AnimationTime, pNodeAnim);
 	unsigned int NextScalingIndex = (ScalingIndex + 1);
@@ -358,10 +358,10 @@ void SkeletalModel::CalcInterpolatedScaling(aiVector3D& Out, float AnimationTime
 void SkeletalModel::CalcInterpolatedTranslation(aiVector3D& Out, float AnimationTime, const aiNodeAnim* pNodeAnim)
 {
 	// we need at least two values to interpolate...
-	if (pNodeAnim->mNumPositionKeys == 1) {
+	//if (pNodeAnim->mNumPositionKeys == 1) {
 		Out = pNodeAnim->mPositionKeys[0].mValue;
 		return;
-	}
+	//}
 
 
 	unsigned int PositionIndex = FindTranslation(AnimationTime, pNodeAnim);

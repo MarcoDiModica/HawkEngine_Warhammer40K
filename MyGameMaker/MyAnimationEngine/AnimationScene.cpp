@@ -22,6 +22,7 @@ AnimationScene::AnimationScene()
 {
 }
 
+
 /////////////////////////////////////////////////////////////////////////////////////////////
 //Initialise the scene
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,12 +59,18 @@ void AnimationScene::update(long long f_StartTime, float f_Interval)
 
 	// Obtains newly transformed matrices from the bone hierarchy at the given time. 
 	m_AnimatedModel->BoneTransform(f_Interval, Transforms);
-
+	static bool first = false;
 	// Passes each new bone transformation into the shader. 
 	for (unsigned int i = 0; i < Transforms.size(); i++) {
+
+		Transforms[i].Inverse();
+		if (!first) {
+			Transforms[i].Print();
+		}
+	
 		m_AnimatedModel->SetBoneTransform(i, Transforms[i]);
 	}
-
+	first = true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,8 +89,8 @@ void AnimationScene::setLightParams()
 /////////////////////////////////////////////////////////////////////////////////////////////
 void AnimationScene::render()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
-	glViewport(0, 0, Application->window->width(), Application->window->height());
+	//glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	//glViewport(0, 0, Application->window->width(), Application->window->height());
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -92,20 +99,20 @@ void AnimationScene::render()
 	// Model matrix 
 	model = mat4(1.0f);
 	//model = glm::translate(glm::vec3(0.0, -20.0, 0.0));
-	model = glm::scale(glm::vec3(0.1f));
+	model = glm::scale(glm::vec3(0.05f));
 
 	setMatrices();
 
 	//Set the Teapot material properties in the shader and render
-	prog->setUniform("Ka", glm::vec3(0.8f, 0.125f, 0.0f));
+	prog->setUniform("Ka", glm::vec3(0.225f, 0.125f, 0.0f));
 	prog->setUniform("Kd", glm::vec3(1.0f, 0.6f, 0.0f));
 	prog->setUniform("Ks", glm::vec3(1.0f, 1.0f, 1.0f));
-	prog->setUniform("specularShininess", 0.2f);
+	prog->setUniform("specularShininess", 1.0f);
 
 	m_AnimatedModel->render();
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////

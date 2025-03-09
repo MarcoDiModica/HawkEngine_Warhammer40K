@@ -48,54 +48,54 @@ bool MyGUI::Awake() {
 
 	bool ret = true;
 
-	UIHierarchyPanel = new UIHierarchy(UIType::HIERARCHY, "Hierarchy");
-	elements.push_back(UIHierarchyPanel);
-	ret = isInitialized(UIHierarchyPanel);
+	//UIHierarchyPanel = new UIHierarchy(UIType::HIERARCHY, "Hierarchy");
+	//elements.push_back(UIHierarchyPanel);
+	//ret = isInitialized(UIHierarchyPanel);
 
-	UIconsolePanel = new UIConsole(UIType::CONSOLE, "Console");
-	elements.push_back(UIconsolePanel);
-	ret = isInitialized(UIconsolePanel);
+	//UIconsolePanel = new UIConsole(UIType::CONSOLE, "Console");
+	//elements.push_back(UIconsolePanel);
+	//ret = isInitialized(UIconsolePanel);
 
-	UIsettingsPanel = new UISettings(UIType::SETTINGS, "Settings");
-	elements.push_back(UIsettingsPanel);
-	ret = isInitialized(UIsettingsPanel);
+	//UIsettingsPanel = new UISettings(UIType::SETTINGS, "Settings");
+	//elements.push_back(UIsettingsPanel);
+	//ret = isInitialized(UIsettingsPanel);
 
-	UIMainMenuBarPanel = new UIMainMenuBar(UIType::DEFAULT, "MainMenuBar");
-	elements.push_back(UIMainMenuBarPanel);
-	ret = isInitialized(UIMainMenuBarPanel);
+	//UIMainMenuBarPanel = new UIMainMenuBar(UIType::DEFAULT, "MainMenuBar");
+	//elements.push_back(UIMainMenuBarPanel);
+	//ret = isInitialized(UIMainMenuBarPanel);
 
-	UIinspectorPanel = new UIInspector(UIType::INSPECTOR, "Inspector");
-	elements.push_back(UIinspectorPanel);
-	ret = isInitialized(UIinspectorPanel);
+	//UIinspectorPanel = new UIInspector(UIType::INSPECTOR, "Inspector");
+	//elements.push_back(UIinspectorPanel);
+	//ret = isInitialized(UIinspectorPanel);
 
-	UIProjectPanel = new UIProject(UIType::PROJECT, "Project");
-	elements.push_back(UIProjectPanel);
-	ret = isInitialized(UIProjectPanel);
+	//UIProjectPanel = new UIProject(UIType::PROJECT, "Project");
+	//elements.push_back(UIProjectPanel);
+	//ret = isInitialized(UIProjectPanel);
 
-	UISceneWindowPanel = new UISceneWindow(UIType::DEFAULT, "SceneWindow");
-	elements.push_back(UISceneWindowPanel);
-	ret = isInitialized(UISceneWindowPanel);
+	//UISceneWindowPanel = new UISceneWindow(UIType::DEFAULT, "SceneWindow");
+	//elements.push_back(UISceneWindowPanel);
+	//ret = isInitialized(UISceneWindowPanel);
 
-	UICameraPanel = new UICamera(UIType::CAMERA, "Camera");
-	elements.push_back(UICameraPanel);
-	ret = isInitialized(UICameraPanel);
-
-	UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
-	elements.push_back(UIAudioTestPanel);
-	ret = isInitialized(UIAudioTestPanel);
-
-	UITextEditorPanel = new UITextEditor(UIType::TEXTEDITOR, "TextEditor");
-	elements.push_back(UITextEditorPanel);
-	ret = isInitialized(UITextEditorPanel);
-
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
-	style.WindowRounding = 5.0f;
-	style.FramePadding = ImVec2(5, 5);
+	//UICameraPanel = new UICamera(UIType::CAMERA, "Camera");
+	//elements.push_back(UICameraPanel);
+	//ret = isInitialized(UICameraPanel);
 
 	//UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
 	//elements.push_back(UIAudioTestPanel);
 	//ret = isInitialized(UIAudioTestPanel);
+
+	//UITextEditorPanel = new UITextEditor(UIType::TEXTEDITOR, "TextEditor");
+	//elements.push_back(UITextEditorPanel);
+	//ret = isInitialized(UITextEditorPanel);
+
+	//ImGuiStyle& style = ImGui::GetStyle();
+	//style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);
+	//style.WindowRounding = 5.0f;
+	//style.FramePadding = ImVec2(5, 5);
+
+	////UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
+	////elements.push_back(UIAudioTestPanel);
+	////ret = isInitialized(UIAudioTestPanel);
 
 
 	return ret;
@@ -114,44 +114,44 @@ bool MyGUI::isInitialized(UIElement* element) {
 
 bool MyGUI::Start() {
 
-	LOG(LogType::LOG_INFO, "Initializing ImGui/ImPlot...");
+	//LOG(LogType::LOG_INFO, "Initializing ImGui/ImPlot...");
 
-	IMGUI_CHECKVERSION();
-	LOG(LogType::LOG_OK, "-ImGui Version: %s", IMGUI_VERSION);
+	//IMGUI_CHECKVERSION();
+	//LOG(LogType::LOG_OK, "-ImGui Version: %s", IMGUI_VERSION);
 
-	if (!ImGui::GetCurrentContext)
-	{
-		LOG(LogType::LOG_ERROR, "-ImGui Context not created");
-	}
-	else
-	{
-		LOG(LogType::LOG_OK, "-ImGui Context created");
-	}
+	//if (!ImGui::GetCurrentContext)
+	//{
+	//	LOG(LogType::LOG_ERROR, "-ImGui Context not created");
+	//}
+	//else
+	//{
+	//	LOG(LogType::LOG_OK, "-ImGui Context created");
+	//}
 
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.Fonts->AddFontFromFileTTF("EngineAssets/SF-Pro-Text-Light.otf", 14.0f);
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	//ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.Fonts->AddFontFromFileTTF("EngineAssets/SF-Pro-Text-Light.otf", 14.0f);
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-	if (!&io)
-	{
-		LOG(LogType::LOG_ERROR, "-ImGui IO not created");
-	}
-	else
-	{
-		LOG(LogType::LOG_OK, "-ImGui IO created");
-	}
+	//if (!&io)
+	//{
+	//	LOG(LogType::LOG_ERROR, "-ImGui IO not created");
+	//}
+	//else
+	//{
+	//	LOG(LogType::LOG_OK, "-ImGui IO created");
+	//}
 
-	Application->gui->UIconsolePanel->SetState(true);
-	Application->gui->UIProjectPanel->SetState(true);
-	Application->gui->UIsettingsPanel->SetState(true);
-	Application->gui->UIinspectorPanel->SetState(true);
-	Application->gui->UIMainMenuBarPanel->SetState(true);
-	Application->gui->UISceneWindowPanel->SetState(true);
-	//Application->gui->UICameraPanel->SetState(true);
-	UISceneWindowPanel->Init();
-	//UICameraPanel->Init();
+	//Application->gui->UIconsolePanel->SetState(true);
+	//Application->gui->UIProjectPanel->SetState(true);
+	//Application->gui->UIsettingsPanel->SetState(true);
+	//Application->gui->UIinspectorPanel->SetState(true);
+	//Application->gui->UIMainMenuBarPanel->SetState(true);
+	//Application->gui->UISceneWindowPanel->SetState(true);
+	////Application->gui->UICameraPanel->SetState(true);
+	//UISceneWindowPanel->Init();
+	////UICameraPanel->Init();
 
 	return true;
 }

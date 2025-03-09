@@ -392,7 +392,7 @@ void Input::HandleFileDrop(const std::string& fileDir)
     std::string fileNameExt = fileDir.substr(fileDir.find_last_of("\\/") + 1);
     std::string fileExt = fileDir.substr(fileDir.find_last_of('.') + 1);
 
-    fs::path targetPath = fs::path(ASSETS_PATH) / fileNameExt;
+    fs::path targetPath = fs::path(LIBRARY_PATH) / fileNameExt;
 
     if (fileExt == "fbx" || fileExt == "FBX") {
         LOG(LogType::LOG_ASSIMP, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
@@ -438,6 +438,32 @@ void Input::HandleFileDrop(const std::string& fileDir)
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {
         LOG(LogType::LOG_INFO, "Loading Texture: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
 
+        // Create Audio directory if it doesn't exist
+        fs::path textureDir = fs::path(ASSETS_PATH) / "Textures";
+        if (!fs::exists(textureDir)) {
+            fs::create_directories(textureDir);
+        }
+
+        
+        targetPath = textureDir / fileNameExt;
+
+        
+        fs::path libraryPath = fs::path("Library/Textures") / fileNameExt;
+        if (!fs::exists(libraryPath.parent_path())) {
+            fs::create_directories(libraryPath.parent_path());
+        }
+
+        try {
+            if (!fs::exists(libraryPath) || fs::file_size(fileDir) != fs::file_size(libraryPath)) {
+                fs::copy(fileDir, libraryPath, fs::copy_options::overwrite_existing);
+                LOG(LogType::LOG_OK, "Texture file copied to Assets: %s", libraryPath.string().c_str());
+            }
+
+            LOG(LogType::LOG_OK, "Texture file processed to Library: %s", libraryPath.string().c_str());
+        }
+        catch (const std::exception& e) {
+            LOG(LogType::LOG_ERROR, "Error processing texture file: %s", e.what());
+        }
         if (InputManagement->draggedObject != nullptr) {
             auto meshRenderer = InputManagement->draggedObject->GetComponent<MeshRenderer>();
 

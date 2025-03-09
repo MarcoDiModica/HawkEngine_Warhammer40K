@@ -896,7 +896,7 @@ private:
         char imagePath[256];
         strcpy_s(imagePath, image->GetImagePath().c_str());
 
-        if (ImGui::InputText("Text File", imagePath, sizeof(imagePath))) {
+        if (ImGui::InputText("image File", imagePath, sizeof(imagePath))) {
             image->SetTexture(imagePath);
         }
 

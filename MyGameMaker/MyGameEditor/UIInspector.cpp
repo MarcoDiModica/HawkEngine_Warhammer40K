@@ -900,7 +900,6 @@ private:
             image->SetTexture(imagePath);
         }
 
-        
         if (ImGui::BeginDragDropTarget()) {
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
                 HandleImageFileDrop(image, static_cast<const char*>(payload->Data));
@@ -1099,6 +1098,32 @@ private:
 		if (!gameObject->HasComponent<ParticlesEmitterComponent>()) {
 			if (ImGui::MenuItem("ParticleEmitter")) {
 				gameObject->AddComponent<ParticlesEmitterComponent>();
+			}
+		}
+
+		if (!gameObject->HasComponent<ShaderComponent>()) {
+			if (ImGui::MenuItem("Shader")) {
+				gameObject->AddComponent<ShaderComponent>();
+			}
+		}
+        
+		if (!gameObject->HasComponent<UICanvasComponent>()) {
+			if (ImGui::MenuItem("Canvas")) {
+                gameObject->AddComponent<UITransformComponent>();
+				gameObject->AddComponent<UICanvasComponent>();
+			}
+		}
+		if (!gameObject->HasComponent<UIImageComponent>()) {
+			if (ImGui::MenuItem("Image")) {
+				gameObject->AddComponent<UITransformComponent>();
+				gameObject->AddComponent<UIImageComponent>();
+				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+			}
+		}
+        
+		if (!gameObject->HasComponent<UITransformComponent>()) {
+			if (ImGui::MenuItem("RectTransform")) {
+				gameObject->AddComponent<UITransformComponent>();
 			}
 		}
 

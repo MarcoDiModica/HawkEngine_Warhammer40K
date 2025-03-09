@@ -888,7 +888,36 @@ private:
         if (!ImGui::CollapsingHeader("Image")) return;
 
         ImGui::Text("Image");
+
+        DrawImageFilePath(image);
     }
+
+    static void DrawImageFilePath(UIImageComponent* image) {
+        char imagePath[256];
+        strcpy_s(imagePath, image->GetImagePath().c_str());
+
+        if (ImGui::InputText("Text File", imagePath, sizeof(imagePath))) {
+            image->SetTexture(imagePath);
+        }
+
+        
+        if (ImGui::BeginDragDropTarget()) {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+                HandleImageFileDrop(image, static_cast<const char*>(payload->Data));
+            }
+            ImGui::EndDragDropTarget();
+        }
+    }
+
+    static void HandleImageFileDrop(UIImageComponent* image, const char* path) {
+        std::string extension = std::filesystem::path(path).extension().string();
+        std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+        if (extension == ".jpg" || extension == ".png" || extension == ".img") {
+            image->SetTexture(path);
+        }
+    }
+
 #pragma endregion
 
 #pragma region RectTransform

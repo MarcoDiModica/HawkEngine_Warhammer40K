@@ -27,6 +27,7 @@ public:
 	std::unique_ptr<Component> Clone(GameObject* owner) override;
 
 	ComponentType GetType() const override { return ComponentType::IMAGE; }
+	const std::string& GetImagePath() const { return texturePath; }
 
 	void SetTexture(std::string path);
 
@@ -36,6 +37,7 @@ public:
 
 private:
 	//texture
+	std::string texturePath;
 	std::shared_ptr<Image> texture;
 	std::shared_ptr<Mesh> mesh;
 	Shaders * shader;

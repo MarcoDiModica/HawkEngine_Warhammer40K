@@ -308,6 +308,14 @@ void Root::CreateGameObjectWithPath(const std::string& path)
 			auto animationComponent = go->AddComponent<SkeletalAnimationComponent>();
             animationComponent->SetAnimation(meshImp.animations[0].get());
             animationComponent->Start();
+
+			for (auto& bone : meshImp.bonesGameObjects[i]) {
+				auto boneGO = CreateGameObject(bone->GetName());
+
+                Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+				boneGO->GetTransform()->SetLocalMatrix(boneTransform->GetLocalTransform());
+				ParentGameObject(*boneGO, *go);
+			}
 		}
 
         go->GetComponent<MeshRenderer>()->GetMesh()->setBoundingBox(*meshBBox);

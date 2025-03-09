@@ -26,6 +26,7 @@ public:
 	std::vector<std::shared_ptr<GameObject>> fbx_object;
 	std::vector<std::shared_ptr<Animation>> animations;
 	void graphicObjectFromNode(const aiScene& scene, const aiNode& node, const vector<shared_ptr<Mesh>>& meshes, const vector<shared_ptr<Material>>& materials, glm::mat4 accumulatedTransform);
+	std::vector<std::vector<std::shared_ptr<GameObject>>> bonesGameObjects;
 
 	std::string scenePath;
 };

@@ -105,6 +105,21 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 			obj.SetName(node.mName.data);
 
 			fbx_object.push_back(std::make_shared<GameObject>(obj));
+
+			const aiMesh* mesh = scene.mMeshes[node.mMeshes[i]];
+			int numBones = mesh->mNumBones;
+
+			std::vector<std::shared_ptr<GameObject>> bonesThisMesh;
+			for (int j = 0; j < numBones; ++j)
+			{
+				aiBone* bone = mesh->mBones[j];
+				std::string boneName = bone->mName.C_Str();
+				std::shared_ptr<GameObject> boneGameObject = std::make_shared<GameObject>();
+				boneGameObject->SetName(boneName);
+				//boneGameObject->GetTransform()->SetMatrix(accumulatedTransform * aiMat4ToMat4(bone->mOffsetMatrix));
+				bonesThisMesh.push_back(boneGameObject);
+			}
+			bonesGameObjects.push_back(bonesThisMesh);
 		}
 
 		// Process and add children as children of the current node

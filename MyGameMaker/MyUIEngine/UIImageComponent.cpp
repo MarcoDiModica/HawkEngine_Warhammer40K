@@ -15,11 +15,30 @@ UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 
 void UIImageComponent::Start()
 {
-
+	
 }
 
 void UIImageComponent::Update(float deltaTime)
 {
+	auto uiTransform = owner->GetComponent<UITransformComponent>();
+
+	if (!resized && uiTransform->getCanvasSize().x > 0) {
+
+		float scaleX = 1.0f;
+		float scaleY = 1.0f;
+
+		if (texture->width() < uiTransform->getCanvasSize().x) {
+			scaleX = (texture->width() / uiTransform->getCanvasSize().x);
+		}
+
+		if (texture->height() < uiTransform->getCanvasSize().y) {
+			scaleY = (texture->height() / uiTransform->getCanvasSize().y);
+		}
+
+		auto scale = uiTransform->GetScale();
+		uiTransform->Scale(glm::vec3(scale.x * scaleX, scale.y * scaleY, scale.z));
+		resized = true;
+	}
 
 	shader->Bind();
 
@@ -36,8 +55,6 @@ void UIImageComponent::Update(float deltaTime)
 	}
 
 	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
-
-	auto uiTransform = owner->GetComponent<UITransformComponent>();
 
 	glm::vec3 translation = uiTransform->getCanvasPosition() + (uiTransform->GetPosition() * uiTransform->getCanvasSize());
 	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));

@@ -1,57 +1,62 @@
-//#pragma once
-//#include "../MyGameEngine/Component.h"
-//
-//
-//class PhysicsModule;
-//
-//class RigidbodyComponent : public Component {
-//public:
-//    explicit Rigidbody_Component(GameObject* owner, float mass = 1.0f)
-//        : Component(owner), mass(mass), rigidBody(nullptr) {
-//        name = "Rigidbody_Component";
-//    }
-//
-//    ~Rigidbody_Component() override {
-//        Destroy();
-//    }
-//
-//    void Start() override {
-//        if (auto* physicsModule = GetPhysicsModule()) {
-//            physicsModule->CreatePhysicsForGameObject(*owner, mass);
-//            rigidBody = physicsModule->GetRigidBodyForGameObject(*owner);
-//        }
-//    }
-//
-//    void Update(float deltaTime) override {
-//        // No-op: la sincronización la maneja PhysicsModule::SyncTransforms
-//    }
-//
-//    void Destroy() override {
-//        if (rigidBody) {
-//            if (auto* physicsModule = GetPhysicsModule()) {
-//                physicsModule->RemoveRigidBodyForGameObject(*owner);
-//            }
-//            rigidBody = nullptr;
-//        }
-//    }
-//
-//    ComponentType GetType() const override {
-//        return ComponentType::NONE; // O un nuevo tipo específico si es necesario
-//    }
-//
-//    std::unique_ptr<Component> Clone(GameObject* new_owner) override {
-//        return std::make_unique<Rigidbody_Component>(new_owner, mass);
-//    }
-//
-//    float GetMass() const { return mass; }
-//    void SetMass(float newMass) { mass = newMass; }
-//
-//private:
-//    float mass;
-//    btRigidBody* rigidBody;
-//
-//    PhysicsModule* GetPhysicsModule() const {
-//        // Suponiendo que App tiene acceso al PhysicsModule.
-//        return owner->GetApp()->GetModule<PhysicsModule>();
-//    }
-//};
+
+// RigidbodyComponent.h
+#pragma once
+
+#include "../MyGameEngine/Component.h"
+#include "PhysicsModule.h"
+#include "ColliderComponent.h"
+#include <glm/glm.hpp>
+
+class RigidbodyComponent : public Component {
+public:
+    RigidbodyComponent(GameObject* owner, PhysicsModule* physicsModule);
+    ~RigidbodyComponent() override;
+
+    void Start() override;
+    void Update(float deltaTime) override;
+    void Destroy() override;
+
+    std::unique_ptr<Component> Clone(GameObject* new_owner) override;
+
+    ComponentType GetType() const override { return ComponentType::RIGIDBODY; }
+
+    void SetMass(float newMass);
+    float GetMass() const;
+
+    bool IsFreezed() const { return isFreezed; }
+    void SetFreezeRotations(bool freeze);
+
+    float GetFriction() const;
+    void SetFriction(float friction);
+
+    bool IsKinematic() const;
+    void SetKinematic(bool isKinematic);
+
+    void AddForce(const glm::vec3& force);
+
+    glm::vec3 GetGravity() const;
+    void SetGravity(const glm::vec3& gravity);
+    
+    glm::vec2 GetDamping() const;
+    void SetDamping(float linearDamping, float angularDamping);
+    void EnableContinuousCollision();
+
+    btRigidBody* GetRigidBody() const { return rigidBody; }
+
+    MonoObject* CsharpReference = nullptr;
+    MonoObject* GetSharp() override;
+
+
+private:
+    btRigidBody* rigidBody;
+    btMotionState* motionState;
+    PhysicsModule* physics;
+    float mass;
+    void CreateRigidbody();
+
+	//bools for propierties;
+    bool isKinematic;
+    bool isFreezed;
+
+    void SetRigidBody(btRigidBody* rigidBody);
+};

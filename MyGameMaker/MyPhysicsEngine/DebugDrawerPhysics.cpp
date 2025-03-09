@@ -71,6 +71,34 @@ void DebugDrawerPhysics::drawBoundingBox(const BoundingBox& bbox, const glm::vec
 
     glPopAttrib();
 }
+
+
+
+void DebugDrawerPhysics::drawRotatedBoundingBox(const glm::vec3 corners[8], const glm::vec3& color) {
+    glPushAttrib(GL_CURRENT_BIT | GL_LINE_BIT);
+    glColor3f(color.r, color.g, color.b);
+    glLineWidth(2.0f);
+
+    // Dibujar las 12 aristas del BoundingBox
+    drawWiredLine(corners[0], corners[1], color);
+    drawWiredLine(corners[1], corners[2], color);
+    drawWiredLine(corners[2], corners[3], color);
+    drawWiredLine(corners[3], corners[0], color);
+
+    drawWiredLine(corners[4], corners[5], color);
+    drawWiredLine(corners[5], corners[6], color);
+    drawWiredLine(corners[6], corners[7], color);
+    drawWiredLine(corners[7], corners[4], color);
+
+    drawWiredLine(corners[0], corners[4], color);
+    drawWiredLine(corners[1], corners[5], color);
+    drawWiredLine(corners[2], corners[6], color);
+    drawWiredLine(corners[3], corners[7], color);
+
+    glPopAttrib();
+}
+
+
 void DebugDrawerPhysics::drawSphere(const glm::vec3& center, float radius, const glm::vec3& color, int segments) {
     glPushAttrib(GL_CURRENT_BIT | GL_LINE_BIT);
 

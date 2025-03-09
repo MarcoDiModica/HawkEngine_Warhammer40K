@@ -26,6 +26,8 @@ public:
 
     bool Awake();
 
+    void CreateSceneColliders();
+
     bool Start();
 
     bool PreUpdate() { return true; }
@@ -55,7 +57,7 @@ public:
 
     void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr, std::vector<Shaders> shaders = std::vector<Shaders>());
 
-    void CreateGameObjectWithPath(const std::string& path);
+    std::shared_ptr<GameObject> CreateGameObjectWithPath(const std::string& path);
 
     void ChangeShader(GameObject& go, ShaderType shader);
 
@@ -63,13 +65,17 @@ public:
 
     bool ParentGameObjectToScene(GameObject& child);
     bool ParentGameObjectToObject(GameObject& child, GameObject& father);
+    void UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared_ptr<GameObject> mainCamera);
+    void RenderScene();
 
-    std::shared_ptr<GameObject> FindGOByName(char* name);
+    std::shared_ptr<GameObject> FindGOByName(std::string name);
 
     std::shared_ptr<Scene> currentScene = nullptr;
     float emitterLifetime = 5.0f;
     //main camera
     std::shared_ptr<GameObject> mainCamera = nullptr;
+    std::shared_ptr<GameObject> CreateCanvasInScene(const std::string& name, const glm::vec3& position, const std::string& texturePath);
+
 
     friend SceneSerializer;
 
@@ -77,6 +83,9 @@ public:
 
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
+    glm::dvec3 initialCanvasOffset;
+    glm::dquat initialCanvasRotationOffset;
+    std::vector<std::shared_ptr<GameObject>> renderFirstObjects;
 };
 
 #endif

@@ -105,6 +105,9 @@
     <ProjectReference Include="..\MyParticlesEngine\MyParticlesEngine.vcxproj">
       <Project>{b258b672-0285-4ccb-9f04-00f753e34951}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\MyUIEngine\MyUIEngine.vcxproj">
+      <Project>{f0b3a276-113a-4cd4-948a-329c847e7743}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -118,8 +121,8 @@
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
     <ClCompile Include="UIAudioTest.cpp" />
-    <ClCompile Include="UICamera.cpp" />
     <ClCompile Include="UIConsole.cpp" />
+    <ClCompile Include="UIGameView.cpp" />
     <ClCompile Include="UIHierarchy.cpp" />
     <ClCompile Include="UIInspector.cpp" />
     <ClCompile Include="UIMainMenuBar.cpp" />
@@ -140,9 +143,9 @@
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
     <ClInclude Include="UIAudioTest.h" />
-    <ClInclude Include="UICamera.h" />
     <ClInclude Include="UIConsole.h" />
     <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIGameView.h" />
     <ClInclude Include="UIHierarchy.h" />
     <ClInclude Include="UIInspector.h" />
     <ClInclude Include="UIMainMenuBar.h" />

@@ -29,15 +29,19 @@ public:
 
     bool Awake();
 
+    void SetBounciness(GameObject& go, float restitution);
+
+    void EnableContinuousCollision(GameObject& go);
+
     bool Start();
     bool PreUpdate();
     bool Update(double dt);
     bool PostUpdate();
+    void AddForceToCollider(GameObject& go, const glm::vec3& force);
     bool CleanUp();
 
     void DrawDebugDrawer();
 
-    void CreatePhysicsForCube(GameObject& go, float mass);
     //void CreatePhysicsPlane();
     void SyncTransforms();
     void SyncCollidersToGameObjects();
@@ -46,8 +50,10 @@ public:
     // Añade una restricción de bisagra (Hinge)
     void AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB,
         const glm::vec3& axisA, const glm::vec3& axisB, bool disable_collision = false);
-    void SpawnPhysSphereWithForce(GameObject& go, float radius, float mass, const glm::vec3& cameraPosition, const glm::vec3& cameraDirection, float forceMagnitude);
+    void SpawnPhysSphereWithForce(GameObject& launcher, GameObject& sphere, float radius, float mass, float forceMagnitude);
     void SetGlobalRestitution(float restitutionValue);
+
+    void SetColliderFriction(GameObject& go, float friction);
 
     p2List<FinalVehicleInfo*> vehicles;
     btDiscreteDynamicsWorld* dynamicsWorld;

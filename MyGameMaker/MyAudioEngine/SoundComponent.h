@@ -30,8 +30,8 @@ public:
     bool LoadAudio(const std::string& filePath, bool isMusic = false);
     void Play(bool loop = false);
     void Stop();
-    void Pause();
-    void Resume();
+    void Pause() const;
+    void Resume() const;
 
     // Audio properties
     void SetVolume(float volume);  // 0.0f to 1.0f
@@ -49,6 +49,9 @@ public:
     bool GetAutoPlay() const { return m_AutoPlay; }
     void SetLoop(bool loop) { m_Loop = loop; }
     bool GetLoop() const { return m_Loop; }
+
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
 
 private:
     void UpdatePosition();

@@ -10,6 +10,7 @@ unsigned int Material::next_id = 0;
 
 Material::Material() : gid(next_id++){
 	color = vec4(1.0f);
+	imagePtr = std::make_shared<Image>();
 }
 
 static auto GLWrapMode(Material::WrapModes mode) {

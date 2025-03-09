@@ -9,6 +9,7 @@
 #include "MyGameEngine/GameObject.h"
 #include "MyWindow.h"
 #include "MyGUI.h"
+#include "UISceneWindow.h"
 
 EditorCamera::EditorCamera(App* app) : Module(app), CameraBase(), transform(Transform_Component(nullptr))
 {
@@ -36,7 +37,10 @@ bool EditorCamera::FixedUpdate()
 
 bool EditorCamera::Update(double dt)
 {
-	move_camera(cameraSpeed, static_cast<float>(dt));
+	if (Application->gui->UISceneWindowPanel->IsMouseOverWindow())
+	{
+		move_camera(cameraSpeed, static_cast<float>(dt));
+	}
 	
 	// Sync listener object position with camera
 	if (listenerObject) {
@@ -137,13 +141,18 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 		transform.Rotate(glm::radians(delta.y * sensitivity * deltaTime), glm::vec3(1, 0, 0));
 		transform.AlignToGlobalUp();
 
-		if (Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) speed *= 1.5f;
-		if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) transform.Translate(glm::vec3(0, 0, speed * deltaTime));
-		if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) transform.Translate(glm::vec3(0, 0, -speed * deltaTime));
-		if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) transform.Translate(glm::vec3(speed * deltaTime, 0, 0));
-		if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) transform.Translate(glm::vec3(-speed * deltaTime, 0, 0));
-		if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) transform.Translate(glm::vec3(0, -speed * deltaTime, 0));
-		if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) transform.Translate(glm::vec3(0, speed * deltaTime, 0));
+	// Get local axes based on current rotation
+		glm::dvec3 forward = transform.GetForward();
+		glm::dvec3 right = glm::normalize(transform.GetRotation() * glm::dvec3(1, 0, 0));
+		glm::dvec3 up = glm::normalize(glm::cross(forward, right)); // Ensure a proper up vector
+
+		// Invert the necessary directions for correct movement
+		if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) transform.Translate(forward * static_cast<double>(speed * deltaTime));
+		if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) transform.Translate(-forward * static_cast<double>(speed * deltaTime));
+		if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) transform.Translate(right * static_cast<double>(speed * deltaTime));
+		if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) transform.Translate(-right * static_cast<double>(speed * deltaTime));
+		if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) transform.Translate(-up * static_cast<double>(speed * deltaTime));
+		if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) transform.Translate(up * static_cast<double>(speed * deltaTime));
 
 	}
 
@@ -173,9 +182,21 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 		glm::dvec2 delta = currentMousePos - lastMousePos;
 		lastMousePos = currentMousePos;
 
-		transform.Rotate(glm::radians(-delta.y * 0.1), glm::dvec3(1, 0, 0));
-		transform.Rotate(glm::radians(-delta.x * 0.1), glm::dvec3(0, 1, 0));
-		transform.AlignToGlobalUp();
+		// Calculate the right vector manually (camera's right is perpendicular to forward and up)
+		glm::dvec3 forward = transform.GetForward();
+		glm::dvec3 worldUp = glm::dvec3(0, 1, 0);
+		glm::dvec3 right = glm::normalize(glm::cross(worldUp, forward));
+
+		// Calculate yaw (left/right) rotation using world up (0,1,0)
+		glm::dquat yawRotation = glm::angleAxis(glm::radians(-delta.x * sensitivity * deltaTime), glm::dvec3(0, 1, 0));
+
+		// Calculate pitch (up/down) rotation using local right vector
+		glm::dquat pitchRotation = glm::angleAxis(glm::radians(-delta.y * sensitivity * deltaTime), right);
+
+		// Apply the rotations: pitch first, then yaw
+		glm::dquat newRotation = transform.GetRotation() * yawRotation * pitchRotation;
+		transform.SetRotationQuat(newRotation);
+
 	}
 	else 
 	{
@@ -185,17 +206,9 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 
 void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight)
 {
-	double windowAspect = windowWidth / windowHeight;
-	double imageAspect = imageWidth / imageHeight;
+	double aspectRatio = windowWidth / windowHeight;
 
-	UpdateAspectRatio(windowAspect);
+	UpdateAspectRatio(aspectRatio);
 
-	if (windowAspect > imageAspect) 
-	{
-		SetFOV(2.0f * atan(tan(glm::radians(60.0f) / 2.0f) * static_cast<float>((imageAspect / windowAspect))));
-	}
-	else 
-	{
-		SetFOV(glm::radians(60.0f));
-	}
+	SetFOV(glm::radians(60.0f));
 }

@@ -6,6 +6,7 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <memory>
+#include <SDL2/SDL_gamecontroller.h>
 
 class GameObject;
 
@@ -34,6 +35,7 @@ namespace EngineBinds {
 
     MonoString* GameObjectGetName(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
+    MonoObject* GetGameObjectByName(MonoString* name);
 
     // Input
     bool GetKey(int keyID);
@@ -44,6 +46,12 @@ namespace EngineBinds {
     bool GetMouseButtonUp(int buttonID);
     int GetAxis(MonoString* axisName);
     glm::vec3 GetMousePosition();
+
+     // Controller
+    bool GetControllerButton(int buttonID);
+    bool GetControllerButtonDown(int buttonID);
+    bool GetControllerButtonUp(int buttonID);
+    float GetControllerAxis(int gamepadIndex, int axis);
 
     // Transform
     void SetPosition(MonoObject* transformRef, float x, float y, float z);
@@ -70,7 +78,9 @@ namespace EngineBinds {
     void SetCameraAspectRatio(MonoObject* cameraRef, float aspectRatio);
     void SetCameraOrthographicSize(MonoObject* cameraRef, float orthographicSize);
     void SetCameraProjectionType(MonoObject* cameraRef, int projectionType);
-
+    void SetFollowTarget(MonoObject* cameraRef, MonoObject* target, glm::vec3* offset, float distance, bool followX, bool followY, bool followZ, float smoothness);
+    void SetDistance(MonoObject* cameraRef, float distance);
+    void SetOffset(MonoObject* cameraRef, glm::vec3* offset);
 
     // MeshRenderer
 	void SetMesh(MonoObject* meshRendererRef, MonoObject* meshRef);
@@ -80,9 +90,52 @@ namespace EngineBinds {
     MonoObject* GetMaterial(MonoObject* meshRendererRef);
 	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
-
     void Render(MonoObject* meshRendererRef);
 
+
+    //Physics Collider
+    void SetTrigger(MonoObject* colliderRef, bool trigger);
+    bool IsTrigger(MonoObject* colliderRef);
+
+    glm::vec3 GetColliderPosition(MonoObject* colliderRef);
+
+    void SetColliderPosition(MonoObject* colliderRef, glm::vec3* position);
+
+    glm::quat GetColliderRotation(MonoObject* colliderRef);
+
+    void SetColliderRotation(MonoObject* colliderRef, glm::quat* rotation);
+
+    glm::vec3 GetColliderSize(MonoObject* colliderRef);
+
+    void SetColliderSize(MonoObject* colliderRef, glm::vec3* size);
+
+    void SetColliderActive(MonoObject* colliderRef, bool active);
+
+    void SnapColliderToPosition(MonoObject* colliderRef);
+
+    //Physics Rigidbody
+    void SetVelocity(MonoObject* rigidbodyRef, glm::vec3* velocity);
+    glm::vec3 GetVelocity(MonoObject* rigidbodyRef);
+    void AddForce(MonoObject* rigidbodyRef, glm::vec3* force);
+    void SetMass(MonoObject* rigidbodyRef, float mass);
+    float GetMass(MonoObject* rigidbodyRef);
+    void SetFriction(MonoObject* rigidbodyRef, float friction);
+    float GetFriction(MonoObject* rigidbodyRef);
+    void SetGravity(MonoObject* rigidbodyRef, glm::vec3* gravity);
+    glm::vec3 GetGravity(MonoObject* rigidbodyRef);
+    void SetDamping(MonoObject* rigidbodyRef, float linearDamping, float angularDamping);
+    glm::vec2 GetDamping(MonoObject* rigidbodyRef);
+    void SetKinematic(MonoObject* rigidbodyRef, bool isKinematic);
+    bool IsKinematic(MonoObject* rigidbodyRef);
+    void EnableContinuousCollision(MonoObject* rigidbodyRef);
+    
+    //Audio
+    void Play(MonoObject* audioRef, bool loop = false);
+    void Stop(MonoObject* audioRef);
+    void Pause(MonoObject* audioRef);
+    void Resume(MonoObject* audioRef);
+    void SetVolume(MonoObject* audioRef, float volume);
+    float GetVolume(MonoObject* audioRef);
 }
 
 #endif // ENGINE_BINDS_H

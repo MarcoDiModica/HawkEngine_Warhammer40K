@@ -13,12 +13,14 @@
 #include "MyGameEngine/ModelImporter.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
 #include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "../MyAudioEngine/SoundComponent.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -42,6 +44,62 @@ struct EmitterInfo{
 std::vector<EmitterInfo> activeEmitters;
 
 Root::Root(App* app) : Module(app) { ; }
+
+
+std::shared_ptr<GameObject> player;
+const float moveSpeed = 100.0f;
+const float jumpForce = 10.0f;
+
+void CreatePlayer() {
+    player = Application->root->CreateCube("Player");
+    auto transform = player->GetTransform();
+    transform->SetPosition(glm::vec3(0, 5, 0));
+    transform->SetScale(glm::vec3(1, 1, 1)); 
+}
+
+void HandleInput(float dt) {
+    if (!player) return;
+
+    auto collider = player->GetComponent<RigidbodyComponent>();
+    if (!collider) return;
+
+    auto rigidBody = collider->GetRigidBody();
+    if (!rigidBody) return;
+
+    btVector3 desiredVelocity(0, rigidBody->getLinearVelocity().getY(), 0);
+
+    //input
+    const Uint8* keys = SDL_GetKeyboardState(NULL);
+    if (keys[SDL_SCANCODE_L]) desiredVelocity.setX(moveSpeed); 
+    if (keys[SDL_SCANCODE_J]) desiredVelocity.setX(-moveSpeed);
+    if (keys[SDL_SCANCODE_K]) desiredVelocity.setZ(moveSpeed); 
+    if (keys[SDL_SCANCODE_I]) desiredVelocity.setZ(-moveSpeed); 
+
+    // Spawn sphere if E is pressed
+    if (keys[SDL_SCANCODE_E]) {
+
+        auto sphere = Application->root->CreateSphere("PhysicsSphere");
+        Application->physicsModule->SpawnPhysSphereWithForce(*player, *sphere, 1.0f, 15.0f, 500.0f);
+    }
+
+    //Apply acceleration + force
+    if (desiredVelocity.length2() > 0) {
+        desiredVelocity.setX(desiredVelocity.getX() * moveSpeed / desiredVelocity.length());
+        desiredVelocity.setZ(desiredVelocity.getZ() * moveSpeed / desiredVelocity.length());
+    }
+    btVector3 currentVelocity = rigidBody->getLinearVelocity();
+    float acceleration = 10.0f * dt; 
+    btVector3 newVelocity = currentVelocity.lerp(desiredVelocity, acceleration);
+    rigidBody->setLinearVelocity(btVector3(newVelocity.getX(), currentVelocity.getY(), newVelocity.getZ()));
+
+    // Jumping 
+    if (keys[SDL_SCANCODE_SPACE]) {
+        if (currentVelocity.getY() < 0.1f && currentVelocity.getY() > -0.1f) {
+            rigidBody->setLinearVelocity(btVector3(currentVelocity.getX(), jumpForce, currentVelocity.getZ()));
+        }
+    }
+}
+
 
 void MakeSmokerEmmiter() {
     auto particlesEmitter = Application->root->CreateGameObject("ParticlesEmitter");
@@ -75,7 +133,78 @@ std::shared_ptr<GameObject> CreateParticleEmitter(const glm::vec3& position, con
     emitterComponent->isSmoking = false;
     return particleEmitter;
 }
+std::shared_ptr<GameObject> environment = nullptr;
 
+std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, const glm::vec3& position, const std::string& texturePath) {
+    
+    auto planeObject = Application->root->CreatePlane(name);
+    auto transform = planeObject->GetTransform();
+    transform->SetPosition(position);
+    transform->Rotate(glm::radians(90.0f), glm::vec3(1, 0, 0));
+    transform->Rotate(glm::radians(180.0f), glm::vec3(0, 1, 0));
+    /*transform->SetScale(glm::dvec3(1.5f, 1.5f, 1.5f));*/
+
+    auto material = std::make_shared<Material>();
+	material->imagePtr = std::make_shared<Image>();
+	material->imagePtr->LoadTexture(texturePath);
+
+    
+    auto mesh = Mesh::CreatePlane();
+    auto meshRenderer = planeObject->AddComponent<MeshRenderer>();
+    meshRenderer->SetMesh(mesh);
+    meshRenderer->SetMaterial(material);
+
+    auto shaderComponent = planeObject->AddComponent<ShaderComponent>();
+    shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+    shaderComponent->SetShaderType(ShaderType::LIGHT);
+
+    if (mainCamera) {
+        initialCanvasOffset = glm::dvec3(position) - mainCamera->GetTransform()->GetPosition();
+        initialCanvasRotationOffset = glm::inverse(mainCamera->GetTransform()->GetRotation()) * transform->GetRotation();
+        /*initialCanvasScaleOffset = transform->GetScale();*/
+        UpdateCanvasTransform(planeObject, mainCamera);
+    }
+    else {
+        std::cerr << "Error: mainCamera es nullptr." << std::endl;
+    }
+
+   /* renderFirstObjects.push_back(planeObject);*/
+
+    return planeObject;
+}
+
+void Root::UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared_ptr<GameObject> mainCamera) {
+    if (!canvas || !mainCamera) {
+        std::cerr << "Error: canvas or mainCamera is null." << std::endl;
+        return;
+    }
+
+    auto cameraTransform = mainCamera->GetTransform();
+    auto canvasTransform = canvas->GetTransform();
+
+    if (cameraTransform && canvasTransform) {
+        glm::dvec3 cameraPosition = cameraTransform->GetPosition();
+        glm::dvec3 cameraForward = cameraTransform->GetForward();
+        glm::dvec3 newPosition = cameraPosition + cameraForward * glm::length(initialCanvasOffset);
+        canvasTransform->SetPosition(newPosition);
+        glm::dquat newRotation = cameraTransform->GetRotation() * initialCanvasRotationOffset;
+        canvasTransform->SetRotationQuat(newRotation);
+        /*glm::dvec3 newScale = initialCanvasScaleOffset;
+        canvasTransform->SetScale(newScale);*/
+    }
+}
+
+void Root::RenderScene() {
+    //// Renderizar primero los objetos en renderFirstObjects
+    //for (const auto& obj : renderFirstObjects) {
+    //    obj->Render();
+    //}
+
+    //// Renderizar el resto de los objetos de la escena
+    //for (const auto& obj : gameObjectsWithColliders) {
+    //    obj->Render();
+    //}
+}
 bool Root::Awake()
 {
    // SceneManagement = (SceneManager*)malloc(sizeof(SceneManager));
@@ -91,19 +220,16 @@ bool Root::Awake()
     //Application->scene_serializer->DeSerialize("Assets/HolaBuenas.scene");
     SoundComponent::InitSharedAudioEngine();
     //CreateGameObjectWithPath("Assets/Meshes/rabbit.FBX");
+   /* CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
     MakeSmokerEmmiter();
-    MakeSmokerEmiter2();
-    /*CreateScene("Viernes13");
-    SetActiveScene("Viernes13");
-    
-    auto MainCamera = CreateCameraObject("MainCamera");
-    MainCamera->GetTransform()->SetPosition(glm::dvec3(0, 0.5, 0));
-    MainCamera->GetTransform()->Rotate(glm::radians(180.0), glm::dvec3(0, 1, 0));
-    auto camera = MainCamera->AddComponent<CameraComponent>();
-    mainCamera = MainCamera; */   
+    MakeSmokerEmiter2();*/
 
-	//auto Collider = CreateGameObject("Collider");
-    //auto colliderComponent = Collider->AddComponent<ColliderComponent>();
+	auto blockout = CreateGameObject("Blockout");
+	blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));
+
+    environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
+    ParentGameObject(*environment, *blockout);
+    blockout->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
 
     return true;
 }
@@ -114,104 +240,63 @@ bool Root::CleanUp()
     return true;
 }
 
+void Root::CreateSceneColliders() {
+    for (auto& go : environment->GetChildren())
+    {
+        auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+        collider->Start();
+    }
+}
+
 bool Root::Start()
 {
-    //auto Player = CreateGameObject("Player");
-    //auto mesh = Mesh::CreateCube();
-    //AddMeshRenderer(*Player, mesh);
-    //auto script = Player->AddComponent<ScriptComponent>();
-    //script->LoadScript("PlayerController");
-    
+    auto player = CreateGameObject("Player");
+    player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+    player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+
     Application->root->CreateGameObjectWithPath("Assets/rabbitSizeFix.fbx");
 
-    //MonoEnvironment* mono = new MonoEnvironment();
+    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+    playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+    playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+    ParentGameObject(*playerMesh, *player);
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
-    //auto Script = CreateGameObject("Script");
-    //auto script = Script->AddComponent<ScriptComponent>();
-    //script->LoadScript("TestingComponent");
-    /*
-    auto BlobFish = CreateGameObject("Tank");
-    auto blob = BlobFish->AddComponent<ScriptComponent>();
-
-	auto BlobFish2 = CreateGameObject("Turret");
-	auto blob2 = BlobFish2->AddComponent<ScriptComponent>();
-
-    auto BlobFish3 = CreateGameObject("SingleProjectile");
-	auto blob3 = BlobFish3->AddComponent<ScriptComponent>();
-    
-    AddMeshRenderer(*BlobFish, Mesh::CreateCube());
-	AddMeshRenderer(*BlobFish2, Mesh::CreateCube());
-    AddMeshRenderer(*BlobFish3, Mesh::CreateSphere());
-
-    //auto blob2 = BlobFish->AddComponent<ScriptComponent>();
-    blob->LoadScript("TestingComponent");
-	blob2->LoadScript("TankController");
-	blob3->LoadScript("ProjectileScript");
-    
-	ParentGameObject(*BlobFish2, *BlobFish);
-	ParentGameObject(*BlobFish3, *BlobFish2);
-    */
-    //blob2->LoadScript("TestingComponent");
-    
-    //check if blobfish has 2 scripts
-
-    /*auto Street = CreateGameObject("Street");
-    Street->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    ModelImporter meshImp;
-    meshImp.loadFromFile("Assets/Meshes/ff.fbx");
-
-    for (int i = 0; i < meshImp.meshGameObjects.size(); i++) {
-        auto& Street2 = meshImp.meshGameObjects[i];
-        currentScene->AddGameObject(Street2);
-        ParentGameObject(*Street2, *Street);
-    }*/
-
-    /*auto MainCamera = CreateGameObject("MainCamera");
-    MainCamera->GetTransform()->GetPosition() = vec3(0, 0, -10);
-    auto camera = MainCamera->AddComponent<CameraComponent>();
-    mainCamera = MainCamera;
-
-    auto cube = CreateCube("Cube");
-    cube->GetTransform()->GetPosition() = vec3(0, 0, 0);
-    AddMeshRenderer(*cube, Mesh::CreateCube(), "Assets/default.png");*/
+    auto objMainCamera = CreateCameraObject("MainCamera");
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+    objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
+    auto camera = objMainCamera->AddComponent<CameraComponent>();
+    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    mainCamera = objMainCamera;
+  
+    auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -2.0f), "../MyGameEditor/Assets/Textures/UI_Final.png");
 
     SceneManagement->Start();
 
     return true;
 }
 
-bool Root::Update(double dt) {
+bool hasCreatedCollider = false;
+bool Root::Update(double dt) 
+{
 
-    //LOG(LogType::LOG_INFO, "Active Scene %s", currentScene->GetName().c_str());
+    auto canvas = FindGOByName(const_cast<char*>("UICanvas"));
+    if (canvas) {
+        UpdateCanvasTransform(canvas, mainCamera);
+    }
 
-    //SceneManagement->Update(dt);
+    if (!hasCreatedCollider) {
+        CreateSceneColliders();
+        hasCreatedCollider = true;
+    }
 
-    //if (Application->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
-    //
-    //    if (currentScene->tree == nullptr) {
-    //        currentScene->tree = new Octree(BoundingBox(vec3(-100, -100, -100), vec3(100, 100, 100)), 10, 1);
-    //        for (auto child : currentScene->children()) {
-    //            currentScene->tree->Insert(currentScene->tree->root, *child, 0);
-    //        }
-    //
-    //    }
-    //    else {
-    //        delete currentScene->tree;
-    //        currentScene->tree = nullptr;
-    //        int a = 7;
-    //    }
-    //}
-    //
-    //
-    //
-    ////if press 1 active scene Viernes13 and press 2 active scene Salimos
-    //if (Application->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-    //    Application->scene_serializer->DeSerialize("Assets/Viernes13.scene");
-	//}
-    //else if (Application->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
-    //    Application->scene_serializer->DeSerialize("Assets/Salimos.scene");
-    //}
-    
+    HandleInput(dt);    
 
     return true;
 }
@@ -265,7 +350,7 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
     return SceneManagement->AddMeshRenderer(go, mesh, texturePath, mat, shaders);
 }
 
-void Root::CreateGameObjectWithPath(const std::string& path)
+std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& path)
 {
     auto MarcoVicePresidente = Application->root->CreateGameObject(path);
 
@@ -330,6 +415,13 @@ void Root::CreateGameObjectWithPath(const std::string& path)
     //for (auto& go : gameObjectsWithColliders) {
     //    go->AddComponent<ColliderComponent>(Application->physicsModule, true);
     //}
+
+    if (meshImp.meshes.size() > 0) {
+		return MarcoVicePresidente;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 void Root::ChangeShader(GameObject& go, ShaderType shader)
@@ -378,7 +470,7 @@ bool Root::ParentGameObject(GameObject& child, GameObject& father) {
     return SceneManagement->ParentGameObject(child, father);
 }
 
-std::shared_ptr<GameObject> Root::FindGOByName(char* name) {
+std::shared_ptr<GameObject> Root::FindGOByName(std::string name) {
     
     return SceneManagement->FindGOByName(name);
 }

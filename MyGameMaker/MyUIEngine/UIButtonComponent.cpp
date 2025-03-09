@@ -30,8 +30,31 @@ void UIButtonComponent::Update(float deltaTime)
 	if (mousePosX >= buttonPos.x + offsetX && mousePosX <= buttonPos.x + offsetX + buttonSize.x &&
 		mousePosY >= buttonPos.y + offsetY && mousePosY <= buttonPos.y + offsetY + buttonSize.y)
 	{
-		std::cout << "Mouse is over the button" << std::endl;
+		//std::cout << "Mouse is over the button" << std::endl;
 	}
+
+    if (mousePosX >= buttonPos.x + offsetX && mousePosX <= buttonPos.x + offsetX + buttonSize.x &&
+        mousePosY >= buttonPos.y + offsetY && mousePosY <= buttonPos.y + offsetY + buttonSize.y)
+    {
+        if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+        {
+            if (GetState() == ButtonState::HOVERED)
+            {
+                SetState(ButtonState::CLICKED);
+                /*std::cout << "button is clicked" << std::endl;*/
+            }
+        }
+        else
+        {
+            SetState(ButtonState::HOVERED);
+            /*std::cout << "button is hovering" << std::endl;*/
+        }
+    }
+    else
+    {
+        SetState(ButtonState::DEFAULT);
+        /*std::cout << "button is default" << std::endl;*/
+    }
 
 	//std::cout << "Mouse position: " << mousePosX << ", " << mousePosY << std::endl;
 }

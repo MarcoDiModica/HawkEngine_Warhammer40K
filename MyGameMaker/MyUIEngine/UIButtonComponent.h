@@ -3,6 +3,12 @@
 #include "../MyGameEngine/Component.h"
 #include "../MyGameEngine/GameObject.h"
 
+enum class ButtonState {
+	DEFAULT,
+	HOVERED,
+	CLICKED
+};
+
 class UIButtonComponent : public Component
 {
 public:
@@ -22,5 +28,12 @@ public:
 	std::unique_ptr<Component> Clone(GameObject* owner) override;
 
 	ComponentType GetType() const override { return ComponentType::BUTTON; }
+	
+	ButtonState GetState() const { return state; }
+	void SetState(ButtonState newState) { state = newState; }
+
+private:
+	ButtonState state = ButtonState::DEFAULT;
+
 };
 

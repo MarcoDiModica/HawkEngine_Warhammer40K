@@ -282,15 +282,15 @@ bool Root::Start()
 
     auto image = CreateGameObject("Image");
     Application->root->ParentGameObject(*image, *canvas);
+    image->AddComponent<UITransformComponent>();
     image->AddComponent<UIImageComponent>();
 	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Baker_house.png");
-    image->AddComponent<UITransformComponent>();
 
     auto button = CreateGameObject("Button");
     Application->root->ParentGameObject(*button, *canvas);
+    button->AddComponent<UITransformComponent>();
     button->AddComponent<UIImageComponent>();
     button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Baker_house.png");
-    button->AddComponent<UITransformComponent>();
 	button->AddComponent<UIButtonComponent>();
     
 

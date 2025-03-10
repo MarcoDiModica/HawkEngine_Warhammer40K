@@ -393,7 +393,9 @@ private:
 
 		ImGui::Text("Number of animations: %d", skeletal->GetAnimations().size());
 		int* animationIndex = skeletal->GetAnimationIndex();
-		ImGui::InputInt("Animation Index", animationIndex);
+        ImGui::InputInt("Animation Index", animationIndex, 1, 1, ImGuiInputTextFlags_CharsDecimal);
+        if (*animationIndex < 0) *animationIndex = 0;
+        if (*animationIndex >= skeletal->GetAnimations().size()) *animationIndex = skeletal->GetAnimations().size()-1;
         if (animationIndex != skeletal->GetAnimationIndex()) 
         {
 			skeletal->SetAnimationIndex(*animationIndex);

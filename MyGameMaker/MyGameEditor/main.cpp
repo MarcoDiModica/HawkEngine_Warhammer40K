@@ -433,13 +433,13 @@ static void display_func() {
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 		objects.push_back(object);
-		RenderOutline(object);
+		//RenderOutline(object);
 		object->Update(static_cast<float>(Application->GetDt()));
 
 		for (size_t j = 0; j < object->GetChildren().size(); ++j) {
 			GameObject* child = object->GetChildren()[j].get();
 			objects.push_back(child);
-			RenderOutline(child);
+			//RenderOutline(child);
 		}
 	}
 
@@ -473,8 +473,6 @@ int main(int argc, char** argv) {
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;
-	int u = aiGetVersionMajor();
-	int v = aiGetVersionMinor();
 
 	while (state != EXIT) 
 	{

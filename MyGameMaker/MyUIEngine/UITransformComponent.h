@@ -23,7 +23,7 @@ public:
 
 	ComponentType GetType() const override { return ComponentType::UITRANSFORM; }
 
-	void SetTransform(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale);
+	void SetTransform(const glm::vec3& position, const glm::vec3 & scale);
 	void Translate(const glm::dvec3& translation);
 	void Rotate(double rads, const glm::dvec3& axis);
 	void Scale(const glm::dvec3& scale);

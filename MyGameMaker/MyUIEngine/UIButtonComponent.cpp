@@ -22,6 +22,8 @@ void UIButtonComponent::Update(float deltaTime)
 
 	auto buttonSize = rectTransform->getCanvasSize() * rectTransform->GetScale();
 	auto buttonPos = rectTransform->getCanvasPosition() + (rectTransform->GetPosition() * rectTransform->getCanvasSize());
+	auto pivotOffset = glm::vec3(0.5f, 0.5f, 0.0f);
+	buttonPos -= pivotOffset * buttonSize;
 
 	auto mousePosX = Application->input->GetMouseX();
 	auto mousePosY = Application->input->GetMouseY();
@@ -43,7 +45,7 @@ void UIButtonComponent::Update(float deltaTime)
         else
         {
             SetState(ButtonState::HOVERED);
-            /*std::cout << "button is hovering" << std::endl;*/
+            std::cout << "button is hovering" << std::endl;
         }
     }
     else

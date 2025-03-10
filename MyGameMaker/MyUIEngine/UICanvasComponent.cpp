@@ -7,9 +7,11 @@
 #include "../MyGameEditor/MyGUI.h"
 #include "../MyGameEditor/UIGameView.h"
 
+
 #include "UIImageComponent.h"
 #include "UIButtonComponent.h"
 #include "UITransformComponent.h"
+#include "UISliderComponent.h"
 
 #include <SDL2/SDL.h>
 
@@ -62,6 +64,12 @@ void UICanvasComponent::Update(float deltaTime)
 		if (object->HasComponent<UIButtonComponent>())
 		{
 			object->GetComponent<UIButtonComponent>()->Update(deltaTime);
+		}
+
+		if (object->HasComponent<UISliderComponent>())
+		{
+			object->GetComponent<UISliderComponent>()->SetProjection(projection);
+			object->GetComponent<UISliderComponent>()->Update(deltaTime);
 		}
 
     }

@@ -24,6 +24,7 @@
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
 #include "../MyUIEngine/UIButtonComponent.h"
+#include "../MyUIEngine/UISliderComponent.h"
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
@@ -275,7 +276,6 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
   
-    //auto myPlane = CreateCanvasInScene("UICanvas", glm::vec3(0.0f, 0.5f, -2.0f), "../MyGameEditor/Assets/Textures/UI_Final.png");
     auto canvas = CreateGameObject("Canvas");
 	canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
@@ -285,6 +285,7 @@ bool Root::Start()
     image->AddComponent<UITransformComponent>();
     image->AddComponent<UIImageComponent>();
 	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/UI_Final.png");
+    image->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(1, 1, 1));
 
     auto button = CreateGameObject("Button");
     Application->root->ParentGameObject(*button, *canvas);
@@ -292,6 +293,20 @@ bool Root::Start()
     button->AddComponent<UIImageComponent>();
     button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
 	button->AddComponent<UIButtonComponent>();
+    button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.5, 0.5, 1));
+
+   /* auto slider = CreateGameObject("Slider");
+    Application->root->ParentGameObject(*slider, *canvas);
+    slider->AddComponent<UITransformComponent>();
+    slider->AddComponent<UIImageComponent>();
+    slider->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/sliderBar.png");
+	slider->AddComponent<UISliderComponent>();
+    auto sliderButton = CreateGameObject("SliderButton");
+    Application->root->ParentGameObject(*sliderButton, *slider);
+    sliderButton->AddComponent<UITransformComponent>();
+    sliderButton->AddComponent<UIImageComponent>();
+    sliderButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/sliderButton.png");*/
+
     
 
 	
@@ -303,11 +318,6 @@ bool Root::Start()
 bool hasCreatedCollider = false;
 bool Root::Update(double dt) 
 {
-
-    auto canvas = FindGOByName(const_cast<char*>("UICanvas"));
-    if (canvas) {
-        UpdateCanvasTransform(canvas, mainCamera);
-    }
 
     if (!hasCreatedCollider) {
         CreateSceneColliders();

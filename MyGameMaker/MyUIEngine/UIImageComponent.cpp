@@ -56,9 +56,14 @@ void UIImageComponent::Update(float deltaTime)
 
 	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
 
+	glm::vec3 scale = uiTransform->GetScale() * uiTransform->getCanvasSize();
 	glm::vec3 translation = uiTransform->getCanvasPosition() + (uiTransform->GetPosition() * uiTransform->getCanvasSize());
 	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
-	glm::vec3 scale = uiTransform->GetScale() * uiTransform->getCanvasSize();
+
+	glm::vec3 pivotOffset = glm::vec3(0.5f, 0.5f, 0.0f);
+	translation -= pivotOffset * scale;
+
+	std::cout << uiTransform->GetPosition().x << std::endl;
 
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../MyGameEngine/Component.h"
-#include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/Image.h"
 #include "../MyGameEngine/Mesh.h"
 #include "../MyGameEngine/Shaders.h"
@@ -36,6 +35,8 @@ public:
 	void LoadMesh();
 
 	void SetProjection(const glm::mat4& proj) { projection = proj; }
+
+	glm::vec2 GetImageSize() const { return glm::vec2(texture->width(), texture->height()); }
 
 private:
 	//texture

@@ -42,8 +42,14 @@ public:
     void SnapToPosition();
 
 
-    //OnCollisionEnter
+    //OnCollision
     virtual void OnCollisionEnter(ColliderComponent* other);
+    virtual void OnCollisionStay(ColliderComponent* other);
+    virtual void OnCollisionExit(ColliderComponent* other); 
+    //OnTrigger
+    virtual void OnTriggerEnter(ColliderComponent* other);
+    virtual void OnTriggerStay(ColliderComponent* other);
+    virtual void OnTriggerExit(ColliderComponent* other);
 
 
     btRigidBody* GetRigidBody() const { return rigidBody; }
@@ -63,4 +69,4 @@ private:
 
     void CreateCollider();
 };
-
+ 

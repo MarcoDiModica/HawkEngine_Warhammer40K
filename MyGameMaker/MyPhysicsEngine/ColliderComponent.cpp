@@ -11,7 +11,7 @@ ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsMo
     name = "ColliderComponent"; 
     physics = physicsModule; 
     isForStreetLocal = isForStreet;
-    snapToPosition = true;
+    snapToPosition = false;
 }
 
 ColliderComponent::~ColliderComponent() {
@@ -29,14 +29,33 @@ void ColliderComponent::Start() {
 }
 
 
-
 void ColliderComponent::OnCollisionEnter(ColliderComponent* other) {
-    std::cout << "hello" << std::endl;
+    std::cout << "EnterCollision" << std::endl;
+}
+
+void ColliderComponent::OnCollisionStay(ColliderComponent* other) {
+    std::cout << "StayColliding" << std::endl;
+}
+
+void ColliderComponent::OnCollisionExit(ColliderComponent* other) {
+    std::cout << "ExitCollision" << std::endl;
+}
+
+void ColliderComponent::OnTriggerEnter(ColliderComponent* other) {
+    std::cout << "EnterCollisionTriggered" << std::endl;
+}
+
+void ColliderComponent::OnTriggerStay(ColliderComponent* other) {
+    std::cout << "StayCollidingTriggered" << std::endl;
+}
+
+void ColliderComponent::OnTriggerExit(ColliderComponent* other) {
+    std::cout << "ExitCollisionTriggered" << std::endl;
 }
 
 
 void ColliderComponent::Update(float deltaTime) {
-    if (snapToPosition && owner) {
+    if (snapToPosition && owner && !physics->linkPhysicsToScene) {
 		SnapToPosition();
     }
 }
@@ -195,19 +214,33 @@ void ColliderComponent::SetActive(bool active) {
             physics->dynamicsWorld->removeRigidBody(rigidBody);
         }
     }
-}
+}void ColliderComponent::SnapToPosition() {
+    if (!owner) return;
 
+    Transform_Component* goTransform = owner->GetTransform();
+    if (!goTransform) return;
 
-void ColliderComponent::SnapToPosition() {
-    glm::vec3 position = owner->boundingBox().center();
-    auto goTransform = owner->GetTransform();
-    //for parenting works bad 
-    glm::quat rotation = goTransform->GetRotation();
+    // Obtener el Bounding Box en espacio local (sin escala aplicada)
+    BoundingBox localBBox = owner->localBoundingBox();
+    glm::vec3 localCenter = localBBox.center();
+    glm::vec3 localSize = localBBox.size();
 
+    // Obtener la escala real del objeto
+    glm::vec3 worldScale = goTransform->GetScale();
+
+    // **Calcular el tamaño real del collider sin depender de la escala del GameObject**
+    glm::vec3 adjustedSize = localSize * worldScale;
+
+    // Obtener la posición en el mundo y ajustar el centro del collider
+    glm::vec3 worldPosition = goTransform->GetPosition();
+    glm::quat worldRotation = goTransform->GetLocalRotation();
+    glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * worldScale);
+
+    // Aplicar la transformación al rigidBody
     btTransform transform;
     transform.setIdentity();
-    transform.setOrigin(btVector3(position.x, position.y, position.z));
-    transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+    transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
+    transform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
 
     if (rigidBody->getMotionState()) {
         rigidBody->getMotionState()->setWorldTransform(transform);
@@ -216,13 +249,27 @@ void ColliderComponent::SnapToPosition() {
         rigidBody->setWorldTransform(transform);
     }
     rigidBody->setCenterOfMassTransform(transform);
-    std::cout << "Collider position snapped to bounding box center: ("
-        << position.x << ", " << position.y << ", " << position.z << ")\n";
+
+    // **Aplicar la escala al collider basándose en la magnitud real del bounding box**
+    btVector3 adjustedScale(adjustedSize.x * 0.5f,
+        adjustedSize.y * 0.5f,
+        adjustedSize.z * 0.5f);
+
+    if (rigidBody->getCollisionShape()) {
+        //rigidBody->getCollisionShape()->setLocalScaling(adjustedScale);
+    }
+
+    std::cout << "Collider adjusted position: (" << adjustedPosition.x << ", " << adjustedPosition.y << ", " << adjustedPosition.z
+        << ") with adjusted scale: (" << adjustedSize.x << ", " << adjustedSize.y << ", " << adjustedSize.z << ")\n";
 }
 
 
+
+
+
+
 //Local BBox Adjusted (doesnt works with the blocking)
-/*
+
 void ColliderComponent::CreateCollider() {
     if (!owner) return;
 
@@ -262,46 +309,46 @@ void ColliderComponent::CreateCollider() {
     physics->dynamicsWorld->addRigidBody(rigidBody);
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
 }
-*/
+
 
 
 
 //Previous Create Collider (doesn´t adjust to local bbx
-
-
-void ColliderComponent::CreateCollider() {
-	if (!owner) return;
-
-	Transform_Component* transform = owner->GetTransform();
-	if (!transform) return;
-
-	BoundingBox localBBox = owner->boundingBox();
-	size = localBBox.size();
-	glm::dvec3 localCenter = localBBox.center();
-
-	glm::dvec3 worldPosition = transform->GetPosition();
-	glm::dquat worldRotation = transform->GetRotation();
-	glm::dvec3 worldScale = transform->GetScale();
-
-	btCollisionShape* shape = new btBoxShape(btVector3(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f));
-	shape->setLocalScaling(btVector3(worldScale.x, worldScale.y, worldScale.z));
-
-	glm::vec3 rotatedCenter = worldPosition + worldRotation * (localCenter - transform->GetLocalPosition());
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-	startTransform.setOrigin(btVector3(rotatedCenter.x, rotatedCenter.y, rotatedCenter.z));
-	startTransform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
-
-	btVector3 localInertia(0, 0, 0);
-	if (mass > 0.0f) {
-		shape->calculateLocalInertia(mass, localInertia);
-	}
-
-	btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
-	rigidBody = new btRigidBody(rbInfo);
-
-	physics->dynamicsWorld->addRigidBody(rigidBody);
-	physics->gameObjectRigidBodyMap[owner] = rigidBody;
-}
+//
+//
+//void ColliderComponent::CreateCollider() {
+//	if (!owner) return;
+//
+//	Transform_Component* transform = owner->GetTransform();
+//	if (!transform) return;
+//
+//	BoundingBox localBBox = owner->boundingBox();
+//	size = localBBox.size();
+//	glm::dvec3 localCenter = localBBox.center();
+//
+//	glm::dvec3 worldPosition = transform->GetPosition();
+//	glm::dquat worldRotation = transform->GetLocalRotation();
+//	glm::dvec3 worldScale = transform->GetScale();
+//
+//	btCollisionShape* shape = new btBoxShape(btVector3(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f));
+//	//shape->setLocalScaling(btVector3(worldScale.x, worldScale.y, worldScale.z));
+//
+//	glm::vec3 rotatedCenter = worldPosition + worldRotation * (localCenter - transform->GetLocalPosition());
+//
+//	btTransform startTransform;
+//	startTransform.setIdentity();
+//	startTransform.setOrigin(btVector3(rotatedCenter.x, rotatedCenter.y, rotatedCenter.z));
+//	startTransform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
+//
+//	btVector3 localInertia(0, 0, 0);
+//	if (mass > 0.0f) {
+//		shape->calculateLocalInertia(mass, localInertia);
+//	}
+//
+//	btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+//	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
+//	rigidBody = new btRigidBody(rbInfo);
+//
+//	physics->dynamicsWorld->addRigidBody(rigidBody);
+//	physics->gameObjectRigidBodyMap[owner] = rigidBody;
+//}

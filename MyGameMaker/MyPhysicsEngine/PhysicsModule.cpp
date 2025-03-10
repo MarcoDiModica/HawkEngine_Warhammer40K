@@ -83,7 +83,7 @@ void PhysicsModule::SyncTransforms() {
         if (previousRotations.find(gameObject) != previousRotations.end()) {
             if (previousRotations[gameObject] != newRotation) {
                 glm::dquat deltaRotation = glm::inverse(previousRotations[gameObject]) * newRotation;
-                goTransform->SetRotationQuat(goTransform->GetRotation() * deltaRotation);
+                goTransform->SetRotationQuat(goTransform->GetLocalRotation() * deltaRotation);
             }
         }
         previousRotations[gameObject] = newRotation;
@@ -193,15 +193,16 @@ void PhysicsModule::DrawDebugDrawer() {
         }
     }
 }
-
 void PhysicsModule::CheckCollisions() {
+    static std::set<std::pair<GameObject*, GameObject*>> previousCollisions;
+    std::set<std::pair<GameObject*, GameObject*>> currentCollisions;
+
     int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
     for (int i = 0; i < numManifolds; i++) {
         btPersistentManifold* contactManifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
         const btCollisionObject* btObjA = contactManifold->getBody0();
         const btCollisionObject* btObjB = contactManifold->getBody1();
 
-        // Buscar los GameObjects en el mapa gameObjectRigidBodyMap
         GameObject* objA = nullptr;
         GameObject* objB = nullptr;
 
@@ -210,21 +211,69 @@ void PhysicsModule::CheckCollisions() {
             if (pair.second == btObjB) objB = pair.first;
         }
 
-        // Si encontramos los GameObjects correspondientes
         if (objA && objB) {
-            // Obtener ColliderComponent de cada objeto
             ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
             ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+            std::pair<GameObject*, GameObject*> collisionPair = std::minmax(objA, objB);
 
-            if (colliderA) {
-                colliderA->OnCollisionEnter(colliderB);
-            }
-            if (colliderB) {
-                colliderB->OnCollisionEnter(colliderA);
+            if (colliderA && colliderB) {
+                bool isTriggerA = colliderA->IsTrigger();
+                bool isTriggerB = colliderB->IsTrigger();
+                bool isTriggerCollision = isTriggerA || isTriggerB;
+
+                if (previousCollisions.find(collisionPair) == previousCollisions.end()) {
+					// --------------- ON ENTER ---------------
+                    if (isTriggerCollision) {
+                        colliderA->OnTriggerEnter(colliderB);
+                        colliderB->OnTriggerEnter(colliderA);
+                    }
+                    else {
+                        colliderA->OnCollisionEnter(colliderB);
+                        colliderB->OnCollisionEnter(colliderA);
+                    }
+                }
+                else {
+                    // --------------- ON STAY ---------------
+                    if (isTriggerCollision) {
+                        colliderA->OnTriggerStay(colliderB);
+                        colliderB->OnTriggerStay(colliderA);
+                    }
+                    else {
+                        colliderA->OnCollisionStay(colliderB);
+                        colliderB->OnCollisionStay(colliderA);
+                    }
+                }
+                currentCollisions.insert(collisionPair);
             }
         }
     }
+
+	// --------------- ON EXIT ---------------
+    for (const auto& collisionPair : previousCollisions) {
+        if (currentCollisions.find(collisionPair) == currentCollisions.end()) {
+            GameObject* objA = collisionPair.first;
+            GameObject* objB = collisionPair.second;
+            ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
+            ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+            if (colliderA && colliderB) {
+                bool isTriggerA = colliderA->IsTrigger();
+                bool isTriggerB = colliderB->IsTrigger();
+                if (isTriggerA || isTriggerB) {
+                    colliderA->OnTriggerExit(colliderB);
+                    colliderB->OnTriggerExit(colliderA);
+                }
+                else {
+                    colliderA->OnCollisionExit(colliderB);
+                    colliderB->OnCollisionExit(colliderA);
+                }
+            }
+        }
+    }
+
+    previousCollisions = currentCollisions;
 }
+
+
 
 bool PhysicsModule::Update(double dt) {
 	if (linkPhysicsToScene)

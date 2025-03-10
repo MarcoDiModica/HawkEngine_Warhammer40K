@@ -57,6 +57,9 @@ uniform int numPointLights;
 // Constants for PBR calculations
 const float PI = 3.14159265359;
 
+// Tonemapping control (added)
+uniform float tonemapStrength = 1.0;
+
 // PBR functions
 vec3 getNormalFromMap();
 float DistributionGGX(vec3 N, vec3 H, float roughness);
@@ -64,14 +67,24 @@ float GeometrySchlickGGX(float NdotV, float roughness);
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
 
+// Added ACES tonemapping function
+vec3 ACESFilm(vec3 x)
+{
+    float a = 2.51f;
+    float b = 0.03f;
+    float c = 2.43f;
+    float d = 0.59f;
+    float e = 0.14f;
+    return clamp((x*(a*x+b))/(x*(c*x+d)+e), 0.0, 1.0);
+}
+
 void main()
 {
-    // Debug - output texture coordinates
-    //FragColor = vec4(TexCoord, 0.0, 1.0);
-    //return;
-    
     // Sample textures or use uniform values
-    vec4 albedoTexture = (u_HasAlbedoMap == 1) ? texture(albedoMap, TexCoord) : albedoColor;
+    vec4 texColor = (u_HasAlbedoMap == 1) ? texture(albedoMap, TexCoord) : vec4(1.0);
+    
+    // CAMBIO IMPORTANTE: Siempre aplicar el albedoColor, como en el shader unlit
+    vec4 albedoTexture = texColor * albedoColor;
     vec3 albedo = albedoTexture.rgb;
     float alpha = albedoTexture.a;
     
@@ -175,8 +188,20 @@ void main()
     //FragColor = vec4(albedo, alpha);
     //return;
     
-    // HDR tonemapping and gamma correction
-    vec3 color = Lo / (Lo + vec3(1.0));
+    // CAMBIO IMPORTANTE: Mejor tonemapping usando ACES
+    vec3 color;
+    
+    // Mezclar entre el resultado crudo (sin tonemapping) y el resultado con tonemapping
+    // Para debugging, puedes ajustar tonemapStrength a 0 para ver colores sin procesar
+    if (tonemapStrength > 0.0) {
+        // Usar ACES tonemapping
+        color = mix(Lo, ACESFilm(Lo), tonemapStrength);
+    } else {
+        // Usar el antiguo Reinhard tonemapping
+        color = Lo / (Lo + vec3(1.0));
+    }
+    
+    // Gamma correction
     color = pow(color, vec3(1.0/2.2)); 
     
     // Use the alpha from the texture or the albedoColor

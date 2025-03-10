@@ -171,6 +171,10 @@ void Material::ApplyShader(const glm::mat4& model, const glm::mat4& view, const 
 		shader->SetUniform("roughnessFactor", roughness);
 		shader->SetUniform("aoFactor", ao);
 
+		shader->SetUniform("tonemapStrength", tonemapStrength);
+
+		shader->SetUniform("u_AlbedoColor", color);
+
 		shader->SetUniform("u_HasAlbedoMap", hasAlbedoMap ? 1 : 0);
 		shader->SetUniform("u_HasNormalMap", hasNormalMap ? 1 : 0);
 		shader->SetUniform("u_HasMetallicMap", hasMetallicMap ? 1 : 0);

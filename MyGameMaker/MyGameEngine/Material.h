@@ -23,6 +23,8 @@ public:
 	float roughness = 0.5f;
 	float ao = 1.0f;
 
+	float tonemapStrength = 1.0f;
+
 	ShaderType shaderType = ShaderType::UNLIT;
 
 	std::shared_ptr<Image> imagePtr = std::make_shared<Image>();  // Main texture (albedo/diffuse)
@@ -56,6 +58,9 @@ public:
 
 	void SaveBinary(const std::string& filename) const;
 	static std::shared_ptr<Material> LoadBinary(const std::string& filename);
+
+	void SetTonemapStrength(float strength) { tonemapStrength = strength; }
+	float GetTonemapStrength() const { return tonemapStrength; }
 
 private:
 	unsigned int gid;

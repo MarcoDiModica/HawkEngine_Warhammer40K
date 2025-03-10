@@ -97,12 +97,6 @@ private:
 
 		ImGui::Text("Vertices: %d", mesh->getModel()->GetModelData().vertexData.size());
 		ImGui::Text("Indices: %d", mesh->getModel()->GetModelData().indexData.size());
-
-		bool& triNormals = mesh->drawTriangleNormals;
-		bool& vertexNormals = mesh->drawVertexNormals;
-
-		ImGui::Checkbox("Triangle Normals", &triNormals);
-		ImGui::Checkbox("Vertex Normals", &vertexNormals);
 	}
 
 	static void DrawTexturePreview(std::shared_ptr<Image> image, const char* label) {
@@ -133,7 +127,7 @@ private:
 			static_cast<float>(matColor.w)
 		};
 
-		if (ImGui::ColorPicker4("Color", colorArray)) {
+		if (ImGui::ColorEdit4("Color", colorArray)) {
 			vec4 newColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
 			meshRenderer->GetMaterial()->SetColor(newColor);
 		}
@@ -243,6 +237,12 @@ private:
 				}
 				ImGui::TreePop();
 			}
+
+            // Draw tonemap strength
+            float tonemapStrength = material->GetTonemapStrength();
+            if (ImGui::SliderFloat("Tonemap Strength", &tonemapStrength, 0.0f, 10.0f)) {
+				material->SetTonemapStrength(tonemapStrength);
+			}
 		}
 	}
 
@@ -256,7 +256,7 @@ private:
 
 		DrawMaterialProperties(meshRenderer);
 	}
-#pragma endregion
+    #pragma endregion
 
     #pragma region Camera
     static void DrawCameraComponent(CameraComponent* camera) {

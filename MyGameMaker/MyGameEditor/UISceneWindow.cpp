@@ -74,7 +74,6 @@ glm::vec3 UISceneWindow::ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int
     glm::mat4 view_matrix = Application->camera->view();
     glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
 
-    // Convert camera position from double to float for addition.
     glm::vec3 camPos = glm::vec3(
         static_cast<float>(Application->camera->GetTransform().GetPosition().x),
         static_cast<float>(Application->camera->GetTransform().GetPosition().y),
@@ -191,7 +190,6 @@ bool UISceneWindow::Draw()
         ImGuizmo::SetDrawlist();
         ImGuizmo::SetRect(viewportPosition.x, viewportPosition.y, contentRegionSize.x, contentRegionSize.y);
 
-        // Use the camera's view and projection matrices.
         glm::mat4 viewMatrix = Application->camera->view();
         glm::mat4 projectionMatrix = Application->camera->projection();
 
@@ -306,8 +304,18 @@ bool UISceneWindow::Draw()
         for (auto& selectedObject : Application->input->GetSelectedGameObjects())
         {
             if (operation != ManipulationOperation::IDLE && selectedObject != nullptr) {
-                // Use the object's LOCAL transform directly.
-                glm::mat4 objectMatrix = selectedObject->GetTransform()->GetLocalMatrix();
+                glm::mat4 objectMatrix;
+                if (transformSpace == TransformSpace::WORLD) {
+                    // Compute world transform from local transform if parent exists.
+                    objectMatrix = selectedObject->GetTransform()->GetLocalMatrix();
+                    if (selectedObject->GetParent()) {
+                        glm::mat4 parentWorldMatrix = selectedObject->GetParent()->GetTransform()->GetMatrix();
+                        objectMatrix = parentWorldMatrix * objectMatrix;
+                    }
+                }
+                else { // LOCAL
+                    objectMatrix = selectedObject->GetTransform()->GetLocalMatrix();
+                }
 
                 float matrixForManipulation[16];
                 memcpy(matrixForManipulation, glm::value_ptr(objectMatrix), sizeof(float) * 16);
@@ -324,14 +332,20 @@ bool UISceneWindow::Draw()
                 case ManipulationOperation::SCALE:     guizmoOperation = ImGuizmo::SCALE;     break;
                 default: guizmoOperation = ImGuizmo::TRANSLATE; break;
                 }
-                // Force local mode.
-                ImGuizmo::MODE guizmoMode = ImGuizmo::LOCAL;
+                // If world axis is desired, set mode to WORLD; otherwise LOCAL.
+                ImGuizmo::MODE guizmoMode = (transformSpace == TransformSpace::WORLD) ? ImGuizmo::WORLD : ImGuizmo::LOCAL;
 
                 ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
                     guizmoOperation, guizmoMode, matrixForManipulation, NULL,
                     (Application->gui->UIinspectorPanel->snap ? snap : nullptr));
 
                 glm::mat4 manipulatedMatrix = glm::make_mat4(matrixForManipulation);
+
+                // If in WORLD mode and object has a parent, convert back to local transform.
+                if (transformSpace == TransformSpace::WORLD && selectedObject->GetParent()) {
+                    glm::mat4 parentWorldMatrix = selectedObject->GetParent()->GetTransform()->GetMatrix();
+                    manipulatedMatrix = glm::inverse(parentWorldMatrix) * manipulatedMatrix;
+                }
 
                 selectedObject->GetTransform()->SetMatrix(manipulatedMatrix);
             }

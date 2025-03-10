@@ -293,10 +293,6 @@ void MeshRenderer::RenderWithPBRShader(Shaders* shader, const glm::mat4& view, c
 void MeshRenderer::RenderMainCamera() const {
 	if (!mesh || !material || !owner || !mesh->model) return;
 
-	glm::dvec4 materialColor = material->GetColor();
-	std::string texturePath = material->image().image_path;
-	ShaderType materialShaderType = material->GetShaderType();
-
 	GLboolean blendEnabled;
 	glGetBooleanv(GL_BLEND, &blendEnabled);
 
@@ -327,46 +323,18 @@ void MeshRenderer::RenderMainCamera() const {
 	}
 	glActiveTexture(GL_TEXTURE0);
 
-	Shaders* shader = ShaderManager::GetInstance().GetShader(materialShaderType);
-	if (!shader) {
-		std::cerr << "Shader not found for type " << static_cast<int>(materialShaderType) << std::endl;
-		return;
-	}
+	material->ApplyShader(
+		owner->GetTransform()->GetMatrix(),
+		Application->root->mainCamera->GetComponent<CameraComponent>()->view(),
+		Application->root->mainCamera->GetComponent<CameraComponent>()->projection()
+	);
 
-	shader->Bind();
-
-	if (texturePath.empty()) {
-		shader->SetUniform("u_HasTexture", 0);
-	}
-	else {
-		material->bind();
-		shader->SetUniform("u_HasTexture", 1);
-		shader->SetUniform("texture1", 0);
-	}
-
-	shader->SetUniform("modColor", glm::vec4(materialColor));
-	shader->SetUniform("model", owner->GetTransform()->GetMatrix());
-
-	glm::mat4 viewMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->view();
-	glm::mat4 projectionMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->projection();
-
-	switch (materialShaderType) {
-	case ShaderType::UNLIT:
-		RenderWithUnlitShader(shader, viewMatrix, projectionMatrix);
-		break;
-
-	case ShaderType::PBR:
-		shader->SetUniform("view", viewMatrix);
-		shader->SetUniform("projection", projectionMatrix);
-
-		shader->SetUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
-		SetupLightProperties(shader, Application->root->mainCamera->GetTransform()->GetPosition());
-		break;
-
-	default:
-		shader->SetUniform("view", viewMatrix);
-		shader->SetUniform("projection", projectionMatrix);
-		break;
+	if (material->GetShaderType() == ShaderType::PBR) {
+		Shaders* shader = ShaderManager::GetInstance().GetShader(material->GetShaderType());
+		if (shader) {
+			shader->SetUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
+			SetupLightProperties(shader, Application->root->mainCamera->GetTransform()->GetPosition());
+		}
 	}
 
 	glEnable(GL_BLEND);
@@ -386,9 +354,7 @@ void MeshRenderer::RenderMainCamera() const {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	if (!texturePath.empty()) {
-		material->unbind();
-	}
+	material->unbind();
 
 	if (!blendEnabled) {
 		glDisable(GL_BLEND);

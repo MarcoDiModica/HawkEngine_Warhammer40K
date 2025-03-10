@@ -238,10 +238,12 @@ private:
 				ImGui::TreePop();
 			}
 
-            // Draw tonemap strength
-            float tonemapStrength = material->GetTonemapStrength();
-            if (ImGui::SliderFloat("Tonemap Strength", &tonemapStrength, 0.0f, 10.0f)) {
-				material->SetTonemapStrength(tonemapStrength);
+            if (ImGui::TreeNodeEx("Tonemap", ImGuiTreeNodeFlags_DefaultOpen)) {
+				float tonemapStrength = material->GetTonemapStrength();
+				if (ImGui::SliderFloat("Tonemap Strength", &tonemapStrength, 0.0f, 10.0f)) {
+					material->SetTonemapStrength(tonemapStrength);
+				}
+				ImGui::TreePop();
 			}
 		}
 	}

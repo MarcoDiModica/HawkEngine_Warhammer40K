@@ -55,6 +55,7 @@
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
 
+#include "assimp/version.h"
 
 using namespace std;
 
@@ -472,6 +473,8 @@ int main(int argc, char** argv) {
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;
+	int u = aiGetVersionMajor();
+	int v = aiGetVersionMinor();
 
 	while (state != EXIT) 
 	{
@@ -489,6 +492,7 @@ int main(int argc, char** argv) {
 			iluInit();
 			ilutInit();
 
+		
 			init_openGL();
 
 			if (Application) {	

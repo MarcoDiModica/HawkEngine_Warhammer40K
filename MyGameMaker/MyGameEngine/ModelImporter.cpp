@@ -122,7 +122,8 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 
 			// Coordenadas de los vértices
 			aiVector3D vertex = mesh->mVertices[j];
-			vec3 aux = vec3(vertex.x, vertex.y, vertex.z);
+			vec3 aux = vec3(vertex.x * 0.02f, vertex.y * 0.02f, vertex.z * 0.02f);				//Unity scale 
+			//vec3 aux = vec3(vertex.x, vertex.y, vertex.z);									//Engineson scale
 			Vertex v;
 			v.position = aux;
 			modelsData[i]->vertexData.push_back(v);

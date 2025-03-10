@@ -97,12 +97,15 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 
 			if (scene.mNumAnimations > 0)
 			{
-				Animation* animation = new Animation();
+				for (int i = 0; i < scene.mNumAnimations; i++)
+				{
+					Animation* animation = new Animation();
 
-				animation->SetUpAnimation(scenePath, model->getModel().get());
-		
-				animations.push_back(std::shared_ptr<Animation>(animation));
-				std::cout << node.mName.C_Str() << std::endl;
+					animation->SetUpAnimation(scenePath, model->getModel().get(),i);
+
+					animations.push_back(std::shared_ptr<Animation>(animation));
+					std::cout << node.mName.C_Str() << std::endl;
+				}
 			}
 
 			obj.SetName(node.mName.data);

@@ -39,6 +39,14 @@ public:
         testAnimation = std::make_unique<Animation>(*animation);
     }
 
+	void AddAnimation(Animation* animation) {
+		animations.push_back(std::make_unique<Animation>(*animation));
+	}
+
+	std::vector<std::unique_ptr<Animation>>& GetAnimations() {
+		return animations;
+	}
+
     Animation* GetAnimation() const {
         return testAnimation.get();
     }
@@ -61,9 +69,20 @@ public:
 		return isPlaying;
 	}
 
+	int* GetAnimationIndex() {
+		return &animationIndex;
+	}
+
+	void SetAnimationIndex(int index) {
+		animationIndex = index;
+	}
+
 private:
     std::unique_ptr<Animator> animator;
     std::unique_ptr<Animation> testAnimation;
+    //vector of unitque ptr of animations
+	std::vector<std::unique_ptr<Animation>> animations;
+    int animationIndex = 0;
 	bool isPlaying = true;
  
 

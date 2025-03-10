@@ -391,6 +391,20 @@ private:
         ImGui::SliderFloat("Timeline", &time, 0, skeletal->GetAnimator()->GetCurrentAnimation()->GetDuration());
         ImGui::PopItemFlag();
 
+		ImGui::Text("Number of animations: %d", skeletal->GetAnimations().size());
+		int* animationIndex = skeletal->GetAnimationIndex();
+		ImGui::InputInt("Animation Index", animationIndex);
+        if (animationIndex != skeletal->GetAnimationIndex()) 
+        {
+			skeletal->SetAnimationIndex(*animationIndex);
+        }
+
+        if (ImGui::Button("ChangeAnimation")) 
+        {
+            skeletal->SetAnimation(skeletal->GetAnimations().at(*animationIndex).get());
+			skeletal->GetAnimator()->PlayAnimation(skeletal->GetAnimation());
+        }
+
     }
     #pragma endregion 
 

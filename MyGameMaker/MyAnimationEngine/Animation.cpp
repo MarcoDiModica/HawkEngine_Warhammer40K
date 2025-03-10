@@ -58,12 +58,12 @@ Animation& Animation::operator=(Animation&& other) noexcept
     return *this;
 }
 
-void Animation::SetUpAnimation(const std::string& animationPath, Model* model)
+void Animation::SetUpAnimation(const std::string& animationPath, Model* model, int index)
 {
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
     assert(scene && scene->mRootNode);
-    auto animation = scene->mAnimations[0];
+    auto animation = scene->mAnimations[index];
     m_Duration = animation->mDuration;
     for (int i = 0; i < animation->mNumChannels; i++)
     {

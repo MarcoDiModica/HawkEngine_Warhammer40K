@@ -260,7 +260,7 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
     player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-    Application->root->CreateGameObjectWithPath("Assets/Meshes/MainCharacterRun.fbx");
+    Application->root->CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
 
     auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
     playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
@@ -393,6 +393,11 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 			auto animationComponent = go->AddComponent<SkeletalAnimationComponent>();
             animationComponent->SetAnimation(meshImp.animations[0].get());
             animationComponent->Start();
+
+            for (int i = 0; i < meshImp.animations.size(); ++i) 
+            {
+                animationComponent->AddAnimation(meshImp.animations[i].get());
+            }
 
             std::unordered_map<std::string, std::shared_ptr<GameObject>> boneMap;
 

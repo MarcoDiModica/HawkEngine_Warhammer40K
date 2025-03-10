@@ -1,7 +1,9 @@
 #ifndef __MESH_H__
 #define __MESH_H__
 #pragma once
-
+#ifdef min
+#undef min
+#endif
 #include <vector>
 #include <string>
 #include <memory>

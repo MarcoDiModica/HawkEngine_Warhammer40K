@@ -1,5 +1,7 @@
 #pragma once
-
+#ifdef min
+#undef min
+#endif
 #include<glm/glm.hpp>
 #include<glm/gtc/quaternion.hpp>
 #include<assimp/quaternion.h>

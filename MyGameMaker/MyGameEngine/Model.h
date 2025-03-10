@@ -1,5 +1,7 @@
 #pragma once
-
+#ifdef min
+#undef min
+#endif
 #include <vector>
 #include <string>
 #include "BoundingBox.h"

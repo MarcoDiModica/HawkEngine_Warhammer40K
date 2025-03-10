@@ -1,6 +1,8 @@
 #pragma once
 #define GLM_ENABLE_EXPERIMENTAL
-
+#ifdef min
+#undef min
+#endif
 #include <string>
 #include <memory>
 #include <vector>

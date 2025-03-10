@@ -6,7 +6,9 @@
 #include <unordered_set>
 #include <zlib.h>
 #include <queue>
-
+#ifdef min
+#undef min
+#endif
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>

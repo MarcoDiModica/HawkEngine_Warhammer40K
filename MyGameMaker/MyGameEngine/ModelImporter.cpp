@@ -1,3 +1,6 @@
+#ifdef min
+#undef min
+#endif
 #define _CRT_SECURE_NO_WARNINGS
 #include "ModelImporter.h"
 #include <map>

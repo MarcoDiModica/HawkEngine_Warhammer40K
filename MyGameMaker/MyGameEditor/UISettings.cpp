@@ -1,3 +1,6 @@
+#ifdef min
+#undef min
+#endif
 #include <assimp/version.h>
 #include <IL/il.h>
 #include <imgui.h>

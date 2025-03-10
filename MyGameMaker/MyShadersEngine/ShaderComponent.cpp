@@ -2,7 +2,7 @@
 #include "../MyGameEngine/ShaderManager.h"
 
 ShaderComponent::ShaderComponent(GameObject* owner)
-	: Component(owner), shaderType(ShaderType::UNLIT), ownerMaterial(nullptr) {
+	: Component(owner), shaderType(ShaderType::PBR), ownerMaterial(nullptr) {
 	name = "Shader";
 }
 

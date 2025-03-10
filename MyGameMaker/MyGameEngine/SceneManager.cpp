@@ -192,7 +192,7 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
 
     auto shaderComponent = go.AddComponent<ShaderComponent>();
 	shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-	shaderComponent->SetShaderType(ShaderType::UNLIT);
+	shaderComponent->SetShaderType(ShaderType::PBR);
 
     meshRenderer->SetImage(image);
 

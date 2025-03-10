@@ -156,7 +156,7 @@ std::shared_ptr<GameObject> Root::CreateCanvasInScene(const std::string& name, c
 
     auto shaderComponent = planeObject->AddComponent<ShaderComponent>();
     shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-    shaderComponent->SetShaderType(ShaderType::UNLIT);
+    shaderComponent->SetShaderType(ShaderType::PBR);
 
     if (mainCamera) {
         initialCanvasOffset = glm::dvec3(position) - mainCamera->GetTransform()->GetPosition();
@@ -363,7 +363,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
         auto shaderComponent = go->AddComponent<ShaderComponent>();
         shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-        shaderComponent->SetShaderType(ShaderType::UNLIT);
+        shaderComponent->SetShaderType(ShaderType::PBR);
 
 		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 		

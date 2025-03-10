@@ -25,7 +25,7 @@ public:
 
 	float tonemapStrength = 1.0f;
 
-	ShaderType shaderType = ShaderType::UNLIT;
+	ShaderType shaderType = ShaderType::PBR;
 
 	std::shared_ptr<Image> imagePtr = std::make_shared<Image>();  // Main texture (albedo/diffuse)
 	std::shared_ptr<Image> normalMapPtr = nullptr;                // Normal map

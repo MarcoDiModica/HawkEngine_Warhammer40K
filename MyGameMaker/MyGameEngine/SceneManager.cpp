@@ -259,8 +259,12 @@ bool SceneManager::ParentGameObjectToObject(GameObject& child, GameObject& newPa
     // Preserve world transform before changing parent
     glm::dmat4 worldTransform = child.GetTransform()->GetMatrix();
 
-    // Only remove from scene root **if it has no parent**
-    if (!child.GetParent()) {
+    // Remove from old parent if it has one
+    if (child.GetParent()) {
+        child.GetParent()->RemoveChild(&child);
+    }
+    else {
+        // If it was a root object, remove it from the scene root
         auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
             [&child](const std::shared_ptr<GameObject>& obj) { return obj.get() == &child; });
         if (it != currentScene->_children.end()) {
@@ -268,24 +272,18 @@ bool SceneManager::ParentGameObjectToObject(GameObject& child, GameObject& newPa
         }
     }
 
-    // If child already has a parent, remove it from the old parent first
-    if (child.GetParent()) {
-        child.GetParent()->RemoveChild(&child);
-    }
-
     // Set new parent
     child.SetParent(&newParent);
     newParent.AddChild(&child);
 
-    // Compute the **correct** local transform so position doesn't break
+    // Compute **correct** local transform so position/scale don't skyrocket
     glm::dmat4 parentWorldTransform = newParent.GetTransform()->GetMatrix();
     glm::dmat4 newLocalTransform = glm::inverse(parentWorldTransform) * worldTransform;
-
-    // Apply local transform
     child.GetTransform()->SetMatrix(newLocalTransform);
 
     return true;
 }
+
 
 
 

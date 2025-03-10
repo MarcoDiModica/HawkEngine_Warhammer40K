@@ -11,7 +11,6 @@ ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsMo
     name = "ColliderComponent"; 
     physics = physicsModule; 
     isForStreetLocal = isForStreet;
-    snapToPosition = false;
 }
 
 ColliderComponent::~ColliderComponent() {
@@ -225,15 +224,11 @@ void ColliderComponent::SetActive(bool active) {
     glm::vec3 localCenter = localBBox.center();
     glm::vec3 localSize = localBBox.size();
 
-    // Obtener la escala real del objeto
     glm::vec3 worldScale = goTransform->GetScale();
 
-    // **Calcular el tama�o real del collider sin depender de la escala del GameObject**
-    glm::vec3 adjustedSize = localSize * worldScale;
 
-    // Obtener la posici�n en el mundo y ajustar el centro del collider
     glm::vec3 worldPosition = goTransform->GetPosition();
-    glm::quat worldRotation = goTransform->GetLocalRotation();
+    glm::quat worldRotation = goTransform->GetRotation();
     glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * worldScale);
 
     // Aplicar la transformaci�n al rigidBody
@@ -250,17 +245,10 @@ void ColliderComponent::SetActive(bool active) {
     }
     rigidBody->setCenterOfMassTransform(transform);
 
-    // **Aplicar la escala al collider bas�ndose en la magnitud real del bounding box**
-    btVector3 adjustedScale(adjustedSize.x * 0.5f,
-        adjustedSize.y * 0.5f,
-        adjustedSize.z * 0.5f);
-
     if (rigidBody->getCollisionShape()) {
-        //rigidBody->getCollisionShape()->setLocalScaling(adjustedScale);
+        btVector3 btScale(worldScale.x, worldScale.y, worldScale.z);
+        rigidBody->getCollisionShape()->setLocalScaling(btScale);
     }
-
-    std::cout << "Collider adjusted position: (" << adjustedPosition.x << ", " << adjustedPosition.y << ", " << adjustedPosition.z
-        << ") with adjusted scale: (" << adjustedSize.x << ", " << adjustedSize.y << ", " << adjustedSize.z << ")\n";
 }
 
 
@@ -296,7 +284,7 @@ void ColliderComponent::CreateCollider() {
         static_cast<btScalar>(localRot.w)
     );
     startTransform.setRotation(btRot);    glm::vec3 scale = transform->GetScale();
-    //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+    shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
 
     btVector3 localInertia(0, 0, 0);
     if (mass > 0.0f) {

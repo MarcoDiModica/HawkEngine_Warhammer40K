@@ -42,6 +42,8 @@ public:
 
     void DrawDebugDrawer();
 
+    void CallMonoCollision(GameObject* obj, const std::string& methodName, GameObject* other);
+
 	void CheckCollisions();
 
 

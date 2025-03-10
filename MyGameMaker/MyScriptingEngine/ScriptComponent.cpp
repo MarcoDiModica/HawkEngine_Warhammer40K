@@ -143,3 +143,17 @@ std::string ScriptComponent::GetTypeName() const
 
 	return "";
 }
+
+void ScriptComponent::InvokeMonoMethod(const std::string& methodName, GameObject* other) {
+    if (!monoScript) return;
+
+    MonoClass* klass = mono_object_get_class(monoScript);
+    MonoMethod* method = mono_class_get_method_from_name(klass, methodName.c_str(), 1);
+
+    if (method) {
+        void* args[1];
+        uintptr_t otherPtr = reinterpret_cast<uintptr_t>(other);
+        args[0] = &otherPtr;
+        mono_runtime_invoke(method, monoScript, args, nullptr);
+    }
+}

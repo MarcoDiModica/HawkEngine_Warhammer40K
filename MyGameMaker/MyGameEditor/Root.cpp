@@ -227,7 +227,7 @@ bool Root::Awake()
 
     environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
     ParentGameObject(*environment, *blockout);
-    blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));
+    blockout->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
 
     return true;
 }

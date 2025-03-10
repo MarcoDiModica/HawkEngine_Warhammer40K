@@ -228,15 +228,15 @@ void ColliderComponent::SetActive(bool active) {
     // Obtener la escala real del objeto
     glm::vec3 worldScale = goTransform->GetScale();
 
-    // **Calcular el tamaño real del collider sin depender de la escala del GameObject**
+    // **Calcular el tamaï¿½o real del collider sin depender de la escala del GameObject**
     glm::vec3 adjustedSize = localSize * worldScale;
 
-    // Obtener la posición en el mundo y ajustar el centro del collider
+    // Obtener la posiciï¿½n en el mundo y ajustar el centro del collider
     glm::vec3 worldPosition = goTransform->GetPosition();
     glm::quat worldRotation = goTransform->GetLocalRotation();
     glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * worldScale);
 
-    // Aplicar la transformación al rigidBody
+    // Aplicar la transformaciï¿½n al rigidBody
     btTransform transform;
     transform.setIdentity();
     transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
@@ -250,7 +250,7 @@ void ColliderComponent::SetActive(bool active) {
     }
     rigidBody->setCenterOfMassTransform(transform);
 
-    // **Aplicar la escala al collider basándose en la magnitud real del bounding box**
+    // **Aplicar la escala al collider basï¿½ndose en la magnitud real del bounding box**
     btVector3 adjustedScale(adjustedSize.x * 0.5f,
         adjustedSize.y * 0.5f,
         adjustedSize.z * 0.5f);
@@ -285,16 +285,18 @@ void ColliderComponent::CreateCollider() {
     btTransform startTransform;
     startTransform.setIdentity();
 
-    glm::quat localRotation = transform->GetLocalRotation();
-    btQuaternion btLocalRotation(localRotation.x, localRotation.y, localRotation.z, localRotation.w);
-
     shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
-
-    startTransform.setOrigin(btVector3(bboxCenter.x, bboxCenter.y, bboxCenter.z));
-    startTransform.setRotation(btLocalRotation);
-
-    glm::vec3 scale = transform->GetScale();
-    shape->setLocalScaling(btVector3(scale.x, scale.y, scale.z));
+    glm::vec3 localPosition = transform->GetLocalPosition();
+    startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
+    glm::dquat localRot = transform->GetRotation();
+    btQuaternion btRot(
+        static_cast<btScalar>(localRot.x),
+        static_cast<btScalar>(localRot.y),
+        static_cast<btScalar>(localRot.z),
+        static_cast<btScalar>(localRot.w)
+    );
+    startTransform.setRotation(btRot);    glm::vec3 scale = transform->GetScale();
+    //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
 
     btVector3 localInertia(0, 0, 0);
     if (mass > 0.0f) {
@@ -313,7 +315,7 @@ void ColliderComponent::CreateCollider() {
 
 
 
-//Previous Create Collider (doesn´t adjust to local bbx
+//Previous Create Collider (doesnï¿½t adjust to local bbx
 //
 //
 //void ColliderComponent::CreateCollider() {

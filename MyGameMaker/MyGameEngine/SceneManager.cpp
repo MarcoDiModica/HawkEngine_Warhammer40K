@@ -253,22 +253,40 @@ bool SceneManager::ParentGameObjectToScene(GameObject& child) {
     return true;
 }
 
-bool SceneManager::ParentGameObjectToObject(GameObject& child, GameObject& father) {
-    //child.isSelected = false;
-    //father.isSelected = false;
-    //Application->input->ClearSelection();
+bool SceneManager::ParentGameObjectToObject(GameObject& child, GameObject& newParent) {
+    if (&child == &newParent) return false; // Prevent self-parenting
 
-    auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
-        [&child](const std::shared_ptr<GameObject>& obj) { return obj.get() == &child; });
-    if (it != currentScene->_children.end()) {
-        currentScene->_children.erase(it);
+    // Preserve world transform before changing parent
+    glm::dmat4 worldTransform = child.GetTransform()->GetMatrix();
+
+    // Only remove from scene root **if it has no parent**
+    if (!child.GetParent()) {
+        auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
+            [&child](const std::shared_ptr<GameObject>& obj) { return obj.get() == &child; });
+        if (it != currentScene->_children.end()) {
+            currentScene->_children.erase(it);
+        }
     }
 
-    child.SetParent(&father);
-    child.GetTransform()->UpdateLocalMatrix();
+    // If child already has a parent, remove it from the old parent first
+    if (child.GetParent()) {
+        child.GetParent()->RemoveChild(&child);
+    }
+
+    // Set new parent
+    child.SetParent(&newParent);
+    newParent.AddChild(&child);
+
+    // Compute the **correct** local transform so position doesn't break
+    glm::dmat4 parentWorldTransform = newParent.GetTransform()->GetMatrix();
+    glm::dmat4 newLocalTransform = glm::inverse(parentWorldTransform) * worldTransform;
+
+    // Apply local transform
+    child.GetTransform()->SetMatrix(newLocalTransform);
 
     return true;
 }
+
 
 
 bool SceneManager::ParentGameObject(GameObject& child, GameObject& father) {

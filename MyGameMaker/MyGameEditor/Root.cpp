@@ -282,14 +282,12 @@ bool Root::Start()
 
     auto image = CreateGameObject("Image");
     Application->root->ParentGameObject(*image, *canvas);
-    image->AddComponent<UITransformComponent>();
     image->AddComponent<UIImageComponent>();
 	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/UI_Final.png");
     image->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(1, 1, 1));
 
     auto button = CreateGameObject("Button");
     Application->root->ParentGameObject(*button, *canvas);
-    button->AddComponent<UITransformComponent>();
     button->AddComponent<UIImageComponent>();
     button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
 	button->AddComponent<UIButtonComponent>();

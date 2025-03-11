@@ -1,3 +1,4 @@
+#define GLM_ENABLE_EXPERIMENTAL
 #include "SceneManager.h"
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
@@ -14,10 +15,11 @@
 #include "../MyGameEditor/Log.h"
 #include "../MyAudioEngine/AudioListener.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "glm/gtx/matrix_decompose.inl"
 
 
 bool SceneManager::Start() {
-    for (shared_ptr<GameObject> object : currentScene->_children)
+    for (const shared_ptr<GameObject>& object : currentScene->_children)
     {
         object->Start();
 
@@ -64,7 +66,7 @@ void SceneManager::RemoveScene(const std::string& name)
 
 void SceneManager::SetActiveScene(const std::string& name)
 {
-    for (auto scene : scenes) {
+    for (auto& scene : scenes) {
         if (scene->name == name) {
             currentScene = scene;
             currentScene->Start();
@@ -125,7 +127,7 @@ std::shared_ptr<GameObject> SceneManager::CreateGameObject(const std::string& na
 {
     std::string uniqueName = name;
     int counter = 1;
-    for (std::shared_ptr<GameObject> child : currentScene->_children) {
+    for (const std::shared_ptr<GameObject>& child : currentScene->_children) {
         if (child->GetName() == uniqueName) {
             uniqueName = name + "_" + std::to_string(counter++);
         }
@@ -254,37 +256,47 @@ bool SceneManager::ParentGameObjectToScene(GameObject& child) {
 }
 
 bool SceneManager::ParentGameObjectToObject(GameObject& child, GameObject& newParent) {
-    if (&child == &newParent) return false; // Prevent self-parenting
+    if (&child == &newParent) return false;
 
-    // Preserve world transform before changing parent
-    glm::dmat4 worldTransform = child.GetTransform()->GetMatrix();
+	GameObject* parent = &newParent;
+	while (parent) {
+		if (parent == &child) return false;
+		parent = parent->GetParent();
+	}
 
-    // Only remove from scene root **if it has no parent**
-    if (!child.GetParent()) {
-        auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
-            [&child](const std::shared_ptr<GameObject>& obj) { return obj.get() == &child; });
-        if (it != currentScene->_children.end()) {
-            currentScene->_children.erase(it);
-        }
-    }
+	glm::dmat4 worldTransform = child.GetTransform()->GetMatrix();
 
-    // If child already has a parent, remove it from the old parent first
-    if (child.GetParent()) {
-        child.GetParent()->RemoveChild(&child);
-    }
+	if (!child.GetParent()) {
+		auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
+			[&child](const std::shared_ptr<GameObject>& obj) { return obj.get() == &child; });
+		if (it != currentScene->_children.end()) {
+			currentScene->_children.erase(it);
+		}
+	}
+	else {
+		child.GetParent()->RemoveChild(&child);
+	}
 
-    // Set new parent
-    child.SetParent(&newParent);
-    newParent.AddChild(&child);
+	child.SetParent(&newParent);
+	newParent.AddChild(&child);
 
-    // Compute the **correct** local transform so position doesn't break
-    glm::dmat4 parentWorldTransform = newParent.GetTransform()->GetMatrix();
-    glm::dmat4 newLocalTransform = glm::inverse(parentWorldTransform) * worldTransform;
+	glm::dmat4 parentWorldTransform = newParent.GetTransform()->GetMatrix();
+	glm::dmat4 localTransform = glm::inverse(parentWorldTransform) * worldTransform;
 
-    // Apply local transform
-    child.GetTransform()->SetMatrix(newLocalTransform);
+	glm::dvec3 skew;
+	glm::dvec4 perspective;
+	glm::dvec3 localPosition;
+	glm::dquat localRotation;
+	glm::dvec3 localScale;
 
-    return true;
+	glm::decompose(localTransform, localScale, localRotation, localPosition, skew, perspective);
+
+	Transform_Component* transform = child.GetTransform();
+	transform->SetLocalPosition(localPosition);
+	transform->SetRotationQuat(localRotation);
+	transform->SetScale(localScale);
+
+	return true;
 }
 
 

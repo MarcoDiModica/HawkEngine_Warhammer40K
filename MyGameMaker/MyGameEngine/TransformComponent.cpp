@@ -50,25 +50,25 @@ Transform_Component& Transform_Component::operator=(const Transform_Component& o
     return *this;
 }
 
-Transform_Component::Transform_Component(Transform_Component&& other) noexcept : Component(std::move(other))
+Transform_Component::Transform_Component(Transform_Component&& other) noexcept : Component(other)
 {
-    localPosition = std::move(other.localPosition);
-    localRotation = std::move(other.localRotation);
-    localScale = std::move(other.localScale);
-    localMatrix = std::move(other.localMatrix);
-    worldMatrix = std::move(other.worldMatrix);
+    localPosition = other.localPosition;
+    localRotation = other.localRotation;
+    localScale = other.localScale;
+    localMatrix = other.localMatrix;
+    worldMatrix = other.worldMatrix;
 }
 
 Transform_Component& Transform_Component::operator=(Transform_Component&& other) noexcept
 {
     if (this != &other)
     {
-        Component::operator=(std::move(other));
-        localPosition = std::move(other.localPosition);
-        localRotation = std::move(other.localRotation);
-        localScale = std::move(other.localScale);
-        localMatrix = std::move(other.localMatrix);
-        worldMatrix = std::move(other.worldMatrix);
+        Component::operator=(other);
+        localPosition = other.localPosition;
+        localRotation = other.localRotation;
+        localScale = other.localScale;
+        localMatrix = other.localMatrix;
+        worldMatrix = other.worldMatrix;
     }
     return *this;
 }
@@ -90,13 +90,15 @@ void Transform_Component::RecalculateLocalMatrix()
 
 void Transform_Component::UpdateWorldMatrix()
 {
-    if (owner && owner->GetParent()) {
-        glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
-        worldMatrix = parentWorld * localMatrix;
-    }
-    else {
-        worldMatrix = localMatrix;
-    }
+	RecalculateLocalMatrix();
+
+	if (owner && owner->GetParent()) {
+		glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
+		worldMatrix = parentWorld * localMatrix;
+	}
+	else {
+		worldMatrix = localMatrix;
+	}
 }
 
 void Transform_Component::Update(float deltaTime)
@@ -109,7 +111,6 @@ void Transform_Component::Update(float deltaTime)
     }
 }
 
-// Sets the absolute world position by computing the corresponding local position.
 void Transform_Component::SetPosition(const glm::dvec3& newPos)
 {
     if (owner && owner->GetParent()) {
@@ -127,7 +128,6 @@ void Transform_Component::SetPosition(const glm::dvec3& newPos)
 
 void Transform_Component::Translate(const glm::dvec3& translation)
 {
-    // Translation in world space: adjust localPosition accordingly.
     if (owner && owner->GetParent()) {
         glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
         glm::dmat4 invParent = glm::inverse(parentWorld);
@@ -230,11 +230,22 @@ void Transform_Component::AlignToGlobalUp(const glm::vec3& worldUp)
 
 void Transform_Component::SetMatrix(const glm::dmat4& newMatrix)
 {
-    glm::dvec3 skew;
-    glm::dvec4 perspective;
-    glm::decompose(newMatrix, localScale, localRotation, localPosition, skew, perspective);
-    RecalculateLocalMatrix();
-    UpdateWorldMatrix();
+	if (owner && owner->GetParent()) {
+		glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
+		glm::dmat4 localMat = glm::inverse(parentWorld) * newMatrix;
+
+		glm::dvec3 skew;
+		glm::dvec4 perspective;
+		glm::decompose(localMat, localScale, localRotation, localPosition, skew, perspective);
+	}
+	else {
+		glm::dvec3 skew;
+		glm::dvec4 perspective;
+		glm::decompose(newMatrix, localScale, localRotation, localPosition, skew, perspective);
+	}
+
+	RecalculateLocalMatrix();
+	UpdateWorldMatrix();
 }
 
 YAML::Node Transform_Component::encode()
@@ -290,7 +301,25 @@ MonoObject* Transform_Component::GetSharp()
     void* args[2];
     args[0] = &componentPtr;
     args[1] = ownerGo;
-    mono_runtime_invoke(method, monoObject, args, NULL);
+    mono_runtime_invoke(method, monoObject, args, nullptr);
     CsharpReference = monoObject;
     return CsharpReference;
+}
+
+void Transform_Component::PreserveWorldTransform()
+{
+	glm::dmat4 currentWorldMatrix = worldMatrix;
+
+	UpdateWorldMatrix();
+
+	if (owner && owner->GetParent()) {
+		glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
+		glm::dmat4 newLocalMatrix = glm::inverse(parentWorld) * currentWorldMatrix;
+
+		glm::dvec3 skew;
+		glm::dvec4 perspective;
+		glm::decompose(newLocalMatrix, localScale, localRotation, localPosition, skew, perspective);
+
+		RecalculateLocalMatrix();
+	}
 }

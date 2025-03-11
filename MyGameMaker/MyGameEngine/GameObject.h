@@ -78,6 +78,7 @@ public:
     unsigned int GetId() const { return gid; }
 
     void SetParent(GameObject* parent);
+    void ApplyWorldToLocalTransform(GameObject* child, const glm::dmat4& childWorldMatrix);
     GameObject* GetParent() const { return parent; }
     void AddChild(GameObject* child);
     void RemoveChild(GameObject* child);

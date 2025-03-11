@@ -31,7 +31,8 @@ enum class ComponentType {
 	PARTICLES_EMITTER,
 	ANIMATION,
 	UI,
-	LIGHT
+	LIGHT,
+	BONE,
 };
 
 class Component

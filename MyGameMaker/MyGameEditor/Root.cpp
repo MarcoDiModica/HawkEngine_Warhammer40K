@@ -20,6 +20,7 @@
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "../MyAnimationEngine/BoneComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 
 
@@ -404,7 +405,9 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
             // Create GameObjects for each bone and store them in the map
             for (auto& bone : meshImp.bonesGameObjects[i]) {
                 auto boneGO = CreateGameObject(bone->GetName());
+                boneGO->AddComponent<BoneComponent>();
                 Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+				boneGO->GetComponent<BoneComponent>()->SetBone(boneTransform);
                 //boneGO->GetTransform()->SetLocalMatrix(boneTransform->GetLocalTransform());
                 boneMap[bone->GetName()] = boneGO;
             }

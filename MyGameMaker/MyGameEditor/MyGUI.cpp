@@ -86,10 +86,6 @@ bool MyGUI::Awake() {
 	elements.push_back(UISceneWindowPanel);
 	ret = isInitialized(UISceneWindowPanel);
 
-	UIAudioTestPanel = new UIAudioTest(UIType::DEFAULT, "AudioTest");
-	elements.push_back(UIAudioTestPanel);
-	ret = isInitialized(UIAudioTestPanel);
-
 	UITextEditorPanel = new UITextEditor(UIType::TEXTEDITOR, "TextEditor");
 	elements.push_back(UITextEditorPanel);
 	ret = isInitialized(UITextEditorPanel);
@@ -290,10 +286,6 @@ void MyGUI::Render() {
 	if (showProject) {
 		UIProjectPanel->Draw();
 	}
-
-	//if (showAudioTest) {
-	//	UIAudioTestPanel->Draw();
-	//}
 
 	if (showTextEditor) {
 		UITextEditorPanel->Draw();

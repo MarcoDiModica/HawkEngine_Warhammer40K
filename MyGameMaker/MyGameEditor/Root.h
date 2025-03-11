@@ -57,7 +57,7 @@ public:
     std::shared_ptr<GameObject> CreateLightObject(const std::string& name);
     std::shared_ptr<GameObject> CreateAudioObject(const std::string& name);
 
-    void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr, std::vector<Shaders> shaders = std::vector<Shaders>());
+    void AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath = "default.png", std::shared_ptr<Material> mat = nullptr);
 
     std::shared_ptr<GameObject> CreateGameObjectWithPath(const std::string& path);
 
@@ -76,10 +76,7 @@ public:
     std::shared_ptr<GameObject> mainCamera = nullptr;
     std::shared_ptr<GameObject> CreateCanvasInScene(const std::string& name, const glm::vec3& position, const std::string& texturePath);
 
-
     friend SceneSerializer;
-
-    std::vector<Shaders> shaders;
 
 private:
     std::vector<std::shared_ptr<Scene>> scenes;

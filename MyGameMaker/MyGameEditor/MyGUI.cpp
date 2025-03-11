@@ -123,35 +123,65 @@ bool MyGUI::isInitialized(UIElement* element) {
 
 
 bool MyGUI::Start() {
-
 	LOG(LogType::LOG_INFO, "Initializing ImGui/ImPlot...");
 
 	IMGUI_CHECKVERSION();
 	LOG(LogType::LOG_OK, "-ImGui Version: %s", IMGUI_VERSION);
 
-	if (!ImGui::GetCurrentContext)
-	{
+	if (!ImGui::GetCurrentContext) {
 		LOG(LogType::LOG_ERROR, "-ImGui Context not created");
 	}
-	else
-	{
+	else {
 		LOG(LogType::LOG_OK, "-ImGui Context created");
 	}
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.Fonts->AddFontFromFileTTF("EngineAssets/SF-Pro-Text-Light.otf", 14.0f);
+
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
-	if (!&io)
-	{
+	ImFont* mainFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Regular.ttf", 14.0f);
+	if (mainFont == nullptr) {
+		LOG(LogType::LOG_WARNING, "Failed to load main font, using default font");
+		mainFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Light.ttf", 14.0f);
+	}
+
+	ImFont* headerFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Bold.ttf", 15.0f);
+	if (headerFont == nullptr) {
+		LOG(LogType::LOG_WARNING, "Failed to load header font, using main font for headers");
+	}
+
+	ImFont* smallFont = io.Fonts->AddFontFromFileTTF("EngineAssets/Rubik-Light.ttf", 10.0f);
+	if (smallFont == nullptr) {
+		LOG(LogType::LOG_WARNING, "Failed to load small font, using main font for small text");
+	}
+
+	if (mainFont != nullptr) {
+		io.FontDefault = mainFont;
+	}
+
+	io.Fonts->Build();
+
+	if (!&io) {
 		LOG(LogType::LOG_ERROR, "-ImGui IO not created");
 	}
-	else
-	{
+	else {
 		LOG(LogType::LOG_OK, "-ImGui IO created");
+		LOG(LogType::LOG_OK, "-Custom fonts loaded successfully");
 	}
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.PopupRounding = 6.0f;
+	style.WindowBorderSize = 1.0f;
+	style.FrameBorderSize = 0.0f;
+	style.PopupBorderSize = 1.0f;
+
+	style.ItemSpacing = ImVec2(8, 6);
+	style.ItemInnerSpacing = ImVec2(6, 6);
+
+	style.GrabRounding = 4.0f;
+	style.GrabMinSize = 10.0f;
 
 	Application->gui->UIconsolePanel->SetState(true);
 	Application->gui->UIProjectPanel->SetState(true);

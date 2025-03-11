@@ -30,7 +30,7 @@ public:
 	void bind(unsigned int slot = 0) const;
 	void load(int width, int height, int channels, void* data);
 	// Load Texture
-	void LoadTexture(const std::string& path);
+	bool LoadTexture(const std::string& path);
 
 	void LoadTextureLocalPath(const std::string& path);
 

@@ -53,6 +53,8 @@ public:
 	MonoObject* CsharpReference = nullptr;
 	MonoObject* GetSharp() override;
 
+    void DetachFromEngine();
+
 private:
     void UpdatePosition();
 

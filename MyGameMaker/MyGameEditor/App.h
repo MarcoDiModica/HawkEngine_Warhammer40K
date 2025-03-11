@@ -82,7 +82,7 @@ private:
 	std::chrono::duration<double> targetFrameDuration;
 	std::chrono::steady_clock::time_point frameStart, frameEnd;
 
-	int frameRate = 90;
+	int frameRate = 240;
 	double dt = 0;
 	double dtCount = 0;
 	int frameCount = 0;

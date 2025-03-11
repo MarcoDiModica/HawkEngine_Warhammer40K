@@ -59,4 +59,28 @@ private:
     bool isFreezed;
 
     void SetRigidBody(btRigidBody* rigidBody);
+
+protected:
+	friend class SceneSerializer;
+
+	YAML::Node encode() override {
+		YAML::Node node;
+		node["mass"] = mass;
+		node["isKinematic"] = isKinematic;
+		node["isFreezed"] = isFreezed;
+		return node;
+	}
+
+	bool decode(const YAML::Node& node) override {
+		if (node["mass"].IsDefined()) {
+			mass = node["mass"].as<float>();
+		}
+		if (node["isKinematic"].IsDefined()) {
+			isKinematic = node["isKinematic"].as<bool>();
+		}
+		if (node["isFreezed"].IsDefined()) {
+			isFreezed = node["isFreezed"].as<bool>();
+		}
+		return true;
+	}
 };

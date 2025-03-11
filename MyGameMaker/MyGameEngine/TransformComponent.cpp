@@ -13,8 +13,36 @@
 #include <mono/metadata/debug-helpers.h>
 #include <mono/jit/jit.h>
 
+namespace Utils {
+	static YAML::Node encodeMat(const glm::dmat4& rhs) {
+		YAML::Node node;
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				node["row" + std::to_string(i)]["col" + std::to_string(j)] = rhs[i][j];
+			}
+		}
+		return node;
+	}
+
+	static bool decodeMat(const YAML::Node& node, glm::dmat4& rhs) {
+		YAML::Node matNode = node["matrix"];
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				std::string rowKey = "row" + std::to_string(i);
+				std::string colKey = "col" + std::to_string(j);
+				if (!matNode[rowKey] || !matNode[rowKey][colKey]) {
+					return false;
+				}
+				rhs[i][j] = matNode[rowKey][colKey].as<double>();
+			}
+		}
+		return true;
+	}
+}
+
 Transform_Component::Transform_Component(GameObject* owner) : Component(owner)
 {
+    name = "Transform_Component";
     localPosition = glm::dvec3(0.0);
     localRotation = glm::dquat(1.0, 0.0, 0.0, 0.0);
     localScale = glm::dvec3(1.0);

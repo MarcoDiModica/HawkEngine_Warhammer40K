@@ -35,6 +35,7 @@ UISceneWindow::~UISceneWindow()
 
 void UISceneWindow::Init()
 {
+
     glGenFramebuffers(1, &Application->gui->fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 
@@ -301,55 +302,46 @@ bool UISceneWindow::Draw()
         }
 
         // --- GIZMO MATRIX HANDLING ---
-        for (auto& selectedObject : Application->input->GetSelectedGameObjects())
-        {
-            if (operation != ManipulationOperation::IDLE && selectedObject != nullptr) {
-                glm::mat4 objectMatrix;
-                if (transformSpace == TransformSpace::WORLD) {
-                    // Compute world transform from local transform if parent exists.
-                    objectMatrix = selectedObject->GetTransform()->GetLocalMatrix();
-                    if (selectedObject->GetParent()) {
-                        glm::mat4 parentWorldMatrix = selectedObject->GetParent()->GetTransform()->GetMatrix();
-                        objectMatrix = parentWorldMatrix * objectMatrix;
-                    }
-                }
-                else { // LOCAL
-                    objectMatrix = selectedObject->GetTransform()->GetLocalMatrix();
-                }
+		for (auto& selectedObject : Application->input->GetSelectedGameObjects())
+		{
+			if (operation != ManipulationOperation::IDLE && selectedObject != nullptr) {
+				glm::mat4 displayMatrix = selectedObject->GetTransform()->GetMatrix();
+				bool hasParent = selectedObject->GetParent() != nullptr;
 
-                float matrixForManipulation[16];
-                memcpy(matrixForManipulation, glm::value_ptr(objectMatrix), sizeof(float) * 16);
+				float matrixForManipulation[16];
+				memcpy(matrixForManipulation, glm::value_ptr(displayMatrix), sizeof(float) * 16);
 
-                float snap[3] = { Application->gui->UIinspectorPanel->snapValue,
-                                  Application->gui->UIinspectorPanel->snapValue,
-                                  Application->gui->UIinspectorPanel->snapValue };
+				float snap[3] = { Application->gui->UIinspectorPanel->snapValue,
+								  Application->gui->UIinspectorPanel->snapValue,
+								  Application->gui->UIinspectorPanel->snapValue };
 
-                ImGuizmo::OPERATION guizmoOperation;
-                switch (operation)
-                {
-                case ManipulationOperation::TRANSLATE: guizmoOperation = ImGuizmo::TRANSLATE; break;
-                case ManipulationOperation::ROTATE:    guizmoOperation = ImGuizmo::ROTATE;    break;
-                case ManipulationOperation::SCALE:     guizmoOperation = ImGuizmo::SCALE;     break;
-                default: guizmoOperation = ImGuizmo::TRANSLATE; break;
-                }
-                // If world axis is desired, set mode to WORLD; otherwise LOCAL.
-                ImGuizmo::MODE guizmoMode = (transformSpace == TransformSpace::WORLD) ? ImGuizmo::WORLD : ImGuizmo::LOCAL;
+				ImGuizmo::OPERATION guizmoOperation;
+				switch (operation)
+				{
+				case ManipulationOperation::TRANSLATE: guizmoOperation = ImGuizmo::TRANSLATE; break;
+				case ManipulationOperation::ROTATE:    guizmoOperation = ImGuizmo::ROTATE;    break;
+				case ManipulationOperation::SCALE:     guizmoOperation = ImGuizmo::SCALE;     break;
+				default: guizmoOperation = ImGuizmo::TRANSLATE; break;
+				}
 
-                ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
-                    guizmoOperation, guizmoMode, matrixForManipulation, NULL,
-                    (Application->gui->UIinspectorPanel->snap ? snap : nullptr));
+				ImGuizmo::MODE guizmoMode = (transformSpace == TransformSpace::WORLD) ? ImGuizmo::WORLD : ImGuizmo::LOCAL;
 
-                glm::mat4 manipulatedMatrix = glm::make_mat4(matrixForManipulation);
+				ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
+					guizmoOperation, guizmoMode, matrixForManipulation, NULL,
+					(Application->gui->UIinspectorPanel->snap ? snap : nullptr));
 
-                // If in WORLD mode and object has a parent, convert back to local transform.
-                if (transformSpace == TransformSpace::WORLD && selectedObject->GetParent()) {
-                    glm::mat4 parentWorldMatrix = selectedObject->GetParent()->GetTransform()->GetMatrix();
-                    manipulatedMatrix = glm::inverse(parentWorldMatrix) * manipulatedMatrix;
-                }
+				if (ImGuizmo::IsUsing()) {
+					glm::mat4 manipulatedMatrix = glm::make_mat4(matrixForManipulation);
 
-                selectedObject->GetTransform()->SetMatrix(manipulatedMatrix);
-            }
-        }
+					if (hasParent) {
+						glm::mat4 parentWorldMatrix = selectedObject->GetParent()->GetTransform()->GetMatrix();
+						manipulatedMatrix = glm::inverse(parentWorldMatrix) * manipulatedMatrix;
+					}
+
+					selectedObject->GetTransform()->SetMatrix(manipulatedMatrix);
+				}
+			}
+		}
         // --- END GIZMO MATRIX HANDLING ---
 
         isFoucused = ImGui::IsWindowHovered();

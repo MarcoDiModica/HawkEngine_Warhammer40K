@@ -17,7 +17,7 @@
 
 
 bool SceneManager::Start() {
-    for (shared_ptr<GameObject> object : currentScene->_children)
+    for (const shared_ptr<GameObject>& object : currentScene->_children)
     {
         object->Start();
 
@@ -64,7 +64,7 @@ void SceneManager::RemoveScene(const std::string& name)
 
 void SceneManager::SetActiveScene(const std::string& name)
 {
-    for (auto scene : scenes) {
+    for (const auto& scene : scenes) {
         if (scene->name == name) {
             currentScene = scene;
             currentScene->Start();
@@ -125,7 +125,7 @@ std::shared_ptr<GameObject> SceneManager::CreateGameObject(const std::string& na
 {
     std::string uniqueName = name;
     int counter = 1;
-    for (std::shared_ptr<GameObject> child : currentScene->_children) {
+    for (const std::shared_ptr<GameObject>& child : currentScene->_children) {
         if (child->GetName() == uniqueName) {
             uniqueName = name + "_" + std::to_string(counter++);
         }
@@ -172,7 +172,7 @@ std::shared_ptr<GameObject> SceneManager::CreateLightObject(const std::string& n
     return light;
 }
 
-void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat, std::vector<Shaders> shaders)
+void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std::string& texturePath, std::shared_ptr<Material> mat)
 {
     auto meshRenderer = go.AddComponent<MeshRenderer>();
     auto image = std::make_shared<Image>();
@@ -192,7 +192,7 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
 
     auto shaderComponent = go.AddComponent<ShaderComponent>();
 	shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-	shaderComponent->SetShaderType(ShaderType::LIGHT);
+	shaderComponent->SetShaderType(ShaderType::PBR);
 
     meshRenderer->SetImage(image);
 

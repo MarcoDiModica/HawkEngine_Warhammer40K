@@ -56,8 +56,8 @@
 #include "../MyGameEngine/InputEngine.h"
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
-
-#include "assimp/version.h"
+#include "MyAudioEngine/SoundComponent.h"
+#include "MyGameEngine/ShaderManager.h"
 
 using namespace std;
 
@@ -80,7 +80,7 @@ using ivec2 = glm::ivec2;
 using vec3 = glm::dvec3;
 
 static const ivec2 WINDOW_SIZE(1280, 720);
-static const auto FPS = 120;
+static const auto FPS = 240;
 static const auto FRAME_DT = 1.0s / FPS;
 
 int numPointLight = 0;
@@ -90,11 +90,9 @@ std::list<GameObject*> lights;
 
 static EditorCamera* camera = nullptr;
 
-Shaders mainShader;
-
-App* Application = NULL;
-SceneManager* SceneManagement = NULL;
-InputEngine* InputManagement = NULL;
+App* Application = nullptr;
+SceneManager* SceneManagement = nullptr;
+InputEngine* InputManagement = nullptr;
 
 static void init_openGL() {
 	glewInit();
@@ -105,8 +103,8 @@ static void init_openGL() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 
@@ -198,7 +196,28 @@ static void configureCamera() {
 
 static void RenderObjectAndChildren(GameObject* object) {
 	if (object->HasComponent<MeshRenderer>()) {
+		GLint lastProgram;
+		glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+		glUseProgram(0);
+		for (GLenum i = 0; i < 5; i++) {
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+		glActiveTexture(GL_TEXTURE0);
+
 		object->GetComponent<MeshRenderer>()->RenderMainCamera();
+
+		glUseProgram(0);
+		for (GLenum i = 0; i < 5; i++) {
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+		glActiveTexture(GL_TEXTURE0);
+
+		if (lastProgram > 0) {
+			glUseProgram(lastProgram);
+		}
 	}
 
 	for (const auto& child : object->GetChildren()) {
@@ -215,6 +234,15 @@ static void RenderGameView() {
 	if (!gameCamera) {
 		return;
 	}
+
+	GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	GLint lastFBO;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+
+	GLint lastVP[4];
+	glGetIntegerv(GL_VIEWPORT, lastVP);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
@@ -241,6 +269,17 @@ static void RenderGameView() {
 	glLoadIdentity();
 	glLoadMatrixd(glm::value_ptr(viewMatrix));
 
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 		RenderObjectAndChildren(object);
@@ -254,27 +293,25 @@ static void RenderGameView() {
 
 	glPopAttrib();
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}
 
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
-}
-
-void drawFrustum(const CameraBase& camera)
-{
-	//const auto& frustum = camera.frustum;
-
-	//glBegin(GL_LINES);
-	//for (int i = 0; i < 4; i++) {
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[i]));
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[(i + 1) % 4]));
-
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[i + 4]));
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[(i + 1) % 4 + 4]));
-
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[i]));
-	//	glVertex3fv(glm::value_ptr(frustum.vertices[i + 4]));
-	//}
-	//glEnd();
 }
 
 //WIP Undo/Redo for transform actions
@@ -421,7 +458,7 @@ static void RenderOutline(GameObject* object) {
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
-static void display_func() {
+static void RenderEditor() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -438,10 +475,18 @@ static void display_func() {
 		//RenderOutline(object);
 		object->Update(static_cast<float>(Application->GetDt()));
 
-		for (size_t j = 0; j < object->GetChildren().size(); ++j) {
-			GameObject* child = object->GetChildren()[j].get();
+		for (const auto & j : object->GetChildren()) {
+			GameObject* child = j.get();
 			objects.push_back(child);
 			//RenderOutline(child);
+		}
+
+		if (object->HasComponent<LightComponent>()) {
+			auto& lights = Application->root->GetActiveScene()->_lights;
+			auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
+			if (it == lights.end()) {
+				lights.push_back(object->shared_from_this());
+			}
 		}
 	}
 
@@ -453,17 +498,12 @@ static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
 		const auto t0 = hrclock::now();
 
-		display_func();
-		
-		RenderGameView();
+		RenderEditor();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		gui->Render();
-
-		/*move_camera();*/
-		Application->window->SwapBuffers();
 
 		const auto t1 = hrclock::now();
 		const auto dt = t1 - t0;
@@ -487,6 +527,7 @@ int main(int argc, char** argv) {
 			Application->physicsModule->Awake();
 			Application->physicsModule->Start();
 			MonoManager::GetInstance().Initialize();
+			SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
 			iluInit();
@@ -517,12 +558,20 @@ int main(int argc, char** argv) {
 		case LOOP:
 
 			EditorRenderer(Application->gui);
+
+			RenderGameView();
+
+			Application->window->SwapBuffers();
+
 			UndoRedo();
 			ObjectToEditorCamera();
 			if (!Application->Update()) { state = FREE; }
 			break;
 
 		case FREE:
+
+			MonoManager::GetInstance().Shutdown();
+			ShaderManager::GetInstance().Cleanup();
 
 			if (Application->CleanUP()) {
 				state = EXIT;
@@ -542,8 +591,6 @@ int main(int argc, char** argv) {
 			break;
 		}
 	}
-
-	MonoManager::GetInstance().Shutdown();
 
 	return result;
 }

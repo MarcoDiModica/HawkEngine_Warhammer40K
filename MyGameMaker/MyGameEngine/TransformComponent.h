@@ -50,15 +50,15 @@ public:
     }
 
     void ResetTransform() {
-		matrix = glm::dmat4(1.0);
-		local_matrix = glm::dmat4(1.0);
+		worldMatrix = glm::dmat4(1.0);
+		localMatrix = glm::dmat4(1.0);
 	}
 
-    Transform_Component operator*(const glm::dmat4& other) const {
-        Transform_Component result(*this);
-        result.matrix = matrix * other;
-        return result;
-    }
+	/*Transform_Component operator*(const glm::dmat4& other) const {
+		Transform_Component result(*this);
+		result.worldMatrix = worldMatrix * other;
+		return result;
+	}*/
     // Returns a pointer to the world matrix data (for shader upload, etc.)
     const double* GetData() const {
         return &worldMatrix[0][0];

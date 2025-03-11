@@ -62,17 +62,17 @@ Animation& Animation::operator=(Animation&& other) noexcept
     return *this;
 }
 
-void Animation::SetUpAnimation(const std::string& animationPath, Model* model, int index)
+void Animation::SetUpAnimation(aiScene* scene, Model* model, int index)
 {
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
-    assert(scene && scene->mRootNode);
+    
+    assert(scene->mRootNode != nullptr);
     auto animation = scene->mAnimations[index];
     m_Duration = animation->mDuration;
-    for (int i = 0; i < animation->mNumChannels; i++)
+    /*for (int i = 0; i < animation->mNumChannels; i++)
     {
         m_Animations.push_back(animation->mChannels[i]->mNodeName.C_Str());
-    }
+    }*/
     m_TicksPerSecond = animation->mTicksPerSecond;
     name = animation->mName.C_Str();
     ReadHeirarchyData(m_RootNode, scene->mRootNode);

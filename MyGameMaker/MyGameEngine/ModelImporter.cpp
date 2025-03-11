@@ -101,10 +101,10 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 				{
 					Animation* animation = new Animation();
 
-					animation->SetUpAnimation(scenePath, model->getModel().get(),i);
+                    animation->SetUpAnimation(const_cast<aiScene*>(&scene), model->getModel().get(),i);
 
 					animations.push_back(std::shared_ptr<Animation>(animation));
-					std::cout << node.mName.C_Str() << std::endl;
+					//std::cout << node.mName.C_Str() << std::endl;
 				}
 			}
 

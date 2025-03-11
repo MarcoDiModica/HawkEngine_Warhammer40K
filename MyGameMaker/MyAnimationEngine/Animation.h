@@ -38,7 +38,7 @@ public:
     Animation(Animation&& other) noexcept;
     Animation& operator=(Animation&& other) noexcept;
 
-    void SetUpAnimation(const std::string& animationPath, Model* model, int index);
+    void SetUpAnimation(aiScene* scene, Model* model, int index);
 
 	Bone* FindBone(const std::string& name);
 

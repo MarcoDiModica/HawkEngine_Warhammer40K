@@ -39,9 +39,9 @@ private:
 
 	void move_camera(float speed, float deltaTime);
 	bool infiniteMouse = false;
-	float cameraSpeed = 10.0f;
+	float cameraSpeed = 20.0f;
 	float zoomSpeed = 5.0f;
-	double sensitivity = 10.0f;
+	double sensitivity = 20.0f;
 	double yaw = 0.0;
 	double pitch = 0.0;
 	double MAX_PITCH = 89.0;

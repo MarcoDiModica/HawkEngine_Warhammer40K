@@ -103,7 +103,7 @@ bool UIHierarchy::Draw() {
         if (draggedObject && ImGui::IsMouseReleased(ImGuiMouseButton_Left) && draggedObject->GetParent()) {
             GameObject* p = draggedObject->GetParent();
             auto dragTransform = draggedObject->GetTransform();
-            glm::dmat4 worldMatrix = dragTransform->GetMatrix();  // Save world transform
+            glm::dmat4 worldMatrix = dragTransform->GetMatrix();
 
             currentScene->AddGameObject(draggedObject->shared_from_this());
 
@@ -205,7 +205,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 				if (!draggedObject) {
 					draggedObject = *(GameObject**)payload->Data;
 				}
-				Application->root->ParentGameObject(*draggedObject, obj);
+				Application->root->ParentGameObjectPreserve(*draggedObject, obj);
 				draggedObject = nullptr;
 				should_continue = false;
 			}

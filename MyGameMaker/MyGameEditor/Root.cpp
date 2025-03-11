@@ -15,6 +15,7 @@
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
+#include "Input.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
@@ -23,77 +24,74 @@
 
 class GameObject;
 
-Root::Root(App* app) : Module(app) {}
+struct EmitterInfo{
+    std::shared_ptr<GameObject> gameObject;
+    std::chrono::steady_clock::time_point creationTime;
+    float lifetime = 0.0f;
+    Particle* particle = nullptr;
+    int maxParticles = 0;
+
+    void SetSpeed(const glm::vec3& newSpeed) {
+        if (particle) {
+            particle->SetParticleSpeed(newSpeed);
+        }
+    }
+};
+
+std::vector<EmitterInfo> activeEmitters;
+
+Root::Root(App* app) : Module(app) { ; }
 
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
-
     SoundComponent::InitSharedAudioEngine();
     ShaderManager::GetInstance().Initialize();
-
-	/*auto blockout = CreateGameObject("Blockout");
-	blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));
-
-	environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
-	ParentGameObject(*environment, *blockout);
-	blockout->GetTransform()->SetPosition(glm::vec3(282, -55, 125));*/
 
     return true;
 }
 
 bool Root::CleanUp()
 {
+    SoundComponent::ShutdownSharedAudioEngine();
     return true;
 }
 
 bool Root::Start()
 {
-	auto player = CreateGameObject("Player");
-	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+    auto player = CreateGameObject("Player");
+    player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+    player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-	playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	ParentGameObject(*playerMesh, *player);
+    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+    playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+    playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+    ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
-	auto objMainCamera = CreateCameraObject("MainCamera");
-	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-	objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
-	auto camera = objMainCamera->AddComponent<CameraComponent>();
-	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-	mainCamera = objMainCamera;
-
-    auto cube = CreateCube("Cube");
+    auto objMainCamera = CreateCameraObject("MainCamera");
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+    objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
+    auto camera = objMainCamera->AddComponent<CameraComponent>();
+    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    mainCamera = objMainCamera;
   
     SceneManagement->Start();
 
     return true;
 }
 
-bool Root::PreUpdate() 
-{
-	return true;
-}
-
-bool Root::Update(double dt)
+bool Root::Update(double dt) 
 {
     return true;
-}
-
-bool Root::PostUpdate() 
-{
-	return true;
 }
 
 shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh)
@@ -154,7 +152,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
     for (int i = 0; i < meshImp.meshes.size(); i++) {
 
-        auto& MarcoVicePresidente2 = meshImp.fbx_object[i];
+        auto MarcoVicePresidente2 = meshImp.fbx_object[i];
 
         auto go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
         go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
@@ -189,13 +187,19 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
         Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        //gameObjectsWithColliders.push_back(go);
     }
+
+    //for (auto& go : gameObjectsWithColliders) {
+    //    go->AddComponent<ColliderComponent>(Application->physicsModule, true);
+    //}
 
     if (meshImp.meshes.size() > 0) {
 		return MarcoVicePresidente;
 	}
-
-	return nullptr;
+	else {
+		return nullptr;
+	}
 }
 
 void Root::ChangeShader(GameObject& go, ShaderType shader)

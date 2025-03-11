@@ -24,15 +24,17 @@ public:
         free(SceneManagement);
     };
 
-    bool Awake() override;
+    bool Awake();
 
-    bool Start() override;
+    void CreateSceneColliders();
 
-    bool PreUpdate() override;
-    bool Update(double dt) override;
-    bool PostUpdate() override;
+    bool Start();
 
-    bool CleanUp() override;
+    bool PreUpdate() { return true; }
+    bool Update(double dt);
+    bool PostUpdate() { return true; }
+
+    bool CleanUp();
 
     void CreateScene(const std::string& name);
     void AddScene(std::shared_ptr<Scene> scene);
@@ -63,20 +65,16 @@ public:
 
     void RemoveGameObject(GameObject* gameObject);
 
-    bool ParentGameObjectToScene(GameObject& child);
-    bool ParentGameObjectToObject(GameObject& child, GameObject& father);
-
     std::shared_ptr<GameObject> FindGOByName(std::string name);
 
+    std::shared_ptr<Scene> currentScene = nullptr;
+
     std::shared_ptr<GameObject> mainCamera = nullptr;
-
+    
     friend SceneSerializer;
-
-    std::vector<Shaders> shaders;
 
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
-    std::vector<std::shared_ptr<GameObject>> renderFirstObjects;
 };
 
 #endif

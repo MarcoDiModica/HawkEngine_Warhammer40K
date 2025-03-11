@@ -23,8 +23,8 @@ void UISliderComponent::Update(float deltaTime)
 	if (sliderButton->HasComponent<UIImageComponent>())
 	{
 		auto uiButtonTransform = sliderButton->GetComponent<UITransformComponent>();
-		uiButtonTransform->setCanvasPosition(uiSliderTransform->getCanvasPosition());
-		uiButtonTransform->setCanvasSize(uiSliderTransform->getCanvasSize());
+		uiButtonTransform->SetCanvasPosition(uiSliderTransform->GetCanvasPosition());
+		uiButtonTransform->SetCanvasSize(uiSliderTransform->GetCanvasSize());
 
 		auto uiButtonPos = uiButtonTransform->GetPosition();
 		uiButtonTransform->setPos(glm::vec3(uiSliderTransform->GetPosition().x + (uiSliderTransform->GetPosition().x * uiSliderTransform->GetScale().x),

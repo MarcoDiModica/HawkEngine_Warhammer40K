@@ -20,10 +20,10 @@ void UIButtonComponent::Update(float deltaTime)
 {
 	auto rectTransform = owner->GetComponent<UITransformComponent>();
 
-	auto buttonSize = rectTransform->getCanvasSize() * rectTransform->GetScale();
-	auto buttonPos = rectTransform->getCanvasPosition() + (rectTransform->GetPosition() * rectTransform->getCanvasSize());
-	auto pivotOffset = glm::vec3(0.5f, 0.5f, 0.0f);
-	buttonPos -= pivotOffset * buttonSize;
+	auto buttonSize = rectTransform->GetCanvasSize() * rectTransform->GetScale();
+	auto buttonPos = rectTransform->GetCanvasPosition() + (rectTransform->GetPosition() * rectTransform->GetCanvasSize());
+
+	buttonPos -= rectTransform->GetPivotOffset() * buttonSize;
 
 	auto mousePosX = Application->input->GetMouseX();
 	auto mousePosY = Application->input->GetMouseY();

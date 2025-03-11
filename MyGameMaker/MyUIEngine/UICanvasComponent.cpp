@@ -52,8 +52,8 @@ void UICanvasComponent::Update(float deltaTime)
 
 		auto rectTransform = object->GetComponent<UITransformComponent>();
 
-		rectTransform->setCanvasPosition(canvasPos);
-		rectTransform->setCanvasSize(canvasSize);
+		rectTransform->SetCanvasPosition(canvasPos);
+		rectTransform->SetCanvasSize(canvasSize);
 
 		if (object->HasComponent<UIImageComponent>())
 		{

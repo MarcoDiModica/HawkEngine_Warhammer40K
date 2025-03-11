@@ -19,7 +19,6 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
-#include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
@@ -285,6 +284,8 @@ bool Root::Start()
     image->AddComponent<UIImageComponent>();
 	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/UI_Final.png");
     image->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(1, 1, 1));
+    image->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+
 
     auto button = CreateGameObject("Button");
     Application->root->ParentGameObject(*button, *canvas);
@@ -292,6 +293,7 @@ bool Root::Start()
     button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
 	button->AddComponent<UIButtonComponent>();
     button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.5, 0.5, 1));
+	button->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 
    /* auto slider = CreateGameObject("Slider");
     Application->root->ParentGameObject(*slider, *canvas);

@@ -39,13 +39,17 @@ public:
 	glm::vec3 GetRotation() const {
 		return rotation;
 	}
-	void setRot(const glm::vec3& rot) { rotation = rot; }
+	void SetRot(const glm::vec3& rot) { rotation = rot; }
 
-	void setCanvasPosition(const glm::vec3& pos) { canvasPosition = pos; }
-	glm::vec3 getCanvasPosition() const { return canvasPosition; }
+	void SetCanvasPosition(const glm::vec3& pos) { canvasPosition = pos; }
+	glm::vec3 GetCanvasPosition() const { return canvasPosition; }
 
-	void setCanvasSize(const glm::vec3& size) { canvasSize = size; }
-	glm::vec3 getCanvasSize() const { return canvasSize; }
+	void SetCanvasSize(const glm::vec3& size) { canvasSize = size; }
+	glm::vec3 GetCanvasSize() const { return canvasSize; }
+
+	void SetPivotOffset(const glm::vec3& off) { pivotOffset = off; }
+	glm::vec3 GetPivotOffset() const { return pivotOffset; }
+
 
 private:
 	//posicion, rotacion, escala
@@ -55,6 +59,8 @@ private:
 
 	glm::vec3 canvasPosition;
 	glm::vec3 canvasSize;
+
+	glm::vec3 pivotOffset;
 
 	//union
 	//{

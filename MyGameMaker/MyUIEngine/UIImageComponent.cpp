@@ -22,17 +22,17 @@ void UIImageComponent::Update(float deltaTime)
 {
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
 
-	if (!resized && uiTransform->getCanvasSize().x > 0) {
+	if (!resized && uiTransform->GetCanvasSize().x > 0) {
 
 		float scaleX = 1.0f;
 		float scaleY = 1.0f;
 
-		if (texture->width() < uiTransform->getCanvasSize().x) {
-			scaleX = (texture->width() / uiTransform->getCanvasSize().x);
+		if (texture->width() < uiTransform->GetCanvasSize().x) {
+			scaleX = (texture->width() / uiTransform->GetCanvasSize().x);
 		}
 
-		if (texture->height() < uiTransform->getCanvasSize().y) {
-			scaleY = (texture->height() / uiTransform->getCanvasSize().y);
+		if (texture->height() < uiTransform->GetCanvasSize().y) {
+			scaleY = (texture->height() / uiTransform->GetCanvasSize().y);
 		}
 
 		auto scale = uiTransform->GetScale();
@@ -56,12 +56,11 @@ void UIImageComponent::Update(float deltaTime)
 
 	glm::mat4 viewMatrix(glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0, 0)));
 
-	glm::vec3 scale = uiTransform->GetScale() * uiTransform->getCanvasSize();
-	glm::vec3 translation = uiTransform->getCanvasPosition() + (uiTransform->GetPosition() * uiTransform->getCanvasSize());
+	glm::vec3 scale = uiTransform->GetScale() * uiTransform->GetCanvasSize();
+	glm::vec3 translation = uiTransform->GetCanvasPosition() + (uiTransform->GetPosition() * uiTransform->GetCanvasSize());
 	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
 
-	glm::vec3 pivotOffset = glm::vec3(0.5f, 0.5f, 0.0f);
-	translation -= pivotOffset * scale;
+	translation -= uiTransform->GetPivotOffset() * scale;
 
 	std::cout << uiTransform->GetPosition().x << std::endl;
 

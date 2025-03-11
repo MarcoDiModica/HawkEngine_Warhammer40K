@@ -103,7 +103,7 @@ std::istream& operator>>(std::istream& is, Image& img) {
 	return is;
 }
 
-void Image::LoadTexture(const std::string& path)
+bool Image::LoadTexture(const std::string& path)
 {
 	image_path = path;
 	auto img = ilGenImage();
@@ -121,6 +121,12 @@ void Image::LoadTexture(const std::string& path)
 	load(width, height, channels, data);
 
 	ilDeleteImage(img);
+
+	if (_id) {
+		return true;
+	}
+	
+	return false;
 }
 
 void Image::LoadTextureLocalPath(const std::string& path) {

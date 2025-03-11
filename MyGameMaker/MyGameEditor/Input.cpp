@@ -276,7 +276,8 @@ bool Input::processSDLEvents()
                 break; 
             case SDLK_p:
                 if (pPressed == false) {
-                    pPressed = true;
+                    pPressed = true; // Activar la bandera si P fue presionado
+                    //Application->root->CreateSceneColliders();
                     Application->physicsModule->linkPhysicsToScene = true;
                 }
                 else {

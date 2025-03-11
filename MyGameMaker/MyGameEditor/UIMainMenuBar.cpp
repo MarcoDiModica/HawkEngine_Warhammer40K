@@ -58,6 +58,7 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("EmptyGameObject")) { Application->root->CreateGameObject("EmptyGameObject"); }
 			if (ImGui::MenuItem("Cube")) { Application->root->CreateCube("Cube"); }
 			if (ImGui::MenuItem("Sphere")) { Application->root->CreateSphere("Sphere"); }
+			if (ImGui::MenuItem("Cylinder")) { Application->root->CreateCylinder("Cylinder"); }
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
 			if (ImGui::MenuItem("Camera")) { Application->root->CreateCameraObject("Camera"); }
 			if (ImGui::MenuItem("Light")) { Application->root->CreateLightObject("Light"); }

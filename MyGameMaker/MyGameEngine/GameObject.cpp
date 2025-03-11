@@ -177,63 +177,6 @@ void GameObject::Start()
     }
 }
 
-void GameObject::ShaderUniforms(glm::dmat4 view, glm::dmat4 projection, glm::dvec3 cameraPosition, std::list<GameObject*> lights, Shaders useShader)
-{
-
-	if (HasComponent<MeshRenderer>() == true ) 
-    {
-		//if (GetComponent<MeshRenderer>()->GetMaterial()->GetShader().GetProgram()  == 0) {
-        //    GetComponent<MeshRenderer>()->GetMaterial()->SetShader(useShader);
-		//}
-
-        GetComponent<MeshRenderer>()->GetMaterial()->bindShaders();
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("aPos", glm::vec3(0, 0, 0));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetTransform()->GetMatrix());
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("modColor", glm::vec4(1, 0.2f, 0, 1));
-        glUniform4f(
-            glGetUniformLocation(GetComponent<MeshRenderer>()->GetMaterial()->shader->GetProgram(), "modColor"),
-            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().x),
-            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().y),
-            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().z),
-            static_cast<GLfloat>(GetComponent<MeshRenderer>()->GetMaterial()->GetColor().w)
-        );        //GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("model", GetComponent<Transform_Component>()->GetMatrix());
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("view", view);
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("projection", projection);
-
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("viewPos", cameraPosition);
-
-		int numPointLights = static_cast<int>( lights.size());
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("numPointLights", numPointLights);
-
-        int i = 0;
-        for (const auto& light : lights)
-        {
-            std::string pointLightstr = "pointLights[" + std::to_string(i) + "]";
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".position", light->GetComponent<Transform_Component>()->GetPosition());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".ambient", light->GetComponent<LightComponent>()->GetAmbient());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".diffuse", light->GetComponent<LightComponent>()->GetDiffuse());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".specular", light->GetComponent<LightComponent>()->GetSpecular());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".constant", light->GetComponent<LightComponent>()->GetConstant());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".linear", light->GetComponent<LightComponent>()->GetLinear());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".quadratic", light->GetComponent<LightComponent>()->GetQuadratic());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".radius", light->GetComponent<LightComponent>()->GetRadius());
-            GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform(pointLightstr + ".intensity", light->GetComponent<LightComponent>()->GetIntensity());
-            i++;
-        }
-
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-        GetComponent<MeshRenderer>()->GetMaterial()->setShaderUniform("dirLight.intensity", 3.0f);
-	}
-
-	//for (auto& child : children)
-	//{
-	//	child->ShaderUniforms(view,projection,cameraPosition,lights,useShader);
-	//}
-}
-
 void GameObject::Update(float deltaTime)
 {
     //display();
@@ -462,7 +405,7 @@ void GameObject::AddChild(GameObject* child)
                     }
 
                     children[children.size() - 1]->parent = this;
-                    children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
+                    children[children.size() - 1]->GetTransform()->UpdateLocalMatrix();
 
                     child->scene->_children.erase(child->scene->_children.begin() + i);
                     return;
@@ -488,7 +431,7 @@ void GameObject::AddChild(GameObject* child)
         }
 
         children[children.size() -1]->parent = this;
-        children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
+        children[children.size() - 1]->GetTransform()->UpdateLocalMatrix();
         step_father->RemoveChild(child);
 
         return;

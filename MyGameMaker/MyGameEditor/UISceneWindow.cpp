@@ -7,6 +7,7 @@
 #include <ImGuizmo.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "UISceneWindow.h"
 #include "UIInspector.h"
@@ -20,11 +21,11 @@ enum class TransformSpace { LOCAL, WORLD };
 
 UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, name)
 {
-	m_World.LoadTextureLocalPath("EngineAssets/global.png");
-	m_Local.LoadTextureLocalPath("EngineAssets/local.png");
-	m_Trans.LoadTextureLocalPath("EngineAssets/trans.png");
-	m_Rot.LoadTextureLocalPath("EngineAssets/rot.png");
-	m_Sca.LoadTextureLocalPath("EngineAssets/sca.png");
+    m_World.LoadTextureLocalPath("EngineAssets/global.png");
+    m_Local.LoadTextureLocalPath("EngineAssets/local.png");
+    m_Trans.LoadTextureLocalPath("EngineAssets/trans.png");
+    m_Rot.LoadTextureLocalPath("EngineAssets/rot.png");
+    m_Sca.LoadTextureLocalPath("EngineAssets/sca.png");
     m_Setting.LoadTextureLocalPath("EngineAssets/settings.png");
 }
 
@@ -34,114 +35,113 @@ UISceneWindow::~UISceneWindow()
 
 void UISceneWindow::Init()
 {
-	glGenFramebuffers(1, &Application->gui->fbo);
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 
-	glGenTextures(1, &Application->gui->fboTexture);
-	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Application->window->width(), Application->window->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, Application->gui->fboTexture, 0);
+    glGenFramebuffers(1, &Application->gui->fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 
-	glGenRenderbuffers(1, &Application->gui->rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Application->window->width(), Application->window->height());
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, Application->gui->rbo);
+    glGenTextures(1, &Application->gui->fboTexture);
+    glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Application->window->width(), Application->window->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, Application->gui->fboTexture, 0);
 
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		std::cerr << "Error: Framebuffer is not complete!" << std::endl;
+    glGenRenderbuffers(1, &Application->gui->rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Application->window->width(), Application->window->height());
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, Application->gui->rbo);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        std::cerr << "Error: Framebuffer is not complete!" << std::endl;
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
-ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;;
+
+ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;
 
 glm::vec3 UISceneWindow::ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y)
 {
-	int adjusted_mouse_x = mouse_x - window_x;
-	int adjusted_mouse_y = mouse_y - window_y;
+    int adjusted_mouse_x = mouse_x - window_x;
+    int adjusted_mouse_y = mouse_y - window_y;
 
-	if (adjusted_mouse_x < 0 || adjusted_mouse_x > screen_width || adjusted_mouse_y < 0 || adjusted_mouse_y > screen_height) {
-		// Si el ratón está fuera de la ventana, no se detecta nada
-	}
+    float ndc_x = (2.0f * adjusted_mouse_x) / screen_width - 1.0f;
+    float ndc_y = 1.0f - (2.0f * adjusted_mouse_y) / screen_height;
 
-	float ndc_x = (2.0f * adjusted_mouse_x) / screen_width - 1.0f;
-	float ndc_y = 1.0f - (2.0f * adjusted_mouse_y) / screen_height;
+    glm::vec4 clip_coords = glm::vec4(ndc_x, ndc_y, -1.0f, 1.0f);
+    glm::mat4 projection_matrix = Application->camera->projection();
+    glm::vec4 view_coords = glm::inverse(projection_matrix) * clip_coords;
+    view_coords = glm::vec4(view_coords.x, view_coords.y, -1.0f, 0.0f);
 
-	glm::vec4 clip_coords = glm::vec4(ndc_x, ndc_y, -1.0f, 1.0f);
-	glm::mat4 projection_matrix = Application->camera->projection();
-	glm::vec4 view_coords = glm::inverse(projection_matrix) * clip_coords;
-	view_coords = glm::vec4(view_coords.x, view_coords.y, -1.0f, 0.0f);
+    glm::mat4 view_matrix = Application->camera->view();
+    glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
 
-	glm::mat4 view_matrix = Application->camera->view();
-	glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
-
-	return glm::vec3(world_coords.x + Application->camera->GetTransform().GetPosition().x, world_coords.y + Application->camera->GetTransform().GetPosition().y, world_coords.z + Application->camera->GetTransform().GetPosition().z);
+    glm::vec3 camPos = glm::vec3(
+        static_cast<float>(Application->camera->GetTransform().GetPosition().x),
+        static_cast<float>(Application->camera->GetTransform().GetPosition().y),
+        static_cast<float>(Application->camera->GetTransform().GetPosition().z)
+    );
+    return glm::vec3(world_coords) + camPos;
 }
 
 glm::vec3 UISceneWindow::GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y)
 {
-	int adjusted_mouse_x = mouse_x - window_x;
-	int adjusted_mouse_y = mouse_y - window_y;
+    int adjusted_mouse_x = mouse_x - window_x;
+    int adjusted_mouse_y = mouse_y - window_y;
 
-	if (adjusted_mouse_x < 0 || adjusted_mouse_x > screen_width || adjusted_mouse_y < 0 || adjusted_mouse_y > screen_height) {
-		// Si el ratón está fuera de la ventana, no se detecta nada
-	}
+    glm::vec3 window_coords = glm::vec3(adjusted_mouse_x, screen_height - adjusted_mouse_y, 0.0f);
+    glm::mat4 view_matrix = Application->camera->view();
+    glm::mat4 projection_matrix = Application->camera->projection();
 
-	glm::vec3 window_coords = glm::vec3(adjusted_mouse_x, screen_height - adjusted_mouse_y, 0.0f);
-	glm::mat4 view_matrix = Application->camera->view();
-	glm::mat4 projection_matrix = Application->camera->projection();
+    glm::vec4 viewport = glm::vec4(0, 0, screen_width, screen_height);
+    glm::vec3 v0 = glm::unProject(window_coords, view_matrix, projection_matrix, viewport);
+    glm::vec3 v1 = glm::unProject(glm::vec3(window_coords.x, window_coords.y, 1.0f), view_matrix, projection_matrix, viewport);
+    glm::vec3 world_coords = (v1 - v0);
 
-	glm::vec4 viewport = glm::vec4(0, 0, screen_width, screen_height);
-	glm::vec3 v0 = glm::unProject(window_coords, view_matrix, projection_matrix, viewport);
-	glm::vec3 v1 = glm::unProject(glm::vec3(window_coords.x, window_coords.y, 1.0f), view_matrix, projection_matrix, viewport);
-	glm::vec3 world_coords = (v1 - v0);
-
-	return world_coords;
+    return world_coords;
 }
 
 bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint) {
-	float tmin = (bBox.min.x - rayOrigin.x) / rayDir.x;
-	float tmax = (bBox.max.x - rayOrigin.x) / rayDir.x;
+    float tmin = (bBox.min.x - rayOrigin.x) / rayDir.x;
+    float tmax = (bBox.max.x - rayOrigin.x) / rayDir.x;
 
-	if (tmin > tmax) std::swap(tmin, tmax);
+    if (tmin > tmax) std::swap(tmin, tmax);
 
-	float tymin = (bBox.min.y - rayOrigin.y) / rayDir.y;
-	float tymax = (bBox.max.y - rayOrigin.y) / rayDir.y;
+    float tymin = (bBox.min.y - rayOrigin.y) / rayDir.y;
+    float tymax = (bBox.max.y - rayOrigin.y) / rayDir.y;
 
-	if (tymin > tymax) std::swap(tymin, tymax);
+    if (tymin > tymax) std::swap(tymin, tymax);
 
-	if ((tmin > tymax) || (tymin > tmax))
-		return false;
+    if ((tmin > tymax) || (tymin > tmax))
+        return false;
 
-	if (tymin > tmin)
-		tmin = tymin;
+    if (tymin > tmin)
+        tmin = tymin;
 
-	if (tymax < tmax)
-		tmax = tymax;
+    if (tymax < tmax)
+        tmax = tymax;
 
-	float tzmin = (bBox.min.z - rayOrigin.z) / rayDir.z;
-	float tzmax = (bBox.max.z - rayOrigin.z) / rayDir.z;
+    float tzmin = (bBox.min.z - rayOrigin.z) / rayDir.z;
+    float tzmax = (bBox.max.z - rayOrigin.z) / rayDir.z;
 
-	if (tzmin > tzmax) std::swap(tzmin, tzmax);
+    if (tzmin > tzmax) std::swap(tzmin, tzmax);
 
-	if ((tmin > tzmax) || (tzmin > tmax))
-		return false;
+    if ((tmin > tzmax) || (tzmin > tmax))
+        return false;
 
-	if (tzmin > tmin)
-		tmin = tzmin;
+    if (tzmin > tmin)
+        tmin = tzmin;
 
-	if (tzmax < tmax)
-		tmax = tzmax;
+    if (tzmax < tmax)
+        tmax = tzmax;
 
-	float t = tmin;
-	if (t < 0) {
-		t = tmax;
-		if (t < 0) return false;
-	}
+    float t = tmin;
+    if (t < 0) {
+        t = tmax;
+        if (t < 0) return false;
+    }
 
-	collisionPoint = rayOrigin + t * rayDir;
-	return true;
+    collisionPoint = rayOrigin + t * rayDir;
+    return true;
 }
 
 bool UISceneWindow::Draw()
@@ -154,19 +154,19 @@ bool UISceneWindow::Draw()
         ImVec2 contentRegionSize = ImGui::GetContentRegionAvail();
 
         winPos = vec2(windowPos.x, windowPos.y);
-        
+
         if (winSize.x != contentRegionSize.x || winSize.y != contentRegionSize.y)
         {
             winSize = vec2(contentRegionSize.x, contentRegionSize.y);
-            
+
             glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)winSize.x, (int)winSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-            
+
             glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
             glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
-            
+
             Application->camera->UpdateCameraView(winSize.x, winSize.y, winSize.x, winSize.y);
-            
+
             Application->gui->camSize = winSize;
         }
 
@@ -185,11 +185,10 @@ bool UISceneWindow::Draw()
         }
 
         ImVec2 viewportPosition = ImGui::GetCursorScreenPos();
-        
+
         ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, contentRegionSize, ImVec2(0, 1), ImVec2(1, 0));
 
         ImGuizmo::SetDrawlist();
-
         ImGuizmo::SetRect(viewportPosition.x, viewportPosition.y, contentRegionSize.x, contentRegionSize.y);
 
         glm::mat4 viewMatrix = Application->camera->view();
@@ -204,11 +203,11 @@ bool UISceneWindow::Draw()
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.15f, 0.15f, 0.75f));
                 ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::GetStyleColorVec4(ImGuiCol_ButtonHovered));
             }
-        };
-        
+            };
+
         ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 190, viewportPosition.y + 15));
         static TransformSpace transformSpace = TransformSpace::LOCAL;
-        
+
         setActiveButtonColor(transformSpace == TransformSpace::WORLD);
         if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_World.id())), ImVec2(15, 15))) {
             transformSpace = (transformSpace == TransformSpace::LOCAL) ? TransformSpace::WORLD : TransformSpace::LOCAL;
@@ -222,24 +221,24 @@ bool UISceneWindow::Draw()
         ImGui::PopStyleColor(2);
         ImGui::SameLine(0, iconSpacing);
         ImGui::Text(transformSpace == TransformSpace::LOCAL ? "local" : "global");
-        ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 20, viewportPosition.y + 10)); 
-        
+        ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 20, viewportPosition.y + 10));
+
         static ManipulationOperation operation = ManipulationOperation::IDLE;
-        
+
         setActiveButtonColor(operation == ManipulationOperation::TRANSLATE);
         if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Trans.id())), ImVec2(iconSize, iconSize))) {
             operation = (operation == ManipulationOperation::TRANSLATE) ? ManipulationOperation::IDLE : ManipulationOperation::TRANSLATE;
         }
         ImGui::PopStyleColor(2);
         ImGui::SameLine(0, iconSpacing);
-        
+
         setActiveButtonColor(operation == ManipulationOperation::ROTATE);
         if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Rot.id())), ImVec2(iconSize, iconSize))) {
             operation = (operation == ManipulationOperation::ROTATE) ? ManipulationOperation::IDLE : ManipulationOperation::ROTATE;
         }
         ImGui::PopStyleColor(2);
         ImGui::SameLine(0, iconSpacing);
-        
+
         setActiveButtonColor(operation == ManipulationOperation::SCALE);
         if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Sca.id())), ImVec2(iconSize, iconSize))) {
             operation = (operation == ManipulationOperation::SCALE) ? ManipulationOperation::IDLE : ManipulationOperation::SCALE;
@@ -261,7 +260,7 @@ bool UISceneWindow::Draw()
             const char* msaaOptions[] = { "Off", "2x", "4x", "8x" };
             if (ImGui::Combo("Antialiasing", &msaaSamples, msaaOptions, IM_ARRAYSIZE(msaaOptions))) {
                 int actualSamples = (msaaSamples == 0) ? 0 : (1 << msaaSamples);
-                //update renderer setting probably on MyWindow
+                // update renderer setting as needed
             }
 
             static float resolutionScale = 1.0f;
@@ -279,65 +278,71 @@ bool UISceneWindow::Draw()
             static int shadowQuality = 1;
             const char* shadowOptions[] = { "Off", "Low", "Medium", "High" };
             if (ImGui::Combo("Shadow Quality", &shadowQuality, shadowOptions, IM_ARRAYSIZE(shadowOptions))) {
-                //update shadows, not implemented yet
+                // update shadows, not implemented yet
             }
 
             static bool enableBloom = true;
             if (ImGui::Checkbox("Bloom", &enableBloom)) {
-                //these will be the post =processing toggles not implemented yet
+                // not implemented yet
             }
 
             static bool enableSSAO = false;
             if (ImGui::Checkbox("Ambient Occlusion (SSAO)", &enableSSAO)) {
-                //these will be the post processing toggles not implemented yet
+                // not implemented yet
             }
 
             ImGui::EndPopup();
         }
-        
+
         if (isViewportHovered && !ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
             if (ImGui::IsKeyPressed(ImGuiKey_W)) operation = ManipulationOperation::TRANSLATE;
             if (ImGui::IsKeyPressed(ImGuiKey_E)) operation = ManipulationOperation::ROTATE;
             if (ImGui::IsKeyPressed(ImGuiKey_R)) operation = ManipulationOperation::SCALE;
             if (ImGui::IsKeyPressed(ImGuiKey_Q)) operation = ManipulationOperation::IDLE;
         }
-        
-        float view[16];
-        float projection[16];
-        memcpy(view, &viewMatrix, sizeof(float) * 16);
-        memcpy(projection, &projectionMatrix, sizeof(float) * 16);
 
-        for (auto& selectedObject : Application->input->GetSelectedGameObjects())
-        {
-            if (operation != ManipulationOperation::IDLE && selectedObject != nullptr) {
-                glm::mat4 matrix = selectedObject->GetTransform()->GetMatrix();
+        // --- GIZMO MATRIX HANDLING ---
+		for (auto& selectedObject : Application->input->GetSelectedGameObjects())
+		{
+			if (operation != ManipulationOperation::IDLE && selectedObject != nullptr) {
+				glm::mat4 displayMatrix = selectedObject->GetTransform()->GetMatrix();
+				bool hasParent = selectedObject->GetParent() != nullptr;
 
-                ImGuizmo::OPERATION guizmoOperation;
-                switch (operation)
-                {
-                case ManipulationOperation::TRANSLATE: guizmoOperation = ImGuizmo::TRANSLATE; break;
-                case ManipulationOperation::ROTATE:    guizmoOperation = ImGuizmo::ROTATE;    break;
-                case ManipulationOperation::SCALE:     guizmoOperation = ImGuizmo::SCALE;     break;
-                default: guizmoOperation = ImGuizmo::TRANSLATE; break;
-                }
-                ImGuizmo::MODE guizmoMode = (transformSpace == TransformSpace::LOCAL) ? ImGuizmo::LOCAL : ImGuizmo::WORLD;
-                float objectMatrix[16];
-                memcpy(objectMatrix, &matrix, sizeof(float) * 16);
+				float matrixForManipulation[16];
+				memcpy(matrixForManipulation, glm::value_ptr(displayMatrix), sizeof(float) * 16);
 
-                float snap[3] = { 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue, 1.0f * Application->gui->UIinspectorPanel->snapValue };
+				float snap[3] = { Application->gui->UIinspectorPanel->snapValue,
+								  Application->gui->UIinspectorPanel->snapValue,
+								  Application->gui->UIinspectorPanel->snapValue };
 
-                ImGuizmo::Manipulate(view, projection, guizmoOperation, guizmoMode, objectMatrix, NULL, Application->gui->UIinspectorPanel->snap ? snap : nullptr);
+				ImGuizmo::OPERATION guizmoOperation;
+				switch (operation)
+				{
+				case ManipulationOperation::TRANSLATE: guizmoOperation = ImGuizmo::TRANSLATE; break;
+				case ManipulationOperation::ROTATE:    guizmoOperation = ImGuizmo::ROTATE;    break;
+				case ManipulationOperation::SCALE:     guizmoOperation = ImGuizmo::SCALE;     break;
+				default: guizmoOperation = ImGuizmo::TRANSLATE; break;
+				}
 
-                glm::vec3 position, rotation, scale;
-                ImGuizmo::DecomposeMatrixToComponents(objectMatrix, glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale));
+				ImGuizmo::MODE guizmoMode = (transformSpace == TransformSpace::WORLD) ? ImGuizmo::WORLD : ImGuizmo::LOCAL;
 
-                ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(position), glm::value_ptr(rotation), glm::value_ptr(scale), objectMatrix);
+				ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
+					guizmoOperation, guizmoMode, matrixForManipulation, NULL,
+					(Application->gui->UIinspectorPanel->snap ? snap : nullptr));
 
-                glm::mat4 newMatrix = glm::make_mat4(objectMatrix);
+				if (ImGuizmo::IsUsing()) {
+					glm::mat4 manipulatedMatrix = glm::make_mat4(matrixForManipulation);
 
-                selectedObject->GetTransform()->SetMatrix(newMatrix);
-            }
-        }
+					if (hasParent) {
+						glm::mat4 parentWorldMatrix = selectedObject->GetParent()->GetTransform()->GetMatrix();
+						manipulatedMatrix = glm::inverse(parentWorldMatrix) * manipulatedMatrix;
+					}
+
+					selectedObject->GetTransform()->SetMatrix(manipulatedMatrix);
+				}
+			}
+		}
+        // --- END GIZMO MATRIX HANDLING ---
 
         isFoucused = ImGui::IsWindowHovered();
     }

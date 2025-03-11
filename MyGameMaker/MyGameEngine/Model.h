@@ -32,12 +32,22 @@ struct Vertex
 
 struct ModelData
 {
-	unsigned int vBPosID = -1, vBNormalsID = -1, vBColorsID = -1, vBTCoordsID = -1, iBID = -1, vA = -1;
+	unsigned int vBPosID = -1;
+	unsigned int vBNormalsID = -1;
+	unsigned int vBColorsID = -1;
+	unsigned int vBTCoordsID = -1;
+	unsigned int vBTangentsID = -1;
+	unsigned int vBBitangentsID = -1;
+	unsigned int iBID = -1;
+	unsigned int vA = -1;
+
 	std::vector<Vertex> vertexData;
 	std::vector<unsigned int> indexData;
 	std::vector<vec2> vertex_texCoords;
 	std::vector<vec3> vertex_normals;
 	std::vector<vec3> vertex_colors;
+	std::vector<vec3> vertex_tangents;  
+	std::vector<vec3> vertex_bitangents;
 };
 
 class Model
@@ -47,28 +57,22 @@ public:
 	~Model() {}
 
 	std::string& GetMeshName() { return meshName; }
-
 	ModelData& GetModelData() { return modelData; }
 
 	void SetMeshName(const std::string& meshName) { this->meshName = meshName; }
-
 	void SetModelData(const ModelData& modelData) {
 		this->modelData = modelData;
-		//calculateBoundingBox(); // Recalcula la bounding box al actualizar los datos
 	}
 
 	void SetMaterialIndex(int index) { materialIndex = index; }
-
 	int& GetMaterialIndex() { return materialIndex; }
 
 	const BoundingBox& getBoundingBox() const { return m_BoundingBox; }
+
 private:
 	std::string meshName;
 	ModelData modelData;
 	int materialIndex = -1;
-
-	BoundingBox m_BoundingBox; // Bounding box de la malla
-
-	//void calculateBoundingBox(); // Método privado para calcular la bounding box
+	BoundingBox m_BoundingBox;
 };
 

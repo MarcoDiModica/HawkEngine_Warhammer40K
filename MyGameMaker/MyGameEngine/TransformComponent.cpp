@@ -1,12 +1,14 @@
+#define GLM_ENABLE_EXPERIMENTAL
 #include "TransformComponent.h"
 #include "GameObject.h"
-#include "../MyGameEditor/Log.h" // Esto es ilegal verdad?
+#include "../MyGameEditor/Log.h"
 #include "types.h"
 #include "Component.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyScriptingEngine/EngineBinds.h"
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/debug-helpers.h>
 #include <mono/jit/jit.h>
@@ -39,319 +41,283 @@ namespace Utils {
 }
 
 Transform_Component::Transform_Component(GameObject* owner) : Component(owner) { name = "Transform_Component"; }
+{
+    localPosition = glm::dvec3(0.0);
+    localRotation = glm::dquat(1.0, 0.0, 0.0, 0.0);
+    localScale = glm::dvec3(1.0);
+    RecalculateLocalMatrix();
+    if (owner && owner->GetParent()) {
+        glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
+        worldMatrix = parentWorld * localMatrix;
+    }
+    else {
+        worldMatrix = localMatrix;
+    }
+}
 
 Transform_Component::Transform_Component(const Transform_Component& other) : Component(other)
 {
-    matrix = other.matrix;
-    position = other.position;
-    left = other.left;
-    up = other.up;
-    forward = other.forward;
+    localPosition = other.localPosition;
+    localRotation = other.localRotation;
+    localScale = other.localScale;
+    localMatrix = other.localMatrix;
+    worldMatrix = other.worldMatrix;
 }
 
 Transform_Component& Transform_Component::operator=(const Transform_Component& other)
 {
-    if (this != &other)
-    {
+    if (this != &other) {
         Component::operator=(other);
-        matrix = other.matrix;
-        position = other.position;
-        left = other.left;
-        up = other.up;
-        forward = other.forward;
-
-        local_matrix = other.local_matrix;
+        localPosition = other.localPosition;
+        localRotation = other.localRotation;
+        localScale = other.localScale;
+        localMatrix = other.localMatrix;
+        worldMatrix = other.worldMatrix;
     }
-
-   // mono_add_internal_call("aaa", (const void*) &Transform_Component::SetPosition);
-
     return *this;
 }
 
 Transform_Component::Transform_Component(Transform_Component&& other) noexcept : Component(std::move(other))
 {
-	matrix = std::move(other.matrix);
-	position = std::move(other.position);
-	left = std::move(other.left);
-	up = std::move(other.up);
-	forward = std::move(other.forward);
+    localPosition = std::move(other.localPosition);
+    localRotation = std::move(other.localRotation);
+    localScale = std::move(other.localScale);
+    localMatrix = std::move(other.localMatrix);
+    worldMatrix = std::move(other.worldMatrix);
 }
 
 Transform_Component& Transform_Component::operator=(Transform_Component&& other) noexcept
 {
-	if (this != &other)
-	{
-		Component::operator=(std::move(other));
-		matrix = std::move(other.matrix);
-		position = std::move(other.position);
-		left = std::move(other.left);
-		up = std::move(other.up);
-		forward = std::move(other.forward);
-	}
-	return *this;
+    if (this != &other)
+    {
+        Component::operator=(std::move(other));
+        localPosition = std::move(other.localPosition);
+        localRotation = std::move(other.localRotation);
+        localScale = std::move(other.localScale);
+        localMatrix = std::move(other.localMatrix);
+        worldMatrix = std::move(other.worldMatrix);
+    }
+    return *this;
 }
 
 std::unique_ptr<Component> Transform_Component::Clone(GameObject* owner)
 {
     auto clone = std::make_unique<Transform_Component>(*this);
-    clone->matrix = this->matrix;
-    clone->left = this->left;
-    clone->up = this->up;
-    clone->forward = this->forward;
-    clone->position = this->position;
     clone->owner = owner;
-    clone->local_matrix = this->local_matrix;
     return clone;
+}
+
+void Transform_Component::RecalculateLocalMatrix()
+{
+    glm::dmat4 T = glm::translate(glm::dmat4(1.0), localPosition);
+    glm::dmat4 R = glm::toMat4(localRotation);
+    glm::dmat4 S = glm::scale(glm::dmat4(1.0), localScale);
+    localMatrix = T * R * S;
+}
+
+void Transform_Component::UpdateWorldMatrix()
+{
+    if (owner && owner->GetParent()) {
+        glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
+        worldMatrix = parentWorld * localMatrix;
+    }
+    else {
+        worldMatrix = localMatrix;
+    }
+}
+
+void Transform_Component::Update(float deltaTime)
+{
+    UpdateWorldMatrix();
+    if (owner) {
+        for (auto& child : owner->GetChildren()) {
+            child->GetTransform()->Update(0.0f);
+        }
+    }
+}
+
+// Sets the absolute world position by computing the corresponding local position.
+void Transform_Component::SetPosition(const glm::dvec3& newPos)
+{
+    if (owner && owner->GetParent()) {
+        glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
+        glm::dmat4 invParent = glm::inverse(parentWorld);
+        glm::dvec4 localPos = invParent * glm::dvec4(newPos, 1.0);
+        localPosition = glm::dvec3(localPos);
+    }
+    else {
+        localPosition = newPos;
+    }
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
 void Transform_Component::Translate(const glm::dvec3& translation)
 {
-
-    matrix = glm::translate(matrix, translation);
-
-    /* After modifying WORLD , recalculate  LOCAL */
-
-    HandleLocalUpdate();
-
-}
-
-void Transform_Component::TranslateLocal(const glm::dvec3& translation) {
-
-    local_matrix = glm::translate(local_matrix, translation);
-
-    HandleWorldUpdate();
-}
-
-void Transform_Component::Update(float deltaTime) 
-{
-    if (owner) {
-
-        if (!owner->GetParent())/*No owner means owner is the scene*/ {
-           UpdateWorldMatrix(glm::dmat4(1.0));
-        }
-        for (auto& child : owner->GetChildren()) {
-            child->GetTransform()->UpdateWorldMatrix(matrix);
-        }
+    // Translation in world space: adjust localPosition accordingly.
+    if (owner && owner->GetParent()) {
+        glm::dmat4 parentWorld = owner->GetParent()->GetTransform()->GetMatrix();
+        glm::dmat4 invParent = glm::inverse(parentWorld);
+        glm::dvec4 localTrans = invParent * glm::dvec4(translation, 0.0);
+        localPosition += glm::dvec3(localTrans);
     }
-    else
-    {
-        UpdateWorldMatrix(glm::dmat4(1.0));
+    else {
+        localPosition += translation;
     }
-
-    //log if owner is null or not
-    bool isOwnerNull = owner == nullptr;
-    if (isOwnerNull)
-    {
-        LOG(LogType::LOG_ERROR, "Owner is null");
-    }
-    else
-    {
-		//LOG(LogType::LOG_ERROR, "Owner is not null");
-	}
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
-void Transform_Component::SetPosition(const glm::dvec3& position)
+void Transform_Component::TranslateLocal(const glm::dvec3& translation)
 {
-    matrix[3] = glm::dvec4(position, 1);
-    HandleLocalUpdate();
-
-}
-
-void Transform_Component::Rotate(double rads, const glm::dvec3& axis)
-{
-
-    matrix = glm::rotate(matrix, rads, axis);
-    HandleLocalUpdate();
-
-}
-
-void Transform_Component::RotateLocal(double rads, const glm::dvec3& axis) {
-
-    local_matrix = glm::rotate(local_matrix, rads, axis);
-    HandleWorldUpdate();
+    localPosition += translation;
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
 void Transform_Component::SetRotation(const glm::dvec3& eulerAngles)
 {
-    glm::dmat4 rotationMatrix = glm::identity<glm::dmat4>();
-    rotationMatrix = glm::rotate(rotationMatrix, eulerAngles.x, glm::dvec3(1, 0, 0));
-    rotationMatrix = glm::rotate(rotationMatrix, eulerAngles.y, glm::dvec3(0, 1, 0));
-    rotationMatrix = glm::rotate(rotationMatrix, eulerAngles.z, glm::dvec3(0, 0, 1));
-
-    // Preserve the position
-    glm::dvec3 position = glm::dvec3(matrix[3]);
-    if (rotationMatrix != matrix) {
-        matrix = rotationMatrix;
-        matrix[3] = glm::dvec4(position, 1);
-        HandleLocalUpdate();
-    }
+    // Euler angles are assumed to be in radians.
+    localRotation = glm::quat(eulerAngles);
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
 void Transform_Component::SetRotationQuat(const glm::dquat& rotation)
 {
-    glm::dvec3 position = matrix[3];
-	matrix = glm::mat4_cast(rotation);
-	HandleLocalUpdate();
-    SetPosition(position);
+    localRotation = rotation;
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
+}
+
+void Transform_Component::Rotate(double rads, const glm::dvec3& axis)
+{
+    glm::dquat delta = glm::angleAxis(rads, glm::normalize(axis));
+    if (owner && owner->GetParent()) {
+        glm::dquat parentRot = owner->GetParent()->GetTransform()->GetRotation();
+        glm::dquat localDelta = glm::inverse(parentRot) * delta * parentRot;
+        localRotation = localDelta * localRotation;
+    }
+    else {
+        localRotation = delta * localRotation;
+    }
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
+}
+
+void Transform_Component::RotateLocal(double rads, const glm::dvec3& axis)
+{
+    glm::dquat delta = glm::angleAxis(rads, glm::normalize(axis));
+    localRotation = delta * localRotation;
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
 void Transform_Component::SetScale(const glm::dvec3& scale)
 {
-
-    glm::dmat4 scaleMatrix = glm::identity<glm::dmat4>();
-    scaleMatrix = glm::scale(scaleMatrix, scale);
-
-    // Preserve the position
-    glm::dvec3 position = glm::dvec3(matrix[3]);
-    matrix = scaleMatrix;
-    matrix[3] = glm::dvec4(position, 1);
-
-    HandleLocalUpdate();
+    localScale = scale;
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
-void Transform_Component::SetForward(const glm::dvec3& forward)
+void Transform_Component::SetForward(const glm::dvec3& newFwd)
 {
-	glm::dvec3 newForward = glm::normalize(forward);
-	glm::dvec3 newRight = glm::normalize(glm::cross(up, newForward));
-	glm::dvec3 newUp = glm::cross(newForward, newRight);
-
-	left = newRight;
-	this->up = newUp;
-	this->forward = newForward;
-
-	HandleLocalUpdate();
-}
-
-void Transform_Component::Scale(const glm::dvec3& scale)
-{
-    matrix = glm::scale(matrix, scale);
+    glm::dvec3 normFwd = glm::normalize(newFwd);
+    glm::dvec3 refUp = glm::dvec3(0, 1, 0);
+    glm::dvec3 newRight = glm::normalize(glm::cross(refUp, normFwd));
+    glm::dvec3 newUp = glm::cross(normFwd, newRight);
+    glm::dmat3 rotMat(newRight, newUp, normFwd);
+    localRotation = glm::quat_cast(glm::dmat4(rotMat));
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
 void Transform_Component::LookAt(const glm::dvec3& target)
 {
-    matrix = glm::lookAt(position, target, up);
-
-    HandleLocalUpdate();
+    glm::dvec3 currentPos = GetPosition();
+    glm::dmat4 view = glm::lookAt(currentPos, target, glm::dvec3(0, 1, 0));
+    glm::dmat4 world = glm::inverse(view);
+    glm::dvec3 skew;
+    glm::dvec4 perspective;
+    glm::decompose(world, localScale, localRotation, localPosition, skew, perspective);
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
 void Transform_Component::AlignToGlobalUp(const glm::vec3& worldUp)
 {
-    glm::vec3 fwd = glm::normalize(forward);
-    glm::vec3 right = glm::normalize(glm::cross(worldUp, fwd));
-    glm::vec3 up = glm::cross(fwd, right);
-
-    left = right;
-    this->up = up;
-    forward = fwd;
-    position = position;
-	
-    SetMatrix(glm::dmat4(glm::dvec4(left, 0.0), glm::dvec4(up, 0.0), glm::dvec4(forward, 0.0), glm::dvec4(position, 1.0)));
+    glm::dvec3 fwd = glm::normalize(localRotation * glm::dvec3(0, 0, 1));
+    glm::dvec3 right = glm::normalize(glm::cross(glm::dvec3(worldUp), fwd));
+    glm::dvec3 newUp = glm::cross(fwd, right);
+    glm::dmat3 rotMat(right, newUp, fwd);
+    localRotation = glm::quat_cast(glm::dmat4(rotMat));
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
 }
 
-void Transform_Component::HandleWorldUpdate() {
+void Transform_Component::SetMatrix(const glm::dmat4& newMatrix)
+{
+    glm::dvec3 skew;
+    glm::dvec4 perspective;
+    glm::decompose(newMatrix, localScale, localRotation, localPosition, skew, perspective);
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
+}
 
-    if (owner) {
-        if (!owner->GetParent())/*No owner means owner is the scene*/ {
-            UpdateWorldMatrix(glm::dmat4(1.0));
-        }
-        else {
-            UpdateWorldMatrix(owner->GetParent()->GetTransform()->matrix);
-        }
+YAML::Node Transform_Component::encode()
+{
+    YAML::Node node = Component::encode();
+    node["localPosition"] = YAML::convert<glm::dvec3>::encode(localPosition);
+    node["localRotation"] = YAML::convert<glm::dvec3>::encode(glm::degrees(glm::eulerAngles(localRotation)));
+    node["localScale"] = YAML::convert<glm::dvec3>::encode(localScale);
+    return node;
+}
+
+bool Transform_Component::decode(const YAML::Node& node)
+{
+    Component::decode(node);
+    if (node["localPosition"] && node["localRotation"] && node["localScale"]) {
+        YAML::convert<glm::dvec3>::decode(node["localPosition"], localPosition);
+        glm::dvec3 eulerRot;
+        YAML::convert<glm::dvec3>::decode(node["localRotation"], eulerRot);
+        localRotation = glm::quat(glm::radians(eulerRot));
+        YAML::convert<glm::dvec3>::decode(node["localScale"], localScale);
+        RecalculateLocalMatrix();
+        UpdateWorldMatrix();
+        return true;
     }
-    else
-    {
-		UpdateWorldMatrix(glm::dmat4(1.0));
-	}
+    return false;
 }
 
-void Transform_Component::HandleLocalUpdate() {
-
-    if (owner) {
-		if (!owner->GetParent())/*No owner means owner is the scene*/ {
-			UpdateLocalMatrix(glm::dmat4(1.0));
-		}
-		else {
-			UpdateLocalMatrix(owner->GetParent()->GetTransform()->matrix);
-		}
-	}
-    else
-    {
-		UpdateLocalMatrix(glm::dmat4(1.0));
-	}
-}
-
-YAML::Node Transform_Component::encode() {
-	YAML::Node node = Component::encode();
-	node["matrix"] = Utils::encodeMat(matrix);
-	node["local_matrix"] = Utils::encodeMat(local_matrix);
-	return node;
-}
-
-bool Transform_Component::decode(const YAML::Node& node) {
-	Component::decode(node);
-
-	glm::dmat4 new_matrix;
-	if (Utils::decodeMat(node, new_matrix)) {
-		SetMatrix(new_matrix);
-	}
-
-	if (node["local_matrix"]) {
-		glm::dmat4 new_local_matrix;
-		if (Utils::decodeMat(node, new_local_matrix)) {
-			SetLocalMatrix(new_local_matrix);
-		}
-	}
-
-	return true;
-}
-
-    
-
-    MonoObject* Transform_Component::GetSharp() {
-        if (CsharpReference) {
-            return CsharpReference;
-        }
-
-        // 1. Obtener la clase de C#
-        MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Transform");
-        if (!klass) {
-            // Manejar el error si la clase no se encuentra
-            return nullptr;
-        }
-
-        // 2. Crear una instancia del objeto de C#
-        MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
-        if (!monoObject) {
-            // Manejar el error si la instancia no se puede crear
-            return nullptr;
-        }
-
-        // 3. Obtener el constructor correcto
-        MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Transform:.ctor(uintptr,HawkEngine.GameObject)", true);
-        MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-        if (!method)
-        {
-            //Manejar error si el constructor no se encuentra
-            return nullptr;
-        }
-
-        // 4. Preparar los argumentos para el constructor
-        uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this); // Puntero a la instancia de Transform_Component
-        MonoObject* ownerGo = owner->GetSharp(); // Obtenemos la instancia del propietario de C#
-        if (!ownerGo)
-        {
-            //Manejar error si el propietario no tiene instancia de C#
-            return nullptr;
-        }
-
-        void* args[2];
-        args[0] = &componentPtr;
-        args[1] = ownerGo;
-
-        // 5. Invocar al constructor
-        mono_runtime_invoke(method, monoObject, args, NULL);
-
-        // 6. Guardar la referencia y devolverla
-        CsharpReference = monoObject;
+MonoObject* Transform_Component::GetSharp()
+{
+    if (CsharpReference) {
         return CsharpReference;
     }
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Transform");
+    if (!klass) {
+        return nullptr;
+    }
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+    if (!monoObject) {
+        return nullptr;
+    }
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Transform:.ctor(uintptr,HawkEngine.GameObject)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    if (!method)
+    {
+        return nullptr;
+    }
+    uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+    MonoObject* ownerGo = owner ? owner->GetSharp() : nullptr;
+    if (!ownerGo)
+    {
+        return nullptr;
+    }
+    void* args[2];
+    args[0] = &componentPtr;
+    args[1] = ownerGo;
+    mono_runtime_invoke(method, monoObject, args, NULL);
+    CsharpReference = monoObject;
+    return CsharpReference;
+}

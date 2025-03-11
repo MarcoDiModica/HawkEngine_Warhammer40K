@@ -119,10 +119,9 @@ void Mesh::CalculateTangents() {
 		unsigned int idx0 = _indices[i];
 		unsigned int idx1 = _indices[i + 1];
 		unsigned int idx2 = _indices[i + 2];
-
-		glm::vec3& v0 = _vertices[idx0];
-		glm::vec3& v1 = _vertices[idx1];
-		glm::vec3& v2 = _vertices[idx2];
+		glm::vec3 v0 = _vertices[idx0].position;
+		glm::vec3 v1 = _vertices[idx1].position;
+		glm::vec3 v2 = _vertices[idx2].position;
 
 		// Get texture coordinates
 		glm::vec2 uv0, uv1, uv2;

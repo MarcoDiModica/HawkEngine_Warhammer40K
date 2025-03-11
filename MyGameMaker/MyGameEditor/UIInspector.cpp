@@ -1290,7 +1290,7 @@ private:
                 ImGui::SetNextItemOpen(true, ImGuiCond_Once);
                 if (ImGui::CollapsingHeader("Shader")) {
                     ShaderType currentType = shaderComponent->GetShaderType();
-                    Shaders* currentShader = shaderComponent->GetShader();
+                    //Shaders* currentShader = shaderComponent->GetShader();
 
                     // Mostrar y editar el tipo de shader
                     int shaderType = static_cast<int>(currentType);
@@ -1298,10 +1298,10 @@ private:
                         shaderComponent->SetShaderType(static_cast<ShaderType>(shaderType));
                     }
 
-                    if (currentType == ShaderType::WATER) {;
+                  /*  if (currentType == ShaderType::WATER) {;
                         if (ImGui::DragFloat("Amplitude", &shaderComponent->amplitude, 0.1f, 0.1f, 10.0f));
                         if (ImGui::DragFloat("Frequency", &shaderComponent->frequency, 0.1f, 0.1f, 10.0f));
-                    }
+                    }*/
                 }
             }
         }

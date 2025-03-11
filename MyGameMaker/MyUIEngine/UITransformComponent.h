@@ -51,6 +51,9 @@ public:
 	void SetPivotOffset(const glm::vec3& off) { pivotOffset = off; }
 	glm::vec3 GetPivotOffset() const { return pivotOffset; }
 
+	bool GetResised() { return resized; }
+	void SetResized(bool resized) { this->resized = resized; }
+
 
 private:
 	//posicion, rotacion, escala
@@ -62,6 +65,7 @@ private:
 	glm::vec3 canvasSize;
 
 	glm::vec3 pivotOffset;
+	bool resized = false;
 
 	//union
 	//{

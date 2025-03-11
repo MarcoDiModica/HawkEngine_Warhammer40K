@@ -51,4 +51,5 @@ void UITransformComponent::SetTransform(const glm::vec3& position, const glm::ve
 {
 	this->scale = scale;
 	this->position = position;
+	resized = true;
 }

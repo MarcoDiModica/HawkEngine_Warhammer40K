@@ -279,12 +279,19 @@ bool Root::Start()
 	canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
 
-    auto image = CreateGameObject("Image");
-    Application->root->ParentGameObject(*image, *canvas);
-    image->AddComponent<UIImageComponent>();
-	image->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/UI_Final.png");
-    image->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(1, 1, 1));
-    image->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    auto staminaBar = CreateGameObject("LifeBar");
+    Application->root->ParentGameObject(*staminaBar, *canvas);
+    staminaBar->AddComponent<UIImageComponent>();
+    staminaBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/staminaBar.png");
+    staminaBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
+    staminaBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
+
+    auto lifeBar = CreateGameObject("LifeBar");
+    Application->root->ParentGameObject(*lifeBar, *canvas);
+    lifeBar->AddComponent<UIImageComponent>();
+    lifeBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/lifeBar.png");
+    lifeBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
+    lifeBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
 
 
     auto button = CreateGameObject("Button");
@@ -292,8 +299,8 @@ bool Root::Start()
     button->AddComponent<UIImageComponent>();
     button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
 	button->AddComponent<UIButtonComponent>();
-    button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.5, 0.5, 1));
 	button->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.180, 0.150, 1));
 
    /* auto slider = CreateGameObject("Slider");
     Application->root->ParentGameObject(*slider, *canvas);

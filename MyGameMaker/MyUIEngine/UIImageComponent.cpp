@@ -22,7 +22,7 @@ void UIImageComponent::Update(float deltaTime)
 {
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
 
-	if (!resized && uiTransform->GetCanvasSize().x > 0) {
+	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0) {
 
 		float scaleX = 1.0f;
 		float scaleY = 1.0f;
@@ -37,7 +37,7 @@ void UIImageComponent::Update(float deltaTime)
 
 		auto scale = uiTransform->GetScale();
 		uiTransform->Scale(glm::vec3(scale.x * scaleX, scale.y * scaleY, scale.z));
-		resized = true;
+		uiTransform->SetResized(true);
 	}
 
 	shader->Bind();

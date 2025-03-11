@@ -46,7 +46,6 @@ private:
 	std::shared_ptr<Mesh> mesh;
 	Shaders * shader;
 	glm::mat4 projection;
-	bool resized = false;
 
 protected:
 

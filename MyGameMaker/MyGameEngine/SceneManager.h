@@ -46,10 +46,11 @@ public:
 
     bool ParentGameObject(GameObject& child, GameObject& father);
 
+    bool DeparentGameObjectKeepWorld(GameObject& child);
+
     void RemoveGameObject(GameObject* gameObject);
 
-    bool ParentGameObjectToScene(GameObject& child);
-    bool ParentGameObjectToObject(GameObject& child, GameObject& father);
+    bool ParentGameObjectPreserve(GameObject& child, GameObject& father);
 
     std::shared_ptr<GameObject> FindGOByName(std::string name) const;
 

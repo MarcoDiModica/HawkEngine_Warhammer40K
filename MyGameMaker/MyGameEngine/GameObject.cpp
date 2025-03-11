@@ -405,7 +405,7 @@ void GameObject::AddChild(GameObject* child)
                     }
 
                     children[children.size() - 1]->parent = this;
-                    children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
+                    children[children.size() - 1]->GetTransform()->UpdateLocalMatrix();
 
                     child->scene->_children.erase(child->scene->_children.begin() + i);
                     return;
@@ -431,7 +431,7 @@ void GameObject::AddChild(GameObject* child)
         }
 
         children[children.size() -1]->parent = this;
-        children[children.size() - 1]->GetTransform()->UpdateLocalMatrix(this->GetTransform()->GetMatrix());
+        children[children.size() - 1]->GetTransform()->UpdateLocalMatrix();
         step_father->RemoveChild(child);
 
         return;

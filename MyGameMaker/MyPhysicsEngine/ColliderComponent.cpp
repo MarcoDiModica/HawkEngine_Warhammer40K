@@ -221,8 +221,14 @@ void ColliderComponent::CreateCollider() {
     shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
     glm::vec3 localPosition = transform->GetLocalPosition();
     startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
-    startTransform.setRotation(btQuaternion(transform->GetLocalRotation().x, transform->GetLocalRotation().y, transform->GetLocalRotation().z, transform->GetLocalRotation().w));
-    glm::vec3 scale = transform->GetScale();
+    glm::dquat localRot = transform->GetRotation();
+    btQuaternion btRot(
+        static_cast<btScalar>(localRot.x),
+        static_cast<btScalar>(localRot.y),
+        static_cast<btScalar>(localRot.z),
+        static_cast<btScalar>(localRot.w)
+    );
+    startTransform.setRotation(btRot);    glm::vec3 scale = transform->GetScale();
     //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
 
     // Configurar la masa e inercia

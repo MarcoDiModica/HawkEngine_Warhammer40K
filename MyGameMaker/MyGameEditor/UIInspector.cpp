@@ -67,22 +67,16 @@ private:
 
         if (ImGui::DragFloat3("Position", pos, 0.1f)) {
             glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-            glm::dvec3 deltaPos = newPosition - currentPosition;
-            transform->Translate(deltaPos);
+            transform->SetPosition(newPosition);
         }
 
         if (ImGui::DragFloat3("Rotation", rot, 0.1f)) {
             glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-            glm::dvec3 deltaRot = newRotation - currentRotation;
-            transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-            transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-            transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+            transform->SetRotation(newRotation);
         }
-
-        if (ImGui::DragFloat3("Scale", sca, 0.1f, 0.1f, 10.0f)) {
+        if (ImGui::DragFloat3("Scale", sca, 0.01f, 0.01f, 100.0f)) {
             glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
-            glm::dvec3 deltaScale = newScale / currentScale;
-            transform->Scale(deltaScale);
+            transform->SetScale(newScale);
         }
 
         ImGui::Checkbox("Snap", &snap);

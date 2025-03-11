@@ -5,9 +5,9 @@ Animator::Animator(Animation* Animation)
     m_CurrentTime = 0.0;
     m_CurrentAnimation = Animation;
 
-    m_FinalBoneMatrices.reserve(100);
+    m_FinalBoneMatrices.reserve(200);
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 200; i++)
         m_FinalBoneMatrices.push_back(glm::mat4(1.0f));
 }
 

@@ -261,7 +261,8 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
     player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-    Application->root->CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
+    auto animatedPlayer = Application->root->CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+	
 
     auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
     playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));

@@ -267,9 +267,9 @@ void MeshRenderer::Render() const {
 		glUseProgram(lastProgram);
 	}
 
-	if (mesh->drawBoundingbox) {
+	/*if (mesh->drawBoundingbox) {
 		mesh->drawBoundingBox(mesh->_boundingBox);
-	}
+	}*/
 }
 
 void MeshRenderer::RenderWithUnlitShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const {

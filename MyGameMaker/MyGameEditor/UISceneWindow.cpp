@@ -146,6 +146,8 @@ bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm:
 
 bool UISceneWindow::Draw()
 {
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    
     ImGui::Begin("Scene", nullptr, windowFlags);
     {
         bool isViewportHovered = ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup);
@@ -347,6 +349,8 @@ bool UISceneWindow::Draw()
         isFoucused = ImGui::IsWindowHovered();
     }
     ImGui::End();
+
+    ImGui::PopStyleVar();
 
     return true;
 }

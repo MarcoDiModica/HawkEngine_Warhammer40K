@@ -2,6 +2,7 @@
 
 #include "../MyGameEngine/Component.h"
 #include "../MyGameEngine/GameObject.h"
+#include <yaml-cpp/yaml.h>
 
 class UITransformComponent : public Component
 {
@@ -83,6 +84,12 @@ protected:
 
 		YAML::Node node = Component::encode();
 
+		//node["position"] = YAML::convert<glm::vec3>::encode(position);
+		//node["rotation"] = YAML::convert<glm::vec3>::encode(rotation);
+		//node["scale"] = YAML::convert<glm::vec3>::encode(scale);
+		//node["canvas_position"] = YAML::convert<glm::vec3>::encode(canvasPosition);
+		//node["canvas_size"] = YAML::convert<glm::vec3>::encode(canvasSize);
+		//node["pivot_offset"] = YAML::convert<glm::vec3>::encode(pivotOffset);
 		//node["light_type"] = static_cast<int>(type);
 		////node["color"] = { color.r, color.g, color.b };
 		//node["intensity"] = intensity;
@@ -96,6 +103,12 @@ protected:
 
 		Component::decode(node);
 
+		/*position = YAML::convert<glm::vec3>::decode(node["position"]);
+		rotation = YAML::convert<glm::vec3>::decode(node["rotation"]);
+		scale = YAML::convert<glm::vec3>::decode(node["scale"]);
+		canvasPosition = YAML::convert<glm::vec3>::decode(node["canvas_position"]);
+		canvasSize = YAML::convert<glm::vec3>::decode(node["canvas_size"]);
+		pivotOffset = YAML::convert<glm::vec3>::decode(node["pivot_offset"]);*/
 		//type = static_cast<LightType>(node["light_type"].as<int>());
 		////color = { node["color"][0].as<float>(), node["color"][1].as<float>(), node["color"][2].as<float>() };
 		//intensity = node["intensity"].as<float>();

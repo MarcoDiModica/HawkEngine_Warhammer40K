@@ -4,6 +4,7 @@
 #include "../MyGameEngine/Image.h"
 #include "../MyGameEngine/Mesh.h"
 #include "../MyGameEngine/Shaders.h"
+#include <yaml-cpp/yaml.h>
 
 class UISliderComponent :  public Component
 {
@@ -47,6 +48,9 @@ protected:
 
 		YAML::Node node = Component::encode();
 
+		/*node["texture_path"] = texturePath;
+		node["shader"] = shader;
+		node["resized"] = resized;*/
 		//node["light_type"] = static_cast<int>(type);
 		////node["color"] = { color.r, color.g, color.b };
 		//node["intensity"] = intensity;
@@ -60,6 +64,9 @@ protected:
 
 		Component::decode(node);
 
+		//texturePath = node["texture_path"].as<std::string>();
+		//shader = node["shader"].as<Shaders*>();
+		//resized = node["resized"].as<bool>();
 		//type = static_cast<LightType>(node["light_type"].as<int>());
 		////color = { node["color"][0].as<float>(), node["color"][1].as<float>(), node["color"][2].as<float>() };
 		//intensity = node["intensity"].as<float>();

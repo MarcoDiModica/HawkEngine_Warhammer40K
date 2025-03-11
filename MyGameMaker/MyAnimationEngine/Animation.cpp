@@ -18,6 +18,7 @@ Animation::Animation(const Animation& other)
     m_RootNode = other.m_RootNode;
     m_BoneInfoMap = other.m_BoneInfoMap;
 	m_Animations = other.m_Animations;
+	name = other.name;
 }
 
 Animation& Animation::operator=(const Animation& other)
@@ -30,6 +31,7 @@ Animation& Animation::operator=(const Animation& other)
         m_RootNode = other.m_RootNode;
         m_BoneInfoMap = other.m_BoneInfoMap;
         m_Animations = other.m_Animations;
+		name = other.name;
     }
     return *this;
 }
@@ -42,6 +44,7 @@ Animation::Animation(Animation&& other) noexcept
     m_RootNode = std::move(other.m_RootNode);
     m_BoneInfoMap = std::move(other.m_BoneInfoMap);
 	m_Animations = std::move(other.m_Animations);
+    name = std::move(other.name);
 }
 
 Animation& Animation::operator=(Animation&& other) noexcept
@@ -54,6 +57,7 @@ Animation& Animation::operator=(Animation&& other) noexcept
         m_RootNode = std::move(other.m_RootNode);
         m_BoneInfoMap = std::move(other.m_BoneInfoMap);
 		m_Animations = std::move(other.m_Animations);
+		name = std::move(other.name);
     }
     return *this;
 }
@@ -70,6 +74,7 @@ void Animation::SetUpAnimation(const std::string& animationPath, Model* model, i
         m_Animations.push_back(animation->mChannels[i]->mNodeName.C_Str());
     }
     m_TicksPerSecond = animation->mTicksPerSecond;
+    name = animation->mName.C_Str();
     ReadHeirarchyData(m_RootNode, scene->mRootNode);
     ReadMissingBones(animation, *model);
 }

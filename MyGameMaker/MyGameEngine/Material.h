@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 #include "Image.h"
 #include "Shaders.h"
 #include "types.h"
@@ -9,49 +10,62 @@ class Material
 {
 public:
 	Material();
+
 	enum WrapModes { Repeat, MirroredRepeat, Clamp };
 	WrapModes wrapMode = Repeat;
 
 	enum Filters { Nearest, Linear };
 	Filters filter = Nearest;
 
-	Shaders* shader = nullptr;
-	ShaderType shaderType = ShaderType::LIGHT;
-	vec4 color = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	bool useShader = false;
+	float metallic = 0.0f;
+	float roughness = 0.5f;
+	float ao = 1.0f;
+
+	float tonemapStrength = 1.0f;
+
+	ShaderType shaderType = ShaderType::PBR;
+
+	std::shared_ptr<Image> imagePtr = std::make_shared<Image>();  // Main texture (albedo/diffuse)
+	std::shared_ptr<Image> normalMapPtr = nullptr;                // Normal map
+	std::shared_ptr<Image> metallicMapPtr = nullptr;              // Metallic map
+	std::shared_ptr<Image> roughnessMapPtr = nullptr;             // Roughness map
+	std::shared_ptr<Image> aoMapPtr = nullptr;                    // Ambient occlusion map
 
 	unsigned int GetId() const { return gid; }
-	
 	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
+
 	void bind() const;
 	void unbind() const;
+
 	void setImage(const std::shared_ptr<Image>& img_ptr) { imagePtr = img_ptr; }
+	void setNormalMap(const std::shared_ptr<Image>& img_ptr) { normalMapPtr = img_ptr; }
+	void setMetallicMap(const std::shared_ptr<Image>& img_ptr) { metallicMapPtr = img_ptr; }
+	void setRoughnessMap(const std::shared_ptr<Image>& img_ptr) { roughnessMapPtr = img_ptr; }
+	void setAoMap(const std::shared_ptr<Image>& img_ptr) { aoMapPtr = img_ptr; }
+
 	auto& image() { return *imagePtr; }
 	std::shared_ptr<Image> getImg() { return imagePtr; }
-	bool loadShaders(const std::string& vertexShaderFile, const std::string& fragmentShaderFile);
-	void bindShaders() const;
-	void setShaderUniform(const std::string& name, int value);
-	void setShaderUniform(const std::string& name, float value);
-	void setShaderUniform(const std::string& name, const glm::vec3& value);
-	void setShaderUniform(const std::string& name, const glm::vec4& value);
-	void setShaderUniform(const std::string& name, const glm::mat4& value);
+
 	const glm::vec4& GetColor() const;
 	void SetColor(const vec4& color);
-	void SetShader(Shaders& shader);
-	Shaders* GetShader();
+
+	void SetShaderType(ShaderType type) { shaderType = type; }
+	ShaderType GetShaderType() const { return shaderType; }
+
+	void ApplyShader(const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection) const;
 
 	void SaveBinary(const std::string& filename) const;
 	static std::shared_ptr<Material> LoadBinary(const std::string& filename);
-	std::shared_ptr<Image> imagePtr = std::make_shared<Image>();
+
+	void SetTonemapStrength(float strength) { tonemapStrength = strength; }
+	float GetTonemapStrength() const { return tonemapStrength; }
+
 private:
-
-
-	
-	std::string image_path;
-
 	unsigned int gid;
 	static unsigned int next_id;
+	std::string image_path;
 
+	void bindTexture(const std::shared_ptr<Image>& texture, GLenum textureUnit) const;
 };
-

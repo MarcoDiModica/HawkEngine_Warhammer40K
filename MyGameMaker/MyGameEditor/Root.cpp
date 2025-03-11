@@ -405,7 +405,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
             for (auto& bone : meshImp.bonesGameObjects[i]) {
                 auto boneGO = CreateGameObject(bone->GetName());
                 Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
-                boneGO->GetTransform()->SetLocalMatrix(boneTransform->GetLocalTransform());
+                //boneGO->GetTransform()->SetLocalMatrix(boneTransform->GetLocalTransform());
                 boneMap[bone->GetName()] = boneGO;
             }
 

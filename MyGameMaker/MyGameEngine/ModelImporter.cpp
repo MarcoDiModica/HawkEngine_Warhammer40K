@@ -122,7 +122,8 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 				std::string boneName = bone->mName.C_Str();
 				std::shared_ptr<GameObject> boneGameObject = std::make_shared<GameObject>();
 				boneGameObject->SetName(boneName);
-				boneGameObject->GetTransform()->SetMatrix(aiMat4ToMat4(bone->mOffsetMatrix));
+				glm::mat4 boneMatrix = aiMat4ToMat4(bone->mOffsetMatrix);
+				boneGameObject->GetTransform()->SetLocalMatrix(accumulatedTransform * boneMatrix);
 				
 				boneVector.push_back(boneGameObject);
 			}

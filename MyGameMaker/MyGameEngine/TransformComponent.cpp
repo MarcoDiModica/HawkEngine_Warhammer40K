@@ -40,8 +40,9 @@ namespace Utils {
 	}
 }
 
-Transform_Component::Transform_Component(GameObject* owner) : Component(owner) { name = "Transform_Component"; }
+Transform_Component::Transform_Component(GameObject* owner) : Component(owner)
 {
+    name = "Transform_Component";
     localPosition = glm::dvec3(0.0);
     localRotation = glm::dquat(1.0, 0.0, 0.0, 0.0);
     localScale = glm::dvec3(1.0);

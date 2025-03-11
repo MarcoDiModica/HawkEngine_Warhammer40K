@@ -122,7 +122,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
                 if (!draggedObject) {
                     draggedObject = *(GameObject**)payload->Data;
                 }
-                Application->root->ParentGameObject(*draggedObject, obj);
+                Application->root->ParentGameObjectPreserve(*draggedObject, obj);
                 draggedObject = nullptr;
                 should_continue = false;
             }

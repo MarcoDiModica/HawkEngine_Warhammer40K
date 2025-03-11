@@ -436,19 +436,13 @@ std::shared_ptr<Scene> Root::GetActiveScene() const
     return SceneManagement->GetActiveScene();
 }
 
-bool Root::ParentGameObjectToScene(GameObject& child) {
-    return SceneManagement->ParentGameObjectToScene(child);
-}
-
-bool Root::ParentGameObjectToObject(GameObject& child, GameObject& father) {
-    
-    return SceneManagement->ParentGameObjectToObject(child, father);
-}
-
-
 bool Root::ParentGameObject(GameObject& child, GameObject& father) {
 
     return SceneManagement->ParentGameObject(child, father);
+}
+
+bool Root::ParentGameObjectPreserve(GameObject& child, GameObject& father) {
+	return SceneManagement->ParentGameObjectPreserve(child, father);
 }
 
 std::shared_ptr<GameObject> Root::FindGOByName(std::string name) {

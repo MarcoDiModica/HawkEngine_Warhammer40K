@@ -42,6 +42,8 @@ public:
     void SetActiveScene(const std::string& name);
 
     bool ParentGameObject(GameObject& child, GameObject& father);
+   
+    bool ParentGameObjectPreserve(GameObject& child, GameObject& father);
 
     std::shared_ptr<Scene> GetActiveScene() const;
 
@@ -63,8 +65,6 @@ public:
 
     void RemoveGameObject(GameObject* gameObject);
 
-    bool ParentGameObjectToScene(GameObject& child);
-    bool ParentGameObjectToObject(GameObject& child, GameObject& father);
     void UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared_ptr<GameObject> mainCamera);
     void RenderScene();
 

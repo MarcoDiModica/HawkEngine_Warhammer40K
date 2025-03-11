@@ -51,7 +51,11 @@ SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(SkeletalAnimat
 
 void SkeletalAnimationComponent::Start()
 {
-    animator = std::make_unique<Animator>(testAnimation.get());
+	if (animator == nullptr) 
+    {
+		animator = std::make_unique<Animator>(testAnimation.get());
+	}
+    //animator = std::make_unique<Animator>(testAnimation.get());
     animator->PlayAnimation(testAnimation.get());
 }
 

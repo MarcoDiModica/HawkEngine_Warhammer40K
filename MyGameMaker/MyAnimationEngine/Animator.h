@@ -4,11 +4,13 @@
 #include <memory>
 #include <vector>
 #include "Animation.h"
+#include "../MyGameEngine/GameObject.h"
 
 class Animator
 {
 private:
     std::vector<glm::mat4> m_FinalBoneMatrices;
+	std::vector<std::shared_ptr<GameObject>> m_BonesGameObjects;
     Animation* m_CurrentAnimation;
     float m_CurrentTime;
     float m_DeltaTime;
@@ -62,6 +64,11 @@ public:
     float GetPlaySpeed()
     {
         return m_PlaySpeed;
+    }
+
+    void AddBoneGameObject(std::shared_ptr<GameObject> boneGO)
+    {
+        m_BonesGameObjects.push_back(boneGO);
     }
 
 };

@@ -21,6 +21,7 @@ Animator::Animator(const Animator& other)
     m_DeltaTime = other.m_DeltaTime;
     m_CurrentAnimation = other.m_CurrentAnimation;
     m_FinalBoneMatrices = other.m_FinalBoneMatrices;
+	m_BonesGameObjects = other.m_BonesGameObjects;
 }
 
 Animator& Animator::operator=(const Animator& other)
@@ -31,6 +32,7 @@ Animator& Animator::operator=(const Animator& other)
         m_DeltaTime = other.m_DeltaTime;
         m_CurrentAnimation = other.m_CurrentAnimation;
         m_FinalBoneMatrices = other.m_FinalBoneMatrices;
+		m_BonesGameObjects = other.m_BonesGameObjects;
     }
     return *this;
 }
@@ -41,6 +43,7 @@ Animator::Animator(Animator&& other) noexcept
     m_DeltaTime = other.m_DeltaTime;
     m_CurrentAnimation = other.m_CurrentAnimation;
     m_FinalBoneMatrices = std::move(other.m_FinalBoneMatrices);
+	m_BonesGameObjects = std::move(other.m_BonesGameObjects);
     other.m_CurrentAnimation = nullptr;
 }
 
@@ -52,6 +55,7 @@ Animator& Animator::operator=(Animator&& other) noexcept
         m_DeltaTime = other.m_DeltaTime;
         m_CurrentAnimation = other.m_CurrentAnimation;
         m_FinalBoneMatrices = std::move(other.m_FinalBoneMatrices);
+		m_BonesGameObjects = std::move(other.m_BonesGameObjects);
         other.m_CurrentAnimation = nullptr;
     }
     return *this;
@@ -94,6 +98,15 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
     {
         int index = boneInfoMap[nodeName].id;
         glm::mat4 offset = boneInfoMap[nodeName].offset;
+		for (int i = 0; i < m_BonesGameObjects.size(); i++)
+		{
+			if (m_BonesGameObjects[i]->GetName() == nodeName)
+			{
+				m_BonesGameObjects[i]->GetTransform()->SetLocalMatrix(globalTransformation * offset);
+				break;
+			}
+		}
+
         m_FinalBoneMatrices[index] = globalTransformation * offset;
     }
 

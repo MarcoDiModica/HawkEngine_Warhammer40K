@@ -96,21 +96,13 @@ namespace EngineBinds {
     //Physics Collider
     void SetTrigger(MonoObject* colliderRef, bool trigger);
     bool IsTrigger(MonoObject* colliderRef);
-
     glm::vec3 GetColliderPosition(MonoObject* colliderRef);
-
     void SetColliderPosition(MonoObject* colliderRef, glm::vec3* position);
-
     glm::quat GetColliderRotation(MonoObject* colliderRef);
-
     void SetColliderRotation(MonoObject* colliderRef, glm::quat* rotation);
-
     glm::vec3 GetColliderSize(MonoObject* colliderRef);
-
     void SetColliderSize(MonoObject* colliderRef, glm::vec3* size);
-
     void SetColliderActive(MonoObject* colliderRef, bool active);
-
     void SnapColliderToPosition(MonoObject* colliderRef);
 
     //Physics Rigidbody
@@ -136,6 +128,9 @@ namespace EngineBinds {
     void Resume(MonoObject* audioRef);
     void SetVolume(MonoObject* audioRef, float volume);
     float GetVolume(MonoObject* audioRef);
+
+    //UIImage
+    void SetTexture(MonoObject* uiImageRef, MonoString* path);
 }
 
 #endif // ENGINE_BINDS_H

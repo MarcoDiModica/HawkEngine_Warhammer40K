@@ -292,6 +292,7 @@ bool Root::Start()
     lifeBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/lifeBar.png");
     lifeBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
     lifeBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
+    lifeBar->AddComponent<ScriptComponent>()->LoadScript("ImageAsSlider");
 
 
     auto button = CreateGameObject("Button");

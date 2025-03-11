@@ -7,6 +7,8 @@
 #include "../MyGameEditor/UISceneWindow.h"
 #include "../MyUIEngine/UITransformComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
+#include "MyScriptingEngine/MonoManager.h"
+#include "mono/metadata/debug-helpers.h"
 
 UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
@@ -135,4 +137,44 @@ void UIImageComponent::LoadMesh()
 	mesh = std::make_shared<Mesh>();
 	mesh->setModel(model);
 	mesh->loadToOpenGL();
+}
+
+MonoObject* UIImageComponent::GetSharp()
+{
+	if (CsharpReference) {
+		return CsharpReference;
+	}
+
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "UIImage");
+	if (!klass) {
+		return nullptr;
+	}
+
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		return nullptr;
+	}
+
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.UIImage:.ctor(uintptr,HawkEngine.GameObject)", true);
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	if (!method)
+	{
+		return nullptr;
+	}
+
+	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+	MonoObject* ownerGo = owner->GetSharp();
+	if (!ownerGo)
+	{
+		return nullptr;
+	}
+
+	void* args[2];
+	args[0] = &componentPtr;
+	args[1] = ownerGo;
+
+	mono_runtime_invoke(method, monoObject, args, nullptr);
+
+	CsharpReference = monoObject;
+	return CsharpReference;
 }

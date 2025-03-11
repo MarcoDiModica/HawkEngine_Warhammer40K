@@ -39,6 +39,9 @@ public:
 
 	glm::vec2 GetImageSize() const { return glm::vec2(texture->width(), texture->height()); }
 
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
+
 private:
 	//texture
 	std::string texturePath;

@@ -27,6 +27,7 @@ private:
     AssimpNodeData m_RootNode;
     std::map<std::string, BoneInfo> m_BoneInfoMap;
     std::vector<std::string> m_Animations;
+    std::string name;
 public:
     Animation();
     ~Animation();
@@ -52,6 +53,8 @@ public:
         return m_BoneInfoMap;
     }
     
+    std::string GetName() { return name; }
+
 	std::vector<std::string>& GetAnimations()
 	{
 		return m_Animations;

@@ -375,7 +375,7 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Animation")) return;
 
-		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetAnimations()[0].c_str());
+		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetName().c_str());
 		ImGui::Text("Time: %.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
         
         float playSpeed = skeletal->GetAnimator()->GetPlaySpeed();

@@ -1,15 +1,19 @@
 #pragma once
+#include <glm/glm.hpp>
+#include <memory>
 #include "Component.h"
 #include "Mesh.h"
 #include "Material.h"
 #include "Image.h"
-#include <glm/glm.hpp>
-#include <memory>
+#include "../MyGameEditor/Log.h"
+#include "../MyShadersEngine/ShaderComponent.h"
+#include "GameObject.h"
 
 class Mesh;
 class Material;
 class Image;
-class Shaders;
+class ShaderComponent;
+class GameObject;
 
 class MeshRenderer : public Component {
 public:
@@ -46,10 +50,25 @@ public:
 	void UnbindMeshAfterRendering() const;
 	void DrawMeshElements() const;
 private:
-	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-	std::shared_ptr<Material> material = std::make_shared<Material>();
-	glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+    std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+    std::shared_ptr<Material> material = std::make_shared<Material>();
+    glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	void RenderWithUnlitShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const;
 	void RenderWithPBRShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const;
+
+protected:
+	friend class SceneSerializer;
+
+	YAML::Node encode() override
+	{
+		YAML::Node node = Component::encode();
+
+		return node;
+	}
+
+	bool decode(const YAML::Node& node) override
+	{
+		return true;
+	}
 };

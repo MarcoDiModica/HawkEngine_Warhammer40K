@@ -82,7 +82,7 @@
       <Filter>EditorModules</Filter>
     </ClCompile>
     <ClCompile Include="UIGameView.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>EditorModules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,7 +147,7 @@
       <Filter>EditorModules</Filter>
     </ClInclude>
     <ClInclude Include="UIGameView.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>EditorModules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

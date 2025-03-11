@@ -118,10 +118,8 @@ bool Image::LoadTexture(const std::string& path)
 	auto channels = ilGetInteger(IL_IMAGE_BPP);
 	auto data = ilGetData();
 
-	//load image as a texture in VRAM
 	load(width, height, channels, data);
 
-	//now we can delete image from RAM
 	ilDeleteImage(img);
 
 	if (_id) {

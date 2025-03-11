@@ -54,8 +54,8 @@
 #include "../MyGameEngine/InputEngine.h"
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
+#include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
-
 
 using namespace std;
 
@@ -525,6 +525,7 @@ int main(int argc, char** argv) {
 			Application->physicsModule->Awake();
 			Application->physicsModule->Start();
 			MonoManager::GetInstance().Initialize();
+			SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
 			iluInit();

@@ -61,10 +61,8 @@ bool AudioEngine::Initialize() {
 }
 
 void AudioEngine::Shutdown() {
-    // Clear audio asset cache
-    AudioAssetProcessor::ClearCache();
+    AudioAssetProcessor::ClearCache(); //crahsea en esta funcion
     
-    // Stop and destroy all active sources
     for (auto& [sourceId, source] : m_ActiveSources) {
         StopSound(sourceId);
         DestroyAudioSource(sourceId);

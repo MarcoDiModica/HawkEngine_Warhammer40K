@@ -49,4 +49,9 @@ public:
 private:
 	ShaderType shaderType;
 	Material* ownerMaterial;
+
+protected:
+	friend class SceneSerializer;
+
+	//todo encode decode functions
 };

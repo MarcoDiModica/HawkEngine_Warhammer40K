@@ -65,24 +65,16 @@ public:
 
     void RemoveGameObject(GameObject* gameObject);
 
-    void UpdateCanvasTransform(std::shared_ptr<GameObject> canvas, std::shared_ptr<GameObject> mainCamera);
-    void RenderScene();
-
     std::shared_ptr<GameObject> FindGOByName(std::string name);
 
     std::shared_ptr<Scene> currentScene = nullptr;
-    float emitterLifetime = 5.0f;
-    //main camera
-    std::shared_ptr<GameObject> mainCamera = nullptr;
-    std::shared_ptr<GameObject> CreateCanvasInScene(const std::string& name, const glm::vec3& position, const std::string& texturePath);
 
+    std::shared_ptr<GameObject> mainCamera = nullptr;
+    
     friend SceneSerializer;
 
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
-    glm::dvec3 initialCanvasOffset;
-    glm::dquat initialCanvasRotationOffset;
-    std::vector<std::shared_ptr<GameObject>> renderFirstObjects;
 };
 
 #endif

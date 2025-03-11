@@ -106,28 +106,29 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 					animations.push_back(std::shared_ptr<Animation>(animation));
 					//std::cout << node.mName.C_Str() << std::endl;
 				}
+
+				const aiMesh* mesh = scene.mMeshes[node.mMeshes[i]];
+				int numBones = mesh->mNumBones;
+
+				std::vector<std::shared_ptr<GameObject>> boneVector;
+				for (int j = 0; j < numBones; ++j)
+				{
+					aiBone* bone = mesh->mBones[j];
+					std::string boneName = bone->mName.C_Str();
+					std::shared_ptr<GameObject> boneGameObject = std::make_shared<GameObject>();
+					boneGameObject->SetName(boneName);
+					glm::mat4 boneMatrix = aiMat4ToMat4(bone->mOffsetMatrix);
+					boneGameObject->GetTransform()->SetLocalMatrix(accumulatedTransform * boneMatrix);
+
+					boneVector.push_back(boneGameObject);
+				}
+				bonesGameObjects.push_back(boneVector);
 			}
 
 			obj.SetName(node.mName.data);
 
 			fbx_object.push_back(std::make_shared<GameObject>(obj));
 
-			const aiMesh* mesh = scene.mMeshes[node.mMeshes[i]];
-			int numBones = mesh->mNumBones;
-
-			std::vector<std::shared_ptr<GameObject>> boneVector;
-			for (int j = 0; j < numBones; ++j)
-			{
-				aiBone* bone = mesh->mBones[j];
-				std::string boneName = bone->mName.C_Str();
-				std::shared_ptr<GameObject> boneGameObject = std::make_shared<GameObject>();
-				boneGameObject->SetName(boneName);
-				glm::mat4 boneMatrix = aiMat4ToMat4(bone->mOffsetMatrix);
-				boneGameObject->GetTransform()->SetLocalMatrix(accumulatedTransform * boneMatrix);
-				
-				boneVector.push_back(boneGameObject);
-			}
-			bonesGameObjects.push_back(boneVector);
 
 			// Establish parent-child relationships
 			/*for (int j = 0; j < numBones; ++j)

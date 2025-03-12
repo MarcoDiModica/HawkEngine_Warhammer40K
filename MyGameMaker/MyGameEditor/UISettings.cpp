@@ -255,14 +255,14 @@ void UISettings::EditorCamData()
 
 	// Movement Speed
 	float movementSpeed = camera->GetMovementSpeed();
-	if (ImGui::SliderFloat("Movement Speed", &movementSpeed, 0.1f, 10.0f))
+	if (ImGui::SliderFloat("Movement Speed", &movementSpeed, 1.0f, 50.0f))
 	{
 		camera->SetMovementSpeed(movementSpeed);
 	}
 
 	// Mouse Sensitivity
 	float mouseSensitivity = camera->GetMouseSensitivity();
-	if (ImGui::SliderFloat("Mouse Sensitivity", &mouseSensitivity, 0.1f, 10.0f))
+	if (ImGui::SliderFloat("Mouse Sensitivity", &mouseSensitivity, 1.0f, 50.0f))
 	{
 		camera->SetMouseSensitivity(mouseSensitivity);
 	}

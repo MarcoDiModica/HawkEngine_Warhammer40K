@@ -20,4 +20,13 @@ public:
 
 private:
     void UpdateListenerPosition();
+
+protected:
+	friend class SceneSerializer;
+    YAML::Node encode() override {
+		return YAML::Node();
+    }
+    bool decode(const YAML::Node& node) override {
+		return false;
+    }
 }; 

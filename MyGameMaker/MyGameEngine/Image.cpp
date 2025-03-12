@@ -103,7 +103,7 @@ std::istream& operator>>(std::istream& is, Image& img) {
 	return is;
 }
 
-void Image::LoadTexture(const std::string& path)
+bool Image::LoadTexture(const std::string& path)
 {
 	image_path = path;
 	auto img = ilGenImage();
@@ -118,11 +118,15 @@ void Image::LoadTexture(const std::string& path)
 	auto channels = ilGetInteger(IL_IMAGE_BPP);
 	auto data = ilGetData();
 
-	//load image as a texture in VRAM
 	load(width, height, channels, data);
 
-	//now we can delete image from RAM
 	ilDeleteImage(img);
+
+	if (_id) {
+		return true;
+	}
+	
+	return false;
 }
 
 void Image::LoadTextureLocalPath(const std::string& path) {

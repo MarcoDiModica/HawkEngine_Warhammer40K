@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "../MyGameEngine/Component.h"
 #include <mono/metadata/object.h>
 #include <filesystem>
@@ -34,5 +35,14 @@ public:
 
     std::filesystem::file_time_type lastWriteTime;
 
-    //int method();
+protected:
+	friend class SceneSerializer;
+    
+    YAML::Node encode() override {
+		return YAML::Node();
+    }
+    
+    bool decode(const YAML::Node& node) override {
+        return false;
+    }
 };

@@ -2,36 +2,37 @@
 #ifndef SCENE_SERIALIZER_H
 #define SCENE_SERIALIZER_H
 
-
-
 #include "Module.h"
 #include "../MyGameEngine/GameObject.h"
-#ifdef YAML_CPP_DLL_EXPORTS
-#define YAML_CPP_API __declspec(dllexport)
-#else
-#define YAML_CPP_API __declspec(dllimport)
-#endif
 #include <yaml-cpp/yaml.h>
+#include <string>
+#include <memory>
+
+class App;
+class Scene;
 
 class SceneSerializer : public Module
 {
-private:
-	
 public:
-
-	SceneSerializer(App* app) : Module(app) { ; }
+	SceneSerializer(App* app);
+	~SceneSerializer() = default;
 
 	void Serialize(const std::string& directoryPath, bool play = false);
+	void DeSerialize(const std::string& path);
 
-	void DeSerialize(std::string path);
+private:
+	YAML::Node SerializeGameObject(GameObject& gameObject);
+	YAML::Node SerializeComponents(GameObject& gameObject);
+	void SerializeChildren(YAML::Node& parentNode, GameObject& gameObject);
 
-	YAML::Node ObjectSerialize(GameObject& child, int num);
+	std::shared_ptr<GameObject> DeserializeGameObject(const YAML::Node& node);
+	void DeserializeComponents(GameObject* gameObject, const YAML::Node& node);
+	void DeserializeChildren(GameObject* parentGameObject, const YAML::Node& node);
 
-	GameObject& DeSerializeChild(YAML::Node _node, YAML::Node& mesh_root_node);
-
-	std::string _mesh_path = "";
-
+	void SaveToFile(const YAML::Node& root, const std::string& filepath);
+	YAML::Node LoadFromFile(const std::string& filepath);
+	std::string GetComponentTypeName(ComponentType type);
+	ComponentType GetComponentTypeFromName(const std::string& name);
 };
 
-
-#endif
+#endif // SCENE_SERIALIZER_H

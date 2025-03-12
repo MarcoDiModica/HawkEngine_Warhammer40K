@@ -58,6 +58,7 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("EmptyGameObject")) { Application->root->CreateGameObject("EmptyGameObject"); }
 			if (ImGui::MenuItem("Cube")) { Application->root->CreateCube("Cube"); }
 			if (ImGui::MenuItem("Sphere")) { Application->root->CreateSphere("Sphere"); }
+			if (ImGui::MenuItem("Cylinder")) { Application->root->CreateCylinder("Cylinder"); }
 			if (ImGui::MenuItem("Plane")) { Application->root->CreatePlane("Plane"); }
 			if (ImGui::MenuItem("Camera")) { Application->root->CreateCameraObject("Camera"); }
 			if (ImGui::MenuItem("Light")) { Application->root->CreateLightObject("Light"); }
@@ -70,8 +71,7 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::MenuItem("Console")) { Application->gui->showConsole = !Application->gui->showConsole; }
 			if (ImGui::MenuItem("Settings")) { Application->gui->showSettings = !Application->gui->showSettings; }
 			if (ImGui::MenuItem("Inspector")) { Application->gui->showInspector = !Application->gui->showInspector; }
-			if (ImGui::MenuItem("Audio Test", NULL, &Application->gui->showAudioTest)) {}
-			if (ImGui::MenuItem("Text Editor", NULL, &Application->gui->showTextEditor)) {}
+			if (ImGui::MenuItem("Text Editor", nullptr, &Application->gui->showTextEditor)) {}
 
 			ImGui::EndMenu();
 		}

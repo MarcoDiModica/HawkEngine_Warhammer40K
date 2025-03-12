@@ -51,7 +51,6 @@ public:
     UIMainMenuBar* UIMainMenuBarPanel = nullptr;
     UISceneWindow* UISceneWindowPanel = nullptr;
     UIProject* UIProjectPanel = nullptr;
-    UIAudioTest* UIAudioTestPanel = nullptr;
     UITextEditor* UITextEditorPanel = nullptr;
     UIGameView* UIGameViewPanel = nullptr;
 
@@ -62,12 +61,11 @@ public:
     bool showMainMenuBar = true;
     bool showSceneWindow = true;
     bool showProject = true;
-    bool showAudioTest = false;
     bool showTextEditor = false;
     bool showGameView = true;
 
     GLuint fbo = 0;
-    vec2 camSize = vec2(1280, 720);
+    vec2 camSize = vec2(1920, 1080);
     GLuint fboTexture = 0;
     GLuint rbo = 0;
 

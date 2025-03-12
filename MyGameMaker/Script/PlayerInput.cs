@@ -43,14 +43,6 @@ public class PlayerInput : MonoBehaviour
     {
         Vector3 direction = Vector3.Zero;
 
-        if (Input.GetMouseButton(1))
-        {
-            Vector3 mousePosition = Input.GetMousePosition();
-            Vector3 playerPosition = gameObject.GetComponent<Transform>().GetPosition();
-            Vector3 directionToMouse = Vector3.Normalize(mousePosition - playerPosition);
-            direction = new Vector3(directionToMouse.X, 0, directionToMouse.Z);
-        }
-
         if (Input.GetRightStick() != Vector2.Zero)
         {
             Vector2 rightStickInput = Input.GetRightStick();

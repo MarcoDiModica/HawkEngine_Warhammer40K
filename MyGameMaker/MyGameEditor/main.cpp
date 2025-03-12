@@ -391,71 +391,6 @@ static void ObjectToEditorCamera()
 	}
 }
 
-static void MousePickingCheck(std::vector<GameObject*> objects)
-{	
-	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
-	glm::vec3 rayDirection = Application->input->getMousePickRay();
-	GameObject* selectedObject = nullptr;
-	bool selecting = false;
-	float distance = 0.0f;
-	float closestDistance = 0.0f;
-	if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused) 
-	{
-
-		if (ImGuizmo::IsOver()) {
-			return;
-		}
-
-		selecting = true;
-		for (int i = 0; i < objects.size(); i++)
-		{
-			if (objects[i]->HasComponent<MeshRenderer>()) 
-			{
-				BoundingBox bbox = objects[i]->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
-
-				bbox = objects[i]->GetTransform()->GetMatrix() * bbox;
-				glm::vec3 collisionPoint;
-				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
-				{
-                    distance = glm::distance(rayOrigin, collisionPoint);
-					if (distance < closestDistance || closestDistance == 0.0f)
-					{
-						closestDistance = distance;
-						selectedObject = objects[i];
-					}
-				}
-			}
-		}
-	}
-
-	if (selectedObject != nullptr && selecting == true)
-	{
-		Application->input->ClearSelection();
-		Application->input->SetDraggedGameObject(selectedObject);
-		Application->input->AddToSelection(selectedObject);
-	}
-}
-
-static void RenderOutline(GameObject* object) {
-	if (!object->isSelected || !object->HasComponent<MeshRenderer>()) return;
-	
-	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
-
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(-5.0f, -5.0f);
-	
-	glColor3f(1.0f, 0.5f, 0.0f); // Red outline
-
-	glPushMatrix();
-	glMultMatrixf(glm::value_ptr(modelMatrix));
-	object->GetComponent<MeshRenderer>()->Render();
-	glPopMatrix();
-
-	glDisable(GL_POLYGON_OFFSET_FILL);
-
-	glColor3f(1.0f, 1.0f, 1.0f);
-}
-
 static void RenderEditor() {
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
@@ -470,13 +405,11 @@ static void RenderEditor() {
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 		objects.push_back(object);
-		RenderOutline(object);
 		object->Update(static_cast<float>(Application->GetDt()));
 
 		for (const auto & j : object->GetChildren()) {
 			GameObject* child = j.get();
 			objects.push_back(child);
-			RenderOutline(child);
 		}
 
 		if (object->HasComponent<LightComponent>()) {
@@ -489,7 +422,6 @@ static void RenderEditor() {
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
-	MousePickingCheck(objects);
 }
 
 static void EditorRenderer(MyGUI* gui) {

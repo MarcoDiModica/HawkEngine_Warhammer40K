@@ -29,10 +29,6 @@ UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, na
     m_Setting.LoadTextureLocalPath("EngineAssets/settings.png");
 }
 
-UISceneWindow::~UISceneWindow()
-{
-}
-
 void UISceneWindow::Init()
 {
 
@@ -58,91 +54,6 @@ void UISceneWindow::Init()
 }
 
 ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;
-
-glm::vec3 UISceneWindow::ConvertMouseToWorldCoords(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y)
-{
-    int adjusted_mouse_x = mouse_x - window_x;
-    int adjusted_mouse_y = mouse_y - window_y;
-
-    float ndc_x = (2.0f * adjusted_mouse_x) / screen_width - 1.0f;
-    float ndc_y = 1.0f - (2.0f * adjusted_mouse_y) / screen_height;
-
-    glm::vec4 clip_coords = glm::vec4(ndc_x, ndc_y, -1.0f, 1.0f);
-    glm::mat4 projection_matrix = Application->camera->projection();
-    glm::vec4 view_coords = glm::inverse(projection_matrix) * clip_coords;
-    view_coords = glm::vec4(view_coords.x, view_coords.y, -1.0f, 0.0f);
-
-    glm::mat4 view_matrix = Application->camera->view();
-    glm::vec4 world_coords = glm::inverse(view_matrix) * view_coords;
-
-    glm::vec3 camPos = glm::vec3(
-        static_cast<float>(Application->camera->GetTransform().GetPosition().x),
-        static_cast<float>(Application->camera->GetTransform().GetPosition().y),
-        static_cast<float>(Application->camera->GetTransform().GetPosition().z)
-    );
-    return glm::vec3(world_coords) + camPos;
-}
-
-glm::vec3 UISceneWindow::GetMousePickDir(int mouse_x, int mouse_y, int screen_width, int screen_height, int window_x, int window_y)
-{
-    int adjusted_mouse_x = mouse_x - window_x;
-    int adjusted_mouse_y = mouse_y - window_y;
-
-    glm::vec3 window_coords = glm::vec3(adjusted_mouse_x, screen_height - adjusted_mouse_y, 0.0f);
-    glm::mat4 view_matrix = Application->camera->view();
-    glm::mat4 projection_matrix = Application->camera->projection();
-
-    glm::vec4 viewport = glm::vec4(0, 0, screen_width, screen_height);
-    glm::vec3 v0 = glm::unProject(window_coords, view_matrix, projection_matrix, viewport);
-    glm::vec3 v1 = glm::unProject(glm::vec3(window_coords.x, window_coords.y, 1.0f), view_matrix, projection_matrix, viewport);
-    glm::vec3 world_coords = (v1 - v0);
-
-    return world_coords;
-}
-
-bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint) {
-    float tmin = (bBox.min.x - rayOrigin.x) / rayDir.x;
-    float tmax = (bBox.max.x - rayOrigin.x) / rayDir.x;
-
-    if (tmin > tmax) std::swap(tmin, tmax);
-
-    float tymin = (bBox.min.y - rayOrigin.y) / rayDir.y;
-    float tymax = (bBox.max.y - rayOrigin.y) / rayDir.y;
-
-    if (tymin > tymax) std::swap(tymin, tymax);
-
-    if ((tmin > tymax) || (tymin > tmax))
-        return false;
-
-    if (tymin > tmin)
-        tmin = tymin;
-
-    if (tymax < tmax)
-        tmax = tymax;
-
-    float tzmin = (bBox.min.z - rayOrigin.z) / rayDir.z;
-    float tzmax = (bBox.max.z - rayOrigin.z) / rayDir.z;
-
-    if (tzmin > tzmax) std::swap(tzmin, tzmax);
-
-    if ((tmin > tzmax) || (tzmin > tmax))
-        return false;
-
-    if (tzmin > tmin)
-        tmin = tzmin;
-
-    if (tzmax < tmax)
-        tmax = tzmax;
-
-    float t = tmin;
-    if (t < 0) {
-        t = tmax;
-        if (t < 0) return false;
-    }
-
-    collisionPoint = rayOrigin + t * rayDir;
-    return true;
-}
 
 bool UISceneWindow::Draw()
 {

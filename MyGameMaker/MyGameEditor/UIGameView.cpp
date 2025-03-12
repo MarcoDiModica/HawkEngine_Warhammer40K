@@ -92,11 +92,11 @@ void UIGameView::UpdateFramebuffer()
 
 bool UIGameView::Draw()
 {
-	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar | 
-                            ImGuiWindowFlags_NoScrollWithMouse | 
-                            ImGuiWindowFlags_NoNavInputs |
-                            ImGuiWindowFlags_NoTitleBar;
-	
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar |
+		ImGuiWindowFlags_NoScrollWithMouse |
+		ImGuiWindowFlags_NoNavInputs |
+		ImGuiWindowFlags_NoTitleBar;
+
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
 	if (ImGui::Begin("Game View", &enabled, ImGuiWindowFlags_NoScrollbar))
@@ -109,23 +109,12 @@ bool UIGameView::Draw()
 			return true;
 		}
 
-		ImVec2 windowPos = ImGui::GetWindowPos();
-		ImVec2 windowSize = ImGui::GetWindowSize();
+		ImVec2 availableSize = ImGui::GetContentRegionAvail();
 
-		winPos = vec2(windowPos.x, windowPos.y);
-		winSize = vec2(windowSize.x, windowSize.y);
-
-        //debug viewport size and position
-        ImGui::Text("Viewport Size: %f, %f", width, height);
-        ImGui::Text("Viewport Pos: %f, %f", GetViewportPos().x, GetViewportPos().y);
+		const float targetAspectRatio = 16.0f / 9.0f;
 
 		float availableAspectRatio = availableSize.x / availableSize.y;
 
-        const float targetAspectRatio = 16.0f / 9.0f;
-
-        width = availableSize.x;
-        height = width / targetAspectRatio;
-		
 		float offsetX = 0, offsetY = 0;
 
 		if (availableAspectRatio > targetAspectRatio) {
@@ -141,24 +130,6 @@ bool UIGameView::Draw()
 			offsetY = (availableSize.y - height) * 0.5f;
 		}
 
-		ImVec2 viewportMin = ImGui::GetItemRectMin();
-		viewportPos = vec2(viewportMin.x, viewportMin.y);
-		viewportSize = vec2(width, height);
-
-        ImGui::End();
-    }
-
-    return true;
-}
-
-vec2 UIGameView::GetViewportSize()
-{
-    return viewportSize;
-}
-
-vec2 UIGameView::GetViewportPos()
-{
-	return viewportPos;
 		if (offsetX > 0) {
 			ImGui::Indent(offsetX);
 		}
@@ -179,10 +150,26 @@ vec2 UIGameView::GetViewportPos()
 		winPos = vec2(windowPos.x, windowPos.y);
 		winSize = vec2(windowSize.x, windowSize.y);
 
+		ImVec2 viewportMin = ImGui::GetItemRectMin();
+		viewportPos = vec2(viewportMin.x, viewportMin.y);
+		viewportSize = vec2(width, height);
+
+		
+
 		ImGui::End();
 	}
 
 	ImGui::PopStyleVar();
 
 	return true;
+}
+
+vec2 UIGameView::GetViewportSize()
+{
+	return viewportSize;
+}
+
+vec2 UIGameView::GetViewportPos()
+{
+	return viewportPos;
 }

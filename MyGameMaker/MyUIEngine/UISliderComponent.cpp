@@ -49,10 +49,10 @@ std::unique_ptr<Component> UISliderComponent::Clone(GameObject* owner)
 
 void UISliderComponent::SetTexture(std::string path)
 {
-	texture = std::make_shared<Image>();
+	/*texture = std::make_shared<Image>();
 	texture->LoadTexture(path);
 	shader = &Application->root->shaders[0];
-	LoadMesh();
+	LoadMesh();*/
 }
 
 void UISliderComponent::LoadMesh()

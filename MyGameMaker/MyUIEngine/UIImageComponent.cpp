@@ -9,6 +9,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
+#include "../MyGameEngine/ShaderManager.h"
 
 UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
@@ -44,8 +45,6 @@ void UIImageComponent::Update(float deltaTime)
 
 	shader->Bind();
 
-	glm::vec4 color(255, 255, 255, 255);
-	shader->SetUniform("modColor", color);
 
 	if (texture->image_path != "") {
 		texture->bind();
@@ -75,6 +74,7 @@ void UIImageComponent::Update(float deltaTime)
 	shader->SetUniform("model", modelMatrix);
 	shader->SetUniform("view", viewMatrix);
 	shader->SetUniform("projection", projection);
+	shader->SetUniform("modColor", color);
 
 	glBindVertexArray(mesh->getModel()->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getModel()->GetModelData().iBID);
@@ -106,7 +106,7 @@ void UIImageComponent::SetTexture(std::string path)
 {
 	texture = std::make_shared<Image>();
 	texture->LoadTexture(path);
-	shader = &Application->root->shaders[0];
+	shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
 	LoadMesh();
 }
 

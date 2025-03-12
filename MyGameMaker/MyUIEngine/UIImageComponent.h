@@ -47,6 +47,7 @@ private:
 	std::string texturePath;
 	std::shared_ptr<Image> texture;
 	std::shared_ptr<Mesh> mesh;
+	glm::vec4 color = glm::vec4(1.0f);
 	Shaders * shader;
 	glm::mat4 projection;
 

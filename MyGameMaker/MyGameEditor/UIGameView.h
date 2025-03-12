@@ -22,11 +22,11 @@ public:
 	vec2 GetWinSize() { return winSize; }
 	vec2 GetWinPos() { return winPos; }
 
+    vec2 GetViewportSize();
+    vec2 GetViewportPos();
+
 	float GetWidth() { return width; }
 	float GetHeight() { return height; }
-
-	vec2 GetViewportSize();
-	vec2 GetViewportPos();
 
 private:
     vec2 winSize = vec2(0, 0);
@@ -36,5 +36,10 @@ private:
     float height;    
     glm::dvec2 viewportPos;
     glm::dvec2 viewportSize;
+    
+
+
+
+
 };
 #endif // !__UI_GAME_VIEW_H__

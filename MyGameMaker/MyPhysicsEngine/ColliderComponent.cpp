@@ -288,7 +288,12 @@ void ColliderComponent::CreateCollider() {
         static_cast<btScalar>(localRot.w)
     );
     startTransform.setRotation(btRot);    glm::vec3 scale = transform->GetScale();
-    shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+    glm::vec3 parentScale(1.0f);
+    if (owner->GetParent()) {
+        parentScale = owner->GetParent()->GetTransform()->GetScale();
+    }
+    glm::vec3 finalScale = scale * parentScale;
+    shape->setLocalScaling(btVector3(finalScale.x, finalScale.z, finalScale.y));
 
     btVector3 localInertia(0, 0, 0);
     if (mass > 0.0f) {

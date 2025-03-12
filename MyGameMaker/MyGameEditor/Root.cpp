@@ -222,12 +222,10 @@ bool Root::Awake()
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();*/
 
-	//auto blockout = CreateGameObject("Blockout");
-	//blockout->GetTransform()->SetScale(glm::vec3(1.685f, 1.685f, 1.685f));
 
- //   environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
- //   ParentGameObject(*environment, *blockout);
- //   blockout->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
+    environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
+    environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
+    environment->GetTransform()->SetScale(glm::vec3(100, 100, 100));
 
     return true;
 }
@@ -288,7 +286,7 @@ bool Root::Update(double dt)
     }
 
     if (!hasCreatedCollider) {
-        //CreateSceneColliders();
+        CreateSceneColliders();
         hasCreatedCollider = true;
     }
 

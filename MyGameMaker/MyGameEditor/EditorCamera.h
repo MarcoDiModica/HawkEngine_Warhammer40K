@@ -39,12 +39,12 @@ private:
 
 	void move_camera(float speed, float deltaTime);
 	bool infiniteMouse = false;
-	float cameraSpeed = 5.0f;
+	float cameraSpeed = 20.0f;
 	float zoomSpeed = 5.0f;
-	double sensitivity = 5.0f;
+	double sensitivity = 20.0f;
 	double yaw = 0.0;
 	double pitch = 0.0;
-	double MAX_PITCH = glm::radians(89.0);
+	double MAX_PITCH = 89.0;
 	glm::dvec3 orbitPoint = glm::dvec3(0.0, 0.0, 0.0);
 
 	bool isFocusing = false;

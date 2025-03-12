@@ -41,13 +41,16 @@ SoundComponent::SoundComponent(GameObject* owner)
     , m_Loop(false)
 {
     name = "SoundComponent";
-    if (!s_SharedAudioEngine) {
-        InitSharedAudioEngine();
-    }
 }
 
 SoundComponent::~SoundComponent() {
-    Destroy();
+	if (m_SourceId != 0) {
+		if (s_SharedAudioEngine) {
+			s_SharedAudioEngine->StopSound(m_SourceId);
+		}
+		m_SourceId = 0;
+	}
+	m_AudioAsset.reset();
 }
 
 void SoundComponent::Start() {
@@ -205,6 +208,11 @@ MonoObject* SoundComponent::GetSharp()
 
 	CsharpReference = monoObject;
 	return CsharpReference;
+}
+
+void SoundComponent::DetachFromEngine()
+{
+    m_SourceId = 0;
 }
 
 void SoundComponent::UpdatePosition() {

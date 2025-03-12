@@ -4,14 +4,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include "Component.h"
 #include "types.h"
-#include <queue>
-#ifdef YAML_CPP_DLL_EXPORTS
-#define YAML_CPP_API __declspec(dllexport)
-#else
-#define YAML_CPP_API __declspec(dllimport)
-#endif
 #include <yaml-cpp/yaml.h>
-
 
 class SceneSerializer;
 
@@ -33,165 +26,93 @@ public:
 
     std::unique_ptr<Component> Clone(GameObject* owner) override;
 
-    const auto& GetMatrix() const { return matrix; }
-    const auto& GetLocalMatrix() const { return local_matrix; }
-    const auto& GetLeft() const { return left; }
-    const auto& GetUp() const { return up; }
-    const auto& GetForward() const { return forward; }
-    const auto& GetPosition() const { return position; }
-    auto& GetPosition() { return position; }
+    // World (final) transform matrix (read-only)
+    const glm::dmat4& GetMatrix() const { return worldMatrix; }
+    // Local transform matrix (computed from canonical data)
+    const glm::dmat4& GetLocalMatrix() const { return localMatrix; }
 
-    //idk why declaring it on the cpp gives me errors ;p
-    glm::dquat GetRotation() const {
-        return glm::quat_cast(matrix);
-    }
-    glm::dquat GetLocalRotation() const {
-        return glm::quat_cast(local_matrix);
-    }
-    glm::dvec3 GetScale() const {
-        return glm::dvec3(
-            glm::length(left),
-            glm::length(up),
-            glm::length(forward)
-        );
-    }
+    // Accessors for canonical transform components
+    glm::dvec3 GetPosition() const { return glm::dvec3(worldMatrix[3]); }
+    glm::dquat GetRotation() const { return localRotation; }
+    glm::dvec3 GetScale() const { return localScale; }
     glm::dvec3 GetEulerAngles() const {
-        return glm::degrees(glm::eulerAngles(GetRotation()));
+        return glm::degrees(glm::eulerAngles(localRotation));
     }
 
-    auto& GetLocalPosition() { return local_position; }
+    // --- New helper functions ---
+    // Returns the forward vector (local space, i.e. rotation applied to (0,0,1))
+    glm::dvec3 GetForward() const {
+        return glm::normalize(localRotation * glm::dvec3(0, 0, 1));
+    }
+    // Returns the up vector (local space, i.e. rotation applied to (0,1,0))
+    glm::dvec3 GetUp() const {
+        return glm::normalize(localRotation * glm::dvec3(0, 1, 0));
+    }
 
-    const auto* GetData() const { return &matrix[0][0]; }
+    void ResetTransform() {
+		worldMatrix = glm::dmat4(1.0);
+		localMatrix = glm::dmat4(1.0);
+	}
 
+	/*Transform_Component operator*(const glm::dmat4& other) const {
+		Transform_Component result(*this);
+		result.worldMatrix = worldMatrix * other;
+		return result;
+	}*/
+    // Returns a pointer to the world matrix data (for shader upload, etc.)
+    const double* GetData() const {
+        return &worldMatrix[0][0];
+    }
+
+    // Inspector API functions that update the canonical local transform
+    void SetPosition(const glm::dvec3& newPos);
     void Translate(const glm::dvec3& translation);
-    void SetPosition(const glm::dvec3& position);
-    void Rotate(double rads, const glm::dvec3& axis);
-    void Scale(const glm::dvec3& scale);
-    void LookAt(const glm::dvec3& target);
-    void AlignToGlobalUp(const glm::vec3& worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
-    void SetRotation(const glm::dvec3& eulerAngles);
-    void SetRotationQuat(const glm::dquat& rotation);
-    void SetScale(const glm::dvec3& scale);
-    void SetForward(const glm::dvec3& forward);
-    void SetMatrix(const glm::dmat4& newMatrix) {
-        matrix = newMatrix;
-        HandleLocalUpdate();
-    }
-    void SetLocalMatrix(const glm::dmat4& newMatrix) {
-        local_matrix = newMatrix;
-        HandleWorldUpdate();
-    }
-
-    ComponentType GetType() const override { return ComponentType::TRANSFORM; }
-
-    Transform_Component operator*(const glm::dmat4& other) const {
-        Transform_Component result(*this);
-        result.matrix = matrix * other;
-        return result;
-    }
-
-    Transform_Component operator*(const Transform_Component& other) const {
-        Transform_Component result(*this);
-        result.matrix = matrix * other.matrix;
-        return result;
-    }
-
     void TranslateLocal(const glm::dvec3& translation);
 
+    void SetRotation(const glm::dvec3& eulerAngles); // expects radians
+    void SetRotationQuat(const glm::dquat& rotation);
+    void Rotate(double rads, const glm::dvec3& axis);
     void RotateLocal(double rads, const glm::dvec3& axis);
 
-    void SetLocalPosition(const glm::dvec3& position) {
+    void SetScale(const glm::dvec3& scale);
 
-        local_matrix[3] = glm::dvec4(position, 1.0);
-    }
+    void SetForward(const glm::dvec3& newFwd);
+    void LookAt(const glm::dvec3& target);
+    void AlignToGlobalUp(const glm::vec3& worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
+
+    // For serialization: directly set the transform by decomposing the matrix.
+    void SetMatrix(const glm::dmat4& newMatrix);
+
+    // --- Compatibility wrappers ---
+    // Instead of directly modifying the local matrix, use the canonical local components.
+    glm::dvec3 GetLocalPosition() const { return localPosition; }
+    void SetLocalPosition(const glm::dvec3& pos) { localPosition = pos; RecalculateLocalMatrix(); UpdateWorldMatrix(); }
+    // If your code was calling UpdateLocalMatrix(), use this wrapper:
+    void UpdateLocalMatrix() { RecalculateLocalMatrix(); UpdateWorldMatrix(); }
+    // For legacy code that set the local matrix directly, delegate to SetMatrix()
+    void SetLocalMatrix(const glm::dmat4& mat) { SetMatrix(mat); }
 
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
+    ComponentType GetType() const override { return ComponentType::TRANSFORM; }
+
 protected:
     friend class SceneSerializer;
-
     YAML::Node encode();
-
-    YAML::Node encodePosition() {
-        YAML::Node node;
-        auto position = GetPosition();
-
-        return YAML::convert<glm::dvec3>::encode(position);
-    }
-
-    YAML::Node encodeRotation() {
-        YAML::Node node;
-        auto rotation = GetEulerAngles();
-
-        return YAML::convert<glm::dvec3>::encode(rotation);
-
-    }
-
-    YAML::Node encodeScale() {
-        YAML::Node node;
-        auto scale = GetScale();
-
-        return YAML::convert<glm::dvec3>::encode(scale);
-    }
-
     bool decode(const YAML::Node& node);
 
 private:
-    // wow friends OoO
-    friend class SceneManager;
-    friend class Root;
-    friend class GameObject;
-    bool isDirty = true;
+    // Canonical local transform components
+    glm::dvec3 localPosition = glm::dvec3(0.0);
+    glm::dquat localRotation = glm::dquat(1.0, 0.0, 0.0, 0.0);
+    glm::dvec3 localScale = glm::dvec3(1.0);
 
-    union
-    {
-        //DONT modify directly, use SetMatrix
-        glm::dmat4 matrix = glm::dmat4(1.0);
-        struct
-        {
-            glm::dvec3 left; glm::dmat4::value_type left_w;
-            glm::dvec3 up; glm::dmat4::value_type up_w;
-            glm::dvec3 forward; glm::dmat4::value_type fwd_w;
-            glm::dvec3 position; glm::dmat4::value_type pos_w;
-        };
-    };
+    // Computed matrices from the canonical data
+    glm::dmat4 localMatrix = glm::dmat4(1.0);
+    glm::dmat4 worldMatrix = glm::dmat4(1.0);
 
-    union
-    {
-        //DONT modify directly, use SetMatrix
-        glm::dmat4 local_matrix = glm::dmat4(1.0);
-        struct
-        {
-            glm::dvec3 left; glm::dmat4::value_type left_w;
-            glm::dvec3 up; glm::dmat4::value_type up_w;
-            glm::dvec3 forward; glm::dmat4::value_type fwd_w;
-            glm::dvec3 local_position; glm::dmat4::value_type pos_w;
-        };
-    };
-
-    // DONT modigy directly use SetLocalMatrix
-    // glm::dmat4 local_matrix = glm::dmat4(1.0);
-
-    /* Update the world matrix based on the parent's world matrix */
-    void UpdateWorldMatrix(const glm::dmat4& parentWorldMatrix) {
-        auto buff = matrix;
-        matrix = parentWorldMatrix * local_matrix;
-        if (buff != matrix) {
-            //int u = 7;
-        }
-    }
-	friend class GameObject;
-    void UpdateLocalMatrix(const glm::dmat4& parentWorldMatrix) {
-        local_matrix = parentWorldMatrix * matrix;
-    }
-
-    void HandleWorldUpdate();
-
-    void HandleLocalUpdate();
-
+    // Helper functions to rebuild the matrices from the canonical data.
+    void RecalculateLocalMatrix();
+    void UpdateWorldMatrix();
 };
-
-inline Transform_Component operator*(const glm::dmat4& m, const Transform_Component& t) {
-    return Transform_Component(t) * m;
-}

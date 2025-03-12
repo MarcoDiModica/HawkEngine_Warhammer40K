@@ -1,1020 +1,140 @@
+SceneMetadata:
+  SceneName: HolaBuenas
 GameObject0:
-  name: City
-  Transform_Component:
-    name: Transform_Component
-    enabled: true
-    matrix:
-      row0:
-        col0: 0.5
-        col1: 0
-        col2: 0
-        col3: 0
-      row1:
-        col0: 0
-        col1: -1.836602551673287e-06
-        col2: -0.49999999999662686
-        col3: 0
-      row2:
-        col0: 0
-        col1: 0.49999999999662686
-        col2: -1.836602551673287e-06
-        col3: 0
-      row3:
-        col0: 0
-        col1: 0
-        col2: 0
-        col3: 1
-  Child0:
-    name: GameObject
+  name: Player
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
     Transform_Component:
       name: Transform_Component
       enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -20.737945556640625
-          col1: -3.8594548066916161e-05
-          col2: -10.507049560475991
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
+      localPosition:
+        x: 0
+        y: 0
+        z: 0
+      localRotation:
+        x: 0
+        y: -0
+        z: 0
+      localScale:
+        x: 1
+        y: 1
+        z: 1
+    SoundComponent:
+      name: SoundComponent
       enabled: true
-      mesh_path: ""
-      mesh_name: City_building_004
-      material_path: material_12.mat
-  Child1:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 8.8535823822021484
-          col1: -3.672384433725868e-05
-          col2: -10.026638030938607
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_001
-      material_path: material_13.mat
-  Child2:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 8.0052461624145508
-          col1: -6.9615608915313669e-05
-          col2: -18.746643066277006
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_007
-      material_path: material_14.mat
-  Child3:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 20.489997863769531
-          col1: -3.4582366073771477e-05
-          col2: -9.1354122161211233
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_008
-      material_path: material_15.mat
-  Child4:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -1.0798859596252441
-          col1: -3.4047639783123243e-06
-          col2: -0.92691910266250899
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: Line002
-      material_path: material_16.mat
-  Child5:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -0.014301300048828125
-          col1: -4.7810603262966957e-08
-          col2: -0.013016045093448567
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: Plane001
-      material_path: material_17.mat
-  Child6:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 12.577005386352539
-          col1: 7.2337516839951718e-05
-          col2: 19.576860427722803
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_010
-      material_path: material_18.mat
-  Child7:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 15.067270278930664
-          col1: -6.9615608915313669e-05
-          col2: -18.746643066277006
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_011
-      material_path: material_19.mat
-  Child8:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -21.144027709960938
-          col1: -6.0727369276903601e-05
-          col2: -16.600788116344006
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_013
-      material_path: material_20.mat
-  Child9:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -9.719853401184082
-          col1: -5.8884654084312917e-05
-          col2: -16.030864715468024
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_014
-      material_path: material_21.mat
-  Child10:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 17.135211944580078
-          col1: 7.7514948924087138e-05
-          col2: 20.986373901224038
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_016
-      material_path: material_22.mat
-  Child11:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 22.130041122436523
-          col1: 7.2337516839951718e-05
-          col2: 19.576860427722803
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_017
-      material_path: material_23.mat
-  Child12:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -10.415661811828613
-          col1: 5.0371559453730158e-05
-          col2: 13.713244438078874
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_022
-      material_path: material_24.mat
-  Child13:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 21.06532096862793
-          col1: -6.9615608915313669e-05
-          col2: -18.746643066277006
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_023
-      material_path: material_25.mat
-  Child14:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -10.286385536193848
-          col1: -0.034676314841006299
-          col2: -21.530414454070861
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_024
-      material_path: material_26.mat
-  Child15:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 15.75594425201416
-          col1: 3.0204795522828639e-05
-          col2: 8.2230081557672801
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_026
-      material_path: material_27.mat
-  Child16:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 6.6939949989318848
-          col1: 6.1525418563709562e-05
-          col2: 16.877519607431807
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_028
-      material_path: material_28.mat
-  Child17:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -10.302436828613281
-          col1: -0.23798738770623848
-          col2: -2.0333703359354973
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: Object010
-      material_path: material_29.mat
-  Child18:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -21.403619766235352
-          col1: 7.6366130377483705e-05
-          col2: 20.91778182969459
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_030
-      material_path: material_30.mat
-  Child19:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -17.339740753173828
-          col1: 7.6366130377483705e-05
-          col2: 20.91778182969459
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_031
-      material_path: material_31.mat
-  Child20:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -14.739201545715332
-          col1: -3.8594548066916161e-05
-          col2: -10.507049560475991
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_032
-      material_path: material_32.mat
-  Child21:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -16.180747985839844
-          col1: -7.75668954758429e-05
-          col2: -21.185211181498623
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_033
-      material_path: material_33.mat
-  Child22:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 8.0247583389282227
-          col1: 3.0665540044568471e-05
-          col2: 8.3484420775803976
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_034
-      material_path: material_34.mat
-  Child23:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 6.6939949989318848
-          col1: 7.4468834131103889e-05
-          col2: 20.401258468492021
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_035
-      material_path: material_35.mat
-  Child24:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -15.608165740966797
-          col1: -6.0727369276903601e-05
-          col2: -16.600788116344006
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_036
-      material_path: material_36.mat
-  Child25:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -10.158846855163574
-          col1: 2.9686124709061393e-05
-          col2: 8.0818042754581736
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_037
-      material_path: material_37.mat
-  Child26:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -20.824501037597656
-          col1: 3.0295482257710458e-05
-          col2: 8.2476968764702381
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_038
-      material_path: material_38.mat
-  Child27:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -21.403619766235352
-          col1: 5.5811471173088723e-05
-          col2: 15.321944236653728
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_039
-      material_path: material_39.mat
-  Child28:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: -17.339740753173828
-          col1: 5.5811471173088723e-05
-          col2: 15.321944236653728
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_040
-      material_path: material_40.mat
-  Child29:
-    name: GameObject
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      matrix:
-        row0:
-          col0: 0.5
-          col1: 0
-          col2: 0
-          col3: 0
-        row1:
-          col0: 0
-          col1: -1.836602551673287e-06
-          col2: -0.49999999999662686
-          col3: 0
-        row2:
-          col0: 0
-          col1: 0.49999999999662686
-          col2: -1.836602551673287e-06
-          col3: 0
-        row3:
-          col0: 15.347639083862305
-          col1: -3.9587787333366661e-05
-          col2: -10.806323051380124
-          col3: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh_path: ""
-      mesh_name: City_building_041
-      material_path: material_41.mat
+      audio_path: Library/Audio/Menu Confirm.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ColliderComponent: ~
+  Children:
+    Child0:
+      name: Assets/Meshes/player.fbx
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            x: 0
+            y: 0
+            z: 0
+          localRotation:
+            x: -90
+            y: 0
+            z: 0
+          localScale:
+            x: 0.0099999997764825821
+            y: 0.0099999997764825821
+            z: 0.0099999997764825821
+      Children:
+        Child0:
+          name: mesh.013
+          tag: Untagged
+          active: true
+          isStatic: false
+          Components:
+            Transform_Component:
+              name: Transform_Component
+              enabled: true
+              localPosition:
+                x: 0
+                y: 0
+                z: 0
+              localRotation:
+                x: 0
+                y: -0
+                z: -179.99997768820026
+              localScale:
+                x: 0.0099999997764833384
+                y: 0.0099999997764833384
+                z: 0.0099999997764825821
+            MeshRenderer:
+              name: MeshRenderer
+              enabled: true
+            Shader:
+              name: Shader
+              enabled: true
 GameObject1:
   name: MainCamera
-  Transform_Component:
-    name: Transform_Component
-    enabled: true
-    matrix:
-      row0:
-        col0: -0.96770215034484863
-        col1: -1.7611461089472868e-06
-        col2: -0.25205570459365845
-        col3: 0
-      row1:
-        col0: -1.3611984286399093e-06
-        col1: 1
-        col2: -1.7611641851544846e-06
-        col3: 0
-      row2:
-        col0: 0.25205570459365845
-        col1: -1.3611844451588695e-06
-        col2: -0.96770215034484863
-        col3: 0
-      row3:
-        col0: 0
-        col1: 0.5
-        col2: 0
-        col3: 1
-  CameraComponent:
-    name: CameraComponent
-    enabled: true
-    projection_type: perspective
-    fov: 1.0471975803375244
-    size: 0
-    near_plane: 0.10000000000000001
-    far_plane: 500
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        x: 0
+        y: 20
+        z: -10.000000000118581
+      localRotation:
+        x: 60.000000890584097
+        y: -0
+        z: 0
+      localScale:
+        x: 1
+        y: 1
+        z: 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+    AudioListener: ~
+GameObject2:
+  name: Cube
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        x: 4.4000000953674316
+        y: 0
+        z: 0
+      localRotation:
+        x: 0
+        y: -0
+        z: 0
+      localScale:
+        x: 1
+        y: 1
+        z: 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+    Shader:
+      name: Shader
+      enabled: true

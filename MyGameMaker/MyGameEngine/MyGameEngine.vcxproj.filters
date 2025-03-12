@@ -19,6 +19,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="InputEngine.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -43,5 +44,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="InputEngine.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ShaderManager.h" />
   </ItemGroup>
 </Project>

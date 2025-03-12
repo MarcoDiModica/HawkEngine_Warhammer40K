@@ -215,6 +215,42 @@ void PhysicsModule::DrawDebugDrawer() {
                 glm::vec3 center(position.x(), position.y(), position.z());
                 debugDrawer->drawSphere(center, radius, glm::vec3(1.0f, 0.0f, 0.0f), 16);
             }
+            else if (shape->getShapeType() == TRIANGLE_MESH_SHAPE_PROXYTYPE) {
+                btBvhTriangleMeshShape* meshShape = static_cast<btBvhTriangleMeshShape*>(shape);
+                const btStridingMeshInterface* meshInterface = meshShape->getMeshInterface();
+
+                const unsigned char* vertexBase;
+                const unsigned char* indexBase;
+                int numVerts, numFaces;
+                PHY_ScalarType vertexType, indexType;
+                int vertexStride, indexStride;
+
+                meshInterface->getLockedReadOnlyVertexIndexBase(&vertexBase, numVerts, vertexType, vertexStride,
+                    &indexBase, indexStride, numFaces, indexType);
+
+                for (int i = 0; i < numFaces; i++) {
+                    const unsigned int* indices = reinterpret_cast<const unsigned int*>(indexBase + i * indexStride);
+
+                    const btScalar* v0 = reinterpret_cast<const btScalar*>(vertexBase + indices[0] * vertexStride);
+                    const btScalar* v1 = reinterpret_cast<const btScalar*>(vertexBase + indices[1] * vertexStride);
+                    const btScalar* v2 = reinterpret_cast<const btScalar*>(vertexBase + indices[2] * vertexStride);
+
+                    btVector3 p0(v0[0], v0[1], v0[2]);
+                    btVector3 p1(v1[0], v1[1], v1[2]);
+                    btVector3 p2(v2[0], v2[1], v2[2]);
+
+                    p0 = transform * p0;
+                    p1 = transform * p1;
+                    p2 = transform * p2;
+
+                    debugDrawer->drawTriangle(glm::vec3(p0.x(), p0.y(), p0.z()),
+                        glm::vec3(p1.x(), p1.y(), p1.z()),
+                        glm::vec3(p2.x(), p2.y(), p2.z()),
+                        glm::vec3(0.0f, 1.0f, 0.0f));
+                }
+
+                meshInterface->unLockReadOnlyVertexBase(0);
+            }
         }
     }
 }

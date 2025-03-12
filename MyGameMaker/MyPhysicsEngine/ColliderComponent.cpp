@@ -3,6 +3,7 @@
 
 #include "ColliderComponent.h"
 #include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 
@@ -153,15 +154,22 @@ glm::quat ColliderComponent::GetColliderRotation() {
 }
 
 void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
+    if (!rigidBody || !rigidBody->getMotionState()) {
+        return;
+    }
+
     btTransform trans;
     rigidBody->getMotionState()->getWorldTransform(trans);
-	trans.setRotation(btQuaternion(rotation.w, rotation.x, rotation.y, rotation.z));
 
-    btVector3 currentPosition = trans.getOrigin();
-    trans.setOrigin(currentPosition);
+    // Convert glm::quat to btQuaternion correctly
+    btQuaternion btRot(rotation.x, rotation.y, rotation.z, rotation.w);
+    trans.setRotation(btRot);
 
     rigidBody->getMotionState()->setWorldTransform(trans);
     rigidBody->setWorldTransform(trans);
+
+    // Ensure activation in case the object is sleeping
+    rigidBody->activate();
 }
 
 void ColliderComponent::SetColliderPos(const glm::vec3& position) {
@@ -252,10 +260,6 @@ void ColliderComponent::SetActive(bool active) {
 }
 
 
-
-
-
-
 //Local BBox Adjusted (doesnt works with the blocking)
 
 void ColliderComponent::CreateCollider() {
@@ -300,45 +304,3 @@ void ColliderComponent::CreateCollider() {
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
 }
 
-
-
-
-//Previous Create Collider (doesn�t adjust to local bbx
-//
-//
-//void ColliderComponent::CreateCollider() {
-//	if (!owner) return;
-//
-//	Transform_Component* transform = owner->GetTransform();
-//	if (!transform) return;
-//
-//	BoundingBox localBBox = owner->boundingBox();
-//	size = localBBox.size();
-//	glm::dvec3 localCenter = localBBox.center();
-//
-//	glm::dvec3 worldPosition = transform->GetPosition();
-//	glm::dquat worldRotation = transform->GetLocalRotation();
-//	glm::dvec3 worldScale = transform->GetScale();
-//
-//	btCollisionShape* shape = new btBoxShape(btVector3(size.x * 0.5f, size.y * 0.5f, size.z * 0.5f));
-//	//shape->setLocalScaling(btVector3(worldScale.x, worldScale.y, worldScale.z));
-//
-//	glm::vec3 rotatedCenter = worldPosition + worldRotation * (localCenter - transform->GetLocalPosition());
-//
-//	btTransform startTransform;
-//	startTransform.setIdentity();
-//	startTransform.setOrigin(btVector3(rotatedCenter.x, rotatedCenter.y, rotatedCenter.z));
-//	startTransform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
-//
-//	btVector3 localInertia(0, 0, 0);
-//	if (mass > 0.0f) {
-//		shape->calculateLocalInertia(mass, localInertia);
-//	}
-//
-//	btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-//	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
-//	rigidBody = new btRigidBody(rbInfo);
-//
-//	physics->dynamicsWorld->addRigidBody(rigidBody);
-//	physics->gameObjectRigidBodyMap[owner] = rigidBody;
-//}

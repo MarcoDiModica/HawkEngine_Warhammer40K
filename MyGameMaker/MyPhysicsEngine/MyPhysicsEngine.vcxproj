@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="DebugDrawerPhysics.cpp" />
+    <ClCompile Include="MeshColliderComponent.cpp" />
     <ClCompile Include="PhysBody3D.cpp" />
     <ClCompile Include="PhysicsModule.cpp" />
     <ClCompile Include="PhysVehicle3D.cpp" />
@@ -87,6 +88,7 @@
   <ItemGroup>
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="DebugDrawerPhysics.h" />
+    <ClInclude Include="MeshColliderComponent.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="PhysBody3D.h" />
     <ClInclude Include="PhysicsModule.h" />

@@ -35,8 +35,7 @@ void MeshColliderComponent::Destroy() {
 
 std::unique_ptr<Component> MeshColliderComponent::Clone(GameObject* new_owner) {
     return std::make_unique<MeshColliderComponent>(new_owner, physics);
-}
-void MeshColliderComponent::CreateMeshCollider() {
+}void MeshColliderComponent::CreateMeshCollider() {
     if (!owner) return;
 
     auto meshRenderer = owner->GetComponent<MeshRenderer>();
@@ -49,24 +48,31 @@ void MeshColliderComponent::CreateMeshCollider() {
     auto indices = model->GetModelData().indexData;
 
     btTriangleMesh* triangleMesh = new btTriangleMesh();
+
     Transform_Component* transform = owner->GetTransform();
     glm::vec3 scale = transform->GetScale();
+    glm::vec3 parentScale(1.0f);
+    if (owner->GetParent()) {
+        parentScale = owner->GetParent()->GetTransform()->GetScale();
+    }
+    glm::vec3 finalScale = scale * parentScale;
 
     for (size_t i = 0; i < indices.size(); i += 3) {
-        btVector3 v0(vertices[indices[i]].position.x * scale.x,
-            vertices[indices[i]].position.y * scale.y,
-            vertices[indices[i]].position.z * scale.z);
-        btVector3 v1(vertices[indices[i + 1]].position.x * scale.x,
-            vertices[indices[i + 1]].position.y * scale.y,
-            vertices[indices[i + 1]].position.z * scale.z);
-        btVector3 v2(vertices[indices[i + 2]].position.x * scale.x,
-            vertices[indices[i + 2]].position.y * scale.y,
-            vertices[indices[i + 2]].position.z * scale.z);
+        btVector3 v0(vertices[indices[i]].position.x * finalScale.x,
+            vertices[indices[i]].position.y * finalScale.y,
+            vertices[indices[i]].position.z * finalScale.z);
+        btVector3 v1(vertices[indices[i + 1]].position.x * finalScale.x,
+            vertices[indices[i + 1]].position.y * finalScale.y,
+            vertices[indices[i + 1]].position.z * finalScale.z);
+        btVector3 v2(vertices[indices[i + 2]].position.x * finalScale.x,
+            vertices[indices[i + 2]].position.y * finalScale.y,
+            vertices[indices[i + 2]].position.z * finalScale.z);
 
         triangleMesh->addTriangle(v0, v1, v2);
     }
 
     btBvhTriangleMeshShape* shape = new btBvhTriangleMeshShape(triangleMesh, true);
+    shape->setLocalScaling(btVector3(1.0f, 1.0f, 1.0f)); // No aplicar la escala aquí, ya se aplicó en los vértices
 
     glm::dquat rotation = transform->GetRotation();
     btTransform startTransform;

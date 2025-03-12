@@ -72,10 +72,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="UIComponent.h" />
+    <ClInclude Include="UIButtonComponent.h" />
+    <ClInclude Include="UICanvasComponent.h" />
+    <ClInclude Include="UIImageComponent.h" />
+    <ClInclude Include="UISliderComponent.h" />
+    <ClInclude Include="UITransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UIComponent.cpp" />
+    <ClCompile Include="UIButtonComponent.cpp" />
+    <ClCompile Include="UICanvasComponent.cpp" />
+    <ClCompile Include="UIImageComponent.cpp" />
+    <ClCompile Include="UISliderComponent.cpp" />
+    <ClCompile Include="UITransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

@@ -19,6 +19,8 @@
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/object.h>
 #include "MyShadersEngine/ShaderComponent.h"
+#include "../MyUIEngine/UICanvasComponent.h"
+#include "../MyUIEngine/UITransformComponent.h"
 
 unsigned int GameObject::nextGid = 1;
 
@@ -406,6 +408,14 @@ void GameObject::AddChild(GameObject* child)
 
                     children[children.size() - 1]->parent = this;
                     children[children.size() - 1]->GetTransform()->UpdateLocalMatrix();
+
+                    if (child->parent!=nullptr && child->parent->HasComponent<UICanvasComponent>()) {
+
+                        if (!child->HasComponent<UITransformComponent>())
+                        {
+                            child->AddComponent<UITransformComponent>();
+                        }
+                    }
 
                     child->scene->_children.erase(child->scene->_children.begin() + i);
                     return;

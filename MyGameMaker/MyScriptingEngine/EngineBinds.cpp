@@ -15,6 +15,7 @@
 #include <MyPhysicsEngine/RigidBodyComponent.h>
 #include "../MyGameEditor/App.h"
 #include "../MyAudioEngine/SoundComponent.h"
+#include "../MyUIEngine/UIImageComponent.h"
 
 
 // GameObject
@@ -136,6 +137,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.Audio") {
         return GO->GetComponent<SoundComponent>()->GetSharp();
     }
+	else if (componentName == "HawkEngine.UIImage") {
+		return GO->GetComponent<UIImageComponent>()->GetSharp();
+	}
 	/*else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}*/
@@ -164,6 +168,8 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 5: _component = static_cast<Component*>(go->AddComponent<SoundComponent>());
         break;
+    case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
+		break;
    }
 
     // loop through all the scripts and grant them unique ids
@@ -719,6 +725,15 @@ float EngineBinds::GetVolume(MonoObject* audioRef)
     return sound ? sound->GetVolume() : 0.0f;
 }
 
+void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
+{
+	char* C_path = mono_string_to_utf8(path);
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetTexture(C_path);
+	}
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -796,7 +811,6 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Collider::SetActive", (const void*)&EngineBinds::SetColliderActive);
     mono_add_internal_call("HawkEngine.Collider::SnapToPosition", (const void*)&EngineBinds::SnapColliderToPosition);
 
-
     // Physics Rigidbody
     mono_add_internal_call("HawkEngine.Rigidbody::SetVelocity", (const void*)&EngineBinds::SetVelocity);
     mono_add_internal_call("HawkEngine.Rigidbody::GetVelocity", (const void*)&EngineBinds::GetVelocity);
@@ -820,6 +834,9 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Audio::Resume", (const void*)&EngineBinds::Resume);
     mono_add_internal_call("HawkEngine.Audio::SetVolume", (const void*)&EngineBinds::SetVolume);
     mono_add_internal_call("HawkEngine.Audio::GetVolume", (const void*)&EngineBinds::GetVolume);
+
+    // UI Image
+    mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
 }
 
 template <class T>

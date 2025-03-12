@@ -19,8 +19,27 @@ public:
     void UpdateFramebuffer();
     bool Draw();
 
+	vec2 GetWinSize() { return winSize; }
+	vec2 GetWinPos() { return winPos; }
+
+    vec2 GetViewportSize();
+    vec2 GetViewportPos();
+
+	float GetWidth() { return width; }
+	float GetHeight() { return height; }
+
 private:
     vec2 winSize = vec2(0, 0);
     vec2 winPos = vec2(0, 0);
+
+    float width;
+    float height;    
+    glm::dvec2 viewportPos;
+    glm::dvec2 viewportSize;
+    
+
+
+
+
 };
 #endif // !__UI_GAME_VIEW_H__

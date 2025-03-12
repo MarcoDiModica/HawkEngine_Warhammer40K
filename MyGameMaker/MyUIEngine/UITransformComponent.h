@@ -88,17 +88,12 @@ protected:
 
 		YAML::Node node = Component::encode();
 
-		//node["position"] = YAML::convert<glm::vec3>::encode(position);
-		//node["rotation"] = YAML::convert<glm::vec3>::encode(rotation);
-		//node["scale"] = YAML::convert<glm::vec3>::encode(scale);
-		//node["canvas_position"] = YAML::convert<glm::vec3>::encode(canvasPosition);
-		//node["canvas_size"] = YAML::convert<glm::vec3>::encode(canvasSize);
-		//node["pivot_offset"] = YAML::convert<glm::vec3>::encode(pivotOffset);
-		//node["light_type"] = static_cast<int>(type);
-		////node["color"] = { color.r, color.g, color.b };
-		//node["intensity"] = intensity;
-		//node["radius"] = radius;
-		//node["direction"] = { direction.x, direction.y, direction.z };
+		node["position"] = YAML::convert<glm::vec3>::encode(position);
+		node["rotation"] = YAML::convert<glm::vec3>::encode(rotation);
+		node["scale"] = YAML::convert<glm::vec3>::encode(scale);
+		node["canvas_position"] = YAML::convert<glm::vec3>::encode(canvasPosition);
+		node["canvas_size"] = YAML::convert<glm::vec3>::encode(canvasSize);
+		node["pivot_offset"] = YAML::convert<glm::vec3>::encode(pivotOffset);
 
 		return node;
 	}
@@ -107,18 +102,13 @@ protected:
 
 		Component::decode(node);
 
-		/*position = YAML::convert<glm::vec3>::decode(node["position"]);
-		rotation = YAML::convert<glm::vec3>::decode(node["rotation"]);
-		scale = YAML::convert<glm::vec3>::decode(node["scale"]);
-		canvasPosition = YAML::convert<glm::vec3>::decode(node["canvas_position"]);
-		canvasSize = YAML::convert<glm::vec3>::decode(node["canvas_size"]);
-		pivotOffset = YAML::convert<glm::vec3>::decode(node["pivot_offset"]);*/
-		//type = static_cast<LightType>(node["light_type"].as<int>());
-		////color = { node["color"][0].as<float>(), node["color"][1].as<float>(), node["color"][2].as<float>() };
-		//intensity = node["intensity"].as<float>();
-		//radius = node["radius"].as<float>();
-		//direction = { node["direction"][0].as<float>(), node["direction"][1].as<float>(), node["direction"][2].as<float>() };
-
+		position = node["position"].as<glm::vec3>();
+		rotation = node["rotation"].as<glm::vec3>();
+		scale = node["scale"].as<glm::vec3>();
+		canvasPosition = node["canvas_position"].as<glm::vec3>();
+		canvasSize = node["canvas_size"].as<glm::vec3>();
+		pivotOffset = node["pivot_offset"].as<glm::vec3>();
+      
 		return true;
 	}
 };

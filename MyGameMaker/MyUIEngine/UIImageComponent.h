@@ -60,8 +60,7 @@ protected:
 
 		/*node["texture_path"] = texturePath;
 		node["shader"] = shader;
-		node["mesh"] = mesh;
-		node["resized"] = resized;*/
+		node["mesh"] = mesh;*/
 		//node["light_type"] = static_cast<int>(type);
 		////node["color"] = { color.r, color.g, color.b };
 		//node["intensity"] = intensity;
@@ -74,6 +73,8 @@ protected:
 	bool decode(const YAML::Node& node) override {
 
 		Component::decode(node);
+
+
 
 		//type = static_cast<LightType>(node["light_type"].as<int>());
 		////color = { node["color"][0].as<float>(), node["color"][1].as<float>(), node["color"][2].as<float>() };

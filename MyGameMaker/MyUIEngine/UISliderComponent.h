@@ -64,9 +64,9 @@ protected:
 
 		Component::decode(node);
 
-		//texturePath = node["texture_path"].as<std::string>();
-		//shader = node["shader"].as<Shaders*>();
-		//resized = node["resized"].as<bool>();
+		/*texturePath = node["texture_path"].as<std::string>();
+		shader = node["shader"].as<Shaders*>();
+		resized = node["resized"].as<bool>();*/
 		//type = static_cast<LightType>(node["light_type"].as<int>());
 		////color = { node["color"][0].as<float>(), node["color"][1].as<float>(), node["color"][2].as<float>() };
 		//intensity = node["intensity"].as<float>();

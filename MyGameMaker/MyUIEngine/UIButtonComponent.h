@@ -44,11 +44,7 @@ protected:
 
 		YAML::Node node = Component::encode();
 
-		/*node["state"] = static_cast<int>(state);*/
-		//node["color"] = { color.r, color.g, color.b };
-		/*node["intensity"] = intensity;
-		node["radius"] = radius;*/
-		//node["direction"] = { direction.x, direction.y, direction.z };
+		node["state"] = static_cast<int>(state);
 
 		return node;
 	}
@@ -57,12 +53,8 @@ protected:
 
 		Component::decode(node);
 
-		//type = static_cast<LightType>(node["light_type"].as<int>());
-		////color = { node["color"][0].as<float>(), node["color"][1].as<float>(), node["color"][2].as<float>() };
-		//intensity = node["intensity"].as<float>();
-		//radius = node["radius"].as<float>();
-		//direction = { node["direction"][0].as<float>(), node["direction"][1].as<float>(), node["direction"][2].as<float>() };
-
+		state = static_cast<ButtonState>(node["state"].as<int>());
+		
 		return true;
 	}
 

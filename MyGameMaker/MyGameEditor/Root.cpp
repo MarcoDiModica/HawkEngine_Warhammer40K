@@ -91,49 +91,8 @@ bool Root::Start()
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
-  
-    auto canvas = CreateGameObject("Canvas");
-	canvas->AddComponent<UICanvasComponent>();
-    canvas->AddComponent<UITransformComponent>();
 
-    auto staminaBar = CreateGameObject("LifeBar");
-    Application->root->ParentGameObject(*staminaBar, *canvas);
-    staminaBar->AddComponent<UIImageComponent>();
-    staminaBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/staminaBar.png");
-    staminaBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
-    staminaBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
-
-    auto lifeBar = CreateGameObject("LifeBar");
-    Application->root->ParentGameObject(*lifeBar, *canvas);
-    lifeBar->AddComponent<UIImageComponent>();
-    lifeBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/lifeBar.png");
-    lifeBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
-    lifeBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
-    lifeBar->AddComponent<ScriptComponent>()->LoadScript("ImageAsSlider");
-
-
-    auto button = CreateGameObject("Button");
-    Application->root->ParentGameObject(*button, *canvas);
-    button->AddComponent<UIImageComponent>();
-    button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
-	button->AddComponent<UIButtonComponent>();
-	button->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-    button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.180, 0.150, 1));
-
-   /* auto slider = CreateGameObject("Slider");
-    Application->root->ParentGameObject(*slider, *canvas);
-    slider->AddComponent<UITransformComponent>();
-    slider->AddComponent<UIImageComponent>();
-    slider->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/sliderBar.png");
-	slider->AddComponent<UISliderComponent>();
-    auto sliderButton = CreateGameObject("SliderButton");
-    Application->root->ParentGameObject(*sliderButton, *slider);
-    sliderButton->AddComponent<UITransformComponent>();
-    sliderButton->AddComponent<UIImageComponent>();
-    sliderButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/sliderButton.png");*/
-
-    
-
+    CreateMainMenuUI();
 	
     SceneManagement->Start();
 
@@ -296,6 +255,70 @@ bool Root::ParentGameObjectPreserve(GameObject& child, GameObject& father) {
 std::shared_ptr<GameObject> Root::FindGOByName(std::string name) {
     
     return SceneManagement->FindGOByName(name);
+}
+
+void Root::CreateGameplayUI()
+{
+    auto canvas = CreateGameObject("Canvas");
+    canvas->AddComponent<UICanvasComponent>();
+    canvas->AddComponent<UITransformComponent>();
+
+    auto staminaBar = CreateGameObject("LifeBar");
+    Application->root->ParentGameObject(*staminaBar, *canvas);
+    staminaBar->AddComponent<UIImageComponent>();
+    staminaBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/staminaBar.png");
+    staminaBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
+    staminaBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
+
+    auto lifeBar = CreateGameObject("LifeBar");
+    Application->root->ParentGameObject(*lifeBar, *canvas);
+    lifeBar->AddComponent<UIImageComponent>();
+    lifeBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/lifeBar.png");
+    lifeBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
+    lifeBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
+    lifeBar->AddComponent<ScriptComponent>()->LoadScript("ImageAsSlider");
+
+
+    auto button = CreateGameObject("Button");
+    Application->root->ParentGameObject(*button, *canvas);
+    button->AddComponent<UIImageComponent>();
+    button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
+    button->AddComponent<UIButtonComponent>();
+    button->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.180, 0.150, 1));
+
+    /* auto slider = CreateGameObject("Slider");
+     Application->root->ParentGameObject(*slider, *canvas);
+     slider->AddComponent<UITransformComponent>();
+     slider->AddComponent<UIImageComponent>();
+     slider->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/sliderBar.png");
+     slider->AddComponent<UISliderComponent>();
+     auto sliderButton = CreateGameObject("SliderButton");
+     Application->root->ParentGameObject(*sliderButton, *slider);
+     sliderButton->AddComponent<UITransformComponent>();
+     sliderButton->AddComponent<UIImageComponent>();
+     sliderButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/sliderButton.png");*/
+}
+
+void Root::CreateMainMenuUI()
+{
+    auto canvas = CreateGameObject("Canvas");
+    canvas->AddComponent<UICanvasComponent>();
+    canvas->AddComponent<UITransformComponent>();
+
+    auto menuImage = CreateGameObject("MenuImage");
+    Application->root->ParentGameObject(*menuImage, *canvas);
+    menuImage->AddComponent<UIImageComponent>();
+    menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Escopeta_BC.png");
+    menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+
+    auto quitButton = CreateGameObject("QuitButton");
+    Application->root->ParentGameObject(*quitButton, *canvas);
+    quitButton->AddComponent<UIImageComponent>();
+    quitButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Quit_button.png");
+    quitButton->AddComponent<UIButtonComponent>();
+    quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.853, 0), glm::vec3(0.183, 0.092, 1));
 }
 
 

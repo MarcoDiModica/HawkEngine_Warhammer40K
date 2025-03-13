@@ -19,6 +19,7 @@ void UIButtonComponent::Start()
 void UIButtonComponent::Update(float deltaTime)
 {
 	auto rectTransform = owner->GetComponent<UITransformComponent>();
+	auto imageComponent = owner->GetComponent<UIImageComponent>();
 
 	auto buttonSize = rectTransform->GetCanvasSize() * rectTransform->GetScale();
 	auto buttonPos = rectTransform->GetCanvasPosition() + (rectTransform->GetPosition() * rectTransform->GetCanvasSize());
@@ -40,17 +41,20 @@ void UIButtonComponent::Update(float deltaTime)
             {
                 SetState(ButtonState::CLICKED);
                 /*std::cout << "button is clicked" << std::endl;*/
+                imageComponent->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
             }
         }
         else
         {
             SetState(ButtonState::HOVERED);
             std::cout << "button is hovering" << std::endl;
+            imageComponent->SetColor(glm::vec4(0.5f, 1.0f, 0.5f, 0.5f));
         }
     }
     else
     {
         SetState(ButtonState::DEFAULT);
+		imageComponent->SetColor(glm::vec4(1.0f));
         /*std::cout << "button is default" << std::endl;*/
     }
 

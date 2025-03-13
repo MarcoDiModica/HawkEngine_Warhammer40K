@@ -63,8 +63,6 @@ void UIImageComponent::Update(float deltaTime)
 
 	translation -= uiTransform->GetPivotOffset() * scale;
 
-	std::cout << uiTransform->GetPosition().x << std::endl;
-
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f)) *

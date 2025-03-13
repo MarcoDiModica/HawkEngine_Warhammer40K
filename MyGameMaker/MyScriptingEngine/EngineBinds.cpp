@@ -738,6 +738,20 @@ float EngineBinds::GetAnimationSpeed(MonoObject* animationRef)
 	return animation ? animation->GetAnimationSpeed() : 0.0f;
 }
 
+void EngineBinds::SetAnimation(MonoObject* animationRef, int index)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->PlayIndexAnimation(index);
+	}
+}
+
+int EngineBinds::GetAnimationIndex(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+    return animation ? animation->GetAnimationIndex() : 0;
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -843,6 +857,8 @@ void EngineBinds::BindEngine() {
     // SkeletalAnimation
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationSpeed", (const void*)&EngineBinds::SetAnimationSpeed);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationSpeed", (const void*)&EngineBinds::GetAnimationSpeed);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimation", (const void*)&EngineBinds::SetAnimation);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationIndex", (const void*)&EngineBinds::GetAnimationIndex);
 }
 
 template <class T>

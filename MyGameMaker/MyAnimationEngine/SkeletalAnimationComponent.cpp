@@ -73,6 +73,10 @@ void SkeletalAnimationComponent::Destroy()
 {
 }
 
+int SkeletalAnimationComponent::GetAnimationIndex() {
+    return animationIndex;
+}
+
 MonoObject* SkeletalAnimationComponent::GetSharp()
 {
     if (CsharpReference) {

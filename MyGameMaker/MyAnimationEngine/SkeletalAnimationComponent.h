@@ -65,9 +65,7 @@ public:
 		return isPlaying;
 	}
 
-	int* GetAnimationIndex() {
-		return &animationIndex;
-	}
+    int GetAnimationIndex();
 
 	void SetAnimationIndex(int index) {
 		animationIndex = index;

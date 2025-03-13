@@ -5,28 +5,26 @@ using HawkEngine;
 public class PlayerAnimations : MonoBehaviour
 {
     private SkeletalAnimation esk;
-    float currentSpeed = 0.0f;
+    int animIndex = 0;
 
     public override void Start()
     {
-        //esk = gameObject.GetComponent<SkeletalAnimation>();
-        //if (esk == null)
-        //{
-        //    Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
-        //    return;
-        //}
+        esk = gameObject.GetComponent<SkeletalAnimation>();
+        if (esk == null)
+        {
+            Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
+            return;
+        }
 
-        //currentSpeed = esk.GetAnimationSpeed();
+        animIndex = esk.GetAnimationIndex();
     }
 
     public override void Update(float deltaTime)
     {
-        //Engineson.print("Current Anim Speed: " + currentSpeed);
-
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    currentSpeed += 0.1f;
-        //    esk.SetAnimationSpeed(currentSpeed);
-        //}
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            animIndex += 1;
+            esk.SetAnimation(animIndex);
+        }
     }
 }

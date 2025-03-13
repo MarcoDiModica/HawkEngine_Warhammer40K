@@ -14,6 +14,13 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern float GetAnimationSpeed();
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetAnimation(int index);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern int GetAnimationIndex();
+
+
         private GameObject owner;
 
         public SkeletalAnimation(UIntPtr nativeRigidbody, GameObject owner)

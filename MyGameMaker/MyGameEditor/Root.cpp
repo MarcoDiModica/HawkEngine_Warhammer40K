@@ -77,7 +77,7 @@ bool Root::Start()
 	
 
     auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
-    playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+    playerMesh->SetName("playerMesh");
     playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
@@ -87,9 +87,10 @@ bool Root::Start()
 	}
     else
 	{
+        LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
 	}
 
-		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
+		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
@@ -162,12 +163,12 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
     ModelImporter meshImp;
     meshImp.loadFromFile(path);
-
+    auto go = Application->root->CreateGameObject(meshImp.fbx_object[0]->GetName());
     for (int i = 0; i < meshImp.meshes.size(); i++) {
 
         auto MarcoVicePresidente2 = meshImp.fbx_object[i];
 
-        auto go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
+        go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
         go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
 
         auto meshRenderer = go->AddComponent<MeshRenderer>();
@@ -243,7 +244,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
     //}
 
     if (meshImp.meshes.size() > 0) {
-		return MarcoVicePresidente;
+		return go;
 	}
 	else {
 		return nullptr;

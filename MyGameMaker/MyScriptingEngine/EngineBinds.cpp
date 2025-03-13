@@ -15,7 +15,7 @@
 #include <MyPhysicsEngine/RigidBodyComponent.h>
 #include "../MyGameEditor/App.h"
 #include "../MyAudioEngine/SoundComponent.h"
-
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
 // GameObject
 
@@ -136,6 +136,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.Audio") {
         return GO->GetComponent<SoundComponent>()->GetSharp();
     }
+	else if (componentName == "HawkEngine.SkeletalAnimation") {
+		return GO->GetComponent<SkeletalAnimationComponent>()->GetSharp();
+	}
 	/*else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}*/
@@ -164,7 +167,9 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 5: _component = static_cast<Component*>(go->AddComponent<SoundComponent>());
         break;
-   }
+	case 6: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
+		break;
+	}
 
     // loop through all the scripts and grant them unique ids
     for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it) {
@@ -719,6 +724,20 @@ float EngineBinds::GetVolume(MonoObject* audioRef)
     return sound ? sound->GetVolume() : 0.0f;
 }
 
+void EngineBinds::SetAnimationSpeed(MonoObject* animationRef, float speed)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->SetAnimationSpeed(speed);
+	}
+}
+
+float EngineBinds::GetAnimationSpeed(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->GetAnimationSpeed() : 0.0f;
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -820,6 +839,10 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Audio::Resume", (const void*)&EngineBinds::Resume);
     mono_add_internal_call("HawkEngine.Audio::SetVolume", (const void*)&EngineBinds::SetVolume);
     mono_add_internal_call("HawkEngine.Audio::GetVolume", (const void*)&EngineBinds::GetVolume);
+
+    // SkeletalAnimation
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationSpeed", (const void*)&EngineBinds::SetAnimationSpeed);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationSpeed", (const void*)&EngineBinds::GetAnimationSpeed);
 }
 
 template <class T>

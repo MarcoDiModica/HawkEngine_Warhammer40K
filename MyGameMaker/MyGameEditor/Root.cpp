@@ -73,15 +73,23 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
     player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-    auto animatedPlayer = Application->root->CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+    //auto animatedPlayer = Application->root->CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	
 
-    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
     playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
     playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	if (playerMesh->HasComponent<SkeletalAnimationComponent>()) {
+		LOG(LogType::LOG_INFO, "Player has SkeletalAnimationComponent");
+	}
+    else
+	{
+	}
 
+		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));

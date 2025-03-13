@@ -275,7 +275,7 @@ std::vector<std::shared_ptr<Material>>createMaterialsFromFBX(const aiScene& scen
 }
 
 void ModelImporter::loadFromFile(const std::string& path) {
-	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_SortByPType |
+	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_Triangulate | 
 		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
 	aiGetErrorString();
 	

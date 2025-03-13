@@ -31,10 +31,6 @@ public:
         return std::make_unique<SkeletalAnimationComponent>(new_owner);
     }
 
-    MonoObject* GetSharp() override {
-        return CsharpReference;
-    }
-
     void SetAnimation(Animation* animation) {
         testAnimation = std::make_unique<Animation>(*animation);
     }
@@ -76,6 +72,31 @@ public:
 	void SetAnimationIndex(int index) {
 		animationIndex = index;
 	}
+
+	void PlayIndexAnimation(int index) 
+    {
+		if (index < 0 || index >= animations.size())
+		{
+			return;
+		}
+        SetAnimationIndex(index);
+		SetAnimation(animations[index].get());
+		animator->PlayAnimation(testAnimation.get());
+	}
+
+    void SetAnimationSpeed(float speed) 
+    {
+		animator->SetPlaySpeed(speed);
+    }
+
+	float GetAnimationSpeed()
+	{
+		return animator->GetPlaySpeed();
+	}
+
+
+    MonoObject* CsharpReference = nullptr;
+    MonoObject* GetSharp() override;
 
 private:
     std::unique_ptr<Animator> animator;

@@ -136,6 +136,10 @@ namespace EngineBinds {
     void Resume(MonoObject* audioRef);
     void SetVolume(MonoObject* audioRef, float volume);
     float GetVolume(MonoObject* audioRef);
+
+    //SkeletalAnimation
+	void SetAnimationSpeed(MonoObject* skeletalAnimationRef, float speed);
+	float GetAnimationSpeed(MonoObject* skeletalAnimationRef);
 }
 
 #endif // ENGINE_BINDS_H

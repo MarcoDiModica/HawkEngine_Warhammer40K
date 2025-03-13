@@ -1,5 +1,7 @@
 #include "SkeletalAnimationComponent.h"
 #include <iostream>
+#include <MyScriptingEngine/MonoManager.h>
+#include <mono/metadata/debug-helpers.h>
 
 SkeletalAnimationComponent::SkeletalAnimationComponent(GameObject* owner) : Component(owner)
 {
@@ -69,4 +71,37 @@ void SkeletalAnimationComponent::Update(float deltaTime)
 
 void SkeletalAnimationComponent::Destroy()
 {
+}
+
+MonoObject* SkeletalAnimationComponent::GetSharp()
+{
+    if (CsharpReference) {
+        return CsharpReference;
+    }
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "SkeletalAnimation");
+    if (!klass) {
+        return nullptr;
+    }
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+    if (!monoObject) {
+        return nullptr;
+    }
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.SkeletalAnimation:.ctor(uintptr,HawkEngine.GameObject)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    if (!method)
+    {
+        return nullptr;
+    }
+    uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+    MonoObject* ownerGo = owner ? owner->GetSharp() : nullptr;
+    if (!ownerGo)
+    {
+        return nullptr;
+    }
+    void* args[2];
+    args[0] = &componentPtr;
+    args[1] = ownerGo;
+    mono_runtime_invoke(method, monoObject, args, NULL);
+    CsharpReference = monoObject;
+    return CsharpReference;
 }

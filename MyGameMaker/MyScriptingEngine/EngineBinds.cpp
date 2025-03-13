@@ -138,8 +138,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.Audio") {
         return GO->GetComponent<SoundComponent>()->GetSharp();
     }
-	else if (componentName == "HawkEngine.UIImage") {
-		return GO->GetComponent<UIImageComponent>()->GetSharp();
+    else if (componentName == "HawkEngine.UIImage") {
+        return GO->GetComponent<UIImageComponent>()->GetSharp();
+    }
 	else if (componentName == "HawkEngine.SkeletalAnimation") {
 		return GO->GetComponent<SkeletalAnimationComponent>()->GetSharp();
 	}
@@ -173,10 +174,11 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
 		break;
+    case 7: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
+        break;
    }
-	case 7: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
-		break;
-	}
+
+	
 
     // loop through all the scripts and grant them unique ids
     for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it) {

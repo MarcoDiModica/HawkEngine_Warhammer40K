@@ -21,6 +21,10 @@ GameObject0:
         x: 1
         y: 1
         z: 1
+    "":
+      mass: 1
+      isKinematic: false
+      isFreezed: false
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -31,6 +35,12 @@ GameObject0:
       auto_play: false
       loop: false
     ColliderComponent: ~
+    ScriptComponents:
+      Script0: ~
+      Script1: ~
+      Script2: ~
+      Script3: ~
+      Script4: ~
   Children:
     Child0:
       name: Assets/Meshes/player.fbx
@@ -46,7 +56,7 @@ GameObject0:
             y: 0
             z: 0
           localRotation:
-            x: -90
+            x: -90.000002504478161
             y: 0
             z: 0
           localScale:
@@ -70,7 +80,7 @@ GameObject0:
               localRotation:
                 x: 0
                 y: -0
-                z: -179.99997768820026
+                z: -179.99997768819978
               localScale:
                 x: 0.0099999997764833384
                 y: 0.0099999997764833384
@@ -93,9 +103,9 @@ GameObject1:
       localPosition:
         x: 0
         y: 20
-        z: -10.000000000118581
+        z: -10.00000000000002
       localRotation:
-        x: 60.000000890584097
+        x: 60.000001669652114
         y: -0
         z: 0
       localScale:
@@ -111,30 +121,5 @@ GameObject1:
       near_plane: 0.10000000000000001
       far_plane: 500
     AudioListener: ~
-GameObject2:
-  name: Cube
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        x: 4.4000000953674316
-        y: 0
-        z: 0
-      localRotation:
-        x: 0
-        y: -0
-        z: 0
-      localScale:
-        x: 1
-        y: 1
-        z: 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-    Shader:
-      name: Shader
-      enabled: true
+    ScriptComponents:
+      Script0: ~

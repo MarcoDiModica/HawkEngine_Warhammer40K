@@ -328,6 +328,8 @@ ComponentType SceneSerializer::GetComponentTypeFromName(const std::string& name)
 	if (name == "ShaderComponent") return ComponentType::SHADER;
 	if (name == "SoundComponent") return ComponentType::AUDIO;
 	if (name == "AudioListener") return ComponentType::AUDIO_LISTENER;
+	//if (name == "ColiiderComponent") return ComponentType::COLLIDER;
+	//if (name == "RigidbodyComponent") return ComponentType::RIGIDBODY;
 	//mas mapeos aqui
 	return ComponentType::NONE;
 }

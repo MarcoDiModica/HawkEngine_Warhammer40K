@@ -41,6 +41,133 @@ std::unique_ptr<Component> MeshColliderComponent::Clone(GameObject* new_owner) {
     return std::make_unique<MeshColliderComponent>(new_owner, physics);
 }
 
+
+void MeshColliderComponent::SetTrigger(bool trigger) {
+    if (rigidBody) {
+        if (trigger) {
+            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+        }
+        else {
+            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+        }
+    }
+}
+
+bool MeshColliderComponent::IsTrigger() const {
+    return (rigidBody && (rigidBody->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE));
+}
+
+glm::vec3 MeshColliderComponent::GetColliderPos() {
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    btVector3 pos = trans.getOrigin();
+    return glm::vec3(pos.getX(), pos.getY(), pos.getZ());
+}
+
+glm::quat MeshColliderComponent::GetColliderRotation() {
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    btQuaternion rot = trans.getRotation();
+    return glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
+}
+
+void MeshColliderComponent::SetColliderRotation(const glm::quat& rotation) {
+    if (!rigidBody || !rigidBody->getMotionState()) {
+        return;
+    }
+
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+    rigidBody->getMotionState()->setWorldTransform(trans);
+    rigidBody->setWorldTransform(trans);
+    rigidBody->activate();
+}
+
+void MeshColliderComponent::SetColliderPos(const glm::vec3& position) {
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    trans.setOrigin(btVector3(position.x, position.y, position.z));
+    rigidBody->getMotionState()->setWorldTransform(trans);
+    rigidBody->setCenterOfMassTransform(trans);
+}
+
+glm::vec3 MeshColliderComponent::GetSize() {
+    if (rigidBody) {
+        btCollisionShape* shape = rigidBody->getCollisionShape();
+        if (shape) {
+            btVector3 scale = shape->getLocalScaling();
+            return glm::vec3(scale.getX() * 2.0f, scale.getY() * 2.0f, scale.getZ() * 2.0f);
+        }
+    }
+    return size;
+}
+
+void MeshColliderComponent::SetSize(const glm::vec3& newSize) {
+    size = newSize;
+    if (rigidBody) {
+        btCollisionShape* shape = rigidBody->getCollisionShape();
+        if (shape) {
+            shape->setLocalScaling(btVector3(newSize.x * 0.5f, newSize.y * 0.5f, newSize.z * 0.5f));
+        }
+    }
+}
+
+void MeshColliderComponent::SetMass(float newMass) {
+    mass = newMass;
+    if (rigidBody) {
+        physics->dynamicsWorld->removeRigidBody(rigidBody);
+        delete rigidBody->getMotionState();
+        delete rigidBody;
+        rigidBody = nullptr;
+    }
+    CreateMeshCollider();
+}
+
+void MeshColliderComponent::SetActive(bool active) {
+    if (rigidBody) {
+        if (active) {
+            physics->dynamicsWorld->addRigidBody(rigidBody);
+        }
+        else {
+            physics->dynamicsWorld->removeRigidBody(rigidBody);
+        }
+    }
+}
+
+void MeshColliderComponent::SnapToPosition() {
+    if (!owner) return;
+
+    Transform_Component* goTransform = owner->GetTransform();
+    if (!goTransform) return;
+
+    BoundingBox localBBox = owner->localBoundingBox();
+    glm::vec3 localCenter = localBBox.center();
+    glm::vec3 worldScale = goTransform->GetScale();
+    glm::vec3 worldPosition = goTransform->GetPosition();
+    glm::quat worldRotation = goTransform->GetRotation();
+    glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * worldScale);
+
+    btTransform transform;
+    transform.setIdentity();
+    transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
+    transform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
+
+    if (rigidBody->getMotionState()) {
+        rigidBody->getMotionState()->setWorldTransform(transform);
+    }
+    else {
+        rigidBody->setWorldTransform(transform);
+    }
+    rigidBody->setCenterOfMassTransform(transform);
+
+    if (rigidBody->getCollisionShape()) {
+        rigidBody->getCollisionShape()->setLocalScaling(btVector3(worldScale.x, worldScale.y, worldScale.z));
+    }
+}
+
+
+
 //Works for environment 
 void MeshColliderComponent::CreateMeshCollider() {
     if (!owner) return;

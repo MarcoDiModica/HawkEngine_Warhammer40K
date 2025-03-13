@@ -62,8 +62,7 @@ private:
     PhysicsModule* physics;
     glm::vec3 size; 
     float mass;
-    bool isForStreetLocal;
-    std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
+    bool isForStreetLocal;  
 
 	bool snapToPosition = false;
 

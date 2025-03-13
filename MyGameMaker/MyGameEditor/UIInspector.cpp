@@ -496,6 +496,22 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("MeshCollider")) return;
 
+        glm::vec3 colliderPosition = collider->GetColliderPos();
+        float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
+        if (ImGui::DragFloat3("Collider Position", pos, 0.1f)) {
+            collider->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
+        }
+
+        glm::vec3 size = collider->GetSize();
+        float sizeArray[3] = { size.x, size.y, size.z };
+        if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
+            collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+        }
+
+        bool isTrigger = collider->IsTrigger();
+        if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+            collider->SetTrigger(isTrigger);
+        }
     }
     #pragma endregion
 

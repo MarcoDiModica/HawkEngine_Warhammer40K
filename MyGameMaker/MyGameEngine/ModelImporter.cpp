@@ -184,15 +184,12 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 
 		for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
 
-			// Coordenadas de los v�rtices
 			aiVector3D vertex = mesh->mVertices[j];
-			vec3 aux = vec3(vertex.x * 0.02f, vertex.y * 0.02f, vertex.z * 0.02f);				//Unity scale 
-			//vec3 aux = vec3(vertex.x, vertex.y, vertex.z);									//Engineson scale
+			vec3 aux = vec3(vertex.x, vertex.y, vertex.z);
 			Vertex v;
 			models[i]->SetVertexBoneDataToDefault(v);
 			v.position = AssimpGLMHelpers::GetGLMVec(vertex);
 			modelsData[i]->vertexData.push_back(v);
-			
 
 			// Coordenadas UV (si existen)
 			if (mesh->mTextureCoords[0]) {  // Comprueba si hay UVs

@@ -50,7 +50,7 @@ void UIGameView::Init()
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
 }
 
-// Modificación para UIGameView.cpp
+// Modificaciï¿½n para UIGameView.cpp
 
 void UIGameView::UpdateFramebuffer()
 {
@@ -92,11 +92,11 @@ void UIGameView::UpdateFramebuffer()
 
 bool UIGameView::Draw()
 {
-	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar | 
-                            ImGuiWindowFlags_NoScrollWithMouse | 
-                            ImGuiWindowFlags_NoNavInputs |
-                            ImGuiWindowFlags_NoTitleBar;
-	
+	ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar |
+		ImGuiWindowFlags_NoScrollWithMouse |
+		ImGuiWindowFlags_NoNavInputs |
+		ImGuiWindowFlags_NoTitleBar;
+
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 
 	if (ImGui::Begin("Game View", &enabled, ImGuiWindowFlags_NoScrollbar))
@@ -115,7 +115,6 @@ bool UIGameView::Draw()
 
 		float availableAspectRatio = availableSize.x / availableSize.y;
 
-		float width, height;
 		float offsetX = 0, offsetY = 0;
 
 		if (availableAspectRatio > targetAspectRatio) {
@@ -151,10 +150,26 @@ bool UIGameView::Draw()
 		winPos = vec2(windowPos.x, windowPos.y);
 		winSize = vec2(windowSize.x, windowSize.y);
 
+		ImVec2 viewportMin = ImGui::GetItemRectMin();
+		viewportPos = vec2(viewportMin.x, viewportMin.y);
+		viewportSize = vec2(width, height);
+
+		
+
 		ImGui::End();
 	}
 
 	ImGui::PopStyleVar();
 
 	return true;
+}
+
+vec2 UIGameView::GetViewportSize()
+{
+	return viewportSize;
+}
+
+vec2 UIGameView::GetViewportPos()
+{
+	return viewportPos;
 }

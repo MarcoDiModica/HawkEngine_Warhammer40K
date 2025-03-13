@@ -36,7 +36,9 @@
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
-#include "../MyUIEngine/UIComponent.h"
+#include "../MyUIEngine/UICanvasComponent.h"
+#include "../MyUIEngine/UIImageComponent.h"
+#include "../MyUIEngine/UITransformComponent.h"
 
 typedef unsigned int guint32;
 #pragma endregion
@@ -1108,37 +1110,97 @@ private:
 
     //Aqui mas componentes
 
-    #pragma region UI
+#pragma region Canvas
+    static void DrawCanvasComponent(UICanvasComponent* canvas) {
+        if (!canvas) return;
 
-	/*static void DrawUIComponent(UIComponent* uiComponent) {
-		if (!uiComponent) return;
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("Canvas")) return;
 
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        bool isOpen = ImGui::CollapsingHeader("UI", ImGuiTreeNodeFlags_DefaultOpen);
-        ImGui::PopStyleVar();
+        ImGui::Text("Canvas");
+    }
+#pragma endregion
 
-        if (!isOpen) return;
+#pragma region Image
+    static void DrawImageComponent(UIImageComponent* image) {
+        if (!image) return;
 
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 8));
-        ImGui::Indent(10.0f);
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("Image")) return;
 
-		DrawUIProperties(uiComponent);
+        ImGui::Text("Image");
 
-		ImGui::Unindent(10.0f);
-		ImGui::PopStyleVar();
+        DrawImageFilePath(image);
+    }
 
+    static void DrawImageFilePath(UIImageComponent* image) {
+        char imagePath[256];
+        strcpy_s(imagePath, image->GetImagePath().c_str());
 
-	}
+        if (ImGui::InputText("image File", imagePath, sizeof(imagePath))) {
+            image->SetTexture(imagePath);
+        }
 
-    static void DrawUIProperties(UIComponent* uiComponent) {
-        if (!ImGui::TreeNodeEx("UI Properties", ImGuiTreeNodeFlags_DefaultOpen)) return;
+        if (ImGui::BeginDragDropTarget()) {
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+                HandleImageFileDrop(image, static_cast<const char*>(payload->Data));
+            }
+            ImGui::EndDragDropTarget();
+        }
+    }
 
-        ImGui::BeginGroup();
-    }*/
+    static void HandleImageFileDrop(UIImageComponent* image, const char* path) {
+        std::string extension = std::filesystem::path(path).extension().string();
+        std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 
-    #pragma endregion
+        if (extension == ".jpg" || extension == ".png" || extension == ".img") {
+            image->SetTexture(path);
+        }
+    }
 
+#pragma endregion
+
+#pragma region RectTransform
+    static void DrawRectTransformComponent(UITransformComponent* transform) {
+        if (!transform) return;
+
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("RectTransform")) return;
+
+        ImGui::Text("RectTransform");
+
+        glm::dvec3 currentPosition = transform->GetPosition();
+        glm::dvec3 currentRotation = glm::radians(transform->GetRotation());
+        glm::dvec3 currentScale = transform->GetScale();
+
+        float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+        float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
+        float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+
+        if (ImGui::DragFloat3("Position", pos, 0.001f, -1.0f, 1.0f)) {
+            glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
+            glm::dvec3 deltaPos = newPosition - currentPosition;
+            transform->Translate(deltaPos);
+        }
+
+        if (ImGui::DragFloat3("Rotation", rot, -1.0f)) {
+            glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
+            glm::dvec3 deltaRot = newRotation - currentRotation;
+            transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+            transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+            transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+        }
+
+        if (ImGui::DragFloat3("Scale", sca, 0.001f, -1.0f, 1.0f)) {
+            glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
+            glm::dvec3 deltaScale = newScale / currentScale;
+            transform->Scale(deltaScale);
+        }
+
+    }
+    
+  
+#pragma endregion
 public:
     static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
 		if (!gameObject) return;
@@ -1198,10 +1260,21 @@ public:
             DrawShaderComponent(shader);
         }
 
-		/*if (gameObject->HasComponent<UIComponent>()) {
-			UIComponent* uiComponent = gameObject->GetComponent<UIComponent>();
-			DrawUIComponent(uiComponent);
-		}*/
+		if (gameObject->HasComponent<UICanvasComponent>()) {
+            UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
+			DrawCanvasComponent(uiCanvasComponent);
+		}
+
+        if (gameObject->HasComponent<UIImageComponent>()) {
+            UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
+            DrawImageComponent(uiImageComponent);
+        }
+
+		if (gameObject->HasComponent<UITransformComponent>()) {
+			UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
+			DrawRectTransformComponent(uiTransformComponent);
+		}
+
         if (gameObject->scriptComponents.size() > 0) {
 			DrawScriptComponents(gameObject);
 		}
@@ -1278,6 +1351,32 @@ private:
 		if (!gameObject->HasComponent<ParticlesEmitterComponent>()) {
 			if (ImGui::MenuItem("ParticleEmitter")) {
 				gameObject->AddComponent<ParticlesEmitterComponent>();
+			}
+		}
+
+		if (!gameObject->HasComponent<ShaderComponent>()) {
+			if (ImGui::MenuItem("Shader")) {
+				gameObject->AddComponent<ShaderComponent>();
+			}
+		}
+        
+		if (!gameObject->HasComponent<UICanvasComponent>()) {
+			if (ImGui::MenuItem("Canvas")) {
+                gameObject->AddComponent<UITransformComponent>();
+				gameObject->AddComponent<UICanvasComponent>();
+			}
+		}
+		if (!gameObject->HasComponent<UIImageComponent>()) {
+			if (ImGui::MenuItem("Image")) {
+				gameObject->AddComponent<UITransformComponent>();
+				gameObject->AddComponent<UIImageComponent>();
+				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+			}
+		}
+        
+		if (!gameObject->HasComponent<UITransformComponent>()) {
+			if (ImGui::MenuItem("RectTransform")) {
+				gameObject->AddComponent<UITransformComponent>();
 			}
 		}
 

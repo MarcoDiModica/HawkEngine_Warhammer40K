@@ -6,52 +6,52 @@
 
 class ShaderComponent : public Component {
 public:
-	explicit ShaderComponent(GameObject* owner);
-	~ShaderComponent() override = default;
+    explicit ShaderComponent(GameObject* owner);
+    ~ShaderComponent() override = default;
 
-	void Start() override;
-	void Update(float deltaTime) override;
-	void Destroy() override;
+    void Start() override;
+    void Update(float deltaTime) override;
+    void Destroy() override;
 
-	std::unique_ptr<Component> Clone(GameObject* owner) override;
+    std::unique_ptr<Component> Clone(GameObject* owner) override;
 
-	void SetShaderType(ShaderType type);
-	ShaderType GetShaderType() const;
+    void SetShaderType(ShaderType type);
+    ShaderType GetShaderType() const;
 
-	void SetOwnerMaterial(Material* material);
-	Material* GetOwnerMaterial() const;
+    void SetOwnerMaterial(Material* material);
+    Material* GetOwnerMaterial() const;
 
-	void SetFloat(const std::string& name, float value);
-	void SetVec3(const std::string& name, const glm::vec3& value);
-	void SetVec4(const std::string& name, const glm::vec4& value);
-	void SetMatrix(const std::string& name, const glm::mat4& value);
+    void SetFloat(const std::string& name, float value);
+    void SetVec3(const std::string& name, const glm::vec3& value);
+    void SetVec4(const std::string& name, const glm::vec4& value);
+    void SetMatrix(const std::string& name, const glm::mat4& value);
 
-	void SetMetallic(float value);
-	void SetRoughness(float value);
-	void SetAO(float value);
+    void SetMetallic(float value);
+    void SetRoughness(float value);
+    void SetAO(float value);
 
-	void SetNormalMap(const std::string& path);
-	void SetMetallicMap(const std::string& path);
-	void SetRoughnessMap(const std::string& path);
-	void SetAOMap(const std::string& path);
+    void SetNormalMap(const std::string& path);
+    void SetMetallicMap(const std::string& path);
+    void SetRoughnessMap(const std::string& path);
+    void SetAOMap(const std::string& path);
 
-	float GetMetallic() const;
-	float GetRoughness() const;
-	float GetAO() const;
+    float GetMetallic() const;
+    float GetRoughness() const;
+    float GetAO() const;
 
-	bool HasNormalMap() const;
-	bool HasMetallicMap() const;
-	bool HasRoughnessMap() const;
-	bool HasAOMap() const;
+    bool HasNormalMap() const;
+    bool HasMetallicMap() const;
+    bool HasRoughnessMap() const;
+    bool HasAOMap() const;
 
-	ComponentType GetType() const override { return ComponentType::SHADER; }
+    ComponentType GetType() const override { return ComponentType::SHADER; }
 
 private:
-	ShaderType shaderType;
-	Material* ownerMaterial;
+    ShaderType shaderType;
+    Material* ownerMaterial;
 
 protected:
-	friend class SceneSerializer;
+    friend class SceneSerializer;
 
-	//todo encode decode functions
+    //todo encode decode functions
 };

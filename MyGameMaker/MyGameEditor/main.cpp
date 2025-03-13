@@ -54,6 +54,8 @@
 #include "../MyGameEngine/InputEngine.h"
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
+#include "../MyUIEngine/UICanvasComponent.h"
+
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 
@@ -216,6 +218,10 @@ static void RenderObjectAndChildren(GameObject* object) {
 		if (lastProgram > 0) {
 			glUseProgram(lastProgram);
 		}
+	}
+
+	if (object->HasComponent<UICanvasComponent>()) {
+		object->GetComponent<UICanvasComponent>()->Update(Application->GetDt());
 	}
 
 	for (const auto& child : object->GetChildren()) {

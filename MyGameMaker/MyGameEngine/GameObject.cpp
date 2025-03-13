@@ -20,6 +20,8 @@
 #include <mono/metadata/object.h>
 #include "MyShadersEngine/ShaderComponent.h"
 #include "glm/gtx/matrix_decompose.inl"
+#include "../MyUIEngine/UICanvasComponent.h"
+#include "../MyUIEngine/UITransformComponent.h"
 
 unsigned int GameObject::nextGid = 1;
 
@@ -426,63 +428,73 @@ void GameObject::ApplyWorldToLocalTransform(GameObject* child, const glm::dmat4&
 	transform->SetRotationQuat(localRotation);
 	transform->SetScale(localScale);
 }
+void GameObject::AddChild(GameObject* child)
+{
+    if (child == this) { return; }
 
-void GameObject::AddChild(GameObject* child) {
-	if (child == this) { return; }
+    if (child->GetParent() == nullptr)/* If child is in the scene */ {
+        if (child->scene) {
 
-	GameObject* parent = GetParent();
-	while (parent) {
-		if (parent == child) return; 
-		parent = parent->GetParent();
-	}
+            if (GetParent() == child) {
+                for (size_t i = 0; i < child->children.size(); ++i) {
+                    auto& uncle = child->children[i];
+                    scene->AddGameObject(uncle);
+                    child->RemoveChild(child->children[i].get());
+                    i--;
+                }
+            }
+            
+            for (size_t i = 0; i < child->scene->_children.size(); ++i) {
 
-	glm::dmat4 childWorldMatrix = child->GetTransform()->GetMatrix();
+                if (*child->scene->_children[i] == *child) {
 
-	if (child->GetParent() == nullptr) {
-		if (child->scene) {
-			for (size_t i = 0; i < child->scene->_children.size(); ++i) {
-				if (*child->scene->_children[i] == *child) {
-					children.push_back(child->shared_from_this());
+                    children.push_back(child->shared_from_this());
+                    if (scene->tree) {
+                        scene->tree->Insert(scene->tree->root, *children.back(), 0);
+                    }
 
-					if (scene && scene->tree) {
-						scene->tree->Insert(scene->tree->root, *children.back(), 0);
-					}
+                    children[children.size() - 1]->parent = this;
+                    children[children.size() - 1]->GetTransform()->UpdateLocalMatrix();
 
-					children[children.size() - 1]->parent = this;
+                    if (child->parent!=nullptr && child->parent->HasComponent<UICanvasComponent>()) {
 
-					child->scene->_children.erase(child->scene->_children.begin() + i);
+                        if (!child->HasComponent<UITransformComponent>())
+                        {
+                            child->AddComponent<UITransformComponent>();
+                        }
+                    }
 
-					ApplyWorldToLocalTransform(child, childWorldMatrix);
-					return;
-				}
-			}
-		}
-	}
-	else {
-		GameObject* previousParent = child->GetParent();
+                    child->scene->_children.erase(child->scene->_children.begin() + i);
+                    return;
+                }
+            }
+        }
+    }
+    else {
+        GameObject* step_father = child->GetParent();
+        /*The problem when you call AddChild when a child childifies its parent is that the paarent is being copied with the child that now parents it*/
+        if ( GetParent() == child) {
+                for (size_t i = 0; i < child->children.size(); ++i) {
+                    auto& uncle = child->children[i];
+                    step_father->AddChild(uncle.get());
+                    i--;
+                }
+        }
 
-		if (GetParent() == child) {
-			for (size_t i = 0; i < child->children.size(); ++i) {
-				auto& uncle = child->children[i];
-				previousParent->AddChild(uncle.get());
-				i--;
-			}
-		}
+        children.push_back(child->shared_from_this());
 
-		children.push_back(child->shared_from_this());
+        if (scene->tree) {
+            scene->tree->Insert(scene->tree->root, *children.back(), 0);
+        }
 
-		if (scene && scene->tree) {
-			scene->tree->Insert(scene->tree->root, *children.back(), 0);
-		}
+        children[children.size() -1]->parent = this;
+        children[children.size() - 1]->GetTransform()->UpdateLocalMatrix();
+        step_father->RemoveChild(child);
 
-		children[children.size() - 1]->parent = this;
-
-		previousParent->RemoveChild(child);
-
-		ApplyWorldToLocalTransform(child, childWorldMatrix);
-		return;
-	}
+        return;
+    }
 }
+
 
 void GameObject::RemoveChild(GameObject* child)
 {

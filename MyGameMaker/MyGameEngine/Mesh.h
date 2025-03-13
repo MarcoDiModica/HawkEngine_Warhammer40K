@@ -90,33 +90,56 @@ protected:
     std::string meshPath;
     std::string nameM;
 
+    YAML::Node encode() {
+        YAML::Node node;
+        node["name"] = nameM;
+
+        if (filePath.empty() || meshPath.empty() || nameM.empty()) {
+            throw std::runtime_error("Mesh paths or name are not initialized.");
+        }
+
+        node["file_path"] = filePath;
+        node["mesh_path"] = meshPath;
+
+        if (_vertices.empty() || _indices.empty()) {
+            throw std::runtime_error("Mesh vertices or indices are not initialized.");
+        }
+
+        node["vertices"] = _vertices;
+        node["indices"] = _indices;
+        node["tex_coords"] = _texCoords;
+        node["normals"] = _normals;
+
+        node["aabb_min"] = aabbMin;
+        node["aabb_max"] = aabbMax;
+
+        return node;
+    }
+
+    bool decode(const YAML::Node& node) {
+        if (!node["file_path"] || !node["mesh_path"] || !node["name"])
+            return false;
+
+        filePath = node["file_path"].as<std::string>();
+        meshPath = node["mesh_path"].as<std::string>();
+        nameM = node["name"].as<std::string>();
+
+        if (node["vertices"])
+            _vertices = node["vertices"].as<std::vector<glm::vec3>>();
+        if (node["indices"])
+            _indices = node["indices"].as<std::vector<unsigned int>>();
+        if (node["tex_coords"])
+            _texCoords = node["tex_coords"].as<std::vector<glm::vec2>>();
+        if (node["normals"])
+            _normals = node["normals"].as<std::vector<glm::vec3>>();
+
+        if (node["aabb_min"])
+            aabbMin = node["aabb_min"].as<glm::vec3>();
+        if (node["aabb_max"])
+            aabbMax = node["aabb_max"].as<glm::vec3>();
+
+        return true;
+    }
 };
-
-namespace YAML {
-    template <>
-    struct convert<glm::vec3> {
-        static Node encode(const glm::vec3& rhs) {
-            Node
-                node;
-            node.push_back(rhs.x);
-            node.push_back(rhs.y);
-            node.push_back(rhs.z);
-            return node;
-        }
-
-        static bool decode(const Node& node,
-            glm::vec3& rhs) {
-            if (!node.IsSequence() || node.size() != 3) {
-                return false;
-            }
-
-            rhs.x = static_cast<float>(node[0].as<double>());
-            rhs.y = static_cast<float>(node[1].as<double>());
-            rhs.z = static_cast<float>(node[2].as<double>());
-            return true;
-
-        }
-    };
-}
 
 #endif // !__MESH_H__

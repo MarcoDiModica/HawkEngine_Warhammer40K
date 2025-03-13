@@ -84,6 +84,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyAnimationEngine\MyAnimationEngine.vcxproj">
+      <Project>{5261e9ef-0fe5-4966-8f18-95fdfc3a51c4}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>

@@ -27,6 +27,8 @@
 
 
 std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "../MyAnimationEngine/BoneComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 
@@ -90,12 +92,24 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
     player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-    //playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f)); //UnComent for HawkEngine scale 
+    //auto animatedPlayer = Application->root->CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+	
+
+    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+    playerMesh->SetName("playerMesh");
     playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	if (playerMesh->HasComponent<SkeletalAnimationComponent>()) {
+		LOG(LogType::LOG_INFO, "Player has SkeletalAnimationComponent");
+	}
+    else
+	{
+        LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
+	}
 
+		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
@@ -230,12 +244,12 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
     ModelImporter meshImp;
     meshImp.loadFromFile(path);
-
+    auto go = Application->root->CreateGameObject(meshImp.fbx_object[0]->GetName());
     for (int i = 0; i < meshImp.meshes.size(); i++) {
 
         auto MarcoVicePresidente2 = meshImp.fbx_object[i];
 
-        auto go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
+        go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
         go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
 
         auto meshRenderer = go->AddComponent<MeshRenderer>();
@@ -262,12 +276,47 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
             meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
         }
 
+
+		if (meshImp.animations.size() > 0) {
+			auto animationComponent = go->AddComponent<SkeletalAnimationComponent>();
+            animationComponent->SetAnimation(meshImp.animations[0].get());
+            animationComponent->Start();
+
+            for (int i = 0; i < meshImp.animations.size(); ++i) 
+            {
+                animationComponent->AddAnimation(meshImp.animations[i].get());
+            }
+
+            std::unordered_map<std::string, std::shared_ptr<GameObject>> boneMap;
+
+            // Create GameObjects for each bone and store them in the map
+            for (auto& bone : meshImp.bonesGameObjects[i]) {
+                auto boneGO = CreateGameObject(bone->GetName());
+                Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+				animationComponent->GetAnimator()->AddBoneGameObject(boneGO);
+                boneMap[bone->GetName()] = boneGO;
+            }
+
+            // Establish parent-child relationships
+            for (auto& bone : meshImp.bonesGameObjects[i]) {
+                auto boneGO = boneMap[bone->GetName()];
+                Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+                if (boneTransform->GetParentName() != "") {
+                    auto parentGO = boneMap[boneTransform->GetParentName()];
+                    ParentGameObject(*boneGO, *parentGO);
+                }
+                else {
+                    ParentGameObject(*boneGO, *go);
+                }
+            }
+		}
+
         go->GetComponent<MeshRenderer>()->GetMesh()->setBoundingBox(*meshBBox);
 
         go->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
 
         go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
-        Application->root->ParentGameObject(*go, *MarcoVicePresidente);
+        //Application->root->ParentGameObject(*go, *MarcoVicePresidente);
         //gameObjectsWithColliders.push_back(go);
     }
 
@@ -276,7 +325,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
     //}
 
     if (meshImp.meshes.size() > 0) {
-		return MarcoVicePresidente;
+		return go;
 	}
 	else {
 		return nullptr;

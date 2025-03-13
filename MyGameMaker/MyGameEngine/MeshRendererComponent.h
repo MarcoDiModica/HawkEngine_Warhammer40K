@@ -46,6 +46,7 @@ public:
 	MonoObject* GetSharp() override;
 
 	void SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const;
+	void SetUpAnimationProperties(Shaders* shader) const;
 	void BindMeshForRendering() const;
 	void UnbindMeshAfterRendering() const;
 	void DrawMeshElements() const;

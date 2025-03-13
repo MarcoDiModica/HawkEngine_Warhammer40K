@@ -1,3 +1,6 @@
+#ifdef min
+#undef min
+#endif
 #define _CRT_SECURE_NO_WARNINGS
 #include "ModelImporter.h"
 #include <map>
@@ -7,6 +10,9 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include <assimp/mesh.h>
+#include "MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "MyAnimationEngine/Animation.h"
+
 #include "Material.h"
 #include "MeshRendererComponent.h"
 #include "TransformComponent.h"
@@ -33,9 +39,8 @@ static mat4 aiMat4ToMat4(const aiMatrix4x4& aiMat) {
 	return mat;
 }
 
-
 static void decomposeMatrix(const mat4& matrix, vec3& scale, glm::quat& rotation, vec3& translation) {
-	// Extraer la traslación
+	// Extraer la traslaciï¿½n
 	translation = vec3(matrix[3]);
 
 	// Extraer la escala
@@ -51,7 +56,7 @@ static void decomposeMatrix(const mat4& matrix, vec3& scale, glm::quat& rotation
 	rotationMatrix[1] /= scale.y;
 	rotationMatrix[2] /= scale.z;
 
-	// Extraer la rotación
+	// Extraer la rotaciï¿½n
 	rotation = glm::quat(rotationMatrix);
 }
 
@@ -89,9 +94,68 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 			const auto meshIndex = node.mMeshes[i];
 			const auto& model = meshes[meshIndex];
 
+
+			if (scene.mNumAnimations > 0)
+			{
+				for (int i = 0; i < scene.mNumAnimations; i++)
+				{
+					Animation* animation = new Animation();
+
+                    animation->SetUpAnimation(const_cast<aiScene*>(&scene), model->getModel().get(),i);
+
+					animations.push_back(std::shared_ptr<Animation>(animation));
+					//std::cout << node.mName.C_Str() << std::endl;
+				}
+
+				const aiMesh* mesh = scene.mMeshes[node.mMeshes[i]];
+				int numBones = mesh->mNumBones;
+
+				std::vector<std::shared_ptr<GameObject>> boneVector;
+				for (int j = 0; j < numBones; ++j)
+				{
+					aiBone* bone = mesh->mBones[j];
+					std::string boneName = bone->mName.C_Str();
+					std::shared_ptr<GameObject> boneGameObject = std::make_shared<GameObject>();
+					boneGameObject->SetName(boneName);
+					glm::mat4 boneMatrix = aiMat4ToMat4(bone->mOffsetMatrix);
+					boneGameObject->GetTransform()->SetLocalMatrix(accumulatedTransform * boneMatrix);
+
+					boneVector.push_back(boneGameObject);
+				}
+				bonesGameObjects.push_back(boneVector);
+			}
+
 			obj.SetName(node.mName.data);
 
 			fbx_object.push_back(std::make_shared<GameObject>(obj));
+
+
+			// Establish parent-child relationships
+			/*for (int j = 0; j < numBones; ++j)
+			{
+				aiBone* bone = mesh->mBones[j];
+				std::string boneName = bone->mName.C_Str();
+				std::shared_ptr<GameObject> boneGameObject = boneMap[boneName];
+
+				aiNode* boneNode = scene.mRootNode->FindNode(bone->mName);
+				if (boneNode && boneNode->mParent)
+				{
+					std::string parentName = boneNode->mParent->mName.C_Str();
+					if (boneMap[i].find(parentName) != boneMap[i].end())
+					{
+						boneMap[i][parentName]->AddChild(boneGameObject);
+					}
+				}
+			}*/
+
+			// Add the root bones to the bonesGameObjects list
+			/*for (const auto& pair : boneMap)
+			{
+				if (!pair.second->GetParent())
+				{
+					bonesGameObjects.push_back(pair.second);
+				}
+			}*/
 		}
 
 		// Process and add children as children of the current node
@@ -120,13 +184,15 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 
 		for (unsigned int j = 0; j < mesh->mNumVertices; j++) {
 
-			// Coordenadas de los vértices
+			// Coordenadas de los vï¿½rtices
 			aiVector3D vertex = mesh->mVertices[j];
 			vec3 aux = vec3(vertex.x * 0.02f, vertex.y * 0.02f, vertex.z * 0.02f);				//Unity scale 
 			//vec3 aux = vec3(vertex.x, vertex.y, vertex.z);									//Engineson scale
 			Vertex v;
-			v.position = aux;
+			models[i]->SetVertexBoneDataToDefault(v);
+			v.position = AssimpGLMHelpers::GetGLMVec(vertex);
 			modelsData[i]->vertexData.push_back(v);
+			
 
 			// Coordenadas UV (si existen)
 			if (mesh->mTextureCoords[0]) {  // Comprueba si hay UVs
@@ -147,8 +213,9 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 				vec3 auxColor(color.r, color.g, color.b);
 				modelsData[i]->vertex_colors.push_back(auxColor);
 			}
-
 		}
+
+		models[i]->ExtractBoneWeightForVertices(modelsData[i]->vertexData, mesh, &scene);
 
 		for (unsigned int j = 0; j < mesh->mNumFaces; j++) {
 			aiFace face = mesh->mFaces[j];
@@ -209,14 +276,16 @@ std::vector<std::shared_ptr<Material>>createMaterialsFromFBX(const aiScene& scen
 }
 
 void ModelImporter::loadFromFile(const std::string& path) {
-	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_Triangulate |
-		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs);
+	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_Triangulate | 
+		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
 	aiGetErrorString();
 	
 	// Create models and materials from FBX
 	meshes = createMeshesFromFBX(*fbx_scene);
 
 	materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/");
+
+	scenePath = path;
 
 	// Create the GameObject hierarchy
 	graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);

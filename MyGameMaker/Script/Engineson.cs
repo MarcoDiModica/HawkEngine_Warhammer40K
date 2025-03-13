@@ -44,6 +44,10 @@ namespace HawkEngine
             {
                 return 5;
             }
+            else if (type == typeof(SkeletalAnimation))
+            {
+                return 6;
+            }
 
             return -1;
         }

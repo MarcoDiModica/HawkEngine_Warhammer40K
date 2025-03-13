@@ -22,6 +22,7 @@
 #include "glm/gtx/matrix_decompose.inl"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "MyAnimationEngine/SkeletalAnimationComponent.h"
 
 unsigned int GameObject::nextGid = 1;
 

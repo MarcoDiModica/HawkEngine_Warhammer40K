@@ -24,7 +24,9 @@
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>
-
+#ifdef min
+#undef min
+#endif
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/cimport.h>
@@ -476,13 +478,13 @@ static void RenderEditor() {
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 		objects.push_back(object);
-		RenderOutline(object);
+		//RenderOutline(object);
 		object->Update(static_cast<float>(Application->GetDt()));
 
 		for (const auto & j : object->GetChildren()) {
 			GameObject* child = j.get();
 			objects.push_back(child);
-			RenderOutline(child);
+			//RenderOutline(child);
 		}
 
 		if (object->HasComponent<LightComponent>()) {
@@ -537,6 +539,7 @@ int main(int argc, char** argv) {
 			iluInit();
 			ilutInit();
 
+		
 			init_openGL();
 
 			if (Application) {	

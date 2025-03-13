@@ -41,6 +41,17 @@ public:
     void SetSnapToPosition(bool value) { snapToPosition = value; }
     void SnapToPosition();
 
+
+    //OnCollision
+    virtual void OnCollisionEnter(ColliderComponent* other);
+    virtual void OnCollisionStay(ColliderComponent* other);
+    virtual void OnCollisionExit(ColliderComponent* other); 
+    //OnTrigger
+    virtual void OnTriggerEnter(ColliderComponent* other);
+    virtual void OnTriggerStay(ColliderComponent* other);
+    virtual void OnTriggerExit(ColliderComponent* other);
+
+
     btRigidBody* GetRigidBody() const { return rigidBody; }
 
 	MonoObject* CsharpReference = nullptr;
@@ -51,8 +62,7 @@ private:
     PhysicsModule* physics;
     glm::vec3 size; 
     float mass;
-    bool isForStreetLocal;
-    std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMapForhouse;
+    bool isForStreetLocal;  
 
 	bool snapToPosition = false;
 
@@ -71,4 +81,4 @@ protected:
 		return false;
     }
 };
-
+ 

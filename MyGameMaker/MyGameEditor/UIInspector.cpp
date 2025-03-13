@@ -31,6 +31,7 @@
 #include "../MyGameEngine/Material.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
+#include "../MyPhysicsEngine/MeshColliderComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
@@ -489,6 +490,32 @@ private:
         }
     }
     #pragma endregion 
+
+    #pragma region MeshCollider
+    static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
+        if (!collider) return;
+
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("MeshCollider")) return;
+
+        glm::vec3 colliderPosition = collider->GetColliderPos();
+        float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
+        if (ImGui::DragFloat3("Collider Position", pos, 0.1f)) {
+            collider->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
+        }
+
+        glm::vec3 size = collider->GetSize();
+        float sizeArray[3] = { size.x, size.y, size.z };
+        if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
+            collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+        }
+
+        bool isTrigger = collider->IsTrigger();
+        if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+            collider->SetTrigger(isTrigger);
+        }
+    }
+    #pragma endregion
 
     #pragma region Collider
     static void DrawColliderComponent(ColliderComponent* collider) {
@@ -1213,6 +1240,11 @@ public:
 			DrawColliderComponent(collider);
 		}
         
+        if (gameObject->HasComponent<MeshColliderComponent>()) {
+            MeshColliderComponent* meshCollider = gameObject->GetComponent<MeshColliderComponent>();
+			DrawMeshColliderComponent(meshCollider);
+		}
+        
         if (gameObject->HasComponent<RigidbodyComponent>()) {
             RigidbodyComponent* rigidbody = gameObject->GetComponent<RigidbodyComponent>();
 			DrawRigidbodyComponent(rigidbody);
@@ -1299,6 +1331,13 @@ private:
 			if (ImGui::MenuItem("Collider")) {
 				gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
 				gameObject->GetComponent<ColliderComponent>()->Start();
+			}
+		}
+        
+        if (!gameObject->HasComponent<MeshColliderComponent>()) {
+			if (ImGui::MenuItem("MeshCollider")) {
+				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+				gameObject->GetComponent<MeshColliderComponent>()->Start();
 			}
 		}
         

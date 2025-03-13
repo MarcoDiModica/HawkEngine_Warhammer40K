@@ -19,6 +19,7 @@
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/object.h>
 #include "MyShadersEngine/ShaderComponent.h"
+#include "glm/gtx/matrix_decompose.inl"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
 
@@ -362,25 +363,71 @@ BoundingBox GameObject::boundingBox() const
     return GetTransform()->GetMatrix() * combinedBoundingBox;
 }
 
-void GameObject::SetParent(GameObject* parent)
-{
-    if (this->parent == parent)
-	{
+
+BoundingBox GameObject::localBoundingBox() const {
+    BoundingBox combinedBoundingBox{};
+
+    if (HasComponent<MeshRenderer>()) {
+        auto meshRenderer = GetComponent<MeshRenderer>();
+        combinedBoundingBox = meshRenderer->GetMesh()->boundingBox();
+    }
+    else if (!children.empty()) {
+        combinedBoundingBox = children.front()->boundingBox();
+    }
+
+    for (auto it = children.begin() + (HasComponent<MeshRenderer>() || children.empty() ? 0 : 1); it != children.end(); ++it) {
+        combinedBoundingBox = combinedBoundingBox + (*it)->boundingBox();
+    }
+
+    return combinedBoundingBox;
+}
+
+void GameObject::SetParent(GameObject* parent) {
+	if (this->parent == parent) {
 		return;
 	}
 
-    if (this->parent)
-	{
+	if (parent == this) {
+		return;
+	}
+
+	GameObject* p = parent;
+	while (p) {
+		if (p == this) return; 
+		p = p->GetParent();
+	}
+
+	if (this->parent) {
 		this->parent->RemoveChild(this);
 	}
 
 	this->parent = parent;
-    if (parent)
-    {
-        parent->AddChild(this);
+	if (parent) {
+		parent->AddChild(this);
+	}
+	else if (scene) {
+		scene->AddGameObject(shared_from_this());
 	}
 }
 
+void GameObject::ApplyWorldToLocalTransform(GameObject* child, const glm::dmat4& childWorldMatrix) {
+	glm::dmat4 parentWorldMatrix = GetTransform()->GetMatrix();
+
+	glm::dmat4 newLocalMatrix = glm::inverse(parentWorldMatrix) * childWorldMatrix;
+
+	glm::dvec3 skew;
+	glm::dvec4 perspective;
+	glm::dvec3 localPosition;
+	glm::dquat localRotation;
+	glm::dvec3 localScale;
+
+	glm::decompose(newLocalMatrix, localScale, localRotation, localPosition, skew, perspective);
+
+	Transform_Component* transform = child->GetTransform();
+	transform->SetLocalPosition(localPosition);
+	transform->SetRotationQuat(localRotation);
+	transform->SetScale(localScale);
+}
 void GameObject::AddChild(GameObject* child)
 {
     if (child == this) { return; }
@@ -447,6 +494,7 @@ void GameObject::AddChild(GameObject* child)
         return;
     }
 }
+
 
 void GameObject::RemoveChild(GameObject* child)
 {

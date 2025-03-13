@@ -67,7 +67,7 @@ public:
     bool CompareTag(const std::string& tag) const;
 
     BoundingBox boundingBox() const;
-    BoundingBox localBoundingBox() const { return mesh ? mesh->boundingBox() : BoundingBox(); }
+    BoundingBox localBoundingBox() const;
 
     Transform_Component* GetTransform() const { return GetComponent<Transform_Component>(); }
 
@@ -76,6 +76,7 @@ public:
     unsigned int GetId() const { return gid; }
 
     void SetParent(GameObject* parent);
+    void ApplyWorldToLocalTransform(GameObject* child, const glm::dmat4& childWorldMatrix);
     GameObject* GetParent() const { return parent; }
     void AddChild(GameObject* child);
     void RemoveChild(GameObject* child);

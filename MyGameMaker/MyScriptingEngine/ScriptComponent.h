@@ -26,6 +26,8 @@ public:
     MonoObject* GetSharpObject() { return monoScript; }
     std::string GetTypeName() const;
 
+    void InvokeMonoMethod(const std::string& methodName, GameObject* other);
+
     MonoObject* monoScript = nullptr;
 
     std::filesystem::file_time_type GetLastWriteTime() const { return lastWriteTime; }

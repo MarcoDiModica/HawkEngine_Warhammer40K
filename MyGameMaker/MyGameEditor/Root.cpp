@@ -50,12 +50,23 @@ std::vector<EmitterInfo> activeEmitters;
 
 Root::Root(App* app) : Module(app) { ; }
 
+
+
+std::shared_ptr<GameObject> environment;
+
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
     Application->root->CreateScene("HolaBuenas");
     Application->root->SetActiveScene("HolaBuenas");
     SoundComponent::InitSharedAudioEngine();
+   /* CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
+    MakeSmokerEmmiter();
+    MakeSmokerEmiter2();*/
+
+   /* environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
+    environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
+    environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
     ShaderManager::GetInstance().Initialize();
 
     return true;
@@ -80,7 +91,7 @@ bool Root::Start()
     player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
     auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-    playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
+    //playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f)); //UnComent for HawkEngine scale 
     playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
@@ -140,8 +151,27 @@ bool Root::Start()
     return true;
 }
 
+void CreateEnvironmentColliders()
+{
+	for (auto& go : environment->GetChildren()) {
+	    auto meshCollider = go->AddComponent<ColliderComponent>(Application->physicsModule, true);
+		meshCollider->Start();
+
+    }
+
+}
+
+
+bool hasCreatedColliders = false;
+
 bool Root::Update(double dt) 
 {
+
+	if (!hasCreatedColliders) {
+		//CreateEnvironmentColliders();
+		hasCreatedColliders = true;
+	}
+
     return true;
 }
 

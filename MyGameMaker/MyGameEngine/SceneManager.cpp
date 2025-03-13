@@ -1,3 +1,4 @@
+#define GLM_ENABLE_EXPERIMENTAL
 #include "SceneManager.h"
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
@@ -14,6 +15,7 @@
 #include "../MyGameEditor/Log.h"
 #include "../MyAudioEngine/AudioListener.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "glm/gtx/matrix_decompose.inl"
 
 
 bool SceneManager::Start() {

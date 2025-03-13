@@ -86,6 +86,36 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    override public void OnCollisionEnter(Collider other)
+    {
+        Engineson.print("Player Collision Enter:");
+    }
+
+    override public void OnCollisionStay(Collider other)
+    {
+        Engineson.print("Player Collision Stay: ");
+    }
+
+    override public void OnCollisionExit(Collider other)
+    {
+        Engineson.print("Player Collision Exit: ");
+    }
+
+    override public void OnTriggerEnter(Collider other)
+    {
+        Engineson.print("Player Trigger Enter: ");
+    }
+
+    override public void OnTriggerStay(Collider other)
+    {
+        Engineson.print("Player Trigger Stay: ");
+    }
+
+    override public void OnTriggerExit(Collider other)
+    {
+        Engineson.print("Player Trigger Exit: ");
+    }
+
     public void SetMoveDirection(Vector3 direction)
     {
         moveDirection = direction;

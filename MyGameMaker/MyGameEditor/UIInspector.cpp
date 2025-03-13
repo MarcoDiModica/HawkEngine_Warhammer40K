@@ -55,7 +55,6 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Transform")) return;
 
-        //reset transform with right click
         if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Reset Transform")) {
 				transform->ResetTransform();

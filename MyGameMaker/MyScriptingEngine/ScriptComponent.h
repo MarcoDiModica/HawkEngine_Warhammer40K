@@ -4,6 +4,7 @@
 #include "../MyGameEngine/Component.h"
 #include <mono/metadata/object.h>
 #include <filesystem>
+#include "MyGameEditor/Log.h"
 
 class ScriptComponent : public Component
 {
@@ -38,11 +39,27 @@ public:
 protected:
 	friend class SceneSerializer;
     
-    YAML::Node encode() override {
-		return YAML::Node();
-    }
+	YAML::Node encode() override {
+		YAML::Node node;
+		node["name"] = GetTypeName();
+		return node;
+	}
     
-    bool decode(const YAML::Node& node) override {
-        return false;
-    }
+	bool decode(const YAML::Node& node) override {
+		if (!node["name"]) {
+			return false;
+		}
+
+		std::string name = node["name"].as<std::string>();
+		bool success = LoadScript(name);
+        if (!success) {
+			LOG(LogType::LOG_ERROR, "Script %s not found", name.c_str());
+		}
+		else {
+			LOG(LogType::LOG_INFO, "Script %s loaded", name.c_str());
+            Start();
+		}
+
+		return success;
+	}
 };

@@ -59,17 +59,17 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-    Application->root->CreateScene("HolaBuenas");
-    Application->root->SetActiveScene("HolaBuenas");
+    Application->root->CreateScene("DefaultScene");
+    Application->root->SetActiveScene("DefaultScene");
     SoundComponent::InitSharedAudioEngine();
    /* CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();*/
 
-   /* environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
+    /*environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
     environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
-    environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
-    ShaderManager::GetInstance().Initialize();
+    environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    ShaderManager::GetInstance().Initialize();*/
 
     return true;
 }
@@ -82,7 +82,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto player = CreateGameObject("Player");
+    /*auto player = CreateGameObject("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
     player->AddComponent<RigidbodyComponent>(Application->physicsModule);
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
@@ -91,9 +91,6 @@ bool Root::Start()
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
     player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
-
-    //auto animatedPlayer = Application->root->CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
-	
 
     auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
     playerMesh->SetName("playerMesh");
@@ -107,7 +104,7 @@ bool Root::Start()
     else
 	{
         LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
-	}
+	}*/
 
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
@@ -117,33 +114,33 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
   
-    auto canvas = CreateGameObject("Canvas");
+	/*auto canvas = CreateGameObject("Canvas");
 	canvas->AddComponent<UICanvasComponent>();
-    canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<UITransformComponent>();
 
-    auto staminaBar = CreateGameObject("LifeBar");
-    Application->root->ParentGameObject(*staminaBar, *canvas);
-    staminaBar->AddComponent<UIImageComponent>();
-    staminaBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/staminaBar.png");
-    staminaBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
-    staminaBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
+	auto staminaBar = CreateGameObject("LifeBar");
+	Application->root->ParentGameObject(*staminaBar, *canvas);
+	staminaBar->AddComponent<UIImageComponent>();
+	staminaBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/staminaBar.png");
+	staminaBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
+	staminaBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
 
-    auto lifeBar = CreateGameObject("LifeBar");
-    Application->root->ParentGameObject(*lifeBar, *canvas);
-    lifeBar->AddComponent<UIImageComponent>();
-    lifeBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/lifeBar.png");
-    lifeBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
-    lifeBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
-    lifeBar->AddComponent<ScriptComponent>()->LoadScript("ImageAsSlider");
+	auto lifeBar = CreateGameObject("LifeBar");
+	Application->root->ParentGameObject(*lifeBar, *canvas);
+	lifeBar->AddComponent<UIImageComponent>();
+	lifeBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/lifeBar.png");
+	lifeBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
+	lifeBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
+	lifeBar->AddComponent<ScriptComponent>()->LoadScript("ImageAsSlider");
 
 
-    auto button = CreateGameObject("Button");
-    Application->root->ParentGameObject(*button, *canvas);
-    button->AddComponent<UIImageComponent>();
-    button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
+	auto button = CreateGameObject("Button");
+	Application->root->ParentGameObject(*button, *canvas);
+	button->AddComponent<UIImageComponent>();
+	button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
 	button->AddComponent<UIButtonComponent>();
 	button->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-    button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.180, 0.150, 1));
+	button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.180, 0.150, 1));*/
 
    /* auto slider = CreateGameObject("Slider");
     Application->root->ParentGameObject(*slider, *canvas);
@@ -157,7 +154,10 @@ bool Root::Start()
     sliderButton->AddComponent<UIImageComponent>();
     sliderButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/sliderButton.png");*/
 
-    
+    //testing the serialization of scripts
+
+    auto cube = CreateCube("Cube");
+    cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
 
 	
     SceneManagement->Start();

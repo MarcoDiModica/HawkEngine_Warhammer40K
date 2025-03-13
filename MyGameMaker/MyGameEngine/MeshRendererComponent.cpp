@@ -173,8 +173,6 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 		i++;
 	}
 
-	
-
 	glBindVertexArray(mesh->model.get()->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
 

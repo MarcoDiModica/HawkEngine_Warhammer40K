@@ -24,15 +24,32 @@
 
 namespace YAML {
     template <>
-    struct convert<glm::vec3> {
-        static Node encode(const glm::vec3& rhs) {
+    struct convert<vec2> {
+        static Node encode(const vec2& rhs) {
+            Node node;
+            node.push_back(rhs.x);
+            node.push_back(rhs.y);
+            return node;
+        }
+        static bool decode(const Node& node, vec2& rhs) {
+            if (!node.IsSequence() || node.size() != 2)
+                return false;
+            rhs.x = node[0].as<float>();
+            rhs.y = node[1].as<float>();
+            return true;
+        }
+    };
+
+    template <>
+    struct convert<vec3> {
+        static Node encode(const vec3& rhs) {
             Node node;
             node.push_back(rhs.x);
             node.push_back(rhs.y);
             node.push_back(rhs.z);
             return node;
         }
-        static bool decode(const Node& node, glm::vec3& rhs) {
+        static bool decode(const Node& node, vec3& rhs) {
             if (!node.IsSequence() || node.size() != 3)
                 return false;
             rhs.x = node[0].as<float>();
@@ -41,19 +58,83 @@ namespace YAML {
             return true;
         }
     };
-    template <>
-    struct convert<glm::vec2> {
-        static Node encode(const glm::vec2& rhs) {
+	template <>
+	struct convert<BoundingBox> {
+		static Node encode(const BoundingBox& rhs) {
+			Node node;
+			node["min"] = rhs.min;
+			node["max"] = rhs.max;
+			return node;
+		}
+		static bool decode(const Node& node, BoundingBox& rhs) {
+			if (!node["min"] || !node["max"])
+				return false;
+			rhs.min = node["min"].as<vec3>();
+			rhs.max = node["max"].as<vec3>();
+			return true;
+		}
+	};
+	template <>
+    struct convert<ModelData> {
+        static Node encode(const ModelData& rhs) {
             Node node;
-            node.push_back(rhs.x);
-            node.push_back(rhs.y);
+            node["vBPosID"] = rhs.vBPosID;
+            node["vBNormalsID"] = rhs.vBNormalsID;
+            node["vBColorsID"] = rhs.vBColorsID;
+            node["vBTCoordsID"] = rhs.vBTCoordsID;
+            node["vBTangentsID"] = rhs.vBTangentsID;
+            node["vBBitangentsID"] = rhs.vBBitangentsID;
+            node["iBID"] = rhs.iBID;
+            node["vA"] = rhs.vA;
+            node["vertexData"] = rhs.vertexData;
+            node["indexData"] = rhs.indexData;
+            node["vertex_texCoords"] = rhs.vertex_texCoords;
+            node["vertex_normals"] = rhs.vertex_normals;
+            node["vertex_colors"] = rhs.vertex_colors;
+            node["vertex_tangents"] = rhs.vertex_tangents;
+            node["vertex_bitangents"] = rhs.vertex_bitangents;
             return node;
         }
-        static bool decode(const Node& node, glm::vec2& rhs) {
-            if (!node.IsSequence() || node.size() != 2)
+        static bool decode(const Node& node, ModelData& rhs) {
+            if (!node["vBPosID"] || !node["vBNormalsID"] || !node["vBColorsID"] || !node["vBTCoordsID"] || !node["vBTangentsID"] || !node["vBBitangentsID"] || !node["iBID"] || !node["vA"] || !node["vertexData"] || !node["indexData"] || !node["vertex_texCoords"] || !node["vertex_normals"] || !node["vertex_colors"] || !node["vertex_tangents"] || !node["vertex_bitangents"])
                 return false;
-            rhs.x = node[0].as<float>();
-            rhs.y = node[1].as<float>();
+            rhs.vBPosID = node["vBPosID"].as<unsigned int>();
+            rhs.vBNormalsID = node["vBNormalsID"].as<unsigned int>();
+            rhs.vBColorsID = node["vBColorsID"].as<unsigned int>();
+            rhs.vBTCoordsID = node["vBTCoordsID"].as<unsigned int>();
+            rhs.vBTangentsID = node["vBTangentsID"].as<unsigned int>();
+            rhs.vBBitangentsID = node["vBBitangentsID"].as<unsigned int>();
+            rhs.iBID = node["iBID"].as<unsigned int>();
+            rhs.vA = node["vA"].as<unsigned int>();
+            rhs.vertexData = node["vertexData"].as<std::vector<Vertex>>();
+            rhs.indexData = node["indexData"].as<std::vector<unsigned int>>();
+            rhs.vertex_texCoords = node["vertex_texCoords"].as<std::vector<vec2>>();
+            rhs.vertex_normals = node["vertex_normals"].as<std::vector<vec3>>();
+            rhs.vertex_colors = node["vertex_colors"].as<std::vector<vec3>>();
+            rhs.vertex_tangents = node["vertex_tangents"].as<std::vector<vec3>>();
+            rhs.vertex_bitangents = node["vertex_bitangents"].as<std::vector<vec3>>();
+            return true;
+        }
+    };
+    template <>
+    struct convert<Vertex> {
+        static Node encode(const Vertex& rhs) {
+            Node node;
+            node["position"] = rhs.position;
+            for (int i = 0; i < MAX_BONE_INFLUENCE; ++i) {
+                node["boneIDs"].push_back(rhs.m_BoneIDs[i]);
+                node["weights"].push_back(rhs.m_Weights[i]);
+            }
+            return node;
+        }
+        static bool decode(const Node& node, Vertex& rhs) {
+            if (!node["position"] || !node["boneIDs"] || !node["weights"])
+                return false;
+            rhs.position = node["position"].as<vec3>();
+            for (int i = 0; i < MAX_BONE_INFLUENCE; ++i) {
+                rhs.m_BoneIDs[i] = node["boneIDs"][i].as<int>();
+                rhs.m_Weights[i] = node["weights"][i].as<float>();
+            }
             return true;
         }
     };
@@ -128,51 +209,35 @@ protected:
 
     YAML::Node encode() {
         YAML::Node node;
-        node["name"] = nameM;
-
-        if (filePath.empty() || meshPath.empty() || nameM.empty()) {
-            throw std::runtime_error("Mesh paths or name are not initialized.");
-        }
-
-        node["file_path"] = filePath;
-        node["mesh_path"] = meshPath;
-
-        if (_vertices.empty() || _indices.empty()) {
-            throw std::runtime_error("Mesh vertices or indices are not initialized.");
-        }
-
-        node["vertices"] = _vertices;
-        node["indices"] = _indices;
-        node["tex_coords"] = _texCoords;
-        node["normals"] = _normals;
-
-        node["aabb_min"] = aabbMin;
-        node["aabb_max"] = aabbMax;
-
+        auto model = getModel();
+        node["name"] = model->GetMeshName();
+        node["model_data"] = model->GetModelData();
+        node["material_index"] = model->GetMaterialIndex();
+        node["boundingbox"] = model->getBoundingBox();
         return node;
     }
 
     bool decode(const YAML::Node& node) {
-        if (!node["file_path"] || !node["mesh_path"] || !node["name"])
-            return false;
+        
+		if (node["name"]) {
+			std::string name = node["name"].as<std::string>();
+			getModel()->SetMeshName(name);
+		}
 
-        filePath = node["file_path"].as<std::string>();
-        meshPath = node["mesh_path"].as<std::string>();
-        nameM = node["name"].as<std::string>();
+		if (node["model_data"]) {
+			ModelData modelData = node["model_data"].as<ModelData>();
+			getModel()->SetModelData(modelData);
+		}
 
-        if (node["vertices"])
-            _vertices = node["vertices"].as<std::vector<glm::vec3>>();
-        if (node["indices"])
-            _indices = node["indices"].as<std::vector<unsigned int>>();
-        if (node["tex_coords"])
-            _texCoords = node["tex_coords"].as<std::vector<glm::vec2>>();
-        if (node["normals"])
-            _normals = node["normals"].as<std::vector<glm::vec3>>();
+        if (node["material_index"]) {
+            int materialIndex = node["material_index"].as<int>();
+            getModel()->SetMaterialIndex(materialIndex);
+        }
 
-        if (node["aabb_min"])
-            aabbMin = node["aabb_min"].as<glm::vec3>();
-        if (node["aabb_max"])
-            aabbMax = node["aabb_max"].as<glm::vec3>();
+		if (node["boundingbox"]) {
+			BoundingBox bbox = node["boundingbox"].as<BoundingBox>();
+			getModel()->SetBoundingBox(bbox);
+		}
 
         return true;
     }

@@ -315,6 +315,10 @@ std::string SceneSerializer::GetComponentTypeName(ComponentType type) {
 	case ComponentType::AUDIO_LISTENER: return "AudioListener";
 	case ComponentType::COLLIDER: return "ColliderComponent";
 	case ComponentType::RIGIDBODY: return "RigidbodyComponent";
+	case ComponentType::CANVAS: return "UICanvasComponent";
+	case ComponentType::UITRANSFORM: return "UITransformComponent";
+	case ComponentType::IMAGE: return "UIImageComponent";
+	case ComponentType::BUTTON: return "UIButtonComponent";
 	//mas casos/componentes
 	default: return "Unknown";
 	}
@@ -328,6 +332,12 @@ ComponentType SceneSerializer::GetComponentTypeFromName(const std::string& name)
 	if (name == "ShaderComponent") return ComponentType::SHADER;
 	if (name == "SoundComponent") return ComponentType::AUDIO;
 	if (name == "AudioListener") return ComponentType::AUDIO_LISTENER;
+	if (name == "ColliderComponent") return ComponentType::COLLIDER;
+	if (name == "RigidbodyComponent") return ComponentType::RIGIDBODY;
+	if (name == "UICanvasComponent") return ComponentType::CANVAS;
+	if (name == "UITransformComponent") return ComponentType::UITRANSFORM;
+	if (name == "UIImageComponent") return ComponentType::IMAGE;
+	if (name == "UIButtonComponent") return ComponentType::BUTTON;
 	//mas mapeos aqui
 	return ComponentType::NONE;
 }

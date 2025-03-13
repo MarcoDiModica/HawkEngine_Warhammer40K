@@ -41,14 +41,14 @@ void UIButtonComponent::Update(float deltaTime)
             {
                 SetState(ButtonState::CLICKED);
                 /*std::cout << "button is clicked" << std::endl;*/
-                imageComponent->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+                imageComponent->SetColor(glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
             }
         }
         else
         {
             SetState(ButtonState::HOVERED);
             std::cout << "button is hovering" << std::endl;
-            imageComponent->SetColor(glm::vec4(0.5f, 1.0f, 0.5f, 0.5f));
+            imageComponent->SetColor(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
         }
     }
     else

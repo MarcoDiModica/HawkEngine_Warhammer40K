@@ -309,8 +309,32 @@ void Root::CreateMainMenuUI()
     auto menuImage = CreateGameObject("MenuImage");
     Application->root->ParentGameObject(*menuImage, *canvas);
     menuImage->AddComponent<UIImageComponent>();
-    menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Escopeta_BC.png");
+    menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Main_Menu_Reference.png");
     menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+
+    auto newGameButton = CreateGameObject("NewGame");
+    Application->root->ParentGameObject(*newGameButton, *canvas);
+    newGameButton->AddComponent<UIImageComponent>();
+    newGameButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/New_Game.png");
+    newGameButton->AddComponent<UIButtonComponent>();
+    newGameButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    newGameButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.318, 0), glm::vec3(0.182, 0.091, 1));
+
+    auto optionsButton = CreateGameObject("OptionsButton");
+    Application->root->ParentGameObject(*optionsButton, *canvas);
+    optionsButton->AddComponent<UIImageComponent>();
+    optionsButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Options_Button.png");
+    optionsButton->AddComponent<UIButtonComponent>();
+    optionsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    optionsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.604, 0), glm::vec3(0.182, 0.091, 1));
+
+    auto creditsButton = CreateGameObject("CreditsButton");
+    Application->root->ParentGameObject(*creditsButton, *canvas);
+    creditsButton->AddComponent<UIImageComponent>();
+    creditsButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Credits_Buttom.png");
+    creditsButton->AddComponent<UIButtonComponent>();
+    creditsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    creditsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.748, 0), glm::vec3(0.182, 0.091, 1));
 
     auto quitButton = CreateGameObject("QuitButton");
     Application->root->ParentGameObject(*quitButton, *canvas);
@@ -318,7 +342,7 @@ void Root::CreateMainMenuUI()
     quitButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Quit_button.png");
     quitButton->AddComponent<UIButtonComponent>();
     quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-    quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.853, 0), glm::vec3(0.183, 0.092, 1));
+    quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.906, 0), glm::vec3(0.182, 0.091, 1));
 }
 
 

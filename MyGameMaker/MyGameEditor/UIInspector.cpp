@@ -62,7 +62,6 @@ private:
 			ImGui::EndPopup();
 		}
 
-        //get parent and say if it has a parent
         GameObject* parent = transform->GetOwner()->GetParent();
         bool hasParent = parent != nullptr;
         ImGui::Text("Parent: %s", hasParent ? parent->GetName().c_str() : "None");
@@ -144,7 +143,6 @@ private:
 		auto material = meshRenderer->GetMaterial();
 		if (!material) return;
 
-		// Draw base color and main texture
 		if (ImGui::TreeNodeEx("Base Color", ImGuiTreeNodeFlags_DefaultOpen)) {
 			DrawColorPicker(meshRenderer);
 
@@ -153,7 +151,6 @@ private:
 				DrawTexturePreview(image, "Albedo");
 			}
 
-			// Add button and drag & drop for albedo texture
 			if (ImGui::Button("Load Albedo Texture")) {
 				ImGui::OpenPopup("LoadAlbedoTexture");
 			}
@@ -162,7 +159,6 @@ private:
 				ImGui::EndPopup();
 			}
 
-			// Handle drag/drop for albedo texture
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
 					const char* path = static_cast<const char*>(payload->Data);
@@ -183,9 +179,7 @@ private:
 			ImGui::TreePop();
 		}
 
-		// Only show PBR properties for PBR shader
 		if (material->GetShaderType() == ShaderType::PBR) {
-			// Draw normal map
 			if (ImGui::TreeNodeEx("Normal Map", ImGuiTreeNodeFlags_DefaultOpen)) {
 				std::shared_ptr<Image> normalMap = material->normalMapPtr;
 				if (normalMap) {
@@ -197,7 +191,6 @@ private:
 				ImGui::TreePop();
 			}
 
-			// Draw metallic map or value
 			if (ImGui::TreeNodeEx("Metallic", ImGuiTreeNodeFlags_DefaultOpen)) {
 				std::shared_ptr<Image> metallicMap = material->metallicMapPtr;
 				if (metallicMap) {
@@ -212,7 +205,6 @@ private:
 				ImGui::TreePop();
 			}
 
-			// Draw roughness map or value
 			if (ImGui::TreeNodeEx("Roughness", ImGuiTreeNodeFlags_DefaultOpen)) {
 				std::shared_ptr<Image> roughnessMap = material->roughnessMapPtr;
 				if (roughnessMap) {
@@ -227,7 +219,6 @@ private:
 				ImGui::TreePop();
 			}
 
-			// Draw AO map or value
 			if (ImGui::TreeNodeEx("Ambient Occlusion", ImGuiTreeNodeFlags_DefaultOpen)) {
 				std::shared_ptr<Image> aoMap = material->aoMapPtr;
 				if (aoMap) {
@@ -271,7 +262,6 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Camera")) return;
 
-        //remove component with right click
         if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
 				camera->GetOwner()->RemoveComponent<CameraComponent>();
@@ -283,8 +273,8 @@ private:
         bool frustum = camera->frustrumCullingEnabled;
         float orthoSize = camera->GetOrthoSize();
         float fov = camera->GetFOV();
-        float nearPlane = static_cast<float>(camera->GetNearPlane());
-        float farPlane = static_cast<float>(camera->GetFarPlane());
+        auto nearPlane = static_cast<float>(camera->GetNearPlane());
+        auto farPlane = static_cast<float>(camera->GetFarPlane());
 
         if (ImGui::Checkbox("Orthographic", &orthographic)) {
             camera->orthographic = orthographic;
@@ -318,6 +308,79 @@ private:
             bool frustumRepresentation = camera->frustrumRepresentation;
             ImGui::Checkbox("Frustum Representation", &frustumRepresentation);
             camera->frustrumRepresentation = frustumRepresentation;
+        }
+
+        if (ImGui::Button("Set as Main Camera or priority")) {
+			ImGui::Text("Main Camera Set to implement. COMING SOON...");
+		}
+
+        //follow target look target and shake config
+        GameObject* followTarget = camera->followTarget;
+        if (followTarget) {
+			ImGui::Text("Follow Target: %s", followTarget->GetName().c_str());
+
+            float followDistance = static_cast<float>(camera->GetDistance());
+            glm::dvec3 followOffset = camera->GetOffset();
+            float followSmoothness = static_cast<float>(camera->followSmoothness);
+            bool followX = camera->followX;
+            bool followY = camera->followY;
+            bool followZ = camera->followZ;
+
+            if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+					GameObject* target = static_cast<GameObject*>(payload->Data);
+					camera->followTarget = target;
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+            if (ImGui::DragFloat("Distance", &followDistance, 0.1f, 0.1f, 100.0f)) {
+				camera->SetDistance(followDistance);
+			}
+
+            float offset[3] = { followOffset.x, followOffset.y, followOffset.z };
+			if (ImGui::DragFloat3("Offset", offset, 0.1f)) {
+				camera->SetOffset(glm::dvec3(offset[0], offset[1], offset[2]));
+			}
+
+			if (ImGui::DragFloat("Smoothness", &followSmoothness, 0.01f, 0.01f, 1.0f)) {
+				camera->followSmoothness = followSmoothness;
+			}
+
+			if (ImGui::Checkbox("Follow X", &followX)) {
+				camera->followX = followX;
+			}
+			if (ImGui::Checkbox("Follow Y", &followY)) {
+				camera->followY = followY;
+			}
+			if (ImGui::Checkbox("Follow Z", &followZ)) {
+				camera->followZ = followZ;
+			}
+
+            if (ImGui::Button("Clear Follow Target")) {
+				camera->followTarget = nullptr;
+			}
+		}
+
+        //shake config
+        float shakeIntensity = camera->shakeIntensity;
+        float shakeDuration = camera->shakeDuration;
+        float shakeFrequency = camera->shakeFrequency;
+
+        if (ImGui::DragFloat("Shake Intensity", &shakeIntensity, 0.1f, 0.0f, 10.0f)) {
+            camera->shakeIntensity = shakeIntensity;
+        }
+
+        if (ImGui::DragFloat("Shake Duration", &shakeDuration, 0.1f, 0.0f, 10.0f)) {
+			camera->shakeDuration = shakeDuration;
+		}
+
+        if (ImGui::DragFloat("Shake Frequency", &shakeFrequency, 0.1f, 0.0f, 10.0f)) {
+            camera->shakeFrequency = shakeFrequency;
+        }
+
+        if (ImGui::Button("Shake")) {
+            camera->Shake(shakeIntensity, shakeDuration, shakeFrequency);
         }
     }
     #pragma endregion
@@ -523,6 +586,7 @@ private:
         }
     }
     #pragma endregion
+
     #pragma region SkeletalAnimation
     static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal) 
     {
@@ -822,7 +886,7 @@ private:
                 return;
             }
 
-            HINSTANCE result = ShellExecuteA(NULL, "open", scriptPath.c_str(), NULL, NULL, SW_SHOW);
+            HINSTANCE result = ShellExecuteA(nullptr, "open", scriptPath.c_str(), nullptr, nullptr, SW_SHOW);
             if ((int)result <= 32) {
                 LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
             }
@@ -838,521 +902,6 @@ private:
             else {
                 LOG(LogType::LOG_INFO, "Script %s reloaded successfully.", scriptName.c_str());
             }
-        }
-
-        ImGui::Separator();
-
-		auto selectedGameObject = Application->input->GetSelectedGameObjects()[0];
-
-        if (selectedGameObject->HasComponent<CameraComponent>()) {
-			CameraComponent* cameraComponent = selectedGameObject->GetComponent<CameraComponent>();
-
-            // Verificar si cameraComponent es v�lido
-            if (!cameraComponent) {
-				LOG(LogType::LOG_ERROR, "UIInspector::Draw: CameraComponent is nullptr");
-				ImGui::Text("Error: Invalid CameraComponent component");
-				//return false;
-			}
-
-			if (cameraComponent) {
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-				if (ImGui::CollapsingHeader("Camera")) {
-					bool orthographic = cameraComponent->IsOrthographic();
-                    bool frustum = cameraComponent->frustrumCullingEnabled;
-					float orthoSize = cameraComponent->GetOrthoSize();
-					float fov = cameraComponent->GetFOV();
-					float nearPlane = static_cast<float>(cameraComponent->GetNearPlane());
-					float farPlane =  static_cast<float>(cameraComponent->GetFarPlane() );
-
-                    //lookAt & follow settings
-
-					if (ImGui::Checkbox("Orthographic", &orthographic)) {
-						cameraComponent->orthographic = orthographic;
-					}
-
-					if (orthographic) {
-						if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
-							cameraComponent->SetOrthoSize(orthoSize);
-						}
-					}
-					else {
-                        float fovDeg = cameraComponent->GetFOV();
-                        fovDeg = glm::degrees(fovDeg);
-                        if (ImGui::SliderFloat("FOV", &fovDeg, 1.0f, 179.0f))
-                        {
-                            cameraComponent->SetFOV(glm::radians(fovDeg));
-                        }
-					}
-
-					if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
-						cameraComponent->SetNearPlane(nearPlane);
-					}
-
-					if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
-						cameraComponent->SetFarPlane(farPlane);
-					}
-
-                    //frustrum settings
-                    if (ImGui::Checkbox("Frustrum Culling", &frustum)) {
-						cameraComponent->frustrumCullingEnabled = frustum;
-					}
-
-					if (frustum) {
-						bool frustumRepresentation = cameraComponent->frustrumRepresentation;
-						if (ImGui::Checkbox("Frustrum Representation", &frustumRepresentation)) {
-							cameraComponent->frustrumRepresentation = frustumRepresentation;
-						}
-					}
-				}
-			}
-			else {
-				LOG(LogType::LOG_WARNING, "UIInspector::Draw: CameraComponent is nullptr");
-			}
-		}
-
-        ImGui::Separator();
-
-        if (selectedGameObject->HasComponent<LightComponent>())
-        {
-            LightComponent* lightComponent = selectedGameObject->GetComponent<LightComponent>();
-
-            if (lightComponent)
-            {
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Light"))
-                {
-                    LightType lightType = lightComponent->GetLightType();
-                    vec3 diffuse = lightComponent->GetDiffuse();
-                    vec3 specular = lightComponent->GetSpecular();
-                    vec3 ambient = lightComponent->GetAmbient();
-                    float intensity = lightComponent->GetIntensity();
-                    float radius = lightComponent->GetRadius();
-                    float constant = lightComponent->GetConstant();
-                    float linear = lightComponent->GetLinear();
-                    float quadratic = lightComponent->GetQuadratic();
-
-                    //glm::dvec3 direction = lightComponent->GetDirection();
-
-                    if (ImGui::Combo("Type", (int*)&lightType, "Directional\0Point\0"))
-                    {
-                        lightComponent->SetLightType(lightType);
-                    }
-
-                    if (ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 100.0f))
-                    {
-                        lightComponent->SetIntensity(intensity);
-                    }
-
-                    /*if (ImGui::ColorEdit3("Color"))
-                    {
-                        lightComponent->SetColor(color); COLOR
-                    }*/
-
-                    if (lightType == LightType::POINT)
-                    {
-                        float diffusefloat[3] = { static_cast<float>(diffuse.x), static_cast<float>(diffuse.y), static_cast<float>(diffuse.z) };
-                        float specularfloat[3] = { static_cast<float>(specular.x), static_cast<float>(specular.y), static_cast<float>(specular.z) };
-                        float ambientfloat[3] = { static_cast<float>(ambient.x), static_cast<float>(ambient.y), static_cast<float>(ambient.z) };
-
-                        if (ImGui::DragFloat("Range", &radius, 0.1f, 0.0f, 1000.0f))
-                        {
-                            lightComponent->SetRadius(radius);
-                        }
-                        if (ImGui::DragFloat("Constant", &constant, 0.1f, 0.0f, 1000.0f))
-                        {
-                            lightComponent->SetConstant(constant);
-                        }
-                        if (ImGui::DragFloat("Linear", &linear, 0.1f, 0.0f, 1000.0f))
-                        {
-                            lightComponent->SetLinear(linear);
-                        }
-                        if (ImGui::DragFloat("Quadratic", &quadratic, 0.1f, 0.0f, 1000.0f))
-                        {
-                            lightComponent->SetQuadratic(quadratic);
-                        }
-                        if (ImGui::ColorEdit3("Ambient", ambientfloat))
-                        {
-                            ambient = vec3(ambientfloat[0], ambientfloat[1], ambientfloat[2]);
-                            lightComponent->SetAmbient(ambient);
-                        }
-                        if (ImGui::ColorEdit3("Diffuse", diffusefloat)) {
-                            diffuse = vec3(diffusefloat[0], diffusefloat[1], diffusefloat[2]);
-                            lightComponent->SetDiffuse(diffuse);
-                        }
-                        if (ImGui::ColorEdit3("Specular", specularfloat))
-                        {
-                            specular = vec3(specularfloat[0], specularfloat[1], specularfloat[2]);
-                            lightComponent->SetSpecular(specular);
-                        }
-                    }
-
-                    //if (lightType == LightType::DIRECTIONAL)
-                    //{
-                    //                   // change direction vec3
-                    //}
-                }
-            }
-            else
-            {
-                LOG(LogType::LOG_WARNING, "UIInspector::Draw: LightComponent is nullptr");
-            }
-        }
-
-        ImGui::Separator();
-
-
-        if (selectedGameObject->HasComponent<ColliderComponent>())
-        {
-            ColliderComponent* colliderComponent = selectedGameObject->GetComponent<ColliderComponent>();
-
-            if (colliderComponent)
-            {
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Collider")) {
-
-                    // Posición del Collider
-
-                    glm::vec3 colliderPosition = colliderComponent->GetColliderPos();
-                    float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
-
-                    if (ImGui::DragFloat3("ColliderPosition", pos, 0.1f)) {
-                        colliderComponent->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
-                    }
-
-                    // Rotación del Collider
-                    glm::quat colliderRotation = colliderComponent->GetColliderRotation();
-                    glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
-                    float rot[3] = { glm::degrees(eulerRotation.x), glm::degrees(eulerRotation.y), glm::degrees(eulerRotation.z) };
-
-                    if (ImGui::DragFloat3("ColliderRotation", rot, 0.1f)) {
-                        glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
-                        colliderComponent->SetColliderRotation(newRotation);
-                    }
-
-                    // Tamaño del Collider
-                    glm::vec3 size = colliderComponent->GetSize();
-                    float sizeArray[3] = { size.x, size.y, size.z };
-
-                    if (ImGui::DragFloat3("ColliderSize", sizeArray, 0.1f, 0.1f, 100.0f)) {
-                        colliderComponent->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
-                    }
-
-                    // Masa del Collider
-                    float mass = colliderComponent->GetMass();
-                    if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 10.0f)) {
-                        colliderComponent->SetMass(mass);
-                    }
-
-                    //// Checkbox para activar/desactivar collider
-                    //bool isActive = colliderComponent->IsActive();
-                    //if (ImGui::Checkbox("Enabled", &isActive)) {
-                    //    colliderComponent->SetActive(isActive);
-                    //}
-
-                    //// Botón para recrear el collider
-                    //if (ImGui::Button("Recreate Collider")) {
-                    //    colliderComponent->CreateCollider();
-                    //}
-                }
-
-            }
-            else
-            {
-                LOG(LogType::LOG_WARNING, "UIInspector::Draw: ColliderComponent is nullptr");
-            }
-        }
-
-        ImGui::Separator();
-
-        if (selectedGameObject->HasComponent<ParticlesEmitterComponent>())
-        {
-            //DrawParticleEmitterInspector(selectedGameObject);
-        }
-
-        ImGui::Separator();
-
-        if (selectedGameObject->HasComponent<SoundComponent>()) {
-            SoundComponent* soundComponent = selectedGameObject->GetComponent<SoundComponent>();
-
-            if (soundComponent) {
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Sound")) {
-                    // Audio File Path
-                    char audioPath[256];
-                    strcpy_s(audioPath, soundComponent->GetAudioPath().c_str());
-                    if (ImGui::InputText("Audio File", audioPath, sizeof(audioPath))) {
-                        soundComponent->LoadAudio(audioPath);
-                    }
-
-                    // Drag and drop target for audio files
-                    if (ImGui::BeginDragDropTarget()) {
-                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-                            const char* path = (const char*)payload->Data;
-                            std::string extension = std::filesystem::path(path).extension().string();
-                            std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
-                            
-                            if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
-                                soundComponent->LoadAudio(path);
-                            }
-                        }
-                        ImGui::EndDragDropTarget();
-                    }
-
-                    // Audio Type
-                    bool isMusic = soundComponent->IsMusic();
-                    if (ImGui::Checkbox("Is Music", &isMusic)) {
-                        if (soundComponent->GetAudioPath().length() > 0) {
-                            soundComponent->LoadAudio(soundComponent->GetAudioPath(), isMusic);
-                        }
-                    }
-
-                    // Spatial Audio
-                    bool isSpatial = soundComponent->IsSpatial();
-                    if (ImGui::Checkbox("3D Sound", &isSpatial)) {
-                        soundComponent->SetSpatial(isSpatial);
-                    }
-
-                    // Volume Control
-                    float volume = soundComponent->GetVolume();
-                    if (ImGui::SliderFloat("Volume", &volume, 0.0f, 1.0f)) {
-                        soundComponent->SetVolume(volume);
-                    }
-
-                    // Loop Setting
-                    bool loop = soundComponent->GetLoop();
-                    if (ImGui::Checkbox("Loop", &loop)) {
-                        soundComponent->SetLoop(loop);
-                    }
-
-                    // Auto-play setting
-                    bool autoPlay = soundComponent->GetAutoPlay();
-                    if (ImGui::Checkbox("Auto Play", &autoPlay)) {
-                        soundComponent->SetAutoPlay(autoPlay);
-                    }
-
-                    ImGui::Separator();
-
-                    // Playback Controls
-                    if (soundComponent->IsPlaying()) {
-                        if (ImGui::Button("Stop")) {
-                            soundComponent->Stop();
-                        }
-                        ImGui::SameLine();
-                        if (ImGui::Button("Pause")) {
-                            soundComponent->Pause();
-                        }
-                        ImGui::SameLine();
-                        if (ImGui::Button("Resume")) {
-                            soundComponent->Resume();
-                        }
-                    } else {
-                        if (ImGui::Button("Play")) {
-                            soundComponent->Play(soundComponent->GetLoop());
-                        }
-                    }
-
-                    if (isSpatial) {
-                        ImGui::Text("Position is controlled by Transform component");
-                    }
-                }
-            }
-        }
-
-        ImGui::Separator();
-        if (selectedGameObject->HasComponent<AudioListener>())
-        {
-            AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
-
-            if (audioListener)
-            if (selectedGameObject->HasComponent<AudioListener>())
-            {
-                AudioListener* audioListener = selectedGameObject->GetComponent<AudioListener>();
-
-                if (audioListener)
-                {
-                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                    if (ImGui::CollapsingHeader("Audio Listener"))
-                    {
-                        ImGui::Text("Audio Listener");
-
-                        // Mostrar la posición del Audio Listener
-                        Transform_Component* transform = selectedGameObject->GetTransform();
-                        if (transform)
-                        {
-                            glm::dvec3 position = transform->GetPosition();
-                            float pos[3] = { static_cast<float>(position.x), static_cast<float>(position.y), static_cast<float>(position.z) };
-                            ImGui::DragFloat3("Position", pos, 0.1f);
-                        }
-                        else
-                        {
-                            ImGui::Text("Error: Transform component is nullptr");
-                        }
-                    }
-                }
-                else
-                {
-                    LOG(LogType::LOG_WARNING, "UIInspector::Draw: AudioListener is nullptr");
-                }
-            }
-            
-               
-        }
-        
-        ImGui::Separator();
-      
-        if (selectedGameObject->scriptComponents.size() > 0) {
-            for (auto& scriptComponent : selectedGameObject->scriptComponents) {
-                if (scriptComponent && scriptComponent->monoScript) {
-                    ImGui::PushID(scriptComponent.get());
-                    ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                    if (ImGui::CollapsingHeader(scriptComponent->GetName().c_str()))
-                    {
-                        std::string scriptName = mono_class_get_name(mono_object_get_class(scriptComponent->monoScript));
-                        ImGui::Text("Script: %s", scriptName.c_str());
-
-                        if (ImGui::Button("Open Script")) {
-                            std::string scriptPath = std::filesystem::absolute("../Script/" + scriptName + ".cs").string();
-                            LOG(LogType::LOG_INFO, "Absolute script path: %s", scriptPath.c_str());
-
-                            if (!std::filesystem::exists(scriptPath)) {
-                                LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
-                            }
-                            else {
-                                HINSTANCE result = ShellExecuteA(NULL, "open", scriptPath.c_str(), NULL, NULL, SW_SHOW);
-                                if ((int)result <= 32) {
-                                    LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
-                                }
-                                else {
-                                    LOG(LogType::LOG_INFO, "Successfully opened script: %s", scriptPath.c_str());
-                                }
-                            }
-                        }
-
-
-                        if (ImGui::Button("Reload Script")) {
-                            if (!scriptComponent->LoadScript(scriptName)) {
-                                LOG(LogType::LOG_ERROR, "Failed to reload script %s.", scriptName.c_str());
-                            }
-                            else {
-                                LOG(LogType::LOG_INFO, "Script %s reloaded successfully.", scriptName.c_str());
-                            }
-                        }
-
-                        MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
-
-                        MonoClassField* field = nullptr;
-                        void* iter = nullptr;
-                        while ((field = mono_class_get_fields(scriptClass, &iter))) {
-                            const char* fieldName = mono_field_get_name(field);
-                            MonoType* fieldType = mono_field_get_type(field);
-                            int typeCode = mono_type_get_type(fieldType);
-
-                            MonoClass* fieldParentClass = mono_field_get_parent(field);
-
-                            ImGui::PushID(field);
-
-                            if (typeCode == MONO_TYPE_STRING) {
-                                MonoString* monoString = nullptr;
-                                mono_field_get_value(scriptComponent->monoScript, field, &monoString);
-                                std::string value = monoString ? mono_string_to_utf8(monoString) : "";
-
-                                char buffer[128];
-                                strncpy(buffer, value.c_str(), sizeof(buffer));
-                                buffer[sizeof(buffer) - 1] = '\0';
-
-                                if (ImGui::InputText(fieldName, buffer, sizeof(buffer))) {
-                                    value = buffer;
-                                    MonoString* newMonoString = mono_string_new(mono_domain_get(), value.c_str());
-                                    mono_field_set_value(scriptComponent->monoScript, field, newMonoString);
-                                }
-                            }
-                            else if (typeCode == MONO_TYPE_BOOLEAN) {
-                                bool value = false;
-                                mono_field_get_value(scriptComponent->monoScript, field, &value);
-                                if (ImGui::Checkbox(fieldName, &value)) {
-                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
-                                }
-                            }
-                            else if (typeCode == MONO_TYPE_I4) {
-                                int value = 0;
-                                mono_field_get_value(scriptComponent->monoScript, field, &value);
-                                if (ImGui::InputInt(fieldName, &value)) {
-                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
-                                }
-                            }
-                            else if (typeCode == MONO_TYPE_R4) {
-                                float value = 0.0f;
-                                mono_field_get_value(scriptComponent->monoScript, field, &value);
-                                if (ImGui::InputFloat(fieldName, &value)) {
-                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
-                                }
-                            }
-                            else if (typeCode == MONO_TYPE_R8) {
-                                double value = 0.0;
-                                mono_field_get_value(scriptComponent->monoScript, field, &value);
-                                if (ImGui::InputDouble(fieldName, &value)) {
-                                    mono_field_set_value(scriptComponent->monoScript, field, &value);
-                                }
-                            }
-
-                            ImGui::PopID();
-                        }
-                    }
-                    ImGui::PopID();
-                }
-                else {
-                    if (!scriptComponent) {
-                        LOG(LogType::LOG_WARNING, "UIInspector::Draw: ScriptComponent is nullptr");
-                    }
-                    else {
-                        LOG(LogType::LOG_WARNING, "UIInspector::Draw: scriptComponent->monoScript is nullptr");
-                    }
-                }
-            }
-
-        }
-
-        ImGui::Separator();
-
-        if (selectedGameObject->HasComponent<ShaderComponent>()) {
-            ShaderComponent* shaderComponent = selectedGameObject->GetComponent<ShaderComponent>();
-
-            if (shaderComponent) {
-
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Shader")) {
-                    ShaderType currentType = shaderComponent->GetShaderType();
-                    //Shaders* currentShader = shaderComponent->GetShader();
-
-                    // Mostrar y editar el tipo de shader
-                    int shaderType = static_cast<int>(currentType);
-                    if (ImGui::Combo("Shader Type", &shaderType, "Default\0Light\0Water\0\0")) {
-                        shaderComponent->SetShaderType(static_cast<ShaderType>(shaderType));
-                    }
-
-                  /*  if (currentType == ShaderType::WATER) {;
-                        if (ImGui::DragFloat("Amplitude", &shaderComponent->amplitude, 0.1f, 0.1f, 10.0f));
-                        if (ImGui::DragFloat("Frequency", &shaderComponent->frequency, 0.1f, 0.1f, 10.0f));
-                    }*/
-                }
-            }
-        }
-
-        ImGui::Separator();
-
-        if (selectedGameObject->HasComponent<SkeletalAnimationComponent>()) 
-        {
-            SkeletalAnimationComponent* animationComponent = selectedGameObject->GetComponent<SkeletalAnimationComponent>();
-
-            if (animationComponent) 
-            {
-                ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-                if (ImGui::CollapsingHeader("Animation"))
-                {
-
-                }
-            }
-
         }
     }
 
@@ -1670,9 +1219,7 @@ private:
     }*/
     #pragma endregion
 
-    //Aqui mas componentes
-
-#pragma region Canvas
+    #pragma region Canvas
     static void DrawCanvasComponent(UICanvasComponent* canvas) {
         if (!canvas) return;
 
@@ -1683,7 +1230,7 @@ private:
     }
 #pragma endregion
 
-#pragma region Image
+    #pragma region Image
     static void DrawImageComponent(UIImageComponent* image) {
         if (!image) return;
 
@@ -1722,7 +1269,7 @@ private:
 
 #pragma endregion
 
-#pragma region RectTransform
+    #pragma region RectTransform
     static void DrawRectTransformComponent(UITransformComponent* transform) {
         if (!transform) return;
 
@@ -1822,10 +1369,10 @@ public:
 			DrawParticleEmitterComponent(emitter);
 		}
 
-        if (gameObject->HasComponent<ShaderComponent>()) {
-            ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
-            DrawShaderComponent(shader);
-        }
+		if (gameObject->HasComponent<ShaderComponent>()) {
+			ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
+			DrawShaderComponent(shader);
+		}
 
 		if (gameObject->HasComponent<UICanvasComponent>()) {
             UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
@@ -1920,23 +1467,21 @@ private:
 				gameObject->AddComponent<ParticlesEmitterComponent>();
 			}
 		}
-
-		if (!gameObject->HasComponent<ShaderComponent>()) {
-			if (ImGui::MenuItem("Shader")) {
-				gameObject->AddComponent<ShaderComponent>();
-			}
-		}
         
 		if (!gameObject->HasComponent<UICanvasComponent>()) {
 			if (ImGui::MenuItem("Canvas")) {
-                gameObject->AddComponent<UITransformComponent>();
+                if (!gameObject->HasComponent<UITransformComponent>()) {
+                    gameObject->AddComponent<UITransformComponent>();
+                }
 				gameObject->AddComponent<UICanvasComponent>();
 			}
 		}
 		if (!gameObject->HasComponent<UIImageComponent>()) {
 			if (ImGui::MenuItem("Image")) {
-				gameObject->AddComponent<UITransformComponent>();
-				gameObject->AddComponent<UIImageComponent>();
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}				
+                gameObject->AddComponent<UIImageComponent>();
 				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
 			}
 		}
@@ -1956,12 +1501,12 @@ private:
 
         if (width > maxPreviewSize || height > maxPreviewSize) {
             if (aspectRatio > 1.0f) {
-                return ImVec2(maxPreviewSize, maxPreviewSize / aspectRatio);
+                return {maxPreviewSize, maxPreviewSize / aspectRatio};
             }
-            return ImVec2(maxPreviewSize * aspectRatio, maxPreviewSize);
+            return {maxPreviewSize * aspectRatio, maxPreviewSize};
         }
 
-        return ImVec2(static_cast<float>(width), static_cast<float>(height));
+        return {static_cast<float>(width), static_cast<float>(height)};
     }
 };
 

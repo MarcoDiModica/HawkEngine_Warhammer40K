@@ -50,8 +50,11 @@ public:
     }
 
     void ResetTransform() {
-		worldMatrix = glm::dmat4(1.0);
-		localMatrix = glm::dmat4(1.0);
+        localPosition = glm::dvec3(0.0);
+		localRotation = glm::dquat(1.0, 0.0, 0.0, 0.0);
+		localScale = glm::dvec3(1.0);
+		RecalculateLocalMatrix();
+		UpdateWorldMatrix();
 	}
 
 	/*Transform_Component operator*(const glm::dmat4& other) const {

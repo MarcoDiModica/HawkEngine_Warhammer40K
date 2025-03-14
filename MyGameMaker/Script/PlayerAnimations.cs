@@ -27,4 +27,36 @@ public class PlayerAnimations : MonoBehaviour
             esk.SetAnimation(animIndex);
         }
     }
+
+    public void SetStandardIdleAnimation()
+    {
+        esk.SetAnimation(4);
+        esk.SetAnimationSpeed(2f);
+    }
+
+    public void SetIdleRandomAnimation()
+    {
+        Random rand = new Random();
+        int idleIndex = rand.Next(2, 6);
+        esk.SetAnimation(idleIndex);
+        esk.SetAnimationSpeed(2f);
+    }
+
+    public void SetShootingStandingAnimation()
+    {
+        esk.SetAnimation(8);
+        esk.SetAnimationSpeed(3f);
+    }
+
+    public void SetShootingRunningAnimation()
+    {
+        esk.SetAnimation(10);
+        esk.SetAnimationSpeed(4.5f);
+    }
+
+    public void SetRunAnimation()
+    {
+        esk.SetAnimation(6);
+        esk.SetAnimationSpeed(4.5f);
+    }
 }

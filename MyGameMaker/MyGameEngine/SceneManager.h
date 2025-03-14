@@ -54,6 +54,8 @@ public:
 
     std::shared_ptr<GameObject> FindGOByName(std::string name) const;
 
+	std::shared_ptr<GameObject> FindGOByNameRecursive(const std::string& name, const std::vector<std::shared_ptr<GameObject>>& gameObjects) const;
+
     std::shared_ptr<Scene> currentScene = nullptr;
 
     //main camera

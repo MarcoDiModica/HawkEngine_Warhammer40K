@@ -32,6 +32,7 @@ public:
 	void SetMouseSensitivity(float sensitivity) { this->sensitivity = sensitivity; }
 
 	void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
+
 private:
 	glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);
 	Transform_Component transform;
@@ -44,6 +45,8 @@ private:
 	double sensitivity = 20.0f;
 	double yaw = 0.0;
 	double pitch = 0.0;
+	double orbitYaw = 0.0;
+	double orbitPitch = 0.0;
 	double MAX_PITCH = 89.0;
 	glm::dvec3 orbitPoint = glm::dvec3(0.0, 0.0, 0.0);
 

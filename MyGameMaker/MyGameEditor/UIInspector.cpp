@@ -38,7 +38,7 @@
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
 #include <Windows.h>
-#include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "../MyParticlesEngine/ParticleFX.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
@@ -1000,224 +1000,405 @@ private:
     }
     #pragma endregion
 
-    #pragma region Particles
-    static void DrawParticleEmitterComponent(ParticlesEmitterComponent* emitter) {
-        if (!emitter) return;
+	#pragma region ParticleFX
+	static void DrawParticleSystemComponent(ParticleFX* system) {
+		if (!system) return;
 
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        bool isOpen = ImGui::CollapsingHeader("Particle Emitter", ImGuiTreeNodeFlags_DefaultOpen);
-        ImGui::PopStyleVar();
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		bool isOpen = ImGui::CollapsingHeader("Particle System", ImGuiTreeNodeFlags_DefaultOpen);
+		ImGui::PopStyleVar();
 
-        if (!isOpen) return;
+		if (!isOpen) return;
 
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 8));
-        ImGui::Indent(10.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 8));
+		ImGui::Indent(10.0f);
 
-        DrawEmissionSettings(emitter);
-        DrawRenderingSettings(emitter);
+		DrawParticleControls(system);
+		DrawParticleEmissionSettings(system);
+		DrawParticleParticleSettings(system);
+		DrawParticleShapeSettings(system);
+		DrawParticleRenderingSettings(system);
+		DrawParticleTextureSettings(system);
 
-        ImGui::Unindent(10.0f);
-        ImGui::PopStyleVar();
-    }
+		ImGui::Unindent(10.0f);
+		ImGui::PopStyleVar();
+	}
 
-    static void DrawEmissionSettings(ParticlesEmitterComponent* emitter) {
-        if (!ImGui::TreeNodeEx("Emission Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
+	static void DrawParticleControls(ParticleFX* system) {
+		ImGui::BeginGroup();
 
-        ImGui::BeginGroup();
+		// Create a row of buttons
+		float width = ImGui::GetContentRegionAvail().x / 3.0f - 2.0f;
 
-        float spawnRate = emitter->getSpawnRate();
-        if (ImGui::DragFloat("Spawn Rate##spawner", &spawnRate, 0.1f, 0.1f, 100.0f, "%.1f")) {
-            emitter->setSpawnRate(spawnRate);
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Number of particles spawned per second");
-        }
+		if (system->IsPlaying()) {
+			if (ImGui::Button("Stop", ImVec2(width, 0))) {
+				system->Stop();
+			}
+		}
+		else {
+			if (ImGui::Button("Play", ImVec2(width, 0))) {
+				system->Play();
+			}
+		}
 
-        int maxParticles = emitter->getMaxParticles();
-        if (ImGui::DragInt("Max Particles##count", &maxParticles, 1, 1, 1000)) {
-            emitter->setMaxParticles(maxParticles);
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Maximum number of particles allowed at once");
-        }
+		ImGui::SameLine();
+		if (ImGui::Button("Pause", ImVec2(width, 0))) {
+			system->Pause();
+		}
 
-        ImGui::EndGroup();
-        ImGui::TreePop();
-    }
+		ImGui::SameLine();
+		if (ImGui::Button("Emit Burst", ImVec2(width, 0))) {
+			system->EmitBurst(20); // Emit 20 particles as a burst
+		}
 
-    static void DrawRenderingSettings(ParticlesEmitterComponent* emitter) {
-        if (!ImGui::TreeNodeEx("Rendering Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
+		bool isOneShot = system->IsOneShot();
+		if (ImGui::Checkbox("One Shot", &isOneShot)) {
+			system->SetOneShot(isOneShot);
+		}
+		if (ImGui::IsItemHovered()) {
+			ImGui::SetTooltip("Emit particles once and then stop");
+		}
 
-        ImGui::BeginGroup();
+		ImGui::EndGroup();
+		ImGui::Separator();
+	}
 
-        DrawBillboardSettings(emitter);
-        DrawTextureSettings(emitter);
+	static void DrawParticleEmissionSettings(ParticleFX* system) {
+		if (!ImGui::TreeNodeEx("Emission Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
 
-        ImGui::EndGroup();
-        ImGui::TreePop();
-    }
+		ImGui::BeginGroup();
 
-    static void DrawBillboardSettings(ParticlesEmitterComponent* emitter) {
-        BillboardType billboardType = emitter->GetTypeEnum();
-        const char* billboardItems[] = {
-            "Screen Aligned - Always faces camera",
-            "World Aligned - Maintains up vector",
-            "Axis Aligned - Rotates around specified axis"
-        };
+		float emissionRate = system->GetEmissionRate();
+		if (ImGui::DragFloat("Emission Rate", &emissionRate, 0.1f, 0.1f, 1000.0f, "%.1f")) {
+			system->SetEmissionRate(emissionRate);
+		}
+		if (ImGui::IsItemHovered()) {
+			ImGui::SetTooltip("Particles per second");
+		}
 
-        if (ImGui::Combo("Billboard Type##alignment", (int*)&billboardType, billboardItems, IM_ARRAYSIZE(billboardItems))) {
-            emitter->SetType(billboardType);
-        }
-    }
+		int maxParticles = system->GetMaxParticles();
+		if (ImGui::DragInt("Max Particles DOESNT WORK", &maxParticles, 1, 1, 10000)) {
+			//system->SetMaxParticles(maxParticles);
+		}
+		if (ImGui::IsItemHovered()) {
+			ImGui::SetTooltip("Maximum number of particles allowed");
+		}
 
-    static void DrawTextureSettings(ParticlesEmitterComponent* emitter) {
-        ImGui::Spacing();
+		ImGui::EndGroup();
+		ImGui::TreePop();
+	}
 
-        ImGui::TextUnformatted("Texture");
-        ImGui::SameLine();
-        ImGui::TextDisabled("(?)");
-        if (ImGui::IsItemHovered()) {
-            ImGui::BeginTooltip();
-            ImGui::TextUnformatted("Supported formats: .png, .jpg, .jpeg, .bmp");
-            ImGui::TextUnformatted("Drag and drop a texture file here");
-            ImGui::EndTooltip();
-        }
+	static void DrawParticleParticleSettings(ParticleFX* system) {
+		if (!ImGui::TreeNodeEx("Particle Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
 
-        std::string texturePath = emitter->GetTexture();
-        char texturePathBuffer[256];
-        strncpy_s(texturePathBuffer, sizeof(texturePathBuffer), texturePath.c_str(), _TRUNCATE);
+		ImGui::BeginGroup();
 
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
-        if (ImGui::InputText("##TexturePath", texturePathBuffer, sizeof(texturePathBuffer))) {
-            emitter->SetTexture(texturePathBuffer);
-        }
-        ImGui::PopStyleVar();
+		// Lifetime
+		float minLifetime = system->GetMinLifetime();
+		float maxLifetime = system->GetMaxLifetime();
+		if (ImGui::DragFloatRange2("Lifetime", &minLifetime, &maxLifetime, 0.05f, 0.01f, 20.0f)) {
+			system->SetParticleLifetime(minLifetime, maxLifetime);
+		}
 
-        if (!texturePath.empty()) {
-            ImGui::SameLine();
-            if (ImGui::Button("Preview##texture")) {
-                //preview here like meshrenderer component does
-            }
-        }
+		// Speed
+		float minSpeed = system->GetMinSpeed();
+		float maxSpeed = system->GetMaxSpeed();
+		if (ImGui::DragFloatRange2("Speed", &minSpeed, &maxSpeed, 0.05f, 0.0f, 50.0f)) {
+			system->SetParticleSpeed(minSpeed, maxSpeed);
+		}
 
-        ImGui::Button("Drop Texture Here", ImVec2(ImGui::GetContentRegionAvail().x, 30));
-        HandleParticleTextureDrop(emitter);
-    }
+		// Size
+		float startSize = system->GetStartSize();
+		float endSize = system->GetEndSize();
+		if (ImGui::DragFloatRange2("Size", &startSize, &endSize, 0.05f, 0.01f, 10.0f)) {
+			system->SetParticleSize(startSize, endSize);
+		}
 
-    static void HandleParticleTextureDrop(ParticlesEmitterComponent* emitter) {
-        if (!ImGui::BeginDragDropTarget()) return;
+		// Rotation
+		float rotationSpeed = system->GetRotationSpeed();
+		if (ImGui::DragFloat("Rotation Speed", &rotationSpeed, 0.1f, 0.0f, 10.0f)) {
+			system->SetParticleRotation(rotationSpeed);
+		}
 
-        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-            const char* path = static_cast<const char*>(payload->Data);
-            std::string extension = std::filesystem::path(path).extension().string();
-            std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+		// Gravity
+		float gravity = system->GetGravity();
+		if (ImGui::DragFloat("Gravity", &gravity, 0.01f, -10.0f, 10.0f)) {
+			system->SetGravity(gravity);
+		}
+		if (ImGui::IsItemHovered()) {
+			ImGui::SetTooltip("Negative values make particles rise");
+		}
 
-            const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".image" };
+		// Color
+		ImGui::Text("Start Color");
+		glm::vec3 startColor = system->GetStartColor();
+		float startAlpha = system->GetStartAlpha();
+		float startColorArr[4] = { startColor.r, startColor.g, startColor.b, startAlpha };
+		if (ImGui::ColorEdit4("##StartColor", startColorArr)) {
+			system->SetParticleColor(glm::vec3(startColorArr[0], startColorArr[1], startColorArr[2]), system->GetEndColor());
+			system->SetParticleAlpha(startColorArr[3], system->GetEndAlpha());
+		}
 
-            if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
-                emitter->SetTexture(path);
-            }
-            else {
-                LOG(LogType::LOG_WARNING, "Invalid texture format: %s", extension.c_str());
-            }
-        }
+		ImGui::Text("End Color");
+		glm::vec3 endColor = system->GetEndColor();
+		float endAlpha = system->GetEndAlpha();
+		float endColorArr[4] = { endColor.r, endColor.g, endColor.b, endAlpha };
+		if (ImGui::ColorEdit4("##EndColor", endColorArr)) {
+			system->SetParticleColor(system->GetStartColor(), glm::vec3(endColorArr[0], endColorArr[1], endColorArr[2]));
+			system->SetParticleAlpha(system->GetStartAlpha(), endColorArr[3]);
+		}
 
-        ImGui::EndDragDropTarget();
-    }
+		ImGui::EndGroup();
+		ImGui::TreePop();
+	}
 
-    //more particle settings
-    /*static void DrawParticleLifetimeSettings(ParticlesEmitterComponent* emitter) {
-        if (!ImGui::TreeNodeEx("Lifetime Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
+	static void DrawParticleShapeSettings(ParticleFX* system) {
+		if (!ImGui::TreeNodeEx("Shape Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
 
-        ImGui::BeginGroup();
+		ImGui::BeginGroup();
 
-        float lifetime = emitter->getParticleLifetime();
-        if (ImGui::DragFloat("Lifetime", &lifetime, 0.1f, 0.1f, 10.0f, "%.1f")) {
-            emitter->setParticleLifetime(lifetime);
-        }
+		// Shape type
+		static const char* shapeItems[] = {
+			"Point",
+			"Sphere",
+			"Cone",
+			"Box",
+			"Circle"
+		};
 
-        float lifetimeVariance = emitter->getLifetimeVariance();
-        if (ImGui::DragFloat("Lifetime Variance", &lifetimeVariance, 0.1f, 0.0f, 5.0f, "%.1f")) {
-            emitter->setLifetimeVariance(lifetimeVariance);
-        }
+		int currentShape = static_cast<int>(system->GetEmitterShape());
+		if (ImGui::Combo("Shape", &currentShape, shapeItems, IM_ARRAYSIZE(shapeItems))) {
+			system->SetEmitterShape(static_cast<EmitterShape>(currentShape));
+		}
 
-        ImGui::EndGroup();
-        ImGui::TreePop();
-    }
+		// Shape parameters based on shape type
+		EmitterShape shape = system->GetEmitterShape();
 
-    static void DrawParticleColorSettings(ParticlesEmitterComponent* emitter) {
-        if (!ImGui::TreeNodeEx("Color Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
+		float param1 = system->GetShapeParam1();
+		float param2 = system->GetShapeParam2();
+		float param3 = system->GetShapeParam3();
 
-        ImGui::BeginGroup();
+		switch (shape) {
+		case EmitterShape::POINT:
+			ImGui::Text("Point emitter has no parameters");
+			break;
 
-        vec4 startColor = emitter->getStartColor();
-        float startColorArray[4] = {
-            static_cast<float>(startColor.x),
-            static_cast<float>(startColor.y),
-            static_cast<float>(startColor.z),
-            static_cast<float>(startColor.w)
-        };
+		case EmitterShape::SPHERE:
+			if (ImGui::DragFloat("Radius", &param1, 0.01f, 0.001f, 100.0f)) {
+				system->SetShapeParameters(param1, param2, param3);
+			}
+			break;
 
-        if (ImGui::ColorEdit4("Start Color", startColorArray)) {
-            emitter->setStartColor(vec4(
-                startColorArray[0],
-                startColorArray[1],
-                startColorArray[2],
-                startColorArray[3]
-            ));
-        }
+		case EmitterShape::CONE:
+			if (ImGui::DragFloat("Radius", &param1, 0.01f, 0.001f, 100.0f)) {
+				system->SetShapeParameters(param1, param2, param3);
+			}
+			if (ImGui::DragFloat("Height", &param2, 0.01f, 0.001f, 100.0f)) {
+				system->SetShapeParameters(param1, param2, param3);
+			}
+			if (ImGui::DragFloat("Angle (degrees)", &param3, 0.1f, 0.1f, 180.0f)) {
+				system->SetShapeParameters(param1, param2, param3);
+			}
+			break;
 
-        vec4 endColor = emitter->getEndColor();
-        float endColorArray[4] = {
-            static_cast<float>(endColor.x),
-            static_cast<float>(endColor.y),
-            static_cast<float>(endColor.z),
-            static_cast<float>(endColor.w)
-        };
+		case EmitterShape::BOX:
+			if (ImGui::DragFloat("Width", &param1, 0.01f, 0.001f, 100.0f)) {
+				system->SetShapeParameters(param1, param2, param3);
+			}
+			if (ImGui::DragFloat("Height", &param2, 0.01f, 0.001f, 100.0f)) {
+				system->SetShapeParameters(param1, param2, param3);
+			}
+			if (ImGui::DragFloat("Depth", &param3, 0.01f, 0.001f, 100.0f)) {
+				system->SetShapeParameters(param1, param2, param3);
+			}
+			break;
 
-        if (ImGui::ColorEdit4("End Color", endColorArray)) {
-            emitter->setEndColor(vec4(
-                endColorArray[0],
-                endColorArray[1],
-                endColorArray[2],
-                endColorArray[3]
-            ));
-        }
+		case EmitterShape::CIRCLE:
+			if (ImGui::DragFloat("Radius", &param1, 0.01f, 0.001f, 100.0f)) {
+				system->SetShapeParameters(param1, param2, param3);
+			}
+			break;
+		}
 
-        ImGui::EndGroup();
-        ImGui::TreePop();
-    }
+		ImGui::EndGroup();
+		ImGui::TreePop();
+	}
 
-    static void DrawParticleVelocitySettings(ParticlesEmitterComponent* emitter) {
-        if (!ImGui::TreeNodeEx("Velocity Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
+	static void DrawParticleRenderingSettings(ParticleFX* system) {
+		if (!ImGui::TreeNodeEx("Rendering Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
 
-        ImGui::BeginGroup();
+		ImGui::BeginGroup();
 
-        vec3 startVelocity = emitter->getStartVelocity();
-        float velocityArray[3] = {
-            static_cast<float>(startVelocity.x),
-            static_cast<float>(startVelocity.y),
-            static_cast<float>(startVelocity.z)
-        };
+		// Billboard type
+		int billboardType = system->GetBillboardType();
+		const char* billboardItems[] = {
+			"Screen Aligned - Always faces camera",
+			"World Aligned - Maintains up vector",
+			"Axis Aligned - Rotates around specified axis"
+		};
 
-        if (ImGui::DragFloat3("Initial Velocity", velocityArray, 0.1f)) {
-            emitter->setStartVelocity(vec3(
-                velocityArray[0],
-                velocityArray[1],
-                velocityArray[2]
-            ));
-        }
+		if (ImGui::Combo("Billboard Type", &billboardType, billboardItems, IM_ARRAYSIZE(billboardItems))) {
+			system->SetBillboardType(billboardType);
+		}
 
-        float velocityVariance = emitter->getVelocityVariance();
-        if (ImGui::DragFloat("Velocity Variance", &velocityVariance, 0.1f, 0.0f, 10.0f)) {
-            emitter->setVelocityVariance(velocityVariance);
-        }
+		// Particle type
+		int particleType = static_cast<int>(system->GetParticleType());
+		const char* particleTypeItems[] = {
+			"Default",
+			"Smoke",
+			"Fire",
+			"Muzzle Flash"
+		};
 
-        ImGui::EndGroup();
-        ImGui::TreePop();
-    }*/
-    #pragma endregion
+		if (ImGui::Combo("Particle Type", &particleType, particleTypeItems, IM_ARRAYSIZE(particleTypeItems))) {
+			system->SetParticleType(static_cast<ParticleType>(particleType));
+		}
+
+		// Quick preset buttons
+		ImGui::Text("Quick Presets:");
+
+		float width = (ImGui::GetContentRegionAvail().x - 9.0f) / 4.0f; // 3 spaces between buttons
+
+		if (ImGui::Button("Smoke", ImVec2(width, 0))) {
+			system->ConfigureSmoke();
+		}
+		ImGui::SameLine(0, 3);
+
+		if (ImGui::Button("Fire", ImVec2(width, 0))) {
+			system->ConfigureFire();
+		}
+		ImGui::SameLine(0, 3);
+
+		if (ImGui::Button("Muzzle Flash", ImVec2(width, 0))) {
+			system->ConfigureMuzzleFlash();
+		}
+		ImGui::SameLine(0, 3);
+
+		if (ImGui::Button("Dust", ImVec2(width, 0))) {
+			system->ConfigureDust();
+		}
+
+		// Softness
+		float softness = system->GetSoftness();
+		if (ImGui::SliderFloat("Edge Softness", &softness, 0.0f, 1.0f)) {
+			system->SetSoftness(softness);
+		}
+
+		ImGui::EndGroup();
+		ImGui::TreePop();
+	}
+
+	static void DrawParticleTextureSettings(ParticleFX* system) {
+		if (!ImGui::TreeNodeEx("Texture Settings", ImGuiTreeNodeFlags_DefaultOpen)) return;
+
+		ImGui::BeginGroup();
+
+		// Main texture
+		ImGui::TextUnformatted("Particle Texture");
+		ImGui::SameLine();
+		ImGui::TextDisabled("(?)");
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::TextUnformatted("Supported formats: .png, .jpg, .jpeg, .bmp");
+			ImGui::TextUnformatted("Drag and drop a texture file here");
+			ImGui::EndTooltip();
+		}
+
+		std::string texturePath = system->GetTexturePath();
+		char texturePathBuffer[256] = { 0 };
+		if (!texturePath.empty()) {
+			strncpy_s(texturePathBuffer, sizeof(texturePathBuffer), texturePath.c_str(), _TRUNCATE);
+		}
+
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
+		if (ImGui::InputText("##TexturePath", texturePathBuffer, sizeof(texturePathBuffer))) {
+			system->SetTexture(texturePathBuffer);
+		}
+		ImGui::PopStyleVar();
+
+		if (!texturePath.empty()) {
+			ImGui::SameLine();
+			if (ImGui::Button("Preview##texture")) {
+				// Preview texture (implement similar to MeshRenderer) TODO
+			}
+		}
+
+		ImGui::Button("Drop Texture Here", ImVec2(ImGui::GetContentRegionAvail().x, 30));
+		HandleParticleTextureDrop(system, false);
+
+		ImGui::Spacing();
+		ImGui::Separator();
+		ImGui::Spacing();
+
+		// Color gradient texture
+		ImGui::TextUnformatted("Color Gradient Texture");
+		ImGui::SameLine();
+		ImGui::TextDisabled("(?)");
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::TextUnformatted("Horizontal gradient texture for color variation over lifetime");
+			ImGui::TextUnformatted("Left side is start of lifetime, right side is end");
+			ImGui::EndTooltip();
+		}
+
+		std::string gradientPath = system->GetGradientPath();
+		char gradientPathBuffer[256] = { 0 };
+		if (!gradientPath.empty()) {
+			strncpy_s(gradientPathBuffer, sizeof(gradientPathBuffer), gradientPath.c_str(), _TRUNCATE);
+		}
+
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 4));
+		if (ImGui::InputText("##GradientPath", gradientPathBuffer, sizeof(gradientPathBuffer))) {
+			system->SetColorGradient(gradientPathBuffer);
+		}
+		ImGui::PopStyleVar();
+
+		if (!gradientPath.empty()) {
+			ImGui::SameLine();
+			if (ImGui::Button("Preview##gradient")) {
+				// Preview gradient texture
+			}
+
+			ImGui::SameLine();
+			if (ImGui::Button("Clear##gradient")) {
+				system->DisableColorGradient();
+			}
+		}
+
+		ImGui::Button("Drop Gradient Here", ImVec2(ImGui::GetContentRegionAvail().x, 30));
+		HandleParticleTextureDrop(system, true);
+
+		ImGui::EndGroup();
+		ImGui::TreePop();
+	}
+
+	static void HandleParticleTextureDrop(ParticleFX* system, bool isGradient) {
+		if (!ImGui::BeginDragDropTarget()) return;
+
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+			const char* path = static_cast<const char*>(payload->Data);
+			std::string extension = std::filesystem::path(path).extension().string();
+			std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+			const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".image" };
+
+			if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
+				if (isGradient) {
+					system->SetColorGradient(path);
+				}
+				else {
+					system->SetTexture(path);
+				}
+			}
+			else {
+				LOG(LogType::LOG_WARNING, "Invalid texture format: %s", extension.c_str());
+			}
+		}
+
+		ImGui::EndDragDropTarget();
+	}
+	#pragma endregion
 
     #pragma region Canvas
     static void DrawCanvasComponent(UICanvasComponent* canvas) {
@@ -1364,9 +1545,9 @@ public:
 			DrawRigidbodyComponent(rigidbody);
 		}
 
-		if (gameObject->HasComponent<ParticlesEmitterComponent>()) {
-			ParticlesEmitterComponent* emitter = gameObject->GetComponent<ParticlesEmitterComponent>();
-			DrawParticleEmitterComponent(emitter);
+		if (gameObject->HasComponent<ParticleFX>()) {
+            ParticleFX* emitter = gameObject->GetComponent<ParticleFX>();
+			DrawParticleSystemComponent(emitter);
 		}
 
 		if (gameObject->HasComponent<ShaderComponent>()) {
@@ -1462,9 +1643,9 @@ private:
 			}
 		}
 
-		if (!gameObject->HasComponent<ParticlesEmitterComponent>()) {
+		if (!gameObject->HasComponent<ParticleFX>()) {
 			if (ImGui::MenuItem("ParticleEmitter")) {
-				gameObject->AddComponent<ParticlesEmitterComponent>();
+				gameObject->AddComponent<ParticleFX>();
 			}
 		}
         

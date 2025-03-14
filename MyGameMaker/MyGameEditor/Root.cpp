@@ -11,7 +11,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
-#include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "../MyParticlesEngine/ParticleFX.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
@@ -90,6 +90,11 @@ bool Root::Start()
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
+
+	auto particleFX = CreateGameObject("ParticleFX");
+	auto emitter = particleFX->AddComponent<ParticleFX>();
+	emitter->ConfigureSmoke();
+	emitter->SetTexture("Baker_house.png");
   
 	/*auto canvas = CreateGameObject("Canvas");
 	canvas->AddComponent<UICanvasComponent>();

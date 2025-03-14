@@ -770,6 +770,40 @@ int EngineBinds::GetAnimationIndex(MonoObject* animationRef)
     return animation ? animation->GetAnimationIndex() : 0;
 }
 
+float EngineBinds::GetAnimationTime(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->GetAnimationTime() : 0.0f;
+}
+
+float EngineBinds::GetAnimationLength(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->GetAnimationDuration() : 0.0f;
+}
+
+void EngineBinds::SetAnimationPlayTime(MonoObject* animationRef, float time)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->GetAnimator()->SetCurrentMTime(time);
+	}
+}
+
+void EngineBinds::SetAnimationPlayState(MonoObject* animationRef, bool play)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->SetAnimationPlayState(play);
+	}
+}
+
+bool EngineBinds::GetAnimationPlayState(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->GetAnimationPlayState() : false;
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -878,6 +912,11 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationSpeed", (const void*)&EngineBinds::GetAnimationSpeed);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimation", (const void*)&EngineBinds::SetAnimation);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationIndex", (const void*)&EngineBinds::GetAnimationIndex);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationTime", (const void*)&EngineBinds::GetAnimationTime);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationLength", (const void*)&EngineBinds::GetAnimationLength);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayTime", (const void*)&EngineBinds::SetAnimationPlayTime);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayState", (const void*)&EngineBinds::SetAnimationPlayState);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationPlayState", (const void*)&EngineBinds::GetAnimationPlayState);
 }
 
 template <class T>

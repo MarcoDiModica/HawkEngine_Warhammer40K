@@ -55,6 +55,14 @@ public:
         return animator.get();
     }
 
+	float GetAnimationDuration() const {
+		return testAnimation->GetDuration();
+	}
+
+	float GetAnimationTime() const {
+		return animator->GetCurrentMTime();
+	}
+
 	void SetAnimationPlayState(bool play) 
     {
 		isPlaying = play;

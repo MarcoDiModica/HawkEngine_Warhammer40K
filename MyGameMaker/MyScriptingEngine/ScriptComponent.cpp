@@ -47,6 +47,26 @@ void ScriptComponent::Update(float deltaTime) {
     }
 }
 
+void ScriptComponent::Destroy()
+{
+	/*if (monoScript) {
+		MonoClass* scriptClass = mono_object_get_class(monoScript);
+		MonoMethod* destroyMethod = mono_class_get_method_from_name(scriptClass, "Destroy", 0);
+
+		MonoObject* exception = nullptr;
+		mono_runtime_invoke(destroyMethod, monoScript, nullptr, &exception);
+
+		if (exception) {
+			MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
+			const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
+			LOG(LogType::LOG_ERROR, "DestroyError: %s", exceptionStr);
+			mono_free((void*)exceptionStr);
+		}
+	}*/
+
+    monoScript = nullptr;
+}
+
 bool ScriptComponent::LoadScript(const std::string& scriptName)
 {
     std::string scriptPath = "../Script/" + scriptName + ".cs";

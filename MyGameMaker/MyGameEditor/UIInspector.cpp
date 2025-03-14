@@ -62,6 +62,11 @@ private:
 			ImGui::EndPopup();
 		}
 
+        //get parent and say if it has a parent
+        GameObject* parent = transform->GetOwner()->GetParent();
+        bool hasParent = parent != nullptr;
+        ImGui::Text("Parent: %s", hasParent ? parent->GetName().c_str() : "None");
+
         glm::dvec3 currentPosition = transform->GetPosition();
         glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
         glm::dvec3 currentScale = transform->GetScale();

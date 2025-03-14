@@ -14,7 +14,7 @@ public:
 
     void Start() override;
     void Update(float deltaTime) override;
-    void Destroy() override {};
+    void Destroy() override;
     ComponentType GetType() const override { return ComponentType::SCRIPT; };
 
     std::unique_ptr<Component> Clone(GameObject* new_owner) override { return std::make_unique<ScriptComponent>(new_owner); }
@@ -24,7 +24,7 @@ public:
     bool LoadScript(const std::string& scriptName);
     bool CreateNewScript(const std::string& scriptName, const std::string& baseScriptName);
 
-    MonoObject* GetSharpObject() { return monoScript; }
+    MonoObject* GetSharpObject() const { return monoScript; }
     std::string GetTypeName() const;
 
     void InvokeMonoMethod(const std::string& methodName, GameObject* other);

@@ -29,7 +29,6 @@ unsigned int GameObject::nextGid = 1;
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), gid(nextGid++)
 {
     AddComponent<Transform_Component>();
-    //transform = GetComponent<Transform_Component>();
 }
 
 GameObject::~GameObject()
@@ -171,10 +170,6 @@ void GameObject::Start()
         scriptComponent->Start();
     }
 
-    //if (GetName() != "Cube_3") {
-    //    scene->tree->Insert(scene->tree->root, *this, 0);
-    //}
-
     for (auto& child : children)
     {
         child->Start();
@@ -183,24 +178,13 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
-    //display();
-    timeActive += deltaTime;
-
-    if (!active)
+    if (!active || !this || destroyed)
     {
         return;
     }
 
-    // Call C# update
-    if (CsharpReference) {
-
-    }
-
-
-    //check the state of the components and throw an error if they are null
     for (auto& component : components)
 	{
-
 		if (!component.second)
 		{
 			throw std::runtime_error("Component is null");
@@ -233,31 +217,26 @@ void GameObject::Destroy()
 
     destroyed = true;
 
-    
+	for (auto& component : components)
+	{
+		component.second->Destroy();
+	}
 
-    for (auto& child : children)
-    {
-        child->Destroy();
-    }
+	for (auto& scriptComponent : scriptComponents) {
+		scriptComponent->Destroy();
+	}
+	scriptComponents.clear();
 
-    return;
-
-    for (auto& component : components)
-    {
-        component.second->Destroy();
-    }
-
-    for (auto& scriptComponent : scriptComponents) {
-        scriptComponent->Destroy();
-    }
-    scriptComponents.clear();
+	for (auto& child : children)
+	{
+		child->Destroy();
+	}
+	children.clear();
 }
 
 void GameObject::Draw() const
 {
-    //std::cout << "Draw GameObject: " << name << std::endl;
     if (!active) { return; }
-
 
     switch (drawMode)
     {
@@ -271,13 +250,6 @@ void GameObject::Draw() const
         DrawPushPopMatrix();
         break;
     }
-
-    for (const auto& child : children)
-    {
-        child->Draw();
-    }
-
-    //glLoadIdentity(); // Resets the current matrix to identity
 }
 
 void GameObject::DrawAccumultedMatrix() const
@@ -429,6 +401,7 @@ void GameObject::ApplyWorldToLocalTransform(GameObject* child, const glm::dmat4&
 	transform->SetRotationQuat(localRotation);
 	transform->SetScale(localScale);
 }
+
 void GameObject::AddChild(GameObject* child)
 {
     if (child == this) { return; }

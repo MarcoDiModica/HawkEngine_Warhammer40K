@@ -22,7 +22,7 @@ public:
 
     void Start() override {}
     void Update(float deltaTime) override;
-    void Destroy() override {}
+    void Destroy() override;
 
     std::unique_ptr<Component> Clone(GameObject* owner) override;
 

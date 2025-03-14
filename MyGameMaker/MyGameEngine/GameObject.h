@@ -105,8 +105,6 @@ public:
 
     void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
 
-	float GetTimeActive() const { return timeActive; }
-
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -130,10 +128,7 @@ private:
     mutable std::type_index cachedComponentType;
     mutable std::shared_ptr<Component> cachedComponent;
 
-    //Transform_Component* transform;
     std::shared_ptr<Mesh> mesh;
-
-    float timeActive = 0.0f;
 
 protected:
     friend class Scene;

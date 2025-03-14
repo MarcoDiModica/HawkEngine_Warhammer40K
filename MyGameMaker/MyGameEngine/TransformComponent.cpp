@@ -139,6 +139,11 @@ void Transform_Component::Update(float deltaTime)
     }
 }
 
+void Transform_Component::Destroy()
+{
+    owner = nullptr;
+}
+
 void Transform_Component::SetPosition(const glm::dvec3& newPos)
 {
     if (owner && owner->GetParent()) {

@@ -74,6 +74,7 @@
   <ItemGroup>
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticlesEmitterComponent.h" />
+    <ClInclude Include="ParticleShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ParticlesEmitterComponent.cpp" />

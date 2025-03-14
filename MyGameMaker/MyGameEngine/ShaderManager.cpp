@@ -1,4 +1,5 @@
 #include "ShaderManager.h"
+#include "../MyParticlesEngine/ParticleShader.h"
 #include <iostream>
 
 ShaderManager& ShaderManager::GetInstance() {
@@ -11,6 +12,7 @@ bool ShaderManager::Initialize() {
 
 	success &= RegisterShader<UnlitShader>();
 	success &= RegisterShader<PBRShader>();
+	success &= RegisterShader<ParticleShader>();
 
 	if (!success) {
 		std::cerr << "Failed to initialize one or more shaders" << std::endl;

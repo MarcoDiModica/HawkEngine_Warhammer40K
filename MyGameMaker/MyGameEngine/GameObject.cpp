@@ -217,7 +217,7 @@ void GameObject::Destroy()
 
     destroyed = true;
 
-	for (auto& component : components)
+	/*for (auto& component : components)
 	{
 		component.second->Destroy();
 	}
@@ -225,7 +225,7 @@ void GameObject::Destroy()
 	for (auto& scriptComponent : scriptComponents) {
 		scriptComponent->Destroy();
 	}
-	scriptComponents.clear();
+	scriptComponents.clear();*/
 
 	for (auto& child : children)
 	{

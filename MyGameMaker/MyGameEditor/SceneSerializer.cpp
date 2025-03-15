@@ -68,7 +68,11 @@ YAML::Node SceneSerializer::SerializeGameObject(GameObject& gameObject) {
 
 	node["Components"] = SerializeComponents(gameObject);
 
-	SerializeChildren(node, gameObject);
+	YAML::Node children;
+	for (const auto& child : gameObject.GetChildren()) {
+		children.push_back(SerializeGameObject(*child));
+	}
+	node["Children"] = children;
 
 	return node;
 }
@@ -287,10 +291,24 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 }
 
 void SceneSerializer::DeserializeChildren(GameObject* parentGameObject, const YAML::Node& childrenNode) {
-	for (YAML::const_iterator it = childrenNode.begin(); it != childrenNode.end(); ++it) {
-		const YAML::Node& childNode = it->second;
+	if (!childrenNode.IsSequence()) {
+		LOG(LogType::LOG_ERROR, "Children node is not a sequence");
+		return;
+	}
+
+	for (const auto& childNode : childrenNode) {
+		if (!childNode.IsDefined()) {
+			LOG(LogType::LOG_WARNING, "Child node is not defined");
+			continue;
+		}
+
 		auto childObject = DeserializeGameObject(childNode);
-		parentGameObject->AddChild(childObject.get());
+		if (childObject) {
+			parentGameObject->AddChild(childObject.get());
+		}
+		else {
+			LOG(LogType::LOG_WARNING, "Failed to deserialize child object");
+		}
 	}
 }
 

@@ -13,7 +13,7 @@
 
 UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
-	name = "UICanvasComponent";
+	name = "UIImageComponent";
 }
 
 void UIImageComponent::Start()

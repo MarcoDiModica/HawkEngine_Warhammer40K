@@ -15,6 +15,10 @@
 #include "MyAudioEngine/AudioListener.h"
 #include "MyPhysicsEngine/ColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
+#include "MyUIEngine/UICanvasComponent.h"
+#include "MyUIEngine/UITransformComponent.h"
+#include "MyUIEngine/UIImageComponent.h"
+#include "MyUIEngine/UIButtonComponent.h"
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -240,6 +244,28 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
 			rb->decode(componentData);
 		}
+		else if (componentName == "UITransformComponent") {
+			auto uiTransform = gameObject->GetComponent<UITransformComponent>();
+			
+			if (uiTransform == nullptr) {
+				uiTransform = gameObject->AddComponent<UITransformComponent>();
+			}
+
+			uiTransform->decode(componentData);
+		}
+		else if (componentName == "UICanvasComponent") {
+			auto uiTransform = gameObject->AddComponent<UITransformComponent>();
+			auto canvas = gameObject->AddComponent<UICanvasComponent>();
+			canvas->decode(componentData);
+		}
+		else if (componentName == "UIImageComponent") {
+			auto image = gameObject->AddComponent<UIImageComponent>();
+			image->decode(componentData);
+		}
+		else if (componentName == "UIButtonComponent") {
+			auto button = gameObject->AddComponent<UIButtonComponent>();
+			button->decode(componentData);
+		}
 		//mas componentes aqui
 		else {
 			LOG(LogType::LOG_WARNING, "Unknown component type: %s", componentName.c_str());
@@ -316,6 +342,10 @@ std::string SceneSerializer::GetComponentTypeName(ComponentType type) {
 	case ComponentType::AUDIO_LISTENER: return "AudioListener";
 	case ComponentType::COLLIDER: return "ColliderComponent";
 	case ComponentType::RIGIDBODY: return "RigidbodyComponent";
+	case ComponentType::UITRANSFORM: return "UITransformComponent";
+	case ComponentType::CANVAS: return "UICanvasComponent";
+	case ComponentType::IMAGE: return "UIImageComponent";
+	case ComponentType::BUTTON: return "UIButtonComponent";
 	//mas casos/componentes
 	default: return "Unknown";
 	}
@@ -329,6 +359,12 @@ ComponentType SceneSerializer::GetComponentTypeFromName(const std::string& name)
 	if (name == "ShaderComponent") return ComponentType::SHADER;
 	if (name == "SoundComponent") return ComponentType::AUDIO;
 	if (name == "AudioListener") return ComponentType::AUDIO_LISTENER;
+	if (name == "ColliderComponent") return ComponentType::COLLIDER;
+	if (name == "RigidbodyComponent") return ComponentType::RIGIDBODY;
+	if (name == "UITransformComponent") return ComponentType::UITRANSFORM;
+	if (name == "UICanvasComponent") return ComponentType::CANVAS;
+	if (name == "UIImageComponent") return ComponentType::IMAGE;
+	if (name == "UIButtonComponent") return ComponentType::BUTTON;
 	//mas mapeos aqui
 	return ComponentType::NONE;
 }

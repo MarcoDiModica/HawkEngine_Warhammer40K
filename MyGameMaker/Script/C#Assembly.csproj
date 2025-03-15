@@ -51,10 +51,12 @@
     <Compile Include="Component.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GrenadeLauncher.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
+    <Compile Include="PlayerAbilities.cs" />
     <Compile Include="PlayerAnimations.cs" />
     <Compile Include="PlayerCamera.cs" />
     <Compile Include="PlayerController.cs" />

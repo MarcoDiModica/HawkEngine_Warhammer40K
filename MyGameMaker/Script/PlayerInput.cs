@@ -8,7 +8,8 @@ public class PlayerInput : MonoBehaviour
     private bool isDashPressed = false;
     private bool isShootPressed = false;
     private bool isReloadPressed = false;
-
+    private bool isAbility1Pressed = false;
+    private bool isAbility2Pressed = false;
     public override void Start()
     {
     }
@@ -21,6 +22,8 @@ public class PlayerInput : MonoBehaviour
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
         isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerButton(ControllerButton.RightShoulder);
         isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
+        isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightTrigger);
+        isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftTrigger);
     }
 
     private void UpdateMovementDirection()
@@ -85,5 +88,15 @@ public class PlayerInput : MonoBehaviour
     public bool IsReloading()
     {
         return isReloadPressed;
+    }
+
+    public bool IsAbility1Pressed()
+    {
+        return isAbility1Pressed;
+    }
+
+    public bool IsAbility2Pressed()
+    {
+        return isAbility2Pressed;
     }
 }

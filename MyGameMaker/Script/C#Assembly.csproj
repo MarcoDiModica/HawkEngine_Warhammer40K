@@ -51,6 +51,7 @@
     <Compile Include="Component.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="Grenade.cs" />
     <Compile Include="GrenadeLauncher.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />

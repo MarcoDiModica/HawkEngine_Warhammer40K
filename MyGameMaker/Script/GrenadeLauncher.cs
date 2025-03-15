@@ -12,9 +12,7 @@ namespace HawkEngine
         protected bool enabled;
         protected float cooldown;
 
-        float distance = 6;
-        float damage = 100;
-        float explosionRadius = 2;
+        
 
         public GrenadeLauncher(UIntPtr instance) : base(instance)
         {
@@ -23,8 +21,9 @@ namespace HawkEngine
         public override void TriggerAbility()
         {
             GameObject projectile = Engineson.CreateGameObject("Grenade", null);
-            Rigidbody rigidbody = projectile.AddComponent<Rigidbody>();
-            //rigidbody.AddForce(Engineson.GetForwardVector() * distance, ForceMode.Impulse);
+            projectile.AddComponent<MeshRenderer>();
+            projectile.AddComponent<Collider>();
+            projectile.AddScript("Grenade");
         }
     }    
 }

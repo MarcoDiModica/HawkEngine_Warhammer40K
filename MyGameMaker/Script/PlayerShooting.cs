@@ -68,6 +68,18 @@ public class PlayerShooting : MonoBehaviour
             Reload();
         }
 
+        if (playerInput?.IsAbility1Pressed() == true)
+        {
+            Engineson.print("Ability 1 pressed");
+            // UseAbility1();
+        }
+
+        if (playerInput?.IsAbility2Pressed() == true)
+        {
+            Engineson.print("Ability 2 pressed");
+            // UseAbility2();
+        }
+
     }
 
     private void Shoot()

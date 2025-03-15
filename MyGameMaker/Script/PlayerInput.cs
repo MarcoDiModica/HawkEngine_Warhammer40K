@@ -22,8 +22,8 @@ public class PlayerInput : MonoBehaviour
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
         isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerButton(ControllerButton.RightShoulder);
         isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
-        isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightTrigger);
-        isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftTrigger);
+        isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
+        isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
     }
 
     private void UpdateMovementDirection()

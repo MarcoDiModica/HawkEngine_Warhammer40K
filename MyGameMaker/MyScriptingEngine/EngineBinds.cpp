@@ -17,6 +17,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
 // GameObject
 
@@ -137,8 +138,11 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.Audio") {
         return GO->GetComponent<SoundComponent>()->GetSharp();
     }
-	else if (componentName == "HawkEngine.UIImage") {
-		return GO->GetComponent<UIImageComponent>()->GetSharp();
+    else if (componentName == "HawkEngine.UIImage") {
+        return GO->GetComponent<UIImageComponent>()->GetSharp();
+    }
+	else if (componentName == "HawkEngine.SkeletalAnimation") {
+		return GO->GetComponent<SkeletalAnimationComponent>()->GetSharp();
 	}
 	/*else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
@@ -170,7 +174,11 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
 		break;
+    case 7: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
+        break;
    }
+
+	
 
     // loop through all the scripts and grant them unique ids
     for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it) {
@@ -734,6 +742,34 @@ void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
 	}
 }
 
+void EngineBinds::SetAnimationSpeed(MonoObject* animationRef, float speed)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->SetAnimationSpeed(speed);
+	}
+}
+
+float EngineBinds::GetAnimationSpeed(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->GetAnimationSpeed() : 0.0f;
+}
+
+void EngineBinds::SetAnimation(MonoObject* animationRef, int index)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->PlayIndexAnimation(index);
+	}
+}
+
+int EngineBinds::GetAnimationIndex(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+    return animation ? animation->GetAnimationIndex() : 0;
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -837,6 +873,11 @@ void EngineBinds::BindEngine() {
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
+    // SkeletalAnimation
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationSpeed", (const void*)&EngineBinds::SetAnimationSpeed);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationSpeed", (const void*)&EngineBinds::GetAnimationSpeed);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimation", (const void*)&EngineBinds::SetAnimation);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationIndex", (const void*)&EngineBinds::GetAnimationIndex);
 }
 
 template <class T>

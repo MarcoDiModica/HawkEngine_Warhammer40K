@@ -277,9 +277,10 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			scriptIt != componentsNode["ScriptComponents"].end(); ++scriptIt) {
 
 			const YAML::Node& scriptNode = scriptIt->second;
-			if (scriptNode["name"].IsDefined()) {
-				std::string scriptName = scriptNode["name"].as<std::string>();
-				//gameObject->AddScriptComponent(scriptName)->decode(scriptNode);
+			auto scriptComponent = gameObject->AddComponent<ScriptComponent>();
+			if (!scriptComponent->decode(scriptNode)) {
+				LOG(LogType::LOG_WARNING, "Failed to load script: %s",
+					scriptNode["name"].IsDefined() ? scriptNode["name"].as<std::string>().c_str() : "unknown");
 			}
 		}
 	}

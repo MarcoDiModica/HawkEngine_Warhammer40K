@@ -19,15 +19,16 @@
 #include <mono/metadata/mono-config.h>
 #include <mono/metadata/object.h>
 #include "MyShadersEngine/ShaderComponent.h"
+#include "glm/gtx/matrix_decompose.inl"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "MyAnimationEngine/SkeletalAnimationComponent.h"
 
 unsigned int GameObject::nextGid = 1;
 
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), gid(nextGid++)
 {
     AddComponent<Transform_Component>();
-    //transform = GetComponent<Transform_Component>();
 }
 
 GameObject::~GameObject()
@@ -169,10 +170,6 @@ void GameObject::Start()
         scriptComponent->Start();
     }
 
-    //if (GetName() != "Cube_3") {
-    //    scene->tree->Insert(scene->tree->root, *this, 0);
-    //}
-
     for (auto& child : children)
     {
         child->Start();
@@ -181,24 +178,13 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
-    //display();
-    timeActive += deltaTime;
-
-    if (!active)
+    if (!active || !this || destroyed)
     {
         return;
     }
 
-    // Call C# update
-    if (CsharpReference) {
-
-    }
-
-
-    //check the state of the components and throw an error if they are null
     for (auto& component : components)
 	{
-
 		if (!component.second)
 		{
 			throw std::runtime_error("Component is null");
@@ -231,31 +217,26 @@ void GameObject::Destroy()
 
     destroyed = true;
 
-    
+	/*for (auto& component : components)
+	{
+		component.second->Destroy();
+	}
 
-    for (auto& child : children)
-    {
-        child->Destroy();
-    }
+	for (auto& scriptComponent : scriptComponents) {
+		scriptComponent->Destroy();
+	}
+	scriptComponents.clear();*/
 
-    return;
-
-    for (auto& component : components)
-    {
-        component.second->Destroy();
-    }
-
-    for (auto& scriptComponent : scriptComponents) {
-        scriptComponent->Destroy();
-    }
-    scriptComponents.clear();
+	for (auto& child : children)
+	{
+		child->Destroy();
+	}
+	children.clear();
 }
 
 void GameObject::Draw() const
 {
-    //std::cout << "Draw GameObject: " << name << std::endl;
     if (!active) { return; }
-
 
     switch (drawMode)
     {
@@ -269,13 +250,6 @@ void GameObject::Draw() const
         DrawPushPopMatrix();
         break;
     }
-
-    for (const auto& child : children)
-    {
-        child->Draw();
-    }
-
-    //glLoadIdentity(); // Resets the current matrix to identity
 }
 
 void GameObject::DrawAccumultedMatrix() const
@@ -362,23 +336,70 @@ BoundingBox GameObject::boundingBox() const
     return GetTransform()->GetMatrix() * combinedBoundingBox;
 }
 
-void GameObject::SetParent(GameObject* parent)
-{
-    if (this->parent == parent)
-	{
+
+BoundingBox GameObject::localBoundingBox() const {
+    BoundingBox combinedBoundingBox{};
+
+    if (HasComponent<MeshRenderer>()) {
+        auto meshRenderer = GetComponent<MeshRenderer>();
+        combinedBoundingBox = meshRenderer->GetMesh()->boundingBox();
+    }
+    else if (!children.empty()) {
+        combinedBoundingBox = children.front()->boundingBox();
+    }
+
+    for (auto it = children.begin() + (HasComponent<MeshRenderer>() || children.empty() ? 0 : 1); it != children.end(); ++it) {
+        combinedBoundingBox = combinedBoundingBox + (*it)->boundingBox();
+    }
+
+    return combinedBoundingBox;
+}
+
+void GameObject::SetParent(GameObject* parent) {
+	if (this->parent == parent) {
 		return;
 	}
 
-    if (this->parent)
-	{
+	if (parent == this) {
+		return;
+	}
+
+	GameObject* p = parent;
+	while (p) {
+		if (p == this) return; 
+		p = p->GetParent();
+	}
+
+	if (this->parent) {
 		this->parent->RemoveChild(this);
 	}
 
 	this->parent = parent;
-    if (parent)
-    {
-        parent->AddChild(this);
+	if (parent) {
+		parent->AddChild(this);
 	}
+	else if (scene) {
+		scene->AddGameObject(shared_from_this());
+	}
+}
+
+void GameObject::ApplyWorldToLocalTransform(GameObject* child, const glm::dmat4& childWorldMatrix) {
+	glm::dmat4 parentWorldMatrix = GetTransform()->GetMatrix();
+
+	glm::dmat4 newLocalMatrix = glm::inverse(parentWorldMatrix) * childWorldMatrix;
+
+	glm::dvec3 skew;
+	glm::dvec4 perspective;
+	glm::dvec3 localPosition;
+	glm::dquat localRotation;
+	glm::dvec3 localScale;
+
+	glm::decompose(newLocalMatrix, localScale, localRotation, localPosition, skew, perspective);
+
+	Transform_Component* transform = child->GetTransform();
+	transform->SetLocalPosition(localPosition);
+	transform->SetRotationQuat(localRotation);
+	transform->SetScale(localScale);
 }
 
 void GameObject::AddChild(GameObject* child)
@@ -447,6 +468,7 @@ void GameObject::AddChild(GameObject* child)
         return;
     }
 }
+
 
 void GameObject::RemoveChild(GameObject* child)
 {

@@ -1,11 +1,13 @@
 #ifndef __MESH_H__
 #define __MESH_H__
 #pragma once
-
+#ifdef min
+#undef min
+#endif
 #include <vector>
-#include <GL/glew.h>
 #include <string>
 #include <memory>
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 #ifdef YAML_CPP_DLL_EXPORTS
 #define YAML_CPP_API __declspec(dllexport)
@@ -13,17 +15,21 @@
 #define YAML_CPP_API __declspec(dllimport)
 #endif
 #include <yaml-cpp/yaml.h>
+#include <assimp/scene.h>
+#include <MyGameEngine/AssimpGLMHelpers.h>
 
 #include "BufferObject.h"
 #include "BoundingBox.h"
 #include "Model.h"
 
+
 class SceneSerializer;
+
 
 class Mesh {
 
     std::vector<glm::vec3> _normals;
-    std::vector<glm::vec3> _vertices;
+    std::vector<Vertex> _vertices;
     std::vector<unsigned int> _indices;
 	std::vector<glm::vec2> _texCoords;
 
@@ -44,8 +50,9 @@ public:
     static std::shared_ptr<Mesh> CreateCylinder();
     static std::shared_ptr<Mesh> CreatePlane();
 
-    void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);
+    //void Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs);
  
+    void LoadBones();    
     void CalculateNormals();
     void CalculateTangents();
     void Draw() const;

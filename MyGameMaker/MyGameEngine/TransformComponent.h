@@ -22,7 +22,7 @@ public:
 
     void Start() override {}
     void Update(float deltaTime) override;
-    void Destroy() override {}
+    void Destroy() override;
 
     std::unique_ptr<Component> Clone(GameObject* owner) override;
 
@@ -50,8 +50,11 @@ public:
     }
 
     void ResetTransform() {
-		worldMatrix = glm::dmat4(1.0);
-		localMatrix = glm::dmat4(1.0);
+        localPosition = glm::dvec3(0.0);
+		localRotation = glm::dquat(1.0, 0.0, 0.0, 0.0);
+		localScale = glm::dvec3(1.0);
+		RecalculateLocalMatrix();
+		UpdateWorldMatrix();
 	}
 
 	/*Transform_Component operator*(const glm::dmat4& other) const {
@@ -86,7 +89,15 @@ public:
     // --- Compatibility wrappers ---
     // Instead of directly modifying the local matrix, use the canonical local components.
     glm::dvec3 GetLocalPosition() const { return localPosition; }
-    void SetLocalPosition(const glm::dvec3& pos) { localPosition = pos; RecalculateLocalMatrix(); UpdateWorldMatrix(); }
+	void SetLocalPosition(const glm::dvec3& pos) {
+		localPosition = pos;
+		RecalculateLocalMatrix();
+		UpdateWorldMatrix();
+	}
+
+	glm::dvec3 GetWorldPosition() const {
+		return glm::dvec3(worldMatrix[3]);
+	}
     // If your code was calling UpdateLocalMatrix(), use this wrapper:
     void UpdateLocalMatrix() { RecalculateLocalMatrix(); UpdateWorldMatrix(); }
     // For legacy code that set the local matrix directly, delegate to SetMatrix()
@@ -96,6 +107,8 @@ public:
     MonoObject* GetSharp() override;
 
     ComponentType GetType() const override { return ComponentType::TRANSFORM; }
+
+    void PreserveWorldTransform();
 
 protected:
     friend class SceneSerializer;

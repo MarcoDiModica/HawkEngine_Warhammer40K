@@ -47,6 +47,20 @@ void DebugDrawerPhysics::drawWiredLine(const glm::vec3& start, const glm::vec3& 
     glPopAttrib();
 }
 
+void DebugDrawerPhysics::drawTriangle(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& color) {
+    glPushAttrib(GL_CURRENT_BIT | GL_LINE_BIT);
+    glColor3f(color.r, color.g, color.b);
+    glLineWidth(2.0f);
+
+    glBegin(GL_LINE_LOOP);
+    glVertex3f(p0.x, p0.y, p0.z);
+    glVertex3f(p1.x, p1.y, p1.z);
+    glVertex3f(p2.x, p2.y, p2.z);
+    glEnd();
+
+    glPopAttrib();
+}
+
 void DebugDrawerPhysics::drawBoundingBox(const BoundingBox& bbox, const glm::vec3& color) {
     glPushAttrib(GL_CURRENT_BIT | GL_LINE_BIT);
 

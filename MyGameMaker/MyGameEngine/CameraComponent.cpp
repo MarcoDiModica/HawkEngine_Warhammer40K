@@ -57,7 +57,7 @@ void CameraComponent::Start()
 }
 
 void CameraComponent::Update(float deltaTime)
-{
+{    
     if (followTarget != nullptr) {
         glm::dvec3 targetPosition = followTarget->GetTransform()->GetPosition();
         glm::dvec3 desiredPosition = targetPosition + followOffset - followTarget->GetTransform()->GetForward() * followDistance;

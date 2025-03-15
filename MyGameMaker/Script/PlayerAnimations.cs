@@ -36,10 +36,14 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetIdleRandomAnimation()
     {
-        Random rand = new Random();
-        int idleIndex = rand.Next(2, 6);
-        esk.SetAnimation(idleIndex);
-        esk.SetAnimationSpeed(2f);
+        if (esk.GetAnimationTime() >= esk.GetAnimationLength() - 0.2f)
+        {
+            Random rand = new Random();
+            int idleIndex = rand.Next(2, 6);
+            esk.SetAnimation(idleIndex);
+            esk.SetAnimationSpeed(2f);
+        }
+        
     }
 
     public void SetShootingStandingAnimation()

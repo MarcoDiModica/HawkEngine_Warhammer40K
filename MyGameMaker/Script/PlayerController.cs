@@ -52,12 +52,8 @@ public class PlayerController : MonoBehaviour
                 playerAnimations.SetStandardIdleAnimation();
                 isIdle = true;
             }
-            currentTime += deltaTime;
-            if (currentTime >= maxIdleTimer)
-            {
-                playerAnimations.SetIdleRandomAnimation();
-                currentTime = 0;
-            }
+            playerAnimations.SetIdleRandomAnimation();
+            
             isRunning = false;
             isShootingStanding = false;
             isShootingRunning = false;

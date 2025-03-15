@@ -207,32 +207,32 @@ protected:
         node["name"] = model->GetMeshName();
         node["model_data"] = model->GetModelData();
         node["material_index"] = model->GetMaterialIndex();
-        node["boundingbox"] = model->getBoundingBox();
+        node["boundingbox"] = _boundingBox;
         return node;
     }
 
     bool decode(const YAML::Node& node) {
         Model model;
-		setModel(std::make_shared<Model>());
-		if (node["name"]) {
-			std::string name = node["name"].as<std::string>();
-			getModel()->SetMeshName(name);
-		}
+        setModel(std::make_shared<Model>());
+        if (node["name"]) {
+            std::string name = node["name"].as<std::string>();
+            getModel()->SetMeshName(name);
+        }
 
-		if (node["model_data"]) {
-			ModelData modelData = node["model_data"].as<ModelData>();
-			getModel()->SetModelData(modelData);
-		}
+        if (node["model_data"]) {
+            ModelData modelData = node["model_data"].as<ModelData>();
+            getModel()->SetModelData(modelData);
+        }
 
         if (node["material_index"]) {
             int materialIndex = node["material_index"].as<int>();
             getModel()->SetMaterialIndex(materialIndex);
         }
 
-		if (node["boundingbox"]) {
-			BoundingBox bbox = node["boundingbox"].as<BoundingBox>();
-			getModel()->SetBoundingBox(bbox);
-		}
+        if (node["boundingbox"]) {
+            BoundingBox bbox = node["boundingbox"].as<BoundingBox>();
+            setBoundingBox(bbox);
+        }
 
         return true;
     }

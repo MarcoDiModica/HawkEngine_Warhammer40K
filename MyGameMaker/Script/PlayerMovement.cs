@@ -147,10 +147,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateRotation(Vector3 moveDirection, float deltaTime)
     {
-        if (playerInput?.IsShooting() == true)
-        {
-            return;
-        }
 
         if (moveDirection != Vector3.Zero)
         {

@@ -16,6 +16,8 @@
 #include "../MyGameEditor/App.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
+#include "../MyUIEngine/UIButtonComponent.h"
+#include "../MyUIEngine/UICanvasComponent.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
@@ -144,6 +146,12 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.SkeletalAnimation") {
 		return GO->GetComponent<SkeletalAnimationComponent>()->GetSharp();
 	}
+	else if (componentName == "HawkEngine.UIButton") {
+		return GO->GetComponent<UIButtonComponent>()->GetSharp();
+	}
+	else if (componentName == "HawkEngine.UICanvas") {
+		return GO->GetComponent<UICanvasComponent>()->GetSharp();
+	}
 	/*else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}*/
@@ -174,7 +182,11 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
 		break;
-    case 7: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
+	case 7: _component = static_cast<Component*>(go->AddComponent<UIButtonComponent>());
+		break;
+	case 8: _component = static_cast<Component*>(go->AddComponent<UICanvasComponent>());
+		break; 
+    case 9: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
         break;
    }
 
@@ -742,6 +754,14 @@ void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
 	}
 }
 
+int EngineBinds::GetState(MonoObject* uiButtonRef)
+{
+	auto uiButton = ConvertFromSharpComponent<UIButtonComponent>(uiButtonRef);
+	if (uiButton) {
+		return (int)uiButton->GetState();
+	}
+}
+
 void EngineBinds::SetAnimationSpeed(MonoObject* animationRef, float speed)
 {
 	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
@@ -873,6 +893,10 @@ void EngineBinds::BindEngine() {
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
+
+	// UI Button
+	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);
+  
     // SkeletalAnimation
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationSpeed", (const void*)&EngineBinds::SetAnimationSpeed);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationSpeed", (const void*)&EngineBinds::GetAnimationSpeed);

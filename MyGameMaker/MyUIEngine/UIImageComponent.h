@@ -42,6 +42,9 @@ public:
 	MonoObject* CsharpReference = nullptr;
 	MonoObject* GetSharp() override;
 
+	void SetColor(const glm::vec4& color) { this->color = color; }
+	glm::vec4 GetColor() const { return color; }
+
 private:
 	//texture
 	std::string texturePath;

@@ -1223,14 +1223,16 @@ public:
 			DrawParticleEmitterComponent(emitter);
 		}
 
-        if (gameObject->HasComponent<ShaderComponent>()) {
-            ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
-            DrawShaderComponent(shader);
-        }
         if (gameObject->HasComponent<UITransformComponent>()) {
             UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
             DrawRectTransformComponent(uiTransformComponent);
         }
+      
+		if (gameObject->HasComponent<ShaderComponent>()) {
+			ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
+			DrawShaderComponent(shader);
+		}
+
 		if (gameObject->HasComponent<UICanvasComponent>()) {
             UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
 			DrawCanvasComponent(uiCanvasComponent);

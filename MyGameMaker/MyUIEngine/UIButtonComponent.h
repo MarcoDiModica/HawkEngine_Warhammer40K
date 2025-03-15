@@ -5,8 +5,10 @@
 #include <yaml-cpp/yaml.h>
 
 enum class ButtonState {
+	DISABLED,
 	DEFAULT,
 	HOVERED,
+	PRESSED,
 	CLICKED
 };
 
@@ -32,6 +34,9 @@ public:
 	
 	ButtonState GetState() const { return state; }
 	void SetState(ButtonState newState) { state = newState; }
+
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
 
 private:
 	ButtonState state = ButtonState::DEFAULT;

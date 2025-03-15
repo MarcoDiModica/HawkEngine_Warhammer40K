@@ -7,6 +7,8 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
+#include "../MyUIEngine/UIButtonComponent.h"
+#include "../MyUIEngine/UICanvasComponent.h"
 
 ComponentMapper::ComponentMapper() {
     AddMapping(std::type_index(typeid(Transform_Component)), "Transform");
@@ -16,6 +18,8 @@ ComponentMapper::ComponentMapper() {
     AddMapping(std::type_index(typeid(RigidbodyComponent)), "Rigidbody");
     AddMapping(std::type_index(typeid(SoundComponent)), "Audio");
     AddMapping(std::type_index(typeid(UIImageComponent)), "UIImage");
+	AddMapping(std::type_index(typeid(UIButtonComponent)), "UIButton");
+	AddMapping(std::type_index(typeid(UICanvasComponent)), "UICanvas");
     // mas components
 }
 

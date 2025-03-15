@@ -92,7 +92,7 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 
-    CreateMainMenuUI();
+    CreateGameplayUI();
 	
     SceneManagement->Start();
 
@@ -278,7 +278,6 @@ void Root::CreateGameplayUI()
     lifeBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
     lifeBar->AddComponent<ScriptComponent>()->LoadScript("ImageAsSlider");
 
-
     auto button = CreateGameObject("Button");
     Application->root->ParentGameObject(*button, *canvas);
     button->AddComponent<UIImageComponent>();
@@ -305,6 +304,7 @@ void Root::CreateMainMenuUI()
     auto canvas = CreateGameObject("Canvas");
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
+    canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 
     auto menuImage = CreateGameObject("MenuImage");
     Application->root->ParentGameObject(*menuImage, *canvas);
@@ -312,13 +312,21 @@ void Root::CreateMainMenuUI()
     menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Main_Menu_Reference.png");
     menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
-    auto newGameButton = CreateGameObject("NewGame");
+    auto newGameButton = CreateGameObject("NewGameButton");
     Application->root->ParentGameObject(*newGameButton, *canvas);
     newGameButton->AddComponent<UIImageComponent>();
     newGameButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/New_Game.png");
     newGameButton->AddComponent<UIButtonComponent>();
     newGameButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     newGameButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.318, 0), glm::vec3(0.182, 0.091, 1));
+
+    //auto continueButton = CreateGameObject("ContinueButton");
+    //Application->root->ParentGameObject(*continueButton, *canvas);
+    //continueButton->AddComponent<UIImageComponent>();
+    //continueButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Continue_button.png");
+    //continueButton->AddComponent<UIButtonComponent>();
+    //continueButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    //continueButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.604, 0), glm::vec3(0.182, 0.091, 1));
 
     auto optionsButton = CreateGameObject("OptionsButton");
     Application->root->ParentGameObject(*optionsButton, *canvas);

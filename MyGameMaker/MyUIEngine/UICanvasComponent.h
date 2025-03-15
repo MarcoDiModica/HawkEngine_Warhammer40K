@@ -27,6 +27,9 @@ public:
 	float GetMonitorWidth() const { return monitorHeight; }
 	float GetMonitorHeight() const { return monitorHeight; }
 
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
+
 private:
 	float monitorWidth;
 	float monitorHeight;

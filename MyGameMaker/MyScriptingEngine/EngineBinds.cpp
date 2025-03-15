@@ -16,6 +16,8 @@
 #include "../MyGameEditor/App.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
+#include "../MyUIEngine/UIButtonComponent.h"
+#include "../MyUIEngine/UICanvasComponent.h"
 
 
 // GameObject
@@ -140,6 +142,12 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.UIImage") {
 		return GO->GetComponent<UIImageComponent>()->GetSharp();
 	}
+	else if (componentName == "HawkEngine.UIButton") {
+		return GO->GetComponent<UIButtonComponent>()->GetSharp();
+	}
+	else if (componentName == "HawkEngine.UICanvas") {
+		return GO->GetComponent<UICanvasComponent>()->GetSharp();
+	}
 	/*else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}*/
@@ -170,7 +178,11 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
 		break;
-   }
+	case 7: _component = static_cast<Component*>(go->AddComponent<UIButtonComponent>());
+		break;
+	case 8: _component = static_cast<Component*>(go->AddComponent<UICanvasComponent>());
+		break; 
+    }
 
     // loop through all the scripts and grant them unique ids
     for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it) {
@@ -734,6 +746,14 @@ void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
 	}
 }
 
+int EngineBinds::GetState(MonoObject* uiButtonRef)
+{
+	auto uiButton = ConvertFromSharpComponent<UIButtonComponent>(uiButtonRef);
+	if (uiButton) {
+		return (int)uiButton->GetState();
+	}
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -837,6 +857,9 @@ void EngineBinds::BindEngine() {
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
+
+	// UI Button
+	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);
 }
 
 template <class T>

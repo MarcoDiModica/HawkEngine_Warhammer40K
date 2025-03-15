@@ -42,14 +42,6 @@ bool Root::Awake()
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
 
-   /*CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
-    MakeSmokerEmmiter();
-    MakeSmokerEmiter2();*/
-
-	/*environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
-	environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
-	environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
-
     return true;
 }
 

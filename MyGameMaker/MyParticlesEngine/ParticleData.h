@@ -169,12 +169,18 @@ public:
 		}
 
 		if (!instances.empty()) {
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glDepthMask(GL_FALSE);
+
 			glBindBuffer(GL_ARRAY_BUFFER, instanceVBO);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, instances.size() * sizeof(InstanceData), instances.data());
 
 			glBindVertexArray(vao);
 			glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, static_cast<GLsizei>(instances.size()));
 			glBindVertexArray(0);
+
+			glDepthMask(GL_TRUE);
 		}
 	}
 

@@ -57,6 +57,8 @@ public:
 	void Update(float deltaTime) override;
 	void Destroy() override;
 
+	void RenderGameView();
+
 	std::unique_ptr<Component> Clone(GameObject* owner) override;
 	ComponentType GetType() const override { return ComponentType::PARTICLES_EMITTER; }
 

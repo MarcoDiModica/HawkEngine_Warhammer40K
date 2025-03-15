@@ -51,11 +51,21 @@ vec4 applyMuzzleFlash() {
 }
 
 void main() {
+    // Primero obtener el color de la textura
+    vec4 texColor = texture(particleTexture, TexCoord);
+    
+    // Si la textura es completamente transparente, descartarla inmediatamente
+    if (texColor.a < 0.01) {
+        discard;
+        return;
+    }
+    
     if (useColorGradient == 1) {
         // Use color gradient based on lifetime
         vec4 gradientColor = texture(colorGradient, vec2(Lifetime, 0.5));
-        vec4 texColor = texture(particleTexture, TexCoord);
-        FragColor = texColor * gradientColor * ParticleColor;
+        
+        // Preservar el alfa de la textura mientras usamos los colores del gradiente
+        FragColor = vec4(texColor.rgb * gradientColor.rgb * ParticleColor.rgb, texColor.a * ParticleColor.a);
     } else {
         // Apply different effects based on particle type
         if (particleType == 1) {
@@ -69,8 +79,8 @@ void main() {
             FragColor = applyMuzzleFlash();
         } else {
             // Default particles
-            vec4 texColor = texture(particleTexture, TexCoord);
-            FragColor = texColor * ParticleColor;
+            // Aplicar el color de la partícula pero preservar el alfa de la textura
+            FragColor = vec4(texColor.rgb * ParticleColor.rgb, texColor.a * ParticleColor.a);
         }
     }
     

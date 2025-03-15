@@ -2,6 +2,9 @@
 #include "../MyGameEditor/App.h"
 #include "../MyGameEngine/TransformComponent.h"
 #include "ParticleShader.h"
+#include "../MyGameEditor/Root.h"
+#include "../MyGameEditor/App.h"
+#include "../MyGameEngine/CameraComponent.h"
 
 namespace ParticlePresets {
 	const ParticlePreset Smoke = {
@@ -142,6 +145,22 @@ void ParticleFX::Start() {
 }
 
 void ParticleFX::Update(float deltaTime) {
+	GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	GLint lastVAO;
+	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &lastVAO);
+
+	GLint lastTexture;
+	glActiveTexture(GL_TEXTURE0);
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTexture);
+
+	GLboolean lastDepthTest = glIsEnabled(GL_DEPTH_TEST);
+	GLboolean lastBlend = glIsEnabled(GL_BLEND);
+	GLint lastBlendSrc, lastBlendDst;
+	glGetIntegerv(GL_BLEND_SRC_ALPHA, &lastBlendSrc);
+	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDst);
+
 	if (owner->GetTransform()) {
 		position = owner->GetTransform()->GetPosition();
 	}
@@ -174,6 +193,73 @@ void ParticleFX::Update(float deltaTime) {
 	}
 
 	renderer->UpdateAndRender(deltaTime);
+
+	glUseProgram(lastProgram);
+	glBindVertexArray(lastVAO);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, lastTexture);
+
+	if (lastDepthTest) glEnable(GL_DEPTH_TEST);
+	else glDisable(GL_DEPTH_TEST);
+
+	if (lastBlend) glEnable(GL_BLEND);
+	else glDisable(GL_BLEND);
+
+	glBlendFunc(lastBlendSrc, lastBlendDst);
+}
+
+void ParticleFX::RenderGameView() {
+	GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	GLint lastVAO;
+	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &lastVAO);
+
+	GLint lastTexture;
+	glActiveTexture(GL_TEXTURE0);
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &lastTexture);
+
+	GLboolean lastDepthTest = glIsEnabled(GL_DEPTH_TEST);
+	GLboolean lastBlend = glIsEnabled(GL_BLEND);
+	GLint lastBlendSrc, lastBlendDst;
+	glGetIntegerv(GL_BLEND_SRC_ALPHA, &lastBlendSrc);
+	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDst);
+
+	glm::vec3 cameraPosition = Application->root->mainCamera->GetTransform()->GetPosition();
+	glm::vec3 cameraUp = Application->root->mainCamera->GetTransform()->GetUp();
+
+	glm::mat4 modelMatrix = owner->GetTransform()->GetMatrix();
+	glm::mat4 viewMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->view();
+	glm::mat4 projMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->projection();
+
+	material->ApplyShader(modelMatrix, viewMatrix, projMatrix);
+
+	if (material) {
+		ParticleShader* particleShader = static_cast<ParticleShader*>(
+			ShaderManager::GetInstance().GetShader(material->GetShaderType()));
+
+		if (particleShader) {
+			particleShader->SetCameraPosition(cameraPosition);
+			particleShader->SetCameraUp(cameraUp);
+		}
+	}
+
+	renderer->UpdateAndRender(0.0f);
+
+	glUseProgram(lastProgram);
+	glBindVertexArray(lastVAO);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, lastTexture);
+
+	if (lastDepthTest) glEnable(GL_DEPTH_TEST);
+	else glDisable(GL_DEPTH_TEST);
+
+	if (lastBlend) glEnable(GL_BLEND);
+	else glDisable(GL_BLEND);
+
+	glBlendFunc(lastBlendSrc, lastBlendDst);
 }
 
 void ParticleFX::Destroy() {

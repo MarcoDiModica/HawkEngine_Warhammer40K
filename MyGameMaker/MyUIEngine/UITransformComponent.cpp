@@ -4,10 +4,10 @@
 
 UITransformComponent::UITransformComponent(GameObject* owner) : Component(owner)
 {
-	name = "UITansformComponent";
-	scale = glm::vec3(1.0f, 1.0f, 1.0f);
-	rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+	name = "UITransformComponent";
 	position = glm::vec3(0.0f, 0.0f, 0.0f);
+	rotation = glm::vec3(0.0f, 0.0f, 0.0f);
+	scale = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
 void UITransformComponent::Start()

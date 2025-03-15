@@ -31,8 +31,8 @@ enum class ComponentType {
 	PARTICLES_EMITTER,
 	UI,
 	LIGHT,
-	CANVAS,
 	UITRANSFORM,
+	CANVAS,
 	IMAGE,
 	BUTTON,
 	SLIDER

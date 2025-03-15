@@ -69,7 +69,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto player = CreateGameObject("Player");
+   /* auto player = CreateGameObject("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
     player->AddComponent<RigidbodyComponent>(Application->physicsModule);
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
@@ -83,7 +83,7 @@ bool Root::Start()
     playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
     playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
     ParentGameObject(*playerMesh, *player);
-	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));*/
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -93,8 +93,9 @@ bool Root::Start()
     mainCamera = objMainCamera;
   
     auto canvas = CreateGameObject("Canvas");
-	canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<UICanvasComponent>();
+    
 
     auto staminaBar = CreateGameObject("LifeBar");
     Application->root->ParentGameObject(*staminaBar, *canvas);

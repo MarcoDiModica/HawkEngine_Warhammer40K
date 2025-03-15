@@ -59,22 +59,20 @@ protected:
 
 		YAML::Node node = Component::encode();
 
-		node["texture_path"] = texturePath;
+		node["texture_path"] = texture->image_path;
 		/*node["shader"] = shader;*/
 		/*node["mesh"] = mesh;*/
 
 		return node;
 	}
 
-	bool decode(const YAML::Node& node) override {
-
-		Component::decode(node);
-
-		texturePath = node["texture_path"].as<std::string>();
-		/*shader = node["shader"].as<Shaders*>();*/
-		/*mesh = node["mesh"].as<std::shared_ptr<Mesh>>();*/
-
-		return true;
-	}
+    bool decode(const YAML::Node& node) override {  
+       Component::decode(node); 
+	   std::string path = node["texture_path"].as<std::string>();
+	   SetTexture(path);
+       /*shader = node["shader"].as<Shaders*>();*/  
+       /*mesh = node["mesh"].as<std::shared_ptr<Mesh>>();*/  
+       return true;  
+    }
 };
 

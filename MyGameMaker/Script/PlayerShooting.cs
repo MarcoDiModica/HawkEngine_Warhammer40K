@@ -51,16 +51,32 @@ public class PlayerShooting : MonoBehaviour
         {
             Engineson.print("ERROR: PlayerShooting requires a Boltgun component!");
         }
+
+        
     }
 
     public override void Update(float deltaTime)
     {
-        shootTimer -= deltaTime;
+        
+        
+        //Engineson.print($"Shoot Timer: {shootTimer}");
 
-        if (playerInput?.IsShooting() == true && shootTimer <= 0)
+        if (playerInput.IsChangingWeapon())
         {
-            Shoot();
-            shootTimer = shootCooldown;
+            ChangeWeapon();
+        }
+
+
+        if (playerInput?.IsShooting() == true)
+        {
+            shootTimer -= deltaTime * 10;
+            if (shootTimer <= 0)
+            {
+                Shoot();
+                shootTimer = shootCooldown;
+            }
+                
+            
         }
 
         if (playerInput?.IsReloading() == true)
@@ -104,6 +120,24 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
                 boltgun.Reload();
+                break;
+            case GunType.SHOTGUN:
+
+                break;
+            case GunType.RAILGUN:
+
+                break;
+        }
+    }
+
+    private void ChangeWeapon()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                shootCooldown = 1f / boltgun.shootCadence;
+                shootTimer = shootCooldown;
+
                 break;
             case GunType.SHOTGUN:
 

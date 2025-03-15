@@ -16,6 +16,11 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
     }
 
+    public override void Update(float deltaTime)
+    {
+        
+    }
+
     public override void Shoot()
     {
         if (currentMagazineAmmo > 0)

@@ -86,4 +86,9 @@ public class PlayerInput : MonoBehaviour
     {
         return isReloadPressed;
     }
+
+    public bool IsChangingWeapon()
+    {
+        return Input.GetKeyDown(KeyCode.Q);
+    }
 }

@@ -217,6 +217,10 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 		rootObject = Application->root->CreateGameObject(fileName);
 	}
 
+	glm::dvec3 globalMin(std::numeric_limits<double>::max());
+	glm::dvec3 globalMax(std::numeric_limits<double>::lowest());
+	std::vector<std::shared_ptr<GameObject>> createdObjects;
+
 	for (int i = 0; i < meshImp.meshes.size(); i++) {
 		if (i >= meshImp.fbx_object.size() || !meshImp.fbx_object[i]) {
 			continue;
@@ -227,6 +231,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 			meshName = "Mesh_" + std::to_string(i);
 		}
 		go = Application->root->CreateGameObject(meshName);
+		createdObjects.push_back(go);
 
 		auto meshRenderer = go->AddComponent<MeshRenderer>();
 		meshRenderer->SetMesh(meshImp.meshes[i]);
@@ -251,15 +256,21 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 				meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
 				meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
 			}
+
+			glm::mat4 modelMatrix = meshImp.fbx_object[i]->GetTransform()->GetLocalMatrix();
+			glm::dvec3 transformedMin = modelMatrix * glm::dvec4(meshBBox->min, 1.0);
+			glm::dvec3 transformedMax = modelMatrix * glm::dvec4(meshBBox->max, 1.0);
+			globalMin = glm::min(globalMin, transformedMin);
+			globalMax = glm::max(globalMax, transformedMax);
 		}
 
-		if (meshImp.animations.size() > 0 && i < meshImp.bonesGameObjects.size()) {
+		if (!meshImp.animations.empty() && i < meshImp.bonesGameObjects.size()) {
 			auto animationComponent = go->AddComponent<SkeletalAnimationComponent>();
 			animationComponent->SetAnimation(meshImp.animations[0].get());
 			animationComponent->Start();
 
-			for (int j = 0; j < meshImp.animations.size(); ++j) {
-				animationComponent->AddAnimation(meshImp.animations[j].get());
+			for (auto& animation : meshImp.animations) {
+				animationComponent->AddAnimation(animation.get());
 			}
 
 			std::unordered_map<std::string, std::shared_ptr<GameObject>> boneMap;
@@ -296,14 +307,37 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 		meshRenderer->GetMesh()->setBoundingBox(*meshBBox);
 		meshRenderer->GetMesh()->loadToOpenGL();
 
-		glm::mat4 originalMatrix = meshImp.fbx_object[i]->GetTransform()->GetLocalMatrix();
-		float scaleFactor = 0.01f;
-		glm::mat4 scaledMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * originalMatrix;
-		go->GetTransform()->SetLocalMatrix(scaledMatrix);
+		go->GetTransform()->SetLocalMatrix(meshImp.fbx_object[i]->GetTransform()->GetLocalMatrix());
 
 		if (meshImp.meshes.size() > 1) {
 			ParentGameObject(*go, *rootObject);
 		}
+	}
+
+	glm::dvec3 modelSize = globalMax - globalMin;
+	double maxDimension = std::max(modelSize.x, std::max(modelSize.y, modelSize.z));
+
+	const double targetSize = 2.0;
+
+	double scaleFactor = (maxDimension > 0.0) ? (targetSize / maxDimension) : 0.01;
+
+	const double minScale = 0.001;
+	const double maxScale = 100.0;
+	scaleFactor = std::min(std::max(scaleFactor, minScale), maxScale);
+
+	LOG(LogType::LOG_INFO, "Modelo '%s' cargado. Tamaño original: [%.2f, %.2f, %.2f], Factor de escala: %.5f",
+		path.c_str(), modelSize.x, modelSize.y, modelSize.z, scaleFactor);
+
+	/*for (auto& obj : createdObjects) {
+		glm::mat4 originalMatrix = obj->GetTransform()->GetLocalMatrix();
+		glm::mat4 scaledMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * originalMatrix;
+		obj->GetTransform()->SetLocalMatrix(scaledMatrix);
+	}*/
+
+	if (rootObject) {
+		glm::mat4 rootMatrix = rootObject->GetTransform()->GetLocalMatrix();
+		glm::mat4 scaledRootMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * rootMatrix;
+		rootObject->GetTransform()->SetLocalMatrix(scaledRootMatrix);
 	}
 
 	return (meshImp.meshes.size() > 1) ? rootObject : go;

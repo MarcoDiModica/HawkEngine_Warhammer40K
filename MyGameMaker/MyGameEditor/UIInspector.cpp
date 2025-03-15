@@ -1550,6 +1550,11 @@ public:
 			DrawParticleSystemComponent(emitter);
 		}
 
+        if (gameObject->HasComponent<UITransformComponent>()) {
+            UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
+            DrawRectTransformComponent(uiTransformComponent);
+        }
+      
 		if (gameObject->HasComponent<ShaderComponent>()) {
 			ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
 			DrawShaderComponent(shader);
@@ -1559,17 +1564,10 @@ public:
             UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
 			DrawCanvasComponent(uiCanvasComponent);
 		}
-
         if (gameObject->HasComponent<UIImageComponent>()) {
             UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
             DrawImageComponent(uiImageComponent);
         }
-
-		if (gameObject->HasComponent<UITransformComponent>()) {
-			UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
-			DrawRectTransformComponent(uiTransformComponent);
-		}
-
         if (gameObject->scriptComponents.size() > 0) {
 			DrawScriptComponents(gameObject);
 		}

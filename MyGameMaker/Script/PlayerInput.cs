@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
     private Vector3 currentLookDirection = Vector3.Zero;
     private bool isDashPressed = false;
     private bool isShootPressed = false;
+    private bool isReloadPressed = false;
 
     public override void Start()
     {
@@ -19,6 +20,7 @@ public class PlayerInput : MonoBehaviour
 
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
         isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerButton(ControllerButton.RightShoulder);
+        isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
     }
 
     private void UpdateMovementDirection()
@@ -78,5 +80,10 @@ public class PlayerInput : MonoBehaviour
     public bool IsShooting()
     {
         return isShootPressed;
+    }
+
+    public bool IsReloading()
+    {
+        return isReloadPressed;
     }
 }

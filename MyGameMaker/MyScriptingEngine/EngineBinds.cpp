@@ -195,6 +195,12 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
 
 }
 
+void EngineBinds::AddScript(MonoObject* ref, MonoString* scriptName) {
+	char* C_name = mono_string_to_utf8(scriptName);
+	auto go = ConvertFromSharp(ref);
+	go->AddComponent<ScriptComponent>()->LoadScript(C_name);
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
@@ -816,6 +822,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
+    mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);

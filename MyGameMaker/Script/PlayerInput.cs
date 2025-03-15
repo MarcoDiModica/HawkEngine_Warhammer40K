@@ -99,4 +99,9 @@ public class PlayerInput : MonoBehaviour
     {
         return isAbility2Pressed;
     }
+    
+    public bool IsChangingWeapon()
+    {
+        return Input.GetKeyDown(KeyCode.Q);
+    }
 }

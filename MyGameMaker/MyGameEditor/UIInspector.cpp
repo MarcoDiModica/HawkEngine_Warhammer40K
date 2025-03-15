@@ -31,9 +31,13 @@
 #include "../MyGameEngine/Material.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
+#include "../MyPhysicsEngine/MeshColliderComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+
+#include <Windows.h>
 #include "../MyParticlesEngine/ParticlesEmitterComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
@@ -51,13 +55,16 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Transform")) return;
 
-        //reset transform with right click
         if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Reset Transform")) {
 				transform->ResetTransform();
 			}
 			ImGui::EndPopup();
 		}
+
+        GameObject* parent = transform->GetOwner()->GetParent();
+        bool hasParent = parent != nullptr;
+        ImGui::Text("Parent: %s", hasParent ? parent->GetName().c_str() : "None");
 
         glm::dvec3 currentPosition = transform->GetPosition();
         glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
@@ -136,7 +143,6 @@ private:
 		auto material = meshRenderer->GetMaterial();
 		if (!material) return;
 
-		// Draw base color and main texture
 		if (ImGui::TreeNodeEx("Base Color", ImGuiTreeNodeFlags_DefaultOpen)) {
 			DrawColorPicker(meshRenderer);
 
@@ -145,7 +151,6 @@ private:
 				DrawTexturePreview(image, "Albedo");
 			}
 
-			// Add button and drag & drop for albedo texture
 			if (ImGui::Button("Load Albedo Texture")) {
 				ImGui::OpenPopup("LoadAlbedoTexture");
 			}
@@ -154,7 +159,6 @@ private:
 				ImGui::EndPopup();
 			}
 
-			// Handle drag/drop for albedo texture
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
 					const char* path = static_cast<const char*>(payload->Data);
@@ -175,9 +179,7 @@ private:
 			ImGui::TreePop();
 		}
 
-		// Only show PBR properties for PBR shader
 		if (material->GetShaderType() == ShaderType::PBR) {
-			// Draw normal map
 			if (ImGui::TreeNodeEx("Normal Map", ImGuiTreeNodeFlags_DefaultOpen)) {
 				std::shared_ptr<Image> normalMap = material->normalMapPtr;
 				if (normalMap) {
@@ -189,7 +191,6 @@ private:
 				ImGui::TreePop();
 			}
 
-			// Draw metallic map or value
 			if (ImGui::TreeNodeEx("Metallic", ImGuiTreeNodeFlags_DefaultOpen)) {
 				std::shared_ptr<Image> metallicMap = material->metallicMapPtr;
 				if (metallicMap) {
@@ -204,7 +205,6 @@ private:
 				ImGui::TreePop();
 			}
 
-			// Draw roughness map or value
 			if (ImGui::TreeNodeEx("Roughness", ImGuiTreeNodeFlags_DefaultOpen)) {
 				std::shared_ptr<Image> roughnessMap = material->roughnessMapPtr;
 				if (roughnessMap) {
@@ -219,7 +219,6 @@ private:
 				ImGui::TreePop();
 			}
 
-			// Draw AO map or value
 			if (ImGui::TreeNodeEx("Ambient Occlusion", ImGuiTreeNodeFlags_DefaultOpen)) {
 				std::shared_ptr<Image> aoMap = material->aoMapPtr;
 				if (aoMap) {
@@ -263,7 +262,6 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Camera")) return;
 
-        //remove component with right click
         if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
 				camera->GetOwner()->RemoveComponent<CameraComponent>();
@@ -275,8 +273,8 @@ private:
         bool frustum = camera->frustrumCullingEnabled;
         float orthoSize = camera->GetOrthoSize();
         float fov = camera->GetFOV();
-        float nearPlane = static_cast<float>(camera->GetNearPlane());
-        float farPlane = static_cast<float>(camera->GetFarPlane());
+        auto nearPlane = static_cast<float>(camera->GetNearPlane());
+        auto farPlane = static_cast<float>(camera->GetFarPlane());
 
         if (ImGui::Checkbox("Orthographic", &orthographic)) {
             camera->orthographic = orthographic;
@@ -310,6 +308,79 @@ private:
             bool frustumRepresentation = camera->frustrumRepresentation;
             ImGui::Checkbox("Frustum Representation", &frustumRepresentation);
             camera->frustrumRepresentation = frustumRepresentation;
+        }
+
+        if (ImGui::Button("Set as Main Camera or priority")) {
+			ImGui::Text("Main Camera Set to implement. COMING SOON...");
+		}
+
+        //follow target look target and shake config
+        GameObject* followTarget = camera->followTarget;
+        if (followTarget) {
+			ImGui::Text("Follow Target: %s", followTarget->GetName().c_str());
+
+            float followDistance = static_cast<float>(camera->GetDistance());
+            glm::dvec3 followOffset = camera->GetOffset();
+            float followSmoothness = static_cast<float>(camera->followSmoothness);
+            bool followX = camera->followX;
+            bool followY = camera->followY;
+            bool followZ = camera->followZ;
+
+            if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+					GameObject* target = static_cast<GameObject*>(payload->Data);
+					camera->followTarget = target;
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+            if (ImGui::DragFloat("Distance", &followDistance, 0.1f, 0.1f, 100.0f)) {
+				camera->SetDistance(followDistance);
+			}
+
+            float offset[3] = { followOffset.x, followOffset.y, followOffset.z };
+			if (ImGui::DragFloat3("Offset", offset, 0.1f)) {
+				camera->SetOffset(glm::dvec3(offset[0], offset[1], offset[2]));
+			}
+
+			if (ImGui::DragFloat("Smoothness", &followSmoothness, 0.01f, 0.01f, 1.0f)) {
+				camera->followSmoothness = followSmoothness;
+			}
+
+			if (ImGui::Checkbox("Follow X", &followX)) {
+				camera->followX = followX;
+			}
+			if (ImGui::Checkbox("Follow Y", &followY)) {
+				camera->followY = followY;
+			}
+			if (ImGui::Checkbox("Follow Z", &followZ)) {
+				camera->followZ = followZ;
+			}
+
+            if (ImGui::Button("Clear Follow Target")) {
+				camera->followTarget = nullptr;
+			}
+		}
+
+        //shake config
+        float shakeIntensity = camera->shakeIntensity;
+        float shakeDuration = camera->shakeDuration;
+        float shakeFrequency = camera->shakeFrequency;
+
+        if (ImGui::DragFloat("Shake Intensity", &shakeIntensity, 0.1f, 0.0f, 10.0f)) {
+            camera->shakeIntensity = shakeIntensity;
+        }
+
+        if (ImGui::DragFloat("Shake Duration", &shakeDuration, 0.1f, 0.0f, 10.0f)) {
+			camera->shakeDuration = shakeDuration;
+		}
+
+        if (ImGui::DragFloat("Shake Frequency", &shakeFrequency, 0.1f, 0.0f, 10.0f)) {
+            camera->shakeFrequency = shakeFrequency;
+        }
+
+        if (ImGui::Button("Shake")) {
+            camera->Shake(shakeIntensity, shakeDuration, shakeFrequency);
         }
     }
     #pragma endregion
@@ -487,6 +558,73 @@ private:
             };
             ImGui::DragFloat3("Position", pos, 0.1f);
         }
+    }
+    #pragma endregion 
+
+    #pragma region MeshCollider
+    static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
+        if (!collider) return;
+
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("MeshCollider")) return;
+
+        glm::vec3 colliderPosition = collider->GetColliderPos();
+        float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
+        if (ImGui::DragFloat3("Collider Position", pos, 0.1f)) {
+            collider->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
+        }
+
+        glm::vec3 size = collider->GetSize();
+        float sizeArray[3] = { size.x, size.y, size.z };
+        if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
+            collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+        }
+
+        bool isTrigger = collider->IsTrigger();
+        if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+            collider->SetTrigger(isTrigger);
+        }
+    }
+    #pragma endregion
+
+    #pragma region SkeletalAnimation
+    static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal) 
+    {
+        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+        if (!ImGui::CollapsingHeader("Animation")) return;
+
+		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetName().c_str());
+		ImGui::Text("Time: %.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
+        
+        float playSpeed = skeletal->GetAnimator()->GetPlaySpeed();
+        ImGui::DragFloat("Speed", &playSpeed, 0.1f, -10.0f, 10.0f);
+        skeletal->GetAnimator()->SetPlaySpeed(playSpeed);
+		
+        bool isPlaying = skeletal->GetAnimationPlayState();
+        ImGui::Checkbox("IsPlaying", &isPlaying);
+		skeletal->SetAnimationPlayState(isPlaying);
+		
+        float time = skeletal->GetAnimator()->GetCurrentMTime();
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+        ImGui::SliderFloat("Timeline", &time, 0, skeletal->GetAnimator()->GetCurrentAnimation()->GetDuration());
+        ImGui::PopItemFlag();
+
+		ImGui::Text("Number of animations: %d", skeletal->GetAnimations().size());
+		int animationIndex = skeletal->GetAnimationIndex();
+        ImGui::InputInt("Animation Index", &animationIndex, 1, 1, ImGuiInputTextFlags_CharsDecimal);
+        if (animationIndex < 0) animationIndex = 0;
+        if (animationIndex >= skeletal->GetAnimations().size()) animationIndex = skeletal->GetAnimations().size()-1;
+        if (animationIndex != skeletal->GetAnimationIndex()) 
+        {
+			skeletal->SetAnimationIndex(animationIndex);
+        }
+
+        if (ImGui::Button("ChangeAnimation")) 
+        {
+            skeletal->SetAnimation(skeletal->GetAnimations().at(animationIndex).get());
+			skeletal->GetAnimator()->PlayAnimation(skeletal->GetAnimation());
+        }
+
     }
     #pragma endregion 
 
@@ -748,7 +886,7 @@ private:
                 return;
             }
 
-            HINSTANCE result = ShellExecuteA(NULL, "open", scriptPath.c_str(), NULL, NULL, SW_SHOW);
+            HINSTANCE result = ShellExecuteA(nullptr, "open", scriptPath.c_str(), nullptr, nullptr, SW_SHOW);
             if ((int)result <= 32) {
                 LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
             }
@@ -1081,9 +1219,7 @@ private:
     }*/
     #pragma endregion
 
-    //Aqui mas componentes
-
-#pragma region Canvas
+    #pragma region Canvas
     static void DrawCanvasComponent(UICanvasComponent* canvas) {
         if (!canvas) return;
 
@@ -1094,7 +1230,7 @@ private:
     }
 #pragma endregion
 
-#pragma region Image
+    #pragma region Image
     static void DrawImageComponent(UIImageComponent* image) {
         if (!image) return;
 
@@ -1133,7 +1269,7 @@ private:
 
 #pragma endregion
 
-#pragma region RectTransform
+    #pragma region RectTransform
     static void DrawRectTransformComponent(UITransformComponent* transform) {
         if (!transform) return;
 
@@ -1188,6 +1324,11 @@ public:
 			DrawMeshRendererComponent(meshRenderer);
 		}
 
+		if (gameObject->HasComponent<SkeletalAnimationComponent>()) {
+			SkeletalAnimationComponent* animationComponent = gameObject->GetComponent<SkeletalAnimationComponent>();
+			DrawSkeletalAnimationComponent(animationComponent);
+		}
+
         if (gameObject->HasComponent<CameraComponent>()) {
 			CameraComponent* camera = gameObject->GetComponent<CameraComponent>();
 			DrawCameraComponent(camera);
@@ -1213,6 +1354,11 @@ public:
 			DrawColliderComponent(collider);
 		}
         
+        if (gameObject->HasComponent<MeshColliderComponent>()) {
+            MeshColliderComponent* meshCollider = gameObject->GetComponent<MeshColliderComponent>();
+			DrawMeshColliderComponent(meshCollider);
+		}
+        
         if (gameObject->HasComponent<RigidbodyComponent>()) {
             RigidbodyComponent* rigidbody = gameObject->GetComponent<RigidbodyComponent>();
 			DrawRigidbodyComponent(rigidbody);
@@ -1223,26 +1369,24 @@ public:
 			DrawParticleEmitterComponent(emitter);
 		}
 
-        if (gameObject->HasComponent<ShaderComponent>()) {
-            ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
-            DrawShaderComponent(shader);
+        if (gameObject->HasComponent<UITransformComponent>()) {
+            UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
+            DrawRectTransformComponent(uiTransformComponent);
         }
+      
+		if (gameObject->HasComponent<ShaderComponent>()) {
+			ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
+			DrawShaderComponent(shader);
+		}
 
 		if (gameObject->HasComponent<UICanvasComponent>()) {
             UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
 			DrawCanvasComponent(uiCanvasComponent);
 		}
-
         if (gameObject->HasComponent<UIImageComponent>()) {
             UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
             DrawImageComponent(uiImageComponent);
         }
-
-		if (gameObject->HasComponent<UITransformComponent>()) {
-			UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
-			DrawRectTransformComponent(uiTransformComponent);
-		}
-
         if (gameObject->scriptComponents.size() > 0) {
 			DrawScriptComponents(gameObject);
 		}
@@ -1302,6 +1446,13 @@ private:
 			}
 		}
         
+        if (!gameObject->HasComponent<MeshColliderComponent>()) {
+			if (ImGui::MenuItem("MeshCollider")) {
+				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+				gameObject->GetComponent<MeshColliderComponent>()->Start();
+			}
+		}
+        
         if (!gameObject->HasComponent<RigidbodyComponent>()) {
 			if (ImGui::MenuItem("RigidBody")) {
 				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -1314,23 +1465,21 @@ private:
 				gameObject->AddComponent<ParticlesEmitterComponent>();
 			}
 		}
-
-		if (!gameObject->HasComponent<ShaderComponent>()) {
-			if (ImGui::MenuItem("Shader")) {
-				gameObject->AddComponent<ShaderComponent>();
-			}
-		}
         
 		if (!gameObject->HasComponent<UICanvasComponent>()) {
 			if (ImGui::MenuItem("Canvas")) {
-                gameObject->AddComponent<UITransformComponent>();
+                if (!gameObject->HasComponent<UITransformComponent>()) {
+                    gameObject->AddComponent<UITransformComponent>();
+                }
 				gameObject->AddComponent<UICanvasComponent>();
 			}
 		}
 		if (!gameObject->HasComponent<UIImageComponent>()) {
 			if (ImGui::MenuItem("Image")) {
-				gameObject->AddComponent<UITransformComponent>();
-				gameObject->AddComponent<UIImageComponent>();
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}				
+                gameObject->AddComponent<UIImageComponent>();
 				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
 			}
 		}
@@ -1350,12 +1499,12 @@ private:
 
         if (width > maxPreviewSize || height > maxPreviewSize) {
             if (aspectRatio > 1.0f) {
-                return ImVec2(maxPreviewSize, maxPreviewSize / aspectRatio);
+                return {maxPreviewSize, maxPreviewSize / aspectRatio};
             }
-            return ImVec2(maxPreviewSize * aspectRatio, maxPreviewSize);
+            return {maxPreviewSize * aspectRatio, maxPreviewSize};
         }
 
-        return ImVec2(static_cast<float>(width), static_cast<float>(height));
+        return {static_cast<float>(width), static_cast<float>(height)};
     }
 };
 

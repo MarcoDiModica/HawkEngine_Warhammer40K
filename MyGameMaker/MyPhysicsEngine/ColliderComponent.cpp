@@ -3,10 +3,16 @@
 
 #include "ColliderComponent.h"
 #include "../MyGameEngine/GameObject.h"
+#include "../MyGameEngine/MeshRendererComponent.h"
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 
-ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) { name = "ColliderComponent"; physics = physicsModule; isForStreetLocal = isForStreet; }
+ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) 
+{ 
+    name = "ColliderComponent"; 
+    physics = physicsModule; 
+    isForStreetLocal = isForStreet;
+}
 
 ColliderComponent::~ColliderComponent() {
     Destroy();
@@ -21,6 +27,100 @@ void ColliderComponent::Start() {
 	}
     CreateCollider();
 }
+
+
+void ColliderComponent::OnCollisionEnter(ColliderComponent* other) {
+    std::cout << "EnterCollision" << std::endl;
+}
+
+void ColliderComponent::OnCollisionStay(ColliderComponent* other) {
+    std::cout << "StayColliding" << std::endl;
+}
+
+void ColliderComponent::OnCollisionExit(ColliderComponent* other) {
+    std::cout << "ExitCollision" << std::endl;
+}
+
+void ColliderComponent::OnTriggerEnter(ColliderComponent* other) {
+    std::cout << "EnterCollisionTriggered" << std::endl;
+}
+
+void ColliderComponent::OnTriggerStay(ColliderComponent* other) {
+    std::cout << "StayCollidingTriggered" << std::endl;
+}
+
+void ColliderComponent::OnTriggerExit(ColliderComponent* other) {
+    std::cout << "ExitCollisionTriggered" << std::endl;
+}
+
+
+void ColliderComponent::Update(float deltaTime) {
+    if (snapToPosition && owner && !physics->linkPhysicsToScene) {
+		SnapToPosition();
+    }
+}
+
+
+void ColliderComponent::Destroy() {
+    if (rigidBody) {
+        physics->dynamicsWorld->removeRigidBody(rigidBody);
+        delete rigidBody->getMotionState();
+        delete rigidBody;
+        rigidBody = nullptr;
+    }
+
+    if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
+        physics->gameObjectRigidBodyMap.erase(owner);
+    }
+}
+
+std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
+    return std::make_unique<ColliderComponent>(new_owner, physics);
+}
+
+
+
+MonoObject* ColliderComponent::GetSharp()
+{
+    if (CsharpReference) {
+        return CsharpReference;
+    }
+
+    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
+    if (!klass) {
+        return nullptr;
+    }
+
+    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+    if (!monoObject) {
+        return nullptr;
+    }
+
+    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Collider:.ctor(uintptr,HawkEngine.GameObject)", true);
+    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+    if (!method)
+    {
+        return nullptr;
+    }
+
+    uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+    MonoObject* ownerGo = owner->GetSharp();
+    if (!ownerGo)
+    {
+        return nullptr;
+    }
+
+    void* args[2]{};
+    args[0] = &componentPtr;
+    args[1] = ownerGo;
+
+    mono_runtime_invoke(method, monoObject, args, nullptr);
+
+    CsharpReference = monoObject;
+    return CsharpReference;
+}
+
+
 
 void ColliderComponent::SetTrigger(bool trigger) {
     if (rigidBody) {
@@ -54,15 +154,22 @@ glm::quat ColliderComponent::GetColliderRotation() {
 }
 
 void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
+    if (!rigidBody || !rigidBody->getMotionState()) {
+        return;
+    }
+
     btTransform trans;
     rigidBody->getMotionState()->getWorldTransform(trans);
-    trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
 
-    btVector3 currentPosition = trans.getOrigin();
-    trans.setOrigin(currentPosition);
+    // Convert glm::quat to btQuaternion correctly
+    btQuaternion btRot(rotation.x, rotation.y, rotation.z, rotation.w);
+    trans.setRotation(btRot);
 
     rigidBody->getMotionState()->setWorldTransform(trans);
     rigidBody->setWorldTransform(trans);
+
+    // Ensure activation in case the object is sleeping
+    rigidBody->activate();
 }
 
 void ColliderComponent::SetColliderPos(const glm::vec3& position) {
@@ -114,19 +221,29 @@ void ColliderComponent::SetActive(bool active) {
             physics->dynamicsWorld->removeRigidBody(rigidBody);
         }
     }
-}
+}void ColliderComponent::SnapToPosition() {
+    if (!owner) return;
+
+    Transform_Component* goTransform = owner->GetTransform();
+    if (!goTransform) return;
+
+    // Obtener el Bounding Box en espacio local (sin escala aplicada)
+    BoundingBox localBBox = owner->localBoundingBox();
+    glm::vec3 localCenter = localBBox.center();
+    glm::vec3 localSize = localBBox.size();
+
+    glm::vec3 worldScale = goTransform->GetScale();
 
 
-void ColliderComponent::SnapToPosition() {
-    glm::vec3 position = owner->boundingBox().center();
-    auto goTransform = owner->GetTransform();
-    //for parenting works bad 
-    glm::quat rotation = goTransform->GetRotation();
+    glm::vec3 worldPosition = goTransform->GetPosition();
+    glm::quat worldRotation = goTransform->GetRotation();
+    glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * worldScale);
 
+    // Aplicar la transformaciï¿½n al rigidBody
     btTransform transform;
     transform.setIdentity();
-    transform.setOrigin(btVector3(position.x, position.y, position.z));
-    transform.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z, rotation.w));
+    transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
+    transform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
 
     if (rigidBody->getMotionState()) {
         rigidBody->getMotionState()->setWorldTransform(transform);
@@ -135,74 +252,15 @@ void ColliderComponent::SnapToPosition() {
         rigidBody->setWorldTransform(transform);
     }
     rigidBody->setCenterOfMassTransform(transform);
-    std::cout << "Collider position snapped to bounding box center: ("
-        << position.x << ", " << position.y << ", " << position.z << ")\n";
-}
 
-MonoObject* ColliderComponent::GetSharp()
-{
-	if (CsharpReference) {
-		return CsharpReference;
-	}
-
-	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
-	if (!klass) {
-		return nullptr;
-	}
-
-	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
-	if (!monoObject) {
-		return nullptr;
-	}
-
-	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Collider:.ctor(uintptr,HawkEngine.GameObject)", true);
-	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-	if (!method)
-	{
-		return nullptr;
-	}
-
-	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
-	MonoObject* ownerGo = owner->GetSharp();
-	if (!ownerGo)
-	{
-		return nullptr;
-	}
-
-    void* args[2]{};
-	args[0] = &componentPtr;
-	args[1] = ownerGo;
-
-	mono_runtime_invoke(method, monoObject, args, nullptr);
-
-	CsharpReference = monoObject;
-	return CsharpReference;
-}
-
-void ColliderComponent::Update(float deltaTime) {
-    if (snapToPosition && owner) {
-		SnapToPosition();
+    if (rigidBody->getCollisionShape()) {
+        btVector3 btScale(worldScale.x, worldScale.y, worldScale.z);
+        rigidBody->getCollisionShape()->setLocalScaling(btScale);
     }
 }
 
 
-void ColliderComponent::Destroy() {
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
-    }
-
-    if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
-        physics->gameObjectRigidBodyMap.erase(owner);
-    }
-}
-
-std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
-    return std::make_unique<ColliderComponent>(new_owner, physics);
-}
-
+//Local BBox Adjusted (doesnt works with the blocking)
 
 void ColliderComponent::CreateCollider() {
     if (!owner) return;
@@ -210,11 +268,12 @@ void ColliderComponent::CreateCollider() {
     Transform_Component* transform = owner->GetTransform();
     if (!transform) return;
 
-    BoundingBox bbox = owner->boundingBox();
+    BoundingBox bbox = owner->localBoundingBox();
     size = bbox.size();
 
-    btCollisionShape* shape;
+    glm::vec3 bboxCenter = owner->boundingBox().center();
 
+    btCollisionShape* shape;
     btTransform startTransform;
     startTransform.setIdentity();
 
@@ -229,25 +288,24 @@ void ColliderComponent::CreateCollider() {
         static_cast<btScalar>(localRot.w)
     );
     startTransform.setRotation(btRot);    glm::vec3 scale = transform->GetScale();
-    //shape->setLocalScaling(btVector3(scale.x, scale.z, scale.y));
+    glm::vec3 parentScale(1.0f);
+    if (owner->GetParent()) {
+        parentScale = owner->GetParent()->GetTransform()->GetScale();
+    }
+    glm::vec3 finalScale = scale * parentScale;
+    shape->setLocalScaling(btVector3(finalScale.x, finalScale.z, finalScale.y));
 
-    // Configurar la masa e inercia
     btVector3 localInertia(0, 0, 0);
     if (mass > 0.0f) {
         shape->calculateLocalInertia(mass, localInertia);
     }
 
-    // Crear el cuerpo rígido
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
     rigidBody = new btRigidBody(rbInfo);
 
-    //rigidBody->setRestitution(0.5f);
-
-    glm::quat newRotation = glm::quat(glm::radians(glm::vec3(0, 0, 0)));
-    SetColliderRotation(newRotation);
-    // Añadir el colisionador al mundo de físicas
+    // Add the collider to the physics world
     physics->dynamicsWorld->addRigidBody(rigidBody);
     physics->gameObjectRigidBodyMap[owner] = rigidBody;
-
 }
+

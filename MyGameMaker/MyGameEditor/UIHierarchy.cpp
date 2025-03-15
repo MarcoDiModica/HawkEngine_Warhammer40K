@@ -213,19 +213,17 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 	}
 
-	if (open) {
-		for (size_t w = 0; w < obj.GetChildren().size(); ++w) {
-			DrawSceneObject(*obj.GetChildren()[w]);
-		}
-		ImGui::TreePop();
-	}
-
 	if (ImGui::BeginPopupContextItem()) {
 		ImGui::Text(obj.GetName().c_str());
+		ImGui::Separator();
 		if (ImGui::MenuItem("Delete")) {
 			Application->input->RemoveFromSelection(&obj);
 			Application->input->ClearSelection();
 			Application->root->RemoveGameObject(&obj);
+			ImGui::CloseCurrentPopup();
+		}
+		if (ImGui::MenuItem("Empty Parent")) {
+			//TODO LIKE UNITY
 			ImGui::CloseCurrentPopup();
 		}
 		if (ImGui::MenuItem("Empty Child")) {
@@ -233,7 +231,32 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 			Application->root->ParentGameObject(*empty, obj);
 			ImGui::CloseCurrentPopup();
 		}
+		if (ImGui::MenuItem("Rename")) {
+			// TODO: Implement renaming like scene one
+			ImGui::CloseCurrentPopup();
+		}
+		if (ImGui::MenuItem("Duplicate")) {
+			//TODO: Implement duplication like ctrl D
+			ImGui::CloseCurrentPopup();
+		}
+		if (hasChildren) {
+			if (ImGui::MenuItem("Expand All")) {
+				//TODO
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Collapse All")) {
+				//TODO
+				ImGui::CloseCurrentPopup();
+			}
+		}
 		ImGui::EndPopup();
+	}
+
+	if (open) {
+		for (size_t w = 0; w < obj.GetChildren().size(); ++w) {
+			DrawSceneObject(*obj.GetChildren()[w]);
+		}
+		ImGui::TreePop();
 	}
 
 	return should_continue;

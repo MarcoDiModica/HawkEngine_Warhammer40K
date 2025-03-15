@@ -1,13 +1,16 @@
 #pragma once
-
+#ifdef min
+#undef min
+#endif
 #include <vector>
 #include <string>
 #include "BoundingBox.h"
+#include "assimp/scene.h"
 
 #include "types.h"
 
+#define MAX_BONES 200
 #define MAX_BONE_INFLUENCE 4
-#define MAX_BONES 100
 
 enum class Shapes
 {
@@ -19,6 +22,17 @@ enum class Shapes
 	CONE,
 	TORUS,
 	MESH
+};
+
+struct BoneInfo
+{
+	int id;
+
+	std::string name;
+	std::string parentName;
+
+	glm::mat4 offset;
+
 };
 
 struct Vertex
@@ -67,12 +81,26 @@ public:
 	void SetMaterialIndex(int index) { materialIndex = index; }
 	int& GetMaterialIndex() { return materialIndex; }
 
+	auto& GetBoneInfoMap() { return m_BoneInfoMap; }
+	int& GetBoneCount() { return m_BoneCounter; }
+
+	void SetVertexBoneDataToDefault(Vertex& vertex);
+	void SetVertexBoneData(Vertex& vertex, int boneID, float weight);
+	void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
+
 	const BoundingBox& getBoundingBox() const { return m_BoundingBox; }
 
+	bool isAnimated = true;
 private:
 	std::string meshName;
 	ModelData modelData;
 	int materialIndex = -1;
-	BoundingBox m_BoundingBox;
+
+	std::map<std::string, BoneInfo> m_BoneInfoMap;
+	int m_BoneCounter = 0;
+
+	BoundingBox m_BoundingBox; // Bounding box de la malla
+
+	//void calculateBoundingBox(); // M�todo privado para calcular la bounding box
 };
 

@@ -21,6 +21,8 @@ public:
     void drawRotatedBoundingBox(const glm::vec3 corners[8], const glm::vec3& color);
     void drawSphere(const glm::vec3& center, float radius, const glm::vec3& color, int segments);
 
+    void drawTriangle(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& color);
+
 private:
     void drawWiredLine(const glm::vec3& start, const glm::vec3& end, const glm::vec3& color);
     DebugDrawModes mode;

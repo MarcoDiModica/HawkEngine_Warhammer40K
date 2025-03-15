@@ -1,4 +1,27 @@
 {
 	"$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
-	"dependencies": ["sdl2", {"name": "imgui","features": [ "sdl2-binding", "opengl3-binding", "docking-experimental" ]},"glm", "glew", "assimp","devil", "yaml-cpp","imguizmo","openal-soft","audiofile", "bullet3" ,"tinyfiledialogs"]
+	"builtin-baseline": "91f002cae2281636da5155efc5a11d67efa72415",
+	"dependencies": [
+		"sdl2",
+		{
+			"name": "imgui",
+			"features": ["sdl2-binding", "opengl3-binding", "docking-experimental"]
+		},
+		"glm",
+		"glew",
+		"assimp",
+		"devil",
+		"yaml-cpp",
+		"imguizmo",
+		"openal-soft",
+		"audiofile",
+		"bullet3",
+		"tinyfiledialogs"
+	],
+	"overrides": [
+		{
+			"name": "assimp",
+			"version": "5.0.1"
+		}
+	]
 }

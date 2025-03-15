@@ -208,7 +208,7 @@ bool UISceneWindow::Draw()
             };
 
         ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 190, viewportPosition.y + 15));
-        static TransformSpace transformSpace = TransformSpace::LOCAL;
+        static TransformSpace transformSpace = TransformSpace::WORLD;
 
         setActiveButtonColor(transformSpace == TransformSpace::WORLD);
         if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_World.id())), ImVec2(15, 15))) {
@@ -225,7 +225,7 @@ bool UISceneWindow::Draw()
         ImGui::Text(transformSpace == TransformSpace::LOCAL ? "local" : "global");
         ImGui::SetCursorScreenPos(ImVec2(viewportPosition.x + 20, viewportPosition.y + 10));
 
-        static ManipulationOperation operation = ManipulationOperation::IDLE;
+        static ManipulationOperation operation = ManipulationOperation::TRANSLATE;
 
         setActiveButtonColor(operation == ManipulationOperation::TRANSLATE);
         if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Trans.id())), ImVec2(iconSize, iconSize))) {

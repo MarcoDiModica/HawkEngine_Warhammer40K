@@ -29,13 +29,15 @@ enum class ComponentType {
 	COLLIDER,
 	RIGIDBODY,
 	PARTICLES_EMITTER,
+	ANIMATION,
 	UI,
 	LIGHT,
-	CANVAS,
 	UITRANSFORM,
+	CANVAS,
 	IMAGE,
 	BUTTON,
-	SLIDER
+	SLIDER,
+	BONE
 };
 
 class Component

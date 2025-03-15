@@ -129,12 +129,17 @@ namespace EngineBinds {
     void SetVolume(MonoObject* audioRef, float volume);
     float GetVolume(MonoObject* audioRef);
 
-    //UI------------------------------------------------------
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);
+  
+    //SkeletalAnimation
+	void SetAnimationSpeed(MonoObject* skeletalAnimationRef, float speed);
+	float GetAnimationSpeed(MonoObject* skeletalAnimationRef);
+	void SetAnimation(MonoObject* skeletalAnimationRef, int index);
+	int GetAnimationIndex(MonoObject* skeletalAnimationRef);
 }
 
 #endif // ENGINE_BINDS_H

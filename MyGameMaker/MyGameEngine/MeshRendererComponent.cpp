@@ -10,6 +10,7 @@
 #include <iostream>
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "LightComponent.h"
 #include "ShaderManager.h"
 #include <mono/metadata/assembly.h>
@@ -172,6 +173,9 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 		i++;
 	}
 
+	glBindVertexArray(mesh->model.get()->GetModelData().vA);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
+
 	shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 	shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
 	shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -234,6 +238,14 @@ void MeshRenderer::Render() const {
 		Application->camera->view(),
 		Application->camera->projection());
 
+	if (material->GetShaderType() == ShaderType::PBR) {
+		Shaders* shader = ShaderManager::GetInstance().GetShader(material->GetShaderType());
+		if (shader) 
+		{
+			SetUpAnimationProperties(shader);
+		}
+	}
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -277,6 +289,19 @@ void MeshRenderer::RenderWithUnlitShader(Shaders* shader, const glm::mat4& view,
 
 	shader->SetUniform("view", view);
 	shader->SetUniform("projection", projection);
+}
+
+void MeshRenderer::SetUpAnimationProperties(Shaders* shader) const
+{
+	shader->SetUniform("isAnimated", 0);
+	if (owner->HasComponent<SkeletalAnimationComponent>() &&
+		owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator())
+	{
+		shader->SetUniform("isAnimated", 1);
+		auto transforms = owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices();
+		for (int i = 0; i < transforms.size(); ++i)
+			shader->SetUniform("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+	}
 }
 
 void MeshRenderer::RenderWithPBRShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const {
@@ -329,11 +354,14 @@ void MeshRenderer::RenderMainCamera() const {
 		Application->root->mainCamera->GetComponent<CameraComponent>()->projection()
 	);
 
-	if (material->GetShaderType() == ShaderType::PBR) {
+	if (material->GetShaderType() == ShaderType::PBR) 
+	{
 		Shaders* shader = ShaderManager::GetInstance().GetShader(material->GetShaderType());
-		if (shader) {
+		if (shader) 
+		{
 			shader->SetUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
 			SetupLightProperties(shader, Application->root->mainCamera->GetTransform()->GetPosition());
+			SetUpAnimationProperties(shader);
 		}
 	}
 

@@ -1,23 +1,23 @@
 #include "Mesh.h"
-#include "GameObject.h"
-#include "assimp/scene.h"
-#include "assimp/postprocess.h"
-#include "assimp/cimport.h"
-#include <assimp/Importer.hpp>
-#include <vector>
-#include <string>
-#include <GL/glew.h>
-#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <unordered_map>
 #include <unordered_set>
-#include "../MyGameEditor/Log.h"
 #include <zlib.h>
-
 #include <queue>
-using namespace std;
+#ifdef min
+#undef min
+#endif
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/cimport.h>
+#include <GL/glew.h>
+#include <glm/gtc/type_ptr.hpp>
+
+#include "GameObject.h"
+#include "../MyGameEditor/Log.h"
 
 Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 {
@@ -28,19 +28,27 @@ Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 Mesh::~Mesh() {}
 
 
+//void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs, const int* boneIDs, const float* weights)
+//{
+//	_boundingBox.min = _vertices.front();
+//	_boundingBox.max = _vertices.front();
+//
+//	for (const auto& v : _vertices) {
+//		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v.position));
+//		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
+//	}
+//	for (size_t i = 0; i < num_verts; ++i) {
+//		_vertices[i].position = vertices[i];
+//		for (int j = 0; j < MAX_BONE_INFLUENCE; ++j) {
+//			_vertices[i].m_BoneIDs[j] = boneIDs[i * MAX_BONE_INFLUENCE + j];
+//			_vertices[i].m_Weights[j] = weights[i * MAX_BONE_INFLUENCE + j];
+//		}
+//	}
+//	
+//
+//	CalculateNormals();
+//}
 
-void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs)
-{
-	_boundingBox.min = _vertices.front();
-	_boundingBox.max = _vertices.front();
-
-	for (const auto& v : _vertices) {
-		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v));
-		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v));
-	}
-
-	CalculateNormals();
-}
 
 void Mesh::drawBoundingBox(const BoundingBox& bbox) {
 	glLineWidth(2.0);
@@ -67,9 +75,9 @@ void Mesh::CalculateNormals() {
 	_normals.resize(_vertices.size(), glm::vec3(0.0f));
 
 	for (size_t i = 0; i < _indices.size(); i += 3) {
-		glm::vec3 v0 = _vertices[_indices[i]];
-		glm::vec3 v1 = _vertices[_indices[i + 1]];
-		glm::vec3 v2 = _vertices[_indices[i + 2]];
+		glm::vec3 v0 = _vertices[_indices[i]].position;
+		glm::vec3 v1 = _vertices[_indices[i + 1]].position;
+		glm::vec3 v2 = _vertices[_indices[i + 2]].position;
 
 		glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 
@@ -85,6 +93,22 @@ void Mesh::CalculateNormals() {
 	//normals_buffer.LoadData(_normals.data(), _normals.size() * sizeof(glm::vec3));
 }
 
+void Mesh::LoadBones()
+{
+	// Check if the mesh has bone data before enabling the attributes
+	bool hasBoneData = false;
+	for (const auto& vertex : _vertices) {
+		if (vertex.m_BoneIDs[0] != -1) {
+			hasBoneData = true;
+			break;
+		}
+	}
+
+	if (hasBoneData) {
+
+
+	}
+}
 void Mesh::CalculateTangents() {
 	// Resize tangent and bitangent arrays to match vertices
 	std::vector<glm::vec3> tangents(_vertices.size(), glm::vec3(0.0f));
@@ -95,10 +119,9 @@ void Mesh::CalculateTangents() {
 		unsigned int idx0 = _indices[i];
 		unsigned int idx1 = _indices[i + 1];
 		unsigned int idx2 = _indices[i + 2];
-
-		glm::vec3& v0 = _vertices[idx0];
-		glm::vec3& v1 = _vertices[idx1];
-		glm::vec3& v2 = _vertices[idx2];
+		glm::vec3 v0 = _vertices[idx0].position;
+		glm::vec3 v1 = _vertices[idx1].position;
+		glm::vec3 v2 = _vertices[idx2].position;
 
 		// Get texture coordinates
 		glm::vec2 uv0, uv1, uv2;
@@ -221,11 +244,11 @@ void Mesh::Draw() const
 		glColor3f(0.0f, 0.0f, 1.0f); // Blue color for vertex normals
 		glBegin(GL_LINES);
 
-		for (size_t i = 0; i < _vertices.size(); ++i) {
-			glm::vec3 end = _vertices[i] + _normals[i] * 0.2f;
-			glVertex3fv(glm::value_ptr(_vertices[i]));
+		/*for (size_t i = 0; i < _vertices.size(); ++i) {
+			glm::vec3 end = _vertices[i].position + _normals[i] * 0.2f;
+			glVertex3fv(glm::value_ptr(_vertices[i].position));
 			glVertex3fv(glm::value_ptr(end));
-		}
+		}*/
 
 		glEnd();
 		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
@@ -236,9 +259,9 @@ void Mesh::Draw() const
 		glBegin(GL_LINES);
 
 		for (size_t i = 0; i < _indices.size(); i += 3) {
-			glm::vec3 v0 = _vertices[_indices[i]];
-			glm::vec3 v1 = _vertices[_indices[i + 1]];
-			glm::vec3 v2 = _vertices[_indices[i + 2]];
+			glm::vec3 v0 = _vertices[_indices[i]].position;
+			glm::vec3 v1 = _vertices[_indices[i + 1]].position;
+			glm::vec3 v2 = _vertices[_indices[i + 2]].position;
 
 			glm::vec3 center = (v0 + v1 + v2) / 3.0f;
 			glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
@@ -258,9 +281,9 @@ void Mesh::Draw() const
 		glBegin(GL_LINES);
 
 		for (size_t i = 0; i < _indices.size(); i += 3) {
-			glm::vec3 v0 = _vertices[_indices[i]];
-			glm::vec3 v1 = _vertices[_indices[i + 1]];
-			glm::vec3 v2 = _vertices[_indices[i + 2]];
+			glm::vec3 v0 = _vertices[_indices[i]].position;
+			glm::vec3 v1 = _vertices[_indices[i + 1]].position;
+			glm::vec3 v2 = _vertices[_indices[i + 2]].position;
 
 			glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
 			glm::vec3 end = center + normal * 0.2f;
@@ -280,8 +303,8 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 
-	// Definimos los vértices de manera diferente para evitar compartir vértices entre caras
-	// 24 vértices (4 por cada cara) con sus propias normales independientes
+	// Definimos los vï¿½rtices de manera diferente para evitar compartir vï¿½rtices entre caras
+	// 24 vï¿½rtices (4 por cada cara) con sus propias normales independientes
 
 	// Posiciones de las 8 esquinas del cubo
 	const vec3 v000(-1.0f, -1.0f, -1.0f);
@@ -293,7 +316,7 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	const vec3 v110(1.0f, 1.0f, -1.0f);
 	const vec3 v111(1.0f, 1.0f, 1.0f);
 
-	// Vector para almacenar los vértices
+	// Vector para almacenar los vï¿½rtices
 	std::vector<Vertex> vertices;
 	std::vector<vec3> normals;
 	std::vector<vec2> texCoords;
@@ -338,7 +361,7 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	vertices.push_back({ v101 }); // 22
 	vertices.push_back({ v001 }); // 23
 
-	// Normals para cada vértice
+	// Normals para cada vï¿½rtice
 	for (int i = 0; i < 4; i++) normals.push_back(vec3(0.0f, 0.0f, 1.0f));  // Cara frontal
 	for (int i = 0; i < 4; i++) normals.push_back(vec3(0.0f, 0.0f, -1.0f)); // Cara trasera
 	for (int i = 0; i < 4; i++) normals.push_back(vec3(1.0f, 0.0f, 0.0f));  // Cara derecha
@@ -346,7 +369,7 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 	for (int i = 0; i < 4; i++) normals.push_back(vec3(0.0f, 1.0f, 0.0f));  // Cara superior
 	for (int i = 0; i < 4; i++) normals.push_back(vec3(0.0f, -1.0f, 0.0f)); // Cara inferior
 
-	// Texcoords para cada cara (usando el mismo patrón para todas)
+	// Texcoords para cada cara (usando el mismo patrï¿½n para todas)
 	for (int i = 0; i < 6; i++) {
 		texCoords.push_back(vec2(0.0f, 0.0f)); // Esquina inferior izquierda
 		texCoords.push_back(vec2(1.0f, 0.0f)); // Esquina inferior derecha
@@ -396,7 +419,7 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 		}
 	}
 
-	// Índices para cada cara (2 triángulos por cara)
+	// ï¿½ndices para cada cara (2 triï¿½ngulos por cara)
 	for (int i = 0; i < 6; i++) {
 		int base = i * 4;
 		indices.push_back(base);     // 0
@@ -421,6 +444,18 @@ std::shared_ptr<Mesh> Mesh::CreateCube()
 
 	// Calcular bounding box
 	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
+
+
+	meshBBox->min = model->GetModelData().vertexData.front().position;
+	meshBBox->max = model->GetModelData().vertexData.front().position;
+
+	for (const auto& v : model->GetModelData().vertexData) {
+		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
+	}
+
+	model->SetVertexBoneDataToDefault(model->GetModelData().vertexData[0]);
+
 	meshBBox->min = vec3(-1.0f, -1.0f, -1.0f);
 	meshBBox->max = vec3(1.0f, 1.0f, 1.0f);
 	mesh->setBoundingBox(*meshBBox);
@@ -436,13 +471,13 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 
-	// Parámetros del cilindro
+	// Parï¿½metros del cilindro
 	const float radius = 1.0f;
 	const float height = 2.0f;
 	const int slices = 20;
 	const float halfHeight = height / 2.0f;
 
-	// Vértice central de la base inferior
+	// Vï¿½rtice central de la base inferior
 	Vertex bottomCenter;
 	bottomCenter.position = vec3(0.0f, -halfHeight, 0.0f);
 	model->GetModelData().vertexData.push_back(bottomCenter);
@@ -452,7 +487,7 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 	model->GetModelData().vertex_tangents.push_back(vec3(1.0f, 0.0f, 0.0f));
 	model->GetModelData().vertex_bitangents.push_back(vec3(0.0f, 0.0f, -1.0f));
 
-	// Vértices de la base inferior
+	// Vï¿½rtices de la base inferior
 	for (int i = 0; i < slices; ++i) {
 		float angle = 2.0f * glm::pi<float>() * i / slices;
 		float x = radius * cos(angle);
@@ -482,8 +517,10 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		vec3 bitangent = glm::cross(normal, tangent);
 		model->GetModelData().vertex_bitangents.push_back(bitangent);
 	}
+	Vertex vertexLow;
+	Vertex vertexHigh;
 
-	// Vértice central de la base superior
+	// Vï¿½rtice central de la base superior
 	Vertex topCenter;
 	topCenter.position = vec3(0.0f, halfHeight, 0.0f);
 	model->GetModelData().vertexData.push_back(topCenter);
@@ -493,7 +530,7 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 	model->GetModelData().vertex_tangents.push_back(vec3(1.0f, 0.0f, 0.0f));
 	model->GetModelData().vertex_bitangents.push_back(vec3(0.0f, 0.0f, -1.0f));
 
-	// Vértices de la base superior
+	// Vï¿½rtices de la base superior
 	for (int i = 0; i < slices; ++i) {
 		float angle = 2.0f * glm::pi<float>() * i / slices;
 		float x = radius * cos(angle);
@@ -524,7 +561,7 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		model->GetModelData().vertex_bitangents.push_back(bitangent);
 	}
 
-	// Vértices para el cuerpo del cilindro
+	// Vï¿½rtices para el cuerpo del cilindro
 	for (int i = 0; i < slices; ++i) {
 		float angle = 2.0f * glm::pi<float>() * i / slices;
 		float x = radius * cos(angle);
@@ -539,7 +576,7 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		// Bitangente (a lo largo del eje Y)
 		vec3 bitangent = vec3(0.0f, 1.0f, 0.0f);
 
-		// Vértice inferior del cuerpo
+		// Vï¿½rtice inferior del cuerpo
 		Vertex bottomVertex;
 		bottomVertex.position = vec3(x, -halfHeight, z);
 		model->GetModelData().vertexData.push_back(bottomVertex);
@@ -558,7 +595,7 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		model->GetModelData().vertex_tangents.push_back(tangent);
 		model->GetModelData().vertex_bitangents.push_back(bitangent);
 
-		// Vértice superior del cuerpo
+		// Vï¿½rtice superior del cuerpo
 		Vertex topVertex;
 		topVertex.position = vec3(x, halfHeight, z);
 		model->GetModelData().vertexData.push_back(topVertex);
@@ -577,19 +614,19 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		model->GetModelData().vertex_bitangents.push_back(bitangent);
 	}
 
-	// Índices para la base inferior - CORRECCIÓN
+	// ï¿½ndices para la base inferior - CORRECCIï¿½N
 	unsigned int bottomCenterIndex = 0;
 	for (int i = 0; i < slices; ++i) {
 		unsigned int current = i + 1;
 		unsigned int next = (i + 1) % slices + 1;
 
-		// CORRECCIÓN: Volvemos al orden original para la base inferior
+		// CORRECCIï¿½N: Volvemos al orden original para la base inferior
 		model->GetModelData().indexData.push_back(bottomCenterIndex);
 		model->GetModelData().indexData.push_back(current);
 		model->GetModelData().indexData.push_back(next);
 	}
 
-	// Índices para la base superior
+	// ï¿½ndices para la base superior
 	unsigned int topCenterIndex = slices + 1;
 	for (int i = 0; i < slices; ++i) {
 		unsigned int current = topCenterIndex + i + 1;
@@ -600,7 +637,7 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		model->GetModelData().indexData.push_back(current);
 	}
 
-	// Índices para el cuerpo del cilindro
+	// ï¿½ndices para el cuerpo del cilindro
 	unsigned int bodyStartIndex = topCenterIndex + slices + 1;
 	for (int i = 0; i < slices; ++i) {
 		unsigned int bottomLeft = bodyStartIndex + i * 2;
@@ -608,7 +645,7 @@ std::shared_ptr<Mesh> Mesh::CreateCylinder() {
 		unsigned int topLeft = bottomLeft + 1;
 		unsigned int topRight = bottomRight + 1;
 
-		// Triangulación del cuerpo (winding order correcto)
+		// Triangulaciï¿½n del cuerpo (winding order correcto)
 		model->GetModelData().indexData.push_back(bottomLeft);
 		model->GetModelData().indexData.push_back(topRight);
 		model->GetModelData().indexData.push_back(bottomRight);
@@ -642,7 +679,7 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 	const int slices = 20;
 	const float radius = 1.0f;
 
-	// Generar vértices para la esfera
+	// Generar vï¿½rtices para la esfera
 	for (int i = 0; i <= stacks; ++i) {
 		float phi = i * glm::pi<float>() / stacks;
 		float sinPhi = sin(phi);
@@ -653,12 +690,12 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 			float sinTheta = sin(theta);
 			float cosTheta = cos(theta);
 
-			// Posición del vértice
+			// Posiciï¿½n del vï¿½rtice
 			float x = cosTheta * sinPhi;
 			float y = cosPhi;
 			float z = sinTheta * sinPhi;
 
-			// Crear vértice
+			// Crear vï¿½rtice
 			Vertex vertex;
 			vertex.position = glm::vec3(x, y, z) * radius;
 			model->GetModelData().vertexData.push_back(vertex);
@@ -668,11 +705,11 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 			float v = static_cast<float>(i) / stacks;
 			model->GetModelData().vertex_texCoords.push_back(vec2(u, v));
 
-			// Normal (misma dirección que la posición para una esfera)
+			// Normal (misma direcciï¿½n que la posiciï¿½n para una esfera)
 			vec3 normal = vec3(x, y, z);
 			model->GetModelData().vertex_normals.push_back(normal);
 
-			// Color (gradiente basado en posición)
+			// Color (gradiente basado en posiciï¿½n)
 			vec3 color = vec3(
 				(x + 1.0f) * 0.5f,  // R: -1 a 1 mapeado a 0 a 1
 				(y + 1.0f) * 0.5f,  // G: -1 a 1 mapeado a 0 a 1
@@ -692,7 +729,7 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 				tangent = glm::normalize(tangent);
 			}
 			else {
-				// Evitar vectores muy pequeños
+				// Evitar vectores muy pequeï¿½os
 				tangent = vec3(1.0f, 0.0f, 0.0f);
 			}
 			model->GetModelData().vertex_tangents.push_back(tangent);
@@ -703,18 +740,18 @@ std::shared_ptr<Mesh> Mesh::CreateSphere()
 		}
 	}
 
-	// Generar índices
+	// Generar ï¿½ndices
 	for (int i = 0; i < stacks; ++i) {
 		for (int j = 0; j < slices; ++j) {
 			int first = i * (slices + 1) + j;
 			int second = first + slices + 1;
 
-			// Triángulo 1
+			// Triï¿½ngulo 1
 			model->GetModelData().indexData.push_back(first);
 			model->GetModelData().indexData.push_back(second);
 			model->GetModelData().indexData.push_back(first + 1);
 
-			// Triángulo 2
+			// Triï¿½ngulo 2
 			model->GetModelData().indexData.push_back(second);
 			model->GetModelData().indexData.push_back(second + 1);
 			model->GetModelData().indexData.push_back(first + 1);
@@ -741,7 +778,7 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 
-	// Vértices del plano (4 vértices)
+	// Vï¿½rtices del plano (4 vï¿½rtices)
 	model->GetModelData().vertexData = {
 		Vertex{vec3(-1.0f, 0.0f, 1.0f)},  // 0: Esquina inferior izquierda
 		Vertex{vec3(1.0f, 0.0f, 1.0f)},   // 1: Esquina inferior derecha
@@ -749,10 +786,10 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 		Vertex{vec3(-1.0f, 0.0f, -1.0f)}  // 3: Esquina superior izquierda
 	};
 
-	// Índices para los triángulos (2 triángulos = 6 índices)
+	// ï¿½ndices para los triï¿½ngulos (2 triï¿½ngulos = 6 ï¿½ndices)
 	model->GetModelData().indexData = {
-		0, 1, 2,  // Primer triángulo
-		0, 2, 3   // Segundo triángulo
+		0, 1, 2,  // Primer triï¿½ngulo
+		0, 2, 3   // Segundo triï¿½ngulo
 	};
 
 	// Coordenadas de textura
@@ -771,7 +808,7 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 		vec3(0.0f, 1.0f, 0.0f)
 	};
 
-	// Colores para los vértices (degradado de blanco a azul)
+	// Colores para los vï¿½rtices (degradado de blanco a azul)
 	model->GetModelData().vertex_colors = {
 		vec3(1.0f, 1.0f, 1.0f),  // Blanco
 		vec3(0.8f, 0.8f, 1.0f),  // Casi blanco
@@ -894,7 +931,7 @@ void Mesh::loadToOpenGL()
 	//buffer de positions
 	(glGenBuffers(1, &model->GetModelData().vBPosID));
 	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
-	(glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_STATIC_DRAW));
+	(glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_DYNAMIC_DRAW));
 
 	//position layout
 	(glEnableVertexAttribArray(0));
@@ -927,6 +964,46 @@ void Mesh::loadToOpenGL()
 		//loadNormalsToOpenGL();
 		//loadFaceNormalsToOpenGL();
 	}
+
+	if (model->GetModelData().vertexData.size() > 0 && model->GetModelData().vertexData[0].m_BoneIDs[0] != -1) {
+		// Create arrays to store IDs and weights
+		std::vector<glm::ivec4> boneIDs;
+		std::vector<glm::vec4> weights;
+
+		for (const auto& vertex : model->GetModelData().vertexData) {
+			glm::ivec4 ids(-1);
+			glm::vec4 vertexWeights(0.0f);
+
+			for (int i = 0; i < MAX_BONE_INFLUENCE; i++) {
+				ids[i] = vertex.m_BoneIDs[i];
+				vertexWeights[i] = vertex.m_Weights[i];
+			}
+
+			boneIDs.push_back(ids);
+			weights.push_back(vertexWeights);
+		}
+
+		// Create buffer for bone IDs
+		GLuint boneIDBuffer;
+		glGenBuffers(1, &boneIDBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, boneIDBuffer);
+		glBufferData(GL_ARRAY_BUFFER, boneIDs.size() * sizeof(glm::ivec4), boneIDs.data(), GL_STATIC_DRAW);
+
+		// Configure attribute for bone IDs
+		glEnableVertexAttribArray(3);
+		glVertexAttribIPointer(3, 4, GL_INT, sizeof(glm::ivec4), (const void*)0);
+
+		// Create buffer for weights
+		GLuint weightBuffer;
+		glGenBuffers(1, &weightBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, weightBuffer);
+		glBufferData(GL_ARRAY_BUFFER, weights.size() * sizeof(glm::vec4), weights.data(), GL_STATIC_DRAW);
+
+		// Configure attribute for weights
+		glEnableVertexAttribArray(4);
+		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
+	}
+
 
 	//buffer de index
 	(glCreateBuffers(1, &model->GetModelData().iBID));

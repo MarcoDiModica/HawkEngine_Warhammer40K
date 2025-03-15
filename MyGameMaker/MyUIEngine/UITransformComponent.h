@@ -100,14 +100,13 @@ protected:
 
 	bool decode(const YAML::Node& node) override {
 
-		Component::decode(node);
-
 		position = node["position"].as<glm::vec3>();
 		rotation = node["rotation"].as<glm::vec3>();
 		scale = node["scale"].as<glm::vec3>();
 		canvasPosition = node["canvas_position"].as<glm::vec3>();
 		canvasSize = node["canvas_size"].as<glm::vec3>();
 		pivotOffset = node["pivot_offset"].as<glm::vec3>();
+		SetTransform(position, scale);
       
 		return true;
 	}

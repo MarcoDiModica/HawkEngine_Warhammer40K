@@ -24,39 +24,31 @@
 #include "../MyUIEngine/UITransformComponent.h"
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UISliderComponent.h"
-
-
-std::vector<std::shared_ptr<GameObject>> gameObjectsWithColliders;
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "../MyAnimationEngine/BoneComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 
 class GameObject;
-
-struct EmitterInfo{
-    std::shared_ptr<GameObject> gameObject;
-    std::chrono::steady_clock::time_point creationTime;
-    float lifetime = 0.0f;
-    Particle* particle = nullptr;
-    int maxParticles = 0;
-
-    void SetSpeed(const glm::vec3& newSpeed) {
-        if (particle) {
-            particle->SetParticleSpeed(newSpeed);
-        }
-    }
-};
-
-std::vector<EmitterInfo> activeEmitters;
 
 Root::Root(App* app) : Module(app) { ; }
 
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-    Application->root->CreateScene("HolaBuenas");
-    Application->root->SetActiveScene("HolaBuenas");
-    SoundComponent::InitSharedAudioEngine();
-    ShaderManager::GetInstance().Initialize();
+    Application->root->CreateScene("DefaultScene");
+    Application->root->SetActiveScene("DefaultScene");
+    
+	SoundComponent::InitSharedAudioEngine();
+	ShaderManager::GetInstance().Initialize();
+
+   /*CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
+    MakeSmokerEmmiter();
+    MakeSmokerEmiter2();*/
+
+	/*environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
+	environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
+	environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
 
     return true;
 }
@@ -69,22 +61,29 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto player = CreateGameObject("Player");
-    player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-    player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+	auto player = CreateGameObject("Player");
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-    auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-    playerMesh->GetTransform()->SetScale(glm::vec3(0.01f, 0.01f, 0.01f));
-    playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-    ParentGameObject(*playerMesh, *player);
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+	playerMesh->SetName("playerMesh");
+	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	if (playerMesh->HasComponent<SkeletalAnimationComponent>()) {
+		LOG(LogType::LOG_INFO, "Player has SkeletalAnimationComponent");
+	}
+	else
+	{
+		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
+	}
+		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
@@ -155,61 +154,146 @@ void Root::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, const std
 
 std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& path)
 {
-    auto MarcoVicePresidente = Application->root->CreateGameObject(path);
+	ModelImporter meshImp;
+	meshImp.loadFromFile(path);
 
-    ModelImporter meshImp;
-    meshImp.loadFromFile(path);
-
-    for (int i = 0; i < meshImp.meshes.size(); i++) {
-
-        auto MarcoVicePresidente2 = meshImp.fbx_object[i];
-
-        auto go = Application->root->CreateGameObject(meshImp.fbx_object[i]->GetName());
-        go->SetName(meshImp.meshes[i]->getModel()->GetMeshName());
-
-        auto meshRenderer = go->AddComponent<MeshRenderer>();
-        auto material = std::make_shared<Material>();
-
-        meshRenderer->SetMesh(meshImp.meshes[i]);
-        material = meshImp.materials[meshImp.meshes[i]->getModel()->GetMaterialIndex()];
-
-        meshRenderer->SetMaterial(material);
-        meshRenderer->GetMaterial()->SetColor(material->GetColor());
-
-        auto shaderComponent = go->AddComponent<ShaderComponent>();
-        shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-        shaderComponent->SetShaderType(ShaderType::PBR);
-
-		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
-		
-
-        meshBBox->min = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front().position;
-        meshBBox->max = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData.front().position;
-
-        for (const auto& v : meshRenderer->GetMesh()->getModel()->GetModelData().vertexData) {
-            meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
-            meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
-        }
-
-        go->GetComponent<MeshRenderer>()->GetMesh()->setBoundingBox(*meshBBox);
-
-        go->GetComponent<MeshRenderer>()->GetMesh()->loadToOpenGL();
-
-        go->GetTransform()->SetLocalMatrix(MarcoVicePresidente2->GetTransform()->GetLocalMatrix());
-        Application->root->ParentGameObject(*go, *MarcoVicePresidente);
-        //gameObjectsWithColliders.push_back(go);
-    }
-
-    //for (auto& go : gameObjectsWithColliders) {
-    //    go->AddComponent<ColliderComponent>(Application->physicsModule, true);
-    //}
-
-    if (meshImp.meshes.size() > 0) {
-		return MarcoVicePresidente;
-	}
-	else {
+	if (meshImp.meshes.empty()) {
 		return nullptr;
 	}
+
+	std::shared_ptr<GameObject> rootObject;
+	std::shared_ptr<GameObject> go;
+
+	if (meshImp.meshes.size() > 1) {
+		std::string fileName = path.substr(path.find_last_of("/\\") + 1);
+		fileName = fileName.substr(0, fileName.find_last_of('.'));
+		rootObject = Application->root->CreateGameObject(fileName);
+	}
+
+	glm::dvec3 globalMin(std::numeric_limits<double>::max());
+	glm::dvec3 globalMax(std::numeric_limits<double>::lowest());
+	std::vector<std::shared_ptr<GameObject>> createdObjects;
+
+	for (int i = 0; i < meshImp.meshes.size(); i++) {
+		if (i >= meshImp.fbx_object.size() || !meshImp.fbx_object[i]) {
+			continue;
+		}
+
+		auto meshName = meshImp.meshes[i]->getModel()->GetMeshName();
+		if (meshName.empty()) {
+			meshName = "Mesh_" + std::to_string(i);
+		}
+		go = Application->root->CreateGameObject(meshName);
+		createdObjects.push_back(go);
+
+		auto meshRenderer = go->AddComponent<MeshRenderer>();
+		meshRenderer->SetMesh(meshImp.meshes[i]);
+
+		auto materialIndex = meshImp.meshes[i]->getModel()->GetMaterialIndex();
+		if (materialIndex >= 0 && materialIndex < meshImp.materials.size()) {
+			auto material = meshImp.materials[materialIndex];
+			meshRenderer->SetMaterial(material);
+			meshRenderer->GetMaterial()->SetColor(material->GetColor());
+		}
+
+		auto shaderComponent = go->AddComponent<ShaderComponent>();
+		shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
+		shaderComponent->SetShaderType(ShaderType::PBR);
+
+		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
+		const auto& vertices = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData;
+		if (!vertices.empty()) {
+			meshBBox->min = vertices.front().position;
+			meshBBox->max = vertices.front().position;
+			for (const auto& v : vertices) {
+				meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
+				meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
+			}
+
+			glm::mat4 modelMatrix = meshImp.fbx_object[i]->GetTransform()->GetLocalMatrix();
+			glm::dvec3 transformedMin = modelMatrix * glm::dvec4(meshBBox->min, 1.0);
+			glm::dvec3 transformedMax = modelMatrix * glm::dvec4(meshBBox->max, 1.0);
+			globalMin = glm::min(globalMin, transformedMin);
+			globalMax = glm::max(globalMax, transformedMax);
+		}
+
+		if (!meshImp.animations.empty() && i < meshImp.bonesGameObjects.size()) {
+			auto animationComponent = go->AddComponent<SkeletalAnimationComponent>();
+			animationComponent->SetAnimation(meshImp.animations[0].get());
+			animationComponent->Start();
+
+			for (auto& animation : meshImp.animations) {
+				animationComponent->AddAnimation(animation.get());
+			}
+
+			std::unordered_map<std::string, std::shared_ptr<GameObject>> boneMap;
+
+			for (auto& bone : meshImp.bonesGameObjects[i]) {
+				if (!bone) continue;
+
+				auto boneGO = Application->root->CreateGameObject(bone->GetName());
+				Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+				animationComponent->GetAnimator()->AddBoneGameObject(boneGO);
+				boneMap[bone->GetName()] = boneGO;
+			}
+
+			for (auto& bone : meshImp.bonesGameObjects[i]) {
+				if (!bone) continue;
+
+				auto boneGO = boneMap[bone->GetName()];
+				Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+				if (boneTransform && !boneTransform->GetParentName().empty()) {
+					auto it = boneMap.find(boneTransform->GetParentName());
+					if (it != boneMap.end()) {
+						ParentGameObject(*boneGO, *(it->second));
+					}
+					else {
+						ParentGameObject(*boneGO, *go);
+					}
+				}
+				else {
+					ParentGameObject(*boneGO, *go);
+				}
+			}
+		}
+
+		meshRenderer->GetMesh()->setBoundingBox(*meshBBox);
+		meshRenderer->GetMesh()->loadToOpenGL();
+
+		go->GetTransform()->SetLocalMatrix(meshImp.fbx_object[i]->GetTransform()->GetLocalMatrix());
+
+		if (meshImp.meshes.size() > 1) {
+			ParentGameObject(*go, *rootObject);
+		}
+	}
+
+	glm::dvec3 modelSize = globalMax - globalMin;
+	double maxDimension = std::max(modelSize.x, std::max(modelSize.y, modelSize.z));
+
+	const double targetSize = 2.0;
+
+	double scaleFactor = (maxDimension > 0.0) ? (targetSize / maxDimension) : 0.01;
+
+	const double minScale = 0.001;
+	const double maxScale = 100.0;
+	scaleFactor = std::min(std::max(scaleFactor, minScale), maxScale);
+
+	LOG(LogType::LOG_INFO, "Modelo '%s' cargado. Tamaño original: [%.2f, %.2f, %.2f], Factor de escala: %.5f",
+		path.c_str(), modelSize.x, modelSize.y, modelSize.z, scaleFactor);
+
+	/*for (auto& obj : createdObjects) {
+		glm::mat4 originalMatrix = obj->GetTransform()->GetLocalMatrix();
+		glm::mat4 scaledMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * originalMatrix;
+		obj->GetTransform()->SetLocalMatrix(scaledMatrix);
+	}*/
+
+	if (rootObject) {
+		glm::mat4 rootMatrix = rootObject->GetTransform()->GetLocalMatrix();
+		glm::mat4 scaledRootMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * rootMatrix;
+		rootObject->GetTransform()->SetLocalMatrix(scaledRootMatrix);
+	}
+
+	return (meshImp.meshes.size() > 1) ? rootObject : go;
 }
 
 void Root::ChangeShader(GameObject& go, ShaderType shader)

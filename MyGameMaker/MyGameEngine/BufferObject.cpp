@@ -38,7 +38,7 @@ void BufferObject::LoadData(const void* data, size_t size)
 	
 	glBindBuffer(target, id);
 	//for animation we will use GL_DYNAMIC_DRAW
-	glBufferData(target, size, data, GL_STATIC_DRAW);
+	glBufferData(target, size, data, GL_DYNAMIC_DRAW);
 }
 
 void BufferObject::LoadIndices(const unsigned int* indices, size_t num_indices)
@@ -51,5 +51,5 @@ void BufferObject::LoadIndices(const unsigned int* indices, size_t num_indices)
 	}
 
 	glBindBuffer(target, id);
-	glBufferData(target, num_indices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	glBufferData(target, num_indices * sizeof(unsigned int), indices, GL_DYNAMIC_DRAW);
 }

@@ -1,3 +1,4 @@
+#define GLM_ENABLE_EXPERIMENTAL
 #include "SceneManager.h"
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
@@ -14,6 +15,7 @@
 #include "../MyGameEditor/Log.h"
 #include "../MyAudioEngine/AudioListener.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "glm/gtx/matrix_decompose.inl"
 
 
 bool SceneManager::Start() {
@@ -236,19 +238,33 @@ void SceneManager::AddMeshRenderer(GameObject& go, std::shared_ptr<Mesh> mesh, c
 //}
 
 bool SceneManager::ParentGameObjectPreserve(GameObject& child, GameObject& father) {
-    if (&child == &father) return false; // Avoid self-parenting
+	if (&child == &father) return false;
 
-    auto childTransform = child.GetTransform();
-    glm::dmat4 worldMatrix = childTransform->GetMatrix();  // Save world transform
+	auto childTransform = child.GetTransform();
+	glm::dmat4 worldMatrix = childTransform->GetMatrix();
 
-    father.AddChild(&child); // Set new parent (removes from old parent automatically)
+	father.AddChild(&child);
 
-    // Recalculate local transform to maintain world position
-    glm::dmat4 inverseParent = glm::inverse(father.GetTransform()->GetMatrix());
-    glm::dmat4 newLocalMatrix = inverseParent * worldMatrix;
-    childTransform->SetMatrix(newLocalMatrix);
+	glm::dvec3 worldPosition = glm::dvec3(worldMatrix[3]);
 
-    return true;
+	childTransform->SetPosition(worldPosition);
+
+	glm::dmat4 parentWorldMatrix = father.GetTransform()->GetMatrix();
+	glm::dmat4 localMatrix = glm::inverse(parentWorldMatrix) * worldMatrix;
+
+	glm::dvec3 skew;
+	glm::dvec4 perspective;
+	glm::dvec3 localScale;
+	glm::dquat localRotation;
+	glm::dvec3 localPosition;
+
+	glm::decompose(localMatrix, localScale, localRotation, localPosition, skew, perspective);
+
+	childTransform->SetLocalPosition(localPosition);
+	childTransform->SetRotationQuat(localRotation);
+	childTransform->SetScale(localScale);
+
+	return true;
 }
 
 

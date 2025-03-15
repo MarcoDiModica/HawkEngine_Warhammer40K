@@ -7,6 +7,7 @@
 #include <IL/ilu.h>
 #include <glm/glm.hpp>
 
+
 class Image{
 
 	unsigned int _id = 0;
@@ -38,6 +39,7 @@ public:
 	static std::shared_ptr<Image> LoadBinary(const std::string& path);
 
 	std::string image_path;
+
 };
 
 std::ostream& operator<<(std::ostream& os, const Image& img);

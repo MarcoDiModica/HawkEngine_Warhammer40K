@@ -50,6 +50,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="MenuButtons.cs" />
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="PlayerAnimations.cs" />
@@ -65,6 +66,8 @@
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="Transform.cs" />
+    <Compile Include="UIButton.cs" />
+    <Compile Include="UICanvas.cs" />
     <Compile Include="UIImage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

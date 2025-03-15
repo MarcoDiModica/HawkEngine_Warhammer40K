@@ -212,7 +212,8 @@ protected:
     }
 
     bool decode(const YAML::Node& node) {
-        
+        Model model;
+		setModel(std::make_shared<Model>());
 		if (node["name"]) {
 			std::string name = node["name"].as<std::string>();
 			getModel()->SetMeshName(name);

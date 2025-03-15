@@ -61,6 +61,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
+    /*
     auto player = CreateGameObject("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
     player->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -76,14 +77,16 @@ bool Root::Start()
     playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
     ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-
+    */
+	auto city = CreateGameObjectWithPath("Assets/Meshes/street2.FBX");
+    /*
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
-  
+    */
     SceneManagement->Start();
 
     return true;

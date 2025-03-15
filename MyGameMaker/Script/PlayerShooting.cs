@@ -10,27 +10,21 @@ public class PlayerShooting : MonoBehaviour
     private PlayerInput playerInput;
     private Transform transform;
     private float shootTimer = 0f;
-    private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
-    
+
+    // Guns Scripts
+    private Boltgun boltgun;
+
     private Audio sound;
 
-    private class ProjectileInfo
+    private enum GunType
     {
-        public GameObject gameObject;
-        public Transform transform;
-        public float lifetime;
-        public Vector3 direction;
-        public bool markedForDestruction;
-
-        public ProjectileInfo(GameObject obj, Transform trans, Vector3 dir)
-        {
-            gameObject = obj;
-            transform = trans;
-            direction = dir;
-            lifetime = 0f;
-            markedForDestruction = false;
-        }
+        BOLTGUN,
+        SHOTGUN,
+        RAILGUN
     }
+    private GunType currentGun = GunType.BOLTGUN;
+
+    
 
     public override void Start()
     {
@@ -51,6 +45,12 @@ public class PlayerShooting : MonoBehaviour
         {
             Engineson.print("PlayerShooting: Audio component not found");
         }
+
+        boltgun = gameObject.GetComponent<Boltgun>();
+        if (boltgun == null)
+        {
+            Engineson.print("ERROR: PlayerShooting requires a Boltgun component!");
+        }
     }
 
     public override void Update(float deltaTime)
@@ -63,38 +63,34 @@ public class PlayerShooting : MonoBehaviour
             shootTimer = shootCooldown;
         }
 
-        UpdateProjectiles(deltaTime);
-        CleanupProjectiles();
+        if (playerInput?.IsReloading() == true)
+        {
+            Reload();
+        }
+
     }
 
     private void Shoot()
     {
         try
         {
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-
-            // TODO: add custom mesh to the projectile
-            projectile.AddComponent<MeshRenderer>();
-            projectile.AddComponent<Collider>();
+            
+            switch(currentGun)
+            {
+                case GunType.BOLTGUN:
+                    boltgun.Shoot();
+                    break;
+                case GunType.SHOTGUN:
+                    
+                    break;
+                case GunType.RAILGUN:
+                    
+                    break;
+            }
 
             sound?.Play();
 
-            if (projectile != null)
-            {
-                Transform projTransform = projectile.GetComponent<Transform>();
-                if (projTransform != null)
-                {
-                    Vector3 forward = transform.forward;
-                    Vector3 spawnPos = transform.position + forward * 1.0f;
-                    projTransform.position = spawnPos;
-                    projTransform.SetScale(0.1f, 0.1f, 0.1f);
-
-                    ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
-                    activeProjectiles.Add(projInfo);
-
-                    Engineson.print("Projectile fired!");
-                }
-            }
+            
         }
         catch (System.Exception e)
         {
@@ -102,53 +98,21 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    private void UpdateProjectiles(float deltaTime)
+    private void Reload()
     {
-        foreach (var proj in activeProjectiles)
+        switch (currentGun)
         {
-            if (proj.markedForDestruction) continue;
+            case GunType.BOLTGUN:
+                boltgun.Reload();
+                break;
+            case GunType.SHOTGUN:
 
-            proj.lifetime += deltaTime;
+                break;
+            case GunType.RAILGUN:
 
-            if (proj.lifetime >= projectileLifetime)
-            {
-                proj.markedForDestruction = true;
-                continue;
-            }
-
-            try
-            {
-                if (proj.transform != null)
-                {
-                    proj.transform.position += proj.direction * projectileSpeed * deltaTime;
-                }
-            }
-            catch (System.Exception e)
-            {
-                proj.markedForDestruction = true;
-                Engineson.print($"Error updating projectile: {e.Message}");
-            }
+                break;
         }
     }
 
-    private void CleanupProjectiles()
-    {
-        for (int i = activeProjectiles.Count - 1; i >= 0; i--)
-        {
-            var proj = activeProjectiles[i];
-            if (proj.markedForDestruction)
-            {
-                try
-                {
-                    Engineson.Destroy(proj.gameObject);
-                    activeProjectiles.RemoveAt(i);
-                }
-                catch (System.Exception e)
-                {
-                    Engineson.print($"Error destroying projectile: {e.Message}");
-                    activeProjectiles.RemoveAt(i);
-                }
-            }
-        }
-    }
+
 }

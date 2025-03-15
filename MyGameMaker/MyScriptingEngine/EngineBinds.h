@@ -33,6 +33,8 @@ namespace EngineBinds {
     template <class T>
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
 
+	void AddScript(MonoObject* ref, MonoString* scriptName);
+
     MonoString* GameObjectGetName(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
     MonoObject* GetGameObjectByName(MonoString* name);

@@ -12,10 +12,14 @@ public class Grenade : MonoBehaviour
     float explosionRadius = 2;
     Rigidbody rigidbody;
 
+
+
     public override void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        rigidbody.SetMass(1);
         rigidbody.AddForce(transform.forward);
+
     }
 
     public override void Update(float deltaTime)
@@ -30,9 +34,9 @@ public class Grenade : MonoBehaviour
     void Explode()
     {
         //Visuals of the grenade explosion
-        GameObject explosion = Engineson.CreateGameObject("Explosion", gameObject);
-
-        
+        gameObject.GetComponent<Transform>().SetScale(2,2,2);
+        rigidbody.SetMass(1);
     }
+
 
 }

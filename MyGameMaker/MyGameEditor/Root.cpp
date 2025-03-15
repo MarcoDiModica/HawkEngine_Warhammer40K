@@ -69,11 +69,13 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
 	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");

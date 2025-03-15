@@ -3,18 +3,15 @@ using System.Runtime.CompilerServices;
 
 namespace HawkEngine
 {
-    public abstract class PlayerAbilities
+    public abstract class BaseAbilities : MonoBehaviour
     {
-        public UIntPtr CplusplusInstance;
-
-       
-
-        public PlayerAbilities()
+   
+        public BaseAbilities()
         {
             
         }
 
-        public PlayerAbilities(UIntPtr instance)
+        public BaseAbilities(UIntPtr instance)
         {
             CplusplusInstance = instance;
         }

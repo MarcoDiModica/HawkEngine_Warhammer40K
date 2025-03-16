@@ -60,6 +60,7 @@
 
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
+#include "MyParticlesEngine/ParticleFX.h"
 
 using namespace std;
 
@@ -224,6 +225,10 @@ static void RenderObjectAndChildren(GameObject* object) {
 
 	if (object->HasComponent<UICanvasComponent>()) {
 		object->GetComponent<UICanvasComponent>()->Update(Application->GetDt());
+	}
+
+	if (object->HasComponent<ParticleFX>()) {
+		object->GetComponent<ParticleFX>()->RenderGameView();
 	}
 
 	for (const auto& child : object->GetChildren()) {
@@ -539,7 +544,6 @@ int main(int argc, char** argv) {
 			iluInit();
 			ilutInit();
 
-		
 			init_openGL();
 
 			if (Application) {	

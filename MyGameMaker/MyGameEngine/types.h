@@ -79,7 +79,8 @@ namespace YAML {
 
 enum ShaderType {
 	UNLIT,
-    PBR
+    PBR,
+    PARTICLE
 };
 
 namespace YAML {

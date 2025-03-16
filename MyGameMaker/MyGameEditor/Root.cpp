@@ -11,7 +11,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
-#include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "../MyParticlesEngine/ParticleFX.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
@@ -41,14 +41,6 @@ bool Root::Awake()
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
-
-   /*CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
-    MakeSmokerEmmiter();
-    MakeSmokerEmiter2();*/
-
-	/*environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
-	environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
-	environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
 
     return true;
 }
@@ -91,7 +83,12 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 
-    CreateGameplayUI();
+	auto particleFX = CreateGameObject("ParticleFX");
+	auto emitter = particleFX->AddComponent<ParticleFX>();
+	emitter->ConfigureSmoke();
+	emitter->SetTexture("Assets/SmokeParticleTexture.png");
+
+    //CreateGameplayUI();
 	
     SceneManagement->Start();
 
@@ -291,6 +288,12 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 		glm::mat4 rootMatrix = rootObject->GetTransform()->GetLocalMatrix();
 		glm::mat4 scaledRootMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * rootMatrix;
 		rootObject->GetTransform()->SetLocalMatrix(scaledRootMatrix);
+	}
+
+	if (meshImp.meshes.size() == 1) {
+		glm::mat4 originalMatrix = go->GetTransform()->GetLocalMatrix();
+		glm::mat4 scaledMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * originalMatrix;
+		go->GetTransform()->SetLocalMatrix(scaledMatrix);
 	}
 
 	return (meshImp.meshes.size() > 1) ? rootObject : go;

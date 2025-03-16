@@ -53,7 +53,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	/*auto player = CreateGameObject("Player");
+	auto player = CreateGameObject("Player");
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
@@ -74,7 +74,7 @@ bool Root::Start()
 	else
 	{
 		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
-	}*/
+	}
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -288,6 +288,12 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 		glm::mat4 rootMatrix = rootObject->GetTransform()->GetLocalMatrix();
 		glm::mat4 scaledRootMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * rootMatrix;
 		rootObject->GetTransform()->SetLocalMatrix(scaledRootMatrix);
+	}
+
+	if (meshImp.meshes.size() == 1) {
+		glm::mat4 originalMatrix = go->GetTransform()->GetLocalMatrix();
+		glm::mat4 scaledMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * originalMatrix;
+		go->GetTransform()->SetLocalMatrix(scaledMatrix);
 	}
 
 	return (meshImp.meshes.size() > 1) ? rootObject : go;

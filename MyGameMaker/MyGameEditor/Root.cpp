@@ -50,9 +50,13 @@ bool Root::Awake()
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();*/
 
-	environment = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2.fbx");
+	/*environment = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2.fbx");
 	environment->GetTransform()->SetPosition(glm::vec3(-15,0, 0));
-	environment->GetTransform()->SetScale(glm::vec3(0.06f, 0.06f, 0.06f));
+	environment->GetTransform()->SetScale(glm::vec3(0.06f, 0.06f, 0.06f));*/
+
+	//environment = CreateGameObjectWithPath("Assets/Meshes/BlockoutLevel1Remaster.fbx");
+	//environment->GetTransform()->SetPosition(glm::vec3(0, -20, 0));
+	//environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 
     return true;
 }
@@ -65,7 +69,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    /*
+    
     auto player = CreateGameObject("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
     player->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -91,15 +95,22 @@ bool Root::Start()
 		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
 	}
 		
+	//Serializar bien la camara (
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, 14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
-    objMainCamera->GetTransform()->Rotate(glm::radians(180.0f), glm::dvec3(0, 1, 0));
+    //objMainCamera->GetTransform()->Rotate(glm::radians(180.0f), glm::dvec3(0, 1, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+
+	//No se inicializa bien al cargar (cuando se carga la escena, que la main camera sea la camara con mayor valor de prioridad en la escena)
+	//Camera component, meter prioridad, en el componente detectar cuando se hace un cambio en la prioridad y llamar al root para cambiar la camara principal
+	//UI inspector poner prioridad
+	//Serializar prioridad
+
     mainCamera = objMainCamera;
 
-    CreateGameplayUI();
+    /*CreateGameplayUI();*/
 	
     SceneManagement->Start();
 
@@ -108,7 +119,7 @@ bool Root::Start()
 
 void AddCollidersEnv() {
 	for (auto go : environment->GetChildren()) {
-		auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
+		auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
 		collider->Start();
 	}
 }

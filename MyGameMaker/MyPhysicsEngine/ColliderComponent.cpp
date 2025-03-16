@@ -55,7 +55,7 @@ void ColliderComponent::OnTriggerExit(ColliderComponent* other) {
 
 
 void ColliderComponent::Update(float deltaTime) {
-    if (snapToPosition && owner && !physics->linkPhysicsToScene) {
+    if (owner && !physics->linkPhysicsToScene) {
 		SnapToPosition();
     }
 }

@@ -14,6 +14,7 @@ public class PlayerShooting : MonoBehaviour
     // Guns Scripts
     private Boltgun boltgun;
     private Shotgun shotgun;
+    private Railgun railgun;
 
     private Audio sound;
 
@@ -61,19 +62,27 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("ERROR: PlayerShooting requires a Shotgun component!");
         }
 
+        railgun = gameObject.GetComponent<Railgun>();
+        railgun.Start();
+        if (railgun == null)
+        {
+            Engineson.print("ERROR: PlayerShooting requires a Railgun component!");
+        }
+
         switch (currentGun)
         {
             case GunType.BOLTGUN:
                 shootCooldown = 1f / boltgun.shootCadence;
-                shootTimer = shootCooldown;
+                shootTimer = 0;
                 Engineson.print($"Shoot Cooldown: {shootCooldown}");
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence;
-                shootTimer = shootCooldown;
+                shootTimer = 0;
                 break;
             case GunType.RAILGUN:
-
+                shootCooldown = 1f / railgun.shootCadence;
+                shootTimer = 0;
                 break;
         }
 
@@ -94,6 +103,11 @@ public class PlayerShooting : MonoBehaviour
             ChangeWeaponLeft();
         }
 
+        if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
+        {
+            railgun.ChangeMode();
+        }
+
 
         if (playerInput?.IsShooting() == true)
         {
@@ -104,12 +118,32 @@ public class PlayerShooting : MonoBehaviour
                 shootTimer = shootCooldown;
             }
                 
-            
         }
+        else if (playerInput.IsShooting() == false)
+        {
+           switch(currentGun)
+            {
+                case GunType.BOLTGUN:
+                    shootTimer = 0;
+                    break;
+                case GunType.SHOTGUN:
+                    shootTimer = 0.5f;
+                    break;
+                case GunType.RAILGUN:
+                    shootTimer = shootCooldown;
+                    break;
+            }
+        }
+        
 
-        if (playerInput?.IsReloading() == true)
+        if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
         {
             Reload();
+        }
+
+        if (currentGun == GunType.RAILGUN && playerInput.IsShooting() == false && railgun.isCooling == false)
+        {
+            railgun.isReloading = true;
         }
 
         if (playerInput?.IsAbility1Pressed() == true)
@@ -140,7 +174,7 @@ public class PlayerShooting : MonoBehaviour
                     shotgun.Shoot();
                     break;
                 case GunType.RAILGUN:
-                    
+                    railgun.Shoot();
                     break;
             }
 
@@ -165,7 +199,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgun.Reload();
                 break;
             case GunType.RAILGUN:
-
+                railgun.Shoot();
                 break;
         }
     }
@@ -179,6 +213,10 @@ public class PlayerShooting : MonoBehaviour
         }
         else if (currentGun == GunType.SHOTGUN)
         {
+            currentGun = GunType.RAILGUN;
+        }
+        else if (currentGun == GunType.RAILGUN)
+        {
             currentGun = GunType.BOLTGUN;
         }
 
@@ -186,15 +224,16 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
                 shootCooldown = 1f / boltgun.shootCadence;
-                shootTimer = shootCooldown;
+                shootTimer = 0;
 
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence;
-                shootTimer = shootCooldown;
+                shootTimer = 0;
                 break;
             case GunType.RAILGUN:
-
+                shootCooldown = 1f / railgun.shootCadence;
+                shootTimer = 0;
                 break;
         }
     }
@@ -204,26 +243,31 @@ public class PlayerShooting : MonoBehaviour
 
         if (currentGun == GunType.BOLTGUN)
         {
-            currentGun = GunType.SHOTGUN;
+            currentGun = GunType.RAILGUN;
         }
         else if (currentGun == GunType.SHOTGUN)
         {
             currentGun = GunType.BOLTGUN;
+        }
+        else if (currentGun == GunType.RAILGUN)
+        {
+            currentGun = GunType.SHOTGUN;
         }
 
         switch (currentGun)
         {
             case GunType.BOLTGUN:
                 shootCooldown = 1f / boltgun.shootCadence;
-                shootTimer = shootCooldown;
+                shootTimer = 0;
 
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence;
-                shootTimer = shootCooldown;
+                shootTimer = 0;
                 break;
             case GunType.RAILGUN:
-
+                shootCooldown = 1f / railgun.shootCadence;
+                shootTimer = 0;
                 break;
         }
     }

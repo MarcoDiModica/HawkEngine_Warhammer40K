@@ -117,4 +117,9 @@ public class PlayerInput : MonoBehaviour
     {
         return Input.GetControllerButtonDown(ControllerButton.DPadLeft);
     }
+
+    public bool IsChangingRailgunMode()
+    {
+        return Input.GetControllerButtonDown(ControllerButton.DPadDown) || Input.GetControllerButtonDown(ControllerButton.DPadUp);
+    }
 }

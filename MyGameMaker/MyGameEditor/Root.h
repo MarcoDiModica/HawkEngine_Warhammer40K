@@ -78,6 +78,8 @@ public:
     void CreateGameplayUI();
 	void CreateMainMenuUI();
 
+    void SetMainCamera(std::shared_ptr<GameObject> camera);
+
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
 	int prevCameraPriority = 0;

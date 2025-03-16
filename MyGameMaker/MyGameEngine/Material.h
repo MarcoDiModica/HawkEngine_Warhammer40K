@@ -165,7 +165,7 @@ protected:
             std::string imagePath = node["image"].as<std::string>();
             if (!imagePath.empty()) {
                 imagePtr = std::make_shared<Image>();
-                imagePtr->LoadTextureLocalPath(imagePath);
+                imagePtr->LoadTexture(imagePath);
             }
         }
 
@@ -173,7 +173,7 @@ protected:
             std::string normalMapPath = node["normal_map"].as<std::string>();
             if (!normalMapPath.empty()) {
                 normalMapPtr = std::make_shared<Image>();
-                normalMapPtr->LoadTextureLocalPath(normalMapPath);
+                normalMapPtr->LoadTexture(normalMapPath);
             }
         }
 
@@ -181,7 +181,7 @@ protected:
             std::string metallicMapPath = node["metallic_map"].as<std::string>();
             if (!metallicMapPath.empty()) {
                 metallicMapPtr = std::make_shared<Image>();
-                metallicMapPtr->LoadTextureLocalPath(metallicMapPath);
+                metallicMapPtr->LoadTexture(metallicMapPath);
             }
         }
 
@@ -189,7 +189,7 @@ protected:
             std::string roughnessMapPath = node["roughness_map"].as<std::string>();
             if (!roughnessMapPath.empty()) {
                 roughnessMapPtr = std::make_shared<Image>();
-                roughnessMapPtr->LoadTextureLocalPath(roughnessMapPath);
+                roughnessMapPtr->LoadTexture(roughnessMapPath);
             }
         }
 

@@ -57,7 +57,6 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    
     auto player = CreateGameObject("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -74,30 +73,16 @@ bool Root::Start()
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	/*if (playerMesh->HasComponent<SkeletalAnimationComponent>()) {
-		LOG(LogType::LOG_INFO, "Player has SkeletalAnimationComponent");
-	}
-	else
-	{
-		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
-	}*/
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
-	//Serializar bien la camara (
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(50.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-
-	//No se inicializa bien al cargar (cuando se carga la escena, que la main camera sea la camara con mayor valor de prioridad en la escena)
-	//Camera component, meter prioridad, en el componente detectar cuando se hace un cambio en la prioridad y llamar al root para cambiar la camara principal
-	
-	//UI inspector poner prioridad
-	
-	//Serializar prioridad
     mainCamera = objMainCamera;
+	UpdateCameraPriority();
 
 	auto particleFX = CreateGameObject("ParticleFX");
 	auto emitter = particleFX->AddComponent<ParticleFX>();
@@ -111,8 +96,8 @@ bool Root::Start()
     return true;
 }
 
-void AddCollidersEnv() {
-	for (auto go : environment->GetChildren()) {
+static void AddCollidersEnv() {
+	for (const auto& go : environment->GetChildren()) {
 		auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
 		collider->Start();
 	}
@@ -126,7 +111,6 @@ bool Root::Update(double dt)
 		//AddCollidersEnv();
 		hasAddedColliders = true;
 	}
-	UpdateCameraPriority();
 
     return true;
 }
@@ -150,7 +134,7 @@ void Root::UpdateCameraPriority()
 {
 	std::vector<std::shared_ptr<GameObject>> cameraGameObjects;
 
-	auto gameObjects = SceneManagement->GetActiveScene()->_children;
+	auto& gameObjects = SceneManagement->GetActiveScene()->_children;
 
 	for (const auto& gameObject : gameObjects) {
 		if (gameObject->HasComponent<CameraComponent>()) {
@@ -521,6 +505,11 @@ void Root::CreateMainMenuUI()
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.906, 0), glm::vec3(0.182, 0.091, 1));
 }
 
+
+void Root::SetMainCamera(std::shared_ptr<GameObject> camera)
+{
+	mainCamera = camera;
+}
 
 std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
 {

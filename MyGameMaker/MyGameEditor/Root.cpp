@@ -91,7 +91,14 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 
-    CreateGameplayUI();
+	auto enemy = CreateGameObject("Enemy");
+	enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
+	enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	auto mesh = CreateCube("EnemyMesh");
+	ParentGameObject(*mesh, *enemy);
+
+	CreateGameplayUI();
 	
     SceneManagement->Start();
 
@@ -362,14 +369,6 @@ void Root::CreateGameplayUI()
     lifeBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.010, 0.940, 0), glm::vec3(0.350, 0.02, 1));
     lifeBar->AddComponent<ScriptComponent>()->LoadScript("ImageAsSlider");
 
-    auto button = CreateGameObject("Button");
-    Application->root->ParentGameObject(*button, *canvas);
-    button->AddComponent<UIImageComponent>();
-    button->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bottonprueba.png");
-    button->AddComponent<UIButtonComponent>();
-    button->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-    button->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(0.180, 0.150, 1));
-
     /* auto slider = CreateGameObject("Slider");
      Application->root->ParentGameObject(*slider, *canvas);
      slider->AddComponent<UITransformComponent>();
@@ -404,13 +403,13 @@ void Root::CreateMainMenuUI()
     newGameButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     newGameButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.318, 0), glm::vec3(0.182, 0.091, 1));
 
-    //auto continueButton = CreateGameObject("ContinueButton");
-    //Application->root->ParentGameObject(*continueButton, *canvas);
-    //continueButton->AddComponent<UIImageComponent>();
-    //continueButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Continue_button.png");
-    //continueButton->AddComponent<UIButtonComponent>();
-    //continueButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-    //continueButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.604, 0), glm::vec3(0.182, 0.091, 1));
+    auto continueButton = CreateGameObject("ContinueButton");
+    Application->root->ParentGameObject(*continueButton, *canvas);
+    continueButton->AddComponent<UIImageComponent>();
+    continueButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Continue_button.png");
+    continueButton->AddComponent<UIButtonComponent>();
+    continueButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+    continueButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.461, 0), glm::vec3(0.182, 0.091, 1));
 
     auto optionsButton = CreateGameObject("OptionsButton");
     Application->root->ParentGameObject(*optionsButton, *canvas);

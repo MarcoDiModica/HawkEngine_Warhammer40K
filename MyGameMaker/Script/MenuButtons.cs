@@ -5,7 +5,7 @@ using System.Numerics;
 public class MenuButtons : MonoBehaviour
 {
     private UIButton newGameButton;
-    //private UIButton continueButton;
+    private UIButton continueButton;
     private UIButton optionsButton;
     private UIButton creditsButton;
     private UIButton quitButton;
@@ -13,6 +13,7 @@ public class MenuButtons : MonoBehaviour
     public override void Start()
     {
         newGameButton = GameObject.Find("NewGameButton").GetComponent<UIButton>();
+        continueButton = GameObject.Find("ContinueButton").GetComponent<UIButton>();
         optionsButton = GameObject.Find("OptionsButton").GetComponent<UIButton>();
         creditsButton = GameObject.Find("CreditsButton").GetComponent<UIButton>();
         quitButton = GameObject.Find("QuitButton").GetComponent<UIButton>();
@@ -28,6 +29,11 @@ public class MenuButtons : MonoBehaviour
         if (newGameButton.GetState () == ButtonState.CLICKED)
         {
             Engineson.print("NewGame is Clicked");
+        }
+
+        if (continueButton.GetState() == ButtonState.CLICKED)
+        {
+            Engineson.print("Continue is Clicked");
         }
 
         if (optionsButton.GetState() == ButtonState.CLICKED)

@@ -46,6 +46,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="EnemyController.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="ImageAsSlider.cs" />

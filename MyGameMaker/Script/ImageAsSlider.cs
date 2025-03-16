@@ -20,8 +20,6 @@ public class ImageAsSlider : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        Engineson.print("PlayerData: " + playerData.GetHealth());
-
         if (Input.GetKeyDown(KeyCode.B))
         {
             playerData.SetHealth(playerData.GetHealth() - 10);

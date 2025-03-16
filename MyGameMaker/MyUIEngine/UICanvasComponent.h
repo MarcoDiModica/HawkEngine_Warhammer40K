@@ -27,6 +27,9 @@ public:
 	float GetMonitorWidth() const { return monitorHeight; }
 	float GetMonitorHeight() const { return monitorHeight; }
 
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
+
 private:
 	float monitorWidth;
 	float monitorHeight;
@@ -42,8 +45,8 @@ protected:
 
 		YAML::Node node = Component::encode();
 
-		node["width"] = width;
-		node["height"] = height;
+		/*node["width"] = width;
+		node["height"] = height;*/
 
 		return node;
 	}
@@ -52,8 +55,8 @@ protected:
 
 		Component::decode(node);
 
-		height = node["height"].as<float>();
-		width = node["width"].as<float>();
+		/*height = node["height"].as<float>();
+		width = node["width"].as<float>();*/
 		
 		return true;
 	}

@@ -6,7 +6,8 @@
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEditor/MyGUI.h"
 #include "../MyGameEditor/UIGameView.h"
-
+#include "MyScriptingEngine/MonoManager.h"
+#include "mono/metadata/debug-helpers.h"
 
 #include "UIImageComponent.h"
 #include "UIButtonComponent.h"
@@ -85,4 +86,44 @@ void UICanvasComponent::Destroy()
 std::unique_ptr<Component> UICanvasComponent::Clone(GameObject* owner)
 {
 	return std::make_unique<UICanvasComponent>(owner);
+}
+
+MonoObject* UICanvasComponent::GetSharp()
+{
+	if (CsharpReference) {
+		return CsharpReference;
+	}
+
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "UICanvas");
+	if (!klass) {
+		return nullptr;
+	}
+
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		return nullptr;
+	}
+
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.UICanvas:.ctor(uintptr,HawkEngine.GameObject)", true);
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	if (!method)
+	{
+		return nullptr;
+	}
+
+	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+	MonoObject* ownerGo = owner->GetSharp();
+	if (!ownerGo)
+	{
+		return nullptr;
+	}
+
+	void* args[2];
+	args[0] = &componentPtr;
+	args[1] = ownerGo;
+
+	mono_runtime_invoke(method, monoObject, args, nullptr);
+
+	CsharpReference = monoObject;
+	return CsharpReference;
 }

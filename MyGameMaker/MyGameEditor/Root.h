@@ -73,6 +73,10 @@ public:
     
     friend SceneSerializer;
 
+	//has to be removed when the scene serializer is implemented
+    void CreateGameplayUI();
+	void CreateMainMenuUI();
+
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
 };

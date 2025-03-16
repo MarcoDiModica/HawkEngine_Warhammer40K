@@ -131,6 +131,10 @@ namespace EngineBinds {
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
+
+	//UIButton
+    int GetState(MonoObject* uiButtonRef);
+  
     //SkeletalAnimation
 	void SetAnimationSpeed(MonoObject* skeletalAnimationRef, float speed);
 	float GetAnimationSpeed(MonoObject* skeletalAnimationRef);

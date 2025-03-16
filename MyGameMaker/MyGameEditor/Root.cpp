@@ -71,6 +71,7 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
 	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
 	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
 	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");

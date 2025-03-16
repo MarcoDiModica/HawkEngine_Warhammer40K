@@ -16,27 +16,40 @@ public class Grenade : MonoBehaviour
 
     public override void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.SetMass(1);
-        rigidbody.AddForce(transform.forward);
+      
+    }
 
+    public void Init(Vector3 pos, Vector3 dir)
+    {
+        AddComponent<MeshRenderer>();
+        AddComponent<Rigidbody>();
+        GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
+        rigidbody = GetComponent<Rigidbody>();
+        AddComponent<Collider>();
+        GetComponent<Transform>().SetScale(0.25f, 0.25f, 0.25f);
+        rigidbody.SetMass(0.05f);
+        rigidbody.SetGravity(new Vector3(0.0f, -9.81f, 0.0f) * 20);
+        rigidbody.AddForce(dir * 1400);
+        rigidbody.SetFriction(0.5f);
     }
 
     public override void Update(float deltaTime)
     {
-        if (rigidbody.GetVelocity().Length() < 0.1f)
-        {
-            Explode();
-        }
+       
     }
 
 
     void Explode()
     {
-        //Visuals of the grenade explosion
-        gameObject.GetComponent<Transform>().SetScale(2,2,2);
-        rigidbody.SetMass(1);
+        GameObject explosion = Engineson.CreateGameObject("Explosion", null);
+        explosion.AddComponent<MeshRenderer>();
+        explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
+        explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
     }
 
+    public override void OnCollisionEnter(Collider other)
+    {
+        Explode();
+    }
 
 }

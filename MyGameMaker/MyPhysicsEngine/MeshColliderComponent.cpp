@@ -3,7 +3,9 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 
 MeshColliderComponent::MeshColliderComponent(GameObject* owner, PhysicsModule* physicsModule)
-    : Component(owner), physics(physicsModule), rigidBody(nullptr) {
+    : Component(owner), physics(physicsModule), rigidBody(nullptr) 
+{
+	name = "MeshColliderComponent";
 }
 
 MeshColliderComponent::~MeshColliderComponent() {

@@ -33,6 +33,9 @@ class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
 
+
+std::shared_ptr<GameObject> environment;
+
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
@@ -46,9 +49,9 @@ bool Root::Awake()
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();*/
 
-	/*environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
-	environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
-	environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
+	environment = CreateGameObjectWithPath("Assets/Meshes/BlockoutLevel1Remaster.fbx");
+	environment->GetTransform()->SetPosition(glm::vec3(0,-20, 0));
+	environment->GetTransform()->SetScale(glm::vec3(50, 50, 50));
 
     return true;
 }
@@ -140,8 +143,23 @@ bool Root::Start()
     return true;
 }
 
+void AddCollidersEnv() {
+	for (auto go : environment->GetChildren()) {
+		auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+		collider->Start();
+		collider->SnapToPosition();
+	}
+}
+
+bool hasAddedColliders = false;	
+
 bool Root::Update(double dt) 
 {
+	if (!hasAddedColliders) {
+		AddCollidersEnv();
+		hasAddedColliders = true;
+	}
+
     return true;
 }
 

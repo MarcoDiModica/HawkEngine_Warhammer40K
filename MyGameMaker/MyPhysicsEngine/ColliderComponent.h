@@ -78,6 +78,7 @@ protected:
 
     bool decode(const YAML::Node& node) override
     {
+        Start();
 		return false;
     }
 };

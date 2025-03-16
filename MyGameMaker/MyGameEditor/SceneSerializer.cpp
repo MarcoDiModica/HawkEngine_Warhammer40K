@@ -15,6 +15,7 @@
 #include "MyAudioEngine/AudioListener.h"
 #include "MyPhysicsEngine/ColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
+#include <MyPhysicsEngine/MeshColliderComponent.h>
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -232,14 +233,19 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto listener = gameObject->AddComponent<AudioListener>();
 			listener->decode(componentData);
 		}
-		else if (componentName == "ColliderComponent") {
-			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
-			collider->decode(componentData);
-		}
 		else if (componentName == "RigidbodyComponent") {
 			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
 			rb->decode(componentData);
 		}
+		else if (componentName == "ColliderComponent") {
+			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+			collider->decode(componentData);
+		}
+		else if (componentName == "MeshColliderComponent") {
+			auto meshCollider = gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+			meshCollider->decode(componentData);
+		}
+		
 		//mas componentes aqui
 		else {
 			LOG(LogType::LOG_WARNING, "Unknown component type: %s", componentName.c_str());
@@ -329,6 +335,8 @@ ComponentType SceneSerializer::GetComponentTypeFromName(const std::string& name)
 	if (name == "ShaderComponent") return ComponentType::SHADER;
 	if (name == "SoundComponent") return ComponentType::AUDIO;
 	if (name == "AudioListener") return ComponentType::AUDIO_LISTENER;
+	if (name == "ColliderComponent") return ComponentType::COLLIDER;
+	if (name == "RigidbodyComponent") return ComponentType::RIGIDBODY;
 	//mas mapeos aqui
 	return ComponentType::NONE;
 }

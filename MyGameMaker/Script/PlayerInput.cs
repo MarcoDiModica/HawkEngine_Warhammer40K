@@ -108,8 +108,13 @@ public class PlayerInput : MonoBehaviour
         return isAbility2Pressed;
     }
     
-    public bool IsChangingWeapon()
+    public bool IsChangingWeaponRight()
     {
-        return Input.GetKeyDown(KeyCode.Q);
+        return Input.GetControllerButtonDown(ControllerButton.DPadRight);
+    }
+
+    public bool IsChangingWeaponLeft()
+    {
+        return Input.GetControllerButtonDown(ControllerButton.DPadLeft);
     }
 }

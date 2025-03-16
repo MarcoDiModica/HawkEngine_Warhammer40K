@@ -155,13 +155,16 @@ std::istream& operator>>(std::istream& is, Image& img) {
 }
 
 bool Image::LoadTexture(const std::string& path) {
-	LOG(LogType::LOG_INFO, "Cargando textura: %s", path.c_str());
+	LOG(LogType::LOG_INFO, "loading tex: %s", path.c_str());
 	image_path = path;
 
 	if (!std::filesystem::exists(path)) {
-		LOG(LogType::LOG_ERROR, "Archivo de textura no encontrado: %s", path.c_str());
+		LOG(LogType::LOG_ERROR, "tex not found at: %s", path.c_str());
 		return false;
 	}
+
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_UPPER_LEFT);
 
 	ILuint img = ilGenImage();
 	ilBindImage(img);
@@ -170,18 +173,18 @@ bool Image::LoadTexture(const std::string& path) {
 
 	if (!success) {
 		ILenum error = ilGetError();
-		LOG(LogType::LOG_ERROR, "Error al cargar imagen %s: %s (código: %d)",
+		LOG(LogType::LOG_ERROR, "error loading image %s: %s (code: %d)",
 			path.c_str(), iluErrorString(error), error);
 		ilDeleteImage(img);
 		return false;
 	}
 
-	if (ilGetInteger(IL_IMAGE_BPP) == 4) {
-		ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-	}
-	else {
-		ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
-	}
+	auto format = ilGetInteger(IL_IMAGE_FORMAT);
+	auto bpp = ilGetInteger(IL_IMAGE_BPP);
+
+	LOG(LogType::LOG_INFO, "og image: BPP=%d, format=%d", bpp, format);
+
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 
 	if (ilGetInteger(IL_IMAGE_ORIGIN) != IL_ORIGIN_UPPER_LEFT) {
 		iluFlipImage();
@@ -190,11 +193,10 @@ bool Image::LoadTexture(const std::string& path) {
 	auto width = ilGetInteger(IL_IMAGE_WIDTH);
 	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
 	auto channels = ilGetInteger(IL_IMAGE_BPP);
-	auto format = ilGetInteger(IL_IMAGE_FORMAT);
 	auto data = ilGetData();
 
-	LOG(LogType::LOG_INFO, "Información de imagen: ancho=%d, alto=%d, canales=%d, formato DevIL=%d",
-		width, height, channels, format);
+	LOG(LogType::LOG_INFO, "converted image: w=%d, h=%d, ch=%d, f=%d",
+		width, height, channels, ilGetInteger(IL_IMAGE_FORMAT));
 
 	load(width, height, channels, data);
 

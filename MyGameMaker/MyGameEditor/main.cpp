@@ -544,7 +544,6 @@ int main(int argc, char** argv) {
 			iluInit();
 			ilutInit();
 
-		
 			init_openGL();
 
 			if (Application) {	

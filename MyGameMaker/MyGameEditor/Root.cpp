@@ -188,11 +188,11 @@ void Root::UpdateCameraPriority()
 
 		if (highestPriorityCamera != nullptr) {
 			if (mainCamera != nullptr) {
-				mainCamera->SetName("Camera");
+				
 			}
 			mainCamera = highestPriorityCamera;
 			prevCameraPriority = highestPriority;
-			mainCamera->SetName("MainCamera");
+			
 		}
 	}
 	

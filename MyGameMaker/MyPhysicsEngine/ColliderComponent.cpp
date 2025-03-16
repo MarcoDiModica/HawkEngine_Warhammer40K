@@ -55,7 +55,7 @@ void ColliderComponent::OnTriggerExit(ColliderComponent* other) {
 
 
 void ColliderComponent::Update(float deltaTime) {
-    if (snapToPosition && owner && !physics->linkPhysicsToScene) {
+    if (owner && !physics->linkPhysicsToScene) {
 		SnapToPosition();
     }
 }
@@ -161,7 +161,7 @@ void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
     btTransform trans;
     rigidBody->getMotionState()->getWorldTransform(trans);
 
-    // Convert glm::quat to btQuaternion correctly
+    // Convert to btQuaternion 
     btQuaternion btRot(rotation.x, rotation.y, rotation.z, rotation.w);
     trans.setRotation(btRot);
 
@@ -221,7 +221,8 @@ void ColliderComponent::SetActive(bool active) {
             physics->dynamicsWorld->removeRigidBody(rigidBody);
         }
     }
-}void ColliderComponent::SnapToPosition() {
+}
+void ColliderComponent::SnapToPosition() {
     if (!owner) return;
 
     Transform_Component* goTransform = owner->GetTransform();
@@ -233,13 +234,17 @@ void ColliderComponent::SetActive(bool active) {
     glm::vec3 localSize = localBBox.size();
 
     glm::vec3 worldScale = goTransform->GetScale();
-
+    glm::vec3 parentScale(1.0f);
+    if (owner->GetParent()) {
+        parentScale = owner->GetParent()->GetTransform()->GetScale();
+    }
+    glm::vec3 finalScale = worldScale * parentScale;
 
     glm::vec3 worldPosition = goTransform->GetPosition();
     glm::quat worldRotation = goTransform->GetRotation();
-    glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * worldScale);
+    glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * finalScale);
 
-    // Aplicar la transformaci�n al rigidBody
+    // Aplicar la transformación al rigidBody
     btTransform transform;
     transform.setIdentity();
     transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
@@ -254,11 +259,10 @@ void ColliderComponent::SetActive(bool active) {
     rigidBody->setCenterOfMassTransform(transform);
 
     if (rigidBody->getCollisionShape()) {
-        btVector3 btScale(worldScale.x, worldScale.y, worldScale.z);
+        btVector3 btScale(finalScale.x, finalScale.y, finalScale.z);
         rigidBody->getCollisionShape()->setLocalScaling(btScale);
     }
 }
-
 
 //Local BBox Adjusted (doesnt works with the blocking)
 
@@ -287,13 +291,14 @@ void ColliderComponent::CreateCollider() {
         static_cast<btScalar>(localRot.z),
         static_cast<btScalar>(localRot.w)
     );
-    startTransform.setRotation(btRot);    glm::vec3 scale = transform->GetScale();
+    startTransform.setRotation(btRot);   
+    glm::vec3 scale = transform->GetScale();
     glm::vec3 parentScale(1.0f);
     if (owner->GetParent()) {
         parentScale = owner->GetParent()->GetTransform()->GetScale();
     }
     glm::vec3 finalScale = scale * parentScale;
-    shape->setLocalScaling(btVector3(finalScale.x, finalScale.z, finalScale.y));
+    shape->setLocalScaling(btVector3(finalScale.x, finalScale.y, finalScale.z));
 
     btVector3 localInertia(0, 0, 0);
     if (mass > 0.0f) {

@@ -15,6 +15,8 @@
 #include "MyAudioEngine/AudioListener.h"
 #include "MyPhysicsEngine/ColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
+#include <MyPhysicsEngine/MeshColliderComponent.h>
+#include <MyAnimationEngine/SkeletalAnimationComponent.h>
 #include "MyUIEngine/UICanvasComponent.h"
 #include "MyUIEngine/UITransformComponent.h"
 #include "MyUIEngine/UIImageComponent.h"
@@ -240,14 +242,23 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto listener = gameObject->AddComponent<AudioListener>();
 			listener->decode(componentData);
 		}
-		else if (componentName == "ColliderComponent") {
-			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
-			collider->decode(componentData);
-		}
 		else if (componentName == "RigidbodyComponent") {
 			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
 			rb->decode(componentData);
 		}
+		else if (componentName == "ColliderComponent") {
+			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+			collider->decode(componentData);
+		}
+		else if (componentName == "MeshColliderComponent") {
+			auto meshCollider = gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+			meshCollider->decode(componentData);
+		}
+		else if (componentName == "SkeletalAnimationComponent") {
+			auto skeletalComponent = gameObject->AddComponent<SkeletalAnimationComponent>();
+			skeletalComponent->decode(componentData);
+		}
+		
 		else if (componentName == "UITransformComponent") {
 			auto uiTransform = gameObject->GetComponent<UITransformComponent>();
 			

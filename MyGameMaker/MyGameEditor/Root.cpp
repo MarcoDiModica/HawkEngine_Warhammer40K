@@ -28,10 +28,14 @@
 #include "../MyAnimationEngine/BoneComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
+#include <MyPhysicsEngine/MeshColliderComponent.h>
 
 class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
+
+
+std::shared_ptr<GameObject> environment;
 
 bool Root::Awake()
 {
@@ -46,9 +50,13 @@ bool Root::Awake()
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();*/
 
-	/*environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
-	environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
-	environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
+	/*environment = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2.fbx");
+	environment->GetTransform()->SetPosition(glm::vec3(-15,0, 0));
+	environment->GetTransform()->SetScale(glm::vec3(0.06f, 0.06f, 0.06f));*/
+
+	//environment = CreateGameObjectWithPath("Assets/Meshes/BlockoutLevel1Remaster.fbx");
+	//environment->GetTransform()->SetPosition(glm::vec3(0, -20, 0));
+	//environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 
     return true;
 }
@@ -61,18 +69,21 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	auto player = CreateGameObject("Player");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+    
+    auto player = CreateGameObject("Player");
+    player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+    player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
@@ -84,22 +95,44 @@ bool Root::Start()
 		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
 	}
 		
+	//Serializar bien la camara (
     auto objMainCamera = CreateCameraObject("MainCamera");
-    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, 14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
+    //objMainCamera->GetTransform()->Rotate(glm::radians(180.0f), glm::dvec3(0, 1, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+
+	//No se inicializa bien al cargar (cuando se carga la escena, que la main camera sea la camara con mayor valor de prioridad en la escena)
+	//Camera component, meter prioridad, en el componente detectar cuando se hace un cambio en la prioridad y llamar al root para cambiar la camara principal
+	//UI inspector poner prioridad
+	//Serializar prioridad
+
     mainCamera = objMainCamera;
 
-    CreateGameplayUI();
+    /*CreateGameplayUI();*/
 	
     SceneManagement->Start();
 
     return true;
 }
 
+void AddCollidersEnv() {
+	for (auto go : environment->GetChildren()) {
+		auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+		collider->Start();
+	}
+}
+
+bool hasAddedColliders = false;	
+
 bool Root::Update(double dt) 
 {
+	if (!hasAddedColliders) {
+		//AddCollidersEnv();
+		hasAddedColliders = true;
+	}
+
     return true;
 }
 

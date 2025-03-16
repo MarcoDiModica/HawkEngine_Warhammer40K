@@ -48,6 +48,7 @@ public:
     MonoObject* GetSharp() override;
 
 
+    void DecodeRigidbody();
 private:
     btRigidBody* rigidBody;
     btMotionState* motionState;
@@ -61,6 +62,8 @@ private:
 
     void SetRigidBody(btRigidBody* rigidBody);
 
+    bool isFromDecode = false;
+
 protected:
 	friend class SceneSerializer;
 
@@ -72,16 +75,19 @@ protected:
 		return node;
 	}
 
-	bool decode(const YAML::Node& node) override {
-		if (node["mass"].IsDefined()) {
-			mass = node["mass"].as<float>();
-		}
-		if (node["isKinematic"].IsDefined()) {
-			isKinematic = node["isKinematic"].as<bool>();
-		}
-		if (node["isFreezed"].IsDefined()) {
-			isFreezed = node["isFreezed"].as<bool>();
-		}
-		return true;
-	}
+    bool decode(const YAML::Node& node) override {
+		Start();
+        
+    if (node["mass"].IsDefined()) {
+    mass = node["mass"].as<float>();
+    }
+    if (node["isKinematic"].IsDefined()) {
+    isKinematic = node["isKinematic"].as<bool>();
+    }
+    if (node["isFreezed"].IsDefined()) {
+    isFreezed = node["isFreezed"].as<bool>();
+    }
+	isFromDecode = true;
+    return true;
+    }
 };

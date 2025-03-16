@@ -106,6 +106,7 @@ private:
  
 
 protected:
+    friend class SceneSerializer;
     YAML::Node encode() override {
         YAML::Node node = Component::encode();
         // Añadir atributos específicos de SkeletalAnimationComponent
@@ -113,6 +114,7 @@ protected:
     }
 
     bool decode(const YAML::Node& node) override {
+		Start();
         if (!Component::decode(node))
             return false;
         // Extraer atributos específicos de SkeletalAnimationComponent

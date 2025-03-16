@@ -36,6 +36,7 @@ struct KeyScale
 class Bone
 {
 private:
+	friend class SkeletalAnimationComponent;
     std::vector<KeyPosition> m_Positions;
     std::vector<KeyRotation> m_Rotations;
     std::vector<KeyScale> m_Scales;
@@ -63,6 +64,8 @@ public:
     int GetBoneID() { return m_ID; }
 
     void DrawTriangle();
+
+    void SetLocalTransform(const glm::mat4& localTransform) { m_LocalTransform = localTransform; }
 
 private:
 	float GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime);

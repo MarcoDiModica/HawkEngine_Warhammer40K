@@ -15,6 +15,8 @@
 #include "MyAudioEngine/AudioListener.h"
 #include "MyPhysicsEngine/ColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
+#include <MyPhysicsEngine/MeshColliderComponent.h>
+#include <MyAnimationEngine/SkeletalAnimationComponent.h>
 #include "MyUIEngine/UICanvasComponent.h"
 #include "MyUIEngine/UITransformComponent.h"
 #include "MyUIEngine/UIImageComponent.h"
@@ -69,7 +71,11 @@ YAML::Node SceneSerializer::SerializeGameObject(GameObject& gameObject) {
 
 	node["Components"] = SerializeComponents(gameObject);
 
-	SerializeChildren(node, gameObject);
+	YAML::Node children;
+	for (const auto& child : gameObject.GetChildren()) {
+		children.push_back(SerializeGameObject(*child));
+	}
+	node["Children"] = children;
 
 	return node;
 }
@@ -78,12 +84,13 @@ YAML::Node SceneSerializer::SerializeComponents(GameObject& gameObject) {
 	YAML::Node componentsNode;
 
 	for (auto& [type, component] : gameObject.components) {
-		if (component) {
+        if (component && component->GetType() != ComponentType::SCRIPT) {
 			YAML::Node componentNode = component->encode();
 			componentsNode[component->GetName()] = componentNode;
 		}
 	}
 
+	// ScriptComponents 
 	if (!gameObject.scriptComponents.empty()) {
 		YAML::Node scriptsNode;
 		for (size_t i = 0; i < gameObject.scriptComponents.size(); ++i) {
@@ -220,6 +227,7 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		else if (componentName == "CameraComponent") {
 			auto camera = gameObject->AddComponent<CameraComponent>();
 			camera->decode(componentData);
+			Application->root->UpdateCameraPriority();
 		}
 		else if (componentName == "LightComponent") {
 			auto light = gameObject->AddComponent<LightComponent>();
@@ -237,14 +245,24 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto listener = gameObject->AddComponent<AudioListener>();
 			listener->decode(componentData);
 		}
-		else if (componentName == "ColliderComponent") {
-			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
-			collider->decode(componentData);
-		}
 		else if (componentName == "RigidbodyComponent") {
 			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
 			rb->decode(componentData);
 		}
+		else if (componentName == "ColliderComponent") {
+			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+			collider->decode(componentData);
+		}
+		else if (componentName == "MeshColliderComponent") {
+			auto meshCollider = gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+			meshCollider->decode(componentData);
+		}
+		else if (componentName == "SkeletalAnimationComponent") {
+			auto skeletalComponent = gameObject->AddComponent<SkeletalAnimationComponent>();
+			skeletalComponent->decode(componentData);
+			
+		}
+		
 		else if (componentName == "UITransformComponent") {
 			auto uiTransform = gameObject->GetComponent<UITransformComponent>();
 			
@@ -292,10 +310,24 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 }
 
 void SceneSerializer::DeserializeChildren(GameObject* parentGameObject, const YAML::Node& childrenNode) {
-	for (YAML::const_iterator it = childrenNode.begin(); it != childrenNode.end(); ++it) {
-		const YAML::Node& childNode = it->second;
+	if (!childrenNode.IsSequence()) {
+		LOG(LogType::LOG_ERROR, "Children node is not a sequence");
+		return;
+	}
+
+	for (const auto& childNode : childrenNode) {
+		if (!childNode.IsDefined()) {
+			LOG(LogType::LOG_WARNING, "Child node is not defined");
+			continue;
+		}
+
 		auto childObject = DeserializeGameObject(childNode);
-		parentGameObject->AddChild(childObject.get());
+		if (childObject) {
+			parentGameObject->AddChild(childObject.get());
+		}
+		else {
+			LOG(LogType::LOG_WARNING, "Failed to deserialize child object");
+		}
 	}
 }
 

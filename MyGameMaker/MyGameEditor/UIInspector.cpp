@@ -311,8 +311,14 @@ private:
         }
 
         if (ImGui::Button("Set as Main Camera or priority")) {
-			ImGui::Text("Main Camera Set to implement. COMING SOON...");
+			/*ImGui::Text("Main Camera Set to implement. COMING SOON...");*/
+            camera->SetPriority(10);
 		}
+
+        int priority = camera->GetPriority();
+        if (ImGui::DragInt("Priority", &priority, 0.1f, 1.0f, 10.0f)) {
+            camera->SetPriority(priority);
+        }
 
         //follow target look target and shake config
         GameObject* followTarget = camera->followTarget;

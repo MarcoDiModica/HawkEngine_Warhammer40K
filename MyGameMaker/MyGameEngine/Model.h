@@ -62,6 +62,21 @@ struct ModelData
 	std::vector<vec3> vertex_colors;
 	std::vector<vec3> vertex_tangents;  
 	std::vector<vec3> vertex_bitangents;
+
+	// Constructor por defecto
+	ModelData() = default;
+
+	// Constructor de copia
+	ModelData(const ModelData& other) = default;
+
+	// Constructor de movimiento
+	ModelData(ModelData&& other) noexcept = default;
+
+	// Operador de asignación
+	ModelData& operator=(const ModelData& other) = default;
+
+	// Operador de asignación por movimiento
+	ModelData& operator=(ModelData&& other) noexcept = default;
 };
 
 class Model
@@ -89,6 +104,7 @@ public:
 	void ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* mesh, const aiScene* scene);
 
 	const BoundingBox& getBoundingBox() const { return m_BoundingBox; }
+	void SetBoundingBox(const BoundingBox& bbox) { m_BoundingBox = bbox; }
 
 	bool isAnimated = true;
 private:

@@ -5,7 +5,7 @@
 
 SkeletalAnimationComponent::SkeletalAnimationComponent(GameObject* owner) : Component(owner)
 {
-    name = "SkeletalAnimation_Component";
+    name = "SkeletalAnimationComponent";
 }
 
 SkeletalAnimationComponent::SkeletalAnimationComponent(const SkeletalAnimationComponent& other) : Component(other) {

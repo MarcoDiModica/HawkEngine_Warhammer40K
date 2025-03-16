@@ -6,7 +6,10 @@
 #include <mono/metadata/debug-helpers.h>
 
 RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physicsModule)
-    : Component(owner), physics(physicsModule), mass(1.0f) {}
+    : Component(owner), physics(physicsModule), mass(1.0f)
+{
+    name = "RigidbodyComponent";
+}
 
 RigidbodyComponent::~RigidbodyComponent() {
     Destroy();
@@ -28,7 +31,14 @@ void RigidbodyComponent::SetRigidBody(btRigidBody* rigidBody) {
 	rigidBody->setActivationState(DISABLE_DEACTIVATION);
 }
 
-void RigidbodyComponent::Update(float deltaTime) {}
+void RigidbodyComponent::Update(float deltaTime) 
+{
+	if (isFromDecode)
+	{
+		SetMass(mass);
+        isFromDecode = false;
+	}
+}
 
 void RigidbodyComponent::Destroy() {}
 
@@ -173,4 +183,14 @@ MonoObject* RigidbodyComponent::GetSharp()
 
     CsharpReference = monoObject;
     return CsharpReference;
+}
+
+
+
+void RigidbodyComponent::DecodeRigidbody()
+{
+    Start();
+    SetMass(mass);
+	ColliderComponent* collider = owner->GetComponent<ColliderComponent>();
+    collider->SnapToPosition();
 }

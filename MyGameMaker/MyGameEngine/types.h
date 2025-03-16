@@ -50,33 +50,6 @@ using color2 = glm::u8vec2;
 using color3 = glm::u8vec3;
 using color4 = glm::u8vec4;
 
-// Specialize YAML::convert for glm::dvec3
-namespace YAML {
-
-    template<>
-    struct convert<glm::dvec3> {
-        static Node encode(const glm::dvec3& rhs) {
-            Node node;
-            node["x"] = (rhs.x);
-            node["y"] = (rhs.y);
-            node["z"] = (rhs.z);
-            return node;
-        }
-
-        static bool decode(const Node& node, glm::dvec3& rhs) {
-
-            if (!node["x"] || !node["y"] || !node["z"]) {
-                return false;
-            }
-
-            rhs.x = node["x"].as<double>();
-            rhs.y = node["y"].as<double>();
-            rhs.z = node["z"].as<double>();
-            return true;
-        }
-    };
-}
-
 enum ShaderType {
 	UNLIT,
     PBR,

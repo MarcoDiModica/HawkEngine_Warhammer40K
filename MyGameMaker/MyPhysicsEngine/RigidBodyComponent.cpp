@@ -191,4 +191,6 @@ void RigidbodyComponent::DecodeRigidbody()
 {
     Start();
     SetMass(mass);
+	ColliderComponent* collider = owner->GetComponent<ColliderComponent>();
+    collider->SnapToPosition();
 }

@@ -21,6 +21,8 @@ struct AssimpNodeData
 class Animation
 {
 private:
+	friend class SkeletalAnimationComponent;
+
     float m_Duration = 0;
     int m_TicksPerSecond = 0;
     std::vector<Bone> m_Bones;
@@ -44,7 +46,11 @@ public:
 
     inline float GetTicksPerSecond() { return m_TicksPerSecond; }
 
+    inline int& GetTicksPerSecond2() { return m_TicksPerSecond; }
+
     inline float GetDuration() { return m_Duration; }
+
+    inline float& GetDuration2() { return m_Duration; }
 
     inline const AssimpNodeData& GetRootNode() { return m_RootNode; }
 

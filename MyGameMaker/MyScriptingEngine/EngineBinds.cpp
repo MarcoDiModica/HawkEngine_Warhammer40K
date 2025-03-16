@@ -152,9 +152,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.UICanvas") {
 		return GO->GetComponent<UICanvasComponent>()->GetSharp();
 	}
-	/*else if (componentName == "HawkEngine.ScriptComponent") {
+	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
-	}*/
+	}
 
 
 	

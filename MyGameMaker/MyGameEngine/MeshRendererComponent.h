@@ -8,6 +8,7 @@
 #include "../MyGameEditor/Log.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "GameObject.h"
+#include "yaml-cpp/yaml.h"
 
 class Mesh;
 class Material;
@@ -59,17 +60,53 @@ private:
 	void RenderWithPBRShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const;
 
 protected:
-	friend class SceneSerializer;
+    friend class SceneSerializer;
 
-	YAML::Node encode() override
-	{
-		YAML::Node node = Component::encode();
+    YAML::Node encode() override {
+        YAML::Node node = Component::encode();
 
-		return node;
-	}
+        if (mesh)
+            node["mesh"] = mesh->encode();
+        else
+            node["mesh"] = YAML::Node();
 
-	bool decode(const YAML::Node& node) override
-	{
-		return true;
-	}
+        if (material)
+            node["material"] = material->encode();
+        else
+            node["material"] = YAML::Node();
+
+        node["color"] = std::vector<float>{ color.x, color.y, color.z };
+
+        return node;
+    }
+
+    bool decode(const YAML::Node& node) override {
+        if (node["mesh"]) {
+            std::shared_ptr<Mesh> loadedMesh = std::make_shared<Mesh>();
+            if (!loadedMesh->decode(node["mesh"])) {
+                LOG(LogType::LOG_ERROR, "Failed to decode mesh in MeshRenderer");
+                return false;
+            }
+            SetMesh(loadedMesh);
+        }
+
+        if (node["material"]) {
+            std::shared_ptr<Material> loadedMaterial = std::make_shared<Material>();
+            if (!loadedMaterial->decode(node["material"])) {
+                LOG(LogType::LOG_ERROR, "Failed to decode material in MeshRenderer");
+                return false;
+            }
+            SetMaterial(loadedMaterial);
+        }
+
+        if (node["color"] && node["color"].IsSequence() && node["color"].size() == 3) {
+            glm::vec3 decodedColor;
+            decodedColor.x = node["color"][0].as<float>();
+            decodedColor.y = node["color"][1].as<float>();
+            decodedColor.z = node["color"][2].as<float>();
+            SetColor(decodedColor);
+        }
+
+        return true;
+    }
 };

@@ -30,6 +30,18 @@ struct BoundingBox {
 		this->min = min;
 		this->max = max;
 	}
+	// Constructor de copia
+	BoundingBox(const BoundingBox& other) = default;
+
+	// Constructor de movimiento
+	BoundingBox(BoundingBox&& other) noexcept = default;
+
+	// Operador de asignación
+	BoundingBox& operator=(const BoundingBox& other) = default;
+
+	// Operador de asignación por movimiento
+	BoundingBox& operator=(BoundingBox&& other) noexcept = default;
+
 
 	BoundingBox(const vec3* vertices, size_t num_verts);
 

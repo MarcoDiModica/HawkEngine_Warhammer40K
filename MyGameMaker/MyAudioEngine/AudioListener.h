@@ -2,6 +2,7 @@
 
 #include "../MyGameEngine/Component.h"
 #include "AudioEngine.h"
+#include <yaml-cpp/yaml.h>
 #include <memory>
 
 class GameObject;

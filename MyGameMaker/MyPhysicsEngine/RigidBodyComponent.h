@@ -6,6 +6,7 @@
 #include "PhysicsModule.h"
 #include "ColliderComponent.h"
 #include <glm/glm.hpp>
+#include <yaml-cpp/yaml.h>
 
 class RigidbodyComponent : public Component {
 public:

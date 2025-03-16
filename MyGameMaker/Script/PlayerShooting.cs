@@ -61,12 +61,6 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("ERROR: PlayerShooting requires a Shotgun component!");
         }
 
-        grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
-        if (grenadeLauncher == null)
-        {
-            Engineson.print("ERROR: PlayerShooting requires a GrenadeLauncher component!");
-        }
-
         switch (currentGun)
         {
             case GunType.BOLTGUN:

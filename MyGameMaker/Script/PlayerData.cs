@@ -10,6 +10,15 @@
 
     public void SetHealth(float health)
     {
+        if (health > maxHealth)
+        {
+            this.health = maxHealth;
+            return;
+        }else if (health < 0)
+        {
+            this.health = 0;
+            return;
+        }
         this.health = health;
     }
 

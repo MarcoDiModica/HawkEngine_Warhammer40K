@@ -5,13 +5,13 @@ using HawkEngine;
 public class EnemyController : MonoBehaviour
 {
     private Transform player;
-    private float distToChase = 10.0f;
-    private float speedMovement = 15.0f;
+    private float distToChase = 20.0f;
+    private float speedMovement = 20.0f;
     private Rigidbody rb;
     public float acceleration = 15.0f;
     Vector3 moveDirection;
     private float currentRotationAngle;
-    public float rotationSpeed = 30.0f;
+    public float rotationSpeed = 300.0f;
     private Collider collider;
 
     public override void Start()

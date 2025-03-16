@@ -26,6 +26,11 @@ public class UIGameplay : MonoBehaviour
         {
             playerData.SetHealth(playerData.GetHealth() - 10);
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            playerData.SetHealth(playerData.GetHealth() + 10);
+        }
         transform.SetUIScale(new Vector3(CaclulateLifeBarWidth(), 0.054f, 1.0f));
 
         if (Input.GetKeyDown(KeyCode.N))

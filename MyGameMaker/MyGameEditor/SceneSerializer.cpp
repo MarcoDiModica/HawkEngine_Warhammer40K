@@ -21,6 +21,7 @@
 #include "MyUIEngine/UITransformComponent.h"
 #include "MyUIEngine/UIImageComponent.h"
 #include "MyUIEngine/UIButtonComponent.h"
+#include "MyParticlesEngine/ParticleFX.h"
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -283,6 +284,10 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		else if (componentName == "UIButtonComponent") {
 			auto button = gameObject->AddComponent<UIButtonComponent>();
 			button->decode(componentData);
+		}
+		else if (componentName == "ParticleFX") {
+			auto particle = gameObject->AddComponent<ParticleFX>();
+			particle->decode(componentData);
 		}
 		//mas componentes aqui
 		else {

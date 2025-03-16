@@ -11,6 +11,7 @@ class Material
 {
 public:
 	Material();
+	virtual ~Material() = default;
 
 	enum WrapModes { Repeat, MirroredRepeat, Clamp };
 	WrapModes wrapMode = Repeat;
@@ -37,8 +38,8 @@ public:
 	unsigned int GetId() const { return gid; }
 	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
 
-	void bind() const;
-	void unbind() const;
+	virtual void bind() const;
+	virtual void unbind() const;
 
 	void setImage(const std::shared_ptr<Image>& img_ptr) { imagePtr = img_ptr; }
 	void setNormalMap(const std::shared_ptr<Image>& img_ptr) { normalMapPtr = img_ptr; }
@@ -55,7 +56,7 @@ public:
 	void SetShaderType(ShaderType type) { shaderType = type; }
 	ShaderType GetShaderType() const { return shaderType; }
 
-	void ApplyShader(const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection) const;
+	virtual void ApplyShader(const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection) const;
 
 	void SaveBinary(const std::string& filename) const;
 	static std::shared_ptr<Material> LoadBinary(const std::string& filename);
@@ -63,7 +64,7 @@ public:
 	void SetTonemapStrength(float strength) { tonemapStrength = strength; }
 	float GetTonemapStrength() const { return tonemapStrength; }
 
-private:
+protected:
 	unsigned int gid;
 	static unsigned int next_id;
 	std::string image_path;

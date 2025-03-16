@@ -52,7 +52,8 @@ using color4 = glm::u8vec4;
 
 enum ShaderType {
 	UNLIT,
-    PBR
+    PBR,
+    PARTICLE
 };
 
 namespace YAML {

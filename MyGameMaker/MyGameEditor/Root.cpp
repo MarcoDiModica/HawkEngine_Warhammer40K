@@ -53,7 +53,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	auto player = CreateGameObject("Player");
+	/*auto player = CreateGameObject("Player");
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
@@ -74,7 +74,7 @@ bool Root::Start()
 	else
 	{
 		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
-	}
+	}*/
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -86,9 +86,9 @@ bool Root::Start()
 	auto particleFX = CreateGameObject("ParticleFX");
 	auto emitter = particleFX->AddComponent<ParticleFX>();
 	emitter->ConfigureSmoke();
-	emitter->SetTexture("Baker_house.png");
+	emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
-    CreateGameplayUI();
+    //CreateGameplayUI();
 	
     SceneManagement->Start();
 

@@ -120,7 +120,7 @@ ParticleFX::ParticleFX(GameObject* owner)
 	, rng(std::random_device()())
 	, dist01(0.0f, 1.0f)
 {
-	name = "ModernParticleEmitter";
+	name = "ParticleFX";
 
 	material = std::make_shared<ParticleMaterial>();
 	renderer = std::make_unique<ParticleInstancedRenderer>(1000);

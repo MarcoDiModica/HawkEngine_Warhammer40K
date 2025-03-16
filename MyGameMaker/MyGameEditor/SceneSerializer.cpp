@@ -124,6 +124,8 @@ void SceneSerializer::DeSerialize(const std::string& path) {
 
 		LOG(LogType::LOG_INFO, "Deserializing scene: %s", path.c_str());
 
+		Application->root->mainCamera = nullptr;
+
 		if (Application->root->GetActiveScene() != nullptr) {
 			for (const auto& child : Application->root->GetActiveScene()->_children) {
 				child->isSelected = false;
@@ -166,6 +168,8 @@ void SceneSerializer::DeSerialize(const std::string& path) {
 	catch (const std::exception& e) {
 		LOG(LogType::LOG_ERROR, "Exception during deserialization: %s", e.what());
 	}
+
+	Application->root->UpdateCameraPriority();
 }
 
 std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::Node& node) {

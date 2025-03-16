@@ -143,25 +143,14 @@ void Root::UpdateCameraPriority()
 	}
 
 	if (!cameraGameObjects.empty()) {
-		std::shared_ptr<GameObject> highestPriorityCamera = nullptr;
-		int highestPriority = prevCameraPriority;
+		
+		// Sort cameras by priority
+		std::sort(cameraGameObjects.begin(), cameraGameObjects.end(), [](const std::shared_ptr<GameObject>& a, const std::shared_ptr<GameObject>& b) {
+			return a->GetComponent<CameraComponent>()->GetPriority() > b->GetComponent<CameraComponent>()->GetPriority();
+			});
 
-		for (const auto& cameraGameObject : cameraGameObjects) {
-			int currentPriority = cameraGameObject->GetComponent<CameraComponent>()->GetPriority();
-			if (currentPriority > highestPriority) {
-				highestPriority = currentPriority;
-				highestPriorityCamera = cameraGameObject;
-			}
-		}
-
-		if (highestPriorityCamera != nullptr) {
-			if (mainCamera != nullptr) {
-				
-			}
-			mainCamera = highestPriorityCamera;
-			prevCameraPriority = highestPriority;
-			
-		}
+		// Set the camera with the highest priority as the main camera
+		mainCamera = cameraGameObjects[0];
 	}
 	
 }

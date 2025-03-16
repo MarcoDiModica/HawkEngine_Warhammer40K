@@ -108,7 +108,11 @@ protected:
         }
         node["shader_type"] = shaderTypeStr;
 
-        node["image"] = image_path;
+        node["image"] = imagePtr ? imagePtr->image_path : "";
+        node["normal_map"] = normalMapPtr ? normalMapPtr->image_path : "";
+        node["metallic_map"] = metallicMapPtr ? metallicMapPtr->image_path : "";
+        node["roughness_map"] = roughnessMapPtr ? roughnessMapPtr->image_path : "";
+        node["ao_map"] = aoMapPtr ? aoMapPtr->image_path : "";
 
         return node;
     }
@@ -157,10 +161,42 @@ protected:
             shaderType = ShaderType::UNLIT;
 
         if (node["image"]) {
-            image_path = node["image"].as<std::string>();
-            if (!image_path.empty()) {
+            std::string imagePath = node["image"].as<std::string>();
+            if (!imagePath.empty()) {
                 imagePtr = std::make_shared<Image>();
-                imagePtr->LoadTextureLocalPath(image_path);
+                imagePtr->LoadTextureLocalPath(imagePath);
+            }
+        }
+
+        if (node["normal_map"]) {
+            std::string normalMapPath = node["normal_map"].as<std::string>();
+            if (!normalMapPath.empty()) {
+                normalMapPtr = std::make_shared<Image>();
+                normalMapPtr->LoadTextureLocalPath(normalMapPath);
+            }
+        }
+
+        if (node["metallic_map"]) {
+            std::string metallicMapPath = node["metallic_map"].as<std::string>();
+            if (!metallicMapPath.empty()) {
+                metallicMapPtr = std::make_shared<Image>();
+                metallicMapPtr->LoadTextureLocalPath(metallicMapPath);
+            }
+        }
+
+        if (node["roughness_map"]) {
+            std::string roughnessMapPath = node["roughness_map"].as<std::string>();
+            if (!roughnessMapPath.empty()) {
+                roughnessMapPtr = std::make_shared<Image>();
+                roughnessMapPtr->LoadTextureLocalPath(roughnessMapPath);
+            }
+        }
+
+        if (node["ao_map"]) {
+            std::string aoMapPath = node["ao_map"].as<std::string>();
+            if (!aoMapPath.empty()) {
+                aoMapPtr = std::make_shared<Image>();
+                aoMapPtr->LoadTextureLocalPath(aoMapPath);
             }
         }
         return true;

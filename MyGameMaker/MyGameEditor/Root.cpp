@@ -101,6 +101,7 @@ bool Root::Start()
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
     //objMainCamera->GetTransform()->Rotate(glm::radians(180.0f), glm::dvec3(0, 1, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
 
 	//No se inicializa bien al cargar (cuando se carga la escena, que la main camera sea la camara con mayor valor de prioridad en la escena)
@@ -110,6 +111,14 @@ bool Root::Start()
 	
 	//Serializar prioridad
     mainCamera = objMainCamera;
+
+	/*auto cameras = SceneManagement->GetActiveScene()->GetComponentsInChildren<CameraComponent>();
+	if (!cameras.empty()) {
+		auto highestPriorityCamera = std::max_element(cameras.begin(), cameras.end(), [](const auto& a, const auto& b) {
+			return a->GetPriority() < b->GetPriority();
+			});
+		mainCamera = highestPriorityCamera->GetOwner();
+	}*/
 
     /*CreateGameplayUI();*/
 	
@@ -133,10 +142,61 @@ bool Root::Update(double dt)
 		//AddCollidersEnv();
 		hasAddedColliders = true;
 	}
+	UpdateCameraPriority();
 
     return true;
 }
 
+void Root::SetCameraPriority(std::shared_ptr<GameObject> camera, int priority)
+{
+	if (mainCamera == nullptr) {
+		mainCamera = camera;
+		prevCameraPriority = priority;
+		mainCamera->SetName("MainCamera");
+	}
+	else if (priority > prevCameraPriority) {
+		mainCamera->SetName("Camera");
+		mainCamera = camera;
+		prevCameraPriority = priority;
+		mainCamera->SetName("MainCamera");
+	}
+}
+
+void Root::UpdateCameraPriority()
+{
+	std::vector<std::shared_ptr<GameObject>> cameraGameObjects;
+
+	auto gameObjects = SceneManagement->GetActiveScene()->_children;
+
+	for (const auto& gameObject : gameObjects) {
+		if (gameObject->HasComponent<CameraComponent>()) {
+			cameraGameObjects.push_back(gameObject);
+		}
+	}
+
+	if (!cameraGameObjects.empty()) {
+		std::shared_ptr<GameObject> highestPriorityCamera = nullptr;
+		int highestPriority = prevCameraPriority;
+
+		for (const auto& cameraGameObject : cameraGameObjects) {
+			int currentPriority = cameraGameObject->GetComponent<CameraComponent>()->GetPriority();
+			if (currentPriority > highestPriority) {
+				highestPriority = currentPriority;
+				highestPriorityCamera = cameraGameObject;
+			}
+		}
+
+		if (highestPriorityCamera != nullptr) {
+			if (mainCamera != nullptr) {
+				
+			}
+			mainCamera = highestPriorityCamera;
+			prevCameraPriority = highestPriority;
+			
+		}
+	}
+	
+}
 shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh)
 {
     return SceneManagement->CreateMeshObject(name, mesh);

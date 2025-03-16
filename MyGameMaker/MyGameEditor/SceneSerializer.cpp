@@ -226,6 +226,7 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		else if (componentName == "CameraComponent") {
 			auto camera = gameObject->AddComponent<CameraComponent>();
 			camera->decode(componentData);
+			Application->root->SetCameraPriority(gameObject->shared_from_this(), camera->GetPriority());
 		}
 		else if (componentName == "LightComponent") {
 			auto light = gameObject->AddComponent<LightComponent>();

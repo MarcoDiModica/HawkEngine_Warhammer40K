@@ -49,7 +49,6 @@
     <Compile Include="EnemyController.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />
-    <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="MenuButtons.cs" />
     <Compile Include="MeshRenderer.cs" />
@@ -69,7 +68,9 @@
     <Compile Include="Transform.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="UICanvas.cs" />
+    <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
+    <Compile Include="UITransform.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

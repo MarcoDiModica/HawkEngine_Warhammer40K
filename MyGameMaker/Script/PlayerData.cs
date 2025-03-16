@@ -1,6 +1,7 @@
 ﻿public class PlayerData
 {
     float health;
+    float maxHealth = 100;
 
     public PlayerData()
     {
@@ -13,4 +14,8 @@
     }
 
     public float GetHealth() { return health; }
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
 }

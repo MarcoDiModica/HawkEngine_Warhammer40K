@@ -134,6 +134,9 @@ namespace EngineBinds {
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);
+
+	//UITransform
+	void SetUIScale(MonoObject* uiTransformRef, glm::vec3* scale);
   
     //SkeletalAnimation
 	void SetAnimationSpeed(MonoObject* skeletalAnimationRef, float speed);

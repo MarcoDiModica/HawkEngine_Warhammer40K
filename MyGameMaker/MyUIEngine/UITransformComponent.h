@@ -54,6 +54,10 @@ public:
 	bool GetResised() { return resized; }
 	void SetResized(bool resized) { this->resized = resized; }
 
+	void SetSacale(const glm::vec3& scale) { this->scale = scale; }
+
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
 
 private:
 	//posicion, rotacion, escala

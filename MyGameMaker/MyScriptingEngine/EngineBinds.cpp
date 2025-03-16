@@ -18,6 +18,7 @@
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
+#include "../MyUIEngine/UITransformComponent.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
@@ -152,6 +153,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.UICanvas") {
 		return GO->GetComponent<UICanvasComponent>()->GetSharp();
 	}
+    else if (componentName == "HawkEngine.UITransform") {
+        return GO->GetComponent<UITransformComponent>()->GetSharp();
+    }
 	/*else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}*/
@@ -188,7 +192,9 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
 		break; 
     case 9: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
         break;
-   }
+	case 10: _component = static_cast<Component*>(go->AddComponent<UITransformComponent>());
+		break;
+    }
 
 	
 
@@ -762,6 +768,14 @@ int EngineBinds::GetState(MonoObject* uiButtonRef)
 	}
 }
 
+void EngineBinds::SetUIScale(MonoObject* uiTransformRef, glm::vec3* scale)
+{
+	auto uiTransform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+	if (uiTransform) {
+		uiTransform->SetSacale(*scale);
+	}
+}
+
 void EngineBinds::SetAnimationSpeed(MonoObject* animationRef, float speed)
 {
 	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
@@ -896,6 +910,9 @@ void EngineBinds::BindEngine() {
 
 	// UI Button
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);
+
+	// UI Transform
+	mono_add_internal_call("HawkEngine.UITransform::SetUIScale", (const void*)&EngineBinds::SetUIScale);
   
     // SkeletalAnimation
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationSpeed", (const void*)&EngineBinds::SetAnimationSpeed);

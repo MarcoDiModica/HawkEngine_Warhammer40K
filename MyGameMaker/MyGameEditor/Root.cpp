@@ -91,12 +91,12 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 
-	//auto enemy = CreateGameObject("Enemy");
-	//enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
-	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	//auto mesh = CreateCube("EnemyMesh");
-	//ParentGameObject(*mesh, *enemy);
+	auto enemy = CreateGameObject("Enemy");
+	enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
+	enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	auto mesh = CreateCube("EnemyMesh");
+	ParentGameObject(*mesh, *enemy);
 
 	CreateGameplayUI();
 	
@@ -354,19 +354,13 @@ void Root::CreateGameplayUI()
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
 
-    //auto staminaBar = CreateGameObject("LifeBar");
-    //Application->root->ParentGameObject(*staminaBar, *canvas);
-    //staminaBar->AddComponent<UIImageComponent>();
-    //staminaBar->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/GamePlayUI.png");
-    //staminaBar->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-    //staminaBar->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.5, 0), glm::vec3(1, 1, 1));
-
 	auto playerLife = CreateGameObject("PlayerLife");
 	Application->root->ParentGameObject(*playerLife, *canvas);
 	playerLife->AddComponent<UIImageComponent>();
 	playerLife->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/blood.png");
 	playerLife->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
 	playerLife->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.143, 0.831, 0), glm::vec3(0.195, 0.054, 1));
+	playerLife->AddComponent<ScriptComponent>()->LoadScript("UIGameplay");
 
 	auto playerStamina = CreateGameObject("PlayerStamina");
 	Application->root->ParentGameObject(*playerStamina, *canvas);
@@ -374,7 +368,6 @@ void Root::CreateGameplayUI()
 	playerStamina->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/blood.png");
 	playerStamina->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
 	playerStamina->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.139, 0.899, 0), glm::vec3(0.107, 0.035, 1));
-	//playerStamina->AddComponent<ScriptComponent>()->LoadScript("ImageAsSlider");
 
 	auto playerStats = CreateGameObject("PlayerStats");
 	Application->root->ParentGameObject(*playerStats, *canvas);

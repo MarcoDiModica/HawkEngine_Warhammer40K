@@ -4,6 +4,9 @@ using HawkEngine;
 
 public class Boltgun : BaseWeapon
 {
+
+    GrenadeLauncher grenadeLauncher;
+
     public override void Start()
     {
         shootCadence = 3f;
@@ -14,6 +17,7 @@ public class Boltgun : BaseWeapon
         reloadTime = 1.5f;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
+        grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
     }
 
     public override void Update(float deltaTime)
@@ -68,6 +72,7 @@ public class Boltgun : BaseWeapon
     {
         // Ability 1 logic
         Engineson.print("Boltgun ability 1 used");
+        grenadeLauncher.TriggerAbility();
     }
 
     public override void UseAbility2()

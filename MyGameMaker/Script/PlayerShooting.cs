@@ -14,9 +14,6 @@ public class PlayerShooting : MonoBehaviour
     // Guns Scripts
     private Boltgun boltgun;
 
-    // Abilities Scripts
-    private GrenadeLauncher grenadeLauncher;
-
     private Audio sound;
 
     private enum GunType
@@ -55,12 +52,6 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("ERROR: PlayerShooting requires a Boltgun component!");
         }
 
-        grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
-        if (grenadeLauncher == null)
-        {
-            Engineson.print("ERROR: PlayerShooting requires a GrenadeLauncher component!");
-        }
-
 
     }
 
@@ -96,13 +87,13 @@ public class PlayerShooting : MonoBehaviour
         if (playerInput?.IsAbility1Pressed() == true)
         {
             Engineson.print("Ability 1 pressed");
-            grenadeLauncher.TriggerAbility();
+            UseAbility1();
         }
 
         if (playerInput?.IsAbility2Pressed() == true)
         {
             Engineson.print("Ability 2 pressed");
-            // UseAbility2();
+            UseAbility2();
         }
 
     }
@@ -169,5 +160,36 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+    private void UseAbility1()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                boltgun.UseAbility1();
+                break;
+            case GunType.SHOTGUN:
+
+                break;
+            case GunType.RAILGUN:
+
+                break;
+        }
+    }
+
+    private void UseAbility2()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                boltgun.UseAbility2();
+                break;
+            case GunType.SHOTGUN:
+
+                break;
+            case GunType.RAILGUN:
+
+                break;
+        }
+    }
 
 }

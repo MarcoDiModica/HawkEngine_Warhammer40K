@@ -24,6 +24,9 @@ void MeshColliderComponent::Start() {
 
 void MeshColliderComponent::Update(float deltaTime) {
     // Update logic if needed
+    if (owner) {
+        SnapToPosition();
+    }
 }
 
 void MeshColliderComponent::Destroy() {

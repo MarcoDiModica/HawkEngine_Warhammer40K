@@ -54,9 +54,9 @@ bool Root::Awake()
 	environment->GetTransform()->SetPosition(glm::vec3(-15,0, 0));
 	environment->GetTransform()->SetScale(glm::vec3(0.06f, 0.06f, 0.06f));*/
 
-	//environment = CreateGameObjectWithPath("Assets/Meshes/BlockoutLevel1Remaster.fbx");
-	//environment->GetTransform()->SetPosition(glm::vec3(0, -20, 0));
-	//environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	/*environment = CreateGameObjectWithPath("Assets/Meshes/BlockoutLevel1Remaster.fbx");
+	environment->GetTransform()->SetPosition(glm::vec3(0, -20, 0));
+	environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
 
     return true;
 }
@@ -72,12 +72,11 @@ bool Root::Start()
     
     auto player = CreateGameObject("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-    player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
     player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
@@ -87,13 +86,14 @@ bool Root::Start()
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	if (playerMesh->HasComponent<SkeletalAnimationComponent>()) {
+	/*if (playerMesh->HasComponent<SkeletalAnimationComponent>()) {
 		LOG(LogType::LOG_INFO, "Player has SkeletalAnimationComponent");
 	}
 	else
 	{
 		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
-	}
+	}*/
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
 	//Serializar bien la camara (
     auto objMainCamera = CreateCameraObject("MainCamera");
@@ -105,9 +105,10 @@ bool Root::Start()
 
 	//No se inicializa bien al cargar (cuando se carga la escena, que la main camera sea la camara con mayor valor de prioridad en la escena)
 	//Camera component, meter prioridad, en el componente detectar cuando se hace un cambio en la prioridad y llamar al root para cambiar la camara principal
+	
 	//UI inspector poner prioridad
+	
 	//Serializar prioridad
-
     mainCamera = objMainCamera;
 
     /*CreateGameplayUI();*/
@@ -119,7 +120,7 @@ bool Root::Start()
 
 void AddCollidersEnv() {
 	for (auto go : environment->GetChildren()) {
-		auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+		auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
 		collider->Start();
 	}
 }
@@ -261,33 +262,33 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
 			std::unordered_map<std::string, std::shared_ptr<GameObject>> boneMap;
 
-			for (auto& bone : meshImp.bonesGameObjects[i]) {
-				if (!bone) continue;
+			//for (auto& bone : meshImp.bonesGameObjects[i]) {
+			//	if (!bone) continue;
 
-				auto boneGO = Application->root->CreateGameObject(bone->GetName());
-				Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
-				animationComponent->GetAnimator()->AddBoneGameObject(boneGO);
-				boneMap[bone->GetName()] = boneGO;
-			}
+			//	auto boneGO = Application->root->CreateGameObject(bone->GetName());
+			//	Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+			//	animationComponent->GetAnimator()->AddBoneGameObject(boneGO);
+			//	boneMap[bone->GetName()] = boneGO;
+			//}
 
-			for (auto& bone : meshImp.bonesGameObjects[i]) {
-				if (!bone) continue;
+			//for (auto& bone : meshImp.bonesGameObjects[i]) {
+			//	if (!bone) continue;
 
-				auto boneGO = boneMap[bone->GetName()];
-				Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
-				if (boneTransform && !boneTransform->GetParentName().empty()) {
-					auto it = boneMap.find(boneTransform->GetParentName());
-					if (it != boneMap.end()) {
-						ParentGameObject(*boneGO, *(it->second));
-					}
-					else {
-						ParentGameObject(*boneGO, *go);
-					}
-				}
-				else {
-					ParentGameObject(*boneGO, *go);
-				}
-			}
+			//	auto boneGO = boneMap[bone->GetName()];
+			//	Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+			//	if (boneTransform && !boneTransform->GetParentName().empty()) {
+			//		auto it = boneMap.find(boneTransform->GetParentName());
+			//		if (it != boneMap.end()) {
+			//			ParentGameObject(*boneGO, *(it->second));
+			//		}
+			//		else {
+			//			ParentGameObject(*boneGO, *go);
+			//		}
+			//	}
+			//	else {
+			//		ParentGameObject(*boneGO, *go);
+			//	}
+			//}
 		}
 
 		meshRenderer->GetMesh()->setBoundingBox(*meshBBox);

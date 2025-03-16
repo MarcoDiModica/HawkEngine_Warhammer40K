@@ -83,12 +83,13 @@ YAML::Node SceneSerializer::SerializeComponents(GameObject& gameObject) {
 	YAML::Node componentsNode;
 
 	for (auto& [type, component] : gameObject.components) {
-		if (component) {
+        if (component && component->GetType() != ComponentType::SCRIPT) {
 			YAML::Node componentNode = component->encode();
 			componentsNode[component->GetName()] = componentNode;
 		}
 	}
 
+	// ScriptComponents 
 	if (!gameObject.scriptComponents.empty()) {
 		YAML::Node scriptsNode;
 		for (size_t i = 0; i < gameObject.scriptComponents.size(); ++i) {
@@ -257,6 +258,7 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		else if (componentName == "SkeletalAnimationComponent") {
 			auto skeletalComponent = gameObject->AddComponent<SkeletalAnimationComponent>();
 			skeletalComponent->decode(componentData);
+			
 		}
 		
 		else if (componentName == "UITransformComponent") {

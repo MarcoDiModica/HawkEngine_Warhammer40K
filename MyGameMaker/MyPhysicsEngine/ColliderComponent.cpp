@@ -6,6 +6,7 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
+#include "RigidBodyComponent.h"
 
 ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) 
 { 
@@ -55,7 +56,7 @@ void ColliderComponent::OnTriggerExit(ColliderComponent* other) {
 
 
 void ColliderComponent::Update(float deltaTime) {
-    if (owner && !physics->linkPhysicsToScene) {
+    if (owner) {
 		SnapToPosition();
     }
 }
@@ -224,6 +225,7 @@ void ColliderComponent::SetActive(bool active) {
 }
 void ColliderComponent::SnapToPosition() {
     if (!owner) return;
+	if (owner->HasComponent<RigidbodyComponent>()) return;
 
     Transform_Component* goTransform = owner->GetTransform();
     if (!goTransform) return;

@@ -60,6 +60,8 @@ public:
 		return m_Animations;
 	}
 
+	 auto GetMBoneInfoMap() { return m_BoneInfoMap; }
+
 private:
     void ReadMissingBones(const aiAnimation* animation, Model& model);
     void ReadHeirarchyData(AssimpNodeData& dest, const aiNode* src);

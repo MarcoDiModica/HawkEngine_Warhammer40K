@@ -103,7 +103,8 @@ public:
 
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
-
+    float blendFactor = 0.0f;
+    bool isBlending = false;
 private:
     std::unique_ptr<Animator> animator;
     std::unique_ptr<Animation> testAnimation;
@@ -111,7 +112,9 @@ private:
 	std::vector<std::unique_ptr<Animation>> animations;
     int animationIndex = 0;
 	bool isPlaying = true;
- 
+
+
+
 
 protected:
     YAML::Node encode() override {

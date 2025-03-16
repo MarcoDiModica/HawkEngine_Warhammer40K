@@ -30,6 +30,10 @@ public:
 	void PlayAnimation(Animation* pAnimation);
     void CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform);
 
+    void BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime);
+    void CalculateBlendedBoneTransform( Animation* pAnimationBase, const AssimpNodeData* node, Animation* pAnimationLayer, const AssimpNodeData* nodeLayered,
+        const float currentTimeBase, const float currentTimeLayered, const glm::mat4& parentTransform, const float blendFactor);
+
     float GetCurrentMTime()
     {
 		return m_CurrentTime;

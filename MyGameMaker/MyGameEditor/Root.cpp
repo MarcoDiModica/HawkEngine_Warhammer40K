@@ -61,20 +61,22 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	auto player = CreateGameObject("Player");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
-	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
-	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+	//auto player = CreateGameObject("Player");
+	//player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	//player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
+
+	/*auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
@@ -87,7 +89,7 @@ bool Root::Start()
 	else
 	{
 		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
-	}
+	}*/
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));

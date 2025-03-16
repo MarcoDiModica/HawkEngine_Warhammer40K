@@ -65,7 +65,15 @@ void SkeletalAnimationComponent::Update(float deltaTime)
 {
     if (isPlaying) 
     {
-        animator->UpdateAnimation(deltaTime);
+        if (isBlending) 
+        {
+            animator->BlendTwoAnimations(animations[0].get(), animations[2].get(), blendFactor, deltaTime);
+        }
+        else 
+        {
+            animator->UpdateAnimation(deltaTime);
+        }
+        
     }
 }
 

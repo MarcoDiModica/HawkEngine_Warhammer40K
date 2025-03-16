@@ -298,7 +298,7 @@ void ColliderComponent::CreateCollider() {
         parentScale = owner->GetParent()->GetTransform()->GetScale();
     }
     glm::vec3 finalScale = scale * parentScale;
-    shape->setLocalScaling(btVector3(finalScale.x, finalScale.z, finalScale.y));
+    shape->setLocalScaling(btVector3(finalScale.x, finalScale.y, finalScale.z));
 
     btVector3 localInertia(0, 0, 0);
     if (mass > 0.0f) {

@@ -28,6 +28,7 @@
 #include "../MyAnimationEngine/BoneComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
+#include <MyPhysicsEngine/MeshColliderComponent.h>
 
 class GameObject;
 
@@ -49,9 +50,9 @@ bool Root::Awake()
     MakeSmokerEmmiter();
     MakeSmokerEmiter2();*/
 
-	environment = CreateGameObjectWithPath("Assets/Meshes/BlockoutLevel1Remaster.fbx");
-	environment->GetTransform()->SetPosition(glm::vec3(0,-20, 0));
-	environment->GetTransform()->SetScale(glm::vec3(50, 50, 50));
+	environment = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2.fbx");
+	environment->GetTransform()->SetPosition(glm::vec3(-15,0, 0));
+	environment->GetTransform()->SetScale(glm::vec3(0.06f, 0.06f, 0.06f));
 
     return true;
 }
@@ -65,6 +66,7 @@ bool Root::CleanUp()
 bool Root::Start()
 {
 	auto player = CreateGameObject("Player");
+	//player->GetTransform()->SetScale(glm::vec3(10,10,10));
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
@@ -76,6 +78,7 @@ bool Root::Start()
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
@@ -88,8 +91,9 @@ bool Root::Start()
 	}
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
-    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, 14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
+    objMainCamera->GetTransform()->Rotate(glm::radians(180.0f), glm::dvec3(0, 1, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
@@ -145,9 +149,8 @@ bool Root::Start()
 
 void AddCollidersEnv() {
 	for (auto go : environment->GetChildren()) {
-		auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+		auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
 		collider->Start();
-		collider->SnapToPosition();
 	}
 }
 
@@ -156,7 +159,7 @@ bool hasAddedColliders = false;
 bool Root::Update(double dt) 
 {
 	if (!hasAddedColliders) {
-		AddCollidersEnv();
+		//AddCollidersEnv();
 		hasAddedColliders = true;
 	}
 

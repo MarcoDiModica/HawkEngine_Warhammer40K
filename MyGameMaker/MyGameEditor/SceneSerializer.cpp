@@ -16,6 +16,7 @@
 #include "MyPhysicsEngine/ColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
+#include <MyAnimationEngine/SkeletalAnimationComponent.h>
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -244,6 +245,10 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		else if (componentName == "MeshColliderComponent") {
 			auto meshCollider = gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
 			meshCollider->decode(componentData);
+		}
+		else if (componentName == "SkeletalAnimationComponent") {
+			auto skeletalComponent = gameObject->AddComponent<SkeletalAnimationComponent>();
+			skeletalComponent->decode(componentData);
 		}
 		
 		//mas componentes aqui

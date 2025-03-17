@@ -89,7 +89,6 @@ bool Root::Start()
 	emitter->ConfigureSmoke();
 	emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
-
 	//Lictor
 	auto lictor = CreateGameObject("Licotr");
 	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));

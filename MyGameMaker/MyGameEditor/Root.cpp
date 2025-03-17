@@ -68,7 +68,6 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
 	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
 	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");

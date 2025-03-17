@@ -11,7 +11,11 @@ public class Railgun : BaseWeapon
     private float coolingTime = 3f;
     private float coolTimer = 0f;
     private float reloadTimer = 0f;
-    
+
+    private Audio sound;
+    private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
+    private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
+
 
     public enum RailgunMode
     {
@@ -31,6 +35,7 @@ public class Railgun : BaseWeapon
         reloadTime = 2f;
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
+        sound = gameObject.GetComponent<Audio>();
     }
 
     public override void Update(float deltaTime)
@@ -65,7 +70,7 @@ public class Railgun : BaseWeapon
             }
         }
 
-        //CleanBullets();
+        CleanBullets();
     }
 
     public override void Shoot()
@@ -74,6 +79,8 @@ public class Railgun : BaseWeapon
         if (currentMagazineAmmo > 0 && isCooling == false && isRecharged)
         {
             currentMagazineAmmo--;
+            sound?.LoadAudio(railgunShot);
+            sound?.Play();
             // Shoot logic
             GameObject projectile = Engineson.CreateGameObject("Projectile", null);
 
@@ -99,7 +106,8 @@ public class Railgun : BaseWeapon
                 }
             }
         }
-        else if (currentMagazineAmmo <= 0)
+        
+        if (currentMagazineAmmo <= 0)
         {
             isCooling = true;
             isRecharged = false;
@@ -112,6 +120,8 @@ public class Railgun : BaseWeapon
         isRecharged = true;
         coolTimer = 0f;
         currentMagazineAmmo = magazineSize;
+        sound?.LoadAudio(railgunReload);
+        sound?.Play();
     }
 
     public override void Reload()
@@ -137,17 +147,21 @@ public class Railgun : BaseWeapon
 
     public override void CleanBullets()
     {
-        if (bullets.Count == 0)
+        for (int i = bullets.Count - 1; i >= 0; i--)
         {
-            return;
-        }
-
-        for (int i = 0; i < bullets.Count; i++)
-        {
-            if (bullets[i].markedForDestruction)
+            var proj = bullets[i];
+            if (proj.markedForDestruction)
             {
-                Engineson.Destroy(bullets[i].gameObject);
-                bullets.RemoveAt(i);
+                try
+                {
+                    Engineson.Destroy(proj.gameObject);
+                    bullets.RemoveAt(i);
+                }
+                catch (System.Exception e)
+                {
+                    Engineson.print($"Error destroying projectile: {e.Message}");
+                    bullets.RemoveAt(i);
+                }
             }
         }
     }

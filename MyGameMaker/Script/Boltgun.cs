@@ -6,6 +6,9 @@ public class Boltgun : BaseWeapon
 {
 
     GrenadeLauncher grenadeLauncher;
+    private Audio sound;
+    private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
+    private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
 
     public override void Start()
     {
@@ -18,6 +21,7 @@ public class Boltgun : BaseWeapon
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
+        sound = gameObject.GetComponent<Audio>();
     }
 
     public override void Update(float deltaTime)
@@ -30,6 +34,8 @@ public class Boltgun : BaseWeapon
         if (currentMagazineAmmo > 0)
         {
             currentMagazineAmmo--;
+            sound?.LoadAudio(boltgunShot);
+            sound?.Play();
             // Shoot logic
             GameObject projectile = Engineson.CreateGameObject("Projectile", null);
 
@@ -62,6 +68,8 @@ public class Boltgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
+            sound?.LoadAudio(boltgunReload);
+            sound?.Play();
             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
             currentMagazineAmmo = magazineSize;
             Engineson.print("Boltgun reloaded");

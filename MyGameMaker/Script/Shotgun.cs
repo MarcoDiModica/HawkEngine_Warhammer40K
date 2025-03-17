@@ -4,7 +4,9 @@ using HawkEngine;
 
 public class Shotgun : BaseWeapon
 {
-
+    private Audio sound;
+    private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
+    private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
     public override void Start()
     {
         shootCadence = 1f;
@@ -15,6 +17,7 @@ public class Shotgun : BaseWeapon
         reloadTime = 2.5f;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
+        sound = gameObject.GetComponent<Audio>();
     }
 
     public override void Update(float deltaTime)
@@ -27,6 +30,8 @@ public class Shotgun : BaseWeapon
         if (currentMagazineAmmo > 0)
         {
             currentMagazineAmmo--;
+            sound?.LoadAudio(shotgunShot);
+            sound?.Play();
             // Shoot logic
             int numProjectiles = 5;
             float spreadAngle = 45f;
@@ -71,6 +76,8 @@ public class Shotgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
+            sound?.LoadAudio(shotgunReload);
+            sound?.Play();
             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
             currentMagazineAmmo = magazineSize;
         }
@@ -88,17 +95,21 @@ public class Shotgun : BaseWeapon
 
     public override void CleanBullets()
     {
-        if (bullets.Count == 0)
+        for (int i = bullets.Count - 1; i >= 0; i--)
         {
-            return;
-        }
-
-        for (int i = 0; i < bullets.Count; i++)
-        {
-            if (bullets[i].markedForDestruction)
+            var proj = bullets[i];
+            if (proj.markedForDestruction)
             {
-                Engineson.Destroy(bullets[i].gameObject);
-                bullets.RemoveAt(i);
+                try
+                {
+                    Engineson.Destroy(proj.gameObject);
+                    bullets.RemoveAt(i);
+                }
+                catch (System.Exception e)
+                {
+                    Engineson.print($"Error destroying projectile: {e.Message}");
+                    bullets.RemoveAt(i);
+                }
             }
         }
     }

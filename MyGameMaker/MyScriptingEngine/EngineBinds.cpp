@@ -739,6 +739,15 @@ float EngineBinds::GetVolume(MonoObject* audioRef)
     return sound ? sound->GetVolume() : 0.0f;
 }
 
+void EngineBinds::LoadAudioClip(MonoObject* audioRef, MonoString* path)
+{
+	char* C_path = mono_string_to_utf8(path);
+	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->LoadAudio(C_path, true);
+	}
+}
+
 void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
 {
 	char* C_path = mono_string_to_utf8(path);
@@ -911,6 +920,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Audio::Resume", (const void*)&EngineBinds::Resume);
     mono_add_internal_call("HawkEngine.Audio::SetVolume", (const void*)&EngineBinds::SetVolume);
     mono_add_internal_call("HawkEngine.Audio::GetVolume", (const void*)&EngineBinds::GetVolume);
+	mono_add_internal_call("HawkEngine.Audio::LoadAudio", (const void*)&EngineBinds::LoadAudioClip);
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);

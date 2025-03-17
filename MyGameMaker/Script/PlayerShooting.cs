@@ -17,8 +17,7 @@ public class PlayerShooting : MonoBehaviour
     private Railgun railgun;
 
    
-
-    private Audio sound;
+    
 
     private enum GunType
     {
@@ -42,12 +41,6 @@ public class PlayerShooting : MonoBehaviour
         if (transform == null)
         {
             Engineson.print("ERROR: PlayerShooting requires a Transform component!");
-        }
-
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
         }
 
         boltgun = gameObject.GetComponent<Boltgun>();
@@ -180,7 +173,6 @@ public class PlayerShooting : MonoBehaviour
                     break;
             }
 
-            sound?.Play();
 
             
         }
@@ -201,7 +193,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgun.Reload();
                 break;
             case GunType.RAILGUN:
-                railgun.Shoot();
+                
                 break;
         }
     }

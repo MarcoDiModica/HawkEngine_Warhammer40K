@@ -535,8 +535,7 @@ int main(int argc, char** argv) {
 		case CREATE:
 
 			Application = new App();
-			Application->physicsModule->Awake();
-			Application->physicsModule->Start();
+			
 			MonoManager::GetInstance().Initialize();
 			SoundComponent::InitSharedAudioEngine();
 
@@ -555,12 +554,14 @@ int main(int argc, char** argv) {
 
 		case AWAKE:
 
+			Application->physicsModule->Awake();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;
 
 		case START:
 
+			Application->physicsModule->Start();
 			if (Application->Start()) { state = LOOP; }
 			else { state = FAIL; printf("Failed on START"); }
 			break;

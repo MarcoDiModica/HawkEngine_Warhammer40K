@@ -40,11 +40,15 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-    Application->root->CreateScene("DefaultScene");
-    Application->root->SetActiveScene("DefaultScene");
+	Application->root->CreateScene("DefaultScene");
+	Application->root->SetActiveScene("DefaultScene");
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
+
+	CreateMainMenuUI();
+
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
     return true;
 }
@@ -57,14 +61,14 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto player = CreateGameObject("Player");
-    player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	/*auto player = CreateGameObject("Player");
+	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
@@ -73,36 +77,35 @@ bool Root::Start()
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
-    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    //objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 	UpdateCameraPriority();
 
-	auto particleFX = CreateGameObject("ParticleFX");
-	auto emitter = particleFX->AddComponent<ParticleFX>();
-	emitter->ConfigureSmoke();
-	emitter->SetTexture("Assets/SmokeParticleTexture.png");
+	//auto particleFX = CreateGameObject("ParticleFX");
+	//auto emitter = particleFX->AddComponent<ParticleFX>();
+	//emitter->ConfigureSmoke();
+	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
-	auto enemy = CreateGameObject("Enemy");
-	enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
-	//enemy->GetComponent<Transform_Component>()->SetScale(glm::vec3(0.05, 0.05, 0.05));
-	enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	//auto enemyMesh = CreateGameObjectWithPath("Assets/Meshes/LictorRig.fbx");
-	auto enemyMesh = CreateCube("EnemyMesh");
-	enemyMesh->SetName("EnemyMesh");
-	//enemyMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	ParentGameObject(*enemyMesh, *enemy);
-	//enemyMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//auto enemy = CreateGameObject("Enemy");
+	//enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
+	////enemy->GetComponent<Transform_Component>()->SetScale(glm::vec3(0.05, 0.05, 0.05));
+	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	////auto enemyMesh = CreateGameObjectWithPath("Assets/Meshes/LictorRig.fbx");
+	//auto enemyMesh = CreateCube("EnemyMesh");
+	//enemyMesh->SetName("EnemyMesh");
+	////enemyMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//ParentGameObject(*enemyMesh, *enemy);
+	////enemyMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
 	//CreateGameplayUI();
-    //CreateGameplayUI();
 	
     SceneManagement->Start();
 
@@ -472,8 +475,7 @@ void Root::CreateGameplayUI()
 	grenadeIcon->AddComponent<UIImageComponent>();
 	grenadeIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/grenade_icon.png");
 	grenadeIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	grenadeIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.773, 0.872, 0), glm::vec3(0.021, 0.065, 1));
-	
+	grenadeIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.773, 0.872, 0), glm::vec3(0.021, 0.065, 1));	
 }
 
 void Root::CreateMainMenuUI()
@@ -481,7 +483,7 @@ void Root::CreateMainMenuUI()
     auto canvas = CreateGameObject("Canvas");
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
-    canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
+	//canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 
     auto menuImage = CreateGameObject("MenuImage");
     Application->root->ParentGameObject(*menuImage, *canvas);

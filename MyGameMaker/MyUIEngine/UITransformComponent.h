@@ -2,6 +2,11 @@
 
 #include "../MyGameEngine/Component.h"
 #include "../MyGameEngine/GameObject.h"
+#ifdef YAML_CPP_DLL_EXPORTS
+#define YAML_CPP_API __declspec(dllexport)
+#else
+#define YAML_CPP_API __declspec(dllimport)
+#endif
 #include <yaml-cpp/yaml.h>
 #include <glm/glm.hpp>
 
@@ -89,31 +94,56 @@ protected:
 
 	friend class SceneSerializer;
 
-	/*YAML::Node encode() override {
+	YAML::Node encode() override {
 
 		YAML::Node node = Component::encode();
 
-		node["position"] = YAML::convert<glm::vec3>::encode(position);
-		node["rotation"] = YAML::convert<glm::vec3>::encode(rotation);
-		node["scale"] = YAML::convert<glm::vec3>::encode(scale);
-		node["canvas_position"] = YAML::convert<glm::vec3>::encode(canvasPosition);
-		node["canvas_size"] = YAML::convert<glm::vec3>::encode(canvasSize);
-		node["pivot_offset"] = YAML::convert<glm::vec3>::encode(pivotOffset);
+		node["position"][0] = position.x;
+		node["position"][1] = position.y;
+		node["position"][2] = position.z;
+
+		node["rotation"][0] = rotation.x;
+		node["rotation"][1] = rotation.y;
+		node["rotation"][2] = rotation.z;
+
+		node["scale"][0] = scale.x;
+		node["scale"][1] = scale.y;
+		node["scale"][2] = scale.z;
+
+		node["pivot_offset"][0] = pivotOffset.x;
+		node["pivot_offset"][1] = pivotOffset.y;
+		node["pivot_offset"][2] = pivotOffset.z;
 
 		return node;
 	}
 
 	bool decode(const YAML::Node& node) override {
 
-		position = node["position"].as<glm::vec3>();
-		rotation = node["rotation"].as<glm::vec3>();
-		scale = node["scale"].as<glm::vec3>();
-		canvasPosition = node["canvas_position"].as<glm::vec3>();
-		canvasSize = node["canvas_size"].as<glm::vec3>();
-		pivotOffset = node["pivot_offset"].as<glm::vec3>();
-		SetTransform(position, scale);
-      
+		if (!Component::decode(node)) {
+			return false;
+		}
+
+		if (!node["position"] || !node["rotation"] || !node["scale"] || !node["pivot_offset"]) {
+			return false;
+		}
+
+		position.x = node["position"][0].as<float>();
+		position.y = node["position"][1].as<float>();
+		position.z = node["position"][2].as<float>();
+
+		rotation.x = node["rotation"][0].as<float>();
+		rotation.y = node["rotation"][1].as<float>();
+		rotation.z = node["rotation"][2].as<float>();
+
+		scale.x = node["scale"][0].as<float>();
+		scale.y = node["scale"][1].as<float>();
+		scale.z = node["scale"][2].as<float>();
+
+		pivotOffset.x = node["pivot_offset"][0].as<float>();
+		pivotOffset.y = node["pivot_offset"][1].as<float>();
+		pivotOffset.z = node["pivot_offset"][2].as<float>();
+
 		return true;
-	}*/
+	}
 };
 

@@ -1,6 +1,38 @@
 SceneMetadata:
-  SceneName: DefaultScene
+  SceneName: MainMenu
 GameObject0:
+  name: MainCamera
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999253784715
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+  Children: ~
+GameObject1:
   name: Canvas
   tag: Untagged
   active: true
@@ -27,22 +59,9 @@ GameObject0:
     UITransformComponent:
       name: UITransformComponent
       enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 0
-        - 0
+    ScriptComponents:
+      Script0:
+        name: MenuButtons
   Children:
     - name: MenuImage
       tag: Untagged
@@ -67,22 +86,6 @@ GameObject0:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -111,22 +114,6 @@ GameObject0:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
-          position:
-            - 0.128000006
-            - 0.317999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -159,22 +146,6 @@ GameObject0:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
-          position:
-            - 0.128000006
-            - 0.460999995
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -207,22 +178,6 @@ GameObject0:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
-          position:
-            - 0.128000006
-            - 0.603999972
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -255,22 +210,6 @@ GameObject0:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
-          position:
-            - 0.127000004
-            - 0.748000026
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -303,22 +242,6 @@ GameObject0:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
-          position:
-            - 0.127000004
-            - 0.906000018
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -328,35 +251,3 @@ GameObject0:
           enabled: true
           state: 1
       Children: ~
-GameObject1:
-  name: MainCamera
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 20
-        - -14
-      localRotation:
-        - 54.999999253784715
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    CameraComponent:
-      name: CameraComponent
-      enabled: true
-      projection_type: perspective
-      fov: 1.0471975803375244
-      size: 0
-      near_plane: 0.10000000000000001
-      far_plane: 500
-      priority: 1
-    AudioListener: ~
-  Children: ~

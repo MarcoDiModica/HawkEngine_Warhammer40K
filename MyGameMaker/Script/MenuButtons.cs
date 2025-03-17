@@ -29,6 +29,7 @@ public class MenuButtons : MonoBehaviour
         if (newGameButton.GetState () == ButtonState.CLICKED)
         {
             Engineson.print("NewGame is Clicked");
+            SceneManager.LoadScene("DefaultScene");
         }
 
         if (continueButton.GetState() == ButtonState.CLICKED)

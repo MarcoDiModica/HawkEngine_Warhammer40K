@@ -39,11 +39,11 @@ bool PhysicsModule::Awake() {
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
     //Plane functions
-    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+   /* btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
     btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
     btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-    dynamicsWorld->addRigidBody(groundRigidBody);
+    dynamicsWorld->addRigidBody(groundRigidBody);*/
 
     //groundRigidBody->setRestitution(0.8f);
     SetGlobalRestitution(0.5f);

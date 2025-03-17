@@ -24,7 +24,11 @@ void MeshColliderComponent::Start() {
 
 void MeshColliderComponent::Update(float deltaTime) {
     // Update logic if needed
-    if (owner) {
+    if (isFromDecode) {
+        Start();
+		isFromDecode = false;
+    }
+    else if (owner) {
         SnapToPosition();
     }
 }
@@ -139,19 +143,27 @@ void MeshColliderComponent::SetActive(bool active) {
         }
     }
 }
-
 void MeshColliderComponent::SnapToPosition() {
     if (!owner) return;
+    //if (owner->HasComponent<RigidbodyComponent>()) return; 
 
     Transform_Component* goTransform = owner->GetTransform();
     if (!goTransform) return;
 
     BoundingBox localBBox = owner->localBoundingBox();
     glm::vec3 localCenter = localBBox.center();
+    glm::vec3 localSize = localBBox.size();
+
     glm::vec3 worldScale = goTransform->GetScale();
+    glm::vec3 parentScale(1.0f);
+    if (owner->GetParent()) {
+        parentScale = owner->GetParent()->GetTransform()->GetScale();
+    }
+    glm::vec3 finalScale = worldScale * parentScale;
+
     glm::vec3 worldPosition = goTransform->GetPosition();
     glm::quat worldRotation = goTransform->GetRotation();
-    glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * worldScale);
+    glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * finalScale);
 
     btTransform transform;
     transform.setIdentity();
@@ -167,9 +179,11 @@ void MeshColliderComponent::SnapToPosition() {
     rigidBody->setCenterOfMassTransform(transform);
 
     if (rigidBody->getCollisionShape()) {
-        rigidBody->getCollisionShape()->setLocalScaling(btVector3(worldScale.x, worldScale.y, worldScale.z));
+        btVector3 btScale(finalScale.x, finalScale.y, finalScale.z);
+        rigidBody->getCollisionShape()->setLocalScaling(btScale);
     }
 }
+
 
 
 

@@ -98,6 +98,13 @@ public:
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
+	void SaveBinary(const std::string& filename) const;
+	bool LoadBinary(const std::string& filename);
+
+	void WriteAssimpNodeData(std::ofstream& fout, const AssimpNodeData& node) const;
+	static AssimpNodeData ReadAssimpNodeData(std::ifstream& fin);
+
+
     std::string serializeMat4(const glm::mat4& mat) {
         std::ostringstream oss;
         for (int i = 0; i < 4; ++i) {
@@ -164,7 +171,7 @@ protected:
     YAML::Node encode() override {
         YAML::Node node = Component::encode();
 
-        for (const auto& animation : animations) {
+        /*for (const auto& animation : animations) {
             if (animation) {
                 YAML::Node animNode;
                 animNode["name"] = animation->GetName();
@@ -232,7 +239,11 @@ protected:
 
                 node["animations"].push_back(animNode);
             }
-        }
+        }*/
+
+        std::string animName = "skeletal_anim_" +  owner->GetName();
+        SaveBinary(animName);
+        node["animation_file"] = animName;
 
         return node;
     }
@@ -241,7 +252,7 @@ protected:
         if (!Component::decode(node))
             return false;
 
-        animations.clear();
+        /*animations.clear();
 
         if (node["animations"]) {
             for (const auto& animNode : node["animations"]) {
@@ -365,7 +376,13 @@ protected:
             testAnimation = std::make_unique<Animation>(*animations[0]);
         }
 
-        Start();
+        Start();*/
+
+		if (node["animation_file"]) {
+			std::string animName = node["animation_file"].as<std::string>();
+			LoadBinary(animName);
+		}
+
         return true;
     }
 

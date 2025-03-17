@@ -252,6 +252,8 @@ void ColliderComponent::SnapToPosition() {
     transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
     transform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
 
+	if (!rigidBody) return;
+
     if (rigidBody->getMotionState()) {
         rigidBody->getMotionState()->setWorldTransform(transform);
     }

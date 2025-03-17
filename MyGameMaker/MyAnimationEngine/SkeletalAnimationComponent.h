@@ -241,7 +241,7 @@ protected:
             }
         }*/
 
-        std::string animName = "skeletal_anim_" + std::to_string(reinterpret_cast<uintptr_t>(this));
+        std::string animName = "skeletal_anim_" +  owner->GetName();
         SaveBinary(animName);
         node["animation_file"] = animName;
 

@@ -74,8 +74,8 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 
-	auto rabbit = CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
-	rabbit->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//auto rabbit = CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
+	//rabbit->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
@@ -86,12 +86,28 @@ bool Root::Start()
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
+
+    auto metallic = std::make_shared<Image>();
+    metallic->LoadTexture("Assets/Textures/dieno_zachael_jetpack_2_DefaultMaterial_Metallic.png");
+    auto roughness = std::make_shared<Image>();
+    roughness->LoadTexture("Assets/Textures/dieno_zachael_jetpack_2_DefaultMaterial_Roughness.png");
+    auto normal = std::make_shared<Image>();
+    normal->LoadTexture("Assets/Textures/dieno_zachael_jetpack_2_DefaultMaterial_Normal.png");
+
+
+    playerMesh->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(metallic);
+    playerMesh->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(roughness);
+    playerMesh->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(normal);
+	playerMesh->GetComponent<MeshRenderer>()->GetMaterial()->SetTonemapStrength(1.8f);
+	playerMesh->GetComponent<MeshRenderer>()->GetMaterial()->ao = 0.8f;
+
+
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
-    //objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 	UpdateCameraPriority();
 
@@ -112,6 +128,24 @@ bool Root::Start()
 	ParentGameObject(*lictorMesh, *lictor);
 	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
+
+	auto metallicLictor = std::make_shared<Image>();
+	metallicLictor->LoadTexture("Assets/Textures/Material_Metallic.png");
+	auto roughnessLictor = std::make_shared<Image>();
+	roughnessLictor->LoadTexture("Assets/Textures/Material_Roughness.png");
+	auto normalLictor = std::make_shared<Image>();
+	normalLictor->LoadTexture("Assets/Textures/Material_Normal_OpenGL.png");
+	auto aoLictor = std::make_shared<Image>();
+	aoLictor->LoadTexture("Assets/Textures/Material_Mixed_AO.png");
+
+	lictorMesh->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(metallicLictor);
+	lictorMesh->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(roughnessLictor);
+	lictorMesh->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(normalLictor);
+	lictorMesh->GetComponent<MeshRenderer>()->GetMaterial()->setAoMap(aoLictor);
+	lictorMesh->GetComponent<MeshRenderer>()->GetMaterial()->SetTonemapStrength(1.8f);
+
+
+
 	////Hormagaunt
 	auto hormagaunt = CreateGameObject("Hormagaunt");
 	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
@@ -122,6 +156,24 @@ bool Root::Start()
 	hormagauntMesh->SetName("HormagauntMesh");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+
+	auto metallicHormagaunt = std::make_shared<Image>();
+	metallicHormagaunt->LoadTexture("Assets/Textures/Low_BSurfaceMesh_Metallic.png");
+	auto roughnessHormagaunt = std::make_shared<Image>();
+	roughnessHormagaunt->LoadTexture("Assets/Textures/Low_BSurfaceMesh_Roughness.png");
+	auto normalHormagaunt = std::make_shared<Image>();
+	normalHormagaunt->LoadTexture("Assets/Textures/Low_BSurfaceMesh_Normal.png");
+	auto aoHormagaunt = std::make_shared<Image>();
+	aoHormagaunt->LoadTexture("Assets/Textures/Low_BSurfaceMesh_AO.png");
+
+
+	hormagauntMesh->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(metallicHormagaunt);
+	hormagauntMesh->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(roughnessHormagaunt);
+	hormagauntMesh->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(normalHormagaunt);
+	hormagauntMesh->GetComponent<MeshRenderer>()->GetMaterial()->ao = 0.8f;
+	hormagauntMesh->GetComponent<MeshRenderer>()->GetMaterial()->SetTonemapStrength(1.8f);
+
+
 
 	CreateGameplayUI();
 	//CreateMainMenuUI();

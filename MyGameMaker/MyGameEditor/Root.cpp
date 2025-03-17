@@ -119,8 +119,8 @@ bool Root::Start()
 	hormagauntMesh->SetName("HormagauntMesh");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 
-	//CreateGameplayUI();
-	//CreateMainMenuUI();
+	CreateGameplayUI();
+	CreateMainMenuUI();
 	
     SceneManagement->Start();
 

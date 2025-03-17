@@ -93,10 +93,15 @@ bool Root::Start()
 
 	auto enemy = CreateGameObject("Enemy");
 	enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
+	//enemy->GetComponent<Transform_Component>()->SetScale(glm::vec3(0.05, 0.05, 0.05));
 	enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	auto mesh = CreateCube("EnemyMesh");
-	ParentGameObject(*mesh, *enemy);
+	//auto enemyMesh = CreateGameObjectWithPath("Assets/Meshes/LictorRig.fbx");
+	auto enemyMesh = CreateCube("EnemyMesh");
+	enemyMesh->SetName("EnemyMesh");
+	//enemyMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	ParentGameObject(*enemyMesh, *enemy);
+	//enemyMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
 	CreateGameplayUI();
 	

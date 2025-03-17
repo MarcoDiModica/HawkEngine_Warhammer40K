@@ -92,7 +92,7 @@ bool Root::Start()
 	auto enemy = CreateGameObject("Enemy");
 	enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
 	enemy->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	enemy->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/HormagauntMeleeAttack.wav");
+	enemy->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 	auto enemyMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");

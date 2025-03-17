@@ -74,6 +74,8 @@ public:
     
     friend SceneSerializer;
 
+    void AddCollidersEnvLvl1();
+
 	//has to be removed when the scene serializer is implemented
     void CreateGameplayUI();
 	void CreateMainMenuUI();
@@ -81,6 +83,7 @@ public:
     void SetMainCamera(std::shared_ptr<GameObject> camera);
 
 private:
+    std::shared_ptr<GameObject> player;
     std::vector<std::shared_ptr<Scene>> scenes;
 	int prevCameraPriority = 0;
 };

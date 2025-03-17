@@ -61,7 +61,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	auto player = CreateGameObject("Player");
+	player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -74,9 +74,6 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 
-	auto rabbit = CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
-	rabbit->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
@@ -86,12 +83,15 @@ bool Root::Start()
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
+	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+	environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
+
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
-    //objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 	UpdateCameraPriority();
 
@@ -152,16 +152,18 @@ static void AddCollidersEnv() {
 
 bool hasAddedColliders = false;	
 
-bool Root::Update(double dt) 
+bool Root::Update(double dt)
 {
 	if (!hasAddedColliders) {
 		//AddCollidersEnv();
+		AddCollidersEnvLvl1();
+		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 		hasAddedColliders = true;
 	}
 
-    return true;
+	return true;
 }
-
 void Root::SetCameraPriority(std::shared_ptr<GameObject> camera, int priority)
 {
 	if (mainCamera == nullptr) {
@@ -204,6 +206,40 @@ void Root::UpdateCameraPriority()
 shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh)
 {
     return SceneManagement->CreateMeshObject(name, mesh);
+}
+
+void Root::AddCollidersEnvLvl1() {
+	for (auto go : environment->GetChildren()) {
+		std::string name = go->GetName();
+
+		if (name == "Mesh.535" || name == "Mesh.481" || name == "Mesh.485" || name == "Mesh.486" ||
+			name == "Mesh.487" || name == "Mesh.489" || name == "Mesh.490" || name == "Mesh.491" ||
+			name == "Mesh.488" || name == "Mesh.492" || name == "Mesh.494" || name == "Mesh.495" ||
+			name == "Mesh.496" || name == "Mesh.497" || name == "Mesh.498" || name == "Mesh.499" ||
+			name == "Mesh.500" || name == "Mesh.501" || name == "Mesh.502" || name == "Mesh.506" ||
+			name == "Mesh.507" || name == "Mesh.508" || name == "Mesh.503" || name == "Mesh.504" ||
+			name == "Mesh.505" || name == "Mesh.509" || name == "Mesh.510" || name == "Mesh.511" ||
+			name == "Mesh.512" || name == "Mesh.513" || name == "Mesh.514" || name == "Mesh.515" ||
+			name == "Mesh.516" || name == "Mesh.517" || name == "Mesh.518" || name == "Mesh.519" ||
+			name == "Mesh.520" || name == "Mesh.001" || name == "Mesh.281" || name == "Mesh.284" ||
+			name == "Mesh.279" || name == "Mesh.404" || name == "Mesh.401" || name == "Mesh.292" ||
+			name == "Mesh.402" || name == "Mesh.400" || name == "Mesh.403" || name == "Mesh.399" ||
+			name == "Mesh.493" || name == "Cylinder.010" || name == "Cylinder.002" || name == "Mesh.056" || name == "Mesh.072" || name == "Mesh.054") {
+
+			auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
+			collider->Start();
+		}
+		else if (name == "Mesh.405" || name == "Mesh.406" || name == "Mesh.407" || name == "Mesh.408" ||
+			name == "Mesh.288" || name == "Mesh.289" || name == "Mesh.297" || name == "Mesh.268" ||
+			name == "Mesh.266" || name == "Mesh.267" || name == "Mesh.269" || name == "Mesh.274" || name == "Mesh.273" ||
+			name == "Mesh.272" || name == "Mesh.271") {
+			continue;
+		}
+		else {
+			auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+			collider->Start();
+		}
+	}
 }
 
 void Root::RemoveGameObject(GameObject* gameObject) {

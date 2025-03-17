@@ -170,6 +170,7 @@ void SceneSerializer::DeSerialize(const std::string& path) {
 	}
 
 	Application->root->UpdateCameraPriority();
+	//Application->root->GetActiveScene()->Start();
 }
 
 std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::Node& node) {
@@ -197,7 +198,6 @@ std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::N
 		DeserializeComponents(gameObject.get(), node["Components"]);
 	}
 
-	// Deserializar hijos
 	if (node["Children"].IsDefined()) {
 		DeserializeChildren(gameObject.get(), node["Children"]);
 	}
@@ -266,15 +266,16 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			skeletalComponent->decode(componentData);
 			
 		}
-		
 		else if (componentName == "UITransformComponent") {
-			auto uiTransform = gameObject->GetComponent<UITransformComponent>();
-			
-			if (uiTransform == nullptr) {
-				uiTransform = gameObject->AddComponent<UITransformComponent>();
+			if (gameObject->HasComponent<UITransformComponent>()) {
+				auto uiTransform = gameObject->GetComponent<UITransformComponent>();
+				uiTransform->decode(componentData);
 			}
-
-			uiTransform->decode(componentData);
+			else
+			{
+				auto uiTransform = gameObject->AddComponent<UITransformComponent>();
+				uiTransform->decode(componentData);
+			}
 		}
 		else if (componentName == "UICanvasComponent") {
 			auto uiTransform = gameObject->AddComponent<UITransformComponent>();

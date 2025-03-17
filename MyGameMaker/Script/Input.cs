@@ -158,7 +158,7 @@ namespace HawkEngine
         DPadUp = 11,
         DPadDown = 12,
         DPadLeft = 13,
-        DPadRight = 14,
+        DPadRight = 14
     }
 
     public enum ControllerAxis

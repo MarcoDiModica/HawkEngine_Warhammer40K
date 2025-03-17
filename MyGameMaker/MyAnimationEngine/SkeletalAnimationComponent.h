@@ -25,8 +25,10 @@ public:
 
     void Destroy() override;
 
+    void TransitionAnimations(int oldAnim, int newAnim, float timeToTransition);
+
     ComponentType GetType() const override {
-        return ComponentType::ANIMATION; // Cambia a un tipo específico si es necesario
+        return ComponentType::ANIMATION; // Cambia a un tipo especï¿½fico si es necesario
     }
 
     std::unique_ptr<Component> Clone(GameObject* new_owner) override {
@@ -34,7 +36,7 @@ public:
     }
 
     void SetAnimation(Animation* animation) {
-        testAnimation = std::make_unique<Animation>(*animation);
+        animation1 = std::make_unique<Animation>(*animation);
     }
 
 	void AddAnimation(Animation* animation) {
@@ -46,7 +48,7 @@ public:
 	}
 
     Animation* GetAnimation() const {
-        return testAnimation.get();
+        return animation1.get();
     }
 
     void SetAnimator(Animator* animatorr) {
@@ -56,6 +58,14 @@ public:
     Animator* GetAnimator() const {
         return animator.get();
     }
+
+	float GetAnimationDuration() const {
+		return animation1->GetDuration();
+	}
+
+	float GetAnimationTime() const {
+		return animator->GetCurrentMTime();
+	}
 
 	void SetAnimationPlayState(bool play) 
     {
@@ -81,12 +91,16 @@ public:
 		}
         SetAnimationIndex(index);
 		SetAnimation(animations[index].get());
-		animator->PlayAnimation(testAnimation.get());
+		animator->PlayAnimation(animation1.get());
 	}
 
     void SetAnimationSpeed(float speed) 
     {
 		animator->SetPlaySpeed(speed);
+    }
+
+    void SetNewAnimation(Animation* animation) {
+        newAnimation = std::make_unique<Animation>(*animation);
     }
 
 	float GetAnimationSpeed()
@@ -98,6 +112,9 @@ public:
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
+
+    float blendFactor = 0.0f;
+    bool isBlending = false;
 	void SaveBinary(const std::string& filename) const;
 	bool LoadBinary(const std::string& filename);
 
@@ -158,12 +175,15 @@ public:
 
 private:
     std::unique_ptr<Animator> animator;
-    std::unique_ptr<Animation> testAnimation;
+    std::unique_ptr<Animation> animation1;
+    std::unique_ptr<Animation> newAnimation;
     //vector of unitque ptr of animations
 	std::vector<std::unique_ptr<Animation>> animations;
     int animationIndex = 0;
 	bool isPlaying = true;
- 
+	float timeToTransition = 0.0f;
+
+
 
 protected:
     friend class SceneSerializer;

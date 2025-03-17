@@ -23,6 +23,8 @@ void UIImageComponent::Start()
 
 void UIImageComponent::Update(float deltaTime)
 {
+	if (!enabled) return;
+
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
 
 	if (!uiTransform->GetResised() && uiTransform->GetCanvasSize().x > 0) {

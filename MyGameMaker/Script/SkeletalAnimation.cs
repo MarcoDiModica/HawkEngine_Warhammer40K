@@ -20,6 +20,27 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern int GetAnimationIndex();
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern float GetAnimationLength();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern float GetAnimationTime();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+
+        public extern void SetAnimationPlayTime(float time);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+
+        public extern void SetAnimationPlayState(bool play);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern bool GetAnimationPlayState();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void TransitionAnimations(int oldAnim, int newAnim, float timeToAnim);
+
+
 
         private GameObject owner;
 

@@ -33,9 +33,11 @@ namespace EngineBinds {
     template <class T>
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
 
+	void AddScript(MonoObject* ref, MonoString* scriptName);
+
     MonoString* GameObjectGetName(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
-    MonoObject* GetGameObjectByName(MonoString* name);
+    MonoObject* GetGameObjectByName(MonoString* name);	
 
     // Input
     bool GetKey(int keyID);
@@ -128,9 +130,11 @@ namespace EngineBinds {
     void Resume(MonoObject* audioRef);
     void SetVolume(MonoObject* audioRef, float volume);
     float GetVolume(MonoObject* audioRef);
+	void LoadAudioClip(MonoObject* audioRef, MonoString* path);
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
+	void SetImageEnabled(MonoObject* uiImageRef, bool enabled);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);
@@ -143,6 +147,13 @@ namespace EngineBinds {
 	float GetAnimationSpeed(MonoObject* skeletalAnimationRef);
 	void SetAnimation(MonoObject* skeletalAnimationRef, int index);
 	int GetAnimationIndex(MonoObject* skeletalAnimationRef);
+	float GetAnimationLength(MonoObject* skeletalAnimationRef);
+	float GetAnimationTime(MonoObject* skeletalAnimationRef);
+	void SetAnimationPlayTime(MonoObject* skeletalAnimationRef, float time);
+	void SetAnimationPlayState(MonoObject* skeletalAnimationRef, bool play);
+	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
+	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
+
 
     //SceneManagement
     void LoadScene(MonoString* sceneName);

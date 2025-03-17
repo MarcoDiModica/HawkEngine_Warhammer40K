@@ -10,6 +10,10 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetImage(string path);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+
+        public extern void SetImageEnabled(bool enabled);
+
         //contructor
         private GameObject owner;
 

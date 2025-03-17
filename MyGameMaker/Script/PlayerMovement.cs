@@ -4,7 +4,7 @@ using System.Numerics;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 21.0f;
+    public float moveSpeed = 41.0f;
     public float rotationSpeed = 30.0f;
     public float acceleration = 20.0f;
     public float deceleration = 15.0f;
@@ -147,10 +147,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateRotation(Vector3 moveDirection, float deltaTime)
     {
-        if (playerInput?.IsShooting() == true)
-        {
-            return;
-        }
 
         if (moveDirection != Vector3.Zero)
         {

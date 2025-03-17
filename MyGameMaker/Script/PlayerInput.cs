@@ -7,7 +7,9 @@ public class PlayerInput : MonoBehaviour
     private Vector3 currentLookDirection = Vector3.Zero;
     private bool isDashPressed = false;
     private bool isShootPressed = false;
-
+    private bool isReloadPressed = false;
+    private bool isAbility1Pressed = false;
+    private bool isAbility2Pressed = false;
     public override void Start()
     {
     }
@@ -18,7 +20,18 @@ public class PlayerInput : MonoBehaviour
         UpdateLookDirection();
 
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
-        isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerButton(ControllerButton.X);
+        if (Input.GetControllerAxis(0, 5) > 0.5f)
+        {
+            isShootPressed = true;
+        }
+        else
+        {
+            isShootPressed = false;
+        }
+        
+        isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
+        isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
+        isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
     }
 
     private void UpdateMovementDirection()
@@ -78,5 +91,35 @@ public class PlayerInput : MonoBehaviour
     public bool IsShooting()
     {
         return isShootPressed;
+    }
+
+    public bool IsReloading()
+    {
+        return isReloadPressed;
+    }
+
+    public bool IsAbility1Pressed()
+    {
+        return isAbility1Pressed;
+    }
+
+    public bool IsAbility2Pressed()
+    {
+        return isAbility2Pressed;
+    }
+    
+    public bool IsChangingWeaponRight()
+    {
+        return Input.GetControllerButtonDown(ControllerButton.DPadRight);
+    }
+
+    public bool IsChangingWeaponLeft()
+    {
+        return Input.GetControllerButtonDown(ControllerButton.DPadLeft);
+    }
+
+    public bool IsChangingRailgunMode()
+    {
+        return Input.GetControllerButtonDown(ControllerButton.DPadDown) || Input.GetControllerButtonDown(ControllerButton.DPadUp);
     }
 }

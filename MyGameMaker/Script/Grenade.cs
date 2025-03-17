@@ -48,7 +48,7 @@ public class Grenade : MonoBehaviour
             }
         }
         deathTimerPrevention += deltaTime;
-        Engineson.print(deathTimerPrevention.ToString());
+        //Engineson.print(deathTimerPrevention.ToString());
 
         if (deathTimerPrevention > .1f) 
         {

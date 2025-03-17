@@ -30,7 +30,10 @@ public class PlayerShooting : MonoBehaviour
     }
     private GunType currentGun = GunType.BOLTGUN;
 
-    
+    public int GetCurrentGun()
+    {
+        return (int)currentGun;
+    }
 
     public override void Start()
     {
@@ -98,11 +101,11 @@ public class PlayerShooting : MonoBehaviour
 
         //Engineson.print($"Shoot Timer: {shootTimer}");
 
-        if (playerInput.IsChangingWeaponRight())
+        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Y))
         {
             ChangeWeaponRight();
         }
-        else if (playerInput.IsChangingWeaponLeft())
+        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.T))
         {
             ChangeWeaponLeft();
         }
@@ -285,7 +288,7 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
- private void UseAbility1()
+    private void UseAbility1()
     {
         switch (currentGun)
         {

@@ -4,17 +4,22 @@ using System.Numerics;
 
 public class UIGameplay : MonoBehaviour
 {
-    private UIImage image;
+    private UIImage boltgunIcon;
+    private UIImage shotgunIcon;
+    private UIImage railgunIcon;
     private PlayerData playerData;
     private UITransform transform;
+    private PlayerShooting playerShootingScript;
 
     public override void Start()
     {
         playerData = new PlayerData();
-
+        playerShootingScript = GameObject.Find("Player").GetComponent<PlayerShooting>();
         transform = GameObject.Find("PlayerLife").GetComponent<UITransform>();
-        image = GameObject.Find("RailgunIcon").GetComponent<UIImage>();
-        if (image == null || transform == null)
+        boltgunIcon = GameObject.Find("BoltgunIcon").GetComponent<UIImage>();
+        shotgunIcon = GameObject.Find("ShotgunIcon").GetComponent<UIImage>();
+        railgunIcon = GameObject.Find("RailgunIcon").GetComponent<UIImage>();
+        if (railgunIcon == null || transform == null)
         {
             Engineson.print("ERROR: ImageAsSlider requires a UIImage component!");
         }
@@ -33,9 +38,23 @@ public class UIGameplay : MonoBehaviour
         }
         transform.SetUIScale(new Vector3(CaclulateLifeBarWidth(), 0.054f, 1.0f));
 
-        if (Input.GetKeyDown(KeyCode.N))
+        switch (playerShootingScript.GetCurrentGun())
         {
-            image.SetImage("../MyGameEditor/Assets/Textures/shotgun_icon.png");
+            case 0:
+                boltgunIcon.SetImageEnabled(true);
+                shotgunIcon.SetImageEnabled(false);
+                railgunIcon.SetImageEnabled(false);
+                break;
+            case 1:
+                boltgunIcon.SetImageEnabled(false);
+                shotgunIcon.SetImageEnabled(true);
+                railgunIcon.SetImageEnabled(false);
+                break;
+            case 2:
+                boltgunIcon.SetImageEnabled(false);
+                shotgunIcon.SetImageEnabled(false);
+                railgunIcon.SetImageEnabled(true);
+                break;
         }
     }
 

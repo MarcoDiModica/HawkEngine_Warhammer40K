@@ -61,7 +61,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	/*auto player = CreateGameObject("Player");
+	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -84,7 +84,7 @@ bool Root::Start()
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -102,29 +102,29 @@ bool Root::Start()
 	emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	//Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	////enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//ParentGameObject(*lictorMesh, *lictor);
+	auto lictor = CreateGameObject("Lictor");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	lictorMesh->SetName("LictorMesh");
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
 	////Hormagaunt
-	//auto hormagaunt = CreateGameObject("Hormagaunt");
-	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	////enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
-	//hormagauntMesh->SetName("HormagauntMesh");
-	//ParentGameObject(*hormagauntMesh, *hormagaunt);
+	auto hormagaunt = CreateGameObject("Hormagaunt");
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
+	hormagauntMesh->SetName("HormagauntMesh");
+	ParentGameObject(*hormagauntMesh, *hormagaunt);
+	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
-	//CreateGameplayUI();
-	CreateMainMenuUI();
+	CreateGameplayUI();
+	//CreateMainMenuUI();
 	
     SceneManagement->Start();
 
@@ -445,7 +445,6 @@ void Root::CreateGameplayUI()
 	playerLife->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/blood.png");
 	playerLife->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
 	playerLife->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.143, 0.831, 0), glm::vec3(0.195, 0.054, 1));
-	//playerLife->AddComponent<ScriptComponent>()->LoadScript("UIGameplay");
 
 	auto playerStamina = CreateGameObject("PlayerStamina");
 	Application->root->ParentGameObject(*playerStamina, *canvas);
@@ -481,6 +480,23 @@ void Root::CreateGameplayUI()
 	railgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/railgun_icon.png");
 	railgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	railgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
+	railgunIcon->GetComponent<UIImageComponent>()->SetEnabled(false);
+
+	auto shotgunIcon = CreateGameObject("ShotgunIcon");
+	Application->root->ParentGameObject(*shotgunIcon, *canvas);
+	shotgunIcon->AddComponent<UIImageComponent>();
+	shotgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/shotgun_icon.png");
+	shotgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	shotgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
+	shotgunIcon->GetComponent<UIImageComponent>()->SetEnabled(false);
+
+	auto boltgunIcon = CreateGameObject("BoltgunIcon");
+	Application->root->ParentGameObject(*boltgunIcon, *canvas);
+	boltgunIcon->AddComponent<UIImageComponent>();
+	boltgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/boltgun_icon.png");
+	boltgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	boltgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
+	boltgunIcon->GetComponent<UIImageComponent>()->SetEnabled(true);
 
 	auto bulletIcon = CreateGameObject("BulletIcon");
 	Application->root->ParentGameObject(*bulletIcon, *canvas);
@@ -494,7 +510,9 @@ void Root::CreateGameplayUI()
 	grenadeIcon->AddComponent<UIImageComponent>();
 	grenadeIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/grenade_icon.png");
 	grenadeIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	grenadeIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.773, 0.872, 0), glm::vec3(0.021, 0.065, 1));	
+	grenadeIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.773, 0.872, 0), glm::vec3(0.021, 0.065, 1));
+
+	canvas->AddComponent<ScriptComponent>()->LoadScript("UIGameplay");
 }
 
 void Root::CreateMainMenuUI()
@@ -502,7 +520,6 @@ void Root::CreateMainMenuUI()
     auto canvas = CreateGameObject("Canvas");
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
-	//canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 
     auto menuImage = CreateGameObject("MenuImage");
     Application->root->ParentGameObject(*menuImage, *canvas);
@@ -549,6 +566,8 @@ void Root::CreateMainMenuUI()
     quitButton->AddComponent<UIButtonComponent>();
     quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.906, 0), glm::vec3(0.182, 0.091, 1));
+
+	canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 }
 
 

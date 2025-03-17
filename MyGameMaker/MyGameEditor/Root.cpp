@@ -152,7 +152,7 @@ bool Root::Start()
 
 	////Hormagaunt
 	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(50, 0, 50));
 	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -177,10 +177,9 @@ bool Root::Start()
 	hormagauntMesh->GetComponent<MeshRenderer>()->GetMaterial()->ao = 0.8f;
 	hormagauntMesh->GetComponent<MeshRenderer>()->GetMaterial()->SetTonemapStrength(1.8f);
 
-
-
 	CreateGameplayUI();
-	//CreateMainMenuUI();
+	CreateMainMenuUI();
+
 	
     SceneManagement->Start();
 
@@ -588,6 +587,7 @@ void Root::CreateMainMenuUI()
     auto canvas = CreateGameObject("MenuCanvas");
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<SoundComponent>();
 
     auto menuImage = CreateGameObject("MenuImage");
     Application->root->ParentGameObject(*menuImage, *canvas);

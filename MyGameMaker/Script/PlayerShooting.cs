@@ -94,73 +94,73 @@ public class PlayerShooting : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        
-        
+
+
         //Engineson.print($"Shoot Timer: {shootTimer}");
 
-        //if (playerInput.IsChangingWeaponRight())
-        //{
-        //    ChangeWeaponRight();
-        //}
-        //else if (playerInput.IsChangingWeaponLeft())
-        //{
-        //    ChangeWeaponLeft();
-        //}
+        if (playerInput.IsChangingWeaponRight())
+        {
+            ChangeWeaponRight();
+        }
+        else if (playerInput.IsChangingWeaponLeft())
+        {
+            ChangeWeaponLeft();
+        }
 
-        //if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
-        //{
-        //    railgun.ChangeMode();
-        //}
-
-
-        //if (playerInput?.IsShooting() == true)
-        //{
-        //    shootTimer -= deltaTime * 10;
-        //    if (shootTimer <= 0)
-        //    {
-        //        Shoot();
-        //        shootTimer = shootCooldown;
-        //    }
-                
-        //}
-        //else if (playerInput.IsShooting() == false)
-        //{
-        //   switch(currentGun)
-        //    {
-        //        case GunType.BOLTGUN:
-        //            shootTimer = 0;
-        //            break;
-        //        case GunType.SHOTGUN:
-        //            shootTimer = 0.5f;
-        //            break;
-        //        case GunType.RAILGUN:
-        //            shootTimer = shootCooldown;
-        //            break;
-        //    }
-        //}
+        if (playerInput.IsChangingRailgunMode() && currentGun == GunType.RAILGUN)
+        {
+            railgun.ChangeMode();
+        }
 
 
-        //if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
-        //{
-        //    Reload();
-        //}
-        //
-        //if (currentGun == GunType.RAILGUN && playerInput.IsShooting() == false && railgun.isCooling == false)
-        //{
-        //    railgun.isReloading = true;
-        //}
+        if (playerInput?.IsShooting() == true)
+        {
+            shootTimer -= deltaTime * 10;
+            if (shootTimer <= 0)
+            {
+                Shoot();
+                shootTimer = shootCooldown;
+            }
 
-        //if (playerInput?.IsAbility1Pressed() == true)
-        //{
-        //    Engineson.print("Ability 1 pressed");
-        //    UseAbility1();
-        //}
+        }
+        else if (playerInput.IsShooting() == false)
+        {
+            switch (currentGun)
+            {
+                case GunType.BOLTGUN:
+                    shootTimer = 0;
+                    break;
+                case GunType.SHOTGUN:
+                    shootTimer = 0.5f;
+                    break;
+                case GunType.RAILGUN:
+                    shootTimer = shootCooldown;
+                    break;
+            }
+        }
 
-        //if (playerInput?.IsAbility2Pressed() == true)
-        //{
-        //    Engineson.print("Ability 2 pressed");
-        //    UseAbility2();
-        //}
+
+        if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
+        {
+            Reload();
+        }
+
+        if (currentGun == GunType.RAILGUN && playerInput.IsShooting() == false && railgun.isCooling == false)
+        {
+            railgun.isReloading = true;
+        }
+
+        if (playerInput?.IsAbility1Pressed() == true)
+        {
+            Engineson.print("Ability 1 pressed");
+            UseAbility1();
+        }
+
+        if (playerInput?.IsAbility2Pressed() == true)
+        {
+            Engineson.print("Ability 2 pressed");
+            UseAbility2();
+        }
 
     }
 

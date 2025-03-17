@@ -1,0 +1,139 @@
+SceneMetadata:
+  SceneName: GameView
+GameObject0:
+  name: Player
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0.46688878536224365
+        - -0.014631748199462891
+        - -0.44573283195495605
+      localRotation:
+        - 0.004718351975489323
+        - 83.121471758315508
+        - 0.0046710741198056141
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library/Audio/Menu Confirm.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: false
+    ColliderComponent: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerShooting
+      Script1:
+        name: PlayerMovement
+      Script2:
+        name: PlayerInput
+      Script3:
+        name: PlayerDash
+      Script4:
+        name: PlayerController
+  Children:
+    - name: playerMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90
+            - 0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cylinder.001
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_BaseColor.png
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_playerMesh
+        ScriptComponents:
+          Script0:
+            name: PlayerAnimations
+      Children: ~
+GameObject1:
+  name: MainCamera
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999735770004
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+  Children: ~

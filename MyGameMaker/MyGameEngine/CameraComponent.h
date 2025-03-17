@@ -42,6 +42,10 @@ public:
     void SetDistance(float distance) { followDistance = distance; }
     float GetDistance() const { return followDistance; }
 
+    void SetPriority(float newPriority);
+	int GetPriority() const { return priority; }
+    void SetAsHighestPriority();
+
     void SetOffset(const glm::vec3& offset) { followOffset = offset; }
     glm::vec3 GetOffset() const { return followOffset; }
 
@@ -61,10 +65,12 @@ public:
     float shakeDuration = 0.0f;
     float shakeFrequency = 0.0f;
     float shakeTimer = 0.0f;
+	int priority;
 
     bool ShakeEnabled = false;
     bool frustrumCullingEnabled = true;
     bool frustrumRepresentation = true;
+
 
     ProjectionType projectionType = ProjectionType::Perspective;
 
@@ -88,6 +94,7 @@ protected:
 		node["size"] = orthoSize;
 		node["near_plane"] = zNear;
 		node["far_plane"] = zFar;
+		node["priority"] = priority;
 
 		return node;
     }
@@ -109,6 +116,8 @@ protected:
 		orthoSize = node["size"].as<float>();
 		zNear = node["near_plane"].as<double>();
 		zFar = node["far_plane"].as<double>();
+		int newPriority = node["priority"].as<int>();
+		SetPriority(newPriority);
 
 		return true;
 	}

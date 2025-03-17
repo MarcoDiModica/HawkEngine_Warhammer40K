@@ -3,7 +3,9 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 
 MeshColliderComponent::MeshColliderComponent(GameObject* owner, PhysicsModule* physicsModule)
-    : Component(owner), physics(physicsModule), rigidBody(nullptr) {
+    : Component(owner), physics(physicsModule), rigidBody(nullptr) 
+{
+	name = "MeshColliderComponent";
 }
 
 MeshColliderComponent::~MeshColliderComponent() {
@@ -22,6 +24,9 @@ void MeshColliderComponent::Start() {
 
 void MeshColliderComponent::Update(float deltaTime) {
     // Update logic if needed
+    if (owner) {
+        SnapToPosition();
+    }
 }
 
 void MeshColliderComponent::Destroy() {

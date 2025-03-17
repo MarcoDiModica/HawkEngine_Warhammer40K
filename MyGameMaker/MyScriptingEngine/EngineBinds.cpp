@@ -16,6 +16,9 @@
 #include "../MyGameEditor/App.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
+#include "../MyUIEngine/UIButtonComponent.h"
+#include "../MyUIEngine/UICanvasComponent.h"
+#include "../MyUIEngine/UITransformComponent.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
@@ -144,9 +147,18 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.SkeletalAnimation") {
 		return GO->GetComponent<SkeletalAnimationComponent>()->GetSharp();
 	}
-	/*else if (componentName == "HawkEngine.ScriptComponent") {
+	else if (componentName == "HawkEngine.UIButton") {
+		return GO->GetComponent<UIButtonComponent>()->GetSharp();
+	}
+	else if (componentName == "HawkEngine.UICanvas") {
+		return GO->GetComponent<UICanvasComponent>()->GetSharp();
+	}
+    else if (componentName == "HawkEngine.UITransform") {
+        return GO->GetComponent<UITransformComponent>()->GetSharp();
+    }
+	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
-	}*/
+	}
 
 
 	
@@ -174,9 +186,15 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
 		break;
-    case 7: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
+	case 7: _component = static_cast<Component*>(go->AddComponent<UIButtonComponent>());
+		break;
+	case 8: _component = static_cast<Component*>(go->AddComponent<UICanvasComponent>());
+		break; 
+    case 9: _component = static_cast<Component*>(go->AddComponent<SkeletalAnimationComponent>());
         break;
-   }
+	case 10: _component = static_cast<Component*>(go->AddComponent<UITransformComponent>());
+		break;
+    }
 
 	
 
@@ -757,6 +775,22 @@ void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
 	}
 }
 
+int EngineBinds::GetState(MonoObject* uiButtonRef)
+{
+	auto uiButton = ConvertFromSharpComponent<UIButtonComponent>(uiButtonRef);
+	if (uiButton) {
+		return (int)uiButton->GetState();
+	}
+}
+
+void EngineBinds::SetUIScale(MonoObject* uiTransformRef, glm::vec3* scale)
+{
+	auto uiTransform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+	if (uiTransform) {
+		uiTransform->SetSacale(*scale);
+	}
+}
+
 void EngineBinds::SetAnimationSpeed(MonoObject* animationRef, float speed)
 {
 	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
@@ -826,11 +860,16 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
 	}
 }
+void EngineBinds::LoadScene(MonoString* sceneName)
+{
+    char* C_sceneName = mono_string_to_utf8(sceneName);
+	Application->scene_serializer->DeSerialize(std::string(C_sceneName));
+}
 
 void EngineBinds::BindEngine() {
 
-    mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     // GameObject
+	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
@@ -932,6 +971,13 @@ void EngineBinds::BindEngine() {
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
+
+	// UI Button
+	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);
+
+	// UI Transform
+	mono_add_internal_call("HawkEngine.UITransform::SetUIScale", (const void*)&EngineBinds::SetUIScale);
+  
     // SkeletalAnimation
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationSpeed", (const void*)&EngineBinds::SetAnimationSpeed);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationSpeed", (const void*)&EngineBinds::GetAnimationSpeed);
@@ -943,6 +989,9 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayState", (const void*)&EngineBinds::SetAnimationPlayState);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationPlayState", (const void*)&EngineBinds::GetAnimationPlayState);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
+
+	// Scene
+	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
 }
 
 template <class T>

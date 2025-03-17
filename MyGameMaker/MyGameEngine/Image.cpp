@@ -52,16 +52,67 @@ void Image::load(int width, int height, int channels, void* data) {
 	_height = height;
 	_channels = channels;
 
-	if (!_id) glGenTextures(1, &_id);
+	if (!data || width <= 0 || height <= 0) {
+		LOG(LogType::LOG_ERROR, "Datos de imagen inválidos: ancho=%d, alto=%d, canales=%d",
+			width, height, channels);
+		return;
+	}
+
+	GLint internalFormat;
+	GLenum format;
+
+	switch (channels) {
+	case 1:
+		internalFormat = GL_R8;
+		format = GL_RED;
+		break;
+	case 2:
+		internalFormat = GL_RG8;
+		format = GL_RG;
+		break;
+	case 3:
+		internalFormat = GL_RGB8;
+		format = GL_RGB;
+		break;
+	case 4:
+		internalFormat = GL_RGBA8;
+		format = GL_RGBA;
+		break;
+	default:
+		LOG(LogType::LOG_WARNING, "Número de canales inesperado: %d, usando RGB", channels);
+		internalFormat = GL_RGB8;
+		format = GL_RGB;
+		break;
+	}
+
+	if (!_id) {
+		glGenTextures(1, &_id);
+	}
 
 	bind();
-	glPixelStorei(GL_UNPACK_ALIGNMENT, rowAlignment(width, channels));
-	glTexImage2D(GL_TEXTURE_2D, 0, channels, width, height, 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, data);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0,
+		format, GL_UNSIGNED_BYTE, data);
+
+	GLenum glError = glGetError();
+	if (glError != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "Error de OpenGL al cargar textura: 0x%x", glError);
+	}
+
 	glGenerateMipmap(GL_TEXTURE_2D);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	swizzling:
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_RED);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_ALPHA);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
@@ -103,30 +154,55 @@ std::istream& operator>>(std::istream& is, Image& img) {
 	return is;
 }
 
-bool Image::LoadTexture(const std::string& path)
-{
+bool Image::LoadTexture(const std::string& path) {
+	LOG(LogType::LOG_INFO, "loading tex: %s", path.c_str());
 	image_path = path;
-	auto img = ilGenImage();
+
+	if (!std::filesystem::exists(path)) {
+		LOG(LogType::LOG_ERROR, "tex not found at: %s", path.c_str());
+		return false;
+	}
+
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_UPPER_LEFT);
+
+	ILuint img = ilGenImage();
 	ilBindImage(img);
-	ilLoadImage(path.c_str());
-	const auto origin = ilGetInteger(IL_IMAGE_ORIGIN);
-	if (origin != IL_ORIGIN_UPPER_LEFT) iluFlipImage();
+
+	ILboolean success = ilLoadImage(path.c_str());
+
+	if (!success) {
+		ILenum error = ilGetError();
+		LOG(LogType::LOG_ERROR, "error loading image %s: %s (code: %d)",
+			path.c_str(), iluErrorString(error), error);
+		ilDeleteImage(img);
+		return false;
+	}
+
+	auto format = ilGetInteger(IL_IMAGE_FORMAT);
+	auto bpp = ilGetInteger(IL_IMAGE_BPP);
+
+	LOG(LogType::LOG_INFO, "og image: BPP=%d, format=%d", bpp, format);
+
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+
+	if (ilGetInteger(IL_IMAGE_ORIGIN) != IL_ORIGIN_UPPER_LEFT) {
+		iluFlipImage();
+	}
+
 	auto width = ilGetInteger(IL_IMAGE_WIDTH);
-
 	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
-
 	auto channels = ilGetInteger(IL_IMAGE_BPP);
 	auto data = ilGetData();
+
+	LOG(LogType::LOG_INFO, "converted image: w=%d, h=%d, ch=%d, f=%d",
+		width, height, channels, ilGetInteger(IL_IMAGE_FORMAT));
 
 	load(width, height, channels, data);
 
 	ilDeleteImage(img);
 
-	if (_id) {
-		return true;
-	}
-	
-	return false;
+	return (_id != 0);
 }
 
 void Image::LoadTextureLocalPath(const std::string& path) {
@@ -145,10 +221,8 @@ void Image::LoadTextureLocalPath(const std::string& path) {
 	auto channels = ilGetInteger(IL_IMAGE_BPP);
 	auto data = ilGetData();
 
-	//load image as a texture in VRAM
 	load(width, height, channels, data);
 
-	//now we can delete image from RAM
 	ilDeleteImage(img);
 
 }
@@ -173,7 +247,7 @@ void Image::SaveBinary(const std::string& filename) const {
 	fout.write(reinterpret_cast<const char*>(&_height), sizeof(_height));
 	fout.write(reinterpret_cast<const char*>(&_channels), sizeof(_channels));
 
-	ILubyte* pixelData = ilGetData(); //devil
+	ILubyte* pixelData = ilGetData(); 
 	ILuint dataSize = _width * _height * _channels;
 
 	fout.write(reinterpret_cast<const char*>(pixelData), dataSize);

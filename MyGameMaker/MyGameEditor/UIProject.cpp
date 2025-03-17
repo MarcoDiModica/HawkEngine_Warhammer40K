@@ -97,17 +97,31 @@ bool UIProject::Draw()
 
     DrawMainLayout();
 
-    if (ImGui::BeginPopupModal("Load Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+    if (showLoadScenePopUp)
+    {
+        ImGui::OpenPopup("Load Scene");
+    }
+
+    if (ImGui::BeginPopupModal("Load Scene", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
         ImGui::Text("Do you want to load this scene?");
         ImGui::Separator();
 
-        if (ImGui::Button("Load without saving", ImVec2(150, 0))) {
+        if (ImGui::Button("Load", ImVec2(150, 0))) {
             Application->scene_serializer->DeSerialize(currentSceneFile);
+			showLoadScenePopUp = false;
             ImGui::CloseCurrentPopup();
         }
 
+        if (ImGui::Button("Save and Load", ImVec2(150, 0))) {
+			Application->scene_serializer->Serialize(Application->root->currentScene->GetName());
+			Application->scene_serializer->DeSerialize(currentSceneFile);
+            showLoadScenePopUp = false;
+			ImGui::CloseCurrentPopup();
+		}
+
         ImGui::SameLine();
         if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+            showLoadScenePopUp = false;
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
@@ -633,7 +647,7 @@ void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
 {
     if (filePath.extension() == ".scene") {
         currentSceneFile = filePath.string();
-        ImGui::OpenPopup("Load Scene");
+        showLoadScenePopUp = true;
     }
     else if (filePath.extension() == ".cs") {
         std::string scriptPath = filePath.string();
@@ -641,7 +655,7 @@ void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
             LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
         }
         else {
-            HINSTANCE result = ShellExecuteA(NULL, "open", scriptPath.c_str(), NULL, NULL, SW_SHOWNORMAL);
+            HINSTANCE result = ShellExecuteA(nullptr, "open", scriptPath.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
             if ((int)result <= 32) {
                 LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
             }
@@ -733,9 +747,9 @@ void UIProject::ShowContextMenu()
             
         }
         else {
-            if (selectedFile.extension() == ".scene" && ImGui::MenuItem("Load without saving")) {
-                Application->scene_serializer->DeSerialize(selectedFile.string());
+            if (selectedFile.extension() == ".scene" && ImGui::MenuItem("Load Scene")) {
                 currentSceneFile = selectedFile.string();
+                showLoadScenePopUp = true;
             }
             if (ImGui::MenuItem("Rename")) {
                 renamePath = selectedFile;

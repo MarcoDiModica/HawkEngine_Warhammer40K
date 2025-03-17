@@ -77,4 +77,5 @@ private:
     void DuplicateItem(const std::filesystem::path& path);
 
     void HandleShortcuts();
+    bool showLoadScenePopUp = false;
 };

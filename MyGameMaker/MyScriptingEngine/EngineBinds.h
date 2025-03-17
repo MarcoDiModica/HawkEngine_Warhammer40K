@@ -134,6 +134,13 @@ namespace EngineBinds {
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
+
+	//UIButton
+    int GetState(MonoObject* uiButtonRef);
+
+	//UITransform
+	void SetUIScale(MonoObject* uiTransformRef, glm::vec3* scale);
+  
     //SkeletalAnimation
 	void SetAnimationSpeed(MonoObject* skeletalAnimationRef, float speed);
 	float GetAnimationSpeed(MonoObject* skeletalAnimationRef);
@@ -146,6 +153,9 @@ namespace EngineBinds {
 	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
 
+
+    //SceneManagement
+    void LoadScene(MonoString* sceneName);
 }
 
 #endif // ENGINE_BINDS_H

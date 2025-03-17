@@ -60,6 +60,7 @@
 
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
+#include "MyParticlesEngine/ParticleFX.h"
 
 using namespace std;
 
@@ -224,6 +225,10 @@ static void RenderObjectAndChildren(GameObject* object) {
 
 	if (object->HasComponent<UICanvasComponent>()) {
 		object->GetComponent<UICanvasComponent>()->Update(Application->GetDt());
+	}
+
+	if (object->HasComponent<ParticleFX>()) {
+		object->GetComponent<ParticleFX>()->RenderGameView();
 	}
 
 	for (const auto& child : object->GetChildren()) {
@@ -530,8 +535,7 @@ int main(int argc, char** argv) {
 		case CREATE:
 
 			Application = new App();
-			Application->physicsModule->Awake();
-			Application->physicsModule->Start();
+			
 			MonoManager::GetInstance().Initialize();
 			SoundComponent::InitSharedAudioEngine();
 
@@ -539,7 +543,6 @@ int main(int argc, char** argv) {
 			iluInit();
 			ilutInit();
 
-		
 			init_openGL();
 
 			if (Application) {	
@@ -551,12 +554,14 @@ int main(int argc, char** argv) {
 
 		case AWAKE:
 
+			Application->physicsModule->Awake();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;
 
 		case START:
 
+			Application->physicsModule->Start();
 			if (Application->Start()) { state = LOOP; }
 			else { state = FAIL; printf("Failed on START"); }
 			break;

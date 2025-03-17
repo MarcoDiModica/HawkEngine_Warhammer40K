@@ -56,7 +56,7 @@ void MonoManager::Initialize() {
     }
 
     // Load the assembly
-    std::string assemblyPath = std::string(getExecutablePath() + "\\..\\..\\Script\\obj\\Debug\\Script.dll").c_str();
+    std::string assemblyPath = std::string(getExecutablePath() + R"(\..\..\Script\obj\Script.dll)");
     assembly = mono_domain_assembly_open(domain, assemblyPath.c_str());
     if (!assembly) {
         std::cerr << "Error loading assembly: " << assemblyPath << std::endl;

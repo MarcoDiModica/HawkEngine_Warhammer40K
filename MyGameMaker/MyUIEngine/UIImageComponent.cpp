@@ -13,7 +13,7 @@
 
 UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 {
-	name = "UICanvasComponent";
+	name = "UIImageComponent";
 }
 
 void UIImageComponent::Start()
@@ -62,8 +62,6 @@ void UIImageComponent::Update(float deltaTime)
 	glm::quat rotation = glm::quat(glm::vec3(glm::radians(0.0f), 0.0f, 0.0f));
 
 	translation -= uiTransform->GetPivotOffset() * scale;
-
-	std::cout << uiTransform->GetPosition().x << std::endl;
 
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), translation) *
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f)) *

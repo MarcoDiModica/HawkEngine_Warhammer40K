@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>obj\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>obj\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -49,12 +49,14 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="EnemyController.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Grenade.cs" />
     <Compile Include="GrenadeLauncher.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="MenuButtons.cs" />
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
@@ -70,10 +72,15 @@
     <Compile Include="Railgun.cs" />
     <Compile Include="Rigidbody.cs" />
     <Compile Include="Shotgun.cs" />
+    <Compile Include="SceneManager.cs" />
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="Transform.cs" />
+    <Compile Include="UIButton.cs" />
+    <Compile Include="UICanvas.cs" />
+    <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
+    <Compile Include="UITransform.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

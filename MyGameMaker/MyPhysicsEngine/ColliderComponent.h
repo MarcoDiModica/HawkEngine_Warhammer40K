@@ -78,6 +78,8 @@ protected:
 
     bool decode(const YAML::Node& node) override
     {
+        Start();
+        SnapToPosition();
 		return false;
     }
 };

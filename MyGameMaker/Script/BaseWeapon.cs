@@ -11,6 +11,8 @@ public abstract class BaseWeapon : MonoBehaviour
     public int currentTotalAmmo;
     public float reloadTime;
     public Transform transform;
+    public List<BulletData> bullets = new List<BulletData>();
+
 
     public enum AmmoType
     {
@@ -27,4 +29,6 @@ public abstract class BaseWeapon : MonoBehaviour
     public abstract void UseAbility1();
 
     public abstract void UseAbility2();
+
+    public abstract void CleanBullets();
 }

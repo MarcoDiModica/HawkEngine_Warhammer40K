@@ -16,6 +16,8 @@ public class PlayerShooting : MonoBehaviour
     private Shotgun shotgun;
     private Railgun railgun;
 
+   
+
     private Audio sound;
 
     private enum GunType

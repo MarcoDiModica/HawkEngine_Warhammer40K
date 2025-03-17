@@ -22,7 +22,7 @@ public class Boltgun : BaseWeapon
 
     public override void Update(float deltaTime)
     {
-        
+        CleanBullets();
     }
 
     public override void Shoot()
@@ -48,7 +48,8 @@ public class Boltgun : BaseWeapon
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                     projectile.AddScript("BulletData");
-                    projectile.GetComponent<BulletData>().Init(projectile, projTransform, forward);
+                    projectile.GetComponent<BulletData>().Init(projTransform, forward);
+                    bullets.Add(projectile.GetComponent<BulletData>());
 
                     Engineson.print("Projectile fired!");
                 }
@@ -81,5 +82,25 @@ public class Boltgun : BaseWeapon
         Engineson.print("Boltgun ability 2 used");
     }
 
-    
+    public override void CleanBullets()
+    {
+        for (int i = bullets.Count - 1; i >= 0; i--)
+        {
+            var proj = bullets[i];
+            if (proj.markedForDestruction)
+            {
+                try
+                {
+                    Engineson.Destroy(proj.gameObject);
+                    bullets .RemoveAt(i);
+                }
+                catch (System.Exception e)
+                {
+                    Engineson.print($"Error destroying projectile: {e.Message}");
+                    bullets.RemoveAt(i);
+                }
+            }
+        }
+    }
+
 }

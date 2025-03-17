@@ -4,27 +4,27 @@ using HawkEngine;
 
 public class BulletData : MonoBehaviour
 {
-    public GameObject gameObject;
     public Transform transform;
     public float lifetime;
     public Vector3 direction;
     public bool markedForDestruction;
-    public float projectileLifetime = 0.5f;
+    public float projectileLifetime;
     public float projectileSpeed = 90.0f;
 
-    public void Init(GameObject obj, Transform trans, Vector3 dir)
+    public void Init(Transform trans, Vector3 dir)
     {
-        gameObject = obj;
+
         transform = trans;
         direction = dir;
         lifetime = 0f;
+        projectileLifetime = 3;
         markedForDestruction = false;
     }
 
     public override void Update(float deltaTime)
     {
 
-        lifetime += deltaTime;
+        lifetime += deltaTime * 10;
 
         if (lifetime >= projectileLifetime)
         {
@@ -42,14 +42,6 @@ public class BulletData : MonoBehaviour
         {
             markedForDestruction = true;
             Engineson.print($"Error updating projectile: {e.Message}");
-        }
-
-        if (markedForDestruction)
-        {
-            if (gameObject != null)
-            {
-                Engineson.Destroy(gameObject);
-            }
         }
     }
 }

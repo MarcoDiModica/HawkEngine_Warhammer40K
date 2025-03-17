@@ -11,6 +11,7 @@ public class Railgun : BaseWeapon
     private float coolingTime = 3f;
     private float coolTimer = 0f;
     private float reloadTimer = 0f;
+    
 
     public enum RailgunMode
     {
@@ -63,6 +64,8 @@ public class Railgun : BaseWeapon
                 Reload();
             }
         }
+
+        //CleanBullets();
     }
 
     public override void Shoot()
@@ -89,7 +92,8 @@ public class Railgun : BaseWeapon
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                     projectile.AddScript("BulletData");
-                    projectile.GetComponent<BulletData>().Init(projectile, projTransform, forward);
+                    projectile.GetComponent<BulletData>().Init(projTransform, forward);
+                    bullets.Add(projectile.GetComponent<BulletData>());
 
                     Engineson.print("Projectile fired!");
                 }
@@ -129,6 +133,23 @@ public class Railgun : BaseWeapon
     public override void UseAbility2()
     {
 
+    }
+
+    public override void CleanBullets()
+    {
+        if (bullets.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < bullets.Count; i++)
+        {
+            if (bullets[i].markedForDestruction)
+            {
+                Engineson.Destroy(bullets[i].gameObject);
+                bullets.RemoveAt(i);
+            }
+        }
     }
 
     public void ChangeMode()

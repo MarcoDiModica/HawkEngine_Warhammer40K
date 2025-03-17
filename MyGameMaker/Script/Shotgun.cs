@@ -4,6 +4,7 @@ using HawkEngine;
 
 public class Shotgun : BaseWeapon
 {
+
     public override void Start()
     {
         shootCadence = 1f;
@@ -18,7 +19,7 @@ public class Shotgun : BaseWeapon
 
     public override void Update(float deltaTime)
     {
-
+        //CleanBullets();
     }
 
     public override void Shoot()
@@ -55,7 +56,8 @@ public class Shotgun : BaseWeapon
                         projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                         projectile.AddScript("BulletData");
-                        projectile.GetComponent<BulletData>().Init(projectile, projTransform, direction);
+                        projectile.GetComponent<BulletData>().Init(projTransform, direction);
+                        bullets.Add(projectile.GetComponent<BulletData>());
 
                         Engineson.print("Projectile fired!");
                     }
@@ -82,5 +84,22 @@ public class Shotgun : BaseWeapon
     public override void UseAbility2()
     {
 
+    }
+
+    public override void CleanBullets()
+    {
+        if (bullets.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < bullets.Count; i++)
+        {
+            if (bullets[i].markedForDestruction)
+            {
+                Engineson.Destroy(bullets[i].gameObject);
+                bullets.RemoveAt(i);
+            }
+        }
     }
 }

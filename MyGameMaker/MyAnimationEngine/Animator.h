@@ -15,6 +15,7 @@ private:
     float m_CurrentTime;
     float m_DeltaTime;
 	float m_PlaySpeed = 1;
+    float transitionTime = 0.0f;
 
 public:
     Animator(Animation* Animation);
@@ -29,6 +30,12 @@ public:
 	void UpdateAnimation(float dt);
 	void PlayAnimation(Animation* pAnimation);
     void CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform);
+
+    void BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime);
+    void CalculateBlendedBoneTransform( Animation* pAnimationBase, const AssimpNodeData* node, Animation* pAnimationLayer, const AssimpNodeData* nodeLayered,
+        const float currentTimeBase, const float currentTimeLayered, const glm::mat4& parentTransform, const float blendFactor);
+
+	void TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation, float transitionDuration, float deltaTime);
 
     float GetCurrentMTime()
     {
@@ -70,6 +77,11 @@ public:
     {
         m_BonesGameObjects.push_back(boneGO);
     }
+
+	void SetTransitionTime(float time)
+	{
+		transitionTime = time;
+	}
 
 };
 

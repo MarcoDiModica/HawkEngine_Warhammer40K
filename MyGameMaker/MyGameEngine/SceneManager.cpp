@@ -275,34 +275,19 @@ bool SceneManager::ParentGameObject(GameObject& child, GameObject& father) {
     return false;
 }
 
-std::shared_ptr<GameObject> FindGORecusrive(std::shared_ptr<GameObject> go, std::string name) {
-	if (!go->GetChildren().empty()) {
-		for (auto& child : go->GetChildren()) {
-			if (child->GetName() == name) {
-				return child;
-			}
-            else {
-				auto child2 = FindGORecusrive(child, name);
-				if (child2 != nullptr) {
-					return child2;
-				}
-            }
-		}
-	}
-	return nullptr;
+std::shared_ptr<GameObject> SceneManager::FindGOByName(std::string name) const {
+    return FindGOByNameRecursive(name, currentScene->_children);
 }
 
-std::shared_ptr<GameObject> SceneManager::FindGOByName(std::string name) const {
-    for (auto& go : currentScene->_children) {
-		if (go->GetName() == name) {
-			return go;
+std::shared_ptr<GameObject> SceneManager::FindGOByNameRecursive(const std::string& name, const std::vector<std::shared_ptr<GameObject>>& gameObjects) const {
+    for (const auto& go : gameObjects) {
+        if (go->GetName() == name) {
+            return go;
         }
-        else {
-			auto child = FindGORecusrive(go, name);
-            if (child != nullptr) {
-                return child;
-            }
+        auto found = FindGOByNameRecursive(name, go->GetChildren());
+        if (found) {
+            return found;
         }
-	}
-	return nullptr;
+    }
+    return nullptr;
 }

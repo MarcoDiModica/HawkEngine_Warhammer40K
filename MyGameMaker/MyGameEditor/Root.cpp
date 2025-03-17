@@ -64,11 +64,14 @@ bool Root::Start()
 	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
+
+	//auto rabbit = CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
+	//rabbit->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");

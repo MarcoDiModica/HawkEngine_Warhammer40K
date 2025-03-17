@@ -627,6 +627,9 @@ private:
 			skeletal->GetAnimator()->PlayAnimation(skeletal->GetAnimation());
         }
 
+		ImGui::DragFloat("Blending Value", &skeletal->blendFactor, 0.01f, 0.0, 1.0f);
+		ImGui::Checkbox("Is Blending", &skeletal->isBlending);
+
     }
     #pragma endregion 
 

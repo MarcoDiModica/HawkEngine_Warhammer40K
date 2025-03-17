@@ -213,6 +213,12 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
 
 }
 
+void EngineBinds::AddScript(MonoObject* ref, MonoString* scriptName) {
+	char* C_name = mono_string_to_utf8(scriptName);
+	auto go = ConvertFromSharp(ref);
+	go->AddComponent<ScriptComponent>()->LoadScript(C_name);
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
@@ -751,6 +757,15 @@ float EngineBinds::GetVolume(MonoObject* audioRef)
     return sound ? sound->GetVolume() : 0.0f;
 }
 
+void EngineBinds::LoadAudioClip(MonoObject* audioRef, MonoString* path)
+{
+	char* C_path = mono_string_to_utf8(path);
+	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+	if (sound) {
+		sound->LoadAudio(C_path, true);
+	}
+}
+
 void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
 {
 	char* C_path = mono_string_to_utf8(path);
@@ -804,6 +819,47 @@ int EngineBinds::GetAnimationIndex(MonoObject* animationRef)
     return animation ? animation->GetAnimationIndex() : 0;
 }
 
+float EngineBinds::GetAnimationTime(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->GetAnimationTime() : 0.0f;
+}
+
+float EngineBinds::GetAnimationLength(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->GetAnimationDuration() : 0.0f;
+}
+
+void EngineBinds::SetAnimationPlayTime(MonoObject* animationRef, float time)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->GetAnimator()->SetCurrentMTime(time);
+	}
+}
+
+void EngineBinds::SetAnimationPlayState(MonoObject* animationRef, bool play)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->SetAnimationPlayState(play);
+	}
+}
+
+bool EngineBinds::GetAnimationPlayState(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->GetAnimationPlayState() : false;
+}
+
+void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, int newAnim, float timeToAnim)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
+	}
+}
 void EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
@@ -822,6 +878,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
+    mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);
@@ -910,6 +967,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Audio::Resume", (const void*)&EngineBinds::Resume);
     mono_add_internal_call("HawkEngine.Audio::SetVolume", (const void*)&EngineBinds::SetVolume);
     mono_add_internal_call("HawkEngine.Audio::GetVolume", (const void*)&EngineBinds::GetVolume);
+	mono_add_internal_call("HawkEngine.Audio::LoadAudio", (const void*)&EngineBinds::LoadAudioClip);
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
@@ -925,6 +983,12 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationSpeed", (const void*)&EngineBinds::GetAnimationSpeed);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimation", (const void*)&EngineBinds::SetAnimation);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationIndex", (const void*)&EngineBinds::GetAnimationIndex);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationTime", (const void*)&EngineBinds::GetAnimationTime);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationLength", (const void*)&EngineBinds::GetAnimationLength);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayTime", (const void*)&EngineBinds::SetAnimationPlayTime);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayState", (const void*)&EngineBinds::SetAnimationPlayState);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationPlayState", (const void*)&EngineBinds::GetAnimationPlayState);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

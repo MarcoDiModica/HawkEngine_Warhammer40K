@@ -3,6 +3,7 @@
 #include "../MyGameEngine/Component.h"
 #include "../MyGameEngine/GameObject.h"
 #include <yaml-cpp/yaml.h>
+#include <glm/glm.hpp>
 
 class UITransformComponent : public Component
 {
@@ -88,7 +89,7 @@ protected:
 
 	friend class SceneSerializer;
 
-	YAML::Node encode() override {
+	/*YAML::Node encode() override {
 
 		YAML::Node node = Component::encode();
 
@@ -113,6 +114,6 @@ protected:
 		SetTransform(position, scale);
       
 		return true;
-	}
+	}*/
 };
 

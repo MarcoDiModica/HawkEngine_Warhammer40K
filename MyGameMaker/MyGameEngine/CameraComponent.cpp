@@ -7,6 +7,7 @@
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 
+
 CameraComponent::CameraComponent(GameObject* owner) : Component(owner), CameraBase()
 {
     name = "CameraComponent";
@@ -192,6 +193,14 @@ void CameraComponent::SetOrthographic(float size, float nearPlane, float farPlan
 	orthoSize = size;
 	SetNearPlane(nearPlane);
 	SetFarPlane(farPlane);
+}
+
+void CameraComponent::SetPriority(float newPriority) {
+    if (newPriority < 1.0f) {
+        newPriority = 1.0f;
+    }
+    priority = newPriority;
+    
 }
 
 void CameraComponent::FollowTarget(GameObject* target, float distance, const glm::vec3& offset, float smoothness, bool followX, bool followY, bool followZ)

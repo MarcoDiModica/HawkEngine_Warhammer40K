@@ -156,9 +156,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.UITransform") {
         return GO->GetComponent<UITransformComponent>()->GetSharp();
     }
-	/*else if (componentName == "HawkEngine.ScriptComponent") {
+	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
-	}*/
+	}
 
 
 	

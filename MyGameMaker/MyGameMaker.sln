@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C#Assembly", "Script\C#Asse
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{69491DAE-22EE-4D68-9C79-EA33AA36F506}"
 	ProjectSection(SolutionItems) = preProject
+		MyGameEditor\Assets\Shaders\particle_fragment.glsl = MyGameEditor\Assets\Shaders\particle_fragment.glsl
+		MyGameEditor\Assets\Shaders\particle_vertex.glsl = MyGameEditor\Assets\Shaders\particle_vertex.glsl
 		MyGameEditor\Assets\Shaders\pbr_fragment.glsl = MyGameEditor\Assets\Shaders\pbr_fragment.glsl
 		MyGameEditor\Assets\Shaders\pbr_vertex.glsl = MyGameEditor\Assets\Shaders\pbr_vertex.glsl
 		MyGameEditor\Assets\Shaders\unlit_fragment.glsl = MyGameEditor\Assets\Shaders\unlit_fragment.glsl

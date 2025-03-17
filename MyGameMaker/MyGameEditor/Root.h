@@ -40,10 +40,11 @@ public:
     void AddScene(std::shared_ptr<Scene> scene);
     void RemoveScene(const std::string& name);
     void SetActiveScene(const std::string& name);
-
     bool ParentGameObject(GameObject& child, GameObject& father);
    
     bool ParentGameObjectPreserve(GameObject& child, GameObject& father);
+	void SetCameraPriority(std::shared_ptr<GameObject> camera, int priority);
+	void UpdateCameraPriority();
 
     std::shared_ptr<Scene> GetActiveScene() const;
 
@@ -77,8 +78,11 @@ public:
     void CreateGameplayUI();
 	void CreateMainMenuUI();
 
+    void SetMainCamera(std::shared_ptr<GameObject> camera);
+
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
+	int prevCameraPriority = 0;
 };
 
 #endif

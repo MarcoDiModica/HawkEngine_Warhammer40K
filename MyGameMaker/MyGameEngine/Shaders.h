@@ -52,5 +52,5 @@ public:
 
 	bool Initialize();
 
-	// Shadow-mapping related methods can be added here in the future
+	// Shadow-mapping related methods should be added here in the future or maybe in a separate file
 };

@@ -11,7 +11,7 @@
 #include "MyGameEngine/Image.h"
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
-#include "../MyParticlesEngine/ParticlesEmitterComponent.h"
+#include "../MyParticlesEngine/ParticleFX.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
@@ -28,10 +28,14 @@
 #include "../MyAnimationEngine/BoneComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
+#include <MyPhysicsEngine/MeshColliderComponent.h>
 
 class GameObject;
 
 Root::Root(App* app) : Module(app) { ; }
+
+
+std::shared_ptr<GameObject> environment;
 
 bool Root::Awake()
 {
@@ -41,14 +45,6 @@ bool Root::Awake()
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
-
-   /*CreateGameObjectWithPath("Assets/Meshes/Street2.FBX");
-    MakeSmokerEmmiter();
-    MakeSmokerEmiter2();*/
-
-	/*environment = CreateGameObjectWithPath("Assets/Meshes/environmentSplit.fbx");
-	environment->GetTransform()->SetPosition(glm::vec3(0, -34, 0));
-	environment->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
 
     return true;
 }
@@ -61,35 +57,37 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	auto player = CreateGameObject("Player");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+    auto player = CreateGameObject("Player");
+    player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+    player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+    player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	if (playerMesh->HasComponent<SkeletalAnimationComponent>()) {
-		LOG(LogType::LOG_INFO, "Player has SkeletalAnimationComponent");
-	}
-	else
-	{
-		LOG(LogType::LOG_ERROR, "Player does not have SkeletalAnimationComponent");
-	}
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-    objMainCamera->GetTransform()->Rotate(glm::radians(60.0f), glm::dvec3(1, 0, 0));
+    objMainCamera->GetTransform()->Rotate(glm::radians(50.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
+	UpdateCameraPriority();
+
+	auto particleFX = CreateGameObject("ParticleFX");
+	auto emitter = particleFX->AddComponent<ParticleFX>();
+	emitter->ConfigureSmoke();
+	emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	auto enemy = CreateGameObject("Enemy");
 	enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
@@ -103,18 +101,72 @@ bool Root::Start()
 	ParentGameObject(*enemyMesh, *enemy);
 	//enemyMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 
-	CreateGameplayUI();
+	//CreateGameplayUI();
+    //CreateGameplayUI();
 	
     SceneManagement->Start();
 
     return true;
 }
 
+static void AddCollidersEnv() {
+	for (const auto& go : environment->GetChildren()) {
+		auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
+		collider->Start();
+	}
+}
+
+bool hasAddedColliders = false;	
+
 bool Root::Update(double dt) 
 {
+	if (!hasAddedColliders) {
+		//AddCollidersEnv();
+		hasAddedColliders = true;
+	}
+
     return true;
 }
 
+void Root::SetCameraPriority(std::shared_ptr<GameObject> camera, int priority)
+{
+	if (mainCamera == nullptr) {
+		mainCamera = camera;
+		prevCameraPriority = priority;
+		mainCamera->SetName("MainCamera");
+	}
+	else if (priority > prevCameraPriority) {
+		mainCamera->SetName("Camera");
+		mainCamera = camera;
+		prevCameraPriority = priority;
+		mainCamera->SetName("MainCamera");
+	}
+}
+
+void Root::UpdateCameraPriority()
+{
+	std::vector<std::shared_ptr<GameObject>> cameraGameObjects;
+
+	auto& gameObjects = SceneManagement->GetActiveScene()->_children;
+
+	for (const auto& gameObject : gameObjects) {
+		if (gameObject->HasComponent<CameraComponent>()) {
+			cameraGameObjects.push_back(gameObject);
+		}
+	}
+
+	if (!cameraGameObjects.empty()) {
+		
+		// Sort cameras by priority
+		std::sort(cameraGameObjects.begin(), cameraGameObjects.end(), [](const std::shared_ptr<GameObject>& a, const std::shared_ptr<GameObject>& b) {
+			return a->GetComponent<CameraComponent>()->GetPriority() > b->GetComponent<CameraComponent>()->GetPriority();
+			});
+
+		// Set the camera with the highest priority as the main camera
+		mainCamera = cameraGameObjects[0];
+	}
+	
+}
 shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh)
 {
     return SceneManagement->CreateMeshObject(name, mesh);
@@ -240,33 +292,33 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
 			std::unordered_map<std::string, std::shared_ptr<GameObject>> boneMap;
 
-			for (auto& bone : meshImp.bonesGameObjects[i]) {
-				if (!bone) continue;
+			//for (auto& bone : meshImp.bonesGameObjects[i]) {
+			//	if (!bone) continue;
 
-				auto boneGO = Application->root->CreateGameObject(bone->GetName());
-				Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
-				animationComponent->GetAnimator()->AddBoneGameObject(boneGO);
-				boneMap[bone->GetName()] = boneGO;
-			}
+			//	auto boneGO = Application->root->CreateGameObject(bone->GetName());
+			//	Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+			//	animationComponent->GetAnimator()->AddBoneGameObject(boneGO);
+			//	boneMap[bone->GetName()] = boneGO;
+			//}
 
-			for (auto& bone : meshImp.bonesGameObjects[i]) {
-				if (!bone) continue;
+			//for (auto& bone : meshImp.bonesGameObjects[i]) {
+			//	if (!bone) continue;
 
-				auto boneGO = boneMap[bone->GetName()];
-				Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
-				if (boneTransform && !boneTransform->GetParentName().empty()) {
-					auto it = boneMap.find(boneTransform->GetParentName());
-					if (it != boneMap.end()) {
-						ParentGameObject(*boneGO, *(it->second));
-					}
-					else {
-						ParentGameObject(*boneGO, *go);
-					}
-				}
-				else {
-					ParentGameObject(*boneGO, *go);
-				}
-			}
+			//	auto boneGO = boneMap[bone->GetName()];
+			//	Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+			//	if (boneTransform && !boneTransform->GetParentName().empty()) {
+			//		auto it = boneMap.find(boneTransform->GetParentName());
+			//		if (it != boneMap.end()) {
+			//			ParentGameObject(*boneGO, *(it->second));
+			//		}
+			//		else {
+			//			ParentGameObject(*boneGO, *go);
+			//		}
+			//	}
+			//	else {
+			//		ParentGameObject(*boneGO, *go);
+			//	}
+			//}
 		}
 
 		meshRenderer->GetMesh()->setBoundingBox(*meshBBox);
@@ -303,6 +355,12 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 		glm::mat4 rootMatrix = rootObject->GetTransform()->GetLocalMatrix();
 		glm::mat4 scaledRootMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * rootMatrix;
 		rootObject->GetTransform()->SetLocalMatrix(scaledRootMatrix);
+	}
+
+	if (meshImp.meshes.size() == 1) {
+		glm::mat4 originalMatrix = go->GetTransform()->GetLocalMatrix();
+		glm::mat4 scaledMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * originalMatrix;
+		go->GetTransform()->SetLocalMatrix(scaledMatrix);
 	}
 
 	return (meshImp.meshes.size() > 1) ? rootObject : go;
@@ -472,6 +530,11 @@ void Root::CreateMainMenuUI()
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.906, 0), glm::vec3(0.182, 0.091, 1));
 }
 
+
+void Root::SetMainCamera(std::shared_ptr<GameObject> camera)
+{
+	mainCamera = camera;
+}
 
 std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
 {

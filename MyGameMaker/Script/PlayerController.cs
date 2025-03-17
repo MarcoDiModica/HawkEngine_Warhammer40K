@@ -61,7 +61,8 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
             isShootingStanding = false;
             isShootingRunning = false;
-            
+            sound?.Stop();
+
         }
 
         if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)
@@ -73,8 +74,8 @@ public class PlayerController : MonoBehaviour
         else if (playerInput.IsShooting())
         {
             isFootstepPlaying = false;
-            //sound?.Stop();
         }
+        
 
 
         if (moveDirection == Vector3.Zero && playerInput.IsShooting() && !isShootingStanding)

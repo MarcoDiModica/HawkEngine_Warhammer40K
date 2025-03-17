@@ -64,6 +64,10 @@ bool Root::Start()
 	/*auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
 	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
 	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
 	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");

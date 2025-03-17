@@ -123,7 +123,7 @@ bool Root::Start()
 	//hormagauntMesh->SetName("HormagauntMesh");
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 
-	CreateGameplayUI();
+	//CreateGameplayUI();
 	CreateMainMenuUI();
 	
     SceneManagement->Start();
@@ -507,7 +507,7 @@ void Root::CreateMainMenuUI()
     auto menuImage = CreateGameObject("MenuImage");
     Application->root->ParentGameObject(*menuImage, *canvas);
     menuImage->AddComponent<UIImageComponent>();
-    menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Main_Menu_Reference.png");
+    menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Main_Menu_1.png");
     menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
     auto newGameButton = CreateGameObject("NewGameButton");

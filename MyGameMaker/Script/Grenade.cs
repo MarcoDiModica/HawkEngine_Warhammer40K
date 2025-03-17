@@ -43,7 +43,7 @@ public class Grenade : MonoBehaviour
             deathtimer -= deltaTime;
             if (deathtimer <= 0)
             {
-                if (explosion != null)
+                if (explosion != null) ;
                     //Engineson.Destroy(explosion);
             }
         }

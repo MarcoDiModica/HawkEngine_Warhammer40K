@@ -143,6 +143,9 @@ namespace EngineBinds {
 	float GetAnimationSpeed(MonoObject* skeletalAnimationRef);
 	void SetAnimation(MonoObject* skeletalAnimationRef, int index);
 	int GetAnimationIndex(MonoObject* skeletalAnimationRef);
+
+    //SceneManagement
+    void LoadScene(MonoString* sceneName);
 }
 
 #endif // ENGINE_BINDS_H

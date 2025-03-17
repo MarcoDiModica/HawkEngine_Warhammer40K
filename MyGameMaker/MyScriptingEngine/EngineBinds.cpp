@@ -804,10 +804,16 @@ int EngineBinds::GetAnimationIndex(MonoObject* animationRef)
     return animation ? animation->GetAnimationIndex() : 0;
 }
 
+void EngineBinds::LoadScene(MonoString* sceneName)
+{
+    char* C_sceneName = mono_string_to_utf8(sceneName);
+	Application->scene_serializer->DeSerialize(std::string(C_sceneName));
+}
+
 void EngineBinds::BindEngine() {
 
-    mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     // GameObject
+	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
@@ -919,6 +925,9 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationSpeed", (const void*)&EngineBinds::GetAnimationSpeed);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimation", (const void*)&EngineBinds::SetAnimation);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationIndex", (const void*)&EngineBinds::GetAnimationIndex);
+
+	// Scene
+	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
 }
 
 template <class T>

@@ -61,7 +61,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	auto player = CreateGameObject("Player");
+	/*auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
@@ -70,8 +70,8 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 
-	//auto rabbit = CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
-	//rabbit->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	auto rabbit = CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
+	rabbit->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
@@ -80,14 +80,14 @@ bool Root::Start()
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
-    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    //objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 	UpdateCameraPriority();
 
@@ -98,26 +98,26 @@ bool Root::Start()
 	emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	//Lictor
-	auto lictor = CreateGameObject("Lictor");
-	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	lictorMesh->SetName("LictorMesh");
-	ParentGameObject(*lictorMesh, *lictor);
+	//auto lictor = CreateGameObject("Lictor");
+	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	////enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	//lictorMesh->SetName("LictorMesh");
+	//ParentGameObject(*lictorMesh, *lictor);
 
-	//Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
-	hormagauntMesh->SetName("HormagauntMesh");
-	ParentGameObject(*hormagauntMesh, *hormagaunt);
+	////Hormagaunt
+	//auto hormagaunt = CreateGameObject("Hormagaunt");
+	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	////enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
+	//hormagauntMesh->SetName("HormagauntMesh");
+	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 
 	CreateGameplayUI();
 	CreateMainMenuUI();
@@ -441,7 +441,7 @@ void Root::CreateGameplayUI()
 	playerLife->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/blood.png");
 	playerLife->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
 	playerLife->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.143, 0.831, 0), glm::vec3(0.195, 0.054, 1));
-	playerLife->AddComponent<ScriptComponent>()->LoadScript("UIGameplay");
+	//playerLife->AddComponent<ScriptComponent>()->LoadScript("UIGameplay");
 
 	auto playerStamina = CreateGameObject("PlayerStamina");
 	Application->root->ParentGameObject(*playerStamina, *canvas);

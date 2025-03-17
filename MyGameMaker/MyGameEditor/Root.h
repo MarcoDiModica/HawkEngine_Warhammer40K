@@ -67,7 +67,7 @@ public:
     void RemoveGameObject(GameObject* gameObject);
 
     std::shared_ptr<GameObject> FindGOByName(std::string name);
-
+    void AddCollidersEnv();
     std::shared_ptr<Scene> currentScene = nullptr;
 
     std::shared_ptr<GameObject> mainCamera = nullptr;

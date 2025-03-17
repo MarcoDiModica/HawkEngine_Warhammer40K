@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
 
+    private Audio sound;
+    private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
+    private bool isFootstepPlaying = false;
 
     public override void Start()
     {
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour
         playerMesh = GameObject.Find("playerMesh");
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
+        sound = gameObject.GetComponent<Audio>();
 
         if (playerInput == null || playerMovement == null || playerDash == null || playerShooting == null || playerMesh == null)
         {
@@ -59,7 +63,20 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             
         }
-        
+
+        if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)
+        {
+            sound?.LoadAudio(footsteps);
+            sound?.Play(true);
+            isFootstepPlaying = true;
+        }
+        else if (playerInput.IsShooting())
+        {
+            isFootstepPlaying = false;
+            //sound?.Stop();
+        }
+
+
         if (moveDirection == Vector3.Zero && playerInput.IsShooting() && !isShootingStanding)
         {
             // Shooting while standing

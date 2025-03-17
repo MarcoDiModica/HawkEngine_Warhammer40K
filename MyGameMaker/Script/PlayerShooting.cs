@@ -16,8 +16,11 @@ public class PlayerShooting : MonoBehaviour
     private Shotgun shotgun;
     private Railgun railgun;
 
-   
-    
+
+    private Audio sound;
+    private string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";
+    private string shotgunEquiped = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunEqquiped.wav";
+    private string railgunEquiped = "Assets/Audio/SFX/Weapons/Railgun/RailgunEqquiped.wav";
 
     private enum GunType
     {
@@ -41,6 +44,12 @@ public class PlayerShooting : MonoBehaviour
         if (transform == null)
         {
             Engineson.print("ERROR: PlayerShooting requires a Transform component!");
+        }
+
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
         }
 
         boltgun = gameObject.GetComponent<Boltgun>();
@@ -219,15 +228,20 @@ public class PlayerShooting : MonoBehaviour
             case GunType.BOLTGUN:
                 shootCooldown = 1f / boltgun.shootCadence;
                 shootTimer = 0;
-
+                sound?.LoadAudio(boltgunEquiped);
+                sound?.Play();
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence;
                 shootTimer = 0;
+                sound?.LoadAudio(shotgunEquiped);
+                sound?.Play();
                 break;
             case GunType.RAILGUN:
                 shootCooldown = 1f / railgun.shootCadence;
                 shootTimer = 0;
+                sound?.LoadAudio(railgunEquiped);
+                sound?.Play();
                 break;
         }
     }
@@ -253,15 +267,20 @@ public class PlayerShooting : MonoBehaviour
             case GunType.BOLTGUN:
                 shootCooldown = 1f / boltgun.shootCadence;
                 shootTimer = 0;
-
+                sound?.LoadAudio(boltgunEquiped);
+                sound?.Play();
                 break;
             case GunType.SHOTGUN:
                 shootCooldown = 1f / shotgun.shootCadence;
                 shootTimer = 0;
+                sound?.LoadAudio(shotgunEquiped);
+                sound?.Play();
                 break;
             case GunType.RAILGUN:
                 shootCooldown = 1f / railgun.shootCadence;
                 shootTimer = 0;
+                sound?.LoadAudio(railgunEquiped);
+                sound?.Play();
                 break;
         }
     }

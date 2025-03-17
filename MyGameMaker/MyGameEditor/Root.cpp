@@ -84,7 +84,7 @@ bool Root::Start()
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -155,7 +155,7 @@ bool hasAddedColliders = false;
 bool Root::Update(double dt) 
 {
 	if (!hasAddedColliders) {
-		AddCollidersEnv();
+		//AddCollidersEnv();
 		hasAddedColliders = true;
 	}
 

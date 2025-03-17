@@ -17,6 +17,7 @@ public class GrenadeLauncher : BaseAbilities
     GameObject grenade;
     Rigidbody rigidbody;
     Collider collider;
+    bool canThrow = true;
     public override void Start()
     {
        
@@ -35,14 +36,26 @@ public class GrenadeLauncher : BaseAbilities
                 Explode();
             }
         }
+
+        if (grenade != null)
+        {
+            if (grenade.GetComponent<Grenade>().needsDestroy == true)
+            {
+                //Engineson.Destroy(grenade.GetComponent<Grenade>().gameObject);
+                canThrow = true;
+            }
+        }
     }
 
     public override void TriggerAbility()
     {
-        grenade = Engineson.CreateGameObject("Grenade", null);
-        grenade.AddScript("Grenade");
-        grenade.GetComponent<Grenade>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-
+        if (canThrow)
+        {
+            grenade = Engineson.CreateGameObject("Grenade", null);
+            grenade.AddScript("Grenade");
+            grenade.GetComponent<Grenade>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+            canThrow = false;
+        }
     }
 
     void Explode()

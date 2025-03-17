@@ -63,6 +63,7 @@
     <Compile Include="PlayerShooting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rigidbody.cs" />
+    <Compile Include="SceneManager.cs" />
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="Transform.cs" />

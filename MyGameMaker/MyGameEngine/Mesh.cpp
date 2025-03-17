@@ -858,23 +858,70 @@ void Mesh::SaveBinary(const std::string& filename) const
 	}
 
 	std::ofstream fout(fullPath, std::ios::binary);
+	if (!fout.is_open()) {
+		LOG(LogType::LOG_ERROR, "Error al guardar la malla: %s", fullPath.c_str());
+		return;
+	}
 
-	uint32_t numVertices = static_cast<uint32_t>(_vertices.size());
-	uint32_t numIndices = static_cast<uint32_t>(_indices.size());
-	fout.write(reinterpret_cast<char*>(&numVertices), sizeof(numVertices));
-	fout.write(reinterpret_cast<char*>(&numIndices), sizeof(numIndices));
+	uint32_t nameLength = static_cast<uint32_t>(model->GetMeshName().length());
+	fout.write(reinterpret_cast<const char*>(&nameLength), sizeof(nameLength));
+	fout.write(model->GetMeshName().c_str(), nameLength);
 
-	fout.write(reinterpret_cast<const char*>(_vertices.data()), numVertices * sizeof(glm::vec3));
-	fout.write(reinterpret_cast<const char*>(_indices.data()), numIndices * sizeof(unsigned int));
-	fout.write(reinterpret_cast<const char*>(_normals.data()), numVertices * sizeof(glm::vec3));
+	int32_t materialIndex = model->GetMaterialIndex();
+	fout.write(reinterpret_cast<const char*>(&materialIndex), sizeof(materialIndex));
+
+	const auto& vertices = model->GetModelData().vertexData;
+	uint32_t numVertices = static_cast<uint32_t>(vertices.size());
+	fout.write(reinterpret_cast<const char*>(&numVertices), sizeof(numVertices));
+	fout.write(reinterpret_cast<const char*>(vertices.data()), numVertices * sizeof(Vertex));
+
+	const auto& indices = model->GetModelData().indexData;
+	uint32_t numIndices = static_cast<uint32_t>(indices.size());
+	fout.write(reinterpret_cast<const char*>(&numIndices), sizeof(numIndices));
+	fout.write(reinterpret_cast<const char*>(indices.data()), numIndices * sizeof(unsigned int));
+
+	const auto& texCoords = model->GetModelData().vertex_texCoords;
+	uint32_t numTexCoords = static_cast<uint32_t>(texCoords.size());
+	fout.write(reinterpret_cast<const char*>(&numTexCoords), sizeof(numTexCoords));
+	if (numTexCoords > 0) {
+		fout.write(reinterpret_cast<const char*>(texCoords.data()), numTexCoords * sizeof(vec2));
+	}
+
+	const auto& normals = model->GetModelData().vertex_normals;
+	uint32_t numNormals = static_cast<uint32_t>(normals.size());
+	fout.write(reinterpret_cast<const char*>(&numNormals), sizeof(numNormals));
+	if (numNormals > 0) {
+		fout.write(reinterpret_cast<const char*>(normals.data()), numNormals * sizeof(vec3));
+	}
+
+	const auto& colors = model->GetModelData().vertex_colors;
+	uint32_t numColors = static_cast<uint32_t>(colors.size());
+	fout.write(reinterpret_cast<const char*>(&numColors), sizeof(numColors));
+	if (numColors > 0) {
+		fout.write(reinterpret_cast<const char*>(colors.data()), numColors * sizeof(vec3));
+	}
+
+	const auto& tangents = model->GetModelData().vertex_tangents;
+	uint32_t numTangents = static_cast<uint32_t>(tangents.size());
+	fout.write(reinterpret_cast<const char*>(&numTangents), sizeof(numTangents));
+	if (numTangents > 0) {
+		fout.write(reinterpret_cast<const char*>(tangents.data()), numTangents * sizeof(vec3));
+	}
+
+	const auto& bitangents = model->GetModelData().vertex_bitangents;
+	uint32_t numBitangents = static_cast<uint32_t>(bitangents.size());
+	fout.write(reinterpret_cast<const char*>(&numBitangents), sizeof(numBitangents));
+	if (numBitangents > 0) {
+		fout.write(reinterpret_cast<const char*>(bitangents.data()), numBitangents * sizeof(vec3));
+	}
 
 	fout.write(reinterpret_cast<const char*>(&_boundingBox.min), sizeof(glm::dvec3));
 	fout.write(reinterpret_cast<const char*>(&_boundingBox.max), sizeof(glm::dvec3));
 
-	//texcords?colors?
+	LOG(LogType::LOG_INFO, "Mesh saved successfully: %s", fullPath.c_str());
 }
 
-std::shared_ptr<Mesh> Mesh::LoadBinary( std::string& filename)
+std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 {
 	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
 
@@ -890,29 +937,84 @@ std::shared_ptr<Mesh> Mesh::LoadBinary( std::string& filename)
 	}
 
 	auto mesh = std::make_shared<Mesh>();
+	mesh->setModel(std::make_shared<Model>());
+	auto& modelData = mesh->model->GetModelData();
 
-	uint32_t numVertices, numIndices;
+	uint32_t nameLength;
+	fin.read(reinterpret_cast<char*>(&nameLength), sizeof(nameLength));
+	std::string meshName(nameLength, '\0');
+	fin.read(&meshName[0], nameLength);
+	mesh->model->SetMeshName(meshName);
+
+	int32_t materialIndex;
+	fin.read(reinterpret_cast<char*>(&materialIndex), sizeof(materialIndex));
+	mesh->model->SetMaterialIndex(materialIndex);
+
+	uint32_t numVertices;
 	fin.read(reinterpret_cast<char*>(&numVertices), sizeof(numVertices));
-	fin.read(reinterpret_cast<char*>(&numIndices), sizeof(numIndices));
+	modelData.vertexData.resize(numVertices);
+	fin.read(reinterpret_cast<char*>(modelData.vertexData.data()), numVertices * sizeof(Vertex));
 
-	mesh->_vertices.resize(numVertices);
-	mesh->_indices.resize(numIndices);
-	mesh->_normals.resize(numVertices);
-	fin.read(reinterpret_cast<char*>(mesh->_vertices.data()), numVertices * sizeof(glm::vec3));
-	fin.read(reinterpret_cast<char*>(mesh->_indices.data()), numIndices * sizeof(unsigned int));
-	fin.read(reinterpret_cast<char*>(mesh->_normals.data()), numVertices * sizeof(glm::vec3));
+	uint32_t numIndices;
+	fin.read(reinterpret_cast<char*>(&numIndices), sizeof(numIndices));
+	modelData.indexData.resize(numIndices);
+	fin.read(reinterpret_cast<char*>(modelData.indexData.data()), numIndices * sizeof(unsigned int));
+
+	uint32_t numTexCoords;
+	fin.read(reinterpret_cast<char*>(&numTexCoords), sizeof(numTexCoords));
+	if (numTexCoords > 0) {
+		modelData.vertex_texCoords.resize(numTexCoords);
+		fin.read(reinterpret_cast<char*>(modelData.vertex_texCoords.data()), numTexCoords * sizeof(vec2));
+	}
+
+	uint32_t numNormals;
+	fin.read(reinterpret_cast<char*>(&numNormals), sizeof(numNormals));
+	if (numNormals > 0) {
+		modelData.vertex_normals.resize(numNormals);
+		fin.read(reinterpret_cast<char*>(modelData.vertex_normals.data()), numNormals * sizeof(vec3));
+	}
+
+	uint32_t numColors;
+	fin.read(reinterpret_cast<char*>(&numColors), sizeof(numColors));
+	if (numColors > 0) {
+		modelData.vertex_colors.resize(numColors);
+		fin.read(reinterpret_cast<char*>(modelData.vertex_colors.data()), numColors * sizeof(vec3));
+	}
+
+	uint32_t numTangents;
+	fin.read(reinterpret_cast<char*>(&numTangents), sizeof(numTangents));
+	if (numTangents > 0) {
+		modelData.vertex_tangents.resize(numTangents);
+		fin.read(reinterpret_cast<char*>(modelData.vertex_tangents.data()), numTangents * sizeof(vec3));
+	}
+
+	uint32_t numBitangents;
+	fin.read(reinterpret_cast<char*>(&numBitangents), sizeof(numBitangents));
+	if (numBitangents > 0) {
+		modelData.vertex_bitangents.resize(numBitangents);
+		fin.read(reinterpret_cast<char*>(modelData.vertex_bitangents.data()), numBitangents * sizeof(vec3));
+	}
 
 	fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.min), sizeof(glm::dvec3));
 	fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.max), sizeof(glm::dvec3));
 
-	/*mesh->vertices_buffer.LoadData(mesh->_vertices.data(), numVertices * sizeof(glm::vec3));
-	mesh->indices_buffer.LoadIndices(mesh->_indices.data(), numIndices);
-	mesh->normals_buffer.LoadData(mesh->_normals.data(), numVertices * sizeof(glm::vec3));*/
+	mesh->_vertices.resize(numVertices);
+	for (size_t i = 0; i < numVertices; ++i) {
+		mesh->_vertices[i] = modelData.vertexData[i];
+	}
+	mesh->_indices = modelData.indexData;
+	mesh->_normals = modelData.vertex_normals;
+	if (numTexCoords > 0) {
+		mesh->_texCoords = modelData.vertex_texCoords;
+	}
 
-	//texcords?colors?
+	mesh->loadToOpenGL();
 
 	meshCache[fullPath] = mesh;
 	mesh->nameM = filename;
+	mesh->filePath = filename;
+
+	LOG(LogType::LOG_INFO, "Mesh loaded successfully: %s", fullPath.c_str());
 	return mesh;
 }
 
@@ -923,9 +1025,9 @@ void Mesh::loadToOpenGL()
 
 	std::vector<vec3> positions;
 
-	for (int i = 0; i < model->GetModelData().vertexData.size(); i++)
+	for (auto & i : model->GetModelData().vertexData)
 	{
-		positions.push_back(model->GetModelData().vertexData[i].position);
+		positions.push_back(i.position);
 	}
 
 	//buffer de positions

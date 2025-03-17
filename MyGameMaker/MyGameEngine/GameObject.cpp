@@ -178,6 +178,8 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
+	if (!active) { return; }
+
     if (!this || destroyed)
     {
         return;

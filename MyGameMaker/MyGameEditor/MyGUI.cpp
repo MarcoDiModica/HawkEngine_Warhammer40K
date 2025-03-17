@@ -259,37 +259,37 @@ void MyGUI::Render() {
 	ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
 	ImGui::End();
 
-	if (showHierarchy) {
-		UIHierarchyPanel->Draw();
-	}
+	//if (showHierarchy) {
+	//	UIHierarchyPanel->Draw();
+	//}
 
-	if (showConsole) {
-		UIconsolePanel->Draw();
-	}
+	//if (showConsole) {
+	//	UIconsolePanel->Draw();
+	//}
 
-	if (showSettings) {
-		UIsettingsPanel->Draw();
-	}
+	//if (showSettings) {
+	//	UIsettingsPanel->Draw();
+	//}
 
-	if (showMainMenuBar) {
-		UIMainMenuBarPanel->Draw();
-	}
+	//if (showMainMenuBar) {
+	//	UIMainMenuBarPanel->Draw();
+	//}
 
-	if (showInspector) {
-		UIinspectorPanel->Draw(); // Ojo que minimizar peta el engine por el inspector
-	}
+	//if (showInspector) {
+	//	UIinspectorPanel->Draw(); // Ojo que minimizar peta el engine por el inspector
+	//}
 
-	if (showSceneWindow) {
-		UISceneWindowPanel->Draw();
-	}
+	//if (showSceneWindow) {
+	//	UISceneWindowPanel->Draw();
+	//}
 
-	if (showProject) {
-		UIProjectPanel->Draw();
-	}
+	//if (showProject) {
+	//	UIProjectPanel->Draw();
+	//}
 
-	if (showTextEditor) {
-		UITextEditorPanel->Draw();
-	}
+	//if (showTextEditor) {
+	//	UITextEditorPanel->Draw();
+	//}
 
 	if (showGameView) {
 		UIGameViewPanel->Draw();

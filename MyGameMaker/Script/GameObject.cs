@@ -56,7 +56,11 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddScript(string scriptName);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         
+        public extern void SetActiveGameObject(bool active);
+
 
         //----LifeCycleMethods----// 
         //these will be called from C++ editor

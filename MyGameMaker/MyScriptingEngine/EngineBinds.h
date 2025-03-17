@@ -38,6 +38,7 @@ namespace EngineBinds {
     MonoString* GameObjectGetName(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
     MonoObject* GetGameObjectByName(MonoString* name);	
+	void SetActiveGameObject(MonoObject* ref, bool active);
 
     // Input
     bool GetKey(int keyID);

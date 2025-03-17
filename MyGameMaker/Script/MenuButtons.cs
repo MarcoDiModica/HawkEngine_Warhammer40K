@@ -10,6 +10,14 @@ public class MenuButtons : MonoBehaviour
     private UIButton creditsButton;
     private UIButton quitButton;
 
+<<<<<<< Updated upstream
+=======
+    private GameObject canvas;
+
+    private Audio sound;
+    private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
+    private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
+>>>>>>> Stashed changes
     public override void Start()
     {
         newGameButton = GameObject.Find("NewGameButton").GetComponent<UIButton>();
@@ -17,6 +25,11 @@ public class MenuButtons : MonoBehaviour
         optionsButton = GameObject.Find("OptionsButton").GetComponent<UIButton>();
         creditsButton = GameObject.Find("CreditsButton").GetComponent<UIButton>();
         quitButton = GameObject.Find("QuitButton").GetComponent<UIButton>();
+<<<<<<< Updated upstream
+=======
+        canvas = GameObject.Find("MenuCanvas");
+        sound = gameObject.GetComponent<Audio>();
+>>>>>>> Stashed changes
 
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
         {
@@ -28,8 +41,14 @@ public class MenuButtons : MonoBehaviour
     {
         if (newGameButton.GetState () == ButtonState.CLICKED)
         {
+<<<<<<< Updated upstream
             Engineson.print("NewGame is Clicked");
             SceneManager.LoadScene("DefaultScene");
+=======
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            canvas.SetActiveGameObject(false);
+>>>>>>> Stashed changes
         }
 
         if (continueButton.GetState() == ButtonState.CLICKED)

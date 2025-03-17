@@ -223,7 +223,7 @@ static void RenderObjectAndChildren(GameObject* object) {
 		}
 	}
 
-	if (object->HasComponent<UICanvasComponent>()) {
+	if (object->HasComponent<UICanvasComponent>() && object->IsActive()) {
 		object->GetComponent<UICanvasComponent>()->Update(Application->GetDt());
 	}
 
@@ -316,7 +316,7 @@ static void RenderGameView() {
 	glActiveTexture(GL_TEXTURE0);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
-	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
+	glViewport(0, 0, Application->window->width(), Application->window->height());
 
 	if (lastProgram > 0) {
 		glUseProgram(lastProgram);

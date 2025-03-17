@@ -119,7 +119,11 @@ bool Root::Start()
 
 	//Lictor
 	auto lictor = CreateGameObject("Lictor");
+<<<<<<< Updated upstream
 	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+=======
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-50, 0, -5));
+>>>>>>> Stashed changes
 	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
 	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -128,6 +132,7 @@ bool Root::Start()
 	ParentGameObject(*lictorMesh, *lictor);
 	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
+<<<<<<< Updated upstream
 
 	auto metallicLictor = std::make_shared<Image>();
 	metallicLictor->LoadTexture("Assets/Textures/Material_Metallic.png");
@@ -177,6 +182,21 @@ bool Root::Start()
 
 	CreateGameplayUI();
 	//CreateMainMenuUI();
+=======
+	////Hormagaunt
+	auto hormagaunt = CreateGameObject("Hormagaunt");
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(50, 0, 5));
+	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
+	hormagauntMesh->SetName("HormagauntMesh");
+	ParentGameObject(*hormagauntMesh, *hormagaunt);
+	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+
+	CreateGameplayUI();
+	CreateMainMenuUI();
+>>>>>>> Stashed changes
 	
     SceneManagement->Start();
 
@@ -499,7 +519,7 @@ std::shared_ptr<GameObject> Root::FindGOByName(std::string name) {
 
 void Root::CreateGameplayUI()
 {
-    auto canvas = CreateGameObject("Canvas");
+    auto canvas = CreateGameObject("HUDCanvas");
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
 
@@ -581,7 +601,7 @@ void Root::CreateGameplayUI()
 
 void Root::CreateMainMenuUI()
 {
-    auto canvas = CreateGameObject("Canvas");
+    auto canvas = CreateGameObject("MenuCanvas");
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
 

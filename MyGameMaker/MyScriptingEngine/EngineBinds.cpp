@@ -233,6 +233,11 @@ MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
     return go ? go->GetSharp() : nullptr;
 }
 
+void EngineBinds::SetActiveGameObject(MonoObject* ref, bool active)
+{
+	ConvertFromSharp(ref)->SetActive(active);
+}
+
 // Input
 bool EngineBinds::GetKey(int keyID) {
     return InputManagement->GetKey(keyID) == KEY_REPEAT;
@@ -886,6 +891,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
+	mono_add_internal_call("HawkEngine.GameObject::SetActiveGameObject", (const void*)SetActiveGameObject);
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);

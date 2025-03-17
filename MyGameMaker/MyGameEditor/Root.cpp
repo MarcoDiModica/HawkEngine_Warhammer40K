@@ -57,7 +57,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-    auto player = CreateGameObject("Player");
+    /*auto player = CreateGameObject("Player");
     player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
     player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -73,7 +73,7 @@ bool Root::Start()
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -89,17 +89,38 @@ bool Root::Start()
 	emitter->ConfigureSmoke();
 	emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
-	auto enemy = CreateGameObject("Enemy");
-	enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
-	//enemy->GetComponent<Transform_Component>()->SetScale(glm::vec3(0.05, 0.05, 0.05));
-	enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	//auto enemyMesh = CreateGameObjectWithPath("Assets/Meshes/LictorRig.fbx");
-	auto enemyMesh = CreateCube("EnemyMesh");
-	enemyMesh->SetName("EnemyMesh");
-	//enemyMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	ParentGameObject(*enemyMesh, *enemy);
-	//enemyMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//auto enemy = CreateGameObject("Enemy");
+	//enemy->GetComponent<Transform_Component>()->SetPosition(glm::vec3(3, 0, 3));
+	////enemy->GetComponent<Transform_Component>()->SetScale(glm::vec3(0.05, 0.05, 0.05));
+	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//enemy->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	////auto enemyMesh = CreateGameObjectWithPath("Assets/Meshes/LictorRig.fbx");
+	//auto enemyMesh = CreateCube("EnemyMesh");
+	//enemyMesh->SetName("EnemyMesh");
+	////enemyMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//ParentGameObject(*enemyMesh, *enemy);
+	////enemyMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+
+
+
+	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+	environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
+
+	/*
+	-16
+	-12
+	-12.8
+	-12.8
+	Suelo
+	-9.3
+	Derecha suelo
+	-48
+
+
+	//Mesh.405
+
+
+	*/
 
 	//CreateGameplayUI();
     //CreateGameplayUI();
@@ -111,8 +132,20 @@ bool Root::Start()
 
 static void AddCollidersEnv() {
 	for (const auto& go : environment->GetChildren()) {
-		auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
-		collider->Start();
+
+		if (go->GetName() == "Mesh.dnsja") {
+			continue;
+		}
+		else if (go->GetName() == "Mesh.dnsja") {
+			auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
+			collider->Start();
+		}
+		else
+		{
+			auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+			collider->Start();
+		}
+	
 	}
 }
 
@@ -121,7 +154,7 @@ bool hasAddedColliders = false;
 bool Root::Update(double dt) 
 {
 	if (!hasAddedColliders) {
-		//AddCollidersEnv();
+		AddCollidersEnv();
 		hasAddedColliders = true;
 	}
 

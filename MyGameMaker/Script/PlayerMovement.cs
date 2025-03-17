@@ -4,7 +4,7 @@ using System.Numerics;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 41.0f;
+    public float moveSpeed = 61.0f;
     public float rotationSpeed = 30.0f;
     public float acceleration = 20.0f;
     public float deceleration = 15.0f;

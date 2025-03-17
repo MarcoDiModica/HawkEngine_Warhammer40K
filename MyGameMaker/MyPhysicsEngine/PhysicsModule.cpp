@@ -380,11 +380,11 @@ bool PhysicsModule::Update(double dt) {
     //    CheckCollisions();
     //}
     DrawDebugDrawer();
-    if (linkPhysicsToScene) {
-		dynamicsWorld->stepSimulation(dt, 16, fixedDeltaTime);
-		SyncTransforms();
-        CheckCollisions();
-	}
+    
+	dynamicsWorld->stepSimulation(dt, 16, fixedDeltaTime);
+	SyncTransforms();
+    CheckCollisions();
+	
     
     return true;
 }

@@ -68,6 +68,7 @@ public:
 
     std::shared_ptr<GameObject> FindGOByName(std::string name);
     void AddCollidersEnv();
+	void AddCollidersEnvLvl1();
     std::shared_ptr<Scene> currentScene = nullptr;
 
     std::shared_ptr<GameObject> mainCamera = nullptr;
@@ -81,6 +82,7 @@ public:
     void SetMainCamera(std::shared_ptr<GameObject> camera);
 
 private:
+    std::shared_ptr<GameObject> player;
     std::vector<std::shared_ptr<Scene>> scenes;
 	int prevCameraPriority = 0;
 };

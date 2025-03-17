@@ -61,7 +61,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	auto player = CreateGameObject("Player");
+	player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -79,8 +79,8 @@ bool Root::Start()
 
 	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
-	AddCollidersEnv();
-
+	//AddCollidersEnv();
+	
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
@@ -89,7 +89,6 @@ bool Root::Start()
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-		
 
     auto metallic = std::make_shared<Image>();
     metallic->LoadTexture("Assets/Textures/dieno_zachael_jetpack_2_DefaultMaterial_Metallic.png");
@@ -152,7 +151,7 @@ bool Root::Start()
 
 	////Hormagaunt
 	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(50, 0, 50));
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(35, 0, 25));
 	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -211,6 +210,9 @@ bool Root::Update(double dt)
 {
 	if (!hasAddedColliders) {
 		//AddCollidersEnv();
+		AddCollidersEnvLvl1();
+		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200,0));
 		hasAddedColliders = true;
 	}
 
@@ -455,6 +457,41 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 	return (meshImp.meshes.size() > 1) ? rootObject : go;
 }
 
+void Root::AddCollidersEnvLvl1() {
+	for (auto go : environment->GetChildren()) {
+		std::string name = go->GetName();
+
+		if (name == "Mesh.535" || name == "Mesh.481" || name == "Mesh.485" || name == "Mesh.486" ||
+			name == "Mesh.487" || name == "Mesh.489" || name == "Mesh.490" || name == "Mesh.491" ||
+			name == "Mesh.488" || name == "Mesh.492" || name == "Mesh.494" || name == "Mesh.495" ||
+			name == "Mesh.496" || name == "Mesh.497" || name == "Mesh.498" || name == "Mesh.499" ||
+			name == "Mesh.500" || name == "Mesh.501" || name == "Mesh.502" || name == "Mesh.506" ||
+			name == "Mesh.507" || name == "Mesh.508" || name == "Mesh.503" || name == "Mesh.504" ||
+			name == "Mesh.505" || name == "Mesh.509" || name == "Mesh.510" || name == "Mesh.511" ||
+			name == "Mesh.512" || name == "Mesh.513" || name == "Mesh.514" || name == "Mesh.515" ||
+			name == "Mesh.516" || name == "Mesh.517" || name == "Mesh.518" || name == "Mesh.519" ||
+			name == "Mesh.520" || name == "Mesh.001" || name == "Mesh.281" || name == "Mesh.284" ||
+			name == "Mesh.279" || name == "Mesh.404" || name == "Mesh.401" || name == "Mesh.292" ||
+			name == "Mesh.402" || name == "Mesh.400" || name == "Mesh.403" || name == "Mesh.399" ||
+			name == "Mesh.493" || name == "Cylinder.010" || name == "Cylinder.002" || name == "Mesh.056" || name == "Mesh.072" || name == "Mesh.054") {
+
+			auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
+			collider->Start();
+		}
+		else if (name == "Mesh.405" || name == "Mesh.406" || name == "Mesh.407" || name == "Mesh.408" ||
+			name == "Mesh.288" || name == "Mesh.289" || name == "Mesh.297" || name == "Mesh.268" ||
+			name == "Mesh.266" || name == "Mesh.267" || name == "Mesh.269" || name == "Mesh.274" || name == "Mesh.273" ||
+			name == "Mesh.272" || name == "Mesh.271") {
+			continue;
+		}
+		else {
+			auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+			collider->Start();
+		}
+	}
+}
+
+
 void Root::ChangeShader(GameObject& go, ShaderType shader)
 {
 	go.GetComponent<ShaderComponent>()->SetShaderType(shader);
@@ -589,11 +626,6 @@ void Root::CreateMainMenuUI()
     canvas->AddComponent<UITransformComponent>();
 	canvas->AddComponent<SoundComponent>();
 
-    auto menuImage = CreateGameObject("MenuImage");
-    Application->root->ParentGameObject(*menuImage, *canvas);
-    menuImage->AddComponent<UIImageComponent>();
-    menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Main_Menu_1.png");
-    menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
     auto newGameButton = CreateGameObject("NewGameButton");
     Application->root->ParentGameObject(*newGameButton, *canvas);
@@ -602,6 +634,13 @@ void Root::CreateMainMenuUI()
     newGameButton->AddComponent<UIButtonComponent>();
     newGameButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     newGameButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.318, 0), glm::vec3(0.182, 0.091, 1));
+
+	auto menuImage = CreateGameObject("MenuImage");
+	Application->root->ParentGameObject(*menuImage, *canvas);
+	menuImage->AddComponent<UIImageComponent>();
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Main_Menu_1.png");
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+
 
     auto continueButton = CreateGameObject("ContinueButton");
     Application->root->ParentGameObject(*continueButton, *canvas);

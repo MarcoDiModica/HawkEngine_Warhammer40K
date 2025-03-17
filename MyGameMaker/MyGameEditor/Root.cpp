@@ -46,7 +46,7 @@ bool Root::Awake()
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
 
-	CreateMainMenuUI();
+	//CreateMainMenuUI();
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
@@ -61,7 +61,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	/*auto player = CreateGameObject("Player");
+	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -77,24 +77,25 @@ bool Root::Start()
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
     objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
-    //objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 	UpdateCameraPriority();
 
-	//auto particleFX = CreateGameObject("ParticleFX");
-	//auto emitter = particleFX->AddComponent<ParticleFX>();
-	//emitter->ConfigureSmoke();
-	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
+	auto particleFX = CreateGameObject("ParticleFX");
+	particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
+	auto emitter = particleFX->AddComponent<ParticleFX>();
+	emitter->ConfigureSmoke();
+	emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	//Lictor
-	auto lictor = CreateGameObject("Licotr");
+	auto lictor = CreateGameObject("Lictor");
 	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
 	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
 	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
@@ -115,7 +116,7 @@ bool Root::Start()
 	hormagauntMesh->SetName("HormagauntMesh");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 
-	CreateGameplayUI();
+	//CreateGameplayUI();
 	//CreateMainMenuUI();
 	
     SceneManagement->Start();

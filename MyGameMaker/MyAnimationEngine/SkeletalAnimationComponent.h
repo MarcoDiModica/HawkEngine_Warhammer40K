@@ -23,6 +23,8 @@ public:
 
     void Destroy() override;
 
+    void TransitionAnimations(int oldAnim, int newAnim, float timeToTransition);
+
     ComponentType GetType() const override {
         return ComponentType::ANIMATION; // Cambia a un tipo específico si es necesario
     }
@@ -32,7 +34,7 @@ public:
     }
 
     void SetAnimation(Animation* animation) {
-        testAnimation = std::make_unique<Animation>(*animation);
+        animation1 = std::make_unique<Animation>(*animation);
     }
 
 	void AddAnimation(Animation* animation) {
@@ -44,7 +46,7 @@ public:
 	}
 
     Animation* GetAnimation() const {
-        return testAnimation.get();
+        return animation1.get();
     }
 
     void SetAnimator(Animator* animatorr) {
@@ -56,7 +58,7 @@ public:
     }
 
 	float GetAnimationDuration() const {
-		return testAnimation->GetDuration();
+		return animation1->GetDuration();
 	}
 
 	float GetAnimationTime() const {
@@ -87,12 +89,16 @@ public:
 		}
         SetAnimationIndex(index);
 		SetAnimation(animations[index].get());
-		animator->PlayAnimation(testAnimation.get());
+		animator->PlayAnimation(animation1.get());
 	}
 
     void SetAnimationSpeed(float speed) 
     {
 		animator->SetPlaySpeed(speed);
+    }
+
+    void SetNewAnimation(Animation* animation) {
+        newAnimation = std::make_unique<Animation>(*animation);
     }
 
 	float GetAnimationSpeed()
@@ -103,16 +109,19 @@ public:
 
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
+
+
     float blendFactor = 0.0f;
     bool isBlending = false;
 private:
     std::unique_ptr<Animator> animator;
-    std::unique_ptr<Animation> testAnimation;
+    std::unique_ptr<Animation> animation1;
+    std::unique_ptr<Animation> newAnimation;
     //vector of unitque ptr of animations
 	std::vector<std::unique_ptr<Animation>> animations;
     int animationIndex = 0;
 	bool isPlaying = true;
-
+	float timeToTransition = 0.0f;
 
 
 

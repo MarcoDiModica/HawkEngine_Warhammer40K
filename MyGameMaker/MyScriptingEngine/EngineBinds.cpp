@@ -810,6 +810,14 @@ bool EngineBinds::GetAnimationPlayState(MonoObject* animationRef)
 	return animation ? animation->GetAnimationPlayState() : false;
 }
 
+void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, int newAnim, float timeToAnim)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
+	}
+}
+
 void EngineBinds::BindEngine() {
 
     mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
@@ -924,6 +932,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayTime", (const void*)&EngineBinds::SetAnimationPlayTime);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayState", (const void*)&EngineBinds::SetAnimationPlayState);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationPlayState", (const void*)&EngineBinds::GetAnimationPlayState);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
 }
 
 template <class T>

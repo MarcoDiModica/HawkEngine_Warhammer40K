@@ -75,6 +75,7 @@ bool Root::Start()
 	player->AddComponent<SoundComponent>()->LoadAudio("Library/Audio/Menu Confirm.wav", true);
 
 	//auto rabbit = CreateGameObjectWithPath("Assets/Meshes/rabbitSizeFix.fbx");
+	//rabbit->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");

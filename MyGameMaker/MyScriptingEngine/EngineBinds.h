@@ -143,6 +143,7 @@ namespace EngineBinds {
 	void SetAnimationPlayTime(MonoObject* skeletalAnimationRef, float time);
 	void SetAnimationPlayState(MonoObject* skeletalAnimationRef, bool play);
 	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
+	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
 
 }
 

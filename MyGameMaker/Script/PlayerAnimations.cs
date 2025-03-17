@@ -24,13 +24,15 @@ public class PlayerAnimations : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             animIndex += 1;
-            esk.SetAnimation(animIndex);
+            esk.TransitionAnimations(0,5,0.5f);
         }
     }
 
     public void SetStandardIdleAnimation()
     {
-        esk.SetAnimation(4);
+
+        esk.TransitionAnimations(6, 3, 0.1f);
+        //esk.SetAnimation(4);
         esk.SetAnimationSpeed(2f);
     }
 
@@ -48,19 +50,22 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetShootingStandingAnimation()
     {
-        esk.SetAnimation(8);
+        esk.TransitionAnimations(3, 8, 0.1f);
+        //esk.SetAnimation(8);
         esk.SetAnimationSpeed(3f);
     }
 
     public void SetShootingRunningAnimation()
     {
-        esk.SetAnimation(10);
+        esk.TransitionAnimations(6, 10, 0.1f);
+        //esk.SetAnimation(10);
         esk.SetAnimationSpeed(4.5f);
     }
 
     public void SetRunAnimation()
     {
-        esk.SetAnimation(6);
+        esk.TransitionAnimations(3, 6, 0.1f);
+        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(4.5f);
     }
 }

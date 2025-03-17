@@ -114,31 +114,42 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
         CalculateBoneTransform(&node->children[i], globalTransformation);
 }
 
+void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation, float transitionDuration, float deltaTime)
+{
+   
+    transitionTime += deltaTime;
+
+    float blendFactor = transitionTime / transitionDuration;
+    if (blendFactor > 1.0f)
+    {
+        blendFactor = 1.0f;
+        m_CurrentAnimation = pNewAnimation;
+    }
+
+    BlendTwoAnimations(pOldAnimation, pNewAnimation, blendFactor, deltaTime);
+}
+
 void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime)
 {
-    // Speed multipliers to correctly transition from one animation to another
     float a = 1.0f;
     float b = pBaseAnimation->GetDuration() / pLayeredAnimation->GetDuration();
-    const float animSpeedMultiplierUp = (1.0f - blendFactor) * a + b * blendFactor; // Lerp
+    const float animSpeedMultiplierUp = (1.0f - blendFactor) * a + b * blendFactor; 
 
     a = pLayeredAnimation->GetDuration() / pBaseAnimation->GetDuration();
     b = 1.0f;
-    const float animSpeedMultiplierDown = (1.0f - blendFactor) * a + b * blendFactor; // Lerp
+    const float animSpeedMultiplierDown = (1.0f - blendFactor) * a + b * blendFactor; 
 
-    // Current time of each animation, "scaled" by the above speed multiplier variables
     static float currentTimeBase = 0.0f;
-    currentTimeBase += pBaseAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierUp;
+    currentTimeBase += pBaseAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierUp * m_PlaySpeed;
     currentTimeBase = fmod(currentTimeBase, pBaseAnimation->GetDuration());
 
     static float currentTimeLayered = 0.0f;
-    currentTimeLayered += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown;
+    currentTimeLayered += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown * m_PlaySpeed;
     currentTimeLayered = fmod(currentTimeLayered, pLayeredAnimation->GetDuration());
 
     CalculateBlendedBoneTransform(pBaseAnimation, &pBaseAnimation->GetRootNode(), pLayeredAnimation, &pLayeredAnimation->GetRootNode(), currentTimeBase, currentTimeLayered, glm::mat4(1.0f), blendFactor);
 }
 
-
-// Recursive function that sets interpolated bone matrices in the 'm_FinalBoneMatrices' vector
 void Animator::CalculateBlendedBoneTransform(
     Animation* pAnimationBase, const AssimpNodeData* node,
     Animation* pAnimationLayer, const AssimpNodeData* nodeLayered,
@@ -164,7 +175,6 @@ void Animator::CalculateBlendedBoneTransform(
         layeredNodeTransform = pBone->GetLocalTransform();
     }
 
-    // Blend two matrices
     const glm::quat rot0 = glm::quat_cast(nodeTransform);
     const glm::quat rot1 = glm::quat_cast(layeredNodeTransform);
     const glm::quat finalRot = glm::slerp(rot0, rot1, blendFactor);

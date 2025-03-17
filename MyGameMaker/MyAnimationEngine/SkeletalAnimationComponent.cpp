@@ -12,8 +12,8 @@ SkeletalAnimationComponent::SkeletalAnimationComponent(const SkeletalAnimationCo
     if (other.animator) {
         animator = std::make_unique<Animator>(*other.animator);
     }
-    if (other.testAnimation) {
-        testAnimation = std::make_unique<Animation>(*other.testAnimation);
+    if (other.animation1) {
+        animation1 = std::make_unique<Animation>(*other.animation1);
     }
 }
 
@@ -27,10 +27,10 @@ SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(const Skeletal
         } else {
             animator.reset();
         }
-        if (other.testAnimation) {
-            testAnimation = std::make_unique<Animation>(*other.testAnimation);
+        if (other.animation1) {
+            animation1 = std::make_unique<Animation>(*other.animation1);
         } else {
-            testAnimation.reset();
+            animation1.reset();
         }
     }
     return *this;
@@ -38,7 +38,7 @@ SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(const Skeletal
 
 SkeletalAnimationComponent::SkeletalAnimationComponent(SkeletalAnimationComponent&& other) noexcept : Component(std::move(other)) {
     animator = std::move(other.animator);
-    testAnimation = std::move(other.testAnimation);
+    animation1 = std::move(other.animation1);
 }
 
 
@@ -46,7 +46,7 @@ SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(SkeletalAnimat
     if (this != &other) {
         Component::operator=(std::move(other));
         animator = std::move(other.animator);
-        testAnimation = std::move(other.testAnimation);
+        animation1 = std::move(other.animation1);
     }
     return *this;
 }
@@ -55,10 +55,11 @@ void SkeletalAnimationComponent::Start()
 {
 	if (animator == nullptr) 
     {
-		animator = std::make_unique<Animator>(testAnimation.get());
+		animator = std::make_unique<Animator>(animation1.get());
 	}
     //animator = std::make_unique<Animator>(testAnimation.get());
-    animator->PlayAnimation(testAnimation.get());
+    animator->PlayAnimation(animation1.get());
+
 }
 
 void SkeletalAnimationComponent::Update(float deltaTime)
@@ -67,7 +68,8 @@ void SkeletalAnimationComponent::Update(float deltaTime)
     {
         if (isBlending) 
         {
-            animator->BlendTwoAnimations(animations[0].get(), animations[2].get(), blendFactor, deltaTime);
+            animator->TransitionToAnimation(animation1.get(), newAnimation.get(), timeToTransition, deltaTime);
+			//animator->BlendTwoAnimations(animations[0].get(), animations[2].get(), blendFactor, deltaTime);
         }
         else 
         {
@@ -75,6 +77,15 @@ void SkeletalAnimationComponent::Update(float deltaTime)
         }
         
     }
+}
+
+void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, float timeToTransitionAnim) 
+{
+    animation1 = std::make_unique<Animation>(*animations[oldAnim].get());
+    newAnimation = std::make_unique<Animation>(*animations[newAnim].get());
+	timeToTransition = timeToTransitionAnim;
+    animator->SetTransitionTime(0);
+	isBlending = true;
 }
 
 void SkeletalAnimationComponent::Destroy()

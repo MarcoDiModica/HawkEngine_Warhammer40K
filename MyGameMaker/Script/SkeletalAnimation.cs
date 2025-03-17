@@ -35,10 +35,10 @@ namespace HawkEngine
         public extern void SetAnimationPlayState(bool play);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-
         public extern bool GetAnimationPlayState();
 
-
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void TransitionAnimations(int oldAnim, int newAnim, float timeToAnim);
 
 
 

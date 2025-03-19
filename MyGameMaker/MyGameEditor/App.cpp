@@ -195,26 +195,28 @@ void App::FinishUpdate()
 	frameEnd = std::chrono::steady_clock::now();
 	auto frameDuration = std::chrono::duration_cast<std::chrono::duration<double>>(frameEnd - frameStart);
 
-	dt = frameDuration.count();
+	//dt = frameDuration.count();
 
+	auto now = hrclock::now();
+    dt = std::chrono::duration<double>(now - lastTime).count();
+	lastTime = now;
+		
+	//if (frameDuration < targetFrameDuration)
+	//{
+	//	auto sleepTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+	//		std::max(targetFrameDuration - frameDuration, std::chrono::duration<double>(0))
+	//	);
 
+	//	// Delay to maintain target frame rate
+	//	SDL_Delay(static_cast<Uint32>(sleepTime.count()));
 
-	if (frameDuration < targetFrameDuration)
-	{
-		auto sleepTime = std::chrono::duration_cast<std::chrono::milliseconds>(
-			std::max(targetFrameDuration - frameDuration, std::chrono::duration<double>(0))
-		);
-
-		// Delay to maintain target frame rate
-		SDL_Delay(static_cast<Uint32>(sleepTime.count()));
-
-		dt = targetFrameDuration.count();
-	}
+	//	dt = targetFrameDuration.count();
+	//}
 	//std::cout << std::endl << dt;
 
 	dtCount += dt;
 	frameCount++;
-
+	//frameStart = frameEnd;
 	if (dtCount >= 1)
 	{
 		fps = frameCount;

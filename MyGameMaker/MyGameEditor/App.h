@@ -28,6 +28,8 @@ class UIMainMenuBar;
 
 class Mesh;
 
+using hrclock = std::chrono::high_resolution_clock;
+
 class App
 {
 public:
@@ -87,7 +89,7 @@ private:
 	double dtCount = 0;
 	int frameCount = 0;
 	int fps = 0;
-
+	hrclock::time_point lastTime = hrclock::now();
 protected:
 	friend class UIMainMenuBar;
 	bool play = false;

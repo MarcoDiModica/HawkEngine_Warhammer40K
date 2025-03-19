@@ -522,6 +522,22 @@ static void EditorRenderer(MyGUI* gui) {
 	}
 }
 
+static double counterUsingDeltaTime = 0.0;
+static double counterUsingChrono = 0.0;
+static hrclock::time_point startTime = hrclock::now();
+
+static void PrintCounters() {
+	// Counter using delta time
+	counterUsingDeltaTime += Application->GetDt();
+	std::cout << "Counter using delta time: " << std::fixed << std::setprecision(2) << counterUsingDeltaTime << " seconds" << std::endl;
+
+	// Counter using chrono
+	auto currentTime = hrclock::now();
+	std::chrono::duration<double> elapsedTime = currentTime - startTime;
+	counterUsingChrono = elapsedTime.count();
+	std::cout << "Counter using chrono: " << std::fixed << std::setprecision(2) << counterUsingChrono << " seconds" << std::endl;
+}
+
 int main(int argc, char** argv) {
 
 	MainState state = CREATE;
@@ -571,9 +587,9 @@ int main(int argc, char** argv) {
 			EditorRenderer(Application->gui);
 
 			RenderGameView();
-
+			PrintCounters();
 			Application->window->SwapBuffers();
-
+            Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
 			UndoRedo();
 			ObjectToEditorCamera();
 			if (!Application->Update()) { state = FREE; }

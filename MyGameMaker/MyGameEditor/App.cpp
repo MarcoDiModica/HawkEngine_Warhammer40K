@@ -13,6 +13,11 @@
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
 
+
+float LOW_LIMIT = 0.00167f; 
+float HIGH_LIMIT = 0.062f; //Min 16Fps
+
+
 App::App() {
 
 	window = new Window("HawkEngine" , 1280,720);
@@ -192,31 +197,24 @@ bool App::PostUpdate()
 
 void App::FinishUpdate()
 {
-	frameEnd = std::chrono::steady_clock::now();
-	auto frameDuration = std::chrono::duration_cast<std::chrono::duration<double>>(frameEnd - frameStart);
-
-	//dt = frameDuration.count();
-
 	auto now = hrclock::now();
     dt = std::chrono::duration<double>(now - lastTime).count();
+
+	if (dt < LOW_LIMIT) 
+	{
+		dt = LOW_LIMIT;
+	}
+	else if (dt > HIGH_LIMIT)
+	{
+		dt = HIGH_LIMIT;
+	}
+
 	lastTime = now;
-		
-	//if (frameDuration < targetFrameDuration)
-	//{
-	//	auto sleepTime = std::chrono::duration_cast<std::chrono::milliseconds>(
-	//		std::max(targetFrameDuration - frameDuration, std::chrono::duration<double>(0))
-	//	);
 
-	//	// Delay to maintain target frame rate
-	//	SDL_Delay(static_cast<Uint32>(sleepTime.count()));
-
-	//	dt = targetFrameDuration.count();
-	//}
-	//std::cout << std::endl << dt;
 
 	dtCount += dt;
 	frameCount++;
-	//frameStart = frameEnd;
+
 	if (dtCount >= 1)
 	{
 		fps = frameCount;

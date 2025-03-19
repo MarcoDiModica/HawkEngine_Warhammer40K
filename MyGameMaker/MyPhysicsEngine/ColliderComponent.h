@@ -21,6 +21,10 @@ public:
 
     glm::vec3 GetSize();
 
+    glm::vec3 GetOffset();
+
+    void SetOffset(const glm::vec3& newoffset);
+
     void SetSize(const glm::vec3& newSize);
 
     float GetMass() { return mass; };
@@ -58,6 +62,8 @@ public:
 	MonoObject* GetSharp() override;
 
 private:
+
+	glm::vec3 offset;
     btRigidBody* rigidBody; 
     PhysicsModule* physics;
     glm::vec3 size; 

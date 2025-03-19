@@ -593,10 +593,10 @@ glm::vec3 EngineBinds::GetColliderSize(MonoObject* colliderRef) {
     return collider ? collider->GetSize() : glm::vec3(0.0f);
 }
 
-void EngineBinds::SetColliderSize(MonoObject* colliderRef, glm::vec3* size) {
+void EngineBinds::SetColliderSize(MonoObject* colliderRef, glm::vec3* sizeFactor) {
     auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
     if (collider) {
-        collider->SetSize(*size);
+        collider->SetSize(*sizeFactor);
     }
 }
 

@@ -1,5 +1,7 @@
 
-#pragma once
+
+
+
 
 #include "ColliderComponent.h"
 #include "../MyGameEngine/GameObject.h"
@@ -8,10 +10,10 @@
 #include "mono/metadata/debug-helpers.h"
 #include "RigidBodyComponent.h"
 
-ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner) 
-{ 
-    name = "ColliderComponent"; 
-    physics = physicsModule; 
+ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner)
+{
+    name = "ColliderComponent";
+    physics = physicsModule;
     isForStreetLocal = isForStreet;
 }
 
@@ -20,12 +22,12 @@ ColliderComponent::~ColliderComponent() {
 }
 
 void ColliderComponent::Start() {
-	if (rigidBody) {
-		physics->dynamicsWorld->removeRigidBody(rigidBody);
-		delete rigidBody->getMotionState();
-		delete rigidBody;
-		rigidBody = nullptr;
-	}
+    if (rigidBody) {
+        physics->dynamicsWorld->removeRigidBody(rigidBody);
+        delete rigidBody->getMotionState();
+        delete rigidBody;
+        rigidBody = nullptr;
+    }
     CreateCollider();
 }
 
@@ -57,7 +59,7 @@ void ColliderComponent::OnTriggerExit(ColliderComponent* other) {
 
 void ColliderComponent::Update(float deltaTime) {
     if (owner) {
-		SnapToPosition();
+        SnapToPosition();
     }
 }
 
@@ -186,10 +188,57 @@ glm::vec3 ColliderComponent::GetSize() {
         btCollisionShape* shape = rigidBody->getCollisionShape();
         if (shape) {
             btVector3 scale = shape->getLocalScaling();
-            return glm::vec3(scale.getX() * 2.0f, scale.getY() * 2.0f, scale.getZ() * 2.0f);
+
+            Transform_Component* transform = owner->GetTransform();
+            if (transform) {
+                glm::vec3 worldScale = transform->GetScale();
+                return glm::vec3(scale.getX() * worldScale.x,
+                    scale.getY() * worldScale.y,
+                    scale.getZ() * worldScale.z);
+            }
+
+            return glm::vec3(scale.getX(), scale.getY(), scale.getZ());
         }
     }
     return size;
+}
+
+
+glm::vec3 ColliderComponent::GetOffset() {
+    if (!rigidBody || !owner) return glm::vec3(0.0f);
+
+    Transform_Component* transform = owner->GetTransform();
+    if (!transform) return glm::vec3(0.0f);
+
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    btVector3 rbPos = trans.getOrigin();
+
+    glm::vec3 ownerPos = transform->GetPosition();
+    return glm::vec3(rbPos.getX(), rbPos.getY(), rbPos.getZ()) - ownerPos;
+}
+
+void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
+    if (offset != newoffset) {
+        offset = newoffset;
+    }
+    if (!rigidBody || !owner) {
+        offset = glm::vec3(0.0f);
+        return;
+    }
+
+    Transform_Component* transform = owner->GetTransform();
+    if (!transform) {
+        offset = glm::vec3(0.0f);
+        return;
+    }
+
+    btTransform trans;
+    rigidBody->getMotionState()->getWorldTransform(trans);
+    btVector3 rbPos = trans.getOrigin();
+
+    glm::vec3 ownerPos = transform->GetPosition();
+    offset = glm::vec3(rbPos.getX(), rbPos.getY(), rbPos.getZ()) - ownerPos;
 }
 
 void ColliderComponent::SetSize(const glm::vec3& newSize) {
@@ -224,12 +273,11 @@ void ColliderComponent::SetActive(bool active) {
     }
 }
 void ColliderComponent::SnapToPosition() {
-    if (!owner) return;
-	if (owner->HasComponent<RigidbodyComponent>()) return;
+    if (!owner || !rigidBody) return;
+    if (owner->HasComponent<RigidbodyComponent>()) return;
 
     Transform_Component* goTransform = owner->GetTransform();
     if (!goTransform) return;
-
     // Obtener el Bounding Box en espacio local (sin escala aplicada)
     BoundingBox localBBox = owner->localBoundingBox();
     glm::vec3 localCenter = localBBox.center();
@@ -246,13 +294,21 @@ void ColliderComponent::SnapToPosition() {
     glm::quat worldRotation = goTransform->GetRotation();
     glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * finalScale);
 
+    glm::vec3 targetPosition = adjustedPosition + offset;
+
+    btTransform currentTransform;
+    rigidBody->getMotionState()->getWorldTransform(currentTransform);
+    btVector3 currentOrigin = currentTransform.getOrigin();
+
+    if (glm::distance(glm::vec3(currentOrigin.x(), currentOrigin.y(), currentOrigin.z()), targetPosition) < 0.001f) {
+        return;
+    }
     // Aplicar la transformación al rigidBody
     btTransform transform;
     transform.setIdentity();
     transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
     transform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
 
-	if (!rigidBody) return;
 
     if (rigidBody->getMotionState()) {
         rigidBody->getMotionState()->setWorldTransform(transform);
@@ -279,7 +335,7 @@ void ColliderComponent::CreateCollider() {
     BoundingBox bbox = owner->localBoundingBox();
     size = bbox.size();
 
-   
+
 
     glm::vec3 bboxCenter = owner->boundingBox().center();
 
@@ -302,7 +358,7 @@ void ColliderComponent::CreateCollider() {
         static_cast<btScalar>(localRot.z),
         static_cast<btScalar>(localRot.w)
     );
-    startTransform.setRotation(btRot);   
+    startTransform.setRotation(btRot);
     glm::vec3 scale = transform->GetScale();
     glm::vec3 parentScale(1.0f);
     if (owner->GetParent()) {

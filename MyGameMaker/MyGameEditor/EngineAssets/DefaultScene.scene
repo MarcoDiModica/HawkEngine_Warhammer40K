@@ -14,9 +14,9 @@ GameObject0:
         - 0
         - 0
       localRotation:
-        - 0
-        - -0
-        - 0
+        - -2.2961903425358957e-07
+        - 0.01198676113353027
+        - -1.9175896181633637e-07
       localScale:
         - 1
         - 1
@@ -33,7 +33,7 @@ GameObject0:
     RigidbodyComponent:
       mass: 1
       isKinematic: false
-      isFreezed: true
+      isFreezed: false
     ColliderComponent: ~
     ScriptComponents:
       Script0:
@@ -68,7 +68,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -125,9 +125,9 @@ GameObject1:
       localPosition:
         - 0
         - 20
-        - -10.5
+        - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -254,9 +254,6 @@ GameObject3:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -276,6 +273,9 @@ GameObject3:
         - 0
         - 0
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     ScriptComponents:
       Script0:
         name: UIGameplay

@@ -168,6 +168,14 @@ bool Root::Update(double dt)
 		hasAddedColliders = true;
 	}
 
+	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
+	}
+
 	return true;
 }
 void Root::SetCameraPriority(std::shared_ptr<GameObject> camera, int priority)

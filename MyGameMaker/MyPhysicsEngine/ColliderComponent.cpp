@@ -226,18 +226,18 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
         return;
     }
 
-    Transform_Component* transform = owner->GetTransform();
-    if (!transform) {
-        offset = glm::vec3(0.0f);
-        return;
-    }
-
-    btTransform trans;
-    collider->getMotionState()->getWorldTransform(trans);
-    btVector3 rbPos = trans.getOrigin();
-
-    glm::vec3 ownerPos = transform->GetPosition();
-    offset = glm::vec3(rbPos.getX(), rbPos.getY(), rbPos.getZ()) - ownerPos;
+	btTransform transform;
+	transform.setIdentity();
+	glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
+	transform.setOrigin(btVector3(worldPosition.x + offset.x, worldPosition.y + offset.y, worldPosition.z + offset.z));
+	if (rigidBody->getMotionState()) {
+		rigidBody->getMotionState()->setWorldTransform(transform);
+	}
+	else {
+		rigidBody->setWorldTransform(transform);
+	}
+	rigidBody->setCenterOfMassTransform(transform);
+    
 }
 
 void ColliderComponent::SetSize(const glm::vec3& newSize) {

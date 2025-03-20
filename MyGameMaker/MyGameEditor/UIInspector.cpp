@@ -676,7 +676,9 @@ private:
 
     static void DrawColliderProperties(ColliderComponent* collider) {
         glm::vec3 size = collider->GetSize();
+		glm::vec3 offset = collider->GetOffset();
         float sizeArray[3] = { size.x, size.y, size.z };
+
         if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
             collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
         }
@@ -684,6 +686,9 @@ private:
         if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
             collider->SetTrigger(isTrigger);
         }
+		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
+			collider->SetOffset(offset);
+		}
     }
     #pragma endregion
 

@@ -31,8 +31,6 @@ public:
 
     void SetBounciness(GameObject& go, float restitution);
 
-    void EnableContinuousCollision(GameObject& go);
-
     bool Start();
     bool PreUpdate();
     bool Update(double dt);

@@ -480,15 +480,6 @@ void PhysicsModule::SetBounciness(GameObject& go, float restitution) {
     }
 }
 
-void PhysicsModule::EnableContinuousCollision(GameObject& go) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-        rigidBody->setCcdMotionThreshold(0.01);
-        rigidBody->setCcdSweptSphereRadius(0.05);
-        std::cout << "Continuous collision detection enabled for GameObject.\n";
-    }
-}
 
 
 bool PhysicsModule::Start() {

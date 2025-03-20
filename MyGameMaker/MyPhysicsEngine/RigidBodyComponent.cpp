@@ -16,11 +16,13 @@ RigidbodyComponent::~RigidbodyComponent() {
 }
 
 void RigidbodyComponent::Start() {
+    //Si no tiene collider, se añade uno 
     ColliderComponent* collider = owner->GetComponent<ColliderComponent>();
     if (!collider) {
         owner->AddComponent<ColliderComponent>(physics);
         collider = owner->GetComponent<ColliderComponent>();
     }
+    //SetMass
 	collider->SetMass(mass);
     SetRigidBody(collider->GetRigidBody());
     
@@ -185,12 +187,3 @@ MonoObject* RigidbodyComponent::GetSharp()
     return CsharpReference;
 }
 
-
-
-void RigidbodyComponent::DecodeRigidbody()
-{
-    Start();
-    SetMass(mass);
-	ColliderComponent* collider = owner->GetComponent<ColliderComponent>();
-    collider->SnapToPosition();
-}

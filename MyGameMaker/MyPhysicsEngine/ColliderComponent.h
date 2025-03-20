@@ -7,7 +7,7 @@
 
 class ColliderComponent : public Component {
 public:
-    ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet = false);
+    ColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
     ~ColliderComponent() override;
 
     void Start() override;
@@ -68,7 +68,6 @@ private:
     PhysicsModule* physics;
     glm::vec3 size; 
     float mass;
-    bool isForStreetLocal;  
 
 	bool snapToPosition = false;
 

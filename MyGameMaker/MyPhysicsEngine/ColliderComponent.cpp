@@ -1,8 +1,3 @@
-
-
-
-
-
 #include "ColliderComponent.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
@@ -10,11 +5,10 @@
 #include "mono/metadata/debug-helpers.h"
 #include "RigidBodyComponent.h"
 
-ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule, bool isForStreet) : Component(owner)
+ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule) : Component(owner)
 {
     name = "ColliderComponent";
     physics = physicsModule;
-    isForStreetLocal = isForStreet;
 }
 
 ColliderComponent::~ColliderComponent() {
@@ -22,16 +16,18 @@ ColliderComponent::~ColliderComponent() {
 }
 
 void ColliderComponent::Start() {
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
+	//si tiene collider, lo destruye y crea uno nuevo 
+    // TODO: Revisar
+    if (collider) {
+        physics->dynamicsWorld->removeRigidBody(collider);
+        delete collider->getMotionState();
+        delete collider;
+        collider = nullptr;
     }
     CreateCollider();
 }
 
-
+//OnCollisions y triggers 
 void ColliderComponent::OnCollisionEnter(ColliderComponent* other) {
     std::cout << "EnterCollision" << std::endl;
 }
@@ -59,17 +55,17 @@ void ColliderComponent::OnTriggerExit(ColliderComponent* other) {
 
 void ColliderComponent::Update(float deltaTime) {
     if (owner) {
-        SnapToPosition();
+       SnapToPosition();
     }
 }
 
 
 void ColliderComponent::Destroy() {
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
+    if (collider) {
+        physics->dynamicsWorld->removeRigidBody(collider);
+        delete collider->getMotionState();
+        delete collider;
+        collider = nullptr;
     }
 
     if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
@@ -126,24 +122,27 @@ MonoObject* ColliderComponent::GetSharp()
 
 
 void ColliderComponent::SetTrigger(bool trigger) {
-    if (rigidBody) {
+    if (collider) {
         if (trigger) {
-            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+            collider->setCollisionFlags(collider->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
         }
         else {
-            rigidBody->setCollisionFlags(rigidBody->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+            collider->setCollisionFlags(collider->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
         }
     }
 }
 
 bool ColliderComponent::IsTrigger() const {
-    return (rigidBody && (rigidBody->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE));
+    return (collider && (collider->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE));
 }
 
+
+//Refactoring UIinspector 
+// Ofset, size
 glm::vec3 ColliderComponent::GetColliderPos() {
 
     btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
+    collider->getMotionState()->getWorldTransform(trans);
     btVector3 pos = trans.getOrigin();
     return glm::vec3(pos.getX(), pos.getY(), pos.getZ());
 }
@@ -151,41 +150,41 @@ glm::vec3 ColliderComponent::GetColliderPos() {
 glm::quat ColliderComponent::GetColliderRotation() {
 
     btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
+    collider->getMotionState()->getWorldTransform(trans);
     btQuaternion rot = trans.getRotation();
     return glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
 }
 
 void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
-    if (!rigidBody || !rigidBody->getMotionState()) {
+    if (!collider || !collider->getMotionState()) {
         return;
     }
 
     btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
+    collider->getMotionState()->getWorldTransform(trans);
 
     // Convert to btQuaternion 
     btQuaternion btRot(rotation.x, rotation.y, rotation.z, rotation.w);
     trans.setRotation(btRot);
 
-    rigidBody->getMotionState()->setWorldTransform(trans);
-    rigidBody->setWorldTransform(trans);
+    collider->getMotionState()->setWorldTransform(trans);
+    collider->setWorldTransform(trans);
 
     // Ensure activation in case the object is sleeping
-    rigidBody->activate();
+    collider->activate();
 }
 
 void ColliderComponent::SetColliderPos(const glm::vec3& position) {
     btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
+    collider->getMotionState()->getWorldTransform(trans);
     trans.setOrigin(btVector3(position.x, position.y, position.z));
-    rigidBody->getMotionState()->setWorldTransform(trans);
-    rigidBody->setCenterOfMassTransform(trans);
+    collider->getMotionState()->setWorldTransform(trans);
+    collider->setCenterOfMassTransform(trans);
 }
 
 glm::vec3 ColliderComponent::GetSize() {
-    if (rigidBody) {
-        btCollisionShape* shape = rigidBody->getCollisionShape();
+    if (collider) {
+        btCollisionShape* shape = collider->getCollisionShape();
         if (shape) {
             btVector3 scale = shape->getLocalScaling();
 
@@ -205,13 +204,13 @@ glm::vec3 ColliderComponent::GetSize() {
 
 
 glm::vec3 ColliderComponent::GetOffset() {
-    if (!rigidBody || !owner) return glm::vec3(0.0f);
+    if (!collider || !owner) return glm::vec3(0.0f);
 
     Transform_Component* transform = owner->GetTransform();
     if (!transform) return glm::vec3(0.0f);
 
     btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
+    collider->getMotionState()->getWorldTransform(trans);
     btVector3 rbPos = trans.getOrigin();
 
     glm::vec3 ownerPos = transform->GetPosition();
@@ -222,7 +221,7 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
     if (offset != newoffset) {
         offset = newoffset;
     }
-    if (!rigidBody || !owner) {
+    if (!collider || !owner) {
         offset = glm::vec3(0.0f);
         return;
     }
@@ -234,7 +233,7 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
     }
 
     btTransform trans;
-    rigidBody->getMotionState()->getWorldTransform(trans);
+    collider->getMotionState()->getWorldTransform(trans);
     btVector3 rbPos = trans.getOrigin();
 
     glm::vec3 ownerPos = transform->GetPosition();
@@ -243,8 +242,8 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
 
 void ColliderComponent::SetSize(const glm::vec3& newSize) {
     size = newSize;
-    if (rigidBody) {
-        btCollisionShape* shape = rigidBody->getCollisionShape();
+    if (collider) {
+        btCollisionShape* shape = collider->getCollisionShape();
         if (shape) {
             btVector3 newBtSize(newSize.x * 0.5f, newSize.y * 0.5f, newSize.z * 0.5f);
             shape->setLocalScaling(newBtSize);
@@ -253,27 +252,27 @@ void ColliderComponent::SetSize(const glm::vec3& newSize) {
 }
 void ColliderComponent::SetMass(float newMass) {
     mass = newMass;
-    if (rigidBody) {
-        physics->dynamicsWorld->removeRigidBody(rigidBody);
-        delete rigidBody->getMotionState();
-        delete rigidBody;
-        rigidBody = nullptr;
+    if (collider) {
+        physics->dynamicsWorld->removeRigidBody(collider);
+        delete collider->getMotionState();
+        delete collider;
+        collider = nullptr;
     }
     CreateCollider();
 }
 
 void ColliderComponent::SetActive(bool active) {
-    if (rigidBody) {
+    if (collider) {
         if (active) {
-            physics->dynamicsWorld->addRigidBody(rigidBody);
+            physics->dynamicsWorld->addRigidBody(collider);
         }
         else {
-            physics->dynamicsWorld->removeRigidBody(rigidBody);
+            physics->dynamicsWorld->removeRigidBody(collider);
         }
     }
 }
 void ColliderComponent::SnapToPosition() {
-    if (!owner || !rigidBody) return;
+    if (!owner || !collider) return;
     if (owner->HasComponent<RigidbodyComponent>()) return;
 
     Transform_Component* goTransform = owner->GetTransform();
@@ -297,7 +296,7 @@ void ColliderComponent::SnapToPosition() {
     glm::vec3 targetPosition = adjustedPosition + offset;
 
     btTransform currentTransform;
-    rigidBody->getMotionState()->getWorldTransform(currentTransform);
+    collider->getMotionState()->getWorldTransform(currentTransform);
     btVector3 currentOrigin = currentTransform.getOrigin();
 
     if (glm::distance(glm::vec3(currentOrigin.x(), currentOrigin.y(), currentOrigin.z()), targetPosition) < 0.001f) {
@@ -310,17 +309,17 @@ void ColliderComponent::SnapToPosition() {
     transform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
 
 
-    if (rigidBody->getMotionState()) {
-        rigidBody->getMotionState()->setWorldTransform(transform);
+    if (collider->getMotionState()) {
+        collider->getMotionState()->setWorldTransform(transform);
     }
     else {
-        rigidBody->setWorldTransform(transform);
+        collider->setWorldTransform(transform);
     }
-    rigidBody->setCenterOfMassTransform(transform);
+    collider->setCenterOfMassTransform(transform);
 
-    if (rigidBody->getCollisionShape()) {
+    if (collider->getCollisionShape()) {
         btVector3 btScale(finalScale.x, finalScale.y, finalScale.z);
-        rigidBody->getCollisionShape()->setLocalScaling(btScale);
+        collider->getCollisionShape()->setLocalScaling(btScale);
     }
 }
 
@@ -374,10 +373,10 @@ void ColliderComponent::CreateCollider() {
 
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
-    rigidBody = new btRigidBody(rbInfo);
+    collider = new btRigidBody(rbInfo);
 
     // Add the collider to the physics world
-    physics->dynamicsWorld->addRigidBody(rigidBody);
-    physics->gameObjectRigidBodyMap[owner] = rigidBody;
+    physics->dynamicsWorld->addRigidBody(collider);
+    physics->gameObjectRigidBodyMap[owner] = collider;
 }
 

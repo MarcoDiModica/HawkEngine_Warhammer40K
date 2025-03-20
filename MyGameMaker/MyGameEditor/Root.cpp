@@ -83,8 +83,8 @@ bool Root::Start()
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
-	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
-	environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
+	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -161,7 +161,7 @@ bool Root::Update(double dt)
 {
 	if (!hasAddedColliders) {
 		//AddCollidersEnv();
-		AddCollidersEnvLvl1();
+		//AddCollidersEnvLvl1();
 		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 		hasAddedColliders = true;

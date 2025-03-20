@@ -484,9 +484,18 @@ static void RenderEditor() {
 
 	configureCamera();
 	drawFloorGrid(256, 4);
-
-	for (auto& object : Application->root->GetActiveScene()->children()) {
+	std::vector<GameObject*> objects;
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
+		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
 		
+		objects.push_back(object);
+
+		for (const auto& j : object->GetChildren()) {
+			GameObject* child = j.get();
+			objects.push_back(child);
+			//RenderOutline(child);
+		}
+
 		if (object->IsActive()) 
 		{
 			object->Update(static_cast<float>(Application->GetDt()));
@@ -502,7 +511,7 @@ static void RenderEditor() {
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
-	//MousePickingCheck(objects);
+	MousePickingCheck(objects);
 }
 
 static void EditorRenderer(MyGUI* gui) {

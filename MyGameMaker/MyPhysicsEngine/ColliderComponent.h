@@ -56,7 +56,7 @@ public:
     virtual void OnTriggerExit(ColliderComponent* other);
 
 
-    btRigidBody* GetRigidBody() const { return rigidBody; }
+    btRigidBody* GetRigidBody() const { return collider; }
 
 	MonoObject* CsharpReference = nullptr;
 	MonoObject* GetSharp() override;
@@ -64,7 +64,7 @@ public:
 private:
 
 	glm::vec3 offset;
-    btRigidBody* rigidBody; 
+    btRigidBody* collider = nullptr;
     PhysicsModule* physics;
     glm::vec3 size; 
     float mass;

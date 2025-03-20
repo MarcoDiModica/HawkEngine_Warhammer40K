@@ -230,13 +230,13 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
 	transform.setIdentity();
 	glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
 	transform.setOrigin(btVector3(worldPosition.x + offset.x, worldPosition.y + offset.y, worldPosition.z + offset.z));
-	if (rigidBody->getMotionState()) {
-		rigidBody->getMotionState()->setWorldTransform(transform);
+	if (collider->getMotionState()) {
+        collider->getMotionState()->setWorldTransform(transform);
 	}
 	else {
-		rigidBody->setWorldTransform(transform);
+        collider->setWorldTransform(transform);
 	}
-	rigidBody->setCenterOfMassTransform(transform);
+    collider->setCenterOfMassTransform(transform);
     
 }
 

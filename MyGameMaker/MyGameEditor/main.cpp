@@ -538,6 +538,95 @@ static void PrintCounters() {
 	std::cout << "Counter using chrono: " << std::fixed << std::setprecision(2) << counterUsingChrono << " seconds" << std::endl;
 }
 
+static void GameRelease() {
+	if (Application->root->mainCamera == nullptr) {
+		return;
+	}
+
+	CameraComponent* gameCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
+	if (!gameCamera) {
+		return;
+	}
+
+	GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	GLint lastFBO;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+
+	GLint lastVP[4];
+	glGetIntegerv(GL_VIEWPORT, lastVP);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, Application->window->width(), Application->window->height());
+
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+
+	glm::dmat4 projectionMatrix = gameCamera->projection();
+	glm::dmat4 viewMatrix = gameCamera->view();
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glLoadMatrixd(glm::value_ptr(projectionMatrix));
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glLoadMatrixd(glm::value_ptr(viewMatrix));
+
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
+		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+		RenderObjectAndChildren(object);
+	}
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glPopAttrib();
+
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}
+
+	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+}
+
 int main(int argc, char** argv) {
 
 	MainState state = CREATE;
@@ -584,14 +673,19 @@ int main(int argc, char** argv) {
 
 		case LOOP:
 
+#ifndef _BUILD
 			EditorRenderer(Application->gui);
 
 			RenderGameView();
 			PrintCounters();
 			Application->window->SwapBuffers();
-            Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
+			Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
 			UndoRedo();
 			ObjectToEditorCamera();
+#else
+			GameRelease();
+			Application->window->SwapBuffers();
+#endif // ENABLE_EDITOR	
 			if (!Application->Update()) { state = FREE; }
 			break;
 

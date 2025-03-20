@@ -32,19 +32,28 @@ void UICanvasComponent::Start()
 
 void UICanvasComponent::Update(float deltaTime)
 {
+#ifndef _BUILD
+	int width = Application->gui->UIGameViewPanel->GetWidth();
+	int height = Application->gui->UIGameViewPanel->GetHeight();
+#else
+	int width = Application->window->width();
+	int height = Application->window->height();
+#endif // !_BUILD
 
-	glm::vec3 canvasPos(owner->GetComponent<UITransformComponent>()->GetPosition().x * Application->gui->UIGameViewPanel->GetWidth(),
-		owner->GetComponent<UITransformComponent>()->GetPosition().y * Application->gui->UIGameViewPanel->GetWidth(),
+	
+
+	glm::vec3 canvasPos(owner->GetComponent<UITransformComponent>()->GetPosition().x * width,
+		owner->GetComponent<UITransformComponent>()->GetPosition().y * height,
 		0.0f);
 
-	glm::vec3 canvasSize(Application->gui->UIGameViewPanel->GetWidth() * owner->GetComponent<UITransformComponent>()->GetScale().x
-		, Application->gui->UIGameViewPanel->GetHeight() * owner->GetComponent<UITransformComponent>()->GetScale().y
+	glm::vec3 canvasSize(width * owner->GetComponent<UITransformComponent>()->GetScale().x
+		, height * owner->GetComponent<UITransformComponent>()->GetScale().y
 		, 0.0f);
 
 	glm::mat4 projection = glm::ortho(
-		0.0f, static_cast<float>(Application->gui->UIGameViewPanel->GetWidth()),
-		static_cast<float>(Application->gui->UIGameViewPanel->GetHeight()), 0.0f,
-		-1.0f, 1.0f);
+		0.0f, static_cast<float>(width),
+		static_cast<float>(height), 0.0f,
+		-1.0f, 1.0f);	
 
     glDisable(GL_DEPTH_TEST);
 

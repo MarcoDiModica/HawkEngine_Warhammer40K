@@ -26,11 +26,17 @@ App::App() {
 
 	hardwareInfo = new HardwareInfo(this);
 
+#ifndef _BUILD
 	gui = new MyGUI(this);
+#endif // ENABLE_EDITOR	
 
 	root = new Root(this);
 
+#ifndef _BUILD
 	camera = new EditorCamera(this);
+#endif // ENABLE_EDITOR	
+
+	
 	physicsModule = new PhysicsModule();
 
 	//gizmos = new Gizmos(this);
@@ -40,9 +46,17 @@ App::App() {
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(hardwareInfo, true);
+
+#ifndef _BUILD
 	AddModule(gui, true);
+#endif // ENABLE_EDITOR	
+	
 	AddModule(root, true);
+
+#ifndef _BUILD
 	AddModule(camera, true);
+#endif // ENABLE_EDITOR	
+	
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
 
@@ -52,9 +66,10 @@ App::App() {
 bool App::Awake() { 
 
 	targetFrameDuration = (std::chrono::duration<double>)1 / frameRate;
-
+#ifndef _BUILD
 	camera->GetTransform().GetPosition() = vec3(0, 1, 4);
 	camera->GetTransform().Rotate(glm::radians(180.0), vec3(0, 1, 0));
+#endif
 
 	for (const auto& module : modules) {
 		if (module->Awake()) continue;
@@ -222,7 +237,9 @@ void App::FinishUpdate()
 		dtCount = 0;
 	}
 
+#ifndef _BUILD
 	Application->gui->UIsettingsPanel->AddFpsMark(fps);
+#endif // !_BUILD	
 
 }
 

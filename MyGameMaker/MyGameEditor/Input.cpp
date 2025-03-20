@@ -206,7 +206,9 @@ bool Input::processSDLEvents()
 
     while (SDL_PollEvent(&event) != 0)
     {
+#ifndef _BUILD
         Application->gui->processEvent(event);
+#endif // !_BUILD  
        
         switch (event.type)
         {
@@ -375,7 +377,8 @@ bool Input::processSDLEvents()
         case SDL_WINDOWEVENT:
         {
             if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-               /* Application->window->OnResizeWindow(event.window.data1, event.window.data2);*/
+				Application->window->SetWidth(event.window.data1);
+				Application->window->SetHeight(event.window.data2);
             }
             break;
         }

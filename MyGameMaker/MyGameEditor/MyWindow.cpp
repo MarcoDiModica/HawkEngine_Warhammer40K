@@ -85,29 +85,6 @@ void Window::SwapBuffers() const {
 }
 
 bool Window::ProcessEvents(IEventProcessor* event_processor) {
-    SDL_Event e;
-    while (SDL_PollEvent(&e)) {
-        if (event_processor) event_processor->processEvent(e);
-        switch (e.type) {
-        case SDL_DROPFILE:
-
-            printf("A file was dropped");
-            return true;
-
-        case SDL_QUIT: 
-            printf("Closing application");
-            Close(); 
-            return false;
-
-        case SDL_WINDOWEVENT:
-            if (e.window.event == SDL_WINDOWEVENT_RESIZED) {
-                printf("Window resized to %d %d\n", e.window.data1, e.window.data2);
-
-                glViewport(0, 0, e.window.data1, e.window.data2);
-			}
-			break;
-		}
-    }
     return true;
 }
 

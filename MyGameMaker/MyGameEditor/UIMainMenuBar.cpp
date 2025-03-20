@@ -16,6 +16,7 @@ UIMainMenuBar::UIMainMenuBar(UIType type, std::string name) : UIElement(type, na
 {
 	play_image.LoadTextureLocalPath("EngineAssets/plabtn.png");
 	stop_image.LoadTextureLocalPath("EngineAssets/stobtn.png");
+	pause_image.LoadTextureLocalPath("EngineAssets/scene.png");
 
 }
 
@@ -78,16 +79,39 @@ bool UIMainMenuBar::Draw()
 		//---------Play and Stop Button----------//
 		if (Application->play == false) {
 			Application->gui->SetColorScheme();
-			if (ImGui::ImageButton("Play Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(play_image.id())), ImVec2(11.0f, 11.0f)))
+			if (!isPaused)
 			{
-				pressing_play = true;
+				if (ImGui::ImageButton("Play Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(play_image.id())), ImVec2(11.0f, 11.0f)))
+				{
+					pressing_play = true;
+				}
+				else if (pressing_play) {
+					pressing_play = false;
+					Application->play = true;
+					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+					SceneManagement->Start();
+					Application->scene_serializer->Serialize(std::string("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene"), true);
+				}
 			}
-			else if (pressing_play) {
-				pressing_play = false;
-				Application->play = true;
-				SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
-				SceneManagement->Start();
-				Application->scene_serializer->Serialize(std::string("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene"), true);
+			
+			if (isPaused)
+			{
+				SetRedStyle();
+				if (ImGui::ImageButton("Stop Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(stop_image.id())), ImVec2(11.0f, 11.0f)))
+				{
+					Application->play = false;
+					isPaused = false;
+					SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
+					Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
+
+
+				}
+				if (ImGui::ImageButton("Pause Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(pause_image.id())), ImVec2(11.0f, 11.0f)))
+				{
+					Application->play = true;
+					isPaused = false;
+					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+				}
 			}
 		}
 		else {
@@ -95,10 +119,17 @@ bool UIMainMenuBar::Draw()
 			if (ImGui::ImageButton("Stop Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(stop_image.id())), ImVec2(11.0f, 11.0f)))
 			{
 				Application->play = false;
+				isPaused = false;
 				SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
 				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
 
 				
+			}
+			if (ImGui::ImageButton("Pause Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(pause_image.id())), ImVec2(11.0f, 11.0f)))
+			{
+				Application->play = false;
+				isPaused = true;
+				SceneManagement->currentScene->sceneState = Scene::SceneState::PAUSE;
 			}
 		}
 

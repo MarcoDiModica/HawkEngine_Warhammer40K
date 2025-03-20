@@ -9,6 +9,7 @@
 #include "Root.h"
 #include "Log.h"
 #include "UISettings.h"
+#include "UIMainMenuBar.h"
 
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
@@ -223,6 +224,7 @@ void App::FinishUpdate()
 	}
 
 	Application->gui->UIsettingsPanel->AddFpsMark(fps);
+	Application->gui->UIMainMenuBarPanel->fps = fps;
 
 }
 

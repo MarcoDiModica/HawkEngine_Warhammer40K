@@ -317,6 +317,7 @@ void MeshRenderer::RenderWithPBRShader(Shaders* shader, const glm::mat4& view, c
 
 void MeshRenderer::RenderMainCamera() const {
 	if (!mesh || !material || !owner || !mesh->model) return;
+	if (!owner->IsActive()) return;
 
 	GLboolean blendEnabled;
 	glGetBooleanv(GL_BLEND, &blendEnabled);

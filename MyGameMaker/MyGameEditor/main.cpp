@@ -57,6 +57,7 @@
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
 #include "../MyUIEngine/UICanvasComponent.h"
+#include "UIGameView.h"
 
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
@@ -256,7 +257,7 @@ static void RenderGameView() {
 	glGetIntegerv(GL_VIEWPORT, lastVP);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
-	glViewport(0, 0, Application->window->width(), Application->window->height());
+	glViewport(0, 0, 1280, 720);
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -595,8 +596,9 @@ static void GameRelease() {
 
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
-		RenderObjectAndChildren(object);
+		object->Update(static_cast<float>(Application->GetDt()));
 	}
+	Application->physicsModule->Update(Application->GetDt());
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();

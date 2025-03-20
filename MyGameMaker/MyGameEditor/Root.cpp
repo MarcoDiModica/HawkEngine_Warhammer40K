@@ -118,18 +118,18 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//////Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
-	hormagauntMesh->SetName("HormagauntMesh");
-	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	//auto hormagaunt = CreateGameObject("Hormagaunt");
+	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	////enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
+	//hormagauntMesh->SetName("HormagauntMesh");
+	//ParentGameObject(*hormagauntMesh, *hormagaunt);
+	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
-	CreateGameplayUI();
-	//CreateMainMenuUI();
+	//CreateGameplayUI();
+	CreateMainMenuUI();
 	
     SceneManagement->Start();
 
@@ -495,42 +495,42 @@ void Root::CreateGameplayUI()
 	auto playerLife = CreateGameObject("PlayerLife");
 	Application->root->ParentGameObject(*playerLife, *canvas);
 	playerLife->AddComponent<UIImageComponent>();
-	playerLife->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/blood.png");
+	playerLife->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/blood.png");
 	playerLife->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
 	playerLife->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.143, 0.831, 0), glm::vec3(0.195, 0.054, 1));
 
 	auto playerStamina = CreateGameObject("PlayerStamina");
 	Application->root->ParentGameObject(*playerStamina, *canvas);
 	playerStamina->AddComponent<UIImageComponent>();
-	playerStamina->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/blood.png");
+	playerStamina->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/blood.png");
 	playerStamina->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
 	playerStamina->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.139, 0.899, 0), glm::vec3(0.107, 0.035, 1));
 
 	auto playerStats = CreateGameObject("PlayerStats");
 	Application->root->ParentGameObject(*playerStats, *canvas);
 	playerStats->AddComponent<UIImageComponent>();
-	playerStats->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/healthbar_empty.png");
+	playerStats->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/healthbar_empty.png");
 	playerStats->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	playerStats->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.190, 0.858, 0), glm::vec3(0.318, 0.241, 1));
 
 	auto powerupFrame = CreateGameObject("PowerupFrame");
 	Application->root->ParentGameObject(*powerupFrame, *canvas);
 	powerupFrame->AddComponent<UIImageComponent>();
-	powerupFrame->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/powerup_frame.png");
+	powerupFrame->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/powerup_frame.png");
 	powerupFrame->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	powerupFrame->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.738, 0.874, 0), glm::vec3(0.126, 0.108, 1));
 
 	auto gunSwitcher = CreateGameObject("GunSwitcher");
 	Application->root->ParentGameObject(*gunSwitcher , *canvas);
 	gunSwitcher->AddComponent<UIImageComponent>();
-	gunSwitcher->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/gunswitcher_frame.png");
+	gunSwitcher->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/gunswitcher_frame.png");
 	gunSwitcher->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	gunSwitcher->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.808, 0.852, 0), glm::vec3(0.301, 0.260, 1));
 
 	auto railgunIcon = CreateGameObject("RailgunIcon");
 	Application->root->ParentGameObject(*railgunIcon, *canvas);
 	railgunIcon->AddComponent<UIImageComponent>();
-	railgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/railgun_icon.png");
+	railgunIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/railgun_icon.png");
 	railgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	railgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
 	railgunIcon->GetComponent<UIImageComponent>()->SetEnabled(false);
@@ -538,7 +538,7 @@ void Root::CreateGameplayUI()
 	auto shotgunIcon = CreateGameObject("ShotgunIcon");
 	Application->root->ParentGameObject(*shotgunIcon, *canvas);
 	shotgunIcon->AddComponent<UIImageComponent>();
-	shotgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/shotgun_icon.png");
+	shotgunIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/shotgun_icon.png");
 	shotgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	shotgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
 	shotgunIcon->GetComponent<UIImageComponent>()->SetEnabled(false);
@@ -546,7 +546,7 @@ void Root::CreateGameplayUI()
 	auto boltgunIcon = CreateGameObject("BoltgunIcon");
 	Application->root->ParentGameObject(*boltgunIcon, *canvas);
 	boltgunIcon->AddComponent<UIImageComponent>();
-	boltgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/boltgun_icon.png");
+	boltgunIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/boltgun_icon.png");
 	boltgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	boltgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
 	boltgunIcon->GetComponent<UIImageComponent>()->SetEnabled(true);
@@ -554,14 +554,14 @@ void Root::CreateGameplayUI()
 	auto bulletIcon = CreateGameObject("BulletIcon");
 	Application->root->ParentGameObject(*bulletIcon, *canvas);
 	bulletIcon->AddComponent<UIImageComponent>();
-	bulletIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bullet_icon.png");
+	bulletIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/bullet_icon.png");
 	bulletIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	bulletIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.704, 0.873, 0), glm::vec3(0.010, 0.067, 1));
 
 	auto grenadeIcon = CreateGameObject("GrenadeIcon");
 	Application->root->ParentGameObject(*grenadeIcon, *canvas);
 	grenadeIcon->AddComponent<UIImageComponent>();
-	grenadeIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/grenade_icon.png");
+	grenadeIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/grenade_icon.png");
 	grenadeIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	grenadeIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.773, 0.872, 0), glm::vec3(0.021, 0.065, 1));
 
@@ -578,13 +578,13 @@ void Root::CreateMainMenuUI()
     auto menuImage = CreateGameObject("MenuImage");
     Application->root->ParentGameObject(*menuImage, *canvas);
     menuImage->AddComponent<UIImageComponent>();
-    menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Main_Menu_1.png");
+    menuImage->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Main_Menu_1.png");
     menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
     auto newGameButton = CreateGameObject("NewGameButton");
     Application->root->ParentGameObject(*newGameButton, *canvas);
     newGameButton->AddComponent<UIImageComponent>();
-    newGameButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/New_Game.png");
+    newGameButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/New_Game.png");
     newGameButton->AddComponent<UIButtonComponent>();
     newGameButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     newGameButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.318, 0), glm::vec3(0.182, 0.091, 1));
@@ -592,7 +592,7 @@ void Root::CreateMainMenuUI()
     auto continueButton = CreateGameObject("ContinueButton");
     Application->root->ParentGameObject(*continueButton, *canvas);
     continueButton->AddComponent<UIImageComponent>();
-    continueButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Continue_button.png");
+    continueButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Continue_button.png");
     continueButton->AddComponent<UIButtonComponent>();
     continueButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     continueButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.461, 0), glm::vec3(0.182, 0.091, 1));
@@ -600,7 +600,7 @@ void Root::CreateMainMenuUI()
     auto optionsButton = CreateGameObject("OptionsButton");
     Application->root->ParentGameObject(*optionsButton, *canvas);
     optionsButton->AddComponent<UIImageComponent>();
-    optionsButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Options_Button.png");
+    optionsButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Options_Button.png");
     optionsButton->AddComponent<UIButtonComponent>();
     optionsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     optionsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.604, 0), glm::vec3(0.182, 0.091, 1));
@@ -608,7 +608,7 @@ void Root::CreateMainMenuUI()
     auto creditsButton = CreateGameObject("CreditsButton");
     Application->root->ParentGameObject(*creditsButton, *canvas);
     creditsButton->AddComponent<UIImageComponent>();
-    creditsButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Credits_Buttom.png");
+    creditsButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Credits_Buttom.png");
     creditsButton->AddComponent<UIButtonComponent>();
     creditsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     creditsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.748, 0), glm::vec3(0.182, 0.091, 1));
@@ -616,7 +616,7 @@ void Root::CreateMainMenuUI()
     auto quitButton = CreateGameObject("QuitButton");
     Application->root->ParentGameObject(*quitButton, *canvas);
     quitButton->AddComponent<UIImageComponent>();
-    quitButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Quit_button.png");
+    quitButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Quit_button.png");
     quitButton->AddComponent<UIButtonComponent>();
     quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.906, 0), glm::vec3(0.182, 0.091, 1));

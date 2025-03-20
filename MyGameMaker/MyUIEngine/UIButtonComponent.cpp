@@ -32,8 +32,15 @@ void UIButtonComponent::Update(float deltaTime)
 	auto mousePosX = Application->input->GetMouseX();
 	auto mousePosY = Application->input->GetMouseY();
 
+#ifndef _BUILD
 	double offsetX = Application->gui->UIGameViewPanel->GetViewportPos().x;
-    double offsetY = Application->gui->UIGameViewPanel->GetViewportPos().y;
+	double offsetY = Application->gui->UIGameViewPanel->GetViewportPos().y;
+#else
+	double offsetX = 0;
+	double offsetY = 0;
+#endif // !_BUILD
+
+	
 
 	if (GetState() == ButtonState::DISABLED) {
 		imageComponent->SetColor(glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));

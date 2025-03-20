@@ -131,7 +131,8 @@ bool Root::Start()
 	CreateGameplayUI();
 	//CreateMainMenuUI();
 	
-    SceneManagement->Start();
+	
+    //SceneManagement->Start();
 
     return true;
 }

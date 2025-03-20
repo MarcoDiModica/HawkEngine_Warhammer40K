@@ -162,12 +162,23 @@ void GameObject::Start()
 {
     for (auto& component : components)
     {
-        component.second->Start();
+        if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+            component.second->Start();
+        }
+        else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
+        {
+            if (component.second->GetName() != "SkeletalAnimationComponent" && component.second->GetName() != "ColliderComponent" && component.second->GetName() != "MeshColliderComponent" && component.second->GetName() != "RigidBodyComponent")
+            {
+                component.second->Start();
+            }
+        }
     }
 
-    for (auto& scriptComponent : scriptComponents)
-    {
-        scriptComponent->Start();
+    if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+        for (auto& scriptComponent : scriptComponents)
+        {
+            scriptComponent->Start();
+        }
     }
 
     for (auto& child : children)
@@ -193,13 +204,25 @@ void GameObject::Update(float deltaTime)
     
     for (auto& component : components)
 	{
-		component.second->Update(deltaTime);
+		if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+			component.second->Update(deltaTime);
+		}
+        else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
+        {
+            if (component.second->GetName() != "SkeletalAnimationComponent" && component.second->GetName() != "ColliderComponent" && component.second->GetName() != "MeshColliderComponent" && component.second->GetName() != "RigidBodyComponent")
+            {
+                component.second->Update(deltaTime);
+            }
+        }
 	}
 
-    for (auto& scriptComponent : scriptComponents)
-    {
-        scriptComponent->Update(deltaTime);
-    }
+	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+		for (auto& scriptComponent : scriptComponents)
+		{
+			scriptComponent->Update(deltaTime);
+		}
+	}
+    
 
     for (auto& child : children)
     {

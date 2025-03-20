@@ -10,6 +10,16 @@ class GameObject;
 class Scene
 {
 public:
+
+	enum class SceneState {
+		PLAY,
+		PAUSE,
+		STOP
+	};
+
+	SceneState sceneState = SceneState::STOP;
+
+public:
 	Scene( const std::string& name = "Scene") : name(name)  {}
 	~Scene() {}
 

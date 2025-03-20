@@ -77,7 +77,7 @@ bool UIMainMenuBar::Draw()
 		}
 		//---------Play and Stop Button----------//
 		if (Application->play == false) {
-
+			Application->gui->SetColorScheme();
 			if (ImGui::ImageButton("Play Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(play_image.id())), ImVec2(11.0f, 11.0f)))
 			{
 				pressing_play = true;
@@ -85,15 +85,19 @@ bool UIMainMenuBar::Draw()
 			else if (pressing_play) {
 				pressing_play = false;
 				Application->play = true;
-				Application->scene_serializer->Serialize(std::string(""), true);
+				SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+				SceneManagement->Start();
+				//Application->scene_serializer->Serialize(std::string(""), true);
 			}
 		}
 		else {
 			SetRedStyle();
 			if (ImGui::ImageButton("Stop Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(stop_image.id())), ImVec2(11.0f, 11.0f)))
 			{
-				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
+				//Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
 				Application->play = false;
+				SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
+				
 			}
 		}
 

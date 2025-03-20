@@ -210,6 +210,16 @@ void App::FinishUpdate()
 		dt = HIGH_LIMIT;
 	}
 
+	if (frameRateCap > 0 && dt < frameRateCap && capFrames)
+	{
+		glm::uint32 delay = (frameRateCap - dt);
+
+		if (delay > 0)
+		{
+			SDL_Delay(delay);
+		}
+	}
+
 	lastTime = now;
 
 

@@ -377,7 +377,7 @@ bool SkeletalAnimationComponent::LoadBinary(const std::string& filename)
 	}
 
 	if (!animations.empty()) {
-		testAnimation = std::make_unique<Animation>(*animations[animationIndex]);
+		animation1 = std::make_unique<Animation>(*animations[animationIndex]);
 	}
 
 	Start();

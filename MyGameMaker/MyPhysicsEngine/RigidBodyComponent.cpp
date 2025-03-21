@@ -9,6 +9,7 @@ RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physics
     : Component(owner), physics(physicsModule), mass(1.0f)
 {
     name = "RigidbodyComponent";
+    Start();
 }
 
 RigidbodyComponent::~RigidbodyComponent() {
@@ -16,22 +17,17 @@ RigidbodyComponent::~RigidbodyComponent() {
 }
 
 void RigidbodyComponent::Start() {
-    //Si no tiene collider, se añade uno 
     ColliderComponent* collider = owner->GetComponent<ColliderComponent>();
     if (!collider) {
         owner->AddComponent<ColliderComponent>(physics);
         collider = owner->GetComponent<ColliderComponent>();
+        collider->Start();
     }
-    //SetMass
-	collider->SetMass(mass);
-    SetRigidBody(collider->GetRigidBody());
-    
+    this->rigidBody = collider->GetRigidBody();
+    rigidBody->setActivationState(DISABLE_DEACTIVATION); 
+    SetMass(mass);    
 }
 
-void RigidbodyComponent::SetRigidBody(btRigidBody* rigidBody) {
-	this->rigidBody = rigidBody;
-	rigidBody->setActivationState(DISABLE_DEACTIVATION);
-}
 
 void RigidbodyComponent::Update(float deltaTime) 
 {
@@ -40,17 +36,44 @@ void RigidbodyComponent::Update(float deltaTime)
 		SetMass(mass);
         isFromDecode = false;
 	}
+        
+    
 }
 
 void RigidbodyComponent::Destroy() {}
 
+
+
 void RigidbodyComponent::SetMass(float newMass) {
-	mass = newMass;
-    ColliderComponent* collider = owner->GetComponent<ColliderComponent>();
-	collider->SetMass(newMass);
-    SetRigidBody(collider->GetRigidBody());
-	SetFreezeRotations(false);
+    mass = newMass;
+
+    if (!rigidBody) return;
+
+    btVector3 localInertia(0, 0, 0);
+    btCollisionShape* shape = rigidBody->getCollisionShape();
+    if (!shape) return;
+
+    if (newMass > 0.0f) {
+        shape->calculateLocalInertia(newMass, localInertia);
+    }
+
+    btTransform currentTransform;
+    rigidBody->getMotionState()->getWorldTransform(currentTransform);
+
+    physics->dynamicsWorld->removeRigidBody(rigidBody);
+
+    rigidBody->setMassProps(newMass, localInertia);
+    rigidBody->updateInertiaTensor();
+    rigidBody->getMotionState()->setWorldTransform(currentTransform);
+    rigidBody->setWorldTransform(currentTransform);
+
+    physics->dynamicsWorld->addRigidBody(rigidBody);
+
+    rigidBody->activate();
 }
+
+
+
 
 float RigidbodyComponent::GetMass() const {
     return mass;

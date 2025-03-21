@@ -60,7 +60,7 @@ private:
     bool isKinematic;
     bool isFreezed;
 
-    void SetRigidBody(btRigidBody* rigidBody);
+
 
     bool isFromDecode = false;
 

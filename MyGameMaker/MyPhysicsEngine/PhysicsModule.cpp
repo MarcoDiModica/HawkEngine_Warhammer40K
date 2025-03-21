@@ -368,17 +368,6 @@ void PhysicsModule::CheckCollisions() {
 
 
 bool PhysicsModule::Update(double dt) {
-    //if (linkPhysicsToScene) {
-    //    accumulatedTime += static_cast<float>(dt);
-    //    // Perform fixed steps
-    //    while (accumulatedTime >= fixedDeltaTime) {
-    //        dynamicsWorld->stepSimulation(fixedDeltaTime, 10);
-    //        accumulatedTime -= fixedDeltaTime;
-    //    }
-    //    // After stepping, interpolate and sync transforms
-    //    SyncTransforms();
-    //    CheckCollisions();
-    //}
     DrawDebugDrawer();
     if (linkPhysicsToScene) {
 		dynamicsWorld->stepSimulation(dt, 16, fixedDeltaTime);

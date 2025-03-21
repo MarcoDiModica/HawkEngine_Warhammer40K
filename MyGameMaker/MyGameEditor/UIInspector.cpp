@@ -1633,7 +1633,6 @@ private:
 		if (!gameObject->HasComponent<ColliderComponent>()) {
 			if (ImGui::MenuItem("Collider")) {
 				gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
-				gameObject->GetComponent<ColliderComponent>()->Start();
 			}
 		}
         
@@ -1647,7 +1646,6 @@ private:
         if (!gameObject->HasComponent<RigidbodyComponent>()) {
 			if (ImGui::MenuItem("RigidBody")) {
 				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
-				gameObject->GetComponent<RigidbodyComponent>()->Start();
 			}
 		}
 

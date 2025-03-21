@@ -9,6 +9,7 @@ ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsMo
 {
     name = "ColliderComponent";
     physics = physicsModule;
+    Start();
 }
 
 ColliderComponent::~ColliderComponent() {
@@ -18,13 +19,16 @@ ColliderComponent::~ColliderComponent() {
 void ColliderComponent::Start() {
 	//si tiene collider, lo destruye y crea uno nuevo 
     // TODO: Revisar
-    if (collider) {
+    /*if (collider) {
         physics->dynamicsWorld->removeRigidBody(collider);
         delete collider->getMotionState();
         delete collider;
         collider = nullptr;
+    }*/
+    if (!collider) {
+
+        CreateCollider();
     }
-    CreateCollider();
 }
 
 //OnCollisions y triggers 
@@ -183,20 +187,6 @@ void ColliderComponent::SetColliderPos(const glm::vec3& position) {
 }
 
 glm::vec3 ColliderComponent::GetSize() {
-    if (collider) {
-        btCollisionShape* shape = collider->getCollisionShape();
-        if (shape) {
-            btVector3 scale = shape->getLocalScaling();
-
-            Transform_Component* transform = owner->GetTransform();
-            if (transform) {
-                glm::vec3 worldScale = transform->GetScale();
-                return size;
-            }
-
-            //return glm::vec3(scale.getX(), scale.getY(), scale.getZ());
-        }
-    }
     return size;
 }
 
@@ -248,17 +238,6 @@ void ColliderComponent::SetSize(const glm::vec3& newSize) {
         }
     }
 }
-void ColliderComponent::SetMass(float newMass) {
-    mass = newMass;
-    if (collider) {
-        physics->dynamicsWorld->removeRigidBody(collider);
-        delete collider->getMotionState();
-        delete collider;
-        collider = nullptr;
-    }
-    CreateCollider();
-}
-
 void ColliderComponent::SetActive(bool active) {
     if (collider) {
         if (active) {
@@ -269,9 +248,30 @@ void ColliderComponent::SetActive(bool active) {
         }
     }
 }
+
+//Researching SnapToPosition with Rigidbody on play mode
 void ColliderComponent::SnapToPosition() {
     if (!owner || !collider) return;
-    if (owner->HasComponent<RigidbodyComponent>()) return;
+    RigidbodyComponent* rigidbody = owner->GetComponent<RigidbodyComponent>();
+
+    // Si el objeto tiene Rigidbody, verificar si tiene fuerzas aplicadas
+    if (rigidbody && physics->linkPhysicsToScene) {
+        return;
+        //btRigidBody* rb = rigidbody->GetRigidBody();
+        //if (rb) {
+        //    // Evitar modificar el collider si el Rigidbody se está moviendo
+        //    if (rb->getLinearVelocity().length2() > 0.0000001f ||
+        //        rb->getAngularVelocity().length2() > 0.0000001f ||
+        //        rb->getTotalForce().length2() > 0.000001f) {
+        //        return;
+        //    }
+
+        //    // Si el cuerpo está en reposo y dormido, no hacer nada
+        //    if (rb->getActivationState() == ISLAND_SLEEPING || rb->wantsSleeping()) {
+        //        return;
+        //    }
+        //}
+    }
 
     Transform_Component* goTransform = owner->GetTransform();
     if (!goTransform) return;
@@ -346,8 +346,6 @@ void ColliderComponent::CreateCollider() {
     BoundingBox bbox = owner->localBoundingBox();
     auto localSize = bbox.size();
 
-
-
     glm::vec3 bboxCenter = owner->boundingBox().center();
 
     btCollisionShape* shape;
@@ -379,12 +377,9 @@ void ColliderComponent::CreateCollider() {
     shape->setLocalScaling(btVector3(finalScale.x, finalScale.y, finalScale.z));
 
     btVector3 localInertia(0, 0, 0);
-    if (mass > 0.0f) {
-        shape->calculateLocalInertia(mass, localInertia);
-    }
 
     btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, shape, localInertia);
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, shape, localInertia);
     collider = new btRigidBody(rbInfo);
     btVector3 btSize = shape->getLocalScaling();
     size = glm::vec3(1.0f, 1.0f,1.0f);

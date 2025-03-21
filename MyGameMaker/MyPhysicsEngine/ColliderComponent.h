@@ -27,7 +27,6 @@ public:
 
     void SetSize(const glm::vec3& newSize);
 
-    float GetMass() { return mass; };
     bool IsTrigger() const;
     glm::vec3 GetColliderPos();
 
@@ -36,8 +35,6 @@ public:
     void SetColliderRotation(const glm::quat& rotation);
 
     void SetColliderPos(const glm::vec3& position);
-
-    void SetMass(float newMass);
 
     void SetActive(bool active);
 
@@ -68,7 +65,6 @@ private:
     PhysicsModule* physics;
     glm::vec3 size; 
     glm::vec3 scaleFactor;
-    float mass;
 
 	bool snapToPosition = false;
 

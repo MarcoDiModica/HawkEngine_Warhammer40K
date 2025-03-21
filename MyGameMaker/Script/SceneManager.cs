@@ -7,12 +7,23 @@ namespace HawkEngine
     {
         //internal calls
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern void LoadSceneInternal(string sceneName);
-        
+        private static extern bool LoadSceneInternal(string sceneName);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+
+        private static extern void SetSceneToPlay();
+
         //funciones
         public static void LoadScene(string sceneName)
         {
-            LoadSceneInternal("Library/Scenes/" + sceneName + ".scene");
+            if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
+            {
+               SetSceneToPlay();
+            }
+            else
+            {
+                Engineson.print("Scene not found");
+            }
         }
 
         //contructor

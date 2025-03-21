@@ -156,7 +156,8 @@ namespace EngineBinds {
 
 
     //SceneManagement
-    void LoadScene(MonoString* sceneName);
+    bool LoadScene(MonoString* sceneName);
+    void SetScenePlay();
 }
 
 #endif // ENGINE_BINDS_H

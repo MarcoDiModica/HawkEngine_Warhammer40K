@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private bool isRunning = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
+    private bool hasStoppedFootsteps = false;
 
     private Audio sound;
     private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
@@ -61,22 +62,32 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
             isShootingStanding = false;
             isShootingRunning = false;
-            sound?.Stop();
+            isFootstepPlaying = false;
+
+            if (!hasStoppedFootsteps)
+            {
+                sound?.Stop();
+                hasStoppedFootsteps = true;
+            }
+
 
         }
+
+        
 
         if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)
         {
             sound?.LoadAudio(footsteps);
             sound?.Play(true);
             isFootstepPlaying = true;
+            hasStoppedFootsteps = false;
         }
         else if (playerInput.IsShooting())
         {
             isFootstepPlaying = false;
         }
         
-
+     
 
         if (moveDirection == Vector3.Zero && playerInput.IsShooting() && !isShootingStanding)
         {
@@ -86,6 +97,7 @@ public class PlayerController : MonoBehaviour
             isShootingStanding = true;
             isShootingRunning = false;
             isIdle = false;
+            
         }
         
         if (moveDirection != Vector3.Zero && !isRunning && !playerInput.IsShooting())
@@ -96,6 +108,7 @@ public class PlayerController : MonoBehaviour
             isShootingStanding = false;
             isShootingRunning = false;
             isIdle = false;
+            
         }
         
         if (moveDirection != Vector3.Zero && !isShootingRunning && playerInput.IsShooting() /*&& !isShooting*/)

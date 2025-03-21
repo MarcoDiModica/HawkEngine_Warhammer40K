@@ -11,8 +11,11 @@ public class Grenade : MonoBehaviour
     float damage = 100;
     float explosionRadius = 2;
     Rigidbody rigidbody;
-
-
+    bool isExploded = false;
+    GameObject explosion;
+    float deathtimer = 0.2f;
+    public bool needsDestroy = false;
+    float deathTimerPrevention = 0;
 
     public override void Start()
     {
@@ -35,16 +38,35 @@ public class Grenade : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-       
-    }
+        if (isExploded)
+        {
+            deathtimer -= deltaTime;
+            if (deathtimer <= 0)
+            {
+                if (explosion != null) ;
+                    //Engineson.Destroy(explosion);
+            }
+        }
+        deathTimerPrevention += deltaTime;
+        //Engineson.print(deathTimerPrevention.ToString());
 
+        if (deathTimerPrevention > .1f) 
+        {
+            if (explosion != null)
+                //Engineson.Destroy(explosion);
+            needsDestroy = true;
+        }
+
+    }
 
     void Explode()
     {
-        GameObject explosion = Engineson.CreateGameObject("Explosion", null);
+        rigidbody.SetVelocity(new Vector3(0, 0, 0));
+        explosion = Engineson.CreateGameObject("Explosion", null);
         explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
+        isExploded = true;
     }
 
     public override void OnCollisionEnter(Collider other)

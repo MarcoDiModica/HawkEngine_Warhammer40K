@@ -37,7 +37,7 @@ namespace EngineBinds {
 
     MonoString* GameObjectGetName(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
-    MonoObject* GetGameObjectByName(MonoString* name);
+    MonoObject* GetGameObjectByName(MonoString* name);	
 
     // Input
     bool GetKey(int keyID);
@@ -134,6 +134,7 @@ namespace EngineBinds {
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
+	void SetImageEnabled(MonoObject* uiImageRef, bool enabled);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);

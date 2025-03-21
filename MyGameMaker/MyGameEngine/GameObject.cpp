@@ -178,10 +178,14 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
-    if (!active || !this || destroyed)
+    if (!this || destroyed)
     {
         return;
     }
+	if (!active) 
+    {
+		return;
+	}
 
     for (auto& component : components)
 	{
@@ -206,7 +210,10 @@ void GameObject::Update(float deltaTime)
         child->Update(deltaTime);
     }
 
-    Draw();
+    if (active) 
+    {
+        Draw();
+    }
 }
 
 void GameObject::Destroy()

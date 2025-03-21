@@ -143,6 +143,8 @@ protected:
 		pivotOffset.y = node["pivot_offset"][1].as<float>();
 		pivotOffset.z = node["pivot_offset"][2].as<float>();
 
+		SetTransform(position, scale);
+
 		return true;
 	}
 };

@@ -30,7 +30,10 @@ public class PlayerShooting : MonoBehaviour
     }
     private GunType currentGun = GunType.BOLTGUN;
 
-    
+    public int GetCurrentGun()
+    {
+        return (int)currentGun;
+    }
 
     public override void Start()
     {
@@ -70,7 +73,7 @@ public class PlayerShooting : MonoBehaviour
         railgun.Start();
         if (railgun == null)
         {
-            Engineson.print("ERROR: PlayerShooting requires a Railgun component!");
+            Engineson.print("ERROR: PlayerShooting requires a Ra ilgun component!");
         }
 
         switch (currentGun)
@@ -94,15 +97,15 @@ public class PlayerShooting : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        
-        
+
+
         //Engineson.print($"Shoot Timer: {shootTimer}");
 
-        if (playerInput.IsChangingWeaponRight())
+        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Y))
         {
             ChangeWeaponRight();
         }
-        else if (playerInput.IsChangingWeaponLeft())
+        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.T))
         {
             ChangeWeaponLeft();
         }
@@ -121,11 +124,11 @@ public class PlayerShooting : MonoBehaviour
                 Shoot();
                 shootTimer = shootCooldown;
             }
-                
+
         }
         else if (playerInput.IsShooting() == false)
         {
-           switch(currentGun)
+            switch (currentGun)
             {
                 case GunType.BOLTGUN:
                     shootTimer = 0;
@@ -138,7 +141,7 @@ public class PlayerShooting : MonoBehaviour
                     break;
             }
         }
-        
+
 
         if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
         {
@@ -285,7 +288,7 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
- private void UseAbility1()
+    private void UseAbility1()
     {
         switch (currentGun)
         {
@@ -302,7 +305,7 @@ public class PlayerShooting : MonoBehaviour
     }
 
      private void UseAbility2()
-    {
+     {
         switch (currentGun)
         {
             case GunType.BOLTGUN:
@@ -315,6 +318,6 @@ public class PlayerShooting : MonoBehaviour
 
                 break;
         }
-    }
+     }
 
 }

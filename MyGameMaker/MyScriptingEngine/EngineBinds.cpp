@@ -775,6 +775,13 @@ void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
 	}
 }
 
+void EngineBinds::SetImageEnabled(MonoObject* uiImageRef, bool enabled) {
+    auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+    if (uiImage) {
+        uiImage->SetEnabled(enabled);
+    }
+}
+
 int EngineBinds::GetState(MonoObject* uiButtonRef)
 {
 	auto uiButton = ConvertFromSharpComponent<UIButtonComponent>(uiButtonRef);
@@ -971,6 +978,7 @@ void EngineBinds::BindEngine() {
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageEnabled", (const void*)&EngineBinds::SetImageEnabled);
 
 	// UI Button
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);

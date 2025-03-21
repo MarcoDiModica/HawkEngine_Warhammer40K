@@ -54,6 +54,7 @@ private:
     bool isForStreetLocal;
 
     bool snapToPosition = false;
+    bool isFromDecode = false;
     void CreateMeshCollider();
 
 protected:
@@ -66,7 +67,8 @@ protected:
 
     bool decode(const YAML::Node& node) override
     {
-        Start();
+        //Start();
+		isFromDecode = true;
         return false;
     }
 };

@@ -279,15 +279,22 @@ void ColliderComponent::CreateCollider() {
     BoundingBox bbox = owner->localBoundingBox();
     size = bbox.size();
 
+   
+
     glm::vec3 bboxCenter = owner->boundingBox().center();
 
     btCollisionShape* shape;
     btTransform startTransform;
     startTransform.setIdentity();
 
+    if (size.x == 0.0f && size.y == 0.0f && size.z == 0.0f) {
+        size = glm::vec3(1.0f, 1.0f, 1.0f);
+        bboxCenter = transform->GetLocalPosition();
+    }
+
     shape = new btBoxShape(btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5));
     glm::vec3 localPosition = transform->GetLocalPosition();
-    startTransform.setOrigin(btVector3(owner->boundingBox().center().x, owner->boundingBox().center().y, owner->boundingBox().center().z));
+    startTransform.setOrigin(btVector3(bboxCenter.x, bboxCenter.y, bboxCenter.z));
     glm::dquat localRot = transform->GetRotation();
     btQuaternion btRot(
         static_cast<btScalar>(localRot.x),

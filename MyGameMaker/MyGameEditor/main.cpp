@@ -197,7 +197,7 @@ static void configureCamera() {
 	Application->camera->frustum.Update(projectionMatrix * viewMatrix);
 }
 
-static void RenderObjectAndChildren(GameObject* object) {
+static void RenderObjectAndChildren(std::shared_ptr<GameObject> object) {
 	if (object->HasComponent<MeshRenderer>()) {
 		GLint lastProgram;
 		glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
@@ -232,7 +232,10 @@ static void RenderObjectAndChildren(GameObject* object) {
 	}
 
 	for (const auto& child : object->GetChildren()) {
-		RenderObjectAndChildren(child.get());
+		if (child->IsActive()) 
+		{
+			RenderObjectAndChildren(child);
+		}
 	}
 }
 
@@ -291,9 +294,12 @@ static void RenderGameView() {
 	}
 	glActiveTexture(GL_TEXTURE0);
 
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
-		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
-		RenderObjectAndChildren(object);
+	for (auto& object : Application->root->GetActiveScene()->children()) 
+	{
+		if (object->IsActive())
+		{
+			RenderObjectAndChildren(object);
+		}
 	}
 
 	glMatrixMode(GL_PROJECTION);
@@ -412,6 +418,7 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 	bool selecting = false;
 	float distance = 0.0f;
 	float closestDistance = 0.0f;
+	
 	if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused) 
 	{
 
@@ -422,7 +429,7 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 		selecting = true;
 		for (int i = 0; i < objects.size(); i++)
 		{
-			if (objects[i]->HasComponent<MeshRenderer>()) 
+			if (objects[i]->HasComponent<MeshRenderer>() && objects[i]->IsActive())
 			{
 				BoundingBox bbox = objects[i]->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
 
@@ -477,26 +484,28 @@ static void RenderEditor() {
 
 	configureCamera();
 	drawFloorGrid(256, 4);
-
 	std::vector<GameObject*> objects;
-
 	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
 		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+		
 		objects.push_back(object);
-		//RenderOutline(object);
-		object->Update(static_cast<float>(Application->GetDt()));
 
-		for (const auto & j : object->GetChildren()) {
+		for (const auto& j : object->GetChildren()) {
 			GameObject* child = j.get();
 			objects.push_back(child);
 			//RenderOutline(child);
 		}
 
-		if (object->HasComponent<LightComponent>()) {
-			auto& lights = Application->root->GetActiveScene()->_lights;
-			auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
-			if (it == lights.end()) {
-				lights.push_back(object->shared_from_this());
+		if (object->IsActive()) 
+		{
+			object->Update(static_cast<float>(Application->GetDt()));
+
+			if (object->HasComponent<LightComponent>()) {
+				auto& lights = Application->root->GetActiveScene()->_lights;
+				auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
+				if (it == lights.end()) {
+					lights.push_back(object->shared_from_this());
+				}
 			}
 		}
 	}
@@ -518,7 +527,7 @@ static void EditorRenderer(MyGUI* gui) {
 
 		const auto t1 = hrclock::now();
 		const auto dt = t1 - t0;
-		if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
+		//if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
 	}
 }
 
@@ -527,15 +536,17 @@ static double counterUsingChrono = 0.0;
 static hrclock::time_point startTime = hrclock::now();
 
 static void PrintCounters() {
-	// Counter using delta time
-	counterUsingDeltaTime += Application->GetDt();
-	std::cout << "Counter using delta time: " << std::fixed << std::setprecision(2) << counterUsingDeltaTime << " seconds" << std::endl;
+	//// Counter using delta time
+	//counterUsingDeltaTime += Application->GetDt();
+	//std::cout << "Counter using delta time: " << std::fixed << std::setprecision(2) << counterUsingDeltaTime << " seconds" << std::endl;
 
-	// Counter using chrono
-	auto currentTime = hrclock::now();
-	std::chrono::duration<double> elapsedTime = currentTime - startTime;
-	counterUsingChrono = elapsedTime.count();
-	std::cout << "Counter using chrono: " << std::fixed << std::setprecision(2) << counterUsingChrono << " seconds" << std::endl;
+	//// Counter using chrono
+	//auto currentTime = hrclock::now();
+	//std::chrono::duration<double> elapsedTime = currentTime - startTime;
+	//counterUsingChrono = elapsedTime.count();
+	//std::cout << "Counter using chrono: " << std::fixed << std::setprecision(2) << counterUsingChrono << " seconds" << std::endl;
+
+	std::cout << "Fps;  %d" << Application->GetFps() << std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -585,13 +596,16 @@ int main(int argc, char** argv) {
 		case LOOP:
 
 			EditorRenderer(Application->gui);
-
-			RenderGameView();
+			
+			RenderGameView(); 
 			PrintCounters();
+			//Application->gui->Render();
 			Application->window->SwapBuffers();
             Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
 			UndoRedo();
 			ObjectToEditorCamera();
+		
+		
 			if (!Application->Update()) { state = FREE; }
 			break;
 

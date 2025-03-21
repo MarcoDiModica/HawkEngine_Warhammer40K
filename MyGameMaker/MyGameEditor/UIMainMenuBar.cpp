@@ -133,6 +133,8 @@ bool UIMainMenuBar::Draw()
 			}
 		}
 
+		ImGui::Text("FPS: %.1f", fps);
+
 		// Finaliza la barra de men� principal
 		ImGui::EndMainMenuBar();
 	}

@@ -331,6 +331,8 @@ void ColliderComponent::SnapToPosition() {
 
         shape->setLocalScaling(scaledSize);
     }
+	//Set Offset
+	SetOffset(offset);
 }
 
 //Local BBox Adjusted (doesnt works with the blocking)

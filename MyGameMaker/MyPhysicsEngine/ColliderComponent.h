@@ -67,6 +67,7 @@ private:
     btRigidBody* collider = nullptr;
     PhysicsModule* physics;
     glm::vec3 size; 
+    glm::vec3 scaleFactor;
     float mass;
 
 	bool snapToPosition = false;

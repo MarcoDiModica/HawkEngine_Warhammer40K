@@ -10,45 +10,52 @@ GameObject0:
       name: Transform_Component
       enabled: true
       localPosition:
-        x: 0
-        y: 0
-        z: 0
+        - 0
+        - 0
+        - 0
       localRotation:
-        x: 0
-        y: -0
-        z: 0
+        - -6.4052352965055747e-06
+        - 0.012063765014620701
+        - -2.5753446308651506e-06
       localScale:
-        x: 1
-        y: 1
-        z: 1
-    "":
-      mass: 1
-      isKinematic: false
-      isFreezed: false
+        - 1
+        - 1
+        - 1
     SoundComponent:
       name: SoundComponent
       enabled: true
-      audio_path: Library/Audio/Menu Confirm.wav
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
       volume: 1
       is_music: true
       is_spatial: false
       auto_play: false
       loop: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: false
     ColliderComponent: ~
     ScriptComponents:
       Script0:
-        name: PlayerController
+        name: PlayerShooting
       Script1:
-        name: PlayerDash
+        name: PlayerMovement
       Script2:
         name: PlayerInput
       Script3:
-        name: PlayerMovement
+        name: PlayerDash
       Script4:
-        name: PlayerShooting
+        name: PlayerController
+      Script5:
+        name: Boltgun
+      Script6:
+        name: Shotgun
+      Script7:
+        name: GrenadeLauncher
+      Script8:
+        name: Railgun
   Children:
-    Child0:
-      name: playerMesh
+    - name: playerMesh
       tag: Untagged
       active: true
       isStatic: false
@@ -57,1353 +64,55 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            x: 0
-            y: 0
-            z: 0
+            - 0
+            - 0
+            - 0
           localRotation:
-            x: -90.000002504478161
-            y: 0
-            z: 0
+            - -90
+            - 0
+            - 0
           localScale:
-            x: 1
-            y: 1
-            z: 1
+            - 1
+            - 1
+            - 1
         MeshRenderer:
           name: MeshRenderer
           enabled: true
+          mesh:
+            name: Cylinder.001
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_BaseColor.png
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
         Shader:
           name: Shader
           enabled: true
-        SkeletalAnimation_Component:
-          name: SkeletalAnimation_Component
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
           enabled: true
+          animation_file: skeletal_anim_playerMesh
         ScriptComponents:
           Script0:
             name: PlayerAnimations
-      Children:
-        Child0:
-          name: ROOT
-          tag: Untagged
-          active: true
-          isStatic: false
-          Components:
-            Transform_Component:
-              name: Transform_Component
-              enabled: true
-              localPosition:
-                x: 0.049110386520624161
-                y: 0.08669558837833885
-                z: 1.8920286931740471
-              localRotation:
-                x: -133.66475918650784
-                y: 4.7706564991328211
-                z: 174.63037905062507
-              localScale:
-                x: 1.000000017325039
-                y: 1.0000000340892126
-                z: 1.0000000211508204
-          Children:
-            Child0:
-              name: HIP.L
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    x: -1.2420903450771625e-06
-                    y: -1.8833626813652415e-07
-                    z: -1.7231033644371507e-07
-                  localRotation:
-                    x: -1.665761373958778e-05
-                    y: 2.6971742401413772e-05
-                    z: -5.7931410407338798e-06
-                  localScale:
-                    x: 1.0000001124564015
-                    y: 0.99999991385960263
-                    z: 1.0000000013372305
-              Children:
-                Child0:
-                  name: THIGH.L
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        x: -0.10234950038264232
-                        y: 1.1846770058214322
-                        z: 0.43892370751279253
-                      localRotation:
-                        x: 32.289335479692951
-                        y: 7.6518980637665015
-                        z: -5.9659882934135426
-                      localScale:
-                        x: 1.0000001108898833
-                        y: 0.99999991608255256
-                        z: 1.0000000971154441
-                  Children:
-                    Child0:
-                      name: TIBIA.L
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            x: 0.26350698924679866
-                            y: -0.74401838473690418
-                            z: 0.40409786687494387
-                          localRotation:
-                            x: -41.721335665349478
-                            y: -7.5452873297046752
-                            z: 9.9726158031164545
-                          localScale:
-                            x: 1.0000000386957746
-                            y: 1.0000000681492105
-                            z: 0.99999998731711459
-                      Children:
-                        Child0:
-                          name: FOOT.L
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                x: 0.034037872885059495
-                                y: -0.0037100121514485052
-                                z: 0.171679333787361
-                              localRotation:
-                                x: 29.912026124312121
-                                y: 4.2449346468567084
-                                z: -4.9040841477867154
-                              localScale:
-                                x: 0.99999997243739369
-                                y: 0.99999987116541289
-                                z: 1.0000000686911952
-                          Children:
-                            Child0:
-                              name: TOE.L
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    x: 8.5648314805415043e-08
-                                    y: 0.036861735386666927
-                                    z: 0.002086645121577746
-                                  localRotation:
-                                    x: 14.107580091698475
-                                    y: 5.2557302374255814e-06
-                                    z: -0.00014821203139462634
-                                  localScale:
-                                    x: 0.99999999935464912
-                                    y: 0.99999962828316968
-                                    z: 0.99999992683618477
-            Child1:
-              name: SPINE
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    x: -0.13667489430536206
-                    y: 0.53146584745151515
-                    z: 0.071118674344622823
-                  localRotation:
-                    x: 10.371570718411268
-                    y: 3.6443385350329449
-                    z: -3.980169182035997
-                  localScale:
-                    x: 0.99999997316807743
-                    y: 0.99999999598359846
-                    z: 0.99999990691700413
-              Children:
-                Child0:
-                  name: SHOULDER.L
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        x: 0.020458555628427848
-                        y: 1.5152798346939451
-                        z: 0.31524567233873679
-                      localRotation:
-                        x: 23.48280123132437
-                        y: -0.99846691977409252
-                        z: 1.5233290774470936
-                      localScale:
-                        x: 1.0000002872452096
-                        y: 1.0000001274828874
-                        z: 1.0000002523388967
-                  Children:
-                    Child0:
-                      name: ARM.L
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            x: 1.4371922686687861
-                            y: -1.9218026084490476
-                            z: 1.2370611390943433
-                          localRotation:
-                            x: -37.632969110182316
-                            y: -24.439979313735027
-                            z: 8.5558180209714063
-                          localScale:
-                            x: 1.00000013267267
-                            y: 0.9999998025065453
-                            z: 0.99999978739576634
-                      Children:
-                        Child0:
-                          name: FOREARM.L
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                x: 1.054552969936521
-                                y: 1.9216761909280347
-                                z: 1.6601259164232167
-                              localRotation:
-                                x: 59.931446388372628
-                                y: -3.8067784210387323
-                                z: -23.221744381329071
-                              localScale:
-                                x: 1.0000000638961648
-                                y: 1.0000005250082278
-                                z: 1.0000003245428581
-                          Children:
-                            Child0:
-                              name: HAND.L
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    x: -1.8510283497723108
-                                    y: 2.7896211793377494
-                                    z: 4.8021851382502296
-                                  localRotation:
-                                    x: -123.45503207682938
-                                    y: -78.85323451891017
-                                    z: -145.77789991090398
-                                  localScale:
-                                    x: 1.0000000829767133
-                                    y: 1.0000000298102714
-                                    z: 1.00000032389686
-                              Children:
-                                Child0:
-                                  name: INDEX1.L
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: 0.44866484602914625
-                                        y: -0.74826817076474039
-                                        z: 0.75798137775775842
-                                      localRotation:
-                                        x: -12.426304872763064
-                                        y: -14.500340554828744
-                                        z: -4.5799800912466697
-                                      localScale:
-                                        x: 0.99999995264669805
-                                        y: 1.0000000449717865
-                                        z: 1.0000000214837408
-                                  Children:
-                                    Child0:
-                                      name: INDEX2.L
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: 0.51997258803634772
-                                            y: 1.4346481809801284
-                                            z: 0.60891869771113427
-                                          localRotation:
-                                            x: 12.214491877649863
-                                            y: -16.150872100340756
-                                            z: 18.832282518751153
-                                          localScale:
-                                            x: 1.0000000727004195
-                                            y: 0.99999995120775054
-                                            z: 0.99999999757061186
-                                      Children:
-                                        Child0:
-                                          name: INDEX3.L
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                x: -6.9175685846190049e-07
-                                                y: -4.5932411041338383e-07
-                                                z: 4.7280023984797026e-07
-                                              localRotation:
-                                                x: -9.2146826544364837e-06
-                                                y: -4.587810458325934e-06
-                                                z: -2.0035792210293663e-06
-                                              localScale:
-                                                x: 0.99999991360213936
-                                                y: 0.99999991249282272
-                                                z: 0.99999997396893214
-                                Child1:
-                                  name: MIDDLE1.L
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: 1.01399205032493e-07
-                                        y: -2.9892243158524678e-07
-                                        z: -5.9591133627634463e-07
-                                      localRotation:
-                                        x: -7.6516344152732369e-07
-                                        y: -3.9401853425661598e-06
-                                        z: 4.897637674530011e-08
-                                      localScale:
-                                        x: 0.99999984607877612
-                                        y: 0.99999991313274927
-                                        z: 1.0000000202396109
-                                  Children:
-                                    Child0:
-                                      name: MIDDLE2.L
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: 0.72662172060623531
-                                            y: -0.80705343876882851
-                                            z: 1.5853989547991496
-                                          localRotation:
-                                            x: -13.11805314796367
-                                            y: -30.418700111682153
-                                            z: -5.2689696268386035
-                                          localScale:
-                                            x: 0.99999989355516405
-                                            y: 1.000000017105181
-                                            z: 0.9999998979300293
-                                      Children:
-                                        Child0:
-                                          name: MIDDLE3.L
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                x: 0.91513456933153137
-                                                y: -0.3329666846603373
-                                                z: 2.0220112888652113
-                                              localRotation:
-                                                x: -6.7612560242171353
-                                                y: -39.887412767466074
-                                                z: -1.1305625481021213
-                                              localScale:
-                                                x: 1.0000001252834634
-                                                y: 1.0000000196495413
-                                                z: 1.0000002096436595
-                                Child2:
-                                  name: RING1.L
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: 5.3598024912733125e-07
-                                        y: 1.1265958488689741e-07
-                                        z: -7.2388119306970725e-07
-                                      localRotation:
-                                        x: -1.6208948660131813e-06
-                                        y: -6.1950273964163936e-06
-                                        z: -3.2779672847562917e-06
-                                      localScale:
-                                        x: 1.0000000672688028
-                                        y: 0.99999996437584537
-                                        z: 0.99999998612796182
-                                  Children:
-                                    Child0:
-                                      name: RING2.L
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: -3.4229493506288122e-07
-                                            y: -1.51496901246162e-07
-                                            z: 1.1578755643171235e-06
-                                          localRotation:
-                                            x: -4.1618005647970009e-06
-                                            y: -4.6838659319423016e-06
-                                            z: 2.3044376778335161e-06
-                                          localScale:
-                                            x: 1.0000000174684707
-                                            y: 0.99999991606682803
-                                            z: 0.99999999400729223
-                                      Children:
-                                        Child0:
-                                          name: RING3.L
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                x: 0.79774406909303552
-                                                y: -0.5796921814120235
-                                                z: 2.9121325741626585
-                                              localRotation:
-                                                x: -12.646360318285323
-                                                y: -55.423617733588124
-                                                z: -1.5724560742050018
-                                              localScale:
-                                                x: 0.99999999955198371
-                                                y: 1.0000001438543391
-                                                z: 0.99999969533637034
-                                Child3:
-                                  name: PINKY1.L
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: 5.6954192872993303e-07
-                                        y: -1.3346178506790096e-07
-                                        z: -7.9002961594909493e-07
-                                      localRotation:
-                                        x: -8.1044714891977353e-07
-                                        y: 1.9248076709044078e-06
-                                        z: -7.3961515336870562e-06
-                                      localScale:
-                                        x: 1.0000001227619673
-                                        y: 1.000000041792569
-                                        z: 1.0000001287382143
-                                  Children:
-                                    Child0:
-                                      name: PINKY2.L
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: -4.2199971472811626e-07
-                                            y: -3.5418122990016343e-08
-                                            z: 7.0907100280237501e-07
-                                          localRotation:
-                                            x: -8.5573127329023156e-07
-                                            y: -7.4368051211198475e-07
-                                            z: 2.2554618704823486e-06
-                                          localScale:
-                                            x: 1.0000000521803791
-                                            y: 1.0000001704523656
-                                            z: 0.9999997186337658
-                                      Children:
-                                        Child0:
-                                          name: PINKY3.L
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                x: 4.6814263088279517e-07
-                                                y: 1.6546065984002212e-07
-                                                z: -1.9411829477178344e-07
-                                              localRotation:
-                                                x: -1.9033261486105592e-06
-                                                y: 3.1965037601367843e-06
-                                                z: 2.2064855299700453e-06
-                                              localScale:
-                                                x: 1.0000002061015805
-                                                y: 0.9999999184148225
-                                                z: 1.0000001728677177
-                                Child4:
-                                  name: THUMB1.L
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: 2.7794640882679957e-07
-                                        y: -4.3441990965118764e-07
-                                        z: 6.9890325864925936e-08
-                                      localRotation:
-                                        x: -2.2954885249675303e-06
-                                        y: 1.4420766506927403e-06
-                                        z: -1.1882588337650475e-05
-                                      localScale:
-                                        x: 1.0000000606498838
-                                        y: 0.99999985860757035
-                                        z: 0.99999985710480899
-                                  Children:
-                                    Child0:
-                                      name: THUMB2.L
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: 0.77431952054135289
-                                            y: 0.073131817369487706
-                                            z: 0.82231031902697138
-                                          localRotation:
-                                            x: 24.251729376956533
-                                            y: -21.067045767482732
-                                            z: -21.407582888190841
-                                          localScale:
-                                            x: 0.99999998846427174
-                                            y: 1.0000001082135348
-                                            z: 0.99999992131349769
-                Child1:
-                  name: HEAD
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        x: -0.055598361539931508
-                        y: 1.2698312836270662
-                        z: 0.21887817183853578
-                      localRotation:
-                        x: 19.539348262372688
-                        y: -0.28156947497144214
-                        z: 3.3003834541420161
-                      localScale:
-                        x: 0.99999993302954948
-                        y: 1.000000035623797
-                        z: 0.99999987518657285
-                Child2:
-                  name: SHOULDER.R
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        x: 0.00039884027639172572
-                        y: 0.96050997132025839
-                        z: 0.12339599224255549
-                      localRotation:
-                        x: 14.641238143884451
-                        y: -0.0063960610449502941
-                        z: 0.00071539139495605387
-                      localScale:
-                        x: 0.99999992752434796
-                        y: 0.99999999667879813
-                        z: 0.99999988819166141
-                  Children:
-                    Child0:
-                      name: ARM.R
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            x: -0.97934139598143155
-                            y: 0.20870552969494507
-                            z: 0.35293708349135733
-                          localRotation:
-                            x: 23.315760981590259
-                            y: 1.4191471165518028
-                            z: 52.299449311588596
-                          localScale:
-                            x: 1.000000309477459
-                            y: 1.0000000111622338
-                            z: 0.99999969217526086
-                      Children:
-                        Child0:
-                          name: FOREARM.R
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                x: 0.72274229304955739
-                                y: -1.7634075984275428
-                                z: 0.27823764484484131
-                              localRotation:
-                                x: 0.94837808432862647
-                                y: 9.8286227665626402
-                                z: 71.790944644839371
-                              localScale:
-                                x: 1.0000000508389641
-                                y: 0.99999975838272614
-                                z: 1.0000000497200499
-                          Children:
-                            Child0:
-                              name: HAND.R
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    x: -0.85596156874968288
-                                    y: 2.0551845494106575
-                                    z: 2.0034360890987126
-                                  localRotation:
-                                    x: 46.710507032724173
-                                    y: 34.27579927836824
-                                    z: 0.095781956714117739
-                                  localScale:
-                                    x: 1.000000013836599
-                                    y: 1.0000001369173022
-                                    z: 0.99999996925544499
-                              Children:
-                                Child0:
-                                  name: INDEX1.R
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: -2.816533646310404e-07
-                                        y: 2.2194508053630102e-07
-                                        z: -4.3313184572291163e-07
-                                      localRotation:
-                                        x: 4.2851224628623094e-06
-                                        y: -1.1374054800113232e-06
-                                        z: -4.6786717248450087e-06
-                                      localScale:
-                                        x: 0.99999999342116397
-                                        y: 0.9999999915882557
-                                        z: 1.0000000546372194
-                                  Children:
-                                    Child0:
-                                      name: INDEX2.R
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: 0.098658587511733398
-                                            y: -0.14183674259847101
-                                            z: -0.04023515943897138
-                                          localRotation:
-                                            x: -7.3493571274269716
-                                            y: -4.0321690608174912
-                                            z: -5.1858810021683865
-                                          localScale:
-                                            x: 1.0000001265677836
-                                            y: 1.0000000375799742
-                                            z: 0.99999996274124225
-                                      Children:
-                                        Child0:
-                                          name: INDEX3.R
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                x: -0.9593631802206245
-                                                y: -0.28066673520395441
-                                                z: 1.8056536270403514
-                                              localRotation:
-                                                x: -13.072781448639198
-                                                y: 34.336165231156976
-                                                z: -4.6756873763762243
-                                              localScale:
-                                                x: 0.99999977879260915
-                                                y: 0.99999993411615762
-                                                z: 1.0000000270686003
-                                Child1:
-                                  name: MIDDLE1.R
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: -0.82556437345350231
-                                        y: -1.0863052936837387
-                                        z: 2.4001090995347347
-                                      localRotation:
-                                        x: 14.233863205481363
-                                        y: 49.174937226606595
-                                        z: 31.110688339949608
-                                      localScale:
-                                        x: 0.99999970617994505
-                                        y: 1.0000001094122559
-                                        z: 1.0000002447902514
-                                  Children:
-                                    Child0:
-                                      name: MIDDLE2.R
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: -0.74327670732223217
-                                            y: -0.61026591703696809
-                                            z: 1.3751851673862643
-                                          localRotation:
-                                            x: -1.0649161366181825
-                                            y: 29.353574300543656
-                                            z: 10.84683589738777
-                                          localScale:
-                                            x: 1.0000001132940655
-                                            y: 1.000000221229443
-                                            z: 0.99999989507678433
-                                      Children:
-                                        Child0:
-                                          name: MIDDLE3.R
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                x: -0.44833511292653672
-                                                y: -0.93090497880115852
-                                                z: 3.4881557502744109
-                                              localRotation:
-                                                x: -37.039473002644542
-                                                y: 59.907311358074971
-                                                z: -8.0924235058221345
-                                              localScale:
-                                                x: 1.0000000785120164
-                                                y: 1.000000165562108
-                                                z: 1.0000001320514731
-                                Child2:
-                                  name: RING1.R
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: -0.90795286967055522
-                                        y: -0.81015384031180671
-                                        z: 3.127617920344639
-                                      localRotation:
-                                        x: 33.698684205613262
-                                        y: 59.562585968348969
-                                        z: 41.247447711495965
-                                      localScale:
-                                        x: 0.99999981420622452
-                                        y: 0.99999983336946019
-                                        z: 1.0000000743168427
-                                  Children:
-                                    Child0:
-                                      name: RING2.R
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: -0.88823414159802516
-                                            y: -0.15794056094121836
-                                            z: 1.4098636537093341
-                                          localRotation:
-                                            x: 5.0653833944620139
-                                            y: 30.507261857576555
-                                            z: 6.9130245432227664
-                                          localScale:
-                                            x: 1.0000004351410197
-                                            y: 1.0000000802119127
-                                            z: 0.99999998960000958
-                                      Children:
-                                        Child0:
-                                          name: RING3.R
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                x: -0.61177510632519194
-                                                y: -0.61644694004830347
-                                                z: 3.4848861173926289
-                                              localRotation:
-                                                x: -17.317152043805343
-                                                y: 65.818101725888667
-                                                z: -1.0857655328204556
-                                              localScale:
-                                                x: 1.0000001472722506
-                                                y: 1.0000000182924631
-                                                z: 0.99999995958528753
-                                Child3:
-                                  name: PINKY1.R
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: -1.0924300201700698
-                                        y: -0.36569761842401372
-                                        z: 2.1745400700700408
-                                      localRotation:
-                                        x: 34.80555228540323
-                                        y: 41.188124940318986
-                                        z: 33.103635280605026
-                                      localScale:
-                                        x: 0.99999982691012723
-                                        y: 0.99999982889884786
-                                        z: 1.0000003056354092
-                                  Children:
-                                    Child0:
-                                      name: PINKY2.R
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: -0.87379410784249556
-                                            y: 0.309417075463567
-                                            z: 1.2212118473582827
-                                          localRotation:
-                                            x: 16.814800514785869
-                                            y: 26.621902574962114
-                                            z: 7.6590265553174381
-                                          localScale:
-                                            x: 1.0000001580530107
-                                            y: 1.0000000603094858
-                                            z: 0.99999994638076128
-                                      Children:
-                                        Child0:
-                                          name: PINKY3.R
-                                          tag: Untagged
-                                          active: true
-                                          isStatic: false
-                                          Components:
-                                            Transform_Component:
-                                              name: Transform_Component
-                                              enabled: true
-                                              localPosition:
-                                                x: -0.86419633118594108
-                                                y: 0.073723363584745183
-                                                z: 3.350635751386986
-                                              localRotation:
-                                                x: 26.528304766130887
-                                                y: 64.826027568921532
-                                                z: 19.084598575143332
-                                              localScale:
-                                                x: 1.0000003575877152
-                                                y: 1.0000000853801687
-                                                z: 1.0000001500407187
-                                Child4:
-                                  name: THUMB1.R
-                                  tag: Untagged
-                                  active: true
-                                  isStatic: false
-                                  Components:
-                                    Transform_Component:
-                                      name: Transform_Component
-                                      enabled: true
-                                      localPosition:
-                                        x: -0.17731459976366157
-                                        y: 0.029189018454419225
-                                        z: 0.13171634481490149
-                                      localRotation:
-                                        x: 4.6649392860589147
-                                        y: 4.7374887839839381
-                                        z: 5.0928406351007593
-                                      localScale:
-                                        x: 1.0000000358676151
-                                        y: 0.99999990897568747
-                                        z: 0.99999989283647706
-                                  Children:
-                                    Child0:
-                                      name: THUMB2.R
-                                      tag: Untagged
-                                      active: true
-                                      isStatic: false
-                                      Components:
-                                        Transform_Component:
-                                          name: Transform_Component
-                                          enabled: true
-                                          localPosition:
-                                            x: -3.8003488755933295e-07
-                                            y: 3.6231900080174745e-07
-                                            z: -1.0384019222264841e-07
-                                          localRotation:
-                                            x: -1.2722601057877674e-06
-                                            y: -1.4603029893417932e-06
-                                            z: -1.7965246009030999e-06
-                                          localScale:
-                                            x: 1.0000000832748446
-                                            y: 1.000000130188093
-                                            z: 1.0000000394655018
-            Child2:
-              name: HIP.R
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    x: 1.2098251818415395e-06
-                    y: -1.5633655192637264e-07
-                    z: -1.5569695088757385e-07
-                  localRotation:
-                    x: -1.4530115354844956e-05
-                    y: -2.7083467023711504e-05
-                    z: 5.2898426550770918e-06
-                  localScale:
-                    x: 1.0000001267227197
-                    y: 0.99999994558095018
-                    z: 0.99999999416762031
-              Children:
-                Child0:
-                  name: THIGH.R
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        x: 0.68804234708433398
-                        y: 2.0702233743004315
-                        z: 1.9601332104256675
-                      localRotation:
-                        x: 77.895103952115321
-                        y: -11.271151967335618
-                        z: -15.635166263476298
-                      localScale:
-                        x: 1.0000000467296484
-                        y: 1.0000000521501329
-                        z: 1.0000001806768102
-                  Children:
-                    Child0:
-                      name: TIBIA.R
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            x: -0.38016687258076465
-                            y: -0.94758674469901016
-                            z: 0.78398155737479747
-                          localRotation:
-                            x: -62.835824221506535
-                            y: 8.1651758697410397
-                            z: -16.276542498012748
-                          localScale:
-                            x: 0.99999981641807201
-                            y: 1.0000002663983594
-                            z: 1.0000000938364704
-                      Children:
-                        Child0:
-                          name: FOOT.R
-                          tag: Untagged
-                          active: true
-                          isStatic: false
-                          Components:
-                            Transform_Component:
-                              name: Transform_Component
-                              enabled: true
-                              localPosition:
-                                x: -0.031364423466984898
-                                y: -0.013302297275799652
-                                z: 0.093642809356547244
-                              localRotation:
-                                x: 21.280286067040372
-                                y: -5.5602296827738851
-                                z: 5.6114544375338324
-                              localScale:
-                                x: 1.0000000200728281
-                                y: 0.99999996798864976
-                                z: 1.0000000527969306
-                          Children:
-                            Child0:
-                              name: TOE.R
-                              tag: Untagged
-                              active: true
-                              isStatic: false
-                              Components:
-                                Transform_Component:
-                                  name: Transform_Component
-                                  enabled: true
-                                  localPosition:
-                                    x: -2.5121194439855471e-09
-                                    y: 0.013706538778358901
-                                    z: -0.00028719854233330989
-                                  localRotation:
-                                    x: 5.2341239286073344
-                                    y: -4.2517935754625248e-05
-                                    z: 0.0018105148249523485
-                                  localScale:
-                                    x: 0.99999988824217756
-                                    y: 0.99999981550954364
-                                    z: 0.99999993188548308
-        Child1:
-          name: KNEE.L
-          tag: Untagged
-          active: true
-          isStatic: false
-          Components:
-            Transform_Component:
-              name: Transform_Component
-              enabled: true
-              localPosition:
-                x: -0.19645440578460693
-                y: 1.0609587461617423e-07
-                z: 0.29999995231628918
-              localRotation:
-                x: -90.000002504478147
-                y: 5.0089562534303548e-06
-                z: -179.99999719855546
-              localScale:
-                x: 1.0000000000000049
-                y: 1.000000000000004
-                z: 0.99999999999999556
-        Child2:
-          name: FOOT.R.002
-          tag: Untagged
-          active: true
-          isStatic: false
-          Components:
-            Transform_Component:
-              name: Transform_Component
-              enabled: true
-              localPosition:
-                x: 2.384185791015625e-07
-                y: 4.470346925183261e-08
-                z: 3.2782554821869961e-07
-              localRotation:
-                x: -90.000010208454256
-                y: 2.0677331615660962e-05
-                z: 179.99999743867801
-              localScale:
-                x: 0.99999994039542139
-                y: 0.99999982118622999
-                z: 1.0000000000000089
-        Child3:
-          name: TOE.R.001
-          tag: Untagged
-          active: true
-          isStatic: false
-          Components:
-            Transform_Component:
-              name: Transform_Component
-              enabled: true
-              localPosition:
-                x: 1.7881391300989234e-07
-                y: -1.0430811331703555e-07
-                z: -5.9604642229416817e-08
-              localRotation:
-                x: -90.000001796404248
-                y: -2.3645527151221158e-06
-                z: 179.99998890094534
-              localScale:
-                x: 1.0000001192092949
-                y: 1.0000000000000009
-                z: 1.0000000000000215
-        Child4:
-          name: PIVOTHEEL.L
-          tag: Untagged
-          active: true
-          isStatic: false
-          Components:
-            Transform_Component:
-              name: Transform_Component
-              enabled: true
-              localPosition:
-                x: -3.5762782601978469e-07
-                y: -0.045299675938694967
-                z: 1.2457161829082306
-              localRotation:
-                x: -97.6909903965891
-                y: -4.4849791498803155e-05
-                z: -179.99999978655467
-              localScale:
-                x: 1.0000000000003064
-                y: 1.0000000873888388
-                z: 0.99999984912053508
-          Children:
-            Child0:
-              name: PIVOTTOE.L
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    x: 5.9604803893126558e-08
-                    y: -1.5586461588057432e-07
-                    z: 4.4546100128051158e-08
-                  localRotation:
-                    x: -4.9405728488464616e-06
-                    y: 3.9448147555361171e-07
-                    z: 2.6865367143861895e-07
-                  localScale:
-                    x: 1.0000001192092864
-                    y: 1.0000003714369119
-                    z: 1.0000002513058193
-              Children:
-                Child0:
-                  name: FOOT.L.001
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        x: -2.1119611643652296e-07
-                        y: -0.036256918035736607
-                        z: 0.006960488368942877
-                      localRotation:
-                        x: -14.106349204566468
-                        y: -3.83768753615135e-07
-                        z: -3.4798016062913972e-07
-                      localScale:
-                        x: 0.99999988079072899
-                        y: 0.99999989521354926
-                        z: 0.99999977935606532
-                  Children:
-                    Child0:
-                      name: IKLEG.L
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            x: 5.9604644331265416e-08
-                            y: 4.4265399790077709e-08
-                            z: -1.1068618677168018e-07
-                          localRotation:
-                            x: -7.6099614319944374e-06
-                            y: 7.530602325877048e-07
-                            z: -1.5859012850641313e-07
-                          localScale:
-                            x: 1.0000001192092953
-                            y: 0.9999999889222928
-                            z: 1.0000000996084679
-        Child5:
-          name: KNEE.R
-          tag: Untagged
-          active: true
-          isStatic: false
-          Components:
-            Transform_Component:
-              name: Transform_Component
-              enabled: true
-              localPosition:
-                x: 0.042087942361831665
-                y: 0.0022750961776617238
-                z: 0.29999995241573213
-              localRotation:
-                x: -90.000002504478203
-                y: 5.0089560085202649e-06
-                z: 179.99999719855501
-              localScale:
-                x: 1.0000000000000049
-                y: 1.000000000000004
-                z: 0.99999999999999545
-        Child6:
-          name: PIVOTHEEL.R
-          tag: Untagged
-          active: true
-          isStatic: false
-          Components:
-            Transform_Component:
-              name: Transform_Component
-              enabled: true
-              localPosition:
-                x: 4.7683710135971292e-07
-                y: -0.0014704540960815077
-                z: 0.1758068887774861
-              localRotation:
-                x: -90.498141244724522
-                y: 4.4356202688760795e-05
-                z: 179.99997737499913
-              localScale:
-                x: 1.0000000000003775
-                y: 1.000000004641169
-                z: 1.0000000046570499
-          Children:
-            Child0:
-              name: PIVOTTOE.R
-              tag: Untagged
-              active: true
-              isStatic: false
-              Components:
-                Transform_Component:
-                  name: Transform_Component
-                  enabled: true
-                  localPosition:
-                    x: -2.4640846929628704e-13
-                    y: -2.2982602032595167e-07
-                    z: 2.798055133187413e-08
-                  localRotation:
-                    x: -5.1637587649465012e-06
-                    y: -4.2472499747020575e-07
-                    z: -2.5049596234576583e-07
-                  localScale:
-                    x: 1.0000001192092833
-                    y: 1.0000003584204573
-                    z: 1.0000002391913863
-              Children:
-                Child0:
-                  name: FOOT.R.001
-                  tag: Untagged
-                  active: true
-                  isStatic: false
-                  Components:
-                    Transform_Component:
-                      name: Transform_Component
-                      enabled: true
-                      localPosition:
-                        x: 2.2733175124003305e-07
-                        y: -0.013586150813124281
-                        z: 0.0015288584850025723
-                      localRotation:
-                        x: -5.2125300477258349
-                        y: 6.4059984676643102e-07
-                        z: -2.7774224053673735e-08
-                      localScale:
-                        x: 0.99999982118609099
-                        y: 0.99999978578846582
-                        z: 0.99999972214142174
-                  Children:
-                    Child0:
-                      name: IKLEG.R
-                      tag: Untagged
-                      active: true
-                      isStatic: false
-                      Components:
-                        Transform_Component:
-                          name: Transform_Component
-                          enabled: true
-                          localPosition:
-                            x: 5.3040910930697484e-14
-                            y: 2.5206397996635488e-08
-                            z: -1.023077141025508e-07
-                          localRotation:
-                            x: -6.3715233001422466e-06
-                            y: -4.6193916095914151e-07
-                            z: 3.2918639265945601e-07
-                          localScale:
-                            x: 1.000000178813947
-                            y: 1.0000000111205725
-                            z: 1.0000000682052823
+      Children: ~
 GameObject1:
   name: MainCamera
   tag: Untagged
@@ -1414,17 +123,17 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        x: 0
-        y: 20
-        z: -9.7237929186793046
+        - 0
+        - 20
+        - -14
       localRotation:
-        x: 60.000001669652114
-        y: -0
-        z: 0
+        - 54.999999735770004
+        - -0
+        - 0
       localScale:
-        x: 1
-        y: 1
-        z: 1
+        - 1
+        - 1
+        - 1
     CameraComponent:
       name: CameraComponent
       enabled: true
@@ -1433,7 +142,581 @@ GameObject1:
       size: 0
       near_plane: 0.10000000000000001
       far_plane: 500
+      priority: 1
     AudioListener: ~
     ScriptComponents:
       Script0:
         name: PlayerCamera
+  Children: ~
+GameObject2:
+  name: Hormagaunt
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 5
+        - 0
+        - 5
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: EnemyController
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.00024807715089991689
+            - 0.79262250661849976
+            - 0.040951989591121674
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.0060735000297427177
+            - 0.0060735000297427177
+            - 0.0060735000297427177
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.089
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Assets/Textures/Low_BSurfaceMesh_BaseColor.png
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject3:
+  name: Canvas
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 0
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: UIGameplay
+  Children:
+    - name: PlayerLife
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.143000007
+            - 0.83099997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.194999993
+            - 0.0540000014
+            - 1
+          pivot_offset:
+            - 0
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: ../MyGameEditor/Assets/Textures/blood.png
+      Children: ~
+    - name: PlayerStamina
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.138999999
+            - 0.898999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.107000001
+            - 0.0350000001
+            - 1
+          pivot_offset:
+            - 0
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: ../MyGameEditor/Assets/Textures/blood.png
+      Children: ~
+    - name: PlayerStats
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.189999998
+            - 0.85799998
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.317999989
+            - 0.240999997
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: ../MyGameEditor/Assets/Textures/healthbar_empty.png
+      Children: ~
+    - name: PowerupFrame
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.737999976
+            - 0.874000013
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.126000002
+            - 0.108000003
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: ../MyGameEditor/Assets/Textures/powerup_frame.png
+      Children: ~
+    - name: GunSwitcher
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.808000028
+            - 0.851999998
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.300999999
+            - 0.25999999
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: ../MyGameEditor/Assets/Textures/gunswitcher_frame.png
+      Children: ~
+    - name: RailgunIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.884000003
+            - 0.83099997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.100000001
+            - 0.063000001
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: false
+          texture_path: ../MyGameEditor/Assets/Textures/railgun_icon.png
+      Children: ~
+    - name: ShotgunIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.884000003
+            - 0.83099997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.100000001
+            - 0.063000001
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: false
+          texture_path: ../MyGameEditor/Assets/Textures/shotgun_icon.png
+      Children: ~
+    - name: BoltgunIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.884000003
+            - 0.83099997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.100000001
+            - 0.063000001
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: ../MyGameEditor/Assets/Textures/boltgun_icon.png
+      Children: ~
+    - name: BulletIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.703999996
+            - 0.873000026
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00999999978
+            - 0.0670000017
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: ../MyGameEditor/Assets/Textures/bullet_icon.png
+      Children: ~
+    - name: GrenadeIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.773000002
+            - 0.871999979
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0209999997
+            - 0.0649999976
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: ../MyGameEditor/Assets/Textures/grenade_icon.png
+      Children: ~

@@ -131,7 +131,8 @@ bool Root::Start()
 	CreateGameplayUI();
 	//CreateMainMenuUI();
 	
-    SceneManagement->Start();
+	
+    //SceneManagement->Start();
 
     return true;
 }
@@ -165,6 +166,14 @@ bool Root::Update(double dt)
 		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 		hasAddedColliders = true;
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
 	}
 
 	return true;

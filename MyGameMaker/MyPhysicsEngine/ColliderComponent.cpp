@@ -13,6 +13,7 @@ ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsMo
     name = "ColliderComponent"; 
     physics = physicsModule; 
     isForStreetLocal = isForStreet;
+	updateInStop = false;
 }
 
 ColliderComponent::~ColliderComponent() {

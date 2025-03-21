@@ -663,10 +663,7 @@ private:
             collider->SetColliderRotation(newRotation);
         }
 
-        bool snapToPosition = collider->GetSnapToPosition();
-        if (ImGui::Checkbox("Snap Position", &snapToPosition)) {
-            collider->SetSnapToPosition(snapToPosition);
-        }
+        
 
         bool resetRotation = false;
         if (ImGui::Checkbox("Reset Rotation", &resetRotation) && resetRotation) {
@@ -679,16 +676,24 @@ private:
 		glm::vec3 offset = collider->GetOffset();
         float sizeArray[3] = { size.x, size.y, size.z };
 
-        if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
-            collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
-        }
-        bool isTrigger = collider->IsTrigger();
-        if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
-            collider->SetTrigger(isTrigger);
-        }
+		bool isTrigger = collider->IsTrigger();
+		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+			collider->SetTrigger(isTrigger);
+		}
+
+		bool snapToPosition = collider->GetSnapToPosition();
+		if (ImGui::Checkbox("Snap Position", &snapToPosition)) {
+			collider->SetSnapToPosition(snapToPosition);
+		}
+
 		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
 			collider->SetOffset(offset);
 		}
+
+        if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
+            collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+        }
+
     }
     #pragma endregion
 
@@ -709,32 +714,35 @@ private:
             rigidbody->SetMass(mass);
         }
 
-        bool isKinematic = rigidbody->IsKinematic();
-        if (ImGui::Checkbox("Is Kinematic", &isKinematic)) {
-            rigidbody->SetKinematic(isKinematic);
-        }
+		float friction = rigidbody->GetFriction();
+		if (ImGui::DragFloat("Friction", &friction, 0.1f, 0.0f, 10.0f)) {
+			rigidbody->SetFriction(friction);
+		}
 
-        bool freezeRotation = rigidbody->IsFreezed();
-        if (ImGui::Checkbox("Freeze Rotation", &freezeRotation)) {
-            rigidbody->SetFreezeRotations(freezeRotation);
-        }
+		glm::vec3 gravity = rigidbody->GetGravity();
+		float gravityY = gravity.y;
+		if (ImGui::DragFloat("Gravity", &gravityY, 0.1f)) {
+			gravity.y = gravityY;
+			rigidbody->SetGravity(gravity);
+		} 
     }
 
     static void DrawRigidbodyPhysics(RigidbodyComponent* rigidbody) {
-        float friction = rigidbody->GetFriction();
-        if (ImGui::DragFloat("Friction", &friction, 0.1f, 0.0f, 10.0f)) {
-            rigidbody->SetFriction(friction);
-        }
+        
+		bool isKinematic = rigidbody->IsKinematic();
+		if (ImGui::Checkbox("Is Kinematic", &isKinematic)) {
+			rigidbody->SetKinematic(isKinematic);
+		}
 
-        float damping[2] = { rigidbody->GetDamping().x, rigidbody->GetDamping().y };
-        if (ImGui::DragFloat2("Damping (Linear, Angular)", damping, 0.1f, 0.0f, 10.0f)) {
-            rigidbody->SetDamping(damping[0], damping[1]);
-        }
+		bool freezeRotation = rigidbody->IsFreezed();
+		if (ImGui::Checkbox("Freeze Rotation", &freezeRotation)) {
+			rigidbody->SetFreezeRotations(freezeRotation);
+		}
 
-        glm::vec3 gravity = rigidbody->GetGravity();
-        if (ImGui::DragFloat3("Gravity", &gravity[0], 0.1f)) {
-            rigidbody->SetGravity(gravity);
-        }
+		float damping[2] = { rigidbody->GetDamping().x, rigidbody->GetDamping().y };
+		if (ImGui::DragFloat2("Damping (Linear, Angular)", damping, 0.1f, 0.0f, 10.0f)) {
+			rigidbody->SetDamping(damping[0], damping[1]);
+		}
     }
 #pragma endregion
 

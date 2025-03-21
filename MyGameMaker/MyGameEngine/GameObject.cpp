@@ -182,6 +182,10 @@ void GameObject::Update(float deltaTime)
     {
         return;
     }
+	if (!active) 
+    {
+		return;
+	}
 
     for (auto& component : components)
 	{

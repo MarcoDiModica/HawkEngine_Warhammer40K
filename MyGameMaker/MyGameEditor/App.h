@@ -28,6 +28,8 @@ class UIMainMenuBar;
 
 class Mesh;
 
+using hrclock = std::chrono::high_resolution_clock;
+
 class App
 {
 public:
@@ -82,12 +84,14 @@ private:
 	std::chrono::duration<double> targetFrameDuration;
 	std::chrono::steady_clock::time_point frameStart, frameEnd;
 
-	int frameRate = 240;
+	bool capFrames = true; //false para tener el maximo de fps posible
+	int frameRate = 240; //Fake frameRate no borro por si acaso
+	glm::uint32 frameRateCap = 16.67; //forlmula para saber que numero poner aqui: 1000ms / desired fps ej: 1000ms / 60fps = 16,67
 	double dt = 0;
 	double dtCount = 0;
 	int frameCount = 0;
 	int fps = 0;
-
+	hrclock::time_point lastTime = hrclock::now();
 protected:
 	friend class UIMainMenuBar;
 	bool play = false;

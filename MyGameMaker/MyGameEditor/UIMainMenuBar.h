@@ -24,6 +24,7 @@ public:
 
 	bool Draw();
 
+	float fps;
 	int newSceneCount = 1;
 };
 #endif // !__UI_MAIN_MENU_BAR_H__

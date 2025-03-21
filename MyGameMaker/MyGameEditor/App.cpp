@@ -9,9 +9,15 @@
 #include "Root.h"
 #include "Log.h"
 #include "UISettings.h"
+#include "UIMainMenuBar.h"
 
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
+
+
+float LOW_LIMIT = 0.00167f; 
+float HIGH_LIMIT = 0.062f; //Min 16Fps
+
 
 App::App() {
 
@@ -192,25 +198,30 @@ bool App::PostUpdate()
 
 void App::FinishUpdate()
 {
-	frameEnd = std::chrono::steady_clock::now();
-	auto frameDuration = std::chrono::duration_cast<std::chrono::duration<double>>(frameEnd - frameStart);
+	auto now = hrclock::now();
+    dt = std::chrono::duration<double>(now - lastTime).count();
 
-	dt = frameDuration.count();
-
-
-
-	if (frameDuration < targetFrameDuration)
+	if (dt < LOW_LIMIT) 
 	{
-		auto sleepTime = std::chrono::duration_cast<std::chrono::milliseconds>(
-			std::max(targetFrameDuration - frameDuration, std::chrono::duration<double>(0))
-		);
-
-		// Delay to maintain target frame rate
-		SDL_Delay(static_cast<Uint32>(sleepTime.count()));
-
-		dt = targetFrameDuration.count();
+		dt = LOW_LIMIT;
 	}
-	//std::cout << std::endl << dt;
+	else if (dt > HIGH_LIMIT)
+	{
+		dt = HIGH_LIMIT;
+	}
+
+	if (frameRateCap > 0 && dt < frameRateCap && capFrames)
+	{
+		glm::uint32 delay = (frameRateCap - dt);
+
+		if (delay > 0)
+		{
+			SDL_Delay(delay);
+		}
+	}
+
+	lastTime = now;
+
 
 	dtCount += dt;
 	frameCount++;
@@ -223,6 +234,7 @@ void App::FinishUpdate()
 	}
 
 	Application->gui->UIsettingsPanel->AddFpsMark(fps);
+	Application->gui->UIMainMenuBarPanel->fps = fps;
 
 }
 

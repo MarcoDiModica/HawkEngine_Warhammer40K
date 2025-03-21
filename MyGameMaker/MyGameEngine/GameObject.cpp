@@ -167,10 +167,10 @@ void GameObject::Start()
         }
         else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
         {
-            if (component.second->GetName() != "SkeletalAnimationComponent" && component.second->GetName() != "ColliderComponent" && component.second->GetName() != "MeshColliderComponent" && component.second->GetName() != "RigidBodyComponent")
-            {
-                component.second->Start();
-            }
+			if (component.second->updateInStop)
+			{
+				component.second->Start();
+			}
         }
     }
 
@@ -213,10 +213,10 @@ void GameObject::Update(float deltaTime)
 		}
         else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
         {
-            if (component.second->GetName() != "SkeletalAnimationComponent" && component.second->GetName() != "ColliderComponent" && component.second->GetName() != "MeshColliderComponent" && component.second->GetName() != "RigidBodyComponent")
-            {
-                component.second->Update(deltaTime);
-            }
+			if (component.second->updateInStop)
+			{
+				component.second->Update(deltaTime);
+			}
         }
 	}
 

@@ -6,7 +6,9 @@
 
 #include "../MyGameEditor/Log.h"
 
-ScriptComponent::ScriptComponent(GameObject* owner) : Component(owner) {}
+ScriptComponent::ScriptComponent(GameObject* owner) : Component(owner) {
+    updateInStop = false;
+}
 
 ScriptComponent::~ScriptComponent() {}
 

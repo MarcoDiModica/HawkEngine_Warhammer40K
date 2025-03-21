@@ -118,7 +118,7 @@ void SceneSerializer::SerializeChildren(YAML::Node& parentNode, GameObject& game
 	}
 }
 
-void SceneSerializer::DeSerialize(const std::string& path) {
+bool SceneSerializer::DeSerialize(const std::string& path) {
 	try {
 		YAML::Node rootNode = LoadFromFile(path);
 
@@ -161,15 +161,21 @@ void SceneSerializer::DeSerialize(const std::string& path) {
 		}
 
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
+		Application->root->UpdateCameraPriority();
+		return true;
 	}
 	catch (const YAML::Exception& e) {
 		LOG(LogType::LOG_ERROR, "YAML Exception during deserialization: %s", e.what());
+		Application->root->UpdateCameraPriority();
+		return false;
 	}
 	catch (const std::exception& e) {
 		LOG(LogType::LOG_ERROR, "Exception during deserialization: %s", e.what());
+		Application->root->UpdateCameraPriority();
+		return false;
 	}
 
-	Application->root->UpdateCameraPriority();
+	
 	//Application->root->GetActiveScene()->Start();
 }
 

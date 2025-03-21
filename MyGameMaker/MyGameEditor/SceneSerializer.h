@@ -18,7 +18,7 @@ public:
 	~SceneSerializer() = default;
 
 	void Serialize(const std::string& directoryPath, bool play = false);
-	void DeSerialize(const std::string& path);
+	bool DeSerialize(const std::string& path);
 
 private:
 	YAML::Node SerializeGameObject(GameObject& gameObject);

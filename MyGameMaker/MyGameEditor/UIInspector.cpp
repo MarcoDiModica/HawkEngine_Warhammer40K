@@ -32,6 +32,7 @@
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "../MyPhysicsEngine/MeshColliderComponent.h"
+#include "../MyPhysicsEngine/CapsuleColliderComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyScriptingEngine/MonoManager.h"
 #include "../MyShadersEngine/ShaderComponent.h"
@@ -633,8 +634,8 @@ private:
     }
     #pragma endregion 
 
-    #pragma region Collider
-    static void DrawColliderComponent(ColliderComponent* collider) {
+    #pragma region CapsuleCollider
+    static void DrawCapsuleColliderComponent(CapsuleColliderComponent* collider) {
         if (!collider) return;
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
@@ -644,12 +645,7 @@ private:
         DrawColliderProperties(collider);
     }
 
-    static void DrawColliderTransform(ColliderComponent* collider) {
-        glm::vec3 colliderPosition = collider->GetColliderPos();
-        float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
-        if (ImGui::DragFloat3("Collider Position", pos, 0.1f)) {
-            collider->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
-        }
+    static void DrawColliderTransform(CapsuleColliderComponent* collider) {
 
         glm::quat colliderRotation = collider->GetColliderRotation();
         glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
@@ -663,39 +659,84 @@ private:
             collider->SetColliderRotation(newRotation);
         }
 
-        
-
         bool resetRotation = false;
         if (ImGui::Checkbox("Reset Rotation", &resetRotation) && resetRotation) {
             collider->SetColliderRotation(glm::quat(glm::radians(glm::vec3(0, 0, 0))));
         }
     }
 
-    static void DrawColliderProperties(ColliderComponent* collider) {
-        glm::vec3 size = collider->GetSize();
+    static void DrawColliderProperties(CapsuleColliderComponent* collider) {
+		glm::vec3 size = collider->GetSize();
 		glm::vec3 offset = collider->GetOffset();
-        float sizeArray[3] = { size.x, size.y, size.z };
+		float sizeArray[2] = { size.x, size.y };
 
 		bool isTrigger = collider->IsTrigger();
 		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
 			collider->SetTrigger(isTrigger);
 		}
 
-		bool snapToPosition = collider->GetSnapToPosition();
-		if (ImGui::Checkbox("Snap Position", &snapToPosition)) {
-			collider->SetSnapToPosition(snapToPosition);
+		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
+			collider->SetOffset(offset);
+		}
+
+		if (ImGui::DragFloat2("Collider Size (X, Y)", sizeArray, 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], size.z));
+		}
+
+    }
+    #pragma endregion
+
+#pragma region Collider
+	static void DrawColliderComponent(ColliderComponent* collider) {
+		if (!collider) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Collider")) return;
+
+		DrawColliderTransform(collider);
+		DrawColliderProperties(collider);
+	}
+
+	static void DrawColliderTransform(ColliderComponent* collider) {
+
+		glm::quat colliderRotation = collider->GetColliderRotation();
+		glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
+		float rot[3] = {
+			glm::degrees(eulerRotation.x),
+			glm::degrees(eulerRotation.y),
+			glm::degrees(eulerRotation.z)
+		};
+		if (ImGui::DragFloat3("Collider Rotation", rot, 0.1f)) {
+			glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
+			collider->SetColliderRotation(newRotation);
+		}
+
+		bool resetRotation = false;
+		if (ImGui::Checkbox("Reset Rotation", &resetRotation) && resetRotation) {
+			collider->SetColliderRotation(glm::quat(glm::radians(glm::vec3(0, 0, 0))));
+		}
+	}
+
+	static void DrawColliderProperties(ColliderComponent* collider) {
+		glm::vec3 size = collider->GetSize();
+		glm::vec3 offset = collider->GetOffset();
+		float sizeArray[3] = { size.x, size.y, size.z };
+
+		bool isTrigger = collider->IsTrigger();
+		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+			collider->SetTrigger(isTrigger);
 		}
 
 		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
 			collider->SetOffset(offset);
 		}
 
-        if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
-            collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
-        }
+		if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+		}
 
-    }
-    #pragma endregion
+	}
+#pragma endregion
 
     #pragma region Rigidbody
     static void DrawRigidbodyComponent(RigidbodyComponent* rigidbody) {
@@ -1557,7 +1598,12 @@ public:
             MeshColliderComponent* meshCollider = gameObject->GetComponent<MeshColliderComponent>();
 			DrawMeshColliderComponent(meshCollider);
 		}
-        
+
+		if (gameObject->HasComponent<CapsuleColliderComponent>()) {
+			CapsuleColliderComponent* capsuleCollider = gameObject->GetComponent<CapsuleColliderComponent>();
+			DrawCapsuleColliderComponent(capsuleCollider);
+		}
+
         if (gameObject->HasComponent<RigidbodyComponent>()) {
             RigidbodyComponent* rigidbody = gameObject->GetComponent<RigidbodyComponent>();
 			DrawRigidbodyComponent(rigidbody);
@@ -1641,6 +1687,12 @@ private:
 		if (!gameObject->HasComponent<ColliderComponent>()) {
 			if (ImGui::MenuItem("Collider")) {
 				gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+			}
+		}
+
+		if (!gameObject->HasComponent<CapsuleColliderComponent>()) {
+			if (ImGui::MenuItem("CapsuleCollider")) {
+				gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 			}
 		}
         

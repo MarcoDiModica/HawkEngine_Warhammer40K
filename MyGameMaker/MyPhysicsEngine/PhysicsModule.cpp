@@ -215,6 +215,14 @@ void PhysicsModule::DrawDebugDrawer() {
                 glm::vec3 center(position.x(), position.y(), position.z());
                 debugDrawer->drawSphere(center, radius, glm::vec3(1.0f, 0.0f, 0.0f), 16);
             }
+            else if (shape->getShapeType() == CAPSULE_SHAPE_PROXYTYPE) {
+                btCapsuleShape* capsuleShape = static_cast<btCapsuleShape*>(shape);
+                float radius = capsuleShape->getRadius();
+                float halfHeight = capsuleShape->getHalfHeight();
+                btVector3 center(position.x(), position.y(), position.z());
+                btVector3 color(1.0f, 0.0f, 0.0f);
+                debugDrawer->drawCapsule(radius, halfHeight, 1, btTransform(btQuaternion(0, 0, 0, 1), center), color);
+            }
             else if (shape->getShapeType() == TRIANGLE_MESH_SHAPE_PROXYTYPE) {
                 btBvhTriangleMeshShape* meshShape = static_cast<btBvhTriangleMeshShape*>(shape);
                 const btStridingMeshInterface* meshInterface = meshShape->getMeshInterface();

@@ -77,6 +77,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CapsuleColliderComponent.cpp" />
     <ClCompile Include="ColliderComponent.cpp" />
     <ClCompile Include="DebugDrawerPhysics.cpp" />
     <ClCompile Include="MeshColliderComponent.cpp" />
@@ -86,6 +87,7 @@
     <ClCompile Include="RigidBodyComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CapsuleColliderComponent.h" />
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="DebugDrawerPhysics.h" />
     <ClInclude Include="MeshColliderComponent.h" />

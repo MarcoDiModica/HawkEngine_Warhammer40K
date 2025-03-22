@@ -10,12 +10,12 @@ public class EnemyController : MonoBehaviour
     private float distToChase = 20.0f;
     private float minDistToChase = 5.0f;
     private float speedMovement = 5.0f;
-    //private Rigidbody rb;
+    private Rigidbody rb;
     public float acceleration = 15.0f;
     Vector3 moveDirection;
     private float currentRotationAngle;
     public float rotationSpeed = 300.0f;
-    //private Collider collider;
+    private Collider collider;
     private Transform enemyTransform;
     private Audio soundAtack;
 
@@ -48,19 +48,19 @@ public class EnemyController : MonoBehaviour
     {
 
         playerTranform = GameObject.Find("Player").GetComponent<Transform>();
-        //rb = gameObject.GetComponent<Rigidbody>();
+        rb = gameObject.GetComponent<Rigidbody>();
 
         if (playerTranform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
         }
 
-        //collider = gameObject.GetComponent<Collider>();
-        //if (collider == null)
-        //{
-        //    Engineson.print("ERROR: PlayerMovement requires a Collider component!");
-        //    return;
-        //}
+        collider = gameObject.GetComponent<Collider>();
+        if (collider == null)
+        {
+            Engineson.print("ERROR: PlayerMovement requires a Collider component!");
+            return;
+        }
 
         soundAtack = gameObject.GetComponent<Audio>();
         if (soundAtack == null)
@@ -95,7 +95,7 @@ public class EnemyController : MonoBehaviour
 
             if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
             {
-                //Vector3 currentVelocity = rb.GetVelocity();
+                Vector3 currentVelocity = rb.GetVelocity();
                 moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
                 Vector3 desiredVelocity = moveDirection * speedMovement;
 
@@ -104,15 +104,15 @@ public class EnemyController : MonoBehaviour
                     desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
                 }
 
-                //Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                //rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
 
-                enemyTransform.position += desiredVelocity * deltaTime;
+                //enemyTransform.position += desiredVelocity * deltaTime;
             }
         }
         else
         {
-            //rb.SetVelocity(Vector3.Zero);
+            rb.SetVelocity(Vector3.Zero);
         }
 
         if (moveDirection != Vector3.Zero)
@@ -133,7 +133,8 @@ public class EnemyController : MonoBehaviour
                 eulerRotation.Z * ((float)Math.PI / 180.0f)
             );
 
-            enemyTransform.SetRotationQuat(newRotation);
+           // enemyTransform.SetRotationQuat(newRotation);
+            collider.SetRotation(newRotation);
         }
 
         UpdateProjectiles(deltaTime);

@@ -78,8 +78,8 @@ bool Root::Start()
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*playerMesh, *player);
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
@@ -119,7 +119,7 @@ bool Root::Start()
 
 	//////Hormagaunt
 	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(50, 0, 5));
 	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -127,6 +127,17 @@ bool Root::Start()
 	hormagauntMesh->SetName("HormagauntMesh");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	auto enemyRb = hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	enemyRb->SetMass(1000.0f);
+	hormagaunt->GetComponent<ColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
+	hormagaunt->GetComponent<ColliderComponent>()->SetSize(glm::vec3(0.3f, 0.5f, 0.4f));
+	
+	auto ground = CreateCube("Ground");
+	ground->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -1, 0));
+	ground->GetComponent<Transform_Component>()->SetScale(glm::vec3(100, 1, 100));
+	ground->AddComponent<ColliderComponent>(Application->physicsModule);
+
+
 
 	CreateGameplayUI();
 	//CreateMainMenuUI();
@@ -164,6 +175,8 @@ bool Root::Update(double dt)
 		//AddCollidersEnvLvl1();
 		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+		player->GetComponent<ColliderComponent>()->SetSize(glm::vec3(0.4f, 1, 1));
+		player->GetComponent<ColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
 		hasAddedColliders = true;
 	}
 

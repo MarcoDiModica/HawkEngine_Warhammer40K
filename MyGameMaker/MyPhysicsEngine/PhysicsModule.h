@@ -49,6 +49,8 @@ public:
     void SyncTransforms();
     void SyncCollidersToGameObjects();
 
+    bool IsForRelease() const { return isForRelease; }
+
     void AddConstraintP2P(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB);
     // Añade una restricción de bisagra (Hinge)
     void AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB,
@@ -62,7 +64,9 @@ public:
     btDiscreteDynamicsWorld* dynamicsWorld;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;
     bool linkPhysicsToScene = false;
+
 private:
+    const bool isForRelease = true;
     btBroadphaseInterface* broadphase;
     btDefaultCollisionConfiguration* collisionConfiguration;
     btCollisionDispatcher* dispatcher;

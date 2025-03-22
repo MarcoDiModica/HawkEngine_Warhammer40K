@@ -68,6 +68,9 @@ private:
 
 	bool snapToPosition = false;
 
+    glm::vec3 initialSnapPosition = glm::vec3(0.0f);  
+    bool hasSnappedToInitialPosition = false;
+
     void CreateCollider();
 
 protected:

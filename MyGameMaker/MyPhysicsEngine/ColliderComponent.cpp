@@ -254,24 +254,42 @@ void ColliderComponent::SnapToPosition() {
     if (!owner || !collider) return;
     RigidbodyComponent* rigidbody = owner->GetComponent<RigidbodyComponent>();
 
-    // Si el objeto tiene Rigidbody, verificar si tiene fuerzas aplicadas
-    if (rigidbody && physics->linkPhysicsToScene) {
-        return;
-        //btRigidBody* rb = rigidbody->GetRigidBody();
-        //if (rb) {
-        //    // Evitar modificar el collider si el Rigidbody se está moviendo
-        //    if (rb->getLinearVelocity().length2() > 0.0000001f ||
-        //        rb->getAngularVelocity().length2() > 0.0000001f ||
-        //        rb->getTotalForce().length2() > 0.000001f) {
-        //        return;
-        //    }
+    if (physics->IsForRelease()) {
+        if (hasSnappedToInitialPosition) return;
 
-        //    // Si el cuerpo está en reposo y dormido, no hacer nada
-        //    if (rb->getActivationState() == ISLAND_SLEEPING || rb->wantsSleeping()) {
-        //        return;
-        //    }
-        //}
+        RigidbodyComponent* rigidbody = owner->GetComponent<RigidbodyComponent>();
+
+        Transform_Component* goTransform = owner->GetTransform();
+        if (!goTransform) return;
+        glm::vec3 worldPosition = goTransform->GetPosition();
+
+        glm::vec3 colliderOffset = GetOffset();
+        glm::vec3 finalColliderPosition = worldPosition + colliderOffset;
+
+        if (rigidbody) {
+            btRigidBody* rb = rigidbody->GetRigidBody();
+            if (rb) {
+                btTransform newTransform;
+                newTransform.setIdentity();
+                newTransform.setOrigin(btVector3(finalColliderPosition.x, finalColliderPosition.y, finalColliderPosition.z));
+
+                rb->getMotionState()->setWorldTransform(newTransform);
+                rb->setWorldTransform(newTransform);
+                rb->activate();
+
+                hasSnappedToInitialPosition = true;
+            }
+        }        
     }
+    else
+    {
+        if (physics->linkPhysicsToScene && rigidbody) {
+            return;
+        }
+    }
+    if (rigidbody) return;
+    
+      
 
     Transform_Component* goTransform = owner->GetTransform();
     if (!goTransform) return;

@@ -35,11 +35,25 @@ public  class MonoBehaviour
     }
 
     // --- Collision Events (Overridable) ---
-    public virtual void OnCollisionEnter(Collider other) { }
-    public virtual void OnCollisionStay(Collider other) { }
-    public virtual void OnCollisionExit(Collider other) { }
+    public virtual void OnCollisionEnter(Collider other) {
+    }
+    public virtual void OnCollisionStay(Collider other) {
 
-    public virtual void OnTriggerEnter(Collider other) { }
-    public virtual void OnTriggerStay(Collider other) { }
-    public virtual void OnTriggerExit(Collider other) { }
+    }
+    public virtual void OnCollisionExit(Collider other) {
+
+    }
+
+    public virtual void OnTriggerEnter(Collider other) {
+        Engineson.print("OnTriggerEnter");
+
+    }
+
+
+    public virtual void OnTriggerStay(Collider other) {
+        Engineson.print("OnTriggerStay");
+    }
+    public virtual void OnTriggerExit(Collider other) {
+        Engineson.print("OnTriggerExit");
+    }
 }

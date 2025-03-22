@@ -9,7 +9,8 @@ RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physics
     : Component(owner), physics(physicsModule), mass(1.0f)
 {
     name = "RigidbodyComponent";
-    Start();
+    isFreezed = true;
+    Start();  
 }
 
 RigidbodyComponent::~RigidbodyComponent() {
@@ -60,6 +61,8 @@ void RigidbodyComponent::SetMass(float newMass) {
     btTransform currentTransform;
     rigidBody->getMotionState()->getWorldTransform(currentTransform);
 
+
+
     physics->dynamicsWorld->removeRigidBody(rigidBody);
 
     rigidBody->setMassProps(newMass, localInertia);
@@ -71,6 +74,8 @@ void RigidbodyComponent::SetMass(float newMass) {
 
     rigidBody->activate();
 }
+
+
 
 
 

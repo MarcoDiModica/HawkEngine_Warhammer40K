@@ -601,7 +601,7 @@ int main(int argc, char** argv) {
 			PrintCounters();
 			//Application->gui->Render();
 			Application->window->SwapBuffers();
-            Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
+            //Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
 			UndoRedo();
 			ObjectToEditorCamera();
 		

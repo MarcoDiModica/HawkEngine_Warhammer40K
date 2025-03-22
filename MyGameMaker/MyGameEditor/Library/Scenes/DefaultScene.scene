@@ -92,7 +92,7 @@ GameObject0:
             ao: 1
             tonemap_strength: 1
             shader_type: PBR
-            image: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_BaseColor.png
+            image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
             normal_map: ""
             metallic_map: ""
             roughness_map: ""
@@ -219,7 +219,7 @@ GameObject2:
             ao: 1
             tonemap_strength: 1
             shader_type: PBR
-            image: Assets/Textures/Low_BSurfaceMesh_BaseColor.png
+            image: Low_BSurfaceMesh_BaseColor
             normal_map: ""
             metallic_map: ""
             roughness_map: ""

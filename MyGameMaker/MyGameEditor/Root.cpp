@@ -61,7 +61,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	/*player = CreateGameObject("Player");
+	player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -81,7 +81,7 @@ bool Root::Start()
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
@@ -150,7 +150,7 @@ bool Root::Start()
 static void AddCollidersEnv() {
 	for (const auto& go : environment->GetChildren()) {
 
-		if (go->GetName() == "Mesh.dnsja") {
+		if (go->GetName() == "Mesh.01") {
 			continue;
 		}
 		else if (go->GetName() == "Mesh.dnsja") {
@@ -173,10 +173,10 @@ bool Root::Update(double dt)
 	if (!hasAddedColliders) {
 		//AddCollidersEnv();
 		//AddCollidersEnvLvl1();
-		/*player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 		player->GetComponent<ColliderComponent>()->SetSize(glm::vec3(0.4f, 1, 1));
-		player->GetComponent<ColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));*/
+		player->GetComponent<ColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
 		hasAddedColliders = true;
 	}
 

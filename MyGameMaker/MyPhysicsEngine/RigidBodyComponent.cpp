@@ -37,7 +37,7 @@ void RigidbodyComponent::Start() {
     }
     this->rigidBody = collider->GetRigidBody();
     rigidBody->setActivationState(DISABLE_DEACTIVATION); 
-    SetMass(mass);
+    Init();
 }
 
 

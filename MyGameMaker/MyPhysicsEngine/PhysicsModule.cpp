@@ -221,7 +221,7 @@ void PhysicsModule::DrawDebugDrawer() {
                 float halfHeight = capsuleShape->getHalfHeight();
                 btVector3 center(position.x(), position.y(), position.z());
                 btVector3 color(1.0f, 0.0f, 0.0f);
-                debugDrawer->drawCapsule(radius, halfHeight, 1, btTransform(btQuaternion(0, 0, 0, 1), center), color);
+                debugDrawer->drawCapsule(radius, halfHeight, 1, transform, color);
             }
             else if (shape->getShapeType() == TRIANGLE_MESH_SHAPE_PROXYTYPE) {
                 btBvhTriangleMeshShape* meshShape = static_cast<btBvhTriangleMeshShape*>(shape);

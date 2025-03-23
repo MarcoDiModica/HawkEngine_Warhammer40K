@@ -209,15 +209,12 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
     }
 
     btQuaternion currentRotation = currentTransform.getRotation();
-
-    glm::quat localRotation = owner->GetTransform()->GetRotation(); 
-
-    glm::vec3 rotatedOffset = localRotation * offset;
-
+    currentTransform.setRotation(currentRotation);
     glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
-    currentTransform.setOrigin(btVector3(worldPosition.x + rotatedOffset.x,
-        worldPosition.y + rotatedOffset.y,
-        worldPosition.z + rotatedOffset.z));
+    currentTransform.setOrigin(btVector3(worldPosition.x + offset.x,
+        worldPosition.y + offset.y,
+        worldPosition.z + offset.z));
+
 
     if (collider->getMotionState()) {
         collider->getMotionState()->setWorldTransform(currentTransform);
@@ -228,6 +225,7 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
 
     collider->setCenterOfMassTransform(currentTransform);
 }
+
 
 void ColliderComponent::SetSize(const glm::vec3& newSize) {
     size = newSize;

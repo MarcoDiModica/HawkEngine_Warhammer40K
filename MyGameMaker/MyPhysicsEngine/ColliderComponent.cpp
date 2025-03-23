@@ -17,16 +17,7 @@ ColliderComponent::~ColliderComponent() {
 }
 
 void ColliderComponent::Start() {
-	//si tiene collider, lo destruye y crea uno nuevo 
-    // TODO: Revisar
-    /*if (collider) {
-        physics->dynamicsWorld->removeRigidBody(collider);
-        delete collider->getMotionState();
-        delete collider;
-        collider = nullptr;
-    }*/
     if (!collider) {
-
         CreateCollider();
     }
 }
@@ -81,8 +72,6 @@ std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
     return std::make_unique<ColliderComponent>(new_owner, physics);
 }
 
-
-
 MonoObject* ColliderComponent::GetSharp()
 {
     if (CsharpReference) {
@@ -123,8 +112,6 @@ MonoObject* ColliderComponent::GetSharp()
     return CsharpReference;
 }
 
-
-
 void ColliderComponent::SetTrigger(bool trigger) {
     if (collider) {
         if (trigger) {
@@ -141,8 +128,7 @@ bool ColliderComponent::IsTrigger() const {
 }
 
 
-//Refactoring UIinspector 
-// Ofset, size
+//Se podria quitar
 glm::vec3 ColliderComponent::GetColliderPos() {
 
     btTransform trans;
@@ -151,6 +137,7 @@ glm::vec3 ColliderComponent::GetColliderPos() {
     return glm::vec3(pos.getX(), pos.getY(), pos.getZ());
 }
 
+//Se podria quitar
 glm::quat ColliderComponent::GetColliderRotation() {
 
     btTransform trans;
@@ -167,14 +154,12 @@ void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
     btTransform trans;
     collider->getMotionState()->getWorldTransform(trans);
 
-    // Convert to btQuaternion 
     btQuaternion btRot(rotation.x, rotation.y, rotation.z, rotation.w);
     trans.setRotation(btRot);
 
     collider->getMotionState()->setWorldTransform(trans);
     collider->setWorldTransform(trans);
 
-    // Ensure activation in case the object is sleeping
     collider->activate();
 }
 
@@ -209,23 +194,36 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
     if (offset != newoffset) {
         offset = newoffset;
     }
+
     if (!collider || !owner) {
         offset = glm::vec3(0.0f);
         return;
     }
 
-	btTransform transform;
-	transform.setIdentity();
-	glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
-	transform.setOrigin(btVector3(worldPosition.x + offset.x, worldPosition.y + offset.y, worldPosition.z + offset.z));
-	if (collider->getMotionState()) {
-        collider->getMotionState()->setWorldTransform(transform);
-	}
-	else {
-        collider->setWorldTransform(transform);
-	}
-    collider->setCenterOfMassTransform(transform);
-    
+    btTransform currentTransform;
+    if (collider->getMotionState()) {
+        collider->getMotionState()->getWorldTransform(currentTransform);
+    }
+    else {
+        currentTransform = collider->getWorldTransform();
+    }
+
+    btQuaternion currentRotation = currentTransform.getRotation();
+    currentTransform.setRotation(currentRotation);
+    glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
+    currentTransform.setOrigin(btVector3(worldPosition.x + offset.x,
+        worldPosition.y + offset.y,
+        worldPosition.z + offset.z));
+
+
+    if (collider->getMotionState()) {
+        collider->getMotionState()->setWorldTransform(currentTransform);
+    }
+    else {
+        collider->setWorldTransform(currentTransform);
+    }
+
+    collider->setCenterOfMassTransform(currentTransform);
 }
 
 void ColliderComponent::SetSize(const glm::vec3& newSize) {
@@ -285,8 +283,6 @@ void ColliderComponent::SnapToPosition() {
             return;
         }
     }
-    
-     
 
     BoundingBox localBBox = owner->localBoundingBox();
     glm::vec3 localCenter = localBBox.center();
@@ -352,10 +348,6 @@ void ColliderComponent::SnapToPosition() {
 	SetOffset(offset);
 }
 
-
-
-
-//Local BBox Adjusted (doesnt works with the blocking)
 void ColliderComponent::CreateCollider() {
     if (!owner) return;
 
@@ -405,8 +397,6 @@ void ColliderComponent::CreateCollider() {
 		btSize = btVector3(size.x, size.y, size.z);
 		shape->setLocalScaling(btSize);
 	}
-
-
 
     // Add the collider to the physics world
     physics->dynamicsWorld->addRigidBody(collider);

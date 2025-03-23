@@ -385,8 +385,6 @@ void PhysicsModule::CheckCollisions() {
     }
 
     previousCollisions = currentCollisions;
-
-    previousCollisions = currentCollisions;
 }
 
 

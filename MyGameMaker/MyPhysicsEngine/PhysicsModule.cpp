@@ -274,7 +274,6 @@ void PhysicsModule::CallMonoCollision(GameObject* obj, const std::string& method
     }
 }
 
-
 void PhysicsModule::CheckCollisions() {
     static std::set<std::pair<GameObject*, GameObject*>> previousCollisions;
     std::set<std::pair<GameObject*, GameObject*>> currentCollisions;
@@ -296,62 +295,72 @@ void PhysicsModule::CheckCollisions() {
         if (objA && objB) {
             ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
             ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+            if (!colliderA || !colliderB) continue;
+
             std::pair<GameObject*, GameObject*> collisionPair = std::minmax(objA, objB);
 
-            if (colliderA && colliderB) {
-                bool isTriggerA = colliderA->IsTrigger();
-                bool isTriggerB = colliderB->IsTrigger();
-                bool isTriggerCollision = isTriggerA || isTriggerB;
+            bool isTriggerA = colliderA->IsTrigger();
+            bool isTriggerB = colliderB->IsTrigger();
+            bool isTriggerCollision = isTriggerA || isTriggerB;
 
-                if (previousCollisions.find(collisionPair) == previousCollisions.end()) {
-					// --------------- ON ENTER ---------------
-                    if (isTriggerCollision) {
-                        colliderA->OnTriggerEnter(colliderB);
-                        colliderB->OnTriggerEnter(colliderA);
+            if (previousCollisions.find(collisionPair) == previousCollisions.end()) {
+                // --------------- ON ENTER ---------------
+                if (isTriggerCollision) {
+                    colliderA->OnTriggerEnter(colliderB);
+                    colliderB->OnTriggerEnter(colliderA);
 
-                        CallMonoCollision(objA, "OnTriggerEnter", objB);
-                        CallMonoCollision(objB, "OnTriggerEnter", objA);
-                    }
-                    else {
-                        colliderA->OnCollisionEnter(colliderB);
-                        colliderB->OnCollisionEnter(colliderA);
-
-                        CallMonoCollision(objA, "OnCollisionEnter", objB);
-                        CallMonoCollision(objB, "OnCollisionEnter", objA);
-                    }
+                    CallMonoCollision(objA, "OnTriggerEnter", objB);
+                    CallMonoCollision(objB, "OnTriggerEnter", objA);
                 }
                 else {
-                    // --------------- ON STAY ---------------
-                    if (isTriggerCollision) {
-                        colliderA->OnTriggerStay(colliderB);
-                        colliderB->OnTriggerStay(colliderA);
+                    colliderA->OnCollisionEnter(colliderB);
+                    colliderB->OnCollisionEnter(colliderA);
 
-                        CallMonoCollision(objA, "OnTriggerStay", objB);
-                        CallMonoCollision(objB, "OnTriggerStay", objA);
-                    }
-                    else {
-                        colliderA->OnCollisionStay(colliderB);
-                        colliderB->OnCollisionStay(colliderA);
-
-                        CallMonoCollision(objA, "OnCollisionStay", objB);
-                        CallMonoCollision(objB, "OnCollisionStay", objA);
-                    }
+                    CallMonoCollision(objA, "OnCollisionEnter", objB);
+                    CallMonoCollision(objB, "OnCollisionEnter", objA);
                 }
-                currentCollisions.insert(collisionPair);
             }
+            else {
+                // --------------- ON STAY ---------------
+                if (isTriggerCollision) {
+                    colliderA->OnTriggerStay(colliderB);
+                    colliderB->OnTriggerStay(colliderA);
+
+                    CallMonoCollision(objA, "OnTriggerStay", objB);
+                    CallMonoCollision(objB, "OnTriggerStay", objA);
+                }
+                else {
+                    colliderA->OnCollisionStay(colliderB);
+                    colliderB->OnCollisionStay(colliderA);
+
+                    CallMonoCollision(objA, "OnCollisionStay", objB);
+                    CallMonoCollision(objB, "OnCollisionStay", objA);
+                }
+            }
+            currentCollisions.insert(collisionPair);
         }
     }
 
-	// --------------- ON EXIT ---------------
-    for (const auto& collisionPair : previousCollisions) {
-        if (currentCollisions.find(collisionPair) == currentCollisions.end()) {
-            GameObject* objA = collisionPair.first;
-            GameObject* objB = collisionPair.second;
+    // --------------- ON EXIT ---------------
+    for (auto it = previousCollisions.begin(); it != previousCollisions.end();) {
+        if (currentCollisions.find(*it) == currentCollisions.end()) {
+            GameObject* objA = it->first;
+            GameObject* objB = it->second;
+
+            // Ensure objects still exist before calling exit functions
+            if (gameObjectRigidBodyMap.find(objA) == gameObjectRigidBodyMap.end() ||
+                gameObjectRigidBodyMap.find(objB) == gameObjectRigidBodyMap.end()) {
+                it = previousCollisions.erase(it); 
+                continue;
+            }
+
             ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
             ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+
             if (colliderA && colliderB) {
                 bool isTriggerA = colliderA->IsTrigger();
                 bool isTriggerB = colliderB->IsTrigger();
+
                 if (isTriggerA || isTriggerB) {
                     colliderA->OnTriggerExit(colliderB);
                     colliderB->OnTriggerExit(colliderA);
@@ -367,8 +376,15 @@ void PhysicsModule::CheckCollisions() {
                     CallMonoCollision(objB, "OnCollisionExit", objA);
                 }
             }
+
+            it = previousCollisions.erase(it);  
+        }
+        else {
+            ++it;
         }
     }
+
+    previousCollisions = currentCollisions;
 
     previousCollisions = currentCollisions;
 }
@@ -376,8 +392,8 @@ void PhysicsModule::CheckCollisions() {
 
 
 bool PhysicsModule::Update(double dt) {
-    DrawDebugDrawer();
 
+    DrawDebugDrawer();
     if (isForRelease || linkPhysicsToScene) {
         dynamicsWorld->stepSimulation(dt, 16, fixedDeltaTime);
         SyncTransforms();

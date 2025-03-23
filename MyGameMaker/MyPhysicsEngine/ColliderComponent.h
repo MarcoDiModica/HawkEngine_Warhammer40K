@@ -23,7 +23,7 @@ public:
 
     glm::vec3 GetOffset();
 
-    void SetOffset(const glm::vec3& newoffset);
+    void SetOffset(const glm::vec3& newoffset); 
 
     void SetSize(const glm::vec3& newSize);
 
@@ -79,6 +79,7 @@ protected:
         YAML::Node node;
         node["size"] = std::vector<float>{size.x, size.y, size.z};
         node["offset"] = std::vector<float>{offset.x, offset.y, offset.z};
+		node["isTrigger"] = IsTrigger();
         return node;
     }
 
@@ -92,6 +93,9 @@ protected:
             auto offsetVec = node["offset"].as<std::vector<float>>();
             offset = glm::vec3(offsetVec[0], offsetVec[1], offsetVec[2]);
         }
+		if (node["isTrigger"]) {
+			SetTrigger(node["isTrigger"].as<bool>());
+		}
         return true;
     }
 };

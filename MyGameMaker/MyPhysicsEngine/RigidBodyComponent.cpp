@@ -6,15 +6,26 @@
 #include <mono/metadata/debug-helpers.h>
 
 RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physicsModule)
-    : Component(owner), physics(physicsModule), mass(1.0f)
+    : Component(owner), physics(physicsModule)
 {
     name = "RigidbodyComponent";
-    isFreezed = true;
     Start();  
 }
 
 RigidbodyComponent::~RigidbodyComponent() {
     Destroy();
+}
+
+void RigidbodyComponent::Init() {
+    if (!rigidBody) {
+		Start();        
+    }
+    SetMass(mass);
+    SetGravity(gravity);
+    SetFriction(friction);
+    SetKinematic(isKinematic);
+    SetFreezeRotations(isFreezed);
+	SetDamping(damping.x, damping.y);
 }
 
 void RigidbodyComponent::Start() {
@@ -26,7 +37,6 @@ void RigidbodyComponent::Start() {
     }
     this->rigidBody = collider->GetRigidBody();
     rigidBody->setActivationState(DISABLE_DEACTIVATION); 
-    SetMass(mass);    
 }
 
 
@@ -36,11 +46,6 @@ void RigidbodyComponent::Update(float deltaTime)
         btVector3 gravityForce = btVector3(0, GetGravity().y * mass, 0);
         rigidBody->applyCentralForce(gravityForce);
     }*/
-	if (isFromDecode)
-	{
-		SetMass(mass);
-        isFromDecode = false;
-	}
         
     
 }
@@ -82,8 +87,6 @@ void RigidbodyComponent::SetMass(float newMass) {
 
 
 
-
-
 float RigidbodyComponent::GetMass() const {
     return mass;
 }
@@ -95,14 +98,11 @@ void RigidbodyComponent::AddForce(const glm::vec3& force) {
 }
 
 glm::vec3 RigidbodyComponent::GetGravity() const {
-    if (rigidBody) {
-        btVector3 gravity = rigidBody->getGravity();
-        return glm::vec3(gravity.getX(), gravity.getY(), gravity.getZ());
-    }
-    return glm::vec3(0.0f, 0.0f, 0.0f);
+    return gravity;
 }
 
-void RigidbodyComponent::SetGravity(const glm::vec3& gravity) {
+void RigidbodyComponent::SetGravity(const glm::vec3& newGravity) {
+	gravity = newGravity;  
     if (rigidBody) {
         rigidBody->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
     }
@@ -122,31 +122,26 @@ void RigidbodyComponent::SetFreezeRotations(bool freeze) {
 	isFreezed = freeze;
 }
 
-void RigidbodyComponent::SetFriction(float friction) {
+void RigidbodyComponent::SetFriction(float newFriction) {
+	friction = newFriction;
     if (rigidBody) {
         rigidBody->setFriction(friction);
     }
 }
 
 float RigidbodyComponent::GetFriction() const {
-    if (rigidBody) {
-        return rigidBody->getFriction();
-    }
-    return 0.0f;
+    return friction;
 }
 
 void RigidbodyComponent::SetDamping(float linearDamping, float angularDamping) {
-    
+    damping = glm::vec2(linearDamping, angularDamping);
     if (rigidBody) {
         rigidBody->setDamping(linearDamping, angularDamping);
     }
 }
 
 glm::vec2 RigidbodyComponent::GetDamping() const {
-    if (rigidBody) {
-        return glm::vec2(rigidBody->getLinearDamping(), rigidBody->getAngularDamping());
-    }
-    return glm::vec2(0.0f, 0.0f);
+    return damping;
 }
 
 void RigidbodyComponent::SetKinematic(bool isKinematic) {

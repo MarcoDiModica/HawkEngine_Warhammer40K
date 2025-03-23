@@ -349,14 +349,13 @@ void ColliderComponent::SnapToPosition() {
     collider->setCenterOfMassTransform(transform);
    
 	//Set Offset
-	//SetOffset(offset);
+	SetOffset(offset);
 }
 
 
 
 
 //Local BBox Adjusted (doesnt works with the blocking)
-
 void ColliderComponent::CreateCollider() {
     if (!owner) return;
 
@@ -379,7 +378,7 @@ void ColliderComponent::CreateCollider() {
 
     shape = new btBoxShape(btVector3(localSize.x * 0.5, localSize.y * 0.5, localSize.z * 0.5));
     glm::vec3 localPosition = transform->GetLocalPosition();
-    startTransform.setOrigin(btVector3(bboxCenter.x, bboxCenter.y, bboxCenter.z));
+    startTransform.setOrigin(btVector3(bboxCenter.x + offset.x, bboxCenter.y + offset.y, bboxCenter.z + offset.z));
     glm::dquat localRot = transform->GetRotation();
     btQuaternion btRot(
         static_cast<btScalar>(localRot.x),
@@ -402,10 +401,14 @@ void ColliderComponent::CreateCollider() {
     btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, shape, localInertia);
     collider = new btRigidBody(rbInfo);
     btVector3 btSize = shape->getLocalScaling();
-    size = glm::vec3(1.0f, 1.0f,1.0f);
+	if (size != glm::vec3(1.0f, 1.0f, 1.0f)) {
+		btSize = btVector3(size.x, size.y, size.z);
+		shape->setLocalScaling(btSize);
+	}
+
+
 
     // Add the collider to the physics world
     physics->dynamicsWorld->addRigidBody(collider);
     physics->gameObjectRigidBodyMap[owner] = collider;
 }
-

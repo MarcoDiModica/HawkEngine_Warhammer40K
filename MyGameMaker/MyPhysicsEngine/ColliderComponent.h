@@ -60,15 +60,13 @@ public:
 
 private:
 
-	glm::vec3 offset;
     btRigidBody* collider = nullptr;
     PhysicsModule* physics;
-    glm::vec3 size; 
-    glm::vec3 scaleFactor;
+    glm::vec3 size = glm::vec3(1.0f);
+	glm::vec3 offset = glm::vec3(0.0f);
 
 	bool snapToPosition = false;
-
-    glm::vec3 initialSnapPosition = glm::vec3(0.0f);  
+ 
     bool hasSnappedToInitialPosition = false;
 
     void CreateCollider();
@@ -76,16 +74,25 @@ private:
 protected:
 	friend class SceneSerializer;
 
-	YAML::Node encode() override
+    YAML::Node encode() override
     {
-		return YAML::Node();
+        YAML::Node node;
+        node["size"] = std::vector<float>{size.x, size.y, size.z};
+        node["offset"] = std::vector<float>{offset.x, offset.y, offset.z};
+        return node;
     }
 
     bool decode(const YAML::Node& node) override
     {
-        Start();
-        SnapToPosition();
-		return false;
+        if (node["size"]) {
+            auto sizeVec = node["size"].as<std::vector<float>>();
+            size = glm::vec3(sizeVec[0], sizeVec[1], sizeVec[2]);
+        }
+        if (node["offset"]) {
+            auto offsetVec = node["offset"].as<std::vector<float>>();
+            offset = glm::vec3(offsetVec[0], offsetVec[1], offsetVec[2]);
+        }
+        return true;
     }
 };
  

@@ -32,6 +32,10 @@ void RigidbodyComponent::Start() {
 
 void RigidbodyComponent::Update(float deltaTime) 
 {
+   /* if (rigidBody) {
+        btVector3 gravityForce = btVector3(0, GetGravity().y * mass, 0);
+        rigidBody->applyCentralForce(gravityForce);
+    }*/
 	if (isFromDecode)
 	{
 		SetMass(mass);

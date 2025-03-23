@@ -66,7 +66,7 @@ public:
     bool linkPhysicsToScene = false;
 
 private:
-    const bool isForRelease = true;
+    const bool isForRelease = false;
     btBroadphaseInterface* broadphase;
     btDefaultCollisionConfiguration* collisionConfiguration;
     btCollisionDispatcher* dispatcher;

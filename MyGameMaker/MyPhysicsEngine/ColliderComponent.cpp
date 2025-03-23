@@ -253,14 +253,12 @@ void ColliderComponent::SetActive(bool active) {
 void ColliderComponent::SnapToPosition() {
     if (!owner || !collider) return;
     RigidbodyComponent* rigidbody = owner->GetComponent<RigidbodyComponent>();
+    Transform_Component* goTransform = owner->GetTransform();
+    if (!goTransform) return;
 
     if (physics->IsForRelease()) {
         if (hasSnappedToInitialPosition) return;
 
-        RigidbodyComponent* rigidbody = owner->GetComponent<RigidbodyComponent>();
-
-        Transform_Component* goTransform = owner->GetTransform();
-        if (!goTransform) return;
         glm::vec3 worldPosition = goTransform->GetPosition();
 
         glm::vec3 colliderOffset = GetOffset();
@@ -287,12 +285,9 @@ void ColliderComponent::SnapToPosition() {
             return;
         }
     }
-    if (rigidbody) return;
     
-      
+     
 
-    Transform_Component* goTransform = owner->GetTransform();
-    if (!goTransform) return;
     BoundingBox localBBox = owner->localBoundingBox();
     glm::vec3 localCenter = localBBox.center();
     glm::vec3 localSize = localBBox.size();
@@ -330,18 +325,8 @@ void ColliderComponent::SnapToPosition() {
     // Aplicar la transformación al rigidBody
     btTransform transform;
     transform.setIdentity();
-    transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
-    transform.setRotation(btQuaternion(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w));
 
-
-    if (collider->getMotionState()) {
-        collider->getMotionState()->setWorldTransform(transform);
-    }
-    else {
-        collider->setWorldTransform(transform);
-    }
-    //Set Size
-    collider->setCenterOfMassTransform(transform);
+    //SetSize
     if (collider->getCollisionShape()) {
         btCollisionShape* shape = collider->getCollisionShape();
 
@@ -349,9 +334,26 @@ void ColliderComponent::SnapToPosition() {
 
         shape->setLocalScaling(scaledSize);
     }
+
+    transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
+    btQuaternion btRot(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w);
+    transform.setRotation(btRot);
+
+    if (collider->getMotionState()) {
+        collider->getMotionState()->setWorldTransform(transform);
+    }
+    else {
+        collider->setWorldTransform(transform);
+    }
+
+    collider->setCenterOfMassTransform(transform);
+   
 	//Set Offset
-	SetOffset(offset);
+	//SetOffset(offset);
 }
+
+
+
 
 //Local BBox Adjusted (doesnt works with the blocking)
 

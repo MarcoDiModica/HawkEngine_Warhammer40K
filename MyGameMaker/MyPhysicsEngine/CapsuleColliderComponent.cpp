@@ -209,23 +209,39 @@ void CapsuleColliderComponent::SetOffset(const glm::vec3& newoffset) {
     if (offset != newoffset) {
         offset = newoffset;
     }
+
     if (!collider || !owner) {
         offset = glm::vec3(0.0f);
         return;
     }
 
-    btTransform transform;
-    transform.setIdentity();
-    glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
-    transform.setOrigin(btVector3(worldPosition.x + offset.x, worldPosition.y + offset.y, worldPosition.z + offset.z));
+    btTransform currentTransform;
     if (collider->getMotionState()) {
-        collider->getMotionState()->setWorldTransform(transform);
+        collider->getMotionState()->getWorldTransform(currentTransform);
     }
     else {
-        collider->setWorldTransform(transform);
+        currentTransform = collider->getWorldTransform();
     }
-    collider->setCenterOfMassTransform(transform);
 
+    btQuaternion currentRotation = currentTransform.getRotation();
+
+    glm::quat localRotation = owner->GetTransform()->GetRotation(); 
+
+    glm::vec3 rotatedOffset = localRotation * offset;
+
+    glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
+    currentTransform.setOrigin(btVector3(worldPosition.x + rotatedOffset.x,
+        worldPosition.y + rotatedOffset.y,
+        worldPosition.z + rotatedOffset.z));
+
+    if (collider->getMotionState()) {
+        collider->getMotionState()->setWorldTransform(currentTransform);
+    }
+    else {
+        collider->setWorldTransform(currentTransform);
+    }
+
+    collider->setCenterOfMassTransform(currentTransform);
 }
 
 void CapsuleColliderComponent::SetSize(const glm::vec3& newSize) {

@@ -210,8 +210,9 @@ void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
 
     btQuaternion currentRotation = currentTransform.getRotation();
 
-    glm::quat localRotation = owner->GetTransform()->GetRotation();  
-    glm::vec3 rotatedOffset = localRotation * offset;  
+    glm::quat localRotation = owner->GetTransform()->GetRotation(); 
+
+    glm::vec3 rotatedOffset = localRotation * offset;
 
     glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
     currentTransform.setOrigin(btVector3(worldPosition.x + rotatedOffset.x,

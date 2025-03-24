@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
     Vector3 moveDirection;
     private float currentRotationAngle;
     public float rotationSpeed = 300.0f;
-    private Collider collider;
+    private BoxCollider collider;
     private Transform enemyTransform;
     private Audio soundAtack;
 
@@ -55,7 +55,7 @@ public class EnemyController : MonoBehaviour
             Engineson.print("ERROR: Player couldn't be found!");
         }
 
-        collider = gameObject.GetComponent<Collider>();
+        collider = gameObject.GetComponent<BoxCollider>();
         if (collider == null)
         {
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
@@ -153,7 +153,7 @@ public class EnemyController : MonoBehaviour
             Engineson.print("Projectile created!" + enemyTransform.forward);
             // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
-            projectile.AddComponent<Collider>();
+            projectile.AddComponent<BoxCollider>();
 
             //sound?.Play();
 

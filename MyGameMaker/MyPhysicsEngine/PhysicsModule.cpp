@@ -7,6 +7,8 @@
 #include "RigidBodyComponent.h"
 #include <iostream>
 #include <glm/glm.hpp>
+#include "CapsuleColliderComponent.h"
+#include "MeshColliderComponent.h"
 
 
 constexpr float fixedDeltaTime = 0.002; // 60 updates per second
@@ -39,11 +41,11 @@ bool PhysicsModule::Awake() {
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
     //Plane functions
-    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
-    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
-    btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
-    btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-    dynamicsWorld->addRigidBody(groundRigidBody);
+    //btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+    //btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
+    //btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+    //btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+    //dynamicsWorld->addRigidBody(groundRigidBody);
 
     //groundRigidBody->setRestitution(0.8f);
     SetGlobalRestitution(0.5f);
@@ -59,7 +61,12 @@ void PhysicsModule::SyncTransforms() {
     // Compute interpolation factor (between 0 and 1)
     float interpolationFactor = accumulatedTime / fixedDeltaTime;
 
-    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+    for (auto it = gameObjectRigidBodyMap.begin(); it != gameObjectRigidBodyMap.end();) {
+        GameObject* gameObject = it->first;
+        btRigidBody* rigidBody = it->second;
+        ++it;
+
+
         if (!gameObject->HasComponent<RigidbodyComponent>())
             continue;
 
@@ -126,6 +133,7 @@ void PhysicsModule::SyncTransforms() {
             goTransform->SetLocalPosition(adjustedPosition);
             goTransform->SetRotationQuat(worldRotation);
         }
+       
     }
 }
 
@@ -300,8 +308,29 @@ void PhysicsModule::CheckCollisions() {
         }
 
         if (objA && objB) {
-            ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
-            ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+
+            BaseColliderComponent* colliderA = nullptr;
+            BaseColliderComponent* colliderB = nullptr;
+
+            if (objA->HasComponent<BoxColliderComponent>()) {
+                colliderA = dynamic_cast<BoxColliderComponent*>(objA->GetComponent<BoxColliderComponent>());
+            }
+            else if (objA->HasComponent<CapsuleColliderComponent>()) {
+                colliderA = dynamic_cast<CapsuleColliderComponent*>(objA->GetComponent<CapsuleColliderComponent>());
+            }
+            else if (objA->HasComponent<MeshColliderComponent>()) {
+                colliderA = dynamic_cast<MeshColliderComponent*>(objA->GetComponent<MeshColliderComponent>());
+            }
+
+            if (objB->HasComponent<BoxColliderComponent>()) {
+                colliderB = dynamic_cast<BoxColliderComponent*>(objB->GetComponent<BoxColliderComponent>());
+            }
+            else if (objB->HasComponent<CapsuleColliderComponent>()) {
+                colliderB = dynamic_cast<CapsuleColliderComponent*>(objB->GetComponent<CapsuleColliderComponent>());
+            }
+            else if (objB->HasComponent<MeshColliderComponent>()) {
+                colliderB = dynamic_cast<MeshColliderComponent*>(objB->GetComponent<MeshColliderComponent>());
+            }
             if (!colliderA || !colliderB) continue;
 
             std::pair<GameObject*, GameObject*> collisionPair = std::minmax(objA, objB);
@@ -360,10 +389,28 @@ void PhysicsModule::CheckCollisions() {
                 it = previousCollisions.erase(it); 
                 continue;
             }
+            BaseColliderComponent* colliderA = nullptr;
+            BaseColliderComponent* colliderB = nullptr;
 
-            ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
-            ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+            if (objA->HasComponent<BoxColliderComponent>()) {
+                colliderA = dynamic_cast<BoxColliderComponent*>(objA->GetComponent<BoxColliderComponent>());
+            }
+            else if (objA->HasComponent<CapsuleColliderComponent>()) {
+                colliderA = dynamic_cast<CapsuleColliderComponent*>(objA->GetComponent<CapsuleColliderComponent>());
+            }
+            else if (objA->HasComponent<MeshColliderComponent>()) {
+                colliderA = dynamic_cast<MeshColliderComponent*>(objA->GetComponent<MeshColliderComponent>());
+            }
 
+            if (objB->HasComponent<BoxColliderComponent>()) {
+                colliderB = dynamic_cast<BoxColliderComponent*>(objB->GetComponent<BoxColliderComponent>());
+            }
+            else if (objB->HasComponent<CapsuleColliderComponent>()) {
+                colliderB = dynamic_cast<CapsuleColliderComponent*>(objB->GetComponent<CapsuleColliderComponent>());
+            }
+            else if (objB->HasComponent<MeshColliderComponent>()) {
+                colliderB = dynamic_cast<MeshColliderComponent*>(objB->GetComponent<MeshColliderComponent>());
+            }
             if (colliderA && colliderB) {
                 bool isTriggerA = colliderA->IsTrigger();
                 bool isTriggerB = colliderB->IsTrigger();

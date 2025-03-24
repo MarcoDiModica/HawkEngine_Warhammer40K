@@ -1,25 +1,22 @@
 #pragma once
 
 #include "../MyGameEngine/Component.h"
-#include "PhysicsModule.h"
 #include "BaseColliderComponent.h"
+#include "PhysicsModule.h"
 #include <glm/glm.hpp>
 #include <memory>
 
-class CapsuleColliderComponent : public BaseColliderComponent {
+class BoxColliderComponent : public BaseColliderComponent {
 public:
-    CapsuleColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
-    ~CapsuleColliderComponent() override;
-
-    void Start() override;
-    void Update(float deltaTime) override;
+    BoxColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
+    ~BoxColliderComponent() override;
 
     ComponentType GetType() const override { return ComponentType::COLLIDER; }
-
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
+
+    void CreateCollider() override;
 
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
-
-    void CreateCollider() override;
 };
+ 

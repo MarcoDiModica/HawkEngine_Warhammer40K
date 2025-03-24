@@ -1,118 +1,71 @@
-#include "ColliderComponent.h"
+#include "BaseColliderComponent.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 #include "RigidBodyComponent.h"
 
-ColliderComponent::ColliderComponent(GameObject* owner, PhysicsModule* physicsModule) : Component(owner)
+BaseColliderComponent::BaseColliderComponent(GameObject* owner, PhysicsModule* physicsModule) : Component(owner)
 {
-    name = "ColliderComponent";
-    physics = physicsModule;
-    Start();
+	
 }
 
-ColliderComponent::~ColliderComponent() {
-    Destroy();
+BaseColliderComponent::~BaseColliderComponent() {
 }
 
-void ColliderComponent::Start() {
+
+void BaseColliderComponent::Start() {
     if (!collider) {
         CreateCollider();
     }
 }
 
-//OnCollisions y triggers 
-void ColliderComponent::OnCollisionEnter(ColliderComponent* other) {
-    std::cout << "EnterCollision" << std::endl;
-}
-
-void ColliderComponent::OnCollisionStay(ColliderComponent* other) {
-    std::cout << "StayColliding" << std::endl;
-}
-
-void ColliderComponent::OnCollisionExit(ColliderComponent* other) {
-    std::cout << "ExitCollision" << std::endl;
-}
-
-void ColliderComponent::OnTriggerEnter(ColliderComponent* other) {
-    std::cout << "EnterCollisionTriggered" << std::endl;
-}
-
-void ColliderComponent::OnTriggerStay(ColliderComponent* other) {
-    std::cout << "StayCollidingTriggered" << std::endl;
-}
-
-void ColliderComponent::OnTriggerExit(ColliderComponent* other) {
-    std::cout << "ExitCollisionTriggered" << std::endl;
-}
-
-
-void ColliderComponent::Update(float deltaTime) {
+void BaseColliderComponent::Update(float deltaTime) {
     if (owner) {
-       SnapToPosition();
+        SnapToPosition();
     }
 }
 
-
-void ColliderComponent::Destroy() {
+void BaseColliderComponent::Destroy() {
     if (collider) {
         physics->dynamicsWorld->removeRigidBody(collider);
         delete collider->getMotionState();
         delete collider;
         collider = nullptr;
+        if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
+            physics->gameObjectRigidBodyMap.erase(owner);
+        }
     }
-
-    if (physics->gameObjectRigidBodyMap.find(owner) != physics->gameObjectRigidBodyMap.end()) {
-        physics->gameObjectRigidBodyMap.erase(owner);
-    }
+    
 }
 
-std::unique_ptr<Component> ColliderComponent::Clone(GameObject* new_owner) {
-    return std::make_unique<ColliderComponent>(new_owner, physics);
+//OnCollisions y triggers 
+void BaseColliderComponent::OnCollisionEnter(BaseColliderComponent* other) {
+    std::cout << "EnterCollision" << std::endl;
 }
 
-MonoObject* ColliderComponent::GetSharp()
-{
-    if (CsharpReference) {
-        return CsharpReference;
-    }
-
-    MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
-    if (!klass) {
-        return nullptr;
-    }
-
-    MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
-    if (!monoObject) {
-        return nullptr;
-    }
-
-    MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.Collider:.ctor(uintptr,HawkEngine.GameObject)", true);
-    MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
-    if (!method)
-    {
-        return nullptr;
-    }
-
-    uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
-    MonoObject* ownerGo = owner->GetSharp();
-    if (!ownerGo)
-    {
-        return nullptr;
-    }
-
-    void* args[2]{};
-    args[0] = &componentPtr;
-    args[1] = ownerGo;
-
-    mono_runtime_invoke(method, monoObject, args, nullptr);
-
-    CsharpReference = monoObject;
-    return CsharpReference;
+void BaseColliderComponent::OnCollisionStay(BaseColliderComponent* other) {
+    std::cout << "StayColliding" << std::endl;
 }
 
-void ColliderComponent::SetTrigger(bool trigger) {
+void BaseColliderComponent::OnCollisionExit(BaseColliderComponent* other) {
+    std::cout << "ExitCollision" << std::endl;
+}
+
+void BaseColliderComponent::OnTriggerEnter(BaseColliderComponent* other) {
+    std::cout << "EnterCollisionTriggered" << std::endl;
+}
+
+void BaseColliderComponent::OnTriggerStay(BaseColliderComponent* other) {
+    std::cout << "StayCollidingTriggered" << std::endl;
+}
+
+void BaseColliderComponent::OnTriggerExit(BaseColliderComponent* other) {
+    std::cout << "ExitCollisionTriggered" << std::endl;
+}
+
+
+void BaseColliderComponent::SetTrigger(bool trigger) {
     if (collider) {
         if (trigger) {
             collider->setCollisionFlags(collider->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
@@ -123,13 +76,13 @@ void ColliderComponent::SetTrigger(bool trigger) {
     }
 }
 
-bool ColliderComponent::IsTrigger() const {
+bool BaseColliderComponent::IsTrigger() const {
     return (collider && (collider->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE));
 }
 
 
 //Se podria quitar
-glm::vec3 ColliderComponent::GetColliderPos() {
+glm::vec3 BaseColliderComponent::GetColliderPos() {
 
     btTransform trans;
     collider->getMotionState()->getWorldTransform(trans);
@@ -138,7 +91,7 @@ glm::vec3 ColliderComponent::GetColliderPos() {
 }
 
 //Se podria quitar
-glm::quat ColliderComponent::GetColliderRotation() {
+glm::quat BaseColliderComponent::GetColliderRotation() {
 
     btTransform trans;
     collider->getMotionState()->getWorldTransform(trans);
@@ -146,7 +99,7 @@ glm::quat ColliderComponent::GetColliderRotation() {
     return glm::quat(rot.getW(), rot.getX(), rot.getY(), rot.getZ());
 }
 
-void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
+void BaseColliderComponent::SetColliderRotation(const glm::quat& rotation) {
     if (!collider || !collider->getMotionState()) {
         return;
     }
@@ -163,7 +116,7 @@ void ColliderComponent::SetColliderRotation(const glm::quat& rotation) {
     collider->activate();
 }
 
-void ColliderComponent::SetColliderPos(const glm::vec3& position) {
+void BaseColliderComponent::SetColliderPos(const glm::vec3& position) {
     btTransform trans;
     collider->getMotionState()->getWorldTransform(trans);
     trans.setOrigin(btVector3(position.x, position.y, position.z));
@@ -171,33 +124,33 @@ void ColliderComponent::SetColliderPos(const glm::vec3& position) {
     collider->setCenterOfMassTransform(trans);
 }
 
-glm::vec3 ColliderComponent::GetSize() {
+glm::vec3 BaseColliderComponent::GetSize() {
     return size;
 }
 
 
-glm::vec3 ColliderComponent::GetOffset() {
+glm::vec3 BaseColliderComponent::GetOffset() {
     return offset;
 }
 
-void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
+void BaseColliderComponent::SetOffset(const glm::vec3& newoffset) {
     if (offset != newoffset) {
         offset = newoffset;
     }
 }
 
 
-void ColliderComponent::SetSize(const glm::vec3& newSize) {
+void BaseColliderComponent::SetSize(const glm::vec3& newSize) {
     size = newSize;
     if (collider) {
         btCollisionShape* shape = collider->getCollisionShape();
         if (shape) {
-            btVector3 newBtSize(size.x* owner->GetTransform()->GetScale().x, size.y * owner->GetTransform()->GetScale().y, size.z * owner->GetTransform()->GetScale().z);
+            btVector3 newBtSize(size.x * owner->GetTransform()->GetScale().x, size.y * owner->GetTransform()->GetScale().y, size.z * owner->GetTransform()->GetScale().z);
             shape->setLocalScaling(newBtSize);
         }
     }
 }
-void ColliderComponent::SetActive(bool active) {
+void BaseColliderComponent::SetActive(bool active) {
     if (collider) {
         if (active) {
             physics->dynamicsWorld->addRigidBody(collider);
@@ -208,7 +161,7 @@ void ColliderComponent::SetActive(bool active) {
     }
 }
 
-void ColliderComponent::SnapToPosition() {
+void BaseColliderComponent::SnapToPosition() {
     if (!owner || !collider) return;
     RigidbodyComponent* rigidbody = owner->GetComponent<RigidbodyComponent>();
     Transform_Component* goTransform = owner->GetTransform();
@@ -330,60 +283,4 @@ void ColliderComponent::SnapToPosition() {
     }
 
     collider->setCenterOfMassTransform(currentTransform);
-}
-
-
-void ColliderComponent::CreateCollider() {
-    if (!owner) return;
-
-    Transform_Component* transform = owner->GetTransform();
-    if (!transform) return;
-
-    BoundingBox bbox = owner->localBoundingBox();
-    auto localSize = bbox.size();
-
-    glm::vec3 bboxCenter = owner->boundingBox().center();
-
-    btCollisionShape* shape;
-    btTransform startTransform;
-    startTransform.setIdentity();
-
-    if (localSize.x == 0.0f && localSize.y == 0.0f && localSize.z == 0.0f) {
-        localSize = glm::vec3(1.0f, 1.0f, 1.0f);
-        bboxCenter = transform->GetLocalPosition();
-    }
-
-    shape = new btBoxShape(btVector3(localSize.x * 0.5, localSize.y * 0.5, localSize.z * 0.5));
-    glm::vec3 localPosition = transform->GetLocalPosition();
-    startTransform.setOrigin(btVector3(bboxCenter.x + offset.x, bboxCenter.y + offset.y, bboxCenter.z + offset.z));
-    glm::dquat localRot = transform->GetRotation();
-    btQuaternion btRot(
-        static_cast<btScalar>(localRot.x),
-        static_cast<btScalar>(localRot.y),
-        static_cast<btScalar>(localRot.z),
-        static_cast<btScalar>(localRot.w)
-    );
-    startTransform.setRotation(btRot);
-    glm::vec3 scale = transform->GetScale();
-    glm::vec3 parentScale(1.0f);
-    if (owner->GetParent()) {
-        parentScale = owner->GetParent()->GetTransform()->GetScale();
-    }
-    glm::vec3 finalScale = scale * parentScale;
-    shape->setLocalScaling(btVector3(finalScale.x, finalScale.y, finalScale.z));
-
-    btVector3 localInertia(0, 0, 0);
-
-    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-    btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, shape, localInertia);
-    collider = new btRigidBody(rbInfo);
-    btVector3 btSize = shape->getLocalScaling();
-	if (size != glm::vec3(1.0f, 1.0f, 1.0f)) {
-		btSize = btVector3(size.x, size.y, size.z);
-		shape->setLocalScaling(btSize);
-	}
-
-    // Add the collider to the physics world
-    physics->dynamicsWorld->addRigidBody(collider);
-    physics->gameObjectRigidBodyMap[owner] = collider;
 }

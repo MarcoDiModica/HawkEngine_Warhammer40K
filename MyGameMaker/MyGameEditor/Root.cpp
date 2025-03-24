@@ -12,7 +12,7 @@
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
 #include "../MyParticlesEngine/ParticleFX.h"
-#include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/BoxColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
 #include "Input.h"
@@ -29,6 +29,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
+#include <MyPhysicsEngine/CapsuleColliderComponent.h>
 
 class GameObject;
 
@@ -81,6 +82,7 @@ bool Root::Start()
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 		
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
@@ -128,8 +130,15 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
+
+	auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	floorCollider->Start();
+
 	//CreateGameplayUI();
-	CreateMainMenuUI();
+	//CreateMainMenuUI();
 
 #ifdef _BUILD
 	Application->play = true;
@@ -155,7 +164,7 @@ static void AddCollidersEnv() {
 		}
 		else
 		{
-			auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+			auto collider = go->AddComponent<BoxColliderComponent>(Application->physicsModule);
 			collider->Start();
 		}
 	
@@ -171,8 +180,8 @@ bool Root::Update(double dt)
 		//AddCollidersEnvLvl1();
 		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-		player->GetComponent<ColliderComponent>()->SetSize(glm::vec3(0.4f, 1, 1));
-		player->GetComponent<ColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
+		player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(0.4f, 1, 1));
+		player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
 		hasAddedColliders = true;
 	}
 
@@ -262,7 +271,7 @@ void Root::AddCollidersEnvLvl1() {
 			continue;
 		}
 		else {
-			auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
+			auto collider = go->AddComponent<BoxColliderComponent>(Application->physicsModule);
 			collider->Start();
 		}
 	}

@@ -1,42 +1,28 @@
-#include "CapsuleColliderComponent.h"
+#include "BoxColliderComponent.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
 #include "RigidBodyComponent.h"
 
-CapsuleColliderComponent::CapsuleColliderComponent(GameObject* owner, PhysicsModule* physicsModule) : BaseColliderComponent(owner, physicsModule)
+BoxColliderComponent::BoxColliderComponent(GameObject* owner, PhysicsModule* physicsModule) : BaseColliderComponent(owner, physicsModule)
 {
-    name = "CapsuleColliderComponent";
+    name = "BoxColliderComponent";
     physics = physicsModule;
     updateInStop = true;
     Start();
 }
 
-CapsuleColliderComponent::~CapsuleColliderComponent() {
+BoxColliderComponent::~BoxColliderComponent() {
     Destroy();
 }
 
-void CapsuleColliderComponent::Start() {
-    if (!collider) {
-        CreateCollider();
-    }
+std::unique_ptr<Component> BoxColliderComponent::Clone(GameObject* new_owner) {
+    return std::make_unique<BoxColliderComponent>(new_owner, physics);
 }
 
-void CapsuleColliderComponent::Update(float deltaTime) {
-    if (owner) {
-        SnapToPosition();
-    }
-}
 
-std::unique_ptr<Component> CapsuleColliderComponent::Clone(GameObject* new_owner) {
-    return std::make_unique<CapsuleColliderComponent>(new_owner, physics);
-}
-
-//Local BBox Adjusted (doesnt works with the blocking)
-
-
-MonoObject* CapsuleColliderComponent::GetSharp()
+MonoObject* BoxColliderComponent::GetSharp()
 {
     if (CsharpReference) {
         return CsharpReference;
@@ -44,7 +30,7 @@ MonoObject* CapsuleColliderComponent::GetSharp()
 
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
     if (!klass) {
-        MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "CapsuleCollider");
+        MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "BoxCollider");
         if (!klass) {
             return nullptr;
         }
@@ -79,7 +65,7 @@ MonoObject* CapsuleColliderComponent::GetSharp()
     return CsharpReference;
 }
 
-void CapsuleColliderComponent::CreateCollider() {
+void BoxColliderComponent::CreateCollider() {
     if (!owner) return;
 
     Transform_Component* transform = owner->GetTransform();
@@ -99,9 +85,9 @@ void CapsuleColliderComponent::CreateCollider() {
         bboxCenter = transform->GetLocalPosition();
     }
 
-	shape = new btCapsuleShape(localSize.x, localSize.y);
+    shape = new btBoxShape(btVector3(localSize.x * 0.5, localSize.y * 0.5, localSize.z * 0.5));
     glm::vec3 localPosition = transform->GetLocalPosition();
-    startTransform.setOrigin(btVector3(bboxCenter.x, bboxCenter.y, bboxCenter.z));
+    startTransform.setOrigin(btVector3(bboxCenter.x + offset.x, bboxCenter.y + offset.y, bboxCenter.z + offset.z));
     glm::dquat localRot = transform->GetRotation();
     btQuaternion btRot(
         static_cast<btScalar>(localRot.x),
@@ -124,10 +110,12 @@ void CapsuleColliderComponent::CreateCollider() {
     btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, shape, localInertia);
     collider = new btRigidBody(rbInfo);
     btVector3 btSize = shape->getLocalScaling();
-    size = glm::vec3(1.0f, 1.0f, 1.0f);
+	if (size != glm::vec3(1.0f, 1.0f, 1.0f)) {
+		btSize = btVector3(size.x, size.y, size.z);
+		shape->setLocalScaling(btSize);
+	}
 
     // Add the collider to the physics world
     physics->dynamicsWorld->addRigidBody(collider);
     physics->gameObjectRigidBodyMap[owner] = collider;
 }
-

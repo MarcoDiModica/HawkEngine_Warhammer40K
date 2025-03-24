@@ -4,7 +4,7 @@
 
 #include "../MyGameEngine/Component.h"
 #include "PhysicsModule.h"
-#include "ColliderComponent.h"
+#include "BoxColliderComponent.h"
 #include <glm/glm.hpp>
 #include <yaml-cpp/yaml.h>
 

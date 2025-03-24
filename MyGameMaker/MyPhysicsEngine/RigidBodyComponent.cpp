@@ -4,13 +4,15 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include <MyScriptingEngine/MonoManager.h>
 #include <mono/metadata/debug-helpers.h>
+#include "CapsuleColliderComponent.h"
+#include "MeshColliderComponent.h"
 
 RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physicsModule)
     : Component(owner), physics(physicsModule)
 {
     name = "RigidbodyComponent";
     Start();  
-	updateInStop = false;
+    updateInStop = true;
 }
 
 RigidbodyComponent::~RigidbodyComponent() {
@@ -30,24 +32,37 @@ void RigidbodyComponent::Init() {
 }
 
 void RigidbodyComponent::Start() {
-    btRigidBody* collider = nullptr;
-    auto it = physics->gameObjectRigidBodyMap.find(owner);
-    if (it != physics->gameObjectRigidBodyMap.end()) {
-        collider = it->second;
+    auto boxCollider = owner->GetComponent<BoxColliderComponent>();
+    auto capsuleCollider = owner->GetComponent<CapsuleColliderComponent>();
+    auto meshCollider = owner->GetComponent<MeshColliderComponent>();
+    bool hasCollider = false;
+    BaseColliderComponent* colliderComponent = nullptr;
+    
+    if (boxCollider) {
+        hasCollider = true;
+        colliderComponent = boxCollider;
+    } else if (capsuleCollider) {
+        hasCollider = true;
+        colliderComponent = capsuleCollider;
+    } else if (meshCollider) {
+        hasCollider = true;
+        colliderComponent = meshCollider;
     }
-    if (!collider) {
-        auto colliderComponent = owner->AddComponent<ColliderComponent>(physics);
+
+    if (!hasCollider) {
+        colliderComponent = owner->AddComponent<BoxColliderComponent>(physics);
         colliderComponent->Start();
-		collider = colliderComponent->GetRigidBody();
     }
-    this->rigidBody = collider;
-    rigidBody->setActivationState(DISABLE_DEACTIVATION); 
+    
+    this->rigidBody = colliderComponent->GetRigidBody();
+    rigidBody->setActivationState(DISABLE_DEACTIVATION);
     Init();
 }
 
 
 void RigidbodyComponent::Update(float deltaTime) 
 {
+
    /* if (rigidBody) {
         btVector3 gravityForce = btVector3(0, GetGravity().y * mass, 0);
         rigidBody->applyCentralForce(gravityForce);

@@ -107,8 +107,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseColliderComponent.cpp" />
     <ClCompile Include="CapsuleColliderComponent.cpp" />
-    <ClCompile Include="ColliderComponent.cpp" />
+    <ClCompile Include="BoxColliderComponent.cpp" />
     <ClCompile Include="DebugDrawerPhysics.cpp" />
     <ClCompile Include="MeshColliderComponent.cpp" />
     <ClCompile Include="PhysBody3D.cpp" />
@@ -117,8 +118,9 @@
     <ClCompile Include="RigidBodyComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseColliderComponent.h" />
     <ClInclude Include="CapsuleColliderComponent.h" />
-    <ClInclude Include="ColliderComponent.h" />
+    <ClInclude Include="BoxColliderComponent.h" />
     <ClInclude Include="DebugDrawerPhysics.h" />
     <ClInclude Include="MeshColliderComponent.h" />
     <ClInclude Include="p2List.h" />

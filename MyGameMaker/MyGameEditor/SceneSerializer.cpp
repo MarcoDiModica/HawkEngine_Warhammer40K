@@ -13,7 +13,7 @@
 #include "MyShadersEngine/ShaderComponent.h"
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyAudioEngine/AudioListener.h"
-#include "MyPhysicsEngine/ColliderComponent.h"
+#include "MyPhysicsEngine/BoxColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyAnimationEngine/SkeletalAnimationComponent.h>
@@ -261,8 +261,8 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
 			rb->decode(componentData);
 		}
-		else if (componentName == "ColliderComponent") {
-			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+		else if (componentName == "BoxColliderComponent") {
+			auto collider = gameObject->AddComponent<BoxColliderComponent>(Application->physicsModule);
 			collider->decode(componentData);
 		}
 		else if (componentName == "MeshColliderComponent") {

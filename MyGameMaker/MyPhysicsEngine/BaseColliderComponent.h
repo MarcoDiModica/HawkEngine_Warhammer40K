@@ -5,77 +5,71 @@
 #include <glm/glm.hpp>
 #include <memory>
 
-class ColliderComponent : public Component {
+class BaseColliderComponent : public Component {
 public:
-    ColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
-    ~ColliderComponent() override;
+    BaseColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
+    ~BaseColliderComponent() override;
 
     void Start() override;
-    void SetTrigger(bool trigger);
     void Update(float deltaTime) override;
     void Destroy() override;
 
-    ComponentType GetType() const override { return ComponentType::COLLIDER; }
-
-    std::unique_ptr<Component> Clone(GameObject* new_owner) override;
-
+    //Size and offset
     glm::vec3 GetSize();
-
     glm::vec3 GetOffset();
-
-    void SetOffset(const glm::vec3& newoffset); 
-
+    void SetOffset(const glm::vec3& newoffset);
     void SetSize(const glm::vec3& newSize);
 
+    //TriggerFuncions
+    void SetTrigger(bool trigger);
     bool IsTrigger() const;
+
+    //Transform Functions
     glm::vec3 GetColliderPos();
-
     glm::quat GetColliderRotation();
-
     void SetColliderRotation(const glm::quat& rotation);
-
     void SetColliderPos(const glm::vec3& position);
-
-    void SetActive(bool active);
 
     void SnapToPosition();
 
+    void SetActive(bool active);
 
     //OnCollision
-    virtual void OnCollisionEnter(ColliderComponent* other);
-    virtual void OnCollisionStay(ColliderComponent* other);
-    virtual void OnCollisionExit(ColliderComponent* other); 
+    virtual void OnCollisionEnter(BaseColliderComponent* other);
+    virtual void OnCollisionStay(BaseColliderComponent* other);
+    virtual void OnCollisionExit(BaseColliderComponent* other);
     //OnTrigger
-    virtual void OnTriggerEnter(ColliderComponent* other);
-    virtual void OnTriggerStay(ColliderComponent* other);
-    virtual void OnTriggerExit(ColliderComponent* other);
+    virtual void OnTriggerEnter(BaseColliderComponent* other);
+    virtual void OnTriggerStay(BaseColliderComponent* other);
+    virtual void OnTriggerExit(BaseColliderComponent* other);
 
 
     btRigidBody* GetRigidBody() const { return collider; }
 
-	MonoObject* CsharpReference = nullptr;
-	MonoObject* GetSharp() override;
+    MonoObject* CsharpReference = nullptr;
 
-private:
-
-    btRigidBody* collider = nullptr;
-    PhysicsModule* physics;
-    glm::vec3 size = glm::vec3(1.0f);
-	glm::vec3 offset = glm::vec3(0.0f);
- 
-    bool hasSnappedToInitialPosition = false;
-
-    void CreateCollider();
 
 protected:
-	friend class SceneSerializer;
+
+    btRigidBody* collider = nullptr;
+    glm::vec3 size = glm::vec3(1.0f);
+    glm::vec3 offset = glm::vec3(0.0f);
+
+    bool hasSnappedToInitialPosition = false;
+
+    PhysicsModule* physics;
+
+    virtual void CreateCollider() = 0;
+
+protected:
+    friend class SceneSerializer;
 
     YAML::Node encode() override
     {
         YAML::Node node;
-        node["size"] = std::vector<float>{size.x, size.y, size.z};
-        node["offset"] = std::vector<float>{offset.x, offset.y, offset.z};
-		node["isTrigger"] = IsTrigger();
+        node["size"] = std::vector<float>{ size.x, size.y, size.z };
+        node["offset"] = std::vector<float>{ offset.x, offset.y, offset.z };
+        node["isTrigger"] = IsTrigger();
         return node;
     }
 
@@ -89,10 +83,10 @@ protected:
             auto offsetVec = node["offset"].as<std::vector<float>>();
             offset = glm::vec3(offsetVec[0], offsetVec[1], offsetVec[2]);
         }
-		if (node["isTrigger"]) {
-			SetTrigger(node["isTrigger"].as<bool>());
-		}
+        if (node["isTrigger"]) {
+            SetTrigger(node["isTrigger"].as<bool>());
+        }
         return true;
     }
 };
- 
+

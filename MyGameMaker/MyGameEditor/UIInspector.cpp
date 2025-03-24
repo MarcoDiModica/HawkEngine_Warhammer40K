@@ -29,7 +29,7 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/Image.h"
 #include "../MyGameEngine/Material.h"
-#include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/BoxColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "../MyPhysicsEngine/MeshColliderComponent.h"
 #include "../MyPhysicsEngine/CapsuleColliderComponent.h"
@@ -617,10 +617,10 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("CapsuleCollider")) return;
 
-        DrawColliderProperties(collider);
+        DrawCapsuleColliderProperties(collider);
     }
 
-    static void DrawColliderProperties(CapsuleColliderComponent* collider) {
+    static void DrawCapsuleColliderProperties(CapsuleColliderComponent* collider) {
 		glm::vec3 size = collider->GetSize();
 		glm::vec3 offset = collider->GetOffset();
 		float sizeArray[2] = { size.x, size.y };
@@ -648,10 +648,10 @@ private:
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (!ImGui::CollapsingHeader("MeshCollider")) return;
 
-		DrawColliderProperties(collider);
+		DrawMeshColliderProperties(collider);
 	}
 
-	static void DrawColliderProperties(MeshColliderComponent* collider) {
+	static void DrawMeshColliderProperties(MeshColliderComponent* collider) {
 		glm::vec3 size = collider->GetSize();
 		glm::vec3 offset = collider->GetOffset();
 		float sizeArray[3] = { size.x, size.y, size.z };
@@ -673,7 +673,7 @@ private:
 #pragma endregion
 
 #pragma region Collider
-	static void DrawColliderComponent(ColliderComponent* collider) {
+	static void DrawColliderComponent(BoxColliderComponent* collider) {
 		if (!collider) return;
 
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
@@ -682,7 +682,7 @@ private:
 		DrawColliderProperties(collider);
 	}
 
-	static void DrawColliderProperties(ColliderComponent* collider) {
+	static void DrawColliderProperties(BoxColliderComponent* collider) {
 		glm::vec3 size = collider->GetSize();
 		glm::vec3 offset = collider->GetOffset();
 		float sizeArray[3] = { size.x, size.y, size.z };
@@ -1554,8 +1554,8 @@ public:
 			DrawAudioListenerComponent(listener, gameObject);
 		}
 
-		if (gameObject->HasComponent<ColliderComponent>()) {
-			ColliderComponent* collider = gameObject->GetComponent<ColliderComponent>();
+		if (gameObject->HasComponent<BoxColliderComponent>()) {
+			BoxColliderComponent* collider = gameObject->GetComponent<BoxColliderComponent>();
 			DrawColliderComponent(collider);
 		}
         
@@ -1649,9 +1649,9 @@ private:
 			}
 		}
 
-		if (!gameObject->HasComponent<ColliderComponent>()) {
-			if (ImGui::MenuItem("Collider")) {
-				gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+		if (!gameObject->HasComponent<BoxColliderComponent>()) {
+			if (ImGui::MenuItem("BoxCollider")) {
+				gameObject->AddComponent<BoxColliderComponent>(Application->physicsModule);
 			}
 		}
 

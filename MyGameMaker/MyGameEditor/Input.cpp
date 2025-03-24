@@ -206,7 +206,9 @@ bool Input::processSDLEvents()
 
     while (SDL_PollEvent(&event) != 0)
     {
+#ifndef _BUILD
         Application->gui->processEvent(event);
+#endif // !_BUILD  
        
         switch (event.type)
         {
@@ -278,20 +280,7 @@ bool Input::processSDLEvents()
                         }
                     }
                 }
-                break; 
-            case SDLK_p:
-                if (pPressed == false) {
-                    pPressed = true; // Activar la bandera si P fue presionado
-                    //Application->root->CreateSceneColliders();
-                    Application->physicsModule->linkPhysicsToScene = true;
-                }
-                else {
-                    pPressed = false;
-                    Application->physicsModule->linkPhysicsToScene = false;
-                }
-                break; 
-
-                
+                break;                 
             }
             
             break;
@@ -375,7 +364,8 @@ bool Input::processSDLEvents()
         case SDL_WINDOWEVENT:
         {
             if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
-               /* Application->window->OnResizeWindow(event.window.data1, event.window.data2);*/
+				Application->window->SetWidth(event.window.data1);
+				Application->window->SetHeight(event.window.data2);
             }
             break;
         }

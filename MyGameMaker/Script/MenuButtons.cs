@@ -34,6 +34,7 @@ public class MenuButtons : MonoBehaviour
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
+            SceneManager.LoadScene("DefaultScene");
         }
 
 
@@ -41,14 +42,14 @@ public class MenuButtons : MonoBehaviour
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            //Engineson.print("Continue is Clicked");
+            Engineson.print("Continue is Clicked");
         }
 
         if (optionsButton.GetState() == ButtonState.CLICKED)
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            //Engineson.print("Options is Clicked");
+            Engineson.print("Options is Clicked");
         }
 
 
@@ -56,7 +57,7 @@ public class MenuButtons : MonoBehaviour
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            //Engineson.print("Credits is Clicked");
+            Engineson.print("Credits is Clicked");
         }
 
 
@@ -64,7 +65,7 @@ public class MenuButtons : MonoBehaviour
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            //Engineson.print("Quit is Clicked");
+            Engineson.print("quit is Clicked");
         }
 
     }

@@ -121,7 +121,9 @@ void CameraComponent::Update(float deltaTime)
 
         if (frustrumRepresentation)
 		{
-            DrawFrustrum();
+            #ifndef _BUILD
+                DrawFrustrum();
+            #endif // !_BUILD            
 		}
 
         std::function<void(std::shared_ptr<GameObject>)> checkGameObject = [&](std::shared_ptr<GameObject> gameObject) {

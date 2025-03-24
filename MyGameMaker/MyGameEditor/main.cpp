@@ -560,14 +560,14 @@ static void GameRelease() {
 		return;
 	}
 
-	GLint lastProgram;
+	/*GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
 
 	GLint lastFBO;
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
 
 	GLint lastVP[4];
-	glGetIntegerv(GL_VIEWPORT, lastVP);
+	glGetIntegerv(GL_VIEWPORT, lastVP);*/
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
@@ -575,18 +575,18 @@ static void GameRelease() {
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	/*glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 
 	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
+	glPushMatrix();*/
 
-	glm::dmat4 projectionMatrix = gameCamera->projection();
-	glm::dmat4 viewMatrix = gameCamera->view();
+	//glm::dmat4 projectionMatrix = gameCamera->projection();
+	//glm::dmat4 viewMatrix = gameCamera->view();
 
-	glMatrixMode(GL_PROJECTION);
+	/*glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glLoadMatrixd(glm::value_ptr(projectionMatrix));
 
@@ -603,15 +603,25 @@ static void GameRelease() {
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);*/
 
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
-		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+	std::shared_ptr<GameObject> UI = nullptr;
+
+	for (auto& object : Application->root->GetActiveScene()->children())
+	{
+		if (object->HasComponent<UICanvasComponent>()) {
+			UI = object;
+			continue;
+		}
 		object->Update(static_cast<float>(Application->GetDt()));
 	}
+
 	Application->physicsModule->Update(Application->GetDt());
 
-	glMatrixMode(GL_PROJECTION);
+	if (UI != nullptr)
+		UI->Update(static_cast<float>(Application->GetDt()));
+
+	/*glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
 
 	glMatrixMode(GL_MODELVIEW);
@@ -635,7 +645,7 @@ static void GameRelease() {
 
 	if (lastProgram > 0) {
 		glUseProgram(lastProgram);
-	}
+	}*/
 
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }
@@ -691,9 +701,8 @@ int main(int argc, char** argv) {
 			
 			RenderGameView(); 
 			PrintCounters();
-			//Application->gui->Render();
+			Application->gui->Render();
 			Application->window->SwapBuffers();
-			Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
 			UndoRedo();
 			ObjectToEditorCamera();
 #else

@@ -130,9 +130,15 @@ bool Root::Start()
 
 	//CreateGameplayUI();
 	CreateMainMenuUI();
-	
-	
-    //SceneManagement->Start();
+
+#ifdef _BUILD
+	Application->play = true;
+	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	Application->physicsModule->linkPhysicsToScene = true;
+	SceneManagement->Start();
+#endif // _BUILD
+
+
 
     return true;
 }

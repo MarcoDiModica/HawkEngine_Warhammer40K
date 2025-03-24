@@ -149,91 +149,6 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: Hormagaunt
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 5
-        - 0
-        - 5
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 2.2000000476837158
-        - 2.2000000476837158
-        - 2.2000000476837158
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: EnemyController
-  Children:
-    - name: HormagauntMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0.00024807715089991689
-            - 0.79262250661849976
-            - 0.040951989591121674
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 0.0060735000297427177
-            - 0.0060735000297427177
-            - 0.0060735000297427177
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: mesh.089
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Assets/Textures/Low_BSurfaceMesh_BaseColor.png
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-GameObject3:
   name: Canvas
   tag: Untagged
   active: true
@@ -257,6 +172,15 @@ GameObject3:
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -278,9 +202,9 @@ GameObject3:
         - 0
     ScriptComponents:
       Script0:
-        name: UIGameplay
+        name: MenuButtons
   Children:
-    - name: PlayerLife
+    - name: MenuImage
       tag: Untagged
       active: true
       isStatic: false
@@ -304,27 +228,27 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.143000007
-            - 0.83099997
+            - 0
+            - 0
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.194999993
-            - 0.0540000014
+            - 1
+            - 1
             - 1
           pivot_offset:
             - 0
-            - 0.5
+            - 0
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/blood.png
+          texture_path: Assets/Textures/Main_Menu_1.png
       Children: ~
-    - name: PlayerStamina
+    - name: NewGameButton
       tag: Untagged
       active: true
       isStatic: false
@@ -348,60 +272,16 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.138999999
-            - 0.898999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.107000001
-            - 0.0350000001
-            - 1
-          pivot_offset:
-            - 0
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/blood.png
-      Children: ~
-    - name: PlayerStats
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.189999998
-            - 0.85799998
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
+            - 0.128000006
             - 0.317999989
-            - 0.240999997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0909999982
             - 1
           pivot_offset:
             - 0.5
@@ -410,9 +290,13 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/healthbar_empty.png
+          texture_path: Assets/Textures/New_Game.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~
-    - name: PowerupFrame
+    - name: ContinueButton
       tag: Untagged
       active: true
       isStatic: false
@@ -436,16 +320,16 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.737999976
-            - 0.874000013
+            - 0.128000006
+            - 0.460999995
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.126000002
-            - 0.108000003
+            - 0.181999996
+            - 0.0909999982
             - 1
           pivot_offset:
             - 0.5
@@ -454,9 +338,13 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/powerup_frame.png
+          texture_path: Assets/Textures/Continue_button.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~
-    - name: GunSwitcher
+    - name: OptionsButton
       tag: Untagged
       active: true
       isStatic: false
@@ -480,16 +368,16 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.808000028
-            - 0.851999998
+            - 0.128000006
+            - 0.603999972
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.300999999
-            - 0.25999999
+            - 0.181999996
+            - 0.0909999982
             - 1
           pivot_offset:
             - 0.5
@@ -498,9 +386,13 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/gunswitcher_frame.png
+          texture_path: Assets/Textures/Options_Button.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~
-    - name: RailgunIcon
+    - name: CreditsButton
       tag: Untagged
       active: true
       isStatic: false
@@ -524,16 +416,16 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.884000003
-            - 0.83099997
+            - 0.127000004
+            - 0.748000026
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.100000001
-            - 0.063000001
+            - 0.181999996
+            - 0.0909999982
             - 1
           pivot_offset:
             - 0.5
@@ -541,10 +433,14 @@ GameObject3:
             - 0
         UIImageComponent:
           name: UIImageComponent
-          enabled: false
-          texture_path: ../MyGameEditor/Assets/Textures/railgun_icon.png
+          enabled: true
+          texture_path: Assets/Textures/Credits_Buttom.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~
-    - name: ShotgunIcon
+    - name: QuitButton
       tag: Untagged
       active: true
       isStatic: false
@@ -568,60 +464,16 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.884000003
-            - 0.83099997
+            - 0.127000004
+            - 0.906000018
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.100000001
-            - 0.063000001
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: false
-          texture_path: ../MyGameEditor/Assets/Textures/shotgun_icon.png
-      Children: ~
-    - name: BoltgunIcon
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.884000003
-            - 0.83099997
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.100000001
-            - 0.063000001
+            - 0.181999996
+            - 0.0909999982
             - 1
           pivot_offset:
             - 0.5
@@ -630,93 +482,9 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/boltgun_icon.png
-      Children: ~
-    - name: BulletIcon
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
+          texture_path: Assets/Textures/Quit_button.png
+        UIButtonComponent:
+          name: UIButtonComponent
           enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.703999996
-            - 0.873000026
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.00999999978
-            - 0.0670000017
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/bullet_icon.png
-      Children: ~
-    - name: GrenadeIcon
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.773000002
-            - 0.871999979
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0209999997
-            - 0.0649999976
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/grenade_icon.png
+          state: 1
       Children: ~

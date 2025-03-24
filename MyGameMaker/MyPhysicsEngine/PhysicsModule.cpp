@@ -379,7 +379,11 @@ bool PhysicsModule::Update(double dt) {
     //    SyncTransforms();
     //    CheckCollisions();
     //}
+
+#ifndef _BUILD
     DrawDebugDrawer();
+#endif // !_BUILD
+  
     if (linkPhysicsToScene) {
 		dynamicsWorld->stepSimulation(dt, 16, fixedDeltaTime);
 		SyncTransforms();

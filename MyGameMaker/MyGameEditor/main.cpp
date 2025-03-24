@@ -57,6 +57,7 @@
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
 #include "../MyUIEngine/UICanvasComponent.h"
+#include "UIGameView.h"
 
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
@@ -259,7 +260,7 @@ static void RenderGameView() {
 	glGetIntegerv(GL_VIEWPORT, lastVP);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
-	glViewport(0, 0, Application->window->width(), Application->window->height());
+	glViewport(0, 0, 1280, 720);
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -555,6 +556,106 @@ static void PrintCounters() {
 	std::cout << "Fps;  %d" << Application->GetFps() << std::endl;
 }
 
+static void GameRelease() {
+	if (Application->root->mainCamera == nullptr) {
+		return;
+	}
+
+	CameraComponent* gameCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
+	if (!gameCamera) {
+		return;
+	}
+
+	/*GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	GLint lastFBO;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+
+	GLint lastVP[4];
+	glGetIntegerv(GL_VIEWPORT, lastVP);*/
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, Application->window->width(), Application->window->height());
+
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	/*glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();*/
+
+	//glm::dmat4 projectionMatrix = gameCamera->projection();
+	//glm::dmat4 viewMatrix = gameCamera->view();
+
+	/*glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glLoadMatrixd(glm::value_ptr(projectionMatrix));
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glLoadMatrixd(glm::value_ptr(viewMatrix));
+
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);*/
+
+	std::shared_ptr<GameObject> UI = nullptr;
+
+	for (auto& object : Application->root->GetActiveScene()->children())
+	{
+		if (object->HasComponent<UICanvasComponent>()) {
+			UI = object;
+			continue;
+		}
+		object->Update(static_cast<float>(Application->GetDt()));
+	}
+
+	Application->physicsModule->Update(Application->GetDt());
+
+	if (UI != nullptr)
+		UI->Update(static_cast<float>(Application->GetDt()));
+
+	/*glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glPopAttrib();
+
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}*/
+
+	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+}
+
 int main(int argc, char** argv) {
 
 	MainState state = CREATE;
@@ -601,15 +702,19 @@ int main(int argc, char** argv) {
 
 		case LOOP:
 
+#ifndef _BUILD
 			EditorRenderer(Application->gui);
 			
 			RenderGameView(); 
 			PrintCounters();
-			//Application->gui->Render();
+			Application->gui->Render();
 			Application->window->SwapBuffers();
 			UndoRedo();
 			ObjectToEditorCamera();
-		
+#else
+			GameRelease();
+			Application->window->SwapBuffers();
+#endif // ENABLE_EDITOR	
 		
 			if (!Application->Update()) { state = FREE; }
 			break;

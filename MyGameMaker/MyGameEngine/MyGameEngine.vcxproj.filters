@@ -20,6 +20,7 @@
     <ClCompile Include="InputEngine.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="Tweening.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -46,5 +47,6 @@
     <ClInclude Include="AssimpGLMHelpers.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="Tweening.h" />
   </ItemGroup>
 </Project>

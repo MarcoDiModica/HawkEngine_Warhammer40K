@@ -118,19 +118,19 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//////Hormagaunt
-	//auto hormagaunt = CreateGameObject("Hormagaunt");
-	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(50, 0, 5));
-	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	////enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
-	//hormagauntMesh->SetName("HormagauntMesh");
-	//ParentGameObject(*hormagauntMesh, *hormagaunt);
-	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
-	//auto enemyRb = hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//enemyRb->SetMass(1000.0f);
-	//hormagaunt->GetComponent<ColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
-	//hormagaunt->GetComponent<ColliderComponent>()->SetSize(glm::vec3(0.3f, 0.5f, 0.4f));
+	auto hormagaunt = CreateGameObject("Hormagaunt");
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(50, 0, 5));
+	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
+	hormagauntMesh->SetName("HormagauntMesh");
+	ParentGameObject(*hormagauntMesh, *hormagaunt);
+	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	auto enemyRb = hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	enemyRb->SetMass(1000.0f);
+	hormagaunt->GetComponent<ColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
+	hormagaunt->GetComponent<ColliderComponent>()->SetSize(glm::vec3(0.3f, 0.5f, 0.4f));
 	
 	auto ground = CreateCube("Ground");
 	ground->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -1, 0));

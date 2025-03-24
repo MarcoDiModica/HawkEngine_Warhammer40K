@@ -173,12 +173,22 @@ void ParticleFX::Update(float deltaTime) {
 		timeSinceLastEmit -= emitInterval;
 	}
 
+#ifndef _BUILD
 	glm::vec3 cameraPosition = Application->camera->GetTransform().GetPosition();
 	glm::vec3 cameraUp = Application->camera->GetTransform().GetUp();
 
 	glm::mat4 modelMatrix = owner->GetTransform()->GetMatrix();
 	glm::mat4 viewMatrix = Application->camera->view();
 	glm::mat4 projMatrix = Application->camera->projection();
+
+#else
+	glm::vec3 cameraPosition = Application->root->mainCamera->GetTransform()->GetPosition();
+	glm::vec3 cameraUp = Application->root->mainCamera->GetTransform()->GetUp();
+
+	glm::mat4 modelMatrix = owner->GetTransform()->GetMatrix();
+	glm::mat4 viewMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->view();
+	glm::mat4 projMatrix = Application->root->mainCamera->GetComponent<CameraComponent>()->projection();
+#endif // !
 
 	material->ApplyShader(modelMatrix, viewMatrix, projMatrix);
 

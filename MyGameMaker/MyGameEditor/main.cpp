@@ -501,6 +501,12 @@ static void RenderEditor() {
 		{
 			object->Update(static_cast<float>(Application->GetDt()));
 
+			if (Application->hasChangedScene)
+			{
+				Application->hasChangedScene = false;
+				break;
+			}
+
 			if (object->HasComponent<LightComponent>()) {
 				auto& lights = Application->root->GetActiveScene()->_lights;
 				auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
@@ -512,6 +518,11 @@ static void RenderEditor() {
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
+
+	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+		Application->physicsModule->linkPhysicsToScene = true;
+	}
+
 	MousePickingCheck(objects);
 }
 
@@ -613,10 +624,24 @@ static void GameRelease() {
 			UI = object;
 			continue;
 		}
-		object->Update(static_cast<float>(Application->GetDt()));
+		if (object->IsActive())
+		{
+			object->Update(static_cast<float>(Application->GetDt()));
+
+			if (Application->hasChangedScene)
+			{
+				Application->hasChangedScene = false;
+				break;
+			}
+		}
+		
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
+
+	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+		Application->physicsModule->linkPhysicsToScene = true;
+	}
 
 	if (UI != nullptr)
 		UI->Update(static_cast<float>(Application->GetDt()));

@@ -144,6 +144,7 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 		LOG(LogType::LOG_INFO, "Loading Scene: %s", sceneName.c_str());
 
 		if (Application->root->GetActiveScene() != nullptr) {
+			SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
 			Application->root->RemoveScene(Application->root->GetActiveScene()->GetName());
 		}
 

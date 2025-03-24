@@ -224,6 +224,9 @@ void GameObject::Update(float deltaTime)
 		for (auto& scriptComponent : scriptComponents)
 		{
 			scriptComponent->Update(deltaTime);
+			if (Application->hasChangedScene) {
+				return;
+			}
 		}
 	}
     

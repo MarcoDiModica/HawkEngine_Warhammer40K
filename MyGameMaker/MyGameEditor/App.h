@@ -73,6 +73,7 @@ public:
 	Mesh ElMesh;
 
 	bool play = false;
+	bool hasChangedScene = false;
 
 private:
 

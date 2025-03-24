@@ -501,6 +501,12 @@ static void RenderEditor() {
 		{
 			object->Update(static_cast<float>(Application->GetDt()));
 
+			if (Application->hasChangedScene)
+			{
+				Application->hasChangedScene = false;
+				break;
+			}
+
 			if (object->HasComponent<LightComponent>()) {
 				auto& lights = Application->root->GetActiveScene()->_lights;
 				auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());

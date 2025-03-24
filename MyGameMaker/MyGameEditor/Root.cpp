@@ -182,6 +182,10 @@ bool Root::Update(double dt)
 		Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
 	}
 
+	if (Application->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
+	}
+
 	return true;
 }
 void Root::SetCameraPriority(std::shared_ptr<GameObject> camera, int priority)

@@ -10,7 +10,7 @@ public class MenuButtons : MonoBehaviour
     private UIButton creditsButton;
     private UIButton quitButton;
 
-    private Audio sound;
+    //private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
     public override void Start()
@@ -20,7 +20,7 @@ public class MenuButtons : MonoBehaviour
         optionsButton = GameObject.Find("OptionsButton").GetComponent<UIButton>();
         creditsButton = GameObject.Find("CreditsButton").GetComponent<UIButton>();
         quitButton = GameObject.Find("QuitButton").GetComponent<UIButton>();
-        sound = gameObject.GetComponent<Audio>();
+        //sound = gameObject.GetComponent<Audio>();
 
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
         {
@@ -30,14 +30,13 @@ public class MenuButtons : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (newGameButton.GetState () == ButtonState.CLICKED)
+        if (newGameButton.GetState() == ButtonState.CLICKED)
         {
+           SceneManager.LoadScene("Level2");
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            SceneManager.LoadScene("DefaultScene");
         }
-
-
+        
         if (continueButton.GetState() == ButtonState.CLICKED)
         {
             sound?.LoadAudio(buttonClicked);
@@ -52,14 +51,12 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("Options is Clicked");
         }
 
-
         if (creditsButton.GetState() == ButtonState.CLICKED)
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
             Engineson.print("Credits is Clicked");
         }
-
 
         if (quitButton.GetState() == ButtonState.CLICKED)
         {

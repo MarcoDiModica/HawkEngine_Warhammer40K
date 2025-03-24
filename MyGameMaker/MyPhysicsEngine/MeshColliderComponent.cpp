@@ -6,6 +6,7 @@ MeshColliderComponent::MeshColliderComponent(GameObject* owner, PhysicsModule* p
     : Component(owner), physics(physicsModule), rigidBody(nullptr) 
 {
 	name = "MeshColliderComponent";
+	updateInStop = false;
 }
 
 MeshColliderComponent::~MeshColliderComponent() {

@@ -9,6 +9,7 @@
 #include "Root.h"
 #include "Log.h"
 #include "UISettings.h"
+#include "UIMainMenuBar.h"
 
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
@@ -224,6 +225,16 @@ void App::FinishUpdate()
 		dt = HIGH_LIMIT;
 	}
 
+	if (frameRateCap > 0 && dt < frameRateCap && capFrames)
+	{
+		glm::uint32 delay = (frameRateCap - dt);
+
+		if (delay > 0)
+		{
+			SDL_Delay(delay);
+		}
+	}
+
 	lastTime = now;
 
 
@@ -240,7 +251,6 @@ void App::FinishUpdate()
 #ifndef _BUILD
 	Application->gui->UIsettingsPanel->AddFpsMark(fps);
 #endif // !_BUILD	
-
 }
 
 bool App::CleanUP() { return true; }

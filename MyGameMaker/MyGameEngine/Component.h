@@ -68,6 +68,8 @@ public:
 
 	virtual  MonoObject* GetSharp() { return nullptr; }
 
+	bool updateInStop = true;
+
 protected:
 
 	MonoObject* CsharpReference = nullptr;

@@ -9,6 +9,7 @@ RigidbodyComponent::RigidbodyComponent(GameObject* owner, PhysicsModule* physics
     : Component(owner), physics(physicsModule), mass(1.0f)
 {
     name = "RigidbodyComponent";
+	updateInStop = false;
 }
 
 RigidbodyComponent::~RigidbodyComponent() {

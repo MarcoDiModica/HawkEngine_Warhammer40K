@@ -57,7 +57,6 @@ protected:
 		}
 		else {
 			LOG(LogType::LOG_INFO, "Script %s loaded", name.c_str());
-            Start();
 		}
 
 		return success;

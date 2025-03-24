@@ -288,7 +288,7 @@ void MyGUI::Render() {
 	}
 
 	if (showTextEditor) {
-		UITextEditorPanel->Draw();
+		UITextEditorPanel->Draw(); // Quitar
 	}
 
 	if (showGameView) {

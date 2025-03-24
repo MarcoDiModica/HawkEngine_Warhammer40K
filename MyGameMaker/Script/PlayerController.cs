@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
         sound = gameObject.GetComponent<Audio>();
+        gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
 
         if (playerInput == null || playerMovement == null || playerDash == null || playerShooting == null || playerMesh == null)
         {

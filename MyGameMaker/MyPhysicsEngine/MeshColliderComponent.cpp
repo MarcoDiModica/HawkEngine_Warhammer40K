@@ -8,6 +8,7 @@ MeshColliderComponent::MeshColliderComponent(GameObject* owner, PhysicsModule* p
 {
 	name = "MeshColliderComponent";
 	Start();
+	updateInStop = false;
 }
 
 MeshColliderComponent::~MeshColliderComponent() {
@@ -354,8 +355,8 @@ void MeshColliderComponent::CreateMeshCollider() {
 //    glm::vec3 parentScale = owner->GetParent() ? glm::vec3(owner->GetParent()->GetTransform()->GetScale()) : glm::vec3(1.0f);
 //    glm::vec3 finalScale = scale * parentScale;
 //
-//     Reducir la cantidad de triángulos para optimizar el rendimiento
-//    size_t step = std::max<size_t>(1, indices.size() / 100000); // Reduce la cantidad de triángulos dinámicamente
+//     Reducir la cantidad de triï¿½ngulos para optimizar el rendimiento
+//    size_t step = std::max<size_t>(1, indices.size() / 100000); // Reduce la cantidad de triï¿½ngulos dinï¿½micamente
 //    for (size_t i = 0; i < indices.size(); i += 3 * step) {
 //        btVector3 v0(vertices[indices[i]].position.x * finalScale.x - position.x,
 //                     vertices[indices[i]].position.y * finalScale.y - position.y,

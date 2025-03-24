@@ -8,6 +8,7 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
+#include "../MyGameEngine/Scene.h"
 #include "../MyPhysicsEngine/ColliderComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "ScriptComponent.h"
@@ -867,10 +868,21 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
 	}
 }
-void EngineBinds::LoadScene(MonoString* sceneName)
+bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
-	Application->scene_serializer->DeSerialize(std::string(C_sceneName));
+    if (Application->scene_serializer->DeSerialize(std::string(C_sceneName)))
+    {
+		return true;
+    }
+	return false;
+    
+}
+
+void EngineBinds::SetScenePlay()
+{
+	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	SceneManagement->currentScene->Start();
 }
 
 void EngineBinds::BindEngine() {
@@ -1000,6 +1012,7 @@ void EngineBinds::BindEngine() {
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
+	mono_add_internal_call("HawkEngine.SceneManager::SetSceneToPlay", (const void*)&EngineBinds::SetScenePlay);
 }
 
 template <class T>

@@ -142,7 +142,8 @@ bool Root::Start()
 	//CreateGameplayUI();
 	//CreateMainMenuUI();
 	
-    SceneManagement->Start();
+	
+    //SceneManagement->Start();
 
     return true;
 }
@@ -178,6 +179,14 @@ bool Root::Update(double dt)
 		player->GetComponent<ColliderComponent>()->SetSize(glm::vec3(0.4f, 1, 1));
 		player->GetComponent<ColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
 		hasAddedColliders = true;
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
 	}
 
 	return true;

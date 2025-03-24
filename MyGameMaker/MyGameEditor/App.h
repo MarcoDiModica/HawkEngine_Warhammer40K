@@ -72,6 +72,8 @@ public:
 
 	Mesh ElMesh;
 
+	bool play = false;
+
 private:
 
 	double fixedCounter = FIXED_INTERVAL;
@@ -94,7 +96,7 @@ private:
 	hrclock::time_point lastTime = hrclock::now();
 protected:
 	friend class UIMainMenuBar;
-	bool play = false;
+	
 };
 
 extern App* Application;

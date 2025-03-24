@@ -234,14 +234,24 @@ void MeshRenderer::Render() const {
 	}
 	glActiveTexture(GL_TEXTURE0);
 
+#ifndef _BUILD
 	material->ApplyShader(owner->GetTransform()->GetMatrix(),
 		Application->camera->view(),
 		Application->camera->projection());
+#else
+	material->ApplyShader(owner->GetTransform()->GetMatrix(),
+		Application->root->mainCamera->GetComponent<CameraComponent>()->view(),
+		Application->root->mainCamera->GetComponent<CameraComponent>()->projection());
+#endif // !_BUILD
 
 	if (material->GetShaderType() == ShaderType::PBR) {
 		Shaders* shader = ShaderManager::GetInstance().GetShader(material->GetShaderType());
 		if (shader) 
 		{
+#ifdef _BUILD
+			shader->SetUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
+			SetupLightProperties(shader, Application->root->mainCamera->GetTransform()->GetPosition());
+#endif 
 			SetUpAnimationProperties(shader);
 		}
 	}

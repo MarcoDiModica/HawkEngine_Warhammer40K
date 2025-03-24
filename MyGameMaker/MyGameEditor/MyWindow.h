@@ -35,6 +35,10 @@ public:
 
 	int height() const { return _height; }
 
+	void SetWidth(int width) { _width = width; }	
+
+	void SetHeight(int height) { _height = height; }
+
 	double aspect() const { return static_cast<double>(_width) / _height; }
 
 	auto* windowPtr() const { return _window; }

@@ -873,6 +873,7 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
     char* C_sceneName = mono_string_to_utf8(sceneName);
     if (Application->scene_serializer->DeSerialize(std::string(C_sceneName)))
     {
+        Application->physicsModule->linkPhysicsToScene = false;
 		Application->hasChangedScene = true;
 		return true;
     }

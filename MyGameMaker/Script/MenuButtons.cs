@@ -32,38 +32,36 @@ public class MenuButtons : MonoBehaviour
     {
         if (newGameButton.GetState() == ButtonState.CLICKED)
         {
-           SceneManager.LoadScene("Level2");
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+           SceneManager.LoadScene("DefaultScene");
         }
         
-        if (continueButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-            Engineson.print("Continue is Clicked");
-        }
+        //if (continueButton.GetState() == ButtonState.CLICKED)
+        //{
+        //    sound?.LoadAudio(buttonClicked);
+        //    sound?.Play();
+        //    Engineson.print("Continue is Clicked");
+        //}
 
-        if (optionsButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-            Engineson.print("Options is Clicked");
-        }
+        //if (optionsButton.GetState() == ButtonState.CLICKED)
+        //{
+        //    sound?.LoadAudio(buttonClicked);
+        //    sound?.Play();
+        //    Engineson.print("Options is Clicked");
+        //}
 
-        if (creditsButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-            Engineson.print("Credits is Clicked");
-        }
+        //if (creditsButton.GetState() == ButtonState.CLICKED)
+        //{
+        //    sound?.LoadAudio(buttonClicked);
+        //    sound?.Play();
+        //    Engineson.print("Credits is Clicked");
+        //}
 
-        if (quitButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-            Engineson.print("quit is Clicked");
-        }
+        //if (quitButton.GetState() == ButtonState.CLICKED)
+        //{
+        //    sound?.LoadAudio(buttonClicked);
+        //    sound?.Play();
+        //    Engineson.print("quit is Clicked");
+        //}
 
     }
 }

@@ -500,6 +500,12 @@ static void RenderEditor() {
 		{
 			object->Update(static_cast<float>(Application->GetDt()));
 
+			if (Application->hasChangedScene)
+			{
+				Application->hasChangedScene = false;
+				break;
+			}
+
 			if (object->HasComponent<LightComponent>()) {
 				auto& lights = Application->root->GetActiveScene()->_lights;
 				auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
@@ -601,7 +607,6 @@ int main(int argc, char** argv) {
 			PrintCounters();
 			//Application->gui->Render();
 			Application->window->SwapBuffers();
-            Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
 			UndoRedo();
 			ObjectToEditorCamera();
 		

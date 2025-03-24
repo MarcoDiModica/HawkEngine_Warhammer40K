@@ -64,6 +64,21 @@ public class PlayerCamera : MonoBehaviour
         currentOffset = LerpVector3(currentOffset, targetOffset, offsetSmoothness * deltaTime);
 
         cameraRef.SetOffset(currentOffset);
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+           SceneManager.LoadScene("Level2");
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SceneManager.LoadScene("Level1");
+        }
     }
 
     private float GetMagnitude(Vector2 vector)

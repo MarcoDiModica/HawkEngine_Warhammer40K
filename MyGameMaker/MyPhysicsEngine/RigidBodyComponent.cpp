@@ -29,13 +29,17 @@ void RigidbodyComponent::Init() {
 }
 
 void RigidbodyComponent::Start() {
-    ColliderComponent* collider = owner->GetComponent<ColliderComponent>();
-    if (!collider) {
-        owner->AddComponent<ColliderComponent>(physics);
-        collider = owner->GetComponent<ColliderComponent>();
-        collider->Start();
+    btRigidBody* collider = nullptr;
+    auto it = physics->gameObjectRigidBodyMap.find(owner);
+    if (it != physics->gameObjectRigidBodyMap.end()) {
+        collider = it->second;
     }
-    this->rigidBody = collider->GetRigidBody();
+    if (!collider) {
+        auto colliderComponent = owner->AddComponent<ColliderComponent>(physics);
+        colliderComponent->Start();
+		collider = colliderComponent->GetRigidBody();
+    }
+    this->rigidBody = collider;
     rigidBody->setActivationState(DISABLE_DEACTIVATION); 
     Init();
 }

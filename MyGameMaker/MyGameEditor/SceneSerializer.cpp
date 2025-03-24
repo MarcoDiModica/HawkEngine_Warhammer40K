@@ -22,6 +22,7 @@
 #include "MyUIEngine/UIImageComponent.h"
 #include "MyUIEngine/UIButtonComponent.h"
 #include "MyParticlesEngine/ParticleFX.h"
+#include <MyPhysicsEngine/CapsuleColliderComponent.h>
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -259,6 +260,10 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 		}
 		else if (componentName == "MeshColliderComponent") {
 			auto meshCollider = gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+			meshCollider->decode(componentData);
+		}
+		else if (componentName == "CapsuleColliderComponent") {
+			auto meshCollider = gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 			meshCollider->decode(componentData);
 		}
 		else if (componentName == "SkeletalAnimationComponent") {

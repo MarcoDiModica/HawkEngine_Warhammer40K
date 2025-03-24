@@ -564,31 +564,7 @@ private:
     }
     #pragma endregion 
 
-    #pragma region MeshCollider
-    static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
-        if (!collider) return;
-
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("MeshCollider")) return;
-
-        glm::vec3 colliderPosition = collider->GetColliderPos();
-        float pos[3] = { colliderPosition.x, colliderPosition.y, colliderPosition.z };
-        if (ImGui::DragFloat3("Collider Position", pos, 0.1f)) {
-            collider->SetColliderPos(glm::vec3(pos[0], pos[1], pos[2]));
-        }
-
-        glm::vec3 size = collider->GetSize();
-        float sizeArray[3] = { size.x, size.y, size.z };
-        if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
-            collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
-        }
-
-        bool isTrigger = collider->IsTrigger();
-        if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
-            collider->SetTrigger(isTrigger);
-        }
-    }
-    #pragma endregion
+   
 
     #pragma region SkeletalAnimation
     static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal) 
@@ -634,35 +610,14 @@ private:
     }
     #pragma endregion 
 
-    #pragma region CapsuleCollider
+#pragma region CapsuleCollider
     static void DrawCapsuleColliderComponent(CapsuleColliderComponent* collider) {
         if (!collider) return;
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Collider")) return;
+        if (!ImGui::CollapsingHeader("CapsuleCollider")) return;
 
-        DrawColliderTransform(collider);
         DrawColliderProperties(collider);
-    }
-
-    static void DrawColliderTransform(CapsuleColliderComponent* collider) {
-
-        glm::quat colliderRotation = collider->GetColliderRotation();
-        glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
-        float rot[3] = {
-            glm::degrees(eulerRotation.x),
-            glm::degrees(eulerRotation.y),
-            glm::degrees(eulerRotation.z)
-        };
-        if (ImGui::DragFloat3("Collider Rotation", rot, 0.1f)) {
-            glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
-            collider->SetColliderRotation(newRotation);
-        }
-
-        bool resetRotation = false;
-        if (ImGui::Checkbox("Reset Rotation", &resetRotation) && resetRotation) {
-            collider->SetColliderRotation(glm::quat(glm::radians(glm::vec3(0, 0, 0))));
-        }
     }
 
     static void DrawColliderProperties(CapsuleColliderComponent* collider) {
@@ -684,7 +639,38 @@ private:
 		}
 
     }
-    #pragma endregion
+#pragma endregion
+
+#pragma region MeshCollider
+	static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
+		if (!collider) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("MeshCollider")) return;
+
+		DrawColliderProperties(collider);
+	}
+
+	static void DrawColliderProperties(MeshColliderComponent* collider) {
+		glm::vec3 size = collider->GetSize();
+		glm::vec3 offset = collider->GetOffset();
+		float sizeArray[3] = { size.x, size.y, size.z };
+
+		bool isTrigger = collider->IsTrigger();
+		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+			collider->SetTrigger(isTrigger);
+		}
+
+		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
+			collider->SetOffset(offset);
+		}
+
+		if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+		}
+
+	}
+#pragma endregion
 
 #pragma region Collider
 	static void DrawColliderComponent(ColliderComponent* collider) {
@@ -693,28 +679,7 @@ private:
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (!ImGui::CollapsingHeader("Collider")) return;
 
-		DrawColliderTransform(collider);
 		DrawColliderProperties(collider);
-	}
-
-	static void DrawColliderTransform(ColliderComponent* collider) {
-
-		glm::quat colliderRotation = collider->GetColliderRotation();
-		glm::vec3 eulerRotation = glm::eulerAngles(colliderRotation);
-		float rot[3] = {
-			glm::degrees(eulerRotation.x),
-			glm::degrees(eulerRotation.y),
-			glm::degrees(eulerRotation.z)
-		};
-		if (ImGui::DragFloat3("Collider Rotation", rot, 0.1f)) {
-			glm::quat newRotation = glm::quat(glm::radians(glm::vec3(rot[0], rot[1], rot[2])));
-			collider->SetColliderRotation(newRotation);
-		}
-
-		bool resetRotation = false;
-		if (ImGui::Checkbox("Reset Rotation", &resetRotation) && resetRotation) {
-			collider->SetColliderRotation(glm::quat(glm::radians(glm::vec3(0, 0, 0))));
-		}
 	}
 
 	static void DrawColliderProperties(ColliderComponent* collider) {

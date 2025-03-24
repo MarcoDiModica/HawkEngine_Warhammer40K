@@ -34,41 +34,53 @@ public:
 
     void SetSize(const glm::vec3& newSize);
 
-    void SetMass(float newMass);
-
     void SetActive(bool active);
 
     void SnapToPosition();
 
-    void SetColliderMesh();
+    glm::vec3 GetOffset();
 
-    btRigidBody* GetRigidBody() const { return rigidBody; }
+    void SetOffset(const glm::vec3& newoffset);
+
+    btRigidBody* GetCollider() const { return meshCollider; }
 
 
 private:
-    btRigidBody* rigidBody;
+    btRigidBody* meshCollider;
     PhysicsModule* physics;
+    glm::vec3 size = glm::vec3(1.0f);
+    glm::vec3 offset = glm::vec3(0.0f);
 
-    glm::vec3 size;
-    float mass;
-    bool isForStreetLocal;
+    bool hasSnappedToInitialPosition = false;
 
-    bool snapToPosition = false;
-    bool isFromDecode = false;
     void CreateMeshCollider();
+
 
 protected:
     friend class SceneSerializer;
 
     YAML::Node encode() override
     {
-        return YAML::Node();
+        YAML::Node node;
+        node["size"] = std::vector<float>{ size.x, size.y, size.z };
+        node["offset"] = std::vector<float>{ offset.x, offset.y, offset.z };
+        node["isTrigger"] = IsTrigger();
+        return node;
     }
 
     bool decode(const YAML::Node& node) override
     {
-        //Start();
-		isFromDecode = true;
-        return false;
+        if (node["size"]) {
+            auto sizeVec = node["size"].as<std::vector<float>>();
+            size = glm::vec3(sizeVec[0], sizeVec[1], sizeVec[2]);
+        }
+        if (node["offset"]) {
+            auto offsetVec = node["offset"].as<std::vector<float>>();
+            offset = glm::vec3(offsetVec[0], offsetVec[1], offsetVec[2]);
+        }
+        if (node["isTrigger"]) {
+            SetTrigger(node["isTrigger"].as<bool>());
+        }
+        return true;
     }
 };

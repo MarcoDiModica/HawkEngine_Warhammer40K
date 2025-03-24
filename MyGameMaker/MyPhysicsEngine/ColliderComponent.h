@@ -38,8 +38,6 @@ public:
 
     void SetActive(bool active);
 
-    bool GetSnapToPosition() const { return snapToPosition; }
-    void SetSnapToPosition(bool value) { snapToPosition = value; }
     void SnapToPosition();
 
 
@@ -64,8 +62,6 @@ private:
     PhysicsModule* physics;
     glm::vec3 size = glm::vec3(1.0f);
 	glm::vec3 offset = glm::vec3(0.0f);
-
-	bool snapToPosition = false;
  
     bool hasSnappedToInitialPosition = false;
 

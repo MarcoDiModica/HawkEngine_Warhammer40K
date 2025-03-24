@@ -177,53 +177,13 @@ glm::vec3 ColliderComponent::GetSize() {
 
 
 glm::vec3 ColliderComponent::GetOffset() {
-    if (!collider || !owner) return glm::vec3(0.0f);
-
-    Transform_Component* transform = owner->GetTransform();
-    if (!transform) return glm::vec3(0.0f);
-
-    btTransform trans;
-    collider->getMotionState()->getWorldTransform(trans);
-    btVector3 rbPos = trans.getOrigin();
-
-    glm::vec3 ownerPos = transform->GetPosition();
-    return glm::vec3(rbPos.getX(), rbPos.getY(), rbPos.getZ()) - ownerPos;
+    return offset;
 }
 
 void ColliderComponent::SetOffset(const glm::vec3& newoffset) {
     if (offset != newoffset) {
         offset = newoffset;
     }
-
-    if (!collider || !owner) {
-        offset = glm::vec3(0.0f);
-        return;
-    }
-
-    btTransform currentTransform;
-    if (collider->getMotionState()) {
-        collider->getMotionState()->getWorldTransform(currentTransform);
-    }
-    else {
-        currentTransform = collider->getWorldTransform();
-    }
-
-    btQuaternion currentRotation = currentTransform.getRotation();
-    currentTransform.setRotation(currentRotation);
-    glm::vec3 worldPosition = owner->GetTransform()->GetPosition();
-    currentTransform.setOrigin(btVector3(worldPosition.x + offset.x,
-        worldPosition.y + offset.y,
-        worldPosition.z + offset.z));
-
-
-    if (collider->getMotionState()) {
-        collider->getMotionState()->setWorldTransform(currentTransform);
-    }
-    else {
-        collider->setWorldTransform(currentTransform);
-    }
-
-    collider->setCenterOfMassTransform(currentTransform);
 }
 
 
@@ -248,13 +208,13 @@ void ColliderComponent::SetActive(bool active) {
     }
 }
 
-//Researching SnapToPosition with Rigidbody on play mode
 void ColliderComponent::SnapToPosition() {
     if (!owner || !collider) return;
     RigidbodyComponent* rigidbody = owner->GetComponent<RigidbodyComponent>();
     Transform_Component* goTransform = owner->GetTransform();
     if (!goTransform) return;
 
+    //For release
     if (physics->IsForRelease()) {
         if (hasSnappedToInitialPosition) return;
 
@@ -276,7 +236,7 @@ void ColliderComponent::SnapToPosition() {
 
                 hasSnappedToInitialPosition = true;
             }
-        }        
+        }
     }
     else
     {
@@ -317,9 +277,9 @@ void ColliderComponent::SnapToPosition() {
     bool scaleChanged = glm::distance(currentColliderScale, finalScale) >= 0.001f;
 
     if (!positionChanged && !rotationChanged && !scaleChanged) {
-        return; 
+        return;
     }
-    // Aplicar la transformación al rigidBody
+
     btTransform transform;
     transform.setIdentity();
 
@@ -332,22 +292,46 @@ void ColliderComponent::SnapToPosition() {
         shape->setLocalScaling(scaledSize);
     }
 
-    transform.setOrigin(btVector3(adjustedPosition.x, adjustedPosition.y, adjustedPosition.z));
-    btQuaternion btRot(worldRotation.x, worldRotation.y, worldRotation.z, worldRotation.w);
-    transform.setRotation(btRot);
-
+    //Set Transform
     if (collider->getMotionState()) {
-        collider->getMotionState()->setWorldTransform(transform);
+        collider->getMotionState()->getWorldTransform(currentTransform);
     }
     else {
-        collider->setWorldTransform(transform);
+        currentTransform = collider->getWorldTransform();
     }
 
-    collider->setCenterOfMassTransform(transform);
-   
-	//Set Offset
-	SetOffset(offset);
+    glm::vec3 adjustedOffset = offset;
+    glm::quat combinedRotation = worldRotation;
+    if (owner->GetParent()) {
+        Transform_Component* parentTransform = owner->GetParent()->GetTransform();
+        if (parentTransform) {
+            glm::quat parentRotation = parentTransform->GetRotation();
+            adjustedOffset = parentRotation * offset;
+            combinedRotation = parentRotation * worldRotation;
+        }
+    }
+    currentTransform.setOrigin(btVector3(worldPosition.x + adjustedOffset.x,
+        worldPosition.y + adjustedOffset.y,
+        worldPosition.z + adjustedOffset.z));
+
+    btQuaternion btCombinedRotation(
+        static_cast<btScalar>(combinedRotation.x),
+        static_cast<btScalar>(combinedRotation.y),
+        static_cast<btScalar>(combinedRotation.z),
+        static_cast<btScalar>(combinedRotation.w)
+    );
+    currentTransform.setRotation(btCombinedRotation);
+
+    if (collider->getMotionState()) {
+        collider->getMotionState()->setWorldTransform(currentTransform);
+    }
+    else {
+        collider->setWorldTransform(currentTransform);
+    }
+
+    collider->setCenterOfMassTransform(currentTransform);
 }
+
 
 void ColliderComponent::CreateCollider() {
     if (!owner) return;

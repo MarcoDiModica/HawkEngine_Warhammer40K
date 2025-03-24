@@ -247,11 +247,18 @@ void PhysicsModule::DrawDebugDrawer() {
                     btVector3 p1(v1[0], v1[1], v1[2]);
                     btVector3 p2(v2[0], v2[1], v2[2]);
 
+                    // Aplicar escala antes de transformar los vértices
+
+                    p0 *= rigidBody->getCollisionShape()->getLocalScaling();
+                    p1 *= rigidBody->getCollisionShape()->getLocalScaling();
+                    p2 *= rigidBody->getCollisionShape()->getLocalScaling();
+      
+
                     p0 = transform * p0;
                     p1 = transform * p1;
                     p2 = transform * p2;
 
-                    debugDrawer->drawTriangle(glm::vec3(p0.x(), p0.y(), p0.z()),
+                    debugDrawer->drawScaledTriangle(glm::vec3(p0.x(), p0.y(), p0.z()),
                         glm::vec3(p1.x(), p1.y(), p1.z()),
                         glm::vec3(p2.x(), p2.y(), p2.z()),
                         glm::vec3(0.0f, 1.0f, 0.0f));

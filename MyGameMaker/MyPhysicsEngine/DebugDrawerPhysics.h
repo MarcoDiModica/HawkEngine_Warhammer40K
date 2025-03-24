@@ -23,6 +23,8 @@ public:
 
     void drawTriangle(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& color);
 
+    void drawScaledTriangle(const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& color);
+
 private:
     void drawWiredLine(const glm::vec3& start, const glm::vec3& end, const glm::vec3& color);
     DebugDrawModes mode;

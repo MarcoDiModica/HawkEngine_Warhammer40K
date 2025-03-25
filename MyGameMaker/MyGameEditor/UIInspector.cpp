@@ -661,7 +661,7 @@ private:
 			collider->SetTrigger(isTrigger);
 		}
 
-		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
+		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f)) {
 			collider->SetOffset(offset);
 		}
 

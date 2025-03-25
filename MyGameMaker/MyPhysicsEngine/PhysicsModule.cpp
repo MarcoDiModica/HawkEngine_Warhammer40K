@@ -9,7 +9,7 @@
 #include "MeshColliderComponent.h"
 
 
-constexpr float fixedDeltaTime = 0.002; // 60 updates per second
+constexpr float fixedDeltaTime = 0.01; // 60 updates per second //With 0.02 it goes a little bit laggy
 float accumulatedTime = 0.0f;
 
 
@@ -57,11 +57,7 @@ void PhysicsModule::SyncTransforms() {
     // Compute interpolation factor (between 0 and 1)
     float interpolationFactor = accumulatedTime / fixedDeltaTime;
 
-    for (auto it = gameObjectRigidBodyMap.begin(); it != gameObjectRigidBodyMap.end();) {
-        GameObject* gameObject = it->first;
-        btRigidBody* rigidBody = it->second;
-        ++it;
-
+    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {      
 
         if (!gameObject->HasComponent<RigidbodyComponent>())
             continue;
@@ -75,7 +71,7 @@ void PhysicsModule::SyncTransforms() {
         // Get previous transform (initialize if not present)
         if (previousTransformMap.find(gameObject) == previousTransformMap.end())
             previousTransformMap[gameObject] = currentBtTrans;
-        btTransform previousBtTrans = previousTransformMap[gameObject];
+        btTransform& previousBtTrans = previousTransformMap[gameObject];
 
         // --- Interpolate Position ---
         btVector3 prevOrigin = previousBtTrans.getOrigin();
@@ -129,7 +125,6 @@ void PhysicsModule::SyncTransforms() {
             goTransform->SetLocalPosition(adjustedPosition);
             goTransform->SetRotationQuat(worldRotation);
         }
-       
     }
 }
 

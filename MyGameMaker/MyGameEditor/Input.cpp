@@ -23,7 +23,7 @@
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 #include <SDL2/SDL.h> // idk what to do to remove this
 #include <string>
-#include <iostream> //2,1 1,7 1,1
+#include <iostream> 
 #include <filesystem>
 #include "../MyShadersEngine/ShaderComponent.h"
 

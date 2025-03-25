@@ -11,6 +11,7 @@ BaseColliderComponent::BaseColliderComponent(GameObject* owner, PhysicsModule* p
 }
 
 BaseColliderComponent::~BaseColliderComponent() {
+    Destroy();
 }
 
 
@@ -41,27 +42,21 @@ void BaseColliderComponent::Destroy() {
 
 //OnCollisions y triggers 
 void BaseColliderComponent::OnCollisionEnter(BaseColliderComponent* other) {
-    std::cout << "EnterCollision" << std::endl;
 }
 
 void BaseColliderComponent::OnCollisionStay(BaseColliderComponent* other) {
-    std::cout << "StayColliding" << std::endl;
 }
 
 void BaseColliderComponent::OnCollisionExit(BaseColliderComponent* other) {
-    std::cout << "ExitCollision" << std::endl;
 }
 
 void BaseColliderComponent::OnTriggerEnter(BaseColliderComponent* other) {
-    std::cout << "EnterCollisionTriggered" << std::endl;
 }
 
 void BaseColliderComponent::OnTriggerStay(BaseColliderComponent* other) {
-    std::cout << "StayCollidingTriggered" << std::endl;
 }
 
 void BaseColliderComponent::OnTriggerExit(BaseColliderComponent* other) {
-    std::cout << "ExitCollisionTriggered" << std::endl;
 }
 
 

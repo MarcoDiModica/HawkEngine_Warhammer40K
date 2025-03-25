@@ -91,6 +91,8 @@ void MeshColliderComponent::CreateCollider() {
     auto vertices = model->GetModelData().vertexData;
     auto indices = model->GetModelData().indexData;
 
+
+
     if (vertices.empty() || indices.empty()) return;
 
     btTriangleMesh* triangleMesh = new btTriangleMesh();
@@ -141,9 +143,10 @@ void MeshColliderComponent::CreateCollider() {
 
     btVector3 btSize = shape->getLocalScaling();
     if (size != glm::vec3(1.0f, 1.0f, 1.0f)) {
-        btSize = btVector3(size.x, size.y, size.z);
-        shape->setLocalScaling(btSize);
+        /*btSize = btVector3(size.x, size.y, size.z);
+        shape->setLocalScaling(btSize);*/
     }
+    size = glm::vec3(finalScale.x, finalScale.y, finalScale.z);
 
     physics->dynamicsWorld->addRigidBody(collider);
     physics->gameObjectRigidBodyMap[owner] = collider;

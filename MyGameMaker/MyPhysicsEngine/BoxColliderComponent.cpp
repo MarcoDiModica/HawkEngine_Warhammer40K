@@ -80,10 +80,8 @@ void BoxColliderComponent::CreateCollider() {
     btTransform startTransform;
     startTransform.setIdentity();
 
-    if (localSize.x == 0.0f && localSize.y == 0.0f && localSize.z == 0.0f) {
-        localSize = glm::vec3(1.0f, 1.0f, 1.0f);
-        bboxCenter = transform->GetLocalPosition();
-    }
+    localSize = glm::vec3(1.0f, 1.0f, 1.0f);
+    bboxCenter = transform->GetLocalPosition();
 
     shape = new btBoxShape(btVector3(localSize.x * 0.5, localSize.y * 0.5, localSize.z * 0.5));
     glm::vec3 localPosition = transform->GetLocalPosition();
@@ -111,8 +109,8 @@ void BoxColliderComponent::CreateCollider() {
     collider = new btRigidBody(rbInfo);
     btVector3 btSize = shape->getLocalScaling();
 	if (size != glm::vec3(1.0f, 1.0f, 1.0f)) {
-		btSize = btVector3(size.x, size.y, size.z);
-		shape->setLocalScaling(btSize);
+	/*	btSize = btVector3(size.x, size.y, size.z);
+		shape->setLocalScaling(btSize);*/
 	}
 
     // Add the collider to the physics world

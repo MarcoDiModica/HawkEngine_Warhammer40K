@@ -62,7 +62,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	player = CreateGameObject("Player");
+	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -178,10 +178,10 @@ bool Root::Update(double dt)
 	if (!hasAddedColliders) {
 		//AddCollidersEnv();
 		//AddCollidersEnvLvl1();
-		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	/*	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 		player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(0.4f, 1, 1));
-		player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));
+		player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.5f, 0));*/
 		hasAddedColliders = true;
 	}
 

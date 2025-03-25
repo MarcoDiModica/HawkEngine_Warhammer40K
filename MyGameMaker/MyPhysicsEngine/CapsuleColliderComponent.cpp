@@ -88,16 +88,12 @@ void CapsuleColliderComponent::CreateCollider() {
     BoundingBox bbox = owner->localBoundingBox();
     auto localSize = bbox.size();
 
-    glm::vec3 bboxCenter = owner->boundingBox().center();
-
     btCollisionShape* shape;
     btTransform startTransform;
     startTransform.setIdentity();
 
-    if (localSize.x == 0.0f && localSize.y == 0.0f && localSize.z == 0.0f) {
-        localSize = glm::vec3(1.0f, 1.0f, 1.0f);
-        bboxCenter = transform->GetLocalPosition();
-    }
+    localSize = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec3 bboxCenter = transform->GetLocalPosition();
 
 	shape = new btCapsuleShape(localSize.x, localSize.y);
     glm::vec3 localPosition = transform->GetLocalPosition();
@@ -124,7 +120,7 @@ void CapsuleColliderComponent::CreateCollider() {
     btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, shape, localInertia);
     collider = new btRigidBody(rbInfo);
     btVector3 btSize = shape->getLocalScaling();
-    size = glm::vec3(1.0f, 1.0f, 1.0f);
+    size = glm::vec3(finalScale.x, finalScale.y, finalScale.z);
 
     // Add the collider to the physics world
     physics->dynamicsWorld->addRigidBody(collider);

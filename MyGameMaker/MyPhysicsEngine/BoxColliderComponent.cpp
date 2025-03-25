@@ -74,16 +74,20 @@ void BoxColliderComponent::CreateCollider() {
     BoundingBox bbox = owner->localBoundingBox();
     auto localSize = bbox.size();
 
+
+    if (localSize.x == 0.0f && localSize.y == 0.0f && localSize.z == 0.0f) {
+        localSize = glm::vec3(1.0f, 1.0f, 1.0f);
+    }
+
     glm::vec3 bboxCenter = owner->boundingBox().center();
 
     btCollisionShape* shape;
     btTransform startTransform;
     startTransform.setIdentity();
 
-    localSize = glm::vec3(1.0f, 1.0f, 1.0f);
     bboxCenter = transform->GetLocalPosition();
 
-    shape = new btBoxShape(btVector3(localSize.x * 0.5, localSize.y * 0.5, localSize.z * 0.5));
+    shape = new btBoxShape(btVector3(1, 1, 1));
     glm::vec3 localPosition = transform->GetLocalPosition();
     startTransform.setOrigin(btVector3(bboxCenter.x + offset.x, bboxCenter.y + offset.y, bboxCenter.z + offset.z));
     glm::dquat localRot = transform->GetRotation();
@@ -108,10 +112,6 @@ void BoxColliderComponent::CreateCollider() {
     btRigidBody::btRigidBodyConstructionInfo rbInfo(0, motionState, shape, localInertia);
     collider = new btRigidBody(rbInfo);
     btVector3 btSize = shape->getLocalScaling();
-	if (size != glm::vec3(1.0f, 1.0f, 1.0f)) {
-	/*	btSize = btVector3(size.x, size.y, size.z);
-		shape->setLocalScaling(btSize);*/
-	}
 
     // Add the collider to the physics world
     physics->dynamicsWorld->addRigidBody(collider);

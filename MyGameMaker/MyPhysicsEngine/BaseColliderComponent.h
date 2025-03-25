@@ -78,6 +78,7 @@ protected:
         if (node["size"]) {
             auto sizeVec = node["size"].as<std::vector<float>>();
             size = glm::vec3(sizeVec[0], sizeVec[1], sizeVec[2]);
+            SetSize(size);
         }
         if (node["offset"]) {
             auto offsetVec = node["offset"].as<std::vector<float>>();

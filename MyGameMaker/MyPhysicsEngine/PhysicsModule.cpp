@@ -51,9 +51,7 @@ bool PhysicsModule::Awake() {
 }
 
 void PhysicsModule::SyncTransforms() {
-    // Map to store the previous physics transform for interpolation.
     static std::unordered_map<GameObject*, btTransform> previousTransformMap;
-    // Map to store initial offsets for root objects only.
     static std::unordered_map<GameObject*, glm::dvec3> offsetMap;
 
     // Compute interpolation factor (between 0 and 1)
@@ -442,17 +440,6 @@ void PhysicsModule::CheckCollisions() {
 
 
 bool PhysicsModule::Update(double dt) {
-    //if (linkPhysicsToScene) {
-    //    accumulatedTime += static_cast<float>(dt);
-    //    // Perform fixed steps
-    //    while (accumulatedTime >= fixedDeltaTime) {
-    //        dynamicsWorld->stepSimulation(fixedDeltaTime, 10);
-    //        accumulatedTime -= fixedDeltaTime;
-    //    }
-    //    // After stepping, interpolate and sync transforms
-    //    SyncTransforms();
-    //    CheckCollisions();
-    //}
 
 #ifndef _BUILD
     DrawDebugDrawer();
@@ -547,15 +534,6 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     }
 
     std::cout << "Global restitution set to: " << restitutionValue << "\n";
-}
-
-void PhysicsModule::SetBounciness(GameObject& go, float restitution) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-        rigidBody->setRestitution(restitution);
-        std::cout << "Bounciness set to " << restitution << " for GameObject.\n";
-    }
 }
 
 

@@ -80,8 +80,6 @@ bool BaseColliderComponent::IsTrigger() const {
     return (collider && (collider->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE));
 }
 
-
-//Se podria quitar
 glm::vec3 BaseColliderComponent::GetColliderPos() {
 
     btTransform trans;
@@ -90,7 +88,6 @@ glm::vec3 BaseColliderComponent::GetColliderPos() {
     return glm::vec3(pos.getX(), pos.getY(), pos.getZ());
 }
 
-//Se podria quitar
 glm::quat BaseColliderComponent::GetColliderRotation() {
 
     btTransform trans;
@@ -208,7 +205,6 @@ void BaseColliderComponent::SnapToPosition() {
         parentScale = owner->GetParent()->GetTransform()->GetScale();
     }
     glm::vec3 finalScale = worldScale * parentScale;
-    //glm::vec3 finalScale = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::vec3 worldPosition = goTransform->GetPosition();
     glm::quat worldRotation = goTransform->GetRotation();
     glm::vec3 adjustedPosition = worldPosition + worldRotation * (localCenter * finalScale);

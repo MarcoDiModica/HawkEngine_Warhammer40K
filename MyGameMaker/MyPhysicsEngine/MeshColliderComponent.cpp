@@ -10,8 +10,8 @@ MeshColliderComponent::MeshColliderComponent(GameObject* owner, PhysicsModule* p
 {
 	name = "MeshColliderComponent";
 	physics = physicsModule;
-	Start();
     updateInStop = true;
+	Start();
 }
 
 MeshColliderComponent::~MeshColliderComponent() {
@@ -33,8 +33,6 @@ void MeshColliderComponent::Update(float deltaTime) {
 std::unique_ptr<Component> MeshColliderComponent::Clone(GameObject* new_owner) {
     return std::make_unique<MeshColliderComponent>(new_owner, physics);
 }
-
-
 
 MonoObject* MeshColliderComponent::GetSharp()
 {
@@ -91,8 +89,6 @@ void MeshColliderComponent::CreateCollider() {
     auto vertices = model->GetModelData().vertexData;
     auto indices = model->GetModelData().indexData;
 
-
-
     if (vertices.empty() || indices.empty()) return;
 
     btTriangleMesh* triangleMesh = new btTriangleMesh();
@@ -146,7 +142,6 @@ void MeshColliderComponent::CreateCollider() {
         btSize = btVector3(size.x, size.y, size.z);
         shape->setLocalScaling(btSize);
     }
-    //size = glm::vec3(finalScale.x, finalScale.y, finalScale.z);
 
     physics->dynamicsWorld->addRigidBody(collider);
     physics->gameObjectRigidBodyMap[owner] = collider;

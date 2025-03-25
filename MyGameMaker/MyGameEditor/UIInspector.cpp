@@ -1649,22 +1649,18 @@ private:
 			}
 		}
 
-		if (!gameObject->HasComponent<BoxColliderComponent>()) {
+		if (!gameObject->HasComponent<BoxColliderComponent>() 
+			&& !gameObject->HasComponent<CapsuleColliderComponent>() 
+			&& !gameObject->HasComponent<MeshColliderComponent>()) 
+		{
 			if (ImGui::MenuItem("BoxCollider")) {
 				gameObject->AddComponent<BoxColliderComponent>(Application->physicsModule);
 			}
-		}
-
-		if (!gameObject->HasComponent<CapsuleColliderComponent>()) {
 			if (ImGui::MenuItem("CapsuleCollider")) {
 				gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 			}
-		}
-        
-        if (!gameObject->HasComponent<MeshColliderComponent>()) {
 			if (ImGui::MenuItem("MeshCollider")) {
 				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
-				gameObject->GetComponent<MeshColliderComponent>()->Start();
 			}
 		}
         

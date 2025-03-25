@@ -9,18 +9,6 @@
 
 
 class GameObject;
-struct VehicleInfo;
-struct PhysVehicle3D;
-
-struct FinalVehicleInfo {
-
-    FinalVehicleInfo(GameObject* chassis, std::vector<GameObject*> wheels, PhysVehicle3D* bulletVehicle) :
-        chassis(chassis), wheels(wheels), bulletVehicle(bulletVehicle) {}
-    GameObject* chassis;
-    std::vector<GameObject*> wheels;
-    PhysVehicle3D* bulletVehicle;
-};
-
 
 class PhysicsModule {
 public:
@@ -60,7 +48,6 @@ public:
 
     void SetColliderFriction(GameObject& go, float friction);
 
-    p2List<FinalVehicleInfo*> vehicles;
     btDiscreteDynamicsWorld* dynamicsWorld;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;
     bool linkPhysicsToScene = false;

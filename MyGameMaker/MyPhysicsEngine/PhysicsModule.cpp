@@ -2,8 +2,6 @@
 #include "PhysicsModule.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
-#include "PhysBody3D.h"
-#include "PhysVehicle3D.h"
 #include "RigidBodyComponent.h"
 #include <iostream>
 #include <glm/glm.hpp>

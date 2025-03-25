@@ -21,12 +21,6 @@
     <ClCompile Include="DebugDrawerPhysics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PhysBody3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysVehicle3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RigidBodyComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -53,13 +47,7 @@
     <ClInclude Include="p2List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PhysBody3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicsModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysVehicle3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Primitive.h">

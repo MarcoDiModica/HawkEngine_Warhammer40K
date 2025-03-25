@@ -112,9 +112,7 @@
     <ClCompile Include="BoxColliderComponent.cpp" />
     <ClCompile Include="DebugDrawerPhysics.cpp" />
     <ClCompile Include="MeshColliderComponent.cpp" />
-    <ClCompile Include="PhysBody3D.cpp" />
     <ClCompile Include="PhysicsModule.cpp" />
-    <ClCompile Include="PhysVehicle3D.cpp" />
     <ClCompile Include="RigidBodyComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -124,9 +122,7 @@
     <ClInclude Include="DebugDrawerPhysics.h" />
     <ClInclude Include="MeshColliderComponent.h" />
     <ClInclude Include="p2List.h" />
-    <ClInclude Include="PhysBody3D.h" />
     <ClInclude Include="PhysicsModule.h" />
-    <ClInclude Include="PhysVehicle3D.h" />
     <ClInclude Include="Primitive.h" />
     <ClInclude Include="RigidBodyComponent.h" />
   </ItemGroup>

@@ -44,7 +44,7 @@ public class Shotgun : BaseWeapon
 
                 // TODO: add custom mesh to the projectile
                 projectile.AddComponent<MeshRenderer>();
-                projectile.AddComponent<Collider>();
+                projectile.AddComponent<BoxCollider>();
 
                 if (projectile != null)
                 {

@@ -74,8 +74,10 @@
     <Compile Include="Audio.cs" />
     <Compile Include="BaseWeapon.cs" />
     <Compile Include="Boltgun.cs" />
+    <Compile Include="BoxCollider.cs" />
     <Compile Include="BulletData.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="CapsuleCollider.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="EnemyController.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="MenuButtons.cs" />
+    <Compile Include="MeshCollider.cs" />
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />

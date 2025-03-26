@@ -16,7 +16,7 @@ public class GrenadeLauncher : BaseAbilities
     private bool exploded = false;
     GameObject grenade;
     Rigidbody rigidbody;
-    Collider collider;
+    BoxCollider collider;
     bool canThrow = true;
     public override void Start()
     {

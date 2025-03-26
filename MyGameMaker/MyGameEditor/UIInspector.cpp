@@ -43,6 +43,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyUIEngine/UIButtonComponent.h"
 
 typedef unsigned int guint32;
 #pragma endregion
@@ -1700,6 +1701,15 @@ private:
 			}
 		}
 
+		if (!gameObject->HasComponent<UIButtonComponent>()) {
+			if (ImGui::MenuItem("Button")) {
+				if (!gameObject->HasComponent<UIImageComponent>()) {
+					gameObject->AddComponent<UIImageComponent>();
+					gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+				}
+				gameObject->AddComponent<UIButtonComponent>();
+			}
+		}
 		//Aqui mas componentes
 	}
 

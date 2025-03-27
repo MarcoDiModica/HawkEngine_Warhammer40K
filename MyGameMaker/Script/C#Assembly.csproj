@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Audio.cs" />
     <Compile Include="BaseWeapon.cs" />
+    <Compile Include="BlackHeart.cs" />
     <Compile Include="Boltgun.cs" />
     <Compile Include="BoxCollider.cs" />
     <Compile Include="BulletData.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Grenade.cs" />
     <Compile Include="GrenadeLauncher.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="IPowerUp.cs" />
     <Compile Include="MenuButtons.cs" />
     <Compile Include="MeshCollider.cs" />
     <Compile Include="MeshRenderer.cs" />

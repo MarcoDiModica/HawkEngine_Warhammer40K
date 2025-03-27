@@ -17,6 +17,10 @@ public class PlayerDash : MonoBehaviour
 
     public bool IsDashing => isDashing;
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();

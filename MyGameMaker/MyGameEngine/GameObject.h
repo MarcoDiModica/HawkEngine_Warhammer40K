@@ -47,7 +47,7 @@ public:
     template <IsComponent T>
     bool HasComponent() const;
 
-    //void Awake();
+    void Awake();
     void Start();
     //void FixedUpdate(float fixedDeltaTime);
     void Update(float deltaTime);

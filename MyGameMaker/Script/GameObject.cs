@@ -56,10 +56,12 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddScript(string scriptName);
-        
+
 
         //----LifeCycleMethods----// 
         //these will be called from C++ editor
+        public virtual void Awake() { }
+
         public virtual void Start() { }
 
         public virtual void Update() { }

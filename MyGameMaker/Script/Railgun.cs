@@ -11,6 +11,8 @@ public class Railgun : BaseWeapon
     private float coolingTime = 3f;
     private float coolTimer = 0f;
     private float reloadTimer = 0f;
+    private PlayerController playerController;
+    public PlayerData playerData;
 
     private Audio sound;
     private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
@@ -25,6 +27,10 @@ public class Railgun : BaseWeapon
 
     public RailgunMode railgunMode = RailgunMode.SEMIAUTOMATIC;
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
         shootCadence = 0.66f;
@@ -36,6 +42,8 @@ public class Railgun : BaseWeapon
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
     }
 
     public override void Update(float deltaTime)
@@ -78,7 +86,10 @@ public class Railgun : BaseWeapon
         isReloading = false;
         if (currentMagazineAmmo > 0 && isCooling == false && isRecharged)
         {
-            currentMagazineAmmo--;
+            if (!playerData.infiniteBullets)
+            {
+                currentMagazineAmmo--;
+            }
             sound?.LoadAudio(railgunShot);
             sound?.Play();
             // Shoot logic

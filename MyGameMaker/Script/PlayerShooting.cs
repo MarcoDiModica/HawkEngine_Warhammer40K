@@ -11,6 +11,9 @@ public class PlayerShooting : MonoBehaviour
     private Transform transform;
     private float shootTimer = 0f;
 
+    private PlayerController playerController;
+    public PlayerData playerData;
+
     // Guns Scripts
     private Boltgun boltgun;
     private Shotgun shotgun;
@@ -35,6 +38,10 @@ public class PlayerShooting : MonoBehaviour
         return (int)currentGun;
     }
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
@@ -76,19 +83,22 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("ERROR: PlayerShooting requires a Ra ilgun component!");
         }
 
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
+
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                shootCooldown = 1f / boltgun.shootCadence;
+                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 Engineson.print($"Shoot Cooldown: {shootCooldown}");
                 break;
             case GunType.SHOTGUN:
-                shootCooldown = 1f / shotgun.shootCadence;
+                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 break;
             case GunType.RAILGUN:
-                shootCooldown = 1f / railgun.shootCadence;
+                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 break;
         }
@@ -210,6 +220,25 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+    public void ApplyBonusCadence()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
+                shootTimer = 0;
+                break;
+            case GunType.SHOTGUN:
+                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
+                shootTimer = 0;
+                break;
+            case GunType.RAILGUN:
+                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
+                shootTimer = 0;
+                break;
+        }
+    }
+
     private void ChangeWeaponRight()
     {
 
@@ -229,19 +258,19 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                shootCooldown = 1f / boltgun.shootCadence;
+                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(boltgunEquiped);
                 sound?.Play();
                 break;
             case GunType.SHOTGUN:
-                shootCooldown = 1f / shotgun.shootCadence;
+                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(shotgunEquiped);
                 sound?.Play();
                 break;
             case GunType.RAILGUN:
-                shootCooldown = 1f / railgun.shootCadence;
+                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(railgunEquiped);
                 sound?.Play();
@@ -268,19 +297,19 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                shootCooldown = 1f / boltgun.shootCadence;
+                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(boltgunEquiped);
                 sound?.Play();
                 break;
             case GunType.SHOTGUN:
-                shootCooldown = 1f / shotgun.shootCadence;
+                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(shotgunEquiped);
                 sound?.Play();
                 break;
             case GunType.RAILGUN:
-                shootCooldown = 1f / railgun.shootCadence;
+                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(railgunEquiped);
                 sound?.Play();

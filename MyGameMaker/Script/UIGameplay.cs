@@ -11,6 +11,11 @@ public class UIGameplay : MonoBehaviour
     private UITransform transform;
     private PlayerShooting playerShootingScript;
 
+    public override void Awake()
+    {
+        
+    }
+
     public override void Start()
     {
         playerData = new PlayerData();

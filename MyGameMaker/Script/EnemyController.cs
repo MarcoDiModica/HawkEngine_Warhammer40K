@@ -44,6 +44,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
 

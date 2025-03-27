@@ -7,6 +7,10 @@ public class PlayerAnimations : MonoBehaviour
     private SkeletalAnimation esk;
     int animIndex = 0;
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
         esk = gameObject.GetComponent<SkeletalAnimation>();

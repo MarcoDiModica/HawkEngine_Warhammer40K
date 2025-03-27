@@ -140,6 +140,8 @@ bool Root::Start()
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	floorCollider->Start();
+	SceneManagement->Awake();
+	SceneManagement->Start();
 
 	//CreateGameplayUI();
 	//CreateMainMenuUI();

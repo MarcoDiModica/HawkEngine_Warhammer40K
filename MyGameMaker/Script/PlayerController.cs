@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour
     private PlayerShooting playerShooting;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
-    private float currentTime = 0;
-    private float maxIdleTimer = 1.0f;
     private bool isIdle = false;
     private bool isRunning = false;
     private bool isShootingStanding = false;
@@ -22,7 +20,9 @@ public class PlayerController : MonoBehaviour
     private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
     private bool isFootstepPlaying = false;
 
-    public override void Start()
+    public PlayerData playerData;
+
+    public override void Awake()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
@@ -33,11 +33,17 @@ public class PlayerController : MonoBehaviour
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
         sound = gameObject.GetComponent<Audio>();
         gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
+        playerData = new PlayerData();
 
         if (playerInput == null || playerMovement == null || playerDash == null || playerShooting == null || playerMesh == null)
         {
             Engineson.print("ERROR: PlayerController is missing required components!");
         }
+    }
+
+    public override void Start()
+    {
+        
     }
 
     public override void Update(float deltaTime)

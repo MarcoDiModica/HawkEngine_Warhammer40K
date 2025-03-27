@@ -39,6 +39,9 @@ MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
 	owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::PBR);
 }
 
+void MeshRenderer::Awake() {
+}
+
 void MeshRenderer::Start() {
 }
 

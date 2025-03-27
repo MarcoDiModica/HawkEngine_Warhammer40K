@@ -39,6 +39,7 @@ namespace HawkEngine
             Engineson.print("Audio default constructor");
         }
 
+        public override void Awake() { }
         public override void Start() { }
         public override void Update(float deltaTime) { }
         public override void Destroy() { }

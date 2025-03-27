@@ -10,6 +10,11 @@ public class PlayerInput : MonoBehaviour
     private bool isReloadPressed = false;
     private bool isAbility1Pressed = false;
     private bool isAbility2Pressed = false;
+
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
     }

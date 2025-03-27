@@ -14,6 +14,9 @@ BaseColliderComponent::~BaseColliderComponent() {
     Destroy();
 }
 
+void BaseColliderComponent::Awake() {
+	
+}
 
 void BaseColliderComponent::Start() {
     if (!collider) {

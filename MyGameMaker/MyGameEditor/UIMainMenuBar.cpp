@@ -89,6 +89,7 @@ bool UIMainMenuBar::Draw()
 					pressing_play = false;
 					Application->play = true;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+					SceneManagement->Awake();
 					SceneManagement->Start();
 					Application->scene_serializer->Serialize(std::string("EnigneAssets/" + Application->root->GetActiveScene()->GetName() + ".scene"), true);
 					Application->physicsModule->linkPhysicsToScene = true;

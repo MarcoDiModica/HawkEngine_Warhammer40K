@@ -7,6 +7,14 @@ public class Shotgun : BaseWeapon
     private Audio sound;
     private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
     private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
+
+    private PlayerController playerController;
+    public PlayerData playerData;
+
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
         shootCadence = 1f;
@@ -18,6 +26,8 @@ public class Shotgun : BaseWeapon
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
     }
 
     public override void Update(float deltaTime)
@@ -29,7 +39,10 @@ public class Shotgun : BaseWeapon
     {
         if (currentMagazineAmmo > 0)
         {
-            currentMagazineAmmo--;
+            if (!playerData.infiniteBullets)
+            {
+                currentMagazineAmmo--;
+            }
             sound?.LoadAudio(shotgunShot);
             sound?.Play();
             // Shoot logic

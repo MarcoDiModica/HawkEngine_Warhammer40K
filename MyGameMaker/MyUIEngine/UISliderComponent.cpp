@@ -11,6 +11,10 @@ UISliderComponent::UISliderComponent(GameObject* owner) : Component(owner)
 	name = "UISliderComponent";
 }
 
+void UISliderComponent::Awake()
+{
+}
+
 void UISliderComponent::Start()
 {
 }

@@ -6,10 +6,16 @@ public class Boltgun : BaseWeapon
 {
 
     GrenadeLauncher grenadeLauncher;
+    private PlayerController playerController;
+    public PlayerData playerData;
     private Audio sound;
     private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
     private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
 
+    public override void Awake()
+    {
+        
+    }
     public override void Start()
     {
         shootCadence = 3f;
@@ -22,6 +28,8 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         sound = gameObject.GetComponent<Audio>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
     }
 
     public override void Update(float deltaTime)
@@ -33,7 +41,11 @@ public class Boltgun : BaseWeapon
     {
         if (currentMagazineAmmo > 0)
         {
-            currentMagazineAmmo--;
+            if (!playerData.infiniteBullets)
+            {
+                currentMagazineAmmo--;
+            }
+                
             sound?.LoadAudio(boltgunShot);
             sound?.Play();
             // Shoot logic

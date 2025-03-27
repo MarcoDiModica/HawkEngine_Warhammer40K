@@ -17,6 +17,10 @@ public class Grenade : MonoBehaviour
     public bool needsDestroy = false;
     float deathTimerPrevention = 0;
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
       

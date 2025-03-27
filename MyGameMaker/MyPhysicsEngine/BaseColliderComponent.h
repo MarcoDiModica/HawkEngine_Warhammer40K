@@ -10,6 +10,7 @@ public:
     BaseColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
     ~BaseColliderComponent() override;
 
+	void Awake() override;
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;

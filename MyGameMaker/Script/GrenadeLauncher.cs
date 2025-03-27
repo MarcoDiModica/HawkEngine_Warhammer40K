@@ -18,6 +18,11 @@ public class GrenadeLauncher : BaseAbilities
     Rigidbody rigidbody;
     BoxCollider collider;
     bool canThrow = true;
+
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
        

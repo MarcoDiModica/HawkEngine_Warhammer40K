@@ -158,6 +158,35 @@ GameObject& GameObject::operator=(GameObject&& other) noexcept
 	return *this;
 }
 
+void GameObject::Awake()
+{
+    for (auto& component : components)
+    {
+        if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+            component.second->Awake();
+        }
+        else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
+        {
+            if (component.second->updateInStop)
+            {
+                component.second->Awake();
+            }
+        }
+    }
+
+    if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+        for (auto& scriptComponent : scriptComponents)
+        {
+            scriptComponent->Awake();
+        }
+    }
+
+    for (auto& child : children)
+    {
+        child->Awake();
+    }
+}
+
 void GameObject::Start()
 {
     for (auto& component : components)

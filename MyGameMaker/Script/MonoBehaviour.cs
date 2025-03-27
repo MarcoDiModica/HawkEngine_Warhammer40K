@@ -11,6 +11,11 @@ public  class MonoBehaviour
 
     public UIntPtr CplusplusInstance;
 
+    public virtual void Awake()
+    {
+
+    }
+
     public virtual void Start()
     {
         

@@ -53,6 +53,10 @@ SoundComponent::~SoundComponent() {
 	m_AudioAsset.reset();
 }
 
+void SoundComponent::Awake() {
+	
+}
+
 void SoundComponent::Start() {
     if (!m_AudioPath.empty() && m_AutoPlay) {
         LoadAudio(m_AudioPath, m_IsMusic);

@@ -17,6 +17,9 @@ CapsuleColliderComponent::~CapsuleColliderComponent() {
     Destroy();
 }
 
+void CapsuleColliderComponent::Awake() {
+}
+
 void CapsuleColliderComponent::Start() {
     if (!collider) {
         CreateCollider();

@@ -11,6 +11,7 @@ public:
     CapsuleColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
     ~CapsuleColliderComponent() override;
 
+	void Awake() override;
     void Start() override;
     void Update(float deltaTime) override;
 

@@ -31,6 +31,10 @@ void RigidbodyComponent::Init() {
 	SetDamping(damping.x, damping.y);
 }
 
+void RigidbodyComponent::Awake() {
+	
+}
+
 void RigidbodyComponent::Start() {
     auto boxCollider = owner->GetComponent<BoxColliderComponent>();
     auto capsuleCollider = owner->GetComponent<CapsuleColliderComponent>();

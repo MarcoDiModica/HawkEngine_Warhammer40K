@@ -14,9 +14,11 @@ class UIMainMenuBar : public UIElement
 private:
 	Image play_image;
 	Image stop_image;
+	Image pause_image;
 
 
 	bool pressing_play = false;
+	bool isPaused = false;
 
 public:
 	UIMainMenuBar(UIType type, std::string name);

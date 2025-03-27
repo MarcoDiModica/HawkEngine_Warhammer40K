@@ -1,4 +1,3 @@
-// MeshColliderComponent.h
 #pragma once
 
 #include "../MyGameEngine/Component.h"
@@ -7,18 +6,20 @@
 #include <glm/glm.hpp>
 #include <memory>
 
-class MeshColliderComponent : public BaseColliderComponent {
+class CapsuleColliderComponent : public BaseColliderComponent {
 public:
-    MeshColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
-    ~MeshColliderComponent() override;
+    CapsuleColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
+    ~CapsuleColliderComponent() override;
 
     void Start() override;
     void Update(float deltaTime) override;
 
     ComponentType GetType() const override { return ComponentType::COLLIDER; }
+
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
-    void CreateCollider() override;
-
+    MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
+
+    void CreateCollider() override;
 };

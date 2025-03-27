@@ -12,7 +12,7 @@
 #include "MyGameEngine/Material.h"
 #include "MyGameEngine/ModelImporter.h"
 #include "../MyParticlesEngine/ParticleFX.h"
-#include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/BoxColliderComponent.h"
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
 #include "Input.h"
@@ -29,6 +29,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
+#include <MyPhysicsEngine/CapsuleColliderComponent.h>
 
 class GameObject;
 
@@ -61,7 +62,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	player = CreateGameObject("Player");
+	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -78,10 +79,15 @@ bool Root::Start()
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	ParentGameObject(*playerMesh, *player);
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*playerMesh, *player);
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
 		
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
@@ -118,41 +124,36 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//////Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
-	hormagauntMesh->SetName("HormagauntMesh");
-	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	//auto hormagaunt = CreateGameObject("Hormagaunt");
+	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	////enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
+	//hormagauntMesh->SetName("HormagauntMesh");
+	//ParentGameObject(*hormagauntMesh, *hormagaunt);
+	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
-	CreateGameplayUI();
+
+	auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	floorCollider->Start();
+
+	//CreateGameplayUI();
 	//CreateMainMenuUI();
-	
-    SceneManagement->Start();
+
+#ifdef _BUILD
+	Application->play = true;
+	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	Application->physicsModule->linkPhysicsToScene = true;
+	SceneManagement->Start();
+#endif // _BUILD
+
+
 
     return true;
-}
-
-static void AddCollidersEnv() {
-	for (const auto& go : environment->GetChildren()) {
-
-		if (go->GetName() == "Mesh.dnsja") {
-			continue;
-		}
-		else if (go->GetName() == "Mesh.dnsja") {
-			auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
-			collider->Start();
-		}
-		else
-		{
-			auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
-			collider->Start();
-		}
-	
-	}
 }
 
 bool hasAddedColliders = false;	
@@ -160,11 +161,19 @@ bool hasAddedColliders = false;
 bool Root::Update(double dt)
 {
 	if (!hasAddedColliders) {
-		//AddCollidersEnv();
-		//AddCollidersEnvLvl1();
-		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
-		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 		hasAddedColliders = true;
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+		Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
 	}
 
 	return true;
@@ -213,39 +222,6 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
     return SceneManagement->CreateMeshObject(name, mesh);
 }
 
-void Root::AddCollidersEnvLvl1() {
-	for (auto go : environment->GetChildren()) {
-		std::string name = go->GetName();
-
-		if (name == "Mesh.535" || name == "Mesh.481" || name == "Mesh.485" || name == "Mesh.486" ||
-			name == "Mesh.487" || name == "Mesh.489" || name == "Mesh.490" || name == "Mesh.491" ||
-			name == "Mesh.488" || name == "Mesh.492" || name == "Mesh.494" || name == "Mesh.495" ||
-			name == "Mesh.496" || name == "Mesh.497" || name == "Mesh.498" || name == "Mesh.499" ||
-			name == "Mesh.500" || name == "Mesh.501" || name == "Mesh.502" || name == "Mesh.506" ||
-			name == "Mesh.507" || name == "Mesh.508" || name == "Mesh.503" || name == "Mesh.504" ||
-			name == "Mesh.505" || name == "Mesh.509" || name == "Mesh.510" || name == "Mesh.511" ||
-			name == "Mesh.512" || name == "Mesh.513" || name == "Mesh.514" || name == "Mesh.515" ||
-			name == "Mesh.516" || name == "Mesh.517" || name == "Mesh.518" || name == "Mesh.519" ||
-			name == "Mesh.520" || name == "Mesh.001" || name == "Mesh.281" || name == "Mesh.284" ||
-			name == "Mesh.279" || name == "Mesh.404" || name == "Mesh.401" || name == "Mesh.292" ||
-			name == "Mesh.402" || name == "Mesh.400" || name == "Mesh.403" || name == "Mesh.399" ||
-			name == "Mesh.493" || name == "Cylinder.010" || name == "Cylinder.002" || name == "Mesh.056" || name == "Mesh.072" || name == "Mesh.054") {
-
-			auto collider = go->AddComponent<MeshColliderComponent>(Application->physicsModule);
-			collider->Start();
-		}
-		else if (name == "Mesh.405" || name == "Mesh.406" || name == "Mesh.407" || name == "Mesh.408" ||
-			name == "Mesh.288" || name == "Mesh.289" || name == "Mesh.297" || name == "Mesh.268" ||
-			name == "Mesh.266" || name == "Mesh.267" || name == "Mesh.269" || name == "Mesh.274" || name == "Mesh.273" ||
-			name == "Mesh.272" || name == "Mesh.271") {
-			continue;
-		}
-		else {
-			auto collider = go->AddComponent<ColliderComponent>(Application->physicsModule);
-			collider->Start();
-		}
-	}
-}
 
 void Root::RemoveGameObject(GameObject* gameObject) {
     
@@ -495,42 +471,42 @@ void Root::CreateGameplayUI()
 	auto playerLife = CreateGameObject("PlayerLife");
 	Application->root->ParentGameObject(*playerLife, *canvas);
 	playerLife->AddComponent<UIImageComponent>();
-	playerLife->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/blood.png");
+	playerLife->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/blood.png");
 	playerLife->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
 	playerLife->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.143, 0.831, 0), glm::vec3(0.195, 0.054, 1));
 
 	auto playerStamina = CreateGameObject("PlayerStamina");
 	Application->root->ParentGameObject(*playerStamina, *canvas);
 	playerStamina->AddComponent<UIImageComponent>();
-	playerStamina->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/blood.png");
+	playerStamina->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/blood.png");
 	playerStamina->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.5, 0));
 	playerStamina->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.139, 0.899, 0), glm::vec3(0.107, 0.035, 1));
 
 	auto playerStats = CreateGameObject("PlayerStats");
 	Application->root->ParentGameObject(*playerStats, *canvas);
 	playerStats->AddComponent<UIImageComponent>();
-	playerStats->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/healthbar_empty.png");
+	playerStats->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/healthbar_empty.png");
 	playerStats->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	playerStats->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.190, 0.858, 0), glm::vec3(0.318, 0.241, 1));
 
 	auto powerupFrame = CreateGameObject("PowerupFrame");
 	Application->root->ParentGameObject(*powerupFrame, *canvas);
 	powerupFrame->AddComponent<UIImageComponent>();
-	powerupFrame->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/powerup_frame.png");
+	powerupFrame->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/powerup_frame.png");
 	powerupFrame->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	powerupFrame->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.738, 0.874, 0), glm::vec3(0.126, 0.108, 1));
 
 	auto gunSwitcher = CreateGameObject("GunSwitcher");
 	Application->root->ParentGameObject(*gunSwitcher , *canvas);
 	gunSwitcher->AddComponent<UIImageComponent>();
-	gunSwitcher->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/gunswitcher_frame.png");
+	gunSwitcher->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/gunswitcher_frame.png");
 	gunSwitcher->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	gunSwitcher->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.808, 0.852, 0), glm::vec3(0.301, 0.260, 1));
 
 	auto railgunIcon = CreateGameObject("RailgunIcon");
 	Application->root->ParentGameObject(*railgunIcon, *canvas);
 	railgunIcon->AddComponent<UIImageComponent>();
-	railgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/railgun_icon.png");
+	railgunIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/railgun_icon.png");
 	railgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	railgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
 	railgunIcon->GetComponent<UIImageComponent>()->SetEnabled(false);
@@ -538,7 +514,7 @@ void Root::CreateGameplayUI()
 	auto shotgunIcon = CreateGameObject("ShotgunIcon");
 	Application->root->ParentGameObject(*shotgunIcon, *canvas);
 	shotgunIcon->AddComponent<UIImageComponent>();
-	shotgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/shotgun_icon.png");
+	shotgunIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/shotgun_icon.png");
 	shotgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	shotgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
 	shotgunIcon->GetComponent<UIImageComponent>()->SetEnabled(false);
@@ -546,7 +522,7 @@ void Root::CreateGameplayUI()
 	auto boltgunIcon = CreateGameObject("BoltgunIcon");
 	Application->root->ParentGameObject(*boltgunIcon, *canvas);
 	boltgunIcon->AddComponent<UIImageComponent>();
-	boltgunIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/boltgun_icon.png");
+	boltgunIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/boltgun_icon.png");
 	boltgunIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	boltgunIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.884, 0.831, 0), glm::vec3(0.100, 0.063, 1));
 	boltgunIcon->GetComponent<UIImageComponent>()->SetEnabled(true);
@@ -554,14 +530,14 @@ void Root::CreateGameplayUI()
 	auto bulletIcon = CreateGameObject("BulletIcon");
 	Application->root->ParentGameObject(*bulletIcon, *canvas);
 	bulletIcon->AddComponent<UIImageComponent>();
-	bulletIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/bullet_icon.png");
+	bulletIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/bullet_icon.png");
 	bulletIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	bulletIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.704, 0.873, 0), glm::vec3(0.010, 0.067, 1));
 
 	auto grenadeIcon = CreateGameObject("GrenadeIcon");
 	Application->root->ParentGameObject(*grenadeIcon, *canvas);
 	grenadeIcon->AddComponent<UIImageComponent>();
-	grenadeIcon->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/grenade_icon.png");
+	grenadeIcon->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/grenade_icon.png");
 	grenadeIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	grenadeIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.773, 0.872, 0), glm::vec3(0.021, 0.065, 1));
 
@@ -578,13 +554,13 @@ void Root::CreateMainMenuUI()
     auto menuImage = CreateGameObject("MenuImage");
     Application->root->ParentGameObject(*menuImage, *canvas);
     menuImage->AddComponent<UIImageComponent>();
-    menuImage->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Main_Menu_1.png");
+    menuImage->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Main_Menu_1.png");
     menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
     auto newGameButton = CreateGameObject("NewGameButton");
     Application->root->ParentGameObject(*newGameButton, *canvas);
     newGameButton->AddComponent<UIImageComponent>();
-    newGameButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/New_Game.png");
+    newGameButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/New_Game.png");
     newGameButton->AddComponent<UIButtonComponent>();
     newGameButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     newGameButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.318, 0), glm::vec3(0.182, 0.091, 1));
@@ -592,7 +568,7 @@ void Root::CreateMainMenuUI()
     auto continueButton = CreateGameObject("ContinueButton");
     Application->root->ParentGameObject(*continueButton, *canvas);
     continueButton->AddComponent<UIImageComponent>();
-    continueButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Continue_button.png");
+    continueButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Continue_button.png");
     continueButton->AddComponent<UIButtonComponent>();
     continueButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     continueButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.461, 0), glm::vec3(0.182, 0.091, 1));
@@ -600,7 +576,7 @@ void Root::CreateMainMenuUI()
     auto optionsButton = CreateGameObject("OptionsButton");
     Application->root->ParentGameObject(*optionsButton, *canvas);
     optionsButton->AddComponent<UIImageComponent>();
-    optionsButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Options_Button.png");
+    optionsButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Options_Button.png");
     optionsButton->AddComponent<UIButtonComponent>();
     optionsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     optionsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.604, 0), glm::vec3(0.182, 0.091, 1));
@@ -608,7 +584,7 @@ void Root::CreateMainMenuUI()
     auto creditsButton = CreateGameObject("CreditsButton");
     Application->root->ParentGameObject(*creditsButton, *canvas);
     creditsButton->AddComponent<UIImageComponent>();
-    creditsButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Credits_Buttom.png");
+    creditsButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Credits_Buttom.png");
     creditsButton->AddComponent<UIButtonComponent>();
     creditsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     creditsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.748, 0), glm::vec3(0.182, 0.091, 1));
@@ -616,7 +592,7 @@ void Root::CreateMainMenuUI()
     auto quitButton = CreateGameObject("QuitButton");
     Application->root->ParentGameObject(*quitButton, *canvas);
     quitButton->AddComponent<UIImageComponent>();
-    quitButton->GetComponent<UIImageComponent>()->SetTexture("../MyGameEditor/Assets/Textures/Quit_button.png");
+    quitButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Quit_button.png");
     quitButton->AddComponent<UIButtonComponent>();
     quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.906, 0), glm::vec3(0.182, 0.091, 1));

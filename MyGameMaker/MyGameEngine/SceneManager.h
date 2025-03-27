@@ -18,7 +18,6 @@ class SceneManager
 public:
 
     SceneManager() {
-        int i = 8;
     }
 
     bool Start();

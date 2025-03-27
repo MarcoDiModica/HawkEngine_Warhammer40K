@@ -9,18 +9,6 @@
 
 
 class GameObject;
-struct VehicleInfo;
-struct PhysVehicle3D;
-
-struct FinalVehicleInfo {
-
-    FinalVehicleInfo(GameObject* chassis, std::vector<GameObject*> wheels, PhysVehicle3D* bulletVehicle) :
-        chassis(chassis), wheels(wheels), bulletVehicle(bulletVehicle) {}
-    GameObject* chassis;
-    std::vector<GameObject*> wheels;
-    PhysVehicle3D* bulletVehicle;
-};
-
 
 class PhysicsModule {
 public:
@@ -30,8 +18,6 @@ public:
     bool Awake();
 
     void SetBounciness(GameObject& go, float restitution);
-
-    void EnableContinuousCollision(GameObject& go);
 
     bool Start();
     bool PreUpdate();
@@ -51,6 +37,8 @@ public:
     void SyncTransforms();
     void SyncCollidersToGameObjects();
 
+    bool IsForRelease() const { return isForRelease; }
+
     void AddConstraintP2P(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB);
     // Añade una restricción de bisagra (Hinge)
     void AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB,
@@ -60,11 +48,12 @@ public:
 
     void SetColliderFriction(GameObject& go, float friction);
 
-    p2List<FinalVehicleInfo*> vehicles;
     btDiscreteDynamicsWorld* dynamicsWorld;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;
     bool linkPhysicsToScene = false;
+
 private:
+    const bool isForRelease = false;
     btBroadphaseInterface* broadphase;
     btDefaultCollisionConfiguration* collisionConfiguration;
     btCollisionDispatcher* dispatcher;

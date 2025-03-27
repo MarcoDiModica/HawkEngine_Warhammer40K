@@ -14,7 +14,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -53,11 +53,27 @@ GameObject1:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     UITransformComponent:
       name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 0
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
       enabled: true
     ScriptComponents:
       Script0:
@@ -86,6 +102,22 @@ GameObject1:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -114,6 +146,22 @@ GameObject1:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.45811519
+            - 0.232693434
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -146,6 +194,22 @@ GameObject1:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.45811519
+            - 0.232693434
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -178,6 +242,22 @@ GameObject1:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.45811519
+            - 0.232693434
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -210,6 +290,22 @@ GameObject1:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.45811519
+            - 0.232693434
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
@@ -242,6 +338,22 @@ GameObject1:
         UITransformComponent:
           name: UITransformComponent
           enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.45811519
+            - 0.232693434
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true

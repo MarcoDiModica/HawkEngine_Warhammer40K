@@ -2,14 +2,14 @@
 #include "PhysicsModule.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
-#include "PhysBody3D.h"
-#include "PhysVehicle3D.h"
 #include "RigidBodyComponent.h"
 #include <iostream>
 #include <glm/glm.hpp>
+#include "CapsuleColliderComponent.h"
+#include "MeshColliderComponent.h"
 
 
-constexpr float fixedDeltaTime = 0.002; // 60 updates per second
+constexpr float fixedDeltaTime = 0.01; // 60 updates per second //With 0.02 it goes a little bit laggy
 float accumulatedTime = 0.0f;
 
 
@@ -39,11 +39,11 @@ bool PhysicsModule::Awake() {
     cubeShape = new btBoxShape(btVector3(1, 1, 1));
 
     //Plane functions
-    btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
-    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
-    btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
-    btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
-    dynamicsWorld->addRigidBody(groundRigidBody);
+    //btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+    //btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
+    //btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+    //btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+    //dynamicsWorld->addRigidBody(groundRigidBody);
 
     //groundRigidBody->setRestitution(0.8f);
     SetGlobalRestitution(0.5f);
@@ -51,15 +51,14 @@ bool PhysicsModule::Awake() {
 }
 
 void PhysicsModule::SyncTransforms() {
-    // Map to store the previous physics transform for interpolation.
     static std::unordered_map<GameObject*, btTransform> previousTransformMap;
-    // Map to store initial offsets for root objects only.
     static std::unordered_map<GameObject*, glm::dvec3> offsetMap;
 
     // Compute interpolation factor (between 0 and 1)
     float interpolationFactor = accumulatedTime / fixedDeltaTime;
 
-    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+    for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {      
+
         if (!gameObject->HasComponent<RigidbodyComponent>())
             continue;
 
@@ -72,7 +71,7 @@ void PhysicsModule::SyncTransforms() {
         // Get previous transform (initialize if not present)
         if (previousTransformMap.find(gameObject) == previousTransformMap.end())
             previousTransformMap[gameObject] = currentBtTrans;
-        btTransform previousBtTrans = previousTransformMap[gameObject];
+        btTransform& previousBtTrans = previousTransformMap[gameObject];
 
         // --- Interpolate Position ---
         btVector3 prevOrigin = previousBtTrans.getOrigin();
@@ -215,6 +214,14 @@ void PhysicsModule::DrawDebugDrawer() {
                 glm::vec3 center(position.x(), position.y(), position.z());
                 debugDrawer->drawSphere(center, radius, glm::vec3(1.0f, 0.0f, 0.0f), 16);
             }
+            else if (shape->getShapeType() == CAPSULE_SHAPE_PROXYTYPE) {
+                btCapsuleShape* capsuleShape = static_cast<btCapsuleShape*>(shape);
+                float radius = capsuleShape->getRadius();
+                float halfHeight = capsuleShape->getHalfHeight();
+                btVector3 center(position.x(), position.y(), position.z());
+                btVector3 color(1.0f, 0.0f, 0.0f);
+                debugDrawer->drawCapsule(radius, halfHeight, 1, transform, color);
+            }
             else if (shape->getShapeType() == TRIANGLE_MESH_SHAPE_PROXYTYPE) {
                 btBvhTriangleMeshShape* meshShape = static_cast<btBvhTriangleMeshShape*>(shape);
                 const btStridingMeshInterface* meshInterface = meshShape->getMeshInterface();
@@ -239,11 +246,18 @@ void PhysicsModule::DrawDebugDrawer() {
                     btVector3 p1(v1[0], v1[1], v1[2]);
                     btVector3 p2(v2[0], v2[1], v2[2]);
 
+                    // Aplicar escala antes de transformar los vértices
+
+                    p0 *= rigidBody->getCollisionShape()->getLocalScaling();
+                    p1 *= rigidBody->getCollisionShape()->getLocalScaling();
+                    p2 *= rigidBody->getCollisionShape()->getLocalScaling();
+      
+
                     p0 = transform * p0;
                     p1 = transform * p1;
                     p2 = transform * p2;
 
-                    debugDrawer->drawTriangle(glm::vec3(p0.x(), p0.y(), p0.z()),
+                    debugDrawer->drawScaledTriangle(glm::vec3(p0.x(), p0.y(), p0.z()),
                         glm::vec3(p1.x(), p1.y(), p1.z()),
                         glm::vec3(p2.x(), p2.y(), p2.z()),
                         glm::vec3(0.0f, 1.0f, 0.0f));
@@ -266,7 +280,6 @@ void PhysicsModule::CallMonoCollision(GameObject* obj, const std::string& method
     }
 }
 
-
 void PhysicsModule::CheckCollisions() {
     static std::set<std::pair<GameObject*, GameObject*>> previousCollisions;
     std::set<std::pair<GameObject*, GameObject*>> currentCollisions;
@@ -286,64 +299,113 @@ void PhysicsModule::CheckCollisions() {
         }
 
         if (objA && objB) {
-            ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
-            ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+
+            BaseColliderComponent* colliderA = nullptr;
+            BaseColliderComponent* colliderB = nullptr;
+
+            if (objA->HasComponent<BoxColliderComponent>()) {
+                colliderA = dynamic_cast<BoxColliderComponent*>(objA->GetComponent<BoxColliderComponent>());
+            }
+            else if (objA->HasComponent<CapsuleColliderComponent>()) {
+                colliderA = dynamic_cast<CapsuleColliderComponent*>(objA->GetComponent<CapsuleColliderComponent>());
+            }
+            else if (objA->HasComponent<MeshColliderComponent>()) {
+                colliderA = dynamic_cast<MeshColliderComponent*>(objA->GetComponent<MeshColliderComponent>());
+            }
+
+            if (objB->HasComponent<BoxColliderComponent>()) {
+                colliderB = dynamic_cast<BoxColliderComponent*>(objB->GetComponent<BoxColliderComponent>());
+            }
+            else if (objB->HasComponent<CapsuleColliderComponent>()) {
+                colliderB = dynamic_cast<CapsuleColliderComponent*>(objB->GetComponent<CapsuleColliderComponent>());
+            }
+            else if (objB->HasComponent<MeshColliderComponent>()) {
+                colliderB = dynamic_cast<MeshColliderComponent*>(objB->GetComponent<MeshColliderComponent>());
+            }
+            if (!colliderA || !colliderB) continue;
+
             std::pair<GameObject*, GameObject*> collisionPair = std::minmax(objA, objB);
 
-            if (colliderA && colliderB) {
-                bool isTriggerA = colliderA->IsTrigger();
-                bool isTriggerB = colliderB->IsTrigger();
-                bool isTriggerCollision = isTriggerA || isTriggerB;
+            bool isTriggerA = colliderA->IsTrigger();
+            bool isTriggerB = colliderB->IsTrigger();
+            bool isTriggerCollision = isTriggerA || isTriggerB;
 
-                if (previousCollisions.find(collisionPair) == previousCollisions.end()) {
-					// --------------- ON ENTER ---------------
-                    if (isTriggerCollision) {
-                        colliderA->OnTriggerEnter(colliderB);
-                        colliderB->OnTriggerEnter(colliderA);
+            if (previousCollisions.find(collisionPair) == previousCollisions.end()) {
+                // --------------- ON ENTER ---------------
+                if (isTriggerCollision) {
+                    colliderA->OnTriggerEnter(colliderB);
+                    colliderB->OnTriggerEnter(colliderA);
 
-                        CallMonoCollision(objA, "OnTriggerEnter", objB);
-                        CallMonoCollision(objB, "OnTriggerEnter", objA);
-                    }
-                    else {
-                        colliderA->OnCollisionEnter(colliderB);
-                        colliderB->OnCollisionEnter(colliderA);
-
-                        CallMonoCollision(objA, "OnCollisionEnter", objB);
-                        CallMonoCollision(objB, "OnCollisionEnter", objA);
-                    }
+                    CallMonoCollision(objA, "OnTriggerEnter", objB);
+                    CallMonoCollision(objB, "OnTriggerEnter", objA);
                 }
                 else {
-                    // --------------- ON STAY ---------------
-                    if (isTriggerCollision) {
-                        colliderA->OnTriggerStay(colliderB);
-                        colliderB->OnTriggerStay(colliderA);
+                    colliderA->OnCollisionEnter(colliderB);
+                    colliderB->OnCollisionEnter(colliderA);
 
-                        CallMonoCollision(objA, "OnTriggerStay", objB);
-                        CallMonoCollision(objB, "OnTriggerStay", objA);
-                    }
-                    else {
-                        colliderA->OnCollisionStay(colliderB);
-                        colliderB->OnCollisionStay(colliderA);
-
-                        CallMonoCollision(objA, "OnCollisionStay", objB);
-                        CallMonoCollision(objB, "OnCollisionStay", objA);
-                    }
+                    CallMonoCollision(objA, "OnCollisionEnter", objB);
+                    CallMonoCollision(objB, "OnCollisionEnter", objA);
                 }
-                currentCollisions.insert(collisionPair);
             }
+            else {
+                // --------------- ON STAY ---------------
+                if (isTriggerCollision) {
+                    colliderA->OnTriggerStay(colliderB);
+                    colliderB->OnTriggerStay(colliderA);
+
+                    CallMonoCollision(objA, "OnTriggerStay", objB);
+                    CallMonoCollision(objB, "OnTriggerStay", objA);
+                }
+                else {
+                    colliderA->OnCollisionStay(colliderB);
+                    colliderB->OnCollisionStay(colliderA);
+
+                    CallMonoCollision(objA, "OnCollisionStay", objB);
+                    CallMonoCollision(objB, "OnCollisionStay", objA);
+                }
+            }
+            currentCollisions.insert(collisionPair);
         }
     }
 
-	// --------------- ON EXIT ---------------
-    for (const auto& collisionPair : previousCollisions) {
-        if (currentCollisions.find(collisionPair) == currentCollisions.end()) {
-            GameObject* objA = collisionPair.first;
-            GameObject* objB = collisionPair.second;
-            ColliderComponent* colliderA = objA->GetComponent<ColliderComponent>();
-            ColliderComponent* colliderB = objB->GetComponent<ColliderComponent>();
+    // --------------- ON EXIT ---------------
+    for (auto it = previousCollisions.begin(); it != previousCollisions.end();) {
+        if (currentCollisions.find(*it) == currentCollisions.end()) {
+            GameObject* objA = it->first;
+            GameObject* objB = it->second;
+
+            // Ensure objects still exist before calling exit functions
+            if (gameObjectRigidBodyMap.find(objA) == gameObjectRigidBodyMap.end() ||
+                gameObjectRigidBodyMap.find(objB) == gameObjectRigidBodyMap.end()) {
+                it = previousCollisions.erase(it); 
+                continue;
+            }
+            BaseColliderComponent* colliderA = nullptr;
+            BaseColliderComponent* colliderB = nullptr;
+
+            if (objA->HasComponent<BoxColliderComponent>()) {
+                colliderA = dynamic_cast<BoxColliderComponent*>(objA->GetComponent<BoxColliderComponent>());
+            }
+            else if (objA->HasComponent<CapsuleColliderComponent>()) {
+                colliderA = dynamic_cast<CapsuleColliderComponent*>(objA->GetComponent<CapsuleColliderComponent>());
+            }
+            else if (objA->HasComponent<MeshColliderComponent>()) {
+                colliderA = dynamic_cast<MeshColliderComponent*>(objA->GetComponent<MeshColliderComponent>());
+            }
+
+            if (objB->HasComponent<BoxColliderComponent>()) {
+                colliderB = dynamic_cast<BoxColliderComponent*>(objB->GetComponent<BoxColliderComponent>());
+            }
+            else if (objB->HasComponent<CapsuleColliderComponent>()) {
+                colliderB = dynamic_cast<CapsuleColliderComponent*>(objB->GetComponent<CapsuleColliderComponent>());
+            }
+            else if (objB->HasComponent<MeshColliderComponent>()) {
+                colliderB = dynamic_cast<MeshColliderComponent*>(objB->GetComponent<MeshColliderComponent>());
+            }
             if (colliderA && colliderB) {
                 bool isTriggerA = colliderA->IsTrigger();
                 bool isTriggerB = colliderB->IsTrigger();
+
                 if (isTriggerA || isTriggerB) {
                     colliderA->OnTriggerExit(colliderB);
                     colliderB->OnTriggerExit(colliderA);
@@ -359,6 +421,11 @@ void PhysicsModule::CheckCollisions() {
                     CallMonoCollision(objB, "OnCollisionExit", objA);
                 }
             }
+
+            it = previousCollisions.erase(it);  
+        }
+        else {
+            ++it;
         }
     }
 
@@ -368,24 +435,17 @@ void PhysicsModule::CheckCollisions() {
 
 
 bool PhysicsModule::Update(double dt) {
-    //if (linkPhysicsToScene) {
-    //    accumulatedTime += static_cast<float>(dt);
-    //    // Perform fixed steps
-    //    while (accumulatedTime >= fixedDeltaTime) {
-    //        dynamicsWorld->stepSimulation(fixedDeltaTime, 10);
-    //        accumulatedTime -= fixedDeltaTime;
-    //    }
-    //    // After stepping, interpolate and sync transforms
-    //    SyncTransforms();
-    //    CheckCollisions();
-    //}
+
+#ifndef _BUILD
     DrawDebugDrawer();
+#endif // !_BUILD
+  
     if (linkPhysicsToScene) {
 		dynamicsWorld->stepSimulation(dt, 16, fixedDeltaTime);
 		SyncTransforms();
         CheckCollisions();
-	}
-    
+    }
+
     return true;
 }
 
@@ -471,24 +531,6 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     std::cout << "Global restitution set to: " << restitutionValue << "\n";
 }
 
-void PhysicsModule::SetBounciness(GameObject& go, float restitution) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-        rigidBody->setRestitution(restitution);
-        std::cout << "Bounciness set to " << restitution << " for GameObject.\n";
-    }
-}
-
-void PhysicsModule::EnableContinuousCollision(GameObject& go) {
-    auto it = gameObjectRigidBodyMap.find(&go);
-    if (it != gameObjectRigidBodyMap.end()) {
-        btRigidBody* rigidBody = it->second;
-        rigidBody->setCcdMotionThreshold(0.01);
-        rigidBody->setCcdSweptSphereRadius(0.05);
-        std::cout << "Continuous collision detection enabled for GameObject.\n";
-    }
-}
 
 
 bool PhysicsModule::Start() {

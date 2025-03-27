@@ -8,7 +8,8 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
-#include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyGameEngine/Scene.h"
+#include "../MyPhysicsEngine/BoxColliderComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
@@ -21,6 +22,8 @@
 #include "../MyUIEngine/UITransformComponent.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include <MyPhysicsEngine/MeshColliderComponent.h>
+#include <MyPhysicsEngine/CapsuleColliderComponent.h>
 
 // GameObject
 
@@ -133,7 +136,24 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 		return GO->GetComponent<CameraComponent>()->GetSharp();
 	}
     else if (componentName == "HawkEngine.Collider") {
-		return GO->GetComponent<ColliderComponent>()->GetSharp();
+        if (auto boxCollider = GO->GetComponent<BoxColliderComponent>()) {
+            return boxCollider->GetSharp();
+        }
+        else if (auto capsuleCollider = GO->GetComponent<CapsuleColliderComponent>()) {
+            return capsuleCollider->GetSharp();
+        }
+        else if (auto meshCollider = GO->GetComponent<MeshColliderComponent>()) {
+            return meshCollider->GetSharp();
+        }
+	}
+    else if (componentName == "HawkEngine.BoxCollider") {
+		return GO->GetComponent<BoxColliderComponent>()->GetSharp();
+	}
+    else if (componentName == "HawkEngine.CapsuleCollider") {
+		return GO->GetComponent<CapsuleColliderComponent>()->GetSharp();
+	}
+    else if (componentName == "HawkEngine.MeshCollider") {
+		return GO->GetComponent<MeshColliderComponent>()->GetSharp();
 	}
     else if (componentName == "HawkEngine.Rigidbody") {
 		return GO->GetComponent<RigidbodyComponent>()->GetSharp();
@@ -161,8 +181,6 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	}
 
 
-	
-    // Add other components
     return nullptr;
 }
 
@@ -178,7 +196,7 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
         break;
-    case 3: _component = static_cast<Component*>(go->AddComponent<ColliderComponent>(Application->physicsModule));
+    case 3: _component = static_cast<Component*>(go->AddComponent<BoxColliderComponent>(Application->physicsModule));
 		break;
     case 4: _component = static_cast<Component*>(go->AddComponent<RigidbodyComponent>(Application->physicsModule));
         break;
@@ -194,6 +212,10 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
 	case 10: _component = static_cast<Component*>(go->AddComponent<UITransformComponent>());
 		break;
+    case 11: _component = static_cast<Component*>(go->AddComponent<MeshColliderComponent>(Application->physicsModule));
+        break; 
+    case 12: _component = static_cast<Component*>(go->AddComponent<CapsuleColliderComponent>(Application->physicsModule));
+        break;
     }
 
 	
@@ -546,7 +568,7 @@ void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
 	
 // Physics Collider
 void EngineBinds::SetTrigger(MonoObject* colliderRef, bool trigger) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SetTrigger(trigger);
     }
@@ -556,7 +578,7 @@ bool EngineBinds::IsTrigger(MonoObject* colliderRef)
 {
     if (!colliderRef) return false;
 
-	ColliderComponent* collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    BaseColliderComponent* collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
 	if (collider) {
 		return collider->IsTrigger();
 	}
@@ -565,50 +587,50 @@ bool EngineBinds::IsTrigger(MonoObject* colliderRef)
 }
 
 glm::vec3 EngineBinds::GetColliderPosition(MonoObject* colliderRef) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     return collider ? collider->GetColliderPos() : glm::vec3(0.0f);
 }
 
 void EngineBinds::SetColliderPosition(MonoObject* colliderRef, glm::vec3* position) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SetColliderPos(*position);
     }
 }
 
 glm::quat EngineBinds::GetColliderRotation(MonoObject* colliderRef) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     return collider ? collider->GetColliderRotation() : glm::quat();
 }
 
 void EngineBinds::SetColliderRotation(MonoObject* colliderRef, glm::quat* rotation) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SetColliderRotation(*rotation);
     }
 }
 
 glm::vec3 EngineBinds::GetColliderSize(MonoObject* colliderRef) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     return collider ? collider->GetSize() : glm::vec3(0.0f);
 }
 
-void EngineBinds::SetColliderSize(MonoObject* colliderRef, glm::vec3* size) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+void EngineBinds::SetColliderSize(MonoObject* colliderRef, glm::vec3* sizeFactor) {
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
-        collider->SetSize(*size);
+        collider->SetSize(*sizeFactor);
     }
 }
 
 void EngineBinds::SetColliderActive(MonoObject* colliderRef, bool active) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SetActive(active);
     }
 }
 
 void EngineBinds::SnapColliderToPosition(MonoObject* colliderRef) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SnapToPosition();
     }
@@ -867,10 +889,23 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
 	}
 }
-void EngineBinds::LoadScene(MonoString* sceneName)
+bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
-	Application->scene_serializer->DeSerialize(std::string(C_sceneName));
+    if (Application->scene_serializer->DeSerialize(std::string(C_sceneName)))
+    {
+        Application->physicsModule->linkPhysicsToScene = false;
+		Application->hasChangedScene = true;
+		return true;
+    }
+	return false;
+    
+}
+
+void EngineBinds::SetScenePlay()
+{
+	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	SceneManagement->currentScene->Start();
 }
 
 void EngineBinds::BindEngine() {
@@ -1000,6 +1035,7 @@ void EngineBinds::BindEngine() {
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
+	mono_add_internal_call("HawkEngine.SceneManager::SetSceneToPlay", (const void*)&EngineBinds::SetScenePlay);
 }
 
 template <class T>

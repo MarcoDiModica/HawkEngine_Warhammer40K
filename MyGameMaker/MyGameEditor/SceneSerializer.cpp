@@ -13,7 +13,7 @@
 #include "MyShadersEngine/ShaderComponent.h"
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyAudioEngine/AudioListener.h"
-#include "MyPhysicsEngine/ColliderComponent.h"
+#include "MyPhysicsEngine/BoxColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyAnimationEngine/SkeletalAnimationComponent.h>
@@ -22,6 +22,7 @@
 #include "MyUIEngine/UIImageComponent.h"
 #include "MyUIEngine/UIButtonComponent.h"
 #include "MyParticlesEngine/ParticleFX.h"
+#include <MyPhysicsEngine/CapsuleColliderComponent.h>
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -118,7 +119,7 @@ void SceneSerializer::SerializeChildren(YAML::Node& parentNode, GameObject& game
 	}
 }
 
-void SceneSerializer::DeSerialize(const std::string& path) {
+bool SceneSerializer::DeSerialize(const std::string& path) {
 	try {
 		YAML::Node rootNode = LoadFromFile(path);
 
@@ -143,6 +144,7 @@ void SceneSerializer::DeSerialize(const std::string& path) {
 		LOG(LogType::LOG_INFO, "Loading Scene: %s", sceneName.c_str());
 
 		if (Application->root->GetActiveScene() != nullptr) {
+			SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
 			Application->root->RemoveScene(Application->root->GetActiveScene()->GetName());
 		}
 
@@ -161,15 +163,21 @@ void SceneSerializer::DeSerialize(const std::string& path) {
 		}
 
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
+		Application->root->UpdateCameraPriority();
+		return true;
 	}
 	catch (const YAML::Exception& e) {
 		LOG(LogType::LOG_ERROR, "YAML Exception during deserialization: %s", e.what());
+		Application->root->UpdateCameraPriority();
+		return false;
 	}
 	catch (const std::exception& e) {
 		LOG(LogType::LOG_ERROR, "Exception during deserialization: %s", e.what());
+		Application->root->UpdateCameraPriority();
+		return false;
 	}
 
-	Application->root->UpdateCameraPriority();
+	
 	//Application->root->GetActiveScene()->Start();
 }
 
@@ -253,12 +261,16 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
 			rb->decode(componentData);
 		}
-		else if (componentName == "ColliderComponent") {
-			auto collider = gameObject->AddComponent<ColliderComponent>(Application->physicsModule);
+		else if (componentName == "BoxColliderComponent") {
+			auto collider = gameObject->AddComponent<BoxColliderComponent>(Application->physicsModule);
 			collider->decode(componentData);
 		}
 		else if (componentName == "MeshColliderComponent") {
 			auto meshCollider = gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+			meshCollider->decode(componentData);
+		}
+		else if (componentName == "CapsuleColliderComponent") {
+			auto meshCollider = gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 			meshCollider->decode(componentData);
 		}
 		else if (componentName == "SkeletalAnimationComponent") {

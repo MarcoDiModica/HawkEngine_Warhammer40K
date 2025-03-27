@@ -58,6 +58,7 @@
 #include "./MyPhysicsEngine/PhysicsModule.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "UIGameView.h"
+#include "External/Optick/include/optick.h"
 
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
@@ -241,6 +242,7 @@ static void RenderObjectAndChildren(std::shared_ptr<GameObject> object) {
 }
 
 static void RenderGameView() {
+	OPTICK_CATEGORY("RenderGameView", Optick::Category::GameLogic);
 	if (Application->root->mainCamera == nullptr) {
 		return;
 	}
@@ -478,6 +480,7 @@ static void RenderOutline(GameObject* object) {
 }
 
 static void RenderEditor() {
+
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -528,6 +531,7 @@ static void RenderEditor() {
 
 static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
+		OPTICK_CATEGORY("RenderEditor", Optick::Category::GameLogic);
 		const auto t0 = hrclock::now();
 
 		RenderEditor();
@@ -535,6 +539,7 @@ static void EditorRenderer(MyGUI* gui) {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		OPTICK_CATEGORY("GUIRender", Optick::Category::GameLogic);
 		gui->Render();
 
 		const auto t1 = hrclock::now();
@@ -562,6 +567,7 @@ static void PrintCounters() {
 }
 
 static void GameRelease() {
+	OPTICK_CATEGORY("GameRelease", Optick::Category::GameLogic);
 	if (Application->root->mainCamera == nullptr) {
 		return;
 	}
@@ -726,7 +732,7 @@ int main(int argc, char** argv) {
 			
 			RenderGameView(); 
 			PrintCounters();
-			Application->gui->Render();
+			//Application->gui->Render();
 			Application->window->SwapBuffers();
 			UndoRedo();
 			ObjectToEditorCamera();

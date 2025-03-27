@@ -241,6 +241,10 @@ void EngineBinds::AddScript(MonoObject* ref, MonoString* scriptName) {
 	go->AddComponent<ScriptComponent>()->LoadScript(C_name);
 }
 
+void EngineBinds::SetActive(MonoObject* ref, bool active) {
+	ConvertFromSharp(ref)->SetActive(active);
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
@@ -921,6 +925,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
+	mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)SetActive);
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);

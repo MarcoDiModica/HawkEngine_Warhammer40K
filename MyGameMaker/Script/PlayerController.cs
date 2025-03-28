@@ -135,10 +135,5 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public override void OnCollisionEnter(Collider other)
-    {
-       
-    }
-
 
 }

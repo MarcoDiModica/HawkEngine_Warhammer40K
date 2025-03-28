@@ -9,7 +9,7 @@
 #include "MeshColliderComponent.h"
 
 
-constexpr float fixedDeltaTime = 0.02; // 60 updates per second //With 0.02 it goes a little bit laggy
+constexpr float fixedDeltaTime = 0.01; // 60 updates per second //With 0.02 it goes a little bit laggy
 float accumulatedTime = 0.0f;
 
 
@@ -55,7 +55,7 @@ void PhysicsModule::SyncTransforms() {
     static std::unordered_map<GameObject*, glm::dvec3> offsetMap;
 
     // Compute interpolation factor (between 0 and 1)
-    float interpolationFactor = glm::clamp((dynamicsWorld->getSolverInfo().m_timeStep - fixedDeltaTime) / fixedDeltaTime, 0.0f, 1.0f);
+    float interpolationFactor = accumulatedTime / fixedDeltaTime;
 
 
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {      

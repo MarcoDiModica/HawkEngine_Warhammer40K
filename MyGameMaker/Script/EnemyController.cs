@@ -27,4 +27,8 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     public abstract void Start();
     public abstract void Update(float deltaTime);
     public abstract void Attack();
+    public float Lerp(float start, float end, float t)
+    {
+        return start + (end - start) * Math.Min(1, Math.Max(0, t));
+    }
 }

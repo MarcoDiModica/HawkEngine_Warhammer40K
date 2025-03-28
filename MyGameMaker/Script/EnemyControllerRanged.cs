@@ -5,7 +5,6 @@ using HawkEngine;
 
 public class EnemyControllerRanged : EnemyController
 {
-    private float shootTimer = 0f;
     private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
 
     private class ProjectileInfo
@@ -27,26 +26,102 @@ public class EnemyControllerRanged : EnemyController
     }
     public override void Start()
     {
-        // Initialize components specific to EnemyControllerRanged
-        playerTransform = GetComponent<Transform>();
-        rb = GetComponent<Rigidbody>();
-        collider = GetComponent<BoxCollider>();
-        enemyTransform = GetComponent<Transform>();
-        soundAttack = GetComponent<Audio>();
-        shootTimer = 0f;
+
+        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        rb = gameObject.GetComponent<Rigidbody>();
+
+        if (playerTransform == null)
+        {
+            Engineson.print("ERROR: Player couldn't be found!");
+        }
+
+        collider = gameObject.GetComponent<BoxCollider>();
+        if (collider == null)
+        {
+            Engineson.print("ERROR: PlayerMovement requires a Collider component!");
+            return;
+        }
+
+        soundAttack = gameObject.GetComponent<Audio>();
+        if (soundAttack == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
+
+        enemyTransform = gameObject.GetComponent<Transform>();
+        if (enemyTransform == null)
+        {
+            Engineson.print("ERROR: PlayerMovement requires a Transform component!");
+            return;
+        }
     }
 
     public override void Update(float deltaTime)
     {
-        // Implement update logic specific to EnemyControllerRanged
+        Vector3 playerPos = playerTransform.position;
+
+        if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+        {
+            if (shootTimer <= 0)
+            {
+                Attack();
+                soundAttack?.Play();
+                shootTimer = shootCooldown;
+            }
+            else
+            {
+                shootTimer -= deltaTime;
+            }
+
+            if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+            {
+                Vector3 currentVelocity = rb.GetVelocity();
+                moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                if (desiredVelocity.LengthSquared() > 0)
+                {
+                    desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                }
+
+                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+
+                //enemyTransform.position += desiredVelocity * deltaTime;
+            }
+        }
+        else
+        {
+            rb.SetVelocity(Vector3.Zero);
+        }
+
+        if (moveDirection != Vector3.Zero)
+        {
+            currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+            float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+            float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+
+            while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+            while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+            currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+            Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+            Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                eulerRotation.Y * ((float)Math.PI / 180.0f),
+                eulerRotation.X * ((float)Math.PI / 180.0f),
+                eulerRotation.Z * ((float)Math.PI / 180.0f)
+            );
+
+            // enemyTransform.SetRotationQuat(newRotation);
+            collider.SetRotation(newRotation);
+        }
+
+        UpdateProjectiles(deltaTime);
+        CleanupProjectiles();
     }
 
     public override void Attack()
-    {
-        // Implement attack logic specific to EnemyControllerRanged
-    }
-
-    private void Shoot()
     {
         try
         {

@@ -6,6 +6,7 @@ public class Boltgun : BaseWeapon
 {
 
     GrenadeLauncher grenadeLauncher;
+    ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
     private Audio sound;
@@ -27,6 +28,7 @@ public class Boltgun : BaseWeapon
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
+        arcSnare = gameObject.GetComponent<ArcSnare>();
         sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
@@ -100,6 +102,7 @@ public class Boltgun : BaseWeapon
     {
         // Ability 2 logic
         Engineson.print("Boltgun ability 2 used");
+        arcSnare.TriggerAbility();
     }
 
     public override void CleanBullets()

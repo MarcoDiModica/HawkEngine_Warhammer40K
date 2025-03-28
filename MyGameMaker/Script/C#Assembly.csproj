@@ -71,7 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArcSnare.cs" />
     <Compile Include="Audio.cs" />
+    <Compile Include="Barrage.cs" />
     <Compile Include="BaseWeapon.cs" />
     <Compile Include="BlackHeart.cs" />
     <Compile Include="Boltgun.cs" />
@@ -82,12 +84,15 @@
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="EnemyController.cs" />
+    <Compile Include="EnergyBall.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Grenade.cs" />
     <Compile Include="GrenadeLauncher.cs" />
+    <Compile Include="HookShot.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="IPowerUp.cs" />
+    <Compile Include="LaserBeam.cs" />
     <Compile Include="MenuButtons.cs" />
     <Compile Include="MeshCollider.cs" />
     <Compile Include="MeshRenderer.cs" />
@@ -109,6 +114,7 @@
     <Compile Include="SceneManager.cs" />
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="Test1.cs" />
+    <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="UICanvas.cs" />

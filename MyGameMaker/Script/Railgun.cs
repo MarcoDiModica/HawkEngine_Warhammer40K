@@ -12,6 +12,9 @@ public class Railgun : BaseWeapon
     private float coolTimer = 0f;
     private float reloadTimer = 0f;
     private PlayerController playerController;
+    ToggleMode toggleMode;
+    EnergyBall energyBall;
+    LaserBeam laserBeam;
     public PlayerData playerData;
 
     private Audio sound;
@@ -44,6 +47,9 @@ public class Railgun : BaseWeapon
         sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
+        toggleMode = gameObject.GetComponent<ToggleMode>();
+        energyBall = gameObject.GetComponent<EnergyBall>();
+        laserBeam = gameObject.GetComponent<LaserBeam>();
     }
 
     public override void Update(float deltaTime)
@@ -148,12 +154,13 @@ public class Railgun : BaseWeapon
 
     public override void UseAbility1()
     {
-
+        toggleMode.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-
+        laserBeam.TriggerAbility();
+        //energyBall.TriggerAbility();
     }
 
     public override void CleanBullets()

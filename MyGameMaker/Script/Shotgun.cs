@@ -10,6 +10,8 @@ public class Shotgun : BaseWeapon
 
     private PlayerController playerController;
     public PlayerData playerData;
+    Barrage barrage;
+    HookShot hookShot;
 
     public override void Awake()
     {
@@ -28,6 +30,8 @@ public class Shotgun : BaseWeapon
         sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
+        barrage = gameObject.GetComponent<Barrage>();
+        hookShot = gameObject.GetComponent<HookShot>();
     }
 
     public override void Update(float deltaTime)
@@ -98,12 +102,12 @@ public class Shotgun : BaseWeapon
 
     public override void UseAbility1()
     {
-        
+        hookShot.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-
+        barrage.TriggerAbility();
     }
 
     public override void CleanBullets()

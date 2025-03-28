@@ -9,7 +9,7 @@
 #include "MeshColliderComponent.h"
 
 
-constexpr float fixedDeltaTime = 0.01; // 60 updates per second //With 0.02 it goes a little bit laggy
+constexpr float fixedDeltaTime = 0.02; // 60 updates per second //With 0.02 it goes a little bit laggy
 float accumulatedTime = 0.0f;
 
 
@@ -55,7 +55,8 @@ void PhysicsModule::SyncTransforms() {
     static std::unordered_map<GameObject*, glm::dvec3> offsetMap;
 
     // Compute interpolation factor (between 0 and 1)
-    float interpolationFactor = accumulatedTime / fixedDeltaTime;
+    float interpolationFactor = glm::clamp((dynamicsWorld->getSolverInfo().m_timeStep - fixedDeltaTime) / fixedDeltaTime, 0.0f, 1.0f);
+
 
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {      
 
@@ -271,11 +272,11 @@ void PhysicsModule::DrawDebugDrawer() {
 
 
 void PhysicsModule::CallMonoCollision(GameObject* obj, const std::string& methodName, GameObject* other) {
-    if (!obj) return;
-
+    if (!obj || !other) return;
+    auto s = *other;
     for (auto& script : obj->scriptComponents) {
         if (script) {
-            script->InvokeMonoMethod(methodName, other);
+            script->InvokeMonoMethod(methodName, *other);
         }
     }
 }
@@ -340,8 +341,8 @@ void PhysicsModule::CheckCollisions() {
                     CallMonoCollision(objB, "OnTriggerEnter", objA);
                 }
                 else {
-                    colliderA->OnCollisionEnter(colliderB);
-                    colliderB->OnCollisionEnter(colliderA);
+                    /*colliderA->OnCollisionEnter(colliderB);
+                    colliderB->OnCollisionEnter(colliderA);*/
 
                     CallMonoCollision(objA, "OnCollisionEnter", objB);
                     CallMonoCollision(objB, "OnCollisionEnter", objA);
@@ -441,7 +442,8 @@ bool PhysicsModule::Update(double dt) {
 #endif // !_BUILD
   
     if (linkPhysicsToScene) {
-		dynamicsWorld->stepSimulation(dt, 16, fixedDeltaTime);
+        int numSubsteps = glm::clamp(static_cast<int>(dt / fixedDeltaTime), 1, 10);
+        dynamicsWorld->stepSimulation(dt, numSubsteps, fixedDeltaTime);
 		SyncTransforms();
         CheckCollisions();
     }

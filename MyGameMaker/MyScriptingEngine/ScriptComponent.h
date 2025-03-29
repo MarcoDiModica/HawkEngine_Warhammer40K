@@ -27,7 +27,7 @@ public:
     MonoObject* GetSharpObject() const { return monoScript; }
     std::string GetTypeName() const;
 
-    void InvokeMonoMethod(const std::string& methodName, GameObject* other);
+	void InvokeMonoMethod(const std::string& methodName, GameObject& other);
 
     MonoObject* monoScript = nullptr;
 

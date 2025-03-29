@@ -166,16 +166,47 @@ std::string ScriptComponent::GetTypeName() const
 	return "";
 }
 
-void ScriptComponent::InvokeMonoMethod(const std::string& methodName, GameObject* other) {
+
+
+MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
+    if (!gameObject) return nullptr;
+
+    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    if (!gameObjectClass) {    
+        return nullptr;
+    }
+
+    MonoObject* monoGameObject = mono_object_new(mono_domain_get(), gameObjectClass);
+    if (!monoGameObject) {
+        return nullptr;
+    }
+
+    MonoClassField* nativePtrField = mono_class_get_field_from_name(gameObjectClass, "CplusplusInstance");
+    if (!nativePtrField) {
+        return nullptr;
+    }
+
+    uintptr_t nativePtr = reinterpret_cast<uintptr_t>(gameObject);
+    mono_field_set_value(monoGameObject, nativePtrField, &nativePtr);
+
+    return monoGameObject;
+}
+
+void ScriptComponent::InvokeMonoMethod(const std::string& methodName, GameObject& other) {
     if (!monoScript) return;
 
     MonoClass* klass = mono_object_get_class(monoScript);
     MonoMethod* method = mono_class_get_method_from_name(klass, methodName.c_str(), 1);
 
-    if (method) {
-        void* args[1];
-        uintptr_t otherPtr = reinterpret_cast<uintptr_t>(other);
-        args[0] = &otherPtr;
-        mono_runtime_invoke(method, monoScript, args, nullptr);
+    if (!method) return;
+
+    MonoObject* monoOther = GetMonoObjectFromGameObject(&other);
+
+    if (!monoOther) {
+        return;
     }
+
+    void* args[1];
+    args[0] = monoOther; 
+    mono_runtime_invoke(method, monoScript, args, nullptr);
 }

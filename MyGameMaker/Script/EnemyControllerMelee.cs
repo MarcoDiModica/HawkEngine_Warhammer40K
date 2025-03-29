@@ -5,10 +5,14 @@ using HawkEngine;
 
 public class EnemyControllerMelee : EnemyController
 {
-    private float hurtboxActivationTime = 2.0f; // Tiempo que el jugador debe estar en la hurtbox para activarla
+    private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(5.0f, 5.0f, 5.0f); // Tamaño de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(5.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxSize = new Vector3(2.0f, 2.0f, 2.0f); // Tamaño de la hurtbox
+    private Vector3 hurtboxOffset = new Vector3(4.0f, 2.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private GameObject hurtboxObject;
+    private bool dodgewindow = false;
+    private float dodgeActivationTime = 0.5f;
+    private float dodgeTimer = 0f;
 
     public override void Start()
     {
@@ -52,16 +56,34 @@ public class EnemyControllerMelee : EnemyController
                 hurtboxTimer += deltaTime;
                 if (hurtboxTimer >= hurtboxActivationTime)
                 {
+                    CreateHurtbox();
+                    hurtboxTimer = 0f;
+                    dodgewindow = true;
+                }
+                else if (hurtboxTimer >= 0.5f && dodgewindow) 
+                {
                     Attack();
                     soundAttack?.Play();
+                    DestroyHurtbox();
                     hurtboxTimer = 0f;
+                    dodgeTimer = 0f;
+                    dodgewindow = false;
                 }
             }
             else
             {
                 hurtboxTimer = 0f;
             }
-
+            if (dodgewindow)
+            {
+                dodgeTimer += deltaTime;
+                if (dodgeTimer >= dodgeActivationTime)
+                {
+                    DestroyHurtbox();
+                    dodgeTimer = 0f;
+                    dodgewindow = false;
+                }
+            }
             if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
             {
                 Vector3 currentVelocity = rb.GetVelocity();
@@ -111,11 +133,29 @@ public class EnemyControllerMelee : EnemyController
 
     private bool IsPlayerInHurtbox(Vector3 playerPos)
     {
-        Vector3 hurtboxCenter = enemyTransform.position + enemyTransform.forward * hurtboxOffset.X;
+        Vector3 hurtboxCenter = enemyTransform.position + enemyTransform.forward * hurtboxOffset;
         Vector3 halfSize = hurtboxSize * 0.5f;
 
         return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
                (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
+    }
+
+    private void CreateHurtbox()
+    {
+        hurtboxObject = Engineson.CreateGameObject("Hurtbox", null);
+        hurtboxObject.AddComponent<MeshRenderer>();
+        var hurtboxTransform = hurtboxObject.AddComponent<Transform>();
+        hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
+        hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
+        var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
+    }
+
+    private void DestroyHurtbox()
+    {
+        if (hurtboxObject != null)
+        {
+            Engineson.Destroy(hurtboxObject);
+        }
     }
 }

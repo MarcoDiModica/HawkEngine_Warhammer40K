@@ -116,6 +116,7 @@
     <Compile Include="Rigidbody.cs" />
     <Compile Include="Shotgun.cs" />
     <Compile Include="SceneManager.cs" />
+    <Compile Include="ShotgunShells.cs" />
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="ToggleMode.cs" />

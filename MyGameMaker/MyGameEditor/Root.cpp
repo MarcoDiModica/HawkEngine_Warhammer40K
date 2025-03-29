@@ -89,8 +89,8 @@ bool Root::Start()
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
 		
-	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
-	environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
+	/*environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+	environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));*/
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));

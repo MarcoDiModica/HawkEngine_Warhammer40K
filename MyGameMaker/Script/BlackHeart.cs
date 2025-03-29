@@ -6,7 +6,7 @@ public class BlackHeart : PowerUp
 {
     public override void Awake()
     {
-        powerUpType = PowerUpType.BLACKHEART;
+        
     }
 
     public override void Start()
@@ -23,5 +23,6 @@ public class BlackHeart : PowerUp
     {
         Engineson.print("BlackHeart PowerUp applied");
         playerController.playerData.SetHealth(playerController.playerData.GetMaxHealth());
+        
     }
 }

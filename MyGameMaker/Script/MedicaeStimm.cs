@@ -6,7 +6,7 @@ public class MedicaeStimm : PowerUp
 {
     public override void Awake()
     {
-        powerUpType = PowerUpType.MEDICAE_STIMM;
+        
     }
 
     public override void Start()

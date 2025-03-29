@@ -44,12 +44,15 @@ public class PlayerPowerUp : MonoBehaviour
             if (other.GetComponent<BlackHeart>() != null)
             {
                 other.GetComponent<BlackHeart>().ApplyPowerUpOnPickup(playerController);
+                
             }
             else if (other.GetComponent<MedicaeStimm>() != null)
             {
                 other.GetComponent<MedicaeStimm>().ApplyPowerUpOnPickup(playerController);
                 hasMedicaeStimm = true;
             }
+
+            Engineson.Destroy(other);
         }
     }
 }

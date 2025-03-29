@@ -29,6 +29,7 @@
 #include "../MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
+#include "../MyGameEngine/Tweening.h"
 
 class GameObject;
 
@@ -165,13 +166,27 @@ static void AddCollidersEnv() {
 bool hasAddedColliders = false;	
 
 bool Root::Update(double dt)
-{
+{	
+	Tweening::Update(dt);
+	
 	if (!hasAddedColliders) {
 		//AddCollidersEnv();
 		//AddCollidersEnvLvl1();
 		player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 		player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 		hasAddedColliders = true;
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		Tweening::Move(player.get(), glm::dvec3(10.0, 5.0, 0.0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		Tweening::Rotate(player.get(), glm::dvec3(0, 180, 0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+		Tweening::Scale(player.get(), glm::dvec3(2.0, 2.0, 2.0), 2.0f, Modes::EASE_IN_OUT);
 	}
 
 	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {

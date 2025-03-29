@@ -7,47 +7,131 @@
 class GameObject;
 
 enum class Modes {
-    EASE_IN,
-    EASE_OUT,
-    EASE_IN_OUT,
-    LINEAR
+	EASE_IN,
+	EASE_OUT,
+	EASE_IN_OUT,
+	LINEAR
 };
 
 class Tweening
 {
 public:
-    static void Move(const glm::dvec3& targetPosition, float duration, Modes mode);
-    static void MoveX(float targetX, float duration, Modes mode);
-    static void MoveY(float targetY, float duration, Modes mode);
-    static void MoveZ(float targetZ, float duration, Modes mode);
+	typedef int TweenHandle;
 
-    static void Rotate(const glm::dvec3& targetRotation, float duration, bool rotate);
+	static void Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode = Modes::LINEAR);
+	static void MoveX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
+	static void MoveY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
+	static void MoveZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
 
-    static void Scale(const glm::dvec3& targetScale, float duration);
-    static void ScaleX(float targetX, float duration);
-    static void ScaleY(float targetY, float duration);
-    static void ScaleZ(float targetZ, float duration);
+	static void Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode = Modes::LINEAR);
+	static void RotateX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
+	static void RotateY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
+	static void RotateZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
 
-    static glm::dvec3 CalculatePosition(const glm::dvec3& startPos, const glm::dvec3& targetPos, float t, Modes mode);
+	static void Scale(GameObject* object, const glm::dvec3& targetScale, float duration, Modes mode = Modes::LINEAR);
+	static void ScaleX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
+	static void ScaleY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
+	static void ScaleZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
 
-    static void Start();
-    static void Update(float deltaTime);
+	static TweenHandle TweenValue(float* value, float start, float target, float duration, Modes mode = Modes::LINEAR);
+	static TweenHandle TweenColor(glm::vec4* color, const glm::vec4& startColor, const glm::vec4& targetColor, float duration, Modes mode = Modes::LINEAR);
+
+	static void Cancel(TweenHandle handle);
+	static void CancelAll(GameObject* object);
+	static void SetOnComplete(TweenHandle handle, std::function<void()> callback);
+	static void SetOnUpdate(TweenHandle handle, std::function<void(float)> callback);
+
+	static float CalculateT(float normalizedTime, Modes mode);
+	static glm::dvec3 CalculatePosition(const glm::dvec3& startPos, const glm::dvec3& targetPos, float t, Modes mode);
+	static glm::dvec3 CalculateRotation(const glm::dvec3& startRot, const glm::dvec3& targetRot, float t, Modes mode);
+	static glm::dvec3 CalculateScale(const glm::dvec3& startScale, const glm::dvec3& targetScale, float t, Modes mode);
+	static float CalculateFloat(float start, float target, float t, Modes mode);
+	static glm::vec4 CalculateColor(const glm::vec4& startColor, const glm::vec4& targetColor, float t, Modes mode);
+
+	class Sequence {
+	public:
+		Sequence();
+
+		Sequence& Append(std::function<TweenHandle()> tweenCreator);
+		Sequence& AppendDelay(float duration);
+		Sequence& AppendCallback(std::function<void()> callback);
+
+		void Play();
+		void Stop();
+
+	private:
+		enum class StepType {
+			TWEEN,
+			DELAY,
+			CALLBACK
+		};
+
+		struct Step {
+			std::function<TweenHandle()> tweenCreator;
+			float duration;
+			StepType type;
+		};
+
+		std::vector<Step> steps;
+		size_t currentIndex;
+		bool isPlaying;
+		TweenHandle currentTweenHandle = 0;
+
+		void PlayCurrentStep();
+	};
+
+	static Sequence CreateSequence();
+
+	static void Update(float deltaTime);
 
 private:
-    struct Tween
-    {
-        GameObject* object;
-        glm::dvec3 startPosition;
-        glm::dvec3 targetPosition;
-        glm::dvec3 startRotation;
-        glm::dvec3 targetRotation;
-        glm::dvec3 startScale;
-        glm::dvec3 targetScale;
-		Modes mode;
-        float duration;
-        float elapsedTime;
-        std::function<void()> onComplete;
-    };
+	enum class TweenType {
+		POSITION,
+		POSITION_X,
+		POSITION_Y,
+		POSITION_Z,
+		ROTATION,
+		ROTATION_X,
+		ROTATION_Y,
+		ROTATION_Z,
+		SCALE,
+		SCALE_X,
+		SCALE_Y,
+		SCALE_Z,
+		FLOAT_VALUE,
+		COLOR
+	};
 
-    static std::vector<Tween> tweens;
+	struct Tween
+	{
+		GameObject* object = nullptr;
+		TweenType tweenType;
+		TweenHandle handle = 0;
+
+		glm::dvec3 startPosition;
+		glm::dvec3 targetPosition;
+		glm::dvec3 startRotation;
+		glm::dvec3 targetRotation;
+		glm::dvec3 startScale;
+		glm::dvec3 targetScale;
+
+		float* floatPtr = nullptr;
+		float startFloat = 0.0f;
+		float targetFloat = 0.0f;
+
+		glm::vec4* colorPtr = nullptr;
+		glm::vec4 startColor;
+		glm::vec4 targetColor;
+
+		Modes mode;
+		float duration;
+		float elapsedTime;
+
+		// Callbacks
+		std::function<void()> onComplete;
+		std::function<void(float)> onUpdate;
+	};
+
+	static std::vector<Tween> tweens;
+	static Tween CreateTween(GameObject* object, float duration, Modes mode);
 };

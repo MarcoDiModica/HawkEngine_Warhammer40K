@@ -4,72 +4,419 @@
 #include <glm/gtc/quaternion.hpp>
 #include <vector>
 #include <functional>
+#include <algorithm>
 
 std::vector<Tweening::Tween> Tweening::tweens;
 
-void Tweening::Move(const glm::dvec3& targetPosition, float duration, Modes mode) {
-    
-	auto tween = Tween();
-    tween.object->GetTransform()->GetPosition() == tween.startPosition;
-	tween.targetPosition = targetPosition;
+Tweening::Tween Tweening::CreateTween(GameObject* object, float duration, Modes mode) {
+	Tween tween;
+	tween.object = object;
 	tween.duration = duration;
 	tween.elapsedTime = 0.0f;
-	tween.onComplete = nullptr;
 	tween.mode = mode;
+	tween.onComplete = nullptr;
+	tween.onUpdate = nullptr;
+	return tween;
+}
+
+void Tweening::Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	tween.startPosition = object->GetTransform()->GetPosition();
+	tween.targetPosition = targetPosition;
+	tween.tweenType = TweenType::POSITION;
 
 	tweens.push_back(tween);
-
 }
 
-void Tweening::MoveX(float targetX, float duration, Modes mode) {
-    
+void Tweening::MoveX(GameObject* object, float targetX, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentPos = object->GetTransform()->GetPosition();
+	tween.startPosition = currentPos;
+	tween.targetPosition = glm::dvec3(targetX, currentPos.y, currentPos.z);
+	tween.tweenType = TweenType::POSITION_X;
+
+	tweens.push_back(tween);
 }
 
-void Tweening::MoveY(float targetY, float duration, Modes mode) {
-   
+void Tweening::MoveY(GameObject* object, float targetY, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentPos = object->GetTransform()->GetPosition();
+	tween.startPosition = currentPos;
+	tween.targetPosition = glm::dvec3(currentPos.x, targetY, currentPos.z);
+	tween.tweenType = TweenType::POSITION_Y;
+
+	tweens.push_back(tween);
 }
 
-void Tweening::MoveZ(float targetZ, float duration, Modes mode) {
-    
+void Tweening::MoveZ(GameObject* object, float targetZ, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentPos = object->GetTransform()->GetPosition();
+	tween.startPosition = currentPos;
+	tween.targetPosition = glm::dvec3(currentPos.x, currentPos.y, targetZ);
+	tween.tweenType = TweenType::POSITION_Z;
+
+	tweens.push_back(tween);
 }
 
-void Tweening::Start() {
-    
+void Tweening::Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	tween.startRotation = object->GetTransform()->GetEulerAngles();
+	tween.targetRotation = targetRotation;
+	tween.tweenType = TweenType::ROTATION;
+
+	tweens.push_back(tween);
+}
+
+void Tweening::RotateX(GameObject* object, float targetX, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentRot = object->GetTransform()->GetEulerAngles();
+	tween.startRotation = currentRot;
+	tween.targetRotation = glm::dvec3(targetX, currentRot.y, currentRot.z);
+	tween.tweenType = TweenType::ROTATION_X;
+
+	tweens.push_back(tween);
+}
+
+void Tweening::RotateY(GameObject* object, float targetY, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentRot = object->GetTransform()->GetEulerAngles();
+	tween.startRotation = currentRot;
+	tween.targetRotation = glm::dvec3(currentRot.x, targetY, currentRot.z);
+	tween.tweenType = TweenType::ROTATION_Y;
+
+	tweens.push_back(tween);
+}
+
+void Tweening::RotateZ(GameObject* object, float targetZ, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentRot = object->GetTransform()->GetEulerAngles();
+	tween.startRotation = currentRot;
+	tween.targetRotation = glm::dvec3(currentRot.x, currentRot.y, targetZ);
+	tween.tweenType = TweenType::ROTATION_Z;
+
+	tweens.push_back(tween);
+}
+
+void Tweening::Scale(GameObject* object, const glm::dvec3& targetScale, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	tween.startScale = object->GetTransform()->GetScale();
+	tween.targetScale = targetScale;
+	tween.tweenType = TweenType::SCALE;
+
+	tweens.push_back(tween);
+}
+
+void Tweening::ScaleX(GameObject* object, float targetX, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentScale = object->GetTransform()->GetScale();
+	tween.startScale = currentScale;
+	tween.targetScale = glm::dvec3(targetX, currentScale.y, currentScale.z);
+	tween.tweenType = TweenType::SCALE_X;
+
+	tweens.push_back(tween);
+}
+
+void Tweening::ScaleY(GameObject* object, float targetY, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentScale = object->GetTransform()->GetScale();
+	tween.startScale = currentScale;
+	tween.targetScale = glm::dvec3(currentScale.x, targetY, currentScale.z);
+	tween.tweenType = TweenType::SCALE_Y;
+
+	tweens.push_back(tween);
+}
+
+void Tweening::ScaleZ(GameObject* object, float targetZ, float duration, Modes mode) {
+	if (!object) return;
+
+	auto tween = CreateTween(object, duration, mode);
+	glm::dvec3 currentScale = object->GetTransform()->GetScale();
+	tween.startScale = currentScale;
+	tween.targetScale = glm::dvec3(currentScale.x, currentScale.y, targetZ);
+	tween.tweenType = TweenType::SCALE_Z;
+
+	tweens.push_back(tween);
+}
+
+Tweening::TweenHandle Tweening::TweenValue(float* value, float start, float target, float duration, Modes mode) {
+	Tween tween;
+	tween.floatPtr = value;
+	tween.startFloat = start;
+	tween.targetFloat = target;
+	tween.duration = duration;
+	tween.elapsedTime = 0.0f;
+	tween.mode = mode;
+	tween.tweenType = TweenType::FLOAT_VALUE;
+
+	static int nextHandle = 1;
+	tween.handle = nextHandle++;
+
+	tweens.push_back(tween);
+	return tween.handle;
+}
+
+Tweening::TweenHandle Tweening::TweenColor(glm::vec4* color, const glm::vec4& startColor, const glm::vec4& targetColor, float duration, Modes mode) {
+	Tween tween;
+	tween.colorPtr = color;
+	tween.startColor = startColor;
+	tween.targetColor = targetColor;
+	tween.duration = duration;
+	tween.elapsedTime = 0.0f;
+	tween.mode = mode;
+	tween.tweenType = TweenType::COLOR;
+
+	static int nextHandle = 1;
+	tween.handle = nextHandle++;
+
+	tweens.push_back(tween);
+	return tween.handle;
+}
+
+void Tweening::Cancel(TweenHandle handle) {
+	tweens.erase(std::remove_if(tweens.begin(), tweens.end(),
+		[handle](const Tween& tween) { return tween.handle == handle; }),
+		tweens.end());
+}
+
+void Tweening::CancelAll(GameObject* object) {
+	if (!object) return;
+
+	tweens.erase(std::remove_if(tweens.begin(), tweens.end(),
+		[object](const Tween& tween) { return tween.object == object; }),
+		tweens.end());
+}
+
+void Tweening::SetOnComplete(TweenHandle handle, std::function<void()> callback) {
+	for (auto& tween : tweens) {
+		if (tween.handle == handle) {
+			tween.onComplete = callback;
+			break;
+		}
+	}
+}
+
+void Tweening::SetOnUpdate(TweenHandle handle, std::function<void(float)> callback) {
+	for (auto& tween : tweens) {
+		if (tween.handle == handle) {
+			tween.onUpdate = callback;
+			break;
+		}
+	}
+}
+
+float Tweening::CalculateT(float normalizedTime, Modes mode) {
+	switch (mode) {
+	case Modes::LINEAR:
+		return normalizedTime;
+	case Modes::EASE_IN:
+		return normalizedTime * normalizedTime;
+	case Modes::EASE_OUT:
+		return 1.0f - (1.0f - normalizedTime) * (1.0f - normalizedTime);
+	case Modes::EASE_IN_OUT:
+		return normalizedTime < 0.5f ?
+			2.0f * normalizedTime * normalizedTime :
+			1.0f - pow(-2.0f * normalizedTime + 2.0f, 2) / 2.0f;
+	default:
+		return normalizedTime;
+	}
 }
 
 glm::dvec3 Tweening::CalculatePosition(const glm::dvec3& startPos, const glm::dvec3& targetPos, float t, Modes mode) {
-    switch (mode) {
-        case Modes::LINEAR:
-            return glm::mix(startPos, targetPos, t);
-        case Modes::EASE_IN:
-            return glm::mix(startPos, targetPos, t * t);
-        case Modes::EASE_OUT:
-            return glm::mix(startPos, targetPos, 1.0f - (1.0f - t) * (1.0f - t));
-        case Modes::EASE_IN_OUT:
-            return glm::mix(startPos, targetPos, t < 0.5f ? 2.0f * t * t : 1.0f - pow(-2.0f * t + 2.0f, 2) / 2.0f);
-        default:
-            return glm::mix(startPos, targetPos, t);
-    }
+	float easedT = CalculateT(t, mode);
+	return glm::mix(startPos, targetPos, easedT);
 }
+
+glm::dvec3 Tweening::CalculateRotation(const glm::dvec3& startRot, const glm::dvec3& targetRot, float t, Modes mode) {
+	float easedT = CalculateT(t, mode);
+	return glm::mix(startRot, targetRot, easedT);
+}
+
+glm::dvec3 Tweening::CalculateScale(const glm::dvec3& startScale, const glm::dvec3& targetScale, float t, Modes mode) {
+	float easedT = CalculateT(t, mode);
+	return glm::mix(startScale, targetScale, easedT);
+}
+
+float Tweening::CalculateFloat(float start, float target, float t, Modes mode) {
+	float easedT = CalculateT(t, mode);
+	return start + (target - start) * easedT;
+}
+
+glm::vec4 Tweening::CalculateColor(const glm::vec4& startColor, const glm::vec4& targetColor, float t, Modes mode) {
+	float easedT = CalculateT(t, mode);
+	return glm::mix(startColor, targetColor, easedT);
+}
+
 void Tweening::Update(float deltaTime) {
-    
-    for (auto& tween : tweens) {
+	for (auto& tween : tweens) {
+		tween.elapsedTime += deltaTime;
+		float t = glm::clamp(tween.elapsedTime / tween.duration, 0.0f, 1.0f);
 
-        tween.elapsedTime += deltaTime;
+		if (tween.onUpdate) {
+			tween.onUpdate(t);
+		}
 
-        float t = glm::clamp(tween.elapsedTime / tween.duration, 0.0f, 1.0f);
+		switch (tween.tweenType) {
+		case TweenType::POSITION:
+		case TweenType::POSITION_X:
+		case TweenType::POSITION_Y:
+		case TweenType::POSITION_Z: {
+			glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
+			if (tween.object && tween.object->GetTransform()) {
+				tween.object->GetTransform()->SetPosition(currentPosition);
+			}
+			break;
+		}
 
-        glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
+		case TweenType::ROTATION:
+		case TweenType::ROTATION_X:
+		case TweenType::ROTATION_Y:
+		case TweenType::ROTATION_Z: {
+			glm::dvec3 currentRotation = CalculateRotation(tween.startRotation, tween.targetRotation, t, tween.mode);
+			if (tween.object && tween.object->GetTransform()) {
+				tween.object->GetTransform()->SetRotation(glm::radians(currentRotation));
+			}
+			break;
+		}
 
-		tween.object->GetTransform()->SetPosition(currentPosition);
+		case TweenType::SCALE:
+		case TweenType::SCALE_X:
+		case TweenType::SCALE_Y:
+		case TweenType::SCALE_Z: {
+			glm::dvec3 currentScale = CalculateScale(tween.startScale, tween.targetScale, t, tween.mode);
+			if (tween.object && tween.object->GetTransform()) {
+				tween.object->GetTransform()->SetScale(currentScale);
+			}
+			break;
+		}
 
-        if (tween.elapsedTime >= tween.duration && tween.onComplete != nullptr) {
-            tween.onComplete();
-        }
-    }
+		case TweenType::FLOAT_VALUE: {
+			if (tween.floatPtr) {
+				*tween.floatPtr = CalculateFloat(tween.startFloat, tween.targetFloat, t, tween.mode);
+			}
+			break;
+		}
 
-    
-    tweens.erase(std::remove_if(tweens.begin(), tweens.end(), [](const Tween& tween) {
-        return tween.elapsedTime >= tween.duration;
-        }), tweens.end());
+		case TweenType::COLOR: {
+			if (tween.colorPtr) {
+				*tween.colorPtr = CalculateColor(tween.startColor, tween.targetColor, t, tween.mode);
+			}
+			break;
+		}
+		}
+
+		if (tween.elapsedTime >= tween.duration && tween.onComplete) {
+			tween.onComplete();
+		}
+	}
+
+	tweens.erase(std::remove_if(tweens.begin(), tweens.end(),
+		[](const Tween& tween) { return tween.elapsedTime >= tween.duration; }),
+		tweens.end());
+}
+
+Tweening::Sequence Tweening::CreateSequence() {
+	return Sequence();
+}
+
+Tweening::Sequence::Sequence() : currentIndex(0), isPlaying(false) {}
+
+Tweening::Sequence& Tweening::Sequence::Append(std::function<TweenHandle()> tweenCreator) {
+	steps.push_back({ tweenCreator, 0, StepType::TWEEN });
+	return *this;
+}
+
+Tweening::Sequence& Tweening::Sequence::AppendDelay(float duration) {
+	steps.push_back({ nullptr, duration, StepType::DELAY });
+	return *this;
+}
+
+Tweening::Sequence& Tweening::Sequence::AppendCallback(std::function<void()> callback) {
+	steps.push_back({ [callback]() -> TweenHandle {
+		callback();
+		return 0;
+	}, 0, StepType::CALLBACK });
+	return *this;
+}
+
+void Tweening::Sequence::Play() {
+	if (steps.empty()) return;
+
+	isPlaying = true;
+	currentIndex = 0;
+	PlayCurrentStep();
+}
+
+void Tweening::Sequence::Stop() {
+	isPlaying = false;
+	if (currentTweenHandle != 0) {
+		Tweening::Cancel(currentTweenHandle);
+		currentTweenHandle = 0;
+	}
+}
+
+void Tweening::Sequence::PlayCurrentStep() {
+	if (!isPlaying || currentIndex >= steps.size()) {
+		isPlaying = false;
+		return;
+	}
+
+	auto& step = steps[currentIndex];
+
+	switch (step.type) {
+	case StepType::TWEEN: {
+		if (step.tweenCreator) {
+			currentTweenHandle = step.tweenCreator();
+			Tweening::SetOnComplete(currentTweenHandle, [this]() {
+				currentIndex++;
+				PlayCurrentStep();
+				});
+		}
+		else {
+			currentIndex++;
+			PlayCurrentStep();
+		}
+		break;
+	}
+
+	case StepType::DELAY: {
+		float dummyValue = 0.0f;
+		currentTweenHandle = Tweening::TweenValue(&dummyValue, 0.0f, 1.0f, step.duration, Modes::LINEAR);
+		Tweening::SetOnComplete(currentTweenHandle, [this]() {
+			currentIndex++;
+			PlayCurrentStep();
+			});
+		break;
+	}
+
+	case StepType::CALLBACK: {
+		if (step.tweenCreator) {
+			step.tweenCreator();
+		}
+		currentIndex++;
+		PlayCurrentStep();
+		break;
+	}
+	}
 }

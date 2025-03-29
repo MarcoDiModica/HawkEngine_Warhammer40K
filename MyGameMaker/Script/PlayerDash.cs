@@ -3,24 +3,22 @@ using HawkEngine;
 
 public class PlayerDash : MonoBehaviour
 {
-    public float dashSpeed = 3000.0f;
+    public float dashSpeed = 1600.0f;
     public float dashDuration = 0.05f;
-    public int maxDashCharges = 2;
-    public float dashRechargeRate = 2.0f;
+    public float dashCooldown = 3.0f; 
 
     private Rigidbody rb;
-    private int currentDashCharges;
-    private float lastDashRechargeTime;
     private bool isDashing;
     private float currentDashTime;
     private Vector3 dashDirection;
+    private float lastDashTime;
 
     public bool IsDashing => isDashing;
 
     public override void Awake()
     {
-
     }
+
     public override void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -29,8 +27,7 @@ public class PlayerDash : MonoBehaviour
             Engineson.print("ERROR: PlayerDash requires a Rigidbody component!");
             return;
         }
-
-        ResetDashCharges();
+        lastDashTime = -dashCooldown; 
     }
 
     public override void Update(float deltaTime)
@@ -39,24 +36,21 @@ public class PlayerDash : MonoBehaviour
         {
             HandleActiveDash(deltaTime);
         }
-
-        UpdateDashRecharge(deltaTime);
     }
 
-    public bool CanDash()
+    public bool CanDash(float currentTime)
     {
-        return !isDashing && currentDashCharges > 0;
+        return !isDashing && (currentTime - lastDashTime >= dashCooldown);
     }
 
-    public void InitiateDash(Vector3 direction)
+    public void InitiateDash(Vector3 direction, float currentTime)
     {
-        if (direction == Vector3.Zero || !CanDash()) return;
+        if (!CanDash(currentTime)) return;
 
         isDashing = true;
         currentDashTime = dashDuration;
-        dashDirection = Vector3.Normalize(direction);
-        currentDashCharges--;
-
+        dashDirection = direction == Vector3.Zero ? gameObject.GetComponent<Transform>().forward : Vector3.Normalize(direction);
+        lastDashTime = currentTime;
         rb.AddForce(dashDirection * dashSpeed);
     }
 
@@ -71,24 +65,5 @@ public class PlayerDash : MonoBehaviour
         {
             isDashing = false;
         }
-    }
-
-    private void UpdateDashRecharge(float deltaTime)
-    {
-        if (currentDashCharges < maxDashCharges)
-        {
-            lastDashRechargeTime += deltaTime;
-            if (lastDashRechargeTime >= dashRechargeRate)
-            {
-                currentDashCharges++;
-                lastDashRechargeTime = 0;
-            }
-        }
-    }
-
-    private void ResetDashCharges()
-    {
-        currentDashCharges = maxDashCharges;
-        lastDashRechargeTime = 0;
     }
 }

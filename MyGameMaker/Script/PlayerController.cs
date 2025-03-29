@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
     private bool hasStoppedFootsteps = false;
+    private float elapsedTime = 0f;
 
     private Audio sound;
     private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
@@ -52,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
-
+        elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
 
@@ -129,10 +130,11 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (playerInput.IsDashPressed() && playerDash.CanDash() && moveDirection != Vector3.Zero)
+        if (playerInput.IsDashPressed() && playerDash.CanDash(elapsedTime))
         {
-            playerDash.InitiateDash(moveDirection);
+            playerDash.InitiateDash(moveDirection, elapsedTime);
         }
+
     }
 
 

@@ -129,6 +129,19 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
+	canvas = CreateGameObject("Canvas");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<SoundComponent>();
+
+	newGameButton = CreateGameObject("NewGameButton");
+	Application->root->ParentGameObject(*newGameButton, *canvas);
+	newGameButton->AddComponent<UIImageComponent>();
+	newGameButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/New_Game.png");
+	newGameButton->AddComponent<UIButtonComponent>();
+	newGameButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	newGameButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.318, 0), glm::vec3(0.182, 0.091, 1));
+
 	//CreateGameplayUI();
 	CreateMainMenuUI();
 
@@ -187,6 +200,18 @@ bool Root::Update(double dt)
 
 	if (Application->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
 		Tweening::Scale(player.get(), glm::dvec3(2.0, 2.0, 2.0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
+		Tweening::UIMove(newGameButton.get(), glm::dvec3(1.0, 0.0, 0.0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
+		Tweening::UIRotate(newGameButton.get(), glm::dvec3(0, 0.5, 0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
+		Tweening::UIScale(newGameButton.get(), glm::dvec3(0.5, 0.8, 0.6), 2.0f, Modes::EASE_IN_OUT);
 	}
 
 	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {

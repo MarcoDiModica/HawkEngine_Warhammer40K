@@ -111,12 +111,12 @@ bool Root::Start()
 
 	// Test PowerUps
 
-	auto powerUp = CreateCube("MedicaeStimm");
+	auto powerUp = CreateCube("AmmunitionBlessing");
 	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	powerUp->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
+	powerUp->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
 	powerUp->SetTag("PowerUp");
 
 	//auto particleFX = CreateGameObject("ParticleFX");

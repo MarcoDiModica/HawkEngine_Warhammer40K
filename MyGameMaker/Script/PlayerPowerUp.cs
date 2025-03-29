@@ -7,8 +7,11 @@ public class PlayerPowerUp : MonoBehaviour
     private PlayerController playerController;
 
     private bool hasMedicaeStimm = false;
+    private bool hasAmmunitionBlessing = false;
     private float medicaeStimmDuration = 5.0f;
     private float medicaeStimmTimer = 0.0f;
+    private float ammunitionBlessingDuration = 5.0f;
+    private float ammunitionBlessingTimer = 0.0f;
 
     public override void Awake()
     {
@@ -35,6 +38,18 @@ public class PlayerPowerUp : MonoBehaviour
                 Engineson.print("Medicae Stimm effect passed");
             }
         }
+        if (hasAmmunitionBlessing)
+        {
+            ammunitionBlessingTimer += deltatime;
+
+            if(ammunitionBlessingTimer >= ammunitionBlessingDuration)
+            {
+                hasAmmunitionBlessing = false;
+                ammunitionBlessingTimer = 0.0f;
+                playerController.playerData.infiniteBullets = false;
+                Engineson.print("Ammunition Blessing effect passed");
+            }
+        }
     }
 
     public override void OnTriggerEnter(GameObject other)
@@ -52,6 +67,16 @@ public class PlayerPowerUp : MonoBehaviour
             {
                 other.GetComponent<MedicaeStimm>().ApplyPowerUpOnPickup(playerController);
                 hasMedicaeStimm = true;
+            }
+            else if (other.GetComponent<ChapterStandard>() != null)
+            {
+                other.GetComponent<ChapterStandard>().ApplyPowerUpOnPickup(playerController);
+
+            }
+            else if (other.GetComponent<AmmunitionBlessing>() != null)
+            {
+                other.GetComponent<AmmunitionBlessing>().ApplyPowerUpOnPickup(playerController);
+                hasAmmunitionBlessing = true;
             }
 
             Engineson.Destroy(other);

@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AmmunitionBlessing.cs" />
     <Compile Include="ArcSnare.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Barrage.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="BulletData.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CapsuleCollider.cs" />
+    <Compile Include="ChapterStandard.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="EnemyController.cs" />

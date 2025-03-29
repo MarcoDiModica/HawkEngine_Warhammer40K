@@ -48,7 +48,7 @@ public class Boltgun : BaseWeapon
             {
                 currentMagazineAmmo--;
             }
-                
+            
             sound?.LoadAudio(boltgunShot);
             sound?.Play();
             // Shoot logic

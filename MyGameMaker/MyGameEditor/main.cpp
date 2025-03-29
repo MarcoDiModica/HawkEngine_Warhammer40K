@@ -242,7 +242,11 @@ static void RenderObjectAndChildren(std::shared_ptr<GameObject> object) {
 }
 
 static void RenderGameView() {
-	OPTICK_CATEGORY("RenderGameView", Optick::Category::GameLogic);
+
+#ifdef PROFILE
+	OPTICK_EVENT();
+#endif // PROFILE
+
 	if (Application->root->mainCamera == nullptr) {
 		return;
 	}
@@ -531,7 +535,11 @@ static void RenderEditor() {
 
 static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
+
+#ifdef PROFILE
 		OPTICK_CATEGORY("RenderEditor", Optick::Category::GameLogic);
+#endif // PROFILE
+
 		const auto t0 = hrclock::now();
 
 		RenderEditor();
@@ -539,7 +547,10 @@ static void EditorRenderer(MyGUI* gui) {
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+#ifdef PROFILE
 		OPTICK_CATEGORY("GUIRender", Optick::Category::GameLogic);
+#endif // PROFILE
+
 		gui->Render();
 
 		const auto t1 = hrclock::now();
@@ -567,7 +578,11 @@ static void PrintCounters() {
 }
 
 static void GameRelease() {
+
+#ifdef PROFILE
 	OPTICK_CATEGORY("GameRelease", Optick::Category::GameLogic);
+#endif // PROFILE
+
 	if (Application->root->mainCamera == nullptr) {
 		return;
 	}

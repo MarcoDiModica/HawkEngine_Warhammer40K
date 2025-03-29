@@ -21,6 +21,7 @@ namespace HawkEngine
 
         public override void TriggerAbility()
         {
+
         }
     }
     

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using HawkEngine;
 
 public class Boltgun : BaseWeapon
@@ -93,7 +94,7 @@ public class Boltgun : BaseWeapon
 
     public override void UseAbility1()
     {
-        // Ability 1 logic
+
         Engineson.print("Boltgun ability 1 used");
         grenadeLauncher.TriggerAbility();
     }

@@ -63,13 +63,13 @@ public class PlayerAnimations : MonoBehaviour
     {
         esk.TransitionAnimations(6, 10, 0.1f);
         //esk.SetAnimation(10);
-        esk.SetAnimationSpeed(4.5f);
+        esk.SetAnimationSpeed(1f);
     }
 
     public void SetRunAnimation()
     {
         esk.TransitionAnimations(3, 6, 0.1f);
         //esk.SetAnimation(6);
-        esk.SetAnimationSpeed(4.5f);
+        esk.SetAnimationSpeed(1.5f);
     }
 }

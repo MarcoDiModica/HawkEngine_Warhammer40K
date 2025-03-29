@@ -15,8 +15,8 @@ public class PlayerShooting : MonoBehaviour
     public PlayerData playerData;
 
     // Guns Scripts
-    private Boltgun boltgun;
-    private Shotgun shotgun;
+    public Boltgun boltgun;
+    public Shotgun shotgun;
     private Railgun railgun;
 
 

@@ -78,6 +78,7 @@
     <Compile Include="BaseWeapon.cs" />
     <Compile Include="BlackHeart.cs" />
     <Compile Include="Boltgun.cs" />
+    <Compile Include="BoltgunBullets.cs" />
     <Compile Include="BoxCollider.cs" />
     <Compile Include="BulletData.cs" />
     <Compile Include="Camera.cs" />

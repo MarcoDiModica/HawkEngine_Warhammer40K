@@ -60,22 +60,22 @@ public class PlayerPowerUp : MonoBehaviour
 
             if (other.GetComponent<BlackHeart>() != null)
             {
-                other.GetComponent<BlackHeart>().ApplyPowerUpOnPickup(playerController);
+                other.GetComponent<BlackHeart>().OnPickUp(playerController);
                 
             }
             else if (other.GetComponent<MedicaeStimm>() != null)
             {
-                other.GetComponent<MedicaeStimm>().ApplyPowerUpOnPickup(playerController);
+                other.GetComponent<MedicaeStimm>().OnPickUp(playerController);
                 hasMedicaeStimm = true;
             }
             else if (other.GetComponent<ChapterStandard>() != null)
             {
-                other.GetComponent<ChapterStandard>().ApplyPowerUpOnPickup(playerController);
+                other.GetComponent<ChapterStandard>().OnPickUp(playerController);
 
             }
             else if (other.GetComponent<AmmunitionBlessing>() != null)
             {
-                other.GetComponent<AmmunitionBlessing>().ApplyPowerUpOnPickup(playerController);
+                other.GetComponent<AmmunitionBlessing>().OnPickUp(playerController);
                 hasAmmunitionBlessing = true;
             }
 

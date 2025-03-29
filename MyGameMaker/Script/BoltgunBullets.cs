@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public class BlackHeart : PickUp
+public class BoltgunBullets : PickUp
 {
     private Transform Transform;
     private Vector3 startPos;
@@ -34,13 +34,13 @@ public class BlackHeart : PickUp
         float newY = startPos.Y + (float)Math.Sin(time * floatSpeed) * floatHeight;
         Transform.position = new Vector3(Transform.position.X, newY, Transform.position.Z);
 
-        // Rotaci�n del objeto
+        // Rotación del objeto
         Transform.Rotate((rotationSpeed * dt) * ((float)Math.PI / 180f), Vector3.UnitY);
     }
+
     public override void OnPickUp(PlayerController playerController)
     {
-        Engineson.print("BlackHeart PowerUp applied");
-        playerController.playerData.SetHealth(playerController.playerData.GetMaxHealth());
-        
+        Engineson.print("MedicaeStimm PowerUp applied");
+        //playerController.playerShooting.boltgun.currentTotalAmmo += 10;
     }
 }

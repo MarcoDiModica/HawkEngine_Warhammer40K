@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerMovement playerMovement;
     private PlayerDash playerDash;
-    private PlayerShooting playerShooting;
+    public PlayerShooting playerShooting;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
     private bool isIdle = false;

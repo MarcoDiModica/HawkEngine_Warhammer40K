@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public abstract class PowerUp : MonoBehaviour
+public abstract class PickUp : MonoBehaviour
 {
 
-    public abstract void ApplyPowerUpOnPickup(PlayerController playerController);
+    public abstract void OnPickUp(PlayerController playerController);
 
 }

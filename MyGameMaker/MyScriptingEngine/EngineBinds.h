@@ -93,7 +93,10 @@ namespace EngineBinds {
 	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void Render(MonoObject* meshRendererRef);
+    
 
+    //Physics
+    MonoArray* OverlapSphere(glm::vec3* position, float radius, MonoString* tag);
 
     //Physics Collider
     void SetTrigger(MonoObject* colliderRef, bool trigger);

@@ -64,6 +64,9 @@ public:
     std::string GetName() const;
     void SetName(const std::string& name);
 
+    std::string GetTag() const { return tag; }
+    void SetTag(const std::string& newTag) { tag = newTag; }
+
     bool CompareTag(const std::string& tag) const;
 
     BoundingBox boundingBox() const;

@@ -6,6 +6,9 @@
 #include <glm/glm.hpp>
 #include "p2List.h"
 #include "DebugDrawerPhysics.h"
+#include <bullet/BulletCollision/btBulletCollisionCommon.h>
+#include <bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
+#include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
 
 
 class GameObject;
@@ -36,6 +39,8 @@ public:
     //void CreatePhysicsPlane();
     void SyncTransforms();
     void SyncCollidersToGameObjects();
+
+    std::vector<GameObject*> OverlapSphere(const glm::vec3& position, float radius, const std::string& tag);
 
     bool IsForRelease() const { return isForRelease; }
 

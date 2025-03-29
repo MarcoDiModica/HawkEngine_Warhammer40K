@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
     private bool hasStoppedFootsteps = false;
+    private bool isInteracting = false;
 
     private Audio sound;
     private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";

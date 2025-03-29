@@ -166,13 +166,11 @@ std::string ScriptComponent::GetTypeName() const
 	return "";
 }
 
-
-
-MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
+MonoObject* GetMonoFromGameObject(GameObject* gameObject) {
     if (!gameObject) return nullptr;
 
     MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    if (!gameObjectClass) {    
+    if (!gameObjectClass) {
         return nullptr;
     }
 
@@ -192,6 +190,8 @@ MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
     return monoGameObject;
 }
 
+
+
 void ScriptComponent::InvokeMonoMethod(const std::string& methodName, GameObject& other) {
     if (!monoScript) return;
 
@@ -200,7 +200,7 @@ void ScriptComponent::InvokeMonoMethod(const std::string& methodName, GameObject
 
     if (!method) return;
 
-    MonoObject* monoOther = GetMonoObjectFromGameObject(&other);
+    MonoObject* monoOther = GetMonoFromGameObject(&other);
 
     if (!monoOther) {
         return;

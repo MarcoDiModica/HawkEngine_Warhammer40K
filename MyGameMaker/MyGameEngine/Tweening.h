@@ -33,6 +33,21 @@ public:
 	static void ScaleY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
 	static void ScaleZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
 
+	static void UIMove(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode = Modes::LINEAR);
+	static void UIMoveX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
+	static void UIMoveY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
+	static void UIMoveZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
+				
+	static void UIRotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode = Modes::LINEAR);
+	static void UIRotateX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
+	static void UIRotateY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
+	static void UIRotateZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
+				
+	static void UIScale(GameObject* object, const glm::dvec3& targetScale, float duration, Modes mode = Modes::LINEAR);
+	static void UIScaleX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
+	static void UIScaleY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
+	static void UIScaleZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
+
 	static TweenHandle TweenValue(float* value, float start, float target, float duration, Modes mode = Modes::LINEAR);
 	static TweenHandle TweenColor(glm::vec4* color, const glm::vec4& startColor, const glm::vec4& targetColor, float duration, Modes mode = Modes::LINEAR);
 
@@ -98,6 +113,18 @@ private:
 		SCALE_X,
 		SCALE_Y,
 		SCALE_Z,
+		UIPOSITION,
+		UIPOSITION_X,
+		UIPOSITION_Y,
+		UIPOSITION_Z,
+		UIROTATION,
+		UIROTATION_X,
+		UIROTATION_Y,
+		UIROTATION_Z,
+		UISCALE,
+		UISCALE_X,
+		UISCALE_Y,
+		UISCALE_Z,
 		FLOAT_VALUE,
 		COLOR
 	};

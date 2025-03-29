@@ -4,22 +4,17 @@
 #include <vector>
 #include <filesystem>
 #include <unordered_map>
-#include <chrono>
 #include <functional>
-#include <Windows.h>
 #include <fstream>
+#include <sstream>
+#include <chrono>
+#include <thread>
+
 #include "../MyGameEditor/Log.h"
-#ifdef min
-#undef min
-#endif // 
 
-#ifdef max
-#undef max
-#endif //
-
-#ifdef _MSC_VER
 #pragma warning(disable: 4996)
-#endif
+
+using ReloadCallbackType = std::function<void(const std::string&)>;
 
 class ScriptHotReloader {
 public:
@@ -31,169 +26,167 @@ public:
 	ScriptHotReloader(const ScriptHotReloader&) = delete;
 	ScriptHotReloader& operator=(const ScriptHotReloader&) = delete;
 
-	void Initialize(const std::string& scriptFolder, const std::string& outputAssembly) {
-		char buffer[MAX_PATH];
-		GetModuleFileNameA(nullptr, buffer, MAX_PATH);
-		std::string fullPath(buffer);
-
-		size_t lastSlash = fullPath.find_last_of("\\/");
-		std::string exeDir = fullPath.substr(0, lastSlash);
-
-		size_t x64Pos = exeDir.find_last_of("\\/");
-		if (x64Pos != std::string::npos) {
-			exeDir = exeDir.substr(0, x64Pos);
-		}
-
-		x64Pos = exeDir.find_last_of("\\/");
-		if (x64Pos != std::string::npos) {
-			exeDir = exeDir.substr(0, x64Pos);
-		}
-
-		std::string absoluteScriptFolder = exeDir + "\\Script";
-		std::string absoluteOutputPath = exeDir + "\\Script\\obj\\Script.dll";
-
-		m_ScriptFolder = absoluteScriptFolder;
-		m_OutputAssembly = absoluteOutputPath;
-
-		std::filesystem::path outputDir = std::filesystem::path(m_OutputAssembly).parent_path();
-		if (!std::filesystem::exists(outputDir)) {
-			try {
-				std::filesystem::create_directories(outputDir);
-			}
-			catch (...) {
-			}
-		}
-
+	void Initialize(const std::string& scriptFolder, const std::string& outputAssemblyDir) {
+		m_ScriptFolder = scriptFolder;
+		m_OutputAssemblyDir = outputAssemblyDir;
 		m_LastCompilationTime = std::filesystem::file_time_type();
+		m_IsCompiling = false;
+		m_CompilationCooldown = false;
+
+		LOG(LogType::LOG_INFO, "Inicializando ScriptHotReloader con proyecto existente");
+		LOG(LogType::LOG_INFO, "Carpeta de scripts: %s", m_ScriptFolder.c_str());
+		LOG(LogType::LOG_INFO, "Directorio de salida: %s", m_OutputAssemblyDir.c_str());
+
+		m_ProjectFile = FindCsprojFile(m_ScriptFolder);
+		if (m_ProjectFile.empty()) {
+			LOG(LogType::LOG_ERROR, "No se encontró un archivo .csproj en la carpeta de scripts");
+		}
+		else {
+			LOG(LogType::LOG_INFO, "Se usará el proyecto existente: %s", m_ProjectFile.c_str());
+		}
 
 		RefreshScriptTimestamps();
+
+		LOG(LogType::LOG_INFO, "ScriptHotReloader inicializado con éxito");
 	}
 
-	void RegisterOnReloadCallback(std::function<void()> callback) {
+	void RegisterOnReloadCallback(ReloadCallbackType callback) {
 		m_OnReloadCallbacks.push_back(callback);
+		LOG(LogType::LOG_INFO, "Callback de recarga registrado");
 	}
 
-	bool CompileScripts() {
-		// Usar el compilador que ya hemos encontrado
-		std::string cscPath = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe";
-
-		if (!std::filesystem::exists(cscPath)) {
-			LOG(LogType::LOG_ERROR, "No se encontró el compilador específico.");
+	bool CheckForChanges() {
+		if (m_IsCompiling || m_CompilationCooldown) {
 			return false;
 		}
 
-		LOG(LogType::LOG_INFO, "Usando compilador moderno CSC: %s", cscPath.c_str());
+		bool scriptsModified = false;
+		for (const auto& entry : std::filesystem::directory_iterator(m_ScriptFolder)) {
+			if (entry.path().extension() == ".cs") {
+				auto lastWriteTime = std::filesystem::last_write_time(entry.path());
 
-		// Verificar carpeta de scripts
-		if (!std::filesystem::exists(m_ScriptFolder)) {
-			LOG(LogType::LOG_ERROR, "Carpeta de scripts no encontrada: %s", m_ScriptFolder.c_str());
+				auto it = m_ScriptTimestamps.find(entry.path().string());
+				if (it == m_ScriptTimestamps.end() || it->second < lastWriteTime) {
+					scriptsModified = true;
+					LOG(LogType::LOG_INFO, "Script modificado: %s", entry.path().filename().string().c_str());
+					break;
+				}
+			}
+		}
+
+		if (scriptsModified) {
+			LOG(LogType::LOG_INFO, "Se detectaron cambios en scripts, compilando...");
+
+			m_IsCompiling = true;
+
+			bool result = CompileExistingProject();
+
+			m_CompilationCooldown = true;
+			m_LastCompilationSuccess = result;
+
+			std::thread([this]() {
+				std::this_thread::sleep_for(std::chrono::seconds(5));
+				m_CompilationCooldown = false;
+				m_IsCompiling = false;
+				LOG(LogType::LOG_INFO, "Cooldown de compilación finalizado, listo para detectar nuevos cambios");
+				}).detach();
+
+			return result;
+		}
+
+		return false;
+	}
+
+	void RefreshScriptTimestamps() {
+		m_ScriptTimestamps.clear();
+
+		int count = 0;
+		for (const auto& entry : std::filesystem::directory_iterator(m_ScriptFolder)) {
+			if (entry.path().extension() == ".cs") {
+				m_ScriptTimestamps[entry.path().string()] = std::filesystem::last_write_time(entry.path());
+				count++;
+			}
+		}
+
+		LOG(LogType::LOG_INFO, "Timestamps actualizados para %d scripts", count);
+	}
+
+	void Update() {
+		CheckForChanges();
+	}
+
+private:
+	ScriptHotReloader() : m_IsCompiling(false), m_CompilationCooldown(false), m_LastCompilationSuccess(true) {}
+	~ScriptHotReloader() {}
+
+	std::string FindCsprojFile(const std::string& folder) {
+		for (const auto& entry : std::filesystem::directory_iterator(folder)) {
+			if (entry.path().extension() == ".csproj") {
+				return entry.path().string();
+			}
+		}
+		return "";
+	}
+
+	bool CompileExistingProject() {
+		if (m_ProjectFile.empty()) {
+			LOG(LogType::LOG_ERROR, "No se ha encontrado un archivo de proyecto (.csproj)");
 			return false;
 		}
 
-		// Asegurar que el directorio de salida existe
-		std::filesystem::path outputDir = std::filesystem::path(m_OutputAssembly).parent_path();
-		if (!std::filesystem::exists(outputDir)) {
-			try {
-				std::filesystem::create_directories(outputDir);
+		LOG(LogType::LOG_INFO, "Compilando proyecto existente: %s", m_ProjectFile.c_str());
+
+		std::string dotnetPath = "C:\\Program Files\\dotnet\\dotnet.exe";
+		if (!std::filesystem::exists(dotnetPath)) {
+			if (std::filesystem::exists("C:\\Program Files (x86)\\dotnet\\dotnet.exe")) {
+				dotnetPath = "C:\\Program Files (x86)\\dotnet\\dotnet.exe";
 			}
-			catch (...) {
-				LOG(LogType::LOG_ERROR, "No se pudo crear el directorio para el assembly");
-				return false;
+			else {
+				// Intentar encontrar en PATH
+				const char* pathEnv = getenv("PATH");
+				if (pathEnv) {
+					std::string path = pathEnv;
+					std::stringstream ss(path);
+					std::string item;
+					while (std::getline(ss, item, ';')) {
+						std::string testPath = item + "\\dotnet.exe";
+						if (std::filesystem::exists(testPath)) {
+							dotnetPath = testPath;
+							break;
+						}
+					}
+				}
 			}
 		}
 
-		// Usar un archivo temporal para la compilación para evitar problemas de archivo bloqueado
-		std::string tempAssembly = m_OutputAssembly.substr(0, m_OutputAssembly.length() - 4) + "_temp.dll";
+		if (!std::filesystem::exists(dotnetPath)) {
+			LOG(LogType::LOG_ERROR, "No se pudo encontrar dotnet.exe");
+			return false;
+		}
 
-		// Crear un archivo batch para la compilación
-		std::string batchPath = m_ScriptFolder + "\\compile_csc.bat";
-		std::ofstream batchFile(batchPath);
-		if (!batchFile.is_open()) {
+		LOG(LogType::LOG_INFO, "Usando dotnet CLI: %s", dotnetPath.c_str());
+
+		std::string batchFile = m_ScriptFolder + "\\build.bat";
+		std::ofstream batch(batchFile);
+		if (!batch.is_open()) {
 			LOG(LogType::LOG_ERROR, "No se pudo crear el archivo batch");
 			return false;
 		}
 
-		batchFile << "@echo off" << std::endl;
-		batchFile << "echo Compilando con CSC moderno..." << std::endl;
+		batch << "@echo off" << std::endl;
+		batch << "echo Compilando proyecto..." << std::endl;
+		batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
+		batch << "\"" << dotnetPath << "\" build \"" << m_ProjectFile << "\" -c Release -v quiet" << std::endl;
+		batch << "echo Código de salida: %ERRORLEVEL% > build_result.txt" << std::endl;
+		batch.close();
 
-		// Crear comando para CSC con todas las referencias y archivos
-		batchFile << "\"" << cscPath << "\" /target:library /out:\"" << tempAssembly << "\"";
-		batchFile << " /langversion:latest"; // Usar la última versión del lenguaje
-
-		// Opciones para ignorar warnings
-		batchFile << " /nowarn:0626,0642,0649,0414,0169"; // Añadido CS0169 (campo nunca usado)
-		batchFile << " /warnaserror-"; // No tratar warnings como errores
-
-		// Añadir referencias básicas 
-		batchFile << " /reference:System.dll";
-		batchFile << " /reference:System.Core.dll";
-
-		// Añadir System.Numerics específicamente para Vector3 y Quaternion
-		batchFile << " /reference:System.Numerics.dll";
-
-		// Otras referencias que podrían necesitarse
-		batchFile << " /reference:System.Drawing.dll";
-
-		// Buscar el Framework path para asegurar que se encuentran las referencias
-		std::string frameworkPath;
-		const char* windir = getenv("WINDIR");
-		if (windir) {
-			frameworkPath = std::string(windir) + "\\Microsoft.NET\\Framework64\\v4.0.30319";
-			if (!std::filesystem::exists(frameworkPath)) {
-				frameworkPath = std::string(windir) + "\\Microsoft.NET\\Framework\\v4.0.30319";
-			}
-		}
-
-		if (!frameworkPath.empty() && std::filesystem::exists(frameworkPath)) {
-			batchFile << " /lib:\"" << frameworkPath << "\"";
-		}
-
-		// Añadir todos los archivos .cs
-		for (const auto& entry : std::filesystem::directory_iterator(m_ScriptFolder)) {
-			if (entry.path().extension() == ".cs") {
-				batchFile << " \"" << entry.path().string() << "\"";
-			}
-		}
-
-		batchFile << std::endl;
-
-		// Añadir código para copiar el assembly a la ubicación final si la compilación fue exitosa
-		batchFile << "if %ERRORLEVEL% EQU 0 (" << std::endl;
-		batchFile << "  if exist \"" << tempAssembly << "\" (" << std::endl;
-
-		// Intentar múltiples veces ya que el archivo podría estar en uso temporalmente
-		batchFile << "    for /L %%i in (1,1,10) do (" << std::endl;
-		batchFile << "      copy /Y \"" << tempAssembly << "\" \"" << m_OutputAssembly << "\" > nul 2>&1" << std::endl;
-		batchFile << "      if not errorlevel 1 goto :succeed" << std::endl;
-		batchFile << "      timeout /t 1 > nul" << std::endl;
-		batchFile << "    )" << std::endl;
-		batchFile << "    echo Error: No se pudo copiar el assembly temporal a la ubicación final." << std::endl;
-		batchFile << "    goto :failed" << std::endl;
-		batchFile << "  )" << std::endl;
-		batchFile << ")" << std::endl;
-
-		// Etiquetas de éxito y fallo
-		batchFile << ":succeed" << std::endl;
-		batchFile << "echo Assembly copiado exitosamente." << std::endl;
-		batchFile << "del \"" << tempAssembly << "\" > nul 2>&1" << std::endl;
-		batchFile << "goto :end" << std::endl;
-
-		batchFile << ":failed" << std::endl;
-		batchFile << "echo Compilación fallida o no se pudo copiar el assembly." << std::endl;
-
-		batchFile << ":end" << std::endl;
-		batchFile << "echo Código de salida: %ERRORLEVEL% > compile_result.txt" << std::endl;
-		batchFile.close();
-
-		// Ejecutar el batch
-		LOG(LogType::LOG_INFO, "Ejecutando script de compilación...");
-		std::string command = "cmd /c \"" + batchPath + "\" > csc_output.txt 2>&1";
+		LOG(LogType::LOG_INFO, "Ejecutando batch de compilación...");
+		std::string command = "cmd /c \"" + batchFile + "\" > \"" + m_ScriptFolder + "\\build_output.txt\" 2>&1";
 		int result = system(command.c_str());
 
-		// Leer el resultado de compilación
-		int compileResult = -1;
+		int buildResult = -1;
 		try {
-			std::ifstream resultFile(m_ScriptFolder + "\\compile_result.txt");
+			std::ifstream resultFile(m_ScriptFolder + "\\build_result.txt");
 			if (resultFile.is_open()) {
 				std::string line;
 				if (std::getline(resultFile, line)) {
@@ -201,152 +194,107 @@ public:
 					if (pos != std::string::npos && pos + 1 < line.length()) {
 						std::string codeStr = line.substr(pos + 1);
 						codeStr.erase(0, codeStr.find_first_not_of(" \t"));
-						try {
-							compileResult = std::stoi(codeStr);
-						}
-						catch (...) {
-							compileResult = -1;
-						}
+						buildResult = std::stoi(codeStr);
 					}
 				}
 				resultFile.close();
 			}
 		}
 		catch (...) {
-			LOG(LogType::LOG_ERROR, "No se pudo leer el resultado de la compilación");
+			LOG(LogType::LOG_ERROR, "Error al leer el resultado de la compilación");
 		}
 
-		// Leer y mostrar la salida del compilador
-		std::string compilerOutput;
 		try {
-			std::ifstream outputFile("csc_output.txt");
+			std::ifstream outputFile(m_ScriptFolder + "\\build_output.txt");
 			if (outputFile.is_open()) {
 				std::stringstream buffer;
 				buffer << outputFile.rdbuf();
-				compilerOutput = buffer.str();
+				std::string output = buffer.str();
 				outputFile.close();
+
+				if (!output.empty()) {
+					//LOG(LogType::LOG_INFO, "Salida de la compilación: %s", output.c_str());
+				}
 			}
 		}
 		catch (...) {
-			compilerOutput = "No se pudo leer la salida del compilador";
+			LOG(LogType::LOG_ERROR, "Error al leer la salida de la compilación");
 		}
 
-		if (!compilerOutput.empty()) {
-			LOG(LogType::LOG_INFO, "Salida del compilador CSC: %s", compilerOutput.c_str());
-		}
-
-		if (compileResult != 0) {
-			LOG(LogType::LOG_ERROR, "Error al compilar scripts con CSC. Código: %d", compileResult);
+		if (buildResult != 0) {
+			LOG(LogType::LOG_ERROR, "Error al compilar proyecto. Código: %d", buildResult);
 			return false;
 		}
 
-		// Verificar que el assembly se generó correctamente
-		if (!std::filesystem::exists(m_OutputAssembly)) {
-			LOG(LogType::LOG_ERROR, "No se generó el assembly con CSC");
+		std::string assemblyPath = FindGeneratedAssembly();
+		if (assemblyPath.empty()) {
+			LOG(LogType::LOG_ERROR, "No se encontró el assembly generado después de la compilación");
 			return false;
 		}
 
-		// Actualizar timestamps y ejecutar callbacks
-		m_LastCompilationTime = std::filesystem::last_write_time(m_OutputAssembly);
+		LOG(LogType::LOG_INFO, "Proyecto compilado exitosamente. Assembly: %s", assemblyPath.c_str());
+
+		m_LastCompilationTime = std::filesystem::last_write_time(assemblyPath);
 		RefreshScriptTimestamps();
 
 		for (auto& callback : m_OnReloadCallbacks) {
 			try {
-				callback();
+				callback(assemblyPath);
 			}
-			catch (...) {
-				LOG(LogType::LOG_ERROR, "Error en callback de recarga");
+			catch (const std::exception& e) {
+				LOG(LogType::LOG_ERROR, "Error en callback de recarga: %s", e.what());
 			}
 		}
 
-		LOG(LogType::LOG_INFO, "Scripts compilados correctamente con CSC");
 		return true;
 	}
 
-	bool CheckForChanges() {
-		bool changes = false;
+	std::string FindGeneratedAssembly() {
+		std::string assemblyPath = m_OutputAssemblyDir + "\\Script.dll";
+		if (std::filesystem::exists(assemblyPath)) {
+			return assemblyPath;
+		}
 
-		for (const auto& entry : std::filesystem::directory_iterator(m_ScriptFolder)) {
-			if (entry.path().extension() == ".cs") {
-				auto lastWriteTime = std::filesystem::last_write_time(entry.path());
+		std::vector<std::string> possiblePaths = {
+			m_ScriptFolder + "\\bin\\Debug\\Script.dll",
+			m_ScriptFolder + "\\bin\\Release\\Script.dll",
+			m_ScriptFolder + "\\bin\\Debug\\netstandard2.0\\Script.dll",
+			m_ScriptFolder + "\\bin\\Release\\netstandard2.0\\Script.dll",
+			m_ScriptFolder + "\\obj\\Debug\\Script.dll",
+			m_ScriptFolder + "\\obj\\Release\\Script.dll",
+			m_ScriptFolder + "\\obj\\Debug\\netstandard2.0\\Script.dll",
+			m_ScriptFolder + "\\obj\\Release\\netstandard2.0\\Script.dll"
+		};
 
-				auto it = m_ScriptTimestamps.find(entry.path().string());
-				if (it == m_ScriptTimestamps.end() || it->second < lastWriteTime) {
-					changes = true;
-					break;
+		for (const auto& path : possiblePaths) {
+			if (std::filesystem::exists(path)) {
+				return path;
+			}
+		}
+
+		std::string latestDll;
+		auto latestTime = std::filesystem::file_time_type::min();
+
+		for (const auto& entry : std::filesystem::recursive_directory_iterator(m_ScriptFolder)) {
+			if (entry.path().extension() == ".dll") {
+				auto writeTime = std::filesystem::last_write_time(entry.path());
+				if (writeTime > latestTime) {
+					latestTime = writeTime;
+					latestDll = entry.path().string();
 				}
 			}
 		}
 
-		return changes;
-	}
-
-	void RefreshScriptTimestamps() {
-		m_ScriptTimestamps.clear();
-
-		for (const auto& entry : std::filesystem::directory_iterator(m_ScriptFolder)) {
-			if (entry.path().extension() == ".cs") {
-				m_ScriptTimestamps[entry.path().string()] = std::filesystem::last_write_time(entry.path());
-			}
-		}
-	}
-
-	bool onetime = true;
-
-	void Update() {
-		/*if (CheckForChanges()) {
-			CompileScripts();
-		}*/
-
-		if (onetime) {
-			CompileScripts();
-			onetime = false;
-		}
-	}
-
-private:
-	ScriptHotReloader() {}
-	~ScriptHotReloader() {}
-
-	std::string GetMonoPath() {
-		char buffer[MAX_PATH];
-		GetModuleFileNameA(nullptr, buffer, MAX_PATH);
-		std::string fullPath(buffer);
-
-		size_t lastSlash = fullPath.find_last_of("\\/");
-		std::string exeDir = fullPath.substr(0, lastSlash);
-
-		size_t x64Pos = exeDir.find_last_of("\\/");
-		if (x64Pos != std::string::npos) {
-			exeDir = exeDir.substr(0, x64Pos);  
-		}
-
-		x64Pos = exeDir.find_last_of("\\/");
-		if (x64Pos != std::string::npos) {
-			exeDir = exeDir.substr(0, x64Pos);  
-		}
-
-		return exeDir + "\\External\\Mono";
-	}
-
-	std::string GetMcsPath() {
-		std::string monoPath = GetMonoPath();
-		std::string mcsPath = monoPath + "\\lib\\mono\\4.5\\mcs.exe";
-
-		if (!std::filesystem::exists(mcsPath)) {
-			mcsPath = monoPath + "\\bin\\mcs.exe";
-
-			if (!std::filesystem::exists(mcsPath)) {
-				mcsPath = monoPath + "\\lib\\mono\\2.0\\mcs.exe";
-			}
-		}
-
-		return mcsPath;
+		return latestDll;
 	}
 
 	std::string m_ScriptFolder;
-	std::string m_OutputAssembly;
+	std::string m_OutputAssemblyDir;
+	std::string m_ProjectFile;
 	std::unordered_map<std::string, std::filesystem::file_time_type> m_ScriptTimestamps;
 	std::filesystem::file_time_type m_LastCompilationTime;
-	std::vector<std::function<void()>> m_OnReloadCallbacks;
+	std::vector<ReloadCallbackType> m_OnReloadCallbacks;
+	bool m_IsCompiling;
+	bool m_CompilationCooldown;
+	bool m_LastCompilationSuccess;
 };

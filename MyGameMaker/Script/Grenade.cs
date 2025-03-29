@@ -61,7 +61,7 @@ public class Grenade : MonoBehaviour
     void Explode()
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
-        explosion = Engineson.CreateGameObject("Explosion", null);
+        explosion = Engineson.CreateGameObject("Exxplosion", null);
         explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);

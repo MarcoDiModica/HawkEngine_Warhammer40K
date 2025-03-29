@@ -111,46 +111,49 @@ MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::st
 	return mono_class_from_name(image, namespaceName.c_str(), className.c_str());
 }
 
-void MonoManager::ReloadAssembly()
-{
-	LOG(LogType::LOG_INFO, "Recargando assembly...");
+void MonoManager::ReloadAssembly(const std::string& assemblyPath) {
+	LOG(LogType::LOG_INFO, "Recargando assembly: %s", assemblyPath.c_str());
 
-	mono_assembly_close(assembly);
+	// Cerrar el assembly actual si existe
+	if (assembly) {
+		mono_assembly_close(assembly);
+		assembly = nullptr;
+		image = nullptr;
+	}
 
+	// Cargar el nuevo assembly
 	assembly = mono_domain_assembly_open(domain, assemblyPath.c_str());
 	if (!assembly) {
-		LOG(LogType::LOG_ERROR, "Error al recargar assembly: %s", assemblyPath.c_str());
+		LOG(LogType::LOG_ERROR, "Error al cargar el assembly: %s", assemblyPath.c_str());
 		return;
 	}
 
+	// Obtener la imagen del assembly
 	image = mono_assembly_get_image(assembly);
 	if (!image) {
-		LOG(LogType::LOG_ERROR, "Error al obtener image del assembly recargado");
+		LOG(LogType::LOG_ERROR, "Error al obtener la imagen del assembly");
 		return;
 	}
 
+	// Cargar las clases de usuario
 	user_classes.clear();
 	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
 	int rows = mono_table_info_get_rows(table_info);
 
 	MonoClass* klass = nullptr;
 
-	for (int i = rows - 1; i > 0; --i)
-	{
+	for (int i = rows - 1; i > 0; --i) {
 		uint32_t cols[MONO_TYPEDEF_SIZE];
 		mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
 		const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-		if (name[0] != '<')
-		{
+		if (name[0] != '<') {
 			const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
 			klass = mono_class_from_name(image, name_space, name);
 
-			if (klass != nullptr && strcmp(mono_class_get_namespace(klass), "Script") != 0)
-			{
+			if (klass != nullptr && strcmp(mono_class_get_namespace(klass), "Script") != 0) {
 				if (!mono_class_is_enum(klass)) {
 					user_classes.push_back(klass);
 				}
-				//LOG("%s", mono_class_get_name(_class));
 			}
 		}
 	}
@@ -160,15 +163,22 @@ void MonoManager::ReloadAssembly()
 
 void MonoManager::EnableHotReloading() {
 	if (!hotReloadEnabled) {
-		std::string scriptFolder = getExecutablePath() + "\\..\\..\\Script";
-		std::string outputAssembly = getExecutablePath() + R"(\..\..\Script\obj\Script.dll)";
+		LOG(LogType::LOG_INFO, "Activando hot-reloading de scripts...");
 
-		ScriptHotReloader::GetInstance().Initialize(scriptFolder, outputAssembly);
-		ScriptHotReloader::GetInstance().RegisterOnReloadCallback([this]() {
-			this->OnScriptsRecompiled();
+		std::string scriptFolder = getExecutablePath() + "\\..\\..\\Script";
+		std::string outputAssemblyDir = getExecutablePath() + "\\..\\..\\Script\\obj";
+
+		// Inicializar el hot reloader
+		ScriptHotReloader::GetInstance().Initialize(scriptFolder, outputAssemblyDir);
+
+		// Registrar callback con la nueva firma que incluye la ruta del assembly
+		ScriptHotReloader::GetInstance().RegisterOnReloadCallback(
+			[this](const std::string& newAssemblyPath) {
+				this->OnScriptsRecompiled(newAssemblyPath);
 			});
 
 		hotReloadEnabled = true;
+		LOG(LogType::LOG_INFO, "Hot-reloading de scripts activado exitosamente");
 	}
 }
 
@@ -176,9 +186,15 @@ void MonoManager::DisableHotReloading() {
 	hotReloadEnabled = false;
 }
 
-void MonoManager::OnScriptsRecompiled() {
-	LOG(LogType::LOG_INFO, "Scripts recompilados, recargando assembly...");
+void MonoManager::OnScriptsRecompiled(const std::string& newAssemblyPath) {
+	LOG(LogType::LOG_INFO, "Scripts recompilados, recargando assembly: %s", newAssemblyPath.c_str());
 
+	// Verificar que el archivo existe
+	if (!std::filesystem::exists(newAssemblyPath)) {
+		LOG(LogType::LOG_ERROR, "El archivo del assembly no existe: %s", newAssemblyPath.c_str());
+		return;
+	}
 
-	ReloadAssembly();
+	// Recargar el assembly
+	ReloadAssembly(newAssemblyPath);
 }

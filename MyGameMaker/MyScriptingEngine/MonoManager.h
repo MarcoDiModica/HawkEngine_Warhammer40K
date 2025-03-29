@@ -29,12 +29,12 @@ public:
 	MonoImage* GetImage() const { return image; }
 	MonoClass* GetClass(const std::string& namespaceName, const std::string& className) const;
 	const ComponentMapper& GetMapper() const { return mapper; }
-	void ReloadAssembly();
 
 	void EnableHotReloading();
 	void DisableHotReloading();
 	bool IsHotReloadingEnabled() const { return hotReloadEnabled; }
-	void OnScriptsRecompiled();
+	void OnScriptsRecompiled(const std::string& newAssemblyPath);
+	void ReloadAssembly(const std::string& assemblyPath);
 
 	template <typename T>
 	T* GetMappedObject(MonoObject* sharpObject) const;

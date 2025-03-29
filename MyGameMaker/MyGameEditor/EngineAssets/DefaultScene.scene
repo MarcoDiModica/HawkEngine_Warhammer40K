@@ -180,8 +180,8 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: AmmunitionBlessing
-  tag: PowerUp
+  name: BoltgunBullets
+  tag: Ammunition
   active: true
   isStatic: false
   Components:
@@ -242,7 +242,7 @@ GameObject2:
       isTrigger: true
     ScriptComponents:
       Script0:
-        name: AmmunitionBlessing
+        name: BoltgunBullets
   Children: ~
 GameObject3:
   name: Floor

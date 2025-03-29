@@ -113,7 +113,7 @@ public class Boltgun : BaseWeapon
     {
         // Ability 2 logic
         Engineson.print("Boltgun ability 2 used");
-        arcSnare.TriggerAbility();
+        //arcSnare.TriggerAbility();
     }
 
     public override void CleanBullets()

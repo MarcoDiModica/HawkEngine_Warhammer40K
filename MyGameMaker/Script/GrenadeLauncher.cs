@@ -18,8 +18,14 @@ public class GrenadeLauncher : BaseAbilities
     Rigidbody rigidbody;
     BoxCollider collider;
     bool canThrow = true;
+
     private float explosionCooldown = 1.0f;
     private float explosionTimer = 0.0f;
+
+    private float abilityCooldown = 3.0f; // Cooldown de la habilidad
+    private float abilityTimer = 0.0f;    // Contador del cooldown
+    private float time = 0.0f;
+
 
     public override void Awake()
     {
@@ -27,29 +33,24 @@ public class GrenadeLauncher : BaseAbilities
     }
     public override void Start()
     {
-        
+
     }
 
     public override void Update(float deltaTime)
     {
+        // Manejo del cooldown de la habilidad
+        
+
         if (rigidbody != null && !exploded && collider != null)
         {
             timer += deltaTime;
-            //Engineson.print("Velocidad Y: " + rigidbody.GetVelocity().Y);
-            //Engineson.print("Timer: " + timer);
 
             if (rigidbody.GetVelocity() != null && grenade != null && grenade.GetComponent<Transform>() != null)
             {
                 float grenadeY = grenade.GetComponent<Transform>().GetPosition().Y;
 
-                //Engineson.print("Chequeando condiciones para Explode()...");
-                //Engineson.print("Velocidad Y: " + rigidbody.GetVelocity().Y);
-                //Engineson.print("yHeight: " + yHeight);
-                //Engineson.print("grenadeY: " + grenadeY);
-
                 if (rigidbody.GetVelocity().Y <= 0.1f && timer > 0.1f && yHeight > grenadeY)
                 {
-                    //Engineson.print("Llamando a Explode()...");
                     Explode();
                 }
             }
@@ -59,20 +60,14 @@ public class GrenadeLauncher : BaseAbilities
         if (exploded)
         {
             explosionTimer += deltaTime;
-            //Engineson.print("Explosion Timer: " + explosionTimer + " / " + explosionCooldown);
 
             if (explosionTimer >= explosionCooldown)
             {
                 if (explosion != null)
                 {
-                    //Engineson.print("Destruyendo explosión...");
+                    Engineson.print("Destruyendo explosión...");
                     Engineson.Destroy(explosion);
                     explosion = null;
-                    //Engineson.print("Explosión destruida.");
-                }
-                else
-                {
-                    //Engineson.print("ERROR: explosion ya era NULL antes de destruir.");
                 }
 
                 exploded = false;
@@ -83,7 +78,7 @@ public class GrenadeLauncher : BaseAbilities
         // Manejo de la granada (después de la explosión)
         if (!exploded && grenade != null && grenade.GetComponent<Grenade>().needsDestroy)
         {
-            //Engineson.print("Destruyendo granada...");
+            Engineson.print("Destruyendo granada...");
             Engineson.Destroy(grenade.GetComponent<Grenade>().gameObject);
             grenade = null;
             canThrow = true;
@@ -96,31 +91,48 @@ public class GrenadeLauncher : BaseAbilities
     {
         if (canThrow)
         {
+            Engineson.print("Lanzando granada...");
             grenade = Engineson.CreateGameObject("Grenade", null);
+
+            if (grenade == null)
+            {
+                Engineson.print("ERROR: No se pudo crear la granada.");
+                return;
+            }
+
             grenade.AddScript("Grenade");
             grenade.GetComponent<Grenade>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-            canThrow = false;
+
+            canThrow = false; // Inicia el cooldown
+            abilityTimer = 0.0f;
         }
+        else
+        {
+            Engineson.print("Habilidad en cooldown. Espera...");
+        }
+        
+        if (!canThrow)
+        {
+            abilityTimer += time;
+            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+
+            if (abilityTimer >= abilityCooldown)
+            {
+                canThrow = true;
+                abilityTimer = 0.0f;
+                Engineson.print("Cooldown terminado. Habilidad lista.");
+            }
+        }
+
     }
 
     void Explode()
     {
-       // Engineson.print("Ejecutando Explode()...");
-
-        if (grenade == null)
-        {
-            //Engineson.print("ERROR: Grenade es NULL en Explode().");
-            return;
-        }
+        if (grenade == null) return;
 
         // Crear explosión
         explosion = Engineson.CreateGameObject("Explosion", null);
-
-        if (explosion == null)
-        {
-            //Engineson.print("ERROR: No se pudo crear la explosión.");
-            return;
-        }
+        if (explosion == null) return;
 
         explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(
@@ -131,9 +143,7 @@ public class GrenadeLauncher : BaseAbilities
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
 
         exploded = true;
-        
-
-        //Engineson.print("Explosión creada. exploded = " + exploded);
     }
 
 }
+

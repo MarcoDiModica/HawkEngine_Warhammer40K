@@ -132,7 +132,7 @@ bool Root::Start()
 	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
 	hormagauntMesh->SetName("HormagauntMesh");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 
 
 	auto floor = CreateCube("Floor");

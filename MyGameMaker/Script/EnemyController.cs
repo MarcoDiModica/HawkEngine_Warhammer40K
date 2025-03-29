@@ -17,10 +17,6 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     public float speedMovement = 5.0f;
     public float acceleration = 15.0f;
     public float rotationSpeed = 300.0f;
-    public float shootCooldown = 2.0f;
-    public float projectileSpeed = 90.0f;
-    public float projectileLifetime = 0.5f;
-    protected float shootTimer = 0f;
     protected Vector3 moveDirection;
     protected float currentRotationAngle;
 

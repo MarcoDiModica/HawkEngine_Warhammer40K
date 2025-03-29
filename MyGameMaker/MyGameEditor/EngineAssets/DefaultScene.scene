@@ -14,22 +14,22 @@ GameObject0:
         - 0
         - 0
       localRotation:
-        - 180
-        - 89.28698645233203
-        - 180
+        - 0
+        - -0
+        - 0
       localScale:
-        - 1.0000010178939505
         - 1
-        - 1.0000010178939505
+        - 1
+        - 1
     SoundComponent:
       name: SoundComponent
       enabled: true
-      audio_path: Assets/Audio/SFX/Player/PlayerFootstep.wav
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
       volume: 1
       is_music: true
       is_spatial: false
       auto_play: false
-      loop: true
+      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -140,9 +140,9 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 6.3198757171630859
-        - 34.831918716430664
-        - -8.0245862007141113
+        - 0
+        - 20
+        - -14
       localRotation:
         - 54.999999253784715
         - -0
@@ -175,12 +175,12 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 4.1834297180175781
-        - -0.39251410961151123
-        - 4.4969496726989746
+        - 5
+        - 0
+        - 5
       localRotation:
         - 0
-        - 35.65180628824924
+        - -0
         - 0
       localScale:
         - 2.2000000476837158
@@ -219,7 +219,7 @@ GameObject2:
         angular: 0
     ScriptComponents:
       Script0:
-        name: EnemyControllerRanged
+        name: EnemyControllerMelee
   Children:
     - name: HormagauntMesh
       tag: Untagged
@@ -283,7 +283,7 @@ GameObject3:
       enabled: true
       localPosition:
         - 0
-        - -1.965785026550293
+        - -1
         - 0
       localRotation:
         - 0

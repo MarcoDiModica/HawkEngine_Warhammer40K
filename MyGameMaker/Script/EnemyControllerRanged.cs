@@ -6,6 +6,10 @@ using HawkEngine;
 public class EnemyControllerRanged : EnemyController
 {
     private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
+    public float shootCooldown = 2.0f;
+    public float projectileSpeed = 90.0f;
+    public float projectileLifetime = 0.5f;
+    protected float shootTimer = 0f;
 
     private class ProjectileInfo
     {

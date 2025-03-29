@@ -81,6 +81,7 @@
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="EnemyController.cs" />
+    <Compile Include="EnemyControllerMelee.cs" />
     <Compile Include="EnemyControllerRanged.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />

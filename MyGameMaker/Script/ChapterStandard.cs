@@ -1,12 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public class MedicaeStimm : PowerUp
+public class ChapterStandard : PowerUp
 {
     public override void Awake()
     {
-        
+
     }
 
     public override void Start()
@@ -21,8 +21,8 @@ public class MedicaeStimm : PowerUp
 
     public override void ApplyPowerUpOnPickup(PlayerController playerController)
     {
-        Engineson.print("MedicaeStimm PowerUp applied");
-        playerController.playerData.AddHealth(25);
-        playerController.playerData.movSpeed = playerController.playerData.movSpeed * 2;
+        Engineson.print("ChapterStandard PowerUp applied");
+       
+
     }
 }

@@ -27,6 +27,15 @@
         this.health = health;
     }
 
+    public void AddHealth(float health)
+    {
+        if (this.health + health > maxHealth)
+        {
+            this.health = maxHealth;
+            return;
+        }
+        this.health += health;
+    }
     public float GetHealth() { return health; }
     public float GetMaxHealth()
     {

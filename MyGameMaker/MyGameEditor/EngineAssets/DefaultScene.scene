@@ -180,7 +180,7 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: BlackHeart
+  name: MedicaeStimm
   tag: PowerUp
   active: true
   isStatic: false
@@ -242,7 +242,7 @@ GameObject2:
       isTrigger: true
     ScriptComponents:
       Script0:
-        name: BlackHeart
+        name: MedicaeStimm
   Children: ~
 GameObject3:
   name: Floor

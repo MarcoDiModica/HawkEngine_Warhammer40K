@@ -93,6 +93,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
+    <Compile Include="MedicaeStimm.cs" />
     <Compile Include="MenuButtons.cs" />
     <Compile Include="MeshCollider.cs" />
     <Compile Include="MeshRenderer.cs" />

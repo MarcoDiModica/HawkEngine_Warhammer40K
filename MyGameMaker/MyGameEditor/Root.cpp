@@ -69,6 +69,7 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
 	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
 	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
 	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
@@ -107,6 +108,16 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 	UpdateCameraPriority();
+
+	// Test PowerUps
+
+	auto powerUp = CreateCube("BlackHeart");
+	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
+	powerUp->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp->AddComponent<ScriptComponent>()->LoadScript("BlackHeart");
+	powerUp->SetTag("PowerUp");
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
@@ -150,7 +161,7 @@ bool Root::Start()
 	SceneManagement->Awake();
 	SceneManagement->Start();
 
-	//CreateGameplayUI();
+	CreateGameplayUI();
 	//CreateMainMenuUI();
 
 #ifdef _BUILD

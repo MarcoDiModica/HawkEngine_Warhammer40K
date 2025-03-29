@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
     public override void Update(float deltaTime)
     {
         moveSpeed = playerData.movSpeed;
-        Engineson.print("Player Movement Update: " + moveSpeed);
+        //Engineson.print("Player Movement Update: " + moveSpeed);
 
         if (playerDash == null || !playerDash.IsDashing)
         {
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
     override public void OnCollisionStay(GameObject other)
     {
-        Engineson.print("Player Collision Stay: ");
+        //Engineson.print("Player Collision Stay: ");
     }
 
     override public void OnCollisionExit(GameObject other)
@@ -137,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
     override public void OnTriggerStay(GameObject other)
     {
-        Engineson.print("Player Trigger Stay: ");
+        //Engineson.print("Player Trigger Stay: ");
     }
 
     override public void OnTriggerExit(GameObject other)

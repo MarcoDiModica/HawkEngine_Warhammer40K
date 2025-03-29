@@ -64,13 +64,27 @@ GameObject0:
       Script4:
         name: PlayerController
       Script5:
-        name: Boltgun
+        name: PlayerPowerUp
       Script6:
-        name: Shotgun
+        name: Boltgun
       Script7:
-        name: GrenadeLauncher
+        name: Shotgun
       Script8:
+        name: GrenadeLauncher
+      Script9:
         name: Railgun
+      Script10:
+        name: ""
+      Script11:
+        name: ""
+      Script12:
+        name: ""
+      Script13:
+        name: ""
+      Script14:
+        name: ""
+      Script15:
+        name: ""
   Children:
     - name: playerMesh
       tag: Untagged
@@ -166,6 +180,71 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
+  name: BlackHeart
+  tag: PowerUp
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 10
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BlackHeart
+  Children: ~
+GameObject3:
   name: Floor
   tag: Untagged
   active: true
@@ -227,3 +306,490 @@ GameObject2:
         - 0
       isTrigger: false
   Children: ~
+GameObject4:
+  name: Canvas
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 0
+        - 0
+    ScriptComponents:
+      Script0:
+        name: UIGameplay
+  Children:
+    - name: PlayerLife
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.143000007
+            - 0.83099997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.194999993
+            - 0.0540000014
+            - 1
+          pivot_offset:
+            - 0
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/blood.png
+      Children: ~
+    - name: PlayerStamina
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.138999999
+            - 0.898999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.107000001
+            - 0.0350000001
+            - 1
+          pivot_offset:
+            - 0
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/blood.png
+      Children: ~
+    - name: PlayerStats
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.189999998
+            - 0.85799998
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.317999989
+            - 0.240999997
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/healthbar_empty.png
+      Children: ~
+    - name: PowerupFrame
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.737999976
+            - 0.874000013
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.126000002
+            - 0.108000003
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/powerup_frame.png
+      Children: ~
+    - name: GunSwitcher
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.808000028
+            - 0.851999998
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.300999999
+            - 0.25999999
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/gunswitcher_frame.png
+      Children: ~
+    - name: RailgunIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.884000003
+            - 0.83099997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.100000001
+            - 0.063000001
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: false
+          texture_path: Assets/Textures/railgun_icon.png
+      Children: ~
+    - name: ShotgunIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.884000003
+            - 0.83099997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.100000001
+            - 0.063000001
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: false
+          texture_path: Assets/Textures/shotgun_icon.png
+      Children: ~
+    - name: BoltgunIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.884000003
+            - 0.83099997
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.100000001
+            - 0.063000001
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/boltgun_icon.png
+      Children: ~
+    - name: BulletIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.703999996
+            - 0.873000026
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00999999978
+            - 0.0670000017
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/bullet_icon.png
+      Children: ~
+    - name: GrenadeIcon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.773000002
+            - 0.871999979
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0209999997
+            - 0.0649999976
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/grenade_icon.png
+      Children: ~

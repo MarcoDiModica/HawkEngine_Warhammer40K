@@ -8,6 +8,7 @@ public abstract class PowerUp : MonoBehaviour
     public enum PowerUpType
     {
         BLACKHEART,
+        MEDICAE_STIMM,
     }
     public PowerUpType powerUpType;
 

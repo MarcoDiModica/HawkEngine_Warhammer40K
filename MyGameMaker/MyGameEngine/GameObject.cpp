@@ -374,6 +374,16 @@ void GameObject::SetName(const std::string& name)
     this->name = name;
 }
 
+void GameObject::SetTag(const std::string& tag)
+{
+	this->tag = tag;
+}
+
+std::string GameObject::GetTag() const
+{
+	return tag;
+}
+
 bool GameObject::CompareTag(const std::string& tag) const
 {
     return this->tag == tag;

@@ -37,6 +37,8 @@ namespace EngineBinds {
 
     MonoString* GameObjectGetName(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
+	MonoString* GetTag(MonoObject* ref);
+	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
 
     // Input

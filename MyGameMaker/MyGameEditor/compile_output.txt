@@ -1,0 +1,8 @@
+Compilando scripts...
+
+Excepci¢n no controlada: System.MissingMethodException: M‚todo no encontrado: 'System.String[] System.String.Split(Char, System.StringSplitOptions)'.
+   en Mono.CSharp.CommandLineParser.ParseOption(String option, String[]& args, CompilerSettings settings)
+   en Mono.CSharp.CommandLineParser.ParseArguments(CompilerSettings settings, String[] args)
+   en Mono.CSharp.CommandLineParser.ParseArguments(String[] args)
+   en Mono.CSharp.Driver.Main(String[] args)
+Error en la compilación: -532462766

@@ -17,7 +17,7 @@ public:
     bool Draw() override;
 
 private:
-    std::shared_ptr<MyGameEngine::AudioEngine> m_AudioEngine;
+    std::shared_ptr<AudioEngine> m_AudioEngine;
     char m_MusicPath[256] = "EngineAssets/Sounds/music.wav";
     char m_SoundEffectPath[256] = "EngineAssets/Sounds/effect.wav";
     float m_Position[3] = {0.0f, 0.0f, 0.0f};

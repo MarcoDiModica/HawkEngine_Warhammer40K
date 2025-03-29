@@ -6,8 +6,6 @@
 #include <memory>
 #include "AudioFile.h"
 
-namespace MyGameEngine {
-
 class AudioAsset {
 public:
     AudioAsset();
@@ -45,5 +43,3 @@ private:
     uint32_t m_AssetID;          // Unique asset identifier
     static uint32_t s_NextAssetID;
 };
-
-} 

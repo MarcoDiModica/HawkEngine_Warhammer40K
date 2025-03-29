@@ -7,8 +7,6 @@
 #include <unordered_map>
 #include "AudioAsset.h"
 
-namespace MyGameEngine {
-
 class AudioEngine {
 public:
     // Represents a playable sound source
@@ -67,5 +65,3 @@ private:
     std::unordered_map<ALuint, AudioSource> m_ActiveSources;
     std::unordered_map<std::string, std::weak_ptr<AudioAsset>> m_AudioAssets;
 };
-
-}

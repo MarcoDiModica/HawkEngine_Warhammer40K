@@ -15,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
     private Boltgun boltgun;
     private Shotgun shotgun;
     private Railgun railgun;
+    public bool niggas = true;
 
 
     private Audio sound;
@@ -73,7 +74,7 @@ public class PlayerShooting : MonoBehaviour
         railgun.Start();
         if (railgun == null)
         {
-            Engineson.print("ERROR: PlayerShooting requires a Ra ilgun component!");
+            Engineson.print("ERROR: PlayerShooting requires a Railgun component!");
         }
 
         switch (currentGun)

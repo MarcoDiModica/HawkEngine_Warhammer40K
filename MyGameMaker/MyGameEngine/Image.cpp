@@ -155,7 +155,6 @@ std::istream& operator>>(std::istream& is, Image& img) {
 }
 
 bool Image::LoadTexture(const std::string& path) {
-	LOG(LogType::LOG_INFO, "loading tex: %s", path.c_str());
 	image_path = path;
 
 	if (!std::filesystem::exists(path)) {
@@ -182,8 +181,6 @@ bool Image::LoadTexture(const std::string& path) {
 	auto format = ilGetInteger(IL_IMAGE_FORMAT);
 	auto bpp = ilGetInteger(IL_IMAGE_BPP);
 
-	LOG(LogType::LOG_INFO, "og image: BPP=%d, format=%d", bpp, format);
-
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 
 	if (ilGetInteger(IL_IMAGE_ORIGIN) != IL_ORIGIN_UPPER_LEFT) {
@@ -194,9 +191,6 @@ bool Image::LoadTexture(const std::string& path) {
 	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
 	auto channels = ilGetInteger(IL_IMAGE_BPP);
 	auto data = ilGetData();
-
-	LOG(LogType::LOG_INFO, "converted image: w=%d, h=%d, ch=%d, f=%d",
-		width, height, channels, ilGetInteger(IL_IMAGE_FORMAT));
 
 	load(width, height, channels, data);
 
@@ -257,7 +251,6 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 	std::string fpath = filename.substr(0, filename.size() - 4);
 
 	std::string fullPath = "Library/Images/" + fpath + ".image";
-	LOG(LogType::LOG_INFO, "Loading image from: %s", fullPath.c_str());
 	auto it = imageCache.find(fullPath);
 	if (it != imageCache.end()) {
 		return it->second;

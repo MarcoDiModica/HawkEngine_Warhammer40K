@@ -690,6 +690,7 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
+			MonoManager::GetInstance().EnableHotReloading();
 			SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
@@ -723,17 +724,22 @@ int main(int argc, char** argv) {
 
 #ifndef _BUILD
 			EditorRenderer(Application->gui);
-			
 			RenderGameView(); 
 			PrintCounters();
 			Application->gui->Render();
 			Application->window->SwapBuffers();
 			UndoRedo();
 			ObjectToEditorCamera();
+
+			if (MonoManager::GetInstance().IsHotReloadingEnabled()) {
+				ScriptHotReloader::GetInstance().Update();
+			}
 #else
 			GameRelease();
 			Application->window->SwapBuffers();
-#endif // ENABLE_EDITOR	
+#endif // ENABLE_EDITOR
+
+			
 		
 			if (!Application->Update()) { state = FREE; }
 			break;

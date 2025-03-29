@@ -51,20 +51,20 @@ void ScriptComponent::Update(float deltaTime) {
 
 void ScriptComponent::Destroy()
 {
-	/*if (monoScript) {
-		MonoClass* scriptClass = mono_object_get_class(monoScript);
-		MonoMethod* destroyMethod = mono_class_get_method_from_name(scriptClass, "Destroy", 0);
+    /*if (monoScript) {
+        MonoClass* scriptClass = mono_object_get_class(monoScript);
+        MonoMethod* destroyMethod = mono_class_get_method_from_name(scriptClass, "Destroy", 0);
 
-		MonoObject* exception = nullptr;
-		mono_runtime_invoke(destroyMethod, monoScript, nullptr, &exception);
+        MonoObject* exception = nullptr;
+        mono_runtime_invoke(destroyMethod, monoScript, nullptr, &exception);
 
-		if (exception) {
-			MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
-			const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
-			LOG(LogType::LOG_ERROR, "DestroyError: %s", exceptionStr);
-			mono_free((void*)exceptionStr);
-		}
-	}*/
+        if (exception) {
+            MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
+            const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
+            LOG(LogType::LOG_ERROR, "DestroyError: %s", exceptionStr);
+            mono_free((void*)exceptionStr);
+        }
+    }*/
 
     monoScript = nullptr;
 }
@@ -77,6 +77,8 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
         LOG(LogType::LOG_ERROR, "script %s not found in route %s", scriptName.c_str(), scriptPath.c_str());
         return false;
     }
+
+    currentScriptName = scriptName;
 
     MonoClass* scriptClass = mono_class_from_name(MonoManager::GetInstance().GetImage(), "", scriptName.c_str());
     if (!scriptClass) {
@@ -101,14 +103,7 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
         return false;
     }
 
-
-/*   Setting the cplusplus gameObject reference of the MonoBehaviour scripto        */
-
     if (MonoManager::GetInstance().scriptIDs.contains(scriptName) == false) {
-
-     LOG(LogType::LOG_INFO, "Script %s Loaded successfully.", scriptName.c_str());
-
-
 
         MonoManager::GetInstance().scriptIDs.emplace(std::pair<std::string, int>(scriptName, MonoManager::GetInstance().GetNewScriptClassID()));
     }
@@ -124,6 +119,19 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
     return true;
 }
 
+bool ScriptComponent::RefreshScriptInstance()
+{
+    if (currentScriptName.empty()) {
+        return false;  
+    }
+
+    // Guardar cualquier estado importante del script aquí si es necesario
+    // Para implementación más avanzada, podrías agregar métodos para serializar/deserializar el estado
+
+    monoScript = nullptr;
+
+    return LoadScript(currentScriptName);
+}
 
 bool ScriptComponent::CreateNewScript(const std::string& scriptName, const std::string& baseScriptName)
 {
@@ -157,13 +165,13 @@ bool ScriptComponent::CreateNewScript(const std::string& scriptName, const std::
 
 std::string ScriptComponent::GetTypeName() const
 {
-	if (monoScript) {
-		MonoClass* scriptClass = mono_object_get_class(monoScript);
-		const char* name = mono_class_get_name(scriptClass);
-		return std::string(name);
-	}
+    if (monoScript) {
+        MonoClass* scriptClass = mono_object_get_class(monoScript);
+        const char* name = mono_class_get_name(scriptClass);
+        return std::string(name);
+    }
 
-	return "";
+    return "";
 }
 
 
@@ -172,7 +180,7 @@ MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
     if (!gameObject) return nullptr;
 
     MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    if (!gameObjectClass) {    
+    if (!gameObjectClass) {
         return nullptr;
     }
 
@@ -207,6 +215,6 @@ void ScriptComponent::InvokeMonoMethod(const std::string& methodName, GameObject
     }
 
     void* args[1];
-    args[0] = monoOther; 
+    args[0] = monoOther;
     mono_runtime_invoke(method, monoScript, args, nullptr);
 }

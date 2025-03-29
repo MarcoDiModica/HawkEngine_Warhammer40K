@@ -27,6 +27,9 @@
     <ClInclude Include="MonoManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptHotReloader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ScriptComponent.cpp">

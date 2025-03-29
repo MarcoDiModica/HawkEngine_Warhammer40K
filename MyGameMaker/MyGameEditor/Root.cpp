@@ -393,9 +393,6 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 	const double maxScale = 100.0;
 	scaleFactor = std::min(std::max(scaleFactor, minScale), maxScale);
 
-	LOG(LogType::LOG_INFO, "Modelo '%s' cargado. Tamaño original: [%.2f, %.2f, %.2f], Factor de escala: %.5f",
-		path.c_str(), modelSize.x, modelSize.y, modelSize.z, scaleFactor);
-
 	/*for (auto& obj : createdObjects) {
 		glm::mat4 originalMatrix = obj->GetTransform()->GetLocalMatrix();
 		glm::mat4 scaledMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scaleFactor)) * originalMatrix;

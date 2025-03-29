@@ -83,7 +83,7 @@ namespace HawkEngine
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             get; // Get from C++
 
-            set; // Set in C#
+            //set; // Set in C#
         }
 
         public string name

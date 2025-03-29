@@ -54,8 +54,6 @@ struct SceneObject {
 };
 
 bool MyGUI::Awake() {
-	LOG(LogType::LOG_INFO, "UI Awake");
-
 	bool ret = true;
 
 	UIHierarchyPanel = new UIHierarchy(UIType::HIERARCHY, "Hierarchy");
@@ -113,22 +111,15 @@ bool MyGUI::isInitialized(UIElement* element) {
 		LOG(LogType::LOG_ERROR, "-%s", element->GetName().c_str());
 		return false;
 	}
-	LOG(LogType::LOG_INFO, "+%s", element->GetName().c_str());
 	return true;
 }
 
 
 bool MyGUI::Start() {
-	LOG(LogType::LOG_INFO, "Initializing ImGui/ImPlot...");
-
 	IMGUI_CHECKVERSION();
-	LOG(LogType::LOG_OK, "-ImGui Version: %s", IMGUI_VERSION);
 
 	if (!ImGui::GetCurrentContext) {
 		LOG(LogType::LOG_ERROR, "-ImGui Context not created");
-	}
-	else {
-		LOG(LogType::LOG_OK, "-ImGui Context created");
 	}
 
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -161,10 +152,6 @@ bool MyGUI::Start() {
 
 	if (!&io) {
 		LOG(LogType::LOG_ERROR, "-ImGui IO not created");
-	}
-	else {
-		LOG(LogType::LOG_OK, "-ImGui IO created");
-		LOG(LogType::LOG_OK, "-Custom fonts loaded successfully");
 	}
 
 	ImGuiStyle& style = ImGui::GetStyle();

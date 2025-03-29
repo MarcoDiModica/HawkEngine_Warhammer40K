@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "../MyGameEngine/Component.h"
 #include <mono/metadata/object.h>
 #include <filesystem>
@@ -9,42 +8,45 @@
 class ScriptComponent : public Component
 {
 public:
-    ScriptComponent(GameObject* owner);
-    ~ScriptComponent() override;
+	ScriptComponent(GameObject* owner);
+	~ScriptComponent() override;
 
-    void Start() override;
-    void Update(float deltaTime) override;
-    void Destroy() override;
-    ComponentType GetType() const override { return ComponentType::SCRIPT; };
+	void Start() override;
+	void Update(float deltaTime) override;
+	void Destroy() override;
+	ComponentType GetType() const override { return ComponentType::SCRIPT; };
 
-    std::unique_ptr<Component> Clone(GameObject* new_owner) override { return std::make_unique<ScriptComponent>(new_owner); }
+	std::unique_ptr<Component> Clone(GameObject* new_owner) override { return std::make_unique<ScriptComponent>(new_owner); }
 
-    void SetMonoScript(MonoObject* script) { monoScript = script; }
+	void SetMonoScript(MonoObject* script) { monoScript = script; }
 
-    bool LoadScript(const std::string& scriptName);
-    bool CreateNewScript(const std::string& scriptName, const std::string& baseScriptName);
+	bool LoadScript(const std::string& scriptName);
+	bool CreateNewScript(const std::string& scriptName, const std::string& baseScriptName);
+	bool RefreshScriptInstance();
 
-    MonoObject* GetSharpObject() const { return monoScript; }
-    std::string GetTypeName() const;
+	MonoObject* GetSharpObject() const { return monoScript; }
+	std::string GetTypeName() const;
+	std::string GetCurrentScriptName() const { return currentScriptName; }
 
 	void InvokeMonoMethod(const std::string& methodName, GameObject& other);
 
-    MonoObject* monoScript = nullptr;
+	MonoObject* monoScript = nullptr;
 
-    std::filesystem::file_time_type GetLastWriteTime() const { return lastWriteTime; }
-    void SetLastWriteTime(std::filesystem::file_time_type newTime) { lastWriteTime = newTime; }
+	std::filesystem::file_time_type GetLastWriteTime() const { return lastWriteTime; }
+	void SetLastWriteTime(std::filesystem::file_time_type newTime) { lastWriteTime = newTime; }
 
-    std::filesystem::file_time_type lastWriteTime;
+	std::filesystem::file_time_type lastWriteTime;
+	std::string currentScriptName;
 
 protected:
 	friend class SceneSerializer;
-    
+
 	YAML::Node encode() override {
 		YAML::Node node;
 		node["name"] = GetTypeName();
 		return node;
 	}
-    
+
 	bool decode(const YAML::Node& node) override {
 		if (!node["name"]) {
 			return false;
@@ -52,7 +54,7 @@ protected:
 
 		std::string name = node["name"].as<std::string>();
 		bool success = LoadScript(name);
-        if (!success) {
+		if (!success) {
 			LOG(LogType::LOG_ERROR, "Script %s not found", name.c_str());
 		}
 		else {

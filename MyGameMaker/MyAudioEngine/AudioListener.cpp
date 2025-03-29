@@ -9,7 +9,6 @@ AudioListener::AudioListener(GameObject* owner)
     : Component(owner)
 {
     name = "AudioListener";
-    LOG(LogType::LOG_INFO, "AudioListener created on %s", owner->GetName().c_str());
 }
 
 void AudioListener::Start() {

@@ -47,19 +47,15 @@ Input::~Input()
 bool Input::Awake()
 {
     bool ret = true;
-    LOG(LogType::LOG_INFO, "Initializing Input Events...");
 
-    if (SDL_InitSubSystem(SDL_INIT_EVENTS) == 0)
-    {
-        LOG(LogType::LOG_OK, "Init SDL Input Event subsystem");
-    }
-    else
-    {
-        LOG(LogType::LOG_ERROR, "SDL Input Event subsystem could not be initialized! %s", SDL_GetError());
-        ret = false;
-    }
-
-    LOG(LogType::LOG_OK, "-File System current path: %s", std::filesystem::current_path().string().c_str());
+	if (SDL_InitSubSystem(SDL_INIT_EVENTS) == 0)
+	{
+	}
+	else
+	{
+		LOG(LogType::LOG_ERROR, "SDL Input Event subsystem could not be initialized! %s", SDL_GetError());
+		ret = false;
+	}
 
 	camera = Application->camera;
     
@@ -98,8 +94,6 @@ std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
     return assetsDir.string();
 }
 
-
-
 void SpawnPhysCube() {
     //auto cube = Application->root->CreateCube("PhysicsCube");
     //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
@@ -109,11 +103,12 @@ void SpawnPhysCube() {
     //glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
     //Application->physicsModule->SpawnPhysSphereWithForce(,*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
 }
+
 bool Input::processSDLEvents()
 {
     SDL_PumpEvents();
 
-    const Uint8* keys = SDL_GetKeyboardState(NULL);
+    const Uint8* keys = SDL_GetKeyboardState(nullptr);
 
     for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j) {
         if (SDL_GameControllerGetButton(InputManagement->gamepads[0].controller, (SDL_GameControllerButton)j))
@@ -457,7 +452,7 @@ void Input::HandleFileDrop(const std::string& fileDir)
             }
 
             // Then process to Library
-            MyGameEngine::AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
+            AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
             LOG(LogType::LOG_OK, "Audio file processed to Library: %s", libraryPath.string().c_str());
         }
         catch (const std::exception& e) {

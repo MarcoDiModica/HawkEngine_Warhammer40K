@@ -9,8 +9,11 @@
 #include <filesystem>
 #include "MyScriptingEngine/MonoManager.h"
 #include "mono/metadata/debug-helpers.h"
+#include "AudioEngine.h"
 
-using namespace MyGameEngine;  // For AudioEngine and AudioAsset
+#ifdef PlaySound
+#undef PlaySound
+#endif
 
 // Initialize static member
 std::shared_ptr<AudioEngine> SoundComponent::s_SharedAudioEngine;

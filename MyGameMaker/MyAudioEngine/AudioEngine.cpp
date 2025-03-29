@@ -3,8 +3,6 @@
 #include <iostream>
 #include <filesystem>
 
-namespace MyGameEngine {
-
 AudioEngine::AudioEngine()
     : m_Device(nullptr)
     , m_Context(nullptr)
@@ -365,6 +363,4 @@ void AudioEngine::PrintActiveSourcesInfo() const {
         std::cout << "Volume: " << gain << std::endl;
         std::cout << "Looping: " << (source.isLooping ? "Yes" : "No") << std::endl;
     }
-}
-
 }

@@ -109,6 +109,7 @@
     <ClInclude Include="EngineBinds.h" />
     <ClInclude Include="MonoManager.h" />
     <ClInclude Include="ScriptComponent.h" />
+    <ClInclude Include="ScriptHotReloader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ComponentMapper.cpp" />

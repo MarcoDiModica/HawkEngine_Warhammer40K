@@ -1,0 +1,6 @@
+Compilando con CSC moderno...
+Compilador de Microsoft (R) Visual C# versi¢n 4.9.0-3.24121.1 (a98c90d5)
+Copyright (C) Microsoft Corporation. Todos los derechos reservados.
+
+Error: No se pudo copiar el assembly temporal a la ubicación final.
+Compilación fallida o no se pudo copiar el assembly.

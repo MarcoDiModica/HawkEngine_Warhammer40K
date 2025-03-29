@@ -73,7 +73,7 @@ public class Grenade : MonoBehaviour
         isExploded = true;
     }
 
-    public override void OnCollisionEnter(Collider other)
+    public override void OnCollisionEnter(GameObject other)
     {
         Explode();
     }

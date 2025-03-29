@@ -36,7 +36,7 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SnapToPosition();
 
-        private GameObject owner;
+        public GameObject owner;
 
         public Collider(UIntPtr nativeCollider, GameObject owner)
         {

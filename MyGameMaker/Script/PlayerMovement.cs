@@ -106,32 +106,41 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    override public void OnCollisionEnter(Collider other)
+    override public void OnCollisionEnter(GameObject other)
     {
-        Engineson.print("Player Collision Enter:");
+        if (other != null)
+        {
+            Engineson.print("OnCollisionEnter con: " + other.name);
+            Engineson.print(other.GetComponent<Collider>().name);
+        }
+        else
+        {
+            Engineson.print("Error: GameObject other es nulo");
+
+        }
     }
 
-    override public void OnCollisionStay(Collider other)
+    override public void OnCollisionStay(GameObject other)
     {
         Engineson.print("Player Collision Stay: ");
     }
 
-    override public void OnCollisionExit(Collider other)
+    override public void OnCollisionExit(GameObject other)
     {
         Engineson.print("Player Collision Exit: ");
     }
 
-    override public void OnTriggerEnter(Collider other)
+    override public void OnTriggerEnter(GameObject other)
     {
         Engineson.print("Player Trigger Enter: ");
     }
 
-    override public void OnTriggerStay(Collider other)
+    override public void OnTriggerStay(GameObject other)
     {
         Engineson.print("Player Trigger Stay: ");
     }
 
-    override public void OnTriggerExit(Collider other)
+    override public void OnTriggerExit(GameObject other)
     {
         Engineson.print("Player Trigger Exit: ");
     }

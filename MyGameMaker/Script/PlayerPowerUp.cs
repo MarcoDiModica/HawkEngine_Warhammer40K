@@ -81,5 +81,21 @@ public class PlayerPowerUp : MonoBehaviour
 
             Engineson.Destroy(other);
         }
+
+        if(other.tag == "Ammunition")
+        {
+            Engineson.print("Player Collided with:" + other.tag);
+
+            if (other.GetComponent<BoltgunBullets>() != null && playerController.playerShooting.boltgun.currentTotalAmmo < playerController.playerShooting.boltgun.maxAmmo)
+            {
+                other.GetComponent<BoltgunBullets>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+            else if (other.GetComponent<ShotgunShells>() != null && playerController.playerShooting.shotgun.currentTotalAmmo < playerController.playerShooting.shotgun.maxAmmo)
+            {
+                other.GetComponent<ShotgunShells>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+            }
+        }
     }
 }

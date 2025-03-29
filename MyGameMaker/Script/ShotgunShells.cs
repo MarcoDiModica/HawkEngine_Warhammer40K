@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public class BoltgunBullets : PickUp
+public class ShotgunShells : PickUp
 {
     private Transform Transform;
     private Vector3 startPos;
@@ -41,7 +41,7 @@ public class BoltgunBullets : PickUp
     public override void OnPickUp(PlayerController playerController)
     {
         Engineson.print("MedicaeStimm PowerUp applied");
-      
-        playerController.playerShooting.boltgun.currentTotalAmmo += 10;
+
+        playerController.playerShooting.shotgun.currentTotalAmmo += 4;
     }
 }

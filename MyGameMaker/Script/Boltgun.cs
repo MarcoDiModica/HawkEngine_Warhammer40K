@@ -24,7 +24,7 @@ public class Boltgun : BaseWeapon
         magazineSize = 30;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 240;
-        currentTotalAmmo = 120;
+        currentTotalAmmo = 30;
         reloadTime = 1.5f;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
@@ -85,8 +85,18 @@ public class Boltgun : BaseWeapon
         {
             sound?.LoadAudio(boltgunReload);
             sound?.Play();
+           
+            if(currentTotalAmmo >= magazineSize)
+            {
+                currentMagazineAmmo = magazineSize;
+                currentTotalAmmo = currentTotalAmmo - magazineSize;
+            }
+            else 
+            {
+                currentMagazineAmmo = currentTotalAmmo;
+                currentTotalAmmo = 0;
+            }
             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
-            currentMagazineAmmo = magazineSize;
             Engineson.print("Boltgun reloaded");
             Engineson.print($"Current ammo: {currentTotalAmmo}");
         }

@@ -13,6 +13,8 @@ public class Shotgun : BaseWeapon
     Barrage barrage;
     HookShot hookShot;
 
+    private float timeSinceLastShot = 0.0f;
+
     public override void Awake()
     {
 
@@ -37,16 +39,20 @@ public class Shotgun : BaseWeapon
     public override void Update(float deltaTime)
     {
         //CleanBullets();
+        timeSinceLastShot += deltaTime;
     }
 
     public override void Shoot()
     {
-        if (currentMagazineAmmo > 0)
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
+            timeSinceLastShot = 0f; // Reiniciar contador
+
             if (!playerData.infiniteBullets)
             {
                 currentMagazineAmmo--;
             }
+
             sound?.LoadAudio(shotgunShot);
             sound?.Play();
             // Shoot logic
@@ -95,8 +101,20 @@ public class Shotgun : BaseWeapon
         {
             sound?.LoadAudio(shotgunReload);
             sound?.Play();
+
+            if (currentTotalAmmo >= magazineSize)
+            {
+                currentMagazineAmmo = magazineSize;
+                currentTotalAmmo = currentTotalAmmo - magazineSize;
+            }
+            else
+            {
+                currentMagazineAmmo = currentTotalAmmo;
+                currentTotalAmmo = 0;
+            }
             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
-            currentMagazineAmmo = magazineSize;
+            Engineson.print("Shotgun reloaded");
+            Engineson.print($"Current ammo: {currentTotalAmmo}");
         }
     }
 

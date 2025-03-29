@@ -14,17 +14,19 @@ public class Boltgun : BaseWeapon
     private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
     private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
 
+    private float timeSinceLastShot = 0.0f;
+
     public override void Awake()
     {
         
     }
     public override void Start()
     {
-        shootCadence = 3f;
+        shootCadence = 0.2f;
         magazineSize = 30;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 240;
-        currentTotalAmmo = 30;
+        currentTotalAmmo = 120;
         reloadTime = 1.5f;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
@@ -38,17 +40,21 @@ public class Boltgun : BaseWeapon
     public override void Update(float deltaTime)
     {
         CleanBullets();
+        timeSinceLastShot += deltaTime;
     }
 
     public override void Shoot()
     {
-        if (currentMagazineAmmo > 0)
+
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
+            timeSinceLastShot = 0f;
+
             if (!playerData.infiniteBullets)
             {
                 currentMagazineAmmo--;
             }
-            
+
             sound?.LoadAudio(boltgunShot);
             sound?.Play();
             // Shoot logic
@@ -96,7 +102,7 @@ public class Boltgun : BaseWeapon
                 currentMagazineAmmo = currentTotalAmmo;
                 currentTotalAmmo = 0;
             }
-            currentTotalAmmo -= magazineSize - currentMagazineAmmo;
+             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
             Engineson.print("Boltgun reloaded");
             Engineson.print($"Current ammo: {currentTotalAmmo}");
         }
@@ -113,7 +119,7 @@ public class Boltgun : BaseWeapon
     {
         // Ability 2 logic
         Engineson.print("Boltgun ability 2 used");
-        //arcSnare.TriggerAbility();
+        arcSnare.TriggerAbility();
     }
 
     public override void CleanBullets()

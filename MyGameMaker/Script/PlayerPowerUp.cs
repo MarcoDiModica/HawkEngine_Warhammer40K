@@ -8,10 +8,13 @@ public class PlayerPowerUp : MonoBehaviour
 
     private bool hasMedicaeStimm = false;
     private bool hasAmmunitionBlessing = false;
+    private bool hasMagnet = false;
     private float medicaeStimmDuration = 5.0f;
     private float medicaeStimmTimer = 0.0f;
     private float ammunitionBlessingDuration = 5.0f;
     private float ammunitionBlessingTimer = 0.0f;
+    private float magnetDuration = 5.0f;
+    private float magnetTimer = 0.0f;
 
     public override void Awake()
     {
@@ -50,6 +53,20 @@ public class PlayerPowerUp : MonoBehaviour
                 Engineson.print("Ammunition Blessing effect passed");
             }
         }
+
+        if(hasMagnet)
+        {
+            magnetTimer += deltatime;
+
+            if (magnetTimer >= magnetDuration)
+            {
+                hasMagnet = false;
+                magnetTimer = 0.0f;
+                playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence * 1.5f;
+                playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 1.5f;
+                Engineson.print("Magnet effect passed");
+            }
+        }
     }
 
     public override void OnTriggerEnter(GameObject other)
@@ -77,6 +94,11 @@ public class PlayerPowerUp : MonoBehaviour
             {
                 other.GetComponent<AmmunitionBlessing>().OnPickUp(playerController);
                 hasAmmunitionBlessing = true;
+            }
+            else if (other.GetComponent<Magnet>() != null)
+            {
+                other.GetComponent<Magnet>().OnPickUp(playerController);
+                hasMagnet = true;
             }
 
             Engineson.Destroy(other);

@@ -58,10 +58,6 @@ void UITransformComponent::SetTransform(const glm::vec3& position, const glm::ve
 
 MonoObject* UITransformComponent::GetSharp()
 {
-	if (CsharpReference) {
-		return CsharpReference;
-	}
-
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "UITransform");
 	if (!klass) {
 		return nullptr;
@@ -92,6 +88,5 @@ MonoObject* UITransformComponent::GetSharp()
 
 	mono_runtime_invoke(method, monoObject, args, nullptr);
 
-	CsharpReference = monoObject;
-	return CsharpReference;
+	return monoObject;
 }

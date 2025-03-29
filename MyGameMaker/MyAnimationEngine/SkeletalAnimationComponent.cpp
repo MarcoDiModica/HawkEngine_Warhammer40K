@@ -100,9 +100,6 @@ int SkeletalAnimationComponent::GetAnimationIndex() {
 
 MonoObject* SkeletalAnimationComponent::GetSharp()
 {
-    if (CsharpReference) {
-        return CsharpReference;
-    }
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "SkeletalAnimation");
     if (!klass) {
         return nullptr;
@@ -127,8 +124,7 @@ MonoObject* SkeletalAnimationComponent::GetSharp()
     args[0] = &componentPtr;
     args[1] = ownerGo;
     mono_runtime_invoke(method, monoObject, args, NULL);
-    CsharpReference = monoObject;
-    return CsharpReference;
+    return monoObject;
 }
 
 void SkeletalAnimationComponent::SaveBinary(const std::string& filename) const

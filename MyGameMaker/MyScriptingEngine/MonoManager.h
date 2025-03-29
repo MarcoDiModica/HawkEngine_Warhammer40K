@@ -11,6 +11,7 @@
 #include <typeindex>
 #include <stdexcept>
 #include "ScriptHotReloader.h"
+#include "ScriptComponent.h"
 
 class MonoManager {
 public:
@@ -24,6 +25,11 @@ public:
 	void Initialize();
 	void Shutdown();
 
+	void CreateScriptDomain();
+	void UnloadScriptDomain();
+	void LoadUserClasses();
+	void NotifyScriptComponentsToRefresh();
+
 	MonoDomain* GetDomain() const { return domain; }
 	MonoAssembly* GetAssembly() const { return assembly; }
 	MonoImage* GetImage() const { return image; }
@@ -36,6 +42,7 @@ public:
 	void OnScriptsRecompiled(const std::string& newAssemblyPath);
 	void ReloadAssembly(const std::string& assemblyPath);
 
+	void RefreshScriptComponentsRecursive(std::shared_ptr<GameObject> gameObject);
 	template <typename T>
 	T* GetMappedObject(MonoObject* sharpObject) const;
 
@@ -55,9 +62,9 @@ private:
 	MonoAssembly* assembly;
 	MonoImage* image;
 	ComponentMapper mapper;
-	std::vector<MonoClass*> user_classes;
+	std::vector<MonoClass*> user_classes; 
 
-	bool hotReloadEnabled = false;
+	bool hotReloadEnabled = false; 
 	std::string assemblyPath;
 
 	int userScriptID = 0;

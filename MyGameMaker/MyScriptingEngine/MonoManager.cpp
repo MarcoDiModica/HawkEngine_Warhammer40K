@@ -6,22 +6,27 @@
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/image.h>
 #include <mono/metadata/reflection.h>
+#include <mono/metadata/threads.h>
+#include <mono/metadata/mono-gc.h>
+#include <mono/metadata/exception.h>
 #include <iostream>
 #include <Windows.h>
 
 #include "../MyGameEditor/Log.h"
 #include <mono/metadata/class.h>
 
+#include "../MyGameEditor/App.h"
 
-// Este metodo hay que moverlo a engineBinds o ScriptingBinds, segun convenga
-void HandleConsoleOutput(MonoString* message) /*C# strings are parse by mnono as MonoString */
+MonoDomain* rootDomain = nullptr;
+MonoDomain* scriptDomain = nullptr;
+
+void HandleConsoleOutput(MonoString* message)
 {
 	if (message == nullptr)
 		return;
 
 	char* msg = mono_string_to_utf8(message);
 	LOG(LogType::LOG_C_SHARP, msg);
-
 	mono_free(msg);
 }
 
@@ -49,22 +54,41 @@ void MonoManager::Initialize() {
 	mono_set_dirs(std::string(path + "\\lib").c_str(),
 		std::string(path + "\\etc").c_str());
 
-	domain = mono_jit_init("MyGameDomain");
-	if (!domain) {
-		std::cerr << "Error initializing Mono" << std::endl;
+	rootDomain = mono_jit_init("RootDomain");
+	if (!rootDomain) {
+		LOG(LogType::LOG_ERROR, "Error inicializando Mono Root Domain");
 		return;
 	}
+
+	CreateScriptDomain();
+}
+
+void MonoManager::CreateScriptDomain() {
+	if (scriptDomain) {
+		LOG(LogType::LOG_ERROR, "Script domain already exists, should be unloaded first");
+		return;
+	}
+
+	scriptDomain = mono_domain_create_appdomain((char*)"ScriptDomain", nullptr);
+	if (!scriptDomain) {
+		LOG(LogType::LOG_ERROR, "Error creating script domain");
+		return;
+	}
+
+	mono_domain_set(scriptDomain, false);
+
+	domain = scriptDomain;
 
 	assemblyPath = std::string(getExecutablePath() + R"(\..\..\Script\obj\Script.dll)");
 	assembly = mono_domain_assembly_open(domain, assemblyPath.c_str());
 	if (!assembly) {
-		std::cerr << "Error loading assembly: " << assemblyPath << std::endl;
+		LOG(LogType::LOG_ERROR, "Error loading assembly: %s", assemblyPath.c_str());
 		return;
 	}
 
 	image = mono_assembly_get_image(assembly);
 	if (!image) {
-		std::cerr << "Error getting image from assembly" << std::endl;
+		LOG(LogType::LOG_ERROR, "Error getting image from assembly");
 		return;
 	}
 
@@ -72,6 +96,12 @@ void MonoManager::Initialize() {
 
 	mono_add_internal_call("HawkEngine.Engineson::print", (const void*)HandleConsoleOutput);
 
+	LoadUserClasses();
+
+	LOG(LogType::LOG_INFO, "Script domain initialized successfully");
+}
+
+void MonoManager::LoadUserClasses() {
 	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
 	int rows = mono_table_info_get_rows(table_info);
 
@@ -96,69 +126,89 @@ void MonoManager::Initialize() {
 			}
 		}
 	}
+
+	LOG(LogType::LOG_INFO, "Loaded %d user classes", user_classes.size());
 }
 
 void MonoManager::Shutdown() {
-	if (domain) {
-		mono_jit_cleanup(domain);
-		domain = nullptr;
-		assembly = nullptr;
-		image = nullptr;
+	if (scriptDomain) {
+		UnloadScriptDomain();
 	}
+
+	if (rootDomain) {
+		mono_jit_cleanup(rootDomain);
+		rootDomain = nullptr;
+	}
+}
+
+void MonoManager::UnloadScriptDomain() {
+	if (!scriptDomain) {
+		return;
+	}
+
+	LOG(LogType::LOG_INFO, "Unloading script domain...");
+
+	user_classes.clear();
+	image = nullptr;
+	assembly = nullptr;
+
+	mono_domain_set(rootDomain, false);
+
+	mono_gc_collect(mono_gc_max_generation());
+
+	mono_domain_unload(scriptDomain);
+	scriptDomain = nullptr;
+	domain = nullptr;
+
+	LOG(LogType::LOG_INFO, "Script domain unloaded successfully");
 }
 
 MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const {
+	if (!image) {
+		LOG(LogType::LOG_ERROR, "No image loaded");
+		return nullptr;
+	}
 	return mono_class_from_name(image, namespaceName.c_str(), className.c_str());
 }
 
-void MonoManager::ReloadAssembly(const std::string& assemblyPath) {
-	LOG(LogType::LOG_INFO, "Recargando assembly: %s", assemblyPath.c_str());
+void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
+	LOG(LogType::LOG_INFO, "Reloading assembly: %s", newAssemblyPath.c_str());
 
-	// Cerrar el assembly actual si existe
-	if (assembly) {
-		mono_assembly_close(assembly);
-		assembly = nullptr;
-		image = nullptr;
-	}
+	assemblyPath = newAssemblyPath;
 
-	// Cargar el nuevo assembly
-	assembly = mono_domain_assembly_open(domain, assemblyPath.c_str());
-	if (!assembly) {
-		LOG(LogType::LOG_ERROR, "Error al cargar el assembly: %s", assemblyPath.c_str());
-		return;
-	}
+	UnloadScriptDomain();
 
-	// Obtener la imagen del assembly
-	image = mono_assembly_get_image(assembly);
-	if (!image) {
-		LOG(LogType::LOG_ERROR, "Error al obtener la imagen del assembly");
-		return;
-	}
+	CreateScriptDomain();
 
-	// Cargar las clases de usuario
-	user_classes.clear();
-	const MonoTableInfo* table_info = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
-	int rows = mono_table_info_get_rows(table_info);
+	NotifyScriptComponentsToRefresh();
 
-	MonoClass* klass = nullptr;
+	LOG(LogType::LOG_INFO, "Assembly reloaded successfully");
+}
 
-	for (int i = rows - 1; i > 0; --i) {
-		uint32_t cols[MONO_TYPEDEF_SIZE];
-		mono_metadata_decode_row(table_info, i, cols, MONO_TYPEDEF_SIZE);
-		const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
-		if (name[0] != '<') {
-			const char* name_space = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
-			klass = mono_class_from_name(image, name_space, name);
-
-			if (klass != nullptr && strcmp(mono_class_get_namespace(klass), "Script") != 0) {
-				if (!mono_class_is_enum(klass)) {
-					user_classes.push_back(klass);
-				}
-			}
+void MonoManager::RefreshScriptComponentsRecursive(std::shared_ptr<GameObject> gameObject) 
+{
+	if (!gameObject->scriptComponents.empty()) {
+		for (auto& script : gameObject->scriptComponents) {
+			script->RefreshScriptInstance();
 		}
 	}
 
-	LOG(LogType::LOG_INFO, "Assembly recargado exitosamente");
+	for (auto& child : gameObject->GetChildren()) {
+		RefreshScriptComponentsRecursive(child);
+	}
+}
+
+void MonoManager::NotifyScriptComponentsToRefresh() {
+	// Aquí implementa la lógica para notificar a todos los ScriptComponent
+	// que deben recrear sus instancias de objetos Mono
+	// Esto depende de cómo estés rastreando esos componentes
+
+	//hacer refresh de todos los script components de la escena
+	for (auto& go : Application->root->GetActiveScene()->children()) {
+		RefreshScriptComponentsRecursive(go);
+	}
+
+	LOG(LogType::LOG_INFO, "Script components notified to refresh");
 }
 
 void MonoManager::EnableHotReloading() {
@@ -168,10 +218,8 @@ void MonoManager::EnableHotReloading() {
 		std::string scriptFolder = getExecutablePath() + "\\..\\..\\Script";
 		std::string outputAssemblyDir = getExecutablePath() + "\\..\\..\\Script\\obj";
 
-		// Inicializar el hot reloader
 		ScriptHotReloader::GetInstance().Initialize(scriptFolder, outputAssemblyDir);
 
-		// Registrar callback con la nueva firma que incluye la ruta del assembly
 		ScriptHotReloader::GetInstance().RegisterOnReloadCallback(
 			[this](const std::string& newAssemblyPath) {
 				this->OnScriptsRecompiled(newAssemblyPath);
@@ -189,12 +237,10 @@ void MonoManager::DisableHotReloading() {
 void MonoManager::OnScriptsRecompiled(const std::string& newAssemblyPath) {
 	LOG(LogType::LOG_INFO, "Scripts recompilados, recargando assembly: %s", newAssemblyPath.c_str());
 
-	// Verificar que el archivo existe
 	if (!std::filesystem::exists(newAssemblyPath)) {
 		LOG(LogType::LOG_ERROR, "El archivo del assembly no existe: %s", newAssemblyPath.c_str());
 		return;
 	}
 
-	// Recargar el assembly
 	ReloadAssembly(newAssemblyPath);
 }

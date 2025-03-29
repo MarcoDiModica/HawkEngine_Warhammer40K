@@ -41,7 +41,7 @@ public class PlayerShooting : MonoBehaviour
         playerInput = gameObject.GetComponent<PlayerInput>();
         if (playerInput == null)
         {
-            Engineson.print("ERROR: PlayerShooting requires a PlayerInput component!");
+            Engineson.print("ERROR: PlayerShooting requires a PlayerInput component!!");
         }
 
         transform = gameObject.GetComponent<Transform>();

@@ -191,10 +191,6 @@ std::unique_ptr<Component> RigidbodyComponent::Clone(GameObject* new_owner) {
 
 MonoObject* RigidbodyComponent::GetSharp()
 {
-    if (CsharpReference) {
-        return CsharpReference;
-    }
-
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Rigidbody");
     if (!klass) {
         return nullptr;
@@ -225,7 +221,6 @@ MonoObject* RigidbodyComponent::GetSharp()
 
     mono_runtime_invoke(method, monoObject, args, nullptr);
 
-    CsharpReference = monoObject;
-    return CsharpReference;
+    return monoObject;
 }
 

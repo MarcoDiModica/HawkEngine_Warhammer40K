@@ -99,10 +99,6 @@ std::unique_ptr<Component> UICanvasComponent::Clone(GameObject* owner)
 
 MonoObject* UICanvasComponent::GetSharp()
 {
-	if (CsharpReference) {
-		return CsharpReference;
-	}
-
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "UICanvas");
 	if (!klass) {
 		return nullptr;
@@ -133,6 +129,5 @@ MonoObject* UICanvasComponent::GetSharp()
 
 	mono_runtime_invoke(method, monoObject, args, nullptr);
 
-	CsharpReference = monoObject;
-	return CsharpReference;
+	return monoObject;
 }

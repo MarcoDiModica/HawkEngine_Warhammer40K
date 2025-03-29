@@ -83,10 +83,6 @@ std::unique_ptr<Component> UIButtonComponent::Clone(GameObject* owner)
 
 MonoObject* UIButtonComponent::GetSharp()
 {
-	if (CsharpReference) {
-		return CsharpReference;
-	}
-
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "UIButton");
 	if (!klass) {
 		return nullptr;
@@ -117,6 +113,5 @@ MonoObject* UIButtonComponent::GetSharp()
 
 	mono_runtime_invoke(method, monoObject, args, nullptr);
 
-	CsharpReference = monoObject;
-	return CsharpReference;
+	return monoObject;
 }

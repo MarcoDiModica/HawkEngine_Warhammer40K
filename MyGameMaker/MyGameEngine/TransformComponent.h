@@ -103,7 +103,6 @@ public:
     // For legacy code that set the local matrix directly, delegate to SetMatrix()
     void SetLocalMatrix(const glm::dmat4& mat) { SetMatrix(mat); }
 
-    MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
     ComponentType GetType() const override { return ComponentType::TRANSFORM; }

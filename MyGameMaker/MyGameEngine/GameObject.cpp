@@ -23,6 +23,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "External/Optick/include/optick.h"
 
 unsigned int GameObject::nextGid = 1;
 
@@ -189,6 +190,11 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
+
+#ifdef PROFILE
+    OPTICK_CATEGORY(name.c_str(), Optick::Category::GameLogic);
+#endif // PROFILE
+
     if (!this || destroyed)
     {
         return;
@@ -270,7 +276,9 @@ void GameObject::Destroy()
 void GameObject::Draw() const
 {
     if (!active) { return; }
-
+#ifdef PROFILE
+    OPTICK_EVENT();
+#endif // PROFILE
     switch (drawMode)
     {
     case DrawMode::AccumultedMatrix:

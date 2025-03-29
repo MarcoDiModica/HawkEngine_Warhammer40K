@@ -7,7 +7,8 @@
 #include <glm/glm.hpp>
 #include "CapsuleColliderComponent.h"
 #include "MeshColliderComponent.h"
-
+#include "MyGameEditor/App.h"
+#include "External/Optick/include/optick.h"
 
 constexpr float fixedDeltaTime = 0.01; // 60 updates per second //With 0.02 it goes a little bit laggy
 float accumulatedTime = 0.0f;
@@ -440,6 +441,10 @@ bool PhysicsModule::Update(double dt) {
 #ifndef _BUILD
     DrawDebugDrawer();
 #endif // !_BUILD
+
+#ifdef PROFILE
+    OPTICK_EVENT();
+#endif // PROFILE
   
     if (linkPhysicsToScene) {
         int numSubsteps = glm::clamp(static_cast<int>(dt / fixedDeltaTime), 1, 10);

@@ -349,4 +349,9 @@ public class PlayerShooting : MonoBehaviour
         }
      }
 
+    public void CounterAttack(GameObject target)
+    {
+        Engineson.print("Counter Attack to: " + target.name);
+    }
+
 }

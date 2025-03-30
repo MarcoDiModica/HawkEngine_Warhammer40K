@@ -116,7 +116,7 @@ public class Railgun : BaseWeapon
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                     projectile.AddScript("BulletData");
-                    projectile.GetComponent<BulletData>().Init(projTransform, forward);
+                    projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
                     bullets.Add(projectile.GetComponent<BulletData>());
 
                     Engineson.print("Projectile fired!");

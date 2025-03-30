@@ -119,13 +119,13 @@ bool Root::Start()
 	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
 	powerUp->SetTag("PowerUp");*/
 
-	auto powerUp = CreateCube("Magnet");
+	/*auto powerUp = CreateCube("Magnet");
 	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	powerUp->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	powerUp->AddComponent<ScriptComponent>()->LoadScript("Magnet");
-	powerUp->SetTag("PowerUp");
+	powerUp->SetTag("PowerUp");*/
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
@@ -134,15 +134,19 @@ bool Root::Start()
 	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	//Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	////enemy->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
+	auto lictor = CreateGameObject("Lictor");
+	lictor->SetTag("Enemy");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
+	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
+	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	lictorMesh->SetName("LictorMesh");
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
 	//auto cube = CreateCube("Cube");
 	//cube->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));

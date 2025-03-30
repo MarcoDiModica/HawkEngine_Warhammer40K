@@ -137,5 +137,40 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public override void OnCollisionEnter(GameObject other)
+    {
+        if (other.tag == "EnemyAttack")
+        {
+            if (!playerDash.isInvulnerable)
+            {
+                playerData.TakeDamage(10);
+                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
+            }
+            else if (playerDash.isInvulnerable)
+            {
+                playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
+            }
+
+
+        }
+
+        if (other.tag == "Enemy")
+        {
+            if (!playerDash.isInvulnerable)
+            {
+                playerData.TakeDamage(10);
+                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
+            }
+            else if (playerDash.isInvulnerable)
+            {
+                playerShooting.CounterAttack(other);
+            }
+
+
+        }
+    }
+
+  
+
 
 }

@@ -13,6 +13,15 @@
         health = 100;
     }
 
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health < 0)
+        {
+            health = 0;
+        }
+    }
+
     public void SetHealth(float health)
     {
         if (health > maxHealth)

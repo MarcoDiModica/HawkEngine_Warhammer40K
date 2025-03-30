@@ -24,19 +24,21 @@ public class EnemyController : MonoBehaviour
     public float projectileSpeed = 90.0f;
     public float projectileLifetime = 0.5f;
     private float shootTimer = 0f;
-    private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
+    private List<BulletData> activeProjectiles = new List<BulletData>();
 
     private class ProjectileInfo
     {
         public GameObject gameObject;
+        public GameObject owner;
         public Transform transform;
         public float lifetime;
         public Vector3 direction;
         public bool markedForDestruction;
 
-        public ProjectileInfo(GameObject obj, Transform trans, Vector3 dir)
+        public ProjectileInfo(GameObject obj, GameObject own, Transform trans, Vector3 dir)
         {
             gameObject = obj;
+            owner = own;
             transform = trans;
             direction = dir;
             lifetime = 0f;
@@ -164,15 +166,17 @@ public class EnemyController : MonoBehaviour
             if (projectile != null)
             {
                 Transform projTransform = projectile.GetComponent<Transform>();
+                projectile.tag = "EnemyAttack";
                 if (projTransform != null)
                 {
                     Vector3 forward = moveDirection;
                     Vector3 spawnPos = enemyTransform.position + forward * 1.0f;
                     projTransform.position = spawnPos;
-                    projTransform.SetScale(0.1f, 0.1f, 0.1f);
+                    projTransform.SetScale(0.5f, 0.5f, 0.5f);
 
-                    ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
-                    activeProjectiles.Add(projInfo);
+                    projectile.AddScript("BulletData");
+                    projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
+                    activeProjectiles.Add(projectile.GetComponent<BulletData>());
 
                     Engineson.print("Projectile fired!");
                 }

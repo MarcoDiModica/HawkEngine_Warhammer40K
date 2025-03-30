@@ -5,7 +5,7 @@ public class PlayerDash : MonoBehaviour
 {
     public float dashSpeed = 1600.0f;
     public float dashDuration = 0.05f;
-    public float dashCooldown = 3.0f; 
+    public float dashCooldown = 1.25f; 
 
     private Rigidbody rb;
     private bool isDashing;
@@ -14,6 +14,10 @@ public class PlayerDash : MonoBehaviour
     private float lastDashTime;
 
     public bool IsDashing => isDashing;
+
+    public bool isInvulnerable = false;
+    private int iFrames = 10;
+    private int iFrameCounter = 0;
 
     public override void Awake()
     {
@@ -35,7 +39,10 @@ public class PlayerDash : MonoBehaviour
         if (isDashing)
         {
             HandleActiveDash(deltaTime);
+            
         }
+
+        HandleInvulnerability();
     }
 
     public bool CanDash(float currentTime)
@@ -51,6 +58,7 @@ public class PlayerDash : MonoBehaviour
         currentDashTime = dashDuration;
         dashDirection = direction == Vector3.Zero ? gameObject.GetComponent<Transform>().forward : Vector3.Normalize(direction);
         lastDashTime = currentTime;
+        isInvulnerable = true;
         rb.AddForce(dashDirection * dashSpeed);
     }
 
@@ -64,6 +72,19 @@ public class PlayerDash : MonoBehaviour
         else
         {
             isDashing = false;
+        }
+    }
+
+    private void HandleInvulnerability()
+    {
+        if (isInvulnerable)
+        {
+            iFrameCounter++;
+            if (iFrameCounter >= iFrames)
+            {
+                isInvulnerable = false;
+                iFrameCounter = 0;
+            }
         }
     }
 }

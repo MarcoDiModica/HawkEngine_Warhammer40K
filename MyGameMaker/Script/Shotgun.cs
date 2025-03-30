@@ -84,7 +84,7 @@ public class Shotgun : BaseWeapon
                         projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                         projectile.AddScript("BulletData");
-                        projectile.GetComponent<BulletData>().Init(projTransform, direction);
+                        projectile.GetComponent<BulletData>().Init(projTransform, direction, gameObject);
                         bullets.Add(projectile.GetComponent<BulletData>());
 
                         Engineson.print("Projectile fired!");

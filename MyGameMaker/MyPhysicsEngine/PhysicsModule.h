@@ -6,9 +6,9 @@
 #include <glm/glm.hpp>
 #include "p2List.h"
 #include "DebugDrawerPhysics.h"
-#include <bullet/BulletCollision/btBulletCollisionCommon.h>
-#include <bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
-#include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
+//#include <bullet/BulletCollision/btBulletCollisionCommon.h>
+//#include <bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.h>
+//#include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
 
 
 class GameObject;

@@ -11,6 +11,8 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected BoxCollider collider;
     protected Transform enemyTransform;
     protected Audio soundAttack;
+    public float currentHealth;
+    public float maxHealth;
 
     public float distToChase = 20.0f;
     public float minDistToChase = 5.0f;

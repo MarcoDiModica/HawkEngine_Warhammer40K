@@ -48,6 +48,9 @@ public class EnemyControllerMelee : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
+
+        maxHealth = 100.0f;
+        currentHealth = maxHealth;
     }
 
     public override void Update(float deltaTime)

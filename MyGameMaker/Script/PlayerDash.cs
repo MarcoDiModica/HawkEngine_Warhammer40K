@@ -16,8 +16,8 @@ public class PlayerDash : MonoBehaviour
     public bool IsDashing => isDashing;
 
     public bool isInvulnerable = false;
-    private int iFrames = 10;
-    private int iFrameCounter = 0;
+    private float invulnerabilityTime = 0.25f;
+    private float iTimeCounter = 0;
 
     public override void Awake()
     {
@@ -42,7 +42,7 @@ public class PlayerDash : MonoBehaviour
             
         }
 
-        HandleInvulnerability();
+        HandleInvulnerability(deltaTime);
     }
 
     public bool CanDash(float currentTime)
@@ -75,15 +75,15 @@ public class PlayerDash : MonoBehaviour
         }
     }
 
-    private void HandleInvulnerability()
+    private void HandleInvulnerability(float deltaTime)
     {
         if (isInvulnerable)
         {
-            iFrameCounter++;
-            if (iFrameCounter >= iFrames)
+            invulnerabilityTime += deltaTime;
+            if (invulnerabilityTime >= iTimeCounter)
             {
                 isInvulnerable = false;
-                iFrameCounter = 0;
+                invulnerabilityTime = 0;
             }
         }
     }

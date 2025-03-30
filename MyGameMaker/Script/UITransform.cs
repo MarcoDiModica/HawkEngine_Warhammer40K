@@ -4,13 +4,6 @@ using System.Runtime.CompilerServices;
 
 namespace HawkEngine
 {
-    public enum Modes
-    {
-        EASE_IN,
-        EASE_OUT,
-        EASE_IN_OUT,
-        LINEAR
-    }
     public class UITransform : Component
     {
         //funciones

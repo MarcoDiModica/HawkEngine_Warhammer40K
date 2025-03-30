@@ -176,6 +176,8 @@ namespace EngineBinds {
 	void DOUIScaleX(GameObject* object, float targetX, float duration, Modes mode);
 	void DOUIScaleY(GameObject* object, float targetY, float duration, Modes mode);
 	void DOUIScaleZ(GameObject* object, float targetZ, float duration, Modes mode);
+    void DOColor(glm::vec4* color, const glm::vec4 startColor, const glm::vec4 targetColor, float duration, Modes mode);
+    void DOValue(float* value, float start, float target, float duration, Modes mode);
 
     //SceneManagement
     bool LoadScene(MonoString* sceneName);

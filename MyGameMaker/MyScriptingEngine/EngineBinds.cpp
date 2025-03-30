@@ -972,6 +972,15 @@ void EngineBinds::DOUIScaleZ(GameObject* object, float targetScale, float durati
 	Tweening::UIScaleZ(object, targetScale, duration, mode);
 }
 
+void EngineBinds::DOColor(glm::vec4 *color, const glm::vec4 startColor, const glm::vec4 targetColor, float duration, Modes mode)
+{
+	Tweening::TweenColor(color, startColor, targetColor, duration, mode);
+}
+
+void EngineBinds::DOValue(float* value, float start, float target, float duration, Modes mode)
+{
+    Tweening::TweenValue(value, start, target, duration, mode);
+}
     
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {

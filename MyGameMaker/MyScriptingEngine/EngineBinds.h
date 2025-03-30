@@ -34,6 +34,7 @@ namespace EngineBinds {
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
 
 	void AddScript(MonoObject* ref, MonoString* scriptName);
+	void SetActive(MonoObject* ref, bool active);
 
     MonoString* GameObjectGetName(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);

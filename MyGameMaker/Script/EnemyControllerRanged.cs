@@ -53,63 +53,77 @@ public class EnemyControllerRanged : EnemyController
 
     public override void Update(float deltaTime)
     {
-        Vector3 playerPos = playerTransform.position;
-
-        if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+        if (!isStunned)
         {
-            if (shootTimer <= 0)
+            Vector3 playerPos = playerTransform.position;
+
+            if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
             {
-                Attack();
-                soundAttack?.Play();
-                shootTimer = shootCooldown;
+                if (shootTimer <= 0)
+                {
+                    Attack();
+                    soundAttack?.Play();
+                    shootTimer = shootCooldown;
+                }
+                else
+                {
+                    shootTimer -= deltaTime;
+                }
+
+                if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                {
+                    Vector3 currentVelocity = rb.GetVelocity();
+                    moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                    Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                    if (desiredVelocity.LengthSquared() > 0)
+                    {
+                        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                    }
+
+                    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+
+                    //enemyTransform.position += desiredVelocity * deltaTime;
+                }
             }
             else
             {
-                shootTimer -= deltaTime;
+                rb.SetVelocity(Vector3.Zero);
             }
 
-            if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+            if (moveDirection != Vector3.Zero)
             {
-                Vector3 currentVelocity = rb.GetVelocity();
-                moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
+                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-                if (desiredVelocity.LengthSquared() > 0)
-                {
-                    desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                }
+                while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
 
-                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
 
-                //enemyTransform.position += desiredVelocity * deltaTime;
+                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerRotation.X * ((float)Math.PI / 180.0f),
+                    eulerRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                // enemyTransform.SetRotationQuat(newRotation);
+                collider.SetRotation(newRotation);
             }
+
         }
-        else
+        else if (isStunned)
         {
+            stunTimer += deltaTime;
             rb.SetVelocity(Vector3.Zero);
-        }
-
-        if (moveDirection != Vector3.Zero)
-        {
-            currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-            float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-            float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-            while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-            while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-            currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-            Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-            Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                eulerRotation.Y * ((float)Math.PI / 180.0f),
-                eulerRotation.X * ((float)Math.PI / 180.0f),
-                eulerRotation.Z * ((float)Math.PI / 180.0f)
-            );
-
-            // enemyTransform.SetRotationQuat(newRotation);
-            collider.SetRotation(newRotation);
+            if (stunTimer >= stunDuration)
+            {
+                isStunned = false;
+                stunTimer = 0.0f;
+            }
         }
 
         UpdateProjectiles(deltaTime);

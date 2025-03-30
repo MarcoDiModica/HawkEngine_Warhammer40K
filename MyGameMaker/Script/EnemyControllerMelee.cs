@@ -55,82 +55,95 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Update(float deltaTime)
     {
-        Vector3 playerPos = playerTransform.position;
-
-        if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+        if (!isStunned)
         {
-            if (IsPlayerInHurtbox(playerPos))
+            Vector3 playerPos = playerTransform.position;
+
+            if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
             {
-                hurtboxTimer += deltaTime;
-                if (hurtboxTimer >= hurtboxActivationTime)
+                if (IsPlayerInHurtbox(playerPos))
                 {
-                    CreateHurtbox();
-                    hurtboxTimer = 0f;
-                    dodgewindow = true;
+                    hurtboxTimer += deltaTime;
+                    if (hurtboxTimer >= hurtboxActivationTime)
+                    {
+                        CreateHurtbox();
+                        hurtboxTimer = 0f;
+                        dodgewindow = true;
+                    }
+                    else if (hurtboxTimer >= 0.5f && dodgewindow)
+                    {
+                        Attack();
+                        soundAttack?.Play();
+                        DestroyHurtbox();
+                        hurtboxTimer = 0f;
+                        dodgeTimer = 0f;
+                        dodgewindow = false;
+                    }
                 }
-                else if (hurtboxTimer >= 0.5f && dodgewindow) 
+                else
                 {
-                    Attack();
-                    soundAttack?.Play();
-                    DestroyHurtbox();
                     hurtboxTimer = 0f;
-                    dodgeTimer = 0f;
-                    dodgewindow = false;
+                }
+                if (dodgewindow)
+                {
+                    dodgeTimer += deltaTime;
+                    if (dodgeTimer >= dodgeActivationTime)
+                    {
+                        DestroyHurtbox();
+                        dodgeTimer = 0f;
+                        dodgewindow = false;
+                    }
+                }
+                if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                {
+                    Vector3 currentVelocity = rb.GetVelocity();
+                    moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                    Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                    if (desiredVelocity.LengthSquared() > 0)
+                    {
+                        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                    }
+
+                    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                 }
             }
             else
             {
-                hurtboxTimer = 0f;
+                rb.SetVelocity(Vector3.Zero);
             }
-            if (dodgewindow)
-            {
-                dodgeTimer += deltaTime;
-                if (dodgeTimer >= dodgeActivationTime)
-                {
-                    DestroyHurtbox();
-                    dodgeTimer = 0f;
-                    dodgewindow = false;
-                }
-            }
-            if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
-            {
-                Vector3 currentVelocity = rb.GetVelocity();
-                moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
 
-                if (desiredVelocity.LengthSquared() > 0)
-                {
-                    desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                }
+            if (moveDirection != Vector3.Zero)
+            {
+                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                    eulerRotation.Y * ((float)Math.PI / 180.0f),
+                    eulerRotation.X * ((float)Math.PI / 180.0f),
+                    eulerRotation.Z * ((float)Math.PI / 180.0f)
+                );
+
+                collider.SetRotation(newRotation);
             }
         }
-        else
+        else if (isStunned)
         {
+            stunTimer += deltaTime;
             rb.SetVelocity(Vector3.Zero);
-        }
-
-        if (moveDirection != Vector3.Zero)
-        {
-            currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-            float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-            float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-            while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-            while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-            currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-            Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-            Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                eulerRotation.Y * ((float)Math.PI / 180.0f),
-                eulerRotation.X * ((float)Math.PI / 180.0f),
-                eulerRotation.Z * ((float)Math.PI / 180.0f)
-            );
-
-            collider.SetRotation(newRotation);
+            if (stunTimer >= stunDuration)
+            {
+                isStunned = false;
+                stunTimer = 0.0f;
+            }
         }
     }
 

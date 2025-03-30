@@ -128,13 +128,7 @@ public class PlayerShooting : MonoBehaviour
 
         if (playerInput?.IsShooting() == true)
         {
-            shootTimer -= deltaTime * 10;
-            if (shootTimer <= 0)
-            {
-                Shoot();
-                shootTimer = shootCooldown;
-            }
-
+            Shoot();
         }
         else if (playerInput.IsShooting() == false)
         {

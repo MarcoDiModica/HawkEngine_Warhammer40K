@@ -80,11 +80,11 @@ GameObject0:
       Script12:
         name: ""
       Script13:
-        name: ""
+        name: Barrage
       Script14:
         name: ""
       Script15:
-        name: ""
+        name: ArcSnare
   Children:
     - name: playerMesh
       tag: Untagged
@@ -99,7 +99,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -158,7 +158,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -369,9 +369,6 @@ GameObject4:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -391,6 +388,9 @@ GameObject4:
         - 0
         - 0
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     ScriptComponents:
       Script0:
         name: UIGameplay

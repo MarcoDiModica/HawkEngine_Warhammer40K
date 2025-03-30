@@ -8,6 +8,7 @@ public class Shotgun : BaseWeapon
     private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
     private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
 
+
     private PlayerController playerController;
     public PlayerData playerData;
     Barrage barrage;
@@ -34,6 +35,7 @@ public class Shotgun : BaseWeapon
         playerData = playerController.playerData;
         barrage = gameObject.GetComponent<Barrage>();
         hookShot = gameObject.GetComponent<HookShot>();
+        
     }
 
     public override void Update(float deltaTime)
@@ -125,13 +127,6 @@ public class Shotgun : BaseWeapon
 
     public override void UseAbility2()
     {
-        if (barrage == null)
-        {
-            Engineson.print("Error: Barrage no encontrado en Shotgun.cs");
-            return;
-        }
-
-        Engineson.print("Activando habilidad Barrage desde Shotgun...");
         barrage.TriggerAbility();
     }
 

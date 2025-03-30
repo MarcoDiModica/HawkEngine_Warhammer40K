@@ -335,7 +335,7 @@ public class PlayerShooting : MonoBehaviour
                 boltgun.UseAbility2();
                 break;
             case GunType.SHOTGUN:
-
+                shotgun.UseAbility2();
                 break;
             case GunType.RAILGUN:
 

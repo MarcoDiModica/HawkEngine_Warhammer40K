@@ -20,6 +20,7 @@ public class BulletData : MonoBehaviour
         lifetime = 0f;
         projectileLifetime = 3;
         markedForDestruction = false;
+        
     }
 
     public override void Awake()

@@ -105,7 +105,7 @@ bool UIMainMenuBar::Draw()
 					isPaused = false;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
 					Application->physicsModule->linkPhysicsToScene = false;
-					Application->scene_serializer->DeSerialize("EnigneAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
+					Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
 				}
 				if (ImGui::ImageButton("Pause Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(pause_image.id())), ImVec2(11.0f, 11.0f)))
 				{
@@ -124,7 +124,7 @@ bool UIMainMenuBar::Draw()
 				isPaused = false;
 				SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
 				Application->physicsModule->linkPhysicsToScene = false;
-				Application->scene_serializer->DeSerialize("EnigneAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");				
+				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");				
 			}
 			if (ImGui::ImageButton("Pause Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(pause_image.id())), ImVec2(11.0f, 11.0f)))
 			{

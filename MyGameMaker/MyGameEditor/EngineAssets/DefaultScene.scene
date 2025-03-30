@@ -99,7 +99,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -158,7 +158,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -180,8 +180,8 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: BoltgunBullets
-  tag: Ammunition
+  name: Magnet
+  tag: PowerUp
   active: true
   isStatic: false
   Components:
@@ -242,7 +242,7 @@ GameObject2:
       isTrigger: true
     ScriptComponents:
       Script0:
-        name: BoltgunBullets
+        name: Magnet
   Children: ~
 GameObject3:
   name: Floor
@@ -327,9 +327,6 @@ GameObject4:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -349,6 +346,9 @@ GameObject4:
         - 0
         - 0
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     ScriptComponents:
       Script0:
         name: UIGameplay

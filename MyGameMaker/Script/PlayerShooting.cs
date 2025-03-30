@@ -13,6 +13,11 @@ public class PlayerShooting : MonoBehaviour
 
     private PlayerController playerController;
     public PlayerData playerData;
+    private RedThirstManager redThirstManager;
+
+    private float abilityUseTimer = 0f;
+    private int abilityCount = 0;
+    private const float abilityTimeLimit = 3f;
 
     // Guns Scripts
     public Boltgun boltgun;
@@ -49,7 +54,11 @@ public class PlayerShooting : MonoBehaviour
         {
             Engineson.print("ERROR: PlayerShooting requires a PlayerInput component!");
         }
-
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
+        if (redThirstManager == null)
+        {
+            Engineson.print("ERROR: PlayerShooting requires a RedThirstManager component!");
+        }
         transform = gameObject.GetComponent<Transform>();
         if (transform == null)
         {
@@ -317,6 +326,7 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
                 boltgun.UseAbility1();
+                
                 break;
             case GunType.SHOTGUN:
 
@@ -324,6 +334,10 @@ public class PlayerShooting : MonoBehaviour
             case GunType.RAILGUN:
 
                 break;
+        }
+        if (redThirstManager != null)
+        {
+            redThirstManager.OnAbilityUsed();
         }
     }
 
@@ -341,7 +355,11 @@ public class PlayerShooting : MonoBehaviour
 
                 break;
         }
-     }
+        if (redThirstManager != null)
+        {
+            redThirstManager.OnAbilityUsed();
+        }
+    }
 
     public void CounterAttack(GameObject target)
     {

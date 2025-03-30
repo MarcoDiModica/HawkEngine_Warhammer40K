@@ -562,7 +562,7 @@ MonoObject* GameObject::GetSharp() {
     if (CsharpReference) {
         return CsharpReference;
     }
-
+    
     //Obtenemos el nombre del GO, creamos el string en mono y llamamos a la funcion que crea el GO
     MonoString* monoString = mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
     CsharpReference = EngineBinds::CreateGameObjectSharp(monoString, this);

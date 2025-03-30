@@ -345,7 +345,27 @@ public class PlayerShooting : MonoBehaviour
 
     public void CounterAttack(GameObject target)
     {
-        Engineson.print("Counter Attack to: " + target.name);
+        if (target.GetComponent<EnemyControllerMelee>() != null)
+        {
+            target.GetComponent<EnemyControllerMelee>().currentHealth -= 10;
+            if (target.GetComponent<EnemyControllerMelee>().currentHealth > 0)
+            {
+                target.GetComponent<EnemyControllerMelee>().isStunned = true;
+            }
+            Engineson.print("Counter Attack to: " + target.name);
+            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerMelee>().currentHealth);
+        }
+        else if (target.GetComponent<EnemyControllerRanged>() != null)
+        {
+            target.GetComponent<EnemyControllerRanged>().currentHealth -= 10;
+            if (target.GetComponent<EnemyControllerRanged>().currentHealth > 0)
+            {
+                target.GetComponent<EnemyControllerRanged>().isStunned = true;
+            }
+            Engineson.print("Counter Attack to: " + target.name);
+            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerRanged>().currentHealth);
+        }
+        
     }
 
 }

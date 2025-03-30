@@ -156,8 +156,10 @@ namespace EngineBinds {
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
 
 	//Tweening
-	void DOMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode);
-	void DOUIMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode);
+    void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);
+
+    //cambia los de UI a que sean DOMoveUI, es mas intuitivo para el usuario !!!!!IMPORTANTE!!!!!
+    void DOUIMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode);
 	void DOMoveX(GameObject* object, float targetX, float duration, Modes mode);
 	void DOUIMoveX(GameObject* object, float targetX, float duration, Modes mode);
 	void DOMoveY(GameObject* object, float targetY, float duration, Modes mode);

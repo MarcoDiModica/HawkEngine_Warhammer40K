@@ -89,11 +89,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             Transform transform = gameObject.GetComponent<Transform>();
-            transform.DOMoveX(10.0f, 2.0f, Modes.LINEAR);
-            Tweening twenn = new Tweening();
-
-            twenn.DOValue(value,10,2.0f,Modes.LINEAR);
-            Engineson.print("Tortuga");
+            transform.DOMove(new Vector3(0, 0, 0), 1.0f, Modes.EASE_IN_OUT);
         }
         Engineson.print($"Value: " +value);
 

@@ -871,10 +871,14 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 }
 
 //Tween
-
-void EngineBinds::DOMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode)
-{
-	Tweening::Move(object, *targetPosition, duration, mode);
+// tienes que referenciar al componente que vas a usar o al gameobject que vas a usar, en el caso de que sea
+// un gameobject se usara el transform del gameobject
+void EngineBinds::DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode) {
+	auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+	if (transform) {
+		GameObject* object = transform->GetOwner();
+		Tweening::Move(object, *targetPosition, duration, mode);
+	}
 }
 
 void EngineBinds::DOMoveX(GameObject* object, float targetPosition, float duration, Modes mode)

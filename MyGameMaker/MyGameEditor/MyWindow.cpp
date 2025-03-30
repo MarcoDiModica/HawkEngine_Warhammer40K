@@ -84,6 +84,11 @@ void Window::SwapBuffers() const {
     SDL_GL_SwapWindow(static_cast<SDL_Window*>(_window));
 }
 
+bool Window::IsForeground() const
+{
+    return SDL_GetWindowFlags(static_cast<SDL_Window*>(_window)) & SDL_WINDOW_INPUT_FOCUS;
+}
+
 bool Window::ProcessEvents(IEventProcessor* event_processor) {
     return true;
 }

@@ -5,15 +5,14 @@ public class Test1 : MonoBehaviour
 {
     public override void Start()
     {
-        Engineson.print("Test1 Start");
+        Engineson.print("Test1 Startt");
     }
 
     public override void Update(float deltaTime)
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            Engineson.print("B key was pressed");
-            SceneManager.LoadScene("Scene2");
+            Engineson.Destroy(gameObject);
         }
     }
 }

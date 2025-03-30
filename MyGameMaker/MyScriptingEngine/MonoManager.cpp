@@ -185,10 +185,11 @@ void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
 	LOG(LogType::LOG_INFO, "Assembly reloaded successfully");
 }
 
-void MonoManager::RefreshScriptComponentsRecursive(std::shared_ptr<GameObject> gameObject) 
+void MonoManager::RefreshScriptComponentsRecursive(std::shared_ptr<GameObject> gameObject)
 {
 	if (!gameObject->scriptComponents.empty()) {
 		for (auto& script : gameObject->scriptComponents) {
+			script->ResetErrorState();
 			script->RefreshScriptInstance();
 		}
 	}
@@ -240,6 +241,28 @@ void MonoManager::OnScriptsRecompiled(const std::string& newAssemblyPath) {
 	if (!std::filesystem::exists(newAssemblyPath)) {
 		LOG(LogType::LOG_ERROR, "El archivo del assembly no existe: %s", newAssemblyPath.c_str());
 		return;
+	}
+
+	std::string errorLogPath = assemblyPath + "\\build_errors.txt";
+	if (std::filesystem::exists(errorLogPath)) {
+		std::ifstream errorFile(errorLogPath);
+		if (errorFile.is_open()) {
+			std::string line;
+			std::stringstream errorLog;
+			bool hasErrors = false;
+
+			while (std::getline(errorFile, line)) {
+				if (line.find("error") != std::string::npos) {
+					hasErrors = true;
+				}
+				errorLog << line << "\n";
+			}
+
+			if (hasErrors) {
+				LOG(LogType::LOG_ERROR, "Compilation errors found:\n%s", errorLog.str().c_str());
+				return;
+			}
+		}
 	}
 
 	ReloadAssembly(newAssemblyPath);

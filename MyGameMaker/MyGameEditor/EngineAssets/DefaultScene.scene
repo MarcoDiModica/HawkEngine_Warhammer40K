@@ -15,7 +15,7 @@ GameObject0:
         - 0
       localRotation:
         - 0
-        - 88.888320898763709
+        - -0
         - 0
       localScale:
         - 1
@@ -24,12 +24,12 @@ GameObject0:
     SoundComponent:
       name: SoundComponent
       enabled: true
-      audio_path: Assets/Audio/SFX/Player/PlayerFootstep.wav
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
       volume: 1
       is_music: true
       is_spatial: false
       auto_play: false
-      loop: true
+      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -140,9 +140,9 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 1.5588832269486375e-07
-        - 22.039321184158325
-        - -19.141875586343616
+        - 0
+        - 20
+        - -14
       localRotation:
         - 54.999999253784715
         - -0
@@ -166,6 +166,61 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
+  name: Cube
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: Test1
+  Children: ~
+GameObject3:
   name: Floor
   tag: Untagged
   active: true

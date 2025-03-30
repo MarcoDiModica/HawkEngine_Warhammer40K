@@ -101,6 +101,9 @@ bool Root::Start()
     mainCamera = objMainCamera;
 	UpdateCameraPriority();
 
+	auto cube = CreateCube("Cube");
+	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
 	//auto emitter = particleFX->AddComponent<ParticleFX>();

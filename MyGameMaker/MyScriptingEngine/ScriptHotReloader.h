@@ -11,6 +11,8 @@
 #include <thread>
 
 #include "../MyGameEditor/Log.h"
+#include "../MyGameEditor/App.h"
+#include "../MyGameEditor/MyWindow.h"
 
 #pragma warning(disable: 4996)
 
@@ -47,6 +49,20 @@ public:
 
 		RefreshScriptTimestamps();
 
+		// Compilación inicial al arrancar
+		LOG(LogType::LOG_INFO, "Realizando compilación inicial...");
+		m_IsCompiling = true;
+		bool initialCompilationResult = CompileExistingProject();
+		m_IsCompiling = false;
+		m_LastCompilationSuccess = initialCompilationResult;
+
+		if (initialCompilationResult) {
+			LOG(LogType::LOG_INFO, "Compilación inicial completada con éxito");
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "Falló la compilación inicial. Por favor, corrige los errores antes de continuar");
+		}
+
 		LOG(LogType::LOG_INFO, "ScriptHotReloader inicializado con éxito");
 	}
 
@@ -57,6 +73,17 @@ public:
 
 	bool CheckForChanges() {
 		if (m_IsCompiling || m_CompilationCooldown) {
+			return false;
+		}
+
+		// No intentar recompilar si la última compilación falló
+		if (!m_LastCompilationSuccess) {
+			LOG(LogType::LOG_INFO, "No se intentará recompilar porque la última compilación falló. Corrige los errores primero.");
+			return false;
+		}
+
+		// Verificar si el engine está en primer plano
+		if (!IsEngineInForeground()) {
 			return false;
 		}
 
@@ -128,6 +155,10 @@ private:
 		return "";
 	}
 
+	bool IsEngineInForeground() {
+		return Application->window->IsForeground();
+	}
+
 	bool CompileExistingProject() {
 		if (m_ProjectFile.empty()) {
 			LOG(LogType::LOG_ERROR, "No se ha encontrado un archivo de proyecto (.csproj)");
@@ -142,7 +173,6 @@ private:
 				dotnetPath = "C:\\Program Files (x86)\\dotnet\\dotnet.exe";
 			}
 			else {
-				// Intentar encontrar en PATH
 				const char* pathEnv = getenv("PATH");
 				if (pathEnv) {
 					std::string path = pathEnv;
@@ -176,12 +206,16 @@ private:
 		batch << "@echo off" << std::endl;
 		batch << "echo Compilando proyecto..." << std::endl;
 		batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
-		batch << "\"" << dotnetPath << "\" build \"" << m_ProjectFile << "\" -c Release -v quiet" << std::endl;
+		batch << "\"" << dotnetPath << "\" build \"" << m_ProjectFile << "\" -c Release > build_output.txt 2>&1" << std::endl;
 		batch << "echo Código de salida: %ERRORLEVEL% > build_result.txt" << std::endl;
+
+		batch << "findstr /C:\"warning\" build_output.txt > build_warnings.txt 2>nul" << std::endl;
+		batch << "findstr /C:\"error\" build_output.txt > build_errors.txt 2>nul" << std::endl;
+
 		batch.close();
 
 		LOG(LogType::LOG_INFO, "Ejecutando batch de compilación...");
-		std::string command = "cmd /c \"" + batchFile + "\" > \"" + m_ScriptFolder + "\\build_output.txt\" 2>&1";
+		std::string command = "cmd /c \"" + batchFile + "\"";
 		int result = system(command.c_str());
 		LOG(LogType::LOG_INFO, "Resultado directo del system(): %d", result);
 
@@ -206,21 +240,41 @@ private:
 		}
 
 		try {
-			std::ifstream outputFile(m_ScriptFolder + "\\build_output.txt");
-			if (outputFile.is_open()) {
-				std::stringstream buffer;
-				buffer << outputFile.rdbuf();
-				std::string output = buffer.str();
-				outputFile.close();
-				//LOG(LogType::LOG_INFO, "Salida completa de la compilación: %s", output.c_str());
+			std::ifstream warningsFile(m_ScriptFolder + "\\build_warnings.txt");
+			if (warningsFile.is_open()) {
+				std::string line;
+				while (std::getline(warningsFile, line)) {
+					if (!line.empty()) {
+						LOG(LogType::LOG_C_SHARP_WARNING, "C# Warning: %s", line.c_str());
+					}
+				}
+				warningsFile.close();
 			}
 		}
 		catch (...) {
-			LOG(LogType::LOG_ERROR, "Error al leer la salida de la compilación");
+			LOG(LogType::LOG_ERROR, "Error al leer las advertencias de compilación");
 		}
 
-		if (buildResult != 0) {
-			LOG(LogType::LOG_ERROR, "Error al compilar proyecto. Código: %d", buildResult);
+		bool hasErrors = false;
+		try {
+			std::ifstream errorsFile(m_ScriptFolder + "\\build_errors.txt");
+			if (errorsFile.is_open()) {
+				std::string line;
+				while (std::getline(errorsFile, line)) {
+					if (!line.empty()) {
+						LOG(LogType::LOG_ERROR, "C# Error: %s", line.c_str());
+						hasErrors = true;
+					}
+				}
+				errorsFile.close();
+			}
+		}
+		catch (...) {
+			LOG(LogType::LOG_ERROR, "Error al leer los errores de compilación");
+		}
+
+		if (buildResult != 0 || hasErrors) {
+			LOG(LogType::LOG_ERROR, "Error al compilar proyecto. Código: %d. Corrige los errores antes de continuar.", buildResult);
 			return false;
 		}
 

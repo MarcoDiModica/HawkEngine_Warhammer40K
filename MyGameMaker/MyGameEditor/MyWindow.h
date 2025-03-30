@@ -61,6 +61,8 @@ public:
 
 	bool IsOpen() const { return _window; }
 
+	bool IsForeground() const;
+
 	bool ProcessEvents(IEventProcessor* event_processor = nullptr);
 
 	void SwapBuffers() const;

@@ -1084,6 +1084,12 @@ private:
 			ImGui::SetTooltip("Emit particles once and then stop");
 		}
 
+		bool playOnAwake = system->GetPlayOnAwake();
+		if (ImGui::Checkbox("Play on awake", &playOnAwake)) {
+			system->SetPlayOnAwake(playOnAwake);
+		}
+		
+
 		ImGui::EndGroup();
 		ImGui::Separator();
 	}

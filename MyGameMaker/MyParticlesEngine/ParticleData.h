@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 
 struct ParticleData {
+	bool playOnAwake;
 	float duration;
 	glm::vec3 position;
 	glm::vec4 color;
@@ -20,7 +21,8 @@ struct ParticleData {
 	bool active;
 
 	ParticleData()
-		: duration(1.0f)
+		: playOnAwake(false)
+		, duration(1.0f)
 		, position(0.0f)
 		, color(1.0f)
 		, endColor(1.0f)
@@ -187,6 +189,7 @@ public:
 			}
 
 			InstanceData instance;
+			instance.playOnAwake = particleData[i].playOnAwake;
 			instance.duration = particleData[i].duration;
 			instance.position = particleData[i].position;
 			instance.color = particleData[i].color;
@@ -234,6 +237,7 @@ public:
 
 private:
 	struct InstanceData {
+		bool playOnAwake;
 		float duration;
 		glm::vec3 position;
 		glm::vec4 color;

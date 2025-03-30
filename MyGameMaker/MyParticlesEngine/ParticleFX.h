@@ -22,6 +22,7 @@ enum class EmitterShape {
 
 struct ParticlePreset {
 	ParticleType type;
+	bool playOnAwake;
 	float duration;
 	glm::vec3 colorStart;
 	glm::vec3 colorEnd;
@@ -94,6 +95,7 @@ public:
 	void DisableColorGradient() { if (material) material->DisableColorGradient(); }
 	void SetEndSpeed(float Espeed);
 	void SetDuration(float duration) { this->duration = duration; }
+	void SetPlayOnAwake(bool playOnAwake) { this->playOnAwake = playOnAwake; }
 
 	float GetEmissionRate() const { return emissionRate; }
 	float GetMinLifetime() const { return minLifetime; }
@@ -104,6 +106,7 @@ public:
 	float GetEndSize() const { return endSize; }
 	float GetEndSpeed() const { return endSpeed; }
 	float GetDuration() const { return duration; }
+	bool GetPlayOnAwake() const { return playOnAwake; }
 	glm::vec3 GetStartColor() const { return startColor; }
 	glm::vec3 GetEndColor() const { return endColor; }
 	float GetStartAlpha() const { return startAlpha; }
@@ -139,6 +142,7 @@ private:
 	std::unique_ptr<ParticleInstancedRenderer> renderer;
 
 	// Emitter configurations
+	bool playOnAwake;
 	EmitterShape emitterShape;
 	float emissionRate;       
 	float particlesPerSecond; 

@@ -9,6 +9,7 @@
 namespace ParticlePresets {
 	const ParticlePreset Smoke = {
 		ParticleType::SMOKE,
+		true,						   // PlayOnAwake
 		5.0f,						   // Duration (only if one-shot)
 		glm::vec3(0.8f, 0.8f, 0.8f),   // Start color (light gray)
 		glm::vec3(0.2f, 0.2f, 0.2f),   // End color (dark gray)
@@ -32,6 +33,7 @@ namespace ParticlePresets {
 
 	const ParticlePreset Fire = {
 		ParticleType::FIRE,
+		true,						   // PlayOnAwake
 		5.0f,						   // Duration (only if one-shot)
 		glm::vec3(1.0f, 0.7f, 0.0f),   // Start color (orange)
 		glm::vec3(1.0f, 0.0f, 0.0f),   // End color (red)
@@ -55,6 +57,7 @@ namespace ParticlePresets {
 
 	const ParticlePreset MuzzleFlash = {
 		ParticleType::MUZZLE_FLASH,
+		false,						   // PlayOnAwake
 		0.1f,						   // Duration (only if one-shot)
 		glm::vec3(1.0f, 0.9f, 0.5f),   // Start color (bright yellow)
 		glm::vec3(1.0f, 0.5f, 0.0f),   // End color (orange)
@@ -78,6 +81,7 @@ namespace ParticlePresets {
 
 	const ParticlePreset Dust = {
 		ParticleType::DEFAULT,
+		true,						   // PlayOnAwake
 		5.0f,						   // Duration (only if one-shot)
 		glm::vec3(0.76f, 0.7f, 0.5f),  // Start color (tan)
 		glm::vec3(0.76f, 0.7f, 0.5f),  // End color (tan)
@@ -100,26 +104,27 @@ namespace ParticlePresets {
 	};
 
 	const ParticlePreset Explosion = {
-	ParticleType::EXPLOSION,
-	0.2f,						   // Duration (only if one-shot)
-	glm::vec3(1.0f, 0.5f, 0.0f),   // Start color (orange)
-	glm::vec3(0.5f, 1.0f, 0.0f),   // End color (dark red)
-	1.0f,                          // Alpha start
-	0.0f,                          // Alpha end
-	1.0f,                          // Size start
-	3.0f,                          // Size end
-	0.2f,                          // Min lifetime
-	1.0f,                          // Max lifetime
-	5.0f,                          // Min speed
-	10.0f,                         // Max speed
-	4.0f,						   // End Speed
-	glm::vec3(0.0f,-0.5f,0.0f),	   // Gravity (negative for upward)
-	1.0f,                          // Rotation speed
-	100.0f,                        // Emission rate (particles per second)
-	EmitterShape::SPHERE,          // Shape
-	1.0f,                          // Sphere radius
-	0.0f,                          // Unused
-	0.0f                           // Unused
+		ParticleType::EXPLOSION,
+		false,						   // PlayOnAwake
+		0.2f,						   // Duration (only if one-shot)
+		glm::vec3(1.0f, 0.5f, 0.0f),   // Start color (orange)
+		glm::vec3(0.5f, 1.0f, 0.0f),   // End color (dark red)
+		1.0f,                          // Alpha start
+		0.0f,                          // Alpha end
+		1.0f,                          // Size start
+		3.0f,                          // Size end
+		0.2f,                          // Min lifetime
+		1.0f,                          // Max lifetime
+		5.0f,                          // Min speed
+		10.0f,                         // Max speed
+		4.0f,						   // End Speed
+		glm::vec3(0.0f,-0.5f,0.0f),	   // Gravity (negative for upward)
+		1.0f,                          // Rotation speed
+		100.0f,                        // Emission rate (particles per second)
+		EmitterShape::SPHERE,          // Shape
+		1.0f,                          // Sphere radius
+		0.0f,                          // Unused
+		0.0f                           // Unused
 	};
 
 }
@@ -170,6 +175,10 @@ void ParticleFX::Start() {
 		position = owner->GetTransform()->GetPosition();
 		rotation = owner->GetTransform()->GetRotation();
 		scale = owner->GetTransform()->GetScale();
+	}
+
+	if (playOnAwake) {
+		Play();
 	}
 
 	if (!isOneShot) {
@@ -476,6 +485,8 @@ glm::vec3 ParticleFX::GenerateRandomVelocity() {
 
 void ParticleFX::ApplyPreset(const ParticlePreset& preset) {
 	material->SetParticleType(preset.type);
+	playOnAwake = preset.playOnAwake;
+	duration = preset.duration;
 	startColor = preset.colorStart;
 	endColor = preset.colorEnd;
 	startAlpha = preset.alphaStart;

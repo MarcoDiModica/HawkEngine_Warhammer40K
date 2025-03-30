@@ -25,36 +25,36 @@ GameObject0:
       name: ParticleFX
       enabled: true
       emitterShape: 2
-      emissionRate: 15
-      particlesPerSecond: 15
-      minLifetime: 2
-      maxLifetime: 4
-      minSpeed: 0.5
-      maxSpeed: 1.5
-      startSize: 0.5
-      endSize: 2
+      emissionRate: 100
+      particlesPerSecond: 100
+      minLifetime: 0.0500000007
+      maxLifetime: 0.150000006
+      minSpeed: 5
+      maxSpeed: 10
+      startSize: 0.300000012
+      endSize: 0.100000001
       startColor:
-        - 0.800000012
-        - 0.800000012
-        - 0.800000012
+        - 1
+        - 0.899999976
+        - 0.5
       endColor:
-        - 0.200000003
-        - 0.200000003
-        - 0.200000003
-      startAlpha: 0.699999988
+        - 1
+        - 0.5
+        - 0
+      startAlpha: 1
       endAlpha: 0
-      rotationSpeed: 0.200000003
+      rotationSpeed: 0
       gravity:
         - 0
-        - -0.100000001
         - 0
-      shapeParam1: 0.200000003
-      shapeParam2: 1
+        - 0
+      shapeParam1: 0.0500000007
+      shapeParam2: 0.200000003
       shapeParam3: 20
-      isOneShot: false
+      isOneShot: true
       material:
         billboardType: 0
-        particleType: 1
+        particleType: 3
         softness: 0
         useColorGradient: false
         texturePath: Assets/SmokeParticleTexture.png

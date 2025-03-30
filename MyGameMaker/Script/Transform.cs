@@ -51,6 +51,42 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetForward(Vector3 forward);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOMove(Vector3 position, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOMoveX(float positionX, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOMoveY(float positionY, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOMoveZ(float positionZ, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOScale(Vector3 scale, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOScaleX(float scaleX, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOScaleY(float scaleY, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOScaleZ(float scaleZ, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DORotate(Vector3 rotation, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DORotateX(float rotationX, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DORotateY(float rotationY, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DORotateZ(float rotationZ, float duration, Modes modes);
+
 
         //private UIntPtr _nativeTransform;
         private GameObject owner;

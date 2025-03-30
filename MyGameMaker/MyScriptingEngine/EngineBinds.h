@@ -7,6 +7,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <memory>
 #include <SDL2/SDL_gamecontroller.h>
+#include <MyGameEngine/Tweening.h>
 
 class GameObject;
 
@@ -154,6 +155,27 @@ namespace EngineBinds {
 	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
 
+	//Tweening
+	void DOMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode);
+	void DOUIMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode);
+	void DOMoveX(GameObject* object, float targetX, float duration, Modes mode);
+	void DOUIMoveX(GameObject* object, float targetX, float duration, Modes mode);
+	void DOMoveY(GameObject* object, float targetY, float duration, Modes mode);
+	void DOUIMoveY(GameObject* object, float targetY, float duration, Modes mode);
+	void DOMoveZ(GameObject* object, float targetZ, float duration, Modes mode);
+	void DOUIMoveZ(GameObject* object, float targetZ, float duration, Modes mode);
+	void DORotate(GameObject* object, glm::vec3* targetRotation, float duration, Modes mode);
+	void DORotateX(GameObject* object, float targetX, float duration, Modes mode);
+	void DORotateY(GameObject* object, float targetY, float duration, Modes mode);
+	void DORotateZ(GameObject* object, float targetZ, float duration, Modes mode);
+	void DOScale(GameObject* object, glm::vec3* targetScale, float duration, Modes mode);
+	void DOUIScale(GameObject* object, glm::vec3* targetScale, float duration, Modes mode);
+	void DOScaleX(GameObject* object, float targetX, float duration, Modes mode);
+	void DOScaleY(GameObject* object, float targetY, float duration, Modes mode);
+	void DOScaleZ(GameObject* object, float targetZ, float duration, Modes mode);
+	void DOUIScaleX(GameObject* object, float targetX, float duration, Modes mode);
+	void DOUIScaleY(GameObject* object, float targetY, float duration, Modes mode);
+	void DOUIScaleZ(GameObject* object, float targetZ, float duration, Modes mode);
 
     //SceneManagement
     bool LoadScene(MonoString* sceneName);

@@ -20,6 +20,7 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyGameEngine/Tweening.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
@@ -868,6 +869,110 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
 	}
 }
+
+//Tween
+
+void EngineBinds::DOMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode)
+{
+	Tweening::Move(object, *targetPosition, duration, mode);
+}
+
+void EngineBinds::DOMoveX(GameObject* object, float targetPosition, float duration, Modes mode)
+{
+	Tweening::MoveX(object, targetPosition, duration, mode);
+}
+
+void EngineBinds::DOMoveY(GameObject* object, float targetPosition, float duration, Modes mode)
+{
+	Tweening::MoveY(object, targetPosition, duration, mode);
+}
+
+void EngineBinds::DOMoveZ(GameObject* object, float targetPosition, float duration, Modes mode)
+{
+	Tweening::MoveZ(object, targetPosition, duration, mode);
+}
+
+void EngineBinds::DORotate(GameObject* object, glm::vec3* targetRotation, float duration, Modes mode)
+{
+	Tweening::Rotate(object, *targetRotation, duration, mode);
+}
+
+void EngineBinds::DORotateX(GameObject* object, float targetRotation, float duration, Modes mode)
+{
+	Tweening::RotateX(object, targetRotation, duration, mode);
+}
+
+void EngineBinds::DORotateY(GameObject* object, float targetRotation, float duration, Modes mode)
+{
+	Tweening::RotateY(object, targetRotation, duration, mode);
+}
+
+void EngineBinds::DORotateZ(GameObject* object, float targetRotation, float duration, Modes mode)
+{
+	Tweening::RotateZ(object, targetRotation, duration, mode);
+}
+
+void EngineBinds::DOScale(GameObject* object, glm::vec3* targetScale, float duration, Modes mode)
+{
+	Tweening::Scale(object, *targetScale, duration, mode);
+}
+
+void EngineBinds::DOScaleX(GameObject* object, float targetScale, float duration, Modes mode)
+{
+	Tweening::ScaleX(object, targetScale, duration, mode);
+}
+
+void EngineBinds::DOScaleY(GameObject* object, float targetScale, float duration, Modes mode)
+{
+	Tweening::ScaleY(object, targetScale, duration, mode);
+}
+
+void EngineBinds::DOScaleZ(GameObject* object, float targetScale, float duration, Modes mode)
+{
+	Tweening::ScaleZ(object, targetScale, duration, mode);
+}
+
+void EngineBinds::DOUIMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode)
+{
+	Tweening::UIMove(object, *targetPosition, duration, mode);
+}
+
+void EngineBinds::DOUIMoveX(GameObject* object, float targetPosition, float duration, Modes mode)
+{
+	Tweening::UIMoveX(object, targetPosition, duration, mode);
+}
+
+void EngineBinds::DOUIMoveY(GameObject* object, float targetPosition, float duration, Modes mode)
+{
+	Tweening::UIMoveY(object, targetPosition, duration, mode);
+}
+
+void EngineBinds::DOUIMoveZ(GameObject* object, float targetPosition, float duration, Modes mode)
+{
+	Tweening::UIMoveZ(object, targetPosition, duration, mode);
+}
+
+void EngineBinds::DOUIScale(GameObject* object, glm::vec3* targetScale, float duration, Modes mode)
+{
+	Tweening::UIScale(object, *targetScale, duration, mode);
+}
+
+void EngineBinds::DOUIScaleX(GameObject* object, float targetScale, float duration, Modes mode)
+{
+	Tweening::UIScaleX(object, targetScale, duration, mode);
+}
+
+void EngineBinds::DOUIScaleY(GameObject* object, float targetScale, float duration, Modes mode)
+{
+	Tweening::UIScaleY(object, targetScale, duration, mode);
+}
+
+void EngineBinds::DOUIScaleZ(GameObject* object, float targetScale, float duration, Modes mode)
+{
+	Tweening::UIScaleZ(object, targetScale, duration, mode);
+}
+
+    
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
@@ -1010,6 +1115,29 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayState", (const void*)&EngineBinds::SetAnimationPlayState);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationPlayState", (const void*)&EngineBinds::GetAnimationPlayState);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
+
+	// Tween
+    
+	mono_add_internal_call("HawkEngine.Tween::DOMove", (const void*)&EngineBinds::DOMove);
+	mono_add_internal_call("HawkEngine.Tween::DOMoveX", (const void*)&EngineBinds::DOMoveX);
+	mono_add_internal_call("HawkEngine.Tween::DOMoveY", (const void*)&EngineBinds::DOMoveY);
+	mono_add_internal_call("HawkEngine.Tween::DOMoveZ", (const void*)&EngineBinds::DOMoveZ);
+	mono_add_internal_call("HawkEngine.Tween::DORotate", (const void*)&EngineBinds::DORotate);
+	mono_add_internal_call("HawkEngine.Tween::DORotateX", (const void*)&EngineBinds::DORotateX);
+	mono_add_internal_call("HawkEngine.Tween::DORotateY", (const void*)&EngineBinds::DORotateY);
+	mono_add_internal_call("HawkEngine.Tween::DORotateZ", (const void*)&EngineBinds::DORotateZ);
+	mono_add_internal_call("HawkEngine.Tween::DOScale", (const void*)&EngineBinds::DOScale);
+	mono_add_internal_call("HawkEngine.Tween::DOScaleX", (const void*)&EngineBinds::DOScaleX);
+	mono_add_internal_call("HawkEngine.Tween::DOScaleY", (const void*)&EngineBinds::DOScaleY);
+	mono_add_internal_call("HawkEngine.Tween::DOScaleZ", (const void*)&EngineBinds::DOScaleZ);
+	mono_add_internal_call("HawkEngine.Tween::DOUIMove", (const void*)&EngineBinds::DOUIMove);
+	mono_add_internal_call("HawkEngine.Tween::DOUIMoveX", (const void*)&EngineBinds::DOUIMoveX);
+	mono_add_internal_call("HawkEngine.Tween::DOUIMoveY", (const void*)&EngineBinds::DOUIMoveY);
+	mono_add_internal_call("HawkEngine.Tween::DOUIMoveZ", (const void*)&EngineBinds::DOUIMoveZ);
+	mono_add_internal_call("HawkEngine.Tween::DOUIScale", (const void*)&EngineBinds::DOUIScale);
+	mono_add_internal_call("HawkEngine.Tween::DOUIScaleX", (const void*)&EngineBinds::DOUIScaleX);
+	mono_add_internal_call("HawkEngine.Tween::DOUIScaleY", (const void*)&EngineBinds::DOUIScaleY);
+	mono_add_internal_call("HawkEngine.Tween::DOUIScaleZ", (const void*)&EngineBinds::DOUIScaleZ);
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

@@ -14,9 +14,9 @@ public class Magnet : PickUp
     public float lifeTime = 10f;
     public override void Awake()
     {
-
+    
     }
-
+    
     public override void Start()
     {
         Transform = gameObject.GetComponent<Transform>();

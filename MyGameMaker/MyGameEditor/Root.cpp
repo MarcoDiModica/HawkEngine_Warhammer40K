@@ -80,6 +80,7 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
 	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
 	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
+	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 

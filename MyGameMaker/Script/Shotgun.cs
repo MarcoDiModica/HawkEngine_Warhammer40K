@@ -125,6 +125,13 @@ public class Shotgun : BaseWeapon
 
     public override void UseAbility2()
     {
+        if (barrage == null)
+        {
+            Engineson.print("Error: Barrage no encontrado en Shotgun.cs");
+            return;
+        }
+
+        Engineson.print("Activando habilidad Barrage desde Shotgun...");
         barrage.TriggerAbility();
     }
 

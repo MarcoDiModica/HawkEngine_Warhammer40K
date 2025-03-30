@@ -11,7 +11,7 @@ public class Magnet : PickUp
     public float floatSpeed = 1f;
     public float floatHeight = 0.5f;
     public float rotationSpeed = 50f;
-
+    public float lifeTime = 10f;
     public override void Awake()
     {
 
@@ -21,14 +21,24 @@ public class Magnet : PickUp
     {
         Transform = gameObject.GetComponent<Transform>();
         startPos = Transform.position;
+        GameObject player = GameObject.Find("Player");
     }
 
     public override void Update(float deltaTime)
     {
         elapsedTime += deltaTime;
         PowerUpMovment(elapsedTime, deltaTime);
+        if(elapsedTime >= lifeTime)
+        {
+            Destroy();
+        }
     }
-
+    public void Destroy()
+    {
+        GameObject player = GameObject.Find("Player");
+        Transform.position = new Vector3(0, -100, 0);
+        //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
+    }
     public void PowerUpMovment(float time, float dt)
     {
         float newY = startPos.Y + (float)Math.Sin(time * floatSpeed) * floatHeight;
@@ -45,4 +55,6 @@ public class Magnet : PickUp
         playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 2f;
 
     }
+
+  
 }

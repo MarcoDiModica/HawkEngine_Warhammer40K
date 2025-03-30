@@ -11,6 +11,7 @@ public class BlackHeart : PickUp
     public float floatSpeed = 1f;
     public float floatHeight = 0.5f;
     public float rotationSpeed = 50f;
+    public float lifeTime = 10f;
 
     public override void Awake()
     {
@@ -27,6 +28,16 @@ public class BlackHeart : PickUp
     {
         elapsedTime += deltaTime;
         PowerUpMovment(elapsedTime, deltaTime);
+        if (elapsedTime >= lifeTime)
+        {
+            Destroy();
+        }
+    }
+    public void Destroy()
+    {
+        GameObject player = GameObject.Find("Player");
+        Transform.position = new Vector3(0, -100, 0);
+        //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
     }
 
     public void PowerUpMovment(float time, float dt)

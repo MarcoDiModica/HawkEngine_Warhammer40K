@@ -6,7 +6,8 @@ enum class ParticleType {
     DEFAULT = 0,
     SMOKE = 1,
     FIRE = 2,
-    MUZZLE_FLASH = 3
+    MUZZLE_FLASH = 3,
+    EXPLOSION = 4
 };
 
 class ParticleMaterial : public Material {
@@ -17,6 +18,9 @@ public:
         particleType = static_cast<int>(ParticleType::DEFAULT);
         softness = 0.0f;
         useColorGradient = false;
+		startColor = glm::vec4(1.0f);
+		endColor = glm::vec4(1.0f);
+                
     }
 
     ~ParticleMaterial() override = default;
@@ -45,6 +49,10 @@ public:
         shader->SetUniform("particleType", particleType);
         shader->SetUniform("softness", softness);
         shader->SetUniform("useColorGradient", useColorGradient ? 1 : 0);
+
+		shader->SetUniform("startColor", startColor);
+		shader->SetUniform("endColor", endColor);
+
 
         glm::vec3 cameraPosition(0.0f);
         glm::vec3 cameraUp(0.0f, 1.0f, 0.0f);
@@ -95,4 +103,6 @@ private:
 	bool useColorGradient;
 	glm::vec3 billboardAxis;
     std::shared_ptr<Image> colorGradientMap = nullptr; 
+	glm::vec4 startColor;
+	glm::vec4 endColor;
 };

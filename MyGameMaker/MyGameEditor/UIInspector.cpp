@@ -1128,14 +1128,20 @@ private:
 		// Speed
 		float minSpeed = system->GetMinSpeed();
 		float maxSpeed = system->GetMaxSpeed();
-		if (ImGui::DragFloatRange2("Speed", &minSpeed, &maxSpeed, 0.05f, 0.0f, 50.0f)) {
+		if (ImGui::DragFloatRange2("Speed in a range", &minSpeed, &maxSpeed, 0.05f, 0.0f, 50.0f)) {
 			system->SetParticleSpeed(minSpeed, maxSpeed);
+		}
+
+		float endSpeed = system->GetEndSpeed();
+
+		if (ImGui::DragFloat("Set final speed", &endSpeed, 0.05f, -50.0f,50.0f)) {
+			system->SetEndSpeed(endSpeed);
 		}
 
 		// Size
 		float startSize = system->GetStartSize();
 		float endSize = system->GetEndSize();
-		if (ImGui::DragFloatRange2("Size", &startSize, &endSize, 0.05f, 0.01f, 10.0f)) {
+		if (ImGui::DragFloatRange2("Size start to end", &startSize, &endSize, 0.05f, 0.01f, 10.0f)) {
 			system->SetParticleSize(startSize, endSize);
 		}
 
@@ -1146,10 +1152,10 @@ private:
 		}
 
 		// Gravity
-		float gravity = system->GetGravity();
-		if (ImGui::DragFloat("Gravity", &gravity, 0.01f, -10.0f, 10.0f)) {
-			system->SetGravity(gravity);
-		}
+        float gravity[3] = { system->GetGravity().x, system->GetGravity().y, system->GetGravity().z };
+        if (ImGui::DragFloat3("Gravity", gravity, 0.01f, -10.0f, 10.0f)) {
+        system->SetGravity(glm::vec3(gravity[0], gravity[1], gravity[2]));
+        }
 		if (ImGui::IsItemHovered()) {
 			ImGui::SetTooltip("Negative values make particles rise");
 		}

@@ -6,22 +6,30 @@
 struct ParticleData {
 	glm::vec3 position;
 	glm::vec4 color;
+	glm::vec4 endColor;
 	glm::vec2 size;
+	glm::vec3 gravity;
+	glm::vec2 endSize;
 	float rotation;
 	float lifetime;
 	float maxLifetime;
 	glm::vec3 velocity;
+	glm::vec3 endVelocity;
 	float age;
 	bool active;
 
 	ParticleData()
 		: position(0.0f)
 		, color(1.0f)
+		, endColor(1.0f)
 		, size(1.0f, 1.0f)
+		, endSize(1.0f, 1.0f)
 		, rotation(0.0f)
 		, lifetime(0.0f)
 		, maxLifetime(5.0f)
 		, velocity(0.0f)
+		, endVelocity(0.0f)
+		, gravity(0.0f, 0.0f, 0.0f)
 		, age(0.0f)
 		, active(false)
 	{}
@@ -97,6 +105,15 @@ public:
 		glVertexAttribPointer(6, 1, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, lifetime));
 		glVertexAttribDivisor(6, 1);
 
+		glEnableVertexAttribArray(7);
+		glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, endColor));
+		glVertexAttribDivisor(7, 1);
+
+		glEnableVertexAttribArray(8);
+		glVertexAttribPointer(8, 2, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, endSize));
+		glVertexAttribDivisor(8, 1);
+
+		
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}
@@ -119,6 +136,7 @@ public:
 
 		particleData[index] = particle;
 		particleData[index].active = true;
+		//particleData[index].velocity += new glm::vec3(gravity,gravity,gravity);
 		activeParticles++;
 
 		return static_cast<int>(index);
@@ -147,8 +165,11 @@ public:
 				continue;
 			}
 
+			particleData[i].velocity += particleData[i].gravity * deltaTime;
 			particleData[i].age += deltaTime;
 			particleData[i].position += particleData[i].velocity * deltaTime;
+
+			
 
 			if (particleData[i].age >= particleData[i].maxLifetime) {
 				particleData[i].active = false;
@@ -158,11 +179,20 @@ public:
 
 			float lifetimeFraction = particleData[i].age / particleData[i].maxLifetime;
 
+			if (glm::length(particleData[i].gravity) == 0.0f)
+			{
+				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
+			}
+
 			InstanceData instance;
 			instance.position = particleData[i].position;
 			instance.color = particleData[i].color;
+			instance.endColor = particleData[i].endColor;
 			instance.size = particleData[i].size;
+			instance.endSize = particleData[i].endSize;
+			instance.gravity = particleData[i].gravity;
 			instance.rotation = particleData[i].rotation;
+			instance.endSpeed = particleData[i].endVelocity;
 			instance.lifetime = lifetimeFraction;
 
 			instances.push_back(instance);
@@ -203,7 +233,11 @@ private:
 	struct InstanceData {
 		glm::vec3 position;
 		glm::vec4 color;
+		glm::vec4 endColor;
+		glm::vec3 gravity;
 		glm::vec2 size;
+		glm::vec2 endSize;
+		glm::vec3 endSpeed;
 		float rotation;
 		float lifetime;
 	};

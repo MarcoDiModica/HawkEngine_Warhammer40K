@@ -8,11 +8,14 @@ layout(location = 3) in vec4 aColor;      // Instance color (with alpha)
 layout(location = 4) in vec2 aSize;       // Instance size (x, y)
 layout(location = 5) in float aRotation;  // Instance rotation in radians
 layout(location = 6) in float aLifetime;  // Current lifetime fraction (0-1)
+layout(location = 7) in vec4 endColor;    // End color for gradient
+layout(location = 8) in vec2 aEndSize;    // End size (x, y) for gradient
 
 // Outputs to fragment shader
 out vec2 TexCoord;
 out vec4 ParticleColor;
 out float Lifetime;
+out vec4 EndColor;  // End color for gradient
 
 // Uniforms
 uniform mat4 projection;
@@ -77,7 +80,9 @@ void main() {
     mat2 rotationMatrix = mat2(c, -s, s, c);
     
     // Apply size and rotation to the quad vertex
-    vec2 rotatedPos = rotationMatrix * (aPos.xy * aSize);
+
+    vec2 totalSize = mix(aSize, aEndSize, aLifetime);
+    vec2 rotatedPos = rotationMatrix * (aPos.xy * totalSize);
     
     // Final position
     vec4 worldPos = billboardMatrix * vec4(rotatedPos.x, rotatedPos.y, 0.0, 1.0);
@@ -87,4 +92,5 @@ void main() {
     TexCoord = aTexCoord;
     ParticleColor = aColor;
     Lifetime = aLifetime;
+    EndColor = endColor;  
 }

@@ -32,7 +32,8 @@ struct ParticlePreset {
 	float maxLifetime;
 	float minSpeed;
 	float maxSpeed;
-	float gravity;
+	float endSpeed;
+	glm::vec3 gravity;
 	float rotationSpeed;
 	float emissionRate;
 	EmitterShape shape;
@@ -83,13 +84,14 @@ public:
 	void SetParticleColor(const glm::vec3& startColor, const glm::vec3& endColor);
 	void SetParticleAlpha(float startAlpha, float endAlpha);
 	void SetParticleRotation(float rotationSpeed);
-	void SetGravity(float gravity);
+	void SetGravity(glm::vec3 gravity);
 	void SetBillboardType(int billboardType);
 	void SetShapeParameters(float param1, float param2 = 0.0f, float param3 = 0.0f);
 	void SetOneShot(bool oneShot);
 	void SetSoftness(float value) { if (material) material->SetSoftness(value); }
 	void SetParticleType(ParticleType type) { if (material) material->SetParticleType(type); }
 	void DisableColorGradient() { if (material) material->DisableColorGradient(); }
+	void SetEndSpeed(float Espeed);
 
 	float GetEmissionRate() const { return emissionRate; }
 	float GetMinLifetime() const { return minLifetime; }
@@ -98,12 +100,13 @@ public:
 	float GetMaxSpeed() const { return maxSpeed; }
 	float GetStartSize() const { return startSize; }
 	float GetEndSize() const { return endSize; }
+	float GetEndSpeed() const { return endSpeed; }
 	glm::vec3 GetStartColor() const { return startColor; }
 	glm::vec3 GetEndColor() const { return endColor; }
 	float GetStartAlpha() const { return startAlpha; }
 	float GetEndAlpha() const { return endAlpha; }
 	float GetRotationSpeed() const { return rotationSpeed; }
-	float GetGravity() const { return gravity; }
+	glm::vec3 GetGravity() const { return gravity; }
 	int GetBillboardType() const { return material ? material->GetBillboardType() : 0; }
 	EmitterShape GetEmitterShape() const { return emitterShape; }
 	ParticleType GetParticleType() const { return material ? static_cast<ParticleType>(material->GetParticleType()) : ParticleType::DEFAULT; }
@@ -119,6 +122,7 @@ public:
 	void ConfigureSmoke();
 	void ConfigureFire();
 	void ConfigureMuzzleFlash();
+	void ConfigureExplosion();
 	void ConfigureDust();
 
 private:
@@ -140,11 +144,12 @@ private:
 	// Particle configurations
 	float minLifetime, maxLifetime;
 	float minSpeed, maxSpeed;
+	float endSpeed;
 	float startSize, endSize;
 	glm::vec3 startColor, endColor;
 	float startAlpha, endAlpha;
 	float rotationSpeed;
-	float gravity;
+	glm::vec3 gravity;
 
 	// Shape parameters
 	float shapeParam1;  // Radius for sphere/cone/circle, width for box
@@ -200,7 +205,10 @@ protected:
 		node["endAlpha"] = endAlpha;
 
 		node["rotationSpeed"] = rotationSpeed;
-		node["gravity"] = gravity;
+		node["gravity"] = YAML::Node();
+		node["gravity"].push_back(gravity.x);
+		node["gravity"].push_back(gravity.y);
+		node["gravity"].push_back(gravity.z);
 
 		node["shapeParam1"] = shapeParam1;
 		node["shapeParam2"] = shapeParam2;
@@ -297,9 +305,22 @@ protected:
 			if (node["rotationSpeed"]) {
 				rotationSpeed = node["rotationSpeed"].as<float>();
 			}
-			if (node["gravity"]) {
-				gravity = node["gravity"].as<float>();
-			}
+            if (node["gravity"]) 
+			{
+            auto gravityNode = node["gravity"];
+			
+				if (gravityNode.IsSequence() && gravityNode.size() == 3) 
+				{
+					gravity = glm::vec3(
+					gravityNode[0].as<float>(),
+					gravityNode[1].as<float>(),
+					gravityNode[2].as<float>()
+					);
+				} else 
+				{
+					gravity = glm::vec3(0.0f); // Default to zero vector if format is incorrect
+				}
+            }
 
 			if (node["shapeParam1"]) {
 				shapeParam1 = node["shapeParam1"].as<float>();

@@ -1,7 +1,7 @@
 SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
-  name: Player
+  name: ParticleFX
   tag: Untagged
   active: true
   isStatic: false
@@ -21,98 +21,44 @@ GameObject0:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
+    ParticleFX:
+      name: ParticleFX
       enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: false
-    ColliderComponent: ~
-    ScriptComponents:
-      Script0:
-        name: PlayerShooting
-      Script1:
-        name: PlayerMovement
-      Script2:
-        name: PlayerInput
-      Script3:
-        name: PlayerDash
-      Script4:
-        name: PlayerController
-      Script5:
-        name: Boltgun
-      Script6:
-        name: Shotgun
-      Script7:
-        name: GrenadeLauncher
-      Script8:
-        name: Railgun
-  Children:
-    - name: playerMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - -90.000002504478161
-            - 0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Cylinder.001
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_BaseColor.png
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_playerMesh
-        ScriptComponents:
-          Script0:
-            name: PlayerAnimations
-      Children: ~
+      emitterShape: 2
+      emissionRate: 15
+      particlesPerSecond: 15
+      minLifetime: 2
+      maxLifetime: 4
+      minSpeed: 0.5
+      maxSpeed: 1.5
+      startSize: 0.5
+      endSize: 2
+      startColor:
+        - 0.800000012
+        - 0.800000012
+        - 0.800000012
+      endColor:
+        - 0.200000003
+        - 0.200000003
+        - 0.200000003
+      startAlpha: 0.699999988
+      endAlpha: 0
+      rotationSpeed: 0.200000003
+      gravity:
+        - 0
+        - -0.100000001
+        - 0
+      shapeParam1: 0.200000003
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      material:
+        billboardType: 0
+        particleType: 1
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/SmokeParticleTexture.png
+  Children: ~
 GameObject1:
   name: MainCamera
   tag: Untagged
@@ -148,343 +94,3 @@ GameObject1:
       Script0:
         name: PlayerCamera
   Children: ~
-GameObject2:
-  name: Canvas
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    UITransformComponent:
-      name: UITransformComponent
-      enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 0
-        - 0
-    ScriptComponents:
-      Script0:
-        name: MenuButtons
-  Children:
-    - name: MenuImage
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Assets/Textures/Main_Menu_1.png
-      Children: ~
-    - name: NewGameButton
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.128000006
-            - 0.317999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Assets/Textures/New_Game.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
-      Children: ~
-    - name: ContinueButton
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.128000006
-            - 0.460999995
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Assets/Textures/Continue_button.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
-      Children: ~
-    - name: OptionsButton
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.128000006
-            - 0.603999972
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Assets/Textures/Options_Button.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
-      Children: ~
-    - name: CreditsButton
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.127000004
-            - 0.748000026
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Assets/Textures/Credits_Buttom.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
-      Children: ~
-    - name: QuitButton
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.127000004
-            - 0.906000018
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.181999996
-            - 0.0909999982
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Assets/Textures/Quit_button.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
-      Children: ~

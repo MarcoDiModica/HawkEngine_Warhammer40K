@@ -3,6 +3,7 @@
 in vec2 TexCoord;
 in vec4 ParticleColor;
 in float Lifetime;
+in vec4 EndColor;  // End color for gradient
 
 out vec4 FragColor;
 
@@ -11,6 +12,8 @@ uniform sampler2D colorGradient;  // Optional color gradient based on lifetime
 uniform int useColorGradient;     // Whether to use gradient (0: no, 1: yes)
 uniform int particleType;         // Different particle types (0: default, 1: smoke, 2: fire, 3: muzzle)
 uniform float softness;           // Edge softness factor
+//uniform vec4 startColor;          // Color inicial
+//uniform vec4 endColor;            // Color final
 
 vec4 applySmoke() {
     vec4 texColor = texture(particleTexture, TexCoord);
@@ -68,20 +71,12 @@ void main() {
         FragColor = vec4(texColor.rgb * gradientColor.rgb * ParticleColor.rgb, texColor.a * ParticleColor.a);
     } else {
         // Apply different effects based on particle type
-        if (particleType == 1) {
-            // Smoke
-            FragColor = applySmoke();
-        } else if (particleType == 2) {
-            // Fire
-            FragColor = applyFire();
-        } else if (particleType == 3) {
-            // Muzzle flash
-            FragColor = applyMuzzleFlash();
-        } else {
             // Default particles
             // Aplicar el color de la partícula pero preservar el alfa de la textura
-            FragColor = vec4(texColor.rgb * ParticleColor.rgb, texColor.a * ParticleColor.a);
-        }
+            vec4 color = mix(ParticleColor, EndColor, Lifetime);
+            FragColor = vec4(texColor.rgb * color.rgb, texColor.a * ParticleColor.a);
+            // FragColor = vec4(texColor.rgb * ParticleColor.rgb, texColor.a * ParticleColor.a);
+        
     }
     
     // Apply softness to edges for more natural look

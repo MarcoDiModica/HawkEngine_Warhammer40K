@@ -19,7 +19,8 @@ namespace ParticlePresets {
 		4.0f,                          // Max lifetime
 		0.5f,                          // Min speed
 		1.5f,                          // Max speed
-		-0.1f,                         // Gravity (negative for upward)
+		4.0f,						   // End Speed
+		glm::vec3(0.0f,-0.1f,0.0f),	   // Gravity (negative for upward)
 		0.2f,                          // Rotation speed
 		15.0f,                         // Emission rate (particles per second)
 		EmitterShape::CONE,            // Shape
@@ -40,7 +41,8 @@ namespace ParticlePresets {
 		1.5f,                          // Max lifetime
 		1.0f,                          // Min speed
 		2.0f,                          // Max speed
-		-0.5f,                         // Gravity (negative for upward)
+		4.0f,						   // End Speed
+		glm::vec3(0.0f,-0.5f,0.0f),	   // Gravity (negative for upward)
 		0.5f,                          // Rotation speed
 		40.0f,                         // Emission rate (particles per second)
 		EmitterShape::CONE,            // Shape
@@ -61,7 +63,8 @@ namespace ParticlePresets {
 		0.15f,                         // Max lifetime
 		5.0f,                          // Min speed
 		10.0f,                         // Max speed
-		0.0f,                          // Gravity
+		4.0f,						   // End Speed
+		glm::vec3(0.0f,0.0f,0.0f),	   // Gravity
 		0.0f,                          // Rotation speed
 		100.0f,                        // Emission rate (particles per second)
 		EmitterShape::CONE,            // Shape
@@ -82,7 +85,8 @@ namespace ParticlePresets {
 		3.0f,                          // Max lifetime
 		0.2f,                          // Min speed
 		0.8f,                          // Max speed
-		0.1f,                          // Gravity (slight downward)
+		4.0f,						   // End Speed
+		glm::vec3(0.0f,0.1f,0.0f),     // Gravity (slight downward)
 		0.3f,                          // Rotation speed
 		10.0f,                         // Emission rate (particles per second)
 		EmitterShape::CIRCLE,          // Shape
@@ -90,6 +94,29 @@ namespace ParticlePresets {
 		0.0f,                          // Unused
 		0.0f                           // Unused
 	};
+
+	const ParticlePreset Explosion = {
+	ParticleType::EXPLOSION,
+	glm::vec3(1.0f, 0.5f, 0.0f),   // Start color (orange)
+	glm::vec3(0.5f, 1.0f, 0.0f),   // End color (dark red)
+	1.0f,                          // Alpha start
+	0.0f,                          // Alpha end
+	1.0f,                          // Size start
+	3.0f,                          // Size end
+	0.2f,                          // Min lifetime
+	1.0f,                          // Max lifetime
+	5.0f,                          // Min speed
+	10.0f,                         // Max speed
+	4.0f,						   // End Speed
+	glm::vec3(0.0f,-0.5f,0.0f),	   // Gravity (negative for upward)
+	1.0f,                          // Rotation speed
+	100.0f,                        // Emission rate (particles per second)
+	EmitterShape::SPHERE,          // Shape
+	1.0f,                          // Sphere radius
+	0.0f,                          // Unused
+	0.0f                           // Unused
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -104,6 +131,7 @@ ParticleFX::ParticleFX(GameObject* owner)
 	, maxSpeed(3.0f)
 	, startSize(1.0f)
 	, endSize(1.0f)
+	, endSpeed(1.0f)
 	, startColor(1.0f, 1.0f, 1.0f)
 	, endColor(1.0f, 1.0f, 1.0f)
 	, startAlpha(1.0f)
@@ -315,9 +343,17 @@ void ParticleFX::EmitParticle() {
 
 	particle.color = glm::vec4(startColor, startAlpha);
 
+	particle.endColor = glm::vec4(endColor, endAlpha);
+
 	particle.size = glm::vec2(startSize, startSize);
 
+	particle.endSize = glm::vec2(endSize, endSize);
+
+	particle.endVelocity = glm::normalize(particle.velocity) * endSpeed;
+
 	particle.rotation = dist01(rng) * 360.0f;
+
+	particle.gravity = gravity;
 
 	renderer->AddParticle(particle);
 }
@@ -461,6 +497,19 @@ void ParticleFX::ConfigureMuzzleFlash() {
 	SetOneShot(true);
 }
 
+void ParticleFX::ConfigureExplosion() {
+	ApplyPreset(ParticlePresets::Explosion);
+	SetOneShot(true);
+}
+
+void ParticleFX::SetEndSpeed(float Espeed) 
+{
+	this->endSpeed = Espeed;
+
+}
+
+
+
 void ParticleFX::ConfigureDust() {
 	ApplyPreset(ParticlePresets::Dust);
 }
@@ -534,7 +583,7 @@ void ParticleFX::SetParticleRotation(float rotationSpeed) {
 	this->rotationSpeed = rotationSpeed;
 }
 
-void ParticleFX::SetGravity(float gravity) {
+void ParticleFX::SetGravity(glm::vec3 gravity) {
 	this->gravity = gravity;
 }
 

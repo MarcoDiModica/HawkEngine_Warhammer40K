@@ -89,6 +89,12 @@ bool Root::Start()
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
 		
+	auto particleFX = CreateGameObject("ParticleFX");
+	particleFX->AddComponent<ParticleFX>();
+	particleFX->GetComponent<ParticleFX>()->ConfigureSmoke();
+	particleFX->GetComponent<ParticleFX>()->SetTexture("Assets/SmokeParticleTexture.png");
+	//particleFX->GetComponent<ParticleFX>()->Play();
+
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 

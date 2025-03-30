@@ -9,6 +9,7 @@
 namespace ParticlePresets {
 	const ParticlePreset Smoke = {
 		ParticleType::SMOKE,
+		5.0f,						   // Duration (only if one-shot)
 		glm::vec3(0.8f, 0.8f, 0.8f),   // Start color (light gray)
 		glm::vec3(0.2f, 0.2f, 0.2f),   // End color (dark gray)
 		0.7f,                          // Alpha start
@@ -31,6 +32,7 @@ namespace ParticlePresets {
 
 	const ParticlePreset Fire = {
 		ParticleType::FIRE,
+		5.0f,						   // Duration (only if one-shot)
 		glm::vec3(1.0f, 0.7f, 0.0f),   // Start color (orange)
 		glm::vec3(1.0f, 0.0f, 0.0f),   // End color (red)
 		0.9f,                          // Alpha start
@@ -53,6 +55,7 @@ namespace ParticlePresets {
 
 	const ParticlePreset MuzzleFlash = {
 		ParticleType::MUZZLE_FLASH,
+		0.1f,						   // Duration (only if one-shot)
 		glm::vec3(1.0f, 0.9f, 0.5f),   // Start color (bright yellow)
 		glm::vec3(1.0f, 0.5f, 0.0f),   // End color (orange)
 		1.0f,                          // Alpha start
@@ -75,6 +78,7 @@ namespace ParticlePresets {
 
 	const ParticlePreset Dust = {
 		ParticleType::DEFAULT,
+		5.0f,						   // Duration (only if one-shot)
 		glm::vec3(0.76f, 0.7f, 0.5f),  // Start color (tan)
 		glm::vec3(0.76f, 0.7f, 0.5f),  // End color (tan)
 		0.6f,                          // Alpha start
@@ -97,6 +101,7 @@ namespace ParticlePresets {
 
 	const ParticlePreset Explosion = {
 	ParticleType::EXPLOSION,
+	0.2f,						   // Duration (only if one-shot)
 	glm::vec3(1.0f, 0.5f, 0.0f),   // Start color (orange)
 	glm::vec3(0.5f, 1.0f, 0.0f),   // End color (dark red)
 	1.0f,                          // Alpha start
@@ -195,10 +200,15 @@ void ParticleFX::Update(float deltaTime) {
 
 	timeSinceLastEmit += deltaTime;
 	float emitInterval = 1.0f / particlesPerSecond;
-
+	durationTrack += deltaTime;
 	while (timeSinceLastEmit >= emitInterval && isPlaying && !isPaused) {
 		EmitParticle();
 		timeSinceLastEmit -= emitInterval;
+		if (durationTrack >= duration && isOneShot) 
+		{
+			Pause();
+			durationTrack = 0.0f;
+		}
 	}
 
 #ifndef _BUILD
@@ -333,6 +343,8 @@ std::unique_ptr<Component> ParticleFX::Clone(GameObject* owner) {
 
 void ParticleFX::EmitParticle() {
 	ParticleData particle;
+
+	particle.duration = duration;
 
 	particle.maxLifetime = minLifetime + dist01(rng) * (maxLifetime - minLifetime);
 	particle.lifetime = 0.0f;
@@ -523,8 +535,10 @@ void ParticleFX::EmitBurst(int count) {
 void ParticleFX::Play() {
 	isPlaying = true;
 	isPaused = false;
+	durationTrack = 0;
 
 	if (isOneShot) {
+
 		burstEmitted = false;
 	}
 }
@@ -539,6 +553,7 @@ void ParticleFX::Stop() {
 
 void ParticleFX::Pause() {
 	isPaused = true;
+	burstEmitted = false;
 }
 
 bool ParticleFX::IsPlaying() const {

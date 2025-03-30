@@ -1118,6 +1118,14 @@ private:
 
 		ImGui::BeginGroup();
 
+		//Duration 
+
+		float duration = system->GetDuration();
+
+		if (ImGui::DragFloat("Duration", &duration, 0.1f, 0.1f, 1000.0f)) {
+			system->SetDuration(duration);
+		}
+
 		// Lifetime
 		float minLifetime = system->GetMinLifetime();
 		float maxLifetime = system->GetMaxLifetime();

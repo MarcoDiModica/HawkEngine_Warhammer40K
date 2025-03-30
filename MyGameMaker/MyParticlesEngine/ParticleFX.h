@@ -22,6 +22,7 @@ enum class EmitterShape {
 
 struct ParticlePreset {
 	ParticleType type;
+	float duration;
 	glm::vec3 colorStart;
 	glm::vec3 colorEnd;
 	float alphaStart;
@@ -92,6 +93,7 @@ public:
 	void SetParticleType(ParticleType type) { if (material) material->SetParticleType(type); }
 	void DisableColorGradient() { if (material) material->DisableColorGradient(); }
 	void SetEndSpeed(float Espeed);
+	void SetDuration(float duration) { this->duration = duration; }
 
 	float GetEmissionRate() const { return emissionRate; }
 	float GetMinLifetime() const { return minLifetime; }
@@ -101,6 +103,7 @@ public:
 	float GetStartSize() const { return startSize; }
 	float GetEndSize() const { return endSize; }
 	float GetEndSpeed() const { return endSpeed; }
+	float GetDuration() const { return duration; }
 	glm::vec3 GetStartColor() const { return startColor; }
 	glm::vec3 GetEndColor() const { return endColor; }
 	float GetStartAlpha() const { return startAlpha; }
@@ -142,6 +145,8 @@ private:
 	float timeSinceLastEmit;
 
 	// Particle configurations
+	float duration;
+	float durationTrack;
 	float minLifetime, maxLifetime;
 	float minSpeed, maxSpeed;
 	float endSpeed;

@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 
 struct ParticleData {
+	float duration;
 	glm::vec3 position;
 	glm::vec4 color;
 	glm::vec4 endColor;
@@ -19,7 +20,8 @@ struct ParticleData {
 	bool active;
 
 	ParticleData()
-		: position(0.0f)
+		: duration(1.0f)
+		, position(0.0f)
 		, color(1.0f)
 		, endColor(1.0f)
 		, size(1.0f, 1.0f)
@@ -185,6 +187,7 @@ public:
 			}
 
 			InstanceData instance;
+			instance.duration = particleData[i].duration;
 			instance.position = particleData[i].position;
 			instance.color = particleData[i].color;
 			instance.endColor = particleData[i].endColor;
@@ -231,6 +234,7 @@ public:
 
 private:
 	struct InstanceData {
+		float duration;
 		glm::vec3 position;
 		glm::vec4 color;
 		glm::vec4 endColor;

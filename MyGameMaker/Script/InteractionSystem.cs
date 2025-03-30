@@ -1,56 +1,67 @@
 ﻿using HawkEngine;
 using System;
 using System.Numerics;
-using System.Collections.Generic;
+using System.Linq;
 
 public class InteractionSystem : MonoBehaviour
 {
     public float interactionRadius = 2.0f;
     private PlayerInput playerInput;
+    private GameObject interactionMessage;
+    private bool isShowingMessage = false; // Estado actual de la imagen
 
     public override void Start()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
         if (playerInput == null)
         {
-  
+            Engineson.print("ERROR: InteractionSystem requires PlayerInput");
+        }
+
+        interactionMessage = GameObject.Find("InteractText");
+        if (interactionMessage == null)
+        {
+            Engineson.print("ERROR: InteractionSystem requires a GameObject named InteractText");
+        }
+        else
+        {
+            interactionMessage.GetComponent<UIImage>().SetImage("");
+            isShowingMessage = false;
         }
     }
 
     public override void Update(float deltaTime)
     {
         if (playerInput == null) return;
-
-        if (Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B))
-        {
-            CheckForInteractions();
-        }
+        CheckForInteractions();
     }
 
     private void CheckForInteractions()
     {
-        Vector3 position = gameObject.GetComponent<Transform>().position;
-        GameObject[] overlappedObjects = Physics.OverlapSphere(position, interactionRadius, "Interactable");
+        Transform transform = gameObject.GetComponent<Transform>();
+        GameObject[] overlappedObjects = Physics.OverlapSphere(transform.position, interactionRadius, "Interactable");
 
-        List<Item> interactables = new List<Item>();
+        Item interactable = overlappedObjects
+            .Select(obj => obj.GetComponent<Item>())
+            .FirstOrDefault(item => item != null);
 
-        foreach (var obj in overlappedObjects)
+        if (interactionMessage != null)
         {
-            Item interactable = obj.GetComponent<Item>();
-            if (interactable != null)
+            if (interactable != null && !isShowingMessage)
             {
-                interactables.Add(interactable);
+                interactionMessage.GetComponent<UIImage>().SetImage("Assets/Textures/PressE.png");
+                isShowingMessage = true;
+            }
+            else if (interactable == null && isShowingMessage)
+            {
+                interactionMessage.GetComponent<UIImage>().SetImage("");
+                isShowingMessage = false;
             }
         }
 
-        if (interactables.Count > 0)
+        if (interactable != null && playerInput.IsInteracting())
         {
-            HandleInteraction(interactables);
+            interactable.Interact();
         }
-    }
-
-    private void HandleInteraction(List<Item> interactables)
-    {
-        interactables[0].Interact();
     }
 }

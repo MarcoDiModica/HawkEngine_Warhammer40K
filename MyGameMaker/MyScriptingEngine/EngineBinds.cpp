@@ -248,6 +248,10 @@ void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
     ConvertFromSharp(ref)->SetName(std::string(C_name));
 }
 
+void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
+    ConvertFromSharp(ref)->SetActive(active);
+}
+
 MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
 {
     char* C_name = mono_string_to_utf8(name);
@@ -972,6 +976,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
+    mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
+
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);

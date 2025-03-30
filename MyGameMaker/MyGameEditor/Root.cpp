@@ -108,7 +108,7 @@ bool Root::Start()
 	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
 	itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	itemtest->AddComponent<ScriptComponent>()->LoadScript("Item");
-	itemtest->SetTag("Interactable");
+	//itemtest->SetTag("Interactable");
 
 	//auto player = CreateGameObject("InteractionSystem");
 		
@@ -163,6 +163,21 @@ bool Root::Start()
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	floorCollider->Start();
+
+	auto canvas = CreateGameObject("Canvas");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<SoundComponent>();
+
+	auto interactText = CreateGameObject("InteractText");
+	Application->root->ParentGameObject(*interactText, *canvas);
+	interactText->AddComponent<UIImageComponent>();
+	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	interactText->AddComponent<UIButtonComponent>();
+	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+
+	floor->SetActive(false);
 
 	//CreateGameplayUI();
 	//CreateMainMenuUI();

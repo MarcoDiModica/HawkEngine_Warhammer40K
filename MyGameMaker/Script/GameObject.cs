@@ -104,6 +104,8 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         private  extern void SetName(string newTag);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void SetActive(bool active);
 
     }
 }

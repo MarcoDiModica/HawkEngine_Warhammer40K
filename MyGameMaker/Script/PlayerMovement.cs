@@ -84,6 +84,16 @@ public class PlayerMovement : MonoBehaviour
                 UpdateRotation(moveDirection, deltaTime);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Transform transform = gameObject.GetComponent<Transform>();
+            if (transform != null)
+            {
+                transform.DOMove(new Vector3(10, 2, 5), 2.0f, Modes.LINEAR);
+            }
+        }
+
     }
 
     override public void OnCollisionEnter(Collider other)

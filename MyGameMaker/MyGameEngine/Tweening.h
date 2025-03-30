@@ -63,7 +63,7 @@ public:
 	static float CalculateFloat(float start, float target, float t, Modes mode);
 	static glm::vec4 CalculateColor(const glm::vec4& startColor, const glm::vec4& targetColor, float t, Modes mode);
 
-	class Sequence {
+	/*class Sequence {
 	public:
 		Sequence();
 
@@ -93,9 +93,9 @@ public:
 		TweenHandle currentTweenHandle = 0;
 
 		void PlayCurrentStep();
-	};
+	};*/
 
-	static Sequence CreateSequence();
+	/*static Sequence CreateSequence();*/
 
 	static void Update(float deltaTime);
 

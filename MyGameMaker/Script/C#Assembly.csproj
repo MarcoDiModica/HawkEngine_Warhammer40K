@@ -105,6 +105,7 @@
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="Transform.cs" />
+    <Compile Include="Tweening.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="UICanvas.cs" />
     <Compile Include="UIGameplay.cs" />

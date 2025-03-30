@@ -190,7 +190,7 @@ bool Root::Update(double dt)
 		hasAddedColliders = true;
 	}
 
-	if (Application->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+	/*if (Application->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		Tweening::Move(player.get(), glm::dvec3(10.0, 5.0, 0.0), 2.0f, Modes::EASE_IN_OUT);
 	}
 
@@ -212,7 +212,7 @@ bool Root::Update(double dt)
 
 	if (Application->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
 		Tweening::UIScale(newGameButton.get(), glm::dvec3(0.5, 0.8, 0.6), 2.0f, Modes::EASE_IN_OUT);
-	}
+	}*/
 
 	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

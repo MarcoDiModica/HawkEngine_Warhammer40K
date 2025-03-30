@@ -183,6 +183,7 @@ private:
 		LOG(LogType::LOG_INFO, "Ejecutando batch de compilación...");
 		std::string command = "cmd /c \"" + batchFile + "\" > \"" + m_ScriptFolder + "\\build_output.txt\" 2>&1";
 		int result = system(command.c_str());
+		LOG(LogType::LOG_INFO, "Resultado directo del system(): %d", result);
 
 		int buildResult = -1;
 		try {
@@ -211,10 +212,7 @@ private:
 				buffer << outputFile.rdbuf();
 				std::string output = buffer.str();
 				outputFile.close();
-
-				if (!output.empty()) {
-					//LOG(LogType::LOG_INFO, "Salida de la compilación: %s", output.c_str());
-				}
+				//LOG(LogType::LOG_INFO, "Salida completa de la compilación: %s", output.c_str());
 			}
 		}
 		catch (...) {

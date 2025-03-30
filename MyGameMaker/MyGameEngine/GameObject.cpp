@@ -33,6 +33,11 @@ GameObject::GameObject(const std::string& name) : name(name), cachedComponentTyp
 
 GameObject::~GameObject()
 {
+	for (auto& scriptComponent : scriptComponents) {
+		scriptComponent->Destroy();
+	}
+	scriptComponents.clear();
+    
     for (auto& component : components) {
         component.second->Destroy();
     }

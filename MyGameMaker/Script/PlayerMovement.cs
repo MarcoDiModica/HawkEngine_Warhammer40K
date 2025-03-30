@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
     override public void OnCollisionStay(GameObject other)
     {
-        Engineson.print("Player Collision Stay hot reload: ");
+        Engineson.print("Player Collision Stay hola: ");
     }
 
     override public void OnCollisionExit(GameObject other)

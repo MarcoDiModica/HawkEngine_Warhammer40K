@@ -1127,26 +1127,28 @@ void EngineBinds::BindEngine() {
 
 	// Tween
     
-	mono_add_internal_call("HawkEngine.Tween::DOMove", (const void*)&EngineBinds::DOMove);
-	mono_add_internal_call("HawkEngine.Tween::DOMoveX", (const void*)&EngineBinds::DOMoveX);
-	mono_add_internal_call("HawkEngine.Tween::DOMoveY", (const void*)&EngineBinds::DOMoveY);
-	mono_add_internal_call("HawkEngine.Tween::DOMoveZ", (const void*)&EngineBinds::DOMoveZ);
-	mono_add_internal_call("HawkEngine.Tween::DORotate", (const void*)&EngineBinds::DORotate);
-	mono_add_internal_call("HawkEngine.Tween::DORotateX", (const void*)&EngineBinds::DORotateX);
-	mono_add_internal_call("HawkEngine.Tween::DORotateY", (const void*)&EngineBinds::DORotateY);
-	mono_add_internal_call("HawkEngine.Tween::DORotateZ", (const void*)&EngineBinds::DORotateZ);
-	mono_add_internal_call("HawkEngine.Tween::DOScale", (const void*)&EngineBinds::DOScale);
-	mono_add_internal_call("HawkEngine.Tween::DOScaleX", (const void*)&EngineBinds::DOScaleX);
-	mono_add_internal_call("HawkEngine.Tween::DOScaleY", (const void*)&EngineBinds::DOScaleY);
-	mono_add_internal_call("HawkEngine.Tween::DOScaleZ", (const void*)&EngineBinds::DOScaleZ);
-	mono_add_internal_call("HawkEngine.Tween::DOUIMove", (const void*)&EngineBinds::DOUIMove);
-	mono_add_internal_call("HawkEngine.Tween::DOUIMoveX", (const void*)&EngineBinds::DOUIMoveX);
-	mono_add_internal_call("HawkEngine.Tween::DOUIMoveY", (const void*)&EngineBinds::DOUIMoveY);
-	mono_add_internal_call("HawkEngine.Tween::DOUIMoveZ", (const void*)&EngineBinds::DOUIMoveZ);
-	mono_add_internal_call("HawkEngine.Tween::DOUIScale", (const void*)&EngineBinds::DOUIScale);
-	mono_add_internal_call("HawkEngine.Tween::DOUIScaleX", (const void*)&EngineBinds::DOUIScaleX);
-	mono_add_internal_call("HawkEngine.Tween::DOUIScaleY", (const void*)&EngineBinds::DOUIScaleY);
-	mono_add_internal_call("HawkEngine.Tween::DOUIScaleZ", (const void*)&EngineBinds::DOUIScaleZ);
+	mono_add_internal_call("HawkEngine.Transform::DOMove", (const void*)&EngineBinds::DOMove);
+	mono_add_internal_call("HawkEngine.Transform::DOMoveX", (const void*)&EngineBinds::DOMoveX);
+	mono_add_internal_call("HawkEngine.Transform::DOMoveY", (const void*)&EngineBinds::DOMoveY);
+	mono_add_internal_call("HawkEngine.Transform::DOMoveZ", (const void*)&EngineBinds::DOMoveZ);
+	mono_add_internal_call("HawkEngine.Transform::DORotate", (const void*)&EngineBinds::DORotate);
+	mono_add_internal_call("HawkEngine.Transform::DORotateX", (const void*)&EngineBinds::DORotateX);
+	mono_add_internal_call("HawkEngine.Transform::DORotateY", (const void*)&EngineBinds::DORotateY);
+	mono_add_internal_call("HawkEngine.Transform::DORotateZ", (const void*)&EngineBinds::DORotateZ);
+	mono_add_internal_call("HawkEngine.Transform::DOScale", (const void*)&EngineBinds::DOScale);
+	mono_add_internal_call("HawkEngine.Transform::DOScaleX", (const void*)&EngineBinds::DOScaleX);
+	mono_add_internal_call("HawkEngine.Transform::DOScaleY", (const void*)&EngineBinds::DOScaleY);
+	mono_add_internal_call("HawkEngine.Transform::DOScaleZ", (const void*)&EngineBinds::DOScaleZ);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIMove", (const void*)&EngineBinds::DOUIMove);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIMoveX", (const void*)&EngineBinds::DOUIMoveX);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIMoveY", (const void*)&EngineBinds::DOUIMoveY);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIMoveZ", (const void*)&EngineBinds::DOUIMoveZ);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIScale", (const void*)&EngineBinds::DOUIScale);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIScaleX", (const void*)&EngineBinds::DOUIScaleX);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIScaleY", (const void*)&EngineBinds::DOUIScaleY);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIScaleZ", (const void*)&EngineBinds::DOUIScaleZ);
+	mono_add_internal_call("HawkEngine.Tweening::DOColor", (const void*)&EngineBinds::DOColor);
+	mono_add_internal_call("HawkEngine.Tweening::DOValue", (const void*)&EngineBinds::DOValue);
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

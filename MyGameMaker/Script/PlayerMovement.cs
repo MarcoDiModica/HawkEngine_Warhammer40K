@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject playerCamera;
     private Transform cameraTransform;
+    private float value = 1.0f;
 
     public override void Start()
     {
@@ -88,11 +89,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             Transform transform = gameObject.GetComponent<Transform>();
-            if (transform != null)
-            {
-                transform.DOMove(new Vector3(10, 2, 5), 2.0f, Modes.LINEAR);
-            }
+            transform.DOMoveX(10.0f, 2.0f, Modes.LINEAR);
+            Tweening twenn = new Tweening();
+
+            twenn.DOValue(value,10,2.0f,Modes.LINEAR);
+            Engineson.print("Tortuga");
         }
+        Engineson.print($"Value: " +value);
 
     }
 

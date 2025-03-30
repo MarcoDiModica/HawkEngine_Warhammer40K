@@ -22,7 +22,7 @@ public class Boltgun : BaseWeapon
     }
     public override void Start()
     {
-        shootCadence = 0.2f;
+        shootCadence = 0.1f;
         magazineSize = 30;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 240;
@@ -41,6 +41,8 @@ public class Boltgun : BaseWeapon
     {
         CleanBullets();
         timeSinceLastShot += deltaTime;
+        //Engineson.print(deltaTime.ToString());
+        //Engineson.print(timeSinceLastShot.ToString());
     }
 
     public override void Shoot()

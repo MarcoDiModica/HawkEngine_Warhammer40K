@@ -8,7 +8,8 @@ public class InteractionSystem : MonoBehaviour
     public float interactionRadius = 2.0f;
     private PlayerInput playerInput;
     private GameObject interactionMessage;
-    private bool isShowingMessage = false; // Estado actual de la imagen
+    private UIImage interactionImage;
+    private bool isShowingMessage = false;
 
     public override void Start()
     {
@@ -16,17 +17,26 @@ public class InteractionSystem : MonoBehaviour
         if (playerInput == null)
         {
             Engineson.print("ERROR: InteractionSystem requires PlayerInput");
+            return;
         }
 
         interactionMessage = GameObject.Find("InteractText");
-        if (interactionMessage == null)
+        if (interactionMessage != null)
         {
-            Engineson.print("ERROR: InteractionSystem requires a GameObject named InteractText");
+            interactionImage = interactionMessage.GetComponent<UIImage>();
+            if (interactionImage != null)
+            {
+                isShowingMessage = false;
+                interactionImage.SetImageEnabled(false);
+            }
+            else
+            {
+                Engineson.print("ERROR: InteractionMessage does not have a UIImage component.");
+            }
         }
         else
         {
-            interactionMessage.GetComponent<UIImage>().SetImage("");
-            isShowingMessage = false;
+            Engineson.print("ERROR: InteractionSystem requires a GameObject named InteractText.");
         }
     }
 
@@ -41,22 +51,19 @@ public class InteractionSystem : MonoBehaviour
         Transform transform = gameObject.GetComponent<Transform>();
         GameObject[] overlappedObjects = Physics.OverlapSphere(transform.position, interactionRadius, "Interactable");
 
-        Item interactable = overlappedObjects
-            .Select(obj => obj.GetComponent<Item>())
-            .FirstOrDefault(item => item != null);
-
-        if (interactionMessage != null)
+        Item interactable = null;
+        foreach (var obj in overlappedObjects)
         {
-            if (interactable != null && !isShowingMessage)
-            {
-                interactionMessage.GetComponent<UIImage>().SetImage("Assets/Textures/PressE.png");
-                isShowingMessage = true;
-            }
-            else if (interactable == null && isShowingMessage)
-            {
-                interactionMessage.GetComponent<UIImage>().SetImage("");
-                isShowingMessage = false;
-            }
+            interactable = obj.GetComponent<Item>();
+            if (interactable != null) break;
+        }
+
+        bool shouldShowMessage = interactable != null;
+
+        if (interactionImage != null && shouldShowMessage != isShowingMessage)
+        {
+            isShowingMessage = shouldShowMessage;
+            interactionImage.SetImageEnabled(isShowingMessage);
         }
 
         if (interactable != null && playerInput.IsInteracting())

@@ -11,6 +11,6 @@ public class Item : MonoBehaviour, IInteractable
     public void Interact()
     {
         Engineson.print("Item picked up");
-        Engineson.Destroy(this.gameObject);
+        Engineson.Destroy(gameObject);       
     }
 }

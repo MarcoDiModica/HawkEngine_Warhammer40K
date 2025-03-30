@@ -88,16 +88,6 @@ bool Root::Start()
 	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-
-	/*auto interaction = CreateGameObject("InteractionSystem");
-	ParentGameObject(*interaction, *player);
-	interaction->GetTransform()->SetPosition(glm::vec3(0, 0, 1));
-	auto colliderInteraction = interaction->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-	auto colliderInrb = interaction->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	colliderInrb->SetKinematic(true);
-	colliderInteraction->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	colliderInteraction->SetOffset(glm::vec3(0, 2.1f, 0));
-	colliderInteraction->SetTrigger(true);*/
 	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 	
 
@@ -108,10 +98,16 @@ bool Root::Start()
 	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
 	itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	itemtest->AddComponent<ScriptComponent>()->LoadScript("Item");
-	//itemtest->SetTag("Interactable");
+	itemtest->SetTag("Interactable");
+	
+	auto itemtest2 = CreateCube("item");
+	itemtest2->GetTransform()->SetPosition(glm::vec3(1, 2, 10));
+	itemtest2->GetTransform()->SetScale(glm::vec3(2, 2, 2));
+	itemtest2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	itemtest2->AddComponent<ScriptComponent>()->LoadScript("Item");
+	itemtest2->SetTag("Interactable");
 
-	//auto player = CreateGameObject("InteractionSystem");
-		
+
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
@@ -164,6 +160,8 @@ bool Root::Start()
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	floorCollider->Start();
 
+
+	//For rendering Interaction System text, remove the canvas if there is already one
 	auto canvas = CreateGameObject("Canvas");
 	canvas->AddComponent<UICanvasComponent>();
 	canvas->AddComponent<UITransformComponent>();

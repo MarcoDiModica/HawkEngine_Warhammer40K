@@ -36,7 +36,9 @@ namespace EngineBinds {
 	void AddScript(MonoObject* ref, MonoString* scriptName);
 
     MonoString* GameObjectGetName(MonoObject* sharpRef);
+    MonoString* GameObjectGetTag(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
+    void SetTag(MonoObject* ref, MonoString* sharpName);
     MonoObject* GetGameObjectByName(MonoString* name);	
     void GameObjectSetActive(MonoObject* ref, bool active);
 

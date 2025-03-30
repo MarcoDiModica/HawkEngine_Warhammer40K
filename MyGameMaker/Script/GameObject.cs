@@ -78,12 +78,16 @@ namespace HawkEngine
 
         //    set; // Set in C#
         //}
-        public extern string tag
+        public string tag
         {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get; // Get from C++
-
-            set; // Set in C#
+            get
+            {
+                return GetTag();
+            }
+            set
+            {
+                SetTag(value);
+            }
         }
 
         public string name
@@ -103,6 +107,12 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         private  extern void SetName(string newTag);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        private  extern string GetTag();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        private  extern void SetTag(string newTag);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetActive(bool active);

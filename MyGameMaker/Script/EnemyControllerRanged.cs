@@ -5,28 +5,16 @@ using HawkEngine;
 
 public class EnemyControllerRanged : EnemyController
 {
-    private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
+    private List<BulletData> activeProjectiles = new List<BulletData>();
     public float shootCooldown = 2.0f;
     public float projectileSpeed = 90.0f;
     public float projectileLifetime = 0.5f;
     protected float shootTimer = 0f;
 
-    private class ProjectileInfo
-    {
-        public GameObject gameObject;
-        public Transform transform;
-        public float lifetime;
-        public Vector3 direction;
-        public bool markedForDestruction;
 
-        public ProjectileInfo(GameObject obj, Transform trans, Vector3 dir)
-        {
-            gameObject = obj;
-            transform = trans;
-            direction = dir;
-            lifetime = 0f;
-            markedForDestruction = false;
-        }
+    public override void Awake()
+    {
+        
     }
     public override void Start()
     {
@@ -136,6 +124,7 @@ public class EnemyControllerRanged : EnemyController
             projectile.AddComponent<BoxCollider>();
 
             //sound?.Play();
+            projectile.tag = "EnemyAttack";
 
             if (projectile != null)
             {
@@ -147,8 +136,9 @@ public class EnemyControllerRanged : EnemyController
                     projTransform.position = spawnPos;
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
-                    ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
-                    activeProjectiles.Add(projInfo);
+                    projectile.AddScript("BulletData");
+                    projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
+                    activeProjectiles.Add(projectile.GetComponent<BulletData>());
 
                     Engineson.print("Projectile fired!");
                 }

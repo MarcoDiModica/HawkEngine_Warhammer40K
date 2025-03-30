@@ -79,11 +79,11 @@ public class PlayerDash : MonoBehaviour
     {
         if (isInvulnerable)
         {
-            invulnerabilityTime += deltaTime;
-            if (invulnerabilityTime >= iTimeCounter)
+            iTimeCounter += deltaTime;
+            if (iTimeCounter >= invulnerabilityTime)
             {
                 isInvulnerable = false;
-                invulnerabilityTime = 0;
+                iTimeCounter = 0;
             }
         }
     }

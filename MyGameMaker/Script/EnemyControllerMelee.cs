@@ -14,6 +14,11 @@ public class EnemyControllerMelee : EnemyController
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
 
+    public override void Awake()
+    {
+        
+    }
+
     public override void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();

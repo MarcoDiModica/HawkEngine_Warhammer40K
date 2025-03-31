@@ -28,6 +28,7 @@ bool PhysicsModule::Awake() {
     solver = new btSequentialImpulseConstraintSolver();
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
     dynamicsWorld->setGravity(btVector3(0, -9.81, 0));
+	
 
     //Debug drawer
     debugDrawer = new DebugDrawerPhysics();
@@ -172,6 +173,7 @@ std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWor
 void PhysicsModule::DrawDebugDrawer() {
     if (debugDrawer) {
         auto rigidBodies = GetAllRigidBodies(dynamicsWorld);
+        debugDrawer->drawLine(rayFrom, rayTo, btVector3(1.0f, 0.0f, 0.0f));
 
         for (const auto& rigidBody : rigidBodies) {
             if (!rigidBody || !rigidBody->getCollisionShape()) {
@@ -536,6 +538,27 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     }
 
     std::cout << "Global restitution set to: " << restitutionValue << "\n";
+}
+
+bool PhysicsModule::Raycast(btVector3& origin, btVector3& direction, float maxDistance) 
+{
+	rayFrom = origin;
+	btVector3 originRay = origin;
+    btVector3 directionRay = origin + direction.normalized() * maxDistance;
+
+	btCollisionWorld::ClosestRayResultCallback rayCallback(originRay, directionRay);
+    dynamicsWorld->rayTest(originRay, directionRay, rayCallback);
+
+	if (rayCallback.hasHit()) {
+        rayTo = directionRay;
+        return true;
+	}
+	else {
+        rayTo = directionRay;
+		return false;
+	}
+
+	return false;
 }
 
 

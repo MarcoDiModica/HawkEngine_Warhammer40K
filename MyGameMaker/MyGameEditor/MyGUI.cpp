@@ -279,9 +279,9 @@ void MyGUI::Render() {
 		UIinspectorPanel->Draw(); // Ojo que minimizar peta el engine por el inspector
 	}
 
-	if (showSceneWindow) {
+	/*if (showSceneWindow) {
 		UISceneWindowPanel->Draw();
-	}
+	}*/
 
 	if (showProject) {
 		UIProjectPanel->Draw();
@@ -291,9 +291,9 @@ void MyGUI::Render() {
 		UITextEditorPanel->Draw(); // Quitar
 	}
 
-	if (showGameView) {
+	/*if (showGameView) {
 		UIGameViewPanel->Draw();
-	}
+	}*/
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

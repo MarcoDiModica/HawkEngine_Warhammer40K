@@ -76,13 +76,13 @@ GameObject0:
       Script10:
         name: ""
       Script11:
-        name: ""
+        name: EnergyBall
       Script12:
         name: ""
       Script13:
         name: Barrage
       Script14:
-        name: ""
+        name: HookShot
       Script15:
         name: ArcSnare
       Script16:
@@ -184,8 +184,8 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: MedicaeStimm
-  tag: PowerUp
+  name: ShotgunShells
+  tag: Ammunition
   active: true
   isStatic: false
   Components:
@@ -193,7 +193,7 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 10
+        - 20
         - 2
         - 0
       localRotation:
@@ -201,9 +201,9 @@ GameObject2:
         - -0
         - 0
       localScale:
-        - 1
-        - 1
-        - 1
+        - 0.5
+        - 0.5
+        - 0.5
     MeshRenderer:
       name: MeshRenderer
       enabled: true
@@ -246,9 +246,269 @@ GameObject2:
       isTrigger: true
     ScriptComponents:
       Script0:
-        name: MedicaeStimm
+        name: ShotgunShells
   Children: ~
 GameObject3:
+  name: ShotgunShells_1
+  tag: Ammunition
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -20
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.5
+        - 0.5
+        - 0.5
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: ShotgunShells
+  Children: ~
+GameObject4:
+  name: BoltgunBullets
+  tag: Ammunition
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 30
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.5
+        - 0.5
+        - 0.5
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BoltgunBullets
+  Children: ~
+GameObject5:
+  name: ShotgunShells_2
+  tag: Ammunition
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -30
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.5
+        - 0.5
+        - 0.5
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: ShotgunShells
+  Children: ~
+GameObject6:
+  name: ChapterStandard
+  tag: PowerUp
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -40
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.5
+        - 0.5
+        - 0.5
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: ChapterStandard
+  Children: ~
+GameObject7:
   name: Lictor
   tag: Enemy
   active: true
@@ -355,7 +615,7 @@ GameObject3:
           name: Shader
           enabled: true
       Children: ~
-GameObject4:
+GameObject8:
   name: Floor
   tag: Untagged
   active: true
@@ -417,7 +677,7 @@ GameObject4:
         - 0
       isTrigger: false
   Children: ~
-GameObject5:
+GameObject9:
   name: Canvas
   tag: Untagged
   active: true
@@ -904,7 +1164,7 @@ GameObject5:
           enabled: true
           texture_path: Assets/Textures/grenade_icon.png
       Children: ~
-GameObject6:
+GameObject10:
   name: Canvas_1
   tag: Untagged
   active: true

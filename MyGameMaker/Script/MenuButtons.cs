@@ -36,7 +36,7 @@ public class MenuButtons : MonoBehaviour
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            SceneManager.LoadScene("TestScene");
+            SceneManager.LoadScene("DefaultScene");
         }
 
         if (continueButton.GetState() == ButtonState.CLICKED)

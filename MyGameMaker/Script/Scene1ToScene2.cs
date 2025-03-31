@@ -20,7 +20,7 @@ public class Scene1ToScene2 : MonoBehaviour
     {
         if(changeScene)
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("Level2");
         }
     }
 

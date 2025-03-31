@@ -55,6 +55,14 @@ public:
 		return userScriptID;
 	}
 
+	bool ForceRecompileScripts() {
+		if (!hotReloadEnabled) {
+			LOG(LogType::LOG_ERROR, "Hot reloading is not enabled. Enable it before forcing recompilation.");
+			return false;
+		}
+		return ScriptHotReloader::GetInstance().ForceRecompile();
+	}
+
 private:
 	MonoManager();
 

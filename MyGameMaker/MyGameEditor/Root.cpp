@@ -30,6 +30,7 @@
 #include "MyGameEngine/ShaderManager.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include "../MyScriptingEngine/MonoManager.h"
 
 class GameObject;
 

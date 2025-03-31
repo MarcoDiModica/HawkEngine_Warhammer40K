@@ -9,6 +9,7 @@
 #include <sstream>
 #include <chrono>
 #include <thread>
+#include <unordered_set>
 
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEditor/App.h"
@@ -35,40 +36,28 @@ public:
 		m_IsCompiling = false;
 		m_CompilationCooldown = false;
 
-		LOG(LogType::LOG_INFO, "Inicializando ScriptHotReloader con proyecto existente");
-		LOG(LogType::LOG_INFO, "Carpeta de scripts: %s", m_ScriptFolder.c_str());
-		LOG(LogType::LOG_INFO, "Directorio de salida: %s", m_OutputAssemblyDir.c_str());
+		//LOG(LogType::LOG_INFO, "Script Folder: %s", m_ScriptFolder.c_str());
+		//LOG(LogType::LOG_INFO, "Output Folder: %s", m_OutputAssemblyDir.c_str());
 
 		m_ProjectFile = FindCsprojFile(m_ScriptFolder);
 		if (m_ProjectFile.empty()) {
-			LOG(LogType::LOG_ERROR, "No se encontró un archivo .csproj en la carpeta de scripts");
-		}
-		else {
-			LOG(LogType::LOG_INFO, "Se usará el proyecto existente: %s", m_ProjectFile.c_str());
+			LOG(LogType::LOG_ERROR, "File .csproj not found");
 		}
 
 		RefreshScriptTimestamps();
 
-		// Compilación inicial al arrancar
-		LOG(LogType::LOG_INFO, "Realizando compilación inicial...");
 		m_IsCompiling = true;
 		bool initialCompilationResult = CompileExistingProject();
 		m_IsCompiling = false;
 		m_LastCompilationSuccess = initialCompilationResult;
 
-		if (initialCompilationResult) {
-			LOG(LogType::LOG_INFO, "Compilación inicial completada con éxito");
+		if (!initialCompilationResult) {
+			LOG(LogType::LOG_ERROR, "Initial compilation failed. Please solve the errors or ask Hawk Developers :)");
 		}
-		else {
-			LOG(LogType::LOG_ERROR, "Falló la compilación inicial. Por favor, corrige los errores antes de continuar");
-		}
-
-		LOG(LogType::LOG_INFO, "ScriptHotReloader inicializado con éxito");
 	}
 
 	void RegisterOnReloadCallback(ReloadCallbackType callback) {
 		m_OnReloadCallbacks.push_back(callback);
-		LOG(LogType::LOG_INFO, "Callback de recarga registrado");
 	}
 
 	bool CheckForChanges() {
@@ -76,13 +65,11 @@ public:
 			return false;
 		}
 
-		// No intentar recompilar si la última compilación falló
 		if (!m_LastCompilationSuccess) {
-			LOG(LogType::LOG_INFO, "No se intentará recompilar porque la última compilación falló. Corrige los errores primero.");
+			LOG(LogType::LOG_INFO, "Compilation Failed. Please fix it :0");
 			return false;
 		}
 
-		// Verificar si el engine está en primer plano
 		if (!IsEngineInForeground()) {
 			return false;
 		}
@@ -95,15 +82,12 @@ public:
 				auto it = m_ScriptTimestamps.find(entry.path().string());
 				if (it == m_ScriptTimestamps.end() || it->second < lastWriteTime) {
 					scriptsModified = true;
-					LOG(LogType::LOG_INFO, "Script modificado: %s", entry.path().filename().string().c_str());
 					break;
 				}
 			}
 		}
 
 		if (scriptsModified) {
-			LOG(LogType::LOG_INFO, "Se detectaron cambios en scripts, compilando...");
-
 			m_IsCompiling = true;
 
 			bool result = CompileExistingProject();
@@ -115,7 +99,6 @@ public:
 				std::this_thread::sleep_for(std::chrono::seconds(5));
 				m_CompilationCooldown = false;
 				m_IsCompiling = false;
-				LOG(LogType::LOG_INFO, "Cooldown de compilación finalizado, listo para detectar nuevos cambios");
 				}).detach();
 
 			return result;
@@ -134,12 +117,42 @@ public:
 				count++;
 			}
 		}
-
-		LOG(LogType::LOG_INFO, "Timestamps actualizados para %d scripts", count);
 	}
 
 	void Update() {
 		CheckForChanges();
+	}
+
+	bool ForceRecompile() {
+		if (m_IsCompiling || m_CompilationCooldown) {
+			LOG(LogType::LOG_INFO, "Compilation already in progress or cooling down. Please wait.");
+			return false;
+		}
+
+		LOG(LogType::LOG_INFO, "Forcing recompilation of scripts...");
+		m_IsCompiling = true;
+
+		bool result = CompileExistingProject();
+
+		DisplayCompilationOutput();
+
+		m_CompilationCooldown = true;
+		m_LastCompilationSuccess = result;
+
+		std::thread([this]() {
+			std::this_thread::sleep_for(std::chrono::seconds(5));
+			m_CompilationCooldown = false;
+			m_IsCompiling = false;
+			}).detach();
+
+		if (result) {
+			LOG(LogType::LOG_INFO, "Forced recompilation succeeded.");
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "Forced recompilation failed.");
+		}
+
+		return result;
 	}
 
 private:
@@ -161,11 +174,9 @@ private:
 
 	bool CompileExistingProject() {
 		if (m_ProjectFile.empty()) {
-			LOG(LogType::LOG_ERROR, "No se ha encontrado un archivo de proyecto (.csproj)");
+			LOG(LogType::LOG_ERROR, "File (.csproj) not found!");
 			return false;
 		}
-
-		LOG(LogType::LOG_INFO, "Compilando proyecto existente: %s", m_ProjectFile.c_str());
 
 		std::string dotnetPath = "C:\\Program Files\\dotnet\\dotnet.exe";
 		if (!std::filesystem::exists(dotnetPath)) {
@@ -190,21 +201,19 @@ private:
 		}
 
 		if (!std::filesystem::exists(dotnetPath)) {
-			LOG(LogType::LOG_ERROR, "No se pudo encontrar dotnet.exe");
+			LOG(LogType::LOG_ERROR, "Can't find dotnet.exe pls download .NET Framework in Visual Installer or contact Hawk Developers :0");
 			return false;
 		}
-
-		LOG(LogType::LOG_INFO, "Usando dotnet CLI: %s", dotnetPath.c_str());
 
 		std::string batchFile = m_ScriptFolder + "\\build.bat";
 		std::ofstream batch(batchFile);
 		if (!batch.is_open()) {
-			LOG(LogType::LOG_ERROR, "No se pudo crear el archivo batch");
+			LOG(LogType::LOG_ERROR, "Couldn't create batch file");
 			return false;
 		}
 
 		batch << "@echo off" << std::endl;
-		batch << "echo Compilando proyecto..." << std::endl;
+		batch << "echo Compiling project please raise your hands" << std::endl;
 		batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
 		batch << "\"" << dotnetPath << "\" build \"" << m_ProjectFile << "\" -c Release > build_output.txt 2>&1" << std::endl;
 		batch << "echo Código de salida: %ERRORLEVEL% > build_result.txt" << std::endl;
@@ -214,10 +223,8 @@ private:
 
 		batch.close();
 
-		LOG(LogType::LOG_INFO, "Ejecutando batch de compilación...");
 		std::string command = "cmd /c \"" + batchFile + "\"";
 		int result = system(command.c_str());
-		LOG(LogType::LOG_INFO, "Resultado directo del system(): %d", result);
 
 		int buildResult = -1;
 		try {
@@ -236,55 +243,33 @@ private:
 			}
 		}
 		catch (...) {
-			LOG(LogType::LOG_ERROR, "Error al leer el resultado de la compilación");
+			LOG(LogType::LOG_ERROR, "Error reading compilation results");
 		}
 
-		try {
-			std::ifstream warningsFile(m_ScriptFolder + "\\build_warnings.txt");
-			if (warningsFile.is_open()) {
-				std::string line;
-				while (std::getline(warningsFile, line)) {
-					if (!line.empty()) {
-						LOG(LogType::LOG_C_SHARP_WARNING, "C# Warning: %s", line.c_str());
-					}
-				}
-				warningsFile.close();
-			}
-		}
-		catch (...) {
-			LOG(LogType::LOG_ERROR, "Error al leer las advertencias de compilación");
-		}
+		DisplayCompilationOutput();
 
 		bool hasErrors = false;
 		try {
 			std::ifstream errorsFile(m_ScriptFolder + "\\build_errors.txt");
-			if (errorsFile.is_open()) {
-				std::string line;
-				while (std::getline(errorsFile, line)) {
-					if (!line.empty()) {
-						LOG(LogType::LOG_ERROR, "C# Error: %s", line.c_str());
-						hasErrors = true;
-					}
-				}
+			if (errorsFile.is_open() && errorsFile.peek() != std::ifstream::traits_type::eof()) {
+				hasErrors = true;
 				errorsFile.close();
 			}
 		}
 		catch (...) {
-			LOG(LogType::LOG_ERROR, "Error al leer los errores de compilación");
+			LOG(LogType::LOG_ERROR, "Error checking for compilation errors");
 		}
 
 		if (buildResult != 0 || hasErrors) {
-			LOG(LogType::LOG_ERROR, "Error al compilar proyecto. Código: %d. Corrige los errores antes de continuar.", buildResult);
+			LOG(LogType::LOG_ERROR, "Error compiling the project. Code: %d. Fix it or contact Hawk Developers.", buildResult);
 			return false;
 		}
 
 		std::string assemblyPath = FindGeneratedAssembly();
 		if (assemblyPath.empty()) {
-			LOG(LogType::LOG_ERROR, "No se encontró el assembly generado después de la compilación");
+			LOG(LogType::LOG_ERROR, "Assembly not found");
 			return false;
 		}
-
-		LOG(LogType::LOG_INFO, "Proyecto compilado exitosamente. Assembly: %s", assemblyPath.c_str());
 
 		m_LastCompilationTime = std::filesystem::last_write_time(assemblyPath);
 		RefreshScriptTimestamps();
@@ -294,7 +279,7 @@ private:
 				callback(assemblyPath);
 			}
 			catch (const std::exception& e) {
-				LOG(LogType::LOG_ERROR, "Error en callback de recarga: %s", e.what());
+				LOG(LogType::LOG_ERROR, "Reload callback error: %s", e.what());
 			}
 		}
 
@@ -338,6 +323,50 @@ private:
 		}
 
 		return latestDll;
+	}
+
+	void DisplayCompilationOutput() {
+		try {
+			std::ifstream warningsFile(m_ScriptFolder + "\\build_warnings.txt");
+			if (warningsFile.is_open()) {
+				std::string line;
+				std::unordered_set<std::string> uniqueWarnings;
+
+				while (std::getline(warningsFile, line)) {
+					if (!line.empty()) {
+						if (uniqueWarnings.find(line) == uniqueWarnings.end()) {
+							LOG(LogType::LOG_C_SHARP_WARNING, "C# Warning: %s", line.c_str());
+							uniqueWarnings.insert(line);
+						}
+					}
+				}
+				warningsFile.close();
+			}
+		}
+		catch (...) {
+			LOG(LogType::LOG_ERROR, "Error reading compilation warnings");
+		}
+
+		try {
+			std::ifstream errorsFile(m_ScriptFolder + "\\build_errors.txt");
+			if (errorsFile.is_open()) {
+				std::string line;
+				std::unordered_set<std::string> uniqueErrors;
+
+				while (std::getline(errorsFile, line)) {
+					if (!line.empty()) {
+						if (uniqueErrors.find(line) == uniqueErrors.end()) {
+							LOG(LogType::LOG_ERROR, "C# Error: %s", line.c_str());
+							uniqueErrors.insert(line);
+						}
+					}
+				}
+				errorsFile.close();
+			}
+		}
+		catch (...) {
+			LOG(LogType::LOG_ERROR, "Error reading compilation errors");
+		}
 	}
 
 	std::string m_ScriptFolder;

@@ -5,14 +5,15 @@ public class Test1 : MonoBehaviour
 {
     public override void Start()
     {
-        Engineson.print("Test1 Startt");
+        Engineson.print("Test1 Start");
     }
 
     public override void Update(float deltaTime)
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Engineson.Destroy(gameObject);
+            Engineson.print("C key is pressed");
+            Engineson.print("Position");
         }
     }
 }

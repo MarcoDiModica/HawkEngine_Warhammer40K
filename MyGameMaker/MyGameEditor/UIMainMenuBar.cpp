@@ -9,6 +9,7 @@
 #include "Input.h"
 #include "MyGameEngine/Image.h"
 #include "Log.h"
+#include "../MyScriptingEngine/MonoManager.h"
 
 void SetRedStyle();
 
@@ -76,6 +77,21 @@ bool UIMainMenuBar::Draw()
 
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Scripting"))
+		{
+			if (ImGui::MenuItem("Compile Scripts")) { MonoManager::GetInstance().ForceRecompileScripts(); }
+			if (!MonoManager::GetInstance().IsHotReloadingEnabled())
+			{
+				if (ImGui::MenuItem("Enable Hot Reloading")) { MonoManager::GetInstance().EnableHotReloading(); }
+			}
+			else
+			{
+				if (ImGui::MenuItem("Disable Hot Reloading")) { MonoManager::GetInstance().DisableHotReloading(); }
+			}
+
+			ImGui::EndMenu();
+		}
+
 		//---------Play and Stop Button----------//
 		if (Application->play == false) {
 			Application->gui->SetColorScheme();

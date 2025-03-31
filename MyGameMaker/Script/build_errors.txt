@@ -1,2 +1,0 @@
-M:\HawkEngine\HawkEngine_Warhammer40K\MyGameMaker\Script\Test1.cs(15,42): error CS1002: ; expected [M:\HawkEngine\HawkEngine_Warhammer40K\MyGameMaker\Script\C#Assembly.csproj]
-M:\HawkEngine\HawkEngine_Warhammer40K\MyGameMaker\Script\Test1.cs(15,42): error CS1002: ; expected [M:\HawkEngine\HawkEngine_Warhammer40K\MyGameMaker\Script\C#Assembly.csproj]

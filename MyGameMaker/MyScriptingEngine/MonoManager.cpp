@@ -97,8 +97,6 @@ void MonoManager::CreateScriptDomain() {
 	mono_add_internal_call("HawkEngine.Engineson::print", (const void*)HandleConsoleOutput);
 
 	LoadUserClasses();
-
-	LOG(LogType::LOG_INFO, "Script domain initialized successfully");
 }
 
 void MonoManager::LoadUserClasses() {
@@ -126,8 +124,6 @@ void MonoManager::LoadUserClasses() {
 			}
 		}
 	}
-
-	LOG(LogType::LOG_INFO, "Loaded %d user classes", user_classes.size());
 }
 
 void MonoManager::Shutdown() {
@@ -146,8 +142,6 @@ void MonoManager::UnloadScriptDomain() {
 		return;
 	}
 
-	LOG(LogType::LOG_INFO, "Unloading script domain...");
-
 	user_classes.clear();
 	image = nullptr;
 	assembly = nullptr;
@@ -159,8 +153,6 @@ void MonoManager::UnloadScriptDomain() {
 	mono_domain_unload(scriptDomain);
 	scriptDomain = nullptr;
 	domain = nullptr;
-
-	LOG(LogType::LOG_INFO, "Script domain unloaded successfully");
 }
 
 MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::string& className) const {
@@ -172,8 +164,6 @@ MonoClass* MonoManager::GetClass(const std::string& namespaceName, const std::st
 }
 
 void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
-	LOG(LogType::LOG_INFO, "Reloading assembly: %s", newAssemblyPath.c_str());
-
 	assemblyPath = newAssemblyPath;
 
 	UnloadScriptDomain();
@@ -181,8 +171,6 @@ void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
 	CreateScriptDomain();
 
 	NotifyScriptComponentsToRefresh();
-
-	LOG(LogType::LOG_INFO, "Assembly reloaded successfully");
 }
 
 void MonoManager::RefreshScriptComponentsRecursive(std::shared_ptr<GameObject> gameObject)
@@ -208,14 +196,10 @@ void MonoManager::NotifyScriptComponentsToRefresh() {
 	for (auto& go : Application->root->GetActiveScene()->children()) {
 		RefreshScriptComponentsRecursive(go);
 	}
-
-	LOG(LogType::LOG_INFO, "Script components notified to refresh");
 }
 
 void MonoManager::EnableHotReloading() {
 	if (!hotReloadEnabled) {
-		LOG(LogType::LOG_INFO, "Activando hot-reloading de scripts...");
-
 		std::string scriptFolder = getExecutablePath() + "\\..\\..\\Script";
 		std::string outputAssemblyDir = getExecutablePath() + "\\..\\..\\Script\\obj";
 
@@ -227,7 +211,6 @@ void MonoManager::EnableHotReloading() {
 			});
 
 		hotReloadEnabled = true;
-		LOG(LogType::LOG_INFO, "Hot-reloading de scripts activado exitosamente");
 	}
 }
 
@@ -236,8 +219,6 @@ void MonoManager::DisableHotReloading() {
 }
 
 void MonoManager::OnScriptsRecompiled(const std::string& newAssemblyPath) {
-	LOG(LogType::LOG_INFO, "Scripts recompilados, recargando assembly: %s", newAssemblyPath.c_str());
-
 	if (!std::filesystem::exists(newAssemblyPath)) {
 		LOG(LogType::LOG_ERROR, "El archivo del assembly no existe: %s", newAssemblyPath.c_str());
 		return;

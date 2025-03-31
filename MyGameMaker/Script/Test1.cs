@@ -12,7 +12,7 @@ public class Test1 : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Engineson.print("C key is pressed");
+            Engineson.print("C key ss pressed");
             Engineson.print("Position");
         }
     }

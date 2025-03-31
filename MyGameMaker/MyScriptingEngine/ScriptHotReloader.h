@@ -123,6 +123,16 @@ public:
 		CheckForChanges();
 	}
 
+	void TryDeleteFile(const std::string& filePath) {
+		try {
+			if (std::filesystem::exists(filePath)) {
+				std::filesystem::remove(filePath);
+			}
+		}
+		catch (...) {
+		}
+	}
+
 	bool ForceRecompile() {
 		if (m_IsCompiling || m_CompilationCooldown) {
 			LOG(LogType::LOG_INFO, "Compilation already in progress or cooling down. Please wait.");
@@ -133,8 +143,6 @@ public:
 		m_IsCompiling = true;
 
 		bool result = CompileExistingProject();
-
-		DisplayCompilationOutput();
 
 		m_CompilationCooldown = true;
 		m_LastCompilationSuccess = result;
@@ -204,6 +212,10 @@ private:
 			LOG(LogType::LOG_ERROR, "Can't find dotnet.exe pls download .NET Framework in Visual Installer or contact Hawk Developers :0");
 			return false;
 		}
+
+		TryDeleteFile(m_ScriptFolder + "\\build_output.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_result.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
 
 		std::string batchFile = m_ScriptFolder + "\\build.bat";
 		std::ofstream batch(batchFile);
@@ -325,6 +337,36 @@ private:
 		return latestDll;
 	}
 
+	std::string CleanCompilerMessage(const std::string& message) {
+		size_t lastSlash = message.find_last_of("\\/", message.find('('));
+		if (lastSlash == std::string::npos) return message;
+
+		size_t filenameStart = lastSlash + 1;
+		size_t filenameEnd = message.find('(', filenameStart);
+		if (filenameEnd == std::string::npos) return message;
+
+		std::string filename = message.substr(filenameStart, filenameEnd - filenameStart);
+
+		size_t lineInfoStart = filenameEnd;
+		size_t lineInfoEnd = message.find(')', lineInfoStart);
+		if (lineInfoEnd == std::string::npos) return message;
+
+		std::string lineInfo = message.substr(lineInfoStart, lineInfoEnd - lineInfoStart + 1);
+
+		size_t messageStart = lineInfoEnd + 2; 
+		size_t projectBracketStart = message.find(" [", messageStart);
+
+		std::string errorMessage;
+		if (projectBracketStart != std::string::npos) {
+			errorMessage = message.substr(messageStart, projectBracketStart - messageStart);
+		}
+		else {
+			errorMessage = message.substr(messageStart);
+		}
+
+		return filename + lineInfo + ": " + errorMessage;
+	}
+
 	void DisplayCompilationOutput() {
 		try {
 			std::ifstream warningsFile(m_ScriptFolder + "\\build_warnings.txt");
@@ -332,14 +374,22 @@ private:
 				std::string line;
 				std::unordered_set<std::string> uniqueWarnings;
 
+				bool hasWarnings = false;
 				while (std::getline(warningsFile, line)) {
 					if (!line.empty()) {
-						if (uniqueWarnings.find(line) == uniqueWarnings.end()) {
-							LOG(LogType::LOG_C_SHARP_WARNING, "C# Warning: %s", line.c_str());
-							uniqueWarnings.insert(line);
+						hasWarnings = true;
+						std::string cleanedWarning = CleanCompilerMessage(line);
+						if (uniqueWarnings.find(cleanedWarning) == uniqueWarnings.end()) {
+							LOG(LogType::LOG_C_SHARP_WARNING, "C# Warning: %s", cleanedWarning.c_str());
+							uniqueWarnings.insert(cleanedWarning);
 						}
 					}
 				}
+
+				if (hasWarnings) {
+					LOG(LogType::LOG_C_SHARP_WARNING, "--- End of warnings ---");
+				}
+
 				warningsFile.close();
 			}
 		}
@@ -353,14 +403,22 @@ private:
 				std::string line;
 				std::unordered_set<std::string> uniqueErrors;
 
+				bool hasErrors = false;
 				while (std::getline(errorsFile, line)) {
 					if (!line.empty()) {
-						if (uniqueErrors.find(line) == uniqueErrors.end()) {
-							LOG(LogType::LOG_ERROR, "C# Error: %s", line.c_str());
-							uniqueErrors.insert(line);
+						hasErrors = true;
+						std::string cleanedError = CleanCompilerMessage(line);
+						if (uniqueErrors.find(cleanedError) == uniqueErrors.end()) {
+							LOG(LogType::LOG_ERROR, "C# Error: %s", cleanedError.c_str());
+							uniqueErrors.insert(cleanedError);
 						}
 					}
 				}
+
+				if (hasErrors) {
+					LOG(LogType::LOG_ERROR, "--- End of errors ---");
+				}
+
 				errorsFile.close();
 			}
 		}

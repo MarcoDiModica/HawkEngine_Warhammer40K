@@ -22,7 +22,6 @@ UIConsole::~UIConsole()
 bool UIConsole::Draw()
 {
 	ImGuiWindowFlags consoleFlags = ImGuiWindowFlags_None;
-
 	if (firstDraw)
 	{
 		ImGui::SetNextWindowSize(ImVec2(500, 350), ImGuiCond_FirstUseEver);
@@ -35,7 +34,6 @@ bool UIConsole::Draw()
 		{
 			Application->CleanLogs();
 		}
-
 		ImGui::SameLine();
 		ImGui::Checkbox("Auto-scroll", &autoScroll);
 
@@ -50,7 +48,6 @@ bool UIConsole::Draw()
 
 		ImGui::Separator();
 
-		// Filter input
 		static char filterBuffer[128] = "";
 		ImGui::Text("Filter:");
 		ImGui::SameLine();
@@ -61,15 +58,22 @@ bool UIConsole::Draw()
 		ImGui::Separator();
 
 		// Log content
-		ImGui::BeginChild("ScrollingArea", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar);
+		const float PADDING = 8.0f; 
+		const float MARGIN = 4.0f;  
+		const float ROUNDING = 5.0f;
+
+		ImGui::BeginChild("ScrollingArea", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 
 		const auto& logs = Application->GetLogs();
 		std::string filterText = filterBuffer;
+		float contentWidth = ImGui::GetContentRegionAvail().x - MARGIN * 2;
+		ImDrawList* drawList = ImGui::GetWindowDrawList();
 
-		for (const auto& log : logs)
+		for (int i = 0; i < logs.size(); i++)
 		{
-			bool shouldShow = false;
+			const auto& log = logs[i];
 
+			bool shouldShow = false;
 			switch (log.type)
 			{
 			case LogType::LOG_INFO:
@@ -99,47 +103,129 @@ bool UIConsole::Draw()
 			if (!shouldShow)
 				continue;
 
-			std::string logType;
-
+			ImVec4 bgColor;
+			ImVec4 typeColor;
+			const char* typeText = "";
 			switch (log.type)
 			{
 			case LogType::LOG_INFO:
-				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.2f, 1.0f), "[INFO]");
+				bgColor = ImVec4(0.05f, 0.2f, 0.05f, 0.6f);
+				typeColor = ImVec4(0.0f, 1.0f, 0.2f, 1.0f);
+				typeText = "[INFO]";
 				break;
 			case LogType::LOG_WARNING:
-				ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "[WARNING]");
+				bgColor = ImVec4(0.3f, 0.25f, 0.05f, 0.6f);
+				typeColor = ImVec4(1.0f, 1.0f, 0.0f, 1.0f);
+				typeText = "[WARNING]";
 				break;
 			case LogType::LOG_ASSIMP:
-				ImGui::TextColored(ImVec4(0.0f, 1.0f, 1.0f, 1.0f), "[ASSIMP]");
+				bgColor = ImVec4(0.05f, 0.2f, 0.2f, 0.6f);
+				typeColor = ImVec4(0.0f, 1.0f, 1.0f, 1.0f);
+				typeText = "[ASSIMP]";
 				break;
 			case LogType::LOG_ERROR:
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "[ERROR]");
+				bgColor = ImVec4(0.3f, 0.05f, 0.05f, 0.6f);
+				typeColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
+				typeText = "[ERROR]";
 				break;
 			case LogType::LOG_OK:
-				ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "[OK]");
+				bgColor = ImVec4(0.05f, 0.2f, 0.05f, 0.6f);
+				typeColor = ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
+				typeText = "[OK]";
 				break;
 			case LogType::LOG_C_SHARP:
-				ImGui::TextColored(ImVec4(0.0f, 149.0f / 255.0f, 110.0f / 255.0f, 1.0f), "[C#]");
+				bgColor = ImVec4(0.05f, 0.15f, 0.15f, 0.6f);
+				typeColor = ImVec4(0.0f, 149.0f / 255.0f, 110.0f / 255.0f, 1.0f);
+				typeText = "[C#]";
 				break;
 			case LogType::LOG_C_SHARP_WARNING:
-				ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "[C# WARNING]");
+				bgColor = ImVec4(0.3f, 0.25f, 0.05f, 0.6f);
+				typeColor = ImVec4(1.0f, 1.0f, 0.0f, 1.0f);
+				typeText = "[C# WARNING]";
 				break;
 			case LogType::LOG_C_SHARP_ERROR:
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "[C# ERROR]");
+				bgColor = ImVec4(0.3f, 0.05f, 0.05f, 0.6f);
+				typeColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
+				typeText = "[C# ERROR]";
 				break;
 			}
 
+			ImGui::PushID(i);
+
+			ImGui::Dummy(ImVec2(0, MARGIN));
+
+			float typeTextWidth = ImGui::CalcTextSize(typeText).x;
+			float availableWidth = contentWidth - typeTextWidth - PADDING * 2 - ImGui::GetStyle().ItemSpacing.x;
+
+			ImVec2 textSize = ImGui::CalcTextSize(log.message.c_str(), nullptr, false, availableWidth);
+
+			float textHeight = textSize.y;
+
+			float containerHeight = textHeight + PADDING * 2;
+
+			ImVec2 containerStart = ImVec2(
+				ImGui::GetCursorScreenPos().x + MARGIN,
+				ImGui::GetCursorScreenPos().y
+			);
+
+			ImVec2 containerEnd = ImVec2(
+				containerStart.x + contentWidth,
+				containerStart.y + containerHeight
+			);
+
+			drawList->AddRectFilled(
+				containerStart,
+				containerEnd,
+				ImGui::ColorConvertFloat4ToU32(bgColor),
+				ROUNDING
+			);
+
+			drawList->AddRect(
+				containerStart,
+				containerEnd,
+				ImGui::ColorConvertFloat4ToU32(ImVec4(0.3f, 0.3f, 0.3f, 0.7f)),
+				ROUNDING,
+				0,
+				1.0f
+			);
+
+			ImGui::SetCursorScreenPos(ImVec2(containerStart.x + PADDING, containerStart.y + PADDING));
+
+			ImGui::TextColored(typeColor, "%s", typeText);
+
 			ImGui::SameLine();
-			ImGui::TextWrapped("%s", log.message.c_str());
+			ImGui::PushTextWrapPos(ImGui::GetCursorPosX() + availableWidth);
+			ImGui::Text("%s", log.message.c_str());
+			ImGui::PopTextWrapPos();
 
 			if (log.repeatCount > 1)
 			{
 				ImGui::SameLine();
-				ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), " (%d)", log.repeatCount);
+				ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "(x%d)", log.repeatCount);
 			}
+
+			if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(1))
+			{
+				ImGui::OpenPopup("LogContextMenu");
+			}
+
+			if (ImGui::BeginPopup("LogContextMenu"))
+			{
+				if (ImGui::MenuItem("Copy Message"))
+				{
+					ImGui::SetClipboardText(log.message.c_str());
+				}
+				ImGui::EndPopup();
+			}
+
+			ImGui::SetCursorScreenPos(ImVec2(ImGui::GetCursorScreenPos().x, containerEnd.y));
+
+			ImGui::PopID();
 		}
 
-		if (autoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY() - 10)
+		ImGui::Dummy(ImVec2(0, MARGIN));
+
+		if (autoScroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY() - 20)
 			ImGui::SetScrollHereY(1.0f);
 
 		ImGui::EndChild();

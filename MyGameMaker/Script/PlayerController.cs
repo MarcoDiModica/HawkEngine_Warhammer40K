@@ -128,6 +128,4 @@ public class PlayerController : MonoBehaviour
             playerDash.InitiateDash(moveDirection);
         }
     }
-
-    
 }

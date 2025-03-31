@@ -93,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
 
     override public void OnCollisionStay(Collider other)
     {
-        Engineson.print("Player Collision Stay: ");
+        //Engineson.print("Player Collision Stay: ");
     }
 
     override public void OnCollisionExit(Collider other)

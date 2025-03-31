@@ -7,8 +7,8 @@ public class EnemyControllerMelee : EnemyController
 {
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(2.0f, 2.0f, 2.0f); // Tamaño de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(4.0f, 2.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tamaño de la hurtbox
+    private Vector3 hurtboxOffset = new Vector3(5.0f, 2.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
@@ -59,17 +59,23 @@ public class EnemyControllerMelee : EnemyController
             if (IsPlayerInHurtbox(playerPos))
             {
                 hurtboxTimer += deltaTime;
+                if (dodgewindow)
+                {
+                    dodgeTimer += deltaTime;
+                }
                 if (hurtboxTimer >= hurtboxActivationTime)
                 {
-                    CreateHurtbox();
+                    Engineson.print("Readying attack");
+                    //CreateHurtbox();
                     hurtboxTimer = 0f;
+                    dodgeTimer = 0f;
                     dodgewindow = true;
                 }
-                else if (hurtboxTimer >= 0.5f && dodgewindow) 
+                if (dodgeTimer >= 0.5f && dodgewindow) 
                 {
                     Attack();
                     soundAttack?.Play();
-                    DestroyHurtbox();
+                    //DestroyHurtbox();
                     hurtboxTimer = 0f;
                     dodgeTimer = 0f;
                     dodgewindow = false;
@@ -77,6 +83,7 @@ public class EnemyControllerMelee : EnemyController
             }
             else
             {
+                Engineson.print("Player not in hurtbox");
                 hurtboxTimer = 0f;
             }
             if (dodgewindow)
@@ -140,10 +147,16 @@ public class EnemyControllerMelee : EnemyController
     {
         Vector3 hurtboxCenter = enemyTransform.position + enemyTransform.forward * hurtboxOffset;
         Vector3 halfSize = hurtboxSize * 0.5f;
+        //Engineson.print("Player in hurtbox");
 
         return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
                (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
+    }
+
+    override public void OnCollisionEnter(Collider other)
+    {
+        Engineson.print("Player hit!");
     }
 
     private void CreateHurtbox()

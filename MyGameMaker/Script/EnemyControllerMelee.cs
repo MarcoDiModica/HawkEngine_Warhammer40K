@@ -8,7 +8,7 @@ public class EnemyControllerMelee : EnemyController
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
     private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tama�o de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(5.0f, 2.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxOffset = new Vector3(4.0f, 2.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
@@ -168,7 +168,7 @@ public class EnemyControllerMelee : EnemyController
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
     }
 
-    override public void OnCollisionEnter(Collider other)
+    override public void OnCollisionEnter(GameObject other)
     {
         Engineson.print("Player hit!");
     }

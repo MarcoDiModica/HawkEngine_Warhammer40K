@@ -15,14 +15,7 @@ public class EnemyControllerRanged : EnemyController
     private float health = 100.0f;
     private float damage = 20.0f;
 
-    private class ProjectileInfo
-    {
-        public GameObject gameObject;
-        public Transform transform;
-        public float lifetime;
-        public Vector3 direction;
-        public bool markedForDestruction;
-    }
+
 
     public override void Awake()
     {

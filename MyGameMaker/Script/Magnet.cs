@@ -30,7 +30,7 @@ public class Magnet : PickUp
         PowerUpMovment(elapsedTime, deltaTime);
         if(elapsedTime >= lifeTime)
         {
-            Destroy();
+           // Destroy();
         }
     }
     public void Destroy()

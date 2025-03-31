@@ -28,7 +28,9 @@ namespace ParticlePresets {
 		EmitterShape::CONE,            // Shape
 		0.2f,                          // Cone base radius
 		1.0f,                          // Cone height
-		20.0f                          // Cone angle in degrees
+		20.0f,                          // Cone angle in degrees
+		glm::vec2(1.0f, 1.0f),         // Sprite size
+		false						  // Use animation
 	};
 
 	const ParticlePreset Fire = {
@@ -52,7 +54,10 @@ namespace ParticlePresets {
 		EmitterShape::CONE,            // Shape
 		0.3f,                          // Cone base radius
 		1.0f,                          // Cone height
-		30.0f                          // Cone angle in degrees
+		30.0f,                          // Cone angle in degrees
+		glm::vec2(1.0f, 1.0f),         // Sprite size
+		false						  // Use animation
+
 	};
 
 	const ParticlePreset MuzzleFlash = {
@@ -76,7 +81,9 @@ namespace ParticlePresets {
 		EmitterShape::CONE,            // Shape
 		0.05f,                         // Cone base radius
 		0.2f,                          // Cone height
-		20.0f                          // Cone angle in degrees
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(1.0f, 1.0f),         // Sprite size
+		false						  // Use animation
 	};
 
 	const ParticlePreset Dust = {
@@ -100,7 +107,9 @@ namespace ParticlePresets {
 		EmitterShape::CIRCLE,          // Shape
 		0.5f,                          // Circle radius
 		0.0f,                          // Unused
-		0.0f                           // Unused
+		0.0f,                          // Unused
+		glm::vec2(1.0f, 1.0f),         // Sprite size
+		false						  // Use animation
 	};
 
 	const ParticlePreset Explosion = {
@@ -124,7 +133,9 @@ namespace ParticlePresets {
 		EmitterShape::SPHERE,          // Shape
 		1.0f,                          // Sphere radius
 		0.0f,                          // Unused
-		0.0f                           // Unused
+		0.0f,                           // Unused
+		glm::vec2(1.0f, 1.0f),         // Sprite size
+		false						  // Use animation
 	};
 
 }
@@ -375,6 +386,13 @@ void ParticleFX::EmitParticle() {
 	particle.rotation = dist01(rng) * 360.0f;
 
 	particle.gravity = gravity;
+
+	particle.sheetSize = glm::vec2(material->imagePtr->width(),material->imagePtr->height());
+	
+	particle.spriteSize = spriteSize;
+	
+	particle.useAnimation = true;
+
 
 	renderer->AddParticle(particle);
 }

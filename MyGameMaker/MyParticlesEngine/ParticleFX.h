@@ -42,6 +42,8 @@ struct ParticlePreset {
 	float shapeParam1;  // Radius for sphere/cone/circle, width for box
 	float shapeParam2;  // Height for cone/box
 	float shapeParam3;  // Depth for box, angle for cone
+	glm::vec2 spriteSize;
+	bool useAnimation;
 };
 
 namespace ParticlePresets {
@@ -179,6 +181,10 @@ private:
 	glm::vec3 position;
 	glm::quat rotation;
 	glm::vec3 scale;
+
+	// Spritesheet data
+	glm::vec2 spriteSize = glm::vec2(133,175);
+	bool useAnimation;
 
 protected:
 	friend class SceneSerializer;

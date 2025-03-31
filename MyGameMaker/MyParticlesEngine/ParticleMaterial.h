@@ -20,7 +20,10 @@ public:
         useColorGradient = false;
 		startColor = glm::vec4(1.0f);
 		endColor = glm::vec4(1.0f);
-                
+		spriteSize = glm::vec2(1.0f);
+		sheetSize = glm::vec2(1.0f);
+		useAnimation = false;
+		spriteIndex = 0;
     }
 
     ~ParticleMaterial() override = default;
@@ -53,6 +56,10 @@ public:
 		shader->SetUniform("startColor", startColor);
 		shader->SetUniform("endColor", endColor);
 
+        //shader->SetUniform("spriteIndex",spriteIndex);
+		//shader->SetUniform("spriteSize",spriteSize );
+		//shader->SetUniform("sheetSize",sheetSize );
+		//shader->SetUniform("useAnimation",useAnimation );
 
         glm::vec3 cameraPosition(0.0f);
         glm::vec3 cameraUp(0.0f, 1.0f, 0.0f);
@@ -105,4 +112,8 @@ private:
     std::shared_ptr<Image> colorGradientMap = nullptr; 
 	glm::vec4 startColor;
 	glm::vec4 endColor;
+	glm::vec2 spriteSize;
+	glm::vec2 sheetSize;
+	bool useAnimation;
+	int spriteIndex;
 };

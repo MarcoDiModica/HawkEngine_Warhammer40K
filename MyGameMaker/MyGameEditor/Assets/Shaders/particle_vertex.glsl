@@ -10,6 +10,10 @@ layout(location = 5) in float aRotation;  // Instance rotation in radians
 layout(location = 6) in float aLifetime;  // Current lifetime fraction (0-1)
 layout(location = 7) in vec4 endColor;    // End color for gradient
 layout(location = 8) in vec2 aEndSize;    // End size (x, y) for gradient
+layout(location = 9) in int spriteIndex;  // Index of the sprite in the spritesheet
+layout(location = 10) in vec2 spriteSize; // Size of each sprite in the spritesheet (normalized)
+layout(location = 11) in vec2 sheetSize;  // Dimensions of the spritesheet (columns, rows)
+
 
 // Outputs to fragment shader
 out vec2 TexCoord;
@@ -88,8 +92,13 @@ void main() {
     vec4 worldPos = billboardMatrix * vec4(rotatedPos.x, rotatedPos.y, 0.0, 1.0);
     gl_Position = projection * view * worldPos;
     
-    // Pass values to fragment shader
+    //spriteSize = new vec21(,)
+    //int column = 1 % int(534);  // Column of the sprite
+    //int row = 1 / int(175);     // Row of the sprite
+    //vec2 spriteOffset = vec2(column, row) * spriteSize;
+    //TexCoord = aTexCoord * spriteSize + spriteOffset;
     TexCoord = aTexCoord;
+    // Pass values to fragment shader
     ParticleColor = aColor;
     Lifetime = aLifetime;
     EndColor = endColor;  

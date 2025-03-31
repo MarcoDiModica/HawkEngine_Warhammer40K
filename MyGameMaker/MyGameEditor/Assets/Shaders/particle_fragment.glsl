@@ -55,7 +55,14 @@ vec4 applyMuzzleFlash() {
 
 void main() {
     // Primero obtener el color de la textura
-    vec4 texColor = texture(particleTexture, TexCoord);
+
+    vec2 uv_min = vec2(0,0) /  vec2(534,175);
+    vec2 uv_max = (vec2(0,0) + vec2(133,175)) / vec2(534,175);
+
+    // Remap texture coordinates to the sub-region
+    vec2 croppedTexCoords = uv_min + TexCoord * (uv_max - uv_min);
+
+    vec4 texColor = texture(particleTexture, croppedTexCoords);
     
     // Si la textura es completamente transparente, descartarla inmediatamente
     if (texColor.a < 0.01) {

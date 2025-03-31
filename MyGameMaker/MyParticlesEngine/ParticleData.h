@@ -19,6 +19,11 @@ struct ParticleData {
 	glm::vec3 endVelocity;
 	float age;
 	bool active;
+	int animIndex;
+	glm::vec2 spriteSize;
+	glm::vec2 sheetSize;
+	bool useAnimation;
+
 
 	ParticleData()
 		: playOnAwake(false)
@@ -36,6 +41,10 @@ struct ParticleData {
 		, gravity(0.0f, 0.0f, 0.0f)
 		, age(0.0f)
 		, active(false)
+		, animIndex(1.0f)
+		, spriteSize(1.0f, 1.0f)
+		, sheetSize(1.0f, 1.0f)
+		, useAnimation(false)
 	{}
 };
 
@@ -117,6 +126,21 @@ public:
 		glVertexAttribPointer(8, 2, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, endSize));
 		glVertexAttribDivisor(8, 1);
 
+		glEnableVertexAttribArray(9);
+		glVertexAttribPointer(9, 1, GL_INT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, animIndex));
+		glVertexAttribDivisor(9, 1);
+
+		glEnableVertexAttribArray(10);
+		glVertexAttribPointer(10, 2, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, spriteSize));
+		glVertexAttribDivisor(10, 1);
+
+		glEnableVertexAttribArray(11);
+		glVertexAttribPointer(11, 2, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, sheetSize));
+		glVertexAttribDivisor(11, 1);
+
+		glEnableVertexAttribArray(12);
+		glVertexAttribPointer(12, 1, GL_INT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, useAnimation));
+		glVertexAttribDivisor(12, 1);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
@@ -138,6 +162,8 @@ public:
 			return -1;
 		}
 
+		
+
 		particleData[index] = particle;
 		particleData[index].active = true;
 		//particleData[index].velocity += new glm::vec3(gravity,gravity,gravity);
@@ -158,6 +184,12 @@ public:
 			particleData[index].active = false;
 			activeParticles--;
 		}
+	}
+
+	int CalculateMaxIndex(const glm::vec2& sheetSize, const glm::vec2& spriteSize) {
+		int columns = static_cast<int>(sheetSize.x / spriteSize.x);
+		int rows = static_cast<int>(sheetSize.y / spriteSize.y);
+		return columns * rows - 1; // Restamos 1 porque los índices empiezan en 0
 	}
 
 	void UpdateAndRender(float deltaTime) {
@@ -187,6 +219,14 @@ public:
 			{
 				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
 			}
+			
+			if (particleData[i].animIndex > CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize)) {
+				particleData[i].animIndex = 0;
+			}
+			else 
+			{
+				particleData[i].animIndex++;
+			}
 
 			InstanceData instance;
 			instance.playOnAwake = particleData[i].playOnAwake;
@@ -200,6 +240,10 @@ public:
 			instance.rotation = particleData[i].rotation;
 			instance.endSpeed = particleData[i].endVelocity;
 			instance.lifetime = lifetimeFraction;
+			instance.animIndex = particleData[i].animIndex;
+			instance.spriteSize = particleData[i].spriteSize;
+			instance.sheetSize = particleData[i].sheetSize;
+			instance.useAnimation = particleData[i].useAnimation;
 
 			instances.push_back(instance);
 		}
@@ -248,6 +292,10 @@ private:
 		glm::vec3 endSpeed;
 		float rotation;
 		float lifetime;
+		int animIndex;
+		glm::vec2 spriteSize;
+		glm::vec2 sheetSize;
+		bool useAnimation;
 	};
 
 	GLuint vao, vbo, ebo, instanceVBO;

@@ -50,6 +50,7 @@ public:
 
 	static TweenHandle TweenValue(float* value, float start, float target, float duration, Modes mode = Modes::LINEAR);
 	static TweenHandle TweenColor(glm::vec4* color, const glm::vec4& startColor, const glm::vec4& targetColor, float duration, Modes mode = Modes::LINEAR);
+	static TweenHandle TweenVec3(glm::vec3* vec, const glm::vec3& start, const glm::vec3& target, float duration, Modes mode = Modes::LINEAR);
 
 	static void Cancel(TweenHandle handle);
 	static void CancelAll(GameObject* object);
@@ -62,6 +63,7 @@ public:
 	static glm::dvec3 CalculateScale(const glm::dvec3& startScale, const glm::dvec3& targetScale, float t, Modes mode);
 	static float CalculateFloat(float start, float target, float t, Modes mode);
 	static glm::vec4 CalculateColor(const glm::vec4& startColor, const glm::vec4& targetColor, float t, Modes mode);
+	static glm::vec3 CalculateVec3(const glm::vec3& start, const glm::vec3& target, float t, Modes mode);
 
 	/*class Sequence {
 	public:
@@ -126,7 +128,8 @@ private:
 		UISCALE_Y,
 		UISCALE_Z,
 		FLOAT_VALUE,
-		COLOR
+		COLOR,
+		VEC3
 	};
 
 	struct Tween
@@ -149,6 +152,10 @@ private:
 		glm::vec4* colorPtr = nullptr;
 		glm::vec4 startColor;
 		glm::vec4 targetColor;
+
+		glm::vec3* vec3Ptr = nullptr;
+		glm::vec3 startVec3;
+		glm::vec3 targetVec3;
 
 		Modes mode;
 		float duration;

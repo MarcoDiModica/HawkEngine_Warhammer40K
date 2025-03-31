@@ -179,6 +179,7 @@ namespace EngineBinds {
 	void DOScaleYUI(MonoObject* uiTransformRef, float targetY, float duration, Modes mode);
 	void DOScaleZUI(MonoObject* uiTransformRef, float targetZ, float duration, Modes mode);
     void DOColor(glm::vec4* color, const glm::vec4 startColor, const glm::vec4 targetColor, float duration, Modes mode);
+	void DOVec3(glm::vec3* vec, const glm::vec3 start, const glm::vec3 target, float duration, Modes mode);
     void DOValue(float* value, float start, float target, float duration, Modes mode);
 
     //SceneManagement

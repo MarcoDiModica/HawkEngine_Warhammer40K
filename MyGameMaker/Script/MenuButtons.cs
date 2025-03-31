@@ -32,11 +32,11 @@ public class MenuButtons : MonoBehaviour
     {
         if (newGameButton.GetState() == ButtonState.CLICKED)
         {
-           SceneManager.LoadScene("Level2");
+            SceneManager.LoadScene("Level2");
             //sound?.LoadAudio(buttonClicked);
             //sound?.Play();
         }
-        
+  
         if (continueButton.GetState() == ButtonState.CLICKED)
         {
             //sound?.LoadAudio(buttonClicked);

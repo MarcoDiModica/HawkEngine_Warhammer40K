@@ -1062,6 +1062,11 @@ void EngineBinds::DOValue(float* value, float start, float target, float duratio
 {
     Tweening::TweenValue(value, start, target, duration, mode);
 }
+
+void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, float duration, Modes mode)
+{
+	Tweening::TweenVec3(value, start, target, duration, mode);
+}
     
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
@@ -1220,16 +1225,17 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.Transform::DOScaleX", (const void*)&EngineBinds::DOScaleX);
 	mono_add_internal_call("HawkEngine.Transform::DOScaleY", (const void*)&EngineBinds::DOScaleY);
 	mono_add_internal_call("HawkEngine.Transform::DOScaleZ", (const void*)&EngineBinds::DOScaleZ);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIMove", (const void*)&EngineBinds::DOMoveUI);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIMoveX", (const void*)&EngineBinds::DOMoveXUI);
-    mono_add_internal_call("HawkEngine.UITransform::DOUIMoveY", (const void*)&EngineBinds::DOMoveYUI);
-    mono_add_internal_call("HawkEngine.UITransform::DOUIMoveZ", (const void*)&EngineBinds::DOMoveZUI);
-    mono_add_internal_call("HawkEngine.UITransform::DOUIScale", (const void*)&EngineBinds::DOScaleUI);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIScaleX", (const void*)&EngineBinds::DOScaleXUI);
-    mono_add_internal_call("HawkEngine.UITransform::DOUIScaleY", (const void*)&EngineBinds::DOScaleYUI);
-    mono_add_internal_call("HawkEngine.UITransform::DOUIScaleZ", (const void*)&EngineBinds::DOScaleZUI);
-	mono_add_internal_call("HawkEngine.Tweening::DOColor", (const void*)&EngineBinds::DOColor);
+	mono_add_internal_call("HawkEngine.UITransform::DOMoveUI", (const void*)&EngineBinds::DOMoveUI);
+	mono_add_internal_call("HawkEngine.UITransform::DOMoveXUI", (const void*)&EngineBinds::DOMoveXUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOMoveYUI", (const void*)&EngineBinds::DOMoveYUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOMoveZUI", (const void*)&EngineBinds::DOMoveZUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOScaleUI", (const void*)&EngineBinds::DOScaleUI);
+	mono_add_internal_call("HawkEngine.UITransform::DOScaleXUI", (const void*)&EngineBinds::DOScaleXUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOScaleYUI", (const void*)&EngineBinds::DOScaleYUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOScaleZUI", (const void*)&EngineBinds::DOScaleZUI);
+    mono_add_internal_call("HawkEngine.Tweening::DOVector4", (const void*)&EngineBinds::DOColor);
 	mono_add_internal_call("HawkEngine.Tweening::DOValue", (const void*)&EngineBinds::DOValue);
+	mono_add_internal_call("HawkEngine.Tweening::DOVector3", (const void*)&EngineBinds::DOVec3);
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

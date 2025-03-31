@@ -346,6 +346,23 @@ Tweening::TweenHandle Tweening::TweenColor(glm::vec4* color, const glm::vec4& st
 	return tween.handle;
 }
 
+Tweening::TweenHandle Tweening::TweenVec3(glm::vec3* vec, const glm::vec3& start, const glm::vec3& target, float duration, Modes mode) {
+	Tween tween;
+	tween.vec3Ptr = vec;
+	tween.startVec3 = start;
+	tween.targetVec3 = target;
+	tween.duration = duration;
+	tween.elapsedTime = 0.0f;
+	tween.mode = mode;
+	tween.tweenType = TweenType::VEC3;
+
+	static int nextHandle = 1;
+	tween.handle = nextHandle++;
+
+	tweens.push_back(tween);
+	return tween.handle;
+}
+
 void Tweening::Cancel(TweenHandle handle) {
 	tweens.erase(std::remove_if(tweens.begin(), tweens.end(),
 		[handle](const Tween& tween) { return tween.handle == handle; }),
@@ -420,6 +437,11 @@ glm::vec4 Tweening::CalculateColor(const glm::vec4& startColor, const glm::vec4&
 	return glm::mix(startColor, targetColor, easedT);
 }
 
+glm::vec3 Tweening::CalculateVec3(const glm::vec3& startVec3, const glm::vec3& targetVec3, float t, Modes mode) {
+	float easedT = CalculateT(t, mode);
+	return glm::mix(startVec3, targetVec3, easedT);
+}
+
 void Tweening::Update(float deltaTime) {
 	for (auto& tween : tweens) {
 		tween.elapsedTime += deltaTime;
@@ -463,7 +485,7 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
-		
+
 		case TweenType::UIROTATION:
 		case TweenType::UIROTATION_X:
 		case TweenType::UIROTATION_Y:
@@ -486,7 +508,7 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
-		
+
 		case TweenType::UISCALE:
 		case TweenType::UISCALE_X:
 		case TweenType::UISCALE_Y:
@@ -511,10 +533,16 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
+		case TweenType::VEC3: {
+			if (tween.vec3Ptr) {
+				*tween.vec3Ptr = CalculateVec3(tween.startVec3, tween.targetVec3, t, tween.mode);
+			}
+			break;
 		}
 
 		if (tween.elapsedTime >= tween.duration && tween.onComplete) {
 			tween.onComplete();
+							}
 		}
 	}
 

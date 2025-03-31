@@ -9,31 +9,31 @@ namespace HawkEngine
         //funciones
         [MethodImpl(MethodImplOptions.InternalCall)]
 
-        public extern void DOMove(Vector3 position,float duration, Modes modes);
+        public extern void DOMoveUI(Vector3 position,float duration, Modes modes);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void DOMoveX(float positionX, float duration, Modes modes);
+        public extern void DOMoveXUI(float positionX, float duration, Modes modes);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void DOMoveY(float positionY, float duration, Modes modes);
+        public extern void DOMoveYUI(float positionY, float duration, Modes modes);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void DOMoveZ(float positionZ, float duration, Modes modes);
+        public extern void DOMoveZUI(float positionZ, float duration, Modes modes);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void DOScale(Vector3 scale, float duration, Modes modes);
+        public extern void DOScaleUI(Vector3 scale, float duration, Modes modes);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void DOScaleX(float scaleX, float duration, Modes modes);
+        public extern void DOScaleXUI(float scaleX, float duration, Modes modes);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void DOScaleY(float scaleY, float duration, Modes modes);
+        public extern void DOScaleYUI(float scaleY, float duration, Modes modes);
 
         [MethodImpl (MethodImplOptions.InternalCall)]
-        public extern void DOScaleZ(float scaleZ, float duration, Modes modes);
+        public extern void DOScaleZUI(float scaleZ, float duration, Modes modes);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetUIScale(Vector3 scale);
+        public extern void SetScaleUI(Vector3 scale);
 
         //contructor
         private GameObject owner;

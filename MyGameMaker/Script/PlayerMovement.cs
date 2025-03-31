@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject playerCamera;
     private Transform cameraTransform;
-    private float value = 1.0f;
 
     public override void Start()
     {
@@ -85,13 +84,6 @@ public class PlayerMovement : MonoBehaviour
                 UpdateRotation(moveDirection, deltaTime);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            value = 1.0f;
-            Tweening.DOValue(ref value, 1.0f, 0.0f, 2.0f, Modes.EASE_IN_OUT);
-        }
-        Engineson.print($"Value: " +value);
 
     }
 

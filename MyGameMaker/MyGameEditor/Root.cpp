@@ -129,19 +129,6 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
-	canvas = CreateGameObject("Canvas");
-	canvas->AddComponent<UICanvasComponent>();
-	canvas->AddComponent<UITransformComponent>();
-	canvas->AddComponent<SoundComponent>();
-
-	newGameButton = CreateGameObject("NewGameButton");
-	Application->root->ParentGameObject(*newGameButton, *canvas);
-	newGameButton->AddComponent<UIImageComponent>();
-	newGameButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/New_Game.png");
-	newGameButton->AddComponent<UIButtonComponent>();
-	newGameButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	newGameButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.318, 0), glm::vec3(0.182, 0.091, 1));
-
 	//CreateGameplayUI();
 	CreateMainMenuUI();
 

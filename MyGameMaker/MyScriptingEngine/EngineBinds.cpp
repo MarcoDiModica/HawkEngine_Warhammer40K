@@ -731,6 +731,27 @@ void EngineBinds::EnableContinuousCollision(MonoObject* rigidbodyRef) {
     }
 }
 
+// Raycast
+bool EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance)
+{
+    btVector3 from;
+	from.setValue(origin->x, origin->y, origin->z);
+
+	btVector3 to;
+	to.setValue(direction->x, direction->y, direction->z);
+
+	if (Application->physicsModule->Raycast(from, to, maxDistance))
+	{
+		return true;
+	}
+    else
+    {
+		return false;
+    }
+
+    return false;
+}
+
 
 void EngineBinds::Play(MonoObject* audioRef, bool loop /*= false*/)
 {
@@ -1001,6 +1022,9 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Rigidbody::SetKinematic", (const void*)&EngineBinds::SetKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::IsKinematic", (const void*)&EngineBinds::IsKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::EnableContinuousCollision", (const void*)&EngineBinds::EnableContinuousCollision);
+
+	// Raycast
+	mono_add_internal_call("HawkEngine.RayCast::Raycast", (const void*)&EngineBinds::Raycast);
 
     // Audio
     mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);

@@ -101,11 +101,11 @@ bool Root::Start()
 	itemtest->SetTag("Interactable");
 	
 	auto itemtest2 = CreateCube("item");
-	itemtest2->GetTransform()->SetPosition(glm::vec3(1, 2, 10));
+	itemtest2->GetTransform()->SetPosition(glm::vec3(-20, 2, 10));
 	itemtest2->GetTransform()->SetScale(glm::vec3(2, 2, 2));
 	itemtest2->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	itemtest2->AddComponent<ScriptComponent>()->LoadScript("Item");
-	itemtest2->SetTag("Interactable");
+	itemtest2->AddComponent<ScriptComponent>()->LoadScript("AreaTrigger");
+	itemtest2->SetTag("AreaTrigger");
 
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
@@ -174,6 +174,15 @@ bool Root::Start()
 	interactText->AddComponent<UIButtonComponent>();
 	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	
+	
+	auto areaText = CreateGameObject("dialogueText");
+	Application->root->ParentGameObject(*areaText, *canvas);
+	areaText->AddComponent<UIImageComponent>();
+	areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
+	areaText->AddComponent<UIButtonComponent>();
+	areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 
 	floor->SetActive(false);
 

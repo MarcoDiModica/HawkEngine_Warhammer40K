@@ -11,14 +11,19 @@ public class PlayerInput : MonoBehaviour
     private bool isAbility1Pressed = false;
     private bool isAbility2Pressed = false;
     private bool isInteractPressed = false;
+
+    private bool isMovementBlocked = false;
     public override void Start()
     {
     }
 
     public override void Update(float deltaTime)
     {
-        UpdateMovementDirection();
-        UpdateLookDirection();
+        if (!isMovementBlocked)
+        {
+            UpdateMovementDirection();
+            UpdateLookDirection();
+        }
 
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
         if (Input.GetControllerAxis(0, 5) > 0.5f)
@@ -128,5 +133,15 @@ public class PlayerInput : MonoBehaviour
     public bool IsChangingRailgunMode()
     {
         return Input.GetControllerButtonDown(ControllerButton.DPadDown) || Input.GetControllerButtonDown(ControllerButton.DPadUp);
+    }
+
+    public void BlockMovement()
+    {
+        isMovementBlocked = true;
+    }
+
+    public void UnblockMovement()
+    {
+        isMovementBlocked = false;
     }
 }

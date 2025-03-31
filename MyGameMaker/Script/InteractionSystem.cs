@@ -6,10 +6,14 @@ using System.Linq;
 public class InteractionSystem : MonoBehaviour
 {
     public float interactionRadius = 2.0f;
+    public float areaInteractionRadius = 3.0f;
+
     private PlayerInput playerInput;
-    private GameObject interactionMessage;
     private UIImage interactionImage;
-    private bool isShowingMessage = false;
+    private bool isInteracting = false;
+    private GameObject currentInteractable = null;
+    private AreaTrigger currentAreaTrigger = null;
+    private bool interactionImageIsEnabled = false;
 
     public override void Start()
     {
@@ -20,19 +24,11 @@ public class InteractionSystem : MonoBehaviour
             return;
         }
 
-        interactionMessage = GameObject.Find("InteractText");
+        var interactionMessage = GameObject.Find("InteractText");
         if (interactionMessage != null)
         {
             interactionImage = interactionMessage.GetComponent<UIImage>();
-            if (interactionImage != null)
-            {
-                isShowingMessage = false;
-                interactionImage.SetImageEnabled(false);
-            }
-            else
-            {
-                Engineson.print("ERROR: InteractionMessage does not have a UIImage component.");
-            }
+            interactionImage?.SetImageEnabled(false);
         }
         else
         {
@@ -48,27 +44,81 @@ public class InteractionSystem : MonoBehaviour
 
     private void CheckForInteractions()
     {
-        Transform transform = gameObject.GetComponent<Transform>();
-        GameObject[] overlappedObjects = Physics.OverlapSphere(transform.position, interactionRadius, "Interactable");
+        var transform = gameObject.GetComponent<Transform>();
 
-        Item interactable = null;
-        foreach (var obj in overlappedObjects)
+        var interactable = Physics.OverlapSphere(transform.position, interactionRadius, "Interactable")
+                                  .Select(obj => obj.GetComponent<Item>())
+                                  .FirstOrDefault(i => i != null);
+
+        if (interactable != null)
         {
-            interactable = obj.GetComponent<Item>();
-            if (interactable != null) break;
+            HandleInteraction(interactable);
+        }
+        else
+        {
+            ShowInteractionMessage(false);
         }
 
-        bool shouldShowMessage = interactable != null;
+        HandleAreaTriggers(transform);
+    }
 
-        if (interactionImage != null && shouldShowMessage != isShowingMessage)
+    private void HandleInteraction(Item interactable)
+    {
+        if (playerInput.IsInteracting())
         {
-            isShowingMessage = shouldShowMessage;
-            interactionImage.SetImageEnabled(isShowingMessage);
+            if (!isInteracting)
+            {
+                isInteracting = true;
+                ShowInteractionMessage(false);
+                currentInteractable = interactable.gameObject;
+                playerInput.BlockMovement();
+                interactable.Interact();
+            }
+            else
+            {
+                isInteracting = false;
+                playerInput.UnblockMovement();
+                interactable.Interact();
+            }
         }
-
-        if (interactable != null && playerInput.IsInteracting())
+        else if (!isInteracting)
         {
-            interactable.Interact();
+            ShowInteractionMessage(true);
+        }
+    }
+
+    private void HandleAreaTriggers(Transform transform)
+    {
+        var areaObjects = Physics.OverlapSphere(transform.position, areaInteractionRadius, "AreaTrigger");
+
+        if (areaObjects.Length > 0)
+        {
+            var newAreaTrigger = areaObjects[0].GetComponent<AreaTrigger>();
+            if (currentAreaTrigger != newAreaTrigger)
+            {
+                currentAreaTrigger?.SetTextVisibility(false);
+                newAreaTrigger?.SetTextVisibility(true);
+                currentAreaTrigger = newAreaTrigger;
+            }
+
+            if (playerInput.IsInteracting() && currentAreaTrigger != null)
+            {
+                currentAreaTrigger.Interact();
+            }
+        }
+        else if (currentAreaTrigger != null)
+        {
+            currentAreaTrigger.SetTextVisibility(false);
+            currentAreaTrigger = null;
+        }
+    }
+
+    private void ShowInteractionMessage(bool show)
+    {
+        if (interactionImage != null && show != interactionImageIsEnabled)
+        {
+            interactionImage.SetImageEnabled(show);
+            interactionImageIsEnabled = show;
         }
     }
 }

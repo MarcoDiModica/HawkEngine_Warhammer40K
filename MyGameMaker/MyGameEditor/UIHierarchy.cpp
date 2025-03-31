@@ -122,9 +122,9 @@ bool UIHierarchy::Draw() {
 void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
     int size = static_cast<int>(Application->root->GetActiveScene()->children().size());
 
-    for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
-        DrawSceneObject(*Application->root->GetActiveScene()->children()[i]);
-    }
+	for (auto& go : Application->root->GetActiveScene()->children()) {
+		DrawSceneObject(*go);
+	}
 }
 
 bool UIHierarchy::DrawSceneObject(GameObject& obj)

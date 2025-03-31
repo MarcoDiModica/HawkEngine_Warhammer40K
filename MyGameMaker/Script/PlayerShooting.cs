@@ -15,8 +15,6 @@ public class PlayerShooting : MonoBehaviour
     private Boltgun boltgun;
     private Shotgun shotgun;
     private Railgun railgun;
-    public bool niggas = true;
-
 
     private Audio sound;
     private string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";

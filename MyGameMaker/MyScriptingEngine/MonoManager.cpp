@@ -11,6 +11,8 @@
 #include <mono/metadata/exception.h>
 #include <iostream>
 #include <Windows.h>
+#include <thread>
+#include <chrono>
 
 #include "../MyGameEditor/Log.h"
 #include <mono/metadata/class.h>
@@ -168,6 +170,8 @@ void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
 
 	UnloadScriptDomain();
 
+	AddUnloadingDelay(200);
+
 	CreateScriptDomain();
 
 	NotifyScriptComponentsToRefresh();
@@ -247,4 +251,8 @@ void MonoManager::OnScriptsRecompiled(const std::string& newAssemblyPath) {
 	}
 
 	ReloadAssembly(newAssemblyPath);
+}
+
+void MonoManager::AddUnloadingDelay(int milliseconds) {
+	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }

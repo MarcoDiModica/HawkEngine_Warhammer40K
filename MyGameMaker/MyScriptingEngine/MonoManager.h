@@ -63,6 +63,8 @@ public:
 		return ScriptHotReloader::GetInstance().ForceRecompile();
 	}
 
+	void AddUnloadingDelay(int milliseconds = 200);
+
 private:
 	MonoManager();
 

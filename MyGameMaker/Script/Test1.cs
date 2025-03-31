@@ -5,7 +5,7 @@ public class Test1 : MonoBehaviour
 {
     public override void Start()
     {
-        Engineson.print("Test1 Start");
+        Engineson.print("Test1 Staart");
     }
 
     public override void Update(float deltaTime)

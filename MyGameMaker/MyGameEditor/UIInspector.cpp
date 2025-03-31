@@ -564,8 +564,6 @@ private:
     }
     #pragma endregion 
 
-   
-
     #pragma region SkeletalAnimation
     static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal) 
     {
@@ -610,7 +608,7 @@ private:
     }
     #pragma endregion 
 
-#pragma region CapsuleCollider
+	#pragma region CapsuleCollider
     static void DrawCapsuleColliderComponent(CapsuleColliderComponent* collider) {
         if (!collider) return;
 
@@ -641,7 +639,7 @@ private:
     }
 #pragma endregion
 
-#pragma region MeshCollider
+	#pragma region MeshCollider
 	static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
 		if (!collider) return;
 
@@ -672,7 +670,7 @@ private:
 	}
 #pragma endregion
 
-#pragma region Collider
+	#pragma region Collider
 	static void DrawColliderComponent(BoxColliderComponent* collider) {
 		if (!collider) return;
 
@@ -872,157 +870,265 @@ private:
 	}
 #pragma endregion
 
-    #pragma region Scripting
-    static void DrawScriptComponents(GameObject* gameObject) {
-        if (gameObject->scriptComponents.empty()) return;
+	#pragma region Scripting
+	class MonoFieldHelper {
+	public:
+		static bool IsPublicField(MonoClassField* field) {
+			return (mono_field_get_flags(field) & MONO_FIELD_ATTR_PUBLIC) != 0;
+		}
 
-        for (auto& scriptComponent : gameObject->scriptComponents) {
-            if (!scriptComponent || !scriptComponent->monoScript) continue;
+		static bool IsStaticField(MonoClassField* field) {
+			return (mono_field_get_flags(field) & MONO_FIELD_ATTR_STATIC) != 0;
+		}
 
-            ImGui::PushID(scriptComponent.get());
-            DrawSingleScriptComponent(scriptComponent.get());
-            ImGui::PopID();
-        }
-    }
+		static std::string GetStringValue(MonoObject* obj, MonoClassField* field) {
+			MonoString* monoString = nullptr;
+			mono_field_get_value(obj, field, &monoString);
+			if (!monoString) return "";
 
-    static void DrawSingleScriptComponent(ScriptComponent* scriptComponent) {
-        if (!scriptComponent || !scriptComponent->monoScript) return;
+			char* cstr = mono_string_to_utf8(monoString);
+			std::string result(cstr);
+			mono_free(cstr);
+			return result;
+		}
 
-        std::string scriptName = mono_class_get_name(mono_object_get_class(scriptComponent->monoScript));
+		static void SetStringValue(MonoObject* obj, MonoClassField* field, const std::string& value) {
+			MonoString* monoString = mono_string_new(mono_domain_get(), value.c_str());
+			mono_field_set_value(obj, field, monoString);
+		}
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader(scriptComponent->GetName().c_str())) {
-            return;
-        }
+		static bool OpenScriptFile(const std::string& path) {
+			if (!std::filesystem::exists(path)) {
+				return false;
+			}
 
-        ImGui::Text("Script: %s", scriptName.c_str());
-        DrawScriptControls(scriptComponent, scriptName);
-        DrawScriptFields(scriptComponent);
-    }
+#ifdef _WIN32
+			HINSTANCE result = ShellExecuteA(nullptr, "open", path.c_str(), nullptr, nullptr, SW_SHOW);
+			return ((intptr_t)result > 32);
+#elif defined(__APPLE__)
+			std::string command = "open \"" + path + "\"";
+			return system(command.c_str()) == 0;
+#else // Linux and others
+			std::string command = "xdg-open \"" + path + "\"";
+			return system(command.c_str()) == 0;
+#endif
+		}
+	};
 
-    static void DrawScriptControls(ScriptComponent* scriptComponent, const std::string& scriptName) {
-        if (ImGui::Button("Open Script")) {
-            std::string scriptPath = std::filesystem::absolute("../Script/" + scriptName + ".cs").string();
-            LOG(LogType::LOG_INFO, "Absolute script path: %s", scriptPath.c_str());
+	static void DrawScriptComponents(GameObject* gameObject) {
+		if (gameObject->scriptComponents.empty()) return;
 
-            if (!std::filesystem::exists(scriptPath)) {
-                LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
-                return;
-            }
+		for (auto& scriptComponent : gameObject->scriptComponents) {
+			if (!scriptComponent || !scriptComponent->monoScript) continue;
 
-            HINSTANCE result = ShellExecuteA(nullptr, "open", scriptPath.c_str(), nullptr, nullptr, SW_SHOW);
-            if ((int)result <= 32) {
-                LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
-            }
-            else {
-                LOG(LogType::LOG_INFO, "Successfully opened script: %s", scriptPath.c_str());
-            }
-        }
+			ImGui::PushID(scriptComponent.get());
+			DrawSingleScriptComponent(scriptComponent.get());
+			ImGui::PopID();
+		}
+	}
 
-        if (ImGui::Button("Reload Script")) {
-            if (!scriptComponent->LoadScript(scriptName)) {
-                LOG(LogType::LOG_ERROR, "Failed to reload script %s.", scriptName.c_str());
-            }
-            else {
-                LOG(LogType::LOG_INFO, "Script %s reloaded successfully.", scriptName.c_str());
-            }
-        }
-    }
+	static void DrawSingleScriptComponent(ScriptComponent* scriptComponent) {
+		if (!scriptComponent || !scriptComponent->monoScript) return;
 
-    static void DrawScriptFields(ScriptComponent* scriptComponent) {
-        if (!scriptComponent || !scriptComponent->monoScript) return;
+		MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
+		if (!scriptClass) {
+			ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Error: Invalid script class");
+			return;
+		}
 
-        MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
-        void* iter = nullptr;
-        MonoClassField* field = nullptr;
+		std::string scriptName = mono_class_get_name(scriptClass);
 
-        while ((field = mono_class_get_fields(scriptClass, &iter))) {
-            guint32 flags = mono_field_get_flags(field);
-            if (flags & MONO_FIELD_ATTR_STATIC) {
-                continue;
-            }
+		std::string headerName = scriptComponent->GetTypeName();
+		if (scriptComponent->HasErrors()) {
+			headerName += " [ERROR]";
+			ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
+		}
 
-            const char* fieldName = mono_field_get_name(field);
-            MonoType* fieldType = mono_field_get_type(field);
-            int typeCode = mono_type_get_type(fieldType);
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		bool isOpen = ImGui::CollapsingHeader(headerName.c_str());
 
-            ImGui::PushID(field);
-            DrawScriptField(scriptComponent->monoScript, field, fieldName, typeCode);
-            ImGui::PopID();
-        }
-    }
+		if (scriptComponent->HasErrors()) {
+			ImGui::PopStyleColor();
+		}
 
-    static void DrawScriptField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, int typeCode) {
-        if (mono_field_get_flags(field) & MONO_FIELD_ATTR_STATIC) {
-            return;
-        }
+		if (!isOpen) return;
 
-        switch (typeCode) {
-        case MONO_TYPE_STRING:
-            DrawStringField(monoScript, field, fieldName);
-            break;
-        case MONO_TYPE_BOOLEAN:
-            DrawBoolField(monoScript, field, fieldName);
-            break;
-        case MONO_TYPE_I4:
-            DrawIntField(monoScript, field, fieldName);
-            break;
-        case MONO_TYPE_R4:
-            DrawFloatField(monoScript, field, fieldName);
-            break;
-        case MONO_TYPE_R8:
-            DrawDoubleField(monoScript, field, fieldName);
-            break;
-        }
-    }
+		if (scriptComponent->HasErrors()) {
+			ImGui::Spacing();
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+			ImGui::TextWrapped("This script has errors. Check the console for details.");
+			ImGui::PopStyleColor();
+			ImGui::Spacing();
+		}
 
-    static void DrawStringField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        MonoString* monoString = nullptr;
-        mono_field_get_value(monoScript, field, &monoString);
-        std::string value = monoString ? mono_string_to_utf8(monoString) : "";
+		if (ImGui::Button("Open Script")) {
+			std::string scriptPath = std::filesystem::absolute(
+				std::filesystem::path(std::string("../Script/") + scriptName + ".cs")).string();
 
-        char buffer[128];
-        strncpy_s(buffer, value.c_str(), sizeof(buffer));
-        buffer[sizeof(buffer) - 1] = '\0';
+			if (MonoFieldHelper::OpenScriptFile(scriptPath)) {
+				LOG(LogType::LOG_INFO, "Opened script: %s", scriptName.c_str());
+			}
+			else {
+				ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Failed to open script file!");
+				LOG(LogType::LOG_ERROR, "Failed to open script file: %s", scriptPath.c_str());
+			}
+		}
 
-        if (ImGui::InputText(fieldName, buffer, sizeof(buffer))) {
-            MonoString* newMonoString = mono_string_new(mono_domain_get(), buffer);
-            mono_field_set_value(monoScript, field, newMonoString);
-        }
-    }
+		static bool showPublicOnly = true;
+		ImGui::SameLine();
+		ImGui::Checkbox("Public Fields Only", &showPublicOnly);
 
-    static void DrawBoolField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        bool value = false;
-        mono_field_get_value(monoScript, field, &value);
-        if (ImGui::Checkbox(fieldName, &value)) {
-            mono_field_set_value(monoScript, field, &value);
-        }
-    }
+		ImGui::Separator();
 
-    static void DrawIntField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        int value = 0;
-        mono_field_get_value(monoScript, field, &value);
-        if (ImGui::InputInt(fieldName, &value)) {
-            mono_field_set_value(monoScript, field, &value);
-        }
-    }
+		DrawScriptFields(scriptComponent, showPublicOnly);
+	}
 
-    static void DrawFloatField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        float value = 0.0f;
-        mono_field_get_value(monoScript, field, &value);
-        if (ImGui::InputFloat(fieldName, &value)) {
-            mono_field_set_value(monoScript, field, &value);
-        }
-    }
+	static void DrawScriptFields(ScriptComponent* scriptComponent) {
+		DrawScriptFields(scriptComponent, true);
+	}
 
-    static void DrawDoubleField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        double value = 0.0;
-        mono_field_get_value(monoScript, field, &value);
-        if (ImGui::InputDouble(fieldName, &value)) {
-            mono_field_set_value(monoScript, field, &value);
-        }
-    }
-    #pragma endregion
+	static void DrawScriptFields(ScriptComponent* scriptComponent, bool publicOnly = true) {
+		if (!scriptComponent || !scriptComponent->monoScript) return;
+
+		MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
+		void* iter = nullptr;
+		MonoClassField* field = nullptr;
+		bool hasFields = false;
+
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 8));
+		ImGui::Indent(10.0f);
+
+		while ((field = mono_class_get_fields(scriptClass, &iter))) {
+			if (MonoFieldHelper::IsStaticField(field)) {
+				continue;
+			}
+
+			if (publicOnly && !MonoFieldHelper::IsPublicField(field)) {
+				continue;
+			}
+
+			const char* fieldName = mono_field_get_name(field);
+			MonoType* fieldType = mono_field_get_type(field);
+			int typeCode = mono_type_get_type(fieldType);
+
+			ImGui::PushID(field);
+			ImGui::AlignTextToFramePadding();
+
+			switch (typeCode) {
+			case MONO_TYPE_BOOLEAN:
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 1.0f, 0.5f, 1.0f));
+				break;
+			case MONO_TYPE_I4:
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.7f, 1.0f, 1.0f));
+				break;
+			case MONO_TYPE_R4:
+			case MONO_TYPE_R8:
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.7f, 0.4f, 1.0f));
+				break;
+			case MONO_TYPE_STRING:
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.9f, 0.5f, 1.0f));
+				break;
+			default:
+				ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.8f, 0.8f, 1.0f));
+				break;
+			}
+
+			float availWidth = ImGui::GetContentRegionAvail().x;
+			float labelWidth = std::min(150.0f, availWidth * 0.4f);
+
+			ImGui::Text("%s", fieldName);
+			ImGui::SameLine(labelWidth);
+			ImGui::SetNextItemWidth(availWidth - labelWidth);
+
+			DrawScriptField(scriptComponent->monoScript, field, fieldName, typeCode);
+			ImGui::PopStyleColor();
+			ImGui::PopID();
+
+			hasFields = true;
+		}
+
+		if (!hasFields) {
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No fields to display");
+		}
+
+		ImGui::Unindent(10.0f);
+		ImGui::PopStyleVar();
+	}
+
+	static void DrawScriptField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, int typeCode) {
+		try {
+			switch (typeCode) {
+			case MONO_TYPE_STRING:
+				DrawStringField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_BOOLEAN:
+				DrawBoolField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_I4:
+				DrawIntField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_R4:
+				DrawFloatField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_R8:
+				DrawDoubleField(monoScript, field, fieldName);
+				break;
+			default:
+				ImGui::TextDisabled("(Unsupported type)");
+				break;
+			}
+		}
+		catch (...) {
+			ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Error reading field");
+		}
+	}
+
+	static void DrawStringField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		std::string value = MonoFieldHelper::GetStringValue(monoScript, field);
+		char buffer[256];
+		strcpy_s(buffer, value.c_str());
+
+		if (ImGui::InputText("##value", buffer, IM_ARRAYSIZE(buffer))) {
+			MonoFieldHelper::SetStringValue(monoScript, field, buffer);
+		}
+	}
+
+	static void DrawBoolField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		bool value = false;
+		mono_field_get_value(monoScript, field, &value);
+
+		if (ImGui::Checkbox("##value", &value)) {
+			mono_field_set_value(monoScript, field, &value);
+		}
+	}
+
+	static void DrawIntField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		int value = 0;
+		mono_field_get_value(monoScript, field, &value);
+
+		if (ImGui::InputInt("##value", &value)) {
+			mono_field_set_value(monoScript, field, &value);
+		}
+	}
+
+	static void DrawFloatField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		float value = 0.0f;
+		mono_field_get_value(monoScript, field, &value);
+
+		if (ImGui::InputFloat("##value", &value, 0.0f, 0.0f, "%.3f")) {
+			mono_field_set_value(monoScript, field, &value);
+		}
+	}
+
+	static void DrawDoubleField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		double value = 0.0;
+		mono_field_get_value(monoScript, field, &value);
+
+		if (ImGui::InputDouble("##value", &value, 0.0, 0.0, "%.6f")) {
+			mono_field_set_value(monoScript, field, &value);
+		}
+	}
+	#pragma endregion
 
 	#pragma region ParticleFX
 	static void DrawParticleSystemComponent(ParticleFX* system) {

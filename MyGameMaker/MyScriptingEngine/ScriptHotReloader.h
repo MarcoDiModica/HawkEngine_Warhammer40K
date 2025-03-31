@@ -10,6 +10,8 @@
 #include <chrono>
 #include <thread>
 #include <unordered_set>
+#include <algorithm>
+#include <iomanip>
 
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEditor/App.h"
@@ -32,12 +34,19 @@ public:
 	void Initialize(const std::string& scriptFolder, const std::string& outputAssemblyDir) {
 		m_ScriptFolder = scriptFolder;
 		m_OutputAssemblyDir = outputAssemblyDir;
+		m_StagingDirectory = m_ScriptFolder + "\\staging";
 		m_LastCompilationTime = std::filesystem::file_time_type();
 		m_IsCompiling = false;
 		m_CompilationCooldown = false;
 
-		//LOG(LogType::LOG_INFO, "Script Folder: %s", m_ScriptFolder.c_str());
-		//LOG(LogType::LOG_INFO, "Output Folder: %s", m_OutputAssemblyDir.c_str());
+		try {
+			if (!std::filesystem::exists(m_StagingDirectory)) {
+				std::filesystem::create_directories(m_StagingDirectory);
+			}
+		}
+		catch (const std::filesystem::filesystem_error& e) {
+			LOG(LogType::LOG_ERROR, "Failed to create staging directory: %s", e.what());
+		}
 
 		m_ProjectFile = FindCsprojFile(m_ScriptFolder);
 		if (m_ProjectFile.empty()) {
@@ -139,7 +148,6 @@ public:
 			return false;
 		}
 
-		LOG(LogType::LOG_INFO, "Forcing recompilation of scripts...");
 		m_IsCompiling = true;
 
 		bool result = CompileExistingProject();
@@ -283,12 +291,25 @@ private:
 			return false;
 		}
 
+		std::string versionedFilename = GenerateVersionedFilename("Script.dll");
+		std::string stagedPath = m_StagingDirectory + "\\" + versionedFilename;
+
+		try {
+			std::filesystem::copy(assemblyPath, stagedPath, std::filesystem::copy_options::overwrite_existing);
+
+			CleanupOldVersions(5);
+		}
+		catch (const std::filesystem::filesystem_error& e) {
+			LOG(LogType::LOG_ERROR, "Failed to create versioned assembly: %s", e.what());
+			stagedPath = assemblyPath;
+		}
+
 		m_LastCompilationTime = std::filesystem::last_write_time(assemblyPath);
 		RefreshScriptTimestamps();
 
 		for (auto& callback : m_OnReloadCallbacks) {
 			try {
-				callback(assemblyPath);
+				callback(stagedPath);
 			}
 			catch (const std::exception& e) {
 				LOG(LogType::LOG_ERROR, "Reload callback error: %s", e.what());
@@ -353,7 +374,7 @@ private:
 
 		std::string lineInfo = message.substr(lineInfoStart, lineInfoEnd - lineInfoStart + 1);
 
-		size_t messageStart = lineInfoEnd + 2; 
+		size_t messageStart = lineInfoEnd + 2;
 		size_t projectBracketStart = message.find(" [", messageStart);
 
 		std::string errorMessage;
@@ -386,10 +407,6 @@ private:
 					}
 				}
 
-				if (hasWarnings) {
-					LOG(LogType::LOG_C_SHARP_WARNING, "--- End of warnings ---");
-				}
-
 				warningsFile.close();
 			}
 		}
@@ -415,10 +432,6 @@ private:
 					}
 				}
 
-				if (hasErrors) {
-					LOG(LogType::LOG_ERROR, "--- End of errors ---");
-				}
-
 				errorsFile.close();
 			}
 		}
@@ -427,8 +440,57 @@ private:
 		}
 	}
 
+	std::string GenerateVersionedFilename(const std::string& baseFilename) {
+		auto now = std::chrono::system_clock::now();
+		auto time_t_now = std::chrono::system_clock::to_time_t(now);
+
+		std::stringstream ss;
+		ss << "Script_";
+
+		std::tm tm_now;
+		localtime_s(&tm_now, &time_t_now);
+		ss << std::put_time(&tm_now, "%Y%m%d_%H%M%S");
+
+		std::string extension = ".dll";
+		size_t dotPos = baseFilename.find_last_of('.');
+		if (dotPos != std::string::npos) {
+			extension = baseFilename.substr(dotPos);
+		}
+
+		ss << extension;
+		return ss.str();
+	}
+
+	void CleanupOldVersions(int keepCount) {
+		try {
+			std::vector<std::filesystem::directory_entry> versionedFiles;
+
+			for (const auto& entry : std::filesystem::directory_iterator(m_StagingDirectory)) {
+				if (entry.is_regular_file() &&
+					entry.path().filename().string().find("Script_") == 0) {
+					versionedFiles.push_back(entry);
+				}
+			}
+
+			std::sort(versionedFiles.begin(), versionedFiles.end(),
+				[](const std::filesystem::directory_entry& a, const std::filesystem::directory_entry& b) {
+					return std::filesystem::last_write_time(a) > std::filesystem::last_write_time(b);
+				});
+
+			if (versionedFiles.size() > keepCount) {
+				for (size_t i = keepCount; i < versionedFiles.size(); ++i) {
+					std::filesystem::remove(versionedFiles[i]);
+				}
+			}
+		}
+		catch (const std::filesystem::filesystem_error& e) {
+			LOG(LogType::LOG_ERROR, "Error cleaning up old assemblies: %s", e.what());
+		}
+	}
+
 	std::string m_ScriptFolder;
 	std::string m_OutputAssemblyDir;
+	std::string m_StagingDirectory;
 	std::string m_ProjectFile;
 	std::unordered_map<std::string, std::filesystem::file_time_type> m_ScriptTimestamps;
 	std::filesystem::file_time_type m_LastCompilationTime;

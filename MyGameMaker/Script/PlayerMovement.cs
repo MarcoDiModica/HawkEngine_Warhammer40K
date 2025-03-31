@@ -88,8 +88,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Transform transform = gameObject.GetComponent<Transform>();
-            transform.DOScaleX(5, 1.0f, Modes.EASE_IN_OUT);
+            value = 1.0f;
+            Tweening.DOValue(ref value, 1.0f, 0.0f, 2.0f, Modes.EASE_IN_OUT);
         }
         Engineson.print($"Value: " +value);
 

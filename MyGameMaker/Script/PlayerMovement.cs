@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             Transform transform = gameObject.GetComponent<Transform>();
-            transform.DOMove(new Vector3(0, 0, 0), 1.0f, Modes.EASE_IN_OUT);
+            transform.DOScaleX(5, 1.0f, Modes.EASE_IN_OUT);
         }
         Engineson.print($"Value: " +value);
 

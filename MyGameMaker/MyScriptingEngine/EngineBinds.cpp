@@ -881,99 +881,176 @@ void EngineBinds::DOMove(MonoObject* transformRef, glm::vec3* targetPosition, fl
 	}
 }
 
-void EngineBinds::DOMoveX(GameObject* object, float targetPosition, float duration, Modes mode)
+void EngineBinds::DOMoveX(MonoObject* transformRef, float targetPosition, float duration, Modes mode)
 {
-	Tweening::MoveX(object, targetPosition, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::MoveX(object, targetPosition, duration, mode);
+    }
 }
 
-void EngineBinds::DOMoveY(GameObject* object, float targetPosition, float duration, Modes mode)
+void EngineBinds::DOMoveY(MonoObject* transformRef, float targetPosition, float duration, Modes mode)
 {
-	Tweening::MoveY(object, targetPosition, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+		GameObject* object = transform->GetOwner();
+		Tweening::MoveY(object, targetPosition, duration, mode);
+	}
+	
 }
 
-void EngineBinds::DOMoveZ(GameObject* object, float targetPosition, float duration, Modes mode)
+void EngineBinds::DOMoveZ(MonoObject* transformRef, float targetPosition, float duration, Modes mode)
 {
-	Tweening::MoveZ(object, targetPosition, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+	    Tweening::MoveZ(object, targetPosition, duration, mode);
+	}
+}   
+
+void EngineBinds::DORotate(MonoObject* transformRef, glm::vec3* targetRotation, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::Rotate(object, *targetRotation, duration, mode);
+    }
 }
 
-void EngineBinds::DORotate(GameObject* object, glm::vec3* targetRotation, float duration, Modes mode)
+void EngineBinds::DORotateX(MonoObject* transformRef, float targetRotation, float duration, Modes mode)
 {
-	Tweening::Rotate(object, *targetRotation, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::RotateX(object, targetRotation, duration, mode);
+    }
 }
 
-void EngineBinds::DORotateX(GameObject* object, float targetRotation, float duration, Modes mode)
+void EngineBinds::DORotateY(MonoObject* transformRef, float targetRotation, float duration, Modes mode)
 {
-	Tweening::RotateX(object, targetRotation, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::RotateY(object, targetRotation, duration, mode);
+    }
 }
 
-void EngineBinds::DORotateY(GameObject* object, float targetRotation, float duration, Modes mode)
+void EngineBinds::DORotateZ(MonoObject* transformRef, float targetRotation, float duration, Modes mode)
 {
-	Tweening::RotateY(object, targetRotation, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::RotateZ(object, targetRotation, duration, mode);
+    }
 }
 
-void EngineBinds::DORotateZ(GameObject* object, float targetRotation, float duration, Modes mode)
+void EngineBinds::DOScale(MonoObject* transformRef, glm::vec3* targetScale, float duration, Modes mode)
 {
-	Tweening::RotateZ(object, targetRotation, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::Scale(object, *targetScale, duration, mode);
+    }
 }
 
-void EngineBinds::DOScale(GameObject* object, glm::vec3* targetScale, float duration, Modes mode)
+void EngineBinds::DOScaleX(MonoObject* transformRef, float targetScale, float duration, Modes mode)
 {
-	Tweening::Scale(object, *targetScale, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::ScaleX(object, targetScale, duration, mode);
+    }
 }
 
-void EngineBinds::DOScaleX(GameObject* object, float targetScale, float duration, Modes mode)
+void EngineBinds::DOScaleY(MonoObject* transformRef, float targetScale, float duration, Modes mode)
 {
-	Tweening::ScaleX(object, targetScale, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::ScaleY(object, targetScale, duration, mode);
+    }
 }
 
-void EngineBinds::DOScaleY(GameObject* object, float targetScale, float duration, Modes mode)
+void EngineBinds::DOScaleZ(MonoObject* transformRef, float targetScale, float duration, Modes mode)
 {
-	Tweening::ScaleY(object, targetScale, duration, mode);
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::ScaleZ(object, targetScale, duration, mode);
+    }
 }
 
-void EngineBinds::DOScaleZ(GameObject* object, float targetScale, float duration, Modes mode)
+void EngineBinds::DOMoveUI(MonoObject* uiTransformRef, glm::vec3* targetPosition, float duration, Modes mode)
 {
-	Tweening::ScaleZ(object, targetScale, duration, mode);
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIMove(object, *targetPosition, duration, mode);
+    }
 }
 
-void EngineBinds::DOUIMove(GameObject* object, glm::vec3* targetPosition, float duration, Modes mode)
+void EngineBinds::DOMoveXUI(MonoObject* uiTransformRef, float targetPosition, float duration, Modes mode)
 {
-	Tweening::UIMove(object, *targetPosition, duration, mode);
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIMoveX(object, targetPosition, duration, mode);
+    }
 }
 
-void EngineBinds::DOUIMoveX(GameObject* object, float targetPosition, float duration, Modes mode)
+void EngineBinds::DOMoveYUI(MonoObject* uiTransformRef, float targetPosition, float duration, Modes mode)
 {
-	Tweening::UIMoveX(object, targetPosition, duration, mode);
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIMoveY(object, targetPosition, duration, mode);
+    }
 }
 
-void EngineBinds::DOUIMoveY(GameObject* object, float targetPosition, float duration, Modes mode)
+void EngineBinds::DOMoveZUI(MonoObject* uiTransformRef, float targetPosition, float duration, Modes mode)
 {
-	Tweening::UIMoveY(object, targetPosition, duration, mode);
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIMoveZ(object, targetPosition, duration, mode);
+    }
 }
 
-void EngineBinds::DOUIMoveZ(GameObject* object, float targetPosition, float duration, Modes mode)
+void EngineBinds::DOScaleUI(MonoObject* uiTransformRef, glm::vec3* targetScale, float duration, Modes mode)
 {
-	Tweening::UIMoveZ(object, targetPosition, duration, mode);
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+	    Tweening::UIScale(object, *targetScale, duration, mode);
+	}
 }
 
-void EngineBinds::DOUIScale(GameObject* object, glm::vec3* targetScale, float duration, Modes mode)
+void EngineBinds::DOScaleXUI(MonoObject* uiTransformRef, float targetScale, float duration, Modes mode)
 {
-	Tweening::UIScale(object, *targetScale, duration, mode);
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIScaleX(object, targetScale, duration, mode);
+    }
 }
 
-void EngineBinds::DOUIScaleX(GameObject* object, float targetScale, float duration, Modes mode)
+void EngineBinds::DOScaleYUI(MonoObject* uiTransformRef, float targetScale, float duration, Modes mode)
 {
-	Tweening::UIScaleX(object, targetScale, duration, mode);
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIScaleY(object, targetScale, duration, mode);
+    }
 }
 
-void EngineBinds::DOUIScaleY(GameObject* object, float targetScale, float duration, Modes mode)
+void EngineBinds::DOScaleZUI(MonoObject* uiTransformRef, float targetScale, float duration, Modes mode)
 {
-	Tweening::UIScaleY(object, targetScale, duration, mode);
-}
-
-void EngineBinds::DOUIScaleZ(GameObject* object, float targetScale, float duration, Modes mode)
-{
-	Tweening::UIScaleZ(object, targetScale, duration, mode);
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIScaleZ(object, targetScale, duration, mode);
+    }
 }
 
 void EngineBinds::DOColor(glm::vec4 *color, const glm::vec4 startColor, const glm::vec4 targetColor, float duration, Modes mode)
@@ -1143,14 +1220,14 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.Transform::DOScaleX", (const void*)&EngineBinds::DOScaleX);
 	mono_add_internal_call("HawkEngine.Transform::DOScaleY", (const void*)&EngineBinds::DOScaleY);
 	mono_add_internal_call("HawkEngine.Transform::DOScaleZ", (const void*)&EngineBinds::DOScaleZ);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIMove", (const void*)&EngineBinds::DOUIMove);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIMoveX", (const void*)&EngineBinds::DOUIMoveX);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIMoveY", (const void*)&EngineBinds::DOUIMoveY);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIMoveZ", (const void*)&EngineBinds::DOUIMoveZ);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIScale", (const void*)&EngineBinds::DOUIScale);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIScaleX", (const void*)&EngineBinds::DOUIScaleX);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIScaleY", (const void*)&EngineBinds::DOUIScaleY);
-	mono_add_internal_call("HawkEngine.UITransform::DOUIScaleZ", (const void*)&EngineBinds::DOUIScaleZ);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIMove", (const void*)&EngineBinds::DOMoveUI);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIMoveX", (const void*)&EngineBinds::DOMoveXUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOUIMoveY", (const void*)&EngineBinds::DOMoveYUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOUIMoveZ", (const void*)&EngineBinds::DOMoveZUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOUIScale", (const void*)&EngineBinds::DOScaleUI);
+	mono_add_internal_call("HawkEngine.UITransform::DOUIScaleX", (const void*)&EngineBinds::DOScaleXUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOUIScaleY", (const void*)&EngineBinds::DOScaleYUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOUIScaleZ", (const void*)&EngineBinds::DOScaleZUI);
 	mono_add_internal_call("HawkEngine.Tweening::DOColor", (const void*)&EngineBinds::DOColor);
 	mono_add_internal_call("HawkEngine.Tweening::DOValue", (const void*)&EngineBinds::DOValue);
 

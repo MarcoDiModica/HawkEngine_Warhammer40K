@@ -73,6 +73,7 @@ public class Shotgun : BaseWeapon
 
                 if (projectile != null)
                 {
+                    projectile.tag = "ShotgunProjectile";
                     Transform projTransform = projectile.GetComponent<Transform>();
                     if (projTransform != null)
                     {

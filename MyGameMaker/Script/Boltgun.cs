@@ -69,6 +69,7 @@ public class Boltgun : BaseWeapon
             if (projectile != null)
             {
                 Transform projTransform = projectile.GetComponent<Transform>();
+                projectile.tag = "BoltgunProjectile";
                 if (projTransform != null)
                 {
                     Vector3 forward = transform.forward;

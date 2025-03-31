@@ -171,7 +171,28 @@ public class EnemyControllerRanged : EnemyController
             Engineson.print($"Error creating projectile: {e.Message}");
         }
     }
-
+    override public void OnCollisionEnter(GameObject other)
+    {
+        if (other.tag == "BoltgunProjectile")
+        {
+            currentHealth -= 20.0f;
+            Engineson.print("Boltgun hit!");
+        }
+        else if (other.tag == "ShotgunProjectile")
+        {
+            //cosas de la shotgun
+        }
+        else if (other.tag == "RailgunProjectile")
+        {
+            //Cosas de railgun
+        }
+        if (currentHealth <= 0)
+        {
+            Engineson.print("This man is dead man.");
+            //Destroy(gameObject);
+        }
+        //Engineson.print("Player hit!");
+    }
     private void UpdateProjectiles(float deltaTime)
     {
         foreach (var proj in activeProjectiles)

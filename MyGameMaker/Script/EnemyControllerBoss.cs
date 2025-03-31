@@ -102,6 +102,28 @@ public class EnemyControllerBoss : EnemyController
         }
     }
 
+    override public void OnCollisionEnter(GameObject other)
+    {
+        if (other.tag == "BoltgunProjectile")
+        {
+            currentHealth -= 20.0f;
+            Engineson.print("Boltgun hit!");
+        }
+        else if (other.tag == "ShotgunProjectile")
+        {
+            //cosas de la shotgun
+        }
+        else if (other.tag == "RailgunProjectile")
+        {
+            //Cosas de railgun
+        }
+        if (currentHealth <= 0)
+        {
+            Engineson.print("This man is dead man.");
+            //Destroy(gameObject);
+        }
+        //Engineson.print("Player hit!");
+    }
     public override void Attack()
     {
 

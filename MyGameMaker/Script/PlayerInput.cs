@@ -25,7 +25,7 @@ public class PlayerInput : MonoBehaviour
         UpdateLookDirection();
 
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
-        if (Input.GetControllerAxis(0, 5) > 0.5f)
+        if (Input.GetControllerAxis(0, 5) > 0.5f || Input.GetKeyDown(KeyCode.Z))
         {
             isShootPressed = true;
         }

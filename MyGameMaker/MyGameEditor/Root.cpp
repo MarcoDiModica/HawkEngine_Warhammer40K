@@ -89,8 +89,8 @@ bool Root::Start()
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
 		
-	/*environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
-	environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));*/
+	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+	environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
     auto objMainCamera = CreateCameraObject("MainCamera");
     objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -134,15 +134,16 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
-
 	auto floor = CreateCube("Floor");
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	floorCollider->Start();
 
-	//CreateGameplayUI();
+	CreateGameplayUI();
 	//CreateMainMenuUI();
+
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 #ifdef _BUILD
 	Application->play = true;
@@ -164,17 +165,17 @@ bool Root::Update(double dt)
 		hasAddedColliders = true;
 	}
 
-	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
-		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
-	}
+	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	//}
 
-	if (Application->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
-		Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
-	}
+	//if (Application->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+	//	Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
+	//}
 
-	if (Application->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
-		Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
-	}
+	//if (Application->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+	//	Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
+	//}
 
 	return true;
 }

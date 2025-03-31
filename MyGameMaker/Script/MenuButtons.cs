@@ -32,7 +32,7 @@ public class MenuButtons : MonoBehaviour
     {
         if (newGameButton.GetState() == ButtonState.CLICKED)
         {
-           SceneManager.LoadScene("DefaultScene");
+           SceneManager.LoadScene("TestScene");
         }
         
         //if (continueButton.GetState() == ButtonState.CLICKED)

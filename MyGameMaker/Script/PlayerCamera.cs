@@ -25,14 +25,16 @@ public class PlayerCamera : MonoBehaviour
             Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
             return;
         }
+        else
+        {
+            cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
+        }
 
         if (cameraRef == null)
         {
             Engineson.print("ERROR: PlayerCamera requires a Camera component!");
             return;
         }
-
-        cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
     }
 
     public override void Update(float deltaTime)

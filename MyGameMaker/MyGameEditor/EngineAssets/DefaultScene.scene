@@ -87,6 +87,8 @@ GameObject0:
         name: ArcSnare
       Script16:
         name: RedThirstManager
+      Script17:
+        name: InteractionSystem
   Children:
     - name: playerMesh
       tag: Untagged
@@ -182,6 +184,71 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
+  name: MedicaeStimm
+  tag: PowerUp
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 10
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: MedicaeStimm
+  Children: ~
+GameObject3:
   name: Lictor
   tag: Enemy
   active: true
@@ -288,7 +355,7 @@ GameObject2:
           name: Shader
           enabled: true
       Children: ~
-GameObject3:
+GameObject4:
   name: Floor
   tag: Untagged
   active: true
@@ -350,7 +417,7 @@ GameObject3:
         - 0
       isTrigger: false
   Children: ~
-GameObject4:
+GameObject5:
   name: Canvas
   tag: Untagged
   active: true
@@ -836,4 +903,105 @@ GameObject4:
           name: UIImageComponent
           enabled: true
           texture_path: Assets/Textures/grenade_icon.png
+      Children: ~
+GameObject6:
+  name: Canvas_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 0
+        - 0
+  Children:
+    - name: InteractText
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.559000015
+            - 0.624000013
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.261999995
+            - 0.463999987
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: false
+          texture_path: Assets/Textures/PressE.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~

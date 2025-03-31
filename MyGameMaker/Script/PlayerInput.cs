@@ -10,11 +10,13 @@ public class PlayerInput : MonoBehaviour
     private bool isReloadPressed = false;
     private bool isAbility1Pressed = false;
     private bool isAbility2Pressed = false;
+    private bool isInteractPressed = false;
 
     public override void Awake()
     {
 
     }
+
     public override void Start()
     {
     }
@@ -33,7 +35,8 @@ public class PlayerInput : MonoBehaviour
         {
             isShootPressed = false;
         }
-        
+
+        isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B);
         isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
         isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
         isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
@@ -112,7 +115,12 @@ public class PlayerInput : MonoBehaviour
     {
         return isAbility2Pressed;
     }
-    
+
+    public bool IsInteracting()
+    {
+        return isInteractPressed;  
+    }
+
     public bool IsChangingWeaponRight()
     {
         return Input.GetControllerButtonDown(ControllerButton.DPadRight);

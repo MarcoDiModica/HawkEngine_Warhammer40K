@@ -34,7 +34,10 @@ namespace HawkEngine
         public extern void SetActive(bool active);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SnapToPosition();
+        public extern void SnapToPosition();      
+        
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void OverlapSphere(Vector3 position, float radius);
 
         public GameObject owner;
 

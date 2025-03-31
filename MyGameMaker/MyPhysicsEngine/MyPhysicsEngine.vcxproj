@@ -119,6 +119,7 @@
     <ClInclude Include="BaseColliderComponent.h" />
     <ClInclude Include="CapsuleColliderComponent.h" />
     <ClInclude Include="BoxColliderComponent.h" />
+    <ClInclude Include="CustomDispatcher.h" />
     <ClInclude Include="DebugDrawerPhysics.h" />
     <ClInclude Include="MeshColliderComponent.h" />
     <ClInclude Include="p2List.h" />

@@ -188,7 +188,7 @@ void BaseColliderComponent::SnapToPosition() {
     }
     else
     {
-        if (physics->linkPhysicsToScene && rigidbody) {
+        if (physics->linkPhysicsToScene && rigidbody && !rigidbody->IsKinematic()) {
             return;
         }
     }

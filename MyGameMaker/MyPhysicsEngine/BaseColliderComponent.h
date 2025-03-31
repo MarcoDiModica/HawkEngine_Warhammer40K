@@ -49,6 +49,9 @@ public:
 
     MonoObject* CsharpReference = nullptr;
 
+public:
+    PhysicsModule* physics;
+
 
 protected:
 
@@ -58,7 +61,6 @@ protected:
 
     bool hasSnappedToInitialPosition = false;
 
-    PhysicsModule* physics;
 
     virtual void CreateCollider() = 0;
 

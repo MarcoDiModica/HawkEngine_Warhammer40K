@@ -97,7 +97,26 @@ bool Root::Start()
 	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-		
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	
+
+
+
+	/*auto itemtest = CreateCube("item");
+	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
+	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
+	itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	itemtest->AddComponent<ScriptComponent>()->LoadScript("Item");
+	itemtest->SetTag("Interactable");
+	
+	auto itemtest2 = CreateCube("item");
+	itemtest2->GetTransform()->SetPosition(glm::vec3(1, 2, 10));
+	itemtest2->GetTransform()->SetScale(glm::vec3(2, 2, 2));
+	itemtest2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	itemtest2->AddComponent<ScriptComponent>()->LoadScript("Item");
+	itemtest2->SetTag("Interactable");*/
+
+
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
@@ -112,13 +131,13 @@ bool Root::Start()
 
 	// Test PowerUps
 
-	/*auto powerUp = CreateCube("MedicaeStimm");
+	auto powerUp = CreateCube("MedicaeStimm");
 	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	powerUp->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
-	powerUp->SetTag("PowerUp");*/
+	powerUp->SetTag("PowerUp");
 
 	/*auto powerUp = CreateCube("Magnet");
 	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
@@ -175,6 +194,24 @@ bool Root::Start()
 	SceneManagement->Start();
 
 	CreateGameplayUI();
+
+	//For rendering Interaction System text, remove the canvas if there is already one
+	auto canvas = CreateGameObject("Canvas");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<SoundComponent>();
+
+	auto interactText = CreateGameObject("InteractText");
+	Application->root->ParentGameObject(*interactText, *canvas);
+	interactText->AddComponent<UIImageComponent>();
+	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	interactText->AddComponent<UIButtonComponent>();
+	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+
+	floor->SetActive(false);
+
+	//CreateGameplayUI();
 	//CreateMainMenuUI();
 
 #ifdef _BUILD

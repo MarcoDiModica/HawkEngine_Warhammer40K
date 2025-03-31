@@ -11,6 +11,10 @@ public class EnemyControllerRanged : EnemyController
     public float projectileLifetime = 0.5f;
     protected float shootTimer = 0f;
 
+    //stats
+    private float health = 100.0f;
+    private float damage = 20.0f;
+
     private class ProjectileInfo
     {
         public GameObject gameObject;

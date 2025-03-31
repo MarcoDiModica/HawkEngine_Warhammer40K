@@ -141,5 +141,9 @@ public class ArcSnare : BaseAbilities
         exploded = true;
     }
 
+    public override void ResetCooldowns()
+    {
+        canThrow = true;
+    }
 }
 

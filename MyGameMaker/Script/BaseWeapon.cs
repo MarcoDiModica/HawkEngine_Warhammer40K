@@ -30,5 +30,6 @@ public abstract class BaseWeapon : MonoBehaviour
 
     public abstract void UseAbility2();
 
+    public abstract void ResetCooldowns();
     public abstract void CleanBullets();
 }

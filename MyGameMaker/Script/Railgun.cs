@@ -201,4 +201,8 @@ public class Railgun : BaseWeapon
             railgunMode = RailgunMode.SEMIAUTOMATIC;
         }
     }
+
+    public override void ResetCooldowns()
+    {
+    }
 }

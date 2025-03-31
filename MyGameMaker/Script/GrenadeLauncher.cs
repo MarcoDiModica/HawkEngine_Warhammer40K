@@ -120,4 +120,9 @@ public class GrenadeLauncher : BaseAbilities
 
         exploded = true;
     }
+
+    public override void ResetCooldowns()
+    {
+        canThrow = true;
+    }
 }

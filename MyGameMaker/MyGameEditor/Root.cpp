@@ -163,6 +163,13 @@ bool Root::Start()
 	powerUp5->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
 	powerUp5->SetTag("Ammunition");
 
+	auto powerUp6 = CreateCube("ChapterStandard");
+	powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
+	powerUp6->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp6->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
+	powerUp6->SetTag("PowerUp");
 	/*auto powerUp2 = CreateCube("Magnet");
 	powerUp2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	powerUp2->GetTransform()->SetScale(glm::vec3(1, 1, 1));

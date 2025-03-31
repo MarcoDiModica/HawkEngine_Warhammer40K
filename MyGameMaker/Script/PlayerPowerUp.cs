@@ -9,6 +9,7 @@ public class PlayerPowerUp : MonoBehaviour
     private bool hasMedicaeStimm = false;
     private bool hasAmmunitionBlessing = false;
     private bool hasMagnet = false;
+    private bool hasChapterStandard = false;
     private float medicaeStimmDuration = 5.0f;
     private float medicaeStimmTimer = 0.0f;
     private float ammunitionBlessingDuration = 5.0f;
@@ -131,6 +132,7 @@ public class PlayerPowerUp : MonoBehaviour
                 other.GetComponent<Magnet>().OnPickUp(playerController);
                 hasMagnet = true;
             }
+           
 
             Engineson.Destroy(other);
         }

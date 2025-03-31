@@ -28,5 +28,9 @@ namespace HawkEngine
         {
 
         }
+
+        public override void ResetCooldowns()
+        {
+        }
     }
 }

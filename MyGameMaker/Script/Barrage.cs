@@ -112,7 +112,11 @@ public class Barrage : BaseAbilities
 
     }
 
-    
+    public override void ResetCooldowns()
+    {
+        canThrow = true;
+    }
+
 
 }
 

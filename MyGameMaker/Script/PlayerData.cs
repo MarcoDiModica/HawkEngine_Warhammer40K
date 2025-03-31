@@ -1,4 +1,6 @@
-﻿public class PlayerData
+﻿using HawkEngine;
+
+public class PlayerData
 {
     float health;
     float maxHealth = 100;
@@ -7,6 +9,9 @@
     public float bonusCadence = 1;
     public bool isPiercing = false;
     public bool infiniteBullets = false;
+
+
+
 
     public PlayerData()
     {

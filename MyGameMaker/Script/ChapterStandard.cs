@@ -53,6 +53,7 @@ public class ChapterStandard : PickUp
     {
         Engineson.print("ChapterStandard PowerUp applied");
        
-
+        playerController.playerShooting.ResetAbilityCooldown();
+        playerController.playerShooting.ResetAbilityCooldown();
     }
 }

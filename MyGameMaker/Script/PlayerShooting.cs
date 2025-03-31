@@ -386,4 +386,9 @@ public class PlayerShooting : MonoBehaviour
         
     }
 
+    public void ResetAbilityCooldown()
+    {
+        boltgun.ResetCooldowns();
+        shotgun.ResetCooldowns();
+    }
 }

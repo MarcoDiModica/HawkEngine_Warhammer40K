@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Numerics;
+using HawkEngine;
+using static BaseWeapon;
 
-namespace HawkEngine
-{
-    internal class HookShot : BaseAbilities
+
+
+public class HookShot : BaseAbilities
     {
         public override void Awake()
         {
@@ -23,7 +22,11 @@ namespace HawkEngine
         {
 
         }
+
+    public override void ResetCooldowns()
+    {
     }
-    
 }
+    
+
 

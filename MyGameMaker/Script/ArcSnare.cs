@@ -39,7 +39,18 @@ public class ArcSnare : BaseAbilities
     public override void Update(float deltaTime)
     {
         // Manejo del cooldown de la habilidad
+        if (!canThrow)
+        {
+            abilityTimer += deltaTime;
+            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
+            if (abilityTimer >= abilityCooldown)
+            {
+                canThrow = true;
+                abilityTimer = 0.0f;
+                Engineson.print("Cooldown terminado. Habilidad lista.");
+            }
+        }
 
         if (rigidbody != null && !exploded && collider != null)
         {
@@ -56,32 +67,16 @@ public class ArcSnare : BaseAbilities
             }
         }
 
-        // Manejo de la explosión
+        // Manejo de la explosión (pero sin destruir la explosión)
         if (exploded)
         {
             explosionTimer += deltaTime;
 
             if (explosionTimer >= explosionCooldown)
             {
-                if (explosion != null)
-                {
-                    Engineson.print("Destruyendo explosión...");
-                    //Engineson.Destroy(explosion);
-                    explosion = null;
-                }
-
                 exploded = false;
                 explosionTimer = 0f;
             }
-        }
-
-        // Manejo de la granada (después de la explosión)
-        if (!exploded && grenade != null && grenade.GetComponent<Arc>().needsDestroy)
-        {
-            Engineson.print("Destruyendo granada...");
-            //Engineson.Destroy(grenade.GetComponent<Arc>().gameObject);
-            grenade = null;
-            canThrow = true;
         }
     }
 

@@ -7,9 +7,22 @@ public class Shotgun : BaseWeapon
     private Audio sound;
     private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
     private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
+
+
+    private PlayerController playerController;
+    public PlayerData playerData;
+    Barrage barrage;
+    HookShot hookShot;
+
+    private float timeSinceLastShot = 0.0f;
+
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
-        shootCadence = 1f;
+        shootCadence = 0.7f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 50;
@@ -18,18 +31,30 @@ public class Shotgun : BaseWeapon
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
+        barrage = gameObject.GetComponent<Barrage>();
+        hookShot = gameObject.GetComponent<HookShot>();
+        
     }
 
     public override void Update(float deltaTime)
     {
         //CleanBullets();
+        timeSinceLastShot += deltaTime;
     }
 
     public override void Shoot()
     {
-        if (currentMagazineAmmo > 0)
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
-            currentMagazineAmmo--;
+            timeSinceLastShot = 0f; // Reiniciar contador
+
+            if (!playerData.infiniteBullets)
+            {
+                currentMagazineAmmo--;
+            }
+
             sound?.LoadAudio(shotgunShot);
             sound?.Play();
             // Shoot logic
@@ -61,7 +86,7 @@ public class Shotgun : BaseWeapon
                         projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                         projectile.AddScript("BulletData");
-                        projectile.GetComponent<BulletData>().Init(projTransform, direction);
+                        projectile.GetComponent<BulletData>().Init(projTransform, direction, gameObject);
                         bullets.Add(projectile.GetComponent<BulletData>());
 
                         Engineson.print("Projectile fired!");
@@ -78,19 +103,31 @@ public class Shotgun : BaseWeapon
         {
             sound?.LoadAudio(shotgunReload);
             sound?.Play();
+
+            if (currentTotalAmmo >= magazineSize)
+            {
+                currentMagazineAmmo = magazineSize;
+                currentTotalAmmo = currentTotalAmmo - magazineSize;
+            }
+            else
+            {
+                currentMagazineAmmo = currentTotalAmmo;
+                currentTotalAmmo = 0;
+            }
             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
-            currentMagazineAmmo = magazineSize;
+            Engineson.print("Shotgun reloaded");
+            Engineson.print($"Current ammo: {currentTotalAmmo}");
         }
     }
 
     public override void UseAbility1()
     {
-        
+        hookShot.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-
+        barrage.TriggerAbility();
     }
 
     public override void CleanBullets()

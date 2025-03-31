@@ -252,6 +252,15 @@ void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
     ConvertFromSharp(ref)->SetName(std::string(C_name));
 }
 
+MonoString* EngineBinds::GetTag(MonoObject* ref) {
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
+}
+
+void EngineBinds::SetTag(MonoObject* ref, MonoString* tag) {
+	char* C_tag = mono_string_to_utf8(tag);
+	ConvertFromSharp(ref)->SetTag(std::string(C_tag));
+}
+
 MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
 {
     char* C_name = mono_string_to_utf8(name);
@@ -919,6 +928,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
+	mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GetTag);
+	mono_add_internal_call("HawkEngine.GameObject::SetTag", (const void*)SetTag);
     mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);

@@ -6,6 +6,11 @@
 
 LightComponent::LightComponent(GameObject* owner) : Component(owner) { name = "Light"; }
 
+void LightComponent::Awake()
+{
+
+}
+
 void LightComponent::Start() {
     // init aqui
 }

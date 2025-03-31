@@ -132,6 +132,10 @@ ParticleFX::ParticleFX(GameObject* owner)
 	}
 }
 
+void ParticleFX::Awake() {
+
+}
+
 void ParticleFX::Start() {
 	if (owner->GetTransform()) {
 		position = owner->GetTransform()->GetPosition();

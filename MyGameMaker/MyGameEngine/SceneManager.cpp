@@ -18,14 +18,24 @@
 #include "glm/gtx/matrix_decompose.inl"
 
 
+bool SceneManager::Awake() {
+    for (const shared_ptr<GameObject>& object : currentScene->_children)
+    {
+        object->Awake();
+
+        if (object->HasComponent<CameraComponent>()) {
+            mainCamera = object;
+        }
+    }
+
+    return true;
+}
+
 bool SceneManager::Start() {
     for (const shared_ptr<GameObject>& object : currentScene->_children)
     {
         object->Start();
 
-        if (object->HasComponent<CameraComponent>()) {
-            mainCamera = object;
-        }
     }
 
     return true;

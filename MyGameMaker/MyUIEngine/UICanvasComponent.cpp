@@ -22,6 +22,10 @@ UICanvasComponent::UICanvasComponent(GameObject* owner)	: Component(owner)
 	name = "UICanvasComponent";
 }
 
+void UICanvasComponent::Awake()
+{
+}
+
 void UICanvasComponent::Start()
 {
     SDL_DisplayMode dm;

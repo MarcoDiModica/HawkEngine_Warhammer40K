@@ -20,6 +20,14 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject playerCamera;
     private Transform cameraTransform;
+    private PlayerController playerController;
+
+    public PlayerData playerData;
+
+    public override void Awake()
+    {
+        
+    }
 
     public override void Start()
     {
@@ -67,10 +75,22 @@ public class PlayerMovement : MonoBehaviour
             Engineson.print("ERROR: cameraTransform is NULL!");
             return;
         }
+
+        playerController = gameObject.GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Engineson.print("ERROR: playerController is NULL!");
+            return;
+        }
+
+        playerData = playerController.playerData;
     }
 
     public override void Update(float deltaTime)
     {
+        moveSpeed = playerData.movSpeed;
+        //Engineson.print("Player Movement Update: " + moveSpeed);
+
         if (playerDash == null || !playerDash.IsDashing)
         {
             UpdateMovement(moveDirection, deltaTime);
@@ -86,32 +106,41 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    override public void OnCollisionEnter(Collider other)
+    override public void OnCollisionEnter(GameObject other)
     {
-        Engineson.print("Player Collision Enter:");
+        if (other != null)
+        {
+            Engineson.print("OnCollisionEnter con: " + other.name);
+            Engineson.print(other.GetComponent<Collider>().name);
+        }
+        else
+        {
+            Engineson.print("Error: GameObject other es nulo");
+
+        }
     }
 
-    override public void OnCollisionStay(Collider other)
+    override public void OnCollisionStay(GameObject other)
     {
         //Engineson.print("Player Collision Stay: ");
     }
 
-    override public void OnCollisionExit(Collider other)
+    override public void OnCollisionExit(GameObject other)
     {
         Engineson.print("Player Collision Exit: ");
     }
 
-    override public void OnTriggerEnter(Collider other)
+    override public void OnTriggerEnter(GameObject other)
     {
         Engineson.print("Player Trigger Enter: ");
     }
 
-    override public void OnTriggerStay(Collider other)
+    override public void OnTriggerStay(GameObject other)
     {
-        Engineson.print("Player Trigger Stay: ");
+        //Engineson.print("Player Trigger Stay: ");
     }
 
-    override public void OnTriggerExit(Collider other)
+    override public void OnTriggerExit(GameObject other)
     {
         Engineson.print("Player Trigger Exit: ");
     }

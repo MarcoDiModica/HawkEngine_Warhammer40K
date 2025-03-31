@@ -20,6 +20,7 @@ public:
     SceneManager() {
     }
 
+    bool Awake();
     bool Start();
     bool Update(double dt);
 

@@ -134,11 +134,24 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyController");
 
+
 	//auto floor = CreateCube("Floor");
 	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
 	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//floorCollider->Start();
+
+	//auto cubeTest = CreateCube("CubeTest");
+	//cubeTest->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
+	//cubeTest->GetTransform()->SetScale(glm::vec3(2, 2, 2));
+	//cubeTest->AddComponent<BoxColliderComponent>(Application->physicsModule);
+
+	//auto floor = CreateCube("Floor");
+	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//floorCollider->Start();
+
 
 	//CreateGameplayUI();
 	//CreateMainMenuUI();

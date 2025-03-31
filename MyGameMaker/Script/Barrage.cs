@@ -1,70 +1,118 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 using static BaseWeapon;
 
-
 public class Barrage : BaseAbilities
 {
-    public GameObject shooter; // Ahora almacenamos el objeto completo en vez del transform
-    public List<BulletData> bullets = new List<BulletData>();
 
-    private bool isAbilityActive = false;
-    public override void Awake() { }
-    public override void Start() { }
-    public override void Update(float deltaTime) { }
-    public override void TriggerAbility()
+    public string name;
+    public bool enabled;
+    public float cooldown;
+    
+
+    private float yHeight = 0.0f;
+    private float timer = 0;
+    
+    GameObject grenade;
+    Rigidbody rigidbody;
+    BoxCollider collider;
+    bool canThrow = true;
+
+    private float explosionCooldown = 1.0f;
+    private float explosionTimer = 0.0f;
+
+    private float abilityCooldown = 3.0f; // Cooldown de la habilidad
+    private float abilityTimer = 0.0f;    // Contador del cooldown
+    private float time = 0.0f;
+
+
+    public override void Awake()
     {
-        if (isAbilityActive) return;
-        if (shooter == null) return; // Cambiado de shooterTransform a shooter
 
-        isAbilityActive = true;
+    }
+    public override void Start()
+    {
 
-        int numProjectiles = 10;
-        float spreadAngle = 90.0f;
-        float projectileSize = 0.2f;
-        float rangeMultiplier = 1.5f;
-        float angleStep = spreadAngle / (numProjectiles - 1);
-        float startAngle = -spreadAngle / 2;
+    }
 
-        Transform shooterTransform = shooter.GetComponent<Transform>(); // Obtenemos el transform
-        if (shooterTransform == null) return;
-
-        for (int i = 0; i < numProjectiles; i++)
+    public override void Update(float deltaTime)
+    {
+        // Manejo del cooldown de la habilidad
+        if (!canThrow)
         {
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-            if (projectile == null) continue;
+            abilityTimer += deltaTime;
+            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
-            projectile.AddComponent<MeshRenderer>();
-            projectile.AddComponent<BoxCollider>();
-
-            Transform projTransform = projectile.GetComponent<Transform>();
-            if (projTransform == null) continue;
-
-            Vector3 forward = shooterTransform.forward;
-            Vector3 spawnPos = shooterTransform.position + forward * rangeMultiplier;
-            projTransform.position = spawnPos;
-
-            float angle = startAngle + angleStep * i;
-            double radians = angle * (Math.PI / 180.0);
-            Vector3 direction = forward + new Vector3((float)Math.Sin(radians), 0, (float)Math.Cos(radians));
-
-            projTransform.position += direction;
-            projTransform.SetScale(projectileSize, projectileSize, projectileSize);
-
-            projectile.AddScript("BulletData");
-            BulletData bullet = projectile.GetComponent<BulletData>();
-
-            if (bullet != null)
+            if (abilityTimer >= abilityCooldown)
             {
-                bullet.Init(projTransform, direction, shooter); // Ahora pasamos shooter en vez de shooterTransform
-                bullets.Add(bullet);
+                canThrow = true;
+                abilityTimer = 0.0f;
+                Engineson.print("Cooldown terminado. Habilidad lista.");
             }
-
-            Engineson.print("Barrage Projectile fired!");
         }
 
-        isAbilityActive = false;
+        if (rigidbody != null && collider != null)
+        {
+            timer += deltaTime;
+
+            if (rigidbody.GetVelocity() != null && grenade != null && grenade.GetComponent<Transform>() != null)
+            {
+                float grenadeY = grenade.GetComponent<Transform>().GetPosition().Y;
+
+                if (rigidbody.GetVelocity().Y <= 0.1f && timer > 0.1f && yHeight > grenadeY)
+                {
+                    
+                }
+            }
+        }
+
+        
     }
+
+
+
+    public override void TriggerAbility()
+    {
+        if (canThrow)
+        {
+            Engineson.print("Lanzando granada...");
+            grenade = Engineson.CreateGameObject("Barrage", null);
+
+            if (grenade == null)
+            {
+                Engineson.print("ERROR: No se pudo crear la granada.");
+                return;
+            }
+
+            grenade.AddScript("BarrageBullet");
+            grenade.GetComponent<BarrageBullet>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+
+
+            canThrow = false; // Inicia el cooldown
+            abilityTimer = 0.0f;
+        }
+        else
+        {
+            Engineson.print("Habilidad en cooldown. Espera...");
+        }
+
+        if (!canThrow)
+        {
+            abilityTimer += time;
+            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+
+            if (abilityTimer >= abilityCooldown)
+            {
+                canThrow = true;
+                abilityTimer = 0.0f;
+                Engineson.print("Cooldown terminado. Habilidad lista.");
+            }
+        }
+
+    }
+
+    
+
 }
+

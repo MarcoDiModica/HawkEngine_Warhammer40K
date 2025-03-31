@@ -76,6 +76,7 @@
     <Compile Include="ArcSnare.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="Barrage.cs" />
+    <Compile Include="BarrageBullet.cs" />
     <Compile Include="BaseWeapon.cs" />
     <Compile Include="BlackHeart.cs" />
     <Compile Include="Boltgun.cs" />

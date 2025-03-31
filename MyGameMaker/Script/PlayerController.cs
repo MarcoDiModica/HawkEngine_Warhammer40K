@@ -50,19 +50,6 @@ public class PlayerController : MonoBehaviour
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
 
-        
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Vector3 playerCenterPosition = gameObject.GetComponent<Transform>().GetPosition();
-            playerCenterPosition.Y += 1.0f;
-            Vector3 playerForward = gameObject.GetComponent<Transform>().forward;
-            if (RayCast.Raycast(playerCenterPosition, playerForward, 50))
-            {
-                Engineson.print("Raycast hit!");
-            }
-        }
-
         if (moveDirection == Vector3.Zero && !playerInput.IsShooting())
         {
             // Idle

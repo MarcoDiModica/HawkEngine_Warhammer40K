@@ -74,7 +74,7 @@ void main() {
             // Default particles
             // Aplicar el color de la partícula pero preservar el alfa de la textura
             vec4 color = mix(ParticleColor, EndColor, Lifetime);
-            FragColor = vec4(texColor.rgb * color.rgb, texColor.a * ParticleColor.a);
+            FragColor = vec4(texColor.rgba * color.rgba);
             // FragColor = vec4(texColor.rgb * ParticleColor.rgb, texColor.a * ParticleColor.a);
         
     }

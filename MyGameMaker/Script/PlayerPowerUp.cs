@@ -16,6 +16,8 @@ public class PlayerPowerUp : MonoBehaviour
     private float magnetDuration = 5.0f;
     private float magnetTimer = 0.0f;
 
+
+
     public override void Awake()
     {
 
@@ -65,6 +67,35 @@ public class PlayerPowerUp : MonoBehaviour
                 playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence * 1.5f;
                 playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 1.5f;
                 Engineson.print("Magnet effect passed");
+            }
+            else
+            {
+                GameObject[] Ammunition = Physics.OverlapSphere(playerController.gameObject.GetComponent<Transform>().position, 20f, "Ammunition");
+
+                foreach (GameObject obj in Ammunition)
+                {
+                    if (obj != null && obj.tag == "Ammunition")
+                    {
+
+                        if (obj != null && obj.tag == "Ammunition")
+                        {
+
+                            if (obj.GetComponent<ShotgunShells>() != null)
+                            {
+                                obj.GetComponent<ShotgunShells>().isDetected = true;
+
+                            }
+                            else if (obj.GetComponent<BoltgunBullets>() != null)
+                            {
+                                obj.GetComponent<BoltgunBullets>().isDetected = true;
+                            }
+
+
+                        }
+
+
+                    }
+                }
             }
         }
     }

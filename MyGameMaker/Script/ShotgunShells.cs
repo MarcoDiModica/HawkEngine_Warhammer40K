@@ -12,6 +12,7 @@ public class ShotgunShells : PickUp
     public float floatHeight = 0.5f;
     public float rotationSpeed = 50f;
     public float lifeTime = 30f;
+    public bool isDetected = false;
 
     public override void Awake()
     {
@@ -28,9 +29,21 @@ public class ShotgunShells : PickUp
     {
         elapsedTime += deltaTime;
         PowerUpMovment(elapsedTime, deltaTime);
+        if(isDetected)
+        {
+            MoveTowardsPlayer(deltaTime);
+        }
         if (elapsedTime >= lifeTime)
         {
             Destroy();
+        }
+    }
+    public void MoveTowardsPlayer(float deltaTime)
+    {
+        GameObject player = GameObject.Find("Player");
+        if (player != null)
+        {
+            Transform.position = Vector3.Lerp(Transform.position, player.GetComponent<Transform>().position, 0.1f);
         }
     }
     public void Destroy()

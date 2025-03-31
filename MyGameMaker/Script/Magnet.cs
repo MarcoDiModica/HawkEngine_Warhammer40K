@@ -53,6 +53,7 @@ public class Magnet : PickUp
         Engineson.print("Magnet PowerUp applied");
         playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence / 2f;
         playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 2f;
+       
 
     }
 

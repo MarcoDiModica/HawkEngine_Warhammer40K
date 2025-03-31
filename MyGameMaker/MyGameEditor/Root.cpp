@@ -131,21 +131,45 @@ bool Root::Start()
 
 	// Test PowerUps
 
-	auto powerUp = CreateCube("MedicaeStimm");
-	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
-	powerUp->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	auto powerUp = CreateCube("ShotgunShells");
+	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
+	powerUp->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
-	powerUp->SetTag("PowerUp");
+	powerUp->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
+	powerUp->SetTag("Ammunition");	
+	
+	auto powerUp3 = CreateCube("ShotgunShells");
+	powerUp3->GetTransform()->SetPosition(glm::vec3(-20, 2, 0));
+	powerUp3->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp3->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
+	powerUp3->SetTag("Ammunition");
 
-	/*auto powerUp = CreateCube("Magnet");
-	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
-	powerUp->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp->AddComponent<ScriptComponent>()->LoadScript("Magnet");
-	powerUp->SetTag("PowerUp");*/
+	auto powerUp4 = CreateCube("BoltgunBullets");
+	powerUp4->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
+	powerUp4->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp4->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
+	powerUp4->SetTag("Ammunition");
+
+	auto powerUp5 = CreateCube("ShotgunShells");
+	powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
+	powerUp5->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp5->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
+	powerUp5->SetTag("Ammunition");
+
+	/*auto powerUp2 = CreateCube("Magnet");
+	powerUp2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	powerUp2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	powerUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp2->AddComponent<ScriptComponent>()->LoadScript("Magnet");
+	powerUp2->SetTag("PowerUp");*/
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));

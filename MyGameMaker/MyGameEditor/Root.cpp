@@ -131,45 +131,46 @@ bool Root::Start()
 
 	// Test PowerUps
 
-	auto powerUp = CreateCube("ShotgunShells");
+	auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
 	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
-	powerUp->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
-	powerUp->SetTag("Ammunition");	
+	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
+	powerUp->SetTag("PowerUp");	
 	
-	auto powerUp3 = CreateCube("ShotgunShells");
+	auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
 	powerUp3->GetTransform()->SetPosition(glm::vec3(-20, 2, 0));
-	powerUp3->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp3->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
 	powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp3->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
-	powerUp3->SetTag("Ammunition");
+	powerUp3->AddComponent<ScriptComponent>()->LoadScript("Magnet");
+	powerUp3->SetTag("PowerUp");
 
-	auto powerUp4 = CreateCube("BoltgunBullets");
+	auto powerUp4 = CreateGameObjectWithPath("Assets/Meshes/AmmunitionBlessing.fbx");
 	powerUp4->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
-	powerUp4->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp4->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
 	powerUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp4->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
-	powerUp4->SetTag("Ammunition");
+	powerUp4->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
+	powerUp4->SetTag("PowerUp");
 
-	auto powerUp5 = CreateCube("ShotgunShells");
+	auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
 	powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
-	powerUp5->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp5->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
 	powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp5->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
-	powerUp5->SetTag("Ammunition");
+	powerUp5->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
+	powerUp5->SetTag("PowerUp");
 
-	auto powerUp6 = CreateCube("ChapterStandard");
+	auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 	powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
-	powerUp6->GetTransform()->SetScale(glm::vec3(0.5, 0.5, 0.5));
+	powerUp6->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
 	powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp6->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
+	powerUp6->AddComponent<ScriptComponent>()->LoadScript("BlackHeart");
 	powerUp6->SetTag("PowerUp");
+
 	/*auto powerUp2 = CreateCube("Magnet");
 	powerUp2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	powerUp2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
@@ -185,7 +186,7 @@ bool Root::Start()
 	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	//Lictor
-	auto lictor = CreateGameObject("Lictor");
+	/*auto lictor = CreateGameObject("Lictor");
 	lictor->SetTag("Enemy");
 	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
 	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
@@ -197,7 +198,7 @@ bool Root::Start()
 	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
 	lictorMesh->SetName("LictorMesh");
 	ParentGameObject(*lictorMesh, *lictor);
-	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");*/
 
 	//auto cube = CreateCube("Cube");
 	//cube->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
@@ -226,19 +227,19 @@ bool Root::Start()
 
 	CreateGameplayUI();
 
-	//For rendering Interaction System text, remove the canvas if there is already one
-	auto canvas = CreateGameObject("Canvas");
-	canvas->AddComponent<UICanvasComponent>();
-	canvas->AddComponent<UITransformComponent>();
-	canvas->AddComponent<SoundComponent>();
+	////For rendering Interaction System text, remove the canvas if there is already one
+	//auto canvas = CreateGameObject("Canvas");
+	//canvas->AddComponent<UICanvasComponent>();
+	//canvas->AddComponent<UITransformComponent>();
+	//canvas->AddComponent<SoundComponent>();
 
-	auto interactText = CreateGameObject("InteractText");
-	Application->root->ParentGameObject(*interactText, *canvas);
-	interactText->AddComponent<UIImageComponent>();
-	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
-	interactText->AddComponent<UIButtonComponent>();
-	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	//auto interactText = CreateGameObject("InteractText");
+	//Application->root->ParentGameObject(*interactText, *canvas);
+	//interactText->AddComponent<UIImageComponent>();
+	//interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	//interactText->AddComponent<UIButtonComponent>();
+	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 
 	floor->SetActive(false);
 

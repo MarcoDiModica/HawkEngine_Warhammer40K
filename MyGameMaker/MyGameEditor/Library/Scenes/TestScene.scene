@@ -85,7 +85,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -144,7 +144,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -248,9 +248,6 @@ GameObject3:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -270,6 +267,9 @@ GameObject3:
         - 0
         - 0
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     ScriptComponents:
       Script0:
         name: UIGameplay
@@ -714,3 +714,38 @@ GameObject3:
           enabled: true
           texture_path: Assets/Textures/grenade_icon.png
       Children: ~
+GameObject4:
+  name: CubeNextLVL
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 13.105774879455566
+        - 1.7564873695373535
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: Scene1ToScene2
+  Children: ~

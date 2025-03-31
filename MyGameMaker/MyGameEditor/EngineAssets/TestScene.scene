@@ -714,3 +714,38 @@ GameObject3:
           enabled: true
           texture_path: Assets/Textures/grenade_icon.png
       Children: ~
+GameObject4:
+  name: CubeNextLVL
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 13.105774879455566
+        - 1.7564873695373535
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: Scene1ToScene2
+  Children: ~

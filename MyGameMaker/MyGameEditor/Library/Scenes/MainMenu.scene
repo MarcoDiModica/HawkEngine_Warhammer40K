@@ -14,7 +14,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -56,15 +56,12 @@ GameObject1:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     SoundComponent:
       name: SoundComponent
       enabled: true
-      audio_path: ""
+      audio_path: Assets/Audio/SFX/UI/ButtonPressed.wav
       volume: 1
-      is_music: false
+      is_music: true
       is_spatial: false
       auto_play: false
       loop: false
@@ -87,6 +84,9 @@ GameObject1:
         - 0
         - 0
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     ScriptComponents:
       Script0:
         name: MenuButtons
@@ -375,3 +375,34 @@ GameObject1:
           enabled: true
           state: 1
       Children: ~
+GameObject2:
+  name: Empty
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\Retro Ambience 02.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: true
+      loop: true
+  Children: ~

@@ -11,8 +11,10 @@ public class MenuButtons : MonoBehaviour
     private UIButton quitButton;
 
     //private Audio sound;
+    private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
+    private string musicPath = "Assets/Audio/Retro Ambience 02.wav";
     public override void Start()
     {
         newGameButton = GameObject.Find("NewGameButton").GetComponent<UIButton>();
@@ -20,7 +22,7 @@ public class MenuButtons : MonoBehaviour
         optionsButton = GameObject.Find("OptionsButton").GetComponent<UIButton>();
         creditsButton = GameObject.Find("CreditsButton").GetComponent<UIButton>();
         quitButton = GameObject.Find("QuitButton").GetComponent<UIButton>();
-        //sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<Audio>();
 
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
         {
@@ -32,36 +34,38 @@ public class MenuButtons : MonoBehaviour
     {
         if (newGameButton.GetState() == ButtonState.CLICKED)
         {
-           SceneManager.LoadScene("TestScene");
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            SceneManager.LoadScene("TestScene");
         }
-        
-        //if (continueButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("Continue is Clicked");
-        //}
 
-        //if (optionsButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("Options is Clicked");
-        //}
+        if (continueButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            Engineson.print("Continue is Clicked");
+        }
 
-        //if (creditsButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("Credits is Clicked");
-        //}
+        if (optionsButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            Engineson.print("Options is Clicked");
+        }
 
-        //if (quitButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("quit is Clicked");
-        //}
+        if (creditsButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            Engineson.print("Credits is Clicked");
+        }
+
+        if (quitButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            Engineson.print("quit is Clicked");
+        }
 
     }
 }

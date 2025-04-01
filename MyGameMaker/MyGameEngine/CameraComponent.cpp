@@ -52,6 +52,11 @@ CameraComponent& CameraComponent::operator=(CameraComponent&& other) noexcept
     return *this;
 }
 
+void CameraComponent::Awake()
+{
+	
+}
+
 void CameraComponent::Start()
 {
 	UpdateCameraView(1280, 720, 1280, 720);

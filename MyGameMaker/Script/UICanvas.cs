@@ -22,6 +22,7 @@ namespace HawkEngine
         {
             Engineson.print("UICanvas default constructor");
         }
+        public override void Awake() { }
 
         public override void Start() { }
 

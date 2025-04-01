@@ -18,6 +18,7 @@ public:
 	UISliderComponent(UISliderComponent&&) noexcept = default;
 	UISliderComponent& operator=(UISliderComponent&&) noexcept = default;
 
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;

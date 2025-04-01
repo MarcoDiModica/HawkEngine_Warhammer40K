@@ -159,6 +159,35 @@ GameObject& GameObject::operator=(GameObject&& other) noexcept
 	return *this;
 }
 
+void GameObject::Awake()
+{
+    for (auto& component : components)
+    {
+        if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+            component.second->Awake();
+        }
+        else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
+        {
+            if (component.second->updateInStop)
+            {
+                component.second->Awake();
+            }
+        }
+    }
+
+    if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+        for (auto& scriptComponent : scriptComponents)
+        {
+            scriptComponent->Awake();
+        }
+    }
+
+    for (auto& child : children)
+    {
+        child->Awake();
+    }
+}
+
 void GameObject::Start()
 {
     for (auto& component : components)
@@ -353,6 +382,16 @@ void GameObject::SetName(const std::string& name)
     this->name = name;
 }
 
+void GameObject::SetTag(const std::string& tag)
+{
+	this->tag = tag;
+}
+
+std::string GameObject::GetTag() const
+{
+	return tag;
+}
+
 bool GameObject::CompareTag(const std::string& tag) const
 {
     return this->tag == tag;
@@ -531,7 +570,7 @@ MonoObject* GameObject::GetSharp() {
     if (CsharpReference) {
         return CsharpReference;
     }
-
+    
     //Obtenemos el nombre del GO, creamos el string en mono y llamamos a la funcion que crea el GO
     MonoString* monoString = mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
     CsharpReference = EngineBinds::CreateGameObjectSharp(monoString, this);

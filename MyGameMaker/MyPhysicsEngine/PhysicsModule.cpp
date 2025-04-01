@@ -10,7 +10,7 @@
 #include "MyGameEditor/App.h"
 #include "External/Optick/include/optick.h"
 
-constexpr float fixedDeltaTime = 0.01; // 60 updates per second //With 0.02 it goes a little bit laggy
+constexpr float fixedDeltaTime = 0.002-; // 60 updates per second //With 0.02 it goes a little bit laggy
 float accumulatedTime = 0.0f;
 
 

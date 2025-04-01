@@ -279,7 +279,6 @@ public class )" + scriptName + R"( : MonoBehaviour
 	public bool isActive = true;
 
 	// Variables privadas
-	private GameObject owner;
 	private Transform transform;
 
 	// Inicialización al cargar el script

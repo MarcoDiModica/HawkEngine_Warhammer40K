@@ -70,7 +70,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
       <Compile Include="Test2.cs" />
-      <Compile Include="Test3.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio.cs" />

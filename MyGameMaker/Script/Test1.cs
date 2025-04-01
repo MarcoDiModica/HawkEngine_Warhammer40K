@@ -10,7 +10,7 @@ public class Test1 : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        Engineson.print("Im a CUBEEE");
+        Engineson.print("Im a CUBEEeE");
 
         if (Input.GetKeyDown(KeyCode.C))
         {

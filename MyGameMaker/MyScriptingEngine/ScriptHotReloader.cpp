@@ -568,10 +568,10 @@ bool ScriptHotReloader::CompileExistingProject() {
 	std::string versionedFilename = GenerateVersionedFilename("Script.dll");
 	std::string stagedPath = m_StagingDirectory + "\\" + versionedFilename;
 
+	CleanupOldVersions(0);
+
 	try {
 		std::filesystem::copy(assemblyPath, stagedPath, std::filesystem::copy_options::overwrite_existing);
-
-		CleanupOldVersions(5);
 	}
 	catch (const std::filesystem::filesystem_error& e) {
 		LOG(LogType::LOG_ERROR, "Failed to create versioned assembly: %s", e.what());
@@ -715,49 +715,28 @@ void ScriptHotReloader::DisplayCompilationOutput() {
 }
 
 std::string ScriptHotReloader::GenerateVersionedFilename(const std::string& baseFilename) {
-	auto now = std::chrono::system_clock::now();
-	auto time_t_now = std::chrono::system_clock::to_time_t(now);
-
-	std::stringstream ss;
-	ss << "Script_";
-
-	std::tm tm_now;
-	localtime_s(&tm_now, &time_t_now);
-	ss << std::put_time(&tm_now, "%Y%m%d_%H%M%S");
-
-	std::string extension = ".dll";
-	size_t dotPos = baseFilename.find_last_of('.');
-	if (dotPos != std::string::npos) {
-		extension = baseFilename.substr(dotPos);
-	}
-
-	ss << extension;
-	return ss.str();
+	return "currentAssembly.dll";
 }
 
 void ScriptHotReloader::CleanupOldVersions(int keepCount) {
 	try {
-		std::vector<std::filesystem::directory_entry> versionedFiles;
+		std::string currentPath = m_StagingDirectory + "\\currentAssembly.dll";
+		std::string prev1Path = m_StagingDirectory + "\\previousAssembly1.dll";
+		std::string prev2Path = m_StagingDirectory + "\\previousAssembly2.dll";
 
-		for (const auto& entry : std::filesystem::directory_iterator(m_StagingDirectory)) {
-			if (entry.is_regular_file() &&
-				entry.path().filename().string().find("Script_") == 0) {
-				versionedFiles.push_back(entry);
-			}
+		if (std::filesystem::exists(prev2Path)) {
+			std::filesystem::remove(prev2Path);
 		}
 
-		std::sort(versionedFiles.begin(), versionedFiles.end(),
-			[](const std::filesystem::directory_entry& a, const std::filesystem::directory_entry& b) {
-				return std::filesystem::last_write_time(a) > std::filesystem::last_write_time(b);
-			});
+		if (std::filesystem::exists(prev1Path)) {
+			std::filesystem::rename(prev1Path, prev2Path);
+		}
 
-		if (versionedFiles.size() > keepCount) {
-			for (size_t i = keepCount; i < versionedFiles.size(); ++i) {
-				std::filesystem::remove(versionedFiles[i]);
-			}
+		if (std::filesystem::exists(currentPath)) {
+			std::filesystem::rename(currentPath, prev1Path);
 		}
 	}
 	catch (const std::filesystem::filesystem_error& e) {
-		LOG(LogType::LOG_ERROR, "Error cleaning up old assemblies: %s", e.what());
+		LOG(LogType::LOG_ERROR, "Error managing assembly versions: %s", e.what());
 	}
 }

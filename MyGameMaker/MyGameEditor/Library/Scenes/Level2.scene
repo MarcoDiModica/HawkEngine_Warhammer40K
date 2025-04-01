@@ -285,6 +285,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 0.649999976
+            - 6.0999999
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cone.001_lvl2_lvl2
       tag: Untagged
@@ -3865,6 +3875,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.79999995
+            - 4
+            - 3
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.017_lvl2.001
       tag: Untagged
@@ -3930,9 +3950,9 @@ GameObject2:
             - 1916.8104248046875
             - -4721.32470703125
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 86.884834289550781
             - 19.680673599243164
@@ -4069,6 +4089,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.79999995
+            - 4
+            - 3
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.019_lvl2.001
       tag: Untagged
@@ -4134,9 +4164,9 @@ GameObject2:
             - 1916.8104248046875
             - -4721.32470703125
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 86.884834289550781
             - 19.680673599243164
@@ -4236,9 +4266,9 @@ GameObject2:
             - 1916.8104248046875
             - -8789.486328125
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 2224.06591796875
             - 16.407663345336914
@@ -4273,6 +4303,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.79999995
+            - 4
+            - 3
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.021_lvl2.001
       tag: Untagged
@@ -4338,9 +4378,9 @@ GameObject2:
             - 1916.8104248046875
             - -8789.486328125
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 2224.06591796875
             - 16.407663345336914
@@ -4375,6 +4415,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.79999995
+            - 3.0999999
+            - 4
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.022_lvl2.001
       tag: Untagged
@@ -4477,6 +4527,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.79999995
+            - 3.20000005
+            - 3.0999999
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.023_lvl2.001
       tag: Untagged
@@ -4579,6 +4639,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.79999995
+            - 4.0999999
+            - 2.70000005
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.024_lvl2.001
       tag: Untagged
@@ -4644,9 +4714,9 @@ GameObject2:
             - 1916.8104248046875
             - -12921.685546875
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 86.884834289550781
             - 19.680673599243164
@@ -4746,9 +4816,9 @@ GameObject2:
             - 1916.8104248046875
             - -12921.685546875
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 86.884834289550781
             - 19.680673599243164
@@ -6856,57 +6926,6 @@ GameObject2:
               - 0.567836881
               - 0
               - 0.0113113783
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: ""
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cube.057_lvl2.001
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 16353.7431640625
-            - 1960.611328125
-            - 14525.37109375
-          localRotation:
-            - -89.999995065778094
-            - -19.100533317406661
-            - -2.1796241344087217e-07
-          localScale:
-            - 51.224552154541016
-            - 51.224552154541016
-            - 84.129531860351562
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Cube.057_lvl2.001
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 1
-              - 0.0521455854
-              - 0.0521455854
               - 1
             metallic: 0
             roughness: 0.5
@@ -10611,9 +10630,9 @@ GameObject2:
             - 976.39801025390625
             - -34280.79296875
           localRotation:
-            - -91.58562915738753
-            - 27.109989547551955
-            - -0.21012534106267536
+            - -91.585597851053436
+            - 27.10999343796821
+            - -0.21011908749278446
           localScale:
             - 55.744495391845703
             - 58.483379364013672
@@ -10662,9 +10681,9 @@ GameObject2:
             - 979.06005859375
             - -33805.5859375
           localRotation:
-            - -91.58562915738753
-            - 27.109989547551955
-            - -0.21012534106267536
+            - -91.585597851053436
+            - 27.10999343796821
+            - -0.21011908749278446
           localScale:
             - 55.744495391845703
             - 58.483379364013672
@@ -10713,9 +10732,9 @@ GameObject2:
             - 979.06005859375
             - -32087.380859375
           localRotation:
-            - -91.016832197670709
-            - -68.427195180333499
-            - -0.50871278912238993
+            - -91.016876200741336
+            - -68.427259940211428
+            - -0.50868250576837459
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -10764,9 +10783,9 @@ GameObject2:
             - 976.39788818359375
             - -31117.626953125
           localRotation:
-            - -91.016832197670709
-            - -68.427195180333499
-            - -0.50871278912238993
+            - -91.016876200741336
+            - -68.427259940211428
+            - -0.50868250576837459
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -11243,9 +11262,9 @@ GameObject2:
             - 748.94708251953125
             - -21148.51171875
           localRotation:
-            - 90.023583553811733
-            - -89.976259548374145
-            - 179.98669588116792
+            - 270.01027260448416
+            - -90
+            - 0
           localScale:
             - 1162.4949951171875
             - 1000.994140625
@@ -11304,9 +11323,9 @@ GameObject2:
             - 110.79864501953125
             - -23130.26953125
           localRotation:
-            - 90.023583553811733
-            - -89.976259548374145
-            - 179.98669588116792
+            - 270.01027260448416
+            - -90
+            - 0
           localScale:
             - 1162.4949951171875
             - 1000.994140625
@@ -11477,9 +11496,9 @@ GameObject2:
             - 1276.346435546875
             - 13627.603515625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 254.55644226074219
             - 2500.754150390625
@@ -11514,6 +11533,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        MeshColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - -0.800000012
+            - 0.25999999
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.018_lvl2_lvl2
       tag: Untagged
@@ -11528,9 +11557,9 @@ GameObject2:
             - 1276.346435546875
             - 14473.5517578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 254.55644226074219
             - 446.62875366210938
@@ -11579,9 +11608,9 @@ GameObject2:
             - 1282.6800537109375
             - 19362.37890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 475.45693969726562
             - 908.419677734375
@@ -11616,6 +11645,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        MeshColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - -0.100000001
+            - 0.25999999
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.013_lvl2_lvl2
       tag: Untagged
@@ -11630,9 +11669,9 @@ GameObject2:
             - 1276.346435546875
             - 21721.298828125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 254.55644226074219
             - 384.56121826171875
@@ -11667,6 +11706,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        MeshColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0.25999999
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.017_lvl2_lvl2
       tag: Untagged
@@ -11681,9 +11730,9 @@ GameObject2:
             - 1276.346435546875
             - 14473.5517578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 254.55644226074219
             - 446.62875366210938
@@ -11915,9 +11964,9 @@ GameObject2:
             - 1282.6800537109375
             - 19441.66015625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 977.56097412109375
             - 1226.174560546875
@@ -11952,6 +12001,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        MeshColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - -0.200000003
+            - 0.25999999
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.022_lvl2_lvl2
       tag: Untagged
@@ -11966,9 +12025,9 @@ GameObject2:
             - 1729.630615234375
             - 20700.673828125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 442.85861206054688
             - 126.90205383300781
@@ -12003,6 +12062,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.023_lvl2_lvl2
       tag: Untagged
@@ -12054,6 +12123,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.024_lvl2_lvl2
       tag: Untagged
@@ -12068,8 +12147,8 @@ GameObject2:
             - 1729.630615234375
             - 22569.302734375
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 345.43319702148438
@@ -12105,6 +12184,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.025_lvl2_lvl2
       tag: Untagged
@@ -12120,7 +12209,7 @@ GameObject2:
             - 22967.697265625
           localRotation:
             - -90
-            - -0.084292869632442688
+            - -0.084292841333556398
             - 0
           localScale:
             - 941.43121337890625
@@ -12156,6 +12245,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.027_lvl2_lvl2
       tag: Untagged
@@ -12170,9 +12269,9 @@ GameObject2:
             - 1729.630615234375
             - 21530.267578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 1140.4056396484375
             - 126.90205383300781
@@ -12207,6 +12306,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.028_lvl2_lvl2
       tag: Untagged
@@ -12222,7 +12331,7 @@ GameObject2:
             - 20540.16015625
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -12258,6 +12367,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.029_lvl2_lvl2
       tag: Untagged
@@ -12273,7 +12392,7 @@ GameObject2:
             - 20038.39453125
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -12309,6 +12428,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.030_lvl2_lvl2
       tag: Untagged
@@ -12323,9 +12452,9 @@ GameObject2:
             - 1729.630615234375
             - 20291.05859375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 235.01882934570312
             - 126.90205383300781
@@ -12360,6 +12489,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.031_lvl2_lvl2
       tag: Untagged
@@ -12374,9 +12513,9 @@ GameObject2:
             - 1729.630615234375
             - 20291.05859375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 235.01882934570312
             - 126.90205383300781
@@ -12411,6 +12550,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.032_lvl2_lvl2
       tag: Untagged
@@ -12425,9 +12574,9 @@ GameObject2:
             - 1729.630615234375
             - 20291.05859375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 235.01882934570312
             - 126.90205383300781
@@ -12462,6 +12611,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.033_lvl2_lvl2
       tag: Untagged
@@ -12476,9 +12635,9 @@ GameObject2:
             - 1729.630615234375
             - 20291.05859375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 235.01882934570312
             - 126.90205383300781
@@ -12513,6 +12672,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.034_lvl2_lvl2
       tag: Untagged
@@ -12528,7 +12697,7 @@ GameObject2:
             - 20038.39453125
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -12564,6 +12733,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.035_lvl2_lvl2
       tag: Untagged
@@ -12579,7 +12758,7 @@ GameObject2:
             - 20555.328125
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -12615,6 +12794,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.036_lvl2_lvl2
       tag: Untagged
@@ -12629,9 +12818,9 @@ GameObject2:
             - 1729.630615234375
             - 21530.267578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 1140.4056396484375
             - 126.90205383300781
@@ -12666,6 +12855,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.037_lvl2_lvl2
       tag: Untagged
@@ -12681,7 +12880,7 @@ GameObject2:
             - 22967.697265625
           localRotation:
             - -90
-            - -0.084292869632442688
+            - -0.084292841333556398
             - 0
           localScale:
             - 941.43121337890625
@@ -12717,6 +12916,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.038_lvl2_lvl2
       tag: Untagged
@@ -12731,8 +12940,8 @@ GameObject2:
             - 1729.630615234375
             - 22569.302734375
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 345.43319702148438
@@ -12768,6 +12977,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.039_lvl2_lvl2
       tag: Untagged
@@ -12819,6 +13038,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.040_lvl2_lvl2
       tag: Untagged
@@ -12833,9 +13062,9 @@ GameObject2:
             - 1729.630615234375
             - 20700.673828125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 442.85861206054688
             - 126.90205383300781
@@ -12870,6 +13099,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.041_lvl2_lvl2
       tag: Untagged
@@ -12921,6 +13160,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.70000005
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.042_lvl2_lvl2
       tag: Untagged
@@ -12935,9 +13184,9 @@ GameObject2:
             - 1729.630615234375
             - 21530.267578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 1140.4056396484375
             - 126.90205383300781
@@ -12986,9 +13235,9 @@ GameObject2:
             - 1729.630615234375
             - 17418.359375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 915.10943603515625
             - 126.90205383300781
@@ -13023,6 +13272,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.044_lvl2_lvl2
       tag: Untagged
@@ -13037,9 +13296,9 @@ GameObject2:
             - 1729.630615234375
             - 18402.451171875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 174.3052978515625
             - 126.90205383300781
@@ -13074,6 +13333,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.045_lvl2_lvl2
       tag: Untagged
@@ -13088,9 +13357,9 @@ GameObject2:
             - 1729.630615234375
             - 18402.451171875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 174.3052978515625
             - 126.90205383300781
@@ -13125,6 +13394,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.046_lvl2_lvl2
       tag: Untagged
@@ -13140,7 +13419,7 @@ GameObject2:
             - 18552.115234375
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -13176,6 +13455,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.047_lvl2_lvl2
       tag: Untagged
@@ -13191,7 +13480,7 @@ GameObject2:
             - 18205.46484375
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -13227,6 +13516,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.54999995
+            - 1
+            - 9
+          offset:
+            - -0.0500000007
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.048_lvl2_lvl2
       tag: Untagged
@@ -13242,7 +13541,7 @@ GameObject2:
             - 18205.46484375
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -13278,6 +13577,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.049_lvl2_lvl2
       tag: Untagged
@@ -13293,7 +13602,7 @@ GameObject2:
             - 18552.115234375
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -13329,6 +13638,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.050_lvl2_lvl2
       tag: Untagged
@@ -13343,9 +13662,9 @@ GameObject2:
             - 1729.630615234375
             - 18402.451171875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 174.3052978515625
             - 126.90205383300781
@@ -13380,6 +13699,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.051_lvl2_lvl2
       tag: Untagged
@@ -13394,9 +13723,9 @@ GameObject2:
             - 1729.630615234375
             - 18402.451171875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 174.3052978515625
             - 126.90205383300781
@@ -13431,6 +13760,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.052_lvl2_lvl2
       tag: Untagged
@@ -13482,6 +13821,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.053_lvl2_lvl2
       tag: Untagged
@@ -13496,9 +13845,9 @@ GameObject2:
             - 1729.630615234375
             - 17418.359375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 915.10943603515625
             - 126.90205383300781
@@ -13533,6 +13882,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.054_lvl2_lvl2
       tag: Untagged
@@ -13548,7 +13907,7 @@ GameObject2:
             - 16253.3447265625
           localRotation:
             - -90
-            - -0.084292869632442688
+            - -0.084292841333556398
             - 0
           localScale:
             - 941.43121337890625
@@ -13584,6 +13943,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.055_lvl2_lvl2
       tag: Untagged
@@ -13599,7 +13968,7 @@ GameObject2:
             - 16249.3984375
           localRotation:
             - -90
-            - -0.084292869632442688
+            - -0.084292841333556398
             - 0
           localScale:
             - 941.43121337890625
@@ -13635,6 +14004,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.056_lvl2_lvl2
       tag: Untagged
@@ -13686,6 +14065,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.85000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.057_lvl2_lvl2
       tag: Untagged
@@ -13737,6 +14126,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.85000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.026_lvl2_lvl2
       tag: Untagged
@@ -13751,9 +14150,9 @@ GameObject2:
             - 1967.9022216796875
             - 22448.40625
           localRotation:
-            - -4.3256899211193242e-06
-            - -1.1301297817164272e-16
-            - -0.12965454916821656
+            - -4.3256899211196528e-06
+            - 1.7854891674058672e-16
+            - -0.12965456250842144
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -13802,9 +14201,9 @@ GameObject2:
             - 1967.9022216796875
             - 22448.40625
           localRotation:
-            - -4.3256899211193242e-06
-            - -1.1301297817164272e-16
-            - -0.12965454916821656
+            - -4.3256899211196528e-06
+            - 1.7854891674058672e-16
+            - -0.12965456250842144
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -13853,9 +14252,9 @@ GameObject2:
             - 1967.9022216796875
             - 22448.40625
           localRotation:
-            - -4.3256899211193242e-06
-            - -1.1301297817164272e-16
-            - -0.12965454916821656
+            - -4.3256899211196528e-06
+            - 1.7854891674058672e-16
+            - -0.12965456250842144
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -13904,9 +14303,9 @@ GameObject2:
             - 1967.9022216796875
             - 22448.40625
           localRotation:
-            - -4.3256899211193242e-06
-            - -1.1301297817164272e-16
-            - -0.12965454916821656
+            - -4.3256899211196528e-06
+            - 1.7854891674058672e-16
+            - -0.12965456250842144
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -13955,9 +14354,9 @@ GameObject2:
             - 1967.9022216796875
             - 21598.134765625
           localRotation:
-            - 89.993715776085253
-            - -89.872871190739275
-            - -89.993727850274766
+            - 89.993429424113771
+            - -89.871414105727155
+            - -89.99345115765675
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -14006,9 +14405,9 @@ GameObject2:
             - 1967.9022216796875
             - 21598.134765625
           localRotation:
-            - 89.993715776085253
-            - -89.872871190739275
-            - -89.993727850274766
+            - 89.993429424113771
+            - -89.871414105727155
+            - -89.99345115765675
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -14058,7 +14457,7 @@ GameObject2:
             - 17285.77734375
           localRotation:
             - 179.99999499104402
-            - -2.2311798413903595e-05
+            - -2.2311791900131878e-05
             - -179.87034070171788
           localScale:
             - 583.88134765625
@@ -14094,6 +14493,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 0.600000024
+            - 5.4000001
+          offset:
+            - 0
+            - 0
+            - -0.200000003
+          isTrigger: false
       Children: ~
     - name: Cube.064_lvl2_lvl2
       tag: Untagged
@@ -14109,7 +14518,7 @@ GameObject2:
             - 17293.650390625
           localRotation:
             - 179.99999499104402
-            - -2.2311798413903595e-05
+            - -2.2311791900131878e-05
             - -179.87034070171788
           localScale:
             - 583.88134765625
@@ -14145,6 +14554,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 0.600000024
+            - 5.4000001
+          offset:
+            - 0
+            - 0
+            - -0.200000003
+          isTrigger: false
       Children: ~
     - name: Cube.065_lvl2_lvl2
       tag: Untagged
@@ -14160,7 +14579,7 @@ GameObject2:
             - 17569.228515625
           localRotation:
             - 179.99999499104402
-            - -2.2311798413903595e-05
+            - -2.2311791900131878e-05
             - -179.87034070171788
           localScale:
             - 541.81085205078125
@@ -14211,7 +14630,7 @@ GameObject2:
             - 16785.146484375
           localRotation:
             - 179.99999499104402
-            - -2.2311798413903595e-05
+            - -2.2311791900131878e-05
             - -179.87034070171788
           localScale:
             - 541.81085205078125
@@ -14262,7 +14681,7 @@ GameObject2:
             - 16785.146484375
           localRotation:
             - 179.99999499104402
-            - -2.2311798413903595e-05
+            - -2.2311791900131878e-05
             - -179.87034070171788
           localScale:
             - 541.81085205078125
@@ -14313,7 +14732,7 @@ GameObject2:
             - 17569.228515625
           localRotation:
             - 179.99999499104402
-            - -2.2311798413903595e-05
+            - -2.2311791900131878e-05
             - -179.87034070171788
           localScale:
             - 541.81085205078125
@@ -14363,9 +14782,9 @@ GameObject2:
             - 1729.630615234375
             - 18107.119140625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 2427.178955078125
             - 126.90205383300781
@@ -14400,6 +14819,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - -0.0299999993
+          isTrigger: false
       Children: ~
     - name: Cube.086_lvl2_lvl2
       tag: Untagged
@@ -14415,7 +14844,7 @@ GameObject2:
             - 21295.017578125
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 202.30824279785156
@@ -14451,6 +14880,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.60000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.087_lvl2_lvl2
       tag: Untagged
@@ -14466,7 +14905,7 @@ GameObject2:
             - 22163.638671875
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 202.30824279785156
@@ -14502,6 +14941,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.088_lvl2_lvl2
       tag: Untagged
@@ -14516,9 +14965,9 @@ GameObject2:
             - 1729.630615234375
             - 20651.69140625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 473.3958740234375
             - 126.90205383300781
@@ -14553,6 +15002,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.089_lvl2_lvl2
       tag: Untagged
@@ -14604,6 +15063,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.60000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.090_lvl2_lvl2
       tag: Untagged
@@ -14618,8 +15087,8 @@ GameObject2:
             - 1729.630615234375
             - 21435.580078125
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 993.590576171875
@@ -14655,6 +15124,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.091_lvl2_lvl2
       tag: Untagged
@@ -14706,6 +15185,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.60000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.092_lvl2_lvl2
       tag: Untagged
@@ -14720,9 +15209,9 @@ GameObject2:
             - 1729.630615234375
             - 22478.58203125
           localRotation:
-            - 89.996533789546731
-            - -89.873362708854927
-            - -179.99883044205797
+            - 90.004303078321968
+            - -89.872299973709687
+            - 179.99340368419513
           localScale:
             - 272.09011840820312
             - 126.89237213134766
@@ -14757,6 +15246,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.093_lvl2_lvl2
       tag: Untagged
@@ -14771,8 +15270,8 @@ GameObject2:
             - 1729.630615234375
             - 23453.572265625
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 993.590576171875
@@ -14808,6 +15307,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.094_lvl2_lvl2
       tag: Untagged
@@ -14823,7 +15332,7 @@ GameObject2:
             - 24718.955078125
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -14859,6 +15368,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.095_lvl2_lvl2
       tag: Untagged
@@ -14874,7 +15393,7 @@ GameObject2:
             - 24718.955078125
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -14910,6 +15429,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.096_lvl2_lvl2
       tag: Untagged
@@ -14924,8 +15453,8 @@ GameObject2:
             - 1729.630615234375
             - 22372.98046875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 1719.1983642578125
@@ -14961,6 +15490,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.097_lvl2_lvl2
       tag: Untagged
@@ -14975,9 +15514,9 @@ GameObject2:
             - 1729.630615234375
             - 16738.873046875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 1432.523681640625
             - 126.90205383300781
@@ -15012,6 +15551,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - -0.100000001
+          isTrigger: false
       Children: ~
     - name: Cube.098_lvl2_lvl2
       tag: Untagged
@@ -15026,8 +15575,8 @@ GameObject2:
             - 1729.630615234375
             - 19447.01171875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 1129.7366943359375
@@ -15063,6 +15612,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.099_lvl2_lvl2
       tag: Untagged
@@ -15078,7 +15637,7 @@ GameObject2:
             - 20937.775390625
           localRotation:
             - -90
-            - -0.12965448139653143
+            - -0.12965446253058571
             - 0
           localScale:
             - 783.181640625
@@ -15114,6 +15673,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.100_lvl2_lvl2
       tag: Untagged
@@ -15129,7 +15698,7 @@ GameObject2:
             - 17981.7734375
           localRotation:
             - -90
-            - -0.12965448139653143
+            - -0.12965446253058571
             - 0
           localScale:
             - 783.181640625
@@ -15165,6 +15734,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.101_lvl2_lvl2
       tag: Untagged
@@ -15216,6 +15795,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 0.800000012
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.102_lvl2_lvl2
       tag: Untagged
@@ -15267,6 +15856,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.103_lvl2_lvl2
       tag: Untagged
@@ -15281,8 +15880,8 @@ GameObject2:
             - 1729.630615234375
             - 20494.716796875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 345.43319702148438
@@ -15318,6 +15917,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.104_lvl2_lvl2
       tag: Untagged
@@ -15332,9 +15941,9 @@ GameObject2:
             - 1729.630615234375
             - 18278.412109375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 257.9012451171875
             - 126.90205383300781
@@ -15369,6 +15978,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.105_lvl2_lvl2
       tag: Untagged
@@ -15420,6 +16039,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.106_lvl2_lvl2
       tag: Untagged
@@ -15471,6 +16100,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.107_lvl2_lvl2
       tag: Untagged
@@ -15485,9 +16124,9 @@ GameObject2:
             - 1729.630615234375
             - 14414.5771484375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 314.22842407226562
             - 126.90205383300781
@@ -15536,9 +16175,9 @@ GameObject2:
             - 1729.630615234375
             - 14523.96875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 247.75399780273438
             - 126.90205383300781
@@ -15573,6 +16212,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.109_lvl2_lvl2
       tag: Untagged
@@ -15624,6 +16273,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.110_lvl2_lvl2
       tag: Untagged
@@ -15638,9 +16297,9 @@ GameObject2:
             - 1729.630615234375
             - 13568.263671875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 539.68701171875
             - 126.90205383300781
@@ -15675,6 +16334,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.111_lvl2_lvl2
       tag: Untagged
@@ -15726,6 +16395,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.112_lvl2_lvl2
       tag: Untagged
@@ -15740,9 +16419,9 @@ GameObject2:
             - 1729.630615234375
             - 13000.126953125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 198.661865234375
             - 126.90205383300781
@@ -15777,6 +16456,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.113_lvl2_lvl2
       tag: Untagged
@@ -15828,6 +16517,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.114_lvl2_lvl2
       tag: Untagged
@@ -15944,9 +16643,9 @@ GameObject2:
             - 1729.630615234375
             - 14414.5771484375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 314.22842407226562
             - 126.90205383300781
@@ -15995,9 +16694,9 @@ GameObject2:
             - 1729.630615234375
             - 14414.5771484375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 314.22842407226562
             - 126.90205383300781
@@ -16148,9 +16847,9 @@ GameObject2:
             - 1729.630615234375
             - 14414.5771484375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 314.22842407226562
             - 126.90205383300781
@@ -16199,9 +16898,9 @@ GameObject2:
             - 1729.630615234375
             - 14523.96875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 247.75399780273438
             - 126.90205383300781
@@ -16236,6 +16935,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.122_lvl2_lvl2
       tag: Untagged
@@ -16287,6 +16996,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.123_lvl2_lvl2
       tag: Untagged
@@ -16301,9 +17020,9 @@ GameObject2:
             - 1729.630615234375
             - 13000.126953125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 198.661865234375
             - 126.90205383300781
@@ -16338,6 +17057,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.124_lvl2_lvl2
       tag: Untagged
@@ -16352,9 +17081,9 @@ GameObject2:
             - 1729.630615234375
             - 13568.263671875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 539.68701171875
             - 126.90205383300781
@@ -16389,6 +17118,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.125_lvl2_lvl2
       tag: Untagged
@@ -16440,6 +17179,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.29999995
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.126_lvl2_lvl2
       tag: Untagged
@@ -16491,6 +17240,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.70000005
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.127_lvl2_lvl2
       tag: Untagged
@@ -16505,9 +17264,9 @@ GameObject2:
             - 1729.630615234375
             - 12108.1552734375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 852.2735595703125
             - 126.90205383300781
@@ -16542,6 +17301,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.128_lvl2_lvl2
       tag: Untagged
@@ -16556,9 +17325,9 @@ GameObject2:
             - 1729.630615234375
             - 12108.1552734375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 852.2735595703125
             - 126.90205383300781
@@ -16593,6 +17362,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.129_lvl2_lvl2
       tag: Untagged
@@ -16608,7 +17387,7 @@ GameObject2:
             - 11010.0849609375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -16644,6 +17423,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.130_lvl2_lvl2
       tag: Untagged
@@ -16659,7 +17448,7 @@ GameObject2:
             - 11010.0849609375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -16695,6 +17484,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.131_lvl2_lvl2
       tag: Untagged
@@ -16709,9 +17508,9 @@ GameObject2:
             - 1729.630615234375
             - 7724.7666015625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 2544.22900390625
             - 126.90205383300781
@@ -16746,6 +17545,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.132_lvl2_lvl2
       tag: Untagged
@@ -16760,9 +17569,9 @@ GameObject2:
             - 1729.630615234375
             - 7724.7666015625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 2544.22900390625
             - 126.90205383300781
@@ -16797,6 +17606,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.133_lvl2_lvl2
       tag: Untagged
@@ -16812,7 +17631,7 @@ GameObject2:
             - 4311.9521484375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -16848,6 +17667,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.134_lvl2_lvl2
       tag: Untagged
@@ -16863,7 +17692,7 @@ GameObject2:
             - 4311.9521484375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -16899,6 +17728,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.135_lvl2_lvl2
       tag: Untagged
@@ -16913,9 +17752,9 @@ GameObject2:
             - 1729.630615234375
             - 1690.4364013671875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 2001.7862548828125
             - 126.90205383300781
@@ -16950,6 +17789,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.136_lvl2_lvl2
       tag: Untagged
@@ -16964,9 +17813,9 @@ GameObject2:
             - 1729.630615234375
             - 1690.4364013671875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 2001.7862548828125
             - 126.90205383300781
@@ -17001,6 +17850,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.137_lvl2_lvl2
       tag: Untagged
@@ -17016,7 +17875,7 @@ GameObject2:
             - -962.4779052734375
           localRotation:
             - -90
-            - -0.08429286019948061
+            - -0.084292841333556398
             - 0
           localScale:
             - 494.740478515625
@@ -17052,6 +17911,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.85000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.138_lvl2_lvl2
       tag: Untagged
@@ -17103,6 +17972,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.95000005
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.139_lvl2_lvl2
       tag: Untagged
@@ -17117,9 +17996,9 @@ GameObject2:
             - 1729.630615234375
             - -1872.7919921875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 751.6044921875
             - 126.90205383300781
@@ -17154,6 +18033,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.140_lvl2_lvl2
       tag: Untagged
@@ -17168,9 +18057,9 @@ GameObject2:
             - 1729.630615234375
             - -1872.7919921875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 751.6044921875
             - 126.90205383300781
@@ -17205,6 +18094,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.069_lvl2_lvl2
       tag: Untagged
@@ -17256,6 +18155,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.70000005
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.141_lvl2_lvl2
       tag: Untagged
@@ -17307,6 +18216,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.70000005
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.142_lvl2_lvl2
       tag: Untagged
@@ -17321,9 +18240,9 @@ GameObject2:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.0086560508784
-            - 89.916143542115293
-            - -0.0026813413938283036
+            - -90.010969231040818
+            - 89.914025369997944
+            - -0.0049706157093801122
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -17358,6 +18277,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 2.20000005
+            - 1
+            - 8.19999981
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.143_lvl2_lvl2
       tag: Untagged
@@ -17372,9 +18301,9 @@ GameObject2:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.0086560508784
-            - 89.916143542115293
-            - -0.0026813413938283036
+            - -90.010969231040818
+            - 89.914025369997944
+            - -0.0049706157093801122
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -17409,6 +18338,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 2
+            - 1
+            - 7.69999981
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.150_lvl2_lvl2
       tag: Untagged
@@ -17423,9 +18362,9 @@ GameObject2:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 90.002995038751664
-            - -89.916138244671345
-            - -179.99700496124834
+            - 89.995945988588176
+            - -89.932554591507383
+            - -179.98997469473292
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -17474,9 +18413,9 @@ GameObject2:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 90.002995038751664
-            - -89.916138244671345
-            - -179.99700496124834
+            - 89.995945988588176
+            - -89.932554591507383
+            - -179.98997469473292
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -17562,6 +18501,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.54999995
+            - 1
+            - 9
+          offset:
+            - 0.100000001
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.153_lvl2_lvl2
       tag: Untagged
@@ -17613,6 +18562,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.95000005
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.154_lvl2_lvl2
       tag: Untagged
@@ -17627,9 +18586,9 @@ GameObject2:
             - 1729.630615234375
             - -15975.3642578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 517.2039794921875
             - 126.90205383300781
@@ -17664,6 +18623,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.155_lvl2_lvl2
       tag: Untagged
@@ -17715,6 +18684,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.156_lvl2_lvl2
       tag: Untagged
@@ -17729,9 +18708,9 @@ GameObject2:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -17766,6 +18745,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.157_lvl2_lvl2
       tag: Untagged
@@ -17817,6 +18806,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.158_lvl2_lvl2
       tag: Untagged
@@ -17831,9 +18830,9 @@ GameObject2:
             - 1729.630615234375
             - -19515.22265625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 765.05303955078125
             - 126.90205383300781
@@ -17868,6 +18867,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.159_lvl2_lvl2
       tag: Untagged
@@ -17882,9 +18891,9 @@ GameObject2:
             - 1729.630615234375
             - -15975.3642578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 517.2039794921875
             - 126.90205383300781
@@ -17919,6 +18928,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.160_lvl2_lvl2
       tag: Untagged
@@ -17970,6 +18989,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.161_lvl2_lvl2
       tag: Untagged
@@ -17984,9 +19013,9 @@ GameObject2:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -18021,6 +19050,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.162_lvl2_lvl2
       tag: Untagged
@@ -18072,6 +19111,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.163_lvl2_lvl2
       tag: Untagged
@@ -18086,9 +19135,9 @@ GameObject2:
             - 1729.630615234375
             - -19515.22265625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 765.05303955078125
             - 126.90205383300781
@@ -18123,6 +19172,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.164_lvl2_lvl2
       tag: Untagged
@@ -18137,9 +19196,9 @@ GameObject2:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -18174,6 +19233,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.165_lvl2_lvl2
       tag: Untagged
@@ -18188,9 +19257,9 @@ GameObject2:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -18225,6 +19294,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.166_lvl2_lvl2
       tag: Untagged
@@ -18276,6 +19355,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.167_lvl2_lvl2
       tag: Untagged
@@ -18290,9 +19379,9 @@ GameObject2:
             - 1729.630615234375
             - 10724.0029296875
           localRotation:
-            - 89.999922816097012
-            - 86.781317716758423
-            - 179.99983398860124
+            - 89.999860297434324
+            - 86.781541816896379
+            - 179.99977488638581
           localScale:
             - 247.75401306152344
             - 126.90206146240234
@@ -18327,6 +19416,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.168_lvl2_lvl2
       tag: Untagged
@@ -18341,9 +19440,9 @@ GameObject2:
             - 1729.630615234375
             - 10721.7958984375
           localRotation:
-            - 89.99997102541991
-            - -86.71953327189766
-            - -179.99996931717263
+            - 90.000306783402053
+            - -86.719137305938602
+            - 179.99971029907198
           localScale:
             - 247.75398254394531
             - 126.90205383300781
@@ -18378,6 +19477,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.169_lvl2_lvl2
       tag: Untagged
@@ -18392,9 +19501,9 @@ GameObject2:
             - 1729.630615234375
             - 4564.580078125
           localRotation:
-            - 89.9998998975571
-            - 85.311989062304235
-            - 179.99989135267103
+            - 89.999870103734409
+            - 85.31213847843155
+            - 179.9998376331682
           localScale:
             - 247.75399780273438
             - 126.90204620361328
@@ -18429,6 +19538,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.170_lvl2_lvl2
       tag: Untagged
@@ -18480,6 +19599,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 1
+            - 9
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.171_lvl2_lvl2
       tag: Untagged
@@ -18494,9 +19623,9 @@ GameObject2:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18545,9 +19674,9 @@ GameObject2:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18596,9 +19725,9 @@ GameObject2:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18647,9 +19776,9 @@ GameObject2:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18698,9 +19827,9 @@ GameObject2:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18749,9 +19878,9 @@ GameObject2:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18800,9 +19929,9 @@ GameObject2:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18851,9 +19980,9 @@ GameObject2:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18902,9 +20031,9 @@ GameObject2:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -18953,9 +20082,9 @@ GameObject2:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -19004,9 +20133,9 @@ GameObject2:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.00418666530841
-            - 89.866500734653584
-            - -90.004184250470203
+            - -90.006559743616648
+            - 89.871357051163571
+            - -90.006547669426126
           localScale:
             - 128.03897094726562
             - 427.90078735351562
@@ -19041,6 +20170,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 5.9000001
+          offset:
+            - 0.100000001
+            - -0.100000001
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.182_lvl2_lvl2
       tag: Untagged
@@ -19055,9 +20194,9 @@ GameObject2:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.00418666530841
-            - 89.866500734653584
-            - -90.004184250470203
+            - -90.006559743616648
+            - 89.871357051163571
+            - -90.006547669426126
           localScale:
             - 318.52142333984375
             - 427.90646362304688
@@ -19092,6 +20231,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.35000002
+            - 0.699999988
+            - 5.5
+          offset:
+            - 0.25
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.183_lvl2_lvl2
       tag: Untagged
@@ -19106,9 +20255,9 @@ GameObject2:
             - 2228.8046875
             - 7750.44482421875
           localRotation:
-            - -90.00418666530841
-            - 89.866500734653584
-            - -90.004184250470203
+            - -90.006559743616648
+            - 89.871357051163571
+            - -90.006547669426126
           localScale:
             - 126.77712249755859
             - 77.251678466796875
@@ -19157,9 +20306,9 @@ GameObject2:
             - 2824.27685546875
             - 7749.7587890625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -90.000007244514023
+            - 89.873728204817738
+            - -89.999992755485991
           localScale:
             - 133.52845764160156
             - 1154.979736328125
@@ -19208,9 +20357,9 @@ GameObject2:
             - 3463.08984375
             - 7749.7587890625
           localRotation:
-            - -89.992935991145487
-            - 89.874321661435616
-            - -108.02396542413091
+            - -89.994678796035146
+            - 89.886205276103595
+            - -108.02572026859018
           localScale:
             - 87.500289916992188
             - 177.206298828125
@@ -19259,9 +20408,9 @@ GameObject2:
             - 3175.477294921875
             - 7599.7939453125
           localRotation:
-            - 14.999906638280484
-            - -0.065029959488431197
-            - -114.75729593512585
+            - 14.999900649673357
+            - -0.065036175809616431
+            - -114.75729675017477
           localScale:
             - 40.151153564453125
             - 430.76507568359375
@@ -19361,9 +20510,9 @@ GameObject2:
             - 3086.548583984375
             - 7750.44482421875
           localRotation:
-            - -90.000735455536457
-            - 89.869556094029349
-            - 179.99771750560234
+            - -90.005670487319819
+            - 89.863826818865192
+            - 179.99279101149224
           localScale:
             - 43.940093994140625
             - 77.251510620117188
@@ -19412,9 +20561,9 @@ GameObject2:
             - 2866.346435546875
             - 7750.44482421875
           localRotation:
-            - -89.998080628180446
-            - 89.873372921965327
-            - 179.99962613440499
+            - -89.994370529407661
+            - 89.868938776859807
+            - -179.99666205937632
           localScale:
             - 27.383285522460938
             - 48.142822265625
@@ -19514,8 +20663,8 @@ GameObject2:
             - 2111.20556640625
             - 9563.1494140625
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19565,8 +20714,8 @@ GameObject2:
             - 2111.20556640625
             - 6504.94482421875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19616,8 +20765,8 @@ GameObject2:
             - 2111.20556640625
             - 6504.94482421875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19667,8 +20816,8 @@ GameObject2:
             - 2111.20556640625
             - 9563.1494140625
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19718,8 +20867,8 @@ GameObject2:
             - 2111.20556640625
             - 3253.54736328125
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19769,8 +20918,8 @@ GameObject2:
             - 2111.20556640625
             - 195.34263610839844
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19820,8 +20969,8 @@ GameObject2:
             - 2111.20556640625
             - 195.34263610839844
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19871,8 +21020,8 @@ GameObject2:
             - 2111.20556640625
             - 3253.54736328125
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19922,8 +21071,8 @@ GameObject2:
             - 2111.20556640625
             - 1750.3154296875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -19973,8 +21122,8 @@ GameObject2:
             - 2111.20556640625
             - 1750.3154296875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -90
+            - 89.946534017150455
             - 0
           localScale:
             - 127.28877258300781
@@ -20024,9 +21173,9 @@ GameObject2:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.002995038751664
-            - 89.916724600432801
-            - 0.0029950387516546081
+            - -90.000336898413067
+            - 89.926329800606538
+            - 0.0056565938284969877
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -20061,6 +21210,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 9.19999981
+            - 1.39999998
+            - 11.6000004
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.203_lvl2_lvl2
       tag: Untagged
@@ -20075,9 +21234,9 @@ GameObject2:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.002995038751664
-            - 89.916724600432801
-            - 0.0029950387516546081
+            - -90.000336898413067
+            - 89.926329800606538
+            - 0.0056565938284969877
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -20112,6 +21271,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 6.80000019
+            - 0.800000012
+            - 6.69999981
+          offset:
+            - 0
+            - 0.100000001
+            - 0.5
+          isTrigger: false
       Children: ~
     - name: Cube.209_lvl2_lvl2
       tag: Untagged
@@ -20126,9 +21295,9 @@ GameObject2:
             - 1972.6943359375
             - -3799.696044921875
           localRotation:
-            - 89.993715776085253
-            - -89.872871190739275
-            - -89.993727850274766
+            - 89.993429424113771
+            - -89.871414105727155
+            - -89.99345115765675
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -20178,7 +21347,7 @@ GameObject2:
             - -2924.91943359375
           localRotation:
             - -90
-            - -0.08429286019948061
+            - -0.084292841333556398
             - 0
           localScale:
             - 274.48114013671875
@@ -20228,9 +21397,9 @@ GameObject2:
             - 1972.6942138671875
             - -3144.035888671875
           localRotation:
-            - -0.2174965585946792
-            - 59.199280906830765
-            - -0.25320559074906895
+            - -0.21749633215768452
+            - 59.199215265844813
+            - -0.25320544805002432
           localScale:
             - 88.9478759765625
             - 202.1011962890625
@@ -20279,9 +21448,9 @@ GameObject2:
             - 1972.6943359375
             - -2994.31640625
           localRotation:
-            - -179.85166694086087
-            - 48.843244956188741
-            - -179.80299500909433
+            - -179.85166696221802
+            - 48.843181796870851
+            - -179.80299503570495
           localScale:
             - 88.947860717773438
             - 202.1011962890625
@@ -20330,9 +21499,9 @@ GameObject2:
             - 2146.18212890625
             - -2985.56982421875
           localRotation:
-            - -179.85166694086087
-            - 48.843244956188741
-            - -179.80299500909433
+            - -179.85166696221802
+            - 48.843181796870851
+            - -179.80299503570495
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -20381,9 +21550,9 @@ GameObject2:
             - 1940.9827880859375
             - -2993.0263671875
           localRotation:
-            - -179.85166694086087
-            - 48.843244956188741
-            - -179.80299500909433
+            - -179.85166696221802
+            - 48.843181796870851
+            - -179.80299503570495
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -20433,7 +21602,7 @@ GameObject2:
             - -15064.5859375
           localRotation:
             - 179.99999499104368
-            - -5.0089558081174543e-06
+            - -5.0089549938959893e-06
             - -179.87034070171865
           localScale:
             - 354.75979614257812
@@ -20484,7 +21653,7 @@ GameObject2:
             - -15064.5859375
           localRotation:
             - 179.99999499104368
-            - -5.0089558081174543e-06
+            - -5.0089549938959893e-06
             - -179.87034070171865
           localScale:
             - 354.75979614257812
@@ -20534,9 +21703,9 @@ GameObject2:
             - 1940.9827880859375
             - -14277.2275390625
           localRotation:
-            - 179.87275858758187
-            - -44.45971391099701
-            - -179.81834930408669
+            - 179.8727585786973
+            - -44.459714719756967
+            - -179.81834929907373
           localScale:
             - 53.263530731201172
             - 121.021728515625
@@ -20585,9 +21754,9 @@ GameObject2:
             - 2146.18212890625
             - -13994.9931640625
           localRotation:
-            - 179.87275858758187
-            - -44.45971391099701
-            - -179.81834930408669
+            - 179.8727585786973
+            - -44.459714719756967
+            - -179.81834929907373
           localScale:
             - 53.263530731201172
             - 121.021728515625
@@ -20636,9 +21805,9 @@ GameObject2:
             - 1972.6943359375
             - -13730.3359375
           localRotation:
-            - 179.87275859661295
-            - -44.459709481869311
-            - -179.81834931187427
+            - 179.8727585786973
+            - -44.459714719756967
+            - -179.81834929907373
           localScale:
             - 88.947868347167969
             - 202.10121154785156
@@ -20687,9 +21856,9 @@ GameObject2:
             - 1972.6942138671875
             - -14019.3798828125
           localRotation:
-            - -179.93252274007611
-            - 27.497114444231599
-            - -179.85383894464877
+            - -179.93252273591807
+            - 27.497095705833043
+            - -179.85383895025322
           localScale:
             - 88.947868347167969
             - 202.10118103027344
@@ -20738,9 +21907,9 @@ GameObject2:
             - 2192.90966796875
             - -14125.2353515625
           localRotation:
-            - 0.12577504187519514
-            - -56.174575085619885
-            - -90.151416386256614
+            - 0.1257788909254077
+            - -56.174586564284297
+            - -90.151418449369942
           localScale:
             - 274.48110961914062
             - 57.520450592041016
@@ -20993,9 +22162,9 @@ GameObject2:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - 89.993715776085253
-            - -89.872871190739275
-            - -89.993727850274766
+            - 89.993429424113771
+            - -89.871414105727155
+            - -89.99345115765675
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -21044,9 +22213,9 @@ GameObject2:
             - 2396.811767578125
             - -19521.4140625
           localRotation:
-            - 89.988728921884331
-            - -89.918366374337779
-            - -179.99088555459656
+            - 89.990361010966907
+            - -89.924236835922216
+            - -179.99251422851961
           localScale:
             - 274.48114013671875
             - 57.520450592041016
@@ -21095,9 +22264,9 @@ GameObject2:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - -90.00418666530841
-            - 89.866500734653584
-            - -90.004184250470203
+            - -90.006559743616648
+            - 89.871357051163571
+            - -90.006547669426126
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -21248,9 +22417,9 @@ GameObject2:
             - 1282.6800537109375
             - 21391.6328125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -90
+            - 90
+            - 0
           localScale:
             - 977.56097412109375
             - 1226.174560546875
@@ -21285,6 +22454,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        MeshColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0.100000001
+            - 0.25999999
+            - 0
+          isTrigger: false
       Children: ~
     - name: Cube.019_lvl2_lvl2
       tag: Untagged
@@ -21336,6 +22515,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        MeshColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - -0.150000006
+            - 0.330000013
+            - -0.300000012
+          isTrigger: false
       Children: ~
     - name: Cube.020_lvl2_lvl2
       tag: Untagged
@@ -21387,6 +22576,16 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        MeshColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - -0.100000001
+            - 0.330000013
+            - -0.200000003
+          isTrigger: false
       Children: ~
     - name: Cube.008_lvl2_lvl2
       tag: Untagged
@@ -21571,3 +22770,131 @@ GameObject2:
             - -0.699999988
           isTrigger: false
       Children: ~
+GameObject3:
+  name: Empty
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 1.9209945201873779
+        - 2.2779910564422607
+        - 20.981765747070312
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 0.400000006
+        - 0.430000007
+      offset:
+        - 0.119999997
+        - 0
+        - -0.129999995
+      isTrigger: false
+  Children: ~
+GameObject4:
+  name: Empty_copy
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.63426166772842407
+        - 2.2779927253723145
+        - 20.845012664794922
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 0.400000006
+        - 0.430000007
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject5:
+  name: Empty_copy_copy
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -1.2457194328308105
+        - 1.5854146480560303
+        - -15.966659545898438
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 0.899999976
+        - 1.89999998
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject6:
+  name: Empty_copy_copy_copy
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 2.5585787296295166
+        - 1.5854146480560303
+        - -15.966659545898438
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 0.899999976
+        - 1.89999998
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~

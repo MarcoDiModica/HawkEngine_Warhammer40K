@@ -237,23 +237,29 @@ public:
 				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
 			}
 			
-			particleData[i].indexTimer += deltaTime;
 
-			if (particleData[i].indexTimer >= 0.5f)
-			{	
-				if (particleData[i].indexTimer >= CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize))
-				{
-					particleData[i].indexTimer = 0;
-					particleData[i].animIndex = 0;
-				}
-				else 
-				{
-					particleData[i].animIndex++;
-				}
-				particleData[i].indexTimer = 0.0f;
-				particleData[i].spriteOffset = CalculateSpriteOffset(particleData[i].animIndex, particleData[i].sheetSize, particleData[i].spriteSize);
+			if (particleData[i].useAnimation) 
+			{
+				particleData[i].indexTimer += deltaTime;
 
+				if (particleData[i].indexTimer >= particleData[i].animSpeed)
+				{
+					if (particleData[i].indexTimer >= CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize))
+					{
+						particleData[i].indexTimer = 0;
+						particleData[i].animIndex = 0;
+					}
+					else
+					{
+						particleData[i].animIndex++;
+					}
+					particleData[i].indexTimer = 0.0f;
+					particleData[i].spriteOffset = CalculateSpriteOffset(particleData[i].animIndex, particleData[i].sheetSize, particleData[i].spriteSize);
+
+				}
 			}
+
+			
 
 		
 			InstanceData instance;

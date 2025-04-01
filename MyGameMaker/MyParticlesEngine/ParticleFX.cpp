@@ -29,8 +29,8 @@ namespace ParticlePresets {
 		0.2f,                          // Cone base radius
 		1.0f,                          // Cone height
 		20.0f,                         // Cone angle in degrees
-		glm::vec2(133,175),         // Sprite size
-		false,						   // Use animation
+		glm::vec2(133,175),			   // Sprite size
+		true,						   // Use animation
 		0.5f						   // Animation speed
 	};
 

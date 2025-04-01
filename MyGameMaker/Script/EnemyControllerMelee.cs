@@ -15,6 +15,8 @@ public class EnemyControllerMelee : EnemyController
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
+    private HormagauntAnimation anim;
+    PlayerController pc;
 
     // Enemy Stats
     private float health = 100.0f;
@@ -67,13 +69,21 @@ public class EnemyControllerMelee : EnemyController
             return;
         }
 
-        maxHealth = 100.0f;
+        anim = GameObject.Find("HormagauntMesh").GetComponent<HormagauntAnimation>();
+        if (anim == null)
+        {
+            Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
+            return;
+        }
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        maxHealth = health;
         currentHealth = maxHealth;
+        isDead = false;
     }
 
     public override void Update(float deltaTime)
     {
-        if (!isStunned)
+        if(!isDead)
         {
             Vector3 playerPos = playerTransform.position;
             float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
@@ -102,7 +112,6 @@ public class EnemyControllerMelee : EnemyController
                         hasLeap = true;
                     }
                 }
-
                 if (IsPlayerInHurtbox(playerPos))
                 {
                     //Engineson.print("Player in hurtbox");
@@ -129,23 +138,6 @@ public class EnemyControllerMelee : EnemyController
                         dodgewindow = false;
                     }
                 }
-                else
-                {
-                    hurtboxTimer = 0f;
-                    dodgeTimer = 0f;
-                    //Engineson.print("Player not in hurtbox");
-                    if (dodgewindow)
-                    {
-                        dodgeTimer += deltaTime;
-                        if (dodgeTimer >= dodgeActivationTime)
-                        {
-                            //DestroyHurtbox();
-                            dodgeTimer = 0f;
-                            dodgewindow = false;
-                        }
-                    }
-                }
-
                 if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
                 {
                     Vector3 currentVelocity = rb.GetVelocity();
@@ -154,52 +146,72 @@ public class EnemyControllerMelee : EnemyController
 
                     if (desiredVelocity.LengthSquared() > 0)
                     {
-                        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                        hurtboxTimer = 0f;
+                        dodgeTimer = 0f;
+                        //Engineson.print("Player not in hurtbox");
+                        if (dodgewindow)
+                        {
+                            dodgeTimer += deltaTime;
+                            if (dodgeTimer >= dodgeActivationTime)
+                            {
+                                //DestroyHurtbox();
+                                dodgeTimer = 0f;
+                                dodgewindow = false;
+                            }
+                        }
                     }
+                }
+                if (moveDirection != Vector3.Zero)
+                {
+                    currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                    float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                    float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-                    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                    while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                    while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+                    currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+                    Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                    Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                        eulerRotation.Y * ((float)Math.PI / 180.0f),
+                        eulerRotation.X * ((float)Math.PI / 180.0f),
+                        eulerRotation.Z * ((float)Math.PI / 180.0f)
+                    );
+
+                    collider.SetRotation(newRotation);
                 }
             }
-
-            if (moveDirection != Vector3.Zero)
+            else if (isStunned)
             {
-                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-                while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                    eulerRotation.Y * ((float)Math.PI / 180.0f),
-                    eulerRotation.X * ((float)Math.PI / 180.0f),
-                    eulerRotation.Z * ((float)Math.PI / 180.0f)
-                );
-
-                collider.SetRotation(newRotation);
+                stunTimer += deltaTime;
+                rb.SetVelocity(Vector3.Zero);
+                if (stunTimer >= stunDuration)
+                {
+                    isStunned = false;
+                    stunTimer = 0.0f;
+                }
             }
         }
-        else if (isStunned)
+
+        if (isAttacking)
         {
-            stunTimer += deltaTime;
-            rb.SetVelocity(Vector3.Zero);
-            if (stunTimer >= stunDuration)
-            {
-                isStunned = false;
-                stunTimer = 0.0f;
-            }
+            anim.SetRandomAttackAnimation();
+            isAttacking = false;
+        }
+        if (isDead)
+        {
+            anim.SetDeathAnimation();
         }
     }
 
     public override void Attack()
     {
+        isAttacking = true;
         Engineson.print("Melee attack executed!");
+        pc.playerData.TakeDamage(damage);
         //GameObject.Find("Player").GetComponent<PlayerData>().TakeDamage(damage);
-        //Engineson.print("Current health: " + (GameObject.Find("Player").GetComponent<PlayerData>().GetHealth()));
+        Engineson.print("Current health: " + (pc.playerData.GetHealth()));
     }
 
     public void Leap()
@@ -240,6 +252,7 @@ public class EnemyControllerMelee : EnemyController
         {
             Engineson.print("This man is dead man.");
             //Destroy(gameObject);
+            isDead = true;
         }
         //Engineson.print("Player hit!");
     }

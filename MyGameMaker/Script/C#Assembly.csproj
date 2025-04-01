@@ -97,6 +97,7 @@
     <Compile Include="Grenade.cs" />
     <Compile Include="GrenadeLauncher.cs" />
     <Compile Include="HookShot.cs" />
+    <Compile Include="HormagauntAnimation.cs" />
     <Compile Include="IEnemyController.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />

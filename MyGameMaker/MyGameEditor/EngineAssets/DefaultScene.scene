@@ -182,6 +182,113 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
+  name: Lictor
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -5
+        - 0
+        - -5
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 5
+        - 5
+        - 5
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.25
+        - 0.5
+        - 0.25
+      offset:
+        - 0
+        - 2.5
+        - 1
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerRanged
+  Children:
+    - name: LictorMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -0.00024597215815447271
+            - 0.0018853993387892842
+            - -0.0003092930419370532
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.004091363400220871
+            - 0.004091363400220871
+            - 0.004091363400220871
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Plane.010
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Assets/Textures/Material_Base_color.png
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject3:
   name: Hormagaunt
   tag: Untagged
   active: true
@@ -250,9 +357,9 @@ GameObject2:
             - 0.98896592855453491
             - 0.051096078008413315
           localRotation:
-            - -90.000016164856888
-            - -1.7342270779077067e-06
-            - -2.4012349863369716e-07
+            - -1.3660378731687233e-05
+            - 2.4012357443917309e-07
+            - -1.7342270674115732e-06
           localScale:
             - 0.0075779887847602402
             - 0.0075779887847605421
@@ -291,8 +398,11 @@ GameObject2:
           name: SkeletalAnimationComponent
           enabled: true
           animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
       Children: ~
-GameObject3:
+GameObject4:
   name: Floor
   tag: Untagged
   active: true

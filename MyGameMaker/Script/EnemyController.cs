@@ -16,6 +16,9 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     public bool isStunned = false;
     protected float stunDuration = 2.0f;
     protected float stunTimer = 0.0f;
+    protected bool notIdle = false;
+    protected bool isDead = false;
+    protected bool isAttacking = false;
 
     public float distToChase = 20.0f;
     public float minDistToChase = 5.0f;

@@ -25,6 +25,7 @@ struct ParticleData {
 	bool useAnimation;
 	float indexTimer;
 	int animIndex;
+	float animSpeed;
 
 	ParticleData()
 		: playOnAwake(false)

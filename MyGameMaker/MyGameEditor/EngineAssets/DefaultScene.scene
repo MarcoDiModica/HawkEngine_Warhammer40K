@@ -157,26 +157,26 @@ GameObject1:
       emitterShape: 2
       emissionRate: 15
       particlesPerSecond: 15
-      minLifetime: 2
-      maxLifetime: 4
+      minLifetime: 9.5
+      maxLifetime: 14.1999998
       minSpeed: 0.5
       maxSpeed: 1.5
       startSize: 0.5
       endSize: 2
       startColor:
-        - 0.800000012
-        - 0.800000012
-        - 0.800000012
+        - 1
+        - 0
+        - 0
       endColor:
-        - 0.200000003
-        - 0.200000003
-        - 0.200000003
+        - 1
+        - 0
+        - 0
       startAlpha: 0.699999988
       endAlpha: 0
       rotationSpeed: 0.200000003
       gravity:
         - 0
-        - -0.100000001
+        - 2.53999996
         - 0
       shapeParam1: 0.200000003
       shapeParam2: 1
@@ -187,7 +187,7 @@ GameObject1:
         particleType: 1
         softness: 0
         useColorGradient: false
-        texturePath: Assets/SmokeParticleTexture.png
+        texturePath: Assets/Textures/spritesheettest.jpg
   Children: ~
 GameObject2:
   name: MainCamera
@@ -199,9 +199,9 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -0.094225628139509521
-        - 22.03932142258703
-        - -15.593950525645997
+        - 0
+        - 20
+        - -14
       localRotation:
         - 54.999999253784715
         - -0
@@ -225,117 +225,6 @@ GameObject2:
         name: PlayerCamera
   Children: ~
 GameObject3:
-  name: Hormagaunt
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 2.8322136402130127
-        - 0.50939702987670898
-        - 2.8313863277435303
-      localRotation:
-        - 180
-        - -44.999997312701623
-        - 180
-      localScale:
-        - 2.2000000476837158
-        - 2.2000000476837158
-        - 2.2000000476837158
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyController
-  Children:
-    - name: HormagauntMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - -1.3660379417693127e-05
-            - 4.5356721314749729e-07
-            - -6.6701057572838307e-07
-          localScale:
-            - 0.0075779892504215249
-            - 0.0075779892504218259
-            - 0.0075779892504218259
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: mesh.005
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Assets/Textures/Low_BSurfaceMesh_BaseColor.png
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_HormagauntMesh
-      Children: ~
-GameObject4:
   name: Floor
   tag: Untagged
   active: true

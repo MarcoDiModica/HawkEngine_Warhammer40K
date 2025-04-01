@@ -44,6 +44,7 @@ struct ParticlePreset {
 	float shapeParam3;  // Depth for box, angle for cone
 	glm::vec2 spriteSize;
 	bool useAnimation;
+	float animSpeed; //in seconds
 };
 
 namespace ParticlePresets {
@@ -185,6 +186,8 @@ private:
 	// Spritesheet data
 	glm::vec2 spriteSize = glm::vec2(133,175);
 	bool useAnimation;
+	float animSpeed;
+
 
 protected:
 	friend class SceneSerializer;

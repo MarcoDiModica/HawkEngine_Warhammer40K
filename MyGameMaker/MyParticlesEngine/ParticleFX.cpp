@@ -28,9 +28,10 @@ namespace ParticlePresets {
 		EmitterShape::CONE,            // Shape
 		0.2f,                          // Cone base radius
 		1.0f,                          // Cone height
-		20.0f,                          // Cone angle in degrees
-		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false						  // Use animation
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(133,175),         // Sprite size
+		false,						   // Use animation
+		0.5f						   // Animation speed
 	};
 
 	const ParticlePreset Fire = {
@@ -54,9 +55,10 @@ namespace ParticlePresets {
 		EmitterShape::CONE,            // Shape
 		0.3f,                          // Cone base radius
 		1.0f,                          // Cone height
-		30.0f,                          // Cone angle in degrees
+		30.0f,                         // Cone angle in degrees
 		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false						  // Use animation
+		false,						   // Use animation
+		0.5f						   // Animation speed
 
 	};
 
@@ -83,7 +85,8 @@ namespace ParticlePresets {
 		0.2f,                          // Cone height
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false						  // Use animation
+		false,						   // Use animation
+		0.5f						   // Animation speed
 	};
 
 	const ParticlePreset Dust = {
@@ -109,7 +112,8 @@ namespace ParticlePresets {
 		0.0f,                          // Unused
 		0.0f,                          // Unused
 		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false						  // Use animation
+		false,						   // Use animation
+		0.5f						   // Animation speed
 	};
 
 	const ParticlePreset Explosion = {
@@ -133,9 +137,10 @@ namespace ParticlePresets {
 		EmitterShape::SPHERE,          // Shape
 		1.0f,                          // Sphere radius
 		0.0f,                          // Unused
-		0.0f,                           // Unused
+		0.0f,                          // Unused
 		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false						  // Use animation
+		false,						   // Use animation
+		0.5f						   // Animation speed
 	};
 
 }
@@ -391,8 +396,9 @@ void ParticleFX::EmitParticle() {
 	
 	particle.spriteSize = spriteSize;
 	
-	particle.useAnimation = true;
-
+	particle.useAnimation = useAnimation;
+	
+	particle.animSpeed = animSpeed;
 
 	renderer->AddParticle(particle);
 }
@@ -523,6 +529,10 @@ void ParticleFX::ApplyPreset(const ParticlePreset& preset) {
 	shapeParam1 = preset.shapeParam1;
 	shapeParam2 = preset.shapeParam2;
 	shapeParam3 = preset.shapeParam3;
+	spriteSize = preset.spriteSize;
+	useAnimation = preset.useAnimation;
+	animSpeed = preset.animSpeed;
+	endSpeed = preset.endSpeed;
 }
 
 void ParticleFX::ConfigureSmoke() {

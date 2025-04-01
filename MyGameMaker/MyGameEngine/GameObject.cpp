@@ -33,15 +33,15 @@ GameObject::GameObject(const std::string& name) : name(name), cachedComponentTyp
 
 GameObject::~GameObject()
 {
-	for (auto& scriptComponent : scriptComponents) {
-		scriptComponent->Destroy();
-	}
-	scriptComponents.clear();
-    
 	for (auto& component : components) {
 		component.second->Destroy();
 	}
 	components.clear();
+
+	for (auto& scriptComponent : scriptComponents) {
+		scriptComponent->Destroy();
+	}
+	scriptComponents.clear();
 
     for (auto& child : children) {
         child->Destroy();
@@ -194,82 +194,83 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
-    if (!this || destroyed)
-    {
-        return;
-    }
-	if (!active) 
-    {
+	if (!this || destroyed || !active) {
 		return;
 	}
 
-    for (auto& component : components)
-	{
-		if (!component.second)
-		{
-			throw std::runtime_error("Component is null");
+	for (auto it = components.begin(); it != components.end(); ) {
+		if (!it->second) {
+			it = components.erase(it);
+			continue;
 		}
+		++it;
 	}
-    
-    for (auto& component : components)
-	{
+
+	for (auto& component : components) {
 		if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 			component.second->Update(deltaTime);
 		}
-        else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
-        {
-			if (component.second->updateInStop)
-			{
+		else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP ||
+			SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE) {
+			if (component.second->updateInStop) {
 				component.second->Update(deltaTime);
-			}
-        }
-	}
-
-	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
-		for (auto& scriptComponent : scriptComponents)
-		{
-			scriptComponent->Update(deltaTime);
-			if (Application->hasChangedScene) {
-				return;
 			}
 		}
 	}
-    
 
-    for (auto& child : children)
-    {
-        child->Update(deltaTime);
-    }
+	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+		for (size_t i = 0; i < scriptComponents.size(); ++i) {
+			if (scriptComponents[i] && !destroyed) {
+				try {
+					scriptComponents[i]->Update(deltaTime);
 
-    if (active) 
-    {
-        Draw();
-    }
+					if (Application->hasChangedScene) {
+						return;
+					}
+				}
+				catch (const std::exception& e) {
+					LOG(LogType::LOG_ERROR, "Exception in script component update: %s", e.what());
+				}
+			}
+		}
+
+		scriptComponents.erase(
+			std::remove_if(scriptComponents.begin(), scriptComponents.end(),
+				[](const auto& component) { return component == nullptr; }),
+			scriptComponents.end());
+	}
+
+	auto childrenCopy = children;
+	for (auto& child : childrenCopy) {
+		if (child) {
+			child->Update(deltaTime);
+		}
+	}
+
+	if (active && !destroyed) {
+		Draw();
+	}
 }
 
 void GameObject::Destroy()
 {
-    if (!this) {
-        return;
-    }
+	if (!this || destroyed) {
+		return;
+	}
 
-    destroyed = true;
+	destroyed = true;
 
-	/*for (auto& component : components)
-	{
+	for (auto& component : components) {
 		component.second->Destroy();
 	}
 
 	for (auto& scriptComponent : scriptComponents) {
 		scriptComponent->Destroy();
 	}
-	scriptComponents.clear();*/
 
-	for (auto& child : children)
-	{
+	for (auto& child : children) {
 		child->Destroy();
 	}
-	children.clear();
 }
 
 void GameObject::Draw() const
@@ -353,6 +354,20 @@ void GameObject::SetName(const std::string& name)
 bool GameObject::CompareTag(const std::string& tag) const
 {
     return this->tag == tag;
+}
+
+Transform_Component* GameObject::GetTransform() const {
+	if (destroyed) {
+		return nullptr;
+	}
+
+	auto transform = GetComponent<Transform_Component>();
+
+	if (!transform) {
+		LOG(LogType::LOG_WARNING, "Attempting to get Transform from destroyed GameObject %s", name.c_str());
+	}
+
+	return transform;
 }
 
 BoundingBox GameObject::boundingBox() const
@@ -534,10 +549,14 @@ MonoObject* GameObject::GetSharp() {
 
 void GameObject::SelfDestroy()
 {
-    if (parent) {
+	auto self = shared_from_this();
+
+	if (parent) {
 		parent->RemoveChild(this);
 	}
 	else if (scene) {
-		scene->RemoveGameObject(this->shared_from_this());
+		scene->RemoveGameObject(self);
 	}
+
+	destroyed = true;
 }

@@ -66,10 +66,11 @@ public:
 
     bool CompareTag(const std::string& tag) const;
 
+    Transform_Component* GetTransform() const;
     BoundingBox boundingBox() const;
     BoundingBox localBoundingBox() const;
 
-    Transform_Component* GetTransform() const { return GetComponent<Transform_Component>(); }
+	
 
     DrawMode drawMode = DrawMode::PushPopMatrix;
 
@@ -167,18 +168,22 @@ T* GameObject::AddComponent(Args&&... args) {
 
 template <typename T>
 T* GameObject::GetComponent() const {
-    for (const auto& scriptComponent : scriptComponents) {
-        if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
-            return dynamic_cast<T*>(scriptComponent.get());
-        }
-    }
+	if (destroyed) {
+		return nullptr;
+	}
 
-    auto it = components.find(typeid(T));
-    if (it != components.end()) {
-        return dynamic_cast<T*>(it->second.get());
-    }
+	for (const auto& scriptComponent : scriptComponents) {
+		if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
+			return dynamic_cast<T*>(scriptComponent.get());
+		}
+	}
 
-    return nullptr;
+	auto it = components.find(typeid(T));
+	if (it != components.end()) {
+		return dynamic_cast<T*>(it->second.get());
+	}
+
+	return nullptr;
 }
 
 template <IsComponent T>

@@ -91,38 +91,43 @@ std::shared_ptr<GameObject> SceneManager::CreateMeshObject(string name, shared_p
 }
 
 void SceneManager::RemoveGameObject(GameObject* gameObject) {
-    if (!gameObject) {
-        LOG(LogType::LOG_ERROR, "Error: Is have tried erased a GameObject null.");
-        return;
-    }
-    if (!gameObject->GetParent()) {
-        auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
-            [gameObject](const auto& child) { return child.get() == gameObject; });
+	if (!gameObject) {
+		LOG(LogType::LOG_ERROR, "Error: Is have tried erased a GameObject null.");
+		return;
+	}
 
-        if (it == currentScene->_children.end()) {
-            LOG(LogType::LOG_ERROR, "Error: The GameObject not is find on the scene.");
-            return;
-        }
+	std::shared_ptr<GameObject> strongRef;
 
+	try {
+		strongRef = gameObject->shared_from_this();
+	}
+	catch (const std::bad_weak_ptr&) {
+		LOG(LogType::LOG_ERROR, "Error: Attempted to get shared_ptr from a GameObject that's not managed by shared_ptr");
+		return;
+	}
 
-        try {
-            if ((*it)->isSelected) {
-               /* (*it)->isSelected = false;
-                Application->input->ClearSelection();*/
-            }
-            (*it)->Destroy();
-            it = currentScene->_children.erase(it);
-        }
-        catch (const std::exception& e) {
-            LOG(LogType::LOG_ERROR, "Error to destroying the GameObject: %s", e.what());
-        }
-    }
-    else {
-       /* if (gameObject->isSelected) { Application->input->ClearSelection(); }*/
-        //currentScene->AddGameObject(gameObject->shared_from_this());
-        gameObject->GetParent()->RemoveChild(gameObject);
-        gameObject->Destroy();
-    }
+	if (!gameObject->GetParent()) {
+		auto it = std::find_if(currentScene->_children.begin(), currentScene->_children.end(),
+			[gameObject](const auto& child) { return child.get() == gameObject; });
+
+		if (it == currentScene->_children.end()) {
+			LOG(LogType::LOG_ERROR, "Error: The GameObject not found in the scene.");
+			return;
+		}
+
+		try {
+			(*it)->Destroy();
+			currentScene->_children.erase(it);
+		}
+		catch (const std::exception& e) {
+			LOG(LogType::LOG_ERROR, "Error destroying the GameObject: %s", e.what());
+		}
+	}
+	else {
+		GameObject* parent = gameObject->GetParent();
+		gameObject->Destroy();
+		parent->RemoveChild(gameObject);
+	}
 }
 
 std::shared_ptr<GameObject> SceneManager::CreateGameObject(const std::string& name)

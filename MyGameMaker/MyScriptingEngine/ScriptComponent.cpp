@@ -66,6 +66,17 @@ void ScriptComponent::Destroy()
 	monoScript = nullptr;
 }
 
+std::unique_ptr<Component> ScriptComponent::Clone(GameObject* new_owner)
+{
+	auto newScript = std::make_unique<ScriptComponent>(new_owner);
+	newScript->monoScript = monoScript;
+	newScript->currentScriptName = currentScriptName;
+	newScript->lastWriteTime = lastWriteTime;
+	newScript->hasErrors = hasErrors;
+
+	return newScript;
+}
+
 bool ScriptComponent::HandleException(MonoObject* exception, const std::string& methodName) {
 	if (!exception) return false;
 

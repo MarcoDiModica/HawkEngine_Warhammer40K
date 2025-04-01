@@ -42,7 +42,8 @@ public class PlayerCamera : MonoBehaviour
         Vector2 leftStickInput = Input.GetLeftStick();
         Vector2 rightStickInput = Input.GetRightStick();
 
-        Vector3 baseOffset = new Vector3(0, 22, -15.5f);
+        Vector3 baseOffset = new Vector3(0, 44, -15.5f);
+
 
         if (leftStickInput != Vector2.Zero)
         {

@@ -19,11 +19,12 @@ struct ParticleData {
 	glm::vec3 endVelocity;
 	float age;
 	bool active;
-	int animIndex;
+	glm::vec2 spriteOffset;
 	glm::vec2 spriteSize;
 	glm::vec2 sheetSize;
 	bool useAnimation;
-
+	float indexTimer;
+	int animIndex;
 
 	ParticleData()
 		: playOnAwake(false)
@@ -41,10 +42,12 @@ struct ParticleData {
 		, gravity(0.0f, 0.0f, 0.0f)
 		, age(0.0f)
 		, active(false)
-		, animIndex(1.0f)
+		, spriteOffset(1.0f,1.0f)
 		, spriteSize(1.0f, 1.0f)
 		, sheetSize(1.0f, 1.0f)
 		, useAnimation(false)
+		, indexTimer(0.0f)
+		, animIndex(0)
 	{}
 };
 
@@ -127,7 +130,7 @@ public:
 		glVertexAttribDivisor(8, 1);
 
 		glEnableVertexAttribArray(9);
-		glVertexAttribPointer(9, 1, GL_INT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, animIndex));
+		glVertexAttribPointer(9, 2, GL_FLOAT, GL_FALSE, sizeof(InstanceData), (void*)offsetof(InstanceData, spriteOffset));
 		glVertexAttribDivisor(9, 1);
 
 		glEnableVertexAttribArray(10);
@@ -192,6 +195,19 @@ public:
 		return columns * rows - 1; // Restamos 1 porque los índices empiezan en 0
 	}
 
+	glm::vec2 CalculateSpriteOffset(int index, const glm::vec2& sheetSize, const glm::vec2& spriteSize) {
+		int columns = static_cast<int>(sheetSize.x / spriteSize.x);
+		int rows = static_cast<int>(sheetSize.y / spriteSize.y);
+
+		int currentColumn = index % columns;
+		int currentRow = index / columns;
+
+		float offsetX = currentColumn * spriteSize.x;
+		float offsetY = currentRow * spriteSize.y;
+
+		return glm::vec2(offsetX, offsetY);
+	}
+
 	void UpdateAndRender(float deltaTime) {
 		std::vector<InstanceData> instances;
 		instances.reserve(activeParticles);
@@ -220,14 +236,25 @@ public:
 				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
 			}
 			
-			if (particleData[i].animIndex > CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize)) {
-				particleData[i].animIndex = 0;
-			}
-			else 
-			{
-				particleData[i].animIndex++;
+			particleData[i].indexTimer += deltaTime;
+
+			if (particleData[i].indexTimer >= 0.5f)
+			{	
+				if (particleData[i].indexTimer >= CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize))
+				{
+					particleData[i].indexTimer = 0;
+					particleData[i].animIndex = 0;
+				}
+				else 
+				{
+					particleData[i].animIndex++;
+				}
+				particleData[i].indexTimer = 0.0f;
+				particleData[i].spriteOffset = CalculateSpriteOffset(particleData[i].animIndex, particleData[i].sheetSize, particleData[i].spriteSize);
+
 			}
 
+		
 			InstanceData instance;
 			instance.playOnAwake = particleData[i].playOnAwake;
 			instance.duration = particleData[i].duration;
@@ -240,10 +267,12 @@ public:
 			instance.rotation = particleData[i].rotation;
 			instance.endSpeed = particleData[i].endVelocity;
 			instance.lifetime = lifetimeFraction;
-			instance.animIndex = particleData[i].animIndex;
+			instance.spriteOffset = particleData[i].spriteOffset;
 			instance.spriteSize = particleData[i].spriteSize;
 			instance.sheetSize = particleData[i].sheetSize;
 			instance.useAnimation = particleData[i].useAnimation;
+			instance.indexTimer = particleData[i].indexTimer;
+			instance.animIndex = particleData[i].animIndex;
 
 			instances.push_back(instance);
 		}
@@ -292,14 +321,17 @@ private:
 		glm::vec3 endSpeed;
 		float rotation;
 		float lifetime;
-		int animIndex;
+		glm::vec2 spriteOffset;
 		glm::vec2 spriteSize;
 		glm::vec2 sheetSize;
 		bool useAnimation;
+		float indexTimer;
+		int animIndex;
 	};
 
 	GLuint vao, vbo, ebo, instanceVBO;
 	std::vector<ParticleData> particleData;
 	size_t maxParticles;
 	size_t activeParticles;
+
 };

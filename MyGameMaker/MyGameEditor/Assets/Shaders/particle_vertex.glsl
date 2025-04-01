@@ -10,7 +10,7 @@ layout(location = 5) in float aRotation;  // Instance rotation in radians
 layout(location = 6) in float aLifetime;  // Current lifetime fraction (0-1)
 layout(location = 7) in vec4 endColor;    // End color for gradient
 layout(location = 8) in vec2 aEndSize;    // End size (x, y) for gradient
-layout(location = 9) in int spriteIndex;  // Index of the sprite in the spritesheet
+layout(location = 9) in vec2 spriteOffset;  // Index of the sprite in the spritesheet
 layout(location = 10) in vec2 spriteSize; // Size of each sprite in the spritesheet (normalized)
 layout(location = 11) in vec2 sheetSize;  // Dimensions of the spritesheet (columns, rows)
 
@@ -21,6 +21,9 @@ out vec4 ParticleColor;
 out float Lifetime;
 out vec4 EndColor;  // End color for gradient
 
+out vec2 SpriteOffset;  
+out vec2 SpriteSize; 
+out vec2 SheetSize;
 // Uniforms
 uniform mat4 projection;
 uniform mat4 view;
@@ -102,4 +105,8 @@ void main() {
     ParticleColor = aColor;
     Lifetime = aLifetime;
     EndColor = endColor;  
+    SpriteOffset = spriteOffset;
+    SpriteSize = spriteSize;
+    SheetSize = sheetSize;
+
 }

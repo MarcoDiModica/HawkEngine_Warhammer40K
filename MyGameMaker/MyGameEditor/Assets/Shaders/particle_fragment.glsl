@@ -5,6 +5,10 @@ in vec4 ParticleColor;
 in float Lifetime;
 in vec4 EndColor;  // End color for gradient
 
+in vec2 SpriteOffset;  
+in vec2 SpriteSize; 
+in vec2 SheetSize;
+
 out vec4 FragColor;
 
 uniform sampler2D particleTexture;
@@ -15,49 +19,12 @@ uniform float softness;           // Edge softness factor
 //uniform vec4 startColor;          // Color inicial
 //uniform vec4 endColor;            // Color final
 
-vec4 applySmoke() {
-    vec4 texColor = texture(particleTexture, TexCoord);
-    
-    // Darken particles as they age
-    float darkening = mix(1.0, 0.2, Lifetime);
-    
-    // Make particles more transparent as they age
-    float alpha = texColor.a * (1.0 - Lifetime) * ParticleColor.a;
-    
-    return vec4(texColor.rgb * ParticleColor.rgb * darkening, alpha);
-}
-
-vec4 applyFire() {
-    vec4 texColor = texture(particleTexture, TexCoord);
-    
-    // Fire color gradient: red/yellow to black
-    vec3 startColor = ParticleColor.rgb;
-    vec3 endColor = vec3(0.0, 0.0, 0.0);
-    vec3 fireColor = mix(startColor, endColor, Lifetime);
-    
-    // Make particles more transparent as they age
-    float alpha = texColor.a * pow(1.0 - Lifetime, 0.5) * ParticleColor.a;
-    
-    return vec4(texColor.rgb * fireColor, alpha);
-}
-
-vec4 applyMuzzleFlash() {
-    vec4 texColor = texture(particleTexture, TexCoord);
-    
-    // Bright flash that quickly fades
-    float intensity = pow(1.0 - Lifetime, 2.0) * 1.5;
-    
-    // Make flash quickly transparent
-    float alpha = texColor.a * pow(1.0 - Lifetime, 1.5) * ParticleColor.a;
-    
-    return vec4(texColor.rgb * ParticleColor.rgb * intensity, alpha);
-}
-
 void main() {
-    // Primero obtener el color de la textura
+ 
+// Calculate the UV offsets for the sprite
+vec2 uv_min = SpriteOffset / SheetSize;
+vec2 uv_max = (SpriteOffset + SpriteSize) / SheetSize;
 
-    vec2 uv_min = vec2(0,0) /  vec2(534,175);
-    vec2 uv_max = (vec2(0,0) + vec2(133,175)) / vec2(534,175);
 
     // Remap texture coordinates to the sub-region
     vec2 croppedTexCoords = uv_min + TexCoord * (uv_max - uv_min);

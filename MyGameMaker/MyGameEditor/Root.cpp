@@ -186,10 +186,10 @@ bool Root::Start()
 
 	//floor->SetActive(false);
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.Scene");
-	auto collisionNextLevel = CreateGameObject("CollisionNextLevel");
-	collisionNextLevel->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	collisionNextLevel->AddComponent<ScriptComponent>()->LoadScript("Scene1ToScene2");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.Scene");
+	//auto collisionNextLevel = CreateGameObject("CollisionNextLevel");
+	//collisionNextLevel->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//collisionNextLevel->AddComponent<ScriptComponent>()->LoadScript("Scene1ToScene2");
 
 	//CreateGameplayUI();
 	//CreateMainMenuUI();

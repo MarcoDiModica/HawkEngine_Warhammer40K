@@ -73,7 +73,6 @@ bool ScriptComponent::HandleException(MonoObject* exception, const std::string& 
 	LOG(LogType::LOG_ERROR, "Script Error in %s.%s: %s",
 		currentScriptName.c_str(), methodName.c_str(), exceptionDetails.c_str());
 
-	// Set error flag to disable further execution of this script
 	hasErrors = true;
 	return true;
 }
@@ -81,7 +80,6 @@ bool ScriptComponent::HandleException(MonoObject* exception, const std::string& 
 std::string ScriptComponent::GetMonoExceptionDetails(MonoObject* exception) {
 	std::string result;
 
-	// Get exception message
 	MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
 	if (exceptionMessage) {
 		const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
@@ -92,7 +90,6 @@ std::string ScriptComponent::GetMonoExceptionDetails(MonoObject* exception) {
 		result = "Unknown exception";
 	}
 
-	// Try to get stack trace if available
 	MonoClass* exceptionClass = mono_object_get_class(exception);
 	MonoProperty* stackTraceProperty = mono_class_get_property_from_name(exceptionClass, "StackTrace");
 	if (stackTraceProperty) {
@@ -110,7 +107,6 @@ std::string ScriptComponent::GetMonoExceptionDetails(MonoObject* exception) {
 		}
 	}
 
-	// Try to get line number info
 	MonoProperty* sourceProperty = mono_class_get_property_from_name(exceptionClass, "Source");
 	if (sourceProperty) {
 		MonoMethod* getSource = mono_property_get_get_method(sourceProperty);
@@ -132,7 +128,6 @@ std::string ScriptComponent::GetMonoExceptionDetails(MonoObject* exception) {
 
 bool ScriptComponent::LoadScript(const std::string& scriptName)
 {
-	// Reset error state when loading a script
 	hasErrors = false;
 
 	std::string scriptPath = "../Script/" + scriptName + ".cs";
@@ -194,36 +189,6 @@ bool ScriptComponent::RefreshScriptInstance()
 	monoScript = nullptr;
 
 	return LoadScript(currentScriptName);
-}
-
-bool ScriptComponent::CreateNewScript(const std::string& scriptName, const std::string& baseScriptName)
-{
-	std::string scriptContent = "using System;\n\n"
-		"public class " + scriptName + " : " + baseScriptName + "\n"
-		"{\n"
-		"    public override void Start()\n"
-		"    {\n"
-		"        HawkEngine.EngineCalls.print(\"Hola desde " + scriptName + "!\");\n"
-		"    }\n\n"
-		"    public override void Update(float deltaTime)\n"
-		"    {\n"
-		"        // Lógica de actualización\n"
-		"    }\n"
-		"}\n";
-
-	std::string scriptPath = "../Script/" + scriptName + ".cs";
-
-	std::ofstream scriptFile(scriptPath);
-	if (!scriptFile.is_open()) {
-		LOG(LogType::LOG_ERROR, "Error al crear el archivo: %s", scriptPath.c_str());
-		return false;
-	}
-
-	scriptFile << scriptContent;
-	scriptFile.close();
-
-	LOG(LogType::LOG_INFO, "Script %s creado correctamente en %s.", scriptName.c_str(), scriptPath.c_str());
-	return true;
 }
 
 std::string ScriptComponent::GetTypeName() const

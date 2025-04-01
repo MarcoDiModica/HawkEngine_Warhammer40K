@@ -65,6 +65,8 @@ public:
 
 	void AddUnloadingDelay(int milliseconds = 200);
 
+	void CreateNewScript(std::string scriptName);
+	void AddScriptToProject(const std::string& scriptName);
 private:
 	MonoManager();
 

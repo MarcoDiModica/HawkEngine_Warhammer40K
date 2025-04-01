@@ -168,7 +168,7 @@ bool Root::Update(double dt)
 		hasAddedColliders = true;
 	}
 
-	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+	/*if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
 	}
 
@@ -178,7 +178,7 @@ bool Root::Update(double dt)
 
 	if (Application->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
 		Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
-	}
+	}*/
 
 	return true;
 }

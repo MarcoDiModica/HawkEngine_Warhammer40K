@@ -1,4 +1,4 @@
-#pragma region Includes
+﻿#pragma region Includes
 #include <glm/glm.hpp>
 #include <algorithm>
 #include <iostream>
@@ -392,6 +392,13 @@ private:
     static void DrawLightComponent(LightComponent* light) {
         if (!light) return;
 
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				light->GetOwner()->RemoveComponent<LightComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Light")) return;
 
@@ -455,6 +462,13 @@ private:
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Sound")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				sound->GetOwner()->RemoveComponent<SoundComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
         DrawAudioFilePath(sound);
         DrawSoundProperties(sound);
@@ -551,6 +565,13 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Audio Listener")) return;
 
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				listener->GetOwner()->RemoveComponent<AudioListener>();
+			}
+			ImGui::EndPopup();
+		}
+
         Transform_Component* transform = gameObject->GetTransform();
         if (transform) {
             glm::dvec3 position = transform->GetPosition();
@@ -569,6 +590,13 @@ private:
     {
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Animation")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				skeletal->GetOwner()->RemoveComponent<SkeletalAnimationComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
 		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetName().c_str());
 		ImGui::Text("Time: %.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
@@ -615,6 +643,13 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("CapsuleCollider")) return;
 
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				collider->GetOwner()->RemoveComponent<CapsuleColliderComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
         DrawCapsuleColliderProperties(collider);
     }
 
@@ -645,6 +680,13 @@ private:
 
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (!ImGui::CollapsingHeader("MeshCollider")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				collider->GetOwner()->RemoveComponent<MeshColliderComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
 		DrawMeshColliderProperties(collider);
 	}
@@ -677,6 +719,13 @@ private:
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (!ImGui::CollapsingHeader("Collider")) return;
 
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				collider->GetOwner()->RemoveComponent<BoxColliderComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
 		DrawColliderProperties(collider);
 	}
 
@@ -707,6 +756,13 @@ private:
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Rigidbody")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				rigidbody->GetOwner()->RemoveComponent<RigidbodyComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
         DrawRigidbodyProperties(rigidbody);
         DrawRigidbodyPhysics(rigidbody);
@@ -947,6 +1003,17 @@ private:
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		bool isOpen = ImGui::CollapsingHeader(headerName.c_str());
 
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				scriptComponent->GetOwner()->scriptComponents.erase(
+					std::remove_if(scriptComponent->GetOwner()->scriptComponents.begin(),
+						scriptComponent->GetOwner()->scriptComponents.end(),
+						[&](const auto& component) { return component.get() == scriptComponent; }),
+					scriptComponent->GetOwner()->scriptComponents.end());
+			}
+			ImGui::EndPopup();
+		}
+
 		if (scriptComponent->HasErrors()) {
 			ImGui::PopStyleColor();
 		}
@@ -1106,7 +1173,7 @@ private:
 		int value = 0;
 		mono_field_get_value(monoScript, field, &value);
 
-		if (ImGui::InputInt("##value", &value)) {
+		if (ImGui::DragInt("##value", &value)) {
 			mono_field_set_value(monoScript, field, &value);
 		}
 	}
@@ -1115,7 +1182,7 @@ private:
 		float value = 0.0f;
 		mono_field_get_value(monoScript, field, &value);
 
-		if (ImGui::InputFloat("##value", &value, 0.0f, 0.0f, "%.3f")) {
+		if (ImGui::DragFloat("##value", &value)) {
 			mono_field_set_value(monoScript, field, &value);
 		}
 	}
@@ -1138,6 +1205,13 @@ private:
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		bool isOpen = ImGui::CollapsingHeader("Particle System", ImGuiTreeNodeFlags_DefaultOpen);
 		ImGui::PopStyleVar();
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				system->GetOwner()->RemoveComponent<ParticleFX>();
+			}
+			ImGui::EndPopup();
+		}
 
 		if (!isOpen) return;
 
@@ -1537,6 +1611,13 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Canvas")) return;
 
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				canvas->GetOwner()->RemoveComponent<UICanvasComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
         ImGui::Text("Canvas");
     }
 #pragma endregion
@@ -1547,6 +1628,14 @@ private:
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Image")) return;
+
+		//remove component
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				image->GetOwner()->RemoveComponent<UIImageComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
         ImGui::Text("Image");
 
@@ -1621,10 +1710,49 @@ private:
     
   
 #pragma endregion
+
 public:
-    static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
+	static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
 		if (!gameObject) return;
 
+		static bool showComponents = true;
+
+		ImGui::PushStyleColor(ImGuiCol_Button, showComponents ? ImVec4(0.4f, 0.4f, 0.4f, 1.0f) : ImVec4(0.2f, 0.2f, 0.2f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));
+
+		if (ImGui::Button("Components", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, 0))) {
+			showComponents = true;
+		}
+
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine(0, 0);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, !showComponents ? ImVec4(0.4f, 0.4f, 0.4f, 1.0f) : ImVec4(0.2f, 0.2f, 0.2f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));
+
+		if (ImGui::Button("Scripts", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			showComponents = false;
+		}
+
+		ImGui::PopStyleColor(3);
+		ImGui::Separator();
+
+		if (showComponents) {
+			DrawEngineComponents(gameObject, snap, snapValue);
+		}
+		else {
+			if (!gameObject->scriptComponents.empty()) {
+				DrawScriptComponents(gameObject);
+			}
+			else {
+				ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No script components attached");
+			}
+		}
+	}
+
+	static void DrawEngineComponents(GameObject* gameObject, bool& snap, float& snapValue) {
 		Transform_Component* transform = gameObject->GetTransform();
 		if (transform) {
 			DrawTransformComponent(transform, snap, snapValue);
@@ -1640,17 +1768,17 @@ public:
 			DrawSkeletalAnimationComponent(animationComponent);
 		}
 
-        if (gameObject->HasComponent<CameraComponent>()) {
+		if (gameObject->HasComponent<CameraComponent>()) {
 			CameraComponent* camera = gameObject->GetComponent<CameraComponent>();
 			DrawCameraComponent(camera);
 		}
 
-        if (gameObject->HasComponent<LightComponent>()) {
+		if (gameObject->HasComponent<LightComponent>()) {
 			LightComponent* light = gameObject->GetComponent<LightComponent>();
 			DrawLightComponent(light);
 		}
 
-        if (gameObject->HasComponent<SoundComponent>()) {
+		if (gameObject->HasComponent<SoundComponent>()) {
 			SoundComponent* sound = gameObject->GetComponent<SoundComponent>();
 			DrawSoundComponent(sound);
 		}
@@ -1664,9 +1792,9 @@ public:
 			BoxColliderComponent* collider = gameObject->GetComponent<BoxColliderComponent>();
 			DrawColliderComponent(collider);
 		}
-        
-        if (gameObject->HasComponent<MeshColliderComponent>()) {
-            MeshColliderComponent* meshCollider = gameObject->GetComponent<MeshColliderComponent>();
+
+		if (gameObject->HasComponent<MeshColliderComponent>()) {
+			MeshColliderComponent* meshCollider = gameObject->GetComponent<MeshColliderComponent>();
 			DrawMeshColliderComponent(meshCollider);
 		}
 
@@ -1675,140 +1803,509 @@ public:
 			DrawCapsuleColliderComponent(capsuleCollider);
 		}
 
-        if (gameObject->HasComponent<RigidbodyComponent>()) {
-            RigidbodyComponent* rigidbody = gameObject->GetComponent<RigidbodyComponent>();
+		if (gameObject->HasComponent<RigidbodyComponent>()) {
+			RigidbodyComponent* rigidbody = gameObject->GetComponent<RigidbodyComponent>();
 			DrawRigidbodyComponent(rigidbody);
 		}
 
 		if (gameObject->HasComponent<ParticleFX>()) {
-            ParticleFX* emitter = gameObject->GetComponent<ParticleFX>();
+			ParticleFX* emitter = gameObject->GetComponent<ParticleFX>();
 			DrawParticleSystemComponent(emitter);
 		}
 
-        if (gameObject->HasComponent<UITransformComponent>()) {
-            UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
-            DrawRectTransformComponent(uiTransformComponent);
-        }
-      
+		if (gameObject->HasComponent<UITransformComponent>()) {
+			UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
+			DrawRectTransformComponent(uiTransformComponent);
+		}
+
 		if (gameObject->HasComponent<ShaderComponent>()) {
 			ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
 			DrawShaderComponent(shader);
 		}
 
 		if (gameObject->HasComponent<UICanvasComponent>()) {
-            UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
+			UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
 			DrawCanvasComponent(uiCanvasComponent);
 		}
-        if (gameObject->HasComponent<UIImageComponent>()) {
-            UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
-            DrawImageComponent(uiImageComponent);
-        }
-        if (gameObject->scriptComponents.size() > 0) {
-			DrawScriptComponents(gameObject);
-		}
 
-		//Aqui mas componentes
+		if (gameObject->HasComponent<UIImageComponent>()) {
+			UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
+			DrawImageComponent(uiImageComponent);
+		}
 	}
 
-    static void DrawAddComponentButton(GameObject* gameObject) {
-        if (ImGui::Button("Add Component")) {
-            ImGui::OpenPopup("AddComponentMenu");
-        }
+	static void DrawScriptsTab(GameObject* gameObject) {
+		if (gameObject->scriptComponents.empty()) {
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No script components attached");
+			return;
+		}
 
-        if (ImGui::BeginPopup("AddComponentMenu")) {
-            DrawAddComponentMenu(gameObject);
-            ImGui::EndPopup();
-        }
-    }
+		DrawScriptComponents(gameObject);
+	}
 
-private:
-    static void DrawAddComponentMenu(GameObject* gameObject) {
-		if (!gameObject) return;
+#pragma region AddComponentMenu
+	static void DrawAddComponentButton(GameObject* gameObject) {
+		if (ImGui::Button("Add Component", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			ImGui::OpenPopup("AddComponentMenu");
+		}
 
-		if (!gameObject->HasComponent<CameraComponent>()) {
-			if (ImGui::MenuItem("Camera")) {
+		ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+		ImGui::SetNextWindowSize(ImVec2(350, 450), ImGuiCond_Appearing);
+
+		static bool inCategoryView = true;
+		static int currentCategory = 0;
+		static char searchBuffer[64] = "";
+
+		if (ImGui::BeginPopupModal("AddComponentMenu", nullptr, ImGuiWindowFlags_NoCollapse)) {
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(6, 6));
+			ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+			bool searchEdited = ImGui::InputTextWithHint("##ComponentSearch", "Search...", searchBuffer, sizeof(searchBuffer));
+			ImGui::PopStyleVar();
+
+			ImGui::Separator();
+
+			if (searchBuffer[0] != '\0') {
+				inCategoryView = false;
+				DrawSearchResults(gameObject, searchBuffer);
+			}
+			else {
+				if (inCategoryView) {
+					DrawCategoryList(inCategoryView, currentCategory);
+				}
+				else {
+					if (ImGui::Button("Back to Categories")) {
+						inCategoryView = true;
+					}
+
+					ImGui::Separator();
+
+					const char* categoryTitle = GetCategoryTitle(currentCategory);
+					ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize(categoryTitle).x) * 0.5f);
+					ImGui::Text("%s", categoryTitle);
+
+					ImGui::Separator();
+
+					DrawCategoryComponents(gameObject, currentCategory);
+				}
+			}
+
+			ImGui::Separator();
+
+			ImGui::SetCursorPosX((ImGui::GetWindowWidth() - 120) * 0.5f);
+			if (ImGui::Button("Close", ImVec2(120, 0))) {
+				inCategoryView = true;
+				searchBuffer[0] = '\0';
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
+	static void DrawCategoryList(bool& inCategoryView, int& currentCategory) {
+		const char* categories[] = {
+			"Rendering",
+			"Physics",
+			"Audio",
+			"UI",
+			"Effects",
+			"Scripts",
+			"Input",
+			"Navigation"
+		};
+
+		for (int i = 0; i < IM_ARRAYSIZE(categories); i++) {
+			bool hovered = false;
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.15f, 0.15f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.25f, 0.40f, 0.70f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.25f, 0.40f, 0.70f, 1.0f));
+
+			ImGui::PushID(i);
+			ImGui::Button(categories[i], ImVec2(ImGui::GetContentRegionAvail().x, 35));
+			hovered = ImGui::IsItemHovered();
+
+			if (hovered && ImGui::IsMouseClicked(0)) {
+				currentCategory = i;
+				inCategoryView = false;
+			}
+
+			if (hovered) {
+				ImVec2 buttonMin = ImGui::GetItemRectMin();
+				ImVec2 buttonMax = ImGui::GetItemRectMax();
+				ImVec2 textPos = ImVec2(buttonMax.x - 20, buttonMin.y + (buttonMax.y - buttonMin.y) * 0.5f - ImGui::GetTextLineHeight() * 0.5f);
+				ImGui::GetWindowDrawList()->AddText(textPos, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), ">");
+			}
+			else {
+				float rightPadding = 0;
+				ImGui::SameLine(ImGui::GetContentRegionAvail().x - rightPadding);
+				ImGui::Text(">");
+			}
+
+			ImGui::PopID();
+			ImGui::PopStyleColor(3);
+		}
+	}
+
+	static void DrawCategoryComponents(GameObject* gameObject, int category) {
+		switch (category) {
+		case 0:
+			DrawComponentButton(gameObject, "Camera", [gameObject]() {
 				gameObject->AddComponent<CameraComponent>();
-			}
-		}
+				}, !gameObject->HasComponent<CameraComponent>());
 
-		if (!gameObject->HasComponent<MeshRenderer>()) {
-			if (ImGui::MenuItem("MeshRenderer")) {
+			DrawComponentButton(gameObject, "Mesh Renderer", [gameObject]() {
 				Application->root->AddMeshRenderer(*gameObject, Mesh::CreateCube(), "Assets/default.png");
-			}
-		}
+				}, !gameObject->HasComponent<MeshRenderer>());
 
-		if (!gameObject->HasComponent<LightComponent>()) {
-			if (ImGui::MenuItem("Light")) {
+			DrawComponentButton(gameObject, "Light", [gameObject]() {
 				gameObject->AddComponent<LightComponent>();
-			}
-		}
+				}, !gameObject->HasComponent<LightComponent>());
 
-		if (!gameObject->HasComponent<SoundComponent>()) {
-			if (ImGui::MenuItem("Sound")) {
-				gameObject->AddComponent<SoundComponent>();
-			}
-		}
+			DrawComponentButton(gameObject, "Shader", [gameObject]() {
+				gameObject->AddComponent<ShaderComponent>();
+				}, !gameObject->HasComponent<ShaderComponent>());
 
-		if (!gameObject->HasComponent<AudioListener>()) {
-			if (ImGui::MenuItem("Audio Listener")) {
-				gameObject->AddComponent<AudioListener>();
-			}
-		}
+			break;
 
-		if (!gameObject->HasComponent<BoxColliderComponent>() 
-			&& !gameObject->HasComponent<CapsuleColliderComponent>() 
-			&& !gameObject->HasComponent<MeshColliderComponent>()) 
-		{
-			if (ImGui::MenuItem("BoxCollider")) {
+		case 1:
+			DrawComponentButton(gameObject, "Box Collider", [gameObject]() {
 				gameObject->AddComponent<BoxColliderComponent>(Application->physicsModule);
-			}
-			if (ImGui::MenuItem("CapsuleCollider")) {
-				gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-			}
-			if (ImGui::MenuItem("MeshCollider")) {
-				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
-			}
-		}
-        
-        if (!gameObject->HasComponent<RigidbodyComponent>()) {
-			if (ImGui::MenuItem("RigidBody")) {
-				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
-			}
-		}
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
 
-		if (!gameObject->HasComponent<ParticleFX>()) {
-			if (ImGui::MenuItem("ParticleEmitter")) {
-				gameObject->AddComponent<ParticleFX>();
-			}
-		}
-        
-		if (!gameObject->HasComponent<UICanvasComponent>()) {
-			if (ImGui::MenuItem("Canvas")) {
-                if (!gameObject->HasComponent<UITransformComponent>()) {
-                    gameObject->AddComponent<UITransformComponent>();
-                }
-				gameObject->AddComponent<UICanvasComponent>();
-			}
-		}
-		if (!gameObject->HasComponent<UIImageComponent>()) {
-			if (ImGui::MenuItem("Image")) {
+			DrawComponentButton(gameObject, "Capsule Collider", [gameObject]() {
+				gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+
+			DrawComponentButton(gameObject, "Mesh Collider", [gameObject]() {
+				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+
+			DrawComponentButton(gameObject, "Rigidbody", [gameObject]() {
+				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<RigidbodyComponent>());
+
+			break;
+
+		case 2:
+			DrawComponentButton(gameObject, "Sound", [gameObject]() {
+				gameObject->AddComponent<SoundComponent>();
+				}, !gameObject->HasComponent<SoundComponent>());
+
+			DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
+				gameObject->AddComponent<AudioListener>();
+				}, !gameObject->HasComponent<AudioListener>());
+
+			break;
+
+		case 3:
+			DrawComponentButton(gameObject, "Canvas", [gameObject]() {
 				if (!gameObject->HasComponent<UITransformComponent>()) {
 					gameObject->AddComponent<UITransformComponent>();
-				}				
-                gameObject->AddComponent<UIImageComponent>();
-				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
-			}
-		}
-        
-		if (!gameObject->HasComponent<UITransformComponent>()) {
-			if (ImGui::MenuItem("RectTransform")) {
-				gameObject->AddComponent<UITransformComponent>();
-			}
-		}
+				}
+				gameObject->AddComponent<UICanvasComponent>();
+				}, !gameObject->HasComponent<UICanvasComponent>());
 
-		//Aqui mas componentes
+			DrawComponentButton(gameObject, "Image", [gameObject]() {
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}
+				gameObject->AddComponent<UIImageComponent>();
+				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+				}, !gameObject->HasComponent<UIImageComponent>());
+
+			DrawComponentButton(gameObject, "Rect Transform", [gameObject]() {
+				gameObject->AddComponent<UITransformComponent>();
+				}, !gameObject->HasComponent<UITransformComponent>());
+
+			break;
+
+		case 4:
+			DrawComponentButton(gameObject, "Particle System", [gameObject]() {
+				gameObject->AddComponent<ParticleFX>();
+				}, !gameObject->HasComponent<ParticleFX>());
+
+			DrawComponentButton(gameObject, "Skeletal Animation", [gameObject]() {
+				gameObject->AddComponent<SkeletalAnimationComponent>();
+				}, !gameObject->HasComponent<SkeletalAnimationComponent>());
+
+			break;
+
+		case 5:
+			DrawAddScriptComponents(gameObject);
+			break;
+
+		case 6:
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No input components available");
+			break;
+
+		case 7:
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No navigation components available");
+			break;
+		}
 	}
 
+	static void DrawAddScriptComponents(GameObject* gameObject) {
+		std::vector<std::string> availableScripts;
+		try {
+			auto& scripts = MonoManager::GetInstance().scriptIDs;
+			for (const auto& script : scripts) {
+				availableScripts.push_back(script.first);
+			}
+		}
+		catch (...) {
+			availableScripts = { "PlayerController", "EnemyAI", "ItemCollector", "CameraFollower" };
+		}
+
+		for (const auto& scriptName : availableScripts) {
+			DrawComponentButton(gameObject, scriptName.c_str(), [gameObject, scriptName]() {
+				gameObject->AddComponent<ScriptComponent>()->LoadScript(scriptName);
+				}, true);
+		}
+
+		ImGui::Separator();
+		if (ImGui::Button("Add New Script", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+			ImGui::OpenPopup("AddCustomScript");
+		}
+
+		static char scriptNameBuffer[64] = "";
+		if (ImGui::BeginPopupModal("AddCustomScript", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+			ImGui::Text("Enter the name of the script to add:");
+			ImGui::InputText("##ScriptName", scriptNameBuffer, sizeof(scriptNameBuffer));
+
+			ImGui::Separator();
+
+			if (ImGui::Button("Add", ImVec2(120, 0))) {
+				if (strlen(scriptNameBuffer) > 0) {
+					MonoManager::GetInstance().CreateNewScript(scriptNameBuffer);
+					gameObject->AddComponent<ScriptComponent>()->LoadScript(scriptNameBuffer);
+					scriptNameBuffer[0] = '\0';
+					ImGui::ClosePopupToLevel(0, true);
+				}
+
+			}
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+				scriptNameBuffer[0] = '\0';
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
+	static void DrawSearchResults(GameObject* gameObject, const char* searchStr) {
+		std::string searchLower = searchStr;
+		std::transform(searchLower.begin(), searchLower.end(), searchLower.begin(), ::tolower);
+
+		bool anyFound = false;
+
+		auto matchesSearch = [&searchLower](const char* name) {
+			std::string nameLower = name;
+			std::transform(nameLower.begin(), nameLower.end(), nameLower.begin(), ::tolower);
+			return nameLower.find(searchLower) != std::string::npos;
+			};
+
+		if (matchesSearch("Camera")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Camera", [gameObject]() {
+				gameObject->AddComponent<CameraComponent>();
+				}, !gameObject->HasComponent<CameraComponent>());
+		}
+
+		if (matchesSearch("Mesh Renderer")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Mesh Renderer", [gameObject]() {
+				Application->root->AddMeshRenderer(*gameObject, Mesh::CreateCube(), "Assets/default.png");
+				}, !gameObject->HasComponent<MeshRenderer>());
+		}
+
+		if (matchesSearch("Light")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Light", [gameObject]() {
+				gameObject->AddComponent<LightComponent>();
+				}, !gameObject->HasComponent<LightComponent>());
+		}
+
+		if (matchesSearch("Box Collider")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Box Collider", [gameObject]() {
+				gameObject->AddComponent<BoxColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+		}
+
+		if (matchesSearch("Capsule Collider")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Capsule Collider", [gameObject]() {
+				gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+		}
+
+		if (matchesSearch("Mesh Collider")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Mesh Collider", [gameObject]() {
+				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+		}
+
+		if (matchesSearch("Rigidbody")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Rigidbody", [gameObject]() {
+				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<RigidbodyComponent>());
+		}
+
+		if (matchesSearch("Sound")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Sound", [gameObject]() {
+				gameObject->AddComponent<SoundComponent>();
+				}, !gameObject->HasComponent<SoundComponent>());
+		}
+
+		if (matchesSearch("Audio Listener")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
+				gameObject->AddComponent<AudioListener>();
+				}, !gameObject->HasComponent<AudioListener>());
+		}
+
+		if (matchesSearch("Canvas")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Canvas", [gameObject]() {
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}
+				gameObject->AddComponent<UICanvasComponent>();
+				}, !gameObject->HasComponent<UICanvasComponent>());
+		}
+
+		if (matchesSearch("Image")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Image", [gameObject]() {
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}
+				gameObject->AddComponent<UIImageComponent>();
+				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+				}, !gameObject->HasComponent<UIImageComponent>());
+		}
+
+		if (matchesSearch("Rect Transform")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Rect Transform", [gameObject]() {
+				gameObject->AddComponent<UITransformComponent>();
+				}, !gameObject->HasComponent<UITransformComponent>());
+		}
+
+		if (matchesSearch("Particle") || matchesSearch("System")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Particle System", [gameObject]() {
+				gameObject->AddComponent<ParticleFX>();
+				}, !gameObject->HasComponent<ParticleFX>());
+		}
+
+		if (matchesSearch("Skeletal") || matchesSearch("Animation")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Skeletal Animation", [gameObject]() {
+				gameObject->AddComponent<SkeletalAnimationComponent>();
+				}, !gameObject->HasComponent<SkeletalAnimationComponent>());
+		}
+
+		if (matchesSearch("Shader")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Shader", [gameObject]() {
+				gameObject->AddComponent<ShaderComponent>();
+				}, !gameObject->HasComponent<ShaderComponent>());
+		}
+
+		std::vector<std::string> availableScripts;
+		try {
+			auto& scripts = MonoManager::GetInstance().scriptIDs;
+			for (const auto& script : scripts) {
+				if (matchesSearch(script.first.c_str())) {
+					availableScripts.push_back(script.first);
+				}
+			}
+		}
+		catch (...) {
+			availableScripts = { "PlayerController", "EnemyAI", "ItemCollector", "CameraFollower" };
+		}
+
+		for (const auto& scriptName : availableScripts) {
+			if (matchesSearch(scriptName.c_str())) {
+				anyFound = true;
+				DrawComponentButton(gameObject, scriptName.c_str(), [gameObject, scriptName]() {
+					gameObject->AddComponent<ScriptComponent>()->LoadScript(scriptName);
+					}, true);
+			}
+		}
+
+		if (!anyFound) {
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f),
+				"No components match your search criteria");
+		}
+	}
+
+	static void DrawComponentButton(GameObject* gameObject, const char* name, std::function<void()> addAction, bool available) {
+		ImGui::PushID(name);
+
+		ImVec4 buttonColor = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
+		ImVec4 buttonHoveredColor = ImVec4(0.25f, 0.40f, 0.70f, 1.0f);
+		ImVec4 buttonActiveColor = ImVec4(0.25f, 0.40f, 0.70f, 1.0f);
+		ImVec4 textColor = available ? ImVec4(1.0f, 1.0f, 1.0f, 1.0f) : ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, buttonHoveredColor);
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, buttonActiveColor);
+		ImGui::PushStyleColor(ImGuiCol_Text, textColor);
+
+		bool clicked = ImGui::Button(name, ImVec2(ImGui::GetContentRegionAvail().x, 35));
+
+		ImGui::PopStyleColor(4);
+
+		if (clicked && available) {
+			addAction();
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::PopID();
+	}
+
+	static const char* GetCategoryTitle(int category) {
+		const char* titles[] = {
+			"Rendering Components",
+			"Physics Components",
+			"Audio Components",
+			"UI Components",
+			"Effects Components",
+			"Scripts",
+			"Input Components",
+			"Navigation Components"
+		};
+
+		if (category >= 0 && category < IM_ARRAYSIZE(titles)) {
+			return titles[category];
+		}
+
+		return "Components";
+	}
+#pragma endregion
+
+private:
     static ImVec2 CalculatePreviewSize(int width, int height) {
         const float maxPreviewSize = 200.0f;
         float aspectRatio = static_cast<float>(width) / height;

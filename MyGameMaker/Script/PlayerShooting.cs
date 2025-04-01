@@ -15,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
     private Boltgun boltgun;
     private Shotgun shotgun;
     private Railgun railgun;
+    public Vector3 testingVectors3 = new Vector3(3, 2, 2);
 
     private Audio sound;
     private string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";

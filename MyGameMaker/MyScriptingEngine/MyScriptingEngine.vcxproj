@@ -116,6 +116,7 @@
     <ClCompile Include="EngineBinds.cpp" />
     <ClCompile Include="MonoManager.cpp" />
     <ClCompile Include="ScriptComponent.cpp" />
+    <ClCompile Include="ScriptHotReloader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">

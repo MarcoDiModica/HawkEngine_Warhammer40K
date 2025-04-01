@@ -170,7 +170,7 @@ void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
 
 	UnloadScriptDomain();
 
-	AddUnloadingDelay(200);
+	AddUnloadingDelay(400);
 
 	CreateScriptDomain();
 
@@ -255,4 +255,127 @@ void MonoManager::OnScriptsRecompiled(const std::string& newAssemblyPath) {
 
 void MonoManager::AddUnloadingDelay(int milliseconds) {
 	std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+}
+
+void MonoManager::CreateNewScript(std::string scriptName) {
+	std::string scriptPath = getExecutablePath() + R"(\..\..\Script\)" + scriptName + ".cs";
+
+	std::ifstream checkFile(scriptPath);
+	if (checkFile.is_open()) {
+		LOG(LogType::LOG_WARNING, "Script already exists: %s", scriptPath.c_str());
+		checkFile.close();
+		return;
+	}
+
+	std::string scriptTemplate =
+		R"(using System;
+using System.Collections.Generic;
+using HawkEngine;
+
+public class )" + scriptName + R"( : MonoBehaviour
+{
+	// Variables públicas que se mostrarán en el inspector
+	public float value = 3.0f;
+	public bool isActive = true;
+
+	// Variables privadas
+	private GameObject owner;
+	private Transform transform;
+
+	// Inicialización al cargar el script
+	public override void Start()
+	{
+		transform = GetComponent<Transform>();
+		Engineson.print("Script " + gameObject.name + " started");
+	}
+
+	// Actualización cada frame
+	public override void Update(float deltaTime)
+	{
+		if (isActive)
+		{
+			// Lógica de actualización
+		}
+	}
+
+	// Llamado cuando ocurre una colisión
+	public override void OnCollisionEnter(GameObject other)
+	{
+		Engineson.print($"Collision with {other.name}");
+	}
+
+	// Llamado cuando otra entidad entra en un trigger
+	public override void OnTriggerEnter(GameObject other)
+	{
+		Engineson.print($"Trigger with {other.name}");
+	}
+
+	// Métodos personalizados
+	public void CustomMethod()
+	{
+		// Tu código aquí
+	}
+}
+		)";
+
+	std::ofstream newScriptFile(scriptPath);
+	if (newScriptFile.is_open()) {
+		newScriptFile << scriptTemplate;
+		newScriptFile.close();
+	}
+	else {
+		LOG(LogType::LOG_ERROR, "Error while creating the new script: %s", scriptPath.c_str());
+		return;
+	}
+
+	AddScriptToProject(scriptName);
+
+	AddUnloadingDelay(200);
+
+	ForceRecompileScripts();
+}
+
+void MonoManager::AddScriptToProject(const std::string& scriptName) {
+	std::string csprojPath = getExecutablePath() + R"(\..\..\Script\C#Assembly.csproj)";
+
+	std::ifstream checkFile(csprojPath);
+	if (!checkFile.is_open()) {
+		LOG(LogType::LOG_ERROR, "Not found .csproj: %s", csprojPath.c_str());
+		return;
+	}
+
+	std::stringstream buffer;
+	buffer << checkFile.rdbuf();
+	std::string content = buffer.str();
+	checkFile.close();
+
+	std::string searchString = "<Compile Include=\"" + scriptName + ".cs\"";
+	if (content.find(searchString) != std::string::npos) {
+		LOG(LogType::LOG_INFO, "Alredy included in the project: %s", scriptName.c_str());
+		return;
+	}
+
+	size_t insertPos = content.find("</ItemGroup>");
+	if (insertPos == std::string::npos) {
+		insertPos = content.find("<ItemGroup>");
+		if (insertPos == std::string::npos) {
+			LOG(LogType::LOG_ERROR, "Cant find where to include the script in the .csproj");
+			return;
+		}
+
+		insertPos = content.find('>', insertPos) + 1;
+	}
+
+	std::string newLine = "    <Compile Include=\"" + scriptName + ".cs\" />\n  ";
+
+	content.insert(insertPos, newLine);
+
+	std::ofstream outFile(csprojPath);
+	if (!outFile.is_open()) {
+		LOG(LogType::LOG_ERROR, "Cant open the .csproj for writing: %s", csprojPath.c_str());
+		return;
+	}
+
+	outFile << content;
+	outFile.close();
 }

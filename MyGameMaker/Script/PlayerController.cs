@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
+ 
         
 
         if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)

@@ -216,6 +216,10 @@ bool Root::Start()
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");*/
 
+	auto cubeTest = CreateCube("CubeTest");
+	cubeTest->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
+	cubeTest->GetTransform()->SetScale(glm::vec3(2, 2, 2));
+	cubeTest->AddComponent<BoxColliderComponent>(Application->physicsModule);
 
 	auto floor = CreateCube("Floor");
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));

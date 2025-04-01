@@ -8,7 +8,8 @@
 #include <glm/glm.hpp>
 #include "CapsuleColliderComponent.h"
 #include "MeshColliderComponent.h"
-
+#include "MyGameEditor/App.h"
+#include "External/Optick/include/optick.h"
 
 constexpr float fixedDeltaTime = 0.002; // 60 updates per second //With 0.02 it goes a little bit laggy
 float accumulatedTime = 0.0f;
@@ -28,6 +29,7 @@ bool PhysicsModule::Awake() {
     solver = new btSequentialImpulseConstraintSolver();
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
     dynamicsWorld->setGravity(btVector3(0, -9.81, 0));
+	
 
     //Debug drawer
     debugDrawer = new DebugDrawerPhysics();
@@ -219,6 +221,7 @@ std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWor
 void PhysicsModule::DrawDebugDrawer() {
     if (debugDrawer) {
         auto rigidBodies = GetAllRigidBodies(dynamicsWorld);
+        debugDrawer->drawLine(rayFrom, rayTo, btVector3(1.0f, 0.0f, 0.0f));
 
         for (const auto& rigidBody : rigidBodies) {
             if (!rigidBody || !rigidBody->getCollisionShape()) {
@@ -487,6 +490,11 @@ bool PhysicsModule::Update(double dt) {
 #ifndef _BUILD
     DrawDebugDrawer();
 #endif // !_BUILD
+
+#ifdef PROFILE
+    OPTICK_EVENT();
+#endif // PROFILE
+  
     if (linkPhysicsToScene) {
         int numSubsteps = glm::clamp(static_cast<int>(dt / fixedDeltaTime), 1, 10);
         int maxSubSteps = 10;
@@ -543,6 +551,27 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     }
 
     std::cout << "Global restitution set to: " << restitutionValue << "\n";
+}
+
+bool PhysicsModule::Raycast(btVector3& origin, btVector3& direction, float maxDistance) 
+{
+	rayFrom = origin;
+	btVector3 originRay = origin;
+    btVector3 directionRay = origin + direction.normalized() * maxDistance;
+
+	btCollisionWorld::ClosestRayResultCallback rayCallback(originRay, directionRay);
+    dynamicsWorld->rayTest(originRay, directionRay, rayCallback);
+
+	if (rayCallback.hasHit()) {
+        rayTo = directionRay;
+        return true;
+	}
+	else {
+        rayTo = directionRay;
+		return false;
+	}
+
+	return false;
 }
 
 

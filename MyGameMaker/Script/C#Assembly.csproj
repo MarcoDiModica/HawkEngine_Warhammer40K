@@ -109,6 +109,7 @@
     <Compile Include="Railgun.cs" />
     <Compile Include="Rigidbody.cs" />
     <Compile Include="Scene1ToScene2.cs" />
+    <Compile Include="Scene2ToMenu.cs" />
     <Compile Include="Shotgun.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="SkeletalAnimation.cs" />

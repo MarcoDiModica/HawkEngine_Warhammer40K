@@ -1,5 +1,5 @@
-using HawkEngine;
-public class Scene1ToScene2 : MonoBehaviour
+﻿using HawkEngine;
+public class Scene2ToMenu : MonoBehaviour
 {
     private Collider TriggerLevel;
     bool changeScene = false;
@@ -13,15 +13,18 @@ public class Scene1ToScene2 : MonoBehaviour
     }
     public override void Update(float deltaTime)
     {
-        if (changeScene) {
-            SceneManager.LoadScene("Level2");
+        if (changeScene)
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
     public override void OnTriggerEnter(GameObject other)
     {
-        if (other != null) { 
+        if (other != null)
+        {
 
-            if (other.name == "Player" && !changeScene) { 
+            if (other.name == "Player" && !changeScene)
+            {
                 changeScene = true;
             }
         }

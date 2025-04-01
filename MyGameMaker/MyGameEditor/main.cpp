@@ -497,6 +497,8 @@ static void RenderEditor() {
 			//RenderOutline(child);
 		}
 
+		objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
+
 		if (object->IsActive()) 
 		{
 			object->Update(static_cast<float>(Application->GetDt()));
@@ -515,6 +517,7 @@ static void RenderEditor() {
 				}
 			}
 		}
+
 	}
 
 	Application->physicsModule->Update(Application->GetDt());

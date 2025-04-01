@@ -38,10 +38,10 @@ GameObject::~GameObject()
 	}
 	scriptComponents.clear();
     
-    for (auto& component : components) {
-        component.second->Destroy();
-    }
-    components.clear();
+	for (auto& component : components) {
+		component.second->Destroy();
+	}
+	components.clear();
 
     for (auto& child : children) {
         child->Destroy();
@@ -530,4 +530,14 @@ MonoObject* GameObject::GetSharp() {
     CsharpReference = EngineBinds::CreateGameObjectSharp(monoString, this);
 
     return CsharpReference;
+}
+
+void GameObject::SelfDestroy()
+{
+    if (parent) {
+		parent->RemoveChild(this);
+	}
+	else if (scene) {
+		scene->RemoveGameObject(this->shared_from_this());
+	}
 }

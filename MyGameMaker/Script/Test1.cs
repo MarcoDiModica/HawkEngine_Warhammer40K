@@ -10,10 +10,12 @@ public class Test1 : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        Engineson.print("Im a CUBEEE");
+
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Engineson.print("C key ss pressed");
-            Engineson.print("Position");
+            gameObject.SelfDestroy();
+            Engineson.print("Test1 Destroyed");
         }
     }
 }

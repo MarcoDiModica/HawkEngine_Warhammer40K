@@ -67,6 +67,7 @@ public:
 
 	void CreateNewScript(std::string scriptName);
 	void AddScriptToProject(const std::string& scriptName);
+	void RemoveScriptFromProject(const std::string& scriptName);
 private:
 	MonoManager();
 

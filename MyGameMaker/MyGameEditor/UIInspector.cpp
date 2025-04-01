@@ -1753,8 +1753,10 @@ public:
 	}
 
 	static void DrawEngineComponents(GameObject* gameObject, bool& snap, float& snapValue) {
-		Transform_Component* transform = gameObject->GetTransform();
-		if (transform) {
+		if (!gameObject) return;
+
+		if (gameObject->HasComponent<Transform_Component>()) {
+			Transform_Component* transform = gameObject->GetComponent<Transform_Component>();
 			DrawTransformComponent(transform, snap, snapValue);
 		}
 

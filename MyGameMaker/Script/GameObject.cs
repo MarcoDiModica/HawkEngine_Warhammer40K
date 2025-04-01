@@ -11,18 +11,15 @@ namespace HawkEngine
     public class GameObject
     {
         UIntPtr CplusplusInstance; /* ptr to C++ instance */
-
         public GameObject(string name, UIntPtr C_doppleganger)
         {
             CplusplusInstance = C_doppleganger;
             this.name = name;
-            Engineson.print("Ive gotten the name " + GetName());
+        }
 
-            if (name == "Samson") {
-                AddChild(Engineson.CreateGameObject("joe", null));
-             }
-
-           // EngineCalls.Destroy(this);
+        public void SelfDestroy()
+        {
+            Engineson.Destroy(this);
         }
 
         public T GetComponent<T>()

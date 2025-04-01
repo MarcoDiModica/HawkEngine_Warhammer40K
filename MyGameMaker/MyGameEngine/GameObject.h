@@ -105,6 +105,8 @@ public:
 
     void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
 
+    void SelfDestroy();
+
 private:
     friend class SceneSerializer;
     friend class GameObject;

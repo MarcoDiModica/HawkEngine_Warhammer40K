@@ -379,3 +379,49 @@ void MonoManager::AddScriptToProject(const std::string& scriptName) {
 	outFile << content;
 	outFile.close();
 }
+
+void MonoManager::RemoveScriptFromProject(const std::string& scriptName)
+{
+	std::string csprojPath = getExecutablePath() + R"(\..\..\Script\C#Assembly.csproj)";
+
+	std::ifstream checkFile(csprojPath);
+	if (!checkFile.is_open()) {
+		LOG(LogType::LOG_ERROR, "Not found .csproj: %s", csprojPath.c_str());
+		return;
+	}
+
+	std::stringstream buffer;
+	buffer << checkFile.rdbuf();
+	std::string content = buffer.str();
+	checkFile.close();
+
+	std::string searchString = "<Compile Include=\"" + scriptName + ".cs\"";
+	size_t pos = content.find(searchString);
+	if (pos == std::string::npos) {
+		LOG(LogType::LOG_INFO, "Not included in the project: %s", scriptName.c_str());
+		return;
+	}
+
+	size_t start = content.rfind("<Compile Include=", pos);
+	size_t end = content.find("/>", pos) + 2;
+
+	content.erase(start, end - start);
+
+	std::ofstream outFile(csprojPath);
+	if (!outFile.is_open()) {
+		LOG(LogType::LOG_ERROR, "Cant open the .csproj for writing: %s", csprojPath.c_str());
+		return;
+	}
+
+	outFile << content;
+	outFile.close();
+
+	std::string scriptPath = getExecutablePath() + R"(\..\..\Script\)" + scriptName + ".cs";
+	if (std::filesystem::exists(scriptPath)) {
+		std::filesystem::remove(scriptPath);
+	}
+
+	AddUnloadingDelay(200);
+
+	ForceRecompileScripts();
+}

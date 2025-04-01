@@ -258,6 +258,11 @@ public:
 
 				}
 			}
+			else 
+			{
+				particleData[i].spriteOffset = glm::vec2(0.0f, 0.0f);
+				particleData[i].spriteSize = particleData[i].sheetSize;
+			}
 
 			
 

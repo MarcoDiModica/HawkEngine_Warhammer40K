@@ -1329,6 +1329,24 @@ private:
 			system->SetSoftness(softness);
 		}
 
+		//SpriteSheet Animation
+		bool useAnimation = system->GetUseAnimation();
+		if (ImGui::Checkbox("Use animation", &useAnimation)) 
+		{
+			system->SetUseAnimation(useAnimation);
+		}
+
+		glm::vec2 spriteSize = system->GetSpriteSize();
+		float spriteSizeArray[2] = { spriteSize.x, spriteSize.y };
+		if (ImGui::DragFloat2("Sprite Size", spriteSizeArray, 0.1f, 0.1f, 4600.0f)) {
+			system->SetSpriteSize(glm::vec2(spriteSizeArray[0], spriteSizeArray[1]));
+		}
+
+		float animSpeed = system->GetAnimSpeed();
+		if (ImGui::DragFloat("Animation Speed", &animSpeed, 0.1f, 0.1f, 100.0f)) {
+			system->SetAnimSpeed(animSpeed);
+		}
+
 		ImGui::EndGroup();
 		ImGui::TreePop();
 	}

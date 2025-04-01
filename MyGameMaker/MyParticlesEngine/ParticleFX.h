@@ -99,6 +99,10 @@ public:
 	void SetEndSpeed(float Espeed);
 	void SetDuration(float duration) { this->duration = duration; }
 	void SetPlayOnAwake(bool playOnAwake) { this->playOnAwake = playOnAwake; }
+	void SetSpriteSize(glm::vec2 size) { spriteSize = size; }
+	void SetUseAnimation(bool useAnimation) { this->useAnimation = useAnimation; }
+	void SetAnimSpeed(float animSpeed) { this->animSpeed = animSpeed; }
+
 
 	float GetEmissionRate() const { return emissionRate; }
 	float GetMinLifetime() const { return minLifetime; }
@@ -109,7 +113,10 @@ public:
 	float GetEndSize() const { return endSize; }
 	float GetEndSpeed() const { return endSpeed; }
 	float GetDuration() const { return duration; }
+	float GetAnimSpeed() const { return animSpeed; }
 	bool GetPlayOnAwake() const { return playOnAwake; }
+	bool GetUseAnimation() const { return useAnimation; }
+	glm::vec2 GetSpriteSize() const { return spriteSize; }
 	glm::vec3 GetStartColor() const { return startColor; }
 	glm::vec3 GetEndColor() const { return endColor; }
 	float GetStartAlpha() const { return startAlpha; }

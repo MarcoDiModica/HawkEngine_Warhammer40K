@@ -27,4 +27,15 @@ public class Scene1ToScene2 : MonoBehaviour
         }
 
     }
+
+    public override void OnCollisionStay(GameObject other)
+    {
+        if (other != null)
+        {
+            if (other.name == "Player")
+            {
+                Engineson.print("Ivo se besa con dani");
+            }
+        }
+    }
 }

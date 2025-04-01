@@ -1,23 +1,37 @@
-using System;
-using System.Diagnostics;
-using System.Numerics;
 using HawkEngine;
+using System;
+using System.Numerics;
 
 public class EnemyControllerMelee : EnemyController
 {
+    // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
     private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tama�o de la hurtbox
     private Vector3 hurtboxOffset = new Vector3(5.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
+
+    // Perfect Dodge
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
 
-    //stats
+    // Enemy Stats
     private float health = 100.0f;
     private float damage = 20.0f;
-    
+
+        // Claw Attack
+    private float lastClawTime = 0f;
+    public float clawCooldown = 2f;
+
+        // Leap Attack
+    public float maxLeapRange = 15f;
+    public float minLeapRange = 7f;
+    private float leapTimer = 0f;
+    public float leapTime = 2f;
+    public float leapCooldown = 8f;
+    private bool hasLeap = true;
+
     public override void Awake()
     {
         
@@ -62,9 +76,33 @@ public class EnemyControllerMelee : EnemyController
         if (!isStunned)
         {
             Vector3 playerPos = playerTransform.position;
+            float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
 
-            if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+            if (distanceToPlayer < distToChase)
             {
+                if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange)
+                {
+                    if (hasLeap)
+                    {
+                        Engineson.print("ENEMY HAS LEAP");
+                        /*Random random = new Random();
+                        int rand = random.Next(0, 4);
+                        if (random.Next(0, 100) == (8 + 1 * rand))
+                        {
+                            Leap();
+                        }*/
+                        Leap();
+                        hasLeap = false;
+                    }
+                    leapTimer += deltaTime;
+
+                    if (leapTimer >= leapCooldown)
+                    {
+                        Engineson.print("LEAP RESTORED");
+                        hasLeap = true;
+                    }
+                }
+
                 if (IsPlayerInHurtbox(playerPos))
                 {
                     //Engineson.print("Player in hurtbox");
@@ -107,6 +145,7 @@ public class EnemyControllerMelee : EnemyController
                         }
                     }
                 }
+
                 if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
                 {
                     Vector3 currentVelocity = rb.GetVelocity();
@@ -122,6 +161,7 @@ public class EnemyControllerMelee : EnemyController
                     rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                 }
             }
+
             if (moveDirection != Vector3.Zero)
             {
                 currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
@@ -158,6 +198,14 @@ public class EnemyControllerMelee : EnemyController
     public override void Attack()
     {
         Engineson.print("Melee attack executed!");
+        //GameObject.Find("Player").GetComponent<PlayerData>().TakeDamage(damage);
+        //Engineson.print("Current health: " + (GameObject.Find("Player").GetComponent<PlayerData>().GetHealth()));
+    }
+
+    public void Leap()
+    {
+        Engineson.print("LEAP JUMP EXECUTED");
+        rb.SetVelocity(rb.GetVelocity() * 2);
         //GameObject.Find("Player").GetComponent<PlayerData>().TakeDamage(damage);
         //Engineson.print("Current health: " + (GameObject.Find("Player").GetComponent<PlayerData>().GetHealth()));
     }

@@ -62,6 +62,7 @@
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include "MyParticlesEngine/ParticleFX.h"
+#include "SDL2/SDL_timer.h"
 
 using namespace std;
 
@@ -412,69 +413,159 @@ static void ObjectToEditorCamera()
 }
 
 static void MousePickingCheck(std::vector<GameObject*> objects)
-{	
-	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
-	glm::vec3 rayDirection = Application->input->getMousePickRay();
-	GameObject* selectedObject = nullptr;
-	bool selecting = false;
-	float distance = 0.0f;
-	float closestDistance = 0.0f;
-	
-	if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused) 
-	{
+{
+	if (Application->input->GetMouseButton(1) != KEY_DOWN && !ImGuizmo::IsUsing()) {
+		return;
+	}
 
+	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
+
+	glm::vec3 rayDirection = Application->input->getMousePickRay();
+
+	if (rayDirection == glm::vec3(0, 0, -1) && Application->input->GetMouseButton(1) != KEY_DOWN) {
+		return;
+	}
+
+	bool selecting = false;
+	bool isMultiSelect = Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT ||
+		Application->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT;
+	bool isCtrlHeld = Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT ||
+		Application->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT;
+
+	static Uint32 lastClickTime = 0;
+	static glm::vec2 lastClickPos(0, 0);
+	static int cyclicIndex = -1;
+
+	glm::vec2 currentMousePos(Application->input->GetMouseX(), Application->input->GetMouseY());
+	Uint32 currentTime = SDL_GetTicks();
+	bool isSamePosition = glm::distance(currentMousePos, lastClickPos) < 5.0f;
+	bool isDoubleClick = (currentTime - lastClickTime < 500) && isSamePosition;
+
+	std::vector<std::pair<GameObject*, float>> objectsHit;
+
+	if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused)
+	{
 		if (ImGuizmo::IsOver()) {
 			return;
 		}
 
-		selecting = true;
-		for (int i = 0; i < objects.size(); i++)
-		{
-			if (objects[i]->HasComponent<MeshRenderer>() && objects[i]->IsActive())
-			{
-				BoundingBox bbox = objects[i]->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+		if (!isSamePosition) {
+			cyclicIndex = -1;
+			objectsHit.clear();
+		}
 
-				bbox = objects[i]->GetTransform()->GetMatrix() * bbox;
-				glm::vec3 collisionPoint;
-				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
+		lastClickTime = currentTime;
+		lastClickPos = currentMousePos;
+
+		selecting = true;
+
+		if (isDoubleClick && !objectsHit.empty()) {
+			cyclicIndex = (cyclicIndex + 1) % objectsHit.size();
+		}
+		else {
+			objectsHit.clear();
+			cyclicIndex = 0;
+
+			for (auto & object : objects)
+			{
+				if (object->HasComponent<MeshRenderer>() && object->IsActive())
 				{
-                    distance = glm::distance(rayOrigin, collisionPoint);
-					if (distance < closestDistance || closestDistance == 0.0f)
+					BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+					bbox = object->GetTransform()->GetMatrix() * bbox;
+					glm::vec3 collisionPoint;
+
+					if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
 					{
-						closestDistance = distance;
-						selectedObject = objects[i];
+						float distance = glm::distance(rayOrigin, collisionPoint);
+						objectsHit.emplace_back(object, distance);
 					}
 				}
 			}
-		}
-	}
 
-	if (selectedObject != nullptr && selecting == true)
-	{
-		Application->input->ClearSelection();
-		Application->input->SetDraggedGameObject(selectedObject);
-		Application->input->AddToSelection(selectedObject);
+			std::sort(objectsHit.begin(), objectsHit.end(),
+				[](const auto& a, const auto& b) {
+					return a.second < b.second;
+				});
+		}
+
+		if (!objectsHit.empty()) {
+			GameObject* selectedObject = objectsHit[cyclicIndex].first;
+
+			if (!isMultiSelect && !isCtrlHeld) {
+				Application->input->ClearSelection();
+			}
+
+			if (isCtrlHeld && Application->input->IsGameObjectSelected(selectedObject)) {
+				Application->input->RemoveFromSelection(selectedObject);
+			}
+			else {
+				Application->input->SetDraggedGameObject(selectedObject);
+				Application->input->AddToSelection(selectedObject);
+			}
+		}
+		else if (!isMultiSelect && !isCtrlHeld) {
+			Application->input->ClearSelection();
+		}
 	}
 }
 
 static void RenderOutline(GameObject* object) {
 	if (!object->isSelected || !object->HasComponent<MeshRenderer>()) return;
-	
+
+	GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+	GLboolean depthTestEnabled;
+	glGetBooleanv(GL_DEPTH_TEST, &depthTestEnabled);
+	GLboolean blendEnabled;
+	glGetBooleanv(GL_BLEND, &blendEnabled);
+	GLint blendSrcFunc, blendDstFunc;
+	glGetIntegerv(GL_BLEND_SRC, &blendSrcFunc);
+	glGetIntegerv(GL_BLEND_DST, &blendDstFunc);
+	GLfloat lineWidth;
+	glGetFloatv(GL_LINE_WIDTH, &lineWidth);
+
+	glUseProgram(0);
+
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_STENCIL_TEST);
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	glStencilMask(0xFF);
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+
 	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
-
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(-5.0f, -5.0f);
-	
-	glColor3f(1.0f, 0.5f, 0.0f); // Red outline
-
 	glPushMatrix();
 	glMultMatrixf(glm::value_ptr(modelMatrix));
 	object->GetComponent<MeshRenderer>()->Render();
 	glPopMatrix();
 
-	glDisable(GL_POLYGON_OFFSET_FILL);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+	glStencilMask(0x00);
 
-	glColor3f(1.0f, 1.0f, 1.0f);
+	float outlineScale = 1.03f;
+	glm::mat4 outlineMatrix = glm::scale(modelMatrix, glm::vec3(outlineScale));
+
+	glColor4f(1.0f, 0.5f, 0.0f, 0.8f);
+
+	glPushMatrix();
+	glMultMatrixf(glm::value_ptr(outlineMatrix));
+	object->GetComponent<MeshRenderer>()->Render();
+	glPopMatrix();
+
+	glDisable(GL_STENCIL_TEST);
+	if (depthTestEnabled) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+	if (blendEnabled) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+	glBlendFunc(blendSrcFunc, blendDstFunc);
+	glStencilMask(0xFF);
+	glStencilFunc(GL_ALWAYS, 0, 0xFF);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}
 }
 
 static void RenderEditor() {
@@ -486,7 +577,6 @@ static void RenderEditor() {
 	configureCamera();
 	drawFloorGrid(256, 4);
 
-	// Obtener la escena activa
 	auto activeScene = Application->root->GetActiveScene();
 	if (!activeScene) return;
 
@@ -536,6 +626,13 @@ static void RenderEditor() {
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
+
+	/*std::vector<GameObject*> selectedObjects = Application->input->GetSelectedGameObjects();
+	for (auto& object : objects) {
+		if (object->IsActive()) {
+			RenderOutline(object);
+		}
+	}*/
 
 	MousePickingCheck(objects);
 }

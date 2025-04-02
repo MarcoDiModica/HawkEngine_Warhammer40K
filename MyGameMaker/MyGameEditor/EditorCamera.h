@@ -7,7 +7,7 @@
 #include "../MyGameEngine/CameraBase.h"
 #include "../MyGameEngine/Component.h"
 
-class EditorCamera : public Module, public CameraBase 
+class EditorCamera : public Module, public CameraBase
 {
 public:
 	EditorCamera(App* app);
@@ -31,7 +31,12 @@ public:
 	float GetMouseSensitivity() const { return static_cast<float>(sensitivity); }
 	void SetMouseSensitivity(float sensitivity) { this->sensitivity = sensitivity; }
 
-	void UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight);
+	void UpdateCameraView(double windowWidth, double windowHeight, double viewportWidth, double viewportHeight);
+
+	double GetViewportWidth() const { return viewportWidth; }
+	double GetViewportHeight() const { return viewportHeight; }
+
+	glm::vec2 ScreenToViewport(int screenX, int screenY) const;
 
 private:
 	glm::dvec2 lastMousePos = glm::dvec2(0.0, 0.0);
@@ -56,7 +61,11 @@ private:
 	float focusDuration = 0.5f;
 	glm::dvec3 targetPosition = glm::dvec3(0.0, 0.0, 0.0);
 	glm::dquat targetRotation = glm::dquat(1.0, 0.0, 0.0, 0.0);
-	
+
+	double viewportWidth = 0.0;
+	double viewportHeight = 0.0;
+	double windowWidth = 0.0;
+	double windowHeight = 0.0;
 };
 
 #endif

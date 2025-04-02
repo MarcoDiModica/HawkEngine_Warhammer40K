@@ -225,11 +225,32 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 	}
 }
 
-void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight)
+void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, double viewportWidth, double viewportHeight)
 {
-	double aspectRatio = windowWidth / windowHeight;
+	this->windowWidth = windowWidth;
+	this->windowHeight = windowHeight;
+	this->viewportWidth = viewportWidth;
+	this->viewportHeight = viewportHeight;
+
+	double aspectRatio = viewportWidth / viewportHeight;
 
 	UpdateAspectRatio(aspectRatio);
 
-	SetFOV(glm::radians(60.0f));
+	SetFOV(glm::radians(45.0f));
+
+	frustum.Update(GetProjectionMatrix() * GetViewMatrix(transform));
+}
+
+glm::vec2 EditorCamera::ScreenToViewport(int screenX, int screenY) const
+{
+	ImVec2 windowPos = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winPos.x),
+		static_cast<float>(Application->gui->UISceneWindowPanel->winPos.y));
+
+	float relativeX = screenX - windowPos.x;
+	float relativeY = screenY - windowPos.y;
+
+	float normalizedX = relativeX / static_cast<float>(viewportWidth);
+	float normalizedY = relativeY / static_cast<float>(viewportHeight);
+
+	return glm::vec2(normalizedX, normalizedY);
 }

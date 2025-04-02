@@ -8,6 +8,7 @@
 #include "MyGameEngine/types.h"
 #include "MyGameEngine/BoundingBox.h"
 #include "MyGameEngine/Image.h"
+#include "imgui.h"
 
 class UISceneWindow : public UIElement
 {
@@ -37,5 +38,11 @@ private:
     Image m_Rot;
     Image m_Sca;
     Image m_Setting;
+
+	bool isMarqueeSelecting = false;
+	ImVec2 marqueeStart;
+	ImVec2 marqueeEnd;
+
+	bool IsGameObjectInMarquee(GameObject* gameObject, const ImVec2& start, const ImVec2& end);
 };
 #endif // !__UI_SCENE_WINDOW_H__

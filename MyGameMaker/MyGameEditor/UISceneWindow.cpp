@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <functional>
 
 #include "UISceneWindow.h"
 #include "UIInspector.h"
@@ -48,8 +49,8 @@ void UISceneWindow::Init()
 
     glGenRenderbuffers(1, &Application->gui->rbo);
     glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Application->window->width(), Application->window->height());
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, Application->gui->rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Application->window->width(), Application->window->height());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, Application->gui->rbo);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         std::cerr << "Error: Framebuffer is not complete!" << std::endl;
@@ -100,48 +101,36 @@ glm::vec3 UISceneWindow::GetMousePickDir(int mouse_x, int mouse_y, int screen_wi
     return world_coords;
 }
 
-bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint) {
-    float tmin = (bBox.min.x - rayOrigin.x) / rayDir.x;
-    float tmax = (bBox.max.x - rayOrigin.x) / rayDir.x;
+bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint) 
+{
+	glm::vec3 dirInv = glm::vec3(
+		rayDir.x != 0.0f ? 1.0f / rayDir.x : std::numeric_limits<float>::infinity(),
+		rayDir.y != 0.0f ? 1.0f / rayDir.y : std::numeric_limits<float>::infinity(),
+		rayDir.z != 0.0f ? 1.0f / rayDir.z : std::numeric_limits<float>::infinity()
+	);
 
-    if (tmin > tmax) std::swap(tmin, tmax);
+	float t1 = (bBox.min.x - rayOrigin.x) * dirInv.x;
+	float t2 = (bBox.max.x - rayOrigin.x) * dirInv.x;
+	float t3 = (bBox.min.y - rayOrigin.y) * dirInv.y;
+	float t4 = (bBox.max.y - rayOrigin.y) * dirInv.y;
+	float t5 = (bBox.min.z - rayOrigin.z) * dirInv.z;
+	float t6 = (bBox.max.z - rayOrigin.z) * dirInv.z;
 
-    float tymin = (bBox.min.y - rayOrigin.y) / rayDir.y;
-    float tymax = (bBox.max.y - rayOrigin.y) / rayDir.y;
+	float tmin = glm::max(glm::max(glm::min(t1, t2), glm::min(t3, t4)), glm::min(t5, t6));
+	float tmax = glm::min(glm::min(glm::max(t1, t2), glm::max(t3, t4)), glm::max(t5, t6));
 
-    if (tymin > tymax) std::swap(tymin, tymax);
+	if (tmax < 0) {
+		return false;
+	}
 
-    if ((tmin > tymax) || (tymin > tmax))
-        return false;
+	if (tmin > tmax) {
+		return false;
+	}
 
-    if (tymin > tmin)
-        tmin = tymin;
+	float t = tmin < 0 ? tmax : tmin;
 
-    if (tymax < tmax)
-        tmax = tymax;
-
-    float tzmin = (bBox.min.z - rayOrigin.z) / rayDir.z;
-    float tzmax = (bBox.max.z - rayOrigin.z) / rayDir.z;
-
-    if (tzmin > tzmax) std::swap(tzmin, tzmax);
-
-    if ((tmin > tzmax) || (tzmin > tmax))
-        return false;
-
-    if (tzmin > tmin)
-        tmin = tzmin;
-
-    if (tzmax < tmax)
-        tmax = tzmax;
-
-    float t = tmin;
-    if (t < 0) {
-        t = tmax;
-        if (t < 0) return false;
-    }
-
-    collisionPoint = rayOrigin + t * rayDir;
-    return true;
+	collisionPoint = rayOrigin + t * rayDir;
+	return true;
 }
 
 bool UISceneWindow::Draw()
@@ -347,7 +336,89 @@ bool UISceneWindow::Draw()
         // --- END GIZMO MATRIX HANDLING ---
 
         isFoucused = ImGui::IsWindowHovered();
+
+		bool isShiftHeld = ImGui::GetIO().KeyShift;
+		bool isCtrlHeld = ImGui::GetIO().KeyCtrl;
+
+		if (isViewportHovered && !ImGuizmo::IsUsing() && !ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
+			if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGuizmo::IsOver() &&
+				!isShiftHeld && !isCtrlHeld) {
+				isMarqueeSelecting = true;
+				marqueeStart = ImGui::GetMousePos();
+			}
+
+			if (isMarqueeSelecting) {
+				marqueeEnd = ImGui::GetMousePos();
+
+				ImDrawList* drawList = ImGui::GetWindowDrawList();
+				drawList->AddRect(
+					marqueeStart,
+					marqueeEnd,
+					IM_COL32(0, 255, 255, 255),
+					0.0f,                   
+					NULL,
+					2.0f            
+				);
+
+				drawList->AddRectFilled(
+					marqueeStart,
+					marqueeEnd,
+					IM_COL32(0, 255, 255, 64) 
+				);
+			}
+
+			if (isMarqueeSelecting && ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+				float dragDistance = glm::distance(
+					glm::vec2(marqueeStart.x, marqueeStart.y),
+					glm::vec2(marqueeEnd.x, marqueeEnd.y)
+				);
+
+				if (dragDistance > 5.0f) { 
+					if (!isShiftHeld && !isCtrlHeld) {
+						Application->input->ClearSelection();
+					}
+
+					auto activeScene = Application->root->GetActiveScene();
+					if (activeScene) {
+						std::vector<GameObject*> allObjects;
+						for (const auto& objPtr : activeScene->children()) {
+							if (objPtr && objPtr->IsActive()) {
+								GameObject* object = objPtr.get();
+								allObjects.push_back(object);
+
+								std::function<void(GameObject*, std::vector<GameObject*>&)> collectChildren;
+								collectChildren = [&collectChildren](GameObject* parent, std::vector<GameObject*>& list) {
+									for (const auto& childPtr : parent->GetChildren()) {
+										if (childPtr && childPtr->IsActive()) {
+											GameObject* child = childPtr.get();
+											list.push_back(child);
+											collectChildren(child, list);
+										}
+									}
+									};
+
+								collectChildren(object, allObjects);
+							}
+						}
+
+						for (GameObject* obj : allObjects) {
+							if (IsGameObjectInMarquee(obj, marqueeStart, marqueeEnd)) {
+								if (isCtrlHeld && Application->input->IsGameObjectSelected(obj)) {
+									Application->input->RemoveFromSelection(obj);
+								}
+								else {
+									Application->input->AddToSelection(obj);
+								}
+							}
+						}
+					}
+				}
+
+				isMarqueeSelecting = false;
+			}
+		}
     }
+
     ImGui::End();
 
     ImGui::PopStyleVar();
@@ -368,4 +439,52 @@ bool UISceneWindow::IsMouseOverWindow() const
         mousePos.y >= minY && mousePos.y <= maxY);
 
     return isOverWindow;
+}
+
+bool UISceneWindow::IsGameObjectInMarquee(GameObject* gameObject, const ImVec2& start, const ImVec2& end) {
+	if (!gameObject->HasComponent<MeshRenderer>()) return false;
+
+	glm::mat4 viewMatrix = Application->camera->view();
+	glm::mat4 projectionMatrix = Application->camera->projection();
+	glm::mat4 modelMatrix = gameObject->GetTransform()->GetMatrix();
+	glm::mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
+
+	BoundingBox bbox = gameObject->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+	std::vector<glm::vec3> corners = {
+		glm::vec3(bbox.min.x, bbox.min.y, bbox.min.z),
+		glm::vec3(bbox.max.x, bbox.min.y, bbox.min.z),
+		glm::vec3(bbox.min.x, bbox.max.y, bbox.min.z),
+		glm::vec3(bbox.max.x, bbox.max.y, bbox.min.z),
+		glm::vec3(bbox.min.x, bbox.min.y, bbox.max.z),
+		glm::vec3(bbox.max.x, bbox.min.y, bbox.max.z),
+		glm::vec3(bbox.min.x, bbox.max.y, bbox.max.z),
+		glm::vec3(bbox.max.x, bbox.max.y, bbox.max.z)
+	};
+
+	bool anyInside = false;
+	bool allOutside = true;
+
+	for (const auto& corner : corners) {
+		glm::vec4 clipSpace = mvp * glm::vec4(corner, 1.0f);
+
+		if (clipSpace.w != 0.0f) {
+			glm::vec3 ndcPos = glm::vec3(clipSpace) / clipSpace.w;
+
+			float screenX = (ndcPos.x * 0.5f + 0.5f) * winSize.x + winPos.x;
+			float screenY = (ndcPos.y * -0.5f + 0.5f) * winSize.y + winPos.y;
+
+			bool isInsideMarquee =
+				screenX >= fmin(start.x, end.x) && screenX <= fmax(start.x, end.x) &&
+				screenY >= fmin(start.y, end.y) && screenY <= fmax(start.y, end.y);
+
+			if (isInsideMarquee) {
+				anyInside = true;
+			}
+			else {
+				allOutside = false;
+			}
+		}
+	}
+
+	return anyInside;
 }

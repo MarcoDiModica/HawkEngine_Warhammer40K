@@ -10,14 +10,20 @@ public class Hook : MonoBehaviour
 
     public override void Awake() { }
 
-    public override void Start() { }
+    public override void Start() { 
+    
+        player = GameObject.Find("Player");
+        if(player == null)
+        {
+            Engineson.print("No se ha encontrado el jugador.");
+        }
+
+    }
 
     public override void Update(float deltaTime) { }
 
     public void Init(Vector3 pos, Vector3 dir)
     {
-        
-
         AddComponent<MeshRenderer>();
         GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
         GetComponent<Transform>().SetScale(0.25f, 0.25f, 0.25f);
@@ -39,9 +45,7 @@ public class Hook : MonoBehaviour
             player.GetComponent<Transform>().SetPosition(hookPosition.X, hookPosition.Y, hookPosition.Z);
             Engineson.print("Jugador teletransportado a la posición del hook.");
         }
-
-
-
+        Engineson.print("Colisión con " + other.name);
     }
 
 }

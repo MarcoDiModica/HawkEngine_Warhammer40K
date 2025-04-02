@@ -103,7 +103,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90
+            - -90.000002504478161
             - 0
             - 0
           localScale:
@@ -162,7 +162,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999735770004
+        - 54.999999253784715
         - -0
         - 0
       localScale:
@@ -653,6 +653,9 @@ GameObject9:
         - 1
         - 1
         - 1
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -672,9 +675,6 @@ GameObject9:
         - 0
         - 0
         - 0
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     ScriptComponents:
       Script0:
         name: UIGameplay

@@ -89,11 +89,14 @@ public class PlayerController : MonoBehaviour
             Vector3 playerDirection = gameObject.GetComponent<Transform>().forward;
 
             RayCast rayCast = new RayCast();
-            GameObject hitGameObject = rayCast.PerformRaycast(playerCenterPosition, playerDirection, 10f);
+            rayCast.PerformRaycast(playerCenterPosition, playerDirection, 10f);
 
-            if (hitGameObject != null)
+            if (rayCast.hit.gameObject != null)
             {
-                Engineson.print("Raycast hit: " + hitGameObject.name);
+                Engineson.print("Raycast hit: " + rayCast.hit.gameObject.name);
+                Engineson.print("Raycast distance: " + rayCast.hit.distance);
+                Engineson.print("Raycast normal: " + rayCast.hit.normal);
+                Engineson.print("Raycast point: " + rayCast.hit.point);
             }
             
 

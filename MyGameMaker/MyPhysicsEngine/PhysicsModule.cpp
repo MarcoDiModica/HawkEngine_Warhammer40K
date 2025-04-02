@@ -553,7 +553,7 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     std::cout << "Global restitution set to: " << restitutionValue << "\n";
 }
 
-GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, float maxDistance) 
+GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, float maxDistance, btVector3& hitPoint, btVector3& normal, float& distance)
 {
 	rayFrom = origin;
 	btVector3 originRay = origin;
@@ -564,13 +564,18 @@ GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, floa
 
 	
     if (rayCallback.hasHit()) {
-        rayTo = directionRay;
+        rayTo = rayCallback.m_closestHitFraction * direction.normalized();
         const btCollisionObject* hitObject = rayCallback.m_collisionObject;
+        hitPoint = rayCallback.m_hitPointWorld;
+        normal = rayCallback.m_hitNormalWorld;
+        distance = rayCallback.m_closestHitFraction * maxDistance;
         for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
             if (rigidBody == hitObject) {
                 return gameObject;
             }
         }
+
+		
     }
 	else {
 		return nullptr;

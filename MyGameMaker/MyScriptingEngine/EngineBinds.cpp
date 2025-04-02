@@ -894,7 +894,6 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
 		return true;
     }
 	return false;
-    
 }
 
 void EngineBinds::SetScenePlay()

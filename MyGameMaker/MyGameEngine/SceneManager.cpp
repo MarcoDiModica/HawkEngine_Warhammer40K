@@ -90,7 +90,7 @@ std::shared_ptr<GameObject> SceneManager::CreateMeshObject(string name, shared_p
     return nullptr;
 }
 
-void SceneManager::RemoveGameObject(GameObject* gameObject) {
+void SceneManager::RemoveGameObject(GameObject* gameObject) const {
 	if (!gameObject) {
 		LOG(LogType::LOG_ERROR, "Error: Is have tried erased a GameObject null.");
 		return;

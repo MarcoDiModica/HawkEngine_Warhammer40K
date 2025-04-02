@@ -485,40 +485,51 @@ static void RenderEditor() {
 
 	configureCamera();
 	drawFloorGrid(256, 4);
+
+	// Obtener la escena activa
+	auto activeScene = Application->root->GetActiveScene();
+	if (!activeScene) return;
+
+	auto sceneChildrenCopy = Application->root->GetActiveScene()->children();
+
 	std::vector<GameObject*> objects;
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
-		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
-		
+
+	for (const auto& objPtr : sceneChildrenCopy) {
+		if (!objPtr) continue;
+
+		GameObject* object = objPtr.get();
+		if (!object) continue;
+
 		objects.push_back(object);
 
-		for (const auto& j : object->GetChildren()) {
-			GameObject* child = j.get();
+		for (const auto& childPtr : object->GetChildren()) {
+			if (!childPtr) continue;
+
+			GameObject* child = childPtr.get();
+			if (!child) continue;
+
 			objects.push_back(child);
-			//RenderOutline(child);
 		}
 
-		objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
-
-		if (object->IsActive()) 
-		{
+		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
 
-			if (Application->hasChangedScene)
-			{
+			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
-				break;
+				return;
 			}
 
 			if (object->HasComponent<LightComponent>()) {
-				auto& lights = Application->root->GetActiveScene()->_lights;
-				auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
+				auto& lights = activeScene->_lights;
+				auto it = std::find(lights.begin(), lights.end(), objPtr);
 				if (it == lights.end()) {
-					lights.push_back(object->shared_from_this());
+					lights.push_back(objPtr);
 				}
 			}
 		}
-
 	}
+
+	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
 
 	Application->physicsModule->Update(Application->GetDt());
 

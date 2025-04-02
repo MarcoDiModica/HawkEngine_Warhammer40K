@@ -229,7 +229,8 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
 
 void Root::RemoveGameObject(GameObject* gameObject) {
     
-    SceneManagement->RemoveGameObject(gameObject);
+    Application->input->ClearSelection();
+	SceneManagement->RemoveGameObject(gameObject);
 }
 
 std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name)
@@ -237,23 +238,23 @@ std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name)
     return SceneManagement->CreateGameObject(name);
 }
 
-std::shared_ptr<GameObject> Root::CreateCube(const std::string& name) {
-    
+std::shared_ptr<GameObject> Root::CreateCube(const std::string& name) 
+{    
     return SceneManagement->CreateCube(name);
 }
 
-std::shared_ptr<GameObject> Root::CreateSphere(const std::string& name) {
-    
+std::shared_ptr<GameObject> Root::CreateSphere(const std::string& name) 
+{    
     return SceneManagement->CreateSphere(name);
 }
-std::shared_ptr<GameObject> Root::CreateCylinder(const std::string& name) {
-    
+std::shared_ptr<GameObject> Root::CreateCylinder(const std::string& name) 
+{    
     return SceneManagement->CreateCylinder(name);
 }
 
 std::shared_ptr<GameObject> Root::CreatePlane(const std::string& name) {
     
-       return SceneManagement->CreatePlane(name);
+    return SceneManagement->CreatePlane(name);
 }
 
 std::shared_ptr<GameObject> Root::CreateCameraObject(const std::string& name) {

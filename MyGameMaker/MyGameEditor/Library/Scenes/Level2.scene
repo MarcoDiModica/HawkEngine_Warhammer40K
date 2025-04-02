@@ -11,7 +11,7 @@ GameObject0:
       enabled: true
       localPosition:
         - 43.976066589355469
-        - 25.41440486907959
+        - 167.27713012695312
         - 17.640968322753906
       localRotation:
         - 81.299659154994401
@@ -105,9 +105,9 @@ GameObject2:
         - 3.4144048690795898
         - 33.140968322753906
       localRotation:
-        - 180
-        - 81.533276827202229
-        - 180
+        - -179.9999949910459
+        - 81.533267141451063
+        - -179.9999949910459
       localScale:
         - 1
         - 1
@@ -247,7 +247,7 @@ GameObject3:
   Children:
     - name: Cube.021_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2308,9 +2308,9 @@ GameObject3:
             - 1944.6842041015625
             - 13865.275390625
           localRotation:
-            - -90.000010786004324
-            - 30.148224659124256
-            - -2.905059982401684e-06
+            - -90.000010786004054
+            - 30.148219266122684
+            - -2.905059437958187e-06
           localScale:
             - 59.197574615478516
             - 59.197574615478516
@@ -2399,7 +2399,7 @@ GameObject3:
       Children: ~
     - name: Cube.070_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2450,7 +2450,7 @@ GameObject3:
       Children: ~
     - name: Cube.002_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2501,7 +2501,7 @@ GameObject3:
       Children: ~
     - name: Cube.071_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2552,7 +2552,7 @@ GameObject3:
       Children: ~
     - name: Cube.003_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2603,7 +2603,7 @@ GameObject3:
       Children: ~
     - name: Cube.072_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2705,7 +2705,7 @@ GameObject3:
       Children: ~
     - name: Cube.073_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2756,7 +2756,7 @@ GameObject3:
       Children: ~
     - name: Cube.005_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2807,7 +2807,7 @@ GameObject3:
       Children: ~
     - name: Cube.074_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2909,7 +2909,7 @@ GameObject3:
       Children: ~
     - name: Cube.075_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -2960,7 +2960,7 @@ GameObject3:
       Children: ~
     - name: Cube.007_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3011,7 +3011,7 @@ GameObject3:
       Children: ~
     - name: Cube.076_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3062,7 +3062,7 @@ GameObject3:
       Children: ~
     - name: Cube.008_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3113,7 +3113,7 @@ GameObject3:
       Children: ~
     - name: Cube.077_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3164,7 +3164,7 @@ GameObject3:
       Children: ~
     - name: Cube.009_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3215,7 +3215,7 @@ GameObject3:
       Children: ~
     - name: Cube.078_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3266,7 +3266,7 @@ GameObject3:
       Children: ~
     - name: Cube.010_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3317,7 +3317,7 @@ GameObject3:
       Children: ~
     - name: Cube.079_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3368,7 +3368,7 @@ GameObject3:
       Children: ~
     - name: Cube.011_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3419,7 +3419,7 @@ GameObject3:
       Children: ~
     - name: Cube.080_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3470,7 +3470,7 @@ GameObject3:
       Children: ~
     - name: Cube.012_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3521,7 +3521,7 @@ GameObject3:
       Children: ~
     - name: Cube.081_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3572,7 +3572,7 @@ GameObject3:
       Children: ~
     - name: Cube.013_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3623,7 +3623,7 @@ GameObject3:
       Children: ~
     - name: Cube.082_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3674,7 +3674,7 @@ GameObject3:
       Children: ~
     - name: Cube.014_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3725,7 +3725,7 @@ GameObject3:
       Children: ~
     - name: Cube.083_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3776,7 +3776,7 @@ GameObject3:
       Children: ~
     - name: Cube.015_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3827,7 +3827,7 @@ GameObject3:
       Children: ~
     - name: Cube.084_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3878,7 +3878,7 @@ GameObject3:
       Children: ~
     - name: Cube.016_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -3980,7 +3980,7 @@ GameObject3:
       Children: ~
     - name: Cube.017_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -4042,9 +4042,9 @@ GameObject3:
             - 1916.8104248046875
             - -4721.32470703125
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 86.884834289550781
             - 19.680673599243164
@@ -4082,7 +4082,7 @@ GameObject3:
       Children: ~
     - name: Cube.018_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -4184,7 +4184,7 @@ GameObject3:
       Children: ~
     - name: Cube.019_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -4246,9 +4246,9 @@ GameObject3:
             - 1916.8104248046875
             - -4721.32470703125
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 86.884834289550781
             - 19.680673599243164
@@ -4286,7 +4286,7 @@ GameObject3:
       Children: ~
     - name: Cube.020_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -4348,9 +4348,9 @@ GameObject3:
             - 1916.8104248046875
             - -8789.486328125
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 2224.06591796875
             - 16.407663345336914
@@ -4388,7 +4388,7 @@ GameObject3:
       Children: ~
     - name: Cube.021_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -4450,9 +4450,9 @@ GameObject3:
             - 1916.8104248046875
             - -8789.486328125
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 2224.06591796875
             - 16.407663345336914
@@ -4592,7 +4592,7 @@ GameObject3:
       Children: ~
     - name: Cube.023_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -4694,7 +4694,7 @@ GameObject3:
       Children: ~
     - name: Cube.024_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -4756,9 +4756,9 @@ GameObject3:
             - 1916.8104248046875
             - -12921.685546875
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 86.884834289550781
             - 19.680673599243164
@@ -4796,7 +4796,7 @@ GameObject3:
       Children: ~
     - name: Cube.025_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -4858,9 +4858,9 @@ GameObject3:
             - 1916.8104248046875
             - -12921.685546875
           localRotation:
-            - -108.42610585941986
+            - -90.000013660378343
             - -90
-            - 18.426102444325377
+            - 0
           localScale:
             - 86.884834289550781
             - 19.680673599243164
@@ -4898,7 +4898,7 @@ GameObject3:
       Children: ~
     - name: Cube.026_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5000,7 +5000,7 @@ GameObject3:
       Children: ~
     - name: Cube.027_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5102,7 +5102,7 @@ GameObject3:
       Children: ~
     - name: Cube.028_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5204,7 +5204,7 @@ GameObject3:
       Children: ~
     - name: Cube.029_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5306,7 +5306,7 @@ GameObject3:
       Children: ~
     - name: Cube.030_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5408,7 +5408,7 @@ GameObject3:
       Children: ~
     - name: Cube.031_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5510,7 +5510,7 @@ GameObject3:
       Children: ~
     - name: Cube.032_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5612,7 +5612,7 @@ GameObject3:
       Children: ~
     - name: Cube.033_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5663,7 +5663,7 @@ GameObject3:
       Children: ~
     - name: Cube.034_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5714,7 +5714,7 @@ GameObject3:
       Children: ~
     - name: Cube.035_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5816,7 +5816,7 @@ GameObject3:
       Children: ~
     - name: Cube.036_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5867,7 +5867,7 @@ GameObject3:
       Children: ~
     - name: Cube.037_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -5969,7 +5969,7 @@ GameObject3:
       Children: ~
     - name: Cube.038_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -6071,7 +6071,7 @@ GameObject3:
       Children: ~
     - name: Cube.039_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -6122,7 +6122,7 @@ GameObject3:
       Children: ~
     - name: Cube.040_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -6173,7 +6173,7 @@ GameObject3:
       Children: ~
     - name: Cube.041_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -6479,7 +6479,7 @@ GameObject3:
       Children: ~
     - name: Cube.047_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -7601,7 +7601,7 @@ GameObject3:
       Children: ~
     - name: Cube.069_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -7652,7 +7652,7 @@ GameObject3:
       Children: ~
     - name: Cube.070_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -7703,7 +7703,7 @@ GameObject3:
       Children: ~
     - name: Cube.071_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -7754,7 +7754,7 @@ GameObject3:
       Children: ~
     - name: Cube.072_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -7805,7 +7805,7 @@ GameObject3:
       Children: ~
     - name: Cube.073_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -7856,7 +7856,7 @@ GameObject3:
       Children: ~
     - name: Cube.074_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -7907,7 +7907,7 @@ GameObject3:
       Children: ~
     - name: Cube.075_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -7958,7 +7958,7 @@ GameObject3:
       Children: ~
     - name: Cube.076_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8009,7 +8009,7 @@ GameObject3:
       Children: ~
     - name: Cube.077_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8060,7 +8060,7 @@ GameObject3:
       Children: ~
     - name: Cube.078_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8111,7 +8111,7 @@ GameObject3:
       Children: ~
     - name: Cube.079_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8162,7 +8162,7 @@ GameObject3:
       Children: ~
     - name: Cube.080_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8213,7 +8213,7 @@ GameObject3:
       Children: ~
     - name: Cube.081_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8264,7 +8264,7 @@ GameObject3:
       Children: ~
     - name: Cube.082_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8315,7 +8315,7 @@ GameObject3:
       Children: ~
     - name: Cube.083_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8377,9 +8377,9 @@ GameObject3:
             - 1930.1954345703125
             - -2173.66064453125
           localRotation:
-            - -84.649724624015803
-            - -9.6464366273708304
-            - 5.740013385374346
+            - -84.649724636353255
+            - -9.6464363385558247
+            - 5.740013702753779
           localScale:
             - -71.575119018554688
             - -71.575149536132812
@@ -8417,7 +8417,7 @@ GameObject3:
       Children: ~
     - name: Cube.226_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -8428,9 +8428,9 @@ GameObject3:
             - 1944.6842041015625
             - 21570.33984375
           localRotation:
-            - -90.000010786004324
-            - 30.148224659124256
-            - -2.905059982401684e-06
+            - -90.000010786004054
+            - 30.148219266122684
+            - -2.905059437958187e-06
           localScale:
             - 59.197574615478516
             - 59.197574615478516
@@ -8468,7 +8468,7 @@ GameObject3:
       Children: ~
     - name: Cube.233_lvl2.002_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -9692,7 +9692,7 @@ GameObject3:
       Children: ~
     - name: Cube.233_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -9896,7 +9896,7 @@ GameObject3:
       Children: ~
     - name: Cube_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -9998,7 +9998,7 @@ GameObject3:
       Children: ~
     - name: Cylinder.001_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -10049,7 +10049,7 @@ GameObject3:
       Children: ~
     - name: Cylinder.002_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -12100,9 +12100,9 @@ GameObject3:
             - 976.39801025390625
             - -34280.79296875
           localRotation:
-            - -91.58562915738753
-            - 27.109989547551955
-            - -0.21012534106267536
+            - -91.585618920214529
+            - 27.109988195496388
+            - -0.2101240978998308
           localScale:
             - 55.744495391845703
             - 58.483379364013672
@@ -12151,9 +12151,9 @@ GameObject3:
             - 979.06005859375
             - -28945.328125
           localRotation:
-            - -91.58562915738753
-            - 27.109989547551955
-            - -0.21012534106267536
+            - -91.585618920214529
+            - 27.109988195496388
+            - -0.2101240978998308
           localScale:
             - 55.744495391845703
             - 58.483379364013672
@@ -12202,9 +12202,9 @@ GameObject3:
             - 979.06005859375
             - -28945.328125
           localRotation:
-            - -91.58562915738753
-            - 27.109989547551955
-            - -0.21012534106267536
+            - -91.585618920214529
+            - 27.109988195496388
+            - -0.2101240978998308
           localScale:
             - 55.744495391845703
             - 58.483379364013672
@@ -12253,9 +12253,9 @@ GameObject3:
             - 979.06005859375
             - -30502.9453125
           localRotation:
-            - -91.016832197670709
-            - -68.427195180333499
-            - -0.50871278912238993
+            - -91.016842996126016
+            - -68.427202679078547
+            - -0.50870542059655222
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -12304,9 +12304,9 @@ GameObject3:
             - 979.06005859375
             - -32087.380859375
           localRotation:
-            - -91.016832197670709
-            - -68.427195180333499
-            - -0.50871278912238993
+            - -91.016842996126016
+            - -68.427202679078547
+            - -0.50870542059655222
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -12355,9 +12355,9 @@ GameObject3:
             - 976.39788818359375
             - -33297.30078125
           localRotation:
-            - -91.016832197670709
-            - -68.427195180333499
-            - -0.50871278912238993
+            - -91.016842996126016
+            - -68.427202679078547
+            - -0.50870542059655222
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -12814,9 +12814,9 @@ GameObject3:
             - 748.94708251953125
             - -21148.51171875
           localRotation:
-            - 90.023583553811733
-            - -89.976259548374145
-            - 179.98669588116792
+            - 90.021622967604898
+            - -89.98486719831503
+            - 179.98865646706841
           localScale:
             - 1162.4949951171875
             - 1000.994140625
@@ -12865,9 +12865,9 @@ GameObject3:
             - 110.79864501953125
             - -23130.26953125
           localRotation:
-            - 90.023583553811733
-            - -89.976259548374145
-            - 179.98669588116792
+            - 90.021622967604898
+            - -89.98486719831503
+            - 179.98865646706841
           localScale:
             - 1162.4949951171875
             - 1000.994140625
@@ -13018,9 +13018,9 @@ GameObject3:
             - 1276.346435546875
             - 13627.603515625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 254.55644226074219
             - 2500.754150390625
@@ -13069,9 +13069,9 @@ GameObject3:
             - 1276.346435546875
             - 14473.5517578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 254.55644226074219
             - 446.62875366210938
@@ -13109,7 +13109,7 @@ GameObject3:
       Children: ~
     - name: Cube.014_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13120,9 +13120,9 @@ GameObject3:
             - 1282.6800537109375
             - 19362.37890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 475.45693969726562
             - 908.419677734375
@@ -13160,7 +13160,7 @@ GameObject3:
       Children: ~
     - name: Cube.013_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13171,9 +13171,9 @@ GameObject3:
             - 1276.346435546875
             - 21721.298828125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 254.55644226074219
             - 384.56121826171875
@@ -13222,9 +13222,9 @@ GameObject3:
             - 1276.346435546875
             - 14473.5517578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 254.55644226074219
             - 446.62875366210938
@@ -13435,7 +13435,7 @@ GameObject3:
       Children: ~
     - name: Cube.015_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13446,9 +13446,9 @@ GameObject3:
             - 1282.6800537109375
             - 19441.66015625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 977.56097412109375
             - 1226.174560546875
@@ -13486,7 +13486,7 @@ GameObject3:
       Children: ~
     - name: Cube.022_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13497,9 +13497,9 @@ GameObject3:
             - 1729.630615234375
             - 20700.673828125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 442.85861206054688
             - 126.90205383300781
@@ -13537,7 +13537,7 @@ GameObject3:
       Children: ~
     - name: Cube.023_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13588,7 +13588,7 @@ GameObject3:
       Children: ~
     - name: Cube.024_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13599,8 +13599,8 @@ GameObject3:
             - 1729.630615234375
             - 22569.302734375
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 345.43319702148438
@@ -13651,7 +13651,7 @@ GameObject3:
             - 22967.697265625
           localRotation:
             - -90
-            - -0.084292869632442688
+            - -0.08429286019948061
             - 0
           localScale:
             - 941.43121337890625
@@ -13701,9 +13701,9 @@ GameObject3:
             - 1729.630615234375
             - 21530.267578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 1140.4056396484375
             - 126.90205383300781
@@ -13741,7 +13741,7 @@ GameObject3:
       Children: ~
     - name: Cube.028_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13753,7 +13753,7 @@ GameObject3:
             - 20540.16015625
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -13792,7 +13792,7 @@ GameObject3:
       Children: ~
     - name: Cube.029_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13804,7 +13804,7 @@ GameObject3:
             - 20038.39453125
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -13843,7 +13843,7 @@ GameObject3:
       Children: ~
     - name: Cube.030_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13854,9 +13854,9 @@ GameObject3:
             - 1729.630615234375
             - 20291.05859375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 235.01882934570312
             - 126.90205383300781
@@ -13894,7 +13894,7 @@ GameObject3:
       Children: ~
     - name: Cube.031_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13905,9 +13905,9 @@ GameObject3:
             - 1729.630615234375
             - 20291.05859375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 235.01882934570312
             - 126.90205383300781
@@ -13945,7 +13945,7 @@ GameObject3:
       Children: ~
     - name: Cube.032_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -13956,9 +13956,9 @@ GameObject3:
             - 1729.630615234375
             - 20291.05859375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 235.01882934570312
             - 126.90205383300781
@@ -13996,7 +13996,7 @@ GameObject3:
       Children: ~
     - name: Cube.033_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14007,9 +14007,9 @@ GameObject3:
             - 1729.630615234375
             - 20291.05859375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 235.01882934570312
             - 126.90205383300781
@@ -14047,7 +14047,7 @@ GameObject3:
       Children: ~
     - name: Cube.034_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14059,7 +14059,7 @@ GameObject3:
             - 20038.39453125
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -14098,7 +14098,7 @@ GameObject3:
       Children: ~
     - name: Cube.035_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14110,7 +14110,7 @@ GameObject3:
             - 20555.328125
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -14160,9 +14160,9 @@ GameObject3:
             - 1729.630615234375
             - 21530.267578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 1140.4056396484375
             - 126.90205383300781
@@ -14212,7 +14212,7 @@ GameObject3:
             - 22967.697265625
           localRotation:
             - -90
-            - -0.084292869632442688
+            - -0.08429286019948061
             - 0
           localScale:
             - 941.43121337890625
@@ -14251,7 +14251,7 @@ GameObject3:
       Children: ~
     - name: Cube.038_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14262,8 +14262,8 @@ GameObject3:
             - 1729.630615234375
             - 22569.302734375
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 345.43319702148438
@@ -14302,7 +14302,7 @@ GameObject3:
       Children: ~
     - name: Cube.039_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14353,7 +14353,7 @@ GameObject3:
       Children: ~
     - name: Cube.040_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14364,9 +14364,9 @@ GameObject3:
             - 1729.630615234375
             - 20700.673828125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 442.85861206054688
             - 126.90205383300781
@@ -14404,7 +14404,7 @@ GameObject3:
       Children: ~
     - name: Cube.041_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14466,9 +14466,9 @@ GameObject3:
             - 1729.630615234375
             - 21530.267578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 1140.4056396484375
             - 126.90205383300781
@@ -14506,7 +14506,7 @@ GameObject3:
       Children: ~
     - name: Cube.043_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14517,9 +14517,9 @@ GameObject3:
             - 1729.630615234375
             - 17418.359375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 915.10943603515625
             - 126.90205383300781
@@ -14557,7 +14557,7 @@ GameObject3:
       Children: ~
     - name: Cube.044_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14568,9 +14568,9 @@ GameObject3:
             - 1729.630615234375
             - 18402.451171875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 174.3052978515625
             - 126.90205383300781
@@ -14608,7 +14608,7 @@ GameObject3:
       Children: ~
     - name: Cube.045_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14619,9 +14619,9 @@ GameObject3:
             - 1729.630615234375
             - 18402.451171875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 174.3052978515625
             - 126.90205383300781
@@ -14659,7 +14659,7 @@ GameObject3:
       Children: ~
     - name: Cube.046_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14671,7 +14671,7 @@ GameObject3:
             - 18552.115234375
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -14710,7 +14710,7 @@ GameObject3:
       Children: ~
     - name: Cube.047_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14722,7 +14722,7 @@ GameObject3:
             - 18205.46484375
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -14761,7 +14761,7 @@ GameObject3:
       Children: ~
     - name: Cube.048_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14773,7 +14773,7 @@ GameObject3:
             - 18205.46484375
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -14812,7 +14812,7 @@ GameObject3:
       Children: ~
     - name: Cube.049_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14824,7 +14824,7 @@ GameObject3:
             - 18552.115234375
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 320.4598388671875
@@ -14863,7 +14863,7 @@ GameObject3:
       Children: ~
     - name: Cube.050_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14874,9 +14874,9 @@ GameObject3:
             - 1729.630615234375
             - 18402.451171875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 174.3052978515625
             - 126.90205383300781
@@ -14914,7 +14914,7 @@ GameObject3:
       Children: ~
     - name: Cube.051_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -14925,9 +14925,9 @@ GameObject3:
             - 1729.630615234375
             - 18402.451171875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 174.3052978515625
             - 126.90205383300781
@@ -14965,7 +14965,7 @@ GameObject3:
       Children: ~
     - name: Cube.052_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15016,7 +15016,7 @@ GameObject3:
       Children: ~
     - name: Cube.053_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15027,9 +15027,9 @@ GameObject3:
             - 1729.630615234375
             - 17418.359375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 915.10943603515625
             - 126.90205383300781
@@ -15079,7 +15079,7 @@ GameObject3:
             - 16253.3447265625
           localRotation:
             - -90
-            - -0.084292869632442688
+            - -0.08429286019948061
             - 0
           localScale:
             - 941.43121337890625
@@ -15130,7 +15130,7 @@ GameObject3:
             - 16249.3984375
           localRotation:
             - -90
-            - -0.084292869632442688
+            - -0.08429286019948061
             - 0
           localScale:
             - 941.43121337890625
@@ -15271,7 +15271,7 @@ GameObject3:
       Children: ~
     - name: Cube.026_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15282,9 +15282,9 @@ GameObject3:
             - 1967.9022216796875
             - 22448.40625
           localRotation:
-            - -4.3256899211193242e-06
-            - -1.1301297817164272e-16
-            - -0.12965454916821656
+            - -4.3256899211196528e-06
+            - 1.7854891674058672e-16
+            - -0.12965456250842144
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -15322,7 +15322,7 @@ GameObject3:
       Children: ~
     - name: Cube.058_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15333,9 +15333,9 @@ GameObject3:
             - 1967.9022216796875
             - 22448.40625
           localRotation:
-            - -4.3256899211193242e-06
-            - -1.1301297817164272e-16
-            - -0.12965454916821656
+            - -4.3256899211196528e-06
+            - 1.7854891674058672e-16
+            - -0.12965456250842144
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -15384,9 +15384,9 @@ GameObject3:
             - 1967.9022216796875
             - 22448.40625
           localRotation:
-            - -4.3256899211193242e-06
-            - -1.1301297817164272e-16
-            - -0.12965454916821656
+            - -4.3256899211196528e-06
+            - 1.7854891674058672e-16
+            - -0.12965456250842144
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -15435,9 +15435,9 @@ GameObject3:
             - 1967.9022216796875
             - 22448.40625
           localRotation:
-            - -4.3256899211193242e-06
-            - -1.1301297817164272e-16
-            - -0.12965454916821656
+            - -4.3256899211196528e-06
+            - 1.7854891674058672e-16
+            - -0.12965456250842144
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -15475,7 +15475,7 @@ GameObject3:
       Children: ~
     - name: Cube.061_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15486,9 +15486,9 @@ GameObject3:
             - 1967.9022216796875
             - 21598.134765625
           localRotation:
-            - 89.993715776085253
-            - -89.872871190739275
-            - -89.993727850274766
+            - 89.991283437058271
+            - -89.873297650384771
+            - -89.99130275576232
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -15537,9 +15537,9 @@ GameObject3:
             - 1967.9022216796875
             - 21598.134765625
           localRotation:
-            - 89.993715776085253
-            - -89.872871190739275
-            - -89.993727850274766
+            - 89.991283437058271
+            - -89.873297650384771
+            - -89.99130275576232
           localScale:
             - 320.4595947265625
             - 108.18214416503906
@@ -15588,9 +15588,9 @@ GameObject3:
             - 1967.9022216796875
             - 17285.77734375
           localRotation:
-            - 179.99999499104402
-            - -2.2311798413903595e-05
-            - -179.87034070171788
+            - -179.99999499104368
+            - -2.2311797988572783e-05
+            - -179.87034070171984
           localScale:
             - 583.88134765625
             - 108.18278503417969
@@ -15639,9 +15639,9 @@ GameObject3:
             - 1967.9022216796875
             - 17293.650390625
           localRotation:
-            - 179.99999499104402
-            - -2.2311798413903595e-05
-            - -179.87034070171788
+            - -179.99999499104368
+            - -2.2311797988572783e-05
+            - -179.87034070171984
           localScale:
             - 583.88134765625
             - 108.18278503417969
@@ -15679,7 +15679,7 @@ GameObject3:
       Children: ~
     - name: Cube.065_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15690,9 +15690,9 @@ GameObject3:
             - 1881.1279296875
             - 17569.228515625
           localRotation:
-            - 179.99999499104402
-            - -2.2311798413903595e-05
-            - -179.87034070171788
+            - -179.99999499104368
+            - -2.2311797988572783e-05
+            - -179.87034070171984
           localScale:
             - 541.81085205078125
             - 108.18820953369141
@@ -15741,9 +15741,9 @@ GameObject3:
             - 1881.1279296875
             - 16785.146484375
           localRotation:
-            - 179.99999499104402
-            - -2.2311798413903595e-05
-            - -179.87034070171788
+            - -179.99999499104368
+            - -2.2311797988572783e-05
+            - -179.87034070171984
           localScale:
             - 541.81085205078125
             - 108.18820953369141
@@ -15792,9 +15792,9 @@ GameObject3:
             - 1881.1279296875
             - 16785.146484375
           localRotation:
-            - 179.99999499104402
-            - -2.2311798413903595e-05
-            - -179.87034070171788
+            - -179.99999499104368
+            - -2.2311797988572783e-05
+            - -179.87034070171984
           localScale:
             - 541.81085205078125
             - 108.18820953369141
@@ -15832,7 +15832,7 @@ GameObject3:
       Children: ~
     - name: Cube.068_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15843,9 +15843,9 @@ GameObject3:
             - 1881.1279296875
             - 17569.228515625
           localRotation:
-            - 179.99999499104402
-            - -2.2311798413903595e-05
-            - -179.87034070171788
+            - -179.99999499104368
+            - -2.2311797988572783e-05
+            - -179.87034070171984
           localScale:
             - 541.81085205078125
             - 108.18820953369141
@@ -15883,7 +15883,7 @@ GameObject3:
       Children: ~
     - name: Cube.085_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15894,9 +15894,9 @@ GameObject3:
             - 1729.630615234375
             - 18107.119140625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 2427.178955078125
             - 126.90205383300781
@@ -15934,7 +15934,7 @@ GameObject3:
       Children: ~
     - name: Cube.086_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15946,7 +15946,7 @@ GameObject3:
             - 21295.017578125
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 202.30824279785156
@@ -15985,7 +15985,7 @@ GameObject3:
       Children: ~
     - name: Cube.087_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -15997,7 +15997,7 @@ GameObject3:
             - 22163.638671875
           localRotation:
             - -90
-            - -0.12965447196355859
+            - -0.12965446253058571
             - 0
           localScale:
             - 202.30824279785156
@@ -16036,7 +16036,7 @@ GameObject3:
       Children: ~
     - name: Cube.088_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16047,9 +16047,9 @@ GameObject3:
             - 1729.630615234375
             - 20651.69140625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 473.3958740234375
             - 126.90205383300781
@@ -16087,7 +16087,7 @@ GameObject3:
       Children: ~
     - name: Cube.089_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16138,7 +16138,7 @@ GameObject3:
       Children: ~
     - name: Cube.090_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16149,8 +16149,8 @@ GameObject3:
             - 1729.630615234375
             - 21435.580078125
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 993.590576171875
@@ -16189,7 +16189,7 @@ GameObject3:
       Children: ~
     - name: Cube.091_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16240,7 +16240,7 @@ GameObject3:
       Children: ~
     - name: Cube.092_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16251,9 +16251,9 @@ GameObject3:
             - 1729.630615234375
             - 22478.58203125
           localRotation:
-            - 89.996533789546731
-            - -89.873362708854927
-            - -179.99883044205797
+            - 89.998855942598169
+            - -89.872584774377302
+            - 179.99885594259817
           localScale:
             - 272.09011840820312
             - 126.89237213134766
@@ -16291,7 +16291,7 @@ GameObject3:
       Children: ~
     - name: Cube.093_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16302,8 +16302,8 @@ GameObject3:
             - 1729.630615234375
             - 23453.572265625
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 993.590576171875
@@ -16342,7 +16342,7 @@ GameObject3:
       Children: ~
     - name: Cube.094_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16354,7 +16354,7 @@ GameObject3:
             - 24718.955078125
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -16393,7 +16393,7 @@ GameObject3:
       Children: ~
     - name: Cube.095_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16405,7 +16405,7 @@ GameObject3:
             - 24718.955078125
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -16444,7 +16444,7 @@ GameObject3:
       Children: ~
     - name: Cube.096_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16455,8 +16455,8 @@ GameObject3:
             - 1729.630615234375
             - 22372.98046875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 1719.1983642578125
@@ -16495,7 +16495,7 @@ GameObject3:
       Children: ~
     - name: Cube.097_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16506,9 +16506,9 @@ GameObject3:
             - 1729.630615234375
             - 16738.873046875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 1432.523681640625
             - 126.90205383300781
@@ -16546,7 +16546,7 @@ GameObject3:
       Children: ~
     - name: Cube.098_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16557,8 +16557,8 @@ GameObject3:
             - 1729.630615234375
             - 19447.01171875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 1129.7366943359375
@@ -16597,7 +16597,7 @@ GameObject3:
       Children: ~
     - name: Cube.099_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16609,7 +16609,7 @@ GameObject3:
             - 20937.775390625
           localRotation:
             - -90
-            - -0.12965448139653143
+            - -0.12965447196355859
             - 0
           localScale:
             - 783.181640625
@@ -16648,7 +16648,7 @@ GameObject3:
       Children: ~
     - name: Cube.100_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16660,7 +16660,7 @@ GameObject3:
             - 17981.7734375
           localRotation:
             - -90
-            - -0.12965448139653143
+            - -0.12965447196355859
             - 0
           localScale:
             - 783.181640625
@@ -16699,7 +16699,7 @@ GameObject3:
       Children: ~
     - name: Cube.101_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16750,7 +16750,7 @@ GameObject3:
       Children: ~
     - name: Cube.102_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16801,7 +16801,7 @@ GameObject3:
       Children: ~
     - name: Cube.103_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16812,8 +16812,8 @@ GameObject3:
             - 1729.630615234375
             - 20494.716796875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 345.43319702148438
@@ -16852,7 +16852,7 @@ GameObject3:
       Children: ~
     - name: Cube.104_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -16863,9 +16863,9 @@ GameObject3:
             - 1729.630615234375
             - 18278.412109375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 257.9012451171875
             - 126.90205383300781
@@ -17016,9 +17016,9 @@ GameObject3:
             - 1729.630615234375
             - 14414.5771484375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 314.22842407226562
             - 126.90205383300781
@@ -17067,9 +17067,9 @@ GameObject3:
             - 1729.630615234375
             - 14523.96875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 247.75399780273438
             - 126.90205383300781
@@ -17169,9 +17169,9 @@ GameObject3:
             - 1729.630615234375
             - 13568.263671875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 539.68701171875
             - 126.90205383300781
@@ -17271,9 +17271,9 @@ GameObject3:
             - 1729.630615234375
             - 13000.126953125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 198.661865234375
             - 126.90205383300781
@@ -17475,9 +17475,9 @@ GameObject3:
             - 1729.630615234375
             - 14414.5771484375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 314.22842407226562
             - 126.90205383300781
@@ -17526,9 +17526,9 @@ GameObject3:
             - 1729.630615234375
             - 14414.5771484375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 314.22842407226562
             - 126.90205383300781
@@ -17679,9 +17679,9 @@ GameObject3:
             - 1729.630615234375
             - 14414.5771484375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 314.22842407226562
             - 126.90205383300781
@@ -17730,9 +17730,9 @@ GameObject3:
             - 1729.630615234375
             - 14523.96875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 247.75399780273438
             - 126.90205383300781
@@ -17832,9 +17832,9 @@ GameObject3:
             - 1729.630615234375
             - 13000.126953125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 198.661865234375
             - 126.90205383300781
@@ -17883,9 +17883,9 @@ GameObject3:
             - 1729.630615234375
             - 13568.263671875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 539.68701171875
             - 126.90205383300781
@@ -18036,9 +18036,9 @@ GameObject3:
             - 1729.630615234375
             - 12108.1552734375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 852.2735595703125
             - 126.90205383300781
@@ -18087,9 +18087,9 @@ GameObject3:
             - 1729.630615234375
             - 12108.1552734375
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 852.2735595703125
             - 126.90205383300781
@@ -18139,7 +18139,7 @@ GameObject3:
             - 11010.0849609375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -18190,7 +18190,7 @@ GameObject3:
             - 11010.0849609375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -18240,9 +18240,9 @@ GameObject3:
             - 1729.630615234375
             - 7724.7666015625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 2544.22900390625
             - 126.90205383300781
@@ -18291,9 +18291,9 @@ GameObject3:
             - 1729.630615234375
             - 7724.7666015625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 2544.22900390625
             - 126.90205383300781
@@ -18343,7 +18343,7 @@ GameObject3:
             - 4311.9521484375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -18394,7 +18394,7 @@ GameObject3:
             - 4311.9521484375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 1511.779052734375
@@ -18444,9 +18444,9 @@ GameObject3:
             - 1729.630615234375
             - 1690.4364013671875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 2001.7862548828125
             - 126.90205383300781
@@ -18495,9 +18495,9 @@ GameObject3:
             - 1729.630615234375
             - 1690.4364013671875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 2001.7862548828125
             - 126.90205383300781
@@ -18547,7 +18547,7 @@ GameObject3:
             - -962.4779052734375
           localRotation:
             - -90
-            - -0.08429286019948061
+            - -0.084292850766518504
             - 0
           localScale:
             - 494.740478515625
@@ -18648,9 +18648,9 @@ GameObject3:
             - 1729.630615234375
             - -1872.7919921875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 751.6044921875
             - 126.90205383300781
@@ -18699,9 +18699,9 @@ GameObject3:
             - 1729.630615234375
             - -1872.7919921875
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 751.6044921875
             - 126.90205383300781
@@ -18852,9 +18852,9 @@ GameObject3:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.0086560508784
-            - 89.916143542115293
-            - -0.0026813413938283036
+            - -90.008821123877993
+            - 89.915055813322155
+            - -0.0028464142153691108
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -18903,9 +18903,9 @@ GameObject3:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.0086560508784
-            - 89.916143542115293
-            - -0.0026813413938283036
+            - -90.008821123877993
+            - 89.915055813322155
+            - -0.0028464142153691108
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -18954,9 +18954,9 @@ GameObject3:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 90.002995038751664
-            - -89.916138244671345
-            - -179.99700496124834
+            - 90.001825866111332
+            - -89.917386613380401
+            - -179.99584091134045
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -19005,9 +19005,9 @@ GameObject3:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 90.002995038751664
-            - -89.916138244671345
-            - -179.99700496124834
+            - 90.001825866111332
+            - -89.917386613380401
+            - -179.99584091134045
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -19158,9 +19158,9 @@ GameObject3:
             - 1729.630615234375
             - -15975.3642578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 517.2039794921875
             - 126.90205383300781
@@ -19260,9 +19260,9 @@ GameObject3:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -19362,9 +19362,9 @@ GameObject3:
             - 1729.630615234375
             - -19515.22265625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 765.05303955078125
             - 126.90205383300781
@@ -19413,9 +19413,9 @@ GameObject3:
             - 1729.630615234375
             - -15975.3642578125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 517.2039794921875
             - 126.90205383300781
@@ -19515,9 +19515,9 @@ GameObject3:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -19617,9 +19617,9 @@ GameObject3:
             - 1729.630615234375
             - -19515.22265625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 765.05303955078125
             - 126.90205383300781
@@ -19668,9 +19668,9 @@ GameObject3:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -19719,9 +19719,9 @@ GameObject3:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -19821,9 +19821,9 @@ GameObject3:
             - 1729.630615234375
             - 10724.0029296875
           localRotation:
-            - 89.999922816097012
-            - 86.781317716758423
-            - 179.99983398860124
+            - 89.999926229961318
+            - 86.78123028260508
+            - 179.99983056957555
           localScale:
             - 247.75401306152344
             - 126.90206146240234
@@ -19872,9 +19872,9 @@ GameObject3:
             - 1729.630615234375
             - 10721.7958984375
           localRotation:
-            - 89.99997102541991
-            - -86.71953327189766
-            - -179.99996931717263
+            - 90.000064780130657
+            - -86.719447928348146
+            - 179.99994546935315
           localScale:
             - 247.75398254394531
             - 126.90205383300781
@@ -19923,9 +19923,9 @@ GameObject3:
             - 1729.630615234375
             - 4564.580078125
           localRotation:
-            - 89.9998998975571
-            - 85.311989062304235
-            - 179.99989135267103
+            - 89.999853020138715
+            - 85.312039357611766
+            - 179.9998547291159
           localScale:
             - 247.75399780273438
             - 126.90204620361328
@@ -19974,9 +19974,9 @@ GameObject3:
             - 1729.630615234375
             - 4562.373046875
           localRotation:
-            - 90.000035980355193
-            - -79.581675134821239
-            - -179.99998282686093
+            - 90.000061619355179
+            - -79.581644405660697
+            - 179.99998639025617
           localScale:
             - 247.75399780273438
             - 126.90206146240234
@@ -20025,9 +20025,9 @@ GameObject3:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20076,9 +20076,9 @@ GameObject3:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20127,9 +20127,9 @@ GameObject3:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20178,9 +20178,9 @@ GameObject3:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20229,9 +20229,9 @@ GameObject3:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20280,9 +20280,9 @@ GameObject3:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20331,9 +20331,9 @@ GameObject3:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20382,9 +20382,9 @@ GameObject3:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20433,9 +20433,9 @@ GameObject3:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20484,9 +20484,9 @@ GameObject3:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -20535,9 +20535,9 @@ GameObject3:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.00418666530841
-            - 89.866500734653584
-            - -90.004184250470203
+            - -90.004146842020205
+            - 89.865870142110253
+            - -90.004144427181984
           localScale:
             - 128.03897094726562
             - 427.90078735351562
@@ -20586,9 +20586,9 @@ GameObject3:
             - 2228.8046875
             - 7750.44482421875
           localRotation:
-            - -90.00418666530841
-            - 89.866500734653584
-            - -90.004184250470203
+            - -90.004146842020205
+            - 89.865870142110253
+            - -90.004144427181984
           localScale:
             - 126.77712249755859
             - 77.251678466796875
@@ -20637,9 +20637,9 @@ GameObject3:
             - 2824.27685546875
             - 7749.7587890625
           localRotation:
-            - -89.995816727625296
-            - 89.870716527963296
-            - -89.995811897949281
+            - -89.997868033923922
+            - 89.870063890052592
+            - -89.997851130057157
           localScale:
             - 133.52845764160156
             - 1154.979736328125
@@ -20688,9 +20688,9 @@ GameObject3:
             - 3463.08984375
             - 7749.7587890625
           localRotation:
-            - -89.992935991145487
-            - 89.874321661435616
-            - -108.02396542413091
+            - -89.992140719812241
+            - 89.876525512704575
+            - -108.02316939597824
           localScale:
             - 87.500289916992188
             - 177.206298828125
@@ -20739,9 +20739,9 @@ GameObject3:
             - 3175.477294921875
             - 7599.7939453125
           localRotation:
-            - 14.999906638280484
-            - -0.065029959488431197
-            - -114.75729593512585
+            - 14.999905725748965
+            - -0.065031385301581715
+            - -114.7572961223276
           localScale:
             - 40.151153564453125
             - 430.76507568359375
@@ -20841,9 +20841,9 @@ GameObject3:
             - 3086.548583984375
             - 7750.44482421875
           localRotation:
-            - -90.000735455536457
-            - 89.869556094029349
-            - 179.99771750560234
+            - -90.001472252115221
+            - 89.868425411838942
+            - 179.99697217125834
           localScale:
             - 43.940093994140625
             - 77.251510620117188
@@ -20892,9 +20892,9 @@ GameObject3:
             - 2866.346435546875
             - 7750.44482421875
           localRotation:
-            - -89.998080628180446
-            - 89.873372921965327
-            - 179.99962613440499
+            - -89.996530311901154
+            - 89.871828644180212
+            - -179.9988337946744
           localScale:
             - 27.383285522460938
             - 48.142822265625
@@ -20994,8 +20994,8 @@ GameObject3:
             - 2111.20556640625
             - 9563.1494140625
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21045,8 +21045,8 @@ GameObject3:
             - 2111.20556640625
             - 6504.94482421875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21096,8 +21096,8 @@ GameObject3:
             - 2111.20556640625
             - 6504.94482421875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21147,8 +21147,8 @@ GameObject3:
             - 2111.20556640625
             - 9563.1494140625
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21198,8 +21198,8 @@ GameObject3:
             - 2111.20556640625
             - 3253.54736328125
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21249,8 +21249,8 @@ GameObject3:
             - 2111.20556640625
             - 195.34263610839844
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21300,8 +21300,8 @@ GameObject3:
             - 2111.20556640625
             - 195.34263610839844
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21351,8 +21351,8 @@ GameObject3:
             - 2111.20556640625
             - 3253.54736328125
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21402,8 +21402,8 @@ GameObject3:
             - 2111.20556640625
             - 1750.3154296875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21453,8 +21453,8 @@ GameObject3:
             - 2111.20556640625
             - 1750.3154296875
           localRotation:
-            - -89.999989754716552
-            - 90
+            - -89.999996584905318
+            - 89.98021765926535
             - 0
           localScale:
             - 127.28877258300781
@@ -21504,9 +21504,9 @@ GameObject3:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.002995038751664
-            - 89.916724600432801
-            - 0.0029950387516546081
+            - -90.000647113991164
+            - 89.921330037739082
+            - 0.0053463782504077923
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -21555,9 +21555,9 @@ GameObject3:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.002995038751664
-            - 89.916724600432801
-            - 0.0029950387516546081
+            - -90.000647113991164
+            - 89.921330037739082
+            - 0.0053463782504077923
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -21606,9 +21606,9 @@ GameObject3:
             - 1972.6943359375
             - -3799.696044921875
           localRotation:
-            - 89.993715776085253
-            - -89.872871190739275
-            - -89.993727850274766
+            - 89.991283437058271
+            - -89.873297650384771
+            - -89.99130275576232
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -21658,7 +21658,7 @@ GameObject3:
             - -2924.91943359375
           localRotation:
             - -90
-            - -0.08429286019948061
+            - -0.084292850766518504
             - 0
           localScale:
             - 274.48114013671875
@@ -21708,9 +21708,9 @@ GameObject3:
             - 1972.6942138671875
             - -3144.035888671875
           localRotation:
-            - -0.2174965585946792
-            - 59.199280906830765
-            - -0.25320559074906895
+            - -0.2174965132128851
+            - 59.199270098247254
+            - -0.25320555593208444
           localScale:
             - 88.9478759765625
             - 202.1011962890625
@@ -21759,9 +21759,9 @@ GameObject3:
             - 1972.6943359375
             - -2994.31640625
           localRotation:
-            - -179.85166694086087
-            - 48.843244956188741
-            - -179.80299500909433
+            - -179.85166695628078
+            - 48.843239797336579
+            - -179.80299500940041
           localScale:
             - 88.947860717773438
             - 202.1011962890625
@@ -21810,9 +21810,9 @@ GameObject3:
             - 2146.18212890625
             - -2985.56982421875
           localRotation:
-            - -179.85166694086087
-            - 48.843244956188741
-            - -179.80299500909433
+            - -179.85166695628078
+            - 48.843239797336579
+            - -179.80299500940041
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -21861,9 +21861,9 @@ GameObject3:
             - 1940.9827880859375
             - -2993.0263671875
           localRotation:
-            - -179.85166694086087
-            - 48.843244956188741
-            - -179.80299500909433
+            - -179.85166695628078
+            - 48.843239797336579
+            - -179.80299500940041
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -21912,9 +21912,9 @@ GameObject3:
             - 1972.6943359375
             - -15064.5859375
           localRotation:
-            - 179.99999499104368
-            - -5.0089558081174543e-06
-            - -179.87034070171865
+            - -179.99999499104405
+            - -5.0089557898973758e-06
+            - -179.87034070171907
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -21963,9 +21963,9 @@ GameObject3:
             - 1972.6943359375
             - -15064.5859375
           localRotation:
-            - 179.99999499104368
-            - -5.0089558081174543e-06
-            - -179.87034070171865
+            - -179.99999499104405
+            - -5.0089557898973758e-06
+            - -179.87034070171907
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -22014,9 +22014,9 @@ GameObject3:
             - 1940.9827880859375
             - -14277.2275390625
           localRotation:
-            - 179.87275858758187
-            - -44.45971391099701
-            - -179.81834930408669
+            - 179.8727585786973
+            - -44.459714719756967
+            - -179.81834929907373
           localScale:
             - 53.263530731201172
             - 121.021728515625
@@ -22065,9 +22065,9 @@ GameObject3:
             - 2146.18212890625
             - -13994.9931640625
           localRotation:
-            - 179.87275858758187
-            - -44.45971391099701
-            - -179.81834930408669
+            - 179.8727585786973
+            - -44.459714719756967
+            - -179.81834929907373
           localScale:
             - 53.263530731201172
             - 121.021728515625
@@ -22116,9 +22116,9 @@ GameObject3:
             - 1972.6943359375
             - -13730.3359375
           localRotation:
-            - 179.87275859661295
-            - -44.459709481869311
-            - -179.81834931187427
+            - 179.87275858758187
+            - -44.45971391099701
+            - -179.81834930408669
           localScale:
             - 88.947868347167969
             - 202.10121154785156
@@ -22167,9 +22167,9 @@ GameObject3:
             - 1972.6942138671875
             - -14019.3798828125
           localRotation:
-            - -179.93252274007611
-            - 27.497114444231599
-            - -179.85383894464877
+            - -179.93252273808079
+            - 27.497110704522012
+            - -179.85383894623089
           localScale:
             - 88.947868347167969
             - 202.10118103027344
@@ -22218,9 +22218,9 @@ GameObject3:
             - 2192.90966796875
             - -14125.2353515625
           localRotation:
-            - 0.12577504187519514
-            - -56.174575085619885
-            - -90.151416386256614
+            - 0.12577887632754542
+            - -56.174578909964104
+            - -90.151418435570761
           localScale:
             - 274.48110961914062
             - 57.520450592041016
@@ -22473,9 +22473,9 @@ GameObject3:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - 89.993715776085253
-            - -89.872871190739275
-            - -89.993727850274766
+            - 89.991283437058271
+            - -89.873297650384771
+            - -89.99130275576232
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -22524,9 +22524,9 @@ GameObject3:
             - 2396.811767578125
             - -19521.4140625
           localRotation:
-            - 89.988728921884331
-            - -89.918366374337779
-            - -179.99088555459656
+            - 89.988131488691494
+            - -89.918417340589357
+            - -179.99029495165888
           localScale:
             - 274.48114013671875
             - 57.520450592041016
@@ -22575,9 +22575,9 @@ GameObject3:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - -90.00418666530841
-            - 89.866500734653584
-            - -90.004184250470203
+            - -90.004146842020205
+            - 89.865870142110253
+            - -90.004144427181984
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -22717,7 +22717,7 @@ GameObject3:
       Children: ~
     - name: Cube.016_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -22728,9 +22728,9 @@ GameObject3:
             - 1282.6800537109375
             - 21391.6328125
           localRotation:
-            - -89.996506998561287
-            - 89.968722136608804
-            - 0.0035015391755652174
+            - -89.993745343790536
+            - 89.964338276847386
+            - 0.0062580713042585398
           localScale:
             - 977.56097412109375
             - 1226.174560546875
@@ -23041,7 +23041,7 @@ GameObject3:
             - -6
           isTrigger: false
       Children: ~
-    - name: Cube.narrat_element
+    - name: ISE
       tag: Untagged
       active: false
       isStatic: false
@@ -23054,9 +23054,9 @@ GameObject3:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.004275881460586
-            - 89.867770399896315
-            - -90.004261392431332
+            - -90.00418666530841
+            - 89.866500734653584
+            - -90.004184250470203
           localScale:
             - 318.52139282226562
             - 427.90646362304688
@@ -23092,7 +23092,7 @@ GameObject3:
           name: Shader
           enabled: true
       Children: ~
-    - name: Cube.narrat_element2
+    - name: ISE
       tag: Untagged
       active: false
       isStatic: false

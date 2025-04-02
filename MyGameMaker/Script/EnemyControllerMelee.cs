@@ -85,101 +85,116 @@ public class EnemyControllerMelee : EnemyController
     {
         if(!isDead)
         {
-            Vector3 playerPos = playerTransform.position;
-            float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
-
-            if (distanceToPlayer < distToChase)
+            if(!isStunned)
             {
-                if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange)
+                Vector3 playerPos = playerTransform.position;
+                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
+
+                if (distanceToPlayer < distToChase)
                 {
-                    if (hasLeap)
+                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange)
                     {
-                        Engineson.print("ENEMY HAS LEAP");
-                        /*Random random = new Random();
-                        int rand = random.Next(0, 4);
-                        if (random.Next(0, 100) == (8 + 1 * rand))
+                        if (hasLeap)
                         {
+                            Engineson.print("ENEMY HAS LEAP");
+                            /*Random random = new Random();
+                            int rand = random.Next(0, 4);
+                            if (random.Next(0, 100) == (8 + 1 * rand))
+                            {
+                                Leap();
+                            }*/
                             Leap();
-                        }*/
-                        Leap();
-                        hasLeap = false;
-                    }
-                    leapTimer += deltaTime;
+                            hasLeap = false;
+                        }
+                        leapTimer += deltaTime;
 
-                    if (leapTimer >= leapCooldown)
-                    {
-                        Engineson.print("LEAP RESTORED");
-                        hasLeap = true;
+                        if (leapTimer >= leapCooldown)
+                        {
+                            Engineson.print("LEAP RESTORED");
+                            hasLeap = true;
+                        }
                     }
-                }
-                if (IsPlayerInHurtbox(playerPos))
-                {
-                    //Engineson.print("Player in hurtbox");
-                    hurtboxTimer += deltaTime;
-                    if (dodgewindow)
+                    if (IsPlayerInHurtbox(playerPos))
                     {
-                        dodgeTimer += deltaTime;
-                    }
-                    if (hurtboxTimer >= hurtboxActivationTime)
-                    {
-                        //CreateHurtbox();
-                        Engineson.print("Atack is ready");
-                        hurtboxTimer = 0f;
-                        dodgeTimer = 0f;
-                        dodgewindow = true;
-                    }
-                    else if (dodgeTimer >= 0.5f && dodgewindow)
-                    {
-                        Attack();
-                        soundAttack?.Play();
-                        //DestroyHurtbox();
-                        hurtboxTimer = 0f;
-                        dodgeTimer = 0f;
-                        dodgewindow = false;
-                    }
-                }
-                if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
-                {
-                    Vector3 currentVelocity = rb.GetVelocity();
-                    moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                    Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                    if (desiredVelocity.LengthSquared() > 0)
-                    {
-                        hurtboxTimer = 0f;
-                        dodgeTimer = 0f;
-                        //Engineson.print("Player not in hurtbox");
+                        //Engineson.print("Player in hurtbox");
+                        hurtboxTimer += deltaTime;
                         if (dodgewindow)
                         {
                             dodgeTimer += deltaTime;
-                            if (dodgeTimer >= dodgeActivationTime)
-                            {
-                                //DestroyHurtbox();
-                                dodgeTimer = 0f;
-                                dodgewindow = false;
-                            }
+                        }
+                        if (hurtboxTimer >= hurtboxActivationTime)
+                        {
+                            //CreateHurtbox();
+                            Engineson.print("Atack is ready");
+                            hurtboxTimer = 0f;
+                            dodgeTimer = 0f;
+                            dodgewindow = true;
+                        }
+                        else if (dodgeTimer >= 0.5f && dodgewindow)
+                        {
+                            Attack();
+                            soundAttack?.Play();
+                            //DestroyHurtbox();
+                            hurtboxTimer = 0f;
+                            dodgeTimer = 0f;
+                            dodgewindow = false;
                         }
                     }
+                    if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+                    {
+
+                        if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                        {
+                            Vector3 currentVelocity = rb.GetVelocity();
+                            moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                            Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                            if (desiredVelocity.LengthSquared() > 0)
+                            {
+                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                            }
+
+                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+
+                            //enemyTransform.position += desiredVelocity * deltaTime;
+                        }
+                    }
+                    else
+                    {
+                        rb.SetVelocity(Vector3.Zero);
+                    }
+
+                    if (moveDirection != Vector3.Zero)
+                    {
+                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+
+                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                            eulerRotation.Y * ((float)Math.PI / 180.0f),
+                            eulerRotation.X * ((float)Math.PI / 180.0f),
+                            eulerRotation.Z * ((float)Math.PI / 180.0f)
+                        );
+
+                        // enemyTransform.SetRotationQuat(newRotation);
+                        collider.SetRotation(newRotation);
+                    }
                 }
-                if (moveDirection != Vector3.Zero)
+                if (isAttacking)
                 {
-                    currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                    float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                    float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-                    while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                    while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-                    currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-                    Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                    Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                        eulerRotation.Y * ((float)Math.PI / 180.0f),
-                        eulerRotation.X * ((float)Math.PI / 180.0f),
-                        eulerRotation.Z * ((float)Math.PI / 180.0f)
-                    );
-
-                    collider.SetRotation(newRotation);
+                    anim.SetRandomAttackAnimation();
+                    isAttacking = false;
+                }
+                if (isDead)
+                {
+                    anim.SetDeathAnimation();
                 }
             }
             else if (isStunned)
@@ -192,16 +207,6 @@ public class EnemyControllerMelee : EnemyController
                     stunTimer = 0.0f;
                 }
             }
-        }
-
-        if (isAttacking)
-        {
-            anim.SetRandomAttackAnimation();
-            isAttacking = false;
-        }
-        if (isDead)
-        {
-            anim.SetDeathAnimation();
         }
     }
 

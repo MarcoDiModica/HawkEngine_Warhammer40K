@@ -7,7 +7,20 @@ namespace HawkEngine
 {
     public class RayCast
     {
+        public RayCast()
+        {
+
+        }
+
+        public GameObject hitGameObject;
+
+        public GameObject PerformRaycast(Vector3 origin, Vector3 direction, float maxDistance)
+        {
+            hitGameObject = Raycast(origin, direction, maxDistance);
+            return hitGameObject;
+        }
+
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern static bool Raycast(Vector3 origin, Vector3 direction, float maxDistance);
+        private extern static GameObject Raycast(Vector3 origin, Vector3 direction, float maxDistance);
     }
 }

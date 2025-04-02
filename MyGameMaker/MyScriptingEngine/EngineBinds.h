@@ -132,7 +132,7 @@ namespace EngineBinds {
     void EnableContinuousCollision(MonoObject* rigidbodyRef);
 
     // Raycast
-	bool Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance);
+	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance);
     
     //Audio
     void Play(MonoObject* audioRef, bool loop = false);

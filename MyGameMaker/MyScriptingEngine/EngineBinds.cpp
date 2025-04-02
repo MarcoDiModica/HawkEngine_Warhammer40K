@@ -807,7 +807,7 @@ void EngineBinds::EnableContinuousCollision(MonoObject* rigidbodyRef) {
 }
 
 // Raycast
-bool EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance)
+MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance)
 {
     btVector3 from;
 	from.setValue(origin->x, origin->y, origin->z);
@@ -815,16 +815,14 @@ bool EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDist
 	btVector3 to;
 	to.setValue(direction->x, direction->y, direction->z);
 
-	if (Application->physicsModule->Raycast(from, to, maxDistance))
-	{
-		return true;
-	}
-    else
-    {
-		return false;
-    }
+	GameObject* hitObject;
+	hitObject = Application->physicsModule->Raycast(from, to, maxDistance);
 
-    return false;
+	if (hitObject) {
+		return GetMonoObjectFromGameObject(hitObject);
+	}
+
+    return nullptr;
 }
 
 

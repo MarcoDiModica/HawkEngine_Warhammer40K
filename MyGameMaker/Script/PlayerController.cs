@@ -82,8 +82,24 @@ public class PlayerController : MonoBehaviour
 
         }
 
- 
-        
+        if (Input.GetControllerButtonDown(ControllerButton.Y))
+        {
+            Vector3 playerCenterPosition = gameObject.GetComponent<Transform>().GetPosition();
+            playerCenterPosition.Y += 1;
+            Vector3 playerDirection = gameObject.GetComponent<Transform>().forward;
+
+            RayCast rayCast = new RayCast();
+            GameObject hitGameObject = rayCast.PerformRaycast(playerCenterPosition, playerDirection, 10f);
+
+            if (hitGameObject != null)
+            {
+                Engineson.print("Raycast hit: " + hitGameObject.name);
+            }
+            
+
+        }
+
+
 
         if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)
         {

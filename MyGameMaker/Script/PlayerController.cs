@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private Audio sound;
     private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
-    private bool isMoving = false;  // Restaurado isMoving
+    private bool isMoving = false; 
 
     public PlayerData playerData;
 
@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     public override void Start()
     {
+
     }
 
     public override void Update(float deltaTime)
@@ -62,29 +63,30 @@ public class PlayerController : MonoBehaviour
 
         if (moveDirection == Vector3.Zero && !playerInput.IsShooting())
         {
-            SetIdleAnimation();
+            SetIdleState();
+            StopFootsteps();
         }
         else
         {
-            if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && dashDelayTimer <= 0f)
+            if (dashDelayTimer <= 0f) 
             {
-                if (playerMovement.moveSpeed == playerMovement.walkSpeed)
+                if (moveDirection != Vector3.Zero && !playerInput.IsShooting())
                 {
-                    SetWalkingAnimation();
+                    PlayFootstep();
+                    if (playerMovement.moveSpeed == playerMovement.walkSpeed)
+                    {
+                        SetWalkingState();
+                    }
+                    else if (playerMovement.moveSpeed == playerMovement.runSpeed)
+                    {
+                        SetRunningState();
+                    }
                 }
-                else if (playerMovement.moveSpeed == playerMovement.runSpeed)
-                {
-                    SetRunningAnimation();
-                }
-            }
 
-            if (moveDirection != Vector3.Zero && playerInput.IsShooting())
-            {
-                SetShootingWhileMovingAnimation();
-            }
-            else if (!isShootingStanding && playerInput.IsShooting() && !isMoving)
-            {
-                SetShootingStandingAnimation();
+                if (playerInput.IsShooting())
+                {
+                    SetShootingState();
+                }
             }
         }
 
@@ -95,88 +97,95 @@ public class PlayerController : MonoBehaviour
             dashDelayTimer = dashDelayDuration;
             isRunning = false;
             isWalking = false;
+            StopFootsteps(); 
         }
     }
 
-    private void SetIdleAnimation()
+    private void SetIdleState()
     {
         if (!isIdle)
         {
             playerAnimations.SetStandardIdleAnimation();
+            playerAnimations.SetIdleRandomAnimation();
             isIdle = true;
+            isRunning = false;
+            isWalking = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = false;
         }
-
-        playerAnimations.SetIdleRandomAnimation();
-        isRunning = false;
-        isWalking = false;
-        isShootingStanding = false;
-        isShootingRunning = false;
-        isFootstepPlaying = false;
-
         if (!hasStoppedFootsteps)
         {
             sound?.Stop();
             hasStoppedFootsteps = true;
-        }
+            isFootstepPlaying = false;
 
-        isMoving = false;  
+        }
     }
 
-    private void SetWalkingAnimation()
+    private void SetWalkingState()
     {
         if (!isWalking)
         {
             playerAnimations.SetWalkAnimation();
             isWalking = true;
             isRunning = false;
-            isShootingStanding = false;
-            isShootingRunning = false;
             isIdle = false;
-            isMoving = true;  
+            isMoving = true;
+            PlayFootstep();
         }
     }
 
-    private void SetRunningAnimation()
+    private void SetRunningState()
     {
         if (!isRunning)
         {
             playerAnimations.SetRunAnimation();
             isRunning = true;
             isWalking = false;
-            isShootingStanding = false;
-            isShootingRunning = false;
             isIdle = false;
-            isMoving = true; 
+            isMoving = true;
+            PlayFootstep();
         }
     }
 
-    private void SetShootingWhileMovingAnimation()
+    private void SetShootingState()
     {
-        if (!isShootingRunning)
+        if (!isShootingRunning && isMoving)
         {
             playerAnimations.SetShootingRunningAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
-            isRunning = false;
-            isWalking = false;
-            isIdle = false;
-            isMoving = true;  
         }
-    }
-
-    private void SetShootingStandingAnimation()
-    {
-        if (!isShootingStanding)
+        else if (!isShootingStanding && !isMoving)
         {
             playerAnimations.SetShootingStandingAnimation();
             isShootingStanding = true;
             isShootingRunning = false;
-            isRunning = false;
-            isWalking = false;
-            isIdle = false;
-            isMoving = false;  
         }
     }
+
+    private void PlayFootstep()
+    {
+        if (!isFootstepPlaying)
+        {
+            sound?.LoadAudio(footsteps);
+            sound?.Play(true);
+            isFootstepPlaying = true;
+            hasStoppedFootsteps = false; 
+        }
+    }
+
+    private void StopFootsteps()
+    {
+        if (isFootstepPlaying)
+        {
+            sound?.Stop();
+            isFootstepPlaying = false;
+            hasStoppedFootsteps = true;
+        }
+    }
+
 
     public override void OnCollisionEnter(GameObject other)
     {

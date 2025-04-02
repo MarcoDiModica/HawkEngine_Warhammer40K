@@ -34,6 +34,19 @@ public class EnemyControllerBoss : EnemyController
     private int attackCount = 0;
     private bool isBuried = true;
 
+    // phase 2 unburrowing/slam stats
+    private bool isPreparingAttack = false;
+    private Vector3[] fixedPositions = new Vector3[]
+    {
+        new Vector3(10,0,10),
+        new Vector3(-10,0,10),
+        new Vector3(10,0,-10),
+        new Vector3(-10,0,-10)
+    };
+    private float slamAttackDistance = 20.0f;
+    private float slamAttackCooldown = 2.0f;
+    private float slamAttackTimer = 0.0f;
+
     private enum BossPhase
     {
         PHASE1,
@@ -123,6 +136,11 @@ public class EnemyControllerBoss : EnemyController
                 }
             }
         }
+
+        if (currentPhase == BossPhase.PHASE2)
+        {
+            // Lógica dels punts fixes
+        }
     }
 
     override public void OnCollisionEnter(GameObject other)
@@ -164,6 +182,38 @@ public class EnemyControllerBoss : EnemyController
         isBuried = false;
 
         // Hurtbox i tot a la pesca
+    }
+
+    public void ChangePositionToClosest()
+    {
+        enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
+        Burrow();
+    }
+
+    private int FindClosestFixedPosition()
+    {
+        int closestIndex = 0;
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < fixedPositions.Length; i++)
+        {
+            float distance = Vector3.Distance(playerTransform.position, fixedPositions[i]);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestIndex = i;
+            }
+        }
+        return closestIndex;
+    }
+
+    private void SlamAttack()
+    {
+        if (playerTransform != null)
+        {
+            Engineson.print("Slam Attack");
+
+        }
     }
 
     private void Burrow()

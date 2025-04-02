@@ -31,7 +31,12 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(256,256),			   // Sprite size
 		true,						   // Use animation
-		0.5f						   // Animation speed
+		0.5f,						   // Animation speed
+		0.0f,						   // Start rotation
+		0.0f,						   // End rotation
+		true,						   // Random rotation
+		0.5f,						   // Min scale
+		0.0f						   // Max scale
 	};
 
 	const ParticlePreset Fire = {
@@ -58,8 +63,12 @@ namespace ParticlePresets {
 		30.0f,                         // Cone angle in degrees
 		glm::vec2(1.0f, 1.0f),         // Sprite size
 		false,						   // Use animation
-		0.5f						   // Animation speed
-
+		0.5f,						   // Animation speed
+		0.0f,						   // Start rotation
+		0.0f,						   // End rotation
+		true,						   // Random rotation
+		0.5f,						   // Min scale
+		0.0f						   // Max scale
 	};
 
 	const ParticlePreset MuzzleFlash = {
@@ -86,7 +95,12 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(1.0f, 1.0f),         // Sprite size
 		false,						   // Use animation
-		0.5f						   // Animation speed
+		0.5f,						   // Animation speed
+		0.0f,						   // Start rotation
+		0.0f,						   // End rotation
+		true,						   // Random rotation
+		0.5f,						   // Min scale
+		0.0f						   // Max scale
 	};
 
 	const ParticlePreset Dust = {
@@ -113,7 +127,12 @@ namespace ParticlePresets {
 		0.0f,                          // Unused
 		glm::vec2(1.0f, 1.0f),         // Sprite size
 		false,						   // Use animation
-		0.5f						   // Animation speed
+		0.5f,						   // Animation speed
+		0.0f,						   // Start rotation
+		0.0f,						   // End rotation
+		true,						   // Random rotation
+		0.5f,						   // Min scale
+		0.0f						   // Max scale
 	};
 
 	const ParticlePreset Explosion = {
@@ -140,7 +159,12 @@ namespace ParticlePresets {
 		0.0f,                          // Unused
 		glm::vec2(1.0f, 1.0f),         // Sprite size
 		false,						   // Use animation
-		0.5f						   // Animation speed
+		0.5f,						   // Animation speed
+		0.0f,						   // Start rotation
+		0.0f,						   // End rotation
+		true,						   // Random rotation
+		0.5f,						   // Min scale
+		0.0f						   // Max scale
 	};
 
 }
@@ -382,13 +406,24 @@ void ParticleFX::EmitParticle() {
 
 	particle.endColor = glm::vec4(endColor, endAlpha);
 
-	particle.size = glm::vec2(startSize, startSize);
+	particle.size = GenerateRandomSize(minSize,maxSize);
 
 	particle.endSize = glm::vec2(endSize, endSize);
 
 	particle.endVelocity = glm::normalize(particle.velocity) * endSpeed;
 
-	particle.rotation = dist01(rng) * 360.0f;
+	if (randomRotation) 
+	{
+		particle.rotation = dist01(rng) * 360.0f;
+	}
+	else 
+	{
+		particle.rotation = startRotation;
+		particle.startRotation = startRotation;
+		particle.endRotation = endRotation;
+	}
+
+	particle.randomRotation = randomRotation;
 
 	particle.gravity = gravity;
 
@@ -505,6 +540,12 @@ glm::vec3 ParticleFX::GenerateRandomVelocity() {
 	}
 
 	return {0.0f, speed, 0.0f};
+}
+
+glm::vec2 ParticleFX::GenerateRandomSize(float minSize, float maxSize) {
+	
+	float tSize = minSize + (maxSize - minSize) * dist01(rng);
+	return glm::vec2(tSize, tSize);
 }
 
 void ParticleFX::ApplyPreset(const ParticlePreset& preset) {

@@ -1158,11 +1158,28 @@ private:
 		if (ImGui::DragFloatRange2("Size start to end", &startSize, &endSize, 0.05f, 0.01f, 10.0f)) {
 			system->SetParticleSize(startSize, endSize);
 		}
+	
+		float minScale = system->GetMinScale();
+		float maxScale = system->GetMaxScale();
+		if (ImGui::DragFloatRange2("Size in a range", &minScale, &maxScale, 0.05f, 0.01f, 10.0f)) {
+			system->SetMinScale(minScale);
+			system->SetMaxScale(maxScale);
+		}
 
 		// Rotation
-		float rotationSpeed = system->GetRotationSpeed();
-		if (ImGui::DragFloat("Rotation Speed", &rotationSpeed, 0.1f, 0.0f, 10.0f)) {
-			system->SetParticleRotation(rotationSpeed);
+		//float rotationSpeed = system->GetRotationSpeed();
+		//if (ImGui::DragFloat("Rotation Speed", &rotationSpeed, 0.1f, 0.0f, 10.0f)) {
+		//	system->SetParticleRotation(rotationSpeed);
+		//}
+		bool randomRotation = system->GetRandomRotation();
+		if (ImGui::Checkbox("Random Rotation", &randomRotation)) {
+			system->SetRandomRotation(randomRotation);
+		}
+		float startRotation = system->GetStartRotation();
+		float endRotation = system->GetEndRotation();
+		if (ImGui::DragFloatRange2("Rotation start to end", &startRotation, &endRotation, 0.1f, 0.0f, 360.0f)) {
+			system->SetEndRotation(endRotation);
+			system->SetStartRotation(startRotation);
 		}
 
 		// Gravity

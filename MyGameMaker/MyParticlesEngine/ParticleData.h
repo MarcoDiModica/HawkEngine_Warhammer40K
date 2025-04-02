@@ -12,7 +12,10 @@ struct ParticleData {
 	glm::vec2 size;
 	glm::vec3 gravity;
 	glm::vec2 endSize;
+	bool randomRotation;
 	float rotation;
+	float startRotation;
+	float endRotation;
 	float lifetime;
 	float maxLifetime;
 	glm::vec3 velocity;
@@ -237,6 +240,11 @@ public:
 				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
 			}
 			
+			if (!particleData[i].randomRotation)
+			{
+				particleData[i].rotation = glm::lerp(particleData[i].rotation, particleData[i].endRotation*360.0f, lifetimeFraction);
+			}
+		
 
 			if (particleData[i].useAnimation) 
 			{
@@ -263,10 +271,10 @@ public:
 				particleData[i].spriteOffset = glm::vec2(0.0f, 0.0f);
 				particleData[i].spriteSize = particleData[i].sheetSize;
 			}
-
+			
+		
 			
 
-		
 			InstanceData instance;
 			instance.playOnAwake = particleData[i].playOnAwake;
 			instance.duration = particleData[i].duration;

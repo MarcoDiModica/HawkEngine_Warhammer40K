@@ -45,6 +45,11 @@ struct ParticlePreset {
 	glm::vec2 spriteSize;
 	bool useAnimation;
 	float animSpeed; //in seconds
+	float startRotation;
+	float endRotation;
+	bool randomRotation;
+	float minSize;
+	float maxSize;
 };
 
 namespace ParticlePresets {
@@ -102,6 +107,11 @@ public:
 	void SetSpriteSize(glm::vec2 size) { spriteSize = size; }
 	void SetUseAnimation(bool useAnimation) { this->useAnimation = useAnimation; }
 	void SetAnimSpeed(float animSpeed) { this->animSpeed = animSpeed; }
+	void SetEndRotation(float endRotation) { this->endRotation = endRotation; }
+	void SetMinScale(float minSize) { this->minSize = minSize; }
+	void SetMaxScale(float maxSize) { this->maxSize = maxSize; }
+	void SetStartRotation(float startRotation) { this->startRotation = startRotation; }
+	void SetRandomRotation(bool randomRotation) { this->randomRotation = randomRotation; }
 
 
 	float GetEmissionRate() const { return emissionRate; }
@@ -114,8 +124,13 @@ public:
 	float GetEndSpeed() const { return endSpeed; }
 	float GetDuration() const { return duration; }
 	float GetAnimSpeed() const { return animSpeed; }
+	float GetEndRotation() const { return endRotation; }
+	float GetStartRotation() const { return startRotation; }
+	float GetMinScale() const { return minSize; }
+	float GetMaxScale() const { return maxSize; }
 	bool GetPlayOnAwake() const { return playOnAwake; }
 	bool GetUseAnimation() const { return useAnimation; }
+	bool GetRandomRotation() const { return randomRotation; }
 	glm::vec2 GetSpriteSize() const { return spriteSize; }
 	glm::vec3 GetStartColor() const { return startColor; }
 	glm::vec3 GetEndColor() const { return endColor; }
@@ -134,6 +149,7 @@ public:
 	std::string GetTexturePath() const { return material && material->getImg() ? material->getImg()->image_path : ""; }
 	std::string GetGradientPath() const { return material && material->GetColorGradientMap() ? material->GetColorGradientMap()->image_path : ""; }
 	int GetMaxParticles() const { return renderer ? static_cast<int>(renderer->GetMaxParticles()) : 0; }
+	glm::vec2 GenerateRandomSize(float minSize, float maxSize);
 
 	void ConfigureSmoke();
 	void ConfigureFire();
@@ -165,8 +181,12 @@ private:
 	float minSpeed, maxSpeed;
 	float endSpeed;
 	float startSize, endSize;
+	float minSize;
+	float maxSize;
 	glm::vec3 startColor, endColor;
 	float startAlpha, endAlpha;
+	bool randomRotation;
+	float startRotation, endRotation;
 	float rotationSpeed;
 	glm::vec3 gravity;
 
@@ -189,6 +209,8 @@ private:
 	glm::vec3 position;
 	glm::quat rotation;
 	glm::vec3 scale;
+
+
 
 	// Spritesheet data
 	glm::vec2 spriteSize = glm::vec2(133,175);

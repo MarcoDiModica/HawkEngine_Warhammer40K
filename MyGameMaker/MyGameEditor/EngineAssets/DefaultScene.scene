@@ -101,7 +101,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -160,7 +160,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -182,113 +182,6 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: Lictor
-  tag: Enemy
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -5
-        - 0
-        - -5
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 5
-        - 5
-        - 5
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 0.25
-        - 0.5
-        - 0.25
-      offset:
-        - 0
-        - 2.5
-        - 1
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerRanged
-  Children:
-    - name: LictorMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.00024597215815447271
-            - 0.0018853993387892842
-            - -0.0003092930419370532
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 0.004091363400220871
-            - 0.004091363400220871
-            - 0.004091363400220871
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Plane.010
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Assets/Textures/Material_Base_color.png
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-GameObject3:
   name: Hormagaunt
   tag: Untagged
   active: true
@@ -298,7 +191,7 @@ GameObject3:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 5
+        - 18.141054153442383
         - 0
         - 5
       localRotation:
@@ -357,13 +250,13 @@ GameObject3:
             - 0.98896592855453491
             - 0.051096078008413315
           localRotation:
-            - -1.3660378731687233e-05
-            - 2.4012357443917309e-07
-            - -1.7342270674115732e-06
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
           localScale:
-            - 0.0075779887847602402
-            - 0.0075779887847605421
-            - 0.0075779887847605386
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -402,102 +295,7 @@ GameObject3:
           Script0:
             name: HormagauntAnimation
       Children: ~
-GameObject4:
-  name: Mawloc
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 10
-        - -100
-        - 10
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 2
-        - 8
-        - 2
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerBoss
-  Children:
-    - name: MawlocMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Cube
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.5
-              - 0.5
-              - 0.5
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Assets/default.png
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-GameObject5:
+GameObject3:
   name: Floor
   tag: Untagged
   active: true

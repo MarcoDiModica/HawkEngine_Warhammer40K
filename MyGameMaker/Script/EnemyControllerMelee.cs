@@ -29,8 +29,8 @@ public class EnemyControllerMelee : EnemyController
         // Leap Attack
     public float maxLeapRange = 15f;
     public float minLeapRange = 7f;
-    private float leapTimer = 0f;
-    public float leapTime = 2f;
+    private float lastLeap = 0f;
+    private float leapTime = 0.0f;
     public float leapCooldown = 8f;
     private bool hasLeap = true;
 
@@ -75,6 +75,7 @@ public class EnemyControllerMelee : EnemyController
             Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
             return;
         }
+
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
@@ -96,24 +97,28 @@ public class EnemyControllerMelee : EnemyController
                     {
                         if (hasLeap)
                         {
-                            Engineson.print("ENEMY HAS LEAP");
-                            /*Random random = new Random();
-                            int rand = random.Next(0, 4);
-                            if (random.Next(0, 100) == (8 + 1 * rand))
+                            Random random = new Random();
+                            int rand = random.Next(3, 4);
+                            int rand2 = random.Next(3, 4);
+                            Engineson.print(rand.ToString());
+                            Engineson.print(rand2.ToString());
+
+                            if (rand == rand2)
                             {
                                 Leap();
-                            }*/
-                            Leap();
+                            }
                             hasLeap = false;
                         }
-                        leapTimer += deltaTime;
+                        lastLeap += deltaTime;
 
-                        if (leapTimer >= leapCooldown)
+                        if (lastLeap >= leapCooldown)
                         {
+                            lastLeap = 0.0f;
                             Engineson.print("LEAP RESTORED");
                             hasLeap = true;
                         }
                     }
+
                     if (IsPlayerInHurtbox(playerPos))
                     {
                         //Engineson.print("Player in hurtbox");
@@ -140,6 +145,7 @@ public class EnemyControllerMelee : EnemyController
                             dodgewindow = false;
                         }
                     }
+
                     if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
                     {
 
@@ -222,8 +228,7 @@ public class EnemyControllerMelee : EnemyController
     public void Leap()
     {
         Engineson.print("LEAP JUMP EXECUTED");
-        rb.SetVelocity(rb.GetVelocity() * 2);
-        //GameObject.Find("Player").GetComponent<PlayerData>().TakeDamage(damage);
+        rb.SetVelocity(rb.GetVelocity() * 10);
         //Engineson.print("Current health: " + (GameObject.Find("Player").GetComponent<PlayerData>().GetHealth()));
     }
 

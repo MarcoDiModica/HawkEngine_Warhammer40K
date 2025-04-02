@@ -27,7 +27,6 @@ UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, na
     m_Trans.LoadTextureLocalPath("EngineAssets/trans.png");
     m_Rot.LoadTextureLocalPath("EngineAssets/rot.png");
     m_Sca.LoadTextureLocalPath("EngineAssets/sca.png");
-    m_Setting.LoadTextureLocalPath("EngineAssets/settings.png");
 }
 
 UISceneWindow::~UISceneWindow()
@@ -36,26 +35,65 @@ UISceneWindow::~UISceneWindow()
 
 void UISceneWindow::Init()
 {
+	GLint maxSamples = 0;
+	glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
+	msaaSamples = std::min(msaaSamples, maxSamples);
 
-    glGenFramebuffers(1, &Application->gui->fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	glGenFramebuffers(1, &Application->gui->multisampleFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
 
-    glGenTextures(1, &Application->gui->fboTexture);
-    glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Application->window->width(), Application->window->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, Application->gui->fboTexture, 0);
+	glGenRenderbuffers(1, &Application->gui->multisampleColorBuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+	glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F,
+		Application->window->width(), Application->window->height());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+		GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
 
-    glGenRenderbuffers(1, &Application->gui->rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Application->window->width(), Application->window->height());
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, Application->gui->rbo);
+	glGenRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+	glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8,
+		Application->window->width(), Application->window->height());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+		GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        std::cerr << "Error: Framebuffer is not complete!" << std::endl;
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		std::cerr << "Error: Multisample framebuffer is not complete!" << std::endl;
 
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glGenFramebuffers(1, &Application->gui->fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+
+	glGenTextures(1, &Application->gui->fboTexture);
+	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Application->window->width(),
+		Application->window->height(), 0, GL_RGBA, GL_FLOAT, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (GLEW_EXT_texture_filter_anisotropic)
+	{
+		GLfloat maxAniso = 0.0f;
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAniso);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAniso);
+	}
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+		Application->gui->fboTexture, 0);
+
+	glGenRenderbuffers(1, &Application->gui->rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8,
+		Application->window->width(), Application->window->height());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+		GL_RENDERBUFFER, Application->gui->rbo);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		std::cerr << "Error: Framebuffer is not complete!" << std::endl;
+
+	lastWidth = Application->window->width();
+	lastHeight = Application->window->height();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;
@@ -146,20 +184,34 @@ bool UISceneWindow::Draw()
 
         winPos = vec2(windowPos.x, windowPos.y);
 
-        if (winSize.x != contentRegionSize.x || winSize.y != contentRegionSize.y)
-        {
-            winSize = vec2(contentRegionSize.x, contentRegionSize.y);
+		if (abs((int)winSize.x - (int)contentRegionSize.x) > 20 ||
+			abs((int)winSize.y - (int)contentRegionSize.y) > 20)
+		{
+			winSize = vec2(contentRegionSize.x, contentRegionSize.y);
+			needsFramebufferUpdate = true;
+		}
 
-            glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)winSize.x, (int)winSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+		if (needsFramebufferUpdate && winSize.x > 1 && winSize.y > 1)
+		{
+			glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+			glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F, (int)winSize.x, (int)winSize.y);
 
-            glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
-            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
+			glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+			glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
 
-            Application->camera->UpdateCameraView(winSize.x, winSize.y, winSize.x, winSize.y);
+			glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, (int)winSize.x, (int)winSize.y, 0, GL_RGBA, GL_FLOAT, nullptr);
 
-            Application->gui->camSize = winSize;
-        }
+			glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
+
+			Application->camera->UpdateCameraView(winSize.x, winSize.y, winSize.x, winSize.y);
+			Application->gui->camSize = winSize;
+
+			lastWidth = (int)winSize.x;
+			lastHeight = (int)winSize.y;
+			needsFramebufferUpdate = false;
+		}
 
         ImRect titleBarRect(windowPos, ImVec2(windowPos.x + windowSize.x, windowPos.y + ImGui::GetFrameHeight()));
 
@@ -177,7 +229,7 @@ bool UISceneWindow::Draw()
 
         ImVec2 viewportPosition = ImGui::GetCursorScreenPos();
 
-        ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, contentRegionSize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, contentRegionSize, ImVec2(0, 1), ImVec2(1, 0));
 
         ImGuizmo::SetDrawlist();
         ImGuizmo::SetRect(viewportPosition.x, viewportPosition.y, contentRegionSize.x, contentRegionSize.y);
@@ -235,55 +287,6 @@ bool UISceneWindow::Draw()
             operation = (operation == ManipulationOperation::SCALE) ? ManipulationOperation::IDLE : ManipulationOperation::SCALE;
         }
         ImGui::PopStyleColor(2);
-
-        ImGui::SameLine(0, iconSpacing);
-        setActiveButtonColor(false);
-        if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Setting.id())), ImVec2(iconSize, iconSize))) {
-            ImGui::OpenPopup("CameraConfigPopup");
-        }
-        ImGui::PopStyleColor(2);
-
-        if (ImGui::BeginPopup("CameraConfigPopup")) {
-            ImGui::Text("Camera Settings");
-            ImGui::Separator();
-
-            static int msaaSamples = 4;
-            const char* msaaOptions[] = { "Off", "2x", "4x", "8x" };
-            if (ImGui::Combo("Antialiasing", &msaaSamples, msaaOptions, IM_ARRAYSIZE(msaaOptions))) {
-                int actualSamples = (msaaSamples == 0) ? 0 : (1 << msaaSamples);
-                // update renderer setting as needed
-            }
-
-            static float resolutionScale = 1.0f;
-            if (ImGui::SliderFloat("Resolution Scale", &resolutionScale, 0.5f, 2.0f, "%.2fx")) {
-                int newWidth = static_cast<int>(winSize.x * resolutionScale);
-                int newHeight = static_cast<int>(winSize.y * resolutionScale);
-
-                glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, newWidth, newHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-
-                glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
-                glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, newWidth, newHeight);
-            }
-
-            static int shadowQuality = 1;
-            const char* shadowOptions[] = { "Off", "Low", "Medium", "High" };
-            if (ImGui::Combo("Shadow Quality", &shadowQuality, shadowOptions, IM_ARRAYSIZE(shadowOptions))) {
-                // update shadows, not implemented yet
-            }
-
-            static bool enableBloom = true;
-            if (ImGui::Checkbox("Bloom", &enableBloom)) {
-                // not implemented yet
-            }
-
-            static bool enableSSAO = false;
-            if (ImGui::Checkbox("Ambient Occlusion (SSAO)", &enableSSAO)) {
-                // not implemented yet
-            }
-
-            ImGui::EndPopup();
-        }
 
         if (isViewportHovered && !ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
             if (ImGui::IsKeyPressed(ImGuiKey_W)) operation = ManipulationOperation::TRANSLATE;

@@ -64,10 +64,14 @@ public:
     bool showTextEditor = false;
     bool showGameView = true;
 
+	vec2 camSize = vec2(1920, 1080);
+
     GLuint fbo = 0;
-    vec2 camSize = vec2(1920, 1080);
     GLuint fboTexture = 0;
     GLuint rbo = 0;
+	GLuint multisampleFBO = 0;
+	GLuint multisampleColorBuffer = 0;
+	GLuint multisampleDepthBuffer = 0;
 
     GLuint fboGame = 0;
     GLuint fboTextureGame = 0;

@@ -3,7 +3,6 @@
 #pragma once
 
 #include <string>
-
 #include "UIElement.h"
 #include "MyGameEngine/types.h"
 #include "MyGameEngine/BoundingBox.h"
@@ -37,12 +36,17 @@ private:
     Image m_Trans;
     Image m_Rot;
     Image m_Sca;
-    Image m_Setting;
 
 	bool isMarqueeSelecting = false;
 	ImVec2 marqueeStart;
 	ImVec2 marqueeEnd;
 
 	bool IsGameObjectInMarquee(GameObject* gameObject, const ImVec2& start, const ImVec2& end);
+	
+	int msaaSamples = 8;
+
+	bool needsFramebufferUpdate = true;
+	int lastWidth = 0;
+	int lastHeight = 0;
 };
 #endif // !__UI_SCENE_WINDOW_H__

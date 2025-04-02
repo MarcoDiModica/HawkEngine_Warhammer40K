@@ -33,9 +33,9 @@ public class Hook : MonoBehaviour
 
     public override void OnCollisionEnter(GameObject other)
     {
-        if (player != null)
+        if (player != null && other != null)
         {
-            Vector3 hookPosition = GetComponent<Transform>().GetPosition();
+            Vector3 hookPosition = other.GetComponent<Transform>().GetPosition();
             player.GetComponent<Transform>().SetPosition(hookPosition.X, hookPosition.Y, hookPosition.Z);
             Engineson.print("Jugador teletransportado a la posición del hook.");
         }

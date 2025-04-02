@@ -4,7 +4,7 @@ public class PlayerData
 {
     float health;
     float maxHealth = 100;
-    public float movSpeed = 20;
+    public float movSpeed = 10;
     public float collectionArea = 1;
     public float bonusCadence = 1;
     public bool isPiercing = false;

@@ -30,6 +30,10 @@ public class PlayerAnimations : MonoBehaviour
             animIndex += 1;
             esk.TransitionAnimations(0,5,0.5f);
         }
+        if (esk.GetAnimationTime() >= esk.GetAnimationLength())
+        {
+            SetRunAnimation();
+        }
     }
 
     public void SetStandardIdleAnimation()
@@ -38,6 +42,7 @@ public class PlayerAnimations : MonoBehaviour
         esk.TransitionAnimations(6, 3, 0.1f);
         //esk.SetAnimation(4);
         esk.SetAnimationSpeed(2f);
+      
     }
 
     public void SetIdleRandomAnimation()
@@ -68,8 +73,23 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetRunAnimation()
     {
-        esk.TransitionAnimations(3, 6, 0.1f);
+        esk.TransitionAnimations(11, 6, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
+    }
+
+    public void SetDashAnimation()
+    {
+        esk.TransitionAnimations(8, 1, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+        
+    }
+    public void SetWalkAnimation()
+    {
+        esk.TransitionAnimations(3, 11, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
     }
 }

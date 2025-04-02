@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Numerics;
 using HawkEngine;
-
 public class PlayerController : MonoBehaviour
 {
     private PlayerInput playerInput;
@@ -15,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private bool isWalking = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
+    private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
     private float elapsedTime = 0f;
     private bool isInteracting = false;
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private Audio sound;
     private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
-    private bool isFootstepPlaying = false;
+    private bool isMoving = false;  // Restaurado isMoving
 
     public PlayerData playerData;
 
@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
 
     public override void Start()
     {
-        
     }
 
     public override void Update(float deltaTime)
@@ -63,58 +62,29 @@ public class PlayerController : MonoBehaviour
 
         if (moveDirection == Vector3.Zero && !playerInput.IsShooting())
         {
-            // Idle
-            if (!isIdle)
-            {
-                playerAnimations.SetStandardIdleAnimation();
-                isIdle = true;
-            }
-            playerAnimations.SetIdleRandomAnimation();
-
-            if (dashDelayTimer <= 0f)
-            {
-                isRunning = false;
-                isWalking = false;
-            }
-
-            isShootingStanding = false;
-            isShootingRunning = false;
-            isFootstepPlaying = false;
-
-            if (!hasStoppedFootsteps)
-            {
-                sound?.Stop();
-                hasStoppedFootsteps = true;
-            }
+            SetIdleAnimation();
         }
         else
         {
-            if (moveDirection != Vector3.Zero && !isWalking && dashDelayTimer <= 0f && !playerInput.IsShooting() && playerMovement.moveSpeed == playerMovement.walkSpeed)
+            if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && dashDelayTimer <= 0f)
             {
-                // Walking
-               playerAnimations.SetWalkAnimation();
-                isWalking = true;
-                isShootingStanding = false;
-                isShootingRunning = false;
-                isIdle = false;
+                if (playerMovement.moveSpeed == playerMovement.walkSpeed)
+                {
+                    SetWalkingAnimation();
+                }
+                else if (playerMovement.moveSpeed == playerMovement.runSpeed)
+                {
+                    SetRunningAnimation();
+                }
             }
-            else if (moveDirection != Vector3.Zero && !isRunning && dashDelayTimer <= 0f && !playerInput.IsShooting() && playerMovement.moveSpeed == playerMovement.runSpeed)
+
+            if (moveDirection != Vector3.Zero && playerInput.IsShooting())
             {
-                // Running
-                playerAnimations.SetRunAnimation();
-                isRunning = true;
-                isShootingStanding = false;
-                isShootingRunning = false;
-                isIdle = false;
+                SetShootingWhileMovingAnimation();
             }
-            else if (moveDirection != Vector3.Zero && !isShootingRunning && playerInput.IsShooting())
+            else if (!isShootingStanding && playerInput.IsShooting() && !isMoving)
             {
-                playerAnimations.SetShootingRunningAnimation();
-                isRunning = false;
-                isWalking = false;
-                isShootingStanding = false;
-                isShootingRunning = true;
-                isIdle = false;
+                SetShootingStandingAnimation();
             }
         }
 
@@ -126,15 +96,87 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
             isWalking = false;
         }
+    }
 
-        if (dashDelayTimer <= 0f && isRunning && moveDirection == Vector3.Zero)
+    private void SetIdleAnimation()
+    {
+        if (!isIdle)
         {
+            playerAnimations.SetStandardIdleAnimation();
+            isIdle = true;
+        }
+
+        playerAnimations.SetIdleRandomAnimation();
+        isRunning = false;
+        isWalking = false;
+        isShootingStanding = false;
+        isShootingRunning = false;
+        isFootstepPlaying = false;
+
+        if (!hasStoppedFootsteps)
+        {
+            sound?.Stop();
+            hasStoppedFootsteps = true;
+        }
+
+        isMoving = false;  
+    }
+
+    private void SetWalkingAnimation()
+    {
+        if (!isWalking)
+        {
+            playerAnimations.SetWalkAnimation();
+            isWalking = true;
             isRunning = false;
-            isWalking = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isIdle = false;
+            isMoving = true;  
         }
     }
 
+    private void SetRunningAnimation()
+    {
+        if (!isRunning)
+        {
+            playerAnimations.SetRunAnimation();
+            isRunning = true;
+            isWalking = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isIdle = false;
+            isMoving = true; 
+        }
+    }
 
+    private void SetShootingWhileMovingAnimation()
+    {
+        if (!isShootingRunning)
+        {
+            playerAnimations.SetShootingRunningAnimation();
+            isShootingStanding = false;
+            isShootingRunning = true;
+            isRunning = false;
+            isWalking = false;
+            isIdle = false;
+            isMoving = true;  
+        }
+    }
+
+    private void SetShootingStandingAnimation()
+    {
+        if (!isShootingStanding)
+        {
+            playerAnimations.SetShootingStandingAnimation();
+            isShootingStanding = true;
+            isShootingRunning = false;
+            isRunning = false;
+            isWalking = false;
+            isIdle = false;
+            isMoving = false;  
+        }
+    }
 
     public override void OnCollisionEnter(GameObject other)
     {
@@ -149,8 +191,6 @@ public class PlayerController : MonoBehaviour
             {
                 playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
             }
-
-
         }
 
         if (other.tag == "Enemy")
@@ -164,12 +204,6 @@ public class PlayerController : MonoBehaviour
             {
                 playerShooting.CounterAttack(other);
             }
-
-
         }
     }
-
-  
-
-
 }

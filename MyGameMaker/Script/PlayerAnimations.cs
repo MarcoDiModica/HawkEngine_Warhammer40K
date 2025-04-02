@@ -39,7 +39,7 @@ public class PlayerAnimations : MonoBehaviour
     public void SetStandardIdleAnimation()
     {
 
-        esk.TransitionAnimations(6, 3, 0.1f);
+        esk.TransitionAnimations(5, 5, 0.1f);
         //esk.SetAnimation(4);
         esk.SetAnimationSpeed(2f);
       
@@ -50,7 +50,7 @@ public class PlayerAnimations : MonoBehaviour
         if (esk.GetAnimationTime() >= esk.GetAnimationLength() - 0.2f)
         {
             Random rand = new Random();
-            int idleIndex = rand.Next(2, 6);
+            int idleIndex = rand.Next(4, 5);
             esk.SetAnimation(idleIndex);
             esk.SetAnimationSpeed(2f);
         }
@@ -59,35 +59,35 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetShootingStandingAnimation()
     {
-        esk.TransitionAnimations(3, 8, 0.1f);
+        esk.TransitionAnimations(3, 7, 0.1f);
         //esk.SetAnimation(8);
-        esk.SetAnimationSpeed(3f);
+        esk.SetAnimationSpeed(5f);
     }
 
     public void SetShootingRunningAnimation()
     {
-        esk.TransitionAnimations(6, 10, 0.1f);
+        esk.TransitionAnimations(6, 8, 0.1f);
         //esk.SetAnimation(10);
         esk.SetAnimationSpeed(1f);
     }
 
     public void SetRunAnimation()
     {
-        esk.TransitionAnimations(11, 6, 0.1f);
+        esk.TransitionAnimations(6, 6, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
     }
 
     public void SetDashAnimation()
     {
-        esk.TransitionAnimations(8, 1, 0.1f);
+        esk.TransitionAnimations(6, 0, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
         
     }
     public void SetWalkAnimation()
     {
-        esk.TransitionAnimations(3, 11, 0.1f);
+        esk.TransitionAnimations(6, 6, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 

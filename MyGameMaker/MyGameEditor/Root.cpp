@@ -84,7 +84,7 @@ bool Root::Start()
 
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));

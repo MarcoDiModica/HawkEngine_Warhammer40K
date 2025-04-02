@@ -143,6 +143,196 @@ namespace ParticlePresets {
 		0.5f						   // Animation speed
 	};
 
+	const ParticlePreset Flame = {
+		ParticleType::FLAME,
+		true,						   // PlayOnAwake
+		1.0f,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		1.0f,                          // Alpha end
+		1.0f,                          // Size start
+		1.0f,                          // Size end
+		1.0f,                          // Min lifetime
+		1.0f,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,-0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		1.0f,                         // Emission rate (particles per second)
+		EmitterShape::POINT,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(385,217),			   // Sprite size
+		true,						   // Use animation
+		0.001f						   // Animation speed
+	};
+
+	const ParticlePreset Environment_Smoke = {
+		ParticleType::ENVIRONMENT_SMOKE,
+		true,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		0,                          // Alpha end
+		0.5f,                          // Size start
+		1.4f,                          // Size end
+		3.0f,                          // Min lifetime
+		4.0f,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,1,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		15,                         // Emission rate (particles per second)
+		EmitterShape::POINT,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(193,109),			   // Sprite size
+		true,						   // Use animation
+		0.005f						   // Animation speed
+	};
+
+	const ParticlePreset Environment_Explosion = {
+		ParticleType::ENVIRONMENT_EXPLOSION,
+		true,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		1.0f,                          // Alpha end
+		1,                          // Size start
+		1,                          // Size end
+		1,                          // Min lifetime
+		1,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		1,                         // Emission rate (particles per second)
+		EmitterShape::POINT,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(1920,1080),			   // Sprite size
+		true,						   // Use animation
+		0.05f						   // Animation speed
+	};
+
+
+	const ParticlePreset Riffle_Shot = {
+		ParticleType::RIFFLE_SHOT,
+		true,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		1.0f,                          // Alpha end
+		1,                          // Size start
+		1,                          // Size end
+		1,                          // Min lifetime
+		1,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		1,                         // Emission rate (particles per second)
+		EmitterShape::POINT,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(1920,1080),			   // Sprite size
+		true,						   // Use animation
+		0.05f						   // Animation speed
+	};
+
+	const ParticlePreset Enemy_Dash = {
+		ParticleType::ENEMY_DASH,
+		true,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		1.0f,                          // Alpha end
+		1,                          // Size start
+		1,                          // Size end
+		1,                          // Min lifetime
+		1,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		1,                         // Emission rate (particles per second)
+		EmitterShape::POINT,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(640,360),			   // Sprite size
+		true,						   // Use animation
+		0.05f						   // Animation speed
+	};
+
+
+	const ParticlePreset Acid_Atk = {
+	ParticleType::ACID_ATK,
+	true,						   // PlayOnAwake
+	5,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   // Start color (light gray)
+	glm::vec3(1,1,1),   // End color (dark gray)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1,                          // Size start
+	1,                          // Size end
+	1,                          // Min lifetime
+	1,                          // Max lifetime
+	0.0f,                          // Min speed
+	0.0f,                          // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+	0,                          // Rotation speed
+	1,                         // Emission rate (particles per second)
+	EmitterShape::POINT,            // Shape
+	0.2f,                          // Cone base radius
+	1.0f,                          // Cone height
+	20.0f,                         // Cone angle in degrees
+	glm::vec2(240,135),			   // Sprite size
+	true,						   // Use animation
+	0.05f						   // Animation speed
+	};
+
+	const ParticlePreset Acid_Puddle = {
+	ParticleType::ACID_PUDDLE,
+	true,						   // PlayOnAwake
+	5,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   // Start color (light gray)
+	glm::vec3(1,1,1),   // End color (dark gray)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1,                          // Size start
+	1,                          // Size end
+	1,                          // Min lifetime
+	1,                          // Max lifetime
+	0.0f,                          // Min speed
+	0.0f,                          // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+	0,                          // Rotation speed
+	1,                         // Emission rate (particles per second)
+	EmitterShape::POINT,            // Shape
+	0.2f,                          // Cone base radius
+	1.0f,                          // Cone height
+	20.0f,                         // Cone angle in degrees
+	glm::vec2(480,270),			   // Sprite size
+	true,						   // Use animation
+	0.05f						   // Animation speed
+	};
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -550,6 +740,41 @@ void ParticleFX::ConfigureMuzzleFlash() {
 
 void ParticleFX::ConfigureExplosion() {
 	ApplyPreset(ParticlePresets::Explosion);
+	SetOneShot(true);
+}
+
+void ParticleFX::ConfigureEnvironmentSmoke() {
+	ApplyPreset(ParticlePresets::Environment_Smoke);
+	SetOneShot(true);
+}
+
+void ParticleFX::ConfigureFlame() {
+	ApplyPreset(ParticlePresets::Flame);
+	SetOneShot(true);
+}
+
+void ParticleFX::ConfigureEnvironmentExplosion() {
+	ApplyPreset(ParticlePresets::Environment_Explosion);
+	SetOneShot(true);
+}
+
+void ParticleFX::ConfigureRiffleShot() {
+	ApplyPreset(ParticlePresets::Riffle_Shot);
+	SetOneShot(true);
+}
+
+void ParticleFX::ConfigureEnemyDash() {
+	ApplyPreset(ParticlePresets::Enemy_Dash);
+	SetOneShot(true);
+}
+
+void ParticleFX::ConfigureAcidAttack() {
+	ApplyPreset(ParticlePresets::Acid_Atk);
+	SetOneShot(true);
+}
+
+void ParticleFX::ConfigureAcidPuddle() {
+	ApplyPreset(ParticlePresets::Acid_Puddle);
 	SetOneShot(true);
 }
 

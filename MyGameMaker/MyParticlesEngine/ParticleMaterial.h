@@ -7,7 +7,15 @@ enum class ParticleType {
     SMOKE = 1,
     FIRE = 2,
     MUZZLE_FLASH = 3,
-    EXPLOSION = 4
+    EXPLOSION = 4,
+    FLAME = 5,
+    ENVIRONMENT_SMOKE = 6,
+    ENVIRONMENT_EXPLOSION = 7,
+    RIFFLE_SHOT = 8,
+    ENEMY_DASH  = 9,
+    ACID_ATK    = 10,
+    // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
+    ACID_PUDDLE = 11
 };
 
 class ParticleMaterial : public Material {

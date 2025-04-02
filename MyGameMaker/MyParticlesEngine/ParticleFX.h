@@ -136,10 +136,18 @@ public:
 	int GetMaxParticles() const { return renderer ? static_cast<int>(renderer->GetMaxParticles()) : 0; }
 
 	void ConfigureSmoke();
+	void ConfigureFlame();
+
+	void ConfigureEnvironmentSmoke();
 	void ConfigureFire();
 	void ConfigureMuzzleFlash();
 	void ConfigureExplosion();
+	void ConfigureEnvironmentExplosion();
+	void ConfigureRiffleShot();
 	void ConfigureDust();
+	void ConfigureAcidAttack();
+	void ConfigureAcidPuddle();
+	void ConfigureEnemyDash();
 
 private:
 	void EmitParticle();

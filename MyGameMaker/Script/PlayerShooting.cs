@@ -333,7 +333,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgun.UseAbility1();
                 break;
             case GunType.RAILGUN:
-
+                railgun.UseAbility1();
                 break;
         }
         if (redThirstManager != null)

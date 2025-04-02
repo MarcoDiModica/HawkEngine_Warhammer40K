@@ -1,45 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Railgun;
+﻿using System.Collections.Generic;
+using System.Numerics;
+using HawkEngine;
+using static BaseWeapon;
 
-namespace HawkEngine
+public class ToggleMode : BaseAbilities
 {
-    internal class ToggleMode : BaseAbilities
+   public Railgun railgun;
+
+    public override void Awake()
+    {
+        railgun = gameObject.GetComponent<Railgun>();
+    }
+    public override void Start()
     {
 
-        public RailgunMode railgunMode;
-        public override void Awake()
+    }
+
+    public override void Update(float deltaTime)
+    {
+
+
+    }
+
+    public override void TriggerAbility()
+    {
+        if (railgun != null)
         {
-
-        }
-        public override void Start()
-        {
-
-        }
-
-        public override void Update(float deltaTime)
-        {
-
-
-        }
-
-        public override void TriggerAbility()
-        {
-            if (railgunMode == RailgunMode.SEMIAUTOMATIC)
-            {
-                railgunMode = RailgunMode.AUTOMATIC;
-            }
-            else
-            {
-                railgunMode = RailgunMode.SEMIAUTOMATIC;
-            }
-        }
-
-        public override void ResetCooldowns()
-        {
+            railgun.ChangeMode();
         }
     }
+
+    public override void ResetCooldowns()
+    {
+
+    }
+    
 }

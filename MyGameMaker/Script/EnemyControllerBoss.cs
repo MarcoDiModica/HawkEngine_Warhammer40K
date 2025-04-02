@@ -15,7 +15,8 @@ public class EnemyControllerBoss : EnemyController
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
-    private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
+
+    private List<BulletData> activeProjectiles = new List<BulletData>();
     public float shootCooldown = 2.0f;
     public float projectileSpeed = 90.0f;
     public float projectileLifetime = 0.5f;
@@ -23,7 +24,15 @@ public class EnemyControllerBoss : EnemyController
 
     //stats
     private float health = 1500.0f;
-    private float damage = 50.0f;
+    private float damage = 25.0f;
+
+    // unburrowing attack stats
+    private float unburrowingAttackCooldown = 5.0f;
+    private float postUnburrowingAttackDelay = 1.5f;
+    private float restAfterThirdAttack = 4.0f;
+    private float timer = 0.0f;
+    private int attackCount = 0;
+    private bool isBuried = true;
 
     private enum BossPhase
     {
@@ -34,27 +43,14 @@ public class EnemyControllerBoss : EnemyController
 
     private BossPhase currentPhase;
 
-    private class ProjectileInfo
+    public override void Awake()
     {
-        public GameObject gameObject;
-        public Transform transform;
-        public float lifetime;
-        public Vector3 direction;
-        public bool markedForDestruction;
-
-        public ProjectileInfo(GameObject obj, Transform trans, Vector3 dir)
-        {
-            gameObject = obj;
-            transform = trans;
-            direction = dir;
-            lifetime = 0f;
-            markedForDestruction = false;
-        }
+ 
     }
+
     public override void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-        rb = gameObject.GetComponent<Rigidbody>();
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
@@ -76,7 +72,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentPhase = BossPhase.PHASE1;
+        //currentPhase = BossPhase.PHASE1;
     }
     public override void Update(float deltaTime)
     {
@@ -99,6 +95,33 @@ public class EnemyControllerBoss : EnemyController
             case BossPhase.PHASE3:
 
                 break;
+        }
+
+        if (currentPhase == BossPhase.PHASE1)
+        {
+            timer += deltaTime;
+
+            if (isBuried && timer >= unburrowingAttackCooldown)
+            {
+                UnburrowingAttack();
+                timer = 0.0f;
+            }
+            else if (!isBuried && timer >= postUnburrowingAttackDelay)
+            {
+                if (attackCount % 3 == 0 && attackCount > 0)
+                {
+                    if (timer >= restAfterThirdAttack)
+                    {
+                        Burrow();
+                        timer = 0.0f;
+                    }
+                }
+                else
+                {
+                    Burrow();
+                    timer = 0.0f;
+                }
+            }
         }
     }
 
@@ -124,8 +147,35 @@ public class EnemyControllerBoss : EnemyController
         }
         //Engineson.print("Player hit!");
     }
+
     public override void Attack()
     {
 
+    }
+
+    private void UnburrowingAttack()
+    {
+        if (playerTransform != null)
+        {
+            Engineson.print("Unburrowing Attack");
+            enemyTransform.position = playerTransform.position;
+        }
+        attackCount++;
+        isBuried = false;
+
+        // Hurtbox i tot a la pesca
+    }
+
+    private void Burrow()
+    {
+        Engineson.print("Burrowed");
+        enemyTransform.position = new Vector3(0.0f, -100.0f, 0.0f);
+        isBuried = true;
+    }
+
+    private void Die()
+    {
+        // Tp del boss a tomar por culo
+        // UI pop-up Win Screen
     }
 }

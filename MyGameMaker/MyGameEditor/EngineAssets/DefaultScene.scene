@@ -403,6 +403,101 @@ GameObject3:
             name: HormagauntAnimation
       Children: ~
 GameObject4:
+  name: Mawloc
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 10
+        - -100
+        - 10
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2
+        - 8
+        - 2
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerBoss
+  Children:
+    - name: MawlocMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.5
+              - 0.5
+              - 0.5
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Assets/default.png
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject5:
   name: Floor
   tag: Untagged
   active: true

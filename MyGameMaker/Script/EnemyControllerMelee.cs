@@ -30,7 +30,6 @@ public class EnemyControllerMelee : EnemyController
     public float leapCooldown = 2.0f;
     private float leapDuration = 1.5f;
     private float leapTimer = 0f;
-    private bool isLeaping = false;
     private bool hasLeap = true;
 
     public override void Awake() {}
@@ -89,9 +88,9 @@ public class EnemyControllerMelee : EnemyController
 
                 if (distanceToPlayer < distToChase)
                 {
+                    // Enemy Attack
                     if (IsPlayerInHurtbox(playerPos))
                     {
-                        //Engineson.print("Player in hurtbox");
                         hurtboxTimer += deltaTime;
                         if (dodgewindow)
                         {
@@ -109,8 +108,6 @@ public class EnemyControllerMelee : EnemyController
                         else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
                         {
                             Attack();
-                            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack.wav");
-                            sound?.Play();
 
                             //DestroyHurtbox();
                             hurtboxTimer = 0f;
@@ -119,31 +116,31 @@ public class EnemyControllerMelee : EnemyController
                         }
                     }
 
-                    if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+                    // Enemy Movement
+                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase && !isAttacking)
                     {
-                        if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                        if (!isFootstepPlaying)
                         {
-                            Engineson.print("Runing Anim");
-                            anim.SetRunningAnimation();
-                            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootsteps.wav");
-                            sound?.Play();
-
-                            Vector3 currentVelocity = rb.GetVelocity();
-                            moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                            Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                            if (desiredVelocity.LengthSquared() > 0)
-                            {
-                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                            }
-
-                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-
-                            //enemyTransform.position += desiredVelocity * deltaTime;
+                            sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
+                            sound?.Play(true);
+                            isFootstepPlaying = true;
+                            hasStoppedFootsteps = false;
                         }
+
+                        Vector3 currentVelocity = rb.GetVelocity();
+                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                        Vector3 desiredVelocity = moveDirection * speedMovement;
+                   
+                        if (desiredVelocity.LengthSquared() > 0)
+                        {
+                            desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                        }
+                   
+                        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                        rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                     }
 
+                    // Enemy Leap
                     if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap)
                     {
                         Random random = new Random();
@@ -156,7 +153,6 @@ public class EnemyControllerMelee : EnemyController
                             Leap();
                         }
                     }
-
                     if (!hasLeap)
                     {
                         lastLeap += deltaTime;
@@ -167,6 +163,7 @@ public class EnemyControllerMelee : EnemyController
                         }
                     }
 
+                    // Enemy Rotation
                     if (moveDirection != Vector3.Zero)
                     {
                         currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
@@ -191,12 +188,25 @@ public class EnemyControllerMelee : EnemyController
                 }
                 else
                 {
-                    anim.SetStandardIdleAnimation();
-                    rb.SetVelocity(Vector3.Zero);
+                    // Enemy Idle
+                    if (!isIdle)
+                    {
+                        rb.SetVelocity(Vector3.Zero);
+                        anim.SetStandardIdleAnimation();
+                        isIdle = true;
+                    }
+                    isRunning = false;
+                    isFootstepPlaying = false;
+                    if (!hasStoppedFootsteps)
+                    {
+                        sound?.Stop();
+                        hasStoppedFootsteps = true;
+                    }
                 }
             }
             else if (isStunned)
             {
+                // Enemy Stun
                 stunTimer += deltaTime;
                 rb.SetVelocity(Vector3.Zero);
                 if (stunTimer >= stunDuration)
@@ -208,6 +218,7 @@ public class EnemyControllerMelee : EnemyController
         }
         if (isDead)
         {
+            // Enemy Death
             collider.SetActive(false);
         }
     }
@@ -216,7 +227,10 @@ public class EnemyControllerMelee : EnemyController
     {
         Engineson.print("Melee attack executed!");
         pc.playerData.TakeDamage(clawDamage);
-        Engineson.print("Current health: " + (pc.playerData.GetHealth()));
+        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
+
+        sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
+        sound?.Play();
     }
 
     public void Leap()
@@ -244,7 +258,7 @@ public class EnemyControllerMelee : EnemyController
         {
             currentHealth -= 20.0f;
             anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit.wav");
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
             sound?.Play();
 
             Engineson.print("Boltgun hit!");
@@ -253,7 +267,7 @@ public class EnemyControllerMelee : EnemyController
         {
             //cosas de la shotgun
             anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit.wav");
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
             sound?.Play();
 
         }
@@ -261,14 +275,14 @@ public class EnemyControllerMelee : EnemyController
         {
             //Cosas de railgun
             anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit.wav");
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
             sound?.Play();
         }
         else if (other.tag == "Player" && isLeaping)
         {
             Engineson.print("Player hit while Leaping!");
             pc.playerData.TakeDamage(leapDamage);
-            Engineson.print("Current health: " + (pc.playerData.GetHealth()));
+            Engineson.print("Player health: " + (pc.playerData.GetHealth()));
         }
 
         if (currentHealth <= 0)
@@ -277,7 +291,7 @@ public class EnemyControllerMelee : EnemyController
             //Destroy(gameObject);
             anim.SetDeathAnimation();
             isDead = true;
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath.wav");
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
             sound?.Play();
         }
     }

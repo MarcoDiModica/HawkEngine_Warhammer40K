@@ -11,14 +11,19 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected BoxCollider collider;
     protected Transform enemyTransform;
     protected Audio sound;
+
     public float currentHealth;
     public float maxHealth;
     public bool isStunned = false;
     protected float stunDuration = 2.0f;
     protected float stunTimer = 0.0f;
-    protected bool notIdle = false;
+    protected bool isIdle = false;
     protected bool isDead = false;
     protected bool isAttacking = false;
+    protected bool isLeaping = false;
+    protected bool isRunning = false;
+    protected bool isFootstepPlaying = false;
+    protected bool hasStoppedFootsteps = false;
 
     public float distToChase = 50.0F;
     public float minDistToChase = 5.0f;

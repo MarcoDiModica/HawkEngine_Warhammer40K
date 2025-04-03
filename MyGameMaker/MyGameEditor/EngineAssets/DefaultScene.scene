@@ -101,7 +101,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -160,7 +160,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -182,7 +182,7 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: Mawloc
+  name: Hormagaunt
   tag: Untagged
   active: true
   isStatic: false
@@ -191,17 +191,17 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 10
-        - -100
-        - 10
+        - 32.62445068359375
+        - 0
+        - 5
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 2
-        - 5
-        - 2
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -222,7 +222,7 @@ GameObject2:
         - 0
       isTrigger: false
     RigidbodyComponent:
-      mass: 1000
+      mass: 1
       isKinematic: false
       isFreezed: true
       friction: 0.5
@@ -235,47 +235,47 @@ GameObject2:
         angular: 0
     ScriptComponents:
       Script0:
-        name: EnemyControllerBoss
+        name: EnemyControllerMelee
   Children:
-    - name: MawlocMesh
+    - name: HormagauntMesh
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 0
-            - 0
-            - 0
+            - 0.00030960628646425903
+            - 0.98896592855453491
+            - 0.051096078008413315
           localRotation:
-            - 0
-            - -0
-            - 0
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
           localScale:
-            - 1
-            - 1
-            - 1
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
         MeshRenderer:
           name: MeshRenderer
           enabled: true
           mesh:
-            name: Cube
+            name: mesh.005
           material:
             wrap_mode: Repeat
             filter: Nearest
             color:
-              - 0.5
-              - 0.5
-              - 0.5
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
               - 1
             metallic: 0
             roughness: 0.5
             ao: 1
             tonemap_strength: 1
             shader_type: PBR
-            image: Assets/default.png
+            image: Assets/Textures/Low_BSurfaceMesh_BaseColor.png
             normal_map: ""
             metallic_map: ""
             roughness_map: ""
@@ -287,6 +287,13 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
       Children: ~
 GameObject3:
   name: Floor

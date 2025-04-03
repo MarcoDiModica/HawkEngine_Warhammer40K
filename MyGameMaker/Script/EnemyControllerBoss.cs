@@ -258,7 +258,7 @@ public class EnemyControllerBoss : EnemyController
         hurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
         hurtboxObject.AddComponent<MeshRenderer>();
 
-        var hurtboxTransform = hurtboxObject.AddComponent<Transform>();
+        var hurtboxTransform = hurtboxObject.GetComponent<Transform>();
         hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X);
         hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
 

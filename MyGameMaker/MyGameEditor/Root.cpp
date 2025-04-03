@@ -135,19 +135,18 @@ bool Root::Start()
 	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	//Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->SetTag("Enemy");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
-	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	auto lictor = CreateGameObject("Lictor");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
+	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
+	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	lictorMesh->SetName("LictorMesh");
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 
 	//auto cube = CreateCube("Cube");
 	//cube->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
@@ -155,17 +154,17 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	hormagauntMesh->SetName("HormagauntMesh");
-	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//auto hormagaunt = CreateGameObject("Hormagaunt");
+	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh->SetName("HormagauntMesh");
+	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh, *hormagaunt);
+	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 
 	//Mawloc
 	//auto mawloc = CreateGameObject("Mawloc");

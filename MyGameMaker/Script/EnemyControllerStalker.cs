@@ -24,15 +24,15 @@ public class EnemyControllerStalker : EnemyController
     private float leapDamage = 15.0f;
 
         // Pounce Attack
-    public float maxLeapRange = 20.0f;
-    public float minLeapRange = 10.0f;
-    private float lastLeap = 0f;
-    public float leapCooldown = 2.0f;
-    private float leapDuration = 1.5f;
-    private float leapTimer = 0f;
-    private bool isLeaping = false;
+    public float pounceRange = 20.0f;
+    public float pounceCooldown = 2.0f;
+    private float pounceDuration = 1.5f;
+    private float pounceTimer = 0f;
+    private bool hasPounce = true;
 
         // Invisibility
+    public float invisibilityRange = 35.0f;
+    private bool isInvisible = false;
 
     public override void Awake() { }
 
@@ -66,7 +66,7 @@ public class EnemyControllerStalker : EnemyController
             return;
         }
 
-        anim = GameObject.Find("HormagauntMesh").GetComponent<HormagauntAnimation>();
+        //anim = GameObject.Find("HormagauntMesh").GetComponent<HormagauntAnimation>();
         if (anim == null)
         {
             Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
@@ -90,9 +90,9 @@ public class EnemyControllerStalker : EnemyController
 
                 if (distanceToPlayer < distToChase)
                 {
+                    // Enemy Attack
                     if (IsPlayerInHurtbox(playerPos))
                     {
-                        //Engineson.print("Player in hurtbox");
                         hurtboxTimer += deltaTime;
                         if (dodgewindow)
                         {
@@ -101,7 +101,7 @@ public class EnemyControllerStalker : EnemyController
                         if (hurtboxTimer >= hurtboxActivationTime)
                         {
                             //CreateHurtbox();
-                            anim.SetRandomAttackAnimation();
+                            //anim.SetRandomAttackAnimation();
                             Engineson.print("Atack is ready");
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
@@ -110,8 +110,7 @@ public class EnemyControllerStalker : EnemyController
                         else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
                         {
                             Attack();
-                            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack.wav");
-                            sound?.Play();
+
                             //DestroyHurtbox();
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
@@ -119,52 +118,37 @@ public class EnemyControllerStalker : EnemyController
                         }
                     }
 
-                    if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+                    // Enemy Movement
+                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase && !isAttacking)
                     {
-                        if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                        if (!isFootstepPlaying)
                         {
-                            anim.SetRunningAnimation();
-                            Vector3 currentVelocity = rb.GetVelocity();
-                            moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                            Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                            if (desiredVelocity.LengthSquared() > 0)
-                            {
-                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                            }
-
-                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-
-                            //enemyTransform.position += desiredVelocity * deltaTime;
+                            //sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
+                            //sound?.Play(true);
+                            isFootstepPlaying = true;
+                            hasStoppedFootsteps = false;
                         }
+
+                        Vector3 currentVelocity = rb.GetVelocity();
+                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                        Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                        if (desiredVelocity.LengthSquared() > 0)
+                        {
+                            desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                        }
+
+                        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                        rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                     }
 
-                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange)
+                    // Enemy Pounce
+                    if (distanceToPlayer <= pounceRange && hasPounce)
                     {
-                        if (!isLeaping)
-                        {
-                            Random random = new Random();
-                            int rand = random.Next(3, 4);
-                            int rand2 = random.Next(3, 4);
-
-                            if (rand == rand2) isLeaping = true;
-
-                            lastLeap += deltaTime;
-                            if (lastLeap >= leapCooldown)
-                            {
-                                Engineson.print("LEAP RESTORED");
-                                lastLeap = 0;
-                                isLeaping = false;
-                            }
-                        }
-                        else
-                        {
-                            leapTimer += deltaTime;
-                            if (leapTimer <= leapDuration) Leap();
-                        }
+                        Pounce();
                     }
 
+                    // Enemy Rotation
                     if (moveDirection != Vector3.Zero)
                     {
                         currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
@@ -187,18 +171,27 @@ public class EnemyControllerStalker : EnemyController
                         collider.SetRotation(newRotation);
                     }
                 }
-                else if (isLeaping)
-                {
-                    anim.SetWholeLeapAnimation();
-                }
                 else
                 {
-                    anim.SetStandardIdleAnimation();
-                    rb.SetVelocity(Vector3.Zero);
+                    // Enemy Idle
+                    if (!isIdle)
+                    {
+                        rb.SetVelocity(Vector3.Zero);
+                        //anim.SetStandardIdleAnimation();
+                        isIdle = true;
+                    }
+                    isRunning = false;
+                    isFootstepPlaying = false;
+                    if (!hasStoppedFootsteps)
+                    {
+                        //sound?.Stop();
+                        hasStoppedFootsteps = true;
+                    }
                 }
             }
             else if (isStunned)
             {
+                // Enemy Stun
                 stunTimer += deltaTime;
                 rb.SetVelocity(Vector3.Zero);
                 if (stunTimer >= stunDuration)
@@ -210,6 +203,7 @@ public class EnemyControllerStalker : EnemyController
         }
         if (isDead)
         {
+            // Enemy Death
             collider.SetActive(false);
         }
     }
@@ -218,12 +212,13 @@ public class EnemyControllerStalker : EnemyController
     {
         Engineson.print("Melee attack executed!");
         pc.playerData.TakeDamage(clawDamage);
-        Engineson.print("Current health: " + (pc.playerData.GetHealth()));
+        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
     }
 
-    public void Leap()
+    public void Pounce()
     {
-        rb.SetVelocity(rb.GetVelocity() * 1.8f);
+        rb.SetVelocity(rb.GetVelocity() * 2f);
+        hasPounce = false;
     }
 
     private bool IsPlayerInHurtbox(Vector3 playerPos)
@@ -242,18 +237,18 @@ public class EnemyControllerStalker : EnemyController
         if (other.tag == "BoltgunProjectile")
         {
             currentHealth -= 20.0f;
-            anim.SetHitAnimation();
+            //anim.SetHitAnimation();
             Engineson.print("Boltgun hit!");
         }
         else if (other.tag == "ShotgunProjectile")
         {
             //cosas de la shotgun
-            anim.SetHitAnimation();
+            //anim.SetHitAnimation();
         }
         else if (other.tag == "RailgunProjectile")
         {
             //Cosas de railgun
-            anim.SetHitAnimation();
+            //anim.SetHitAnimation();
         }
         else if (other.tag == "Player" && isLeaping)
         {
@@ -266,7 +261,7 @@ public class EnemyControllerStalker : EnemyController
         {
             Engineson.print("This man is dead man.");
             //Destroy(gameObject);
-            anim.SetDeathAnimation();
+            //anim.SetDeathAnimation();
             isDead = true;
         }
     }

@@ -101,7 +101,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90
+            - -90.000002504478161
             - 0
             - 0
           localScale:
@@ -160,7 +160,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999735770004
+        - 54.999999253784715
         - -0
         - 0
       localScale:
@@ -182,7 +182,7 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: Hormagaunt
+  name: Lictor
   tag: Untagged
   active: true
   isStatic: false
@@ -191,17 +191,17 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 32.62445068359375
+        - -5
         - 0
-        - 5
+        - -5
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 2.2000000476837158
-        - 2.2000000476837158
-        - 2.2000000476837158
+        - 5
+        - 5
+        - 5
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -213,13 +213,13 @@ GameObject2:
       loop: false
     BoxColliderComponent:
       size:
-        - 1
-        - 1
-        - 1
+        - 0.25
+        - 0.5
+        - 0.25
       offset:
         - 0
-        - 0
-        - 0
+        - 2.5
+        - 1
       isTrigger: false
     RigidbodyComponent:
       mass: 1
@@ -235,33 +235,33 @@ GameObject2:
         angular: 0
     ScriptComponents:
       Script0:
-        name: EnemyControllerMelee
+        name: EnemyControllerRanged
   Children:
-    - name: HormagauntMesh
+    - name: LictorMesh
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 0.00030960628646425903
-            - 0.98896592855453491
-            - 0.051096078008413315
+            - -0.00024597215815447271
+            - 0.0018853993387892842
+            - -0.0003092930419370532
           localRotation:
-            - -1.3660378343659465e-05
-            - 2.4012355493896692e-07
-            - -1.7342271369070097e-06
+            - 0
+            - -0
+            - 0
           localScale:
-            - 0.0075779887847602367
-            - 0.0075779887847602367
-            - 0.0075779887847602367
+            - 0.004091363400220871
+            - 0.004091363400220871
+            - 0.004091363400220871
         MeshRenderer:
           name: MeshRenderer
           enabled: true
           mesh:
-            name: mesh.005
+            name: Plane.010
           material:
             wrap_mode: Repeat
             filter: Nearest
@@ -275,7 +275,7 @@ GameObject2:
             ao: 1
             tonemap_strength: 1
             shader_type: PBR
-            image: Assets/Textures/Low_BSurfaceMesh_BaseColor.png
+            image: Assets/Textures/Material_Base_color.png
             normal_map: ""
             metallic_map: ""
             roughness_map: ""
@@ -287,13 +287,6 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_HormagauntMesh
-        ScriptComponents:
-          Script0:
-            name: HormagauntAnimation
       Children: ~
 GameObject3:
   name: Floor

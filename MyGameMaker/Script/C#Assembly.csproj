@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaTrigger.cs" />
     <Compile Include="AmmunitionBlessing.cs" />
     <Compile Include="Arc.cs" />
     <Compile Include="ArcSnare.cs" />
@@ -134,6 +135,8 @@
     <Compile Include="RedThirstManager.cs" />
     <Compile Include="RayCast.cs" />
     <Compile Include="Rigidbody.cs" />
+    <Compile Include="Scene1ToScene2.cs" />
+    <Compile Include="Scene2ToMenu.cs" />
     <Compile Include="Shotgun.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="ShotgunPickUp.cs" />

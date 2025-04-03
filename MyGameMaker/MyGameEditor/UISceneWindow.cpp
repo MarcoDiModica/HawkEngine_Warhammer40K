@@ -344,8 +344,10 @@ bool UISceneWindow::Draw()
 		bool isCtrlHeld = ImGui::GetIO().KeyCtrl;
 
 		if (isViewportHovered && !ImGuizmo::IsUsing() && !ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
+			bool isOverUIButtons = (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup) || ImGui::IsAnyItemHovered());
+
 			if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGuizmo::IsOver() &&
-				!isShiftHeld && !isCtrlHeld) {
+				!isShiftHeld && !isCtrlHeld && !isOverUIButtons) {
 				isMarqueeSelecting = true;
 				marqueeStart = ImGui::GetMousePos();
 			}

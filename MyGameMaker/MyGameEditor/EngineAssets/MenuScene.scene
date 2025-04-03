@@ -1,5 +1,5 @@
 SceneMetadata:
-  SceneName: MainMenu
+  SceneName: MenuScene
 GameObject0:
   name: MainCamera
   tag: Untagged
@@ -56,15 +56,6 @@ GameObject1:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/UI/ButtonPressed.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -84,6 +75,15 @@ GameObject1:
         - 0
         - 0
         - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/UI/ButtonPressed.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -375,3 +375,34 @@ GameObject1:
           enabled: true
           state: 1
       Children: ~
+GameObject2:
+  name: EmptyMusic
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\Retro Ambience 02.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: true
+      loop: true
+  Children: ~

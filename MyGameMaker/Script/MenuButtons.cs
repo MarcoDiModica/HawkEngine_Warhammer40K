@@ -12,11 +12,10 @@ public class MenuButtons : MonoBehaviour
 
     //private Audio sound;
     private Audio sound;
-    private Audio music;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
-    private string musicPath = "Assets/Audio/PlaceHolder_MainMenuMusic.ogg";
-    public override void Start()
+
+    public override void Awake()
     {
         newGameButton = GameObject.Find("NewGameButton").GetComponent<UIButton>();
         continueButton = GameObject.Find("ContinueButton").GetComponent<UIButton>();
@@ -24,50 +23,46 @@ public class MenuButtons : MonoBehaviour
         creditsButton = GameObject.Find("CreditsButton").GetComponent<UIButton>();
         quitButton = GameObject.Find("QuitButton").GetComponent<UIButton>();
         sound = gameObject.GetComponent<Audio>();
-        music = gameObject.AddComponent<Audio>();
+    }
 
+    public override void Start()
+    {
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
         }
 
-        music?.LoadAudio(musicPath);
-        music?.Play();
+        sound?.LoadAudio(buttonClicked);
     }
 
     public override void Update(float deltaTime)
     {
         if (newGameButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
             sound?.Play();
             SceneManager.LoadScene("DefaultScene");
         }
 
         if (continueButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
             sound?.Play();
             Engineson.print("Continue is Clicked");
         }
 
         if (optionsButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
             sound?.Play();
             Engineson.print("Options is Clicked");
         }
 
         if (creditsButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
             sound?.Play();
             Engineson.print("Credits is Clicked");
         }
 
         if (quitButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
             sound?.Play();
             Engineson.print("quit is Clicked");
         }

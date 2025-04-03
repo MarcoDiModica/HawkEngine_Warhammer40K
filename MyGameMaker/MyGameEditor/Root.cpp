@@ -41,15 +41,15 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-	Application->root->CreateScene("DefaultScene");
-	Application->root->SetActiveScene("DefaultScene");
+	//Application->root->CreateScene("DefaultScene");
+	//Application->root->SetActiveScene("DefaultScene");
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/MenuScene.scene");
 
     return true;
 }
@@ -67,45 +67,46 @@ bool Root::Start()
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/FinalLevel1.Scene");
-	auto player = CreateGameObject("Player");
-	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
-	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
-	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
-	player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
-	player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
-	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
-	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
-	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
-	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
-	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
-	
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
-	playerMesh->SetName("playerMesh");
-	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	ParentGameObject(*playerMesh, *player);
-	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
-	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	//auto player = CreateGameObject("Player");
+	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
+	//player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
+	//player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
+	//player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
+	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
+	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 
+	//player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
+	//
+	//auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+	//playerMesh->SetName("playerMesh");
+	//playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//ParentGameObject(*playerMesh, *player);
+	//playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	//player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+	//player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	//player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+	//player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	//player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 
+	/*
 	auto itemtest = CreateCube("item");
 	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
@@ -118,19 +119,19 @@ bool Root::Start()
 	itemtest2->GetTransform()->SetScale(glm::vec3(2, 2, 2));
 	itemtest2->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	itemtest2->AddComponent<ScriptComponent>()->LoadScript("AreaTrigger");
-	itemtest2->SetTag("AreaTrigger");
+	itemtest2->SetTag("AreaTrigger");*/
 
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-    //auto objMainCamera = CreateCameraObject("MainCamera");
-    //objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-    //objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
-    //auto camera = objMainCamera->AddComponent<CameraComponent>();
+ //   auto objMainCamera = CreateCameraObject("MainCamera");
+ //   objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+ //   objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+ //   auto camera = objMainCamera->AddComponent<CameraComponent>();
 	//camera->priority = 1;
-    //objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-    //mainCamera = objMainCamera;
+ //   objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+ //   mainCamera = objMainCamera;
 	//UpdateCameraPriority();
 	//
 	//// Test PowerUps
@@ -235,13 +236,13 @@ bool Root::Start()
 	//cubeTest->GetTransform()->SetScale(glm::vec3(2, 2, 2));
 	//cubeTest->AddComponent<BoxColliderComponent>(Application->physicsModule);
 
-	auto floor = CreateCube("Floor");
-	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	floorCollider->Start();
-	SceneManagement->Awake();
-	SceneManagement->Start();
+	//auto floor = CreateCube("Floor");
+	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//floorCollider->Start();
+	//SceneManagement->Awake();
+	//SceneManagement->Start();
 
 	//CreateGameplayUI();
 
@@ -277,7 +278,6 @@ bool Root::Start()
 	//CreateGameplayUI();
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
 
@@ -305,10 +305,13 @@ bool Root::Start()
 	//boltgunPickUp->AddComponent<ScriptComponent>()->LoadScript("BoltgunPickUp");
 	//boltgunPickUp->SetTag("Weapon");
 
+	//CreateMainMenuUI();
+
 #ifdef _BUILD
 	Application->play = true;
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
 	Application->physicsModule->linkPhysicsToScene = true;
+	SceneManagement->Awake();
 	SceneManagement->Start();
 #endif // _BUILD
 
@@ -757,6 +760,9 @@ void Root::CreateMainMenuUI()
     quitButton->AddComponent<UIButtonComponent>();
     quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.906, 0), glm::vec3(0.182, 0.091, 1));
+
+	auto emmptyMusic = CreateGameObject("EmptyMusic");
+	emmptyMusic->AddComponent<SoundComponent>();
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 }

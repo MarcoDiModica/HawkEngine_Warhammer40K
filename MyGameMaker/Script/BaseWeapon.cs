@@ -15,6 +15,7 @@ public abstract class BaseWeapon : MonoBehaviour
     public List<BulletData> bullets = new List<BulletData>();
     public List<Vector3> bulletsPos = new List<Vector3>();
     public List<Vector3> hitPoints = new List<Vector3>();
+    public List<string> collisionNames = new List<string>();
 
     public enum AmmoType
     {

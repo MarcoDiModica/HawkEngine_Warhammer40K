@@ -78,16 +78,19 @@ public class Boltgun : BaseWeapon
             if (rayBullet.hit.isHit)
             {
                 bulletHitPoint = rayBullet.hit.point;
+                collisionNames.Add(rayBullet.hit.gameObject.name);
                 Engineson.print($"Hit: {bulletHitPoint}");
             }
             else
             {
                 bulletHitPoint = transform.GetPosition() + transform.forward * range;
+                collisionNames.Add("Missed");
                 Engineson.print("Missed");
             }
 
             hitPoints.Add(bulletHitPoint);
             bulletsPos.Add(bulletPosition);
+            
         }
         
     }
@@ -137,6 +140,15 @@ public class Boltgun : BaseWeapon
             {
                 bulletsPos.RemoveAt(i);
                 hitPoints.RemoveAt(i);
+                if (collisionNames[i] == "Missed")
+                {
+                    collisionNames.RemoveAt(i);
+                }
+                else
+                {
+                    Engineson.Destroy(GameObject.Find(collisionNames[i]));
+                    collisionNames.RemoveAt(i);
+                }
                 i--;
             }
         }

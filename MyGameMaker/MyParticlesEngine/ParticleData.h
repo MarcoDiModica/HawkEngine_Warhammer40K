@@ -196,7 +196,7 @@ public:
 	int CalculateMaxIndex(const glm::vec2& sheetSize, const glm::vec2& spriteSize) {
 		int columns = static_cast<int>(sheetSize.x / spriteSize.x);
 		int rows = static_cast<int>(sheetSize.y / spriteSize.y);
-		return columns * rows - 1; // Restamos 1 porque los índices empiezan en 0
+		return columns * rows - 1; 
 	}
 
 	glm::vec2 CalculateSpriteOffset(int index, const glm::vec2& sheetSize, const glm::vec2& spriteSize) {

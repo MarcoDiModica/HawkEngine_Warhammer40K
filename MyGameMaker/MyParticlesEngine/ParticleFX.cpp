@@ -7,6 +7,11 @@
 #include <MyScriptingEngine/MonoManager.h>
 #include <mono/metadata/debug-helpers.h>
 #include "../MyGameEngine/CameraComponent.h"
+#include "../MyGameEngine/CameraComponent.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 namespace ParticlePresets {
 	const ParticlePreset Smoke = {
@@ -937,26 +942,26 @@ glm::vec3 ParticleFX::GenerateRandomVelocity() {
 		float theta = dist01(rng) * 2.0f * glm::pi<float>();
 		float phi = dist01(rng) * coneAngleRad;
 
-		return speed * glm::vec3(
+		return glm::rotate((glm::quat)owner->GetTransform()->GetRotation(),speed * glm::vec3(
 			sin(phi) * cos(theta),
 			cos(phi),
-			sin(phi) * sin(theta)
+			sin(phi) * sin(theta))
 		);
 	}
 
 	case EmitterShape::BOX: {
 		float theta = dist01(rng) * 2.0f * glm::pi<float>();
 		float phi = acos(2.0f * dist01(rng) - 1.0f);
-
-		return speed * glm::vec3(
+		
+		return glm::rotate((glm::quat) owner->GetTransform()->GetRotation(), speed * glm::vec3(
 			sin(phi) * cos(theta),
 			sin(phi) * sin(theta),
-			cos(phi)
+			cos(phi))
 		);
 	}
 
 	case EmitterShape::CIRCLE: {
-		return speed * glm::vec3(0.0f, 1.0f, 0.0f);
+		return glm::rotate((glm::quat)owner->GetTransform()->GetRotation(), speed * glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 	}
 

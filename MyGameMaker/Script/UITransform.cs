@@ -33,7 +33,7 @@ namespace HawkEngine
         public extern void DOScaleZUI(float scaleZ, float duration, Modes modes);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetScaleUI(Vector3 scale, Modes modes);
+        public extern void SetScaleUI(Vector3 scale);
 
         //contructor
         private GameObject owner;

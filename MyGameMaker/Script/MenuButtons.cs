@@ -4,6 +4,8 @@ using System.Numerics;
 
 public class MenuButtons : MonoBehaviour
 {
+    //Referencia el boton y los componentes que quieras usar aqui
+
     private GameObject newGameButton;
     private GameObject continueButton;
     private GameObject optionsButton;
@@ -62,7 +64,8 @@ public class MenuButtons : MonoBehaviour
 
         //if (continueButton.GetState() == ButtonState.CLICKED)
         //{
-        //    transform_continueButton.DOScaleUI(new Vector3(1.2f, 1.2f, 1.2f), 0.2f, Modes.EASE_IN_OUT);
+        //    EJEMPLO PARA HACER UN TWEEN!!
+        //    transform_continueButton.DOScaleUI(new Vector3(1.0f, 1.0f, 1.0f), 0.2f, Modes.EASE_IN_OUT);
         //    
         //    
         //    Engineson.print("Continue is Clicked");

@@ -34,11 +34,13 @@ namespace EngineBinds {
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
 
 	void AddScript(MonoObject* ref, MonoString* scriptName);
+	void SetActive(MonoObject* ref, bool active);
 
     MonoString* GameObjectGetName(MonoObject* sharpRef);
     MonoString* GameObjectGetTag(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
-    void SetTag(MonoObject* ref, MonoString* sharpName);
+	MonoString* GetTag(MonoObject* ref);
+	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
     void GameObjectSetActive(MonoObject* ref, bool active);
 
@@ -128,6 +130,9 @@ namespace EngineBinds {
     void SetKinematic(MonoObject* rigidbodyRef, bool isKinematic);
     bool IsKinematic(MonoObject* rigidbodyRef);
     void EnableContinuousCollision(MonoObject* rigidbodyRef);
+
+    // Raycast
+	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance);
     
     //Audio
     void Play(MonoObject* audioRef, bool loop = false);

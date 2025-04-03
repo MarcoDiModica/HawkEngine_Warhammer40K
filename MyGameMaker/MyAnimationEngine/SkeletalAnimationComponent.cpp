@@ -53,6 +53,10 @@ SkeletalAnimationComponent& SkeletalAnimationComponent::operator=(SkeletalAnimat
     return *this;
 }
 
+void SkeletalAnimationComponent::Awake()
+{
+}
+
 void SkeletalAnimationComponent::Start()
 {
 	if (animator == nullptr) 

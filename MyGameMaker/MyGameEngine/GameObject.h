@@ -47,7 +47,7 @@ public:
     template <IsComponent T>
     bool HasComponent() const;
 
-    //void Awake();
+    void Awake();
     void Start();
     //void FixedUpdate(float fixedDeltaTime);
     void Update(float deltaTime);
@@ -64,8 +64,8 @@ public:
     std::string GetName() const;
     void SetName(const std::string& name);
 
-    std::string GetTag() const { return tag; }
-    void SetTag(const std::string& newTag) { tag = newTag; }
+    std::string GetTag() const;
+    void SetTag(const std::string& newTag);
 
     bool CompareTag(const std::string& tag) const;
 

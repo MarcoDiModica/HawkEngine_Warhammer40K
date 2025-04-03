@@ -246,6 +246,10 @@ void EngineBinds::AddScript(MonoObject* ref, MonoString* scriptName) {
 	go->AddComponent<ScriptComponent>()->LoadScript(C_name);
 }
 
+void EngineBinds::SetActive(MonoObject* ref, bool active) {
+	ConvertFromSharp(ref)->SetActive(active);
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
@@ -261,6 +265,12 @@ void EngineBinds::SetTag(MonoObject* ref, MonoString* sharpName) {
 void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
     ConvertFromSharp(ref)->SetActive(active);
 }
+
+MonoString* EngineBinds::GetTag(MonoObject* ref) {
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
+}
+
+
 
 MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
 {
@@ -796,6 +806,35 @@ void EngineBinds::EnableContinuousCollision(MonoObject* rigidbodyRef) {
     }
 }
 
+// Raycast
+MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance)
+{
+    btVector3 from;
+	from.setValue(origin->x, origin->y, origin->z);
+
+	btVector3 to;
+	to.setValue(direction->x, direction->y, direction->z);
+
+    btVector3 hitPos;
+    hitPos.setValue(hitPoint.x, hitPoint.y, hitPoint.z);
+
+    btVector3 hitNormal;
+    hitNormal.setValue(normal.x, normal.y, normal.z);
+
+	GameObject* hitObject;
+	hitObject = Application->physicsModule->Raycast(from, to, maxDistance, hitPos, hitNormal, distance);
+
+	
+	hitPoint = glm::vec3(hitPos.getX(), hitPos.getY(), hitPos.getZ());
+	normal = glm::vec3(hitNormal.getX(), hitNormal.getY(), hitNormal.getZ());
+
+	if (hitObject) {
+		return GetMonoObjectFromGameObject(hitObject);
+	}
+
+    return nullptr;
+}
+
 
 void EngineBinds::Play(MonoObject* audioRef, bool loop /*= false*/)
 {
@@ -981,7 +1020,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
-    mono_add_internal_call("HawkEngine.GameObject::SetTag", (const void*) SetName );
+	mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GetTag);
+	mono_add_internal_call("HawkEngine.GameObject::SetTag", (const void*)SetTag);
     mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
@@ -1075,6 +1115,9 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Rigidbody::SetKinematic", (const void*)&EngineBinds::SetKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::IsKinematic", (const void*)&EngineBinds::IsKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::EnableContinuousCollision", (const void*)&EngineBinds::EnableContinuousCollision);
+
+	// Raycast
+	mono_add_internal_call("HawkEngine.RayCast::Raycast", (const void*)&EngineBinds::Raycast);
 
     // Audio
     mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);

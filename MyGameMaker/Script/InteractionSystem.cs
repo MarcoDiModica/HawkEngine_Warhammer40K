@@ -15,6 +15,9 @@ public class InteractionSystem : MonoBehaviour
     private AreaTrigger currentAreaTrigger = null;
     private bool interactionImageIsEnabled = false;
 
+    public override void Awake()
+    {
+    }
     public override void Start()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();

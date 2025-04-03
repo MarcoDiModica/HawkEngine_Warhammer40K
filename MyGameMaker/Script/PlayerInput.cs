@@ -13,6 +13,11 @@ public class PlayerInput : MonoBehaviour
     private bool isInteractPressed = false;
 
     private bool isMovementBlocked = false;
+    public override void Awake()
+    {
+
+    }
+
     public override void Start()
     {
     }

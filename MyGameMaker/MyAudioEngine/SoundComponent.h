@@ -19,6 +19,7 @@ public:
     static void ShutdownSharedAudioEngine();
     static std::shared_ptr<MyGameEngine::AudioEngine>& GetSharedAudioEngine() { return s_SharedAudioEngine; }
 
+	void Awake() override;
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;

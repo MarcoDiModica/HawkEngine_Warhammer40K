@@ -20,6 +20,14 @@ public class PlayerMovement : MonoBehaviour
 
     private GameObject playerCamera;
     private Transform cameraTransform;
+    private PlayerController playerController;
+
+    public PlayerData playerData;
+
+    public override void Awake()
+    {
+        
+    }
 
     public override void Start()
     {
@@ -67,10 +75,22 @@ public class PlayerMovement : MonoBehaviour
             Engineson.print("ERROR: cameraTransform is NULL!");
             return;
         }
+
+        playerController = gameObject.GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Engineson.print("ERROR: playerController is NULL!");
+            return;
+        }
+
+        playerData = playerController.playerData;
     }
 
     public override void Update(float deltaTime)
     {
+        moveSpeed = playerData.movSpeed;
+        //Engineson.print("Player Movement Update: " + moveSpeed);
+
         if (playerDash == null || !playerDash.IsDashing)
         {
             UpdateMovement(moveDirection, deltaTime);
@@ -102,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
     override public void OnCollisionStay(GameObject other)
     {
-        Engineson.print("Player Collision Stay: ");
+        //Engineson.print("Player Collision Stay: ");
     }
 
     override public void OnCollisionExit(GameObject other)
@@ -117,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
     override public void OnTriggerStay(GameObject other)
     {
-        Engineson.print("Player Trigger Stay: ");
+        //Engineson.print("Player Trigger Stay: ");
     }
 
     override public void OnTriggerExit(GameObject other)

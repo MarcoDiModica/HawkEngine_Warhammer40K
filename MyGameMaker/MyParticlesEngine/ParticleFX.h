@@ -53,6 +53,7 @@ public:
 	explicit ParticleFX(GameObject* owner);
 	~ParticleFX() override = default;
 
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;

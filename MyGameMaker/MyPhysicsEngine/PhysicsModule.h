@@ -51,6 +51,9 @@ public:
 
     void SetColliderFriction(GameObject& go, float friction);
 
+    // Raycast
+	GameObject* Raycast(btVector3& origin, btVector3& direction, float maxDistance, btVector3& hitPoint, btVector3& normal, float& distance);
+
     btDiscreteDynamicsWorld* dynamicsWorld;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;
     bool linkPhysicsToScene = false;
@@ -65,6 +68,11 @@ private:
     p2List<btCollisionShape*> shapes;
     btCollisionShape* cubeShape;
     btDefaultVehicleRaycaster* vehicle_raycaster;
+
+    // Raycast
+	btVector3 rayFrom;
+	btVector3 rayTo;
+
 
     // Relación entre GameObject y su cuerpo rígido
     DebugDrawerPhysics* debugDrawer;

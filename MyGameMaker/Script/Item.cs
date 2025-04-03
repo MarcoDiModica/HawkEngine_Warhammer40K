@@ -30,6 +30,7 @@ public class Item : MonoBehaviour, IInteractable
             Engineson.print("ERROR: InteractionSystem requires a GameObject named dialogueText.");
         }
     }
+    public override void Awake() { }
 
     public override void Update(float deltaTime) { }
 

@@ -16,6 +16,11 @@ UIImageComponent::UIImageComponent(GameObject* owner) : Component(owner)
 	name = "UIImageComponent";
 }
 
+void UIImageComponent::Awake()
+{
+	
+}
+
 void UIImageComponent::Start()
 {
 	

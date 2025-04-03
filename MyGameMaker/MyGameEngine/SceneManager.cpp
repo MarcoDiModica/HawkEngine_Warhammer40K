@@ -18,7 +18,18 @@
 #include "glm/gtx/matrix_decompose.inl"
 
 
+bool SceneManager::Awake() {
+    for (const shared_ptr<GameObject>& object : currentScene->_children)
+    {
+        object->Awake();
 
+        if (object->HasComponent<CameraComponent>()) {
+            mainCamera = object;
+        }
+    }
+
+    return true;
+}
 void SceneManager::AddTag(const std::string& tag) {
     if (!HasTag(tag)) {
         tags.push_back(tag);
@@ -66,9 +77,6 @@ bool SceneManager::Start() {
     {
         object->Start();
 
-        if (object->HasComponent<CameraComponent>()) {
-            mainCamera = object;
-        }
     }
 
     return true;

@@ -22,6 +22,8 @@ namespace HawkEngine
             enabled = true;
         }
 
+        public abstract void Awake();
+
         public abstract void Start();
         
         public abstract void Update(float deltaTime);

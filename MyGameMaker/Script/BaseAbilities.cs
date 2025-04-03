@@ -5,7 +5,7 @@ namespace HawkEngine
 {
     public abstract class BaseAbilities : MonoBehaviour
     {
-   
+        private float abilityCooldown;
         public BaseAbilities()
         {
             
@@ -16,6 +16,10 @@ namespace HawkEngine
             CplusplusInstance = instance;
         }
 
+        public abstract void ResetCooldowns();
+        
+
+        
         public abstract void TriggerAbility();
 
     }

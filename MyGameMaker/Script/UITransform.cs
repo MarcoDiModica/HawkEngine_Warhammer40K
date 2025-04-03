@@ -25,6 +25,7 @@ namespace HawkEngine
             Engineson.print("UITransform default constructor");
         }
 
+        public override void Awake() { }
         public override void Start() { }
 
         public override void Update(float deltaTime) { }

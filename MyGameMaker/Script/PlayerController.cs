@@ -7,23 +7,24 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerMovement playerMovement;
     private PlayerDash playerDash;
-    private PlayerShooting playerShooting;
+    public PlayerShooting playerShooting;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
-    private float currentTime = 0;
-    private float maxIdleTimer = 1.0f;
     private bool isIdle = false;
     private bool isRunning = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
     private bool hasStoppedFootsteps = false;
+    private float elapsedTime = 0f;
     private bool isInteracting = false;
 
     private Audio sound;
     private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
     private bool isFootstepPlaying = false;
 
-    public override void Start()
+    public PlayerData playerData;
+
+    public override void Awake()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
         playerMovement = gameObject.GetComponent<PlayerMovement>();
@@ -34,11 +35,17 @@ public class PlayerController : MonoBehaviour
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
         sound = gameObject.GetComponent<Audio>();
         //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
+        playerData = new PlayerData();
 
         if (playerInput == null || playerMovement == null || playerDash == null || playerShooting == null || playerMesh == null)
         {
             Engineson.print("ERROR: PlayerController is missing required components!");
         }
+    }
+
+    public override void Start()
+    {
+        
     }
 
     public override void Update(float deltaTime)
@@ -47,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
-
+        elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
 
@@ -75,7 +82,27 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        
+        if (Input.GetControllerButtonDown(ControllerButton.Y))
+        {
+            Vector3 playerCenterPosition = gameObject.GetComponent<Transform>().GetPosition();
+            playerCenterPosition.Y += 1;
+            Vector3 playerDirection = gameObject.GetComponent<Transform>().forward;
+
+            RayCast rayCast = new RayCast();
+            rayCast.PerformRaycast(playerCenterPosition, playerDirection, 10f);
+
+            if (rayCast.hit.isHit)
+            {
+                Engineson.print("Raycast hit: " + rayCast.hit.gameObject.name);
+                Engineson.print("Raycast distance: " + rayCast.hit.distance);
+                Engineson.print("Raycast normal: " + rayCast.hit.normal);
+                Engineson.print("Raycast point: " + rayCast.hit.point);
+            }
+            
+
+        }
+
+
 
         if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)
         {
@@ -124,11 +151,49 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (playerInput.IsDashPressed() && playerDash.CanDash() && moveDirection != Vector3.Zero)
+        if (playerInput.IsDashPressed() && playerDash.CanDash(elapsedTime))
         {
-            playerDash.InitiateDash(moveDirection);
+            playerDash.InitiateDash(moveDirection, elapsedTime);
         }
+
     }
 
     
+
+    public override void OnCollisionEnter(GameObject other)
+    {
+        if (other.tag == "EnemyAttack")
+        {
+            if (!playerDash.isInvulnerable)
+            {
+                playerData.TakeDamage(10);
+                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
+            }
+            else if (playerDash.isInvulnerable)
+            {
+                playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
+            }
+
+
+        }
+
+        if (other.tag == "Enemy")
+        {
+            if (!playerDash.isInvulnerable)
+            {
+                playerData.TakeDamage(10);
+                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
+            }
+            else if (playerDash.isInvulnerable)
+            {
+                playerShooting.CounterAttack(other);
+            }
+
+
+        }
+    }
+
+  
+
+
 }

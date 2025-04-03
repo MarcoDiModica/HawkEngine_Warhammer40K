@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
+using static Railgun;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -11,9 +12,17 @@ public class PlayerShooting : MonoBehaviour
     private Transform transform;
     private float shootTimer = 0f;
 
+    private PlayerController playerController;
+    public PlayerData playerData;
+    private RedThirstManager redThirstManager;
+
+    private float abilityUseTimer = 0f;
+    private int abilityCount = 0;
+    private const float abilityTimeLimit = 3f;
+
     // Guns Scripts
-    private Boltgun boltgun;
-    private Shotgun shotgun;
+    public Boltgun boltgun;
+    public Shotgun shotgun;
     private Railgun railgun;
 
 
@@ -35,6 +44,10 @@ public class PlayerShooting : MonoBehaviour
         return (int)currentGun;
     }
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
@@ -42,7 +55,11 @@ public class PlayerShooting : MonoBehaviour
         {
             Engineson.print("ERROR: PlayerShooting requires a PlayerInput component!");
         }
-
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
+        if (redThirstManager == null)
+        {
+            Engineson.print("ERROR: PlayerShooting requires a RedThirstManager component!");
+        }
         transform = gameObject.GetComponent<Transform>();
         if (transform == null)
         {
@@ -76,19 +93,22 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("ERROR: PlayerShooting requires a Ra ilgun component!");
         }
 
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
+
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                shootCooldown = 1f / boltgun.shootCadence;
+                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 Engineson.print($"Shoot Cooldown: {shootCooldown}");
                 break;
             case GunType.SHOTGUN:
-                shootCooldown = 1f / shotgun.shootCadence;
+                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 break;
             case GunType.RAILGUN:
-                shootCooldown = 1f / railgun.shootCadence;
+                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 break;
         }
@@ -118,13 +138,7 @@ public class PlayerShooting : MonoBehaviour
 
         if (playerInput?.IsShooting() == true)
         {
-            shootTimer -= deltaTime * 10;
-            if (shootTimer <= 0)
-            {
-                Shoot();
-                shootTimer = shootCooldown;
-            }
-
+            Shoot();
         }
         else if (playerInput.IsShooting() == false)
         {
@@ -210,6 +224,25 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+    public void ApplyBonusCadence()
+    {
+        switch (currentGun)
+        {
+            case GunType.BOLTGUN:
+                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
+                shootTimer = 0;
+                break;
+            case GunType.SHOTGUN:
+                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
+                shootTimer = 0;
+                break;
+            case GunType.RAILGUN:
+                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
+                shootTimer = 0;
+                break;
+        }
+    }
+
     private void ChangeWeaponRight()
     {
 
@@ -229,19 +262,19 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                shootCooldown = 1f / boltgun.shootCadence;
+                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(boltgunEquiped);
                 sound?.Play();
                 break;
             case GunType.SHOTGUN:
-                shootCooldown = 1f / shotgun.shootCadence;
+                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(shotgunEquiped);
                 sound?.Play();
                 break;
             case GunType.RAILGUN:
-                shootCooldown = 1f / railgun.shootCadence;
+                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(railgunEquiped);
                 sound?.Play();
@@ -268,19 +301,19 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
-                shootCooldown = 1f / boltgun.shootCadence;
+                shootCooldown = 1f / boltgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(boltgunEquiped);
                 sound?.Play();
                 break;
             case GunType.SHOTGUN:
-                shootCooldown = 1f / shotgun.shootCadence;
+                shootCooldown = 1f / shotgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(shotgunEquiped);
                 sound?.Play();
                 break;
             case GunType.RAILGUN:
-                shootCooldown = 1f / railgun.shootCadence;
+                shootCooldown = 1f / railgun.shootCadence * playerData.bonusCadence;
                 shootTimer = 0;
                 sound?.LoadAudio(railgunEquiped);
                 sound?.Play();
@@ -294,13 +327,18 @@ public class PlayerShooting : MonoBehaviour
         {
             case GunType.BOLTGUN:
                 boltgun.UseAbility1();
+                
                 break;
             case GunType.SHOTGUN:
-
+                shotgun.UseAbility1();
                 break;
             case GunType.RAILGUN:
 
                 break;
+        }
+        if (redThirstManager != null)
+        {
+            redThirstManager.OnAbilityUsed();
         }
     }
 
@@ -312,12 +350,46 @@ public class PlayerShooting : MonoBehaviour
                 boltgun.UseAbility2();
                 break;
             case GunType.SHOTGUN:
-
+                shotgun.UseAbility2();
                 break;
             case GunType.RAILGUN:
-
+               railgun.UseAbility2();
                 break;
         }
-     }
+        if (redThirstManager != null)
+        {
+            redThirstManager.OnAbilityUsed();
+        }
+    }
 
+    public void CounterAttack(GameObject target)
+    {
+        if (target.GetComponent<EnemyControllerMelee>() != null)
+        {
+            target.GetComponent<EnemyControllerMelee>().currentHealth -= 10;
+            if (target.GetComponent<EnemyControllerMelee>().currentHealth > 0)
+            {
+                target.GetComponent<EnemyControllerMelee>().isStunned = true;
+            }
+            Engineson.print("Counter Attack to: " + target.name);
+            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerMelee>().currentHealth);
+        }
+        else if (target.GetComponent<EnemyControllerRanged>() != null)
+        {
+            target.GetComponent<EnemyControllerRanged>().currentHealth -= 10;
+            if (target.GetComponent<EnemyControllerRanged>().currentHealth > 0)
+            {
+                target.GetComponent<EnemyControllerRanged>().isStunned = true;
+            }
+            Engineson.print("Counter Attack to: " + target.name);
+            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerRanged>().currentHealth);
+        }
+        
+    }
+
+    public void ResetAbilityCooldown()
+    {
+        boltgun.ResetCooldowns();
+        shotgun.ResetCooldowns();
+    }
 }

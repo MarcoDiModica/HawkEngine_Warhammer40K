@@ -12,6 +12,22 @@ ScriptComponent::ScriptComponent(GameObject* owner) : Component(owner) {
 
 ScriptComponent::~ScriptComponent() {}
 
+void ScriptComponent::Awake()
+{
+    if (monoScript) {
+        MonoClass* scriptClass = mono_object_get_class(monoScript);
+        MonoMethod* awakeMethod = mono_class_get_method_from_name(scriptClass, "Awake", 0);
+        MonoObject* exception = nullptr;
+        mono_runtime_invoke(awakeMethod, monoScript, nullptr, &exception);
+        if (exception) {
+            MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
+            const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
+            LOG(LogType::LOG_ERROR, "AwakeError: %s", exceptionStr);
+            mono_free((void*)exceptionStr);
+        }
+    }
+}
+
 void ScriptComponent::Start() {
     if (monoScript) {
         MonoClass* scriptClass = mono_object_get_class(monoScript);

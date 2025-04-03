@@ -83,10 +83,8 @@ public:
     void CreateOptionsMenuUI();
     void CreateLocationSM();
     void CreateLocationBot();
-	void CreateGameOverUI();
 	void CreateWinUI();
     void CreateLoseUI();
-	void CreateHUDUI();
 
 
     void SetMainCamera(std::shared_ptr<GameObject> camera);

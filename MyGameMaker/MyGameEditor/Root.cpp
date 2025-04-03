@@ -142,6 +142,8 @@ bool Root::Start()
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	floorCollider->Start();
 
+	CreateWinUI();
+	//CreatePauseMenuUI();
 	//CreateGameplayUI();
 	//CreateMainMenuUI();
 
@@ -628,29 +630,29 @@ void Root::CreateMainMenuUI()
 }
 
 void Root::CreatePauseMenuUI() {
-	auto canvas = CreateGameObject("Canvas_PauseMeny");
+	auto canvas = CreateGameObject("Canvas_PauseMenu");
 	canvas->AddComponent<UICanvasComponent>();
 	canvas->AddComponent<UITransformComponent>();
+
 
 	auto menuImage = CreateGameObject("Menu_Image");
 	Application->root->ParentGameObject(*menuImage, *canvas);
 	menuImage->AddComponent<UIImageComponent>();
-	menuImage->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/pause_menu.png");
-	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0.5));
-	menuImage->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.0, 0.0, 0), glm::vec3(1, 1, 1));
-
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/pause_menu.png");
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+	
 	auto resumeButton = CreateGameObject("Resume_Button");
 	Application->root->ParentGameObject(*resumeButton, *canvas);
 	resumeButton->AddComponent<UIImageComponent>();
-	resumeButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/pause_resume.png");
+	resumeButton->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/pause_resume.png");
 	resumeButton->AddComponent<UIButtonComponent>();
-	resumeButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.0, 0));
+	resumeButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	resumeButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.426, 0.281, 0), glm::vec3(0.182, 0.091, 1));
 
 	auto optionsButton = CreateGameObject("Options_Button");
 	Application->root->ParentGameObject(*optionsButton, *canvas);
 	optionsButton->AddComponent<UIImageComponent>();
-	optionsButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/pause_options.png");
+	optionsButton->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/pause_options.png");
 	optionsButton->AddComponent<UIButtonComponent>();
 	optionsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	optionsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.426, 0.391, 0), glm::vec3(0.182, 0.091, 1));
@@ -658,7 +660,7 @@ void Root::CreatePauseMenuUI() {
 	auto mainMenuButton = CreateGameObject("MainMenu_Button");
 	Application->root->ParentGameObject(*mainMenuButton, *canvas);
 	mainMenuButton->AddComponent<UIImageComponent>();
-	mainMenuButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/pause_mainmenu.png");
+	mainMenuButton->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/pause_mainmenu.png");
 	mainMenuButton->AddComponent<UIButtonComponent>();
 	mainMenuButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	mainMenuButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.426, 0.485, 0), glm::vec3(0.182, 0.091, 1));
@@ -666,13 +668,79 @@ void Root::CreatePauseMenuUI() {
 	auto quitButton = CreateGameObject("Exit_Button");
 	Application->root->ParentGameObject(*quitButton, *canvas);
 	quitButton->AddComponent<UIImageComponent>();
-	quitButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/pause_exit.png");
+	quitButton->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/pause_exit.png");
 	quitButton->AddComponent<UIButtonComponent>();
 	quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.426, 0.591, 0), glm::vec3(0.182, 0.091, 1));
 }
 
+void Root::CreateOptionsMenuUI() {
+	
+	auto canvas = CreateGameObject("Canvas_OptionsMenu");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
 
+	auto menuImage = CreateGameObject("Menu_Image");
+	Application->root->ParentGameObject(*menuImage, *canvas);
+	menuImage->AddComponent<UIImageComponent>();
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/options_menu.png");
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+
+}
+
+void Root::CreateWinUI() {
+
+	auto canvas = CreateGameObject("Canvas_win_screen");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+
+	auto menuImage = CreateGameObject("Menu_Image");
+	Application->root->ParentGameObject(*menuImage, *canvas);
+	menuImage->AddComponent<UIImageComponent>();
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/WIN_screen.png");
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+
+
+}
+
+void Root::CreateLoseUI() {
+
+	auto canvas = CreateGameObject("Canvas_Lose");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+
+	auto menuImage = CreateGameObject("Menu_Image");
+	Application->root->ParentGameObject(*menuImage, *canvas);
+	menuImage->AddComponent<UIImageComponent>();
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/gameover_blockout.png");
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+}
+
+void Root::CreateLocationSM() {
+
+	auto canvas = CreateGameObject("Canvas_LocationSM");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+
+	auto menuImage = CreateGameObject("Menu_Image");
+	Application->root->ParentGameObject(*menuImage, *canvas);
+	menuImage->AddComponent<UIImageComponent>();
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/location_sacarium_mortis.png");
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+}
+
+void Root::CreateLocationBot() {
+
+	auto canvas = CreateGameObject("Canvas_LocationBot");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+
+	auto menuImage = CreateGameObject("Menu_Image");
+	Application->root->ParentGameObject(*menuImage, *canvas);
+	menuImage->AddComponent<UIImageComponent>();
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/location_butcher_of_truth.png");
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+}
 void Root::SetMainCamera(std::shared_ptr<GameObject> camera)
 {
 	mainCamera = camera;

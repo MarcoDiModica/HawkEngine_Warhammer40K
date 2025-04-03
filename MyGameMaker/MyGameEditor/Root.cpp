@@ -777,7 +777,7 @@ void Root::CreatePauseMenuUI() {
 	Application->root->ParentGameObject(*menuImage, *canvas);
 	menuImage->AddComponent<UIImageComponent>();
 	menuImage->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/pause_menu.png");
-	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0.5));
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 	menuImage->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.0, 0.0, 0), glm::vec3(1, 1, 1));
 
 	auto resumeButton = CreateGameObject("Resume_Button");

@@ -1192,13 +1192,6 @@ void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, fl
 {
 	Tweening::TweenVec3(value, start, target, duration, mode);
 }
-
-void EngineBinds::SetActive(MonoObject* gameObjectRef, bool active) {
-	GameObject* gameObject = ConvertFromSharp(gameObjectRef);
-	if (gameObject) {
-		gameObject->SetActive(active);
-	}
-}
     
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
@@ -1383,8 +1376,6 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Tweening::DOVector4", (const void*)&EngineBinds::DOColor);
 	mono_add_internal_call("HawkEngine.Tweening::DOValue", (const void*)&EngineBinds::DOValue);
 	mono_add_internal_call("HawkEngine.Tweening::DOVector3", (const void*)&EngineBinds::DOVec3);
-
-	
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

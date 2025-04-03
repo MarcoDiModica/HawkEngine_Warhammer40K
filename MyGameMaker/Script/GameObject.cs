@@ -44,8 +44,6 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         extern internal T TryAddComponent<T>(int type);
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetActive(bool active);
         public T AddComponent<T>()
         {
             return TryAddComponent<T>( Engineson.MapComponent(typeof(T)) );

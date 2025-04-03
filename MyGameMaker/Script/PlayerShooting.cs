@@ -27,6 +27,7 @@ public class PlayerShooting : MonoBehaviour
 
     public bool hasShotgun = false;
     public bool hasRailgun = false;
+    public bool hasBoltgun = false;
 
     private Audio sound;
     private string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";

@@ -155,9 +155,16 @@ public class PlayerPowerUp : MonoBehaviour
         if (other.tag == "Weapon")
         {
             Engineson.print("Player Collided with:" + other.tag);
-            if (other.GetComponent<Shotgun>() != null)
+            if (other.GetComponent<ShotgunPickUp>() != null)
             {
-                other.GetComponent<Shotgun>().OnPickUp(playerController);
+                other.GetComponent<ShotgunPickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+
+            }
+            else if (other.GetComponent<RailgunPickUp>() != null)
+            {
+                other.GetComponent<RailgunPickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
 
             }
 

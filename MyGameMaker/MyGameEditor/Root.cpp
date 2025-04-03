@@ -155,24 +155,24 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	hormagauntMesh->SetName("HormagauntMesh");
-	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//auto hormagaunt = CreateGameObject("Hormagaunt");
+	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh->SetName("HormagauntMesh");
+	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh, *hormagaunt);
+	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 
 	//Mawloc
 	auto mawloc = CreateGameObject("Mawloc");
 	mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(10, -100, 10));
-	mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 8, 2));
+	mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
 	mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	mawloc->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	auto mawlocMesh = CreateCube("MawlocMesh");
 	ParentGameObject(*mawlocMesh, *mawloc);
 	mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");

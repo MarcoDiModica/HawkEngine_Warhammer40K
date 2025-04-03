@@ -7,20 +7,10 @@ using HawkEngine;
 
 public class EnemyControllerBoss : EnemyController
 {
-    private float hurtboxActivationTime = 0.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
-    private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(2.0f, 2.0f, 2.0f); // Tamaño de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(4.0f, 2.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private float hurtboxDuration = 0.5f; 
+    private Vector3 hurtboxSize = new Vector3(7f, 1.0f, 2.0f); 
+    private Vector3 hurtboxOffset = new Vector3(3.0f, 0.0f, 0.0f); 
     private GameObject hurtboxObject;
-    private bool dodgewindow = false;
-    private float dodgeActivationTime = 0.5f;
-    private float dodgeTimer = 0f;
-
-    private List<BulletData> activeProjectiles = new List<BulletData>();
-    public float shootCooldown = 2.0f;
-    public float projectileSpeed = 90.0f;
-    public float projectileLifetime = 0.5f;
-    protected float shootTimer = 0f;
 
     //stats
     private float health = 1500.0f;
@@ -67,6 +57,9 @@ public class EnemyControllerBoss : EnemyController
     public override void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        rb = gameObject.GetComponent<Rigidbody>();
+        rb.SetMass(1000.0f);
+        currentHealth = maxHealth;
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
@@ -88,15 +81,15 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentPhase = BossPhase.PHASE2;
+        currentHealth = 900.0f;
     }
     public override void Update(float deltaTime)
     {
-        if (health < 500)
+        if (currentHealth < 500)
         {
             currentPhase = BossPhase.PHASE3;
         }
-        else if (health < 1000)
+        else if (currentHealth < 1000)
         {
             currentPhase = BossPhase.PHASE2;
         }
@@ -104,8 +97,69 @@ public class EnemyControllerBoss : EnemyController
         {
             case BossPhase.PHASE1:
 
+                timer += deltaTime;
+
+                if (isBuried && timer >= unburrowingAttackCooldown)
+                {
+                    UnburrowingAttack();
+                    timer = 0.0f;
+                }
+                else if (!isBuried && timer >= postUnburrowingAttackDelay)
+                {
+                    if (attackCount % 3 == 0 && attackCount > 0)
+                    {
+                        if (timer >= restAfterThirdAttack)
+                        {
+                            Burrow();
+                            timer = 0.0f;
+                        }
+                    }
+                    else
+                    {
+                        Burrow();
+                        timer = 0.0f;
+                    }
+                }
+
                 break;
             case BossPhase.PHASE2:
+
+                timer += deltaTime;
+
+                if (isBuried && timer >= unburrowingAttackCooldown)
+                {
+                    isPreparingAttack = true;
+                    timer = 0.0f;
+                }
+                else if (isPreparingAttack && timer >= burrowTime)
+                {
+                    UnburrowingAttackPhase2();
+                    isPreparingAttack = false;
+                    timer = 0.0f;
+                }
+                else if (!isBuried && timer >= postAttackDelay)
+                {
+                    if (playerTransform != null)
+                    {
+                        float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+
+                        if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                        {
+                            SlamAttack();
+                            slamAttackTimer = slamAttackCooldown;
+                        }
+                        else
+                        {
+                            ChangePositionToClosest();
+                        }
+                    }
+                    timer = 0.0f;
+                }
+
+                if (slamAttackTimer > 0.0f)
+                {
+                    slamAttackTimer -= deltaTime;
+                }
 
                 break;
             case BossPhase.PHASE3:
@@ -113,71 +167,13 @@ public class EnemyControllerBoss : EnemyController
                 break;
         }
 
-        if (currentPhase == BossPhase.PHASE1)
+        if (playerTransform != null)
         {
-            timer += deltaTime;
-
-            if (isBuried && timer >= unburrowingAttackCooldown)
-            {
-                UnburrowingAttack();
-                timer = 0.0f;
-            }
-            else if (!isBuried && timer >= postUnburrowingAttackDelay)
-            {
-                if (attackCount % 3 == 0 && attackCount > 0)
-                {
-                    if (timer >= restAfterThirdAttack)
-                    {
-                        Burrow();
-                        timer = 0.0f;
-                    }
-                }
-                else
-                {
-                    Burrow();
-                    timer = 0.0f;
-                }
-            }
-        }
-
-        if (currentPhase == BossPhase.PHASE2)
-        {
-            timer += deltaTime;
-
-            if(isBuried && timer >= unburrowingAttackCooldown)
-            {
-                isPreparingAttack = true;
-                timer = 0.0f;
-            }
-            else if (isPreparingAttack && timer >= burrowTime)
-            {
-                UnburrowingAttack();
-                isPreparingAttack = false;
-                timer = 0.0f;
-            }
-            else if (!isBuried && timer >= postAttackDelay)
-            {
-                if (playerTransform != null)
-                {
-                    float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
-
-                    if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
-                    {
-                        SlamAttack();
-                        slamAttackTimer = slamAttackCooldown;
-                    }
-                    else
-                    {
-                        ChangePositionToClosest();
-                    }
-                }
-                timer = 0.0f;
-            }
-
-            if (slamAttackTimer > 0.0f)
-            {
-                slamAttackTimer -= deltaTime;
-            }
+            Vector3 directionToPlayer = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+            float targetAngle = (float)Math.Atan2(directionToPlayer.X, directionToPlayer.Z) * (180.0f / (float)Math.PI);
+            Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(targetAngle * ((float)Math.PI / 180.0f), 0, 0);
+            enemyTransform.SetRotationQuat(newRotation);
+            collider.SetRotation(newRotation);
         }
       
     }
@@ -220,8 +216,6 @@ public class EnemyControllerBoss : EnemyController
         }
         attackCount++;
         isBuried = false;
-
-        // Hurtbox i tot a la pesca
     }
 
     private void UnburrowingAttackPhase2()
@@ -232,11 +226,13 @@ public class EnemyControllerBoss : EnemyController
             collider.SetPosition(enemyTransform.position);
             Engineson.print("Unburrowing Attack ");
         }
+        isBuried = false;
     }
 
     public void ChangePositionToClosest()
     {
         enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
+        collider.SetPosition(enemyTransform.position);
         Burrow();
     }
 
@@ -259,22 +255,22 @@ public class EnemyControllerBoss : EnemyController
 
     private void SlamAttack()
     {
-        Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 5.0f);
-        Vector3 hurtbOffset = enemyTransform.forward * 3.0f;
-        Vector3 hurtboxPosition = enemyTransform.position + hurtboxOffset;
-
-        GameObject hurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
+        hurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
         hurtboxObject.AddComponent<MeshRenderer>();
+
         var hurtboxTransform = hurtboxObject.AddComponent<Transform>();
-        hurtboxTransform.position = hurtboxPosition;
+        hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X);
         hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
-        var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
+
+        hurtboxObject.AddComponent<BoxCollider>();
+
     }
 
     private void Burrow()
     {
         Engineson.print("Burrowed");
         enemyTransform.position = new Vector3(0.0f, -100.0f, 0.0f);
+        collider.SetPosition(enemyTransform.position);
         isBuried = true;
     }
 

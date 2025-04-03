@@ -265,7 +265,7 @@ GameObject3:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent
@@ -500,35 +500,35 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 3.7999999523162842
-            - 79.199996948242188
+            - 4.5
+            - 92.300003051757812
             - 0
           localRotation:
             - 5.008954909642331e-06
             - 4.7643048187382357e-21
             - -6.8040446907981826e-37
           localScale:
-            - 0.69999998807907104
-            - 4.369999885559082
+            - 0.56999999284744263
+            - 4.2800002098083496
             - 1
         UITransformComponent:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.0379999988
-            - 0.791999996
+            - 0.0450000018
+            - 0.922999978
             - 0
           rotation:
             - 10461.2969
             - -14.8299809
             - 1166.54407
           scale:
-            - 0.0930000022
-            - 0.169
+            - 0.0799999982
+            - 0.159999996
             - 1
           pivot_offset:
             - 0
-            - 0
+            - 1
             - 0
         UIImageComponent:
           name: UIImageComponent
@@ -1101,7 +1101,7 @@ GameObject4:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent
@@ -1381,7 +1381,7 @@ GameObject5:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent
@@ -1705,7 +1705,7 @@ GameObject6:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent
@@ -1793,7 +1793,7 @@ GameObject7:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent
@@ -1881,7 +1881,7 @@ GameObject8:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent
@@ -1969,7 +1969,7 @@ GameObject9:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent
@@ -2110,7 +2110,7 @@ GameObject9:
 GameObject10:
   name: Canvas_lose_screen
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -2145,7 +2145,7 @@ GameObject10:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent
@@ -2330,7 +2330,7 @@ GameObject10:
 GameObject11:
   name: Canvas_win_screen
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -2365,7 +2365,7 @@ GameObject11:
         - 1
       pivot_offset:
         - 0
-        - 0
+        - 1
         - 0
     UICanvasComponent:
       name: UICanvasComponent

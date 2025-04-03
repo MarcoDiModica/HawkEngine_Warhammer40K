@@ -20,7 +20,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected bool isDead = false;
     protected bool isAttacking = false;
 
-    public float distToChase = 20.0f;
+    public float distToChase = 50.0F;
     public float minDistToChase = 5.0f;
     public float speedMovement = 5.0f;
     public float acceleration = 15.0f;

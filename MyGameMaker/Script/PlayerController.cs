@@ -44,13 +44,11 @@ public class PlayerController : MonoBehaviour
 
     public override void Start()
     {
-        
+        gameObject.tag = "Player";
     }
 
     public override void Update(float deltaTime)
     {
-        
-
         Vector3 moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
         elapsedTime += deltaTime;
@@ -77,11 +75,7 @@ public class PlayerController : MonoBehaviour
                 sound?.Stop();
                 hasStoppedFootsteps = true;
             }
-
-
         }
-
-        
 
         if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)
         {
@@ -95,8 +89,6 @@ public class PlayerController : MonoBehaviour
             isFootstepPlaying = false;
         }
         
-     
-
         if (moveDirection == Vector3.Zero && playerInput.IsShooting() && !isShootingStanding)
         {
             // Shooting while standing
@@ -129,15 +121,11 @@ public class PlayerController : MonoBehaviour
             isIdle = false;
         }
 
-
         if (playerInput.IsDashPressed() && playerDash.CanDash(elapsedTime))
         {
             playerDash.InitiateDash(moveDirection, elapsedTime);
         }
-
     }
-
-    
 
     public override void OnCollisionEnter(GameObject other)
     {
@@ -152,8 +140,6 @@ public class PlayerController : MonoBehaviour
             {
                 playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
             }
-
-
         }
 
         if (other.tag == "Enemy")
@@ -167,12 +153,6 @@ public class PlayerController : MonoBehaviour
             {
                 playerShooting.CounterAttack(other);
             }
-
-
         }
     }
-
-  
-
-
 }

@@ -20,22 +20,20 @@ public class EnemyControllerMelee : EnemyController
 
     // Enemy Stats
     private float health = 100.0f;
-    private float damage = 20.0f;
-
-        // Claw Attack
-    public float clawCooldown = 2f;
+    private float clawDamage = 10.0f;
+    private float leapDamage = 15.0f;
 
         // Leap Attack
     public float maxLeapRange = 20.0f;
     public float minLeapRange = 10.0f;
     private float lastLeap = 0f;
     public float leapCooldown = 2.0f;
-    private bool hasLeaped = false;
+    private float leapDuration = 1.5f;
+    private float leapTimer = 0f;
+    private bool isLeaping = false;
+    private bool hasLeap = true;
 
-    public override void Awake()
-    {
-        
-    }
+    public override void Awake() {}
 
     public override void Start()
     {
@@ -108,10 +106,10 @@ public class EnemyControllerMelee : EnemyController
                             dodgeTimer = 0f;
                             dodgewindow = true;
                         }
-                        else if (dodgeTimer >= 0.5f && dodgewindow)
+                        else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
                         {
                             Attack();
-                            sound.LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+                            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack.wav");
                             sound?.Play();
                             //DestroyHurtbox();
                             hurtboxTimer = 0f;
@@ -141,29 +139,26 @@ public class EnemyControllerMelee : EnemyController
                         }
                     }
 
-                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange)
+                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap)
                     {
-                        if (!hasLeaped)
-                        {
-                            Random random = new Random();
-                            int rand = random.Next(3, 4);
-                            int rand2 = random.Next(3, 4);
+                        Random random = new Random();
+                        int rand = random.Next(3, 4);
+                        int rand2 = random.Next(3, 4);
 
-                            if (rand == rand2)
-                            {
-                                Leap();
-                                hasLeaped = true;
-                            }
-                        }
-                        else
+                        if (rand == rand2)
                         {
-                            lastLeap += deltaTime;
-                            if (lastLeap >= leapCooldown)
-                            {
-                                Engineson.print("LEAP RESTORED");
-                                lastLeap = 0;
-                                hasLeaped = false;
-                            }
+                            leapTimer += deltaTime;
+                            Leap();
+                        }
+                    }
+
+                    if (!hasLeap)
+                    {
+                        lastLeap += deltaTime;
+                        if (lastLeap >= leapCooldown)
+                        {
+                            Engineson.print("LEAP RESTORED");
+                            hasLeap = true;
                         }
                     }
 
@@ -215,14 +210,16 @@ public class EnemyControllerMelee : EnemyController
     public override void Attack()
     {
         Engineson.print("Melee attack executed!");
-        pc.playerData.TakeDamage(damage);
+        pc.playerData.TakeDamage(clawDamage);
         Engineson.print("Current health: " + (pc.playerData.GetHealth()));
     }
 
     public void Leap()
     {
-        Engineson.print("LEAP JUMP EXECUTED");
-        rb.SetVelocity(rb.GetVelocity() * 50);
+        isLeaping = true;
+        lastLeap = 0.0f;
+        if (leapTimer <= leapDuration)  rb.SetVelocity(rb.GetVelocity() * 1.8f);
+        anim.SetWholeLeapAnimation();
     }
 
     private bool IsPlayerInHurtbox(Vector3 playerPos)
@@ -248,12 +245,19 @@ public class EnemyControllerMelee : EnemyController
         {
             //cosas de la shotgun
             anim.SetHitAnimation();
-        } 
+        }
         else if (other.tag == "RailgunProjectile")
         {
             //Cosas de railgun
             anim.SetHitAnimation();
         }
+        else if (other.tag == "Player" && isLeaping)
+        {
+            Engineson.print("Player hit while Leaping!");
+            pc.playerData.TakeDamage(leapDamage);
+            Engineson.print("Current health: " + (pc.playerData.GetHealth()));
+        }
+
         if (currentHealth <= 0)
         {
             Engineson.print("This man is dead man.");

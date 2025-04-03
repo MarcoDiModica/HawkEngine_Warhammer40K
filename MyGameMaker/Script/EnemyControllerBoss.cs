@@ -74,8 +74,8 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
         }
-        soundAttack = gameObject.GetComponent<Audio>();
-        if (soundAttack == null)
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
         {
             Engineson.print("PlayerShooting: Audio component not found");
         }

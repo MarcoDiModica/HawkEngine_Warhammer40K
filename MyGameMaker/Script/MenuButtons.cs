@@ -72,6 +72,7 @@ public class MenuButtons : MonoBehaviour
         if(button_optionsButton.GetState() == ButtonState.CLICKED)
         {
             optionsCanvas.SetActive(true);
+            
         }
 
         

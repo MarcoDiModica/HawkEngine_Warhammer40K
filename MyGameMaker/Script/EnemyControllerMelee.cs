@@ -111,6 +111,7 @@ public class EnemyControllerMelee : EnemyController
                             Attack();
                             sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack.wav");
                             sound?.Play();
+
                             //DestroyHurtbox();
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
@@ -122,7 +123,11 @@ public class EnemyControllerMelee : EnemyController
                     {
                         if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
                         {
+                            Engineson.print("Runing Anim");
                             anim.SetRunningAnimation();
+                            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootsteps.wav");
+                            sound?.Play();
+
                             Vector3 currentVelocity = rb.GetVelocity();
                             moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
                             Vector3 desiredVelocity = moveDirection * speedMovement;
@@ -239,17 +244,25 @@ public class EnemyControllerMelee : EnemyController
         {
             currentHealth -= 20.0f;
             anim.SetHitAnimation();
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit.wav");
+            sound?.Play();
+
             Engineson.print("Boltgun hit!");
         }
         else if (other.tag == "ShotgunProjectile")
         {
             //cosas de la shotgun
             anim.SetHitAnimation();
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit.wav");
+            sound?.Play();
+
         }
         else if (other.tag == "RailgunProjectile")
         {
             //Cosas de railgun
             anim.SetHitAnimation();
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit.wav");
+            sound?.Play();
         }
         else if (other.tag == "Player" && isLeaping)
         {
@@ -264,6 +277,8 @@ public class EnemyControllerMelee : EnemyController
             //Destroy(gameObject);
             anim.SetDeathAnimation();
             isDead = true;
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath.wav");
+            sound?.Play();
         }
     }
 

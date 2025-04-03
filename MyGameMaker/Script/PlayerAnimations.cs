@@ -30,10 +30,10 @@ public class PlayerAnimations : MonoBehaviour
             animIndex += 1;
             esk.TransitionAnimations(0,5,0.5f);
         }
-        if (esk.GetAnimationTime() >= esk.GetAnimationLength())
-        {
-            SetRunAnimation();
-        }
+        //if (esk.GetAnimationTime() >= esk.GetAnimationLength())
+        //{
+        //    SetRunAnimation();
+        //}
     }
 
     public void SetStandardIdleAnimation()
@@ -59,18 +59,24 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetShootingStandingAnimation()
     {
-        esk.TransitionAnimations(3, 7, 0.1f);
+        esk.TransitionAnimations(5, 7, 0.1f);
         //esk.SetAnimation(8);
         esk.SetAnimationSpeed(5f);
     }
 
-    public void SetShootingRunningAnimation()
+    public void SetRunningToShootRunningAnimation()
     {
         esk.TransitionAnimations(6, 8, 0.1f);
         //esk.SetAnimation(10);
         esk.SetAnimationSpeed(1f);
     }
+    public void SetWalkAnimation()
+    {
+        esk.TransitionAnimations(5, 6, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1f);
 
+    }
     public void SetRunAnimation()
     {
         esk.TransitionAnimations(6, 6, 0.1f);
@@ -85,9 +91,38 @@ public class PlayerAnimations : MonoBehaviour
         esk.SetAnimationSpeed(1.5f);
         
     }
-    public void SetWalkAnimation()
+
+    public void SetShootingStandingToIdleAnimation()
     {
-        esk.TransitionAnimations(6, 6, 0.1f);
+        esk.TransitionAnimations(7, 5, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetRunningToIdleAnimation()
+    {
+        esk.TransitionAnimations(6, 5, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetWalkingToIdleAnimation()
+    {
+        esk.TransitionAnimations(6, 5, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetShootingRunningToRunAnimation()
+    {
+        esk.TransitionAnimations(8, 6, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetShootingStandingToShootingRunAnimation()
+    {
+        esk.TransitionAnimations(7, 6, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 

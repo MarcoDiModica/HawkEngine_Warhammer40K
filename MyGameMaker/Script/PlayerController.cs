@@ -10,20 +10,28 @@ public class PlayerController : MonoBehaviour
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
     private bool isIdle = false;
-    private bool isRunning = false;
+    public bool isRunning = false;
     private bool isWalking = false;
+    private bool isMoving = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
-    private bool isFootstepPlaying = false;
-    private bool hasStoppedFootsteps = false;
+    private bool isTransitioning = false;
+    private float transitionTimer = 0f;
+    private float transitionDelay = 0.5f;
+    Vector3 moveDirection;
+    private bool once = false;
+
     private float elapsedTime = 0f;
     private bool isInteracting = false;
     private float dashDelayTimer = 0f; 
     private float dashDelayDuration = 0.45f;
 
     private Audio sound;
-    private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
-    private bool isMoving = false; 
+    private bool isFootstepPlaying = false;
+    private bool hasStoppedFootsteps = false;
+    private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
+    private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep.wav";
+
 
     public PlayerData playerData;
 
@@ -48,45 +56,61 @@ public class PlayerController : MonoBehaviour
 
     public override void Start()
     {
-
     }
 
     public override void Update(float deltaTime)
     {
         dashDelayTimer -= deltaTime;
-
+        transitionTimer -= deltaTime;
+        if (once == false)
+        {
+            playerAnimations.SetStandardIdleAnimation();
+            once = true;
+        }
         Vector3 moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
         elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
 
-        if (moveDirection == Vector3.Zero && !playerInput.IsShooting())
+        if (dashDelayTimer > 0f)
         {
-            SetIdleState();
-            StopFootsteps();
+            return;
+        }
+        if (playerInput.IsShooting())
+        {
+            SetShootingState();
+            isIdle = false;
         }
         else
         {
-            if (dashDelayTimer <= 0f) 
+
+            if (moveDirection == Vector3.Zero)
             {
-                if (moveDirection != Vector3.Zero && !playerInput.IsShooting())
+                if (isWalking)
+                {
+                    SetWalkingToIdle();
+                }
+                else if (isRunning)
+                {
+                    SetRunningToIdle();
+                }
+                else 
+                {
+                    SetIdleState();
+                }
+                StopFootsteps();
+            }
+            else
+            {
+                if (!isFootstepPlaying) 
                 {
                     PlayFootstep();
-                    if (playerMovement.moveSpeed == playerMovement.walkSpeed)
-                    {
-                        SetWalkingState();
-                    }
-                    else if (playerMovement.moveSpeed == playerMovement.runSpeed)
-                    {
-                        SetRunningState();
-                    }
                 }
-
-                if (playerInput.IsShooting())
-                {
-                    SetShootingState();
-                }
+                if (playerMovement.moveSpeed == playerMovement.walkSpeed)
+                    SetWalkingState();
+                else if (playerMovement.moveSpeed == playerMovement.runSpeed)
+                    SetRunningState();
             }
         }
 
@@ -97,15 +121,25 @@ public class PlayerController : MonoBehaviour
             dashDelayTimer = dashDelayDuration;
             isRunning = false;
             isWalking = false;
-            StopFootsteps(); 
+            StopFootsteps();
+        }
+        if (isTransitioning && transitionTimer > 0f)
+        {
+            transitionTimer -= deltaTime;
+
         }
     }
+
 
     private void SetIdleState()
     {
         if (!isIdle)
         {
-            playerAnimations.SetStandardIdleAnimation();
+            if (isShootingStanding)
+            {
+                playerAnimations.SetShootingStandingToIdleAnimation();
+            }
+
             playerAnimations.SetIdleRandomAnimation();
             isIdle = true;
             isRunning = false;
@@ -114,65 +148,166 @@ public class PlayerController : MonoBehaviour
             isShootingRunning = false;
             isMoving = false;
         }
+
         if (!hasStoppedFootsteps)
         {
             sound?.Stop();
             hasStoppedFootsteps = true;
             isFootstepPlaying = false;
-
         }
     }
 
     private void SetWalkingState()
     {
-        if (!isWalking)
+        if (playerInput.IsShooting() && !isShootingRunning)
+        {
+            TransitionShootingStandingToRunning();
+        }
+        else if (isShootingRunning && !playerInput.IsShooting())
+        {
+            playerAnimations.SetShootingRunningToRunAnimation();
+            isRunning = false;
+            isWalking = false;
+            isIdle = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = true;
+            isTransitioning = true;
+            transitionTimer = transitionDelay;
+            PlayFootstep();
+        }
+        else if (transitionTimer <= 0f && !isWalking)
         {
             playerAnimations.SetWalkAnimation();
-            isWalking = true;
             isRunning = false;
+            isWalking = true;
             isIdle = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
             isMoving = true;
+            isTransitioning = false;
             PlayFootstep();
         }
     }
 
     private void SetRunningState()
     {
-        if (!isRunning)
+        if (playerInput.IsShooting() && !isShootingRunning)
+        {
+            TransitionShootingStandingToRunning();
+        }
+        else if (isShootingRunning && !playerInput.IsShooting())
+        {
+            playerAnimations.SetShootingRunningToRunAnimation();
+            isRunning = false;
+            isWalking = false;
+            isIdle = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = true;
+            isTransitioning = true;
+            transitionTimer = transitionDelay;
+            PlayFootstep();
+        }
+        else if (transitionTimer <= 0f && !isRunning)
         {
             playerAnimations.SetRunAnimation();
             isRunning = true;
             isWalking = false;
-            isIdle = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
             isMoving = true;
+            isTransitioning = false;
             PlayFootstep();
         }
     }
 
     private void SetShootingState()
     {
-        if (!isShootingRunning && isMoving)
+        if (isMoving && !isShootingRunning && playerInput.IsShooting())
         {
-            playerAnimations.SetShootingRunningAnimation();
+            playerAnimations.SetRunningToShootRunningAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
+            isFootstepPlaying = false;
+            isWalking = false;
+            isRunning = false;
+            isIdle = false;
         }
-        else if (!isShootingStanding && !isMoving)
+        else if (!isShootingStanding && !isMoving && playerInput.IsShooting())
         {
             playerAnimations.SetShootingStandingAnimation();
             isShootingStanding = true;
             isShootingRunning = false;
+            isFootstepPlaying = false;
+            isWalking = false;
+            isRunning = false;
+            isIdle = false;
+        }
+        if (isShootingStanding && moveDirection != Vector3.Zero)
+        {
+            playerAnimations.SetShootingStandingToShootingRunAnimation();
+            isShootingStanding = false;
+            isShootingRunning = true;
+        }
+    }
+    private void SetWalkingToIdle()
+    {
+        if (isWalking)
+        {
+            playerAnimations.SetWalkingToIdleAnimation();
+            isWalking = false;
+            isIdle = true;
+            isRunning = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = false;
+            isTransitioning = false;
+            StopFootsteps();
         }
     }
 
+    private void SetRunningToIdle()
+    {
+        if (isRunning)
+        {
+            playerAnimations.SetRunningToIdleAnimation();
+            isRunning = false;
+            isWalking = false;
+            isIdle = true;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = false;
+            isTransitioning = false;
+            StopFootsteps();
+        }
+    }
+    private void TransitionShootingStandingToRunning()
+    {
+        playerAnimations.SetShootingStandingToShootingRunAnimation();
+        isShootingRunning = true;
+        isShootingStanding = false;
+        isTransitioning = true;
+        transitionTimer = transitionDelay;
+        isWalking = false;
+        isRunning = false;
+        isIdle = false;
+        isMoving = true;
+    }
+    private string currentFootstep = ""; 
+
     private void PlayFootstep()
     {
-        if (!isFootstepPlaying)
+        string newFootstep = isRunning ? Runfootsteps : Walkfootsteps;
+
+        if (!isFootstepPlaying || currentFootstep != newFootstep)
         {
-            sound?.LoadAudio(footsteps);
-            sound?.Play(true);
+            sound?.Stop(); 
+            sound?.LoadAudio(newFootstep);
+            sound?.Play(true); 
             isFootstepPlaying = true;
-            hasStoppedFootsteps = false; 
+            hasStoppedFootsteps = false;
+            currentFootstep = newFootstep; 
         }
     }
 
@@ -183,6 +318,7 @@ public class PlayerController : MonoBehaviour
             sound?.Stop();
             isFootstepPlaying = false;
             hasStoppedFootsteps = true;
+            currentFootstep = ""; 
         }
     }
 

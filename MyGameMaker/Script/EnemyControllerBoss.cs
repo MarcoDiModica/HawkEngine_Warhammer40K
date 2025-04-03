@@ -177,6 +177,7 @@ public class EnemyControllerBoss : EnemyController
         {
             Engineson.print("Unburrowing Attack");
             enemyTransform.position = playerTransform.position;
+            collider.SetPosition(playerTransform.position);
         }
         attackCount++;
         isBuried = false;

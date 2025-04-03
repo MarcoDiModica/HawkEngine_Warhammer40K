@@ -191,7 +191,7 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 18.141054153442383
+        - 5
         - 0
         - 5
       localRotation:

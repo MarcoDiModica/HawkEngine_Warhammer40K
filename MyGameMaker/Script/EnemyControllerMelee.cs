@@ -102,6 +102,7 @@ public class EnemyControllerMelee : EnemyController
                         if (hurtboxTimer >= hurtboxActivationTime)
                         {
                             //CreateHurtbox();
+                            anim.SetRandomAttackAnimation();
                             Engineson.print("Atack is ready");
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
@@ -122,6 +123,7 @@ public class EnemyControllerMelee : EnemyController
                     {
                         if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
                         {
+                            anim.SetRunningAnimation();
                             Vector3 currentVelocity = rb.GetVelocity();
                             moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
                             Vector3 desiredVelocity = moveDirection * speedMovement;
@@ -136,10 +138,6 @@ public class EnemyControllerMelee : EnemyController
 
                             //enemyTransform.position += desiredVelocity * deltaTime;
                         }
-                    }
-                    else
-                    {
-                        rb.SetVelocity(Vector3.Zero);
                     }
 
                     if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange)
@@ -188,14 +186,10 @@ public class EnemyControllerMelee : EnemyController
                         collider.SetRotation(newRotation);
                     }
                 }
-                if (isAttacking)
+                else
                 {
-                    anim.SetRandomAttackAnimation();
-                    isAttacking = false;
-                }
-                if (isDead)
-                {
-                    anim.SetDeathAnimation();
+                    anim.SetStandardIdleAnimation();
+                    rb.SetVelocity(Vector3.Zero);
                 }
             }
             else if (isStunned)
@@ -209,11 +203,14 @@ public class EnemyControllerMelee : EnemyController
                 }
             }
         }
+        if (isDead)
+        {
+            collider.SetActive(false);
+        }
     }
 
     public override void Attack()
     {
-        isAttacking = true;
         Engineson.print("Melee attack executed!");
         pc.playerData.TakeDamage(damage);
         Engineson.print("Current health: " + (pc.playerData.GetHealth()));
@@ -241,20 +238,24 @@ public class EnemyControllerMelee : EnemyController
         if (other.tag == "BoltgunProjectile")
         {
             currentHealth -= 20.0f;
+            anim.SetHitAnimation();
             Engineson.print("Boltgun hit!");
         }
         else if (other.tag == "ShotgunProjectile")
         {
             //cosas de la shotgun
+            anim.SetHitAnimation();
         } 
         else if (other.tag == "RailgunProjectile")
         {
             //Cosas de railgun
+            anim.SetHitAnimation();
         }
         if (currentHealth <= 0)
         {
             Engineson.print("This man is dead man.");
             //Destroy(gameObject);
+            anim.SetDeathAnimation();
             isDead = true;
         }
     }

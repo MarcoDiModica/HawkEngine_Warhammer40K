@@ -11,6 +11,7 @@ public class MenuButtons : MonoBehaviour
     private GameObject optionsButton;
     private GameObject creditsButton;
     private GameObject quitButton;
+    private GameObject optionsCanvas;
 
     private UIButton button_newGameButton;
     private UIButton button_continueButton;
@@ -33,22 +34,23 @@ public class MenuButtons : MonoBehaviour
     }
     public override void Start()
     {
-        newGameButton = GameObject.Find("NewGameButton");
-        continueButton = GameObject.Find("ContinueButton");
-        optionsButton = GameObject.Find("OptionsButton");
-        creditsButton = GameObject.Find("CreditsButton");
-        quitButton = GameObject.Find("QuitButton");
+        newGameButton = GameObject.Find("new_game_button");
+        continueButton = GameObject.Find("continue_button");
+        optionsButton = GameObject.Find("options_button");
+        //creditsButton = GameObject.Find("CreditsButton");
+        quitButton = GameObject.Find("exit_button");
+        optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
 
         button_newGameButton = newGameButton.GetComponent<UIButton>();
         button_continueButton = continueButton.GetComponent<UIButton>();
         button_optionsButton = optionsButton.GetComponent<UIButton>();
-        button_creditsButton = creditsButton.GetComponent<UIButton>();
+        //button_creditsButton = creditsButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
 
         transform_newGameButton = newGameButton.GetComponent<UITransform>();
         transform_continueButton = continueButton.GetComponent<UITransform>();
         transform_optionsButton = optionsButton.GetComponent<UITransform>();
-        transform_creditsButton = creditsButton.GetComponent<UITransform>();
+        //transform_creditsButton = creditsButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
 
         //sound = gameObject.GetComponent<Audio>();
@@ -66,6 +68,13 @@ public class MenuButtons : MonoBehaviour
             
             SceneManager.LoadScene("DefaultScene");
         }
+
+        if(button_optionsButton.GetState() == ButtonState.CLICKED)
+        {
+            optionsCanvas.SetActive(true);
+        }
+
+        
 
         //if (continueButton.GetState() == ButtonState.CLICKED)
         //{

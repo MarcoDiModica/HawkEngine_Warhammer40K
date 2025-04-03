@@ -3,11 +3,31 @@
 #include "../MyGameEngine/ShaderManager.h"
 
 enum class ParticleType {
+    // PLACE_HOLDERS
     DEFAULT = 0,
     SMOKE = 1,
     FIRE = 2,
     MUZZLE_FLASH = 3,
-    EXPLOSION = 4
+    EXPLOSION = 4,
+    // ENVIRONMENT
+    FLAME = 5,
+    ENVIRONMENT_SMOKE = 6,
+    ENVIRONMENT_EXPLOSION = 7,
+    ENVIRONMENT_DROPPLET = 15,
+    ENVIRONMENT_SPARK = 16,
+    // Enemies
+    ENEMY_DASH  = 9,
+    ACID_ATK    = 10,
+    // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
+    ACID_PUDDLE = 11,
+
+
+    // Player / Weapons
+    ENERGY_BALL = 12,
+    RAILGUN_AUTO = 13,
+    RAILGUN_SEMI = 14,
+    RIFFLE_SHOT = 8,
+    ARC_SNARE_IMPACT = 17
 };
 
 class ParticleMaterial : public Material {

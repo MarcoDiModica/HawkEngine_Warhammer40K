@@ -162,6 +162,16 @@ public:
 
 	int particleID = 0;
 
+	// Player VFX
+
+	void ConfigureRiffleShot();
+	void ConfigureAcidAttack();
+	void ConfigureAcidPuddle();
+	void ConfigureEnemyDash();
+	void ConfigureEnergyBall();
+	void ConfigureRailGunAuto();
+	void ConfigureRailGunSemi();
+
 private:
 	void EmitParticle();
 
@@ -444,4 +454,4 @@ protected:
 
 //cosas a mejorar: Sub-emisores, Movimiento basado en ruido, Efectos de estela/cinta, particula suaves
 
-//Simulación en GPU Mueve más cálculos al GPU usando compute shaders Aumentará significativamente el número de partículas posibles
+//Simulaciï¿½n en GPU Mueve mï¿½s cï¿½lculos al GPU usando compute shaders Aumentarï¿½ significativamente el nï¿½mero de partï¿½culas posibles

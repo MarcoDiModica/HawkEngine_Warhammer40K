@@ -1,136 +1,6 @@
 SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
-  name: Player
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
-    CapsuleColliderComponent:
-      size:
-        - 1.70000005
-        - 1.10000002
-        - 1
-      offset:
-        - 0
-        - 2.0999999
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -200
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: PlayerShooting
-      Script1:
-        name: PlayerMovement
-      Script2:
-        name: PlayerInput
-      Script3:
-        name: PlayerDash
-      Script4:
-        name: PlayerController
-      Script5:
-        name: Boltgun
-      Script6:
-        name: Shotgun
-      Script7:
-        name: GrenadeLauncher
-      Script8:
-        name: Railgun
-  Children:
-    - name: playerMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - -90.000002504478161
-            - 0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Cylinder.001
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_BaseColor.png
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_playerMesh
-        ScriptComponents:
-          Script0:
-            name: PlayerAnimations
-      Children: ~
-GameObject1:
   name: ParticleFX
   tag: Untagged
   active: true
@@ -154,29 +24,29 @@ GameObject1:
     ParticleFX:
       name: ParticleFX
       enabled: true
-      emitterShape: 2
-      emissionRate: 15
-      particlesPerSecond: 15
-      minLifetime: 9.5
-      maxLifetime: 14.1999998
-      minSpeed: 0.5
-      maxSpeed: 1.5
-      startSize: 0.5
-      endSize: 2
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
       startColor:
         - 1
-        - 0
-        - 0
+        - 1
+        - 1
       endColor:
         - 1
-        - 0
-        - 0
-      startAlpha: 0.699999988
-      endAlpha: 0
-      rotationSpeed: 0.200000003
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
       gravity:
         - 0
-        - 2.53999996
+        - -0.00100000005
         - 0
       shapeParam1: 0.200000003
       shapeParam2: 1
@@ -184,12 +54,12 @@ GameObject1:
       isOneShot: false
       material:
         billboardType: 0
-        particleType: 1
+        particleType: 6
         softness: 0
         useColorGradient: false
-        texturePath: Assets/Textures/spritesheettest.jpg
+        texturePath: Library\Textures\smoke_spritesheet(2).png
   Children: ~
-GameObject2:
+GameObject1:
   name: MainCamera
   tag: Untagged
   active: true
@@ -220,69 +90,4 @@ GameObject2:
       far_plane: 500
       priority: 1
     AudioListener: ~
-    ScriptComponents:
-      Script0:
-        name: PlayerCamera
-  Children: ~
-GameObject3:
-  name: Floor
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - -1
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 50
-        - 1
-        - 50
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.5
-          - 0.5
-          - 0.5
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Assets/default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
   Children: ~

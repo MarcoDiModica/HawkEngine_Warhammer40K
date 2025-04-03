@@ -28,6 +28,7 @@ public class Shotgun : BaseWeapon
         maxAmmo = 50;
         currentTotalAmmo = 16;
         reloadTime = 2.5f;
+        range = 20f;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
@@ -40,8 +41,14 @@ public class Shotgun : BaseWeapon
 
     public override void Update(float deltaTime)
     {
-        //CleanBullets();
+        CleanBullets();
         timeSinceLastShot += deltaTime;
+
+        for (int i = 0; i < bulletsPos.Count; i++)
+        {
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.1f);
+            
+        }
     }
 
     public override void Shoot()
@@ -65,33 +72,35 @@ public class Shotgun : BaseWeapon
 
             for (int i = 0; i < numProjectiles; i++)
             {
-                GameObject projectile = Engineson.CreateGameObject("Projectile", null);
+                Vector3 forward = transform.forward;
+                Vector3 spawnPos = transform.position + forward * 1.0f;
 
-                // TODO: add custom mesh to the projectile
-                projectile.AddComponent<MeshRenderer>();
-                projectile.AddComponent<BoxCollider>();
+                float angle = startAngle + angleStep * i;
+                Vector3 direction = Vector3.Transform(forward, Matrix4x4.CreateRotationY(angle * (3.14f / 180f))); // Convert degrees to radians
 
-                if (projectile != null)
+                RayCast rayBullet = new RayCast();
+                Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 1f, 0);
+
+                rayBullet.PerformRaycast(bulletPosition, direction, range);
+
+
+                Vector3 bulletHitPoint = Vector3.Zero;
+
+                if (rayBullet.hit.isHit)
                 {
-                    Transform projTransform = projectile.GetComponent<Transform>();
-                    if (projTransform != null)
-                    {
-                        Vector3 forward = transform.forward;
-                        Vector3 spawnPos = transform.position + forward * 1.0f;
-                        projTransform.position = spawnPos;
-
-                        float angle = startAngle + angleStep * i;
-                        Vector3 direction = Vector3.Transform(forward, Matrix4x4.CreateRotationY(angle * (3.14f / 180f))); // Convert degrees to radians
-                        projTransform.LookAt(direction);
-                        projTransform.SetScale(0.1f, 0.1f, 0.1f);
-
-                        projectile.AddScript("BulletData");
-                        projectile.GetComponent<BulletData>().Init(projTransform, direction, gameObject);
-                        bullets.Add(projectile.GetComponent<BulletData>());
-
-                        Engineson.print("Projectile fired!");
-                    }
+                    bulletHitPoint = rayBullet.hit.point;
+                    collisionNames.Add(rayBullet.hit.gameObject.name);
+                    Engineson.print($"Hit: {bulletHitPoint}");
                 }
+                else
+                {
+                    bulletHitPoint = transform.GetPosition() + transform.forward * range;
+                    collisionNames.Add("Missed");
+                    Engineson.print("Missed");
+                }
+
+                hitPoints.Add(bulletHitPoint);
+                bulletsPos.Add(bulletPosition);
             }
         }
     }
@@ -132,21 +141,23 @@ public class Shotgun : BaseWeapon
 
     public override void CleanBullets()
     {
-        for (int i = bullets.Count - 1; i >= 0; i--)
+        for (int i = 0; i < bulletsPos.Count; i++)
         {
-            var proj = bullets[i];
-            if (proj.markedForDestruction)
+            if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.1f)
             {
-                try
+                bulletsPos.RemoveAt(i);
+                hitPoints.RemoveAt(i);
+                if (collisionNames[i] == "Missed")
                 {
-                    Engineson.Destroy(proj.gameObject);
-                    bullets.RemoveAt(i);
+                    collisionNames.RemoveAt(i);
                 }
-                catch (System.Exception e)
+                else
                 {
-                    Engineson.print($"Error destroying projectile: {e.Message}");
-                    bullets.RemoveAt(i);
+                    // Aquí se ejecuta la función de daño al enemigo
+                    Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
+                    collisionNames.RemoveAt(i);
                 }
+                i--;
             }
         }
     }

@@ -564,7 +564,7 @@ GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, floa
 
 	
     if (rayCallback.hasHit()) {
-        rayTo = rayCallback.m_closestHitFraction * direction.normalized();
+        rayTo = origin + rayCallback.m_closestHitFraction * direction.normalized() * maxDistance;
         const btCollisionObject* hitObject = rayCallback.m_collisionObject;
         hitPoint = rayCallback.m_hitPointWorld;
         normal = rayCallback.m_hitNormalWorld;
@@ -578,6 +578,7 @@ GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, floa
 		
     }
 	else {
+		rayTo = origin + direction.normalized() * maxDistance;
 		return nullptr;
 	}
 

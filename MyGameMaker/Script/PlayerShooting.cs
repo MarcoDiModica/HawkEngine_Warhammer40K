@@ -154,7 +154,7 @@ public class PlayerShooting : MonoBehaviour
                     shootTimer = 0.5f;
                     break;
                 case GunType.RAILGUN:
-                    shootTimer = shootCooldown;
+                    shootTimer = 0;
                     break;
             }
         }

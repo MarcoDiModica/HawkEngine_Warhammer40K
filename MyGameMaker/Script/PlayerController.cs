@@ -83,27 +83,6 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (Input.GetControllerButtonDown(ControllerButton.Y))
-        {
-            Vector3 playerCenterPosition = gameObject.GetComponent<Transform>().GetPosition();
-            playerCenterPosition.Y += 1;
-            Vector3 playerDirection = gameObject.GetComponent<Transform>().forward;
-
-            RayCast rayCast = new RayCast();
-            rayCast.PerformRaycast(playerCenterPosition, playerDirection, 10f);
-
-            if (rayCast.hit.isHit)
-            {
-                Engineson.print("Raycast hit: " + rayCast.hit.gameObject.name);
-                Engineson.print("Raycast distance: " + rayCast.hit.distance);
-                Engineson.print("Raycast normal: " + rayCast.hit.normal);
-                Engineson.print("Raycast point: " + rayCast.hit.point);
-            }
-            
-
-        }
-
-
 
         if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)
         {

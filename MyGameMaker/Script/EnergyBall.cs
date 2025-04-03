@@ -26,6 +26,10 @@ public class EnergyBall : BaseAbilities
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
 
+    private Audio sound;
+    private string energyBallLaunch = "Assets/Audio/SFX/Weapons/Railgun/EnergyBallLaunch.wav";
+    private string energyBall= "Assets/Audio/SFX/Weapons/Railgun/EnergyBallMoving.wav";
+
 
     public override void Awake()
     {
@@ -33,7 +37,11 @@ public class EnergyBall : BaseAbilities
     }
     public override void Start()
     {
-
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
     }
 
     public override void Update(float deltaTime)
@@ -77,6 +85,8 @@ public class EnergyBall : BaseAbilities
         if (canThrow)
         {
             Engineson.print("Lanzando granada...");
+            sound.LoadAudio(energyBallLaunch);
+            sound.Play();
             grenade = Engineson.CreateGameObject("energyBall", null);
 
             if (grenade == null)
@@ -87,7 +97,8 @@ public class EnergyBall : BaseAbilities
 
             grenade.AddScript("Ball");
             grenade.GetComponent<Ball>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-
+            sound.LoadAudio(energyBall);
+            sound.Play();
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;

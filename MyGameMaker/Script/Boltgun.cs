@@ -24,6 +24,7 @@ public class Boltgun : BaseWeapon
     }
     public override void Start()
     {
+        damage = 20.0f; 
         shootCadence = 0.1f;
         magazineSize = 30;
         currentMagazineAmmo = magazineSize;

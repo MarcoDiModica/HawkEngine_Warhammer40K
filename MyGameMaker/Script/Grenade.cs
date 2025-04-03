@@ -48,17 +48,19 @@ public class Grenade : MonoBehaviour
             if (deathtimer <= 0)
             {
                 if (explosion != null) ;
-                    //Engineson.Destroy(explosion);
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
+                needsDestroy = false;
             }
         }
         deathTimerPrevention += deltaTime;
         //Engineson.print(deathTimerPrevention.ToString());
 
-        if (deathTimerPrevention > .1f) 
+        if (deathTimerPrevention > .1f)
         {
-            if (explosion != null)
-                //Engineson.Destroy(explosion);
-            needsDestroy = true;
+            if (explosion != null) { 
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
+                needsDestroy = false;
+            }
         }
 
     }

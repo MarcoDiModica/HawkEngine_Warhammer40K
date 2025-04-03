@@ -78,7 +78,7 @@ GameObject0:
       Script11:
         name: EnergyBall
       Script12:
-        name: ""
+        name: ToggleMode
       Script13:
         name: Barrage
       Script14:

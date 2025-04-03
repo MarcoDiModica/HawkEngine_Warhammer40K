@@ -46,8 +46,8 @@ public class Boltgun : BaseWeapon
 
         for (int i = 0; i < bulletsPos.Count; i++)
         {
-            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.1f);
-            Engineson.print($"Bullet {i} position: {bulletsPos[i]}");
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.2f);
+            
         }
     }
 
@@ -146,7 +146,8 @@ public class Boltgun : BaseWeapon
                 }
                 else
                 {
-                    Engineson.Destroy(GameObject.Find(collisionNames[i]));
+                    //Engineson.Destroy(GameObject.Find(collisionNames[i]));
+                    Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
                     collisionNames.RemoveAt(i);
                 }
                 i--;

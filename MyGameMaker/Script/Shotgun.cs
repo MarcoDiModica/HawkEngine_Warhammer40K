@@ -47,7 +47,7 @@ public class Shotgun : BaseWeapon
         for (int i = 0; i < bulletsPos.Count; i++)
         {
             bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.1f);
-            Engineson.print($"Bullet {i} position: {bulletsPos[i]}");
+            
         }
     }
 
@@ -153,6 +153,7 @@ public class Shotgun : BaseWeapon
                 }
                 else
                 {
+                    // Aquí se ejecuta la función de daño al enemigo
                     Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
                     collisionNames.RemoveAt(i);
                 }

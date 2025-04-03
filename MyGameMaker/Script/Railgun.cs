@@ -21,7 +21,7 @@ public class Railgun : BaseWeapon
     private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
     private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
 
-
+    private float timeSinceLastShot = 0.0f;
     public enum RailgunMode
     {
         SEMIAUTOMATIC,
@@ -54,21 +54,22 @@ public class Railgun : BaseWeapon
 
     public override void Update(float deltaTime)
     {
+        timeSinceLastShot += deltaTime;
 
         if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {
-            shootCadence = 0.66f;
+            shootCadence = 2f;
             magazineSize = 4;
         }
         else
         {
-            shootCadence = 2f;
+            shootCadence = 0.66f;
             magazineSize = 10;
         }
 
         if (isCooling)
         {
-            coolTimer += deltaTime * 10;
+            coolTimer += deltaTime;
             if (coolTimer >= coolingTime)
             {
                 Cooling();
@@ -77,7 +78,7 @@ public class Railgun : BaseWeapon
 
         if (isReloading)
         {
-            reloadTimer += deltaTime * 10;
+            reloadTimer += deltaTime;
             if (reloadTimer >= reloadTime)
             {
                 Reload();
@@ -90,8 +91,9 @@ public class Railgun : BaseWeapon
     public override void Shoot()
     {
         isReloading = false;
-        if (currentMagazineAmmo > 0 && isCooling == false && isRecharged)
+        if (currentMagazineAmmo > 0 && isCooling == false && isRecharged && timeSinceLastShot >= shootCadence)
         {
+            timeSinceLastShot = 0f;
             if (!playerData.infiniteBullets)
             {
                 currentMagazineAmmo--;

@@ -14,6 +14,7 @@ public class Boltgun : BaseWeapon
     private Audio sound;
     private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
     private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
+    GameObject projectile;
 
     private float timeSinceLastShot = 0.0f;
 
@@ -47,7 +48,7 @@ public class Boltgun : BaseWeapon
         for (int i = 0; i < bulletsPos.Count; i++)
         {
             bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.2f);
-            
+            projectile.GetComponent<Transform>().position = bulletsPos[i];
         }
     }
 
@@ -72,7 +73,12 @@ public class Boltgun : BaseWeapon
 
             rayBullet.PerformRaycast(bulletPosition, transform.forward, range);
 
-            
+            projectile = Engineson.CreateGameObject("Projectile", null);
+
+            // TODO: add custom mesh to the projectile
+            projectile.AddComponent<MeshRenderer>();
+            projectile.AddComponent<BoxCollider>();
+
             Vector3 bulletHitPoint = Vector3.Zero;
 
             if (rayBullet.hit.isHit)

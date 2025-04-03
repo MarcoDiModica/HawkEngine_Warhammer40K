@@ -46,7 +46,6 @@ struct ParticlePreset {
 	bool useAnimation;
 	float animSpeed; //in seconds
 	float startRotation;
-	float endRotation;
 	bool randomRotation;
 	float minSize;
 	float maxSize;
@@ -107,11 +106,11 @@ public:
 	void SetSpriteSize(glm::vec2 size) { spriteSize = size; }
 	void SetUseAnimation(bool useAnimation) { this->useAnimation = useAnimation; }
 	void SetAnimSpeed(float animSpeed) { this->animSpeed = animSpeed; }
-	void SetEndRotation(float endRotation) { this->endRotation = endRotation; }
 	void SetMinScale(float minSize) { this->minSize = minSize; }
 	void SetMaxScale(float maxSize) { this->maxSize = maxSize; }
 	void SetStartRotation(float startRotation) { this->startRotation = startRotation; }
 	void SetRandomRotation(bool randomRotation) { this->randomRotation = randomRotation; }
+	void SetParticleEndSize(float endSize);
 
 
 	float GetEmissionRate() const { return emissionRate; }
@@ -124,7 +123,6 @@ public:
 	float GetEndSpeed() const { return endSpeed; }
 	float GetDuration() const { return duration; }
 	float GetAnimSpeed() const { return animSpeed; }
-	float GetEndRotation() const { return endRotation; }
 	float GetStartRotation() const { return startRotation; }
 	float GetMinScale() const { return minSize; }
 	float GetMaxScale() const { return maxSize; }
@@ -186,7 +184,7 @@ private:
 	glm::vec3 startColor, endColor;
 	float startAlpha, endAlpha;
 	bool randomRotation;
-	float startRotation, endRotation;
+	float startRotation;
 	float rotationSpeed;
 	glm::vec3 gravity;
 

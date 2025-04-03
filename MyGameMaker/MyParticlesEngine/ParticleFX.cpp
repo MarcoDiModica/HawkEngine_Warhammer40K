@@ -33,7 +33,6 @@ namespace ParticlePresets {
 		true,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
-		0.0f,						   // End rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f						   // Max scale
@@ -65,7 +64,6 @@ namespace ParticlePresets {
 		false,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
-		0.0f,						   // End rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f						   // Max scale
@@ -97,7 +95,6 @@ namespace ParticlePresets {
 		false,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
-		0.0f,						   // End rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f						   // Max scale
@@ -129,7 +126,6 @@ namespace ParticlePresets {
 		false,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
-		0.0f,						   // End rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f						   // Max scale
@@ -161,7 +157,6 @@ namespace ParticlePresets {
 		false,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
-		0.0f,						   // End rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f						   // Max scale
@@ -418,10 +413,10 @@ void ParticleFX::EmitParticle() {
 	}
 	else 
 	{
-		particle.rotation = startRotation;
-		particle.startRotation = startRotation;
-		particle.endRotation = endRotation;
+		particle.rotation = glm::radians(startRotation);
 	}
+
+	particle.rotationSpeed = rotationSpeed;
 
 	particle.randomRotation = randomRotation;
 
@@ -661,6 +656,11 @@ void ParticleFX::SetParticleSpeed(float min, float max) {
 
 void ParticleFX::SetParticleSize(float startSize, float endSize) {
 	this->startSize = startSize;
+	this->endSize = endSize;
+}
+
+void ParticleFX::SetParticleEndSize(float endSize) 
+{
 	this->endSize = endSize;
 }
 

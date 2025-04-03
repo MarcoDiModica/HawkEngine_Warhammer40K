@@ -15,7 +15,7 @@ struct ParticleData {
 	bool randomRotation;
 	float rotation;
 	float startRotation;
-	float endRotation;
+	float rotationSpeed;
 	float lifetime;
 	float maxLifetime;
 	glm::vec3 velocity;
@@ -240,10 +240,9 @@ public:
 				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
 			}
 			
-			if (!particleData[i].randomRotation)
-			{
-				particleData[i].rotation = glm::lerp(particleData[i].rotation, particleData[i].endRotation*360.0f, lifetimeFraction);
-			}
+		
+		   particleData[i].rotation += particleData[i].rotationSpeed/360.0f;
+			
 		
 
 			if (particleData[i].useAnimation) 

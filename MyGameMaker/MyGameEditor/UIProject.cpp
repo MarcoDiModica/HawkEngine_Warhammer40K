@@ -27,6 +27,7 @@ const std::string SCRIPT_ICON_PATH = "EngineAssets/cscript.png";
 UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 {
     directoryPath = LIBRARY_PATH;
+    assetsPath = ASSETS_PATH;
     selectedDirectory = directoryPath;
     currentSceneFile = "";
 
@@ -40,6 +41,8 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
     iconCache[".scene"]->LoadTexture(SCENE_ICON_PATH);
     iconCache[".mesh"] = new Image();
     iconCache[".mesh"]->LoadTexture(MESH_ICON_PATH);
+    iconCache[".fbx"] = new Image();
+    iconCache[".fbx"]->LoadTexture(MESH_ICON_PATH);
     iconCache[".audio"] = new Image();
     iconCache[".audio"]->LoadTexture(AUDIO_ICON_PATH);
     iconCache[".cs"] = new Image();
@@ -58,17 +61,22 @@ UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 
 UIProject::~UIProject()
 {
-    if (directoryListingFuture.valid()) {
-        try {
-            directoryListingFuture.wait();
-        }
-        catch (...) {}
-    }
+	if (directoryListingFuture.valid()) {
+		try {
+			directoryListingFuture.wait();
+		}
+		catch (...) {}
+	}
 
-    for (auto& pair : iconCache) {
-        delete pair.second;
-    }
-    iconCache.clear();
+	for (auto& pair : iconCache) {
+		delete pair.second;
+	}
+	iconCache.clear();
+
+	for (auto& pair : imagePreviewCache) {
+		delete pair.second;
+	}
+	imagePreviewCache.clear();
 }
 
 bool UIProject::Draw()
@@ -96,6 +104,23 @@ bool UIProject::Draw()
     HandleShortcuts();
 
     DrawMainLayout();
+
+	if (ImGui::IsWindowHovered(ImGuiHoveredFlags_RootAndChildWindows) &&
+		ImGui::IsMouseClicked(ImGuiMouseButton_Left) &&
+		!ImGui::IsAnyItemHovered() &&
+		!ImGui::IsPopupOpen("ContextMenu") &&
+		!ImGui::IsPopupOpen("CreateMenu") &&
+		!ImGui::IsPopupOpen("SortOptions") &&
+		!isCreatingNewItem &&
+		renamePath.empty()) {
+
+		selectedFile.clear();
+	}
+
+    if (!ImGui::IsWindowFocused())
+    {
+        selectedFile.clear();
+    }
 
     if (showLoadScenePopUp)
     {
@@ -253,10 +278,15 @@ void UIProject::DrawDirectoryTree()
         };
 
     ImGuiTreeNodeFlags rootFlags = baseFlags | ImGuiTreeNodeFlags_DefaultOpen;
-    if (ImGui::TreeNodeEx(directoryPath.string().c_str(), rootFlags)) {
-        drawDirectory(directoryPath);
-        ImGui::TreePop();
-    }
+	if(ImGui::TreeNodeEx(directoryPath.string().c_str(), rootFlags)) {
+		drawDirectory(directoryPath);
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNodeEx(assetsPath.string().c_str(), rootFlags)) {
+		drawDirectory(assetsPath);
+		ImGui::TreePop();
+	}
 }
 
 void UIProject::DrawBreadcrumbs()
@@ -342,7 +372,7 @@ void UIProject::DrawFolderContents(const std::filesystem::path& path)
     }
 
     float contentRegionWidth = ImGui::GetContentRegionAvail().x;
-    const float totalSize = ICON_SIZE + 16.0f;
+    const float totalSize = ICON_SIZE + 24.0f;
     int itemsPerRow = static_cast<int>(std::max(1.0f, (contentRegionWidth - 5.0f) / totalSize));
     if (itemsPerRow < 1) itemsPerRow = 1;
 
@@ -684,22 +714,25 @@ void UIProject::HandleRename(const std::filesystem::path& entry, const char* new
 
 Image* UIProject::GetIconForFile(const std::filesystem::path& filePath)
 {
-    if (std::filesystem::is_directory(filePath)) {
-        return iconCache[".folder"];
-    }
+	if (std::filesystem::is_directory(filePath)) {
+		return iconCache[".folder"];
+	}
 
-    std::string extension = filePath.extension().string();
-    std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+	std::string extension = filePath.extension().string();
+	std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 
-    if (iconCache.count(extension)) {
-        return iconCache[extension];
-    }
-    else if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
-        return iconCache[".audio"];
-    }
-    else {
-        return iconCache[".default"];
-    }
+	if (IsImageFile(filePath)) {
+		return GetImageThumbnail(filePath);
+	}
+	else if (iconCache.count(extension)) {
+		return iconCache[extension];
+	}
+	else if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
+		return iconCache[".audio"];
+	}
+	else {
+		return iconCache[".default"];
+	}
 }
 
 void UIProject::ShowContextMenu()
@@ -888,6 +921,8 @@ void UIProject::DrawTruncatedLabel(const std::string& filename)
 
 void UIProject::HandleShortcuts()
 {
+    if (!ImGui::IsWindowFocused()) return;
+    
     if (ImGui::IsKeyPressed(ImGuiKey_Delete) && !selectedFile.empty()) {
         showDeletePopup = true;
     }
@@ -911,4 +946,29 @@ void UIProject::HandleShortcuts()
     if (ImGui::IsKeyPressed(ImGuiKey_F2) && !selectedFile.empty()) {
         renamePath = selectedFile;
     }
+}
+
+bool UIProject::IsImageFile(const std::filesystem::path& path)
+{
+	std::string ext = path.extension().string();
+	std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+	return (ext == ".png" || ext == ".jpg" || ext == ".jpeg" ||
+		ext == ".bmp" || ext == ".tga");
+}
+
+Image* UIProject::GetImageThumbnail(const std::filesystem::path& imagePath)
+{
+	if (imagePreviewCache.find(imagePath) != imagePreviewCache.end()) {
+		return imagePreviewCache[imagePath];
+	}
+
+	Image* thumbnail = new Image();
+	if (thumbnail->LoadTexture(imagePath.string())) {
+		imagePreviewCache[imagePath] = thumbnail;
+		return thumbnail;
+	}
+	else {
+		delete thumbnail;
+		return iconCache[".image"];
+	}
 }

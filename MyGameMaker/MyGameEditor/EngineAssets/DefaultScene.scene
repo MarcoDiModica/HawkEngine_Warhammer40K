@@ -184,8 +184,8 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: ShotgunShells
-  tag: Ammunition
+  name: stim
+  tag: PowerUp
   active: true
   isStatic: false
   Components:
@@ -201,28 +201,28 @@ GameObject2:
         - -0
         - 0
       localScale:
-        - 0.5
-        - 0.5
-        - 0.5
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
-        name: Cube
+        name: stim
       material:
         wrap_mode: Repeat
         filter: Nearest
         color:
-          - 0.5
-          - 0.5
-          - 0.5
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
           - 1
         metallic: 0
         roughness: 0.5
         ao: 1
         tonemap_strength: 1
         shader_type: PBR
-        image: Assets/default.png
+        image: ""
         normal_map: ""
         metallic_map: ""
         roughness_map: ""
@@ -246,11 +246,11 @@ GameObject2:
       isTrigger: true
     ScriptComponents:
       Script0:
-        name: ShotgunShells
+        name: MedicaeStimm
   Children: ~
 GameObject3:
-  name: ShotgunShells_1
-  tag: Ammunition
+  name: magnet
+  tag: PowerUp
   active: true
   isStatic: false
   Components:
@@ -266,28 +266,28 @@ GameObject3:
         - -0
         - 0
       localScale:
-        - 0.5
-        - 0.5
-        - 0.5
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
-        name: Cube
+        name: magnet
       material:
         wrap_mode: Repeat
         filter: Nearest
         color:
-          - 0.5
-          - 0.5
-          - 0.5
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
           - 1
         metallic: 0
         roughness: 0.5
         ao: 1
         tonemap_strength: 1
         shader_type: PBR
-        image: Assets/default.png
+        image: ""
         normal_map: ""
         metallic_map: ""
         roughness_map: ""
@@ -311,11 +311,11 @@ GameObject3:
       isTrigger: true
     ScriptComponents:
       Script0:
-        name: ShotgunShells
+        name: Magnet
   Children: ~
 GameObject4:
-  name: BoltgunBullets
-  tag: Ammunition
+  name: bullett
+  tag: PowerUp
   active: false
   isStatic: false
   Components:
@@ -331,28 +331,28 @@ GameObject4:
         - -0
         - 0
       localScale:
-        - 0.5
-        - 0.5
-        - 0.5
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
-        name: Cube
+        name: bullett
       material:
         wrap_mode: Repeat
         filter: Nearest
         color:
-          - 0.5
-          - 0.5
-          - 0.5
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
           - 1
         metallic: 0
         roughness: 0.5
         ao: 1
         tonemap_strength: 1
         shader_type: PBR
-        image: Assets/default.png
+        image: ""
         normal_map: ""
         metallic_map: ""
         roughness_map: ""
@@ -376,11 +376,11 @@ GameObject4:
       isTrigger: true
     ScriptComponents:
       Script0:
-        name: BoltgunBullets
+        name: AmmunitionBlessing
   Children: ~
 GameObject5:
-  name: ShotgunShells_2
-  tag: Ammunition
+  name: estandarte
+  tag: PowerUp
   active: false
   isStatic: false
   Components:
@@ -396,93 +396,28 @@ GameObject5:
         - -0
         - 0
       localScale:
-        - 0.5
-        - 0.5
-        - 0.5
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
-        name: Cube
+        name: estandarte
       material:
         wrap_mode: Repeat
         filter: Nearest
         color:
-          - 0.5
-          - 0.5
-          - 0.5
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
           - 1
         metallic: 0
         roughness: 0.5
         ao: 1
         tonemap_strength: 1
         shader_type: PBR
-        image: Assets/default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: ShotgunShells
-  Children: ~
-GameObject6:
-  name: ChapterStandard
-  tag: PowerUp
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -40
-        - 2
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.5
-        - 0.5
-        - 0.5
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.5
-          - 0.5
-          - 0.5
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Assets/default.png
+        image: ""
         normal_map: ""
         metallic_map: ""
         roughness_map: ""
@@ -508,9 +443,74 @@ GameObject6:
       Script0:
         name: ChapterStandard
   Children: ~
+GameObject6:
+  name: heart
+  tag: PowerUp
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -40
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: heart
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BlackHeart
+  Children: ~
 GameObject7:
-  name: Lictor
-  tag: Enemy
+  name: CubeTest
+  tag: Untagged
   active: true
   isStatic: false
   Components:
@@ -518,103 +518,58 @@ GameObject7:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -5
+        - 10
         - 0
-        - -5
+        - 0
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 5
-        - 5
-        - 5
-    SoundComponent:
-      name: SoundComponent
+        - 2
+        - 2
+        - 2
+    MeshRenderer:
+      name: MeshRenderer
       enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
     BoxColliderComponent:
       size:
-        - 0.25
-        - 0.5
-        - 0.25
+        - 1
+        - 1
+        - 1
       offset:
         - 0
-        - 2.5
-        - 1
+        - 0
+        - 0
       isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerRanged
-  Children:
-    - name: LictorMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.00024597215815447271
-            - 0.0018853993387892842
-            - -0.0003092930419370532
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 0.004091363400220871
-            - 0.004091363400220871
-            - 0.004091363400220871
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Plane.010
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Assets/Textures/Material_Base_color.png
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
+  Children: ~
 GameObject8:
   name: Floor
   tag: Untagged
@@ -1163,105 +1118,4 @@ GameObject9:
           name: UIImageComponent
           enabled: true
           texture_path: Assets/Textures/grenade_icon.png
-      Children: ~
-GameObject10:
-  name: Canvas_1
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    UITransformComponent:
-      name: UITransformComponent
-      enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 0
-        - 0
-  Children:
-    - name: InteractText
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.559000015
-            - 0.624000013
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.261999995
-            - 0.463999987
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: false
-          texture_path: Assets/Textures/PressE.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
       Children: ~

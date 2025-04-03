@@ -600,6 +600,43 @@ void Root::CreateMainMenuUI()
 	canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 }
 
+void Root::CreatePauseMenuUI() {
+	auto canvas = CreateGameObject("Canvas_PauseMeny");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+
+	auto menuImage = CreateGameObject("Menu_Image");
+	Application->root->ParentGameObject(*menuImage, *canvas);
+	menuImage->AddComponent<UIImageComponent>();
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PauseMenu.png");
+	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
+	menuImage->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.0, 0.0, 0), glm::vec3(1, 1, 1));
+
+	auto resumeButton = CreateGameObject("Resume_Button");
+	Application->root->ParentGameObject(*resumeButton, *canvas);
+	resumeButton->AddComponent<UIImageComponent>();
+	resumeButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Resume_button.png");
+	resumeButton->AddComponent<UIButtonComponent>();
+	resumeButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.0, 0));
+	resumeButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.426, 0.281, 0), glm::vec3(0.182, 0.091, 1));
+
+	auto optionsButton = CreateGameObject("Options_Button");
+	Application->root->ParentGameObject(*optionsButton, *canvas);
+	optionsButton->AddComponent<UIImageComponent>();
+	optionsButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Options_Button.png");
+	optionsButton->AddComponent<UIButtonComponent>();
+	optionsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	optionsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.426, 0.604, 0), glm::vec3(0.182, 0.091, 1));
+
+	auto quitButton = CreateGameObject("Exit_Button");
+	Application->root->ParentGameObject(*quitButton, *canvas);
+	quitButton->AddComponent<UIImageComponent>();
+	quitButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Quit_button.png");
+	quitButton->AddComponent<UIButtonComponent>();
+	quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.426, 0.591, 0), glm::vec3(0.182, 0.091, 1));
+}
+
 
 void Root::SetMainCamera(std::shared_ptr<GameObject> camera)
 {

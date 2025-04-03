@@ -79,6 +79,15 @@ public:
 	//has to be removed when the scene serializer is implemented
     void CreateGameplayUI();
 	void CreateMainMenuUI();
+	void CreatePauseMenuUI();
+    void CreateOptionsMenuUI();
+    void CreateLocationSM();
+    void CreateLocationBot();
+	void CreateGameOverUI();
+	void CreateWinUI();
+    void CreateLoseUI();
+	void CreateHUDUI();
+
 
     void SetMainCamera(std::shared_ptr<GameObject> camera);
 

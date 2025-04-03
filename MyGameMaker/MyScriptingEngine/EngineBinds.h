@@ -193,6 +193,8 @@ namespace EngineBinds {
 	void DOVec3(glm::vec3* vec, const glm::vec3 start, const glm::vec3 target, float duration, Modes mode);
     void DOValue(float* value, float start, float target, float duration, Modes mode);
 
+	void SetActive(MonoObject* gameObjectRef, bool active);
+
     //SceneManagement
     bool LoadScene(MonoString* sceneName);
     void SetScenePlay();

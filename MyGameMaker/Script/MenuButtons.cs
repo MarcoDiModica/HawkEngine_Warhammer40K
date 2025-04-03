@@ -53,6 +53,7 @@ public class MenuButtons : MonoBehaviour
         //transform_creditsButton = creditsButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
 
+        
         //sound = gameObject.GetComponent<Audio>();
 
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerDash playerDash;
     public PlayerShooting playerShooting;
+    public RedThirstManager redThirstManager;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
     private bool isIdle = false;

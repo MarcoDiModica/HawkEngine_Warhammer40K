@@ -25,8 +25,8 @@ public class PlayerShooting : MonoBehaviour
     public Shotgun shotgun;
     private Railgun railgun;
 
-    public bool hasShotgun;
-    public bool hasRailgun;
+    public bool hasShotgun = true;
+    public bool hasRailgun = true;
 
 
     private Audio sound;

@@ -22,6 +22,7 @@ public class Shotgun : BaseWeapon
     }
     public override void Start()
     {
+        damage = 70.0f;
         shootCadence = 0.7f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;

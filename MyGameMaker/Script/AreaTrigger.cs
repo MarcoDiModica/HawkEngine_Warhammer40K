@@ -8,6 +8,11 @@ public class AreaTrigger : MonoBehaviour, IInteractable
 
     public bool hasInteracted { get; set; }
 
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
     public override void Start()
     {
         areaMessage = GameObject.Find("dialogueText"); 

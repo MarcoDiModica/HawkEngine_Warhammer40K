@@ -3,6 +3,12 @@ public class Scene2ToMenu : MonoBehaviour
 {
     private Collider TriggerLevel;
     bool changeScene = false;
+
+    public override void Awake()
+    {
+        base.Awake();
+    }
+
     public override void Start()
     {
         TriggerLevel = gameObject.GetComponent<Collider>();

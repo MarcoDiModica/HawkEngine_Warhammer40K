@@ -4,22 +4,46 @@ using System.Numerics;
 
 public class MenuButtons : MonoBehaviour
 {
-    private UIButton newGameButton;
-    private UIButton continueButton;
-    private UIButton optionsButton;
-    private UIButton creditsButton;
-    private UIButton quitButton;
+    private GameObject newGameButton;
+    private GameObject continueButton;
+    private GameObject optionsButton;
+    private GameObject creditsButton;
+    private GameObject quitButton;
 
+    private UIButton button_newGameButton;
+    private UIButton button_continueButton;
+    private UIButton button_optionsButton;
+    private UIButton button_creditsButton;
+    private UIButton button_quitButton;
+
+    private UITransform transform_newGameButton;
+    private UITransform transform_continueButton;
+    private UITransform transform_optionsButton;
+    private UITransform transform_creditsButton;
+    private UITransform transform_quitButton;
     //private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
     public override void Start()
     {
-        newGameButton = GameObject.Find("NewGameButton").GetComponent<UIButton>();
-        continueButton = GameObject.Find("ContinueButton").GetComponent<UIButton>();
-        optionsButton = GameObject.Find("OptionsButton").GetComponent<UIButton>();
-        creditsButton = GameObject.Find("CreditsButton").GetComponent<UIButton>();
-        quitButton = GameObject.Find("QuitButton").GetComponent<UIButton>();
+        newGameButton = GameObject.Find("NewGameButton");
+        continueButton = GameObject.Find("ContinueButton");
+        optionsButton = GameObject.Find("OptionsButton");
+        creditsButton = GameObject.Find("CreditsButton");
+        quitButton = GameObject.Find("QuitButton");
+
+        button_newGameButton = newGameButton.GetComponent<UIButton>();
+        button_continueButton = continueButton.GetComponent<UIButton>();
+        button_optionsButton = optionsButton.GetComponent<UIButton>();
+        button_creditsButton = creditsButton.GetComponent<UIButton>();
+        button_quitButton = quitButton.GetComponent<UIButton>();
+
+        transform_newGameButton = newGameButton.GetComponent<UITransform>();
+        transform_continueButton = continueButton.GetComponent<UITransform>();
+        transform_optionsButton = optionsButton.GetComponent<UITransform>();
+        transform_creditsButton = creditsButton.GetComponent<UITransform>();
+        transform_quitButton = quitButton.GetComponent<UITransform>();
+
         //sound = gameObject.GetComponent<Audio>();
 
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
@@ -30,15 +54,17 @@ public class MenuButtons : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (newGameButton.GetState() == ButtonState.CLICKED)
+        if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
-           SceneManager.LoadScene("DefaultScene");
+            
+            SceneManager.LoadScene("DefaultScene");
         }
-        
+
         //if (continueButton.GetState() == ButtonState.CLICKED)
         //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
+        //    transform_continueButton.DOScaleUI(new Vector3(1.2f, 1.2f, 1.2f), 0.2f, Modes.EASE_IN_OUT);
+        //    
+        //    
         //    Engineson.print("Continue is Clicked");
         //}
 

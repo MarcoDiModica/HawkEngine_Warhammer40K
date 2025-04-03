@@ -21,6 +21,7 @@ public:
 	explicit MeshRenderer(GameObject* owner);
 	~MeshRenderer() override = default;
 
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;

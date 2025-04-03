@@ -16,6 +16,7 @@ public:
 	UICanvasComponent(UICanvasComponent&&) noexcept = default;
 	UICanvasComponent& operator=(UICanvasComponent&&) noexcept = default;
 
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;

@@ -10,14 +10,25 @@ public class PlayerInput : MonoBehaviour
     private bool isReloadPressed = false;
     private bool isAbility1Pressed = false;
     private bool isAbility2Pressed = false;
+    private bool isInteractPressed = false;
+
+    private bool isMovementBlocked = false;
+    public override void Awake()
+    {
+
+    }
+
     public override void Start()
     {
     }
 
     public override void Update(float deltaTime)
     {
-        UpdateMovementDirection();
-        UpdateLookDirection();
+        if (!isMovementBlocked)
+        {
+            UpdateMovementDirection();
+            UpdateLookDirection();
+        }
 
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
         if (Input.GetControllerAxis(0, 5) > 0.5f)
@@ -28,10 +39,17 @@ public class PlayerInput : MonoBehaviour
         {
             isShootPressed = false;
         }
-        
+
+        isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B);
         isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
         isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
         isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
+
+
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            SceneManager.LoadScene("Level2");
+        }
     }
 
     private void UpdateMovementDirection()
@@ -107,7 +125,12 @@ public class PlayerInput : MonoBehaviour
     {
         return isAbility2Pressed;
     }
-    
+
+    public bool IsInteracting()
+    {
+        return isInteractPressed;  
+    }
+
     public bool IsChangingWeaponRight()
     {
         return Input.GetControllerButtonDown(ControllerButton.DPadRight);
@@ -121,5 +144,15 @@ public class PlayerInput : MonoBehaviour
     public bool IsChangingRailgunMode()
     {
         return Input.GetControllerButtonDown(ControllerButton.DPadDown) || Input.GetControllerButtonDown(ControllerButton.DPadUp);
+    }
+
+    public void BlockMovement()
+    {
+        isMovementBlocked = true;
+    }
+
+    public void UnblockMovement()
+    {
+        isMovementBlocked = false;
     }
 }

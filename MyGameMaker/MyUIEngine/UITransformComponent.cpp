@@ -13,6 +13,10 @@ UITransformComponent::UITransformComponent(GameObject* owner) : Component(owner)
 	pivotOffset = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
+void UITransformComponent::Awake()
+{
+}
+
 void UITransformComponent::Start()
 {
 

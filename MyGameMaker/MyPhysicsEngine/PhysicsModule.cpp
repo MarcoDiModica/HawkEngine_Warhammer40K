@@ -1,5 +1,6 @@
 
 #include "PhysicsModule.h"
+#include "CustomDispatcher.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/TransformComponent.h"
 #include "RigidBodyComponent.h"
@@ -7,9 +8,10 @@
 #include <glm/glm.hpp>
 #include "CapsuleColliderComponent.h"
 #include "MeshColliderComponent.h"
+#include "MyGameEditor/App.h"
+#include "External/Optick/include/optick.h"
 
-
-constexpr float fixedDeltaTime = 0.01; // 60 updates per second //With 0.02 it goes a little bit laggy
+constexpr float fixedDeltaTime = 0.002; // 60 updates per second //With 0.02 it goes a little bit laggy
 float accumulatedTime = 0.0f;
 
 
@@ -23,10 +25,11 @@ bool PhysicsModule::Awake() {
     // Inicializaci�n del sistema de f�sicas de Bullet
     broadphase = new btDbvtBroadphase();
     collisionConfiguration = new btDefaultCollisionConfiguration();
-    dispatcher = new btCollisionDispatcher(collisionConfiguration);
+    btDispatcher* dispatcher = new CustomCollisionDispatcher(collisionConfiguration);
     solver = new btSequentialImpulseConstraintSolver();
     dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
     dynamicsWorld->setGravity(btVector3(0, -9.81, 0));
+	
 
     //Debug drawer
     debugDrawer = new DebugDrawerPhysics();
@@ -45,6 +48,11 @@ bool PhysicsModule::Awake() {
     //btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
     //dynamicsWorld->addRigidBody(groundRigidBody);
 
+    //btGhostObject* ghost = new btGhostObject();
+    //ghost->setCollisionShape(new btBoxShape(btVector3(1, 1, 1)));
+    //ghost->setCollisionFlags(btCollisionObject::CF_KINEMATIC_OBJECT);
+    //dynamicsWorld->addCollisionObject(ghost, btBroadphaseProxy::SensorTrigger, btBroadphaseProxy::AllFilter);
+
     //groundRigidBody->setRestitution(0.8f);
     SetGlobalRestitution(0.5f);
     return true;
@@ -55,13 +63,18 @@ void PhysicsModule::SyncTransforms() {
     static std::unordered_map<GameObject*, glm::dvec3> offsetMap;
 
     // Compute interpolation factor (between 0 and 1)
-    float interpolationFactor = accumulatedTime / fixedDeltaTime;
+    float interpolationFactor = glm::clamp(accumulatedTime / fixedDeltaTime, 0.0f, 1.0f);
+
 
     for (auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {      
 
         if (!gameObject->HasComponent<RigidbodyComponent>())
             continue;
 
+        if (gameObject->GetComponent<RigidbodyComponent>()->IsKinematic())
+            //gameObject->GetComponent<BoxColliderComponent>()->SnapToPosition();
+            continue;
+        
         btTransform currentBtTrans;
         if (rigidBody->getMotionState())
             rigidBody->getMotionState()->getWorldTransform(currentBtTrans);
@@ -146,11 +159,49 @@ void PhysicsModule::SyncCollidersToGameObjects() {
         else {
             rigidBody->setWorldTransform(transform);
         }
-
-        std::cout << "Collider position updated to: ("
-            << position.x << ", " << position.y << ", " << position.z << ")\n";
     }
 }
+std::vector<GameObject*> PhysicsModule::OverlapSphere(const glm::vec3& position, float radius, const std::string& tag) {
+      std::vector<GameObject*> overlappingObjects;
+
+    // Ghost Pair Callback
+    if (!dynamicsWorld->getBroadphase()->getOverlappingPairCache()->hasDeferredRemoval()) {
+        dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+    }
+
+    //Ghost object
+    auto ghostObject = std::make_unique<btPairCachingGhostObject>();
+    btSphereShape* sphereShape = new btSphereShape(radius);
+    ghostObject->setCollisionShape(sphereShape);
+    ghostObject->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE); 
+    ghostObject->setWorldTransform(btTransform(btQuaternion::getIdentity(), btVector3(position.x, position.y, position.z)));
+    int collisionFilterGroup = btBroadphaseProxy::SensorTrigger;
+    int collisionFilterMask = btBroadphaseProxy::AllFilter;
+    dynamicsWorld->addCollisionObject(ghostObject.get(), collisionFilterGroup, collisionFilterMask);
+
+	//adjust the world collisions
+    dynamicsWorld->stepSimulation(1.f / 60.f, 10);
+
+    //Check collisions
+    int numOverlappingObjects = ghostObject->getNumOverlappingObjects();
+    for (int i = 0; i < numOverlappingObjects; i++) {
+        const btCollisionObject* collidingObject = ghostObject->getOverlappingObject(i);
+        for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+            if (rigidBody == collidingObject) {
+                if (tag == "Default" || gameObject->CompareTag(tag)) {
+                    overlappingObjects.push_back(gameObject);
+                }
+                break;
+            }
+        }
+    }
+    dynamicsWorld->removeCollisionObject(ghostObject.get());
+    delete sphereShape;
+
+    return overlappingObjects;
+}
+
+
 
 std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWorld) {
     std::vector<btRigidBody*> rigidBodies;
@@ -170,6 +221,7 @@ std::vector<btRigidBody*> GetAllRigidBodies(btDiscreteDynamicsWorld* dynamicsWor
 void PhysicsModule::DrawDebugDrawer() {
     if (debugDrawer) {
         auto rigidBodies = GetAllRigidBodies(dynamicsWorld);
+        debugDrawer->drawLine(rayFrom, rayTo, btVector3(1.0f, 0.0f, 0.0f));
 
         for (const auto& rigidBody : rigidBodies) {
             if (!rigidBody || !rigidBody->getCollisionShape()) {
@@ -271,11 +323,11 @@ void PhysicsModule::DrawDebugDrawer() {
 
 
 void PhysicsModule::CallMonoCollision(GameObject* obj, const std::string& methodName, GameObject* other) {
-    if (!obj) return;
-
+    if (!obj || !other) return;
+    auto s = *other;
     for (auto& script : obj->scriptComponents) {
         if (script) {
-            script->InvokeMonoMethod(methodName, other);
+            script->InvokeMonoMethod(methodName, *other);
         }
     }
 }
@@ -283,6 +335,7 @@ void PhysicsModule::CallMonoCollision(GameObject* obj, const std::string& method
 void PhysicsModule::CheckCollisions() {
     static std::set<std::pair<GameObject*, GameObject*>> previousCollisions;
     std::set<std::pair<GameObject*, GameObject*>> currentCollisions;
+
 
     int numManifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
     for (int i = 0; i < numManifolds; i++) {
@@ -428,21 +481,27 @@ void PhysicsModule::CheckCollisions() {
             ++it;
         }
     }
-
     previousCollisions = currentCollisions;
 }
 
 
 
 bool PhysicsModule::Update(double dt) {
-
 #ifndef _BUILD
     DrawDebugDrawer();
 #endif // !_BUILD
+
+#ifdef PROFILE
+    OPTICK_EVENT();
+#endif // PROFILE
   
     if (linkPhysicsToScene) {
-		dynamicsWorld->stepSimulation(dt, 16, fixedDeltaTime);
-		SyncTransforms();
+        int numSubsteps = glm::clamp(static_cast<int>(dt / fixedDeltaTime), 1, 10);
+        int maxSubSteps = 10;
+
+        dynamicsWorld->stepSimulation(dt, maxSubSteps, dt / maxSubSteps);
+
+        SyncTransforms();
         CheckCollisions();
     }
 
@@ -480,43 +539,6 @@ bool PhysicsModule::CleanUp() {
     return true;
 }
 
-void PhysicsModule::SpawnPhysSphereWithForce(GameObject& launcher, GameObject& sphere, float radius, float mass, float forceMagnitude) {
-    Transform_Component* transform = launcher.GetTransform();
-    glm::vec3 spawnPosition = transform->GetPosition();
-
-    glm::vec3 spawnDirection = glm::vec3(transform->GetForward().x, 0.0f, transform->GetForward().z);
-    float offsetDistance = 1.0f;
-    spawnPosition += spawnDirection * offsetDistance;
-
-    Transform_Component* sphereTransform = sphere.GetTransform();
-    sphereTransform->SetPosition(spawnPosition);
-
-    btTransform startTransform;
-    startTransform.setIdentity();
-    startTransform.setOrigin(btVector3(spawnPosition.x, spawnPosition.y, spawnPosition.z));
-    startTransform.setRotation(btQuaternion(0, 0, 0, 1)); 
-
-    btSphereShape* sphereShape = new btSphereShape(radius);
-
-    btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
-
-    btVector3 inertia(0, 0, 0);
-    if (mass > 0.0f) {
-        sphereShape->calculateLocalInertia(mass, inertia);
-    }
-
-    btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, motionState, sphereShape, inertia);
-    btRigidBody* rigidBody = new btRigidBody(rigidBodyCI);
-
-    rigidBody->setRestitution(0.7f);
-    dynamicsWorld->addRigidBody(rigidBody);
-    gameObjectRigidBodyMap[&sphere] = rigidBody;
-
-    btVector3 btForce = btVector3(spawnDirection.x * forceMagnitude, 0.0f, spawnDirection.z * forceMagnitude);
-    rigidBody->applyCentralImpulse(btForce);
-}
-
-
 void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     int numCollisionObjects = dynamicsWorld->getNumCollisionObjects();
 
@@ -529,6 +551,37 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
     }
 
     std::cout << "Global restitution set to: " << restitutionValue << "\n";
+}
+
+GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, float maxDistance, btVector3& hitPoint, btVector3& normal, float& distance)
+{
+	rayFrom = origin;
+	btVector3 originRay = origin;
+    btVector3 directionRay = origin + direction.normalized() * maxDistance;
+
+	btCollisionWorld::ClosestRayResultCallback rayCallback(originRay, directionRay);
+    dynamicsWorld->rayTest(originRay, directionRay, rayCallback);
+
+	
+    if (rayCallback.hasHit()) {
+        rayTo = rayCallback.m_closestHitFraction * direction.normalized();
+        const btCollisionObject* hitObject = rayCallback.m_collisionObject;
+        hitPoint = rayCallback.m_hitPointWorld;
+        normal = rayCallback.m_hitNormalWorld;
+        distance = rayCallback.m_closestHitFraction * maxDistance;
+        for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+            if (rigidBody == hitObject) {
+                return gameObject;
+            }
+        }
+
+		
+    }
+	else {
+		return nullptr;
+	}
+
+	return nullptr;
 }
 
 

@@ -1,0 +1,119 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using HawkEngine;
+
+public class RedThirstManager : MonoBehaviour
+{
+    private int redThirstPoints = 0;
+    private const int maxRedThirstPoints = 5;
+    private bool isInBlackRage = false;
+
+    private float abilityUseTimer = 0f;
+    private int abilityCount = 0;
+    private const float abilityTimeLimit = 3f;
+
+    private float redThirstDecayTimer = 0f;
+    private const float RED_THIRST_DECAY_TIME = 5f;
+
+    private float blackRageTimer = 0f;
+    private const float BLACK_RAGE_DURATION = 5f;
+    private const float BLACK_RAGE_EXTENSION = 2f;
+    private PlayerController playerController;
+    private float lastActionTime = 0f;
+
+    public float biblePages = 0f;
+    public override void Awake()
+    {
+        playerController = gameObject.GetComponent<PlayerController>();
+    }
+
+    public override void Start()
+    {
+    
+    }
+
+    public override void Update(float deltaTime)
+    {
+        if (abilityCount > 0)
+        {
+            abilityUseTimer += deltaTime;
+            if (abilityUseTimer >= abilityTimeLimit)
+            {
+                ResetAbilityCombo();
+            }
+        }
+
+        if (isInBlackRage)
+        {
+            HandleBlackRage(deltaTime);
+        }
+        else
+        {
+           
+        }
+    }
+
+    public void OnAbilityUsed()
+    {
+        abilityCount++;
+
+        if (abilityCount == 2)
+        {
+            AddRedThirstPoint(1);
+            ResetAbilityCombo();
+        }
+        lastActionTime = 0f;
+    }
+
+    private void ResetAbilityCombo()
+    {
+        abilityCount = 0;
+        abilityUseTimer = 0f;
+    }
+
+    private void AddRedThirstPoint(int points)
+    {
+        //Actualizar el HUD por cada Red Thirst Point
+        redThirstPoints += points;
+
+        Engineson.print($"Red Thirst Points: {redThirstPoints}");
+
+        if (redThirstPoints >= maxRedThirstPoints && isInBlackRage == false)
+        {
+            ActivateBlackRage();
+        }
+
+        redThirstDecayTimer = 0f;
+        lastActionTime = 0f;
+    }
+
+    private void ActivateBlackRage()
+    {
+        isInBlackRage = true;
+        blackRageTimer = 0f;
+        Engineson.print("Black Rage Activated!");
+        playerController.playerData.movSpeed = playerController.playerData.movSpeed * 1.5f;
+        
+
+    }
+    private void DeactivateBlackRage()
+    {
+        // Actualizar el HUD para mostrar que Black Rage ha terminado
+        isInBlackRage = false;
+        redThirstPoints = 0;
+        Engineson.print("Black Rage Deactivated");
+        playerController.playerData.movSpeed = playerController.playerData.movSpeed / 1.5f;
+    }
+    private void HandleBlackRage(float deltaTime)
+    {
+        blackRageTimer += deltaTime;
+
+        lastActionTime += deltaTime;
+
+        if (blackRageTimer >= BLACK_RAGE_DURATION)
+        {
+            DeactivateBlackRage();
+        }
+    }
+
+}

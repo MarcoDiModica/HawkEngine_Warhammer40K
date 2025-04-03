@@ -1786,23 +1786,60 @@ bool UIInspector::Draw() {
 }
 
 void UIInspector::DrawGameObjectHeader(GameObject* gameObject) {
-    char newName[128] = {};
-    strncpy_s(newName, gameObject->GetName().c_str(), sizeof(newName));
+	char newName[128] = {};
+	strncpy_s(newName, gameObject->GetName().c_str(), sizeof(newName));
 
-    ImGui::Text("GameObject:");
-    if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue)) {
-        if (strlen(newName) > 0) {
-            gameObject->SetName(newName);
-        }
-    }
+	ImGui::Text("GameObject:");
+	if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue)) {
+		if (strlen(newName) > 0) {
+			gameObject->SetName(newName);
+		}
+	}
 
-    ImGui::SameLine();
-    ImGui::Checkbox("Static", &gameObject->isStatic);
+	ImGui::SameLine();
+	ImGui::Checkbox("Static", &gameObject->isStatic);
 
-    ImGui::Separator();
+	ImGui::Separator();
 
-    bool isActive = gameObject->IsActive();
-    if (ImGui::Checkbox("Active", &isActive)) {
+	bool isActive = gameObject->IsActive();
+	if (ImGui::Checkbox("Active", &isActive)) {
 		gameObject->SetActive(isActive);
+	}
+
+	ImGui::Separator();
+	ImGui::Text("Tag:");
+
+	const std::vector<std::string>& tags = SceneManagement->GetTags();
+	int selectedTagIndex = -1;
+
+	std::string currentTag = gameObject->GetTag();
+	for (size_t i = 0; i < tags.size(); ++i) {
+		if (tags[i] == currentTag) {
+			selectedTagIndex = static_cast<int>(i);
+			break;
+		}
+	}
+
+	if (ImGui::BeginCombo("##GameObjectTag", currentTag.c_str())) {
+		for (size_t i = 0; i < tags.size(); ++i) {
+			bool isSelected = (selectedTagIndex == static_cast<int>(i));
+			if (ImGui::Selectable(tags[i].c_str(), isSelected)) {
+				gameObject->SetTag(tags[i]);
+			}
+			if (isSelected) {
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	static char newTag[128] = {};
+	ImGui::InputText("New Tag", newTag, sizeof(newTag));
+
+	if (ImGui::Button("Add Tag") && strlen(newTag) > 0) {
+		std::string newTagStr(newTag);
+		SceneManagement->AddTag(newTagStr);
+		gameObject->SetTag(newTagStr);
+		memset(newTag, 0, sizeof(newTag));  
 	}
 }

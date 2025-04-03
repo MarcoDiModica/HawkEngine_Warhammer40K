@@ -17,6 +17,10 @@ public class Grenade : MonoBehaviour
     public bool needsDestroy = false;
     float deathTimerPrevention = 0;
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
       
@@ -69,7 +73,7 @@ public class Grenade : MonoBehaviour
         isExploded = true;
     }
 
-    public override void OnCollisionEnter(Collider other)
+    public override void OnCollisionEnter(GameObject other)
     {
         Explode();
     }

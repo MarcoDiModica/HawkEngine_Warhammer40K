@@ -1,18 +1,28 @@
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using HawkEngine;
 
 public class Boltgun : BaseWeapon
 {
 
     GrenadeLauncher grenadeLauncher;
+    ArcSnare arcSnare;
+    private PlayerController playerController;
+    public PlayerData playerData;
     private Audio sound;
     private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
     private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
 
+    private float timeSinceLastShot = 0.0f;
+
+    public override void Awake()
+    {
+        
+    }
     public override void Start()
     {
-        shootCadence = 3f;
+        shootCadence = 0.1f;
         magazineSize = 30;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 240;
@@ -21,19 +31,32 @@ public class Boltgun : BaseWeapon
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
+        arcSnare = gameObject.GetComponent<ArcSnare>();
         sound = gameObject.GetComponent<Audio>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
     }
 
     public override void Update(float deltaTime)
     {
         CleanBullets();
+        timeSinceLastShot += deltaTime;
+        //Engineson.print(deltaTime.ToString());
+        //Engineson.print(timeSinceLastShot.ToString());
     }
 
     public override void Shoot()
     {
-        if (currentMagazineAmmo > 0)
+
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
-            currentMagazineAmmo--;
+            timeSinceLastShot = 0f;
+
+            if (!playerData.infiniteBullets)
+            {
+                currentMagazineAmmo--;
+            }
+
             sound?.LoadAudio(boltgunShot);
             sound?.Play();
             // Shoot logic
@@ -54,7 +77,7 @@ public class Boltgun : BaseWeapon
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                     projectile.AddScript("BulletData");
-                    projectile.GetComponent<BulletData>().Init(projTransform, forward);
+                    projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
                     bullets.Add(projectile.GetComponent<BulletData>());
 
                     Engineson.print("Projectile fired!");
@@ -70,8 +93,18 @@ public class Boltgun : BaseWeapon
         {
             sound?.LoadAudio(boltgunReload);
             sound?.Play();
-            currentTotalAmmo -= magazineSize - currentMagazineAmmo;
-            currentMagazineAmmo = magazineSize;
+           
+            if(currentTotalAmmo >= magazineSize)
+            {
+                currentMagazineAmmo = magazineSize;
+                currentTotalAmmo = currentTotalAmmo - magazineSize;
+            }
+            else 
+            {
+                currentMagazineAmmo = currentTotalAmmo;
+                currentTotalAmmo = 0;
+            }
+             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
             Engineson.print("Boltgun reloaded");
             Engineson.print($"Current ammo: {currentTotalAmmo}");
         }
@@ -79,15 +112,16 @@ public class Boltgun : BaseWeapon
 
     public override void UseAbility1()
     {
-        // Ability 1 logic
+
         Engineson.print("Boltgun ability 1 used");
         grenadeLauncher.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-        // Ability 2 logic
+        
         Engineson.print("Boltgun ability 2 used");
+        arcSnare.TriggerAbility();
     }
 
     public override void CleanBullets()
@@ -109,6 +143,12 @@ public class Boltgun : BaseWeapon
                 }
             }
         }
+    }
+
+    public override void ResetCooldowns()
+    {
+       arcSnare.ResetCooldowns();
+        grenadeLauncher.ResetCooldowns();
     }
 
 }

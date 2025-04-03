@@ -9,7 +9,11 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(SolutionDir)External\Mono\include\mono-2.0\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(SolutionDir); $(SolutionDir)External\Mono\include\mono-2.0\;%(AdditionalIncludeDirectories)
+        $(MSBuildThisFileDirectory)vcpkg_installed\$(VcpkgTriplet)\$(VcpkgTriplet)\include\bullet;
+        $(MSBuildThisFileDirectory)vcpkg_installed\$(VcpkgTriplet)\include\bullet;
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)External\Mono\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

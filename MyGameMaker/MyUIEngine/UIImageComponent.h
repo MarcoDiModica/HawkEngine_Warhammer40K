@@ -20,6 +20,7 @@ public:
 	UIImageComponent(UIImageComponent&&) noexcept = default;
 	UIImageComponent& operator=(UIImageComponent&&) noexcept = default;
 
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;

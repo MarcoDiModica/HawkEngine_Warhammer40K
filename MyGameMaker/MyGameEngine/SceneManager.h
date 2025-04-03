@@ -20,6 +20,7 @@ public:
     SceneManager() {
     }
 
+    bool Awake();
     bool Start();
     bool Update(double dt);
 
@@ -55,12 +56,24 @@ public:
 
 	std::shared_ptr<GameObject> FindGOByNameRecursive(const std::string& name, const std::vector<std::shared_ptr<GameObject>>& gameObjects) const;
 
+    //Tag Management
+    const std::vector<std::string>& GetTags() const { return tags; }
+    void AddTag(const std::string& tag);
+    bool HasTag(const std::string& tag) const;
+    void SaveTags();
+    void LoadTags();
+
+
+
     std::shared_ptr<Scene> currentScene = nullptr;
 
     //main camera
     std::shared_ptr<GameObject> mainCamera = nullptr;
 private:
     std::vector<std::shared_ptr<Scene>> scenes;
+    std::vector<std::string> tags;
+    void LoadTagsFromFile();
+    void SaveTagsToFile();
 
 };
 

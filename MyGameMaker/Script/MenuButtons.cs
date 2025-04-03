@@ -26,6 +26,11 @@ public class MenuButtons : MonoBehaviour
     //private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
+
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
         newGameButton = GameObject.Find("NewGameButton");

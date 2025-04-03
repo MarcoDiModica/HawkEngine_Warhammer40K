@@ -17,6 +17,7 @@ public class GrenadeLauncher : BaseAbilities
     Rigidbody rigidbody;
     BoxCollider collider;
     bool canThrow = true;
+    public bool needsDestroy = false;
 
     private float explosionCooldown = 1.0f;
     private float explosionTimer = 0.0f;
@@ -80,6 +81,8 @@ public class GrenadeLauncher : BaseAbilities
 
             if (explosionTimer >= explosionCooldown)
             {
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
+                needsDestroy = false;
                 exploded = false;
                 explosionTimer = 0f;
             }
@@ -107,6 +110,7 @@ public class GrenadeLauncher : BaseAbilities
 
         grenade.AddScript("Grenade");
         grenade.GetComponent<Grenade>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+        grenade.AddComponent<Audio>();
 
         canThrow = false; // Inicia el cooldown
         abilityTimer = 0.0f;

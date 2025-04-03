@@ -90,11 +90,16 @@ public class Barrage : BaseAbilities
 
             grenade = Engineson.CreateGameObject("Barrage", null);
 
+
+
             if (grenade == null)
             {
                 Engineson.print("ERROR: No se pudo crear la granada.");
                 return;
             }
+
+
+
 
             grenade.AddScript("BarrageBullet");
             grenade.GetComponent<BarrageBullet>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);

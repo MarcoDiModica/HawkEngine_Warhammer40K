@@ -96,7 +96,11 @@ public class HookShot : BaseAbilities
         }
 
         grenade.AddScript("Hook");
+        
         grenade.GetComponent<Hook>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+        grenade.AddComponent<Audio>();
+        grenade.GetComponent<Hook>().Start();
+        
 
         canThrow = false;
         abilityTimer = 0.0f;

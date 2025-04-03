@@ -1009,6 +1009,7 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
 void EngineBinds::SetScenePlay()
 {
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	SceneManagement->Awake();
 	SceneManagement->currentScene->Start();
 }
 

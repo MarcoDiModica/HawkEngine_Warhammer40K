@@ -10,9 +10,9 @@ GameObject0:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 0
-        - 49.667213439941406
-        - 0
+        - 22.687610626220703
+        - 26.459808349609375
+        - -8.5545635223388672
       localRotation:
         - 0
         - -0
@@ -140,9 +140,9 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 37.509864807128906
-        - 1338.126708984375
-        - -137.15426635742188
+        - 31.154407501220703
+        - 40.963550567626953
+        - -7.5168571472167969
       localRotation:
         - 87.184427852864545
         - -0
@@ -189,7 +189,7 @@ GameObject2:
   Children:
     - name: Cube.067
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -250,7 +250,7 @@ GameObject2:
       Children: ~
     - name: Cube.063
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -372,7 +372,7 @@ GameObject2:
       Children: ~
     - name: Cube.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -433,7 +433,7 @@ GameObject2:
       Children: ~
     - name: Cube.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -445,7 +445,7 @@ GameObject2:
             - 384.92050170898438
           localRotation:
             - -90
-            - 26.042648755774472
+            - 26.042648755774469
             - 0
           localScale:
             - 17.614019393920898
@@ -484,7 +484,7 @@ GameObject2:
       Children: ~
     - name: Cube.068
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -545,7 +545,7 @@ GameObject2:
       Children: ~
     - name: Cube.069
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -606,7 +606,7 @@ GameObject2:
       Children: ~
     - name: Cube.070
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -667,7 +667,7 @@ GameObject2:
       Children: ~
     - name: Cube.071
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -728,7 +728,7 @@ GameObject2:
       Children: ~
     - name: Cube.072
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -789,7 +789,7 @@ GameObject2:
       Children: ~
     - name: Cube.073
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -850,7 +850,7 @@ GameObject2:
       Children: ~
     - name: Cube.074
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -911,7 +911,7 @@ GameObject2:
       Children: ~
     - name: Cube.075
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -972,7 +972,7 @@ GameObject2:
       Children: ~
     - name: Cube.076
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1033,7 +1033,7 @@ GameObject2:
       Children: ~
     - name: Cube.077
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1094,7 +1094,7 @@ GameObject2:
       Children: ~
     - name: Cube.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1155,7 +1155,7 @@ GameObject2:
       Children: ~
     - name: Cube.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1216,7 +1216,7 @@ GameObject2:
       Children: ~
     - name: Cube.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1277,7 +1277,7 @@ GameObject2:
       Children: ~
     - name: Cube.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1338,7 +1338,7 @@ GameObject2:
       Children: ~
     - name: Cube
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1399,7 +1399,7 @@ GameObject2:
       Children: ~
     - name: Cube.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1460,7 +1460,7 @@ GameObject2:
       Children: ~
     - name: Cube.011
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1521,7 +1521,7 @@ GameObject2:
       Children: ~
     - name: Cube.053
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1582,7 +1582,7 @@ GameObject2:
       Children: ~
     - name: Cube.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1643,7 +1643,7 @@ GameObject2:
       Children: ~
     - name: Cube.013
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1704,7 +1704,7 @@ GameObject2:
       Children: ~
     - name: Cube.054
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1765,7 +1765,7 @@ GameObject2:
       Children: ~
     - name: Cube.016
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1826,7 +1826,7 @@ GameObject2:
       Children: ~
     - name: Cube.017
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1877,7 +1877,7 @@ GameObject2:
       Children: ~
     - name: Cube.018
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1938,7 +1938,7 @@ GameObject2:
       Children: ~
     - name: Cube.019
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1989,7 +1989,7 @@ GameObject2:
       Children: ~
     - name: Cube.020
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2050,7 +2050,7 @@ GameObject2:
       Children: ~
     - name: Cube.023
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2061,9 +2061,9 @@ GameObject2:
             - 183.71685791015625
             - -117.96504211425781
           localRotation:
-            - -90.000003633415957
-            - 74.995741166755252
-            - 4.2868416009780305e-05
+            - -90.000003633380132
+            - 74.995754945072221
+            - 4.2868451832966648e-05
           localScale:
             - 84.462257385253906
             - 75.247108459472656
@@ -2111,7 +2111,7 @@ GameObject2:
       Children: ~
     - name: Cube.022
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2172,7 +2172,7 @@ GameObject2:
       Children: ~
     - name: Cube.024
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2233,7 +2233,7 @@ GameObject2:
       Children: ~
     - name: Cube.025
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2244,9 +2244,9 @@ GameObject2:
             - 183.71685791015625
             - 160.91238403320312
           localRotation:
-            - 89.999929928637968
-            - -77.99599598186073
-            - -179.99989043857619
+            - 89.999951409706767
+            - -77.99598480248639
+            - -179.99990161788827
           localScale:
             - 84.462272644042969
             - 75.247100830078125
@@ -2294,7 +2294,7 @@ GameObject2:
       Children: ~
     - name: Cube.026
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2355,7 +2355,7 @@ GameObject2:
       Children: ~
     - name: Cube.027
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2416,7 +2416,7 @@ GameObject2:
       Children: ~
     - name: Cube.028
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2477,7 +2477,7 @@ GameObject2:
       Children: ~
     - name: Cube.029
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2538,7 +2538,7 @@ GameObject2:
       Children: ~
     - name: Cube.030
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2599,7 +2599,7 @@ GameObject2:
       Children: ~
     - name: Cube.031
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2660,7 +2660,7 @@ GameObject2:
       Children: ~
     - name: Cube.032
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2721,7 +2721,7 @@ GameObject2:
       Children: ~
     - name: Cube.033
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2732,9 +2732,9 @@ GameObject2:
             - 220.03384399414062
             - -838.89398193359375
           localRotation:
-            - -89.001249121691444
-            - 0.1162067843103879
-            - 12.6171051496133
+            - -89.001249254371572
+            - 0.11620558424606459
+            - 12.617105139019055
           localScale:
             - 57.425930023193359
             - 57.731025695800781
@@ -2782,7 +2782,7 @@ GameObject2:
       Children: ~
     - name: Cube.034
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2843,7 +2843,7 @@ GameObject2:
       Children: ~
     - name: Cube.035
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2854,9 +2854,9 @@ GameObject2:
             - 183.71688842773438
             - -978.13653564453125
           localRotation:
-            - 89.999995323450563
-            - 74.948890235268863
-            - -179.99998228557035
+            - 89.999989665702117
+            - 74.948897615388915
+            - -179.99998966570212
           localScale:
             - 84.462265014648438
             - 75.247108459472656
@@ -2904,7 +2904,7 @@ GameObject2:
       Children: ~
     - name: Cube.036
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2965,7 +2965,7 @@ GameObject2:
       Children: ~
     - name: Cube.037
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3026,7 +3026,7 @@ GameObject2:
       Children: ~
     - name: Cube.038
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3087,7 +3087,7 @@ GameObject2:
       Children: ~
     - name: Cube.057
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3148,7 +3148,7 @@ GameObject2:
       Children: ~
     - name: Cube.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3209,7 +3209,7 @@ GameObject2:
       Children: ~
     - name: Cube.041
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3270,7 +3270,7 @@ GameObject2:
       Children: ~
     - name: Cube.042
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3331,7 +3331,7 @@ GameObject2:
       Children: ~
     - name: Cube.043
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3392,7 +3392,7 @@ GameObject2:
       Children: ~
     - name: Cube.044
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3453,7 +3453,7 @@ GameObject2:
       Children: ~
     - name: Cube.045
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3464,9 +3464,9 @@ GameObject2:
             - 184.10441589355469
             - -335.21240234375
           localRotation:
-            - 0.047069100139123285
-            - 2.7027478765904434
-            - 4.9405166166379191
+            - 0.047069120262858997
+            - 2.7027478771085924
+            - 4.9405174703301427
           localScale:
             - 54.899223327636719
             - 46.821659088134766
@@ -3514,7 +3514,7 @@ GameObject2:
       Children: ~
     - name: Cube.046
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3575,7 +3575,7 @@ GameObject2:
       Children: ~
     - name: Cube.050
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3587,8 +3587,8 @@ GameObject2:
             - -1785.541015625
           localRotation:
             - -89.999995169953408
-            - 1.1740076349196027
-            - 1.1752474327087236e-08
+            - 1.1740080877727879
+            - 1.175249341537093e-08
           localScale:
             - 52.059200286865234
             - 57.092182159423828
@@ -3636,7 +3636,7 @@ GameObject2:
       Children: ~
     - name: Cube.058
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3697,7 +3697,7 @@ GameObject2:
       Children: ~
     - name: Cube.060
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3758,7 +3758,7 @@ GameObject2:
       Children: ~
     - name: Cube.061
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3769,9 +3769,9 @@ GameObject2:
             - 231.12017822265625
             - 1541.8310546875
           localRotation:
-            - -108.64618516916244
-            - -78.00270398698963
-            - 14.375500514308765
+            - -108.64620599781492
+            - -78.002698401464343
+            - 14.375519691178512
           localScale:
             - 321.77432250976562
             - 256.072265625
@@ -3819,7 +3819,7 @@ GameObject2:
       Children: ~
     - name: Cube.062
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3880,7 +3880,7 @@ GameObject2:
       Children: ~
     - name: Cube.049
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3941,7 +3941,7 @@ GameObject2:
       Children: ~
     - name: Cube.051
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4002,7 +4002,7 @@ GameObject2:
       Children: ~
     - name: Cube.052
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4063,7 +4063,7 @@ GameObject2:
       Children: ~
     - name: Cube.056
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4124,7 +4124,7 @@ GameObject2:
       Children: ~
     - name: Cube.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4185,7 +4185,7 @@ GameObject2:
       Children: ~
     - name: Cube.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4197,7 +4197,7 @@ GameObject2:
             - 432.58200073242188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4236,7 +4236,7 @@ GameObject2:
       Children: ~
     - name: Cube.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4248,7 +4248,7 @@ GameObject2:
             - 424.4725341796875
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4287,7 +4287,7 @@ GameObject2:
       Children: ~
     - name: Cube.021
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4299,7 +4299,7 @@ GameObject2:
             - 421.9820556640625
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4338,7 +4338,7 @@ GameObject2:
       Children: ~
     - name: Cube.039
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4350,7 +4350,7 @@ GameObject2:
             - 420.29098510742188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4389,7 +4389,7 @@ GameObject2:
       Children: ~
     - name: Cube.040
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4401,7 +4401,7 @@ GameObject2:
             - 397.4527587890625
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4440,7 +4440,7 @@ GameObject2:
       Children: ~
     - name: Cube.047
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4452,7 +4452,7 @@ GameObject2:
             - 410.44708251953125
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4491,7 +4491,7 @@ GameObject2:
       Children: ~
     - name: Cube.048
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4503,7 +4503,7 @@ GameObject2:
             - 409.47164916992188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4542,7 +4542,7 @@ GameObject2:
       Children: ~
     - name: Cube.055
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4554,7 +4554,7 @@ GameObject2:
             - 397.4527587890625
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4593,7 +4593,7 @@ GameObject2:
       Children: ~
     - name: Cube.059
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4605,7 +4605,7 @@ GameObject2:
             - 420.29098510742188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4644,7 +4644,7 @@ GameObject2:
       Children: ~
     - name: Cube.064
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4656,7 +4656,7 @@ GameObject2:
             - 432.98822021484375
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4695,7 +4695,7 @@ GameObject2:
       Children: ~
     - name: Cube.065
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4707,7 +4707,7 @@ GameObject2:
             - 424.4725341796875
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4746,7 +4746,7 @@ GameObject2:
       Children: ~
     - name: Cube.066
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4758,7 +4758,7 @@ GameObject2:
             - 432.58200073242188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4797,7 +4797,7 @@ GameObject2:
       Children: ~
     - name: Cube.078
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4809,7 +4809,7 @@ GameObject2:
             - 384.92050170898438
           localRotation:
             - -90
-            - 26.042648755774472
+            - 26.042648755774469
             - 0
           localScale:
             - 17.614019393920898
@@ -4848,7 +4848,7 @@ GameObject2:
       Children: ~
     - name: Cube.079
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4860,7 +4860,7 @@ GameObject2:
             - 384.92050170898438
           localRotation:
             - -90
-            - 26.042648755774472
+            - 26.042648755774469
             - 0
           localScale:
             - 17.614019393920898
@@ -4899,7 +4899,7 @@ GameObject2:
       Children: ~
     - name: Cube.080
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4911,7 +4911,7 @@ GameObject2:
             - 432.58200073242188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -4950,7 +4950,7 @@ GameObject2:
       Children: ~
     - name: Cube.081
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4962,7 +4962,7 @@ GameObject2:
             - 424.4725341796875
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5001,7 +5001,7 @@ GameObject2:
       Children: ~
     - name: Cube.082
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5013,7 +5013,7 @@ GameObject2:
             - 432.98822021484375
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5052,7 +5052,7 @@ GameObject2:
       Children: ~
     - name: Cube.083
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5064,7 +5064,7 @@ GameObject2:
             - 420.29098510742188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5103,7 +5103,7 @@ GameObject2:
       Children: ~
     - name: Cube.084
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5115,7 +5115,7 @@ GameObject2:
             - 397.4527587890625
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5154,7 +5154,7 @@ GameObject2:
       Children: ~
     - name: Cube.085
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5166,7 +5166,7 @@ GameObject2:
             - 409.47164916992188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5205,7 +5205,7 @@ GameObject2:
       Children: ~
     - name: Cube.086
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5217,7 +5217,7 @@ GameObject2:
             - 411.37701416015625
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5256,7 +5256,7 @@ GameObject2:
       Children: ~
     - name: Cube.087
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5307,7 +5307,7 @@ GameObject2:
       Children: ~
     - name: Cube.088
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5319,7 +5319,7 @@ GameObject2:
             - 420.29098510742188
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5358,7 +5358,7 @@ GameObject2:
       Children: ~
     - name: Cube.089
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5370,7 +5370,7 @@ GameObject2:
             - 429.17758178710938
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5409,7 +5409,7 @@ GameObject2:
       Children: ~
     - name: Cube.090
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5421,7 +5421,7 @@ GameObject2:
             - 424.4725341796875
           localRotation:
             - -90
-            - 14.722101648183028
+            - 14.722096695723891
             - 0
           localScale:
             - 17.614017486572266
@@ -5460,7 +5460,7 @@ GameObject2:
       Children: ~
     - name: Cube.091
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5511,7 +5511,7 @@ GameObject2:
       Children: ~
     - name: Cube.092
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5523,7 +5523,7 @@ GameObject2:
             - 384.92050170898438
           localRotation:
             - -90
-            - 26.042648755774472
+            - 26.042648755774469
             - 0
           localScale:
             - 17.614019393920898
@@ -5562,7 +5562,7 @@ GameObject2:
       Children: ~
     - name: Cube.093
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5613,7 +5613,7 @@ GameObject2:
       Children: ~
     - name: Cube.094
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5664,7 +5664,7 @@ GameObject2:
       Children: ~
     - name: Cube.095
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5715,7 +5715,7 @@ GameObject2:
       Children: ~
     - name: Cube.096
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5766,7 +5766,7 @@ GameObject2:
       Children: ~
     - name: Cube.097
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5817,7 +5817,7 @@ GameObject2:
       Children: ~
     - name: Cube.098
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5868,7 +5868,7 @@ GameObject2:
       Children: ~
     - name: Cube.099
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5919,7 +5919,7 @@ GameObject2:
       Children: ~
     - name: Cube.100
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5970,7 +5970,7 @@ GameObject2:
       Children: ~
     - name: Cube.101
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6021,7 +6021,7 @@ GameObject2:
       Children: ~
     - name: Cube.102
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6072,7 +6072,7 @@ GameObject2:
       Children: ~
     - name: Cube.103
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6123,7 +6123,7 @@ GameObject2:
       Children: ~
     - name: Cube.104
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6174,7 +6174,7 @@ GameObject2:
       Children: ~
     - name: Cube.105
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6225,7 +6225,7 @@ GameObject2:
       Children: ~
     - name: Cube.106
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6276,7 +6276,7 @@ GameObject2:
       Children: ~
     - name: Cube.107
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6327,7 +6327,7 @@ GameObject2:
       Children: ~
     - name: Cube.108
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6378,7 +6378,7 @@ GameObject2:
       Children: ~
     - name: Cube.109
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6429,7 +6429,7 @@ GameObject2:
       Children: ~
     - name: Cube.110
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6480,7 +6480,7 @@ GameObject2:
       Children: ~
     - name: Cube.111
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6531,7 +6531,7 @@ GameObject2:
       Children: ~
     - name: Cube.112
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6582,7 +6582,7 @@ GameObject2:
       Children: ~
     - name: Cube.113
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6633,7 +6633,7 @@ GameObject2:
       Children: ~
     - name: Cube.114
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6684,7 +6684,7 @@ GameObject2:
       Children: ~
     - name: Cube.115
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6735,7 +6735,7 @@ GameObject2:
       Children: ~
     - name: Cube.116
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6786,7 +6786,7 @@ GameObject2:
       Children: ~
     - name: Cube.117
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6837,7 +6837,7 @@ GameObject2:
       Children: ~
     - name: Cube.118
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6888,7 +6888,7 @@ GameObject2:
       Children: ~
     - name: Cube.119
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6939,7 +6939,7 @@ GameObject2:
       Children: ~
     - name: Cube.120
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6990,7 +6990,7 @@ GameObject2:
       Children: ~
     - name: Cube.121
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7041,7 +7041,7 @@ GameObject2:
       Children: ~
     - name: Cube.149
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7102,7 +7102,7 @@ GameObject2:
       Children: ~
     - name: Cube.150
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7153,7 +7153,7 @@ GameObject2:
       Children: ~
     - name: Cube.124
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7204,7 +7204,7 @@ GameObject2:
       Children: ~
     - name: Cube.125
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7255,7 +7255,7 @@ GameObject2:
       Children: ~
     - name: Cube.126
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7306,7 +7306,7 @@ GameObject2:
       Children: ~
     - name: Cube.127
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7357,7 +7357,7 @@ GameObject2:
       Children: ~
     - name: Cube.128
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7408,7 +7408,7 @@ GameObject2:
       Children: ~
     - name: Cube.129
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7459,7 +7459,7 @@ GameObject2:
       Children: ~
     - name: Cube.130
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7510,7 +7510,7 @@ GameObject2:
       Children: ~
     - name: Cube.131
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7561,7 +7561,7 @@ GameObject2:
       Children: ~
     - name: Cube.132
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7612,7 +7612,7 @@ GameObject2:
       Children: ~
     - name: Cube.151
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7663,7 +7663,7 @@ GameObject2:
       Children: ~
     - name: Cube.134
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7714,7 +7714,7 @@ GameObject2:
       Children: ~
     - name: Cube.135
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7765,7 +7765,7 @@ GameObject2:
       Children: ~
     - name: Cube.136
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7816,7 +7816,7 @@ GameObject2:
       Children: ~
     - name: Cube.137
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7867,7 +7867,7 @@ GameObject2:
       Children: ~
     - name: Cube.138
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7918,7 +7918,7 @@ GameObject2:
       Children: ~
     - name: Cube.139
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7969,7 +7969,7 @@ GameObject2:
       Children: ~
     - name: Cube.140
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8020,7 +8020,7 @@ GameObject2:
       Children: ~
     - name: Cube.141
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8071,7 +8071,7 @@ GameObject2:
       Children: ~
     - name: Cube.142
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8122,7 +8122,7 @@ GameObject2:
       Children: ~
     - name: Cube.143
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8173,7 +8173,7 @@ GameObject2:
       Children: ~
     - name: Cube.144
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8224,7 +8224,7 @@ GameObject2:
       Children: ~
     - name: Cube.145
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8275,7 +8275,7 @@ GameObject2:
       Children: ~
     - name: Cube.146
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8326,7 +8326,7 @@ GameObject2:
       Children: ~
     - name: Cube.147
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8377,7 +8377,7 @@ GameObject2:
       Children: ~
     - name: Cube.148
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8428,7 +8428,7 @@ GameObject2:
       Children: ~
     - name: Cube.152
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8479,7 +8479,7 @@ GameObject2:
       Children: ~
     - name: Cube.153
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8530,7 +8530,7 @@ GameObject2:
       Children: ~
     - name: Cube.154
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8581,7 +8581,7 @@ GameObject2:
       Children: ~
     - name: Cube.155
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8632,7 +8632,7 @@ GameObject2:
       Children: ~
     - name: Cube.156
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8683,7 +8683,7 @@ GameObject2:
       Children: ~
     - name: Cube.157
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8734,7 +8734,7 @@ GameObject2:
       Children: ~
     - name: Cube.158
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8785,7 +8785,7 @@ GameObject2:
       Children: ~
     - name: Cube.159
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8836,7 +8836,7 @@ GameObject2:
       Children: ~
     - name: Cube.160
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8887,7 +8887,7 @@ GameObject2:
       Children: ~
     - name: Cube.161
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8938,7 +8938,7 @@ GameObject2:
       Children: ~
     - name: Cube.162
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8989,7 +8989,7 @@ GameObject2:
       Children: ~
     - name: Cube.163
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9040,7 +9040,7 @@ GameObject2:
       Children: ~
     - name: Cube.164
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9091,7 +9091,7 @@ GameObject2:
       Children: ~
     - name: Cube.165
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9142,7 +9142,7 @@ GameObject2:
       Children: ~
     - name: Cube.166
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9193,7 +9193,7 @@ GameObject2:
       Children: ~
     - name: Cube.167
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9244,7 +9244,7 @@ GameObject2:
       Children: ~
     - name: Cube.168
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9295,7 +9295,7 @@ GameObject2:
       Children: ~
     - name: Cube.169
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9346,7 +9346,7 @@ GameObject2:
       Children: ~
     - name: Cube.170
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9397,7 +9397,7 @@ GameObject2:
       Children: ~
     - name: Cube.171
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9448,7 +9448,7 @@ GameObject2:
       Children: ~
     - name: Cube.172
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9499,7 +9499,7 @@ GameObject2:
       Children: ~
     - name: Cube.173
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9550,7 +9550,7 @@ GameObject2:
       Children: ~
     - name: Cube.174
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9601,7 +9601,7 @@ GameObject2:
       Children: ~
     - name: Cube.175
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9652,7 +9652,7 @@ GameObject2:
       Children: ~
     - name: Cube.176
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9703,7 +9703,7 @@ GameObject2:
       Children: ~
     - name: Cube.177
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9754,7 +9754,7 @@ GameObject2:
       Children: ~
     - name: Cube.178
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9805,7 +9805,7 @@ GameObject2:
       Children: ~
     - name: Cube.179
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9856,7 +9856,7 @@ GameObject2:
       Children: ~
     - name: Cube.180
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9907,7 +9907,7 @@ GameObject2:
       Children: ~
     - name: Cube.181
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9958,7 +9958,7 @@ GameObject2:
       Children: ~
     - name: Cube.182
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10009,7 +10009,7 @@ GameObject2:
       Children: ~
     - name: Cube.183
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10060,7 +10060,7 @@ GameObject2:
       Children: ~
     - name: Cube.184
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10111,7 +10111,7 @@ GameObject2:
       Children: ~
     - name: Cube.185
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10172,7 +10172,7 @@ GameObject2:
       Children: ~
     - name: Cube.186
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10233,7 +10233,7 @@ GameObject2:
       Children: ~
     - name: Cube.188
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10294,7 +10294,7 @@ GameObject2:
       Children: ~
     - name: Cube.189
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10355,7 +10355,7 @@ GameObject2:
       Children: ~
     - name: Cube.190
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10416,7 +10416,7 @@ GameObject2:
       Children: ~
     - name: Cube.191
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10477,7 +10477,7 @@ GameObject2:
       Children: ~
     - name: Cube.192
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10538,7 +10538,7 @@ GameObject2:
       Children: ~
     - name: Cube.193
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10599,7 +10599,7 @@ GameObject2:
       Children: ~
     - name: Cube.194
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10611,7 +10611,7 @@ GameObject2:
             - -2243.4521484375
           localRotation:
             - 89.999996765504889
-            - -39.999985704661292
+            - -39.999985704661299
             - -179.99999111329461
           localScale:
             - 12.566903114318848
@@ -10660,7 +10660,7 @@ GameObject2:
       Children: ~
     - name: Cube.195
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10711,7 +10711,7 @@ GameObject2:
       Children: ~
     - name: Cube.196
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10722,9 +10722,9 @@ GameObject2:
             - 244.91923522949219
             - 1295.5804443359375
           localRotation:
-            - -2.3048070043182274
-            - -23.175169832954804
-            - -1.2541614472642717
+            - -2.3048065728606959
+            - -23.175169823559273
+            - -1.2541614269147587
           localScale:
             - 34.665451049804688
             - 80.004905700683594
@@ -10772,7 +10772,7 @@ GameObject2:
       Children: ~
     - name: Cube.197
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10823,7 +10823,7 @@ GameObject2:
       Children: ~
     - name: Cube.198
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10874,7 +10874,7 @@ GameObject2:
       Children: ~
     - name: Cube.199
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10925,7 +10925,7 @@ GameObject2:
       Children: ~
     - name: Cube.200
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10976,7 +10976,7 @@ GameObject2:
       Children: ~
     - name: Cube.201
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11027,7 +11027,7 @@ GameObject2:
       Children: ~
     - name: Cube.202
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11078,7 +11078,7 @@ GameObject2:
       Children: ~
     - name: Cube.203
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11129,7 +11129,7 @@ GameObject2:
       Children: ~
     - name: Cube.204
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11180,7 +11180,7 @@ GameObject2:
       Children: ~
     - name: Cube.205
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11231,7 +11231,7 @@ GameObject2:
       Children: ~
     - name: Cube.206
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11282,7 +11282,7 @@ GameObject2:
       Children: ~
     - name: Cube.207
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11333,7 +11333,7 @@ GameObject2:
       Children: ~
     - name: Cube.208
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11384,7 +11384,7 @@ GameObject2:
       Children: ~
     - name: Cube.209
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11435,7 +11435,7 @@ GameObject2:
       Children: ~
     - name: Cube.210
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11486,7 +11486,7 @@ GameObject2:
       Children: ~
     - name: Cube.211
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11537,7 +11537,7 @@ GameObject2:
       Children: ~
     - name: Cube.212
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11588,7 +11588,7 @@ GameObject2:
       Children: ~
     - name: Cube.213
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11639,7 +11639,7 @@ GameObject2:
       Children: ~
     - name: Cube.214
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11650,9 +11650,9 @@ GameObject2:
             - 254.33460998535156
             - -498.60629272460938
           localRotation:
-            - 110.73867588996484
-            - 80.086552935285681
-            - 143.09166133750168
+            - 110.73867890557074
+            - 80.086573981976159
+            - 143.09166649442534
           localScale:
             - 7.6379303932189941
             - 37.862796783447266
@@ -11690,7 +11690,7 @@ GameObject2:
       Children: ~
     - name: Cube.215
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11751,7 +11751,7 @@ GameObject2:
       Children: ~
     - name: Cube.216
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11762,9 +11762,9 @@ GameObject2:
             - 235.60743713378906
             - -4443.873046875
           localRotation:
-            - 90.000000098796235
-            - 67.869967152026319
-            - -179.99999120174473
+            - 90.000021273890852
+            - 67.869965313336721
+            - -179.99998568567651
           localScale:
             - 7.6379308700561523
             - 37.86279296875
@@ -11802,7 +11802,7 @@ GameObject2:
       Children: ~
     - name: Cube.217
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11863,7 +11863,7 @@ GameObject2:
       Children: ~
     - name: Cube.218
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11874,9 +11874,9 @@ GameObject2:
             - 228.42301940917969
             - -8281.9775390625
           localRotation:
-            - 89.999983311753326
-            - -71.368793308895334
-            - -179.99998504212124
+            - 89.999977338712895
+            - -71.368790630099554
+            - 179.99999843613566
           localScale:
             - 72.511398315429688
             - 158.16007995605469
@@ -11924,7 +11924,7 @@ GameObject2:
       Children: ~
     - name: Cube.219
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11985,7 +11985,7 @@ GameObject2:
       Children: ~
     - name: Cube.220
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12046,7 +12046,7 @@ GameObject2:
       Children: ~
     - name: Cube.221
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12107,7 +12107,7 @@ GameObject2:
       Children: ~
     - name: Cube.222
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12168,7 +12168,7 @@ GameObject2:
       Children: ~
     - name: Cube.223
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12270,7 +12270,7 @@ GameObject2:
       Children: ~
     - name: Cube.225
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12321,7 +12321,7 @@ GameObject2:
       Children: ~
     - name: Cube.226
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12372,7 +12372,7 @@ GameObject2:
       Children: ~
     - name: Cube.227
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12423,7 +12423,7 @@ GameObject2:
       Children: ~
     - name: Cube.269
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12434,9 +12434,9 @@ GameObject2:
             - 182.52854919433594
             - -4285.9453125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -12474,7 +12474,7 @@ GameObject2:
       Children: ~
     - name: Cube.229
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12525,7 +12525,7 @@ GameObject2:
       Children: ~
     - name: Cube.230
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12576,7 +12576,7 @@ GameObject2:
       Children: ~
     - name: Cube.231
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12627,7 +12627,7 @@ GameObject2:
       Children: ~
     - name: Cube.232
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12678,7 +12678,7 @@ GameObject2:
       Children: ~
     - name: Cube.233
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12729,7 +12729,7 @@ GameObject2:
       Children: ~
     - name: Cube.234
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12780,7 +12780,7 @@ GameObject2:
       Children: ~
     - name: Cube.235
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12791,9 +12791,9 @@ GameObject2:
             - 182.42166137695312
             - -2015.6971435546875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -12831,7 +12831,7 @@ GameObject2:
       Children: ~
     - name: Cube.236
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12842,9 +12842,9 @@ GameObject2:
             - 173.47050476074219
             - 1590.0946044921875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -12882,7 +12882,7 @@ GameObject2:
       Children: ~
     - name: Cube.237
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12893,9 +12893,9 @@ GameObject2:
             - 173.47050476074219
             - 1600.6397705078125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -12933,7 +12933,7 @@ GameObject2:
       Children: ~
     - name: Cube.238
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12944,9 +12944,9 @@ GameObject2:
             - 182.52857971191406
             - -145.3399658203125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -12984,7 +12984,7 @@ GameObject2:
       Children: ~
     - name: Cube.239
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12995,9 +12995,9 @@ GameObject2:
             - 182.52857971191406
             - -613.3924560546875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13035,7 +13035,7 @@ GameObject2:
       Children: ~
     - name: Cube.240
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13046,9 +13046,9 @@ GameObject2:
             - 182.52859497070312
             - -1861.0029296875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13086,7 +13086,7 @@ GameObject2:
       Children: ~
     - name: Cube.241
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13097,9 +13097,9 @@ GameObject2:
             - 182.52861022949219
             - -473.03323364257812
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13137,7 +13137,7 @@ GameObject2:
       Children: ~
     - name: Cube.242
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13148,9 +13148,9 @@ GameObject2:
             - 182.52861022949219
             - -448.92898559570312
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13188,7 +13188,7 @@ GameObject2:
       Children: ~
     - name: Cube.243
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13199,9 +13199,9 @@ GameObject2:
             - 182.52861022949219
             - -448.92898559570312
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13239,7 +13239,7 @@ GameObject2:
       Children: ~
     - name: Cube.244
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13250,9 +13250,9 @@ GameObject2:
             - 182.52861022949219
             - -448.92898559570312
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13290,7 +13290,7 @@ GameObject2:
       Children: ~
     - name: Cube.245
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13301,9 +13301,9 @@ GameObject2:
             - 182.52861022949219
             - 793.425537109375
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13341,7 +13341,7 @@ GameObject2:
       Children: ~
     - name: Cube.246
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13352,9 +13352,9 @@ GameObject2:
             - 182.52861022949219
             - 1212.9971923828125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13392,7 +13392,7 @@ GameObject2:
       Children: ~
     - name: Cube.247
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13403,9 +13403,9 @@ GameObject2:
             - 182.52862548828125
             - 1164.91845703125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13443,7 +13443,7 @@ GameObject2:
       Children: ~
     - name: Cube.248
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13454,9 +13454,9 @@ GameObject2:
             - 182.52864074707031
             - 1933.7962646484375
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13494,7 +13494,7 @@ GameObject2:
       Children: ~
     - name: Cube.249
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13505,9 +13505,9 @@ GameObject2:
             - 182.52862548828125
             - 1739.1920166015625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13545,7 +13545,7 @@ GameObject2:
       Children: ~
     - name: Cube.250
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13556,9 +13556,9 @@ GameObject2:
             - 182.52861022949219
             - 1083.9595947265625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13596,7 +13596,7 @@ GameObject2:
       Children: ~
     - name: Cube.251
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13607,9 +13607,9 @@ GameObject2:
             - 182.52859497070312
             - -511.09356689453125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13647,7 +13647,7 @@ GameObject2:
       Children: ~
     - name: Cube.252
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13658,9 +13658,9 @@ GameObject2:
             - 182.52859497070312
             - -561.11285400390625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13698,7 +13698,7 @@ GameObject2:
       Children: ~
     - name: Cube.253
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13709,9 +13709,9 @@ GameObject2:
             - 182.52859497070312
             - -637.2557373046875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13749,7 +13749,7 @@ GameObject2:
       Children: ~
     - name: Cube.254
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13760,9 +13760,9 @@ GameObject2:
             - 182.52859497070312
             - -649.0947265625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13800,7 +13800,7 @@ GameObject2:
       Children: ~
     - name: Cube.255
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13811,9 +13811,9 @@ GameObject2:
             - 182.52859497070312
             - -925.661865234375
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13851,7 +13851,7 @@ GameObject2:
       Children: ~
     - name: Cube.256
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13862,9 +13862,9 @@ GameObject2:
             - 182.528564453125
             - -786.05181884765625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13902,7 +13902,7 @@ GameObject2:
       Children: ~
     - name: Cube.257
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13913,9 +13913,9 @@ GameObject2:
             - 182.528564453125
             - -265.61569213867188
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -13953,7 +13953,7 @@ GameObject2:
       Children: ~
     - name: Cube.258
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13964,9 +13964,9 @@ GameObject2:
             - 182.528564453125
             - -1392.1627197265625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14004,7 +14004,7 @@ GameObject2:
       Children: ~
     - name: Cube.259
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14015,9 +14015,9 @@ GameObject2:
             - 182.528564453125
             - -1635.141357421875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14055,7 +14055,7 @@ GameObject2:
       Children: ~
     - name: Cube.260
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14066,9 +14066,9 @@ GameObject2:
             - 182.528564453125
             - -1530.256103515625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14106,7 +14106,7 @@ GameObject2:
       Children: ~
     - name: Cube.261
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14117,9 +14117,9 @@ GameObject2:
             - 182.528564453125
             - -633.916259765625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14157,7 +14157,7 @@ GameObject2:
       Children: ~
     - name: Cube.262
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14168,9 +14168,9 @@ GameObject2:
             - 182.528564453125
             - -681.784912109375
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14208,7 +14208,7 @@ GameObject2:
       Children: ~
     - name: Cube.263
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14219,9 +14219,9 @@ GameObject2:
             - 182.528564453125
             - -1577.1534423828125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14259,7 +14259,7 @@ GameObject2:
       Children: ~
     - name: Cube.264
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14270,9 +14270,9 @@ GameObject2:
             - 182.52854919433594
             - -2360.427734375
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14310,7 +14310,7 @@ GameObject2:
       Children: ~
     - name: Cube.265
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14321,9 +14321,9 @@ GameObject2:
             - 182.52854919433594
             - -2624.84326171875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14361,7 +14361,7 @@ GameObject2:
       Children: ~
     - name: Cube.266
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14372,9 +14372,9 @@ GameObject2:
             - 182.528564453125
             - -2642.017822265625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14412,7 +14412,7 @@ GameObject2:
       Children: ~
     - name: Cube.267
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14423,9 +14423,9 @@ GameObject2:
             - 182.528564453125
             - -2742.8173828125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14463,7 +14463,7 @@ GameObject2:
       Children: ~
     - name: Cube.268
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14514,7 +14514,7 @@ GameObject2:
       Children: ~
     - name: Cube.270
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14525,9 +14525,9 @@ GameObject2:
             - 182.528564453125
             - -4691.5810546875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14565,7 +14565,7 @@ GameObject2:
       Children: ~
     - name: Cube.271
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14576,9 +14576,9 @@ GameObject2:
             - 182.528564453125
             - -6177.6513671875
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14616,7 +14616,7 @@ GameObject2:
       Children: ~
     - name: Cube.272
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14627,9 +14627,9 @@ GameObject2:
             - 182.528564453125
             - -6216.5908203125
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14667,7 +14667,7 @@ GameObject2:
       Children: ~
     - name: Cube.273
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14678,9 +14678,9 @@ GameObject2:
             - 182.528564453125
             - -6243.90771484375
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14718,7 +14718,7 @@ GameObject2:
       Children: ~
     - name: Cube.274
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14729,9 +14729,9 @@ GameObject2:
             - 182.52857971191406
             - -6657.25390625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14769,7 +14769,7 @@ GameObject2:
       Children: ~
     - name: Cube.275
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14780,9 +14780,9 @@ GameObject2:
             - 180.016845703125
             - -7827.19140625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14820,7 +14820,7 @@ GameObject2:
       Children: ~
     - name: Cube.276
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14831,9 +14831,9 @@ GameObject2:
             - 180.016845703125
             - -7597.22900390625
           localRotation:
-            - -90.000045620326532
-            - -83.523374731170563
-            - 1.4835318413268062e-05
+            - -90.000013682225017
+            - -83.523448869597516
+            - -1.3682225009022901e-05
           localScale:
             - 12.640756607055664
             - 12.640756607055664
@@ -14871,7 +14871,7 @@ GameObject2:
       Children: ~
     - name: Cube.277
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14922,7 +14922,7 @@ GameObject2:
       Children: ~
     - name: Cube.279
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15044,7 +15044,7 @@ GameObject2:
       Children: ~
     - name: Cube.282
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15095,7 +15095,7 @@ GameObject2:
       Children: ~
     - name: Cube.284
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15146,7 +15146,7 @@ GameObject2:
       Children: ~
     - name: Cube.285
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15197,7 +15197,7 @@ GameObject2:
       Children: ~
     - name: Cube.286
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15248,7 +15248,7 @@ GameObject2:
       Children: ~
     - name: Cube.122
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15299,7 +15299,7 @@ GameObject2:
       Children: ~
     - name: Cube.123
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15350,7 +15350,7 @@ GameObject2:
       Children: ~
     - name: Cube.133
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15401,7 +15401,7 @@ GameObject2:
       Children: ~
     - name: Cube.187
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15452,7 +15452,7 @@ GameObject2:
       Children: ~
     - name: Cube.228
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15503,7 +15503,7 @@ GameObject2:
       Children: ~
     - name: Cube.278
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15554,7 +15554,7 @@ GameObject2:
       Children: ~
     - name: Cube.281
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15605,7 +15605,7 @@ GameObject2:
       Children: ~
     - name: Cube.283
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15656,7 +15656,7 @@ GameObject2:
       Children: ~
     - name: Cube.287
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15707,7 +15707,7 @@ GameObject2:
       Children: ~
     - name: Cube.288
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15758,7 +15758,7 @@ GameObject2:
       Children: ~
     - name: Cube.289
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15809,7 +15809,7 @@ GameObject2:
       Children: ~
     - name: Cube.290
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15860,7 +15860,7 @@ GameObject2:
       Children: ~
     - name: Cube.291
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15911,7 +15911,7 @@ GameObject2:
       Children: ~
     - name: Cube.292
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15962,7 +15962,7 @@ GameObject2:
       Children: ~
     - name: Cube.293
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16013,7 +16013,7 @@ GameObject2:
       Children: ~
     - name: Cube.294
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16064,7 +16064,7 @@ GameObject2:
       Children: ~
     - name: Cube.295
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16115,7 +16115,7 @@ GameObject2:
       Children: ~
     - name: Cube.296
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16166,7 +16166,7 @@ GameObject2:
       Children: ~
     - name: Cube.297
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16217,7 +16217,7 @@ GameObject2:
       Children: ~
     - name: Cube.298
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16268,7 +16268,7 @@ GameObject2:
       Children: ~
     - name: Cube.299
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16319,7 +16319,7 @@ GameObject2:
       Children: ~
     - name: Cube.300
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16370,7 +16370,7 @@ GameObject2:
       Children: ~
     - name: Cube.305
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16421,7 +16421,7 @@ GameObject2:
       Children: ~
     - name: Cube.306
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16472,7 +16472,7 @@ GameObject2:
       Children: ~
     - name: Cube.303
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16523,7 +16523,7 @@ GameObject2:
       Children: ~
     - name: Cube.304
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16574,7 +16574,7 @@ GameObject2:
       Children: ~
     - name: Cube.307
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16625,7 +16625,7 @@ GameObject2:
       Children: ~
     - name: Cube.308
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16676,7 +16676,7 @@ GameObject2:
       Children: ~
     - name: Cube.309
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16727,7 +16727,7 @@ GameObject2:
       Children: ~
     - name: Cube.310
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16778,7 +16778,7 @@ GameObject2:
       Children: ~
     - name: Cube.311
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16829,7 +16829,7 @@ GameObject2:
       Children: ~
     - name: Cube.312
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16880,7 +16880,7 @@ GameObject2:
       Children: ~
     - name: Cube.313
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16931,7 +16931,7 @@ GameObject2:
       Children: ~
     - name: Cube.314
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16982,7 +16982,7 @@ GameObject2:
       Children: ~
     - name: Cube.315
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17033,7 +17033,7 @@ GameObject2:
       Children: ~
     - name: Cube.316
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17084,7 +17084,7 @@ GameObject2:
       Children: ~
     - name: Cube.317
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17135,7 +17135,7 @@ GameObject2:
       Children: ~
     - name: Cube.318
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17186,7 +17186,7 @@ GameObject2:
       Children: ~
     - name: Cube.319
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17237,7 +17237,7 @@ GameObject2:
       Children: ~
     - name: Cube.320
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17288,7 +17288,7 @@ GameObject2:
       Children: ~
     - name: Cube.321
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17339,7 +17339,7 @@ GameObject2:
       Children: ~
     - name: Cube.322
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17390,7 +17390,7 @@ GameObject2:
       Children: ~
     - name: Cube.323
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17441,7 +17441,7 @@ GameObject2:
       Children: ~
     - name: Cube.324
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17492,7 +17492,7 @@ GameObject2:
       Children: ~
     - name: Cube.325
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17543,7 +17543,7 @@ GameObject2:
       Children: ~
     - name: Cube.326
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17594,7 +17594,7 @@ GameObject2:
       Children: ~
     - name: Cube.327
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17645,7 +17645,7 @@ GameObject2:
       Children: ~
     - name: Cube.328
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17696,7 +17696,7 @@ GameObject2:
       Children: ~
     - name: Cube.329
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17747,7 +17747,7 @@ GameObject2:
       Children: ~
     - name: Cube.330
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17798,7 +17798,7 @@ GameObject2:
       Children: ~
     - name: Cube.331
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17849,7 +17849,7 @@ GameObject2:
       Children: ~
     - name: Cube.332
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17900,7 +17900,7 @@ GameObject2:
       Children: ~
     - name: Cube.333
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17951,7 +17951,7 @@ GameObject2:
       Children: ~
     - name: Cube.334
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18002,7 +18002,7 @@ GameObject2:
       Children: ~
     - name: Cube.335
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18053,7 +18053,7 @@ GameObject2:
       Children: ~
     - name: Cube.336
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18104,7 +18104,7 @@ GameObject2:
       Children: ~
     - name: Cube.337
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18155,7 +18155,7 @@ GameObject2:
       Children: ~
     - name: Cube.338
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18206,7 +18206,7 @@ GameObject2:
       Children: ~
     - name: Cube.339
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18257,7 +18257,7 @@ GameObject2:
       Children: ~
     - name: Cube.340
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18308,7 +18308,7 @@ GameObject2:
       Children: ~
     - name: Cube.341
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18359,7 +18359,7 @@ GameObject2:
       Children: ~
     - name: Cube.342
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18410,7 +18410,7 @@ GameObject2:
       Children: ~
     - name: Cube.343
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18461,7 +18461,7 @@ GameObject2:
       Children: ~
     - name: Cube.344
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18512,7 +18512,7 @@ GameObject2:
       Children: ~
     - name: Cube.345
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18563,7 +18563,7 @@ GameObject2:
       Children: ~
     - name: Cube.346
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18614,7 +18614,7 @@ GameObject2:
       Children: ~
     - name: Cube.347
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18665,7 +18665,7 @@ GameObject2:
       Children: ~
     - name: Cube.348
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18716,7 +18716,7 @@ GameObject2:
       Children: ~
     - name: Cube.349
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18767,7 +18767,7 @@ GameObject2:
       Children: ~
     - name: Cube.350
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18818,7 +18818,7 @@ GameObject2:
       Children: ~
     - name: Cylinder
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18869,7 +18869,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18920,7 +18920,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18971,7 +18971,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19022,7 +19022,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19124,7 +19124,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.011
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19175,7 +19175,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19226,7 +19226,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.013
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19277,7 +19277,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19328,7 +19328,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19379,7 +19379,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19481,7 +19481,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19532,7 +19532,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19583,7 +19583,7 @@ GameObject2:
       Children: ~
     - name: Cylinder.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19647,12 +19647,12 @@ GameObject3:
         - -53.873485565185547
       localRotation:
         - 0
-        - -11.976914262391555
+        - -11.976914500434168
         - 0
       localScale:
-        - 14.367866494252194
+        - 14.367866516113281
         - 2.1831250190734863
-        - 0.99999977290649422
+        - 0.9999997615814209
     BoxColliderComponent:
       size:
         - 1
@@ -19679,12 +19679,12 @@ GameObject4:
         - 18.187276840209961
       localRotation:
         - 0
-        - 14.653308342237528
+        - 14.653308853636348
         - 0
       localScale:
-        - 5.4589013182313497
+        - 5.4589014053344727
         - 2.2280318737030029
-        - 0.99999993507170981
+        - 0.99999994039535522
     BoxColliderComponent:
       size:
         - 1
@@ -19697,7 +19697,7 @@ GameObject4:
       isTrigger: false
   Children: ~
 GameObject5:
-  name: Empty_copy
+  name: Empty_copy_1
   tag: Untagged
   active: true
   isStatic: false
@@ -19711,12 +19711,12 @@ GameObject5:
         - 36.2841796875
       localRotation:
         - 0
-        - 1.0609302626442043
+        - 1.0609303004617461
         - 0
       localScale:
-        - 9.3882032353095504
+        - 9.3882036209106445
         - 2.1831250190734863
-        - 0.99999970865467303
+        - 0.99999970197677612
     BoxColliderComponent:
       size:
         - 1
@@ -19743,12 +19743,12 @@ GameObject6:
         - -43.837287902832031
       localRotation:
         - 0
-        - -32.03194395012931
+        - -32.031943322945622
         - 0
       localScale:
-        - 14.953643076693186
+        - 14.953642845153809
         - 2.2280318737030029
-        - 0.99999977769268444
+        - 0.9999997615814209
     BoxColliderComponent:
       size:
         - 1
@@ -19761,7 +19761,7 @@ GameObject6:
       isTrigger: false
   Children: ~
 GameObject7:
-  name: Empty_copy_copy
+  name: Empty_copy_copy_1
   tag: Untagged
   active: true
   isStatic: false
@@ -19775,12 +19775,12 @@ GameObject7:
         - 27.89573860168457
       localRotation:
         - 0
-        - 27.786620876756125
+        - 27.786623475832918
         - 0
       localScale:
-        - 18.777130131157517
+        - 18.777130126953125
         - 2.2280318737030029
-        - 0.99999981730567955
+        - 0.99999982118606567
     BoxColliderComponent:
       size:
         - 1
@@ -19793,7 +19793,7 @@ GameObject7:
       isTrigger: false
   Children: ~
 GameObject8:
-  name: Empty_copy_copy
+  name: Empty_copy_copy_2
   tag: Untagged
   active: true
   isStatic: false
@@ -19806,13 +19806,13 @@ GameObject8:
         - 14.029054641723633
         - -41.986846923828125
       localRotation:
-        - 180
-        - 80.626741212767769
-        - 180
+        - 179.99999499104243
+        - 80.626775588013231
+        - 179.99999499104243
       localScale:
-        - 7.5358694704849185
+        - 7.5358695983886719
         - 2.2280318737030029
-        - 0.99999997987802514
+        - 1
     BoxColliderComponent:
       size:
         - 1
@@ -19839,12 +19839,12 @@ GameObject9:
         - -48.528999328613281
       localRotation:
         - 0
-        - 29.530238604737843
+        - 29.530238618795916
         - 0
       localScale:
-        - 14.953644578223479
+        - 14.953644752502441
         - 2.2280318737030029
-        - 0.99999970759916079
+        - 0.99999970197677612
     BoxColliderComponent:
       size:
         - 1
@@ -19871,12 +19871,12 @@ GameObject10:
         - -52.85357666015625
       localRotation:
         - 0
-        - -11.15473251843029
+        - -11.15473248815379
         - 0
       localScale:
-        - 17.45011703777994
+        - 17.450117111206055
         - 2.2280318737030029
-        - 0.99999975832784949
+        - 0.9999997615814209
     BoxColliderComponent:
       size:
         - 1
@@ -19889,7 +19889,7 @@ GameObject10:
       isTrigger: false
   Children: ~
 GameObject11:
-  name: Empty_copy_copy_copy
+  name: Empty_copy_copy_copy_1
   tag: Untagged
   active: true
   isStatic: false
@@ -19903,12 +19903,12 @@ GameObject11:
         - -40.013740539550781
       localRotation:
         - 0
-        - 81.522005544289655
+        - 81.522007110326214
         - 0
       localScale:
-        - 5.4589013738647463
+        - 5.4589014053344727
         - 2.2280318737030029
-        - 0.99999988036256759
+        - 0.99999988079071045
     BoxColliderComponent:
       size:
         - 1
@@ -19921,7 +19921,7 @@ GameObject11:
       isTrigger: false
   Children: ~
 GameObject12:
-  name: Empty_copy_copy_copy
+  name: Empty_copy_copy_copy_2
   tag: Untagged
   active: true
   isStatic: false
@@ -19935,12 +19935,12 @@ GameObject12:
         - 37.945869445800781
       localRotation:
         - 0
-        - -62.642214596061571
+        - -62.642213361469018
         - 0
       localScale:
-        - 23.781706009943949
+        - 23.781705856323242
         - 2.2280318737030029
-        - 0.99999972646747926
+        - 0.99999970197677612
     BoxColliderComponent:
       size:
         - 1
@@ -19953,7 +19953,7 @@ GameObject12:
       isTrigger: false
   Children: ~
 GameObject13:
-  name: Empty_copy_copy_copy_copy
+  name: Empty_copy_copy_copy_copy_1
   tag: Untagged
   active: true
   isStatic: false
@@ -19966,13 +19966,13 @@ GameObject13:
         - 14.028914451599121
         - 80.487548828125
       localRotation:
-        - 180
-        - -76.876812236093315
-        - 180
+        - 179.99999499104388
+        - -76.87679386763628
+        - 179.99999499104388
       localScale:
-        - 23.781706583103158
+        - 23.781705856323242
         - 2.2280318737030029
-        - 0.99999982020653788
+        - 0.99999982118606567
     BoxColliderComponent:
       size:
         - 1
@@ -19999,12 +19999,12 @@ GameObject14:
         - 122.18088531494141
       localRotation:
         - 0
-        - -86.06293038297558
+        - -86.062929189897957
         - 0
       localScale:
-        - 19.414266571444998
+        - 19.414266586303711
         - 2.2280318737030029
-        - 0.99999976943341928
+        - 0.9999997615814209
     BoxColliderComponent:
       size:
         - 1
@@ -20031,12 +20031,12 @@ GameObject15:
         - 145.2493896484375
       localRotation:
         - 0
-        - -3.910450338674178
+        - -3.910449653789736
         - 0
       localScale:
-        - 45.84795536044971
+        - 45.847953796386719
         - 2.2280318737030029
-        - 0.99999986628057325
+        - 0.99999988079071045
     BoxColliderComponent:
       size:
         - 1
@@ -20063,12 +20063,12 @@ GameObject16:
         - 139.86334228515625
       localRotation:
         - 0
-        - 81.29402868365257
+        - 81.29403058726956
         - 0
       localScale:
-        - 9.6704610348697884
+        - 9.6704607009887695
         - 2.2280318737030029
-        - 0.9999999472688601
+        - 0.99999994039535522
     BoxColliderComponent:
       size:
         - 1
@@ -20079,4 +20079,271 @@ GameObject16:
         - 0
         - 0
       isTrigger: false
+  Children: ~
+GameObject17:
+  name: shotgun
+  tag: Weapon
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 30
+        - 16.435770034790039
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: ShotgunPickUp
+  Children:
+    - name: bOLTER.010
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: bOLTER.010
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: ""
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cone
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cone
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: ""
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject18:
+  name: bOLTER.012
+  tag: Weapon
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 30
+        - 19.098386764526367
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: bOLTER.012
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: RailgunPickUp
+  Children: ~
+GameObject19:
+  name: Cylinder.010
+  tag: Weapon
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 30
+        - 21.872905731201172
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cylinder.010
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BoltgunPickUp
   Children: ~

@@ -1338,6 +1338,11 @@ private:
 			system->SetUseAnimation(useAnimation);
 		}
 
+		bool randomStartIndex = system->GetRandomStartIndex();
+		if (ImGui::Checkbox("Random start index", &randomStartIndex)) {
+			system->SetRandomStartIndex(randomStartIndex);
+		}
+
 		glm::vec2 spriteSize = system->GetSpriteSize();
 		float spriteSizeArray[2] = { spriteSize.x, spriteSize.y };
 		if (ImGui::DragFloat2("Sprite Size", spriteSizeArray, 0.1f, 0.1f, 4600.0f)) {

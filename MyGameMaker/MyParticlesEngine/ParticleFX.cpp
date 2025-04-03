@@ -38,6 +38,7 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(256,256),			   // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -70,6 +71,7 @@ namespace ParticlePresets {
 		30.0f,                         // Cone angle in degrees
 		glm::vec2(256,256),         // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -103,6 +105,7 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(256,256),         // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -135,6 +138,7 @@ namespace ParticlePresets {
 		0.0f,                          // Unused
 		glm::vec2(256,256),         // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -168,6 +172,7 @@ namespace ParticlePresets {
 		0.0f,                          // Unused
 		glm::vec2(256,256),         // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -200,6 +205,7 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(385,217),			   // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.001f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
@@ -232,6 +238,7 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(193,109),			   // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.005f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
@@ -264,6 +271,7 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(1920,1080),			   // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
@@ -297,6 +305,7 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(1920,1080),			   // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
@@ -329,6 +338,7 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(640,360),			   // Sprite size
 		true,						   // Use animation
+		true,						   // Random animation Index
 		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
@@ -362,6 +372,7 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(240,135),			   // Sprite size
 	true,						   // Use animation
+	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
@@ -394,6 +405,7 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(480,270),			   // Sprite size
 	true,						   // Use animation
+	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
@@ -426,6 +438,7 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
+	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
@@ -458,6 +471,7 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(434,181),			   // Sprite size
 	true,						   // Use animation
+	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
@@ -490,6 +504,7 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
+	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
@@ -522,6 +537,7 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	false,						   // Use animation
+	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
@@ -554,6 +570,7 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
+	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
@@ -586,6 +603,7 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(240,135),			   // Sprite size
 	true,						   // Use animation
+	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
@@ -882,6 +900,8 @@ void ParticleFX::EmitParticle() {
 	
 	particle.useAnimation = useAnimation;
 	
+	particle.randomAnimIndex = randomAnimIndex;
+
 	particle.animSpeed = animSpeed;
 
 	renderer->AddParticle(particle);
@@ -1108,103 +1128,15 @@ void ParticleFX::ApplyPreset(int particleID) {
 	randomRotation = preset.randomRotation;
 	minSize = preset.minSize;
 	maxSize = preset.maxSize;
+	randomAnimIndex = preset.randomAnimIndex;
 	SetTexture(preset.texturePath);
 }
-
-//void ParticleFX::ConfigureSmoke() {
-//	ApplyPreset(ParticlePresets::Smoke);
-//}
-//
-//void ParticleFX::ConfigureFire() {
-//	ApplyPreset(ParticlePresets::Fire);
-//}
-//
-//void ParticleFX::ConfigureMuzzleFlash() {
-//	ApplyPreset(ParticlePresets::MuzzleFlash);
-//	SetOneShot(true);
-//}
-//
-//void ParticleFX::ConfigureExplosion() {
-//	ApplyPreset(ParticlePresets::Explosion);
-//	SetOneShot(true);
-//}
-
-//void ParticleFX::ConfigureEnvironmentSmoke() {
-//	ApplyPreset(ParticlePresets::Environment_Smoke);
-//	SetOneShot(false);
-//}
-//
-//void ParticleFX::ConfigureFlame() {
-//	ApplyPreset(ParticlePresets::Flame);
-//	SetOneShot(false);
-//}
-//
-//void ParticleFX::ConfigureEnvironmentExplosion() {
-//	ApplyPreset(ParticlePresets::Environment_Explosion);
-//	SetOneShot(true);
-//}
-//
-//void ParticleFX::ConfigureRiffleShot() {
-//	ApplyPreset(ParticlePresets::Riffle_Shot);
-//	SetOneShot(true);
-//}
-//
-//void ParticleFX::ConfigureEnemyDash() {
-//	ApplyPreset(ParticlePresets::Enemy_Dash);
-//	SetOneShot(true);
-//}
-//
-//void ParticleFX::ConfigureAcidAttack() {
-//	ApplyPreset(ParticlePresets::Acid_Atk);
-//	SetOneShot(false);
-//}
-//
-//void ParticleFX::ConfigureAcidPuddle() {
-//	ApplyPreset(ParticlePresets::Acid_Puddle);
-//	SetOneShot(false);
-//}
-//
-//void ParticleFX::ConfigureEnergyBall() {
-//	ApplyPreset(ParticlePresets::Energy_Ball);
-//	SetOneShot(false);
-//}
-//
-//void ParticleFX::ConfigureRailGunAuto() {
-//	ApplyPreset(ParticlePresets::RailGun_Auto);
-//	SetOneShot(false);
-//}
-//
-//void ParticleFX::ConfigureRailGunSemi() {
-//	ApplyPreset(ParticlePresets::RailGun_Semi);
-//	SetOneShot(false);
-//}
-//
-//void ParticleFX::ConfigureEnvironmentDropplet() {
-//	ApplyPreset(ParticlePresets::Environment_Dropplet);
-//	SetOneShot(false);
-//}
-//
-//void ParticleFX::ConfigureEnvironmentSpark() {
-//	ApplyPreset(ParticlePresets::Environment_Spark);
-//	SetOneShot(true);
-//}
-//
-//void ParticleFX::ConfigureArcSnareImpact() {
-//	ApplyPreset(ParticlePresets::Arc_Snare_Impact);
-//	SetOneShot(true);
-//}
 
 void ParticleFX::SetEndSpeed(float Espeed) 
 {
 	this->endSpeed = Espeed;
 
 }
-
-
-
-//void ParticleFX::ConfigureDust() {
-//	ApplyPreset(ParticlePresets::Dust);
-//}
 
 void ParticleFX::EmitBurst(int count) {
 	for (int i = 0; i < count; ++i) {

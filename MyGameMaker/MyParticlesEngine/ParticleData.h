@@ -26,6 +26,7 @@ struct ParticleData {
 	glm::vec2 spriteSize;
 	glm::vec2 sheetSize;
 	bool useAnimation;
+	bool randomAnimIndex;
 	float indexTimer;
 	int animIndex;
 	float animSpeed;
@@ -169,7 +170,10 @@ public:
 			return -1;
 		}
 
-		
+		if (particleData[index].randomAnimIndex == true) 
+		{
+			particleData[index].animIndex = rand() % CalculateMaxIndex(particleData[index].sheetSize, particleData[index].spriteSize);
+		}
 
 		particleData[index] = particle;
 		particleData[index].active = true;

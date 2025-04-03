@@ -44,6 +44,7 @@ struct ParticlePreset {
 	float shapeParam3;  // Depth for box, angle for cone
 	glm::vec2 spriteSize;
 	bool useAnimation;
+	bool randomAnimIndex;
 	float animSpeed; //in seconds
 	float startRotation;
 	bool randomRotation;
@@ -112,6 +113,7 @@ public:
 	void SetStartRotation(float startRotation) { this->startRotation = startRotation; }
 	void SetRandomRotation(bool randomRotation) { this->randomRotation = randomRotation; }
 	void SetParticleEndSize(float endSize);
+	void SetRandomStartIndex(bool randomAnimIndex) { this->randomAnimIndex = randomAnimIndex; }
 
 
 	float GetEmissionRate() const { return emissionRate; }
@@ -130,6 +132,7 @@ public:
 	bool GetPlayOnAwake() const { return playOnAwake; }
 	bool GetUseAnimation() const { return useAnimation; }
 	bool GetRandomRotation() const { return randomRotation; }
+	bool GetRandomStartIndex() const { return randomAnimIndex; }
 	glm::vec2 GetSpriteSize() const { return spriteSize; }
 	glm::vec3 GetStartColor() const { return startColor; }
 	glm::vec3 GetEndColor() const { return endColor; }
@@ -223,6 +226,7 @@ private:
 	// Spritesheet data
 	glm::vec2 spriteSize = glm::vec2(133,175);
 	bool useAnimation;
+	bool randomAnimIndex = false; 
 	float animSpeed;
 
 
@@ -245,6 +249,8 @@ protected:
 		node["maxSpeed"] = maxSpeed;
 		node["startSize"] = startSize;
 		node["endSize"] = endSize;
+		node["minSize"] = minSize;
+		node["maxSize"] = maxSize;
 
 		node["startColor"] = YAML::Node();
 		node["startColor"].push_back(startColor.r);
@@ -270,6 +276,18 @@ protected:
 		node["shapeParam3"] = shapeParam3;
 
 		node["isOneShot"] = isOneShot;
+		node["isPlaying"] = isPlaying;
+		node["isPaused"] = isPaused;
+		node["burstEmitted"] = burstEmitted;
+
+		node["spriteSize"] = YAML::Node();
+		node["spriteSize"].push_back(spriteSize.x);
+		node["spriteSize"].push_back(spriteSize.y);
+
+		node["useAnimation"] = useAnimation;
+		node["animSpeed"] = animSpeed;
+		node["startRotation"] = startRotation;
+		node["randomRotation"] = randomRotation;
 
 		if (material) {
 			node["material"] = YAML::Node();
@@ -360,22 +378,19 @@ protected:
 			if (node["rotationSpeed"]) {
 				rotationSpeed = node["rotationSpeed"].as<float>();
 			}
-            if (node["gravity"]) 
-			{
-            auto gravityNode = node["gravity"];
-			
-				if (gravityNode.IsSequence() && gravityNode.size() == 3) 
-				{
+			if (node["gravity"]) {
+				auto gravityNode = node["gravity"];
+				if (gravityNode.IsSequence() && gravityNode.size() == 3) {
 					gravity = glm::vec3(
-					gravityNode[0].as<float>(),
-					gravityNode[1].as<float>(),
-					gravityNode[2].as<float>()
+						gravityNode[0].as<float>(),
+						gravityNode[1].as<float>(),
+						gravityNode[2].as<float>()
 					);
-				} else 
-				{
+				}
+				else {
 					gravity = glm::vec3(0.0f); // Default to zero vector if format is incorrect
 				}
-            }
+			}
 
 			if (node["shapeParam1"]) {
 				shapeParam1 = node["shapeParam1"].as<float>();
@@ -389,6 +404,24 @@ protected:
 
 			if (node["isOneShot"]) {
 				isOneShot = node["isOneShot"].as<bool>();
+			}
+
+			if (node["spriteSize"] && node["spriteSize"].IsSequence() && node["spriteSize"].size() == 2) {
+				spriteSize.x = node["spriteSize"][0].as<float>();
+				spriteSize.y = node["spriteSize"][1].as<float>();
+			}
+
+			if (node["useAnimation"]) {
+				useAnimation = node["useAnimation"].as<bool>();
+			}
+			if (node["animSpeed"]) {
+				animSpeed = node["animSpeed"].as<float>();
+			}
+			if (node["startRotation"]) {
+				startRotation = node["startRotation"].as<float>();
+			}
+			if (node["randomRotation"]) {
+				randomRotation = node["randomRotation"].as<bool>();
 			}
 
 			if (node["material"]) {

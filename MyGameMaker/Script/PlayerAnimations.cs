@@ -72,14 +72,14 @@ public class PlayerAnimations : MonoBehaviour
     }
     public void SetWalkAnimation()
     {
-        esk.TransitionAnimations(5, 6, 0.1f);
+        esk.TransitionAnimations(5, 9, 0.1f);
         //esk.SetAnimation(6);
-        esk.SetAnimationSpeed(1f);
+        esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetRunAnimation()
     {
-        esk.TransitionAnimations(6, 6, 0.1f);
+        esk.TransitionAnimations(9, 6, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
     }
@@ -108,7 +108,7 @@ public class PlayerAnimations : MonoBehaviour
     }
     public void SetWalkingToIdleAnimation()
     {
-        esk.TransitionAnimations(6, 5, 0.1f);
+        esk.TransitionAnimations(9, 5, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 

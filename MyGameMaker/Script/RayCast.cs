@@ -18,6 +18,13 @@ namespace HawkEngine
             public Vector3 point;
             public Vector3 normal;
             public float distance;
+            public bool isHit
+            {
+                get
+                {
+                    return gameObject != null;
+                }
+            }
         }
 
         public RaycastHit hit;

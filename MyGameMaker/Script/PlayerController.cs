@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
             RayCast rayCast = new RayCast();
             rayCast.PerformRaycast(playerCenterPosition, playerDirection, 10f);
 
-            if (rayCast.hit.gameObject != null)
+            if (rayCast.hit.isHit)
             {
                 Engineson.print("Raycast hit: " + rayCast.hit.gameObject.name);
                 Engineson.print("Raycast distance: " + rayCast.hit.distance);

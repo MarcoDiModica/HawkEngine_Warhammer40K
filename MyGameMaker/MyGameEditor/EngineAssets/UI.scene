@@ -1,5 +1,5 @@
 SceneMetadata:
-  SceneName: DefaultScene
+  SceneName: UI
 GameObject0:
   name: Player
   tag: Untagged
@@ -230,7 +230,7 @@ GameObject2:
 GameObject3:
   name: Canvas_HUD
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -581,7 +581,7 @@ GameObject3:
       Children: ~
     - name: boltgun_small
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -633,7 +633,7 @@ GameObject3:
           enabled: true
           localPosition:
             - 82.5
-            - 63.400001525878906
+            - 20.600000381469727
             - 0
           localRotation:
             - 0
@@ -648,7 +648,7 @@ GameObject3:
           enabled: true
           position:
             - 0.824999988
-            - 0.634000003
+            - 0.206
             - 0
           rotation:
             - 0
@@ -676,31 +676,31 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 89
-            - 63.299999237060547
+            - 92.599998474121094
+            - 76
             - 0
           localRotation:
             - 0
             - -0
             - 0
           localScale:
-            - 0.46000000834465027
-            - 0.070000000298023224
+            - 0.028999999165534973
+            - 0.05000000074505806
             - 1
         UITransformComponent:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.889999986
-            - 0.633000016
+            - 0.925999999
+            - 0.75999999
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0579999983
-            - 0.0989999995
+            - 0.029000001
+            - 0.0500000007
             - 1
           pivot_offset:
             - 0
@@ -720,31 +720,31 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 82.199996948242188
-            - 63
+            - 89.099998474121094
+            - 0.75999999046325684
             - 0
           localRotation:
             - 0
             - -0
             - 0
           localScale:
-            - 0.039999999105930328
-            - 0.090000003576278687
+            - 0.064000003039836884
+            - 0.054499998688697815
             - 1
         UITransformComponent:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.822000027
-            - 0.629999995
+            - 0.890999973
+            - 0.75999999
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.128000006
-            - 0.10899999
+            - 0.064000003
+            - 0.0544999987
             - 1
           pivot_offset:
             - 0
@@ -764,31 +764,31 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 81.599998474121094
-            - 3.0069999694824219
+            - 0.88999998569488525
+            - 0.81400001049041748
             - 0
           localRotation:
             - 0
             - -0
             - 0
           localScale:
-            - 0.51999998092651367
-            - 0.56000000238418579
+            - 0.068999998271465302
+            - 0.10400000214576721
             - 1
         UITransformComponent:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.815999985
-            - 0.730000019
+            - 0.889999986
+            - 0.81400001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.138999999
-            - 0.207999989
+            - 0.0689999983
+            - 0.103999995
             - 1
           pivot_offset:
             - 0
@@ -808,31 +808,31 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 0.81599998474121094
-            - 0.73000001907348633
+            - 0.88999998569488525
+            - 0.81400001049041748
             - 0
           localRotation:
             - 0
             - -0
             - 0
           localScale:
-            - 0.13899999856948853
-            - 0.20800000429153442
+            - 0.068999998271465302
+            - 0.10400000214576721
             - 1
         UITransformComponent:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.815999985
-            - 0.730000019
+            - 0.889999986
+            - 0.81400001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.138999999
-            - 0.207999989
+            - 0.0689999983
+            - 0.103999995
             - 1
           pivot_offset:
             - 0
@@ -1106,6 +1106,13 @@ GameObject4:
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
+    ScriptComponents:
+      Script0:
+        name: PauseMenu
+      Script1:
+        name: PauseMenu
+      Script2:
+        name: PauseMenu
   Children:
     - name: PauseMenu
       tag: Untagged
@@ -1390,6 +1397,14 @@ GameObject5:
       Script0:
         name: MenuButtons
       Script1:
+        name: MenuButtons
+      Script2:
+        name: MenuButtons
+      Script3:
+        name: MenuButtons
+      Script4:
+        name: MenuButtons
+      Script5:
         name: MenuButtons
   Children:
     - name: bg_menu
@@ -1719,6 +1734,14 @@ GameObject6:
       Script0:
         name: OptionMenu
       Script1:
+        name: OptionMenu
+      Script2:
+        name: OptionMenu
+      Script3:
+        name: OptionMenu
+      Script4:
+        name: OptionMenu
+      Script5:
         name: OptionMenu
   Children:
     - name: Canvas_OptionsMenu_
@@ -2160,6 +2183,9 @@ GameObject10:
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
+    ScriptComponents:
+      Script0:
+        name: LoseScreen
   Children:
     - name: BG
       tag: Untagged
@@ -2248,6 +2274,10 @@ GameObject10:
           name: UIImageComponent
           enabled: true
           texture_path: Library\Textures\UI\game_over_LLC.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~
     - name: MM_button
       tag: Untagged
@@ -2292,6 +2322,10 @@ GameObject10:
           name: UIImageComponent
           enabled: true
           texture_path: Library\Textures\UI\game_over_MM.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~
     - name: QUIT_button
       tag: Untagged
@@ -2336,11 +2370,15 @@ GameObject10:
           name: UIImageComponent
           enabled: true
           texture_path: Library\Textures\UI\game_over_quit.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~
 GameObject11:
   name: Canvas_win_screen
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -2380,6 +2418,9 @@ GameObject11:
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
+    ScriptComponents:
+      Script0:
+        name: WinScreen
   Children:
     - name: win_screen
       tag: Untagged
@@ -2398,7 +2439,7 @@ GameObject11:
             - -0
             - 0
           localScale:
-            - 1
+            - 1.4700000286102295
             - 1
             - 1
         UITransformComponent:
@@ -2424,4 +2465,100 @@ GameObject11:
           name: UIImageComponent
           enabled: true
           texture_path: Library\Textures\UI\WIN_screen.png
+      Children: ~
+    - name: Menu_Button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 29.299999237060547
+            - -6.2189998626708984
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1.6150000095367432
+            - 0.41499999165534973
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.293000013
+            - 0.890999973
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.184
+            - 0.064000003
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\WinMenu.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: Quit_Button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 48.799999237060547
+            - 45.737998962402344
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.25999999046325684
+            - 0.10999999940395355
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.488000005
+            - 0.896000028
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.193000004
+            - 0.0670000017
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\WinQuit.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
       Children: ~

@@ -106,6 +106,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
+    <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="MedicaeStimm.cs" />
     <Compile Include="IInteractable.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
     <Compile Include="OptionMenu.cs" />
+    <Compile Include="PauseMenu.cs" />
     <Compile Include="PickUpManager.cs" />
     <Compile Include="Physics.cs" />
     <Compile Include="PlayerAnimations.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
     <Compile Include="UITransform.cs" />
+    <Compile Include="WinScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

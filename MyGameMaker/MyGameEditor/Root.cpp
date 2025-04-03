@@ -42,8 +42,8 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-	Application->root->CreateScene("DefaultScene");
-	Application->root->SetActiveScene("DefaultScene");
+	/*Application->root->CreateScene("DefaultScene");
+	Application->root->SetActiveScene("DefaultScene");*/
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
@@ -65,9 +65,14 @@ bool Root::Start()
 {
 	auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
-	auto canvasPauseMenu = FindGOByName("Canvas_Pause_Menu");
+	auto canvasPauseMenu = FindGOByName("Canvas_PauseMenu");
+	canvasPauseMenu->AddComponent<ScriptComponent>()->LoadScript("PauseMenu");
 	auto canvasOptionsMenu = FindGOByName("Canvas_OptionsMenu");
 	canvasOptionsMenu->AddComponent<ScriptComponent>()->LoadScript("OptionMenu");
+	auto canvasLoseScreen = FindGOByName("Canvas_lose_screen");
+	canvasLoseScreen->AddComponent<ScriptComponent>()->LoadScript("LoseScreen");
+	auto canvasWinScreen = FindGOByName("Canvas_win_screen");
+	canvasWinScreen->AddComponent<ScriptComponent>()->LoadScript("WinScreen");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/FinalLevel1.Scene");
 	//auto player = CreateGameObject("Player");
@@ -338,17 +343,17 @@ bool Root::Update(double dt)
 		Tweening::UIScale(newGameButton.get(), glm::dvec3(0.5, 0.8, 0.6), 2.0f, Modes::EASE_IN_OUT);
 	}*/
 
-	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
-		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
-	}
+	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
+	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	//}
 
-	if (Application->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
-		Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
-	}
+	//if (Application->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+	//	Application->scene_serializer->DeSerialize("Library/Scenes/Level2.scene");
+	//}
 
-	if (Application->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
-		Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
-	}
+	//if (Application->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
+	//	Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
+	//}
 
 	return true;
 }

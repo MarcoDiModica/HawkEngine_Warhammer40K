@@ -65,17 +65,28 @@ public class MenuButtons : MonoBehaviour
     {
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
-            
-            SceneManager.LoadScene("DefaultScene");
+            //SceneManager.LoadScene("DefaultScene");
+            gameObject.SetActive(false);
         }
 
-        if(button_optionsButton.GetState() == ButtonState.CLICKED)
+        if (button_continueButton.GetState() == ButtonState.CLICKED)
+        {
+            //Cargar el juego
+            //SceneManager.LoadScene("DefaultScene");
+            gameObject.SetActive(false);
+        }
+
+        if (button_optionsButton.GetState() == ButtonState.CLICKED)
         {
             optionsCanvas.SetActive(true);
             
         }
 
-        
+        if (button_quitButton.GetState() == ButtonState.CLICKED)
+        {
+            //Salir del juego
+        }
+
 
         //if (continueButton.GetState() == ButtonState.CLICKED)
         //{

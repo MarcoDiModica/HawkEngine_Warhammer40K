@@ -52,7 +52,7 @@ public:
     void SetColliderFriction(GameObject& go, float friction);
 
     // Raycast
-	bool Raycast(btVector3& origin, btVector3& direction, float maxDistance);
+	GameObject* Raycast(btVector3& origin, btVector3& direction, float maxDistance, btVector3& hitPoint, btVector3& normal, float& distance);
 
     btDiscreteDynamicsWorld* dynamicsWorld;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;

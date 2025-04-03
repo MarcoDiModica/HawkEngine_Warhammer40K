@@ -1,5 +1,5 @@
 SceneMetadata:
-  SceneName: DefaultScene
+  SceneName: FinalLevel1
 GameObject0:
   name: Player
   tag: Player
@@ -47,7 +47,7 @@ GameObject0:
       friction: 0.5
       gravity:
         x: 0
-        y: -199.699997
+        y: -200
         z: 0
       damping:
         linear: 0

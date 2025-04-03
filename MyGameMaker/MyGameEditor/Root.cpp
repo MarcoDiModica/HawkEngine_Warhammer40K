@@ -763,14 +763,6 @@ void Root::CreateMainMenuUI()
     optionsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     optionsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.128, 0.604, 0), glm::vec3(0.182, 0.091, 1));
 
-    auto creditsButton = CreateGameObject("CreditsButton");
-    Application->root->ParentGameObject(*creditsButton, *canvas);
-    creditsButton->AddComponent<UIImageComponent>();
-    creditsButton->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/Credits_Buttom.png");
-    creditsButton->AddComponent<UIButtonComponent>();
-    creditsButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-    creditsButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.127, 0.748, 0), glm::vec3(0.182, 0.091, 1));
-
     auto quitButton = CreateGameObject("QuitButton");
     Application->root->ParentGameObject(*quitButton, *canvas);
     quitButton->AddComponent<UIImageComponent>();

@@ -22,6 +22,7 @@ public:
 
     std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
+	void Awake() override;
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override {}

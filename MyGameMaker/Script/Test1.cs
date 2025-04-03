@@ -3,6 +3,10 @@ using System.Numerics;
 
 public class Test1 : MonoBehaviour
 {
+    public override void Awake()
+    {
+        Engineson.print("Test1 Awake");
+    }
     public override void Start()
     {
         Engineson.print("Test1 Start");

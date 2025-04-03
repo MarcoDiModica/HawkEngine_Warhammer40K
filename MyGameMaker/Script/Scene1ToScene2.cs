@@ -1,36 +1,46 @@
 using HawkEngine;
-
 public class Scene1ToScene2 : MonoBehaviour
 {
-    private Collider nextLvlCollider;
+    private Collider TriggerLevel;
     bool changeScene = false;
+
+    public override void Awake()
+    {
+        base.Awake();
+    }
 
     public override void Start()
     {
-        nextLvlCollider = gameObject.GetComponent<Collider>();
-
-
-        if (nextLvlCollider == null)
+        TriggerLevel = gameObject.GetComponent<Collider>();
+        if (TriggerLevel == null)
         {
-            Engineson.print("ERROR: No NextLvl object found");
+            Engineson.print("Error");
         }
     }
-
     public override void Update(float deltaTime)
     {
-        if(changeScene)
-        {
+        if (changeScene) {
             SceneManager.LoadScene("Level2");
         }
     }
+    public override void OnTriggerEnter(GameObject other)
+    {
+        if (other != null) { 
 
-    override public void OnTriggerEnter(GameObject other)
+            if (other.name == "Player" && !changeScene) { 
+                changeScene = true;
+            }
+        }
+
+    }
+
+    public override void OnCollisionStay(GameObject other)
     {
         if (other != null)
         {
-            if (other.name == "Player" && !changeScene)
+            if (other.name == "Player")
             {
-                changeScene = true;
+                Engineson.print("Enters the colider");
             }
         }
     }

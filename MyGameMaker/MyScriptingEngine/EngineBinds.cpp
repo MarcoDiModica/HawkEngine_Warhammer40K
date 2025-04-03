@@ -38,6 +38,11 @@ MonoString* EngineBinds::GameObjectGetName(MonoObject* sharpRef) {
     return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
 }
 
+MonoString* EngineBinds::GameObjectGetTag(MonoObject* sharpRef) {
+    std::string name = ConvertFromSharp(sharpRef)->GetTag();
+    return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
+}
+
 GameObject* EngineBinds::ConvertFromSharp(MonoObject* sharpObj) {
     if (sharpObj == nullptr) {
         return nullptr;
@@ -241,12 +246,31 @@ void EngineBinds::AddScript(MonoObject* ref, MonoString* scriptName) {
 	go->AddComponent<ScriptComponent>()->LoadScript(C_name);
 }
 
+void EngineBinds::SetActive(MonoObject* ref, bool active) {
+	ConvertFromSharp(ref)->SetActive(active);
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
     char* C_name = mono_string_to_utf8(sharpName);
     ConvertFromSharp(ref)->SetName(std::string(C_name));
 }
+void EngineBinds::SetTag(MonoObject* ref, MonoString* sharpName) {
+
+    char* C_name = mono_string_to_utf8(sharpName);
+    ConvertFromSharp(ref)->SetTag(std::string(C_name));
+}
+
+void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
+    ConvertFromSharp(ref)->SetActive(active);
+}
+
+MonoString* EngineBinds::GetTag(MonoObject* ref) {
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
+}
+
+
 
 MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
 {
@@ -598,6 +622,57 @@ void EngineBinds::SetColliderPosition(MonoObject* colliderRef, glm::vec3* positi
     }
 }
 
+
+MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
+    if (!gameObject) return nullptr;
+
+    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    if (!gameObjectClass) {
+        return nullptr;
+    }
+
+    MonoObject* monoGameObject = mono_object_new(mono_domain_get(), gameObjectClass);
+    if (!monoGameObject) {
+        return nullptr;
+    }
+
+    MonoClassField* nativePtrField = mono_class_get_field_from_name(gameObjectClass, "CplusplusInstance");
+    if (!nativePtrField) {
+        return nullptr;
+    }
+
+    uintptr_t nativePtr = reinterpret_cast<uintptr_t>(gameObject);
+    mono_field_set_value(monoGameObject, nativePtrField, &nativePtr);
+
+    return monoGameObject;
+}
+
+
+MonoArray* EngineBinds::OverlapSphere(glm::vec3* position, float radius, MonoString* tag) {
+    if (!Application || !Application->physicsModule) {
+        return nullptr;
+    }
+
+    std::string tagStr = mono_string_to_utf8(tag);
+    auto overlappingObjects = Application->physicsModule->OverlapSphere(*position, radius, tagStr);
+
+    MonoDomain* domain = mono_domain_get();
+    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    if (!gameObjectClass) return nullptr;
+
+    MonoArray* monoArray = mono_array_new(domain, gameObjectClass, overlappingObjects.size());
+
+    for (size_t i = 0; i < overlappingObjects.size(); i++) {
+        MonoObject* monoGameObject = GetMonoObjectFromGameObject(overlappingObjects[i]);
+        if (monoGameObject) {
+            mono_array_set(monoArray, MonoObject*, i, monoGameObject);
+        }
+    }
+
+    return monoArray;
+}
+
+
 glm::quat EngineBinds::GetColliderRotation(MonoObject* colliderRef) {
     auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     return collider ? collider->GetColliderRotation() : glm::quat();
@@ -732,7 +807,7 @@ void EngineBinds::EnableContinuousCollision(MonoObject* rigidbodyRef) {
 }
 
 // Raycast
-bool EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance)
+MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance)
 {
     btVector3 from;
 	from.setValue(origin->x, origin->y, origin->z);
@@ -740,16 +815,24 @@ bool EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDist
 	btVector3 to;
 	to.setValue(direction->x, direction->y, direction->z);
 
-	if (Application->physicsModule->Raycast(from, to, maxDistance))
-	{
-		return true;
-	}
-    else
-    {
-		return false;
-    }
+    btVector3 hitPos;
+    hitPos.setValue(hitPoint.x, hitPoint.y, hitPoint.z);
 
-    return false;
+    btVector3 hitNormal;
+    hitNormal.setValue(normal.x, normal.y, normal.z);
+
+	GameObject* hitObject;
+	hitObject = Application->physicsModule->Raycast(from, to, maxDistance, hitPos, hitNormal, distance);
+
+	
+	hitPoint = glm::vec3(hitPos.getX(), hitPos.getY(), hitPos.getZ());
+	normal = glm::vec3(hitNormal.getX(), hitNormal.getY(), hitNormal.getZ());
+
+	if (hitObject) {
+		return GetMonoObjectFromGameObject(hitObject);
+	}
+
+    return nullptr;
 }
 
 
@@ -926,6 +1009,7 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
 void EngineBinds::SetScenePlay()
 {
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	SceneManagement->Awake();
 	SceneManagement->currentScene->Start();
 }
 
@@ -935,13 +1019,18 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
+    mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
+	mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GetTag);
+	mono_add_internal_call("HawkEngine.GameObject::SetTag", (const void*)SetTag);
     mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
+    mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
+
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);
@@ -995,6 +1084,10 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
 
+
+    //Physics
+    mono_add_internal_call("HawkEngine.Physics::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);
+
     // Physics Collider
     mono_add_internal_call("HawkEngine.Collider::SetTrigger", (const void*)&EngineBinds::SetTrigger);
     mono_add_internal_call("HawkEngine.Collider::IsTrigger", (const void*)&EngineBinds::IsTrigger);
@@ -1006,6 +1099,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Collider::SetSize", (const void*)&EngineBinds::SetColliderSize);
     mono_add_internal_call("HawkEngine.Collider::SetActive", (const void*)&EngineBinds::SetColliderActive);
     mono_add_internal_call("HawkEngine.Collider::SnapToPosition", (const void*)&EngineBinds::SnapColliderToPosition);
+    mono_add_internal_call("HawkEngine.Collider::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);
 
     // Physics Rigidbody
     mono_add_internal_call("HawkEngine.Rigidbody::SetVelocity", (const void*)&EngineBinds::SetVelocity);

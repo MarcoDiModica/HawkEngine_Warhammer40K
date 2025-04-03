@@ -417,11 +417,11 @@ static void ObjectToEditorCamera()
 	}
 }
 
-static void MousePickingCheck(std::vector<GameObject*> objects)
+static void MousePickingCheck(std::vector<std::shared_ptr<GameObject>> objects)
 {	
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
-	GameObject* selectedObject = nullptr;
+	std::shared_ptr<GameObject> selectedObject = nullptr;
 	bool selecting = false;
 	float distance = 0.0f;
 	float closestDistance = 0.0f;
@@ -434,13 +434,13 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 		}
 
 		selecting = true;
-		for (int i = 0; i < objects.size(); i++)
+		for (auto & object : objects)
 		{
-			if (objects[i]->HasComponent<MeshRenderer>() && objects[i]->IsActive())
+			if (object->HasComponent<MeshRenderer>() && object->IsActive())
 			{
-				BoundingBox bbox = objects[i]->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+				BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
 
-				bbox = objects[i]->GetTransform()->GetMatrix() * bbox;
+				bbox = object->GetTransform()->GetMatrix() * bbox;
 				glm::vec3 collisionPoint;
 				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
 				{
@@ -448,7 +448,7 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 					if (distance < closestDistance || closestDistance == 0.0f)
 					{
 						closestDistance = distance;
-						selectedObject = objects[i];
+						selectedObject = object;
 					}
 				}
 			}
@@ -458,8 +458,8 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 	if (selectedObject != nullptr && selecting == true)
 	{
 		Application->input->ClearSelection();
-		Application->input->SetDraggedGameObject(selectedObject);
-		Application->input->AddToSelection(selectedObject);
+		Application->input->SetDraggedGameObject(selectedObject.get());
+		Application->input->AddToSelection(selectedObject.get());
 	}
 }
 
@@ -492,16 +492,13 @@ static void RenderEditor() {
 
 	configureCamera();
 	drawFloorGrid(256, 4);
-	std::vector<GameObject*> objects;
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
-		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+	std::vector<std::shared_ptr<GameObject>> objects;
+	for (auto& object : Application->root->GetActiveScene()->children()) {
 		
 		objects.push_back(object);
 
-		for (const auto& j : object->GetChildren()) {
-			GameObject* child = j.get();
+		for (const auto& child : object->GetChildren()) {
 			objects.push_back(child);
-			//RenderOutline(child);
 		}
 
 		if (object->IsActive()) 

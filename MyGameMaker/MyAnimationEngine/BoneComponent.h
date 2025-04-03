@@ -19,6 +19,8 @@ public:
 	BoneComponent(BoneComponent&& other) noexcept;
 	BoneComponent& operator=(BoneComponent&& other) noexcept;
 
+	void Awake() override;
+
 	void Start() override;
 
 	void Update(float deltaTime) override;

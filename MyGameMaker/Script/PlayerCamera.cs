@@ -15,6 +15,11 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 currentOffset = new Vector3(0, 20, -10.5f);
     private Vector3 targetOffset = new Vector3(0, 20, -10.5f);
 
+    public override void Awake()
+    {
+
+    }
+
     public override void Start()
     {
         playerRef = GameObject.Find("Player");

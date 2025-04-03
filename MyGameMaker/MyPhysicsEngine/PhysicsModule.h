@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include "p2List.h"
 #include "DebugDrawerPhysics.h"
+#include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
 
 
 class GameObject;
@@ -37,6 +38,8 @@ public:
     void SyncTransforms();
     void SyncCollidersToGameObjects();
 
+    std::vector<GameObject*> OverlapSphere(const glm::vec3& position, float radius, const std::string& tag);
+
     bool IsForRelease() const { return isForRelease; }
 
     void AddConstraintP2P(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB);
@@ -49,7 +52,7 @@ public:
     void SetColliderFriction(GameObject& go, float friction);
 
     // Raycast
-	bool Raycast(btVector3& origin, btVector3& direction, float maxDistance);
+	GameObject* Raycast(btVector3& origin, btVector3& direction, float maxDistance, btVector3& hitPoint, btVector3& normal, float& distance);
 
     btDiscreteDynamicsWorld* dynamicsWorld;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -56,10 +57,14 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void AddScript(string scriptName);
-        
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern void SetActive(bool active);
 
         //----LifeCycleMethods----// 
         //these will be called from C++ editor
+        public virtual void Awake() { }
+
         public virtual void Start() { }
 
         public virtual void Update() { }
@@ -78,13 +83,23 @@ namespace HawkEngine
 
         //    set; // Set in C#
         //}
-        public extern string tag
+        public string tag
         {
-            [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            get; // Get from C++
-
-            set; // Set in C#
+            get
+            {
+                return GetTag();
+            }
+            set
+            {
+                SetTag(value);
+            }
         }
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        private extern string GetTag();
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        private extern void SetTag(string newTag);
 
         public string name
         {
@@ -103,6 +118,12 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         private  extern void SetName(string newTag);
+        
+
+        internal Vector3 SetGravity(Vector3 vector3)
+        {
+            throw new NotImplementedException();
+        }
 
 
     }

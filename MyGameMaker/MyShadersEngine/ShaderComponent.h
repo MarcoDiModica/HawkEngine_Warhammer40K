@@ -9,6 +9,7 @@ public:
     explicit ShaderComponent(GameObject* owner);
     ~ShaderComponent() override = default;
 
+	void Awake() override;
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;

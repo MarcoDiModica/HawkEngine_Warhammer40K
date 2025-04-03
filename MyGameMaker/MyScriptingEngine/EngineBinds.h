@@ -158,6 +158,10 @@ namespace EngineBinds {
     //SceneManagement
     bool LoadScene(MonoString* sceneName);
     void SetScenePlay();
+
+    //VFX (particles)
+    void ApplyPreset(MonoObject* particleRef, int presetName);
+	void SetOneShot(MonoObject* particleRef, bool oneShot);
 }
 
 #endif // ENGINE_BINDS_H

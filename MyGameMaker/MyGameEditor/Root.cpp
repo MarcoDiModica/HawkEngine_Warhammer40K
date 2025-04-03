@@ -91,7 +91,7 @@ bool Root::Start()
 		
 	auto particleFX = CreateGameObject("ParticleFX");
 	particleFX->AddComponent<ParticleFX>();
-	particleFX->GetComponent<ParticleFX>()->ConfigureSmoke();
+	particleFX->GetComponent<ParticleFX>()->ApplyPreset(0);
 	//particleFX->GetComponent<ParticleFX>()->Play();
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");

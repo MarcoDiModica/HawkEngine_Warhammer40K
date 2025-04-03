@@ -22,6 +22,7 @@
 #include "../MyUIEngine/UITransformComponent.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "../MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
 
@@ -179,6 +180,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}
+	else if (componentName == "HawkEngine.ParticleFX") {
+		return GO->GetComponent<ParticleFX>()->GetSharp();
+	}
 
 
     return nullptr;
@@ -216,6 +220,9 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break; 
     case 12: _component = static_cast<Component*>(go->AddComponent<CapsuleColliderComponent>(Application->physicsModule));
         break;
+	case 13: _component = static_cast<Component*>(go->AddComponent<ParticleFX>());
+		break;
+
     }
 
 	
@@ -908,6 +915,23 @@ void EngineBinds::SetScenePlay()
 	SceneManagement->currentScene->Start();
 }
 
+void EngineBinds::ApplyPreset(MonoObject* particleRef, int particleType)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+
+	if (particle) {
+		particle->ApplyPreset(particleType);
+	}
+}
+
+void EngineBinds::SetOneShot(MonoObject* particleRef, bool oneShot)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->SetOneShot(oneShot);
+	}
+}
+
 void EngineBinds::BindEngine() {
 
     // GameObject
@@ -1036,6 +1060,10 @@ void EngineBinds::BindEngine() {
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
 	mono_add_internal_call("HawkEngine.SceneManager::SetSceneToPlay", (const void*)&EngineBinds::SetScenePlay);
+
+	// VFX (particles)
+	mono_add_internal_call("HawkEngine.ParticleFX::ApplyPreset", (const void*)&EngineBinds::ApplyPreset);
+    mono_add_internal_call("HawkEngine.ParticleFX::SetOneShot", (const void*)&EngineBinds::SetOneShot);
 }
 
 template <class T>

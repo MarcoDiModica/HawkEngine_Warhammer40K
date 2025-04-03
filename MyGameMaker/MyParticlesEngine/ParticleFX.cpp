@@ -4,6 +4,8 @@
 #include "ParticleShader.h"
 #include "../MyGameEditor/Root.h"
 #include "../MyGameEditor/App.h"
+#include <MyScriptingEngine/MonoManager.h>
+#include <mono/metadata/debug-helpers.h>
 #include "../MyGameEngine/CameraComponent.h"
 
 namespace ParticlePresets {
@@ -61,8 +63,8 @@ namespace ParticlePresets {
 		0.3f,                          // Cone base radius
 		1.0f,                          // Cone height
 		30.0f,                         // Cone angle in degrees
-		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false,						   // Use animation
+		glm::vec2(256,256),         // Sprite size
+		true,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -94,8 +96,8 @@ namespace ParticlePresets {
 		0.05f,                         // Cone base radius
 		0.2f,                          // Cone height
 		20.0f,                         // Cone angle in degrees
-		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false,						   // Use animation
+		glm::vec2(256,256),         // Sprite size
+		true,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -126,8 +128,8 @@ namespace ParticlePresets {
 		0.5f,                          // Circle radius
 		0.0f,                          // Unused
 		0.0f,                          // Unused
-		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false,						   // Use animation
+		glm::vec2(256,256),         // Sprite size
+		true,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -159,8 +161,8 @@ namespace ParticlePresets {
 		1.0f,                          // Sphere radius
 		0.0f,                          // Unused
 		0.0f,                          // Unused
-		glm::vec2(1.0f, 1.0f),         // Sprite size
-		false,						   // Use animation
+		glm::vec2(256,256),         // Sprite size
+		true,						   // Use animation
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -550,7 +552,31 @@ glm::vec2 ParticleFX::GenerateRandomSize(float minSize, float maxSize) {
 	return glm::vec2(tSize, tSize);
 }
 
-void ParticleFX::ApplyPreset(const ParticlePreset& preset) {
+void ParticleFX::ApplyPreset(int particleID) {
+	ParticleType particleType = static_cast<ParticleType>(particleID);
+	auto preset = ParticlePresets::Smoke;
+	switch (particleType)
+	{
+	case ParticleType::DEFAULT:
+		preset = ParticlePresets::Smoke;
+		break;
+	case ParticleType::SMOKE:
+		preset = ParticlePresets::Smoke;
+		break;
+	case ParticleType::FIRE:
+		preset = ParticlePresets::Fire;
+		break;
+	case ParticleType::MUZZLE_FLASH:
+		preset = ParticlePresets::MuzzleFlash;
+		break;
+	case ParticleType::EXPLOSION:
+		preset = ParticlePresets::Explosion;
+		break;
+	default:
+		preset = ParticlePresets::Smoke;
+		break;
+	}
+
 	material->SetParticleType(preset.type);
 	playOnAwake = preset.playOnAwake;
 	duration = preset.duration;
@@ -583,23 +609,23 @@ void ParticleFX::ApplyPreset(const ParticlePreset& preset) {
 	SetTexture(preset.texturePath);
 }
 
-void ParticleFX::ConfigureSmoke() {
-	ApplyPreset(ParticlePresets::Smoke);
-}
-
-void ParticleFX::ConfigureFire() {
-	ApplyPreset(ParticlePresets::Fire);
-}
-
-void ParticleFX::ConfigureMuzzleFlash() {
-	ApplyPreset(ParticlePresets::MuzzleFlash);
-	SetOneShot(true);
-}
-
-void ParticleFX::ConfigureExplosion() {
-	ApplyPreset(ParticlePresets::Explosion);
-	SetOneShot(true);
-}
+//void ParticleFX::ConfigureSmoke() {
+//	ApplyPreset(ParticlePresets::Smoke);
+//}
+//
+//void ParticleFX::ConfigureFire() {
+//	ApplyPreset(ParticlePresets::Fire);
+//}
+//
+//void ParticleFX::ConfigureMuzzleFlash() {
+//	ApplyPreset(ParticlePresets::MuzzleFlash);
+//	SetOneShot(true);
+//}
+//
+//void ParticleFX::ConfigureExplosion() {
+//	ApplyPreset(ParticlePresets::Explosion);
+//	SetOneShot(true);
+//}
 
 void ParticleFX::SetEndSpeed(float Espeed) 
 {
@@ -609,9 +635,9 @@ void ParticleFX::SetEndSpeed(float Espeed)
 
 
 
-void ParticleFX::ConfigureDust() {
-	ApplyPreset(ParticlePresets::Dust);
-}
+//void ParticleFX::ConfigureDust() {
+//	ApplyPreset(ParticlePresets::Dust);
+//}
 
 void ParticleFX::EmitBurst(int count) {
 	for (int i = 0; i < count; ++i) {
@@ -719,4 +745,37 @@ void ParticleFX::SetShapeParameters(float param1, float param2, float param3) {
 	shapeParam1 = param1;
 	shapeParam2 = param2;
 	shapeParam3 = param3;
+}
+
+MonoObject* ParticleFX::GetSharp()
+{
+	if (CsharpReference) {
+		return CsharpReference;
+	}
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "ParticleFX");
+	if (!klass) {
+		return nullptr;
+	}
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		return nullptr;
+	}
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.ParticleFX:.ctor(uintptr,HawkEngine.GameObject)", true);
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	if (!method)
+	{
+		return nullptr;
+	}
+	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+	MonoObject* ownerGo = owner ? owner->GetSharp() : nullptr;
+	if (!ownerGo)
+	{
+		return nullptr;
+	}
+	void* args[2];
+	args[0] = &componentPtr;
+	args[1] = ownerGo;
+	mono_runtime_invoke(method, monoObject, args, NULL);
+	CsharpReference = monoObject;
+	return CsharpReference;
 }

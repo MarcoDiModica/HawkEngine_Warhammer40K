@@ -92,6 +92,7 @@
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
+    <Compile Include="ParticleFX.cs" />
     <Compile Include="PlayerAnimations.cs" />
     <Compile Include="PlayerCamera.cs" />
     <Compile Include="PlayerController.cs" />

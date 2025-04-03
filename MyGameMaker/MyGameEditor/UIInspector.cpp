@@ -1320,23 +1320,14 @@ private:
 
 		float width = (ImGui::GetContentRegionAvail().x - 9.0f) / 4.0f; // 3 spaces between buttons
 
-		if (ImGui::Button("Smoke", ImVec2(width, 0))) {
-			system->ConfigureSmoke();
-		}
-		ImGui::SameLine(0, 3);
+		int particleID = system->particleID;
 
-		if (ImGui::Button("Fire", ImVec2(width, 0))) {
-			system->ConfigureFire();
+		if (ImGui::InputInt("Particle preset ID", &particleID)) {
+			system->particleID = particleID;
 		}
-		ImGui::SameLine(0, 3);
 
-		if (ImGui::Button("Muzzle Flash", ImVec2(width, 0))) {
-			system->ConfigureMuzzleFlash();
-		}
-		ImGui::SameLine(0, 3);
-
-		if (ImGui::Button("Dust", ImVec2(width, 0))) {
-			system->ConfigureDust();
+		if (ImGui::Button("Set particle preset", ImVec2(width, 0))) {
+			system->ApplyPreset(particleID);
 		}
 
 		// Softness

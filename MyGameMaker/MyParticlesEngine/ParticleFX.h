@@ -71,13 +71,13 @@ public:
 	void RenderGameView();
 
 	std::unique_ptr<Component> Clone(GameObject* owner) override;
-	ComponentType GetType() const override { return ComponentType::PARTICLES_EMITTER; }
+	ComponentType GetType() const override { return ComponentType::PARTICLEFX; }
 
 	void SetTexture(const std::string& texturePath);
 
 	void SetColorGradient(const std::string& texturePath);
 
-	void ApplyPreset(const ParticlePreset& preset);
+	void ApplyPreset(int presetID);
 
 	void EmitBurst(int count);
 
@@ -150,11 +150,17 @@ public:
 	int GetMaxParticles() const { return renderer ? static_cast<int>(renderer->GetMaxParticles()) : 0; }
 	glm::vec2 GenerateRandomSize(float minSize, float maxSize);
 
-	void ConfigureSmoke();
-	void ConfigureFire();
-	void ConfigureMuzzleFlash();
-	void ConfigureExplosion();
-	void ConfigureDust();
+	//void ConfigureSmoke();
+	//void ConfigureFire();
+	//void ConfigureMuzzleFlash();
+	//void ConfigureExplosion();
+	//void ConfigureDust();
+
+
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
+
+	int particleID = 0;
 
 private:
 	void EmitParticle();
@@ -209,7 +215,7 @@ private:
 	glm::quat rotation;
 	glm::vec3 scale;
 
-
+	int particleTypeInt = 0;
 
 	// Spritesheet data
 	glm::vec2 spriteSize = glm::vec2(133,175);

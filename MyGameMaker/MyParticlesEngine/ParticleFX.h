@@ -143,11 +143,18 @@ public:
 	void ConfigureMuzzleFlash();
 	void ConfigureExplosion();
 	void ConfigureEnvironmentExplosion();
-	void ConfigureRiffleShot();
+
 	void ConfigureDust();
+
+	// Player VFX
+
+	void ConfigureRiffleShot();
 	void ConfigureAcidAttack();
 	void ConfigureAcidPuddle();
 	void ConfigureEnemyDash();
+	void ConfigureEnergyBall();
+	void ConfigureRailGunAuto();
+	void ConfigureRailGunSemi();
 
 private:
 	void EmitParticle();

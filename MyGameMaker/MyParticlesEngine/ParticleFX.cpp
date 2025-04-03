@@ -333,6 +333,87 @@ namespace ParticlePresets {
 	true,						   // Use animation
 	0.05f						   // Animation speed
 	};
+
+	const ParticlePreset Energy_Ball = {
+	ParticleType::ENERGY_BALL,
+	true,						   // PlayOnAwake
+	5,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   // Start color (light gray)
+	glm::vec3(1,1,1),   // End color (dark gray)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1,                          // Size start
+	1,                          // Size end
+	1,                          // Min lifetime
+	1,                          // Max lifetime
+	0.0f,                          // Min speed
+	0.0f,                          // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+	0,                          // Rotation speed
+	1,                         // Emission rate (particles per second)
+	EmitterShape::POINT,            // Shape
+	0.2f,                          // Cone base radius
+	1.0f,                          // Cone height
+	20.0f,                         // Cone angle in degrees
+	glm::vec2(641,361),			   // Sprite size
+	true,						   // Use animation
+	0.05f						   // Animation speed
+	};
+
+	const ParticlePreset RailGun_Auto = {
+	ParticleType::RAILGUN_AUTO,
+	true,						   // PlayOnAwake
+	5,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   // Start color (light gray)
+	glm::vec3(1,1,1),   // End color (dark gray)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1,                          // Size start
+	1,                          // Size end
+	1,                          // Min lifetime
+	1,                          // Max lifetime
+	0.0f,                          // Min speed
+	0.0f,                          // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+	0,                          // Rotation speed
+	1,                         // Emission rate (particles per second)
+	EmitterShape::POINT,            // Shape
+	0.2f,                          // Cone base radius
+	1.0f,                          // Cone height
+	20.0f,                         // Cone angle in degrees
+	glm::vec2(434,181),			   // Sprite size
+	true,						   // Use animation
+	0.05f						   // Animation speed
+	};
+
+	const ParticlePreset RailGun_Semi = {
+	ParticleType::RAILGUN_SEMI,
+	true,						   // PlayOnAwake
+	5,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   // Start color (light gray)
+	glm::vec3(1,1,1),   // End color (dark gray)
+	0.8f,                          // Alpha start
+	1.0f,                          // Alpha end
+	0.3f,                          // Size start
+	0.4f,                          // Size end
+	3.5f,                          // Min lifetime
+	4.0f,                          // Max lifetime
+	0.0f,                          // Min speed
+	0.0f,                          // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,1.2f),	   // Gravity (negative for upward)
+	0,                          // Rotation speed
+	26,                         // Emission rate (particles per second)
+	EmitterShape::CONE,            // Shape
+	0.1f,                          // Cone base radius
+	1.0f,                          // Cone height
+	20.0f,                         // Cone angle in degrees
+	glm::vec2(641,361),			   // Sprite size
+	true,						   // Use animation
+	0.05f						   // Animation speed
+	};
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -745,12 +826,12 @@ void ParticleFX::ConfigureExplosion() {
 
 void ParticleFX::ConfigureEnvironmentSmoke() {
 	ApplyPreset(ParticlePresets::Environment_Smoke);
-	SetOneShot(true);
+	SetOneShot(false);
 }
 
 void ParticleFX::ConfigureFlame() {
 	ApplyPreset(ParticlePresets::Flame);
-	SetOneShot(true);
+	SetOneShot(false);
 }
 
 void ParticleFX::ConfigureEnvironmentExplosion() {
@@ -770,12 +851,27 @@ void ParticleFX::ConfigureEnemyDash() {
 
 void ParticleFX::ConfigureAcidAttack() {
 	ApplyPreset(ParticlePresets::Acid_Atk);
-	SetOneShot(true);
+	SetOneShot(false);
 }
 
 void ParticleFX::ConfigureAcidPuddle() {
 	ApplyPreset(ParticlePresets::Acid_Puddle);
-	SetOneShot(true);
+	SetOneShot(false);
+}
+
+void ParticleFX::ConfigureEnergyBall() {
+	ApplyPreset(ParticlePresets::Energy_Ball);
+	SetOneShot(false);
+}
+
+void ParticleFX::ConfigureRailGunAuto() {
+	ApplyPreset(ParticlePresets::RailGun_Auto);
+	SetOneShot(false);
+}
+
+void ParticleFX::ConfigureRailGunSemi() {
+	ApplyPreset(ParticlePresets::RailGun_Semi);
+	SetOneShot(false);
 }
 
 void ParticleFX::SetEndSpeed(float Espeed) 

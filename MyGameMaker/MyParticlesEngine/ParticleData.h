@@ -240,10 +240,7 @@ public:
 				particleData[i].velocity = glm::mix(particleData[i].velocity, particleData[i].endVelocity, lifetimeFraction);
 			}
 			
-		
-		   particleData[i].rotation += particleData[i].rotationSpeed/360.0f;
-			
-		
+		    particleData[i].rotation += particleData[i].rotationSpeed/360.0f;		
 
 			if (particleData[i].useAnimation) 
 			{

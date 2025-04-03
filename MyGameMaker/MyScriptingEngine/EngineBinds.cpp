@@ -932,6 +932,30 @@ void EngineBinds::SetOneShot(MonoObject* particleRef, bool oneShot)
 	}
 }
 
+void EngineBinds::PlayParticle(MonoObject* particleRef)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->Play();
+	}
+}
+
+void EngineBinds::StopParticle(MonoObject* particleRef)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->Stop();
+	}
+}
+
+void EngineBinds::EmitBurst(MonoObject* particleRef, int burstCount)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->EmitBurst(burstCount);
+	}
+}
+
 void EngineBinds::BindEngine() {
 
     // GameObject
@@ -1064,6 +1088,9 @@ void EngineBinds::BindEngine() {
 	// VFX (particles)
 	mono_add_internal_call("HawkEngine.ParticleFX::ApplyPreset", (const void*)&EngineBinds::ApplyPreset);
     mono_add_internal_call("HawkEngine.ParticleFX::SetOneShot", (const void*)&EngineBinds::SetOneShot);
+	mono_add_internal_call("HawkEngine.ParticleFX::Play", (const void*)&EngineBinds::PlayParticle);
+	mono_add_internal_call("HawkEngine.ParticleFX::Stop", (const void*)&EngineBinds::StopParticle);
+	mono_add_internal_call("HawkEngine.ParticleFX::EmitBurst", (const void*)&EngineBinds::EmitBurst);
 }
 
 template <class T>

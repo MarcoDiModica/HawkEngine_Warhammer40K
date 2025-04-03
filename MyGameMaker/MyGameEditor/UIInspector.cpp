@@ -1057,18 +1057,13 @@ private:
 
 		if (system->IsPlaying()) {
 			if (ImGui::Button("Stop", ImVec2(width, 0))) {
-				system->Stop();
+				system->Pause();
 			}
 		}
 		else {
 			if (ImGui::Button("Play", ImVec2(width, 0))) {
 				system->Play();
 			}
-		}
-
-		ImGui::SameLine();
-		if (ImGui::Button("Pause", ImVec2(width, 0))) {
-			system->Pause();
 		}
 
 		ImGui::SameLine();

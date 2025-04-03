@@ -623,6 +623,7 @@ ParticleFX::ParticleFX(GameObject* owner)
 	, burstEmitted(false)
 	, rng(std::random_device()())
 	, dist01(0.0f, 1.0f)
+
 {
 	name = "ParticleFX";
 
@@ -812,6 +813,28 @@ std::unique_ptr<Component> ParticleFX::Clone(GameObject* owner) {
 	clone->shapeParam2 = shapeParam2;
 	clone->shapeParam3 = shapeParam3;
 	clone->isOneShot = isOneShot;
+	clone->isPlaying = isPlaying;
+	clone->isPaused = isPaused;
+	clone->playOnAwake = playOnAwake;
+	clone->duration = duration;
+	clone->position = position;
+	clone->rotation = rotation;
+	clone->scale = scale;
+	clone->spriteSize = spriteSize;
+	clone->useAnimation = useAnimation;
+	clone->animSpeed = animSpeed;
+	clone->endSpeed = endSpeed;
+	clone->randomRotation = randomRotation;
+	clone->minSize = minSize;
+	clone->maxSize = maxSize;
+	clone->shapeParam1 = shapeParam1;
+	clone->shapeParam2 = shapeParam2;
+	clone->shapeParam3 = shapeParam3;
+	clone->burstEmitted = burstEmitted;
+	clone->durationTrack = durationTrack;
+	clone->rng = rng;
+	clone->dist01 = dist01;
+
 
 	return clone;
 }
@@ -981,60 +1004,78 @@ void ParticleFX::ApplyPreset(int particleID) {
 	{
 	case ParticleType::DEFAULT:
 		preset = ParticlePresets::Smoke;
+		SetOneShot(false);
 		break;
 	case ParticleType::SMOKE:
 		preset = ParticlePresets::Smoke;
+		SetOneShot(false);
 		break;
 	case ParticleType::FIRE:
 		preset = ParticlePresets::Fire;
+		SetOneShot(false);
 		break;
 	case ParticleType::MUZZLE_FLASH:
 		preset = ParticlePresets::MuzzleFlash;
+		SetOneShot(true);
 		break;
 	case ParticleType::EXPLOSION:
 		preset = ParticlePresets::Explosion;
+		SetOneShot(true);
 		break;
 	case ParticleType::ENVIRONMENT_SMOKE:
 		preset = ParticlePresets::Environment_Smoke;
+		SetOneShot(false);
 		break;
 	case ParticleType::FLAME:
 		preset = ParticlePresets::Flame;
+		SetOneShot(false);
 		break;
 	case ParticleType::ENVIRONMENT_EXPLOSION:
 		preset = ParticlePresets::Environment_Explosion;
+		SetOneShot(true);
 		break;
 	case ParticleType::RIFFLE_SHOT:
 		preset = ParticlePresets::Riffle_Shot;
 		break;
 	case ParticleType::ENEMY_DASH:
 		preset = ParticlePresets::Enemy_Dash;
+		SetOneShot(true);
 		break;
 	case ParticleType::ACID_ATK:
 		preset = ParticlePresets::Acid_Atk;
+		SetOneShot(true);
 		break;
 	case ParticleType::ACID_PUDDLE:
 		preset = ParticlePresets::Acid_Puddle;
+		SetOneShot(false);
 		break;
 	case ParticleType::ENERGY_BALL:
 		preset = ParticlePresets::Energy_Ball;
+		SetOneShot(false);
 		break;
 	case ParticleType::RAILGUN_AUTO:
 		preset = ParticlePresets::RailGun_Auto;
+		SetOneShot(false);
 		break;
 	case ParticleType::RAILGUN_SEMI:
 		preset = ParticlePresets::RailGun_Semi;
+		SetOneShot(false);
 		break;
 	case ParticleType::ENVIRONMENT_DROPPLET:
 		preset = ParticlePresets::Environment_Dropplet;
+		SetOneShot(false);
 		break;
 	case ParticleType::ENVIRONMENT_SPARK:
 		preset = ParticlePresets::Environment_Spark;
+		SetOneShot(true);
 		break;
 	case ParticleType::ARC_SNARE_IMPACT:
 		preset = ParticlePresets::Arc_Snare_Impact;
+		SetOneShot(true);
 		break;
 	default:
 		preset = ParticlePresets::Smoke;
+		SetOneShot(false);
 		break;
 	}
 

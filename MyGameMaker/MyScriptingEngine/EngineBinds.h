@@ -162,6 +162,9 @@ namespace EngineBinds {
     //VFX (particles)
     void ApplyPreset(MonoObject* particleRef, int presetName);
 	void SetOneShot(MonoObject* particleRef, bool oneShot);
+	void PlayParticle(MonoObject* particleRef);
+	void StopParticle(MonoObject* particleRef);
+	void EmitBurst(MonoObject* particleRef, int burstCount);
 }
 
 #endif // ENGINE_BINDS_H

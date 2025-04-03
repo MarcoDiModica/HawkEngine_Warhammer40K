@@ -13,6 +13,15 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern float SetOneShot();
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void Play();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void Stop();
+        
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void EmitBurst(int count);
+
         private GameObject owner;
 
         public ParticleFX(UIntPtr nativeRigidbody, GameObject owner)

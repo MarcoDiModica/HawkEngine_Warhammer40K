@@ -152,7 +152,6 @@ public class EnemyControllerMelee : EnemyController
 
                             if (rand == rand2)
                             {
-                                leapTimer = deltaTime;
                                 Leap();
                                 hasLeaped = true;
                             }

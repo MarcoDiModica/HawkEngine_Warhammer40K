@@ -1088,6 +1088,13 @@ void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, fl
 {
 	Tweening::TweenVec3(value, start, target, duration, mode);
 }
+
+void EngineBinds::SetActive(MonoObject* gameObjectRef, bool active) {
+	GameObject* gameObject = ConvertFromSharp(gameObjectRef);
+	if (gameObject) {
+		gameObject->SetActive(active);
+	}
+}
     
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
@@ -1121,7 +1128,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
-
+    mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)SetActive);
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);
     mono_add_internal_call("HawkEngine.Input::GetKeyDown", (const void*)GetKeyDown);
@@ -1258,6 +1265,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Tweening::DOVector4", (const void*)&EngineBinds::DOColor);
 	mono_add_internal_call("HawkEngine.Tweening::DOValue", (const void*)&EngineBinds::DOValue);
 	mono_add_internal_call("HawkEngine.Tweening::DOVector3", (const void*)&EngineBinds::DOVec3);
+
+	
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

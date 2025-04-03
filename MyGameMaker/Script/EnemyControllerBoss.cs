@@ -7,7 +7,7 @@ using HawkEngine;
 
 public class EnemyControllerBoss : EnemyController
 {
-    private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
+    private float hurtboxActivationTime = 0.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
     private Vector3 hurtboxSize = new Vector3(2.0f, 2.0f, 2.0f); // Tamaño de la hurtbox
     private Vector3 hurtboxOffset = new Vector3(4.0f, 2.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
@@ -35,6 +35,9 @@ public class EnemyControllerBoss : EnemyController
     private bool isBuried = true;
 
     // phase 2 unburrowing/slam stats
+    private float unburrowingAttackCooldownPhase2 = 5.0f;
+    private float postAttackDelay = 2.0f;
+    private float burrowTime = 2.0f;
     private bool isPreparingAttack = false;
     private Vector3[] fixedPositions = new Vector3[]
     {
@@ -85,7 +88,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        //currentPhase = BossPhase.PHASE1;
+        currentPhase = BossPhase.PHASE2;
     }
     public override void Update(float deltaTime)
     {
@@ -139,8 +142,44 @@ public class EnemyControllerBoss : EnemyController
 
         if (currentPhase == BossPhase.PHASE2)
         {
-            // Lógica dels punts fixes
+            timer += deltaTime;
+
+            if(isBuried && timer >= unburrowingAttackCooldown)
+            {
+                isPreparingAttack = true;
+                timer = 0.0f;
+            }
+            else if (isPreparingAttack && timer >= burrowTime)
+            {
+                UnburrowingAttack();
+                isPreparingAttack = false;
+                timer = 0.0f;
+            }
+            else if (!isBuried && timer >= postAttackDelay)
+            {
+                if (playerTransform != null)
+                {
+                    float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+
+                    if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                    {
+                        SlamAttack();
+                        slamAttackTimer = slamAttackCooldown;
+                    }
+                    else
+                    {
+                        ChangePositionToClosest();
+                    }
+                }
+                timer = 0.0f;
+            }
+
+            if (slamAttackTimer > 0.0f)
+            {
+                slamAttackTimer -= deltaTime;
+            }
         }
+      
     }
 
     override public void OnCollisionEnter(GameObject other)
@@ -185,6 +224,16 @@ public class EnemyControllerBoss : EnemyController
         // Hurtbox i tot a la pesca
     }
 
+    private void UnburrowingAttackPhase2()
+    {
+        if (playerTransform != null)
+        {
+            enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
+            collider.SetPosition(enemyTransform.position);
+            Engineson.print("Unburrowing Attack ");
+        }
+    }
+
     public void ChangePositionToClosest()
     {
         enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
@@ -210,11 +259,16 @@ public class EnemyControllerBoss : EnemyController
 
     private void SlamAttack()
     {
-        if (playerTransform != null)
-        {
-            Engineson.print("Slam Attack");
+        Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 5.0f);
+        Vector3 hurtbOffset = enemyTransform.forward * 3.0f;
+        Vector3 hurtboxPosition = enemyTransform.position + hurtboxOffset;
 
-        }
+        GameObject hurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
+        hurtboxObject.AddComponent<MeshRenderer>();
+        var hurtboxTransform = hurtboxObject.AddComponent<Transform>();
+        hurtboxTransform.position = hurtboxPosition;
+        hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
+        var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
     }
 
     private void Burrow()
@@ -226,7 +280,7 @@ public class EnemyControllerBoss : EnemyController
 
     private void Die()
     {
-        // Tp del boss a tomar por culo
-        // UI pop-up Win Screen
+        enemyTransform.position = new Vector3(0.0f, -100.0f, 0.0f);
+        collider.SetPosition(enemyTransform.position);
     }
 }

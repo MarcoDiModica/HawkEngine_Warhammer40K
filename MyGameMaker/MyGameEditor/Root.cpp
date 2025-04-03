@@ -62,6 +62,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
+	//Application->scene_serializer->DeSerialize("Library/Scenes/FinalLevel1.Scene");
 	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -83,7 +84,7 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
-
+	
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
@@ -98,11 +99,9 @@ bool Root::Start()
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
-	
 
 
-
-	/*auto itemtest = CreateCube("item");
+	auto itemtest = CreateCube("item");
 	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
 	itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
@@ -110,11 +109,11 @@ bool Root::Start()
 	itemtest->SetTag("Interactable");
 	
 	auto itemtest2 = CreateCube("item");
-	itemtest2->GetTransform()->SetPosition(glm::vec3(1, 2, 10));
+	itemtest2->GetTransform()->SetPosition(glm::vec3(-20, 2, 10));
 	itemtest2->GetTransform()->SetScale(glm::vec3(2, 2, 2));
 	itemtest2->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	itemtest2->AddComponent<ScriptComponent>()->LoadScript("Item");
-	itemtest2->SetTag("Interactable");*/
+	itemtest2->AddComponent<ScriptComponent>()->LoadScript("AreaTrigger");
+	itemtest2->SetTag("AreaTrigger");
 
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
@@ -216,10 +215,10 @@ bool Root::Start()
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");*/
 
-	auto cubeTest = CreateCube("CubeTest");
-	cubeTest->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
-	cubeTest->GetTransform()->SetScale(glm::vec3(2, 2, 2));
-	cubeTest->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//auto cubeTest = CreateCube("CubeTest");
+	//cubeTest->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
+	//cubeTest->GetTransform()->SetScale(glm::vec3(2, 2, 2));
+	//cubeTest->AddComponent<BoxColliderComponent>(Application->physicsModule);
 
 	auto floor = CreateCube("Floor");
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
@@ -229,7 +228,7 @@ bool Root::Start()
 	SceneManagement->Awake();
 	SceneManagement->Start();
 
-	CreateGameplayUI();
+	//CreateGameplayUI();
 
 	////For rendering Interaction System text, remove the canvas if there is already one
 	//auto canvas = CreateGameObject("Canvas");
@@ -244,8 +243,21 @@ bool Root::Start()
 	//interactText->AddComponent<UIButtonComponent>();
 	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	//
+	//
+	//auto areaText = CreateGameObject("dialogueText");
+	//Application->root->ParentGameObject(*areaText, *canvas);
+	//areaText->AddComponent<UIImageComponent>();
+	//areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
+	//areaText->AddComponent<UIButtonComponent>();
+	//areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	//areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 
-	floor->SetActive(false);
+	//floor->SetActive(false);
+
+	//auto collisionNextLevel = CreateGameObject("CollisionNextLevel");
+	//collisionNextLevel->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//collisionNextLevel->AddComponent<ScriptComponent>()->LoadScript("Scene2ToMenu");
 
 	//CreateGameplayUI();
 	//CreateMainMenuUI();

@@ -26,10 +26,10 @@ public class EnemyControllerMelee : EnemyController
     public float clawCooldown = 2f;
 
         // Leap Attack
-    public float maxLeapRange = 15f;
-    public float minLeapRange = 7f;
+    public float maxLeapRange = 20.0f;
+    public float minLeapRange = 10.0f;
     private float lastLeap = 0f;
-    public float leapCooldown = 8f;
+    public float leapCooldown = 2.0f;
     private bool hasLeaped = false;
 
     public override void Awake()
@@ -54,10 +54,10 @@ public class EnemyControllerMelee : EnemyController
             return;
         }
 
-        soundAttack = gameObject.GetComponent<Audio>();
-        if (soundAttack == null)
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
         {
-            Engineson.print("PlayerShooting: Audio component not found");
+            Engineson.print("ERROR: Audio component not found");
         }
 
         enemyTransform = gameObject.GetComponent<Transform>();
@@ -111,7 +111,8 @@ public class EnemyControllerMelee : EnemyController
                         else if (dodgeTimer >= 0.5f && dodgewindow)
                         {
                             Attack();
-                            soundAttack?.Play();
+                            sound.LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+                            sound?.Play();
                             //DestroyHurtbox();
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
@@ -153,7 +154,9 @@ public class EnemyControllerMelee : EnemyController
                                 Leap();
                                 hasLeaped = true;
                             }
-
+                        }
+                        else
+                        {
                             lastLeap += deltaTime;
                             if (lastLeap >= leapCooldown)
                             {
@@ -219,7 +222,7 @@ public class EnemyControllerMelee : EnemyController
     public void Leap()
     {
         Engineson.print("LEAP JUMP EXECUTED");
-        rb.SetVelocity(rb.GetVelocity() * 10);
+        rb.SetVelocity(rb.GetVelocity() * 50);
     }
 
     private bool IsPlayerInHurtbox(Vector3 playerPos)

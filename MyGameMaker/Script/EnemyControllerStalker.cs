@@ -19,26 +19,25 @@ public class EnemyControllerStalker : EnemyController
     PlayerController pc;
 
     // Enemy Stats
-    private float health = 100.0f;
-    private float damage = 20.0f;
+    private float health = 350.0f;
+    private float damage = 40.0f;
 
-    // Claw Attack
-    private float lastClawTime = 0f;
-    public float clawCooldown = 2f;
+        // Stab Attack
+    public float stabCooldown = 2f;
 
-    // Leap Attack
-    public float maxLeapRange = 15f;
-    public float minLeapRange = 7f;
-    private float lastLeap = 0f;
-    public float leapCooldown = 8f;
-    private float leapTime = 0.0f;
-    private float leapDuration = 2.0f;
-    private bool hasLeaped = false;
+        // Pounce Attack
+    public float pounceRange = 10f;
+    private float lastPounce = 0f;
+    public float pounceCooldown = 8f;
+    private float pounceTime = 0.0f;
+    private float pounceDuration = 2.0f;
+    private bool hasPounced = false;
 
-    public override void Awake()
-    {
+    // Invisibility
+    public float invisibleRange = 15.0f;
+    private bool isInvisible = false;
 
-    }
+    public override void Awake() {}
 
     public override void Start()
     {
@@ -145,34 +144,13 @@ public class EnemyControllerStalker : EnemyController
                         rb.SetVelocity(Vector3.Zero);
                     }
 
-                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange)
+                    if (distanceToPlayer <= pounceRange)
                     {
-                        if (!hasLeaped)
+                        if (!hasPounced)
                         {
-                            Random random = new Random();
-                            int rand = random.Next(3, 4);
-                            int rand2 = random.Next(3, 4);
-
-                            leapTime += deltaTime;
-                            if (rand == rand2)
-                            {
-                                if (leapTime >= leapDuration)
-                                {
-                                    Leap();
-                                }
-                                else
-                                {
-                                    hasLeaped = true;
-                                }
-                            }
-                        }
-
-                        lastLeap += deltaTime;
-                        if (lastLeap >= leapCooldown)
-                        {
-                            lastLeap = 0.0f;
-                            Engineson.print("LEAP RESTORED");
-                            hasLeaped = false;
+                            pounceTime += deltaTime;
+                            Pounce();
+                            hasPounced = true;
                         }
                     }
 
@@ -226,15 +204,13 @@ public class EnemyControllerStalker : EnemyController
         isAttacking = true;
         Engineson.print("Melee attack executed!");
         pc.playerData.TakeDamage(damage);
-        //GameObject.Find("Player").GetComponent<PlayerData>().TakeDamage(damage);
         Engineson.print("Current health: " + (pc.playerData.GetHealth()));
     }
 
-    public void Leap()
+    public void Pounce()
     {
         Engineson.print("LEAP JUMP EXECUTED");
         rb.SetVelocity(rb.GetVelocity() * 2);
-        //Engineson.print("Current health: " + (GameObject.Find("Player").GetComponent<PlayerData>().GetHealth()));
     }
 
     private bool IsPlayerInHurtbox(Vector3 playerPos)

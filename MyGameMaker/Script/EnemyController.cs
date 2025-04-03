@@ -10,7 +10,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected Rigidbody rb;
     protected BoxCollider collider;
     protected Transform enemyTransform;
-    protected Audio soundAttack;
+    protected Audio sound;
     public float currentHealth;
     public float maxHealth;
     public bool isStunned = false;

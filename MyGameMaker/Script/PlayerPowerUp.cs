@@ -152,5 +152,23 @@ public class PlayerPowerUp : MonoBehaviour
                 Engineson.Destroy(other);
             }
         }
+        if (other.tag == "Weapon")
+        {
+            Engineson.print("Player Collided with:" + other.tag);
+            if (other.GetComponent<ShotgunPickUp>() != null)
+            {
+                other.GetComponent<ShotgunPickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+
+            }
+            else if (other.GetComponent<RailgunPickUp>() != null)
+            {
+                other.GetComponent<RailgunPickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+
+            }
+
+
+        }
     }
 }

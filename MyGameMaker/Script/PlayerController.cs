@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private PlayerMovement playerMovement;
     private PlayerDash playerDash;
     public PlayerShooting playerShooting;
+    public RedThirstManager redThirstManager;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
     private bool isIdle = false;
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
         sound = gameObject.GetComponent<Audio>();
-        gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
+        //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
         playerData = new PlayerData();
 
         if (playerInput == null || playerMovement == null || playerDash == null || playerShooting == null || playerMesh == null)

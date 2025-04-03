@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     private bool isAbility2Pressed = false;
     private bool isInteractPressed = false;
 
+    private bool isMovementBlocked = false;
     public override void Awake()
     {
 
@@ -23,8 +24,11 @@ public class PlayerInput : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        UpdateMovementDirection();
-        UpdateLookDirection();
+        if (!isMovementBlocked)
+        {
+            UpdateMovementDirection();
+            UpdateLookDirection();
+        }
 
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
         if (Input.GetControllerAxis(0, 5) > 0.5f || Input.GetKeyDown(KeyCode.Q))
@@ -40,6 +44,12 @@ public class PlayerInput : MonoBehaviour
         isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
         isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
         isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
+
+
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            SceneManager.LoadScene("Level2");
+        }
     }
 
     private void UpdateMovementDirection()
@@ -134,5 +144,15 @@ public class PlayerInput : MonoBehaviour
     public bool IsChangingRailgunMode()
     {
         return Input.GetControllerButtonDown(ControllerButton.DPadDown) || Input.GetControllerButtonDown(ControllerButton.DPadUp);
+    }
+
+    public void BlockMovement()
+    {
+        isMovementBlocked = true;
+    }
+
+    public void UnblockMovement()
+    {
+        isMovementBlocked = false;
     }
 }

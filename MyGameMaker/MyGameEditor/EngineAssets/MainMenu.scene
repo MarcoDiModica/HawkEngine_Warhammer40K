@@ -78,7 +78,7 @@ GameObject1:
     SoundComponent:
       name: SoundComponent
       enabled: true
-      audio_path: Assets/Audio/SFX/UI/ButtonPressed.wav
+      audio_path: Assets/Audio/PlaceHolder_MainMenuMusic.ogg
       volume: 1
       is_music: true
       is_spatial: false

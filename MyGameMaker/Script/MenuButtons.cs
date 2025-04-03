@@ -12,9 +12,10 @@ public class MenuButtons : MonoBehaviour
 
     //private Audio sound;
     private Audio sound;
+    private Audio music;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
-    private string musicPath = "Assets/Audio/Retro Ambience 02.wav";
+    private string musicPath = "Assets/Audio/PlaceHolder_MainMenuMusic.ogg";
     public override void Start()
     {
         newGameButton = GameObject.Find("NewGameButton").GetComponent<UIButton>();
@@ -23,11 +24,15 @@ public class MenuButtons : MonoBehaviour
         creditsButton = GameObject.Find("CreditsButton").GetComponent<UIButton>();
         quitButton = GameObject.Find("QuitButton").GetComponent<UIButton>();
         sound = gameObject.GetComponent<Audio>();
+        music = gameObject.AddComponent<Audio>();
 
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
         }
+
+        music?.LoadAudio(musicPath);
+        music?.Play();
     }
 
     public override void Update(float deltaTime)

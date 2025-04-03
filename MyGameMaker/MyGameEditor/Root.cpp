@@ -122,6 +122,8 @@ bool Root::Start()
 	//CreateMainMenuUI();
 
 	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	//auto audioScene1 = CreateGameObject("AudioScene");
+	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
 
 #ifdef _BUILD
 	Application->play = true;

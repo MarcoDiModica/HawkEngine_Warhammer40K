@@ -172,7 +172,7 @@ namespace ParticlePresets {
 		0.0f,                          // Unused
 		glm::vec2(256,256),         // Sprite size
 		true,						   // Use animation
-		true,						   // Random animation Index
+		false,						   // Random animation Index
 		0.5f,						   // Animation speed
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
@@ -211,7 +211,7 @@ namespace ParticlePresets {
 		false,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/fire_spritesheet(1) (1).png" // Texture path
 	};
 
 	const ParticlePreset Environment_Smoke = {
@@ -241,10 +241,10 @@ namespace ParticlePresets {
 		true,						   // Random animation Index
 		0.005f,						   // Animation speed
 		0.0f,						   // Start rotation
-		false,						   // Random rotation
+		true,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/smoke_spritesheet.png" // Texture path
 	};
 
 	const ParticlePreset Environment_Explosion = {
@@ -271,13 +271,13 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(1920,1080),			   // Sprite size
 		true,						   // Use animation
-		true,						   // Random animation Index
+		false,						   // Random animation Index
 		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
-		false,						   // Random rotation
+		true,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/explosion.png" // Texture path
 	};
 
 
@@ -305,13 +305,13 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(1920,1080),			   // Sprite size
 		true,						   // Use animation
-		true,						   // Random animation Index
+		false,						   // Random animation Index
 		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/muzzle.png" // Texture path
 	};
 
 	const ParticlePreset Enemy_Dash = {
@@ -338,13 +338,13 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(640,360),			   // Sprite size
 		true,						   // Use animation
-		true,						   // Random animation Index
+		false,						   // Random animation Index
 		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/EnemyDash.png" // Texture path
 	};
 
 
@@ -378,7 +378,7 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Smoke30Frames.png" // Texture path
+	"Assets/Textures/Acid_Splash.png" // Texture path
 	};
 
 	const ParticlePreset Acid_Puddle = {
@@ -411,7 +411,7 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Smoke30Frames.png" // Texture path
+	"Assets/Textures/acid_puddle.png" // Texture path
 	};
 
 	const ParticlePreset Energy_Ball = {
@@ -444,7 +444,7 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Smoke30Frames.png" // Texture path
+	"Assets/Textures/ElectricityBall.png" // Texture path
 	};
 
 	const ParticlePreset RailGun_Auto = {
@@ -477,7 +477,7 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Smoke30Frames.png" // Texture path
+	"Assets/Textures/RailGunAuto.png" // Texture path
 	};
 
 	const ParticlePreset RailGun_Semi = {
@@ -510,7 +510,7 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Smoke30Frames.png" // Texture path
+	"Assets/Textures/RailGunSemi.png" // Texture path
 	};
 
 	const ParticlePreset Environment_Dropplet = {
@@ -537,13 +537,13 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	false,						   // Use animation
-	true,						   // Random animation Index
+	false,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Smoke30Frames.png" // Texture path
+	"Assets/Textures/dropplet.png" // Texture path
 	};
 
 	const ParticlePreset Environment_Spark = {
@@ -570,13 +570,13 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
-	true,						   // Random animation Index
+	false,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Smoke30Frames.png" // Texture path
+	"Assets/Textures/Spark.png" // Texture path
 	};
 
 	const ParticlePreset Arc_Snare_Impact = { // la que pone thundaaar
@@ -606,10 +606,10 @@ namespace ParticlePresets {
 	true,						   // Random animation Index
 	0.05f,						   // Animation speed
 	0.0f,						   // Start rotation
-	false,						   // Random rotation
+	true,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Smoke30Frames.png" // Texture path
+	"Assets/Textures/thundaaar.png" // Texture path
 	};
 }
 

@@ -195,7 +195,12 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(385,217),			   // Sprite size
 		true,						   // Use animation
-		0.001f						   // Animation speed
+		0.001f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Environment_Smoke = {
@@ -222,7 +227,12 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(193,109),			   // Sprite size
 		true,						   // Use animation
-		0.005f						   // Animation speed
+		0.005f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Environment_Explosion = {
@@ -249,7 +259,12 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(1920,1080),			   // Sprite size
 		true,						   // Use animation
-		0.05f						   // Animation speed
+		0.05f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 
@@ -277,7 +292,12 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(1920,1080),			   // Sprite size
 		true,						   // Use animation
-		0.05f						   // Animation speed
+		0.05f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Enemy_Dash = {
@@ -304,7 +324,12 @@ namespace ParticlePresets {
 		20.0f,                         // Cone angle in degrees
 		glm::vec2(640,360),			   // Sprite size
 		true,						   // Use animation
-		0.05f						   // Animation speed
+		0.05f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 
@@ -332,7 +357,12 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(240,135),			   // Sprite size
 	true,						   // Use animation
-	0.05f						   // Animation speed
+	0.05f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Acid_Puddle = {
@@ -359,7 +389,12 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(480,270),			   // Sprite size
 	true,						   // Use animation
-	0.05f						   // Animation speed
+	0.05f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Energy_Ball = {
@@ -386,7 +421,12 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
-	0.05f						   // Animation speed
+	0.05f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset RailGun_Auto = {
@@ -413,7 +453,12 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(434,181),			   // Sprite size
 	true,						   // Use animation
-	0.05f						   // Animation speed
+	0.05f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset RailGun_Semi = {
@@ -440,7 +485,12 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
-	0.05f						   // Animation speed
+	0.05f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Environment_Dropplet = {
@@ -467,7 +517,12 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	false,						   // Use animation
-	0.05f						   // Animation speed
+	0.05f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Environment_Spark = {
@@ -494,7 +549,12 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(641,361),			   // Sprite size
 	true,						   // Use animation
-	0.05f						   // Animation speed
+	0.05f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Arc_Snare_Impact = { // la que pone thundaaar
@@ -521,7 +581,12 @@ namespace ParticlePresets {
 	20.0f,                         // Cone angle in degrees
 	glm::vec2(240,135),			   // Sprite size
 	true,						   // Use animation
-	0.05f						   // Animation speed
+	0.05f,						   // Animation speed
+	0.0f,						   // Start rotation
+	false,						   // Random rotation
+	1.0f,						   // Min scale
+	1.0f,						   // Max scale
+	"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 }
 
@@ -924,6 +989,45 @@ void ParticleFX::ApplyPreset(int particleID) {
 	case ParticleType::EXPLOSION:
 		preset = ParticlePresets::Explosion;
 		break;
+	case ParticleType::ENVIRONMENT_SMOKE:
+		preset = ParticlePresets::Environment_Smoke;
+		break;
+	case ParticleType::FLAME:
+		preset = ParticlePresets::Flame;
+		break;
+	case ParticleType::ENVIRONMENT_EXPLOSION:
+		preset = ParticlePresets::Environment_Explosion;
+		break;
+	case ParticleType::RIFFLE_SHOT:
+		preset = ParticlePresets::Riffle_Shot;
+		break;
+	case ParticleType::ENEMY_DASH:
+		preset = ParticlePresets::Enemy_Dash;
+		break;
+	case ParticleType::ACID_ATK:
+		preset = ParticlePresets::Acid_Atk;
+		break;
+	case ParticleType::ACID_PUDDLE:
+		preset = ParticlePresets::Acid_Puddle;
+		break;
+	case ParticleType::ENERGY_BALL:
+		preset = ParticlePresets::Energy_Ball;
+		break;
+	case ParticleType::RAILGUN_AUTO:
+		preset = ParticlePresets::RailGun_Auto;
+		break;
+	case ParticleType::RAILGUN_SEMI:
+		preset = ParticlePresets::RailGun_Semi;
+		break;
+	case ParticleType::ENVIRONMENT_DROPPLET:
+		preset = ParticlePresets::Environment_Dropplet;
+		break;
+	case ParticleType::ENVIRONMENT_SPARK:
+		preset = ParticlePresets::Environment_Spark;
+		break;
+	case ParticleType::ARC_SNARE_IMPACT:
+		preset = ParticlePresets::Arc_Snare_Impact;
+		break;
 	default:
 		preset = ParticlePresets::Smoke;
 		break;
@@ -979,70 +1083,70 @@ void ParticleFX::ApplyPreset(int particleID) {
 //	SetOneShot(true);
 //}
 
-void ParticleFX::ConfigureEnvironmentSmoke() {
-	ApplyPreset(ParticlePresets::Environment_Smoke);
-	SetOneShot(false);
-}
-
-void ParticleFX::ConfigureFlame() {
-	ApplyPreset(ParticlePresets::Flame);
-	SetOneShot(false);
-}
-
-void ParticleFX::ConfigureEnvironmentExplosion() {
-	ApplyPreset(ParticlePresets::Environment_Explosion);
-	SetOneShot(true);
-}
-
-void ParticleFX::ConfigureRiffleShot() {
-	ApplyPreset(ParticlePresets::Riffle_Shot);
-	SetOneShot(true);
-}
-
-void ParticleFX::ConfigureEnemyDash() {
-	ApplyPreset(ParticlePresets::Enemy_Dash);
-	SetOneShot(true);
-}
-
-void ParticleFX::ConfigureAcidAttack() {
-	ApplyPreset(ParticlePresets::Acid_Atk);
-	SetOneShot(false);
-}
-
-void ParticleFX::ConfigureAcidPuddle() {
-	ApplyPreset(ParticlePresets::Acid_Puddle);
-	SetOneShot(false);
-}
-
-void ParticleFX::ConfigureEnergyBall() {
-	ApplyPreset(ParticlePresets::Energy_Ball);
-	SetOneShot(false);
-}
-
-void ParticleFX::ConfigureRailGunAuto() {
-	ApplyPreset(ParticlePresets::RailGun_Auto);
-	SetOneShot(false);
-}
-
-void ParticleFX::ConfigureRailGunSemi() {
-	ApplyPreset(ParticlePresets::RailGun_Semi);
-	SetOneShot(false);
-}
-
-void ParticleFX::ConfigureEnvironmentDropplet() {
-	ApplyPreset(ParticlePresets::Environment_Dropplet);
-	SetOneShot(false);
-}
-
-void ParticleFX::ConfigureEnvironmentSpark() {
-	ApplyPreset(ParticlePresets::Environment_Spark);
-	SetOneShot(true);
-}
-
-void ParticleFX::ConfigureArcSnareImpact() {
-	ApplyPreset(ParticlePresets::Arc_Snare_Impact);
-	SetOneShot(true);
-}
+//void ParticleFX::ConfigureEnvironmentSmoke() {
+//	ApplyPreset(ParticlePresets::Environment_Smoke);
+//	SetOneShot(false);
+//}
+//
+//void ParticleFX::ConfigureFlame() {
+//	ApplyPreset(ParticlePresets::Flame);
+//	SetOneShot(false);
+//}
+//
+//void ParticleFX::ConfigureEnvironmentExplosion() {
+//	ApplyPreset(ParticlePresets::Environment_Explosion);
+//	SetOneShot(true);
+//}
+//
+//void ParticleFX::ConfigureRiffleShot() {
+//	ApplyPreset(ParticlePresets::Riffle_Shot);
+//	SetOneShot(true);
+//}
+//
+//void ParticleFX::ConfigureEnemyDash() {
+//	ApplyPreset(ParticlePresets::Enemy_Dash);
+//	SetOneShot(true);
+//}
+//
+//void ParticleFX::ConfigureAcidAttack() {
+//	ApplyPreset(ParticlePresets::Acid_Atk);
+//	SetOneShot(false);
+//}
+//
+//void ParticleFX::ConfigureAcidPuddle() {
+//	ApplyPreset(ParticlePresets::Acid_Puddle);
+//	SetOneShot(false);
+//}
+//
+//void ParticleFX::ConfigureEnergyBall() {
+//	ApplyPreset(ParticlePresets::Energy_Ball);
+//	SetOneShot(false);
+//}
+//
+//void ParticleFX::ConfigureRailGunAuto() {
+//	ApplyPreset(ParticlePresets::RailGun_Auto);
+//	SetOneShot(false);
+//}
+//
+//void ParticleFX::ConfigureRailGunSemi() {
+//	ApplyPreset(ParticlePresets::RailGun_Semi);
+//	SetOneShot(false);
+//}
+//
+//void ParticleFX::ConfigureEnvironmentDropplet() {
+//	ApplyPreset(ParticlePresets::Environment_Dropplet);
+//	SetOneShot(false);
+//}
+//
+//void ParticleFX::ConfigureEnvironmentSpark() {
+//	ApplyPreset(ParticlePresets::Environment_Spark);
+//	SetOneShot(true);
+//}
+//
+//void ParticleFX::ConfigureArcSnareImpact() {
+//	ApplyPreset(ParticlePresets::Arc_Snare_Impact);
+//	SetOneShot(true);
+//}
 
 void ParticleFX::SetEndSpeed(float Espeed) 
 {

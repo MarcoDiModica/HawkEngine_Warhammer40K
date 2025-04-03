@@ -21,7 +21,6 @@ enum class ParticleType {
     // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
     ACID_PUDDLE = 11,
 
-
     // Player / Weapons
     ENERGY_BALL = 12,
     RAILGUN_AUTO = 13,

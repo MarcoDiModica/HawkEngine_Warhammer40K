@@ -128,6 +128,7 @@
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TreeExt.h" />
+    <ClInclude Include="Tweening.h" />
     <ClInclude Include="types.h" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +151,7 @@
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="Tweening.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

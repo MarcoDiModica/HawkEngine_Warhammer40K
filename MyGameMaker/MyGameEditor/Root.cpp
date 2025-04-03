@@ -30,6 +30,7 @@
 #include "MyGameEngine/ShaderManager.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include "../MyGameEngine/Tweening.h"
 
 class GameObject;
 
@@ -159,10 +160,36 @@ bool Root::Start()
 bool hasAddedColliders = false;	
 
 bool Root::Update(double dt)
-{
+{	
+	Tweening::Update(dt);
+	
 	if (!hasAddedColliders) {
 		hasAddedColliders = true;
 	}
+
+	/*if (Application->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		Tweening::Move(player.get(), glm::dvec3(10.0, 5.0, 0.0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		Tweening::Rotate(player.get(), glm::dvec3(0, 180, 0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN) {
+		Tweening::Scale(player.get(), glm::dvec3(2.0, 2.0, 2.0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
+		Tweening::UIMove(newGameButton.get(), glm::dvec3(1.0, 0.0, 0.0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) {
+		Tweening::UIRotate(newGameButton.get(), glm::dvec3(0, 0.5, 0), 2.0f, Modes::EASE_IN_OUT);
+	}
+
+	if (Application->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN) {
+		Tweening::UIScale(newGameButton.get(), glm::dvec3(0.5, 0.8, 0.6), 2.0f, Modes::EASE_IN_OUT);
+	}*/
 
 	if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 		Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

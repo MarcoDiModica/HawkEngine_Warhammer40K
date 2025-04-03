@@ -36,7 +36,7 @@ public class UIGameplay : MonoBehaviour
         {
             playerData.SetHealth(playerData.GetHealth() + 10);
         }
-        transform.SetUIScale(new Vector3(CaclulateLifeBarWidth(), 0.054f, 1.0f));
+        transform.SetScaleUI(new Vector3(CaclulateLifeBarWidth(), 0.054f, 1.0f));
 
         switch (playerShootingScript.GetCurrentGun())
         {

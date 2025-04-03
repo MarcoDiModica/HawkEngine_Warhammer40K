@@ -40,6 +40,12 @@ public class PlayerInput : MonoBehaviour
         isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
         isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
         isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
+
+
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            SceneManager.LoadScene("Level2");
+        }
     }
 
     private void UpdateMovementDirection()

@@ -1,5 +1,4 @@
 #pragma once
-
 #include <string>
 #include <vector>
 #include <filesystem>
@@ -7,11 +6,9 @@
 #include <functional>
 #include <fstream>
 #include <chrono>
-
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEditor/App.h"
 #include "../MyGameEditor/MyWindow.h"
-
 #pragma warning(disable: 4996)
 
 using ReloadCallbackType = std::function<void(const std::string&)>;
@@ -19,10 +16,8 @@ using ReloadCallbackType = std::function<void(const std::string&)>;
 class ScriptHotReloader {
 public:
 	static ScriptHotReloader& GetInstance();
-
 	ScriptHotReloader(const ScriptHotReloader&) = delete;
 	ScriptHotReloader& operator=(const ScriptHotReloader&) = delete;
-
 	void Initialize(const std::string& scriptFolder, const std::string& outputAssemblyDir);
 	void RegisterOnReloadCallback(ReloadCallbackType callback);
 	bool CheckForChanges();
@@ -30,11 +25,12 @@ public:
 	void Update();
 	void TryDeleteFile(const std::string& filePath);
 	bool ForceRecompile();
+	void SetPreferMSBuild(bool prefer);
+	bool GetPreferMSBuild() const;
 
 private:
 	ScriptHotReloader();
 	~ScriptHotReloader();
-
 	std::string FindCsprojFile(const std::string& folder);
 	bool IsEngineInForeground();
 	bool CompileExistingProject();
@@ -43,11 +39,20 @@ private:
 	void DisplayCompilationOutput();
 	std::string GenerateVersionedFilename(const std::string& baseFilename);
 	void CleanupOldVersions(int keepCount);
-
 	bool FindWorkingDotnet();
 	bool TestDotnetCompilation(const std::string& dotnetPath);
 	void SaveWorkingDotnetPath(const std::string& dotnetPath);
 	std::string LoadWorkingDotnetPath();
+
+	std::string m_MSBuildPath;
+	bool m_PreferMSBuild;
+	bool FindWorkingMSBuild();
+	bool TestMSBuildCompilation(const std::string& msbuildPath);
+	void SaveWorkingMSBuildPath(const std::string& msbuildPath);
+	std::string LoadWorkingMSBuildPath();
+	bool CompileWithMSBuild();
+	void SaveBuildPreference(bool preferMSBuild);
+	bool LoadBuildPreference();
 
 	std::string m_ScriptFolder;
 	std::string m_OutputAssemblyDir;

@@ -274,45 +274,45 @@ using HawkEngine;
 
 public class )" + scriptName + R"( : MonoBehaviour
 {
-	// Variables públicas que se mostrarán en el inspector
+	// Public variables will be shown in the Inspector
 	public float value = 3.0f;
 	public bool isActive = true;
 
-	// Variables privadas
+	// Private variables
 	private Transform transform;
 
-	// Inicialización al cargar el script
+	// Script Initialization
 	public override void Start()
 	{
 		transform = GetComponent<Transform>();
 		Engineson.print("Script " + gameObject.name + " started");
 	}
 
-	// Actualización cada frame
+	// Update on every frame
 	public override void Update(float deltaTime)
 	{
 		if (isActive)
 		{
-			// Lógica de actualización
+			// Update logic
 		}
 	}
 
-	// Llamado cuando ocurre una colisión
+	// Called when a collision happens
 	public override void OnCollisionEnter(GameObject other)
 	{
 		Engineson.print($"Collision with {other.name}");
 	}
 
-	// Llamado cuando otra entidad entra en un trigger
+	// Called when a trigger happens
 	public override void OnTriggerEnter(GameObject other)
 	{
 		Engineson.print($"Trigger with {other.name}");
 	}
 
-	// Métodos personalizados
+	// Custom method
 	public void CustomMethod()
 	{
-		// Tu código aquí
+		// Your code here
 	}
 }
 		)";

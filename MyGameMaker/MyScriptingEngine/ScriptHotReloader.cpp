@@ -10,7 +10,8 @@ ScriptHotReloader& ScriptHotReloader::GetInstance() {
 	return instance;
 }
 
-ScriptHotReloader::ScriptHotReloader() : m_IsCompiling(false), m_CompilationCooldown(false), m_LastCompilationSuccess(true) {
+ScriptHotReloader::ScriptHotReloader() : m_IsCompiling(false), m_CompilationCooldown(false), m_LastCompilationSuccess(true), m_PreferMSBuild(false) {
+	m_PreferMSBuild = LoadBuildPreference();
 }
 
 ScriptHotReloader::~ScriptHotReloader() {
@@ -42,16 +43,84 @@ void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::s
 	RefreshScriptTimestamps();
 
 	m_DotnetPath = LoadWorkingDotnetPath();
+	m_MSBuildPath = LoadWorkingMSBuildPath();
+	m_PreferMSBuild = LoadBuildPreference();
 
-	if (m_DotnetPath.empty() || !std::filesystem::exists(m_DotnetPath)) {
-		if (!FindWorkingDotnet()) {
-			LOG(LogType::LOG_ERROR, "Failed to find a working dotnet installation. Please install .NET SDK or contact Hawk Developers.");
-			return;
+	bool dotnetAvailable = false;
+	bool msbuildAvailable = false;
+
+	if (m_PreferMSBuild) {
+		LOG(LogType::LOG_INFO, "MSBuild is preferred for compilation");
+
+		if (!m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath)) {
+			msbuildAvailable = TestMSBuildCompilation(m_MSBuildPath);
+		}
+
+		if (!msbuildAvailable) {
+			msbuildAvailable = FindWorkingMSBuild();
+		}
+
+		if (!msbuildAvailable) {
+			LOG(LogType::LOG_WARNING, "MSBuild not available, falling back to dotnet...");
+
+			if (!m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath)) {
+				dotnetAvailable = TestDotnetCompilation(m_DotnetPath);
+			}
+
+			if (!dotnetAvailable) {
+				dotnetAvailable = FindWorkingDotnet();
+			}
+		}
+	}
+	else {
+		LOG(LogType::LOG_INFO, "Dotnet is preferred for compilation");
+
+		if (!m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath)) {
+			dotnetAvailable = TestDotnetCompilation(m_DotnetPath);
+		}
+
+		if (!dotnetAvailable) {
+			dotnetAvailable = FindWorkingDotnet();
+		}
+
+		if (!dotnetAvailable) {
+			LOG(LogType::LOG_WARNING, "Dotnet not available, trying MSBuild as fallback...");
+
+			if (!m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath)) {
+				msbuildAvailable = TestMSBuildCompilation(m_MSBuildPath);
+			}
+
+			if (!msbuildAvailable) {
+				msbuildAvailable = FindWorkingMSBuild();
+			}
 		}
 	}
 
+	if (!dotnetAvailable && !msbuildAvailable) {
+		LOG(LogType::LOG_ERROR, "Failed to find a working dotnet or MSBuild installation. Please install .NET SDK or Visual Studio.");
+		return;
+	}
+
 	m_IsCompiling = true;
-	bool initialCompilationResult = CompileExistingProject();
+	bool initialCompilationResult = false;
+
+	if (m_PreferMSBuild && msbuildAvailable) {
+		LOG(LogType::LOG_INFO, "Using MSBuild for compilation (preferred)");
+		initialCompilationResult = CompileWithMSBuild();
+	}
+	else if (!m_PreferMSBuild && dotnetAvailable) {
+		LOG(LogType::LOG_INFO, "Using dotnet for compilation (preferred)");
+		initialCompilationResult = CompileExistingProject();
+	}
+	else if (msbuildAvailable) {
+		LOG(LogType::LOG_INFO, "Using MSBuild for compilation (fallback)");
+		initialCompilationResult = CompileWithMSBuild();
+	}
+	else if (dotnetAvailable) {
+		LOG(LogType::LOG_INFO, "Using dotnet for compilation (fallback)");
+		initialCompilationResult = CompileExistingProject();
+	}
+
 	m_IsCompiling = false;
 	m_LastCompilationSuccess = initialCompilationResult;
 
@@ -70,7 +139,7 @@ bool ScriptHotReloader::CheckForChanges() {
 	}
 
 	if (!m_LastCompilationSuccess) {
-		LOG(LogType::LOG_INFO, "Compilation Failed. Please fix it :0");
+		LOG(LogType::LOG_INFO, "Previous compilation failed. Please fix errors.");
 		return false;
 	}
 
@@ -94,7 +163,29 @@ bool ScriptHotReloader::CheckForChanges() {
 	if (scriptsModified) {
 		m_IsCompiling = true;
 
-		bool result = CompileExistingProject();
+		bool result = false;
+		bool dotnetAvailable = !m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath);
+		bool msbuildAvailable = !m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath);
+
+		if (m_PreferMSBuild && msbuildAvailable) {
+			LOG(LogType::LOG_INFO, "Compiling changes with MSBuild (preferred)");
+			result = CompileWithMSBuild();
+		}
+		else if (!m_PreferMSBuild && dotnetAvailable) {
+			LOG(LogType::LOG_INFO, "Compiling changes with dotnet (preferred)");
+			result = CompileExistingProject();
+		}
+		else if (msbuildAvailable) {
+			LOG(LogType::LOG_INFO, "Compiling changes with MSBuild (fallback)");
+			result = CompileWithMSBuild();
+		}
+		else if (dotnetAvailable) {
+			LOG(LogType::LOG_INFO, "Compiling changes with dotnet (fallback)");
+			result = CompileExistingProject();
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "No working dotnet or MSBuild available for compilation.");
+		}
 
 		m_CompilationCooldown = true;
 		m_LastCompilationSuccess = result;
@@ -145,7 +236,29 @@ bool ScriptHotReloader::ForceRecompile() {
 
 	m_IsCompiling = true;
 
-	bool result = CompileExistingProject();
+	bool result = false;
+	bool dotnetAvailable = !m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath);
+	bool msbuildAvailable = !m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath);
+
+	if (m_PreferMSBuild && msbuildAvailable) {
+		LOG(LogType::LOG_INFO, "Force recompiling with MSBuild (preferred)");
+		result = CompileWithMSBuild();
+	}
+	else if (!m_PreferMSBuild && dotnetAvailable) {
+		LOG(LogType::LOG_INFO, "Force recompiling with dotnet (preferred)");
+		result = CompileExistingProject();
+	}
+	else if (msbuildAvailable) {
+		LOG(LogType::LOG_INFO, "Force recompiling with MSBuild (fallback)");
+		result = CompileWithMSBuild();
+	}
+	else if (dotnetAvailable) {
+		LOG(LogType::LOG_INFO, "Force recompiling with dotnet (fallback)");
+		result = CompileExistingProject();
+	}
+	else {
+		LOG(LogType::LOG_ERROR, "No working dotnet or MSBuild available for compilation.");
+	}
 
 	m_CompilationCooldown = true;
 	m_LastCompilationSuccess = result;
@@ -297,15 +410,13 @@ bool ScriptHotReloader::FindWorkingDotnet() {
 		for (const auto& dotnetPath : potentialVSDotnetPaths) {
 			if (TestDotnetCompilation(dotnetPath)) {
 				m_DotnetPath = dotnetPath;
-
 				SaveWorkingDotnetPath(dotnetPath);
-
 				return true;
 			}
 		}
 	}
 
-	LOG(LogType::LOG_ERROR, "No working dotnet installation found. Please install .NET SDK or contact Hawk Developers.");
+	LOG(LogType::LOG_ERROR, "No working dotnet installation found. Will try MSBuild.");
 	return false;
 }
 
@@ -490,7 +601,7 @@ bool ScriptHotReloader::CompileExistingProject() {
 	}
 
 	if (m_DotnetPath.empty() || !std::filesystem::exists(m_DotnetPath)) {
-		LOG(LogType::LOG_ERROR, "Valid dotnet installation not found. Please install .NET SDK or contact Hawk Developers.");
+		LOG(LogType::LOG_ERROR, "Valid dotnet installation not found. Please install .NET SDK or check MSBuild option.");
 		return false;
 	}
 
@@ -507,7 +618,7 @@ bool ScriptHotReloader::CompileExistingProject() {
 	}
 
 	batch << "@echo off" << std::endl;
-	batch << "echo Compiling project please raise your hands" << std::endl;
+	batch << "echo Compiling project with dotnet" << std::endl;
 	batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
 	batch << "\"" << m_DotnetPath << "\" build \"" << m_ProjectFile << "\" -c Release > build_output.txt 2>&1" << std::endl;
 	batch << "echo Código de salida: %ERRORLEVEL% > build_result.txt" << std::endl;
@@ -555,7 +666,7 @@ bool ScriptHotReloader::CompileExistingProject() {
 	}
 
 	if (buildResult != 0 || hasErrors) {
-		LOG(LogType::LOG_ERROR, "Error compiling the project. Code: %d. Fix it or contact Hawk Developers.", buildResult);
+		LOG(LogType::LOG_ERROR, "Error compiling the project with dotnet. Code: %d. Fix it or try MSBuild.", buildResult);
 		return false;
 	}
 
@@ -739,4 +850,395 @@ void ScriptHotReloader::CleanupOldVersions(int keepCount) {
 	catch (const std::filesystem::filesystem_error& e) {
 		LOG(LogType::LOG_ERROR, "Error managing assembly versions: %s", e.what());
 	}
+}
+
+bool ScriptHotReloader::FindWorkingMSBuild() {
+	std::vector<std::string> potentialMSBuildPaths;
+
+	const std::vector<std::string> vsCommonPaths = {
+		"C:\\Program Files\\Microsoft Visual Studio",
+		"C:\\Program Files (x86)\\Microsoft Visual Studio"
+	};
+
+	const std::vector<std::string> vsYears = {
+		"2022", "2019", "2017", "2015"
+	};
+
+	const std::vector<std::string> vsEditions = {
+		"Enterprise", "Professional", "Community", "BuildTools"
+	};
+
+	for (const auto& basePath : vsCommonPaths) {
+		if (!std::filesystem::exists(basePath)) continue;
+
+		try {
+			for (const auto& entry : std::filesystem::directory_iterator(basePath)) {
+				if (!entry.is_directory()) continue;
+
+				for (const auto& year : vsYears) {
+					std::string yearPath = entry.path().string() + "\\" + year;
+					if (!std::filesystem::exists(yearPath)) continue;
+
+					for (const auto& edition : vsEditions) {
+						std::string editionPath = yearPath + "\\" + edition;
+						if (!std::filesystem::exists(editionPath)) continue;
+
+						std::vector<std::string> msbuildLocations = {
+							editionPath + "\\MSBuild\\Current\\Bin\\MSBuild.exe",
+							editionPath + "\\MSBuild\\Current\\Bin\\amd64\\MSBuild.exe",
+							editionPath + "\\MSBuild\\15.0\\Bin\\MSBuild.exe",
+							editionPath + "\\MSBuild\\15.0\\Bin\\amd64\\MSBuild.exe"
+						};
+
+						try {
+							for (auto it = std::filesystem::recursive_directory_iterator(editionPath, std::filesystem::directory_options::skip_permission_denied);
+								it != std::filesystem::recursive_directory_iterator(); ++it) {
+								if (it.depth() > 4) {
+									it.disable_recursion_pending();
+									continue;
+								}
+
+								if (it->path().filename() == "MSBuild.exe") {
+									msbuildLocations.push_back(it->path().string());
+								}
+							}
+						}
+						catch (const std::filesystem::filesystem_error&) {
+						}
+
+						for (const auto& location : msbuildLocations) {
+							if (std::filesystem::exists(location)) {
+								potentialMSBuildPaths.push_back(location);
+							}
+						}
+					}
+				}
+			}
+		}
+		catch (const std::filesystem::filesystem_error&) {
+		}
+	}
+
+	const char* pathEnv = getenv("PATH");
+	if (pathEnv) {
+		std::string path = pathEnv;
+		std::stringstream ss(path);
+		std::string item;
+		while (std::getline(ss, item, ';')) {
+			if (!item.empty()) {
+				std::string testPath = item;
+				if (testPath.back() != '\\' && testPath.back() != '/') {
+					testPath += '\\';
+				}
+				testPath += "MSBuild.exe";
+
+				if (std::filesystem::exists(testPath) &&
+					std::find(potentialMSBuildPaths.begin(), potentialMSBuildPaths.end(), testPath) == potentialMSBuildPaths.end()) {
+					potentialMSBuildPaths.push_back(testPath);
+				}
+			}
+		}
+	}
+
+	for (const auto& msbuildPath : potentialMSBuildPaths) {
+		if (TestMSBuildCompilation(msbuildPath)) {
+			m_MSBuildPath = msbuildPath;
+			SaveWorkingMSBuildPath(msbuildPath);
+			LOG(LogType::LOG_INFO, "Found working MSBuild: %s", msbuildPath.c_str());
+			return true;
+		}
+	}
+
+	LOG(LogType::LOG_WARNING, "No working MSBuild installation found.");
+	return false;
+}
+
+bool ScriptHotReloader::TestMSBuildCompilation(const std::string& msbuildPath) {
+	if (m_ProjectFile.empty()) {
+		LOG(LogType::LOG_ERROR, "No .csproj file found for testing MSBuild!");
+		return false;
+	}
+
+	std::string testBuildBatch = m_ScriptFolder + "\\test_msbuild_build.bat";
+	std::string testOutputFile = m_ScriptFolder + "\\test_msbuild_output.txt";
+	std::string testErrorFile = m_ScriptFolder + "\\test_msbuild_error.txt";
+
+	std::ofstream batch(testBuildBatch);
+	if (!batch.is_open()) {
+		LOG(LogType::LOG_ERROR, "Couldn't create MSBuild test batch file");
+		return false;
+	}
+
+	batch << "@echo off" << std::endl;
+	batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
+	batch << "\"" << msbuildPath << "\" \"" << m_ProjectFile << "\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal > \"" << testOutputFile << "\" 2> \"" << testErrorFile << "\"" << std::endl;
+	batch << "echo %ERRORLEVEL% > \"" << m_ScriptFolder << "\\test_msbuild_result.txt\"" << std::endl;
+	batch.close();
+
+	std::string command = "cmd /c \"" + testBuildBatch + "\"";
+	system(command.c_str());
+
+	int buildResult = -1;
+	try {
+		std::ifstream resultFile(m_ScriptFolder + "\\test_msbuild_result.txt");
+		if (resultFile.is_open()) {
+			std::string line;
+			if (std::getline(resultFile, line) && !line.empty()) {
+				buildResult = std::stoi(line);
+			}
+			resultFile.close();
+		}
+	}
+	catch (...) {}
+
+	bool buildHasErrors = false;
+
+	try {
+		std::ifstream outputFile(testOutputFile);
+		if (outputFile.is_open()) {
+			std::string line;
+			while (std::getline(outputFile, line)) {
+				if (line.find("error") != std::string::npos) {
+					buildHasErrors = true;
+					break;
+				}
+			}
+			outputFile.close();
+		}
+	}
+	catch (...) {}
+
+	try {
+		std::ifstream errorFile(testErrorFile);
+		if (errorFile.is_open() && errorFile.peek() != std::ifstream::traits_type::eof()) {
+			buildHasErrors = true;
+			errorFile.close();
+		}
+	}
+	catch (...) {}
+
+	try {
+		std::filesystem::remove(testBuildBatch);
+		std::filesystem::remove(testOutputFile);
+		std::filesystem::remove(testErrorFile);
+		std::filesystem::remove(m_ScriptFolder + "\\test_msbuild_result.txt");
+	}
+	catch (...) {}
+
+	if (buildResult != 0 || buildHasErrors) {
+		LOG(LogType::LOG_INFO, "MSBuild failed to build the project, result code: %d", buildResult);
+		return false;
+	}
+
+	return true;
+}
+
+void ScriptHotReloader::SaveWorkingMSBuildPath(const std::string& msbuildPath) {
+	try {
+		std::string configFile = m_ScriptFolder + "\\msbuild_config.txt";
+		std::ofstream file(configFile);
+		if (file.is_open()) {
+			file << msbuildPath;
+			file.close();
+		}
+	}
+	catch (...) {
+		LOG(LogType::LOG_WARNING, "Failed to save working MSBuild path configuration");
+	}
+}
+
+std::string ScriptHotReloader::LoadWorkingMSBuildPath() {
+	try {
+		std::string configFile = m_ScriptFolder + "\\msbuild_config.txt";
+		if (std::filesystem::exists(configFile)) {
+			std::ifstream file(configFile);
+			if (file.is_open()) {
+				std::string savedPath;
+				std::getline(file, savedPath);
+				file.close();
+
+				if (!savedPath.empty() && std::filesystem::exists(savedPath)) {
+					return savedPath;
+				}
+			}
+		}
+	}
+	catch (...) {
+		LOG(LogType::LOG_WARNING, "Failed to load saved MSBuild path configuration");
+	}
+
+	return "";
+}
+
+bool ScriptHotReloader::CompileWithMSBuild() {
+	if (m_ProjectFile.empty()) {
+		LOG(LogType::LOG_ERROR, "File (.csproj) not found!");
+		return false;
+	}
+
+	if (m_MSBuildPath.empty() || !std::filesystem::exists(m_MSBuildPath)) {
+		LOG(LogType::LOG_ERROR, "Valid MSBuild installation not found. Please install Visual Studio.");
+		return false;
+	}
+
+	LOG(LogType::LOG_INFO, "Compiling with MSBuild: %s", m_MSBuildPath.c_str());
+
+	TryDeleteFile(m_ScriptFolder + "\\build_output.txt");
+	TryDeleteFile(m_ScriptFolder + "\\build_result.txt");
+	TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
+	TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
+
+	std::string batchFile = m_ScriptFolder + "\\build_msbuild.bat";
+	std::ofstream batch(batchFile);
+	if (!batch.is_open()) {
+		LOG(LogType::LOG_ERROR, "Couldn't create MSBuild batch file");
+		return false;
+	}
+
+	batch << "@echo off" << std::endl;
+	batch << "echo Compiling project with MSBuild..." << std::endl;
+	batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
+	batch << "\"" << m_MSBuildPath << "\" \"" << m_ProjectFile << "\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal > build_output.txt 2>&1" << std::endl;
+	batch << "echo Código de salida: %ERRORLEVEL% > build_result.txt" << std::endl;
+
+	batch << "findstr /C:\"warning\" build_output.txt > build_warnings.txt 2>nul" << std::endl;
+	batch << "findstr /C:\"error\" build_output.txt > build_errors.txt 2>nul" << std::endl;
+
+	batch.close();
+
+	std::string command = "cmd /c \"" + batchFile + "\"";
+	int result = system(command.c_str());
+
+	int buildResult = -1;
+	try {
+		std::ifstream resultFile(m_ScriptFolder + "\\build_result.txt");
+		if (resultFile.is_open()) {
+			std::string line;
+			if (std::getline(resultFile, line)) {
+				size_t pos = line.find_last_of(":");
+				if (pos != std::string::npos && pos + 1 < line.length()) {
+					std::string codeStr = line.substr(pos + 1);
+					codeStr.erase(0, codeStr.find_first_not_of(" \t"));
+					buildResult = std::stoi(codeStr);
+				}
+			}
+			resultFile.close();
+		}
+	}
+	catch (...) {
+		LOG(LogType::LOG_ERROR, "Error reading MSBuild compilation results");
+	}
+
+	DisplayCompilationOutput();
+
+	bool hasErrors = false;
+	try {
+		std::ifstream errorsFile(m_ScriptFolder + "\\build_errors.txt");
+		if (errorsFile.is_open() && errorsFile.peek() != std::ifstream::traits_type::eof()) {
+			hasErrors = true;
+			errorsFile.close();
+		}
+	}
+	catch (...) {
+		LOG(LogType::LOG_ERROR, "Error checking for MSBuild compilation errors");
+	}
+
+	if (buildResult != 0 || hasErrors) {
+		LOG(LogType::LOG_ERROR, "Error compiling the project with MSBuild. Code: %d. Fix it or try dotnet.", buildResult);
+		return false;
+	}
+
+	std::string assemblyPath = FindGeneratedAssembly();
+	if (assemblyPath.empty()) {
+		LOG(LogType::LOG_ERROR, "Assembly not found after MSBuild compilation");
+		return false;
+	}
+
+	std::string versionedFilename = GenerateVersionedFilename("Script.dll");
+	std::string stagedPath = m_StagingDirectory + "\\" + versionedFilename;
+
+	CleanupOldVersions(0);
+
+	try {
+		std::filesystem::copy(assemblyPath, stagedPath, std::filesystem::copy_options::overwrite_existing);
+	}
+	catch (const std::filesystem::filesystem_error& e) {
+		LOG(LogType::LOG_ERROR, "Failed to create versioned assembly: %s", e.what());
+		stagedPath = assemblyPath;
+	}
+
+	m_LastCompilationTime = std::filesystem::last_write_time(assemblyPath);
+	RefreshScriptTimestamps();
+
+	for (auto& callback : m_OnReloadCallbacks) {
+		try {
+			callback(stagedPath);
+		}
+		catch (const std::exception& e) {
+			LOG(LogType::LOG_ERROR, "Reload callback error: %s", e.what());
+		}
+	}
+
+	return true;
+}
+
+void ScriptHotReloader::SetPreferMSBuild(bool prefer) {
+	m_PreferMSBuild = prefer;
+	SaveBuildPreference(prefer);
+
+	LOG(LogType::LOG_INFO, "Build preference set to: %s", prefer ? "MSBuild" : "dotnet");
+
+	if (prefer) {
+		if (m_MSBuildPath.empty() || !std::filesystem::exists(m_MSBuildPath)) {
+			if (!FindWorkingMSBuild()) {
+				LOG(LogType::LOG_WARNING, "Preferencia establecida a MSBuild, pero no se encontró una instalación. Se usará dotnet si está disponible.");
+			}
+		}
+	}
+	else {
+		if (m_DotnetPath.empty() || !std::filesystem::exists(m_DotnetPath)) {
+			if (!FindWorkingDotnet()) {
+				LOG(LogType::LOG_WARNING, "Preferencia establecida a dotnet, pero no se encontró una instalación. Se usará MSBuild si está disponible.");
+			}
+		}
+	}
+}
+
+bool ScriptHotReloader::GetPreferMSBuild() const {
+	return m_PreferMSBuild;
+}
+
+void ScriptHotReloader::SaveBuildPreference(bool preferMSBuild) {
+	try {
+		std::string configFile = m_ScriptFolder + "\\build_preference.txt";
+		std::ofstream file(configFile);
+		if (file.is_open()) {
+			file << (preferMSBuild ? "MSBuild" : "dotnet");
+			file.close();
+		}
+	}
+	catch (...) {
+		LOG(LogType::LOG_WARNING, "Error al guardar la preferencia de compilación");
+	}
+}
+
+bool ScriptHotReloader::LoadBuildPreference() {
+	try {
+		std::string configFile = m_ScriptFolder + "\\build_preference.txt";
+		if (std::filesystem::exists(configFile)) {
+			std::ifstream file(configFile);
+			if (file.is_open()) {
+				std::string preference;
+				std::getline(file, preference);
+				file.close();
+
+				return preference == "MSBuild";
+			}
+		}
+	}
+	catch (...) {
+		LOG(LogType::LOG_WARNING, "Error al cargar la preferencia de compilación");
+	}
+
+	return false;
 }

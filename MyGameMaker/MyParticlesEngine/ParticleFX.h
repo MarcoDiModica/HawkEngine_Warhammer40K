@@ -49,6 +49,7 @@ struct ParticlePreset {
 	bool randomRotation;
 	float minSize;
 	float maxSize;
+	std::string texturePath;
 };
 
 namespace ParticlePresets {

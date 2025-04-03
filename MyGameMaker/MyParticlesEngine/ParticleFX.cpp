@@ -35,7 +35,8 @@ namespace ParticlePresets {
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
-		0.0f						   // Max scale
+		0.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Fire = {
@@ -66,7 +67,9 @@ namespace ParticlePresets {
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
-		0.0f						   // Max scale
+		0.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
+
 	};
 
 	const ParticlePreset MuzzleFlash = {
@@ -97,7 +100,8 @@ namespace ParticlePresets {
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
-		0.0f						   // Max scale
+		0.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 	const ParticlePreset Dust = {
@@ -128,7 +132,9 @@ namespace ParticlePresets {
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
-		0.0f						   // Max scale
+		0.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
+
 	};
 
 	const ParticlePreset Explosion = {
@@ -159,7 +165,8 @@ namespace ParticlePresets {
 		0.0f,						   // Start rotation
 		true,						   // Random rotation
 		0.5f,						   // Min scale
-		0.0f						   // Max scale
+		0.0f,						   // Max scale
+		"Assets/Textures/Smoke30Frames.png" // Texture path
 	};
 
 }
@@ -569,6 +576,11 @@ void ParticleFX::ApplyPreset(const ParticlePreset& preset) {
 	useAnimation = preset.useAnimation;
 	animSpeed = preset.animSpeed;
 	endSpeed = preset.endSpeed;
+	startRotation = preset.startRotation;
+	randomRotation = preset.randomRotation;
+	minSize = preset.minSize;
+	maxSize = preset.maxSize;
+	SetTexture(preset.texturePath);
 }
 
 void ParticleFX::ConfigureSmoke() {

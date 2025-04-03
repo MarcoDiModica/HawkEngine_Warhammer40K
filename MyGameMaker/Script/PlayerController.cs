@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerInput playerInput;
     private PlayerMovement playerMovement;
-    private PlayerDash playerDash;
+    public PlayerDash playerDash;
     public PlayerShooting playerShooting;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;

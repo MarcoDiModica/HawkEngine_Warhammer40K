@@ -40,13 +40,13 @@ public class GrenadeLauncher : BaseAbilities
         if (!canThrow)
         {
             abilityTimer += deltaTime;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+          //  Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
-                Engineson.print("Cooldown terminado. Habilidad lista.");
+               // Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
 
@@ -82,16 +82,16 @@ public class GrenadeLauncher : BaseAbilities
     {
         if (!canThrow)
         {
-            Engineson.print("Habilidad en cooldown. Espera...");
+           // Engineson.print("Habilidad en cooldown. Espera...");
             return;
         }
 
-        Engineson.print("Lanzando granada...");
+       // Engineson.print("Lanzando granada...");
         grenade = Engineson.CreateGameObject("Grenade", null);
 
         if (grenade == null)
         {
-            Engineson.print("ERROR: No se pudo crear la granada.");
+           // Engineson.print("ERROR: No se pudo crear la granada.");
             return;
         }
 

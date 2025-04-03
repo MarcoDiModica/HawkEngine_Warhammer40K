@@ -179,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 desiredVelocity = moveDirection * moveSpeed;
         if (playerInput?.IsShooting() == true)
         {
-            desiredVelocity /= 1.3f;
+            desiredVelocity /= 2f;
         }
         Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
         rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));

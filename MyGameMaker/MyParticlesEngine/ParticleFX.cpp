@@ -414,6 +414,87 @@ namespace ParticlePresets {
 	true,						   // Use animation
 	0.05f						   // Animation speed
 	};
+
+	const ParticlePreset Environment_Dropplet = {
+	ParticleType::ENVIRONMENT_DROPPLET,
+	true,						   // PlayOnAwake
+	5,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   // Start color (light gray)
+	glm::vec3(1,1,1),   // End color (dark gray)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1.0f,                          // Size start
+	1.0f,                          // Size end
+	3.5f,                          // Min lifetime
+	4.0f,                          // Max lifetime
+	0.0f,                          // Min speed
+	0.0f,                          // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,-1.0f,0.0f),	   // Gravity (negative for upward)
+	0,                          // Rotation speed
+	1,                         // Emission rate (particles per second)
+	EmitterShape::POINT,            // Shape
+	0.1f,                          // Cone base radius
+	1.0f,                          // Cone height
+	20.0f,                         // Cone angle in degrees
+	glm::vec2(641,361),			   // Sprite size
+	false,						   // Use animation
+	0.05f						   // Animation speed
+	};
+
+	const ParticlePreset Environment_Spark = {
+	ParticleType::ENVIRONMENT_SPARK,
+	true,						   // PlayOnAwake
+	5,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   // Start color (light gray)
+	glm::vec3(1,1,1),   // End color (dark gray)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1.0f,                          // Size start
+	1.0f,                          // Size end
+	1.0f,                          // Min lifetime
+	1.0f,                          // Max lifetime
+	0.0f,                          // Min speed
+	0.0f,                          // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+	0,                          // Rotation speed
+	1,                         // Emission rate (particles per second)
+	EmitterShape::POINT,            // Shape
+	0.1f,                          // Cone base radius
+	1.0f,                          // Cone height
+	20.0f,                         // Cone angle in degrees
+	glm::vec2(641,361),			   // Sprite size
+	true,						   // Use animation
+	0.05f						   // Animation speed
+	};
+
+	const ParticlePreset Arc_Snare_Impact = { // la que pone thundaaar
+	ParticleType::ARC_SNARE_IMPACT,
+	true,						   // PlayOnAwake
+	5,						   // Duration (only if one-shot)
+	glm::vec3(1,1,1),   // Start color (light gray)
+	glm::vec3(1,1,1),   // End color (dark gray)
+	1.0f,                          // Alpha start
+	1.0f,                          // Alpha end
+	1,                          // Size start
+	1,                          // Size end
+	1,                          // Min lifetime
+	1,                          // Max lifetime
+	0.0f,                          // Min speed
+	0.0f,                          // Max speed
+	0.0f,						   // End Speed
+	glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+	0,                          // Rotation speed
+	1,                         // Emission rate (particles per second)
+	EmitterShape::POINT,            // Shape
+	0.2f,                          // Cone base radius
+	1.0f,                          // Cone height
+	20.0f,                         // Cone angle in degrees
+	glm::vec2(240,135),			   // Sprite size
+	true,						   // Use animation
+	0.05f						   // Animation speed
+	};
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -872,6 +953,21 @@ void ParticleFX::ConfigureRailGunAuto() {
 void ParticleFX::ConfigureRailGunSemi() {
 	ApplyPreset(ParticlePresets::RailGun_Semi);
 	SetOneShot(false);
+}
+
+void ParticleFX::ConfigureEnvironmentDropplet() {
+	ApplyPreset(ParticlePresets::Environment_Dropplet);
+	SetOneShot(false);
+}
+
+void ParticleFX::ConfigureEnvironmentSpark() {
+	ApplyPreset(ParticlePresets::Environment_Spark);
+	SetOneShot(true);
+}
+
+void ParticleFX::ConfigureArcSnareImpact() {
+	ApplyPreset(ParticlePresets::Arc_Snare_Impact);
+	SetOneShot(true);
 }
 
 void ParticleFX::SetEndSpeed(float Espeed) 

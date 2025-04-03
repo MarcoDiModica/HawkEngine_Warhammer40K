@@ -91,7 +91,7 @@ bool Root::Start()
 		
 	auto particleFX = CreateGameObject("ParticleFX");
 	particleFX->AddComponent<ParticleFX>();
-	particleFX->GetComponent<ParticleFX>()->ConfigureRailGunSemi();
+	particleFX->GetComponent<ParticleFX>()->ConfigureArcSnareImpact();
 	particleFX->GetComponent<ParticleFX>()->SetTexture("Assets/Textures/Smoke30Frames.png");
 	//particleFX->GetComponent<ParticleFX>()->Play();
 

@@ -143,6 +143,9 @@ public:
 	void ConfigureMuzzleFlash();
 	void ConfigureExplosion();
 	void ConfigureEnvironmentExplosion();
+	void ConfigureEnvironmentDropplet();
+	void ConfigureEnvironmentSpark();
+	void ConfigureArcSnareImpact(); // la que se llama thundaaar
 
 	void ConfigureDust();
 

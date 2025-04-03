@@ -43,7 +43,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
-
+#include <MyGameEngine/ImGuiCurveEditor.h>
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -1434,6 +1434,20 @@ private:
 				system->DisableColorGradient();
 			}
 		}
+
+		
+		int selectionIdx = -1;
+		
+		if (ImGui::Button("Add Color Point", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			Application->gui->foo[0].x = ImGui::CurveTerminator;
+		}
+
+		if (ImGui::Curve("", ImVec2(600, 200), 10, Application->gui->foo,&selectionIdx))
+		{
+			// curve changed
+		}
+
+		float value_you_care_about = ImGui::CurveValue(0.7f, 10, Application->gui->foo); // calculate value at position 0.7
 
 		ImGui::Button("Drop Gradient Here", ImVec2(ImGui::GetContentRegionAvail().x, 30));
 		HandleParticleTextureDrop(system, true);

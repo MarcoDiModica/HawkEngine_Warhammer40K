@@ -14,6 +14,9 @@ BaseColliderComponent::~BaseColliderComponent() {
     Destroy();
 }
 
+void BaseColliderComponent::Awake() {
+	
+}
 
 void BaseColliderComponent::Start() {
     if (!collider) {
@@ -185,7 +188,7 @@ void BaseColliderComponent::SnapToPosition() {
     }
     else
     {
-        if (physics->linkPhysicsToScene && rigidbody) {
+        if (physics->linkPhysicsToScene && rigidbody && !rigidbody->IsKinematic()) {
             return;
         }
     }

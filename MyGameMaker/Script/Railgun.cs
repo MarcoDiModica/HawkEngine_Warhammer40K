@@ -11,12 +11,17 @@ public class Railgun : BaseWeapon
     private float coolingTime = 3f;
     private float coolTimer = 0f;
     private float reloadTimer = 0f;
+    private PlayerController playerController;
+    ToggleMode toggleMode;
+    EnergyBall energyBall;
+    LaserBeam laserBeam;
+    public PlayerData playerData;
 
     private Audio sound;
     private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
     private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
 
-
+    private float timeSinceLastShot = 0.0f;
     public enum RailgunMode
     {
         SEMIAUTOMATIC,
@@ -25,8 +30,13 @@ public class Railgun : BaseWeapon
 
     public RailgunMode railgunMode = RailgunMode.SEMIAUTOMATIC;
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
+        damage = 100.0f;
         shootCadence = 0.66f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
@@ -36,25 +46,34 @@ public class Railgun : BaseWeapon
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
+        toggleMode = gameObject.GetComponent<ToggleMode>();
+        energyBall = gameObject.GetComponent<EnergyBall>();
+        laserBeam = gameObject.GetComponent<LaserBeam>();
     }
 
     public override void Update(float deltaTime)
     {
+        timeSinceLastShot += deltaTime;
 
         if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {
+
+            damage = 100.0f;
             shootCadence = 0.66f;
             magazineSize = 4;
         }
         else
         {
+            damage = 50.0f;
             shootCadence = 2f;
             magazineSize = 10;
         }
 
         if (isCooling)
         {
-            coolTimer += deltaTime * 10;
+            coolTimer += deltaTime;
             if (coolTimer >= coolingTime)
             {
                 Cooling();
@@ -63,7 +82,7 @@ public class Railgun : BaseWeapon
 
         if (isReloading)
         {
-            reloadTimer += deltaTime * 10;
+            reloadTimer += deltaTime;
             if (reloadTimer >= reloadTime)
             {
                 Reload();
@@ -76,9 +95,13 @@ public class Railgun : BaseWeapon
     public override void Shoot()
     {
         isReloading = false;
-        if (currentMagazineAmmo > 0 && isCooling == false && isRecharged)
+        if (currentMagazineAmmo > 0 && isCooling == false && isRecharged && timeSinceLastShot >= shootCadence)
         {
-            currentMagazineAmmo--;
+            timeSinceLastShot = 0f;
+            if (!playerData.infiniteBullets)
+            {
+                currentMagazineAmmo--;
+            }
             sound?.LoadAudio(railgunShot);
             sound?.Play();
             // Shoot logic
@@ -99,7 +122,7 @@ public class Railgun : BaseWeapon
                     projTransform.SetScale(0.1f, 0.1f, 0.1f);
 
                     projectile.AddScript("BulletData");
-                    projectile.GetComponent<BulletData>().Init(projTransform, forward);
+                    projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
                     bullets.Add(projectile.GetComponent<BulletData>());
 
                     Engineson.print("Projectile fired!");
@@ -137,12 +160,19 @@ public class Railgun : BaseWeapon
 
     public override void UseAbility1()
     {
-
+        toggleMode.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-
+        if (railgunMode == RailgunMode.AUTOMATIC)
+        {
+            laserBeam.TriggerAbility();
+        }
+        else
+        {
+            energyBall.TriggerAbility();
+        }
     }
 
     public override void CleanBullets()
@@ -176,5 +206,9 @@ public class Railgun : BaseWeapon
         {
             railgunMode = RailgunMode.SEMIAUTOMATIC;
         }
+    }
+
+    public override void ResetCooldowns()
+    {
     }
 }

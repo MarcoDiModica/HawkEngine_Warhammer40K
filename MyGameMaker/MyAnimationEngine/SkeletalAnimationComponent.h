@@ -18,6 +18,7 @@ public:
     SkeletalAnimationComponent(SkeletalAnimationComponent&& other) noexcept;
     SkeletalAnimationComponent& operator=(SkeletalAnimationComponent&& other) noexcept;
 
+	void Awake() override;
 
     void Start() override;
 

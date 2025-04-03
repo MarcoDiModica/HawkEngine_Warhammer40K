@@ -12,6 +12,10 @@ AudioListener::AudioListener(GameObject* owner)
     LOG(LogType::LOG_INFO, "AudioListener created on %s", owner->GetName().c_str());
 }
 
+void AudioListener::Awake() {
+	
+}
+
 void AudioListener::Start() {
     UpdateListenerPosition();
 }

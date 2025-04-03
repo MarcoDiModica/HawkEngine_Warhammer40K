@@ -34,10 +34,15 @@ namespace EngineBinds {
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
 
 	void AddScript(MonoObject* ref, MonoString* scriptName);
+	void SetActive(MonoObject* ref, bool active);
 
     MonoString* GameObjectGetName(MonoObject* sharpRef);
+    MonoString* GameObjectGetTag(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
+	MonoString* GetTag(MonoObject* ref);
+	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
+    void GameObjectSetActive(MonoObject* ref, bool active);
 
     // Input
     bool GetKey(int keyID);
@@ -93,7 +98,10 @@ namespace EngineBinds {
 	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void Render(MonoObject* meshRendererRef);
+    
 
+    //Physics
+    MonoArray* OverlapSphere(glm::vec3* position, float radius, MonoString* tag);
 
     //Physics Collider
     void SetTrigger(MonoObject* colliderRef, bool trigger);
@@ -122,6 +130,9 @@ namespace EngineBinds {
     void SetKinematic(MonoObject* rigidbodyRef, bool isKinematic);
     bool IsKinematic(MonoObject* rigidbodyRef);
     void EnableContinuousCollision(MonoObject* rigidbodyRef);
+
+    // Raycast
+	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance);
     
     //Audio
     void Play(MonoObject* audioRef, bool loop = false);

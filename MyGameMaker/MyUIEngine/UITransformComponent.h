@@ -22,6 +22,7 @@ public:
 	UITransformComponent(UITransformComponent&&) noexcept = default;
 	UITransformComponent& operator=(UITransformComponent&&) noexcept = default;
 
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;

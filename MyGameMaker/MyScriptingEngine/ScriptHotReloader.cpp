@@ -50,8 +50,6 @@ void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::s
 	bool msbuildAvailable = false;
 
 	if (m_PreferMSBuild) {
-		LOG(LogType::LOG_INFO, "MSBuild is preferred for compilation");
-
 		if (!m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath)) {
 			msbuildAvailable = TestMSBuildCompilation(m_MSBuildPath);
 		}
@@ -73,8 +71,6 @@ void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::s
 		}
 	}
 	else {
-		LOG(LogType::LOG_INFO, "Dotnet is preferred for compilation");
-
 		if (!m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath)) {
 			dotnetAvailable = TestDotnetCompilation(m_DotnetPath);
 		}
@@ -105,19 +101,15 @@ void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::s
 	bool initialCompilationResult = false;
 
 	if (m_PreferMSBuild && msbuildAvailable) {
-		LOG(LogType::LOG_INFO, "Using MSBuild for compilation (preferred)");
 		initialCompilationResult = CompileWithMSBuild();
 	}
 	else if (!m_PreferMSBuild && dotnetAvailable) {
-		LOG(LogType::LOG_INFO, "Using dotnet for compilation (preferred)");
 		initialCompilationResult = CompileExistingProject();
 	}
 	else if (msbuildAvailable) {
-		LOG(LogType::LOG_INFO, "Using MSBuild for compilation (fallback)");
 		initialCompilationResult = CompileWithMSBuild();
 	}
 	else if (dotnetAvailable) {
-		LOG(LogType::LOG_INFO, "Using dotnet for compilation (fallback)");
 		initialCompilationResult = CompileExistingProject();
 	}
 
@@ -168,19 +160,15 @@ bool ScriptHotReloader::CheckForChanges() {
 		bool msbuildAvailable = !m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath);
 
 		if (m_PreferMSBuild && msbuildAvailable) {
-			LOG(LogType::LOG_INFO, "Compiling changes with MSBuild (preferred)");
 			result = CompileWithMSBuild();
 		}
 		else if (!m_PreferMSBuild && dotnetAvailable) {
-			LOG(LogType::LOG_INFO, "Compiling changes with dotnet (preferred)");
 			result = CompileExistingProject();
 		}
 		else if (msbuildAvailable) {
-			LOG(LogType::LOG_INFO, "Compiling changes with MSBuild (fallback)");
 			result = CompileWithMSBuild();
 		}
 		else if (dotnetAvailable) {
-			LOG(LogType::LOG_INFO, "Compiling changes with dotnet (fallback)");
 			result = CompileExistingProject();
 		}
 		else {
@@ -241,19 +229,15 @@ bool ScriptHotReloader::ForceRecompile() {
 	bool msbuildAvailable = !m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath);
 
 	if (m_PreferMSBuild && msbuildAvailable) {
-		LOG(LogType::LOG_INFO, "Force recompiling with MSBuild (preferred)");
 		result = CompileWithMSBuild();
 	}
 	else if (!m_PreferMSBuild && dotnetAvailable) {
-		LOG(LogType::LOG_INFO, "Force recompiling with dotnet (preferred)");
 		result = CompileExistingProject();
 	}
 	else if (msbuildAvailable) {
-		LOG(LogType::LOG_INFO, "Force recompiling with MSBuild (fallback)");
 		result = CompileWithMSBuild();
 	}
 	else if (dotnetAvailable) {
-		LOG(LogType::LOG_INFO, "Force recompiling with dotnet (fallback)");
 		result = CompileExistingProject();
 	}
 	else {
@@ -303,7 +287,6 @@ bool ScriptHotReloader::FindWorkingDotnet() {
 
 	for (const auto& dotnetPath : existingStandardPaths) {
 		if (TestDotnetCompilation(dotnetPath)) {
-			LOG(LogType::LOG_INFO, "Found working standard dotnet: %s", dotnetPath.c_str());
 			m_DotnetPath = dotnetPath;
 			SaveWorkingDotnetPath(dotnetPath);
 			return true;
@@ -944,7 +927,6 @@ bool ScriptHotReloader::FindWorkingMSBuild() {
 		if (TestMSBuildCompilation(msbuildPath)) {
 			m_MSBuildPath = msbuildPath;
 			SaveWorkingMSBuildPath(msbuildPath);
-			LOG(LogType::LOG_INFO, "Found working MSBuild: %s", msbuildPath.c_str());
 			return true;
 		}
 	}

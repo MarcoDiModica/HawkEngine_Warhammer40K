@@ -814,7 +814,6 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
-			ScriptHotReloader::GetInstance().SetPreferMSBuild(true);
 			MonoManager::GetInstance().EnableHotReloading();
 			SoundComponent::InitSharedAudioEngine();
 

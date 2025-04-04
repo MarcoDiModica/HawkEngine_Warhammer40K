@@ -9,11 +9,11 @@ public class PlayerCamera : MonoBehaviour
 
     public float smoothness = 19.0f;
 
-    public float maxOffsetDistance = 2.2f;
+    public float maxOffsetDistance = 3.6f;
     public float offsetSmoothness = 25.0f;
 
     private Vector3 currentOffset = new Vector3(0, 20, -10.5f);
-    private Vector3 targetOffset = new Vector3(0, 20, -10.5f);
+    private Vector3 targetOffset = new Vector3(0, 20, 0);
 
     public override void Awake()
     {
@@ -45,7 +45,7 @@ public class PlayerCamera : MonoBehaviour
         Vector2 leftStickInput = Input.GetLeftStick();
         Vector2 rightStickInput = Input.GetRightStick();
 
-        Vector3 baseOffset = new Vector3(0, 22, -15.5f);
+        Vector3 baseOffset = new Vector3(0, 35.07492f, -18.5f);
 
         if (leftStickInput != Vector2.Zero)
         {

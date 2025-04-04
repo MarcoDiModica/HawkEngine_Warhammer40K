@@ -124,8 +124,8 @@ bool Root::Start()
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
     auto objMainCamera = CreateCameraObject("MainCamera");
-    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-    objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 31.07492f, -14.0f));
+    objMainCamera->GetTransform()->Rotate(glm::radians(61.418f), glm::dvec3(1, 0, 0));
     auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
@@ -256,6 +256,7 @@ bool Root::Start()
 	//lictorMesh->SetName("LictorMesh");
 	//ParentGameObject(*lictorMesh, *lictor);
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	//lictor->SetTag("Enemy");
 
 
 	//auto cube = CreateCube("Cube");
@@ -264,7 +265,7 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
+	/*auto hormagaunt = CreateGameObject("Hormagaunt");
 	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
 	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
@@ -275,6 +276,7 @@ bool Root::Start()
 	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	hormagaunt->SetTag("Enemy");*/
 
 	//Mawloc
 	//auto mawloc = CreateGameObject("Mawloc");
@@ -291,6 +293,7 @@ bool Root::Start()
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+
 
 	//CreateGameplayUI();
 
@@ -354,6 +357,7 @@ bool Root::Start()
 	Application->play = true;
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
 	Application->physicsModule->linkPhysicsToScene = true;
+	SceneManagement->Awake();
 	SceneManagement->Start();
 #endif // _BUILD
 

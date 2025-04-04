@@ -117,7 +117,7 @@ public class EnemyControllerMelee : EnemyController
                         }
                         if (hurtboxTimer >= hurtboxActivationTime)
                         {
-                            //CreateHurtbox();
+                            CreateHurtbox();
                             anim.SetRandomAttackAnimation();
                             Engineson.print("Atack is ready");
                             hurtboxTimer = 0f;
@@ -126,9 +126,9 @@ public class EnemyControllerMelee : EnemyController
                         }
                         else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
                         {
-                            Attack();
+                            //Attack();
 
-                            //DestroyHurtbox();
+                            DestroyHurtbox();
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
                             dodgewindow = false;
@@ -326,11 +326,13 @@ public class EnemyControllerMelee : EnemyController
     private void CreateHurtbox()
     {
         hurtboxObject = Engineson.CreateGameObject("Hurtbox", null);
-        hurtboxObject.AddComponent<MeshRenderer>();
+        //hurtboxObject.AddComponent<MeshRenderer>();
         var hurtboxTransform = hurtboxObject.AddComponent<Transform>();
         hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
         hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
         var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
+        hurtboxCollider.SetTrigger(true);
+        Attack();
     }
 
     private void DestroyHurtbox()

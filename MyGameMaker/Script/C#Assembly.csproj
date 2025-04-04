@@ -121,6 +121,7 @@
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
+    <Compile Include="ParticleFX.cs" />
     <Compile Include="PickUpManager.cs" />
     <Compile Include="Physics.cs" />
     <Compile Include="PlayerAnimations.cs" />

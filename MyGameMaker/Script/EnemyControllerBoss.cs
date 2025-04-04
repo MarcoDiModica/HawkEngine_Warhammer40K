@@ -92,105 +92,111 @@ public class EnemyControllerBoss : EnemyController
     }
     public override void Update(float deltaTime)
     {
-
-        if (currentHealth < 500)
+        if (!isDead)
         {
-            currentPhase = BossPhase.PHASE3;
-        }
-        else if (currentHealth < 1000)
-        {
-            currentPhase = BossPhase.PHASE2;
-        }
-        switch (currentPhase)
-        {
-            case BossPhase.PHASE1:
-              
-                if (isCombatMusicPlaying == false)
-                {
-                    sound?.LoadAudio(combatMusic);
-                    sound?.Play(true);
-                    isCombatMusicPlaying = true;
-                }
+            if (currentHealth <= 0)
+            {
+                Engineson.print("This man is dead man.");
+                //Destroy(gameObject);
+            }
+            if (currentHealth < 500)
+            {
+                currentPhase = BossPhase.PHASE3;
+            }
+            else if (currentHealth < 1000)
+            {
+                currentPhase = BossPhase.PHASE2;
+            }
+            switch (currentPhase)
+            {
+                case BossPhase.PHASE1:
 
-                timer += deltaTime;
-
-                if (isBuried && timer >= unburrowingAttackCooldown)
-                {
-                    UnburrowingAttack();
-                    timer = 0.0f;
-                }
-                else if (!isBuried && timer >= postUnburrowingAttackDelay)
-                {
-                    if (attackCount % 3 == 0 && attackCount > 0)
+                    if (isCombatMusicPlaying == false)
                     {
-                        if (timer >= restAfterThirdAttack)
+                        sound?.LoadAudio(combatMusic);
+                        sound?.Play(true);
+                        isCombatMusicPlaying = true;
+                    }
+
+                    timer += deltaTime;
+
+                    if (isBuried && timer >= unburrowingAttackCooldown)
+                    {
+                        UnburrowingAttack();
+                        timer = 0.0f;
+                    }
+                    else if (!isBuried && timer >= postUnburrowingAttackDelay)
+                    {
+                        if (attackCount % 3 == 0 && attackCount > 0)
+                        {
+                            if (timer >= restAfterThirdAttack)
+                            {
+                                Burrow();
+                                timer = 0.0f;
+                            }
+                        }
+                        else
                         {
                             Burrow();
                             timer = 0.0f;
                         }
                     }
-                    else
+
+                    break;
+                case BossPhase.PHASE2:
+
+                    timer += deltaTime;
+
+                    if (isBuried && timer >= unburrowingAttackCooldown)
                     {
-                        Burrow();
+                        isPreparingAttack = true;
                         timer = 0.0f;
                     }
-                }
-
-                break;
-            case BossPhase.PHASE2:
-
-                timer += deltaTime;
-
-                if (isBuried && timer >= unburrowingAttackCooldown)
-                {
-                    isPreparingAttack = true;
-                    timer = 0.0f;
-                }
-                else if (isPreparingAttack && timer >= burrowTime)
-                {
-                    UnburrowingAttackPhase2();
-                    isPreparingAttack = false;
-                    timer = 0.0f;
-                }
-                else if (!isBuried && timer >= postAttackDelay)
-                {
-                    if (playerTransform != null)
+                    else if (isPreparingAttack && timer >= burrowTime)
                     {
-                        float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
-
-                        if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
-                        {
-                            SlamAttack();
-                            slamAttackTimer = slamAttackCooldown;
-                        }
-                        else
-                        {
-                            ChangePositionToClosest();
-                        }
+                        UnburrowingAttackPhase2();
+                        isPreparingAttack = false;
+                        timer = 0.0f;
                     }
-                    timer = 0.0f;
-                }
+                    else if (!isBuried && timer >= postAttackDelay)
+                    {
+                        if (playerTransform != null)
+                        {
+                            float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
-                if (slamAttackTimer > 0.0f)
-                {
-                    slamAttackTimer -= deltaTime;
-                }
+                            if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                            {
+                                SlamAttack();
+                                slamAttackTimer = slamAttackCooldown;
+                            }
+                            else
+                            {
+                                ChangePositionToClosest();
+                            }
+                        }
+                        timer = 0.0f;
+                    }
 
-                break;
-            case BossPhase.PHASE3:
+                    if (slamAttackTimer > 0.0f)
+                    {
+                        slamAttackTimer -= deltaTime;
+                    }
 
-                break;
+                    break;
+                case BossPhase.PHASE3:
+
+                    break;
+            }
+
+            if (playerTransform != null)
+            {
+                Vector3 directionToPlayer = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                float targetAngle = (float)Math.Atan2(directionToPlayer.X, directionToPlayer.Z) * (180.0f / (float)Math.PI);
+                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(targetAngle * ((float)Math.PI / 180.0f), 0, 0);
+                enemyTransform.SetRotationQuat(newRotation);
+                collider.SetRotation(newRotation);
+            }
         }
-
-        if (playerTransform != null)
-        {
-            Vector3 directionToPlayer = Vector3.Normalize(playerTransform.position - enemyTransform.position);
-            float targetAngle = (float)Math.Atan2(directionToPlayer.X, directionToPlayer.Z) * (180.0f / (float)Math.PI);
-            Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(targetAngle * ((float)Math.PI / 180.0f), 0, 0);
-            enemyTransform.SetRotationQuat(newRotation);
-            collider.SetRotation(newRotation);
-        }
-      
     }
 
     override public void OnCollisionEnter(GameObject other)
@@ -207,11 +213,6 @@ public class EnemyControllerBoss : EnemyController
         else if (other.tag == "RailgunProjectile")
         {
             //Cosas de railgun
-        }
-        if (currentHealth <= 0)
-        {
-            Engineson.print("This man is dead man.");
-            //Destroy(gameObject);
         }
         //Engineson.print("Player hit!");
     }

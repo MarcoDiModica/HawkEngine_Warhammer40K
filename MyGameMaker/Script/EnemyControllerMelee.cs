@@ -89,9 +89,18 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Update(float deltaTime)
     {
-        if(!isDead)
+        if (!isDead)
         {
-            if(!isStunned)
+            if (currentHealth <= 0)
+            {
+                Engineson.print("This man is dead man.");
+                //Destroy(gameObject);
+                anim.SetDeathAnimation();
+                isDead = true;
+                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
+                sound?.Play();
+            }
+            if (!isStunned)
             {
                 Vector3 playerPos = playerTransform.position;
                 float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
@@ -281,6 +290,7 @@ public class EnemyControllerMelee : EnemyController
         if (other.tag == "BoltgunProjectile")
         {
             currentHealth -= 20.0f;
+            Engineson.print("Hit");
             anim.SetHitAnimation();
             sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
             sound?.Play();
@@ -298,6 +308,7 @@ public class EnemyControllerMelee : EnemyController
         else if (other.tag == "RailgunProjectile")
         {
             //Cosas de railgun
+            currentHealth -= 100.0f;
             anim.SetHitAnimation();
             sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
             sound?.Play();
@@ -307,16 +318,6 @@ public class EnemyControllerMelee : EnemyController
             Engineson.print("Player hit while Leaping!");
             pc.playerData.TakeDamage(leapDamage);
             Engineson.print("Player health: " + (pc.playerData.GetHealth()));
-        }
-
-        if (currentHealth <= 0)
-        {
-            Engineson.print("This man is dead man.");
-            //Destroy(gameObject);
-            anim.SetDeathAnimation();
-            isDead = true;
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
-            sound?.Play();
         }
     }
 

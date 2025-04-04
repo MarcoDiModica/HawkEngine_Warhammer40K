@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         if (rb == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a Rigidbody component!");
+           // Engineson.print("ERROR: PlayerMovement requires a Rigidbody component!");
             return;
         }
 
@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         collider = gameObject.GetComponent<Collider>();
         if (collider == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a Collider component!");
+           // Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
         }
 
@@ -60,28 +60,28 @@ public class PlayerMovement : MonoBehaviour
         playerInput = gameObject.GetComponent<PlayerInput>();
         if (playerInput == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a PlayerInput component!");
+           // Engineson.print("ERROR: PlayerMovement requires a PlayerInput component!");
             return;
         }
 
         playerCamera = GameObject.Find("MainCamera");
         if (playerCamera == null)
         {
-            Engineson.print("ERROR: playerCamera is NULL!");
+            //Engineson.print("ERROR: playerCamera is NULL!");
             return;
         }
 
         cameraTransform = playerCamera.GetComponent<Transform>();
         if (cameraTransform == null) 
         {
-            Engineson.print("ERROR: cameraTransform is NULL!");
+           // Engineson.print("ERROR: cameraTransform is NULL!");
             return;
         }
 
         playerController = gameObject.GetComponent<PlayerController>();
         if (playerController == null)
         {
-            Engineson.print("ERROR: playerController is NULL!");
+           // Engineson.print("ERROR: playerController is NULL!");
             return;
         }
 
@@ -112,39 +112,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other != null)
         {
-            Engineson.print("OnCollisionEnter con: " + other.name);
+           // Engineson.print("OnCollisionEnter con: " + other.name);
             Engineson.print(other.GetComponent<Collider>().name);
         }
         else
         {
-            Engineson.print("Error: GameObject other es nulo");
+           // Engineson.print("Error: GameObject other es nulo");
 
         }
-    }
-
-    override public void OnCollisionStay(GameObject other)
-    {
-        //Engineson.print("Player Collision Stay: ");
-    }
-
-    override public void OnCollisionExit(GameObject other)
-    {
-        Engineson.print("Player Collision Exit: ");
-    }
-
-    override public void OnTriggerEnter(GameObject other)
-    {
-        Engineson.print("Player Trigger Enter: ");
-    }
-
-    override public void OnTriggerStay(GameObject other)
-    {
-        //Engineson.print("Player Trigger Stay: ");
-    }
-
-    override public void OnTriggerExit(GameObject other)
-    {
-        Engineson.print("Player Trigger Exit: ");
     }
 
     public void SetMoveDirection(Vector3 direction)
@@ -163,7 +138,11 @@ public class PlayerMovement : MonoBehaviour
         Vector2 leftStick = Input.GetLeftStick();
         float magnitude = leftStick.Length();
 
-        if (magnitude > 0.1f)
+        
+        if(playerData.GodMode == true)
+        {
+            moveSpeed = runSpeed*3;
+        } else if (magnitude > 0.1f)
         {
             if (magnitude > 0.7f)
             {
@@ -173,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 moveSpeed = walkSpeed;
             }
-         
+
         }
 
         Vector3 desiredVelocity = moveDirection * moveSpeed;

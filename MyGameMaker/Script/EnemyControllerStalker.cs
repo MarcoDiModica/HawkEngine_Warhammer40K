@@ -92,6 +92,13 @@ public class EnemyControllerStalker : EnemyController
     {
         if (!isDead)
         {
+            if (currentHealth <= 0)
+            {
+                Engineson.print("This man is dead man.");
+                //Destroy(gameObject);
+                //anim.SetDeathAnimation();
+                isDead = true;
+            }
             if (!isStunned)
             {
                 Vector3 playerPos = playerTransform.position;
@@ -276,14 +283,6 @@ public class EnemyControllerStalker : EnemyController
             Engineson.print("Player hit while Leaping!");
             pc.playerData.TakeDamage(leapDamage);
             Engineson.print("Current health: " + (pc.playerData.GetHealth()));
-        }
-
-        if (currentHealth <= 0)
-        {
-            Engineson.print("This man is dead man.");
-            //Destroy(gameObject);
-            //anim.SetDeathAnimation();
-            isDead = true;
         }
     }
 }

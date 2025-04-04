@@ -75,7 +75,10 @@ public class RedThirstManager : MonoBehaviour
     {
         //Actualizar el HUD por cada Red Thirst Point
         redThirstPoints += points;
-
+        if (redThirstPoints > maxRedThirstPoints)
+        {
+            redThirstPoints = maxRedThirstPoints;
+        }
         Engineson.print($"Red Thirst Points: {redThirstPoints}");
 
         if (redThirstPoints >= maxRedThirstPoints && isInBlackRage == false)

@@ -49,7 +49,6 @@ public class HormagauntAnimation : MonoBehaviour
         hormagauntesk.SetAnimationPlayState(true);
         Random rand = new Random();
         int attackIndex = rand.Next(1, 4);
-        Engineson.print("" + attackIndex);
         switch (attackIndex)
         {
             case 1:
@@ -134,7 +133,6 @@ public class HormagauntAnimation : MonoBehaviour
         hormagauntesk.SetAnimationPlayState(true);
         Random rand = new Random();
         int hitIndex = rand.Next(1, 4);
-        Engineson.print("" + hitIndex);
         switch (hitIndex)
         {
             case 1:

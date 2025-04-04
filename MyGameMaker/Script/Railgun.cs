@@ -36,6 +36,7 @@ public class Railgun : BaseWeapon
     }
     public override void Start()
     {
+        damage = 100.0f;
         shootCadence = 0.66f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
@@ -58,12 +59,15 @@ public class Railgun : BaseWeapon
 
         if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {
-            shootCadence = 2f;
+
+            damage = 100.0f;
+            shootCadence = 0.66f;
             magazineSize = 4;
         }
         else
         {
-            shootCadence = 0.66f;
+            damage = 50.0f;
+            shootCadence = 2f;
             magazineSize = 10;
         }
 

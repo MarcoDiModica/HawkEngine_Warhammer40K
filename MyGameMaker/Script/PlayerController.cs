@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private bool isShootingRunning = false;
     private bool isTransitioning = false;
     private float transitionTimer = 0f;
-    private float transitionDelay = 0.5f;
+    private float transitionDelay = 0.1f;
     Vector3 moveDirection;
     private bool once = false;
 
@@ -62,6 +62,23 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if (Input.GetKeyDown(KeyCode.Z) )
+        {
+            if (playerData.GodMode == true)
+            {
+                playerData.GodMode = false;
+                Engineson.print("GodMode deactivated");
+            }
+            else
+            {
+                playerData.GodMode = true;
+                Engineson.print("GodMode activated");
+
+            }
+
+
+        }
+        
         dashDelayTimer -= deltaTime;
         transitionTimer -= deltaTime;
         if (once == false)
@@ -69,7 +86,7 @@ public class PlayerController : MonoBehaviour
             playerAnimations.SetStandardIdleAnimation();
             once = true;
         }
-        Vector3 moveDirection = playerInput.GetCurrentMoveDirection();
+         moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
         elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
@@ -87,6 +104,7 @@ public class PlayerController : MonoBehaviour
         else
         {
 
+           
             if (moveDirection == Vector3.Zero)
             {
                 if (isWalking)
@@ -226,7 +244,7 @@ public class PlayerController : MonoBehaviour
 
     private void SetShootingState()
     {
-        if (isMoving && !isShootingRunning && playerInput.IsShooting())
+        if (moveDirection != Vector3.Zero && !isShootingRunning)
         {
             playerAnimations.SetRunningToShootRunningAnimation();
             isShootingStanding = false;
@@ -236,7 +254,7 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
             isIdle = false;
         }
-        else if (!isShootingStanding && !isMoving && playerInput.IsShooting())
+        else if (!isShootingStanding && moveDirection == Vector3.Zero)
         {
             playerAnimations.SetShootingStandingAnimation();
             isShootingStanding = true;
@@ -245,12 +263,15 @@ public class PlayerController : MonoBehaviour
             isWalking = false;
             isRunning = false;
             isIdle = false;
+
         }
+        Engineson.print(moveDirection.ToString());
         if (isShootingStanding && moveDirection != Vector3.Zero)
         {
             playerAnimations.SetShootingStandingToShootingRunAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
+            Engineson.print("Transitioning to shooting running");
         }
     }
     private void SetWalkingToIdle()
@@ -329,7 +350,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "EnemyAttack")
         {
-            if (!playerDash.isInvulnerable)
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
                 if(playerData.GetHealth() <= 0)
@@ -353,7 +374,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "Enemy")
         {
-            if (!playerDash.isInvulnerable)
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
                 if (playerData.GetHealth() <= 0)

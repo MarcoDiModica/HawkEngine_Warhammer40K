@@ -4,6 +4,7 @@ using HawkEngine;
 
 public abstract class BaseWeapon : MonoBehaviour
 {
+    public float damage;
     public float shootCadence;
     public int magazineSize;
     public int currentMagazineAmmo;

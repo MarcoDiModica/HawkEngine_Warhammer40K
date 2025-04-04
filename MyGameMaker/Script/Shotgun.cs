@@ -22,6 +22,7 @@ public class Shotgun : BaseWeapon
     }
     public override void Start()
     {
+        damage = 70.0f;
         shootCadence = 0.7f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
@@ -92,19 +93,19 @@ public class Shotgun : BaseWeapon
                     collisionNames.Add(rayBullet.hit.gameObject.name);
                     if (rayBullet.hit.gameObject.tag == "Melee")
                     {
-                        rayBullet.hit.gameObject.GetComponent<EnemyControllerMelee>().TakeDamage(20.0f); //placeholder damage
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
                     }
                     if (rayBullet.hit.gameObject.tag == "Ranged")
                     {
-                        rayBullet.hit.gameObject.GetComponent<EnemyControllerRanged>().TakeDamage(20.0f); //placeholder damage
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
                     }
                     if (rayBullet.hit.gameObject.tag == "Stalker")
                     {
-                        rayBullet.hit.gameObject.GetComponent<EnemyControllerStalker>().TakeDamage(20.0f); //placeholder damage
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
                     }
                     if (rayBullet.hit.gameObject.tag == "Boss")
                     {
-                        rayBullet.hit.gameObject.GetComponent<EnemyControllerBoss>().TakeDamage(20.0f); //placeholder damage
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
                     }
                     Engineson.print($"Hit: {bulletHitPoint}");
                 }

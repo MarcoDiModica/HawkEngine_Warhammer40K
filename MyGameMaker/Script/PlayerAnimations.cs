@@ -133,7 +133,7 @@ public class PlayerAnimations : MonoBehaviour
     }
     public void SetShootingStandingToShootingRunAnimation()
     {
-        esk.TransitionAnimations(7, 6, 0.1f);
+        esk.TransitionAnimations(7, 8, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 

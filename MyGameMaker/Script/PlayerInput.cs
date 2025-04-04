@@ -31,7 +31,7 @@ public class PlayerInput : MonoBehaviour
         }
 
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
-        if (Input.GetControllerAxis(0, 5) > 0.5f || Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetControllerAxis(0, 5) > 0.5f || Input.GetKeyDown(KeyCode.Q))
         {
             isShootPressed = true;
         }

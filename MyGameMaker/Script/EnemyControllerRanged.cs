@@ -64,6 +64,11 @@ public class EnemyControllerRanged : EnemyController
     {
         if (!isStunned)
         {
+            if (currentHealth <= 0)
+            {
+                Engineson.print("This man is dead man.");
+                //Destroy(gameObject);
+            }
             Vector3 playerPos = playerTransform.position;
 
             if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
@@ -205,11 +210,6 @@ public class EnemyControllerRanged : EnemyController
         else if (other.tag == "RailgunProjectile")
         {
             //Cosas de railgun
-        }
-        if (currentHealth <= 0)
-        {
-            Engineson.print("This man is dead man.");
-            //Destroy(gameObject);
         }
         //Engineson.print("Player hit!");
     }

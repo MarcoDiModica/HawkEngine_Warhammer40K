@@ -83,9 +83,10 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
 	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 
+	//particle->ApplyPreset(Particle)
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
-	
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
@@ -130,46 +131,38 @@ bool Root::Start()
 	
 	//// Test PowerUps
 	//
-	//auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
-	//powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
-	//powerUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
-	//powerUp->SetTag("PowerUp");	
-	//
-	//auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
-	//powerUp3->GetTransform()->SetPosition(glm::vec3(-20, 2, 0));
-	//powerUp3->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//powerUp3->AddComponent<ScriptComponent>()->LoadScript("Magnet");
-	//powerUp3->SetTag("PowerUp");
-	//
-	//
-	//auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
-	//powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
-	//powerUp5->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//powerUp5->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
-	//powerUp5->SetTag("PowerUp");
-	//
-	//auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-	//powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
-	//powerUp6->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//powerUp6->AddComponent<ScriptComponent>()->LoadScript("BlackHeart");
-	//powerUp6->SetTag("PowerUp");
-
-	/*auto powerUp2 = CreateCube("Magnet");
-	powerUp2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	powerUp2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	powerUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	powerUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp2->AddComponent<ScriptComponent>()->LoadScript("Magnet");
-	powerUp2->SetTag("PowerUp");*/
+	auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
+	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
+	powerUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
+	powerUp->SetTag("PowerUp");	
+	
+	auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
+	powerUp3->GetTransform()->SetPosition(glm::vec3(-20, 2, 0));
+	powerUp3->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp3->AddComponent<ScriptComponent>()->LoadScript("Magnet");
+	powerUp3->SetTag("PowerUp");
+	
+	
+	auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
+	powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
+	powerUp5->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp5->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
+	powerUp5->SetTag("PowerUp");
+	
+	auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
+	powerUp6->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp6->AddComponent<ScriptComponent>()->LoadScript("BlackHeart");
+	powerUp6->SetTag("PowerUp");
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
@@ -259,7 +252,7 @@ bool Root::Start()
 	//collisionNextLevel->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//collisionNextLevel->AddComponent<ScriptComponent>()->LoadScript("Scene2ToMenu");
 
-	//CreateGameplayUI();
+	CreateGameplayUI();
 	//CreateMainMenuUI();
 
 	//auto shotgunPickUp = CreateGameObjectWithPath("Assets/shotgun.fbx");

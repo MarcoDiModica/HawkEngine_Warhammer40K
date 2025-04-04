@@ -101,7 +101,6 @@ bool Root::Start()
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 
-
 	auto itemtest = CreateCube("item");
 	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
@@ -116,6 +115,10 @@ bool Root::Start()
 	itemtest2->AddComponent<ScriptComponent>()->LoadScript("AreaTrigger");
 	itemtest2->SetTag("AreaTrigger");
 
+	auto floor2 = CreateCube("Player2");
+	floor2->GetTransform()->SetPosition(glm::vec3(10, 3, 0));
+	floor2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	floor2->AddComponent<RigidbodyComponent>(Application->physicsModule);
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
@@ -128,6 +131,7 @@ bool Root::Start()
     objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
     mainCamera = objMainCamera;
 	UpdateCameraPriority();
+	//
 	
 	//// Test PowerUps
 	//
@@ -287,34 +291,31 @@ bool Root::Start()
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	floorCollider->Start();
-	SceneManagement->Awake();
-	SceneManagement->Start();
 
 	//CreateGameplayUI();
 
 	////For rendering Interaction System text, remove the canvas if there is already one
-	//auto canvas = CreateGameObject("Canvas");
-	//canvas->AddComponent<UICanvasComponent>();
-	//canvas->AddComponent<UITransformComponent>();
-	//canvas->AddComponent<SoundComponent>();
+	auto canvas = CreateGameObject("Canvas");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<SoundComponent>();
 
-	//auto interactText = CreateGameObject("InteractText");
-	//Application->root->ParentGameObject(*interactText, *canvas);
-	//interactText->AddComponent<UIImageComponent>();
-	//interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
-	//interactText->AddComponent<UIButtonComponent>();
-	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
-	//
-	//
-	//auto areaText = CreateGameObject("dialogueText");
-	//Application->root->ParentGameObject(*areaText, *canvas);
-	//areaText->AddComponent<UIImageComponent>();
-	//areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
-	//areaText->AddComponent<UIButtonComponent>();
-	//areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	//areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	auto interactText = CreateGameObject("InteractText");
+	Application->root->ParentGameObject(*interactText, *canvas);
+	interactText->AddComponent<UIImageComponent>();
+	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	interactText->AddComponent<UIButtonComponent>();
+	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	
+	
+	auto areaText = CreateGameObject("dialogueText");
+	Application->root->ParentGameObject(*areaText, *canvas);
+	areaText->AddComponent<UIImageComponent>();
+	areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
+	areaText->AddComponent<UIButtonComponent>();
+	areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 
 	//floor->SetActive(false);
 

@@ -71,11 +71,11 @@ public class MenuButtons : MonoBehaviour
 
         if (button_newGameButton.GetState() == ButtonState.HOVERED)
         {
-            transform_newGameButton.DOScaleUI(new Vector3(0.25f, 0.14f, 0.5f), 0.5f, Modes.EASE_OUT);
+            transform_newGameButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
         }
         else if (button_newGameButton.GetState() == ButtonState.DEFAULT)
         {
-            transform_newGameButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.5f, Modes.EASE_OUT);
+            transform_newGameButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
         }
 
         if (button_continueButton.GetState() == ButtonState.CLICKED)
@@ -84,6 +84,15 @@ public class MenuButtons : MonoBehaviour
             //SceneManager.LoadScene("DefaultScene");
             gameObject.SetActive(false);
         }
+        if(button_continueButton.GetState() == ButtonState.HOVERED)
+        {
+            transform_continueButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+        else if (button_continueButton.GetState() == ButtonState.DEFAULT)
+        {
+            transform_continueButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+        }
+
 
         if (button_optionsButton.GetState() == ButtonState.CLICKED)
         {
@@ -91,11 +100,28 @@ public class MenuButtons : MonoBehaviour
             
         }
 
+        if (button_optionsButton.GetState() == ButtonState.HOVERED)
+        {
+            transform_optionsButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+        else if (button_optionsButton.GetState() == ButtonState.DEFAULT)
+        {
+            transform_optionsButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+        }
+
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
             //Salir del juego
         }
 
+        if (button_quitButton.GetState() == ButtonState.HOVERED)
+        {
+            transform_quitButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+        else if (button_quitButton.GetState() == ButtonState.DEFAULT)
+        {
+            transform_quitButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+        }
 
         //if (continueButton.GetState() == ButtonState.CLICKED)
         //{

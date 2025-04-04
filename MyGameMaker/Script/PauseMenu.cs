@@ -76,16 +76,43 @@ public class PauseMenu : MonoBehaviour
                 this.gameObject.SetActive(false);
             }
         }
+
+        if (button_resumeButton.GetState() == ButtonState.HOVERED)
+        {
+            transform_resumeButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+        else if (button_resumeButton.GetState() == ButtonState.DEFAULT)
+        {
+            transform_resumeButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+
         if (button_optionsMenuButton.GetState() == ButtonState.CLICKED)
         {
             optionsMenu.SetActive(true);
             isOptionsMenuActive = true;
         }
+        if (button_optionsMenuButton.GetState() == ButtonState.HOVERED)
+        {
+            transform_optionsMenuButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+        else if (button_optionsMenuButton.GetState() == ButtonState.DEFAULT)
+        {
+            transform_optionsMenuButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
 
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
+            //SceneManager.LoadScene("MainMenu");
             mainMenu.SetActive(true);
             this.gameObject.SetActive(false);
+        }
+        if (button_mainMenuButton.GetState() == ButtonState.HOVERED)
+        {
+            transform_mainMenuButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+        else if (button_mainMenuButton.GetState() == ButtonState.DEFAULT)
+        {
+            transform_mainMenuButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
         }
 
         if (button_quitButton.GetState() == ButtonState.CLICKED)
@@ -93,6 +120,14 @@ public class PauseMenu : MonoBehaviour
             //Salir del juego
         }
 
+        if (button_quitButton.GetState() == ButtonState.HOVERED)
+        {
+            transform_quitButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+        else if (button_quitButton.GetState() == ButtonState.DEFAULT)
+        {
+            transform_quitButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
 
         //Esto lo tengo que mover al HUD por ahora y luego ya al script del gameplay o lo que sea
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))

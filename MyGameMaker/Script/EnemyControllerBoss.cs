@@ -14,7 +14,7 @@ public class EnemyControllerBoss : EnemyController
 
     //audio
     private Audio music;
-    private string combatMusic = "Assets/Audio/combatMusic.mp3";
+    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
    
     //stats
 

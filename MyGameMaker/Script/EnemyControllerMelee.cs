@@ -21,7 +21,7 @@ public class EnemyControllerMelee : EnemyController
     //audio
     bool isCombatMusicPlaying = false;
     private Audio music;
-    private string combatMusic = "Assets/Audio/SFX/Player/combatMusic.wav";
+    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
     // Enemy Stats
     private float health = 100.0f;

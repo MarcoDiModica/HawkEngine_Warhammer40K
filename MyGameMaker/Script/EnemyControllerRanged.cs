@@ -18,7 +18,7 @@ public class EnemyControllerRanged : EnemyController
     //audio
     bool isCombatMusicPlaying = false;
     private Audio music;
-    private string combatMusic = "Assets/Audio/combatMusic.mp3";
+    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
     public override void Awake()
     {

@@ -26,7 +26,7 @@ public class EnemyControllerStalker : EnemyController
     //audio
     bool isCombatMusicPlaying = false;
     private Audio music;
-    private string combatMusic = "Assets/Audio/combatMusic.mp3";
+    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
     // Pounce Attack
     public float pounceRange = 20.0f;

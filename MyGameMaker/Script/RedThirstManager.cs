@@ -116,4 +116,13 @@ public class RedThirstManager : MonoBehaviour
         }
     }
 
+    public int GetRedThirstPoints()
+    {
+        return redThirstPoints;
+    }
+
+    public bool IsInBlackRage()
+    {
+        return isInBlackRage;
+    }
 }

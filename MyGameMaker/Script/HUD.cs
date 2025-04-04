@@ -32,8 +32,24 @@ public class HUD : MonoBehaviour
 
     private UITransform transform_hpBar;
     private UITransform transform_hpTempBar;
+    private UITransform transform_redThirstBar;
 
- 
+    private RedThirstManager redThirstManager;
+    private GameObject redThirstBar;
+
+    private GameObject nodash;
+    private GameObject msup;
+    private GameObject defenseup;
+    private GameObject attackup;
+    private GameObject noreload;
+    private GameObject asup;
+    private GameObject magnet;
+
+    private GameObject bible1;
+    private GameObject bible2;
+    private GameObject bible3;
+    private GameObject bible4;
+    private GameObject bible5;
 
     float CalculateHPBarWidth()
     {
@@ -49,6 +65,14 @@ public class HUD : MonoBehaviour
         float maxHpTemp = playerData.GetMaxHealthTemp();
         float width = (hpTemp / maxHpTemp) * 0.055f;
         return width;
+    }
+
+    float CalculateRedThirstBarHeight()
+    {
+        float redThirst = redThirstManager.GetRedThirstPoints();
+        float maxRedThirst = 5;
+        float height = (redThirst / maxRedThirst) * 0.08f;
+        return height;
     }
 
     public override void Awake()
@@ -127,11 +151,105 @@ public class HUD : MonoBehaviour
         }
 
         railgunScript = playerShootingScript.railgun;
+
+        if (railgunScript == null)
+        {
+            Engineson.print("ERROR: Railgun not found");
+        }
+
+        redThirstManager = Player.GetComponent<RedThirstManager>();
+        if (redThirstManager == null)
+        {
+            Engineson.print("ERROR: RedThirstManager not found");
+        }
+
+        redThirstBar = GameObject.Find("red_thirst_bar");
+        if (redThirstBar == null)
+        {
+            Engineson.print("ERROR: RedThirstBar not found");
+        }
+        transform_redThirstBar = redThirstBar.GetComponent<UITransform>();
+        if (transform_redThirstBar == null)
+        {
+            Engineson.print("ERROR: RedThirstBar not found");
+        }
+        nodash = GameObject.Find("nodash");
+        msup = GameObject.Find("msup");
+        defenseup = GameObject.Find("defenseup");
+        attackup = GameObject.Find("attackup");
+        noreload = GameObject.Find("noreload");
+        asup = GameObject.Find("asup");
+        magnet = GameObject.Find("magnet");
+        if (nodash == null || msup == null || defenseup == null || attackup == null || noreload == null || asup == null || magnet == null)
+        {
+            Engineson.print("ERROR: Buffs not found");
+        }
+
+        bible1 = GameObject.Find("bible1");
+        bible2 = GameObject.Find("bible2");
+        bible3 = GameObject.Find("bible3");
+        bible4 = GameObject.Find("bible4");
+        bible5 = GameObject.Find("bible5");
     }
     public override void Update(float deltaTime)
     {
         transform_hpBar.SetScaleUI(new Vector3(CalculateHPBarWidth(), 0.032f, 1.0f));
         transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.018f, 1.0f));
+        transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
+
+        if (redThirstManager.biblePages >= 1)
+        {
+            bible1.SetActive(true);
+        }
+        else
+        {
+            bible1.SetActive(false);
+        }
+        if (redThirstManager.biblePages >= 2)
+        {
+            bible2.SetActive(true);
+        }
+        else
+        {
+            bible2.SetActive(false);
+        }
+        if (redThirstManager.biblePages >= 3)
+        {
+            bible3.SetActive(true);
+        }
+        else
+        {
+            bible3.SetActive(false);
+        }
+        if (redThirstManager.biblePages >= 4)
+        {
+            bible4.SetActive(true);
+        }
+        else
+        {
+            bible4.SetActive(false);
+        }
+        if (redThirstManager.biblePages >= 5)
+        {
+            bible5.SetActive(true);
+        }
+        else
+        {
+            bible5.SetActive(false);
+        }
+
+        if (redThirstManager.IsInBlackRage())
+        {
+            nodash.SetActive(true);
+            msup.SetActive(true);
+            defenseup.SetActive(true);
+        }
+        else
+        {
+            nodash.SetActive(false);
+            msup.SetActive(false);
+            defenseup.SetActive(false);
+        }
 
         switch (playerShootingScript.GetCurrentGun())
         {
@@ -208,7 +326,14 @@ public class HUD : MonoBehaviour
                 {
                     lockR.SetActive(true);
                 }
-
+                if (playerShootingScript.hasBoltgun)
+                {
+                    lockL.SetActive(false);
+                }
+                else
+                {
+                    lockL.SetActive(true);
+                }
                 break;
             case 2:
                 //Railgun equipped
@@ -240,7 +365,24 @@ public class HUD : MonoBehaviour
                         railgunAbility2b.SetActive(true);
                         break;
                 }
-            break;
+
+                if (playerShootingScript.hasBoltgun)
+                {
+                    lockR.SetActive(false);
+                }
+                else
+                {
+                    lockR.SetActive(true);
+                }
+                if (playerShootingScript.hasShotgun)
+                {
+                    lockL.SetActive(false);
+                }
+                else
+                {
+                    lockL.SetActive(true);
+                }
+                break;
         }
     }
 }

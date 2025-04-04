@@ -163,7 +163,11 @@ public class PlayerMovement : MonoBehaviour
         Vector2 leftStick = Input.GetLeftStick();
         float magnitude = leftStick.Length();
 
-        if (magnitude > 0.1f)
+        
+        if(playerData.GodMode == true)
+        {
+            moveSpeed = runSpeed*3;
+        } else if (magnitude > 0.1f)
         {
             if (magnitude > 0.7f)
             {
@@ -173,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 moveSpeed = walkSpeed;
             }
-         
+
         }
 
         Vector3 desiredVelocity = moveDirection * moveSpeed;

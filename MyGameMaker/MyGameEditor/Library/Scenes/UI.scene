@@ -1064,6 +1064,358 @@ GameObject3:
           texture_path: Library\Textures\UI\gunswitcher_frame.png
       Children: ~
 GameObject4:
+  name: Canvas_Location_SM
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: Location_SM
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\location_sacarium_mortis.png
+      Children: ~
+GameObject5:
+  name: Canvas_Location_BoT
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: Location_BoT
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\location_butcher_of_truth.png
+      Children: ~
+GameObject6:
+  name: Canvas_dialogue_box
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: dialogue_box
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue.png
+      Children: ~
+    - name: option_1
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_option1.png
+      Children: ~
+    - name: option_2
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_option2.png
+      Children: ~
+GameObject7:
   name: Canvas_PauseMenu
   tag: Untagged
   active: false
@@ -1108,10 +1460,6 @@ GameObject4:
       enabled: true
     ScriptComponents:
       Script0:
-        name: PauseMenu
-      Script1:
-        name: PauseMenu
-      Script2:
         name: PauseMenu
   Children:
     - name: PauseMenu
@@ -1350,7 +1698,7 @@ GameObject4:
           enabled: true
           state: 1
       Children: ~
-GameObject5:
+GameObject8:
   name: Canvas_Main_Menu
   tag: Untagged
   active: false
@@ -1395,16 +1743,6 @@ GameObject5:
       enabled: true
     ScriptComponents:
       Script0:
-        name: MenuButtons
-      Script1:
-        name: MenuButtons
-      Script2:
-        name: MenuButtons
-      Script3:
-        name: MenuButtons
-      Script4:
-        name: MenuButtons
-      Script5:
         name: MenuButtons
   Children:
     - name: bg_menu
@@ -1687,7 +2025,7 @@ GameObject5:
           enabled: true
           state: 1
       Children: ~
-GameObject6:
+GameObject9:
   name: Canvas_OptionsMenu
   tag: Untagged
   active: false
@@ -1733,16 +2071,6 @@ GameObject6:
     ScriptComponents:
       Script0:
         name: OptionMenu
-      Script1:
-        name: OptionMenu
-      Script2:
-        name: OptionMenu
-      Script3:
-        name: OptionMenu
-      Script4:
-        name: OptionMenu
-      Script5:
-        name: OptionMenu
   Children:
     - name: Canvas_OptionsMenu_
       tag: Untagged
@@ -1787,358 +2115,6 @@ GameObject6:
           name: UIImageComponent
           enabled: true
           texture_path: Library\Textures\UI\options_menu.png
-      Children: ~
-GameObject7:
-  name: Canvas_Location_SM
-  tag: Untagged
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    UITransformComponent:
-      name: UITransformComponent
-      enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 1
-        - 0
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-  Children:
-    - name: Location_SM
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\location_sacarium_mortis.png
-      Children: ~
-GameObject8:
-  name: Canvas_Location_BoT
-  tag: Untagged
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    UITransformComponent:
-      name: UITransformComponent
-      enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 1
-        - 0
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-  Children:
-    - name: Location_BoT
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\location_butcher_of_truth.png
-      Children: ~
-GameObject9:
-  name: Canvas_dialogue_box
-  tag: Untagged
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    UITransformComponent:
-      name: UITransformComponent
-      enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 1
-        - 0
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-  Children:
-    - name: dialogue_box
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\dialogue.png
-      Children: ~
-    - name: option_1
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\dialogue_option1.png
-      Children: ~
-    - name: option_2
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\dialogue_option2.png
       Children: ~
 GameObject10:
   name: Canvas_lose_screen

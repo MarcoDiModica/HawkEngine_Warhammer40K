@@ -63,7 +63,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
+	/*auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 	auto canvasPauseMenu = FindGOByName("Canvas_PauseMenu");
 	canvasPauseMenu->AddComponent<ScriptComponent>()->LoadScript("PauseMenu");
@@ -72,7 +72,7 @@ bool Root::Start()
 	auto canvasLoseScreen = FindGOByName("Canvas_lose_screen");
 	canvasLoseScreen->AddComponent<ScriptComponent>()->LoadScript("LoseScreen");
 	auto canvasWinScreen = FindGOByName("Canvas_win_screen");
-	canvasWinScreen->AddComponent<ScriptComponent>()->LoadScript("WinScreen");
+	canvasWinScreen->AddComponent<ScriptComponent>()->LoadScript("WinScreen");*/
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/FinalLevel1.Scene");
 	//auto player = CreateGameObject("Player");

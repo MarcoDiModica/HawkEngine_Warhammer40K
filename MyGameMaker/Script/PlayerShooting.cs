@@ -23,8 +23,11 @@ public class PlayerShooting : MonoBehaviour
     // Guns Scripts
     public Boltgun boltgun;
     public Shotgun shotgun;
-    private Railgun railgun;
+    public Railgun railgun;
 
+    public bool hasShotgun = false;
+    public bool hasRailgun = false;
+    public bool hasBoltgun = false;
 
     private Audio sound;
     private string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";
@@ -151,7 +154,7 @@ public class PlayerShooting : MonoBehaviour
                     shootTimer = 0.5f;
                     break;
                 case GunType.RAILGUN:
-                    shootTimer = shootCooldown;
+                    shootTimer = 0;
                     break;
             }
         }

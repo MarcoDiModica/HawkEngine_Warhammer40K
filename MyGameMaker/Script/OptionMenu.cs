@@ -23,6 +23,11 @@ public class OptionMenu : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
+
+        if (this.gameObject.GetComponent<UIButton>().GetState() == ButtonState.HOVERED)
+        {
+            this.gameObject.GetComponent<UITransform>().DOScaleUI(new Vector3(1.1f, 1.1f, 1.1f), 0.2f,Modes.EASE_OUT);
+        }
     }
 
 }

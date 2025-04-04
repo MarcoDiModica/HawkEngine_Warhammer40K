@@ -69,6 +69,15 @@ public class MenuButtons : MonoBehaviour
             gameObject.SetActive(false);
         }
 
+        if (button_newGameButton.GetState() == ButtonState.HOVERED)
+        {
+            transform_newGameButton.DOScaleUI(new Vector3(0.25f, 0.14f, 0.5f), 0.5f, Modes.EASE_OUT);
+        }
+        else if (button_newGameButton.GetState() == ButtonState.DEFAULT)
+        {
+            transform_newGameButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.5f, Modes.EASE_OUT);
+        }
+
         if (button_continueButton.GetState() == ButtonState.CLICKED)
         {
             //Cargar el juego

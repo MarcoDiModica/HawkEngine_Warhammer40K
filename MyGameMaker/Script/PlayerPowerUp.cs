@@ -171,4 +171,17 @@ public class PlayerPowerUp : MonoBehaviour
 
         }
     }
+
+    public bool GetHasMedicaeStimm()
+    {
+        return hasMedicaeStimm;
+    }
+    public bool GetHasAmmunitionBlessing()
+    {
+        return hasAmmunitionBlessing;
+    }
+    public bool GetHasMagnet()
+    {
+        return hasMagnet;
+    }
 }

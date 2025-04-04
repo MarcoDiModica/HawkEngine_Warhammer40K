@@ -51,6 +51,8 @@ public class HUD : MonoBehaviour
     private GameObject bible4;
     private GameObject bible5;
 
+    private PlayerPowerUp playerPowerUp;
+
     float CalculateHPBarWidth()
     {
         float hp = playerData.GetHealth();
@@ -190,6 +192,17 @@ public class HUD : MonoBehaviour
         bible3 = GameObject.Find("bible3");
         bible4 = GameObject.Find("bible4");
         bible5 = GameObject.Find("bible5");
+        if (bible1 == null || bible2 == null || bible3 == null || bible4 == null || bible5 == null)
+        {
+            Engineson.print("ERROR: Bibles not found");
+        }
+
+        playerPowerUp = Player.GetComponent<PlayerPowerUp>();
+
+        if (playerPowerUp == null)
+        {
+            Engineson.print("ERROR: PlayerPowerUp not found");
+        }
     }
     public override void Update(float deltaTime)
     {
@@ -384,5 +397,38 @@ public class HUD : MonoBehaviour
                 }
                 break;
         }
+
+
+
+        if(playerPowerUp.GetHasMedicaeStimm())
+        {
+            msup.SetActive(true);
+        }
+        else if (!redThirstManager.IsInBlackRage())
+        {
+            msup.SetActive(false);
+
+        }
+
+        if (playerPowerUp.GetHasAmmunitionBlessing())
+        {
+            noreload.SetActive(true);
+        }
+        else
+        {
+            noreload.SetActive(false);
+        }
+
+        if(playerPowerUp.GetHasMagnet())
+        {
+            magnet.SetActive(true);
+        }
+        else
+        {
+            magnet.SetActive(false);
+        }
+
     }
+
+    
 }

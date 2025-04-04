@@ -42,6 +42,7 @@ public class PlayerCamera : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        //gameObject.GetComponent<Transform>().SetPosition(playerRef.GetComponent<Transform>().GetPosition().X, playerRef.GetComponent<Transform>().GetPosition().Y +20, playerRef.GetComponent<Transform>().GetPosition().Z-10);
         Vector2 leftStickInput = Input.GetLeftStick();
         Vector2 rightStickInput = Input.GetRightStick();
 

@@ -49,7 +49,7 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
 
     return true;
 }
@@ -92,13 +92,13 @@ bool Root::Start()
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-	player->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	player->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 
 	auto itemtest = CreateCube("item");
 	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));

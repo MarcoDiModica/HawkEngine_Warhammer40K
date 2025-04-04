@@ -1,12 +1,14 @@
 ﻿using HawkEngine;
-using System;
 using System.Numerics;
-using System.Linq;
+using System;
 
 public class InteractionSystem : MonoBehaviour
 {
     public float interactionRadius = 2.0f;
     public float areaInteractionRadius = 3.0f;
+    public float scanCooldown = 0.1f;
+
+    private float scanTimer = 0f;
 
     private PlayerInput playerInput;
     private UIImage interactionImage;
@@ -15,8 +17,13 @@ public class InteractionSystem : MonoBehaviour
     private AreaTrigger currentAreaTrigger = null;
     private bool interactionImageIsEnabled = false;
 
+    private Item cachedInteractable = null;
+    private AreaTrigger cachedAreaTrigger = null;
+
+
     public override void Awake()
     {
+        base.Awake();
     }
     public override void Start()
     {
@@ -42,27 +49,56 @@ public class InteractionSystem : MonoBehaviour
     public override void Update(float deltaTime)
     {
         if (playerInput == null) return;
-        CheckForInteractions();
+
+        scanTimer += deltaTime;
+        if (scanTimer >= scanCooldown)
+        {
+            ScanForNearbyObjects();
+            scanTimer = 0f;
+        }
+
+        if (cachedInteractable != null)
+            HandleInteraction(cachedInteractable);
+
+        if (cachedAreaTrigger != null && playerInput.IsInteracting())
+            cachedAreaTrigger.Interact();
     }
 
-    private void CheckForInteractions()
+    private void ScanForNearbyObjects()
     {
         var transform = gameObject.GetComponent<Transform>();
+        var allNearby = Physics.OverlapSphere(transform.position, Math.Max(interactionRadius, areaInteractionRadius), "All");
 
-        var interactable = Physics.OverlapSphere(transform.position, interactionRadius, "Interactable")
-                                  .Select(obj => obj.GetComponent<Item>())
-                                  .FirstOrDefault(i => i != null);
+        cachedInteractable = null;
+        cachedAreaTrigger = null;
 
-        if (interactable != null)
+        foreach (var obj in allNearby)
         {
-            HandleInteraction(interactable);
-        }
-        else
-        {
-            ShowInteractionMessage(false);
+            if (cachedInteractable == null)
+            {
+                var item = obj.GetComponent<Item>();
+                if (item != null && Vector3.Distance(transform.position, obj.GetComponent<Transform>().position) <= interactionRadius)
+                {
+                    cachedInteractable = item;
+                    continue;
+                }
+            }
+
+            if (cachedAreaTrigger == null)
+            {
+                var area = obj.GetComponent<AreaTrigger>();
+                if (area != null && Vector3.Distance(transform.position, obj.GetComponent<Transform>().position) <= areaInteractionRadius)
+                {
+                    cachedAreaTrigger = area;
+                }
+            }
+
+            if (cachedInteractable != null && cachedAreaTrigger != null)
+                break;
         }
 
-        HandleAreaTriggers(transform);
+        HandleAreaTextVisibility();
+        ShowInteractionMessage(cachedInteractable != null && !isInteracting);
     }
 
     private void HandleInteraction(Item interactable)
@@ -84,32 +120,18 @@ public class InteractionSystem : MonoBehaviour
                 interactable.Interact();
             }
         }
-        else if (!isInteracting)
-        {
-            ShowInteractionMessage(true);
-        }
     }
 
-    private void HandleAreaTriggers(Transform transform)
+    private void HandleAreaTextVisibility()
     {
-        var areaObjects = Physics.OverlapSphere(transform.position, areaInteractionRadius, "AreaTrigger");
-
-        if (areaObjects.Length > 0)
+        if (cachedAreaTrigger != currentAreaTrigger)
         {
-            var newAreaTrigger = areaObjects[0].GetComponent<AreaTrigger>();
-            if (currentAreaTrigger != newAreaTrigger)
-            {
-                currentAreaTrigger?.SetTextVisibility(false);
-                newAreaTrigger?.SetTextVisibility(true);
-                currentAreaTrigger = newAreaTrigger;
-            }
-
-            if (playerInput.IsInteracting() && currentAreaTrigger != null)
-            {
-                currentAreaTrigger.Interact();
-            }
+            currentAreaTrigger?.SetTextVisibility(false);
+            cachedAreaTrigger?.SetTextVisibility(true);
+            currentAreaTrigger = cachedAreaTrigger;
         }
-        else if (currentAreaTrigger != null)
+
+        if (cachedAreaTrigger == null && currentAreaTrigger != null)
         {
             currentAreaTrigger.SetTextVisibility(false);
             currentAreaTrigger = null;

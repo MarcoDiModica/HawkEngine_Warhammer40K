@@ -552,35 +552,45 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
 
 GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, float maxDistance, btVector3& hitPoint, btVector3& normal, float& distance)
 {
-	rayFrom = origin;
-	btVector3 originRay = origin;
+    rayFrom = origin;
+    btVector3 originRay = origin;
     btVector3 directionRay = origin + direction.normalized() * maxDistance;
 
-	btCollisionWorld::ClosestRayResultCallback rayCallback(originRay, directionRay);
+    btCollisionWorld::ClosestRayResultCallback rayCallback(originRay, directionRay);
+    rayCallback.m_collisionFilterMask = btBroadphaseProxy::DefaultFilter | btBroadphaseProxy::StaticFilter | btBroadphaseProxy::KinematicFilter;
     dynamicsWorld->rayTest(originRay, directionRay, rayCallback);
 
-	
     if (rayCallback.hasHit()) {
-        rayTo = origin + rayCallback.m_closestHitFraction * direction.normalized() * maxDistance;
+        
         const btCollisionObject* hitObject = rayCallback.m_collisionObject;
-        hitPoint = rayCallback.m_hitPointWorld;
-        normal = rayCallback.m_hitNormalWorld;
-        distance = rayCallback.m_closestHitFraction * maxDistance;
-        for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
-            if (rigidBody == hitObject) {
-                return gameObject;
+        if (hitObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE) {
+            rayTo = origin + direction.normalized() * maxDistance;
+            return nullptr; // Ignore triggers
+        }
+        else
+        {
+            rayTo = origin + rayCallback.m_closestHitFraction * direction.normalized() * maxDistance;
+            hitPoint = rayCallback.m_hitPointWorld;
+            normal = rayCallback.m_hitNormalWorld;
+            distance = rayCallback.m_closestHitFraction * maxDistance;
+
+            for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+                if (rigidBody == hitObject) {
+                    return gameObject;
+                }
             }
         }
-
-		
+        
     }
-	else {
-		rayTo = origin + direction.normalized() * maxDistance;
-		return nullptr;
-	}
+    else {
+        rayTo = origin + direction.normalized() * maxDistance;
+        return nullptr;
+    }
 
-	return nullptr;
+    return nullptr;
 }
+
+
 
 
 

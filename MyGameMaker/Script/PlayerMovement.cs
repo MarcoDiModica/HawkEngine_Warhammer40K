@@ -4,7 +4,9 @@ using System.Numerics;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 41.0f;
+    public float moveSpeed = 10.0f;
+    public float walkSpeed = 5; 
+    public float runSpeed = 10.0f; 
     public float rotationSpeed = 30.0f;
     public float acceleration = 40.0f;
     public float deceleration = 15.0f;
@@ -34,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         if (rb == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a Rigidbody component!");
+           // Engineson.print("ERROR: PlayerMovement requires a Rigidbody component!");
             return;
         }
 
@@ -43,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         collider = gameObject.GetComponent<Collider>();
         if (collider == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a Collider component!");
+           // Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
         }
 
@@ -58,28 +60,28 @@ public class PlayerMovement : MonoBehaviour
         playerInput = gameObject.GetComponent<PlayerInput>();
         if (playerInput == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a PlayerInput component!");
+           // Engineson.print("ERROR: PlayerMovement requires a PlayerInput component!");
             return;
         }
 
         playerCamera = GameObject.Find("MainCamera");
         if (playerCamera == null)
         {
-            Engineson.print("ERROR: playerCamera is NULL!");
+            //Engineson.print("ERROR: playerCamera is NULL!");
             return;
         }
 
         cameraTransform = playerCamera.GetComponent<Transform>();
         if (cameraTransform == null) 
         {
-            Engineson.print("ERROR: cameraTransform is NULL!");
+           // Engineson.print("ERROR: cameraTransform is NULL!");
             return;
         }
 
         playerController = gameObject.GetComponent<PlayerController>();
         if (playerController == null)
         {
-            Engineson.print("ERROR: playerController is NULL!");
+           // Engineson.print("ERROR: playerController is NULL!");
             return;
         }
 
@@ -88,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        moveSpeed = playerData.movSpeed;
+        //moveSpeed = playerData.movSpeed;
         //Engineson.print("Player Movement Update: " + moveSpeed);
 
         if (playerDash == null || !playerDash.IsDashing)
@@ -110,39 +112,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other != null)
         {
-            Engineson.print("OnCollisionEnter con: " + other.name);
+           // Engineson.print("OnCollisionEnter con: " + other.name);
             Engineson.print(other.GetComponent<Collider>().name);
         }
         else
         {
-            Engineson.print("Error: GameObject other es nulo");
+           // Engineson.print("Error: GameObject other es nulo");
 
         }
-    }
-
-    override public void OnCollisionStay(GameObject other)
-    {
-        //Engineson.print("Player Collision Stay: ");
-    }
-
-    override public void OnCollisionExit(GameObject other)
-    {
-        Engineson.print("Player Collision Exit: ");
-    }
-
-    override public void OnTriggerEnter(GameObject other)
-    {
-        Engineson.print("Player Trigger Enter: ");
-    }
-
-    override public void OnTriggerStay(GameObject other)
-    {
-        //Engineson.print("Player Trigger Stay: ");
-    }
-
-    override public void OnTriggerExit(GameObject other)
-    {
-        Engineson.print("Player Trigger Exit: ");
     }
 
     public void SetMoveDirection(Vector3 direction)
@@ -158,22 +135,34 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateMovement(Vector3 moveDirection, float deltaTime)
     {
         Vector3 currentVelocity = rb.GetVelocity();
-        Vector3 desiredVelocity = moveDirection * moveSpeed;
+        Vector2 leftStick = Input.GetLeftStick();
+        float magnitude = leftStick.Length();
+
         
+        if(playerData.GodMode == true)
+        {
+            moveSpeed = runSpeed*3;
+        } else if (magnitude > 0.1f)
+        {
+            if (magnitude > 0.7f)
+            {
+                moveSpeed = runSpeed;
+            }
+            else
+            {
+                moveSpeed = walkSpeed;
+            }
+
+        }
+
+        Vector3 desiredVelocity = moveDirection * moveSpeed;
         if (playerInput?.IsShooting() == true)
         {
-            desiredVelocity /= 1.3f;
+            desiredVelocity /= 2f;
         }
-
-        if (desiredVelocity.LengthSquared() > 0)
-        {
-            desiredVelocity = Vector3.Normalize(desiredVelocity) * moveSpeed;
-        }
-
         Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
         rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
     }
-
     private void UpdateRotation(Vector3 moveDirection, float deltaTime)
     {
 

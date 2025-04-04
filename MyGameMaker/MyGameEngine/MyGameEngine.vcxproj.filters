@@ -46,5 +46,6 @@
     <ClInclude Include="AssimpGLMHelpers.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="ImGuiCurveEditor.h" />
   </ItemGroup>
 </Project>

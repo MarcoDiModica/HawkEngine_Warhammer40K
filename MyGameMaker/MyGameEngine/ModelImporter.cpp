@@ -232,46 +232,68 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 	return meshes;
 }
 
-std::vector<std::shared_ptr<Material>>createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath) {
-	std::vector<std::shared_ptr<Material>> materials;
-	materials.resize(scene.mNumMaterials);
+std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath) {
+    std::vector<std::shared_ptr<Material>> materials;
+    materials.resize(scene.mNumMaterials);
 
-	for (unsigned int i = 0; i < scene.mNumMaterials; ++i) {
-		const auto* fbx_material = scene.mMaterials[i];
-		materials[i] = std::make_shared<Material>();
-		materials[i]->imagePtr = std::make_shared<Image>();
+    for (unsigned int i = 0; i < scene.mNumMaterials; ++i) {
+        const auto* fbx_material = scene.mMaterials[i];
+        materials[i] = std::make_shared<Material>();
+        materials[i]->imagePtr = std::make_shared<Image>();
 
-		if (fbx_material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-			aiString texturePath;
-			fbx_material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
-			const string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
-			materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
-			materials[i]->imagePtr->LoadTexture((basePath / textureFileName).string());
+        if (fbx_material->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+            aiString texturePath;
+            fbx_material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
+            const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
+            materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
+            materials[i]->imagePtr->LoadTexture((basePath / textureFileName).string());
+        } else {
+            materials[i]->imagePtr->image_path = "";
+        }
 
-			auto uWrapMode = aiTextureMapMode_Wrap;
-			auto vWrapMode = aiTextureMapMode_Wrap;
-			fbx_material->Get(AI_MATKEY_MAPPINGMODE_U_DIFFUSE(0), uWrapMode);
-			fbx_material->Get(AI_MATKEY_MAPPINGMODE_V_DIFFUSE(0), vWrapMode);
-			assert(uWrapMode == aiTextureMapMode_Wrap);
-			assert(vWrapMode == aiTextureMapMode_Wrap);
+        if (fbx_material->GetTextureCount(aiTextureType_NORMALS) > 0) {
+            aiString texturePath;
+            fbx_material->GetTexture(aiTextureType_NORMALS, 0, &texturePath);
+            const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
+            materials[i]->normalMapPtr = std::make_shared<Image>();
+            materials[i]->normalMapPtr->image_path = (basePath / textureFileName).string();
+            materials[i]->normalMapPtr->LoadTexture((basePath / textureFileName).string());
+        }
 
-			unsigned int flags = 0;
-			fbx_material->Get(AI_MATKEY_TEXFLAGS_DIFFUSE(0), flags);
-			assert(flags == 0);
-		}
-		else {
-			materials[i]->imagePtr->image_path = "";
-		}
+        if (fbx_material->GetTextureCount(aiTextureType_METALNESS) > 0) {
+            aiString texturePath;
+            fbx_material->GetTexture(aiTextureType_METALNESS, 0, &texturePath);
+            const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
+            materials[i]->metallicMapPtr = std::make_shared<Image>();
+            materials[i]->metallicMapPtr->image_path = (basePath / textureFileName).string();
+            materials[i]->metallicMapPtr->LoadTexture((basePath / textureFileName).string());
+        }
 
-		aiColor4D color;
-		fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
-		materials[i]->color = vec4(color.r, color.g, color.b, color.a);
+        if (fbx_material->GetTextureCount(aiTextureType_SHININESS) > 0) {
+            aiString texturePath;
+            fbx_material->GetTexture(aiTextureType_SHININESS, 0, &texturePath);
+            const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
+            materials[i]->roughnessMapPtr = std::make_shared<Image>();
+            materials[i]->roughnessMapPtr->image_path = (basePath / textureFileName).string();
+            materials[i]->roughnessMapPtr->LoadTexture((basePath / textureFileName).string());
+        }
 
-	}
+        if (fbx_material->GetTextureCount(aiTextureType_AMBIENT_OCCLUSION) > 0) {
+            aiString texturePath;
+            fbx_material->GetTexture(aiTextureType_AMBIENT_OCCLUSION, 0, &texturePath);
+            const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
+            materials[i]->aoMapPtr = std::make_shared<Image>();
+            materials[i]->aoMapPtr->image_path = (basePath / textureFileName).string();
+            materials[i]->aoMapPtr->LoadTexture((basePath / textureFileName).string());
+        }
 
-	return materials;
+        aiColor4D color;
+        fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+        materials[i]->color = glm::vec4(color.r, color.g, color.b, color.a);
+    }
+
+    return materials;
 }
-
 void ModelImporter::loadFromFile(const std::string& path) {
 	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_Triangulate | 
 		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );

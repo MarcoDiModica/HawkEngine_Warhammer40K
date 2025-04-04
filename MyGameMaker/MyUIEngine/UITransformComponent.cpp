@@ -12,6 +12,10 @@ UITransformComponent::UITransformComponent(GameObject* owner) : Component(owner)
 	scale = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
+void UITransformComponent::Awake()
+{
+}
+
 void UITransformComponent::Start()
 {
 

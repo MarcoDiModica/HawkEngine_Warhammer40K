@@ -52,6 +52,11 @@ CameraComponent& CameraComponent::operator=(CameraComponent&& other) noexcept
     return *this;
 }
 
+void CameraComponent::Awake()
+{
+	
+}
+
 void CameraComponent::Start()
 {
 	UpdateCameraView(1280, 720, 1280, 720);
@@ -121,7 +126,9 @@ void CameraComponent::Update(float deltaTime)
 
         if (frustrumRepresentation)
 		{
-            DrawFrustrum();
+            #ifndef _BUILD
+                DrawFrustrum();
+            #endif // !_BUILD            
 		}
 
         std::function<void(std::shared_ptr<GameObject>)> checkGameObject = [&](std::shared_ptr<GameObject> gameObject) {

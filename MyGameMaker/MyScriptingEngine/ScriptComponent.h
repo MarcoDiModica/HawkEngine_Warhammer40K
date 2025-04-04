@@ -12,6 +12,7 @@ public:
     ScriptComponent(GameObject* owner);
     ~ScriptComponent() override;
 
+    void Awake() override;
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;
@@ -27,7 +28,7 @@ public:
     MonoObject* GetSharpObject() const { return monoScript; }
     std::string GetTypeName() const;
 
-    void InvokeMonoMethod(const std::string& methodName, GameObject* other);
+	void InvokeMonoMethod(const std::string& methodName, GameObject& other);
 
     MonoObject* monoScript = nullptr;
 

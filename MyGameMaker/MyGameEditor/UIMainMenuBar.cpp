@@ -89,8 +89,10 @@ bool UIMainMenuBar::Draw()
 					pressing_play = false;
 					Application->play = true;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+					SceneManagement->Awake();
 					SceneManagement->Start();
-					Application->scene_serializer->Serialize(std::string("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene"), true);
+					Application->scene_serializer->Serialize(std::string("EnigneAssets/" + Application->root->GetActiveScene()->GetName() + ".scene"), true);
+					Application->physicsModule->linkPhysicsToScene = true;
 				}
 			}
 			
@@ -102,15 +104,15 @@ bool UIMainMenuBar::Draw()
 					Application->play = false;
 					isPaused = false;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
+					Application->physicsModule->linkPhysicsToScene = false;
 					Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
-
-
 				}
 				if (ImGui::ImageButton("Pause Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(pause_image.id())), ImVec2(11.0f, 11.0f)))
 				{
 					Application->play = true;
 					isPaused = false;
 					SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+					Application->physicsModule->linkPhysicsToScene = true;
 				}
 			}
 		}
@@ -121,19 +123,22 @@ bool UIMainMenuBar::Draw()
 				Application->play = false;
 				isPaused = false;
 				SceneManagement->currentScene->sceneState = Scene::SceneState::STOP;
-				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
-
-				
+				Application->physicsModule->linkPhysicsToScene = false;
+				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");				
 			}
 			if (ImGui::ImageButton("Pause Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(pause_image.id())), ImVec2(11.0f, 11.0f)))
 			{
 				Application->play = false;
 				isPaused = true;
 				SceneManagement->currentScene->sceneState = Scene::SceneState::PAUSE;
+				Application->physicsModule->linkPhysicsToScene = false;
 			}
 		}
 
-		ImGui::Text("FPS: %.1f", fps);
+		fps = ImGui::GetIO().Framerate;
+		ImGui::Text("GUI FPS: %.1f", fps);
+		float gameFPS = Application->GetFps();
+		ImGui::Text("Game FPS: %.1f", gameFPS);
 
 		// Finaliza la barra de men� principal
 		ImGui::EndMainMenuBar();

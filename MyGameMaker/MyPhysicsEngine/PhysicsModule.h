@@ -6,21 +6,10 @@
 #include <glm/glm.hpp>
 #include "p2List.h"
 #include "DebugDrawerPhysics.h"
+#include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
 
 
 class GameObject;
-struct VehicleInfo;
-struct PhysVehicle3D;
-
-struct FinalVehicleInfo {
-
-    FinalVehicleInfo(GameObject* chassis, std::vector<GameObject*> wheels, PhysVehicle3D* bulletVehicle) :
-        chassis(chassis), wheels(wheels), bulletVehicle(bulletVehicle) {}
-    GameObject* chassis;
-    std::vector<GameObject*> wheels;
-    PhysVehicle3D* bulletVehicle;
-};
-
 
 class PhysicsModule {
 public:
@@ -30,8 +19,6 @@ public:
     bool Awake();
 
     void SetBounciness(GameObject& go, float restitution);
-
-    void EnableContinuousCollision(GameObject& go);
 
     bool Start();
     bool PreUpdate();
@@ -51,6 +38,10 @@ public:
     void SyncTransforms();
     void SyncCollidersToGameObjects();
 
+    std::vector<GameObject*> OverlapSphere(const glm::vec3& position, float radius, const std::string& tag);
+
+    bool IsForRelease() const { return isForRelease; }
+
     void AddConstraintP2P(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB);
     // Añade una restricción de bisagra (Hinge)
     void AddConstraintHinge(GameObject& goA, GameObject& goB, const glm::vec3& anchorA, const glm::vec3& anchorB,
@@ -60,11 +51,15 @@ public:
 
     void SetColliderFriction(GameObject& go, float friction);
 
-    p2List<FinalVehicleInfo*> vehicles;
+    // Raycast
+	GameObject* Raycast(btVector3& origin, btVector3& direction, float maxDistance, btVector3& hitPoint, btVector3& normal, float& distance);
+
     btDiscreteDynamicsWorld* dynamicsWorld;
     std::unordered_map<GameObject*, btRigidBody*> gameObjectRigidBodyMap;
     bool linkPhysicsToScene = false;
+
 private:
+    const bool isForRelease = false;
     btBroadphaseInterface* broadphase;
     btDefaultCollisionConfiguration* collisionConfiguration;
     btCollisionDispatcher* dispatcher;
@@ -73,6 +68,11 @@ private:
     p2List<btCollisionShape*> shapes;
     btCollisionShape* cubeShape;
     btDefaultVehicleRaycaster* vehicle_raycaster;
+
+    // Raycast
+	btVector3 rayFrom;
+	btVector3 rayTo;
+
 
     // Relación entre GameObject y su cuerpo rígido
     DebugDrawerPhysics* debugDrawer;

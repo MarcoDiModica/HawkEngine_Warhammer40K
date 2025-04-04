@@ -10,6 +10,7 @@
 #include "Log.h"
 #include "UISettings.h"
 #include "UIMainMenuBar.h"
+#include "External/Optick/include/optick.h"
 
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
@@ -27,11 +28,17 @@ App::App() {
 
 	hardwareInfo = new HardwareInfo(this);
 
+#ifndef _BUILD
 	gui = new MyGUI(this);
+#endif // ENABLE_EDITOR	
 
 	root = new Root(this);
 
+#ifndef _BUILD
 	camera = new EditorCamera(this);
+#endif // ENABLE_EDITOR	
+
+	
 	physicsModule = new PhysicsModule();
 
 	//gizmos = new Gizmos(this);
@@ -41,9 +48,17 @@ App::App() {
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(hardwareInfo, true);
+
+#ifndef _BUILD
 	AddModule(gui, true);
+#endif // ENABLE_EDITOR	
+	
 	AddModule(root, true);
+
+#ifndef _BUILD
 	AddModule(camera, true);
+#endif // ENABLE_EDITOR	
+	
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
 
@@ -53,9 +68,10 @@ App::App() {
 bool App::Awake() { 
 
 	targetFrameDuration = (std::chrono::duration<double>)1 / frameRate;
-
+#ifndef _BUILD
 	camera->GetTransform().GetPosition() = vec3(0, 1, 4);
 	camera->GetTransform().Rotate(glm::radians(180.0), vec3(0, 1, 0));
+#endif
 
 	for (const auto& module : modules) {
 		if (module->Awake()) continue;
@@ -86,6 +102,10 @@ bool App::Start() {
 
 bool App::Update()
 {
+#ifdef PROFILE
+	OPTICK_FRAME("Main Loop")
+#endif // PROFILE
+
 	bool ret = true;
 	PrepareUpdate();
 
@@ -122,7 +142,11 @@ void App::PrepareUpdate()
 
 bool App::PreUpdate()
 {
-	//OPTICK_CATEGORY("PreUpdate", Optick::Category::GameLogic);
+
+#ifdef PROFILE
+	OPTICK_CATEGORY("PreUpdate", Optick::Category::GameLogic);
+#endif // PROFILE
+
 	bool ret = true;
 
 	for (const auto& module : modules)
@@ -139,7 +163,10 @@ bool App::PreUpdate()
 
 bool App::DoUpdate()
 {
-	//OPTICK_CATEGORY("DoUpdate", Optick::Category::GameLogic);
+
+#ifdef PROFILE
+	OPTICK_CATEGORY("DoUpdate", Optick::Category::GameLogic);
+#endif // PROFILE
 
 	fixedCounter += dt;
 	int numFixedUpdates = 0;
@@ -182,7 +209,9 @@ bool App::DoUpdate()
 
 bool App::PostUpdate()
 {
-	//OPTICK_CATEGORY("PostUpdate", Optick::Category::GameLogic);
+#ifdef PROFILE
+	OPTICK_CATEGORY("PostUpdate", Optick::Category::GameLogic);
+#endif // PROFILE
 
 	for (const auto& module : modules)
 	{
@@ -233,9 +262,9 @@ void App::FinishUpdate()
 		dtCount = 0;
 	}
 
+#ifndef _BUILD
 	Application->gui->UIsettingsPanel->AddFpsMark(fps);
-	Application->gui->UIMainMenuBarPanel->fps = fps;
-
+#endif // !_BUILD	
 }
 
 bool App::CleanUP() { return true; }

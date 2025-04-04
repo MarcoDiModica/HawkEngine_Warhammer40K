@@ -70,6 +70,7 @@ namespace HawkEngine
             Engineson.print("Camera created");
         }
 
+        public override void Awake() { }
         public override void Start() { }
         public override void Update(float deltaTime)
         {

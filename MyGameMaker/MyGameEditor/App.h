@@ -14,6 +14,7 @@
 #include "../MyPhysicsEngine/PhysicsModule.h"
 
 #define FIXED_INTERVAL 0.02
+#undef PROFILE
 
 class  Module;
 class Window;
@@ -73,6 +74,7 @@ public:
 	Mesh ElMesh;
 
 	bool play = false;
+	bool hasChangedScene = false;
 
 private:
 

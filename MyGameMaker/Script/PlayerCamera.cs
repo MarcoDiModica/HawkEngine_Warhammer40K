@@ -15,6 +15,11 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 currentOffset = new Vector3(0, 20, -10.5f);
     private Vector3 targetOffset = new Vector3(0, 20, -10.5f);
 
+    public override void Awake()
+    {
+
+    }
+
     public override void Start()
     {
         playerRef = GameObject.Find("Player");
@@ -36,7 +41,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public override void Update(float deltaTime)
-    {
+    {    
         Vector2 leftStickInput = Input.GetLeftStick();
         Vector2 rightStickInput = Input.GetRightStick();
 
@@ -64,6 +69,21 @@ public class PlayerCamera : MonoBehaviour
         currentOffset = LerpVector3(currentOffset, targetOffset, offsetSmoothness * deltaTime);
 
         cameraRef.SetOffset(currentOffset);
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+           SceneManager.LoadScene("Level2");
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            SceneManager.LoadScene("Level1");
+        }
     }
 
     private float GetMagnitude(Vector2 vector)

@@ -57,6 +57,8 @@
 #include "./MyScriptingEngine/MonoManager.h"
 #include "./MyPhysicsEngine/PhysicsModule.h"
 #include "../MyUIEngine/UICanvasComponent.h"
+#include "UIGameView.h"
+#include "External/Optick/include/optick.h"
 
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
@@ -240,6 +242,11 @@ static void RenderObjectAndChildren(std::shared_ptr<GameObject> object) {
 }
 
 static void RenderGameView() {
+
+#ifdef PROFILE
+	OPTICK_EVENT();
+#endif // PROFILE
+
 	if (Application->root->mainCamera == nullptr) {
 		return;
 	}
@@ -259,7 +266,7 @@ static void RenderGameView() {
 	glGetIntegerv(GL_VIEWPORT, lastVP);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
-	glViewport(0, 0, Application->window->width(), Application->window->height());
+	glViewport(0, 0, 1280, 720);
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -410,11 +417,11 @@ static void ObjectToEditorCamera()
 	}
 }
 
-static void MousePickingCheck(std::vector<GameObject*> objects)
+static void MousePickingCheck(std::vector<std::shared_ptr<GameObject>> objects)
 {	
 	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
 	glm::vec3 rayDirection = Application->input->getMousePickRay();
-	GameObject* selectedObject = nullptr;
+	std::shared_ptr<GameObject> selectedObject = nullptr;
 	bool selecting = false;
 	float distance = 0.0f;
 	float closestDistance = 0.0f;
@@ -427,13 +434,13 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 		}
 
 		selecting = true;
-		for (int i = 0; i < objects.size(); i++)
+		for (auto & object : objects)
 		{
-			if (objects[i]->HasComponent<MeshRenderer>() && objects[i]->IsActive())
+			if (object->HasComponent<MeshRenderer>() && object->IsActive())
 			{
-				BoundingBox bbox = objects[i]->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+				BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
 
-				bbox = objects[i]->GetTransform()->GetMatrix() * bbox;
+				bbox = object->GetTransform()->GetMatrix() * bbox;
 				glm::vec3 collisionPoint;
 				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
 				{
@@ -441,7 +448,7 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 					if (distance < closestDistance || closestDistance == 0.0f)
 					{
 						closestDistance = distance;
-						selectedObject = objects[i];
+						selectedObject = object;
 					}
 				}
 			}
@@ -451,8 +458,8 @@ static void MousePickingCheck(std::vector<GameObject*> objects)
 	if (selectedObject != nullptr && selecting == true)
 	{
 		Application->input->ClearSelection();
-		Application->input->SetDraggedGameObject(selectedObject);
-		Application->input->AddToSelection(selectedObject);
+		Application->input->SetDraggedGameObject(selectedObject.get());
+		Application->input->AddToSelection(selectedObject.get());
 	}
 }
 
@@ -477,6 +484,7 @@ static void RenderOutline(GameObject* object) {
 }
 
 static void RenderEditor() {
+
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -484,21 +492,24 @@ static void RenderEditor() {
 
 	configureCamera();
 	drawFloorGrid(256, 4);
-	std::vector<GameObject*> objects;
-	for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
-		GameObject* object = Application->root->GetActiveScene()->children()[i].get();
+	std::vector<std::shared_ptr<GameObject>> objects;
+	for (auto& object : Application->root->GetActiveScene()->children()) {
 		
 		objects.push_back(object);
 
-		for (const auto& j : object->GetChildren()) {
-			GameObject* child = j.get();
+		for (const auto& child : object->GetChildren()) {
 			objects.push_back(child);
-			//RenderOutline(child);
 		}
 
 		if (object->IsActive()) 
 		{
 			object->Update(static_cast<float>(Application->GetDt()));
+
+			if (Application->hasChangedScene)
+			{
+				Application->hasChangedScene = false;
+				break;
+			}
 
 			if (object->HasComponent<LightComponent>()) {
 				auto& lights = Application->root->GetActiveScene()->_lights;
@@ -511,17 +522,31 @@ static void RenderEditor() {
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
+
+	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+		Application->physicsModule->linkPhysicsToScene = true;
+	}
+
 	MousePickingCheck(objects);
 }
 
 static void EditorRenderer(MyGUI* gui) {
 	if (Application->window->IsOpen()) {
+
+#ifdef PROFILE
+		OPTICK_CATEGORY("RenderEditor", Optick::Category::GameLogic);
+#endif // PROFILE
+
 		const auto t0 = hrclock::now();
 
 		RenderEditor();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+#ifdef PROFILE
+		OPTICK_CATEGORY("GUIRender", Optick::Category::GameLogic);
+#endif // PROFILE
 
 		gui->Render();
 
@@ -547,6 +572,125 @@ static void PrintCounters() {
 	//std::cout << "Counter using chrono: " << std::fixed << std::setprecision(2) << counterUsingChrono << " seconds" << std::endl;
 
 	std::cout << "Fps;  %d" << Application->GetFps() << std::endl;
+}
+
+static void GameRelease() {
+
+#ifdef PROFILE
+	OPTICK_CATEGORY("GameRelease", Optick::Category::GameLogic);
+#endif // PROFILE
+
+	if (Application->root->mainCamera == nullptr) {
+		return;
+	}
+
+	CameraComponent* gameCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
+	if (!gameCamera) {
+		return;
+	}
+
+	/*GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	GLint lastFBO;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+
+	GLint lastVP[4];
+	glGetIntegerv(GL_VIEWPORT, lastVP);*/
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, Application->window->width(), Application->window->height());
+
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	/*glPushAttrib(GL_ALL_ATTRIB_BITS);
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();*/
+
+	//glm::dmat4 projectionMatrix = gameCamera->projection();
+	//glm::dmat4 viewMatrix = gameCamera->view();
+
+	/*glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glLoadMatrixd(glm::value_ptr(projectionMatrix));
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glLoadMatrixd(glm::value_ptr(viewMatrix));
+
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);*/
+
+	std::shared_ptr<GameObject> UI = nullptr;
+
+	for (auto& object : Application->root->GetActiveScene()->children())
+	{
+		if (object->HasComponent<UICanvasComponent>()) {
+			UI = object;
+			continue;
+		}
+		if (object->IsActive())
+		{
+			object->Update(static_cast<float>(Application->GetDt()));
+
+			if (Application->hasChangedScene)
+			{
+				Application->hasChangedScene = false;
+				break;
+			}
+		}
+		
+	}
+
+	Application->physicsModule->Update(Application->GetDt());
+
+	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+		Application->physicsModule->linkPhysicsToScene = true;
+	}
+
+	if (UI != nullptr)
+		UI->Update(static_cast<float>(Application->GetDt()));
+
+	/*glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glPopAttrib();
+
+	glUseProgram(0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}*/
+
+	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }
 
 int main(int argc, char** argv) {
@@ -595,16 +739,19 @@ int main(int argc, char** argv) {
 
 		case LOOP:
 
+#ifndef _BUILD
 			EditorRenderer(Application->gui);
 			
 			RenderGameView(); 
 			PrintCounters();
 			//Application->gui->Render();
 			Application->window->SwapBuffers();
-            //Application->AddLog(LogType::LOG_INFO, std::to_string(Application->GetDt()).c_str());
 			UndoRedo();
 			ObjectToEditorCamera();
-		
+#else
+			GameRelease();
+			Application->window->SwapBuffers();
+#endif // ENABLE_EDITOR	
 		
 			if (!Application->Update()) { state = FREE; }
 			break;

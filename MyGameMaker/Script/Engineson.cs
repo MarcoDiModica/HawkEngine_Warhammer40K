@@ -32,7 +32,7 @@ namespace HawkEngine
             {
                 return 2;
             }
-            else if(type == typeof(Collider))
+            else if(type == typeof(BoxCollider) || type == typeof(Collider))
             {
                 return 3;
             }
@@ -48,10 +48,23 @@ namespace HawkEngine
             {
                 return 6;
             }
-            
-           
+            else if (type == typeof(MeshCollider))
+            {
+                return 11;
+            }
+            else if (type == typeof(CapsuleCollider))
+            {
+                return 12;
+            }
+            else if (type == typeof(ParticleFX))
+            {
+                return 13;
+            }
 
-                return -1;
+
+
+
+            return -1;
         }
 
     }

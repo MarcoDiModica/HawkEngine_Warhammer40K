@@ -7,13 +7,20 @@ public class UIGameplay : MonoBehaviour
     private UIImage boltgunIcon;
     private UIImage shotgunIcon;
     private UIImage railgunIcon;
+    private PlayerController playerController;
     private PlayerData playerData;
     private UITransform transform;
     private PlayerShooting playerShootingScript;
 
+    public override void Awake()
+    {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
+
     public override void Start()
     {
-        playerData = new PlayerData();
+        
+        playerData = playerController.playerData;
         playerShootingScript = GameObject.Find("Player").GetComponent<PlayerShooting>();
         transform = GameObject.Find("PlayerLife").GetComponent<UITransform>();
         boltgunIcon = GameObject.Find("BoltgunIcon").GetComponent<UIImage>();

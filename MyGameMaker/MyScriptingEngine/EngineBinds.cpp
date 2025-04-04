@@ -9,7 +9,7 @@
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/InputEngine.h"
 #include "../MyGameEngine/Scene.h"
-#include "../MyPhysicsEngine/ColliderComponent.h"
+#include "../MyPhysicsEngine/BoxColliderComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
 #include "ScriptComponent.h"
 #include <mono/metadata/debug-helpers.h>
@@ -22,6 +22,9 @@
 #include "../MyUIEngine/UITransformComponent.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "../MyParticlesEngine/ParticleFX.h"
+#include <MyPhysicsEngine/MeshColliderComponent.h>
+#include <MyPhysicsEngine/CapsuleColliderComponent.h>
 
 // GameObject
 
@@ -33,6 +36,11 @@ MonoObject* EngineBinds::GetGameObject(MonoObject* ref) {
 
 MonoString* EngineBinds::GameObjectGetName(MonoObject* sharpRef) {
     std::string name = ConvertFromSharp(sharpRef)->GetName();
+    return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
+}
+
+MonoString* EngineBinds::GameObjectGetTag(MonoObject* sharpRef) {
+    std::string name = ConvertFromSharp(sharpRef)->GetTag();
     return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
 }
 
@@ -134,7 +142,24 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 		return GO->GetComponent<CameraComponent>()->GetSharp();
 	}
     else if (componentName == "HawkEngine.Collider") {
-		return GO->GetComponent<ColliderComponent>()->GetSharp();
+        if (auto boxCollider = GO->GetComponent<BoxColliderComponent>()) {
+            return boxCollider->GetSharp();
+        }
+        else if (auto capsuleCollider = GO->GetComponent<CapsuleColliderComponent>()) {
+            return capsuleCollider->GetSharp();
+        }
+        else if (auto meshCollider = GO->GetComponent<MeshColliderComponent>()) {
+            return meshCollider->GetSharp();
+        }
+	}
+    else if (componentName == "HawkEngine.BoxCollider") {
+		return GO->GetComponent<BoxColliderComponent>()->GetSharp();
+	}
+    else if (componentName == "HawkEngine.CapsuleCollider") {
+		return GO->GetComponent<CapsuleColliderComponent>()->GetSharp();
+	}
+    else if (componentName == "HawkEngine.MeshCollider") {
+		return GO->GetComponent<MeshColliderComponent>()->GetSharp();
 	}
     else if (componentName == "HawkEngine.Rigidbody") {
 		return GO->GetComponent<RigidbodyComponent>()->GetSharp();
@@ -160,10 +185,11 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}
+	else if (componentName == "HawkEngine.ParticleFX") {
+		return GO->GetComponent<ParticleFX>()->GetSharp();
+	}
 
 
-	
-    // Add other components
     return nullptr;
 }
 
@@ -179,7 +205,7 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
     case 2: _component = static_cast<Component*>(go->AddComponent<CameraComponent>());
         break;
-    case 3: _component = static_cast<Component*>(go->AddComponent<ColliderComponent>(Application->physicsModule));
+    case 3: _component = static_cast<Component*>(go->AddComponent<BoxColliderComponent>(Application->physicsModule));
 		break;
     case 4: _component = static_cast<Component*>(go->AddComponent<RigidbodyComponent>(Application->physicsModule));
         break;
@@ -195,6 +221,13 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
 	case 10: _component = static_cast<Component*>(go->AddComponent<UITransformComponent>());
 		break;
+    case 11: _component = static_cast<Component*>(go->AddComponent<MeshColliderComponent>(Application->physicsModule));
+        break; 
+    case 12: _component = static_cast<Component*>(go->AddComponent<CapsuleColliderComponent>(Application->physicsModule));
+        break;
+	case 13: _component = static_cast<Component*>(go->AddComponent<ParticleFX>());
+		break;
+
     }
 
 	
@@ -220,12 +253,31 @@ void EngineBinds::AddScript(MonoObject* ref, MonoString* scriptName) {
 	go->AddComponent<ScriptComponent>()->LoadScript(C_name);
 }
 
+void EngineBinds::SetActive(MonoObject* ref, bool active) {
+	ConvertFromSharp(ref)->SetActive(active);
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
     char* C_name = mono_string_to_utf8(sharpName);
     ConvertFromSharp(ref)->SetName(std::string(C_name));
 }
+void EngineBinds::SetTag(MonoObject* ref, MonoString* sharpName) {
+
+    char* C_name = mono_string_to_utf8(sharpName);
+    ConvertFromSharp(ref)->SetTag(std::string(C_name));
+}
+
+void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
+    ConvertFromSharp(ref)->SetActive(active);
+}
+
+MonoString* EngineBinds::GetTag(MonoObject* ref) {
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
+}
+
+
 
 MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
 {
@@ -547,7 +599,7 @@ void EngineBinds::SetColor(MonoObject* meshRendererRef, glm::vec3* color)
 	
 // Physics Collider
 void EngineBinds::SetTrigger(MonoObject* colliderRef, bool trigger) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SetTrigger(trigger);
     }
@@ -557,7 +609,7 @@ bool EngineBinds::IsTrigger(MonoObject* colliderRef)
 {
     if (!colliderRef) return false;
 
-	ColliderComponent* collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    BaseColliderComponent* collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
 	if (collider) {
 		return collider->IsTrigger();
 	}
@@ -566,50 +618,101 @@ bool EngineBinds::IsTrigger(MonoObject* colliderRef)
 }
 
 glm::vec3 EngineBinds::GetColliderPosition(MonoObject* colliderRef) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     return collider ? collider->GetColliderPos() : glm::vec3(0.0f);
 }
 
 void EngineBinds::SetColliderPosition(MonoObject* colliderRef, glm::vec3* position) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SetColliderPos(*position);
     }
 }
 
+
+MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
+    if (!gameObject) return nullptr;
+
+    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    if (!gameObjectClass) {
+        return nullptr;
+    }
+
+    MonoObject* monoGameObject = mono_object_new(mono_domain_get(), gameObjectClass);
+    if (!monoGameObject) {
+        return nullptr;
+    }
+
+    MonoClassField* nativePtrField = mono_class_get_field_from_name(gameObjectClass, "CplusplusInstance");
+    if (!nativePtrField) {
+        return nullptr;
+    }
+
+    uintptr_t nativePtr = reinterpret_cast<uintptr_t>(gameObject);
+    mono_field_set_value(monoGameObject, nativePtrField, &nativePtr);
+
+    return monoGameObject;
+}
+
+
+MonoArray* EngineBinds::OverlapSphere(glm::vec3* position, float radius, MonoString* tag) {
+    if (!Application || !Application->physicsModule) {
+        return nullptr;
+    }
+
+    std::string tagStr = mono_string_to_utf8(tag);
+    auto overlappingObjects = Application->physicsModule->OverlapSphere(*position, radius, tagStr);
+
+    MonoDomain* domain = mono_domain_get();
+    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    if (!gameObjectClass) return nullptr;
+
+    MonoArray* monoArray = mono_array_new(domain, gameObjectClass, overlappingObjects.size());
+
+    for (size_t i = 0; i < overlappingObjects.size(); i++) {
+        MonoObject* monoGameObject = GetMonoObjectFromGameObject(overlappingObjects[i]);
+        if (monoGameObject) {
+            mono_array_set(monoArray, MonoObject*, i, monoGameObject);
+        }
+    }
+
+    return monoArray;
+}
+
+
 glm::quat EngineBinds::GetColliderRotation(MonoObject* colliderRef) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     return collider ? collider->GetColliderRotation() : glm::quat();
 }
 
 void EngineBinds::SetColliderRotation(MonoObject* colliderRef, glm::quat* rotation) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SetColliderRotation(*rotation);
     }
 }
 
 glm::vec3 EngineBinds::GetColliderSize(MonoObject* colliderRef) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     return collider ? collider->GetSize() : glm::vec3(0.0f);
 }
 
-void EngineBinds::SetColliderSize(MonoObject* colliderRef, glm::vec3* size) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+void EngineBinds::SetColliderSize(MonoObject* colliderRef, glm::vec3* sizeFactor) {
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
-        collider->SetSize(*size);
+        collider->SetSize(*sizeFactor);
     }
 }
 
 void EngineBinds::SetColliderActive(MonoObject* colliderRef, bool active) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SetActive(active);
     }
 }
 
 void EngineBinds::SnapColliderToPosition(MonoObject* colliderRef) {
-    auto collider = ConvertFromSharpComponent<ColliderComponent>(colliderRef);
+    auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     if (collider) {
         collider->SnapToPosition();
     }
@@ -708,6 +811,35 @@ void EngineBinds::EnableContinuousCollision(MonoObject* rigidbodyRef) {
     if (rigidbody) {
         rigidbody->EnableContinuousCollision();
     }
+}
+
+// Raycast
+MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance)
+{
+    btVector3 from;
+	from.setValue(origin->x, origin->y, origin->z);
+
+	btVector3 to;
+	to.setValue(direction->x, direction->y, direction->z);
+
+    btVector3 hitPos;
+    hitPos.setValue(hitPoint.x, hitPoint.y, hitPoint.z);
+
+    btVector3 hitNormal;
+    hitNormal.setValue(normal.x, normal.y, normal.z);
+
+	GameObject* hitObject;
+	hitObject = Application->physicsModule->Raycast(from, to, maxDistance, hitPos, hitNormal, distance);
+
+	
+	hitPoint = glm::vec3(hitPos.getX(), hitPos.getY(), hitPos.getZ());
+	normal = glm::vec3(hitNormal.getX(), hitNormal.getY(), hitNormal.getZ());
+
+	if (hitObject) {
+		return GetMonoObjectFromGameObject(hitObject);
+	}
+
+    return nullptr;
 }
 
 
@@ -868,11 +1000,15 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
 	}
 }
+
+
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
     if (Application->scene_serializer->DeSerialize(std::string(C_sceneName)))
     {
+        Application->physicsModule->linkPhysicsToScene = false;
+		Application->hasChangedScene = true;
 		return true;
     }
 	return false;
@@ -882,7 +1018,49 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
 void EngineBinds::SetScenePlay()
 {
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	SceneManagement->Awake();
 	SceneManagement->currentScene->Start();
+}
+
+void EngineBinds::ApplyPreset(MonoObject* particleRef, int particleType)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+
+	if (particle) {
+		particle->ApplyPreset(particleType);
+	}
+}
+
+void EngineBinds::SetOneShot(MonoObject* particleRef, bool oneShot)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->SetOneShot(oneShot);
+	}
+}
+
+void EngineBinds::PlayParticle(MonoObject* particleRef)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->Play();
+	}
+}
+
+void EngineBinds::StopParticle(MonoObject* particleRef)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->Stop();
+	}
+}
+
+void EngineBinds::EmitBurst(MonoObject* particleRef, int burstCount)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->EmitBurst(burstCount);
+	}
 }
 
 void EngineBinds::BindEngine() {
@@ -891,13 +1069,18 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
+    mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
+	mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GetTag);
+	mono_add_internal_call("HawkEngine.GameObject::SetTag", (const void*)SetTag);
     mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
+    mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
+
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);
@@ -951,6 +1134,10 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
 
+
+    //Physics
+    mono_add_internal_call("HawkEngine.Physics::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);
+
     // Physics Collider
     mono_add_internal_call("HawkEngine.Collider::SetTrigger", (const void*)&EngineBinds::SetTrigger);
     mono_add_internal_call("HawkEngine.Collider::IsTrigger", (const void*)&EngineBinds::IsTrigger);
@@ -962,6 +1149,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Collider::SetSize", (const void*)&EngineBinds::SetColliderSize);
     mono_add_internal_call("HawkEngine.Collider::SetActive", (const void*)&EngineBinds::SetColliderActive);
     mono_add_internal_call("HawkEngine.Collider::SnapToPosition", (const void*)&EngineBinds::SnapColliderToPosition);
+    mono_add_internal_call("HawkEngine.Collider::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);
 
     // Physics Rigidbody
     mono_add_internal_call("HawkEngine.Rigidbody::SetVelocity", (const void*)&EngineBinds::SetVelocity);
@@ -978,6 +1166,9 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Rigidbody::SetKinematic", (const void*)&EngineBinds::SetKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::IsKinematic", (const void*)&EngineBinds::IsKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::EnableContinuousCollision", (const void*)&EngineBinds::EnableContinuousCollision);
+
+	// Raycast
+	mono_add_internal_call("HawkEngine.RayCast::Raycast", (const void*)&EngineBinds::Raycast);
 
     // Audio
     mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);
@@ -1013,6 +1204,13 @@ void EngineBinds::BindEngine() {
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
 	mono_add_internal_call("HawkEngine.SceneManager::SetSceneToPlay", (const void*)&EngineBinds::SetScenePlay);
+
+	// VFX (particles)
+	mono_add_internal_call("HawkEngine.ParticleFX::ApplyPreset", (const void*)&EngineBinds::ApplyPreset);
+    mono_add_internal_call("HawkEngine.ParticleFX::SetOneShot", (const void*)&EngineBinds::SetOneShot);
+	mono_add_internal_call("HawkEngine.ParticleFX::Play", (const void*)&EngineBinds::PlayParticle);
+	mono_add_internal_call("HawkEngine.ParticleFX::Stop", (const void*)&EngineBinds::StopParticle);
+	mono_add_internal_call("HawkEngine.ParticleFX::EmitBurst", (const void*)&EngineBinds::EmitBurst);
 }
 
 template <class T>

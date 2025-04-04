@@ -7,29 +7,62 @@ public class Shotgun : BaseWeapon
     private Audio sound;
     private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
     private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
+
+
+    private PlayerController playerController;
+    public PlayerData playerData;
+    Barrage barrage;
+    HookShot hookShot;
+
+    private float timeSinceLastShot = 0.0f;
+
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
-        shootCadence = 1f;
+        damage = 70.0f;
+        shootCadence = 0.7f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 50;
         currentTotalAmmo = 16;
         reloadTime = 2.5f;
+        range = 20f;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
+        barrage = gameObject.GetComponent<Barrage>();
+        hookShot = gameObject.GetComponent<HookShot>();
+        
     }
 
     public override void Update(float deltaTime)
     {
-        //CleanBullets();
+        CleanBullets();
+        timeSinceLastShot += deltaTime;
+
+        for (int i = 0; i < bulletsPos.Count; i++)
+        {
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.1f);
+            
+        }
     }
 
     public override void Shoot()
     {
-        if (currentMagazineAmmo > 0)
+        if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
-            currentMagazineAmmo--;
+            timeSinceLastShot = 0f; // Reiniciar contador
+
+            if (!playerData.infiniteBullets)
+            {
+                currentMagazineAmmo--;
+            }
+
             sound?.LoadAudio(shotgunShot);
             sound?.Play();
             // Shoot logic
@@ -40,33 +73,51 @@ public class Shotgun : BaseWeapon
 
             for (int i = 0; i < numProjectiles; i++)
             {
-                GameObject projectile = Engineson.CreateGameObject("Projectile", null);
+                Vector3 forward = transform.forward;
+                Vector3 spawnPos = transform.position + forward * 1.0f;
 
-                // TODO: add custom mesh to the projectile
-                projectile.AddComponent<MeshRenderer>();
-                projectile.AddComponent<Collider>();
+                float angle = startAngle + angleStep * i;
+                Vector3 direction = Vector3.Transform(forward, Matrix4x4.CreateRotationY(angle * (3.14f / 180f))); // Convert degrees to radians
 
-                if (projectile != null)
+                RayCast rayBullet = new RayCast();
+                Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 1f, 0);
+
+                rayBullet.PerformRaycast(bulletPosition, direction, range);
+
+
+                Vector3 bulletHitPoint = Vector3.Zero;
+
+                if (rayBullet.hit.isHit)
                 {
-                    Transform projTransform = projectile.GetComponent<Transform>();
-                    if (projTransform != null)
+                    bulletHitPoint = rayBullet.hit.point;
+                    collisionNames.Add(rayBullet.hit.gameObject.name);
+                    if (rayBullet.hit.gameObject.tag == "Melee")
                     {
-                        Vector3 forward = transform.forward;
-                        Vector3 spawnPos = transform.position + forward * 1.0f;
-                        projTransform.position = spawnPos;
-
-                        float angle = startAngle + angleStep * i;
-                        Vector3 direction = Vector3.Transform(forward, Matrix4x4.CreateRotationY(angle * (3.14f / 180f))); // Convert degrees to radians
-                        projTransform.LookAt(direction);
-                        projTransform.SetScale(0.1f, 0.1f, 0.1f);
-
-                        projectile.AddScript("BulletData");
-                        projectile.GetComponent<BulletData>().Init(projTransform, direction);
-                        bullets.Add(projectile.GetComponent<BulletData>());
-
-                        Engineson.print("Projectile fired!");
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
                     }
+                    if (rayBullet.hit.gameObject.tag == "Ranged")
+                    {
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (rayBullet.hit.gameObject.tag == "Stalker")
+                    {
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (rayBullet.hit.gameObject.tag == "Boss")
+                    {
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                    }
+                    Engineson.print($"Hit: {bulletHitPoint}");
                 }
+                else
+                {
+                    bulletHitPoint = transform.GetPosition() + transform.forward * range;
+                    collisionNames.Add("Missed");
+                    Engineson.print("Missed");
+                }
+
+                hitPoints.Add(bulletHitPoint);
+                bulletsPos.Add(bulletPosition);
             }
         }
     }
@@ -78,39 +129,59 @@ public class Shotgun : BaseWeapon
         {
             sound?.LoadAudio(shotgunReload);
             sound?.Play();
+
+            if (currentTotalAmmo >= magazineSize)
+            {
+                currentMagazineAmmo = magazineSize;
+                currentTotalAmmo = currentTotalAmmo - magazineSize;
+            }
+            else
+            {
+                currentMagazineAmmo = currentTotalAmmo;
+                currentTotalAmmo = 0;
+            }
             currentTotalAmmo -= magazineSize - currentMagazineAmmo;
-            currentMagazineAmmo = magazineSize;
+            Engineson.print("Shotgun reloaded");
+            Engineson.print($"Current ammo: {currentTotalAmmo}");
         }
     }
 
     public override void UseAbility1()
     {
-        
+        hookShot.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-
+        barrage.TriggerAbility();
     }
 
     public override void CleanBullets()
     {
-        for (int i = bullets.Count - 1; i >= 0; i--)
+        for (int i = 0; i < bulletsPos.Count; i++)
         {
-            var proj = bullets[i];
-            if (proj.markedForDestruction)
+            if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.1f)
             {
-                try
+                bulletsPos.RemoveAt(i);
+                hitPoints.RemoveAt(i);
+                if (collisionNames[i] == "Missed")
                 {
-                    Engineson.Destroy(proj.gameObject);
-                    bullets.RemoveAt(i);
+                    collisionNames.RemoveAt(i);
                 }
-                catch (System.Exception e)
+                else
                 {
-                    Engineson.print($"Error destroying projectile: {e.Message}");
-                    bullets.RemoveAt(i);
+                    // Aqu� se ejecuta la funci�n de da�o al enemigo
+                    Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
+                    collisionNames.RemoveAt(i);
                 }
+                i--;
             }
         }
+    }
+
+    public override void ResetCooldowns()
+    {
+        hookShot.ResetCooldowns();
+        barrage.ResetCooldowns();
     }
 }

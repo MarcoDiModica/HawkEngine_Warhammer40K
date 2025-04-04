@@ -30,6 +30,35 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build|AnyCPU'">
+    <OutputPath>obj\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build|Gaming.Desktop.x64'">
+    <OutputPath>bin\Gaming.Desktop.x64\Build\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build|Gaming.Xbox.Scarlett.x64'">
+    <OutputPath>bin\Gaming.Xbox.Scarlett.x64\Build\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build|Gaming.Xbox.XboxOne.x64'">
+    <OutputPath>bin\Gaming.Xbox.XboxOne.x64\Build\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Build|Win32'">
+    <OutputPath>bin\Win32\Build\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,24 +71,59 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AreaTrigger.cs" />
+    <Compile Include="AmmunitionBlessing.cs" />
+    <Compile Include="Arc.cs" />
+    <Compile Include="ArcSnare.cs" />
     <Compile Include="Audio.cs" />
+    <Compile Include="Ball.cs" />
+    <Compile Include="Barrage.cs" />
+    <Compile Include="BarrageBullet.cs" />
     <Compile Include="BaseWeapon.cs" />
+    <Compile Include="BlackHeart.cs" />
     <Compile Include="Boltgun.cs" />
+    <Compile Include="BoltgunBullets.cs" />
+    <Compile Include="BoltgunPickUp.cs" />
+    <Compile Include="BoxCollider.cs" />
     <Compile Include="BulletData.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="CapsuleCollider.cs" />
+    <Compile Include="ChapterStandard.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="EnemyController.cs" />
+    <Compile Include="EnemyControllerBoss.cs" />
+    <Compile Include="EnemyControllerStalker.cs" />
+    <Compile Include="EnergyBall.cs" />
+    <Compile Include="EnemyControllerMelee.cs" />
+    <Compile Include="EnemyControllerRanged.cs" />
     <Compile Include="Engineson.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Grenade.cs" />
     <Compile Include="GrenadeLauncher.cs" />
+    <Compile Include="Hook.cs" />
+    <Compile Include="HookShot.cs" />
+    <Compile Include="HormagauntAnimation.cs" />
+    <Compile Include="IEnemyController.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="IPowerUp.cs" />
+    <Compile Include="LaserBeam.cs" />
+    <Compile Include="Magnet.cs" />
+    <Compile Include="MedicaeStimm.cs" />
+    <Compile Include="IInteractable.cs" />
+    <Compile Include="ImageAsSlider.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="InteractionSystem.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="MenuButtons.cs" />
+    <Compile Include="MeshCollider.cs" />
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
+    <Compile Include="ParticleFX.cs" />
+    <Compile Include="PickUpManager.cs" />
+    <Compile Include="Physics.cs" />
     <Compile Include="PlayerAnimations.cs" />
     <Compile Include="PlayerCamera.cs" />
     <Compile Include="PlayerController.cs" />
@@ -67,14 +131,23 @@
     <Compile Include="PlayerData.cs" />
     <Compile Include="PlayerInput.cs" />
     <Compile Include="PlayerMovement.cs" />
+    <Compile Include="PlayerPowerUp.cs" />
     <Compile Include="PlayerShooting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Railgun.cs" />
+    <Compile Include="RailgunPickUp.cs" />
+    <Compile Include="RedThirstManager.cs" />
+    <Compile Include="RayCast.cs" />
     <Compile Include="Rigidbody.cs" />
+    <Compile Include="Scene1ToScene2.cs" />
+    <Compile Include="Scene2ToMenu.cs" />
     <Compile Include="Shotgun.cs" />
     <Compile Include="SceneManager.cs" />
+    <Compile Include="ShotgunPickUp.cs" />
+    <Compile Include="ShotgunShells.cs" />
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="Test1.cs" />
+    <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="UICanvas.cs" />

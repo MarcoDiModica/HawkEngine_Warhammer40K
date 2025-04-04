@@ -23,8 +23,11 @@ public class PlayerShooting : MonoBehaviour
     // Guns Scripts
     public Boltgun boltgun;
     public Shotgun shotgun;
-    private Railgun railgun;
+    public Railgun railgun;
 
+    public bool hasShotgun = false;
+    public bool hasRailgun = false;
+    public bool hasBoltgun = false;
 
     private Audio sound;
     private string boltgunEquiped = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunEqquiped.wav";
@@ -151,7 +154,7 @@ public class PlayerShooting : MonoBehaviour
                     shootTimer = 0.5f;
                     break;
                 case GunType.RAILGUN:
-                    shootTimer = shootCooldown;
+                    shootTimer = 0;
                     break;
             }
         }
@@ -246,18 +249,35 @@ public class PlayerShooting : MonoBehaviour
     private void ChangeWeaponRight()
     {
 
-        if (currentGun == GunType.BOLTGUN)
+        if (hasShotgun && !hasRailgun)
         {
-            currentGun = GunType.SHOTGUN;
+            if (currentGun == GunType.BOLTGUN)
+            {
+                currentGun = GunType.SHOTGUN;
+            }
+            else if (currentGun == GunType.SHOTGUN)
+            {
+                currentGun = GunType.BOLTGUN;
+            }
+           
         }
-        else if (currentGun == GunType.SHOTGUN)
+        else if (hasShotgun && hasRailgun)
         {
-            currentGun = GunType.RAILGUN;
+            if (currentGun == GunType.BOLTGUN)
+            {
+                currentGun = GunType.SHOTGUN;
+            }
+            else if (currentGun == GunType.SHOTGUN)
+            {
+                currentGun = GunType.RAILGUN;
+            }
+            else if (currentGun == GunType.RAILGUN)
+            {
+                currentGun = GunType.BOLTGUN;
+            }
         }
-        else if (currentGun == GunType.RAILGUN)
-        {
-            currentGun = GunType.BOLTGUN;
-        }
+
+        
 
         switch (currentGun)
         {
@@ -285,17 +305,32 @@ public class PlayerShooting : MonoBehaviour
     private void ChangeWeaponLeft()
     {
 
-        if (currentGun == GunType.BOLTGUN)
+        if (hasShotgun && !hasRailgun)
         {
-            currentGun = GunType.RAILGUN;
+            if (currentGun == GunType.BOLTGUN)
+            {
+                currentGun = GunType.SHOTGUN;
+            }
+            else if (currentGun == GunType.SHOTGUN)
+            {
+                currentGun = GunType.BOLTGUN;
+            }
+
         }
-        else if (currentGun == GunType.SHOTGUN)
+        else if (hasShotgun && hasRailgun)
         {
-            currentGun = GunType.BOLTGUN;
-        }
-        else if (currentGun == GunType.RAILGUN)
-        {
-            currentGun = GunType.SHOTGUN;
+            if (currentGun == GunType.BOLTGUN)
+            {
+                currentGun = GunType.SHOTGUN;
+            }
+            else if (currentGun == GunType.SHOTGUN)
+            {
+                currentGun = GunType.RAILGUN;
+            }
+            else if (currentGun == GunType.RAILGUN)
+            {
+                currentGun = GunType.BOLTGUN;
+            }
         }
 
         switch (currentGun)
@@ -333,7 +368,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgun.UseAbility1();
                 break;
             case GunType.RAILGUN:
-
+                railgun.UseAbility1();
                 break;
         }
         if (redThirstManager != null)

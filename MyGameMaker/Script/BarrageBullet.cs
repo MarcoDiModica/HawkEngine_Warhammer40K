@@ -22,9 +22,10 @@ public class BarrageBullet : MonoBehaviour
 
     public void Init(Vector3 pos, Vector3 dir)
     {
-
         AddComponent<MeshRenderer>();
         GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
+        Vector3 perpendicularDir = new Vector3(dir.Z, 0, 0);
+        GetComponent<Transform>().SetRotationQuat(Quaternion.CreateFromAxisAngle(perpendicularDir, (float)Math.PI / 2));
         GetComponent<Transform>().SetScale(5.0f, 1.0f, 0.5f);
         AddComponent<BoxCollider>();
         AddComponent<Rigidbody>();
@@ -34,8 +35,8 @@ public class BarrageBullet : MonoBehaviour
         rigidbody.AddForce(dir * 140);
         rigidbody.SetFriction(0.5f);
 
-
-
+        
+        
     }
 
     public override void Update(float deltaTime)
@@ -46,7 +47,7 @@ public class BarrageBullet : MonoBehaviour
             if (deathTimerPrevention >= deathtimer)
             {
                 // En vez de destruir, se mueve 100 unidades hacia abajo
-                GetComponent<Transform>().position -= new Vector3(0, 100, 0);
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
                 needsDestroy = false; // Para que no siga moviéndose constantemente
             }
         }

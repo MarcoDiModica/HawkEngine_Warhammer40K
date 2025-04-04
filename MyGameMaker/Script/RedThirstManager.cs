@@ -20,6 +20,8 @@ public class RedThirstManager : MonoBehaviour
     private const float BLACK_RAGE_EXTENSION = 2f;
     private PlayerController playerController;
     private float lastActionTime = 0f;
+
+    public float biblePages = 0f;
     public override void Awake()
     {
         playerController = gameObject.GetComponent<PlayerController>();

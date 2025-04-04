@@ -132,7 +132,7 @@ namespace EngineBinds {
     void EnableContinuousCollision(MonoObject* rigidbodyRef);
 
     // Raycast
-	bool Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance);
+	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance);
     
     //Audio
     void Play(MonoObject* audioRef, bool loop = false);
@@ -169,6 +169,13 @@ namespace EngineBinds {
     //SceneManagement
     bool LoadScene(MonoString* sceneName);
     void SetScenePlay();
+
+    //VFX (particles)
+    void ApplyPreset(MonoObject* particleRef, int presetName);
+	void SetOneShot(MonoObject* particleRef, bool oneShot);
+	void PlayParticle(MonoObject* particleRef);
+	void StopParticle(MonoObject* particleRef);
+	void EmitBurst(MonoObject* particleRef, int burstCount);
 }
 
 #endif // ENGINE_BINDS_H

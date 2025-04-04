@@ -18,6 +18,15 @@ public class HUD : MonoBehaviour
     private GameObject smallBoltgunR;
     private GameObject smallShotgunR;
     private GameObject smallRailgunR;
+    private Railgun railgunScript;
+
+    private GameObject boltgunAbility1;
+    private GameObject boltgunAbility2;
+    private GameObject shotgunAbility1;
+    private GameObject shotgunAbility2;
+    private GameObject railgunAbility1;
+    private GameObject railgunAbility2a;
+    private GameObject railgunAbility2b;
 
     private UITransform transform_hpBar;
     private UITransform transform_hpTempBar;
@@ -98,6 +107,21 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: SmallGun not found");
         }
+
+        boltgunAbility1 = GameObject.Find("boltgun_ability_1");
+        boltgunAbility2 = GameObject.Find("boltgun_ability_2");
+        shotgunAbility1 = GameObject.Find("shotgun_ability_1");
+        shotgunAbility2 = GameObject.Find("shotgun_ability_2");
+        railgunAbility1 = GameObject.Find("railgun_ability_1");
+        railgunAbility2a = GameObject.Find("railgun_ability_2a");
+        railgunAbility2b = GameObject.Find("railgun_ability_2b");
+
+        if (boltgunAbility1 == null || boltgunAbility2 == null || shotgunAbility1 == null || shotgunAbility2 == null || railgunAbility1 == null || railgunAbility2a == null || railgunAbility2b == null)
+        {
+            Engineson.print("ERROR: GunAbilities not found");
+        }
+
+        railgunScript = playerShootingScript.railgun;
     }
     public override void Update(float deltaTime)
     {
@@ -119,6 +143,14 @@ public class HUD : MonoBehaviour
                 smallBoltgunR.SetActive(false);
                 smallShotgunR.SetActive(true);
                 smallRailgunR.SetActive(false);
+
+                boltgunAbility1.SetActive(true);
+                boltgunAbility2.SetActive(true);
+                shotgunAbility1.SetActive(false);
+                shotgunAbility2.SetActive(false);
+                railgunAbility1.SetActive(false);
+                railgunAbility2a.SetActive(false);
+                railgunAbility2b.SetActive(false);
                 break;
             case 1:
                 //Shotgun equipped
@@ -134,6 +166,16 @@ public class HUD : MonoBehaviour
                 smallShotgunR.SetActive(false);
                 smallRailgunR.SetActive(true);
 
+
+
+                boltgunAbility1.SetActive(false);
+                boltgunAbility2.SetActive(false);
+                shotgunAbility1.SetActive(true);
+                shotgunAbility2.SetActive(true);
+                railgunAbility1.SetActive(false);
+                railgunAbility2a.SetActive(false);
+                railgunAbility2b.SetActive(false);
+
                 break;
             case 2:
                 //Railgun equipped
@@ -148,7 +190,24 @@ public class HUD : MonoBehaviour
                 smallBoltgunR.SetActive(true);
                 smallShotgunR.SetActive(false);
                 smallRailgunR.SetActive(false);
-                break;
+
+                boltgunAbility1.SetActive(false);
+                boltgunAbility2.SetActive(false);
+                shotgunAbility1.SetActive(false);
+                shotgunAbility2.SetActive(false);
+                railgunAbility1.SetActive(true);
+                switch (railgunScript.railgunMode)
+                {
+                    case Railgun.RailgunMode.SEMIAUTOMATIC:
+                        railgunAbility2a.SetActive(true);
+                        railgunAbility2b.SetActive(false);
+                        break;
+                    case Railgun.RailgunMode.AUTOMATIC:
+                        railgunAbility2a.SetActive(false);
+                        railgunAbility2b.SetActive(true);
+                        break;
+                }
+            break;
         }
     }
 }

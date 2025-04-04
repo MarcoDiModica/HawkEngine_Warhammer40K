@@ -57,7 +57,7 @@ public class EnemyControllerRanged : EnemyController
 
         maxHealth = 100.0f;
         currentHealth = maxHealth;
-        gameObject.tag = "Enemy";
+        gameObject.tag = "Ranged";
     }
 
     public override void Update(float deltaTime)

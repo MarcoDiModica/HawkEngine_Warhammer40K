@@ -90,6 +90,22 @@ public class Shotgun : BaseWeapon
                 {
                     bulletHitPoint = rayBullet.hit.point;
                     collisionNames.Add(rayBullet.hit.gameObject.name);
+                    if (rayBullet.hit.gameObject.tag == "Melee")
+                    {
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerMelee>().TakeDamage(20.0f); //placeholder damage
+                    }
+                    if (rayBullet.hit.gameObject.tag == "Ranged")
+                    {
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerRanged>().TakeDamage(20.0f); //placeholder damage
+                    }
+                    if (rayBullet.hit.gameObject.tag == "Stalker")
+                    {
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerStalker>().TakeDamage(20.0f); //placeholder damage
+                    }
+                    if (rayBullet.hit.gameObject.tag == "Boss")
+                    {
+                        rayBullet.hit.gameObject.GetComponent<EnemyControllerBoss>().TakeDamage(20.0f); //placeholder damage
+                    }
                     Engineson.print($"Hit: {bulletHitPoint}");
                 }
                 else

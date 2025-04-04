@@ -88,7 +88,7 @@ public class EnemyControllerBoss : EnemyController
             return;
         }
         currentHealth = 900.0f;
-        gameObject.tag = "Enemy";
+        gameObject.tag = "Boss";
     }
     public override void Update(float deltaTime)
     {

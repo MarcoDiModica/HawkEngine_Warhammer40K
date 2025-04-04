@@ -83,7 +83,7 @@ public class EnemyControllerMelee : EnemyController
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
-        gameObject.tag = "Enemy";
+        gameObject.tag = "Melee";
         isDead = false;
     }
 

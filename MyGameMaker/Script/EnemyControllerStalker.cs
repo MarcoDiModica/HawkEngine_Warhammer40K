@@ -84,7 +84,7 @@ public class EnemyControllerStalker : EnemyController
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
-        gameObject.tag = "Enemy";
+        gameObject.tag = "Stalker";
         isDead = false;
     }
 

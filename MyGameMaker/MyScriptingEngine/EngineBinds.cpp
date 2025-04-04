@@ -1337,7 +1337,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);
 
 	// UI Transform
-	mono_add_internal_call("HawkEngine.UITransform::SetUIScale", (const void*)&EngineBinds::SetUIScale);
+	mono_add_internal_call("HawkEngine.UITransform::SetScaleUI", (const void*)&EngineBinds::SetUIScale);
   
     // SkeletalAnimation
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationSpeed", (const void*)&EngineBinds::SetAnimationSpeed);

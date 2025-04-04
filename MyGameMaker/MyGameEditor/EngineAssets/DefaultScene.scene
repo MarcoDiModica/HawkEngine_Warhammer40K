@@ -21,6 +21,55 @@ GameObject0:
         - 1
         - 1
         - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 10
+      particlesPerSecond: 10
+      minLifetime: 1
+      maxLifetime: 3
+      minSpeed: 1
+      maxSpeed: 3
+      startSize: 1
+      endSize: 1
+      minSize: 0
+      maxSize: 0
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 0
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0
+        - 0
+      shapeParam1: 0.5
+      shapeParam2: 1
+      shapeParam3: 0
+      isOneShot: false
+      isPlaying: true
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 133
+        - 175
+      useAnimation: false
+      animSpeed: 0
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 0
+        softness: 0
+        useColorGradient: false
+        texturePath: ""
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -103,7 +152,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -292,7 +341,7 @@ GameObject3:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:

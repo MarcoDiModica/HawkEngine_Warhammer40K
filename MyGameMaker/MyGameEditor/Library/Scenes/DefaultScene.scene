@@ -10,12 +10,12 @@ GameObject0:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -5.7051622964816602
-        - 0.0037705898284912109
-        - -0.00062970915899995816
+        - 0
+        - 0
+        - 0
       localRotation:
         - 0
-        - 89.984922544943672
+        - -0
         - 0
       localScale:
         - 1
@@ -27,14 +27,14 @@ GameObject0:
       emitterShape: 0
       emissionRate: 10
       particlesPerSecond: 10
-      minLifetime: 0.5
-      maxLifetime: 1
-      minSpeed: 20
-      maxSpeed: 0.00999999978
+      minLifetime: 1
+      maxLifetime: 3
+      minSpeed: 1
+      maxSpeed: 3
       startSize: 1
       endSize: 1
-      minSize: 10
-      maxSize: 5
+      minSize: 0
+      maxSize: 0
       startColor:
         - 1
         - 1
@@ -47,29 +47,29 @@ GameObject0:
       endAlpha: 0
       rotationSpeed: 0
       gravity:
-        - 3
+        - 0
         - 0
         - 0
       shapeParam1: 0.5
       shapeParam2: 1
       shapeParam3: 0
-      isOneShot: true
+      isOneShot: false
       isPlaying: false
       isPaused: false
       burstEmitted: false
       spriteSize:
-        - 512
-        - 512
+        - 133
+        - 175
       useAnimation: false
       animSpeed: 0
       startRotation: 0
-      randomRotation: true
+      randomRotation: false
       material:
         billboardType: 0
         particleType: 0
         softness: 0
         useColorGradient: false
-        texturePath: Library\Textures\VFX\BloodSplash_decals1_Yiwei.png
+        texturePath: ""
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -152,7 +152,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -337,11 +337,11 @@ GameObject3:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -5.7051622964816602
-        - 22.003770589828491
-        - -15.500629688437703
+        - 0
+        - 20
+        - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -373,7 +373,7 @@ GameObject4:
       enabled: true
       localPosition:
         - -30
-        - -1.2248818874359131
+        - 0
         - -5
       localRotation:
         - 0
@@ -420,7 +420,7 @@ GameObject4:
   Children:
     - name: LictorMesh
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -509,564 +509,6 @@ GameObject5:
         tonemap_strength: 1
         shader_type: PBR
         image: Assets/default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject6:
-  name: Projectile
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 4.780092716217041
-        - 1.0037705898284912
-        - 7.1046304128685733e-07
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject7:
-  name: Projectile_1
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 3.684063196182251
-        - 1.0037708282470703
-        - 9.8392752079234924e-07
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject8:
-  name: Projectile_2
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 2.4311749935150146
-        - 1.0037705898284912
-        - 1.0271164683217648e-06
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject9:
-  name: Projectile_3
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 1.348785400390625
-        - 1.132683277130127
-        - 1.0795246225825395e-06
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject10:
-  name: Projectile_4
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0.25602522492408752
-        - 1.0037708282470703
-        - 1.8916241970146075e-05
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject11:
-  name: Projectile_5
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -0.82531750202178955
-        - 1.0037705898284912
-        - 1.7739916074788198e-05
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject12:
-  name: Projectile_6
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -1.9116597175598145
-        - 1.0037705898284912
-        - 1.8932505554403178e-05
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject13:
-  name: Projectile_7
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 12.944777488708496
-        - 0.0084929559379816055
-        - -8.0394754409790039
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject14:
-  name: Projectile_8
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -3.005162239074707
-        - 1.0037705898284912
-        - -0.00044902792433276772
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default.png
         normal_map: ""
         metallic_map: ""
         roughness_map: ""

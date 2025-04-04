@@ -92,7 +92,7 @@ public class PlayerAnimations : MonoBehaviour
     {
         esk.TransitionAnimations(9, 6, 0.1f);
         //esk.SetAnimation(6);
-        esk.SetAnimationSpeed(1.5f);
+        esk.SetAnimationSpeed(1.2f);
     }
 
     public void SetDashAnimation()

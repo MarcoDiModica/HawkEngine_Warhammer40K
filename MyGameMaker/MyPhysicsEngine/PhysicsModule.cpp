@@ -179,8 +179,6 @@ std::vector<GameObject*> PhysicsModule::OverlapSphere(const glm::vec3& position,
     int collisionFilterMask = btBroadphaseProxy::AllFilter;
     dynamicsWorld->addCollisionObject(ghostObject.get(), collisionFilterGroup, collisionFilterMask);
 
-	//adjust the world collisions
-    dynamicsWorld->stepSimulation(1.f / 60.f, 10);
 
     //Check collisions
     int numOverlappingObjects = ghostObject->getNumOverlappingObjects();
@@ -495,11 +493,10 @@ bool PhysicsModule::Update(double dt) {
     OPTICK_EVENT();
 #endif // PROFILE
   
-    if (linkPhysicsToScene) {
-        int numSubsteps = glm::clamp(static_cast<int>(dt / fixedDeltaTime), 1, 10);
+    if (linkPhysicsToScene) {  
         int maxSubSteps = 10;
 
-        dynamicsWorld->stepSimulation(dt, maxSubSteps, dt / maxSubSteps);
+        dynamicsWorld->stepSimulation(dt, maxSubSteps, fixedDeltaTime);
 
         SyncTransforms();
         CheckCollisions();

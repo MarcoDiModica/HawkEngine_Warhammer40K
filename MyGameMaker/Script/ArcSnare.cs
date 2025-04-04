@@ -108,6 +108,7 @@ public class ArcSnare : BaseAbilities
             grenade.AddScript("Arc");
             grenade.GetComponent<Arc>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
             grenade.AddComponent<Audio>();
+            grenade.GetComponent<Arc>().Start();
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;

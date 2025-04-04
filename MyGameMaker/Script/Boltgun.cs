@@ -43,13 +43,28 @@ public class Boltgun : BaseWeapon
 
     public override void Update(float deltaTime)
     {
-        CleanBullets();
+        
         timeSinceLastShot += deltaTime;
 
-        for (int i = 0; i < bulletsPos.Count; i++)
+        for (int i = bulletsPos.Count - 1; i >= 0; i--)
         {
-            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.2f);
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.5f);
             projectile.GetComponent<Transform>().position = bulletsPos[i];
+
+            if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.5f)
+            {
+                bulletsPos.RemoveAt(i);
+                hitPoints.RemoveAt(i);
+                if (collisionNames[i] == "Missed")
+                {
+                    collisionNames.RemoveAt(i);
+                }
+                else
+                {
+                    Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
+                    collisionNames.RemoveAt(i);
+                }
+            }
         }
     }
 
@@ -78,7 +93,7 @@ public class Boltgun : BaseWeapon
 
             // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
-            projectile.AddComponent<BoxCollider>();
+            projectile.GetComponent<Transform>().SetScale(0.1f, 0.1f, 0.1f);
 
             Vector3 bulletHitPoint = Vector3.Zero;
 

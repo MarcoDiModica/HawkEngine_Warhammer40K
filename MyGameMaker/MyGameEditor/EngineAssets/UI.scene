@@ -1066,50 +1066,6 @@ GameObject3:
           enabled: true
           texture_path: Library\Textures\UI\gun_shotgun_small_icon.png
       Children: ~
-    - name: gun_small_frame
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 91.900001525878906
-            - 3.9600000381469727
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 0.064000003039836884
-            - 0.054499998688697815
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.91900003
-            - 0.791999996
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.064000003
-            - 0.0544999987
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\gun_weapon_frames.png
-      Children: ~
     - name: boltgun_ability_1
       tag: Untagged
       active: true
@@ -1461,6 +1417,138 @@ GameObject3:
           name: UIImageComponent
           enabled: true
           texture_path: Library\Textures\UI\powerup_frame.png
+      Children: ~
+    - name: lock_L
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 92.300003051757812
+            - 79.5
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.02500000037252903
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.922999978
+            - 0.795000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0249999985
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\lock.png
+      Children: ~
+    - name: lock_R
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 95.5
+            - 0.79500001668930054
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.02500000037252903
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.954999983
+            - 0.795000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0249999985
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\lock.png
+      Children: ~
+    - name: gun_small_frame
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 91.900001525878906
+            - 3.9600000381469727
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.064000003039836884
+            - 0.054499998688697815
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.91900003
+            - 0.791999996
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.064000003
+            - 0.0544999987
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_weapon_frames.png
       Children: ~
 GameObject4:
   name: Canvas_Location_SM

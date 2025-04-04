@@ -18,6 +18,8 @@ public class HUD : MonoBehaviour
     private GameObject smallBoltgunR;
     private GameObject smallShotgunR;
     private GameObject smallRailgunR;
+    private GameObject lockL;
+    private GameObject lockR;
     private Railgun railgunScript;
 
     private GameObject boltgunAbility1;
@@ -108,6 +110,9 @@ public class HUD : MonoBehaviour
             Engineson.print("ERROR: SmallGun not found");
         }
 
+        lockL = GameObject.Find("lock_L");
+        lockR = GameObject.Find("lock_R");
+
         boltgunAbility1 = GameObject.Find("boltgun_ability_1");
         boltgunAbility2 = GameObject.Find("boltgun_ability_2");
         shotgunAbility1 = GameObject.Find("shotgun_ability_1");
@@ -151,6 +156,25 @@ public class HUD : MonoBehaviour
                 railgunAbility1.SetActive(false);
                 railgunAbility2a.SetActive(false);
                 railgunAbility2b.SetActive(false);
+
+                if(playerShootingScript.hasShotgun)
+                {
+                    lockR.SetActive(false);
+                }
+                else
+                {
+                    lockR.SetActive(true);
+                }
+
+                if (playerShootingScript.hasRailgun)
+                {
+                    lockL.SetActive(false);
+                }
+                else
+                {
+                    lockL.SetActive(true);
+                }
+
                 break;
             case 1:
                 //Shotgun equipped
@@ -175,6 +199,15 @@ public class HUD : MonoBehaviour
                 railgunAbility1.SetActive(false);
                 railgunAbility2a.SetActive(false);
                 railgunAbility2b.SetActive(false);
+
+                if(playerShootingScript.hasRailgun)
+                {
+                    lockR.SetActive(false);
+                }
+                else
+                {
+                    lockR.SetActive(true);
+                }
 
                 break;
             case 2:

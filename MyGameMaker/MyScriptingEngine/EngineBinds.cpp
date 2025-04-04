@@ -1000,6 +1000,8 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
 	}
 }
+
+
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);

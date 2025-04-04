@@ -101,6 +101,22 @@ public class Boltgun : BaseWeapon
             {
                 bulletHitPoint = rayBullet.hit.point;
                 collisionNames.Add(rayBullet.hit.gameObject.name);
+                if (rayBullet.hit.gameObject.tag == "Melee")
+                {
+                    rayBullet.hit.gameObject.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                }
+                if (rayBullet.hit.gameObject.tag == "Ranged")
+                {
+                    rayBullet.hit.gameObject.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                }
+                if (rayBullet.hit.gameObject.tag == "Stalker")
+                {
+                    rayBullet.hit.gameObject.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+                }
+                if (rayBullet.hit.gameObject.tag == "Boss")
+                {
+                    rayBullet.hit.gameObject.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                }
                 Engineson.print($"Hit: {bulletHitPoint}");
             }
             else

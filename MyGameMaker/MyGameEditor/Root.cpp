@@ -41,15 +41,15 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-	//Application->root->CreateScene("DefaultScene");
-	//Application->root->SetActiveScene("DefaultScene");
+	Application->root->CreateScene("DefaultScene");
+	Application->root->SetActiveScene("DefaultScene");
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MenuScene.scene");
+	/*Application->scene_serializer->DeSerialize("Library/Scenes/MenuScene.scene");*/
 
     return true;
 }
@@ -122,17 +122,17 @@ bool Root::Start()
 	itemtest2->SetTag("AreaTrigger");*/
 
 
-	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+	environment = CreateGameObjectWithPath("Assets/Meshes/Level2 Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
- //   auto objMainCamera = CreateCameraObject("MainCamera");
- //   objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
- //   objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
- //   auto camera = objMainCamera->AddComponent<CameraComponent>();
-	//camera->priority = 1;
- //   objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
- //   mainCamera = objMainCamera;
-	//UpdateCameraPriority();
+    auto objMainCamera = CreateCameraObject("MainCamera");
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+    objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+    auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
+    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    mainCamera = objMainCamera;
+	UpdateCameraPriority();
 	//
 	//// Test PowerUps
 	//

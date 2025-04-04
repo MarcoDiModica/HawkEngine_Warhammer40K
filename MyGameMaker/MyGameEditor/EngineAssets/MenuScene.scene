@@ -56,6 +56,15 @@ GameObject1:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/UI/ButtonPressed.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -75,15 +84,6 @@ GameObject1:
         - 0
         - 0
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/UI/ButtonPressed.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true

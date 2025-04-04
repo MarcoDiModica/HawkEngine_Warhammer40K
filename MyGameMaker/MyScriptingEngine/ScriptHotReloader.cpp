@@ -119,6 +119,7 @@ void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::s
 	if (!initialCompilationResult) {
 		LOG(LogType::LOG_ERROR, "Initial compilation failed. Please solve the errors or ask Hawk Developers :)");
 	}
+
 }
 
 void ScriptHotReloader::RegisterOnReloadCallback(ReloadCallbackType callback) {
@@ -153,6 +154,12 @@ bool ScriptHotReloader::CheckForChanges() {
 	}
 
 	if (scriptsModified) {
+
+		if (Application->root->GetActiveScene()->sceneState == Scene::SceneState::PLAY) {
+			LOG(LogType::LOG_ERROR, "Script changes detected, but engine is in play mode. Please stop the game to reload scripts.");
+			return false;
+		}
+
 		m_IsCompiling = true;
 
 		bool result = false;
@@ -219,6 +226,11 @@ void ScriptHotReloader::TryDeleteFile(const std::string& filePath) {
 bool ScriptHotReloader::ForceRecompile() {
 	if (m_IsCompiling || m_CompilationCooldown) {
 		LOG(LogType::LOG_INFO, "Compilation already in progress or cooling down. Please wait.");
+		return false;
+	}
+
+	if (Application->root->GetActiveScene()->sceneState == Scene::SceneState::PLAY) {
+		LOG(LogType::LOG_ERROR, "Script changes detected, but engine is in play mode. Please stop the game to reload scripts.");
 		return false;
 	}
 

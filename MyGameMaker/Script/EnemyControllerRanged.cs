@@ -15,11 +15,14 @@ public class EnemyControllerRanged : EnemyController
     private float health = 100.0f;
     private float damage = 20.0f;
 
-
+    //audio
+    bool isCombatMusicPlaying = false;
+    private Audio music;
+    private string combatMusic = "Assets/Audio/combatMusic.mp3";
 
     public override void Awake()
     {
-        
+        music = gameObject.GetComponent<Audio>();
     }
     public override void Start()
     {
@@ -69,6 +72,13 @@ public class EnemyControllerRanged : EnemyController
                     Attack();
                     sound?.Play();
                     shootTimer = shootCooldown;
+                }
+
+                if (isCombatMusicPlaying == false)
+                {
+                    sound?.LoadAudio(combatMusic);
+                    sound?.Play(true);
+                    isCombatMusicPlaying = true;
                 }
                 else
                 {

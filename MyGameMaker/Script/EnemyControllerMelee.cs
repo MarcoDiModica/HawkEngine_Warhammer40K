@@ -18,6 +18,11 @@ public class EnemyControllerMelee : EnemyController
     private HormagauntAnimation anim;
     PlayerController pc;
 
+    //audio
+    bool isCombatMusicPlaying = false;
+    private Audio music;
+    private string combatMusic = "Assets/Audio/SFX/Player/combatMusic.wav";
+
     // Enemy Stats
     private float health = 100.0f;
     private float clawDamage = 10.0f;
@@ -32,7 +37,10 @@ public class EnemyControllerMelee : EnemyController
     private float leapTimer = 0f;
     private bool hasLeap = true;
 
-    public override void Awake() {}
+    public override void Awake() {
+
+        music = gameObject.GetComponent<Audio>();
+    }
 
     public override void Start()
     {
@@ -126,6 +134,12 @@ public class EnemyControllerMelee : EnemyController
                             isFootstepPlaying = true;
                             hasStoppedFootsteps = false;
                         }
+                        if (isCombatMusicPlaying == false)
+                        {
+                            sound?.LoadAudio(combatMusic);
+                            sound?.Play(true);
+                            isCombatMusicPlaying = true;
+                        }
 
                         Vector3 currentVelocity = rb.GetVelocity();
                         moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
@@ -181,7 +195,7 @@ public class EnemyControllerMelee : EnemyController
                             eulerRotation.X * ((float)Math.PI / 180.0f),
                             eulerRotation.Z * ((float)Math.PI / 180.0f)
                         );
-
+                        
                         // enemyTransform.SetRotationQuat(newRotation);
                         collider.SetRotation(newRotation);
                     }

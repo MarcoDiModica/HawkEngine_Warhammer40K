@@ -12,7 +12,13 @@ public class EnemyControllerBoss : EnemyController
     private Vector3 hurtboxOffset = new Vector3(3.0f, 0.0f, 0.0f); 
     private GameObject hurtboxObject;
 
+    //audio
+    private Audio music;
+    private string combatMusic = "Assets/Audio/combatMusic.mp3";
+   
     //stats
+
+    bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
     private float damage = 25.0f;
 
@@ -51,7 +57,7 @@ public class EnemyControllerBoss : EnemyController
 
     public override void Awake()
     {
- 
+        music = gameObject.GetComponent<Audio>();
     }
 
     public override void Start()
@@ -85,6 +91,7 @@ public class EnemyControllerBoss : EnemyController
     }
     public override void Update(float deltaTime)
     {
+
         if (currentHealth < 500)
         {
             currentPhase = BossPhase.PHASE3;
@@ -96,6 +103,13 @@ public class EnemyControllerBoss : EnemyController
         switch (currentPhase)
         {
             case BossPhase.PHASE1:
+              
+                if (isCombatMusicPlaying == false)
+                {
+                    sound?.LoadAudio(combatMusic);
+                    sound?.Play(true);
+                    isCombatMusicPlaying = true;
+                }
 
                 timer += deltaTime;
 

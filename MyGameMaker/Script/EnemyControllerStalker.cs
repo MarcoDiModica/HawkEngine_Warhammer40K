@@ -23,7 +23,12 @@ public class EnemyControllerStalker : EnemyController
     private float clawDamage = 10.0f;
     private float leapDamage = 15.0f;
 
-        // Pounce Attack
+    //audio
+    bool isCombatMusicPlaying = false;
+    private Audio music;
+    private string combatMusic = "Assets/Audio/combatMusic.mp3";
+
+    // Pounce Attack
     public float pounceRange = 20.0f;
     public float pounceCooldown = 2.0f;
     private float pounceDuration = 1.5f;
@@ -34,7 +39,10 @@ public class EnemyControllerStalker : EnemyController
     public float invisibilityRange = 35.0f;
     private bool isInvisible = false;
 
-    public override void Awake() { }
+    public override void Awake() {
+
+        music = gameObject.GetComponent<Audio>();
+    }
 
     public override void Start()
     {
@@ -90,6 +98,12 @@ public class EnemyControllerStalker : EnemyController
 
                 if (distanceToPlayer < distToChase)
                 {
+                    if (isCombatMusicPlaying == false)
+                    {
+                        sound?.LoadAudio(combatMusic);
+                        sound?.Play(true);
+                        isCombatMusicPlaying = true;
+                    }
                     // Enemy Attack
                     if (IsPlayerInHurtbox(playerPos))
                     {

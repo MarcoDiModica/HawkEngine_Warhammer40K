@@ -186,7 +186,7 @@ bool Root::Start()
 	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	//Lictor
-	/*auto lictor = CreateGameObject("Lictor");
+	auto lictor = CreateGameObject("Lictor");
 	lictor->SetTag("Enemy");
 	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-30, 0, -5));
 	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
@@ -198,7 +198,7 @@ bool Root::Start()
 	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
 	lictorMesh->SetName("LictorMesh");
 	ParentGameObject(*lictorMesh, *lictor);
-	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");*/
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
 
 	//auto cube = CreateCube("Cube");
 	//cube->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));

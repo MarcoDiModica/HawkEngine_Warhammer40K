@@ -60,6 +60,23 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if (Input.GetKeyDown(KeyCode.Z) )
+        {
+            if (playerData.GodMode == true)
+            {
+                playerData.GodMode = false;
+                Engineson.print("GodMode deactivated");
+            }
+            else
+            {
+                playerData.GodMode = true;
+                Engineson.print("GodMode activated");
+
+            }
+
+
+        }
+        
         dashDelayTimer -= deltaTime;
         transitionTimer -= deltaTime;
         if (once == false)
@@ -327,7 +344,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "EnemyAttack")
         {
-            if (!playerDash.isInvulnerable)
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
                 if(playerData.GetHealth() <= 0)
@@ -351,7 +368,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "Enemy")
         {
-            if (!playerDash.isInvulnerable)
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
                 if (playerData.GetHealth() <= 0)

@@ -9,6 +9,7 @@ public class PlayerData
     public float bonusCadence = 1;
     public bool isPiercing = false;
     public bool infiniteBullets = false;
+    public bool GodMode = false;
 
 
 

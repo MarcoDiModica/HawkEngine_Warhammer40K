@@ -124,11 +124,11 @@ public class PlayerShooting : MonoBehaviour
 
         //Engineson.print($"Shoot Timer: {shootTimer}");
 
-        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Y))
+        if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q))
         {
             ChangeWeaponRight();
         }
-        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.T))
+        else if (playerInput.IsChangingWeaponLeft() || Input.GetKeyDown(KeyCode.Z))
         {
             ChangeWeaponLeft();
         }
@@ -283,6 +283,7 @@ public class PlayerShooting : MonoBehaviour
                 sound?.Play();
                 break;
         }
+        Engineson.print("Changed weapon right");
     }
 
     private void ChangeWeaponLeft()
@@ -322,6 +323,8 @@ public class PlayerShooting : MonoBehaviour
                 sound?.Play();
                 break;
         }
+        Engineson.print("Changed weapon left");
+
     }
 
     private void UseAbility1()

@@ -63,16 +63,18 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	/*auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
-	canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
-	auto canvasPauseMenu = FindGOByName("Canvas_PauseMenu");
-	canvasPauseMenu->AddComponent<ScriptComponent>()->LoadScript("PauseMenu");
-	auto canvasOptionsMenu = FindGOByName("Canvas_OptionsMenu");
-	canvasOptionsMenu->AddComponent<ScriptComponent>()->LoadScript("OptionMenu");
-	auto canvasLoseScreen = FindGOByName("Canvas_lose_screen");
-	canvasLoseScreen->AddComponent<ScriptComponent>()->LoadScript("LoseScreen");
-	auto canvasWinScreen = FindGOByName("Canvas_win_screen");
-	canvasWinScreen->AddComponent<ScriptComponent>()->LoadScript("WinScreen");*/
+	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
+	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
+	//auto canvasPauseMenu = FindGOByName("Canvas_PauseMenu");
+	//canvasPauseMenu->AddComponent<ScriptComponent>()->LoadScript("PauseMenu");
+	//auto canvasOptionsMenu = FindGOByName("Canvas_OptionsMenu");
+	//canvasOptionsMenu->AddComponent<ScriptComponent>()->LoadScript("OptionMenu");
+	//auto canvasLoseScreen = FindGOByName("Canvas_lose_screen");
+	//canvasLoseScreen->AddComponent<ScriptComponent>()->LoadScript("LoseScreen");
+	//auto canvasWinScreen = FindGOByName("Canvas_win_screen");
+	//canvasWinScreen->AddComponent<ScriptComponent>()->LoadScript("WinScreen");
+	//auto canvasHUD = FindGOByName("Canvas_HUD");
+	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/FinalLevel1.Scene");
 	//auto player = CreateGameObject("Player");

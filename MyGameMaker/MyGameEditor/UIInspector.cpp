@@ -43,7 +43,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
-
+#include <MyGameEngine/ImGuiCurveEditor.h>
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -1057,18 +1057,13 @@ private:
 
 		if (system->IsPlaying()) {
 			if (ImGui::Button("Stop", ImVec2(width, 0))) {
-				system->Stop();
+				system->Pause();
 			}
 		}
 		else {
 			if (ImGui::Button("Play", ImVec2(width, 0))) {
 				system->Play();
 			}
-		}
-
-		ImGui::SameLine();
-		if (ImGui::Button("Pause", ImVec2(width, 0))) {
-			system->Pause();
 		}
 
 		ImGui::SameLine();
@@ -1083,6 +1078,12 @@ private:
 		if (ImGui::IsItemHovered()) {
 			ImGui::SetTooltip("Emit particles once and then stop");
 		}
+
+		bool playOnAwake = system->GetPlayOnAwake();
+		if (ImGui::Checkbox("Play on awake", &playOnAwake)) {
+			system->SetPlayOnAwake(playOnAwake);
+		}
+		
 
 		ImGui::EndGroup();
 		ImGui::Separator();
@@ -1118,6 +1119,14 @@ private:
 
 		ImGui::BeginGroup();
 
+		//Duration 
+
+		float duration = system->GetDuration();
+
+		if (ImGui::DragFloat("Duration", &duration, 0.1f, 0.1f, 1000.0f)) {
+			system->SetDuration(duration);
+		}
+
 		// Lifetime
 		float minLifetime = system->GetMinLifetime();
 		float maxLifetime = system->GetMaxLifetime();
@@ -1128,15 +1137,27 @@ private:
 		// Speed
 		float minSpeed = system->GetMinSpeed();
 		float maxSpeed = system->GetMaxSpeed();
-		if (ImGui::DragFloatRange2("Speed", &minSpeed, &maxSpeed, 0.05f, 0.0f, 50.0f)) {
+		if (ImGui::DragFloatRange2("Speed in a range", &minSpeed, &maxSpeed, 0.05f, 0.0f, 50.0f)) {
 			system->SetParticleSpeed(minSpeed, maxSpeed);
 		}
 
+		float endSpeed = system->GetEndSpeed();
+
+		if (ImGui::DragFloat("Set final speed", &endSpeed, 0.05f, -50.0f,50.0f)) {
+			system->SetEndSpeed(endSpeed);
+		}
+
 		// Size
-		float startSize = system->GetStartSize();
 		float endSize = system->GetEndSize();
-		if (ImGui::DragFloatRange2("Size", &startSize, &endSize, 0.05f, 0.01f, 10.0f)) {
-			system->SetParticleSize(startSize, endSize);
+		if (ImGui::DragFloat("Size end", &endSize, 0.05f, 0.01f, 10.0f)) {
+			system->SetParticleEndSize(endSize);
+		}
+	
+		float minScale = system->GetMinScale();
+		float maxScale = system->GetMaxScale();
+		if (ImGui::DragFloatRange2("Size in a range", &minScale, &maxScale, 0.05f, 0.00f, 10.0f)) {
+			system->SetMinScale(minScale);
+			system->SetMaxScale(maxScale);
 		}
 
 		// Rotation
@@ -1144,12 +1165,22 @@ private:
 		if (ImGui::DragFloat("Rotation Speed", &rotationSpeed, 0.1f, 0.0f, 10.0f)) {
 			system->SetParticleRotation(rotationSpeed);
 		}
+		bool randomRotation = system->GetRandomRotation();
+		if (ImGui::Checkbox("Random Rotation", &randomRotation)) {
+			system->SetRandomRotation(randomRotation);
+		}
+		float startRotation = system->GetStartRotation();
+		
+		if (ImGui::DragFloat("Start rotation", &startRotation, 0.1f, 0.0f, 360.0f)) {
+			
+			system->SetStartRotation(startRotation);
+		}
 
 		// Gravity
-		float gravity = system->GetGravity();
-		if (ImGui::DragFloat("Gravity", &gravity, 0.01f, -10.0f, 10.0f)) {
-			system->SetGravity(gravity);
-		}
+        float gravity[3] = { system->GetGravity().x, system->GetGravity().y, system->GetGravity().z };
+        if (ImGui::DragFloat3("Gravity", gravity, 0.01f, -10.0f, 10.0f)) {
+        system->SetGravity(glm::vec3(gravity[0], gravity[1], gravity[2]));
+        }
 		if (ImGui::IsItemHovered()) {
 			ImGui::SetTooltip("Negative values make particles rise");
 		}
@@ -1284,29 +1315,43 @@ private:
 
 		float width = (ImGui::GetContentRegionAvail().x - 9.0f) / 4.0f; // 3 spaces between buttons
 
-		if (ImGui::Button("Smoke", ImVec2(width, 0))) {
-			system->ConfigureSmoke();
-		}
-		ImGui::SameLine(0, 3);
+		int particleID = system->particleID;
 
-		if (ImGui::Button("Fire", ImVec2(width, 0))) {
-			system->ConfigureFire();
+		if (ImGui::InputInt("Particle preset ID", &particleID)) {
+			system->particleID = particleID;
 		}
-		ImGui::SameLine(0, 3);
 
-		if (ImGui::Button("Muzzle Flash", ImVec2(width, 0))) {
-			system->ConfigureMuzzleFlash();
-		}
-		ImGui::SameLine(0, 3);
-
-		if (ImGui::Button("Dust", ImVec2(width, 0))) {
-			system->ConfigureDust();
+		if (ImGui::Button("Set particle preset", ImVec2(width, 0))) {
+			system->ApplyPreset(particleID);
 		}
 
 		// Softness
 		float softness = system->GetSoftness();
 		if (ImGui::SliderFloat("Edge Softness", &softness, 0.0f, 1.0f)) {
 			system->SetSoftness(softness);
+		}
+
+		//SpriteSheet Animation
+		bool useAnimation = system->GetUseAnimation();
+		if (ImGui::Checkbox("Use animation", &useAnimation)) 
+		{
+			system->SetUseAnimation(useAnimation);
+		}
+
+		bool randomStartIndex = system->GetRandomStartIndex();
+		if (ImGui::Checkbox("Random start index", &randomStartIndex)) {
+			system->SetRandomStartIndex(randomStartIndex);
+		}
+
+		glm::vec2 spriteSize = system->GetSpriteSize();
+		float spriteSizeArray[2] = { spriteSize.x, spriteSize.y };
+		if (ImGui::DragFloat2("Sprite Size", spriteSizeArray, 0.1f, 0.1f, 4600.0f)) {
+			system->SetSpriteSize(glm::vec2(spriteSizeArray[0], spriteSizeArray[1]));
+		}
+
+		float animSpeed = system->GetAnimSpeed();
+		if (ImGui::DragFloat("Animation Speed", &animSpeed, 0.1f, 0.1f, 100.0f)) {
+			system->SetAnimSpeed(animSpeed);
 		}
 
 		ImGui::EndGroup();
@@ -1389,6 +1434,20 @@ private:
 				system->DisableColorGradient();
 			}
 		}
+
+		
+		int selectionIdx = -1;
+		
+		if (ImGui::Button("Add Color Point", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			Application->gui->foo[0].x = ImGui::CurveTerminator;
+		}
+
+		if (ImGui::Curve("", ImVec2(600, 200), 10, Application->gui->foo,&selectionIdx))
+		{
+			// curve changed
+		}
+
+		float value_you_care_about = ImGui::CurveValue(0.7f, 10, Application->gui->foo); // calculate value at position 0.7
 
 		ImGui::Button("Drop Gradient Here", ImVec2(ImGui::GetContentRegionAvail().x, 30));
 		HandleParticleTextureDrop(system, true);

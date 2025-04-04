@@ -22,6 +22,8 @@ enum class EmitterShape {
 
 struct ParticlePreset {
 	ParticleType type;
+	bool playOnAwake;
+	float duration;
 	glm::vec3 colorStart;
 	glm::vec3 colorEnd;
 	float alphaStart;
@@ -32,13 +34,23 @@ struct ParticlePreset {
 	float maxLifetime;
 	float minSpeed;
 	float maxSpeed;
-	float gravity;
+	float endSpeed;
+	glm::vec3 gravity;
 	float rotationSpeed;
 	float emissionRate;
 	EmitterShape shape;
 	float shapeParam1;  // Radius for sphere/cone/circle, width for box
 	float shapeParam2;  // Height for cone/box
 	float shapeParam3;  // Depth for box, angle for cone
+	glm::vec2 spriteSize;
+	bool useAnimation;
+	bool randomAnimIndex;
+	float animSpeed; //in seconds
+	float startRotation;
+	bool randomRotation;
+	float minSize;
+	float maxSize;
+	std::string texturePath;
 };
 
 namespace ParticlePresets {
@@ -61,13 +73,13 @@ public:
 	void RenderGameView();
 
 	std::unique_ptr<Component> Clone(GameObject* owner) override;
-	ComponentType GetType() const override { return ComponentType::PARTICLES_EMITTER; }
+	ComponentType GetType() const override { return ComponentType::PARTICLEFX; }
 
 	void SetTexture(const std::string& texturePath);
 
 	void SetColorGradient(const std::string& texturePath);
 
-	void ApplyPreset(const ParticlePreset& preset);
+	void ApplyPreset(int presetID);
 
 	void EmitBurst(int count);
 
@@ -84,13 +96,26 @@ public:
 	void SetParticleColor(const glm::vec3& startColor, const glm::vec3& endColor);
 	void SetParticleAlpha(float startAlpha, float endAlpha);
 	void SetParticleRotation(float rotationSpeed);
-	void SetGravity(float gravity);
+	void SetGravity(glm::vec3 gravity);
 	void SetBillboardType(int billboardType);
 	void SetShapeParameters(float param1, float param2 = 0.0f, float param3 = 0.0f);
 	void SetOneShot(bool oneShot);
 	void SetSoftness(float value) { if (material) material->SetSoftness(value); }
 	void SetParticleType(ParticleType type) { if (material) material->SetParticleType(type); }
 	void DisableColorGradient() { if (material) material->DisableColorGradient(); }
+	void SetEndSpeed(float Espeed);
+	void SetDuration(float duration) { this->duration = duration; }
+	void SetPlayOnAwake(bool playOnAwake) { this->playOnAwake = playOnAwake; }
+	void SetSpriteSize(glm::vec2 size) { spriteSize = size; }
+	void SetUseAnimation(bool useAnimation) { this->useAnimation = useAnimation; }
+	void SetAnimSpeed(float animSpeed) { this->animSpeed = animSpeed; }
+	void SetMinScale(float minSize) { this->minSize = minSize; }
+	void SetMaxScale(float maxSize) { this->maxSize = maxSize; }
+	void SetStartRotation(float startRotation) { this->startRotation = startRotation; }
+	void SetRandomRotation(bool randomRotation) { this->randomRotation = randomRotation; }
+	void SetParticleEndSize(float endSize);
+	void SetRandomStartIndex(bool randomAnimIndex) { this->randomAnimIndex = randomAnimIndex; }
+
 
 	float GetEmissionRate() const { return emissionRate; }
 	float GetMinLifetime() const { return minLifetime; }
@@ -99,12 +124,23 @@ public:
 	float GetMaxSpeed() const { return maxSpeed; }
 	float GetStartSize() const { return startSize; }
 	float GetEndSize() const { return endSize; }
+	float GetEndSpeed() const { return endSpeed; }
+	float GetDuration() const { return duration; }
+	float GetAnimSpeed() const { return animSpeed; }
+	float GetStartRotation() const { return startRotation; }
+	float GetMinScale() const { return minSize; }
+	float GetMaxScale() const { return maxSize; }
+	bool GetPlayOnAwake() const { return playOnAwake; }
+	bool GetUseAnimation() const { return useAnimation; }
+	bool GetRandomRotation() const { return randomRotation; }
+	bool GetRandomStartIndex() const { return randomAnimIndex; }
+	glm::vec2 GetSpriteSize() const { return spriteSize; }
 	glm::vec3 GetStartColor() const { return startColor; }
 	glm::vec3 GetEndColor() const { return endColor; }
 	float GetStartAlpha() const { return startAlpha; }
 	float GetEndAlpha() const { return endAlpha; }
 	float GetRotationSpeed() const { return rotationSpeed; }
-	float GetGravity() const { return gravity; }
+	glm::vec3 GetGravity() const { return gravity; }
 	int GetBillboardType() const { return material ? material->GetBillboardType() : 0; }
 	EmitterShape GetEmitterShape() const { return emitterShape; }
 	ParticleType GetParticleType() const { return material ? static_cast<ParticleType>(material->GetParticleType()) : ParticleType::DEFAULT; }
@@ -116,11 +152,22 @@ public:
 	std::string GetTexturePath() const { return material && material->getImg() ? material->getImg()->image_path : ""; }
 	std::string GetGradientPath() const { return material && material->GetColorGradientMap() ? material->GetColorGradientMap()->image_path : ""; }
 	int GetMaxParticles() const { return renderer ? static_cast<int>(renderer->GetMaxParticles()) : 0; }
+	glm::vec2 GenerateRandomSize(float minSize, float maxSize);
 
-	void ConfigureSmoke();
-	void ConfigureFire();
-	void ConfigureMuzzleFlash();
-	void ConfigureDust();
+	//void ConfigureSmoke();
+	//void ConfigureFire();
+	//void ConfigureMuzzleFlash();
+	//void ConfigureExplosion();
+	//void ConfigureDust();
+
+
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
+
+	int particleID = 0;
+
+	// Player VFX
+
 
 private:
 	void EmitParticle();
@@ -133,19 +180,27 @@ private:
 	std::unique_ptr<ParticleInstancedRenderer> renderer;
 
 	// Emitter configurations
+	bool playOnAwake;
 	EmitterShape emitterShape;
 	float emissionRate;       
 	float particlesPerSecond; 
 	float timeSinceLastEmit;
 
 	// Particle configurations
+	float duration;
+	float durationTrack;
 	float minLifetime, maxLifetime;
 	float minSpeed, maxSpeed;
+	float endSpeed;
 	float startSize, endSize;
+	float minSize;
+	float maxSize;
 	glm::vec3 startColor, endColor;
 	float startAlpha, endAlpha;
+	bool randomRotation;
+	float startRotation;
 	float rotationSpeed;
-	float gravity;
+	glm::vec3 gravity;
 
 	// Shape parameters
 	float shapeParam1;  // Radius for sphere/cone/circle, width for box
@@ -167,6 +222,15 @@ private:
 	glm::quat rotation;
 	glm::vec3 scale;
 
+	int particleTypeInt = 0;
+
+	// Spritesheet data
+	glm::vec2 spriteSize = glm::vec2(133,175);
+	bool useAnimation;
+	bool randomAnimIndex = false; 
+	float animSpeed;
+
+
 protected:
 	friend class SceneSerializer;
 
@@ -186,6 +250,8 @@ protected:
 		node["maxSpeed"] = maxSpeed;
 		node["startSize"] = startSize;
 		node["endSize"] = endSize;
+		node["minSize"] = minSize;
+		node["maxSize"] = maxSize;
 
 		node["startColor"] = YAML::Node();
 		node["startColor"].push_back(startColor.r);
@@ -201,13 +267,28 @@ protected:
 		node["endAlpha"] = endAlpha;
 
 		node["rotationSpeed"] = rotationSpeed;
-		node["gravity"] = gravity;
+		node["gravity"] = YAML::Node();
+		node["gravity"].push_back(gravity.x);
+		node["gravity"].push_back(gravity.y);
+		node["gravity"].push_back(gravity.z);
 
 		node["shapeParam1"] = shapeParam1;
 		node["shapeParam2"] = shapeParam2;
 		node["shapeParam3"] = shapeParam3;
 
 		node["isOneShot"] = isOneShot;
+		node["isPlaying"] = isPlaying;
+		node["isPaused"] = isPaused;
+		node["burstEmitted"] = burstEmitted;
+
+		node["spriteSize"] = YAML::Node();
+		node["spriteSize"].push_back(spriteSize.x);
+		node["spriteSize"].push_back(spriteSize.y);
+
+		node["useAnimation"] = useAnimation;
+		node["animSpeed"] = animSpeed;
+		node["startRotation"] = startRotation;
+		node["randomRotation"] = randomRotation;
 
 		if (material) {
 			node["material"] = YAML::Node();
@@ -299,7 +380,17 @@ protected:
 				rotationSpeed = node["rotationSpeed"].as<float>();
 			}
 			if (node["gravity"]) {
-				gravity = node["gravity"].as<float>();
+				auto gravityNode = node["gravity"];
+				if (gravityNode.IsSequence() && gravityNode.size() == 3) {
+					gravity = glm::vec3(
+						gravityNode[0].as<float>(),
+						gravityNode[1].as<float>(),
+						gravityNode[2].as<float>()
+					);
+				}
+				else {
+					gravity = glm::vec3(0.0f); // Default to zero vector if format is incorrect
+				}
 			}
 
 			if (node["shapeParam1"]) {
@@ -314,6 +405,24 @@ protected:
 
 			if (node["isOneShot"]) {
 				isOneShot = node["isOneShot"].as<bool>();
+			}
+
+			if (node["spriteSize"] && node["spriteSize"].IsSequence() && node["spriteSize"].size() == 2) {
+				spriteSize.x = node["spriteSize"][0].as<float>();
+				spriteSize.y = node["spriteSize"][1].as<float>();
+			}
+
+			if (node["useAnimation"]) {
+				useAnimation = node["useAnimation"].as<bool>();
+			}
+			if (node["animSpeed"]) {
+				animSpeed = node["animSpeed"].as<float>();
+			}
+			if (node["startRotation"]) {
+				startRotation = node["startRotation"].as<float>();
+			}
+			if (node["randomRotation"]) {
+				randomRotation = node["randomRotation"].as<bool>();
 			}
 
 			if (node["material"]) {
@@ -372,4 +481,4 @@ protected:
 
 //cosas a mejorar: Sub-emisores, Movimiento basado en ruido, Efectos de estela/cinta, particula suaves
 
-//Simulación en GPU Mueve más cálculos al GPU usando compute shaders Aumentará significativamente el número de partículas posibles
+//Simulaciï¿½n en GPU Mueve mï¿½s cï¿½lculos al GPU usando compute shaders Aumentarï¿½ significativamente el nï¿½mero de partï¿½culas posibles

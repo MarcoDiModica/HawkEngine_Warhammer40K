@@ -3,10 +3,31 @@
 #include "../MyGameEngine/ShaderManager.h"
 
 enum class ParticleType {
+    // PLACE_HOLDERS
     DEFAULT = 0,
     SMOKE = 1,
     FIRE = 2,
-    MUZZLE_FLASH = 3
+    MUZZLE_FLASH = 3,
+    EXPLOSION = 4,
+    // ENVIRONMENT
+    FLAME = 5,
+    ENVIRONMENT_SMOKE = 6,
+    ENVIRONMENT_EXPLOSION = 7,
+    ENVIRONMENT_DROPPLET = 15,
+    ENVIRONMENT_SPARK = 16,
+    // Enemies
+    ENEMY_DASH  = 9,
+    ACID_ATK    = 10,
+    // ACID_ATK_EXPLODE can use the same vfx structure as ACID_ATK with different texture
+    ACID_PUDDLE = 11,
+
+    // Player / Weapons
+    ENERGY_BALL = 12,
+    RAILGUN_AUTO = 13,
+    RAILGUN_SEMI = 14,
+    RIFFLE_SHOT = 8,
+    ARC_SNARE_IMPACT = 17,
+    MEDICAE_STIM = 18
 };
 
 class ParticleMaterial : public Material {
@@ -17,6 +38,12 @@ public:
         particleType = static_cast<int>(ParticleType::DEFAULT);
         softness = 0.0f;
         useColorGradient = false;
+		startColor = glm::vec4(1.0f);
+		endColor = glm::vec4(1.0f);
+		spriteSize = glm::vec2(1.0f);
+		sheetSize = glm::vec2(1.0f);
+		useAnimation = false;
+		spriteIndex = 0;
     }
 
     ~ParticleMaterial() override = default;
@@ -45,6 +72,14 @@ public:
         shader->SetUniform("particleType", particleType);
         shader->SetUniform("softness", softness);
         shader->SetUniform("useColorGradient", useColorGradient ? 1 : 0);
+
+		shader->SetUniform("startColor", startColor);
+		shader->SetUniform("endColor", endColor);
+
+        //shader->SetUniform("spriteIndex",spriteIndex);
+		//shader->SetUniform("spriteSize",spriteSize );
+		//shader->SetUniform("sheetSize",sheetSize );
+		//shader->SetUniform("useAnimation",useAnimation );
 
         glm::vec3 cameraPosition(0.0f);
         glm::vec3 cameraUp(0.0f, 1.0f, 0.0f);
@@ -95,4 +130,10 @@ private:
 	bool useColorGradient;
 	glm::vec3 billboardAxis;
     std::shared_ptr<Image> colorGradientMap = nullptr; 
+	glm::vec4 startColor;
+	glm::vec4 endColor;
+	glm::vec2 spriteSize;
+	glm::vec2 sheetSize;
+	bool useAnimation;
+	int spriteIndex;
 };

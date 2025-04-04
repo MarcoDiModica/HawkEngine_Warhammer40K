@@ -451,6 +451,10 @@ void Tweening::Update(float deltaTime) {
 			tween.onUpdate(t);
 		}
 
+		if (!tween.object->HasComponent<UITransformComponent>()) {
+			continue;
+		}
+
 		switch (tween.tweenType) {
 		case TweenType::POSITION:
 		case TweenType::POSITION_X:

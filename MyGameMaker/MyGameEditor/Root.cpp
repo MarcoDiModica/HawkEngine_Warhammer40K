@@ -133,36 +133,105 @@ bool Root::Start()
 	//
 	auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
 	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
-	powerUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> MedicaeStimmBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> MedicaeStimmRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> MedicaeStimmNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> MedicaeStimmMetallic = std::make_shared<Image>();
+	MedicaeStimmBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	MedicaeStimmRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	MedicaeStimmNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	MedicaeStimmMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(MedicaeStimmBaseColor);
+	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(MedicaeStimmRoughness);
+	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(MedicaeStimmNormal);
+	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MedicaeStimmMetallic);
 	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
 	powerUp->SetTag("PowerUp");	
-	
-	auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
-	powerUp3->GetTransform()->SetPosition(glm::vec3(-20, 2, 0));
-	powerUp3->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp3->AddComponent<ScriptComponent>()->LoadScript("Magnet");
-	powerUp3->SetTag("PowerUp");
-	
-	
+
 	auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
 	powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
-	powerUp5->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp5->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp5->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
 	powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> ChapterStandardBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> ChapterStandardRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> ChapterStandardNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> ChapterMetallic = std::make_shared<Image>();
+	ChapterStandardBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	ChapterStandardRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	ChapterStandardNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	ChapterMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ChapterStandardBaseColor);
+	powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(ChapterStandardRoughness);
+	powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(ChapterStandardNormal);
+	powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(ChapterMetallic);
 	powerUp5->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
 	powerUp5->SetTag("PowerUp");
-	
+
 	auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 	powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
-	powerUp6->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp6->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> BlackHeartBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> BlackHeartRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> BlackHeartNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> BlackHeartMetallic = std::make_shared<Image>();
+	BlackHeartBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	BlackHeartRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	BlackHeartNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	BlackHeartMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp6->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BlackHeartBaseColor);
+	powerUp6->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BlackHeartRoughness);
+	powerUp6->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BlackHeartNormal);
+	powerUp6->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(BlackHeartMetallic);
 	powerUp6->AddComponent<ScriptComponent>()->LoadScript("BlackHeart");
 	powerUp6->SetTag("PowerUp");
+
+	auto powerUp2 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
+	powerUp2->GetTransform()->SetPosition(glm::vec3(0, 1, -10));
+	powerUp2->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	powerUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> MagnetBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> MagnetRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> MagnetNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> MagnetMetallic = std::make_shared<Image>();
+	MagnetBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	MagnetRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	MagnetNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	MagnetMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setImage(MagnetBaseColor);
+	powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(MagnetRoughness);
+	powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(MagnetNormal);
+	powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MagnetMetallic);
+	powerUp2->AddComponent<ScriptComponent>()->LoadScript("Magnet");
+	powerUp2->SetTag("PowerUp");
+
+	auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/AmmunitionBlessing.fbx");
+	powerUp3->GetTransform()->SetPosition(glm::vec3(0, 1, 10));
+	powerUp3->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> AmmunitionBlessingBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> AmmunitionBlessingRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> AmmunitionBlessingNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> AmmunitionBlessingMetallic = std::make_shared<Image>();
+	AmmunitionBlessingBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	AmmunitionBlessingRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	AmmunitionBlessingNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	AmmunitionBlessingMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setImage(AmmunitionBlessingBaseColor);
+	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(AmmunitionBlessingRoughness);
+	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(AmmunitionBlessingNormal);
+	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(AmmunitionBlessingMetallic);
+	powerUp3->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
+	powerUp3->SetTag("PowerUp");
+
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
@@ -183,6 +252,7 @@ bool Root::Start()
 	//lictorMesh->SetName("LictorMesh");
 	//ParentGameObject(*lictorMesh, *lictor);
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+
 
 	//auto cube = CreateCube("Cube");
 	//cube->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));

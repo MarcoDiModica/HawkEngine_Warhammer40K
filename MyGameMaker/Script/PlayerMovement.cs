@@ -5,8 +5,8 @@ using System.Numerics;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
-    public float walkSpeed = 5; 
-    public float runSpeed = 10.0f; 
+    public float walkSpeed = 2.5f; 
+    public float runSpeed = 5.0f; 
     public float rotationSpeed = 30.0f;
     public float acceleration = 40.0f;
     public float deceleration = 15.0f;

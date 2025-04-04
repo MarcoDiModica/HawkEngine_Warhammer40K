@@ -1,5 +1,6 @@
 using HawkEngine;
 using System;
+using System.Net.Http.Headers;
 using System.Numerics;
 
 public class EnemyControllerMelee : EnemyController
@@ -82,6 +83,7 @@ public class EnemyControllerMelee : EnemyController
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
+        gameObject.tag = "Enemy";
         isDead = false;
     }
 
@@ -264,6 +266,14 @@ public class EnemyControllerMelee : EnemyController
         return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
                (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        anim.SetHitAnimation();
+        sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        sound?.Play();
     }
 
     override public void OnCollisionEnter(GameObject other)

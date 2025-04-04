@@ -57,6 +57,7 @@ public class EnemyControllerRanged : EnemyController
 
         maxHealth = 100.0f;
         currentHealth = maxHealth;
+        gameObject.tag = "Enemy";
     }
 
     public override void Update(float deltaTime)
@@ -180,6 +181,15 @@ public class EnemyControllerRanged : EnemyController
         {
             Engineson.print($"Error creating projectile: {e.Message}");
         }
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Engineson.print("Hit");
+        //anim.SetHitAnimation();
+        //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        //sound?.Play();
     }
     override public void OnCollisionEnter(GameObject other)
     {

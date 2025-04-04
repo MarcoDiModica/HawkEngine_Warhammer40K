@@ -152,6 +152,10 @@ public class Boltgun : BaseWeapon
                 }
                 else
                 {
+                    if (GameObject.Find(collisionNames[i]).tag == "Enemy")
+                    {
+                        GameObject.Find(collisionNames[i]).GetComponent<EnemyController>().TakeDamage(20.0f); //placeholder damage
+                    }
                     //Engineson.Destroy(GameObject.Find(collisionNames[i]));
                     Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
                     collisionNames.RemoveAt(i);

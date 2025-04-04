@@ -88,6 +88,7 @@ public class EnemyControllerBoss : EnemyController
             return;
         }
         currentHealth = 900.0f;
+        gameObject.tag = "Enemy";
     }
     public override void Update(float deltaTime)
     {
@@ -220,6 +221,13 @@ public class EnemyControllerBoss : EnemyController
 
     }
 
+    public override void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        //anim.SetHitAnimation();
+        //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        //sound?.Play();
+    }
     private void UnburrowingAttack()
     {
         if (playerTransform != null)

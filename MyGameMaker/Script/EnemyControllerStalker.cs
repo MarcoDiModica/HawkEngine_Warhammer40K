@@ -84,6 +84,7 @@ public class EnemyControllerStalker : EnemyController
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
+        gameObject.tag = "Enemy";
         isDead = false;
     }
 
@@ -234,7 +235,13 @@ public class EnemyControllerStalker : EnemyController
         rb.SetVelocity(rb.GetVelocity() * 2f);
         hasPounce = false;
     }
-
+    public override void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        //anim.SetHitAnimation();
+        //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        //sound?.Play();
+    }
     private bool IsPlayerInHurtbox(Vector3 playerPos)
     {
         Vector3 hurtboxCenter = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);

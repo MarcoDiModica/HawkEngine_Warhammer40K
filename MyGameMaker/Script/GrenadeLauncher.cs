@@ -49,13 +49,13 @@ public class GrenadeLauncher : BaseAbilities
         if (!canThrow)
         {
             abilityTimer += deltaTime;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+          //  Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
-                Engineson.print("Cooldown terminado. Habilidad lista.");
+               // Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
 
@@ -93,7 +93,7 @@ public class GrenadeLauncher : BaseAbilities
     {
         if (!canThrow)
         {
-            Engineson.print("Habilidad en cooldown. Espera...");
+           // Engineson.print("Habilidad en cooldown. Espera...");
             return;
         }
 
@@ -104,13 +104,14 @@ public class GrenadeLauncher : BaseAbilities
 
         if (grenade == null)
         {
-            Engineson.print("ERROR: No se pudo crear la granada.");
+           // Engineson.print("ERROR: No se pudo crear la granada.");
             return;
         }
 
         grenade.AddScript("Grenade");
         grenade.GetComponent<Grenade>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
         grenade.AddComponent<Audio>();
+        grenade.GetComponent<Grenade>().Start();
 
         canThrow = false; // Inicia el cooldown
         abilityTimer = 0.0f;

@@ -49,7 +49,11 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
+
 	Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.scene");
+
+	//Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+
 
     return true;
 }
@@ -107,6 +111,25 @@ bool Root::Start()
 	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 
 	/*
+
+	//particle->ApplyPreset(Particle)
+	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
+
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	playerMesh->SetName("playerMesh");
+	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*playerMesh, *player);
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+
 	auto itemtest = CreateCube("item");
 	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
@@ -121,6 +144,10 @@ bool Root::Start()
 	itemtest2->AddComponent<ScriptComponent>()->LoadScript("AreaTrigger");
 	itemtest2->SetTag("AreaTrigger");*/
 
+	auto floor2 = CreateCube("Player2");
+	floor2->GetTransform()->SetPosition(glm::vec3(10, 3, 0));
+	floor2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	floor2->AddComponent<RigidbodyComponent>(Application->physicsModule);
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Level1.fbx");
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
@@ -134,55 +161,128 @@ bool Root::Start()
  //   objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
  //   mainCamera = objMainCamera;
 	//UpdateCameraPriority();
+
+    auto objMainCamera = CreateCameraObject("MainCamera");
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+    objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+    auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
+    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    mainCamera = objMainCamera;
+	UpdateCameraPriority();
+
 	//
+	
 	//// Test PowerUps
 	//
-	//auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
-	//powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
-	//powerUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
-	//powerUp->SetTag("PowerUp");	
-	//
-	//auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
-	//powerUp3->GetTransform()->SetPosition(glm::vec3(-20, 2, 0));
-	//powerUp3->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//powerUp3->AddComponent<ScriptComponent>()->LoadScript("Magnet");
-	//powerUp3->SetTag("PowerUp");
-	//
-	//
-	//auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
-	//powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
-	//powerUp5->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//powerUp5->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
-	//powerUp5->SetTag("PowerUp");
-	//
-	//auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-	//powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
-	//powerUp6->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//powerUp6->AddComponent<ScriptComponent>()->LoadScript("BlackHeart");
-	//powerUp6->SetTag("PowerUp");
+	auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
+	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
+	powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> MedicaeStimmBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> MedicaeStimmRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> MedicaeStimmNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> MedicaeStimmMetallic = std::make_shared<Image>();
+	MedicaeStimmBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	MedicaeStimmRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	MedicaeStimmNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	MedicaeStimmMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(MedicaeStimmBaseColor);
+	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(MedicaeStimmRoughness);
+	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(MedicaeStimmNormal);
+	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MedicaeStimmMetallic);
+	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
+	powerUp->SetTag("PowerUp");	
 
-	/*auto powerUp2 = CreateCube("Magnet");
-	powerUp2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	powerUp2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
+	powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
+	powerUp5->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp5->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
+	powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> ChapterStandardBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> ChapterStandardRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> ChapterStandardNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> ChapterMetallic = std::make_shared<Image>();
+	ChapterStandardBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	ChapterStandardRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	ChapterStandardNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	ChapterMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ChapterStandardBaseColor);
+	powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(ChapterStandardRoughness);
+	powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(ChapterStandardNormal);
+	powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(ChapterMetallic);
+	powerUp5->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
+	powerUp5->SetTag("PowerUp");
+
+	auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
+	powerUp6->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> BlackHeartBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> BlackHeartRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> BlackHeartNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> BlackHeartMetallic = std::make_shared<Image>();
+	BlackHeartBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	BlackHeartRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	BlackHeartNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	BlackHeartMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp6->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BlackHeartBaseColor);
+	powerUp6->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BlackHeartRoughness);
+	powerUp6->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BlackHeartNormal);
+	powerUp6->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(BlackHeartMetallic);
+	powerUp6->AddComponent<ScriptComponent>()->LoadScript("BlackHeart");
+	powerUp6->SetTag("PowerUp");
+
+	auto powerUp2 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
+	powerUp2->GetTransform()->SetPosition(glm::vec3(0, 1, -10));
+	powerUp2->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	powerUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> MagnetBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> MagnetRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> MagnetNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> MagnetMetallic = std::make_shared<Image>();
+	MagnetBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	MagnetRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	MagnetNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	MagnetMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setImage(MagnetBaseColor);
+	powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(MagnetRoughness);
+	powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(MagnetNormal);
+	powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MagnetMetallic);
 	powerUp2->AddComponent<ScriptComponent>()->LoadScript("Magnet");
-	powerUp2->SetTag("PowerUp");*/
+	powerUp2->SetTag("PowerUp");
+
+	auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/AmmunitionBlessing.fbx");
+	powerUp3->GetTransform()->SetPosition(glm::vec3(0, 1, 10));
+	powerUp3->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> AmmunitionBlessingBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> AmmunitionBlessingRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> AmmunitionBlessingNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> AmmunitionBlessingMetallic = std::make_shared<Image>();
+	AmmunitionBlessingBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	AmmunitionBlessingRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	AmmunitionBlessingNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	AmmunitionBlessingMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setImage(AmmunitionBlessingBaseColor);
+	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(AmmunitionBlessingRoughness);
+	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(AmmunitionBlessingNormal);
+	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(AmmunitionBlessingMetallic);
+	powerUp3->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
+	powerUp3->SetTag("PowerUp");
+
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
 	//auto emitter = particleFX->AddComponent<ParticleFX>();
 	//emitter->ConfigureSmoke();
 	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
+
 	
 	//Lictor
 	/*auto lictor = CreateGameObject("Lictor");
@@ -199,21 +299,39 @@ bool Root::Start()
 	ParentGameObject(*lictorMesh, *lictor);
 	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");*/
 
+
+	////Lictor
+	//auto lictor = CreateGameObject("Lictor");
+	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
+	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
+	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	//lictorMesh->SetName("LictorMesh");
+	//ParentGameObject(*lictorMesh, *lictor);
+	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+
+
 	//auto cube = CreateCube("Cube");
 	//cube->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
 	//auto cubeMesh = CreateCube("CubeMesh");
 	//ParentGameObject(*cubeMesh, *cube);
 
-	////Hormagaunt
-	/*auto hormagaunt = CreateGameObject("Hormagaunt");
+	//Hormagaunt
+	auto hormagaunt = CreateGameObject("Hormagaunt");
 	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
 	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt without rig.fbx");
+	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
 	hormagauntMesh->SetName("HormagauntMesh");
+	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");*/
+	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 
 	//auto floor = CreateCube("Floor");
 	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
@@ -245,30 +363,46 @@ bool Root::Start()
 	//SceneManagement->Awake();
 	//SceneManagement->Start();
 
+	//Mawloc
+	//auto mawloc = CreateGameObject("Mawloc");
+	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(10, -100, 10));
+	//mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
+	//mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto mawlocMesh = CreateCube("MawlocMesh");
+	//ParentGameObject(*mawlocMesh, *mawloc);
+	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
+
+	//Floor
+	auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+
 	//CreateGameplayUI();
 
 	////For rendering Interaction System text, remove the canvas if there is already one
-	//auto canvas = CreateGameObject("Canvas");
-	//canvas->AddComponent<UICanvasComponent>();
-	//canvas->AddComponent<UITransformComponent>();
-	//canvas->AddComponent<SoundComponent>();
+	auto canvas = CreateGameObject("Canvas");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<SoundComponent>();
 
-	//auto interactText = CreateGameObject("InteractText");
-	//Application->root->ParentGameObject(*interactText, *canvas);
-	//interactText->AddComponent<UIImageComponent>();
-	//interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
-	//interactText->AddComponent<UIButtonComponent>();
-	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
-	//
-	//
-	//auto areaText = CreateGameObject("dialogueText");
-	//Application->root->ParentGameObject(*areaText, *canvas);
-	//areaText->AddComponent<UIImageComponent>();
-	//areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
-	//areaText->AddComponent<UIButtonComponent>();
-	//areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	//areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	auto interactText = CreateGameObject("InteractText");
+	Application->root->ParentGameObject(*interactText, *canvas);
+	interactText->AddComponent<UIImageComponent>();
+	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	interactText->AddComponent<UIButtonComponent>();
+	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	
+	
+	auto areaText = CreateGameObject("dialogueText");
+	Application->root->ParentGameObject(*areaText, *canvas);
+	areaText->AddComponent<UIImageComponent>();
+	areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
+	areaText->AddComponent<UIButtonComponent>();
+	areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 
 	//floor->SetActive(false);
 
@@ -276,7 +410,7 @@ bool Root::Start()
 	//collisionNextLevel->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//collisionNextLevel->AddComponent<ScriptComponent>()->LoadScript("Scene2ToMenu");
 
-	//CreateGameplayUI();
+	CreateGameplayUI();
 	//CreateMainMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");

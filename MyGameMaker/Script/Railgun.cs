@@ -113,6 +113,7 @@ public class Railgun : BaseWeapon
 
             if (projectile != null)
             {
+                projectile.tag = "RailgunProjectile";
                 Transform projTransform = projectile.GetComponent<Transform>();
                 if (projTransform != null)
                 {

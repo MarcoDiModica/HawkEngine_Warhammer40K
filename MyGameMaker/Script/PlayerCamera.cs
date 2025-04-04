@@ -43,7 +43,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public override void Update(float deltaTime)
-    {
+    {    
         Vector2 leftStickInput = Input.GetLeftStick();
         Vector2 rightStickInput = Input.GetRightStick();
 

@@ -200,6 +200,10 @@ bool Image::LoadTexture(const std::string& path) {
 
 	load(width, height, channels, data);
 
+	std::filesystem::path filePath(path);
+	std::string fileName = filePath.stem().string();
+	image_name = fileName;
+
 	ilDeleteImage(img);
 
 	return (_id != 0);
@@ -230,16 +234,16 @@ void Image::LoadTextureLocalPath(const std::string& path) {
 std::unordered_map<std::string, std::shared_ptr<Image>> imageCache;
 
 void Image::SaveBinary(const std::string& filename) const {
-	
+	if (!std::filesystem::exists("Library/Images")) {
+		std::filesystem::create_directories("Library/Images");
+	}
+
 	std::string fullPath = "Library/Images/" + filename + ".image";
 	LOG(LogType::LOG_INFO, "Saving image to: %s", fullPath.c_str());
 
-	if (!std::filesystem::exists("Library/Images")) {
-		std::filesystem::create_directory("Library/Images");
-	}
-
 	std::ofstream fout(fullPath, std::ios::binary);
 	if (!fout.is_open()) {
+		LOG(LogType::LOG_ERROR, "Failed to open file for writing: %s", fullPath.c_str());
 		return;
 	}
 
@@ -247,45 +251,130 @@ void Image::SaveBinary(const std::string& filename) const {
 	fout.write(reinterpret_cast<const char*>(&_height), sizeof(_height));
 	fout.write(reinterpret_cast<const char*>(&_channels), sizeof(_channels));
 
-	ILubyte* pixelData = ilGetData(); 
-	ILuint dataSize = _width * _height * _channels;
+	size_t pathLen = image_path.length();
+	fout.write(reinterpret_cast<const char*>(&pathLen), sizeof(pathLen));
+	fout.write(image_path.c_str(), pathLen);
 
-	fout.write(reinterpret_cast<const char*>(pixelData), dataSize);
+	std::vector<unsigned char> pixels(_width * _height * _channels);
+
+	glBindTexture(GL_TEXTURE_2D, _id);
+
+	GLenum format = formatFromChannels(_channels);
+
+	glGetTexImage(GL_TEXTURE_2D, 0, format, GL_UNSIGNED_BYTE, pixels.data());
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	fout.write(reinterpret_cast<const char*>(pixels.data()), pixels.size());
+
+	if (!fout.good()) {
+		LOG(LogType::LOG_ERROR, "Error writing image data to file: %s", fullPath.c_str());
+	}
+
+	fout.close();
+	LOG(LogType::LOG_INFO, "Successfully saved image to: %s", fullPath.c_str());
 }
 
 std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
-	std::string fpath = filename.substr(0, filename.size() - 4);
+	std::string baseFilename = filename;
+	if (baseFilename.size() > 6 &&
+		baseFilename.substr(baseFilename.size() - 6) == ".image") {
+		baseFilename = baseFilename.substr(0, baseFilename.size() - 6);
+	}
 
-	std::string fullPath = "Library/Images/" + fpath + ".image";
+	std::string fullPath = "Library/Images/" + baseFilename + ".image";
 	LOG(LogType::LOG_INFO, "Loading image from: %s", fullPath.c_str());
+
 	auto it = imageCache.find(fullPath);
 	if (it != imageCache.end()) {
+		LOG(LogType::LOG_INFO, "Found image in cache: %s", fullPath.c_str());
 		return it->second;
 	}
 
-	std::shared_ptr<Image> img;
-
 	std::ifstream fin(fullPath, std::ios::binary);
 	if (!fin.is_open()) {
-		throw std::runtime_error("Error opening image file: " + fullPath);
+		LOG(LogType::LOG_ERROR, "Failed to open file for reading: %s", fullPath.c_str());
+		return nullptr;
 	}
 
-	img = std::make_shared<Image>();
+	auto img = std::make_shared<Image>();
 
 	fin.read(reinterpret_cast<char*>(&img->_width), sizeof(img->_width));
 	fin.read(reinterpret_cast<char*>(&img->_height), sizeof(img->_height));
 	fin.read(reinterpret_cast<char*>(&img->_channels), sizeof(img->_channels));
 
-	ILubyte* pixelData = new ILubyte[img->_width * img->_height * img->_channels];
+	size_t pathLen;
+	fin.read(reinterpret_cast<char*>(&pathLen), sizeof(pathLen));
+	img->image_path.resize(pathLen);
+	fin.read(&img->image_path[0], pathLen);
 
-	fin.read(reinterpret_cast<char*>(pixelData), img->_width * img->_height * img->_channels);
+	std::vector<unsigned char> pixels(img->_width * img->_height * img->_channels);
+	fin.read(reinterpret_cast<char*>(pixels.data()), pixels.size());
 
-	ilTexImage(img->_width, img->_height, 1, img->_channels, IL_RGBA, IL_UNSIGNED_BYTE, pixelData);
+	if (!fin.good() && !fin.eof()) {
+		LOG(LogType::LOG_ERROR, "Error reading image data from file: %s", fullPath.c_str());
+		return nullptr;
+	}
 
-	delete[] pixelData;
+	fin.close();
+
+	glGenTextures(1, &img->_id);
+	glBindTexture(GL_TEXTURE_2D, img->_id);
+
+	GLint internalFormat;
+	GLenum format;
+
+	switch (img->_channels) {
+	case 1:
+		internalFormat = GL_R8;
+		format = GL_RED;
+		break;
+	case 2:
+		internalFormat = GL_RG8;
+		format = GL_RG;
+		break;
+	case 3:
+		internalFormat = GL_RGB8;
+		format = GL_RGB;
+		break;
+	case 4:
+		internalFormat = GL_RGBA8;
+		format = GL_RGBA;
+		break;
+	default:
+		LOG(LogType::LOG_WARNING, "Unexpected number of channels: %d, using RGB", img->_channels);
+		internalFormat = GL_RGB8;
+		format = GL_RGB;
+		break;
+	}
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, img->_width, img->_height, 0,
+		format, GL_UNSIGNED_BYTE, pixels.data());
+
+	GLenum glError = glGetError();
+	if (glError != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "OpenGL error when loading texture: 0x%x", glError);
+	}
+
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_RED);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_ALPHA);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	imageCache[fullPath] = img;
 
+	LOG(LogType::LOG_INFO, "Successfully loaded image: %s (%dx%d, %d channels)",
+		fullPath.c_str(), img->_width, img->_height, img->_channels);
 
 	return img;
 }

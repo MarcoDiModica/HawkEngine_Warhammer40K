@@ -39,6 +39,7 @@ public:
 	static std::shared_ptr<Image> LoadBinary(const std::string& path);
 
 	std::string image_path;
+	std::string image_name;
 
 };
 

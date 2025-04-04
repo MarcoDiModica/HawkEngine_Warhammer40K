@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
+using static Railgun;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -329,7 +330,7 @@ public class PlayerShooting : MonoBehaviour
                 
                 break;
             case GunType.SHOTGUN:
-
+                shotgun.UseAbility1();
                 break;
             case GunType.RAILGUN:
 
@@ -352,7 +353,7 @@ public class PlayerShooting : MonoBehaviour
                 shotgun.UseAbility2();
                 break;
             case GunType.RAILGUN:
-
+               railgun.UseAbility2();
                 break;
         }
         if (redThirstManager != null)
@@ -386,4 +387,9 @@ public class PlayerShooting : MonoBehaviour
         
     }
 
+    public void ResetAbilityCooldown()
+    {
+        boltgun.ResetCooldowns();
+        shotgun.ResetCooldowns();
+    }
 }

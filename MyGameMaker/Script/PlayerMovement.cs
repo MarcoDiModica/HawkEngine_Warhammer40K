@@ -4,9 +4,11 @@ using System.Numerics;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 41.0f;
+    public float moveSpeed = 10.0f;
+    public float walkSpeed = 5; 
+    public float runSpeed = 10.0f; 
     public float rotationSpeed = 30.0f;
-    public float acceleration = 20.0f;
+    public float acceleration = 40.0f;
     public float deceleration = 15.0f;
 
     private Rigidbody rb;
@@ -88,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        moveSpeed = playerData.movSpeed;
+        //moveSpeed = playerData.movSpeed;
         //Engineson.print("Player Movement Update: " + moveSpeed);
 
         if (playerDash == null || !playerDash.IsDashing)
@@ -158,22 +160,30 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateMovement(Vector3 moveDirection, float deltaTime)
     {
         Vector3 currentVelocity = rb.GetVelocity();
+        Vector2 leftStick = Input.GetLeftStick();
+        float magnitude = leftStick.Length();
+
+        if (magnitude > 0.1f)
+        {
+            if (magnitude > 0.7f)
+            {
+                moveSpeed = runSpeed;
+            }
+            else
+            {
+                moveSpeed = walkSpeed;
+            }
+         
+        }
+
         Vector3 desiredVelocity = moveDirection * moveSpeed;
-        
         if (playerInput?.IsShooting() == true)
         {
-            desiredVelocity /= 1.3f;
+            desiredVelocity /= 2f;
         }
-
-        if (desiredVelocity.LengthSquared() > 0)
-        {
-            desiredVelocity = Vector3.Normalize(desiredVelocity) * moveSpeed;
-        }
-
         Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
         rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
     }
-
     private void UpdateRotation(Vector3 moveDirection, float deltaTime)
     {
 

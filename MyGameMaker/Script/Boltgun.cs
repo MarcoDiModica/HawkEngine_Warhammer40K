@@ -146,4 +146,10 @@ public class Boltgun : BaseWeapon
         }
     }
 
+    public override void ResetCooldowns()
+    {
+       arcSnare.ResetCooldowns();
+        grenadeLauncher.ResetCooldowns();
+    }
+
 }

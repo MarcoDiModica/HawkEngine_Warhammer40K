@@ -30,8 +30,49 @@ bool SceneManager::Awake() {
 
     return true;
 }
+void SceneManager::AddTag(const std::string& tag) {
+    if (!HasTag(tag)) {
+        tags.push_back(tag);
+        SaveTags();
+    }
+}
+
+bool SceneManager::HasTag(const std::string& tag) const {
+    return std::find(tags.begin(), tags.end(), tag) != tags.end();
+}
+
+void SceneManager::SaveTags() {
+    SaveTagsToFile();
+}
+
+void SceneManager::LoadTags() {
+    LoadTagsFromFile();
+}
+
+void SceneManager::SaveTagsToFile() {
+    std::ofstream file("tags.txt");
+    if (file.is_open()) {
+        for (const auto& tag : tags) {
+            file << tag << "\n";
+        }
+        file.close();
+    }
+}
+
+void SceneManager::LoadTagsFromFile() {
+    tags.clear();
+    std::ifstream file("tags.txt");
+    std::string line;
+    while (std::getline(file, line)) {
+        if (!line.empty()) {
+            tags.push_back(line);
+        }
+    }
+    file.close();
+}
 
 bool SceneManager::Start() {
+    
     for (const shared_ptr<GameObject>& object : currentScene->_children)
     {
         object->Start();
@@ -50,8 +91,10 @@ bool SceneManager::Update(double dt) {
     return true;
 }
 
+
 void SceneManager::CreateScene(const std::string& name)
 {
+    LoadTags();
     auto scene = make_shared<Scene>(name);
     scenes.push_back(scene);
 }

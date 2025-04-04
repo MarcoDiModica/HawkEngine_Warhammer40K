@@ -135,7 +135,10 @@ bool UIMainMenuBar::Draw()
 			}
 		}
 
-		ImGui::Text("FPS: %.1f", fps);
+		fps = ImGui::GetIO().Framerate;
+		ImGui::Text("GUI FPS: %.1f", fps);
+		float gameFPS = Application->GetFps();
+		ImGui::Text("Game FPS: %.1f", gameFPS);
 
 		// Finaliza la barra de men� principal
 		ImGui::EndMainMenuBar();

@@ -4,7 +4,6 @@ using HawkEngine;
 
 public abstract class PickUp : MonoBehaviour
 {
-
     public abstract void OnPickUp(PlayerController playerController);
 
 }

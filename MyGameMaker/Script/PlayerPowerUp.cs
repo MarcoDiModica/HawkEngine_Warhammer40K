@@ -9,12 +9,15 @@ public class PlayerPowerUp : MonoBehaviour
     private bool hasMedicaeStimm = false;
     private bool hasAmmunitionBlessing = false;
     private bool hasMagnet = false;
+    private bool hasChapterStandard = false;
     private float medicaeStimmDuration = 5.0f;
     private float medicaeStimmTimer = 0.0f;
     private float ammunitionBlessingDuration = 5.0f;
     private float ammunitionBlessingTimer = 0.0f;
     private float magnetDuration = 5.0f;
     private float magnetTimer = 0.0f;
+
+
 
     public override void Awake()
     {
@@ -66,6 +69,35 @@ public class PlayerPowerUp : MonoBehaviour
                 playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 1.5f;
                 Engineson.print("Magnet effect passed");
             }
+            else
+            {
+                GameObject[] Ammunition = Physics.OverlapSphere(playerController.gameObject.GetComponent<Transform>().position, 20f, "Ammunition");
+
+                foreach (GameObject obj in Ammunition)
+                {
+                    if (obj != null && obj.tag == "Ammunition")
+                    {
+
+                        if (obj != null && obj.tag == "Ammunition")
+                        {
+
+                            if (obj.GetComponent<ShotgunShells>() != null)
+                            {
+                                obj.GetComponent<ShotgunShells>().isDetected = true;
+
+                            }
+                            else if (obj.GetComponent<BoltgunBullets>() != null)
+                            {
+                                obj.GetComponent<BoltgunBullets>().isDetected = true;
+                            }
+
+
+                        }
+
+
+                    }
+                }
+            }
         }
     }
 
@@ -100,6 +132,7 @@ public class PlayerPowerUp : MonoBehaviour
                 other.GetComponent<Magnet>().OnPickUp(playerController);
                 hasMagnet = true;
             }
+           
 
             Engineson.Destroy(other);
         }

@@ -28,16 +28,32 @@ public class PlayerAnimations : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             animIndex += 1;
-            esk.TransitionAnimations(0,5,0.5f);
+            SetHitIdleAnimation();
         }
+        //if (esk.GetAnimationTime() >= esk.GetAnimationLength())
+        //{
+        //    SetRunAnimation();
+        //}
     }
-
+    public void SetHitIdleAnimation()
+    {
+        esk.TransitionAnimations(2, 5, 0.1f);
+        //esk.SetAnimation(3);
+       // esk.SetAnimationSpeed(2f);
+    }
+    public void SetDeathAnimation()
+    {
+        esk.TransitionAnimations(2, 1, 0.1f);
+        //esk.SetAnimation(3);
+        // esk.SetAnimationSpeed(2f);
+    }
     public void SetStandardIdleAnimation()
     {
 
-        esk.TransitionAnimations(6, 3, 0.1f);
+        esk.TransitionAnimations(5, 5, 0.1f);
         //esk.SetAnimation(4);
         esk.SetAnimationSpeed(2f);
+      
     }
 
     public void SetIdleRandomAnimation()
@@ -45,7 +61,7 @@ public class PlayerAnimations : MonoBehaviour
         if (esk.GetAnimationTime() >= esk.GetAnimationLength() - 0.2f)
         {
             Random rand = new Random();
-            int idleIndex = rand.Next(2, 6);
+            int idleIndex = rand.Next(4, 5);
             esk.SetAnimation(idleIndex);
             esk.SetAnimationSpeed(2f);
         }
@@ -54,22 +70,72 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetShootingStandingAnimation()
     {
-        esk.TransitionAnimations(3, 8, 0.1f);
+        esk.TransitionAnimations(5, 7, 0.1f);
         //esk.SetAnimation(8);
-        esk.SetAnimationSpeed(3f);
+        esk.SetAnimationSpeed(5f);
     }
 
-    public void SetShootingRunningAnimation()
+    public void SetRunningToShootRunningAnimation()
     {
-        esk.TransitionAnimations(6, 10, 0.1f);
+        esk.TransitionAnimations(6, 8, 0.1f);
         //esk.SetAnimation(10);
         esk.SetAnimationSpeed(1f);
     }
-
-    public void SetRunAnimation()
+    public void SetWalkAnimation()
     {
-        esk.TransitionAnimations(3, 6, 0.1f);
+        esk.TransitionAnimations(5, 9, 0.1f);
         //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetRunAnimation()
+    {
+        esk.TransitionAnimations(9, 6, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+    }
+
+    public void SetDashAnimation()
+    {
+        esk.TransitionAnimations(6, 0, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+        
+    }
+
+    public void SetShootingStandingToIdleAnimation()
+    {
+        esk.TransitionAnimations(7, 5, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetRunningToIdleAnimation()
+    {
+        esk.TransitionAnimations(6, 5, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetWalkingToIdleAnimation()
+    {
+        esk.TransitionAnimations(9, 5, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetShootingRunningToRunAnimation()
+    {
+        esk.TransitionAnimations(8, 6, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
+    }
+    public void SetShootingStandingToShootingRunAnimation()
+    {
+        esk.TransitionAnimations(7, 6, 0.1f);
+        //esk.SetAnimation(6);
+        esk.SetAnimationSpeed(1.5f);
+
     }
 }

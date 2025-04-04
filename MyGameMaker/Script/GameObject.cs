@@ -89,7 +89,6 @@ namespace HawkEngine
             {
                 return GetTag();
             }
-
             set
             {
                 SetTag(value);
@@ -119,10 +118,13 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         private  extern void SetName(string newTag);
+        
 
         internal Vector3 SetGravity(Vector3 vector3)
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

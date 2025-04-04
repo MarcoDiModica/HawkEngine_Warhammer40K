@@ -30,7 +30,7 @@ public class ChapterStandard : PickUp
         PowerUpMovment(elapsedTime, deltaTime);
         if (elapsedTime >= lifeTime)
         {
-            Destroy();
+           // Destroy();
         }
     }
     public void Destroy()
@@ -53,6 +53,7 @@ public class ChapterStandard : PickUp
     {
         Engineson.print("ChapterStandard PowerUp applied");
        
-
+        playerController.playerShooting.ResetAbilityCooldown();
+        playerController.playerShooting.ResetAbilityCooldown();
     }
 }

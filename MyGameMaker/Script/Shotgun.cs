@@ -151,4 +151,10 @@ public class Shotgun : BaseWeapon
             }
         }
     }
+
+    public override void ResetCooldowns()
+    {
+        hookShot.ResetCooldowns();
+        barrage.ResetCooldowns();
+    }
 }

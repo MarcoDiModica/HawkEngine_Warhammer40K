@@ -84,7 +84,7 @@ bool Root::Start()
 
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
 	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
@@ -97,7 +97,26 @@ bool Root::Start()
 	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-		
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	
+
+
+
+	/*auto itemtest = CreateCube("item");
+	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
+	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
+	itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	itemtest->AddComponent<ScriptComponent>()->LoadScript("Item");
+	itemtest->SetTag("Interactable");
+	
+	auto itemtest2 = CreateCube("item");
+	itemtest2->GetTransform()->SetPosition(glm::vec3(1, 2, 10));
+	itemtest2->GetTransform()->SetScale(glm::vec3(2, 2, 2));
+	itemtest2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	itemtest2->AddComponent<ScriptComponent>()->LoadScript("Item");
+	itemtest2->SetTag("Interactable");*/
+
+
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
@@ -112,21 +131,53 @@ bool Root::Start()
 
 	// Test PowerUps
 
-	/*auto powerUp = CreateCube("MedicaeStimm");
-	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
-	powerUp->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
+	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
+	powerUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
-	powerUp->SetTag("PowerUp");*/
+	powerUp->SetTag("PowerUp");	
+	
+	auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
+	powerUp3->GetTransform()->SetPosition(glm::vec3(-20, 2, 0));
+	powerUp3->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp3->AddComponent<ScriptComponent>()->LoadScript("Magnet");
+	powerUp3->SetTag("PowerUp");
 
-	/*auto powerUp = CreateCube("Magnet");
-	powerUp->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
-	powerUp->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	powerUp->AddComponent<ScriptComponent>()->LoadScript("Magnet");
-	powerUp->SetTag("PowerUp");*/
+	auto powerUp4 = CreateGameObjectWithPath("Assets/Meshes/AmmunitionBlessing.fbx");
+	powerUp4->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
+	powerUp4->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp4->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
+	powerUp4->SetTag("PowerUp");
+
+	auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
+	powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
+	powerUp5->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp5->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
+	powerUp5->SetTag("PowerUp");
+
+	auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
+	powerUp6->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp6->AddComponent<ScriptComponent>()->LoadScript("BlackHeart");
+	powerUp6->SetTag("PowerUp");
+
+	/*auto powerUp2 = CreateCube("Magnet");
+	powerUp2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	powerUp2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	powerUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	powerUp2->AddComponent<ScriptComponent>()->LoadScript("Magnet");
+	powerUp2->SetTag("PowerUp");*/
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
@@ -184,6 +235,24 @@ bool Root::Start()
 	floorCollider->Start();
 	SceneManagement->Awake();
 	SceneManagement->Start();
+
+	CreateGameplayUI();
+
+	////For rendering Interaction System text, remove the canvas if there is already one
+	//auto canvas = CreateGameObject("Canvas");
+	//canvas->AddComponent<UICanvasComponent>();
+	//canvas->AddComponent<UITransformComponent>();
+	//canvas->AddComponent<SoundComponent>();
+
+	//auto interactText = CreateGameObject("InteractText");
+	//Application->root->ParentGameObject(*interactText, *canvas);
+	//interactText->AddComponent<UIImageComponent>();
+	//interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	//interactText->AddComponent<UIButtonComponent>();
+	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+
+	floor->SetActive(false);
 
 	//CreateGameplayUI();
 	//CreateMainMenuUI();

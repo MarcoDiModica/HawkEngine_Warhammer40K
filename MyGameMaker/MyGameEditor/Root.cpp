@@ -49,7 +49,7 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
 
     return true;
 }
@@ -92,14 +92,13 @@ bool Root::Start()
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+	player->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
 	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
-
+	player->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	player->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 
 	auto itemtest = CreateCube("item");
 	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
@@ -115,18 +114,22 @@ bool Root::Start()
 	itemtest2->AddComponent<ScriptComponent>()->LoadScript("AreaTrigger");
 	itemtest2->SetTag("AreaTrigger");
 
+	auto floor2 = CreateCube("Player2");
+	floor2->GetTransform()->SetPosition(glm::vec3(10, 3, 0));
+	floor2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	floor2->AddComponent<RigidbodyComponent>(Application->physicsModule);
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-    //auto objMainCamera = CreateCameraObject("MainCamera");
-    //objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-    //objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
-    //auto camera = objMainCamera->AddComponent<CameraComponent>();
-	//camera->priority = 1;
-    //objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-    //mainCamera = objMainCamera;
-	//UpdateCameraPriority();
+    auto objMainCamera = CreateCameraObject("MainCamera");
+    objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+    objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+    auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
+    objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+    mainCamera = objMainCamera;
+	UpdateCameraPriority();
 	//
 	//// Test PowerUps
 	//
@@ -217,9 +220,6 @@ bool Root::Start()
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	floorCollider->Start();
-	SceneManagement->Awake();
-	SceneManagement->Start();
 
 	//CreateGameplayUI();
 

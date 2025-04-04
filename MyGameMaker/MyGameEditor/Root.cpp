@@ -83,6 +83,11 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
 	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 
+	auto particleFX = CreateGameObject("ParticleVFX");
+	particleFX->AddComponent<ParticleFX>();
+	auto particle = particleFX->GetComponent<ParticleFX>();
+	particle->ApplyPreset(18);
+	//particle->ApplyPreset(Particle)
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 	
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/MainCharacterAnimated.fbx");

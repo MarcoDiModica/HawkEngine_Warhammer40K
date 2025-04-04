@@ -206,12 +206,12 @@ namespace ParticlePresets {
 		glm::vec2(385,217),			   // Sprite size
 		true,						   // Use animation
 		true,						   // Random animation Index
-		0.001f,						   // Animation speed
+		0.05f,						   // Animation speed
 		0.0f,						   // Start rotation
 		false,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/fire_spritesheet(1) (1).png" // Texture path
+		"Assets/Textures/fire_spritesheet.png" // Texture path
 	};
 
 	const ParticlePreset Environment_Smoke = {
@@ -223,7 +223,7 @@ namespace ParticlePresets {
 		1.0f,                          // Alpha start
 		0,                          // Alpha end
 		0.5f,                          // Size start
-		1.4f,                          // Size end
+		3.0f,                          // Size end
 		3.0f,                          // Min lifetime
 		4.0f,                          // Max lifetime
 		0.0f,                          // Min speed
@@ -269,7 +269,7 @@ namespace ParticlePresets {
 		0.2f,                          // Cone base radius
 		1.0f,                          // Cone height
 		20.0f,                         // Cone angle in degrees
-		glm::vec2(1920,1080),			   // Sprite size
+		glm::vec2(640,360),			   // Sprite size
 		true,						   // Use animation
 		false,						   // Random animation Index
 		0.05f,						   // Animation speed
@@ -277,7 +277,7 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/explosion.png" // Texture path
+		"Assets/Textures/ixplosion.png" // Texture path
 	};
 
 
@@ -317,7 +317,7 @@ namespace ParticlePresets {
 	const ParticlePreset Enemy_Dash = {
 		ParticleType::ENEMY_DASH,
 		true,						   // PlayOnAwake
-		5,						   // Duration (only if one-shot)
+		1.0f,						   // Duration (only if one-shot)
 		glm::vec3(1,1,1),   // Start color (light gray)
 		glm::vec3(1,1,1),   // End color (dark gray)
 		1.0f,                          // Alpha start
@@ -539,7 +539,7 @@ namespace ParticlePresets {
 	false,						   // Use animation
 	false,						   // Random animation Index
 	0.05f,						   // Animation speed
-	0.0f,						   // Start rotation
+	180.0f,						   // Start rotation
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
@@ -568,7 +568,7 @@ namespace ParticlePresets {
 	0.1f,                          // Cone base radius
 	1.0f,                          // Cone height
 	20.0f,                         // Cone angle in degrees
-	glm::vec2(641,361),			   // Sprite size
+	glm::vec2(144,174),			   // Sprite size
 	true,						   // Use animation
 	false,						   // Random animation Index
 	0.05f,						   // Animation speed
@@ -582,7 +582,7 @@ namespace ParticlePresets {
 	const ParticlePreset Arc_Snare_Impact = { // la que pone thundaaar
 	ParticleType::ARC_SNARE_IMPACT,
 	true,						   // PlayOnAwake
-	5,						   // Duration (only if one-shot)
+	2,						   // Duration (only if one-shot)
 	glm::vec3(1,1,1),   // Start color (light gray)
 	glm::vec3(1,1,1),   // End color (dark gray)
 	1.0f,                          // Alpha start
@@ -609,8 +609,42 @@ namespace ParticlePresets {
 	true,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/thundaaar.png" // Texture path
+	"Assets/Textures/thundaaar2.png" // Texture path
 	};
+
+	const ParticlePreset Medicae_Stim = {
+		ParticleType::MEDICAE_STIM,
+			true,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		0.35f,                          // Alpha start
+		1.0f,                          // Alpha end
+		0.8f,                          // Size start
+		4.0f,                          // Size end
+		1,                          // Min lifetime
+		1,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		2.6f,                         // Emission rate (particles per second)
+		EmitterShape::POINT,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(384,216),			   // Sprite size
+		true,						   // Use animation
+		true,						   // Random animation Index
+		0.03f,						   // Animation speed
+		0.0f,						   // Start rotation
+		true,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Medicae_Stim.png" // Texture path
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -1044,7 +1078,7 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::EXPLOSION:
 		preset = ParticlePresets::Explosion;
-		SetOneShot(true);
+		SetOneShot(false);
 		break;
 	case ParticleType::ENVIRONMENT_SMOKE:
 		preset = ParticlePresets::Environment_Smoke;
@@ -1056,7 +1090,7 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::ENVIRONMENT_EXPLOSION:
 		preset = ParticlePresets::Environment_Explosion;
-		SetOneShot(true);
+		SetOneShot(false);
 		break;
 	case ParticleType::RIFFLE_SHOT:
 		preset = ParticlePresets::Riffle_Shot;
@@ -1098,7 +1132,7 @@ void ParticleFX::ApplyPreset(int particleID) {
 		SetOneShot(true);
 		break;
 	default:
-		preset = ParticlePresets::Smoke;
+		preset = ParticlePresets::Medicae_Stim;
 		SetOneShot(false);
 		break;
 	}

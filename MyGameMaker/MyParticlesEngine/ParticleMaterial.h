@@ -26,7 +26,8 @@ enum class ParticleType {
     RAILGUN_AUTO = 13,
     RAILGUN_SEMI = 14,
     RIFFLE_SHOT = 8,
-    ARC_SNARE_IMPACT = 17
+    ARC_SNARE_IMPACT = 17,
+    MEDICAE_STIM = 18
 };
 
 class ParticleMaterial : public Material {

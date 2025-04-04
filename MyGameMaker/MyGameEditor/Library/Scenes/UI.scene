@@ -1876,6 +1876,50 @@ GameObject3:
           enabled: true
           texture_path: Library\Textures\UI\status_magnet.png
       Children: ~
+    - name: bookshelf
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 12.300000190734863
+            - 36.368999481201172
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.0099999997764825821
+            - 0.070000000298023224
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.123000003
+            - 0.926999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0189999994
+            - 0.0249999985
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\bookshelf.png
+      Children: ~
     - name: bible1
       tag: Untagged
       active: true
@@ -1918,7 +1962,7 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\bible.png
       Children: ~
     - name: bible2
       tag: Untagged
@@ -1929,7 +1973,7 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 13
+            - 12.800000190734863
             - 0.92900002002716064
             - 0
           localRotation:
@@ -1944,7 +1988,7 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.129999995
+            - 0.128000006
             - 0.92900002
             - 0
           rotation:
@@ -1962,7 +2006,7 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\bible.png
       Children: ~
     - name: bible3
       tag: Untagged
@@ -1973,7 +2017,7 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 13.5
+            - 13.100000381469727
             - 0.92900002002716064
             - 0
           localRotation:
@@ -1988,7 +2032,7 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.135000005
+            - 0.130999997
             - 0.92900002
             - 0
           rotation:
@@ -2006,7 +2050,7 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\bible.png
       Children: ~
     - name: bible4
       tag: Untagged
@@ -2017,7 +2061,7 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 14
+            - 13.399999618530273
             - 0.92900002002716064
             - 0
           localRotation:
@@ -2032,7 +2076,7 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.140000001
+            - 0.134000003
             - 0.92900002
             - 0
           rotation:
@@ -2050,7 +2094,7 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\bible.png
       Children: ~
     - name: bible5
       tag: Untagged
@@ -2061,7 +2105,7 @@ GameObject3:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 14.5
+            - 13.699999809265137
             - 0.92900002002716064
             - 0
           localRotation:
@@ -2076,7 +2120,7 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.144999996
+            - 0.136999995
             - 0.92900002
             - 0
           rotation:
@@ -2094,7 +2138,7 @@ GameObject3:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\bible.png
       Children: ~
 GameObject4:
   name: Canvas_Location_SM

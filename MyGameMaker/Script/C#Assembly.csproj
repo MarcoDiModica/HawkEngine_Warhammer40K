@@ -92,6 +92,8 @@
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="EnemyController.cs" />
+    <Compile Include="EnemyControllerBoss.cs" />
+    <Compile Include="EnemyControllerStalker.cs" />
     <Compile Include="EnergyBall.cs" />
     <Compile Include="EnemyControllerMelee.cs" />
     <Compile Include="EnemyControllerRanged.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="GrenadeLauncher.cs" />
     <Compile Include="Hook.cs" />
     <Compile Include="HookShot.cs" />
+    <Compile Include="HormagauntAnimation.cs" />
     <Compile Include="IEnemyController.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />

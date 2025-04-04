@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
     public override void Start()
     {
+        gameObject.tag = "Player";
     }
 
     public override void Update(float deltaTime)

@@ -28,14 +28,25 @@ public class PlayerAnimations : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             animIndex += 1;
-            esk.TransitionAnimations(0,5,0.5f);
+            SetHitIdleAnimation();
         }
         //if (esk.GetAnimationTime() >= esk.GetAnimationLength())
         //{
         //    SetRunAnimation();
         //}
     }
-
+    public void SetHitIdleAnimation()
+    {
+        esk.TransitionAnimations(2, 5, 0.1f);
+        //esk.SetAnimation(3);
+       // esk.SetAnimationSpeed(2f);
+    }
+    public void SetDeathAnimation()
+    {
+        esk.TransitionAnimations(2, 1, 0.1f);
+        //esk.SetAnimation(3);
+        // esk.SetAnimationSpeed(2f);
+    }
     public void SetStandardIdleAnimation()
     {
 

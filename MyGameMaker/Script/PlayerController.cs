@@ -330,6 +330,17 @@ public class PlayerController : MonoBehaviour
             if (!playerDash.isInvulnerable)
             {
                 playerData.TakeDamage(10);
+                if(playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    Engineson.print("Player is dead!");
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
+                //playerAnimations.SetHitIdleAnimation();
+
                 Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
@@ -343,6 +354,15 @@ public class PlayerController : MonoBehaviour
             if (!playerDash.isInvulnerable)
             {
                 playerData.TakeDamage(10);
+                if (playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    Engineson.print("Player is dead!");
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
                 Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)

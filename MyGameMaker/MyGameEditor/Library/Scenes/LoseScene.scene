@@ -1,5 +1,5 @@
 SceneMetadata:
-  SceneName: DefaultScene
+  SceneName: LoseScene
 GameObject0:
   name: MainCamera
   tag: Untagged

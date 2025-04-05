@@ -68,6 +68,12 @@ public class MenuButtons : MonoBehaviour
             optionsCanvas.SetActive(false);
         }
 
+        Audio emptyMusic = GameObject.Find("EmptyMusic").GetComponent<Audio>();
+        if (emptyMusic != null)
+        {
+            emptyMusic.Play();
+        }
+
     }
 
     private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
@@ -105,23 +111,18 @@ public class MenuButtons : MonoBehaviour
 
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
-            //SceneManager.LoadScene("DefaultScene");
-            //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
-            gameObject.SetActive(false);
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
+            SceneManager.LoadScene("SpaceShip");
         }
 
         HandleHoveredState(button_newGameButton, transform_newGameButton, ref prevState_newGameButton);
 
         if (button_continueButton.GetState() == ButtonState.CLICKED)
         {
-            //Cargar el juego
-            //SceneManager.LoadScene("DefaultScene");
-            //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            gameObject.SetActive(false);
+            SceneManager.LoadScene("Mortis_Level1");
         }
 
         HandleHoveredState(button_continueButton, transform_continueButton, ref prevState_continueButton);

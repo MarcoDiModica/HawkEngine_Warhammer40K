@@ -4,7 +4,6 @@ using System.Numerics;
 
 public class LoseScreen : MonoBehaviour
 {
-    private GameObject mainMenu;
     private GameObject loadLastCheckpoint;
     private GameObject mainMenuButton;
     private GameObject quitButton;
@@ -14,9 +13,7 @@ public class LoseScreen : MonoBehaviour
     private UITransform transform_loadLastCheckpoint;
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
-    private GameObject HUD;
-    private GameObject Player;
-    private PlayerData playerData;
+
     private Audio sound;
 
     private ButtonState prevState_loadLastCheckpoint = ButtonState.DEFAULT;
@@ -27,12 +24,10 @@ public class LoseScreen : MonoBehaviour
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
     public override void Awake()
     {
-        //Engineson.print("WinScreen Awake");
+
     }
     public override void Start()
     {
-        //Engineson.print("WinScreen Start");
-        mainMenu = GameObject.Find("Canvas_Main_Menu");
         loadLastCheckpoint = GameObject.Find("LLC_button");
         mainMenuButton = GameObject.Find("MM_button");
         quitButton = GameObject.Find("QUIT_button");
@@ -46,44 +41,19 @@ public class LoseScreen : MonoBehaviour
             Engineson.print("ERROR: No Button object found");
             return;
         }
-        if (mainMenu == null)
-        {
-            Engineson.print("Error: No Canvas found");
-            return;
-        }
+
         transform_loadLastCheckpoint = loadLastCheckpoint.GetComponent<UITransform>();
         transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
+
         if (mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
         }
 
-        HUD = GameObject.Find("Canvas_HUD");
-
-        if (HUD == null)
-        {
-            Engineson.print("ERROR: HUD not found");
-            return;
-        }
-
-        Player = GameObject.Find("Player");
-        if (Player == null)
-        {
-            Engineson.print("ERROR: Player not found");
-            return;
-        }
-
         if (sound == null)
         {
             Engineson.print("ERROR: Audio not found");
-            return;
-        }
-
-        playerData = Player.GetComponent<PlayerController>().playerData;
-        if (playerData == null)
-        {
-            Engineson.print("ERROR: PlayerData not found");
             return;
         }
     }
@@ -104,35 +74,12 @@ public class LoseScreen : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (mainMenu == null || loadLastCheckpoint == null || mainMenuButton == null || quitButton == null)
+        if (loadLastCheckpoint == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button or object found");
             return;
         }
 
-        if (mainMenu == null)
-        {
-            Engineson.print("ERROR: No Main Menu object found");
-            return;
-        }
-
-        if (Player == null)
-        {
-            Engineson.print("ERROR: Player not found");
-            return;
-        }
-
-        if (playerData == null)
-        {
-            Engineson.print("ERROR: PlayerData not found");
-            return;
-        }
-
-        if (HUD == null)
-        {
-            Engineson.print("ERROR: HUD not found");
-            return;
-        }
         if (sound == null)
         {
             Engineson.print("ERROR: Audio not found");
@@ -141,12 +88,9 @@ public class LoseScreen : MonoBehaviour
 
         if (button_loadLastCheckpoint.GetState() == ButtonState.CLICKED)
         {
-            //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
-            playerData.SetHealth(playerData.GetMaxHealth());
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            HUD.SetActive(true);
-            this.gameObject.SetActive(false);
+            SceneManager.LoadScene("SpaceShip");
         }
 
         HandleHoveredState(button_loadLastCheckpoint, transform_loadLastCheckpoint, ref prevState_loadLastCheckpoint);
@@ -155,8 +99,7 @@ public class LoseScreen : MonoBehaviour
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            mainMenu.SetActive(true);
-            this.gameObject.SetActive(false);
+            SceneManager.LoadScene("MainMenu");
         }
 
         HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);

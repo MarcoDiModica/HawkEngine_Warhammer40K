@@ -399,7 +399,7 @@ GameObject2:
       volume: 1
       is_music: true
       is_spatial: false
-      auto_play: true
+      auto_play: false
       loop: true
   Children: ~
 GameObject3:

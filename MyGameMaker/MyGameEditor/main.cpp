@@ -595,12 +595,12 @@ static void GameRelease() {
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	std::shared_ptr<GameObject> UI = nullptr;
+	std::vector<std::shared_ptr<GameObject>> UI;
 
 	for (auto& object : Application->root->GetActiveScene()->children())
 	{
 		if (object->HasComponent<UICanvasComponent>()) {
-			UI = object;
+			UI.push_back(object);
 			continue;
 		}
 		if (object->IsActive())
@@ -622,8 +622,13 @@ static void GameRelease() {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	if (UI != nullptr)
-		UI->Update(static_cast<float>(Application->GetDt()));
+	for (size_t i = 0; i < UI.size(); i++)
+	{
+		if (UI[i]->IsActive())
+		{
+			UI[i]->Update(static_cast<float>(Application->GetDt()));
+		}
+	}
 
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }

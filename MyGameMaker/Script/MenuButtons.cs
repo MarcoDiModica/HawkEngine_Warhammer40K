@@ -105,42 +105,23 @@ public class MenuButtons : MonoBehaviour
 
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
+            //SceneManager.LoadScene("DefaultScene");
+            //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
+            gameObject.SetActive(false);
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            SceneManager.LoadScene("SpaceShip");
-            //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
         }
 
         HandleHoveredState(button_newGameButton, transform_newGameButton, ref prevState_newGameButton);
-        if (button_newGameButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_newGameButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            //sound?.LoadAudio(buttonHovered);
-            //sound?.Play();
-        }
-        else if (button_newGameButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_newGameButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
 
         if (button_continueButton.GetState() == ButtonState.CLICKED)
         {
             //Cargar el juego
-            SceneManager.LoadScene("Mortis_Level1");
+            //SceneManager.LoadScene("DefaultScene");
             //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
             gameObject.SetActive(false);
-        }
-        if (button_continueButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_continueButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            //sound?.LoadAudio(buttonHovered);
-            //sound?.Play();
-        }
-        else if (button_continueButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_continueButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
         }
 
         HandleHoveredState(button_continueButton, transform_continueButton, ref prevState_continueButton);
@@ -153,16 +134,6 @@ public class MenuButtons : MonoBehaviour
         }
 
         HandleHoveredState(button_optionsButton, transform_optionsButton, ref prevState_optionsButton);
-        if (button_optionsButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_optionsButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            //sound?.LoadAudio(buttonHovered);
-            //sound?.Play();
-        }
-        else if (button_optionsButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_optionsButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
 
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
@@ -172,46 +143,5 @@ public class MenuButtons : MonoBehaviour
         }
 
         HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
-        if (button_quitButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            //sound?.LoadAudio(buttonHovered);
-            //sound?.Play();
-        }
-        else if (button_quitButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
-
-        //if (continueButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    EJEMPLO PARA HACER UN TWEEN!!
-        //    transform_continueButton.DOScaleUI(new Vector3(1.0f, 1.0f, 1.0f), 0.2f, Modes.EASE_IN_OUT);
-        //    
-        //    
-        //    Engineson.print("Continue is Clicked");
-        //}
-
-        //if (optionsButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("Options is Clicked");
-        //}
-
-        //if (creditsButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("Credits is Clicked");
-        //}
-
-        //if (quitButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("quit is Clicked");
-        //}
-
     }
 }

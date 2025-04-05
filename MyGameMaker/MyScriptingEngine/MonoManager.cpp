@@ -177,7 +177,7 @@ void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
 
 	UnloadScriptDomain();
 
-	AddUnloadingDelay(200);
+	AddUnloadingDelay(100);
 
 	CreateScriptDomain();
 

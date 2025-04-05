@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public RedThirstManager redThirstManager;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
+    private ParticleFX bloodSplashEffect;
     private bool isIdle = false;
     public bool isRunning = false;
     private bool isWalking = false;
@@ -50,6 +51,10 @@ public class PlayerController : MonoBehaviour
         sound = gameObject.GetComponent<Audio>();
         //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
         playerData = new PlayerData();
+        // Add the blood splash effect directly to the player object
+        bloodSplashEffect = gameObject.AddComponent<ParticleFX>();
+        bloodSplashEffect.ApplyPreset(19); // BLOOD_SPLASH preset (index 19)
+
     }
 
     public override void Start()
@@ -364,9 +369,17 @@ public class PlayerController : MonoBehaviour
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
+
                 sound?.LoadAudio(HitAudio);
                 sound?.Play(true);
-                if (playerData.GetHealth() <= 0)
+     
+                // Simply emit the blood splash particles
+                if (bloodSplashEffect != null)
+                {
+                    bloodSplashEffect.EmitBurst(100);
+                }
+                
+                if(playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
                     sound?.LoadAudio(DeathAudio);
@@ -389,6 +402,12 @@ public class PlayerController : MonoBehaviour
                 playerData.TakeDamage(10);
                 sound?.LoadAudio(HitAudio);
                 sound?.Play(true);
+                
+                if (bloodSplashEffect != null)
+                {
+                    bloodSplashEffect.EmitBurst(100);
+                }
+                
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();

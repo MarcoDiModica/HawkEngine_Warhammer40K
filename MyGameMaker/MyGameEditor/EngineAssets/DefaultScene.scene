@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
-  tag: Untagged
+  tag: Player
   active: true
   isStatic: false
   Components:
@@ -129,9 +129,9 @@ GameObject0:
             tonemap_strength: 1
             shader_type: PBR
             image: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_BaseColor.png
-            normal_map: ""
+            normal_map: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_Normal.png
             metallic_map: ""
-            roughness_map: ""
+            roughness_map: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_Roughness.png
             ao_map: ""
           color:
             - 1
@@ -160,7 +160,7 @@ GameObject1:
       localPosition:
         - 10
         - 2
-        - 0
+        - 10
       localRotation:
         - 0
         - -0
@@ -216,6 +216,7 @@ GameObject1:
 GameObject2:
   name: item_1
   tag: AreaTrigger
+
   active: true
   isStatic: false
   Components:
@@ -271,7 +272,7 @@ GameObject2:
         - 1
       offset:
         - 0
-        - 0
+        - 2.5
         - 0
       isTrigger: false
     ScriptComponents:
@@ -326,6 +327,8 @@ GameObject4:
         - 0
         - -1
         - 0
+        - 1
+        - 10
       localRotation:
         - 0
         - -0
@@ -338,24 +341,24 @@ GameObject4:
       name: MeshRenderer
       enabled: true
       mesh:
-        name: Cube
+        name: bullett.001
       material:
         wrap_mode: Repeat
         filter: Nearest
         color:
-          - 0.5
-          - 0.5
-          - 0.5
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
           - 1
         metallic: 0
         roughness: 0.5
         ao: 1
         tonemap_strength: 1
         shader_type: PBR
-        image: Assets/default.png
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
+        image: Assets/Textures/powerups_DefaultMaterial_BaseColor.png
+        normal_map: Assets/Textures/powerups_DefaultMaterial_Normal.png
+        metallic_map: Assets/Textures/powerups_DefaultMaterial_Metallic.png
+        roughness_map: Assets/Textures/powerups_DefaultMaterial_Roughness.png
         ao_map: ""
       color:
         - 1

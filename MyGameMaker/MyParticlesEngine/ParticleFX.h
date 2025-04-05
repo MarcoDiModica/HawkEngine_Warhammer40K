@@ -58,6 +58,7 @@ namespace ParticlePresets {
 	extern const ParticlePreset Fire;
 	extern const ParticlePreset MuzzleFlash;
 	extern const ParticlePreset Dust;
+	extern const ParticlePreset Blood_Splash;
 }
 
 class ParticleFX : public Component {

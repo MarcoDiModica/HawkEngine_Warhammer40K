@@ -43,6 +43,7 @@ public class Railgun : BaseWeapon
         maxAmmo = 0;
         currentTotalAmmo = 0;
         reloadTime = 2f;
+        range = 25f;
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
@@ -89,7 +90,49 @@ public class Railgun : BaseWeapon
             }
         }
 
-        CleanBullets();
+        for (int i = bulletsPos.Count - 1; i >= 0; i--)
+        {
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.1f);
+            bulletsObjects[i].GetComponent<Transform>().position = bulletsPos[i];
+
+            if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.5f)
+            {
+                bulletsPos.RemoveAt(i);
+                hitPoints.RemoveAt(i);
+                if (collisionNames[i] == "Missed")
+                {
+                    Engineson.Destroy(bulletsObjects[i]);
+                    bulletsObjects.RemoveAt(i);
+                    collisionNames.RemoveAt(i);
+                }
+                else
+                {
+                    Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
+                    var enemy = GameObject.Find(collisionNames[i]);
+                    if (enemy.tag == "Melee")
+                    {
+                        enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Ranged")
+                    {
+                        enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Stalker")
+                    {
+                        enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Boss")
+                    {
+                        enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                    }
+                    Engineson.Destroy(bulletsObjects[i]);
+                    bulletsObjects.RemoveAt(i);
+                    collisionNames.RemoveAt(i);
+                }
+            }
+        }
+
+        //CleanBullets();
     }
 
     public override void Shoot()
@@ -105,30 +148,37 @@ public class Railgun : BaseWeapon
             sound?.LoadAudio(railgunShot);
             sound?.Play();
             // Shoot logic
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
+            RayCast rayBullet = new RayCast();
+            Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 2.5f, 0);
+
+            rayBullet.PerformRaycast(bulletPosition, transform.forward, range);
+
+            var projectile = Engineson.CreateGameObject("Projectile", null);
 
             // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
-            projectile.AddComponent<BoxCollider>();
+            projectile.GetComponent<Transform>().SetScale(0.5f, 0.5f, 0.5f);
 
-            if (projectile != null)
+            bulletsObjects.Add(projectile);
+
+            Vector3 bulletHitPoint = Vector3.Zero;
+
+            if (rayBullet.hit.isHit)
             {
-                projectile.tag = "RailgunProjectile";
-                Transform projTransform = projectile.GetComponent<Transform>();
-                if (projTransform != null)
-                {
-                    Vector3 forward = transform.forward;
-                    Vector3 spawnPos = transform.position + forward * 1.0f;
-                    projTransform.position = spawnPos;
-                    projTransform.SetScale(0.1f, 0.1f, 0.1f);
+                bulletHitPoint = rayBullet.hit.point;
+                collisionNames.Add(rayBullet.hit.gameObject.name);
 
-                    projectile.AddScript("BulletData");
-                    projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
-                    bullets.Add(projectile.GetComponent<BulletData>());
-
-                    Engineson.print("Projectile fired!");
-                }
+                Engineson.print($"Hit: {bulletHitPoint}");
             }
+            else
+            {
+                bulletHitPoint = transform.GetPosition() + new Vector3(0, 2.5f, 0) + transform.forward * range;
+                collisionNames.Add("Missed");
+                Engineson.print("Missed");
+            }
+
+            hitPoints.Add(bulletHitPoint);
+            bulletsPos.Add(bulletPosition);
         }
         
         if (currentMagazineAmmo <= 0)

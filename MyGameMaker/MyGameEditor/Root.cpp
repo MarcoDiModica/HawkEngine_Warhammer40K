@@ -387,8 +387,6 @@ bool hasAddedColliders = false;
 
 bool Root::Update(double dt)
 {	
-	Tweening::Update(dt);
-	
 	if (!hasAddedColliders) {
 		hasAddedColliders = true;
 	}
@@ -428,6 +426,8 @@ bool Root::Update(double dt)
 	//if (Application->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
 	//}
+
+	Tweening::Update(dt);
 
 	return true;
 }

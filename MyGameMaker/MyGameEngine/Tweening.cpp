@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "MyUIEngine/UITransformComponent.h"
 #include <mutex>
+#include "MyGameEditor/App.h"
 
 std::vector<Tweening::Tween> Tweening::tweens;
 std::mutex tweenMutex;
@@ -471,6 +472,11 @@ glm::vec3 Tweening::CalculateVec3(const glm::vec3& startVec3, const glm::vec3& t
 void Tweening::Update(float deltaTime) {
 	std::lock_guard<std::mutex> lock(tweenMutex);
 
+	if (Application->root->GetActiveScene()->sceneState != Scene::SceneState::PLAY) {
+		tweens.clear();
+		return;
+	}
+
 	for (auto& tween : tweens) {
 		if (tween.object == nullptr) {
 			continue;
@@ -494,7 +500,6 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
-
 		case TweenType::UIPOSITION:
 		case TweenType::UIPOSITION_X:
 		case TweenType::UIPOSITION_Y:
@@ -508,7 +513,6 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
-
 		case TweenType::ROTATION:
 		case TweenType::ROTATION_X:
 		case TweenType::ROTATION_Y:
@@ -519,7 +523,6 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
-
 		case TweenType::UIROTATION:
 		case TweenType::UIROTATION_X:
 		case TweenType::UIROTATION_Y:
@@ -533,7 +536,6 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
-
 		case TweenType::SCALE:
 		case TweenType::SCALE_X:
 		case TweenType::SCALE_Y:
@@ -544,7 +546,6 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
-
 		case TweenType::UISCALE:
 		case TweenType::UISCALE_X:
 		case TweenType::UISCALE_Y:
@@ -558,38 +559,37 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
-
 		case TweenType::FLOAT_VALUE: {
 			if (tween.floatPtr) {
 				*tween.floatPtr = CalculateFloat(tween.startFloat, tween.targetFloat, t, tween.mode);
 			}
 			break;
 		}
-
 		case TweenType::COLOR: {
 			if (tween.colorPtr) {
 				*tween.colorPtr = CalculateColor(tween.startColor, tween.targetColor, t, tween.mode);
 			}
 			break;
 		}
-
 		case TweenType::VEC3: {
 			if (tween.vec3Ptr) {
 				*tween.vec3Ptr = CalculateVec3(tween.startVec3, tween.targetVec3, t, tween.mode);
 			}
 			break;
 		}
-
-							if (tween.elapsedTime >= tween.duration && tween.onComplete) {
-								tween.onComplete();
-							}
-
 		}
 
-		tweens.erase(std::remove_if(tweens.begin(), tweens.end(),
-			[](const Tween& tween) { return tween.elapsedTime >= tween.duration || tween.object == nullptr; }),
-			tweens.end());
+		if (tween.elapsedTime >= tween.duration && tween.onComplete) {
+			tween.onComplete();
+		}
 	}
+
+	tweens.erase(
+		std::remove_if(tweens.begin(), tweens.end(),
+			[](const Tween& tween) {
+				return tween.elapsedTime >= tween.duration || tween.object == nullptr;
+			}),
+		tweens.end());
 }
 
 //Tweening::Sequence Tweening::CreateSequence() {

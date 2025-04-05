@@ -39,7 +39,7 @@ public class MenuButtons : MonoBehaviour
         optionsButton = GameObject.Find("options_button");
         //creditsButton = GameObject.Find("CreditsButton");
         quitButton = GameObject.Find("exit_button");
-        optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
+        optionsCanvas = GameObject.Find("Canvas_OptionsMenu_");
 
         button_newGameButton = newGameButton.GetComponent<UIButton>();
         button_continueButton = continueButton.GetComponent<UIButton>();

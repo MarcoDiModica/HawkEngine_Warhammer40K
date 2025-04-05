@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using HawkEngine;
 
 public class PlayerCamera : MonoBehaviour
@@ -14,10 +15,18 @@ public class PlayerCamera : MonoBehaviour
 
     private Vector3 currentOffset = new Vector3(0, 20, -10.5f);
     private Vector3 targetOffset = new Vector3(0, 20, 0);
+    private double fieldOfView;
 
+    public double  originalFOV = 60.0f;
+    public float dashFOV = 55.0f;
+    public double currentFOV;
+
+    private double targetFOV;
+    private float zoomSpeed = 5.0f;
     public override void Awake()
     {
-
+        currentFOV = originalFOV;
+        targetFOV = originalFOV;
     }
 
     public override void Start()
@@ -27,17 +36,19 @@ public class PlayerCamera : MonoBehaviour
 
         if (playerRef == null)
         {
-            Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
+            //Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
             return;
         }
 
         if (cameraRef == null)
         {
-            Engineson.print("ERROR: PlayerCamera requires a Camera component!");
+            //Engineson.print("ERROR: PlayerCamera requires a Camera component!");
             return;
         }
 
         cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
+        cameraRef.SetCameraFieldOfView(originalFOV*(System.Math.PI/180.0));
+        Engineson.print("Camera FOV: " + originalFOV * (System.Math.PI / 180.0));
     }
 
     public override void Update(float deltaTime)
@@ -70,28 +81,24 @@ public class PlayerCamera : MonoBehaviour
 
         cameraRef.SetOffset(currentOffset);
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (targetFOV != currentFOV)
         {
-           SceneManager.LoadScene("Level2");
+            currentFOV = Lerp(currentFOV, targetFOV, deltaTime * zoomSpeed);
+            cameraRef.SetCameraFieldOfView(currentFOV * (System.Math.PI / 180.0));
         }
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SceneManager.LoadScene("Level1");
-        }
     }
 
     private float GetMagnitude(Vector2 vector)
     {
         return (float)System.Math.Sqrt((vector.X * vector.X) + (vector.Y * vector.Y));
     }
-
-    private Vector3 LerpVector3(Vector3 start, Vector3 end, float t)
+    public double Lerp(double start, double end, float t)
+    {
+        t = Clamp01(t);
+        return start + (end - start) * t;
+    }
+    public Vector3 LerpVector3(Vector3 start, Vector3 end, float t)
     {
         t = Clamp01(t);
         return new Vector3(
@@ -106,5 +113,14 @@ public class PlayerCamera : MonoBehaviour
         if (value < 0) return 0;
         if (value > 1) return 1;
         return value;
+    }
+    public void StartDash()
+    {
+        targetFOV = dashFOV;
+    }
+
+    public void EndDash()
+    {
+        targetFOV = originalFOV; 
     }
 }

@@ -19,9 +19,14 @@ public class PlayerDash : MonoBehaviour
     public bool isInvulnerable = false;
     private float invulnerabilityTime = 0.25f;
     private float iTimeCounter = 0;
+    private GameObject playerCamera;
+
+    private float targetFOV;
+    private float zoomSpeed = 0.5f;
 
     public override void Awake()
     {
+
     }
 
     public override void Start()
@@ -32,7 +37,10 @@ public class PlayerDash : MonoBehaviour
             Engineson.print("ERROR: PlayerDash requires a Rigidbody component!");
             return;
         }
-        lastDashTime = -dashCooldown; 
+        lastDashTime = -dashCooldown;
+
+        playerCamera = GameObject.Find("MainCamera");
+        playerCamera.GetComponent<PlayerCamera>();
     }
 
     public override void Update(float deltaTime)
@@ -55,24 +63,32 @@ public class PlayerDash : MonoBehaviour
     {
         if (!CanDash(currentTime)) return;
 
+        
         isDashing = true;
         currentDashTime = dashDuration;
         dashDirection = direction == Vector3.Zero ? gameObject.GetComponent<Transform>().forward : Vector3.Normalize(direction);
         lastDashTime = currentTime;
         isInvulnerable = true;
         rb.AddForce(dashDirection * dashSpeed);
+        playerCamera.GetComponent<PlayerCamera>().StartDash();
     }
 
     private void HandleActiveDash(float deltaTime)
     {
         if (currentDashTime > 0)
         {
+            //playerCamera.GetComponent<Camera>().SetCameraFieldOfView(playerCamera.GetComponent<PlayerCamera>().dashFOV * (System.Math.PI / 180.0));
+            //playerCamera.GetComponent<PlayerCamera>().Lerp(playerCamera.GetComponent<PlayerCamera>().originalFOV, playerCamera.GetComponent<PlayerCamera>().dashFOV, 1);
             rb.AddForce(dashDirection * dashSpeed);
             currentDashTime -= deltaTime;
         }
         else
         {
             isDashing = false;
+            //playerCamera.GetComponent<Camera>().SetCameraFieldOfView(playerCamera.GetComponent<PlayerCamera>().originalFOV * (System.Math.PI / 180.0));
+            //playerCamera.GetComponent<PlayerCamera>().Lerp(playerCamera.GetComponent<PlayerCamera>().dashFOV, playerCamera.GetComponent<PlayerCamera>().originalFOV, 1);
+            playerCamera.GetComponent<PlayerCamera>().EndDash(); // Restaura el FOV
+
         }
     }
 

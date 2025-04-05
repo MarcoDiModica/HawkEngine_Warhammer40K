@@ -80,7 +80,7 @@ namespace EngineBinds {
     void SetForward(MonoObject* transformRef, glm::vec3* forward);
 
 	// Camera
-    void SetCameraFieldOfView(MonoObject* cameraRef, float fov);
+    void SetCameraFieldOfView(MonoObject* cameraRef, double fov);
     void SetCameraNearClipPlane(MonoObject* cameraRef, float nearClipPlane);
     void SetCameraFarClipPlane(MonoObject* cameraRef, float farClipPlane);
     void SetCameraAspectRatio(MonoObject* cameraRef, float aspectRatio);

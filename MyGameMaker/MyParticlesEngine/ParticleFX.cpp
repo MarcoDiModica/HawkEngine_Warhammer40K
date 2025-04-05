@@ -645,6 +645,39 @@ namespace ParticlePresets {
 		"Assets/Textures/Medicae_Stim.png" // Texture path
 	};
 
+	const ParticlePreset Blood_Splash = {
+		ParticleType::DEFAULT,
+		false,                         // PlayOnAwake
+		2.0f,                          // Duration (only if one-shot)
+		glm::vec3(1.0f, 1.0f, 1.0f),   // Start color (white)
+		glm::vec3(1.0f, 1.0f, 1.0f),   // End color (white)
+		1.0f,                          // Alpha start
+		0.0f,                          // Alpha end
+		1.0f,                          // Size start
+		1.0f,                          // Size end
+		0.5f,                          // Min lifetime
+		1.0f,                          // Max lifetime
+		20.0f,                         // Min speed
+		0.01f,                         // Max speed
+		0.01f,                         // End Speed
+		glm::vec3(3.0f, 0.0f, 0.0f),   // Gravity
+		0.0f,                          // Rotation speed
+		10.0f,                         // Emission rate (particles per second)
+		EmitterShape::POINT,           // Shape
+		0.0f,                          // Unused for point
+		0.0f,                          // Unused for point
+		0.0f,                          // Unused for point
+		glm::vec2(512.0f, 512.0f),     // Sprite size
+		false,                         // Use animation
+		false,                         // Random animation Index
+		0.0f,                          // Animation speed
+		0.0f,                          // Start rotation
+		true,                          // Random rotation
+		10.0f,                         // Min scale
+		5.0f,                          // Max scale
+		"Assets/Textures/BloodSplash_decals1_Yiwei.png" // Texture path
+	};
+
 }
 
 ParticleFX::ParticleFX(GameObject* owner)
@@ -1129,6 +1162,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::ARC_SNARE_IMPACT:
 		preset = ParticlePresets::Arc_Snare_Impact;
+		SetOneShot(true);
+		break;
+	case ParticleType::BLOOD_SPLASH:
+		preset = ParticlePresets::Blood_Splash;
 		SetOneShot(true);
 		break;
 	default:

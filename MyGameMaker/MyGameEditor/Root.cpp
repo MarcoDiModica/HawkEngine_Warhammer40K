@@ -250,6 +250,30 @@ bool Root::Start()
 	powerUp3->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
 	powerUp3->SetTag("PowerUp");
 
+	//// Test Ammunition
+	auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
+	ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 1, 20));
+	ShotgunShells->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	ShotgunShells->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
+	ShotgunShellsBaseColor->LoadTexture("Assets/Textures/ShotgunShells.png");
+	ShotgunShells->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunShellsBaseColor);
+	ShotgunShells->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
+	ShotgunShells->SetTag("Ammunition");
+
+	auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
+	BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 1, 20));
+	BoltgunBullets->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();
+	BoltgunBulletsBaseColor->LoadTexture("Assets/Textures/BoltgunBullets.png");
+	BoltgunBullets->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBulletsBaseColor);
+	BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
+	BoltgunBullets->SetTag("Ammunition");
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
@@ -258,19 +282,19 @@ bool Root::Start()
 	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	////Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
-	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
-	//lictor->SetTag("Enemy");
+	/*auto lictor = CreateGameObject("Lictor");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
+	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
+	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	lictorMesh->SetName("LictorMesh");
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	lictor->SetTag("Enemy");*/
 
 
 	//auto cube = CreateCube("Cube");

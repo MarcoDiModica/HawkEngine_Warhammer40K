@@ -50,48 +50,131 @@ typedef unsigned int guint32;
 class ComponentDrawer {
 private:
     #pragma region Transform
-    static void DrawTransformComponent(Transform_Component* transform, bool& snap, float& snapValue) {
-        if (!transform) return;
+	static void DrawTransformComponent(Transform_Component* transform, bool& snap, float& snapValue) {
+		if (!transform) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Transform")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Transform")) return;
 
-        if (ImGui::BeginPopupContextItem()) {
+		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Reset Transform")) {
 				transform->ResetTransform();
 			}
 			ImGui::EndPopup();
 		}
 
-        GameObject* parent = transform->GetOwner()->GetParent();
-        bool hasParent = parent != nullptr;
-        ImGui::Text("Parent: %s", hasParent ? parent->GetName().c_str() : "None");
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+		const ImVec4 posColor(0.7f, 0.9f, 0.7f, 1.0f);
+		const ImVec4 rotColor(0.9f, 0.7f, 0.7f, 1.0f);
+		const ImVec4 scaleColor(0.7f, 0.7f, 0.9f, 1.0f);
 
-        glm::dvec3 currentPosition = transform->GetPosition();
-        glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
-        glm::dvec3 currentScale = transform->GetScale();
+		ImGui::BeginGroup();
 
-        float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
-        float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
-        float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+		GameObject* parent = transform->GetOwner()->GetParent();
+		bool hasParent = parent != nullptr;
+		AlignedProperty("Parent", hasParent ? parent->GetName().c_str() : "None", labelWidth);
 
-        if (ImGui::DragFloat3("Position", pos, 0.1f)) {
-            glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-            transform->SetPosition(newPosition);
-        }
+		ImGui::Separator();
 
-        if (ImGui::DragFloat3("Rotation", rot, 0.1f)) {
-            glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-            transform->SetRotation(newRotation);
-        }
-        if (ImGui::DragFloat3("Scale", sca, 0.01f, 0.01f, 100.0f)) {
-            glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
-            transform->SetScale(newScale);
-        }
+		glm::dvec3 currentPosition = transform->GetPosition();
+		glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
+		glm::dvec3 currentScale = transform->GetScale();
 
-        ImGui::Checkbox("Snap", &snap);
-        ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f, 10.0f);
-    }
+		float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+		float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
+		float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Position");
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-20);
+		bool posChanged = ImGui::DragFloat3("##Position", pos, 0.1f);
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("World position (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("R##PosReset", ImVec2(25, 25))) {
+			transform->SetPosition({ 0, 0, 0 });
+		}
+		else if (posChanged) {
+			transform->SetPosition({ pos[0], pos[1], pos[2] });
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Rotation");
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-20);
+		bool rotChanged = ImGui::DragFloat3("##Rotation", rot, 0.1f);
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Rotation in degrees (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("R##RotReset", ImVec2(25, 25))) {
+			transform->SetRotation({ 0, 0, 0 });
+		}
+		else if (rotChanged) {
+			transform->SetRotation(glm::radians(glm::dvec3(rot[0], rot[1], rot[2])));
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Scale");
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-20);
+		bool scaChanged = ImGui::DragFloat3("##Scale", sca, 0.01f, 0.01f, 100.0f);
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Scale multiplier (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("R", ImVec2(25, 25))) {
+			transform->SetScale({ 1, 1, 1 });
+		}
+		else if (scaChanged) {
+			transform->SetScale({ sca[0], sca[1], sca[2] });
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+
+		ImGui::Separator();
+		ImGui::BeginGroup();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Snap");
+		ImGui::SameLine(labelWidth);
+		ImGui::Checkbox("##Snap", &snap);
+
+		if (snap) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Snap Value");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			ImGui::DragFloat("##SnapValue", &snapValue, 0.1f, 0.1f, 10.0f);
+			ImGui::PopItemWidth();
+		}
+
+		ImGui::EndGroup();
+	}
     #pragma endregion
 
 	#pragma region MeshRenderer

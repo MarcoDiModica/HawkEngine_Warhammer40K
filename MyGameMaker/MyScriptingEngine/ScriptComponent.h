@@ -37,7 +37,6 @@ public:
 
     std::filesystem::file_time_type lastWriteTime;
 
-	std::string name;
 
 protected:
 	friend class SceneSerializer;

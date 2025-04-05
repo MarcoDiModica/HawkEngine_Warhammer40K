@@ -49,7 +49,6 @@ void ScriptComponent::Update(float deltaTime) {
     if (monoScript) {
         MonoClass* scriptClass = mono_object_get_class(monoScript);
         MonoMethod* updateMethod = mono_class_get_method_from_name(scriptClass, "Update", 1);
-		std::printf("Update %s\n", name.c_str());
         void* args[1];
         args[0] = &deltaTime;
 

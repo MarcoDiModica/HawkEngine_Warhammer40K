@@ -6,8 +6,10 @@
 #include <functional>
 #include <algorithm>
 #include "MyUIEngine/UITransformComponent.h"
+#include <mutex>
 
 std::vector<Tweening::Tween> Tweening::tweens;
+std::mutex tweenMutex;
 
 Tweening::Tween Tweening::CreateTween(GameObject* object, float duration, Modes mode) {
 	Tween tween;
@@ -467,13 +469,13 @@ glm::vec3 Tweening::CalculateVec3(const glm::vec3& startVec3, const glm::vec3& t
 }
 
 void Tweening::Update(float deltaTime) {
+	std::lock_guard<std::mutex> lock(tweenMutex);
+
 	for (auto& tween : tweens) {
 		if (tween.object == nullptr) {
 			continue;
 		}
-		if (!tween.object->HasComponent<UITransformComponent>()) {
-			continue;
-		}
+
 		tween.elapsedTime += deltaTime;
 		float t = glm::clamp(tween.elapsedTime / tween.duration, 0.0f, 1.0f);
 
@@ -486,8 +488,8 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::POSITION_X:
 		case TweenType::POSITION_Y:
 		case TweenType::POSITION_Z: {
-			glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
 			if (tween.object && tween.object->GetTransform()) {
+				glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
 				tween.object->GetTransform()->SetPosition(currentPosition);
 			}
 			break;
@@ -497,12 +499,13 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::UIPOSITION_X:
 		case TweenType::UIPOSITION_Y:
 		case TweenType::UIPOSITION_Z: {
-			if (!tween.object->HasComponent<UITransformComponent>()) {
-				continue;
+			if (tween.object && tween.object->HasComponent<UITransformComponent>()) {
+				auto uiTransform = tween.object->GetComponent<UITransformComponent>();
+				if (uiTransform) {
+					glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
+					uiTransform->setPos(currentPosition);
+				}
 			}
-			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
-			glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
-			uiTransform->setPos(currentPosition);
 			break;
 		}
 
@@ -510,8 +513,8 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::ROTATION_X:
 		case TweenType::ROTATION_Y:
 		case TweenType::ROTATION_Z: {
-			glm::dvec3 currentRotation = CalculateRotation(tween.startRotation, tween.targetRotation, t, tween.mode);
 			if (tween.object && tween.object->GetTransform()) {
+				glm::dvec3 currentRotation = CalculateRotation(tween.startRotation, tween.targetRotation, t, tween.mode);
 				tween.object->GetTransform()->SetRotation(glm::radians(currentRotation));
 			}
 			break;
@@ -521,12 +524,13 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::UIROTATION_X:
 		case TweenType::UIROTATION_Y:
 		case TweenType::UIROTATION_Z: {
-			if (!tween.object->HasComponent<UITransformComponent>()) {
-				continue;
+			if (tween.object && tween.object->HasComponent<UITransformComponent>()) {
+				auto uiTransform = tween.object->GetComponent<UITransformComponent>();
+				if (uiTransform) {
+					glm::dvec3 currentRotation = CalculateRotation(tween.startRotation, tween.targetRotation, t, tween.mode);
+					uiTransform->SetRot(glm::radians(currentRotation));
+				}
 			}
-			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
-			glm::dvec3 currentRotation = CalculateRotation(tween.startRotation, tween.targetRotation, t, tween.mode);
-			uiTransform->SetRot(glm::radians(currentRotation));
 			break;
 		}
 
@@ -534,8 +538,8 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::SCALE_X:
 		case TweenType::SCALE_Y:
 		case TweenType::SCALE_Z: {
-			glm::dvec3 currentScale = CalculateScale(tween.startScale, tween.targetScale, t, tween.mode);
 			if (tween.object && tween.object->GetTransform()) {
+				glm::dvec3 currentScale = CalculateScale(tween.startScale, tween.targetScale, t, tween.mode);
 				tween.object->GetTransform()->SetScale(currentScale);
 			}
 			break;
@@ -545,13 +549,13 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::UISCALE_X:
 		case TweenType::UISCALE_Y:
 		case TweenType::UISCALE_Z: {
-
-			if (!tween.object->HasComponent<UITransformComponent>()) {
-				continue;
+			if (tween.object && tween.object->HasComponent<UITransformComponent>()) {
+				auto uiTransform = tween.object->GetComponent<UITransformComponent>();
+				if (uiTransform) {
+					glm::dvec3 currentScale = CalculateScale(tween.startScale, tween.targetScale, t, tween.mode);
+					uiTransform->setScale(currentScale);
+				}
 			}
-			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
-			glm::dvec3 currentScale = CalculateScale(tween.startScale, tween.targetScale, t, tween.mode);
-			uiTransform->setScale(currentScale);
 			break;
 		}
 
@@ -576,9 +580,9 @@ void Tweening::Update(float deltaTime) {
 			break;
 		}
 
-		if (tween.elapsedTime >= tween.duration && tween.onComplete) {
-		tween.onComplete();
-		}
+							if (tween.elapsedTime >= tween.duration && tween.onComplete) {
+								tween.onComplete();
+							}
 
 		}
 

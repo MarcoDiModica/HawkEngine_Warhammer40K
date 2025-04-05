@@ -149,7 +149,7 @@ bool Root::Start()
 	
 	//// Test PowerUps
 	//
-	/*auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
+	auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
 	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
 	powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
@@ -248,7 +248,7 @@ bool Root::Start()
 	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(AmmunitionBlessingNormal);
 	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(AmmunitionBlessingMetallic);
 	powerUp3->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
-	powerUp3->SetTag("PowerUp");*/
+	powerUp3->SetTag("PowerUp");
 
 
 	//auto particleFX = CreateGameObject("ParticleFX");
@@ -303,10 +303,10 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	/*auto floor = CreateCube("Floor");
+	auto floor = CreateCube("Floor");
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);*/
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 
 	////For rendering Interaction System text, remove the canvas if there is already one
 	/*auto canvas = CreateGameObject("Canvas");
@@ -341,8 +341,8 @@ bool Root::Start()
 	//CreateLocationSM();
 	//CreateWinUI();
 	//CreateLoseUI();
-	//CreatePauseMenuUI();
-	CreateGameplayUI();
+	CreatePauseMenuUI();
+	//CreateGameplayUI();
 	//CreateMainMenuUI();
 	//CreateOptionsMenuUI();
 

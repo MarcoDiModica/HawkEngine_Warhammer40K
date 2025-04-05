@@ -30,6 +30,7 @@ public class Shotgun : BaseWeapon
         currentTotalAmmo = 16;
         reloadTime = 2.5f;
         range = 20f;
+        timeToLerp = 2;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
@@ -46,7 +47,8 @@ public class Shotgun : BaseWeapon
 
         for (int i = bulletsPos.Count - 1; i >= 0; i--)
         {
-            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.1f);
+            bulletIntervals[i] += deltaTime;
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], bulletIntervals[i] / timeToLerp);
             bulletsObjects[i].GetComponent<Transform>().position = bulletsPos[i];
 
             if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.5f)
@@ -58,6 +60,7 @@ public class Shotgun : BaseWeapon
                     Engineson.Destroy(bulletsObjects[i]);
                     bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
                 }
                 else
                 {
@@ -82,6 +85,7 @@ public class Shotgun : BaseWeapon
                     Engineson.Destroy(bulletsObjects[i]);
                     bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
                 }
             }
         }
@@ -126,6 +130,7 @@ public class Shotgun : BaseWeapon
                 projectile.GetComponent<Transform>().SetScale(0.5f, 0.5f, 0.5f);
 
                 bulletsObjects.Add(projectile);
+                bulletIntervals.Add(0);
 
 
                 Vector3 bulletHitPoint = Vector3.Zero;

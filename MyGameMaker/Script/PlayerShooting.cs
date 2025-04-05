@@ -34,6 +34,8 @@ public class PlayerShooting : MonoBehaviour
     private string shotgunEquiped = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunEqquiped.wav";
     private string railgunEquiped = "Assets/Audio/SFX/Weapons/Railgun/RailgunEqquiped.wav";
 
+    private ParticleFX riffleShotFX;
+
     private enum GunType
     {
         BOLTGUN,
@@ -96,6 +98,11 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("ERROR: PlayerShooting requires a Ra ilgun component!");
         }
 
+        riffleShotFX = GameObject.Find("RiffleShotFX").GetComponent<ParticleFX>();
+        
+        
+        
+
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
 
@@ -142,6 +149,7 @@ public class PlayerShooting : MonoBehaviour
         if (playerInput?.IsShooting() == true)
         {
             Shoot();
+            riffleShotFX.EmitBurst(1);
         }
         else if (playerInput.IsShooting() == false)
         {
@@ -157,6 +165,9 @@ public class PlayerShooting : MonoBehaviour
                     shootTimer = 0;
                     break;
             }
+
+            riffleShotFX.Stop();
+
         }
 
 
@@ -202,8 +213,10 @@ public class PlayerShooting : MonoBehaviour
                     break;
             }
 
-
             
+
+
+
         }
         catch (System.Exception e)
         {

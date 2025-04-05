@@ -54,6 +54,7 @@ public class ArcSnare : BaseAbilities
 
             if (abilityTimer >= abilityCooldown)
             {
+                Engineson.Destroy(grenade);
                 canThrow = true;
                 abilityTimer = 0.0f;
                // Engineson.print("Cooldown terminado. Habilidad lista.");
@@ -71,9 +72,11 @@ public class ArcSnare : BaseAbilities
                 if (rigidbody.GetVelocity().Y <= 0.1f && timer > 0.1f && yHeight > grenadeY)
                 {
                     Explode();
+                    
                 }
             }
         }
+
 
         // Manejo de la explosión (pero sin destruir la explosión)
         if (exploded)
@@ -110,6 +113,7 @@ public class ArcSnare : BaseAbilities
             grenade.AddComponent<Audio>();
             grenade.GetComponent<Arc>().Start();
 
+
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;
         }
@@ -140,6 +144,7 @@ public class ArcSnare : BaseAbilities
         // Crear explosión
         explosion = Engineson.CreateGameObject("Explosion", null);
         
+
         if (explosion == null) return;
 
         explosion.AddComponent<MeshRenderer>();
@@ -149,6 +154,8 @@ public class ArcSnare : BaseAbilities
             grenade.GetComponent<Transform>().GetPosition().Z
         );
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
+
+        
 
         exploded = true;
     }

@@ -1,6 +1,225 @@
 SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
+  name: Player
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
+    CapsuleColliderComponent:
+      size:
+        - 1.70000005
+        - 1.10000002
+        - 1
+      offset:
+        - 0
+        - 2.0999999
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -200
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: PlayerShooting
+      Script1:
+        name: PlayerMovement
+      Script2:
+        name: PlayerInput
+      Script3:
+        name: PlayerDash
+      Script4:
+        name: PlayerController
+      Script5:
+        name: PlayerPowerUp
+      Script6:
+        name: Boltgun
+      Script7:
+        name: Shotgun
+      Script8:
+        name: GrenadeLauncher
+      Script9:
+        name: Railgun
+      Script10:
+        name: ""
+      Script11:
+        name: EnergyBall
+      Script12:
+        name: ToggleMode
+      Script13:
+        name: Barrage
+      Script14:
+        name: HookShot
+      Script15:
+        name: ArcSnare
+      Script16:
+        name: RedThirstManager
+      Script17:
+        name: InteractionSystem
+  Children:
+    - name: playerMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90.000002504478161
+            - 0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cylinder.001
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
+            normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
+            metallic_map: ""
+            roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_playerMesh
+        ScriptComponents:
+          Script0:
+            name: PlayerAnimations
+      Children: ~
+    - name: RiffleShotFX
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 0
+          emissionRate: 10
+          particlesPerSecond: 10
+          minLifetime: 1
+          maxLifetime: 3
+          minSpeed: 1
+          maxSpeed: 3
+          startSize: 1
+          endSize: 1
+          minSize: 0
+          maxSize: 0
+          startColor:
+            - 1
+            - 1
+            - 1
+          endColor:
+            - 1
+            - 1
+            - 1
+          startAlpha: 1
+          endAlpha: 0
+          rotationSpeed: 0
+          gravity:
+            - 0
+            - 0
+            - 0
+          shapeParam1: 0.5
+          shapeParam2: 1
+          shapeParam3: 0
+          isOneShot: false
+          isPlaying: false
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 133
+            - 175
+          useAnimation: false
+          animSpeed: 0
+          startRotation: 0
+          randomRotation: false
+          material:
+            billboardType: 0
+            particleType: 0
+            softness: 0
+            useColorGradient: false
+            texturePath: ""
+          particleType: 0
+      Children: ~
+GameObject1:
   name: MainCamera
   tag: Untagged
   active: true
@@ -25,7 +244,7 @@ GameObject0:
       name: CameraComponent
       enabled: true
       projection_type: perspective
-      fov: 1.0471975511965976
+      fov: 1.0471975803375244
       size: 0
       near_plane: 0.10000000000000001
       far_plane: 500
@@ -35,7 +254,7 @@ GameObject0:
       Script0:
         name: PlayerCamera
   Children: ~
-GameObject1:
+GameObject2:
   name: stim.001
   tag: PowerUp
   active: true
@@ -100,7 +319,121 @@ GameObject1:
       Script0:
         name: MedicaeStimm
   Children: ~
-GameObject2:
+GameObject3:
+  name: Hormagaunt
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 5
+        - 0
+        - 5
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.00030960628646425903
+            - 0.98896592855453491
+            - 0.051096078008413315
+          localRotation:
+            - -1.3660378731687233e-05
+            - 2.4012357443917309e-07
+            - -1.7342270674115732e-06
+          localScale:
+            - 0.0075779887847602402
+            - 0.0075779887847605421
+            - 0.0075779887847605386
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject4:
   name: Floor
   tag: Untagged
   active: true
@@ -162,7 +495,7 @@ GameObject2:
         - 0
       isTrigger: false
   Children: ~
-GameObject3:
+GameObject5:
   name: Canvas_HUD
   tag: Untagged
   active: true
@@ -2012,273 +2345,4 @@ GameObject3:
           name: UIImageComponent
           enabled: true
           texture_path: Library/Textures/UI/bible.png
-      Children: ~
-GameObject4:
-  name: Player
-  tag: Player
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 10
-      particlesPerSecond: 10
-      minLifetime: 0.5
-      maxLifetime: 1
-      minSpeed: 20
-      maxSpeed: 0.00999999978
-      startSize: 1
-      endSize: 1
-      minSize: 10
-      maxSize: 5
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 0
-      rotationSpeed: 0
-      gravity:
-        - 3
-        - 0
-        - 0
-      shapeParam1: 0
-      shapeParam2: 0
-      shapeParam3: 0
-      isOneShot: true
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 512
-        - 512
-      useAnimation: false
-      animSpeed: 0
-      startRotation: 0
-      randomRotation: true
-      material:
-        billboardType: 0
-        particleType: 0
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
-      particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
-    CapsuleColliderComponent:
-      size:
-        - 1.70000005
-        - 1.10000002
-        - 1
-      offset:
-        - 0
-        - 2.0999999
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -200
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: PlayerShooting
-      Script1:
-        name: PlayerMovement
-      Script2:
-        name: PlayerInput
-      Script3:
-        name: PlayerDash
-      Script4:
-        name: PlayerController
-      Script5:
-        name: PlayerPowerUp
-      Script6:
-        name: Boltgun
-      Script7:
-        name: Shotgun
-      Script8:
-        name: GrenadeLauncher
-      Script9:
-        name: Railgun
-      Script10:
-        name: ""
-      Script11:
-        name: EnergyBall
-      Script12:
-        name: ToggleMode
-      Script13:
-        name: Barrage
-      Script14:
-        name: HookShot
-      Script15:
-        name: ArcSnare
-      Script16:
-        name: RedThirstManager
-      Script17:
-        name: InteractionSystem
-  Children:
-    - name: playerMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - -90.000002504478161
-            - 0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Cylinder.001
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
-            normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
-            metallic_map: ""
-            roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_playerMesh
-        ScriptComponents:
-          Script0:
-            name: PlayerAnimations
-      Children: ~
-    - name: RiffleShotFX
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.80000001192092896
-            - 3
-            - 0.5
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 2
-            - 2
-            - 2
-        ParticleFX:
-          name: ParticleFX
-          enabled: true
-          emitterShape: 0
-          emissionRate: 1
-          particlesPerSecond: 1
-          minLifetime: 0.25
-          maxLifetime: 0.25
-          minSpeed: 0
-          maxSpeed: 0
-          startSize: 3
-          endSize: 3
-          minSize: 1
-          maxSize: 1
-          startColor:
-            - 1
-            - 1
-            - 1
-          endColor:
-            - 1
-            - 1
-            - 1
-          startAlpha: 1
-          endAlpha: 1
-          rotationSpeed: 0
-          gravity:
-            - 0
-            - 0.00100000005
-            - 0
-          shapeParam1: 0.200000003
-          shapeParam2: 1
-          shapeParam3: 20
-          isOneShot: false
-          isPlaying: true
-          isPaused: false
-          burstEmitted: false
-          spriteSize:
-            - 1920
-            - 1080
-          useAnimation: true
-          animSpeed: 0.0500000007
-          startRotation: 0
-          randomRotation: false
-          material:
-            billboardType: 0
-            particleType: 8
-            softness: 0
-            useColorGradient: false
-            texturePath: Assets/Textures/muzzle.png
-          particleType: 8
       Children: ~

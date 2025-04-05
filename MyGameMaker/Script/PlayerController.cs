@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private bool hasStoppedFootsteps = false;
     private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
     private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep.wav";
+    public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit.wav";
+    public string DeathAudio = "Assets/Audio/SFX/Player/PlayerDeath.wav";
 
 
     public PlayerData playerData;
@@ -378,9 +380,12 @@ public class PlayerController : MonoBehaviour
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
-                if(playerData.GetHealth() <= 0)
+                sound?.LoadAudio(HitAudio);
+                sound?.Play(true);
+                if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
+                    sound?.LoadAudio(DeathAudio);
                     Engineson.print("Player is dead!");
                 }
                 else
@@ -402,9 +407,13 @@ public class PlayerController : MonoBehaviour
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
+                sound?.LoadAudio(HitAudio);
+                sound?.Play(true);
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
+                    sound?.LoadAudio(DeathAudio);
+                    sound?.Play(true);
                     Engineson.print("Player is dead!");
                 }
                 else

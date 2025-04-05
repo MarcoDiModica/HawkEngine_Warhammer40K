@@ -5,6 +5,8 @@ using HawkEngine;
 public class PlayerAnimations : MonoBehaviour
 {
     private SkeletalAnimation esk;
+    private PlayerController playerController;
+    private PlayerData playerData;
     int animIndex = 0;
 
     public override void Awake()
@@ -14,6 +16,8 @@ public class PlayerAnimations : MonoBehaviour
     public override void Start()
     {
         esk = gameObject.GetComponent<SkeletalAnimation>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerData = playerController.playerData;
         if (esk == null)
         {
             Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
@@ -25,33 +29,35 @@ public class PlayerAnimations : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+
         if (Input.GetKeyDown(KeyCode.B))
         {
-            animIndex += 1;
-            SetHitIdleAnimation();
+            if(playerData.GetHealth() <= 0)
+            {
+                animIndex += 1;
+                SetDeathAnimation();
+            }
+            else
+            {
+                animIndex += 1;
+
+                SetHitIdleAnimation();
+            }
+            
         }
-        //if (esk.GetAnimationTime() >= esk.GetAnimationLength())
-        //{
-        //    SetRunAnimation();
-        //}
     }
     public void SetHitIdleAnimation()
     {
         esk.TransitionAnimations(2, 5, 0.1f);
-        //esk.SetAnimation(3);
-       // esk.SetAnimationSpeed(2f);
     }
     public void SetDeathAnimation()
     {
         esk.TransitionAnimations(2, 1, 0.1f);
-        //esk.SetAnimation(3);
-        // esk.SetAnimationSpeed(2f);
     }
     public void SetStandardIdleAnimation()
     {
 
         esk.TransitionAnimations(5, 5, 0.1f);
-        //esk.SetAnimation(4);
         esk.SetAnimationSpeed(2f);
       
     }
@@ -71,34 +77,29 @@ public class PlayerAnimations : MonoBehaviour
     public void SetShootingStandingAnimation()
     {
         esk.TransitionAnimations(5, 7, 0.1f);
-        //esk.SetAnimation(8);
         esk.SetAnimationSpeed(5f);
     }
 
     public void SetRunningToShootRunningAnimation()
     {
         esk.TransitionAnimations(6, 8, 0.1f);
-        //esk.SetAnimation(10);
         esk.SetAnimationSpeed(1f);
     }
     public void SetWalkAnimation()
     {
         esk.TransitionAnimations(5, 9, 0.1f);
-        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetRunAnimation()
     {
         esk.TransitionAnimations(9, 6, 0.1f);
-        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.2f);
     }
 
     public void SetDashAnimation()
     {
         esk.TransitionAnimations(6, 0, 0.1f);
-        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
         
     }
@@ -106,35 +107,30 @@ public class PlayerAnimations : MonoBehaviour
     public void SetShootingStandingToIdleAnimation()
     {
         esk.TransitionAnimations(7, 5, 0.1f);
-        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetRunningToIdleAnimation()
     {
         esk.TransitionAnimations(6, 5, 0.1f);
-        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetWalkingToIdleAnimation()
     {
         esk.TransitionAnimations(9, 5, 0.1f);
-        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetShootingRunningToRunAnimation()
     {
         esk.TransitionAnimations(8, 6, 0.1f);
-        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetShootingStandingToShootingRunAnimation()
     {
         esk.TransitionAnimations(7, 8, 0.1f);
-        //esk.SetAnimation(6);
         esk.SetAnimationSpeed(1.5f);
 
     }

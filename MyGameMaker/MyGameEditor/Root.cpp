@@ -236,6 +236,30 @@ bool Root::Start()
 	powerUp3->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
 	powerUp3->SetTag("PowerUp");
 
+	//// Test Ammunition
+	auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
+	ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 1, 20));
+	ShotgunShells->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	ShotgunShells->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
+	ShotgunShellsBaseColor->LoadTexture("Assets/Textures/ShotgunShells.png");
+	ShotgunShells->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunShellsBaseColor);
+	ShotgunShells->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
+	ShotgunShells->SetTag("Ammunition");
+
+	auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
+	BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 1, 20));
+	BoltgunBullets->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();
+	BoltgunBulletsBaseColor->LoadTexture("Assets/Textures/BoltgunBullets.png");
+	BoltgunBullets->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBulletsBaseColor);
+	BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
+	BoltgunBullets->SetTag("Ammunition");
 
 	//auto particleFX = CreateGameObject("ParticleFX");
 	//particleFX->GetTransform()->SetPosition(glm::vec3(10, 0, 0));

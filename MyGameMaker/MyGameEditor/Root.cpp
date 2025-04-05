@@ -523,7 +523,7 @@ bool Root::Update(double dt)
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
 	//}
 
-	//Tweening::Update(dt);
+	Tweening::Update(dt);
 
 	return true;
 }

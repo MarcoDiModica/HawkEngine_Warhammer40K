@@ -339,12 +339,12 @@ bool Root::Start()
 
 	//CreateLocationBot();
 	//CreateLocationSM();
-	CreateWinUI();
+	/*CreateWinUI();
 	CreateLoseUI();
 	CreatePauseMenuUI();
 	CreateGameplayUI();
 	CreateMainMenuUI();
-	CreateOptionsMenuUI();
+	CreateOptionsMenuUI();*/
 
 	//auto shotgunPickUp = CreateGameObjectWithPath("Assets/shotgun.fbx");
 	//shotgunPickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));

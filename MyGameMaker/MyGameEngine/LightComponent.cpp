@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "Shaders.h"
 
-LightComponent::LightComponent(GameObject* owner) : Component(owner) { name = "Light"; }
+LightComponent::LightComponent(GameObject* owner) : Component(owner) { name = "LightComponent"; }
 
 void LightComponent::Awake()
 {

@@ -42,8 +42,8 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-	/*Application->root->CreateScene("DefaultScene");
-	Application->root->SetActiveScene("DefaultScene");*/
+	Application->root->CreateScene("DefaultScene");
+	Application->root->SetActiveScene("DefaultScene");
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
@@ -77,25 +77,25 @@ bool Root::Start()
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/FinalLevel1.Scene");
-	//auto player = CreateGameObject("Player");
-	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
-	//player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
-	//player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
-	//player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
-	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
-	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
+	auto player = CreateGameObject("Player");
+	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
+	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
+	player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
+	player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
+	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
+	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
+	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
+	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 
 	//particle->ApplyPreset(Particle)
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
@@ -115,7 +115,7 @@ bool Root::Start()
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 
-	auto itemtest = CreateCube("item");
+	/*auto itemtest = CreateCube("item");
 	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
 	itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
@@ -132,7 +132,7 @@ bool Root::Start()
 	auto floor2 = CreateCube("Player2");
 	floor2->GetTransform()->SetPosition(glm::vec3(10, 3, 0));
 	floor2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	floor2->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	floor2->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
@@ -149,7 +149,7 @@ bool Root::Start()
 	
 	//// Test PowerUps
 	//
-	auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
+	/*auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
 	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
 	powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
@@ -248,7 +248,7 @@ bool Root::Start()
 	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(AmmunitionBlessingNormal);
 	powerUp3->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(AmmunitionBlessingMetallic);
 	powerUp3->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
-	powerUp3->SetTag("PowerUp");
+	powerUp3->SetTag("PowerUp");*/
 
 
 	//auto particleFX = CreateGameObject("ParticleFX");
@@ -303,16 +303,13 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	auto floor = CreateCube("Floor");
+	/*auto floor = CreateCube("Floor");
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-
-
-	//CreateGameplayUI();
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);*/
 
 	////For rendering Interaction System text, remove the canvas if there is already one
-	auto canvas = CreateGameObject("Canvas");
+	/*auto canvas = CreateGameObject("Canvas");
 	canvas->AddComponent<UICanvasComponent>();
 	canvas->AddComponent<UITransformComponent>();
 	canvas->AddComponent<SoundComponent>();
@@ -332,7 +329,7 @@ bool Root::Start()
 	areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
 	areaText->AddComponent<UIButtonComponent>();
 	areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));*/
 
 	//floor->SetActive(false);
 
@@ -345,7 +342,7 @@ bool Root::Start()
 	//CreateWinUI();
 	//CreateLoseUI();
 	//CreatePauseMenuUI();
-	//CreateGameplayUI();
+	CreateGameplayUI();
 	//CreateMainMenuUI();
 	//CreateOptionsMenuUI();
 

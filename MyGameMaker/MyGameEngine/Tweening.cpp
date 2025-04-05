@@ -24,6 +24,7 @@ void Tweening::Move(GameObject* object, const glm::dvec3& targetPosition, float 
 	if (!object) return;
 
 	auto tween = CreateTween(object, duration, mode);
+	tween.object = object;
 	tween.startPosition = object->GetTransform()->GetPosition();
 	tween.targetPosition = targetPosition;
 	tween.tweenType = TweenType::POSITION;
@@ -37,6 +38,7 @@ void Tweening::UIMove(GameObject* object, const glm::dvec3& targetPosition, floa
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startPosition = uiTransform->GetPosition();
 		tween.targetPosition = targetPosition;
 		tween.tweenType = TweenType::UIPOSITION;
@@ -49,6 +51,7 @@ void Tweening::MoveX(GameObject* object, float targetX, float duration, Modes mo
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentPos = object->GetTransform()->GetPosition();
+	tween.object = object;
 	tween.startPosition = currentPos;
 	tween.targetPosition = glm::dvec3(targetX, currentPos.y, currentPos.z);
 	tween.tweenType = TweenType::POSITION_X;
@@ -62,6 +65,7 @@ void Tweening::UIMoveX(GameObject* object, float targetX, float duration, Modes 
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startPosition = uiTransform->GetPosition();
 		tween.targetPosition = glm::dvec3(targetX, uiTransform->GetPosition().y, uiTransform->GetPosition().z);
 		tween.tweenType = TweenType::UIPOSITION_X;
@@ -74,6 +78,7 @@ void Tweening::MoveY(GameObject* object, float targetY, float duration, Modes mo
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentPos = object->GetTransform()->GetPosition();
+	tween.object = object;
 	tween.startPosition = currentPos;
 	tween.targetPosition = glm::dvec3(currentPos.x, targetY, currentPos.z);
 	tween.tweenType = TweenType::POSITION_Y;
@@ -87,6 +92,7 @@ void Tweening::UIMoveY(GameObject* object, float targetY, float duration, Modes 
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startPosition = uiTransform->GetPosition();
 		tween.targetPosition = glm::dvec3(uiTransform->GetPosition().x, targetY, uiTransform->GetPosition().z);
 		tween.tweenType = TweenType::UIPOSITION_Y;
@@ -99,6 +105,7 @@ void Tweening::MoveZ(GameObject* object, float targetZ, float duration, Modes mo
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentPos = object->GetTransform()->GetPosition();
+	tween.object = object;
 	tween.startPosition = currentPos;
 	tween.targetPosition = glm::dvec3(currentPos.x, currentPos.y, targetZ);
 	tween.tweenType = TweenType::POSITION_Z;
@@ -112,6 +119,7 @@ void Tweening::UIMoveZ(GameObject* object, float targetZ, float duration, Modes 
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startPosition = uiTransform->GetPosition();
 		tween.targetPosition = glm::dvec3(uiTransform->GetPosition().x, uiTransform->GetPosition().y, targetZ);
 		tween.tweenType = TweenType::UIPOSITION_Z;
@@ -123,6 +131,7 @@ void Tweening::Rotate(GameObject* object, const glm::dvec3& targetRotation, floa
 	if (!object) return;
 
 	auto tween = CreateTween(object, duration, mode);
+	tween.object = object;
 	tween.startRotation = object->GetTransform()->GetEulerAngles();
 	tween.targetRotation = targetRotation;
 	tween.tweenType = TweenType::ROTATION;
@@ -135,6 +144,7 @@ void Tweening::UIRotate(GameObject* object, const glm::dvec3& targetRotation, fl
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startRotation = uiTransform->GetRotation();
 		tween.targetRotation = targetRotation;
 		tween.tweenType = TweenType::UIROTATION;
@@ -147,6 +157,7 @@ void Tweening::RotateX(GameObject* object, float targetX, float duration, Modes 
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentRot = object->GetTransform()->GetEulerAngles();
+	tween.object = object;
 	tween.startRotation = currentRot;
 	tween.targetRotation = glm::dvec3(targetX, currentRot.y, currentRot.z);
 	tween.tweenType = TweenType::ROTATION_X;
@@ -159,6 +170,7 @@ void Tweening::UIRotateX(GameObject* object, float targetX, float duration, Mode
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startRotation = uiTransform->GetRotation();
 		tween.targetRotation = glm::dvec3(targetX, uiTransform->GetRotation().y, uiTransform->GetRotation().z);
 		tween.tweenType = TweenType::UIROTATION_X;
@@ -171,6 +183,7 @@ void Tweening::RotateY(GameObject* object, float targetY, float duration, Modes 
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentRot = object->GetTransform()->GetEulerAngles();
+	tween.object = object;
 	tween.startRotation = currentRot;
 	tween.targetRotation = glm::dvec3(currentRot.x, targetY, currentRot.z);
 	tween.tweenType = TweenType::ROTATION_Y;
@@ -183,6 +196,7 @@ void Tweening::UIRotateY(GameObject* object, float targetY, float duration, Mode
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startRotation = uiTransform->GetRotation();
 		tween.targetRotation = glm::dvec3(uiTransform->GetRotation().x, targetY, uiTransform->GetRotation().z);
 		tween.tweenType = TweenType::UIROTATION_Y;
@@ -195,6 +209,7 @@ void Tweening::RotateZ(GameObject* object, float targetZ, float duration, Modes 
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentRot = object->GetTransform()->GetEulerAngles();
+	tween.object = object;
 	tween.startRotation = currentRot;
 	tween.targetRotation = glm::dvec3(currentRot.x, currentRot.y, targetZ);
 	tween.tweenType = TweenType::ROTATION_Z;
@@ -207,6 +222,7 @@ void Tweening::UIRotateZ(GameObject* object, float targetZ, float duration, Mode
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startRotation = uiTransform->GetRotation();
 		tween.targetRotation = glm::dvec3(uiTransform->GetRotation().x, uiTransform->GetRotation().y, targetZ);
 		tween.tweenType = TweenType::UIROTATION_Z;
@@ -218,6 +234,7 @@ void Tweening::Scale(GameObject* object, const glm::dvec3& targetScale, float du
 	if (!object) return;
 
 	auto tween = CreateTween(object, duration, mode);
+	tween.object = object;
 	tween.startScale = object->GetTransform()->GetScale();
 	tween.targetScale = targetScale;
 	tween.tweenType = TweenType::SCALE;
@@ -231,6 +248,7 @@ void Tweening::UIScale(GameObject* object, const glm::dvec3& targetScale, float 
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startScale = uiTransform->GetScale();
 		tween.targetScale = targetScale;
 		tween.tweenType = TweenType::UISCALE;
@@ -243,6 +261,7 @@ void Tweening::ScaleX(GameObject* object, float targetX, float duration, Modes m
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentScale = object->GetTransform()->GetScale();
+	tween.object = object;
 	tween.startScale = currentScale;
 	tween.targetScale = glm::dvec3(targetX, currentScale.y, currentScale.z);
 	tween.tweenType = TweenType::SCALE_X;
@@ -256,6 +275,7 @@ void Tweening::UIScaleX(GameObject* object, float targetX, float duration, Modes
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startScale = uiTransform->GetScale();
 		tween.targetScale = glm::dvec3(targetX, uiTransform->GetScale().y, uiTransform->GetScale().z);
 		tween.tweenType = TweenType::UISCALE_X;
@@ -268,6 +288,7 @@ void Tweening::ScaleY(GameObject* object, float targetY, float duration, Modes m
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentScale = object->GetTransform()->GetScale();
+	tween.object = object;
 	tween.startScale = currentScale;
 	tween.targetScale = glm::dvec3(currentScale.x, targetY, currentScale.z);
 	tween.tweenType = TweenType::SCALE_Y;
@@ -281,6 +302,7 @@ void Tweening::UIScaleY(GameObject* object, float targetY, float duration, Modes
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startScale = uiTransform->GetScale();
 		tween.targetScale = glm::dvec3(uiTransform->GetScale().x, targetY, uiTransform->GetScale().z);
 		tween.tweenType = TweenType::UISCALE_Y;
@@ -293,6 +315,7 @@ void Tweening::ScaleZ(GameObject* object, float targetZ, float duration, Modes m
 
 	auto tween = CreateTween(object, duration, mode);
 	glm::dvec3 currentScale = object->GetTransform()->GetScale();
+	tween.object = object;
 	tween.startScale = currentScale;
 	tween.targetScale = glm::dvec3(currentScale.x, currentScale.y, targetZ);
 	tween.tweenType = TweenType::SCALE_Z;
@@ -306,6 +329,7 @@ void Tweening::UIScaleZ(GameObject* object, float targetZ, float duration, Modes
 	auto tween = CreateTween(object, duration, mode);
 	auto uiTransform = object->GetComponent<UITransformComponent>();
 	if (uiTransform) {
+		tween.object = object;
 		tween.startScale = uiTransform->GetScale();
 		tween.targetScale = glm::dvec3(uiTransform->GetScale().x, uiTransform->GetScale().y, targetZ);
 		tween.tweenType = TweenType::UISCALE_Z;
@@ -444,15 +468,17 @@ glm::vec3 Tweening::CalculateVec3(const glm::vec3& startVec3, const glm::vec3& t
 
 void Tweening::Update(float deltaTime) {
 	for (auto& tween : tweens) {
+		if (tween.object == nullptr) {
+			continue;
+		}
+		if (!tween.object->HasComponent<UITransformComponent>()) {
+			continue;
+		}
 		tween.elapsedTime += deltaTime;
 		float t = glm::clamp(tween.elapsedTime / tween.duration, 0.0f, 1.0f);
 
 		if (tween.onUpdate) {
 			tween.onUpdate(t);
-		}
-
-		if (!tween.object->HasComponent<UITransformComponent>()) {
-			continue;
 		}
 
 		switch (tween.tweenType) {
@@ -471,11 +497,12 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::UIPOSITION_X:
 		case TweenType::UIPOSITION_Y:
 		case TweenType::UIPOSITION_Z: {
-			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
-			if (uiTransform) {
-				glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
-				uiTransform->setPos(currentPosition);
+			if (!tween.object->HasComponent<UITransformComponent>()) {
+				continue;
 			}
+			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
+			glm::dvec3 currentPosition = CalculatePosition(tween.startPosition, tween.targetPosition, t, tween.mode);
+			uiTransform->setPos(currentPosition);
 			break;
 		}
 
@@ -494,11 +521,12 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::UIROTATION_X:
 		case TweenType::UIROTATION_Y:
 		case TweenType::UIROTATION_Z: {
-			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
-			if (uiTransform) {
-				glm::dvec3 currentRotation = CalculateRotation(tween.startRotation, tween.targetRotation, t, tween.mode);
-				uiTransform->SetRot(glm::radians(currentRotation));
+			if (!tween.object->HasComponent<UITransformComponent>()) {
+				continue;
 			}
+			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
+			glm::dvec3 currentRotation = CalculateRotation(tween.startRotation, tween.targetRotation, t, tween.mode);
+			uiTransform->SetRot(glm::radians(currentRotation));
 			break;
 		}
 
@@ -517,13 +545,16 @@ void Tweening::Update(float deltaTime) {
 		case TweenType::UISCALE_X:
 		case TweenType::UISCALE_Y:
 		case TweenType::UISCALE_Z: {
-			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
-			if (uiTransform) {
-				glm::dvec3 currentScale = CalculateScale(tween.startScale, tween.targetScale, t, tween.mode);
-				uiTransform->setScale(currentScale);
+
+			if (!tween.object->HasComponent<UITransformComponent>()) {
+				continue;
 			}
+			auto uiTransform = tween.object->GetComponent<UITransformComponent>();
+			glm::dvec3 currentScale = CalculateScale(tween.startScale, tween.targetScale, t, tween.mode);
+			uiTransform->setScale(currentScale);
 			break;
 		}
+
 		case TweenType::FLOAT_VALUE: {
 			if (tween.floatPtr) {
 				*tween.floatPtr = CalculateFloat(tween.startFloat, tween.targetFloat, t, tween.mode);
@@ -537,6 +568,7 @@ void Tweening::Update(float deltaTime) {
 			}
 			break;
 		}
+
 		case TweenType::VEC3: {
 			if (tween.vec3Ptr) {
 				*tween.vec3Ptr = CalculateVec3(tween.startVec3, tween.targetVec3, t, tween.mode);
@@ -545,14 +577,15 @@ void Tweening::Update(float deltaTime) {
 		}
 
 		if (tween.elapsedTime >= tween.duration && tween.onComplete) {
-			tween.onComplete();
-							}
+		tween.onComplete();
 		}
-	}
 
-	tweens.erase(std::remove_if(tweens.begin(), tweens.end(),
-		[](const Tween& tween) { return tween.elapsedTime >= tween.duration; }),
-		tweens.end());
+		}
+
+		tweens.erase(std::remove_if(tweens.begin(), tweens.end(),
+			[](const Tween& tween) { return tween.elapsedTime >= tween.duration || tween.object == nullptr; }),
+			tweens.end());
+	}
 }
 
 //Tweening::Sequence Tweening::CreateSequence() {

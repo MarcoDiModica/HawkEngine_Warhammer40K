@@ -24,7 +24,7 @@ GameObject0:
   Children:
     - name: Lvl2Z1_Plane.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -75,7 +75,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -126,7 +126,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -137,9 +137,9 @@ GameObject0:
             - 110.7918701171875
             - 1311.495361328125
           localRotation:
-            - -90.000001237861341
-            - 74.935088794589774
-            - 1.4263831772341371e-05
+            - -90.000006889641696
+            - 74.93507356165037
+            - 6.8896416963790275e-06
           localScale:
             - 28.372146606445312
             - 21.824729919433594
@@ -177,7 +177,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -228,7 +228,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -239,9 +239,9 @@ GameObject0:
             - 110.7918701171875
             - 1246.791015625
           localRotation:
-            - -90.000006976746363
-            - 66.470765656038665
-            - 6.9767463638741136e-06
+            - -90.00000697674615
+            - 66.470768798262995
+            - 6.9767461514894113e-06
           localScale:
             - 28.372150421142578
             - 21.824728012084961
@@ -279,7 +279,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -330,7 +330,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -341,9 +341,9 @@ GameObject0:
             - 110.7918701171875
             - 1409.2218017578125
           localRotation:
-            - -90.000004086210083
-            - -41.36334788723078
-            - -1.6525669165229872e-05
+            - -90.00001010650395
+            - -41.363344139617283
+            - -1.4252989707167874e-05
           localScale:
             - 28.372146606445312
             - 21.824729919433594
@@ -381,7 +381,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -432,7 +432,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.011
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -483,7 +483,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Plane.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -728,9 +728,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.021171137467036
-            - 89.976283814567225
-            - -0.021136986520166139
+            - -90.033100959496366
+            - 89.957530486373585
+            - -0.033066808547463564
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -789,9 +789,9 @@ GameObject0:
             - 90.798004150390625
             - 2911.414794921875
           localRotation:
-            - -0.39652049261372924
-            - -69.300181706174754
-            - 118.55401183693496
+            - -0.39652877977065071
+            - -69.300218534100239
+            - 118.5540163292405
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -850,9 +850,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.00749328220229
-            - 89.98149753496115
-            - -0.0074625463510259926
+            - -90.028894768662752
+            - 89.964509448565451
+            - -0.028858910166931036
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -911,9 +911,9 @@ GameObject0:
             - 47.038593292236328
             - 3103.14794921875
           localRotation:
-            - 89.999980473783069
-            - -76.348286948877885
-            - -179.99999079220419
+            - 90
+            - -76.348303035618571
+            - 180
           localScale:
             - 19.999996185302734
             - 19.999996185302734
@@ -972,9 +972,9 @@ GameObject0:
             - 47.038593292236328
             - 2985.45849609375
           localRotation:
-            - -90.021171137467036
-            - 89.976283814567225
-            - -0.021136986520166139
+            - -90.033100959496366
+            - 89.957530486373585
+            - -0.033066808547463564
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1094,9 +1094,9 @@ GameObject0:
             - 47.038593292236328
             - 2648.169921875
           localRotation:
-            - 89.999972791946732
-            - 79.548693417910982
-            - 179.99995221585962
+            - 89.999952329243584
+            - 79.548635459116284
+            - 179.99993518250278
           localScale:
             - 20.000001907348633
             - 20.000001907348633
@@ -1338,9 +1338,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.00749328220229
-            - 89.98149753496115
-            - -0.0074625463510259926
+            - -90.028894768662752
+            - 89.964509448565451
+            - -0.028858910166931036
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1399,9 +1399,9 @@ GameObject0:
             - 47.038593292236328
             - 2642.65478515625
           localRotation:
-            - -90.000509686684424
-            - -89.564944259669758
-            - 0.000390157511887557
+            - -90.00051037314185
+            - -89.566176421423648
+            - 0.00039084397643383964
           localScale:
             - 20.000001907348633
             - 20.000001907348633
@@ -1460,9 +1460,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.00749328220229
-            - 89.98149753496115
-            - -0.0074625463510259926
+            - -90.028894768662752
+            - 89.964509448565451
+            - -0.028858910166931036
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1754,7 +1754,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_CBenchJusto.025
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1805,7 +1805,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_CBenchJusto.026
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2295,7 +2295,7 @@ GameObject0:
             - 2582.04150390625
           localRotation:
             - -90
-            - -89.962989221593503
+            - -89.956325304544904
             - 0
           localScale:
             - 30.347345352172852
@@ -2356,7 +2356,7 @@ GameObject0:
             - 3032.04150390625
           localRotation:
             - -90
-            - -89.962989221593503
+            - -89.956325304544904
             - 0
           localScale:
             - 30.347345352172852
@@ -2466,7 +2466,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_CTableJusto.013
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2527,7 +2527,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_CTableJusto.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2629,7 +2629,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2641,7 +2641,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -2690,7 +2690,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2702,7 +2702,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -2751,7 +2751,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2763,7 +2763,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -2904,7 +2904,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2916,7 +2916,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -2965,7 +2965,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -2977,7 +2977,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3026,7 +3026,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.018
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3087,7 +3087,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3099,7 +3099,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3199,7 +3199,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3211,7 +3211,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3250,7 +3250,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3262,7 +3262,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3311,7 +3311,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3323,7 +3323,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3372,7 +3372,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3384,7 +3384,7 @@ GameObject0:
             - 1189.4329833984375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3423,7 +3423,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.011
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3435,7 +3435,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3474,7 +3474,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3486,7 +3486,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3525,7 +3525,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.013
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3537,7 +3537,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3576,7 +3576,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3588,7 +3588,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3627,7 +3627,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3639,7 +3639,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3688,7 +3688,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.016
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3700,7 +3700,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3739,7 +3739,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.017
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3751,7 +3751,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3800,7 +3800,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.019
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3812,7 +3812,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3851,7 +3851,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.020
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3863,7 +3863,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3902,7 +3902,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.021
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3914,7 +3914,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -3953,7 +3953,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.022
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3965,7 +3965,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4004,7 +4004,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.023
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4016,7 +4016,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4055,7 +4055,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.026
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4067,7 +4067,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4106,7 +4106,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.027
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4118,7 +4118,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4167,7 +4167,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.028
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4179,7 +4179,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4218,7 +4218,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.030
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4230,7 +4230,7 @@ GameObject0:
             - 1189.432861328125
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4269,7 +4269,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.031
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4281,7 +4281,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4320,7 +4320,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.032
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4332,7 +4332,7 @@ GameObject0:
             - 1187.18017578125
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4371,7 +4371,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.033
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4383,7 +4383,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -90
+            - -89.965738768430612
             - 0
           localScale:
             - 29.999998092651367
@@ -4809,7 +4809,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.041
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4870,7 +4870,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.042
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4931,7 +4931,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.043
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5104,7 +5104,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.046
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -5542,7 +5542,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.054
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -6980,7 +6980,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7041,7 +7041,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7102,7 +7102,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7163,7 +7163,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.011
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7224,7 +7224,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7235,9 +7235,9 @@ GameObject0:
             - 179.52284240722656
             - 1464.330810546875
           localRotation:
-            - -4.3257109293384042e-06
+            - -4.3257109260076826e-06
             - 7.4421700826969319
-            - 2.4532490124831986e-13
+            - 2.9653790660309704e-13
           localScale:
             - 0.5
             - 0.5
@@ -7285,7 +7285,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7336,7 +7336,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7387,7 +7387,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.016
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7438,7 +7438,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.017
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7489,7 +7489,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.018
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7540,7 +7540,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.019
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7591,7 +7591,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.023
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7642,7 +7642,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cube.024
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7693,7 +7693,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7754,7 +7754,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7765,9 +7765,9 @@ GameObject0:
             - 74.326217651367188
             - 776.99554443359375
           localRotation:
-            - -89.999974022665938
-            - -83.045431184082389
-            - -5.8480572820420006e-05
+            - -89.999977443645676
+            - -83.045409092492989
+            - -6.1902382541538788e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -7815,7 +7815,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7866,7 +7866,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7917,7 +7917,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -7928,9 +7928,9 @@ GameObject0:
             - 74.326217651367188
             - 1479.6358642578125
           localRotation:
-            - -89.999980343434046
-            - -72.097039846183606
-            - -3.521397410075787e-05
+            - -89.999976886258395
+            - -72.097042177278141
+            - -3.1756745885455761e-05
           localScale:
             - 26.229902267456055
             - 26.229902267456055
@@ -7978,7 +7978,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8029,7 +8029,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8080,7 +8080,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8131,7 +8131,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8182,7 +8182,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.011
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8233,7 +8233,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8284,7 +8284,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.013
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8335,7 +8335,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8346,9 +8346,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999974022665938
-            - -83.045431184082389
-            - -5.8480572820420006e-05
+            - -89.999977443645676
+            - -83.045409092492989
+            - -6.1902382541538788e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8386,7 +8386,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8397,9 +8397,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999974022665938
-            - -83.045431184082389
-            - -5.8480572820420006e-05
+            - -89.999977443645676
+            - -83.045409092492989
+            - -6.1902382541538788e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8437,7 +8437,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Cylinder.016
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8448,9 +8448,9 @@ GameObject0:
             - 74.326217651367188
             - 501.02926635742188
           localRotation:
-            - -89.999974022665938
-            - -83.045431184082389
-            - -5.8480572820420006e-05
+            - -89.999977443645676
+            - -83.045409092492989
+            - -6.1902382541538788e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8488,7 +8488,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8549,7 +8549,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.021
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8610,7 +8610,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.022
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8671,7 +8671,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.035
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8732,7 +8732,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.024
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8793,7 +8793,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.025
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8854,7 +8854,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.026
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8915,7 +8915,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.036
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8976,7 +8976,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.037
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -8987,9 +8987,9 @@ GameObject0:
             - 61.655414581298828
             - 1112.2374267578125
           localRotation:
-            - 90.000608071715448
-            - 88.502533807495695
-            - -179.99956269759471
+            - 90.000601238554225
+            - 88.502791756477379
+            - -179.99955586920174
           localScale:
             - 2.1550707817077637
             - 2.1550707817077637
@@ -9037,7 +9037,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.031
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9098,7 +9098,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.032
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9159,7 +9159,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.033
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9220,7 +9220,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.018
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9281,7 +9281,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.038
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9342,7 +9342,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.039
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9403,7 +9403,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.040
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9464,7 +9464,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Literal.041
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9525,7 +9525,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9586,7 +9586,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9647,7 +9647,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.016
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9708,7 +9708,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.017
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9720,7 +9720,7 @@ GameObject0:
             - 1799.589111328125
           localRotation:
             - -90
-            - -89.956325304544904
+            - -89.954813368437641
             - 0
           localScale:
             - 100
@@ -9769,7 +9769,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.018
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9830,7 +9830,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9881,7 +9881,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -9942,7 +9942,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.020
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10003,7 +10003,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.021
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10064,7 +10064,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10115,7 +10115,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10166,7 +10166,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10319,7 +10319,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10370,7 +10370,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10421,7 +10421,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10472,7 +10472,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10533,7 +10533,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10594,7 +10594,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.011
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -10645,7 +10645,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11308,7 +11308,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11319,9 +11319,9 @@ GameObject0:
             - 159.99995422363281
             - 600
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -11369,7 +11369,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11380,9 +11380,9 @@ GameObject0:
             - 159.99995422363281
             - 1400
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -11430,7 +11430,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.017
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11491,7 +11491,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11502,9 +11502,9 @@ GameObject0:
             - 159.99996948242188
             - 411.2071533203125
           localRotation:
-            - 179.99999499102984
-            - -89.978842024279103
-            - -1.9353268541449231e-09
+            - 179.99999499101051
+            - -89.978813084749817
+            - -1.6382077992017072e-09
           localScale:
             - 199.99998474121094
             - 200
@@ -11552,7 +11552,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11563,9 +11563,9 @@ GameObject0:
             - 159.99998474121094
             - 411.2071533203125
           localRotation:
-            - 179.99999499102984
-            - -89.978842024279103
-            - -1.9353268541449231e-09
+            - 179.99999499101051
+            - -89.978813084749817
+            - -1.6382077992017072e-09
           localScale:
             - 199.99998474121094
             - 200
@@ -11613,7 +11613,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11624,9 +11624,9 @@ GameObject0:
             - 159.99998474121094
             - 600
           localRotation:
-            - 179.99999499102984
-            - -89.978842024279103
-            - -1.9353268541449231e-09
+            - 179.99999499101051
+            - -89.978813084749817
+            - -1.6382077992017072e-09
           localScale:
             - 199.99998474121094
             - 200
@@ -11674,7 +11674,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11685,9 +11685,9 @@ GameObject0:
             - 159.67585754394531
             - 1400
           localRotation:
-            - 179.99999499102984
-            - -89.978842024279103
-            - -1.9353268541449231e-09
+            - 179.99999499101051
+            - -89.978813084749817
+            - -1.6382077992017072e-09
           localScale:
             - 199.99998474121094
             - 200
@@ -11735,7 +11735,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11746,9 +11746,9 @@ GameObject0:
             - 159.99995422363281
             - 1588.7928466796875
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -11796,7 +11796,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11807,9 +11807,9 @@ GameObject0:
             - 159.99995422363281
             - 1217.6168212890625
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -11857,7 +11857,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11868,9 +11868,9 @@ GameObject0:
             - 159.99993896484375
             - 1399.9998779296875
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -11918,7 +11918,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11929,9 +11929,9 @@ GameObject0:
             - 159.99996948242188
             - 1400
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -11979,7 +11979,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.011
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -11990,9 +11990,9 @@ GameObject0:
             - 159.99996948242188
             - 1588.7928466796875
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -12091,7 +12091,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12102,9 +12102,9 @@ GameObject0:
             - 159.99993896484375
             - 1400
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -12152,7 +12152,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.013
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12163,9 +12163,9 @@ GameObject0:
             - 159.99995422363281
             - 1588.7928466796875
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -12213,7 +12213,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12224,9 +12224,9 @@ GameObject0:
             - 159.99995422363281
             - 1217.6168212890625
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -12274,7 +12274,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12285,9 +12285,9 @@ GameObject0:
             - 159.99995422363281
             - 1588.792724609375
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -12335,7 +12335,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.016
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12346,9 +12346,9 @@ GameObject0:
             - 159.99996948242188
             - 1400
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -12396,7 +12396,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.018
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12407,9 +12407,9 @@ GameObject0:
             - 159.99998474121094
             - 600
           localRotation:
-            - 179.99999499102753
-            - -89.978842024279103
-            - -1.9376298217703312e-09
+            - 179.99999499100994
+            - -89.978813084749817
+            - -1.6387835411080591e-09
           localScale:
             - 199.99998474121094
             - 200
@@ -12457,7 +12457,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.019
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12468,9 +12468,9 @@ GameObject0:
             - 159.99998474121094
             - 411.2071533203125
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -12640,7 +12640,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.022
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -12701,7 +12701,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.023
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13555,7 +13555,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.038
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13616,7 +13616,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.039
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13627,9 +13627,9 @@ GameObject0:
             - 159.99993896484375
             - 600
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -13677,7 +13677,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.040
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13688,9 +13688,9 @@ GameObject0:
             - 159.99996948242188
             - 411.2071533203125
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -13738,7 +13738,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.041
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13749,9 +13749,9 @@ GameObject0:
             - 159.99995422363281
             - 1400
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -13799,7 +13799,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Pared_low.042
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13810,9 +13810,9 @@ GameObject0:
             - 159.99998474121094
             - 1400
           localRotation:
-            - 179.99999499058544
-            - -89.978822735677085
-            - -6.0917331971412615e-10
+            - 179.99999499051165
+            - -89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -13911,7 +13911,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PortonMarco_low.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -13962,7 +13962,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PortonMarco_low.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14013,7 +14013,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PortonMarco_low.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14064,7 +14064,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PortonMarco_low.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14115,7 +14115,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PortonMarco_low.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14319,7 +14319,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PuertaAbierta_low.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14330,9 +14330,9 @@ GameObject0:
             - 159.19488525390625
             - 999.33758544921875
           localRotation:
-            - -179.99999499058544
-            - 89.978822735677085
-            - -6.0917331971412615e-10
+            - -179.99999499051165
+            - 89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -14370,7 +14370,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PuertaAbierta_low.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14381,9 +14381,9 @@ GameObject0:
             - 159.19499206542969
             - 999.33746337890625
           localRotation:
-            - -179.99999499058544
-            - 89.978822735677085
-            - -6.0917331971412615e-10
+            - -179.99999499051165
+            - 89.978808257632252
+            - 2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -14421,7 +14421,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PuertaCerrada_low.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14432,9 +14432,9 @@ GameObject0:
             - 159.195068359375
             - 410.54458618164062
           localRotation:
-            - -179.99999499058544
-            - -89.978822735677085
-            - 6.0917331971412615e-10
+            - -179.99999499051165
+            - -89.978808257632252
+            - -2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -14482,7 +14482,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PuertaCerrada_low.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14493,9 +14493,9 @@ GameObject0:
             - 159.19511413574219
             - 639.04010009765625
           localRotation:
-            - -179.99999499058544
-            - -89.978822735677085
-            - 6.0917331971412615e-10
+            - -179.99999499051165
+            - -89.978808257632252
+            - -2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -14533,7 +14533,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PuertaCerrada_low.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14544,9 +14544,9 @@ GameObject0:
             - 159.19505310058594
             - 999.33740234375
           localRotation:
-            - -179.99999499058544
-            - -89.978822735677085
-            - 6.0917331971412615e-10
+            - -179.99999499051165
+            - -89.978808257632252
+            - -2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -14594,7 +14594,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_PuertaCerrada_low.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14605,9 +14605,9 @@ GameObject0:
             - 159.19505310058594
             - 999.33740234375
           localRotation:
-            - -179.99999499058544
-            - -89.978822735677085
-            - 6.0917331971412615e-10
+            - -179.99999499051165
+            - -89.978808257632252
+            - -2.5138353958010566e-10
           localScale:
             - 200
             - 200
@@ -14655,7 +14655,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.021
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14706,7 +14706,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.022
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14757,7 +14757,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14808,7 +14808,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14859,7 +14859,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14910,7 +14910,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.108
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14961,7 +14961,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15012,7 +15012,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15063,7 +15063,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15114,7 +15114,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15216,7 +15216,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.023
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15267,7 +15267,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15318,7 +15318,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15369,7 +15369,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.012
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15420,7 +15420,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.013
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15471,7 +15471,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15522,7 +15522,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15573,7 +15573,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.016
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15624,7 +15624,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.017
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15675,7 +15675,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.018
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15726,7 +15726,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.019
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15777,7 +15777,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.024
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15828,7 +15828,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.025
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15879,7 +15879,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.026
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15930,7 +15930,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.027
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -15981,7 +15981,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.028
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16440,7 +16440,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.037
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16491,7 +16491,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.038
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16542,7 +16542,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.039
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16593,7 +16593,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.040
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16644,7 +16644,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.041
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16695,7 +16695,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.042
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16746,7 +16746,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.043
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16797,7 +16797,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.044
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16848,7 +16848,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.045
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16899,7 +16899,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suelo_low.046
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -16950,7 +16950,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.047
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17001,7 +17001,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.048
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17052,7 +17052,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.049
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17103,7 +17103,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.050
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17154,7 +17154,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.051
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17358,7 +17358,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.055
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17409,7 +17409,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.056
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17460,7 +17460,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.057
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17511,7 +17511,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.058
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -17562,7 +17562,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.059
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18225,7 +18225,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.072
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18276,7 +18276,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.073
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18327,7 +18327,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.074
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18378,7 +18378,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.075
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18429,7 +18429,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.076
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18480,7 +18480,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.077
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18531,7 +18531,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.078
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18582,7 +18582,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.079
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18633,7 +18633,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.080
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18684,7 +18684,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.081
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18735,7 +18735,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.082
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18786,7 +18786,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.083
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18837,7 +18837,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.084
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18888,7 +18888,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.085
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18939,7 +18939,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.086
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -18990,7 +18990,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.087
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19245,7 +19245,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.092
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19296,7 +19296,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.093
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19347,7 +19347,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.094
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -19398,7 +19398,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.095
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20367,7 +20367,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.122
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20418,7 +20418,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.123
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20469,7 +20469,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel2Suelo_low.124
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20520,7 +20520,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.125
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20571,7 +20571,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.126
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20622,7 +20622,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.127
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20673,7 +20673,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel1Suelo_low.128
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20724,7 +20724,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_TableJusto
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20785,7 +20785,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_TableJusto.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20846,7 +20846,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_TableJusto.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20907,7 +20907,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_TableJusto.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20958,7 +20958,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_TableJusto.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20969,9 +20969,9 @@ GameObject0:
             - 59.258811950683594
             - 1273.9903564453125
           localRotation:
-            - 89.999675529445796
-            - 88.524667917720961
-            - 179.99952866820675
+            - 89.999672068007825
+            - 88.524753298103349
+            - 179.99953203752409
           localScale:
             - 31.190008163452148
             - 31.190008163452148
@@ -21009,7 +21009,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_TableJusto.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21060,7 +21060,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Tunel_low.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21121,7 +21121,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Tunel_low.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21182,7 +21182,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Tunel_low.003
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21243,7 +21243,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Tunel_low.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21426,7 +21426,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Tunel_low.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21487,7 +21487,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Tunel_low.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21548,7 +21548,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Tunel_low.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21609,7 +21609,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Tunel_low.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21914,7 +21914,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.002
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -21975,7 +21975,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.001
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22036,7 +22036,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.018
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22087,7 +22087,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.004
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22138,7 +22138,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.005
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22199,7 +22199,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.006
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22260,7 +22260,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.007
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22311,7 +22311,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.008
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22372,7 +22372,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.009
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22433,7 +22433,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.010
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22657,7 +22657,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.014
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22708,7 +22708,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.015
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22769,7 +22769,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.016
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22780,9 +22780,9 @@ GameObject0:
             - 48.799598693847656
             - 804
           localRotation:
-            - -90.000003415094582
-            - 89.987389724490413
-            - 3.4150945850063712e-06
+            - -89.983340261189099
+            - 89.984658168825561
+            - 0.016661446358168106
           localScale:
             - 100
             - 100
@@ -22830,7 +22830,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Vallas.017
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -22841,9 +22841,9 @@ GameObject0:
             - 48.799598693847656
             - 1603.9998779296875
           localRotation:
-            - -89.996951912602711
-            - 89.982167258248822
-            - 0.0030566251336238783
+            - -89.984491209953063
+            - 89.970635809778912
+            - 0.015512205141728495
           localScale:
             - 100
             - 100
@@ -22913,7 +22913,7 @@ GameObject1:
   Children:
     - name: Cube.201_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -24861,7 +24861,7 @@ GameObject1:
       Children: ~
     - name: Cube.005_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -24912,7 +24912,7 @@ GameObject1:
       Children: ~
     - name: Cube.144_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -24973,7 +24973,7 @@ GameObject1:
       Children: ~
     - name: Cube.145_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -25024,7 +25024,7 @@ GameObject1:
       Children: ~
     - name: Cube.146_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -25085,7 +25085,7 @@ GameObject1:
       Children: ~
     - name: Cube.147_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -25136,7 +25136,7 @@ GameObject1:
       Children: ~
     - name: Cube.148_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -25197,7 +25197,7 @@ GameObject1:
       Children: ~
     - name: Cube.149_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -25992,7 +25992,7 @@ GameObject1:
       Children: ~
     - name: Cube.061_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26043,7 +26043,7 @@ GameObject1:
       Children: ~
     - name: Cube.062_lvl2.001_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26398,57 +26398,6 @@ GameObject1:
           name: Shader
           enabled: true
       Children: ~
-    - name: Cube.223_lvl2
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 15576.3134765625
-            - 1930.1954345703125
-            - -2173.66064453125
-          localRotation:
-            - -84.649724636353255
-            - -9.6464363385558247
-            - 5.740013702753779
-          localScale:
-            - -71.575119018554688
-            - -71.575149536132812
-            - -71.57513427734375
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Cube.223_lvl2
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.0287835542
-              - 0.800156593
-              - 0.0189216249
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: ""
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
     - name: Cube.233_lvl2.007_lvl2
       tag: Untagged
       active: true
@@ -26553,7 +26502,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.009_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26604,7 +26553,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.010_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26655,7 +26604,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.011_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26706,7 +26655,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.012_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26757,7 +26706,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.013_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26808,7 +26757,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.014_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26859,7 +26808,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.015_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -29624,9 +29573,9 @@ GameObject1:
             - 979.06005859375
             - -30502.9453125
           localRotation:
-            - -91.016876200741336
-            - -68.427259940211428
-            - -0.50868250576837459
+            - -91.016880064193899
+            - -68.427272259345727
+            - -0.50867688106991504
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -29675,9 +29624,9 @@ GameObject1:
             - 979.06005859375
             - -32087.380859375
           localRotation:
-            - -91.016876200741336
-            - -68.427259940211428
-            - -0.50868250576837459
+            - -91.016880064193899
+            - -68.427272259345727
+            - -0.50867688106991504
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -29726,9 +29675,9 @@ GameObject1:
             - 976.39788818359375
             - -33297.30078125
           localRotation:
-            - -91.016876200741336
-            - -68.427259940211428
-            - -0.50868250576837459
+            - -91.016880064193899
+            - -68.427272259345727
+            - -0.50867688106991504
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -30347,7 +30296,7 @@ GameObject1:
       Children: ~
     - name: Icosphere_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30398,7 +30347,7 @@ GameObject1:
       Children: ~
     - name: Cube.001_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30449,7 +30398,7 @@ GameObject1:
       Children: ~
     - name: Cube.006_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30551,7 +30500,7 @@ GameObject1:
       Children: ~
     - name: Cube.056_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30612,7 +30561,7 @@ GameObject1:
       Children: ~
     - name: Cube.057_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30807,7 +30756,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 2544.22900390625
@@ -30868,7 +30817,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 2544.22900390625
@@ -30917,7 +30866,7 @@ GameObject1:
       Children: ~
     - name: Cube.133_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30978,7 +30927,7 @@ GameObject1:
       Children: ~
     - name: Cube.134_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31039,7 +30988,7 @@ GameObject1:
       Children: ~
     - name: Cube.135_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31051,7 +31000,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 2001.7862548828125
@@ -31100,7 +31049,7 @@ GameObject1:
       Children: ~
     - name: Cube.136_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31112,7 +31061,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 2001.7862548828125
@@ -31161,7 +31110,7 @@ GameObject1:
       Children: ~
     - name: Cube.137_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31222,7 +31171,7 @@ GameObject1:
       Children: ~
     - name: Cube.138_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31283,7 +31232,7 @@ GameObject1:
       Children: ~
     - name: Cube.139_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31295,7 +31244,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 751.6044921875
@@ -31344,7 +31293,7 @@ GameObject1:
       Children: ~
     - name: Cube.140_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31356,7 +31305,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 751.6044921875
@@ -31405,7 +31354,7 @@ GameObject1:
       Children: ~
     - name: Cube.069_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31466,7 +31415,7 @@ GameObject1:
       Children: ~
     - name: Cube.141_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31527,7 +31476,7 @@ GameObject1:
       Children: ~
     - name: Cube.142_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31538,9 +31487,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.010969231040818
-            - 89.914025369997944
-            - -0.0049706157093801122
+            - -90.008689296225825
+            - 89.913991349744947
+            - -0.0026872657988507823
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31588,7 +31537,7 @@ GameObject1:
       Children: ~
     - name: Cube.143_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -31599,9 +31548,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.010969231040818
-            - 89.914025369997944
-            - -0.0049706157093801122
+            - -90.008689296225825
+            - 89.913991349744947
+            - -0.0026872657988507823
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31660,9 +31609,9 @@ GameObject1:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 89.995945988588176
-            - -89.932554591507383
-            - -179.98997469473292
+            - 89.995621725195633
+            - -89.931223597051229
+            - -179.98964360097196
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31721,9 +31670,9 @@ GameObject1:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 89.995945988588176
-            - -89.932554591507383
-            - -179.98997469473292
+            - 89.995621725195633
+            - -89.931223597051229
+            - -179.98964360097196
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31905,7 +31854,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 517.2039794921875
@@ -32027,7 +31976,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 744.78399658203125
@@ -32149,7 +32098,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 765.05303955078125
@@ -32210,7 +32159,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 517.2039794921875
@@ -32332,7 +32281,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 744.78399658203125
@@ -32454,7 +32403,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 765.05303955078125
@@ -32515,7 +32464,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 744.78399658203125
@@ -32576,7 +32525,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 90
+            - 89.965738768430612
             - 0
           localScale:
             - 744.78399658203125
@@ -32697,9 +32646,9 @@ GameObject1:
             - 1729.630615234375
             - 10724.0029296875
           localRotation:
-            - 89.999860297434324
-            - 86.781541816896379
-            - 179.99977488638581
+            - 89.999893257809191
+            - 86.781485630042638
+            - 179.9998027220937
           localScale:
             - 247.75401306152344
             - 126.90206146240234
@@ -32758,9 +32707,9 @@ GameObject1:
             - 1729.630615234375
             - 10721.7958984375
           localRotation:
-            - 90.000306783402053
-            - -86.719137305938602
-            - 179.99971029907198
+            - 90.000303369390863
+            - -86.719270270675437
+            - 179.99970688009296
           localScale:
             - 247.75398254394531
             - 126.90205383300781
@@ -32808,7 +32757,7 @@ GameObject1:
       Children: ~
     - name: Cube.169_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -32819,9 +32768,9 @@ GameObject1:
             - 1729.630615234375
             - 4564.580078125
           localRotation:
-            - 89.999870103734409
-            - 85.31213847843155
-            - 179.9998376331682
+            - 89.999900380003112
+            - 85.312099658789961
+            - 179.99984911068731
           localScale:
             - 247.75399780273438
             - 126.90204620361328
@@ -32869,7 +32818,7 @@ GameObject1:
       Children: ~
     - name: Cube.170_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -32930,7 +32879,7 @@ GameObject1:
       Children: ~
     - name: Cube.171_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -32941,9 +32890,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -32992,9 +32941,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33043,9 +32992,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33083,7 +33032,7 @@ GameObject1:
       Children: ~
     - name: Cube.174_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33094,9 +33043,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33134,7 +33083,7 @@ GameObject1:
       Children: ~
     - name: Cube.175_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33145,9 +33094,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33196,9 +33145,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33247,9 +33196,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33287,7 +33236,7 @@ GameObject1:
       Children: ~
     - name: Cube.178_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33298,9 +33247,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33338,7 +33287,7 @@ GameObject1:
       Children: ~
     - name: Cube.179_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33349,9 +33298,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33400,9 +33349,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -33440,7 +33389,7 @@ GameObject1:
       Children: ~
     - name: Cube.181_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33451,9 +33400,9 @@ GameObject1:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.006559743616648
-            - 89.871357051163571
-            - -90.006547669426126
+            - -90.004274739085602
+            - 89.867789340416465
+            - -90.004265079732761
           localScale:
             - 128.03897094726562
             - 427.90078735351562
@@ -33502,9 +33451,9 @@ GameObject1:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.006559743616648
-            - 89.871357051163571
-            - -90.006547669426126
+            - -90.004274739085602
+            - 89.867789340416465
+            - -90.004265079732761
           localScale:
             - 318.52142333984375
             - 427.90646362304688
@@ -33552,7 +33501,7 @@ GameObject1:
       Children: ~
     - name: Cube.183_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33563,9 +33512,9 @@ GameObject1:
             - 2228.8046875
             - 7750.44482421875
           localRotation:
-            - -90.006559743616648
-            - 89.871357051163571
-            - -90.006547669426126
+            - -90.004274739085602
+            - 89.867789340416465
+            - -90.004265079732761
           localScale:
             - 126.77712249755859
             - 77.251678466796875
@@ -33603,7 +33552,7 @@ GameObject1:
       Children: ~
     - name: Cube.184_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33614,9 +33563,9 @@ GameObject1:
             - 2824.27685546875
             - 7749.7587890625
           localRotation:
-            - -90.000007244514023
-            - 89.873728204817738
-            - -89.999992755485991
+            - -90.000006037095019
+            - 89.873724582519372
+            - -89.999993962904995
           localScale:
             - 133.52845764160156
             - 1154.979736328125
@@ -33654,7 +33603,7 @@ GameObject1:
       Children: ~
     - name: Cube.185_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33665,9 +33614,9 @@ GameObject1:
             - 3463.08984375
             - 7749.7587890625
           localRotation:
-            - -89.994678796035146
-            - 89.886205276103595
-            - -108.02572026859018
+            - -89.995399529870113
+            - 89.892728414347047
+            - -108.02642355057368
           localScale:
             - 87.500289916992188
             - 177.206298828125
@@ -33705,7 +33654,7 @@ GameObject1:
       Children: ~
     - name: Cube.186_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33716,9 +33665,9 @@ GameObject1:
             - 3175.477294921875
             - 7599.7939453125
           localRotation:
-            - 14.999900649673357
-            - -0.065036175809616431
-            - -114.75729675017477
+            - 14.999898275360703
+            - -0.065036667886524874
+            - -114.75730052702247
           localScale:
             - 40.151153564453125
             - 430.76507568359375
@@ -33756,7 +33705,7 @@ GameObject1:
       Children: ~
     - name: Cube.187_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33807,7 +33756,7 @@ GameObject1:
       Children: ~
     - name: Cube.188_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33818,9 +33767,9 @@ GameObject1:
             - 3086.548583984375
             - 7750.44482421875
           localRotation:
-            - -90.005670487319819
-            - 89.863826818865192
-            - 179.99279101149224
+            - -90.005780418702386
+            - 89.86497416367456
+            - 179.99268108010966
           localScale:
             - 43.940093994140625
             - 77.251510620117188
@@ -33858,7 +33807,7 @@ GameObject1:
       Children: ~
     - name: Cube.189_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33869,9 +33818,9 @@ GameObject1:
             - 2866.346435546875
             - 7750.44482421875
           localRotation:
-            - -89.994370529407661
-            - 89.868938776859807
-            - -179.99666205937632
+            - -89.992914032326198
+            - 89.86995817312399
+            - -179.99521580751673
           localScale:
             - 27.383285522460938
             - 48.142822265625
@@ -33909,7 +33858,7 @@ GameObject1:
       Children: ~
     - name: Cube.190_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33972,7 +33921,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34011,7 +33960,7 @@ GameObject1:
       Children: ~
     - name: Cube.192_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34023,7 +33972,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34062,7 +34011,7 @@ GameObject1:
       Children: ~
     - name: Cube.193_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34074,7 +34023,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34125,7 +34074,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34164,7 +34113,7 @@ GameObject1:
       Children: ~
     - name: Cube.195_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34176,7 +34125,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34215,7 +34164,7 @@ GameObject1:
       Children: ~
     - name: Cube.196_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34227,7 +34176,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34266,7 +34215,7 @@ GameObject1:
       Children: ~
     - name: Cube.197_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34278,7 +34227,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34317,7 +34266,7 @@ GameObject1:
       Children: ~
     - name: Cube.198_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34329,7 +34278,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34368,7 +34317,7 @@ GameObject1:
       Children: ~
     - name: Cube.199_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34380,7 +34329,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34419,7 +34368,7 @@ GameObject1:
       Children: ~
     - name: Cube.200_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34431,7 +34380,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.946534017150455
+            - 89.941227374527912
             - 0
           localScale:
             - 127.28877258300781
@@ -34481,9 +34430,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.000336898413067
-            - 89.926329800606538
-            - 0.0056565938284969877
+            - -89.999218699216499
+            - 89.925592035898461
+            - 0.0067833306738452883
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34542,9 +34491,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.000336898413067
-            - 89.926329800606538
-            - 0.0056565938284969877
+            - -89.999218699216499
+            - 89.925592035898461
+            - 0.0067833306738452883
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34592,7 +34541,7 @@ GameObject1:
       Children: ~
     - name: Cube.209_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34603,9 +34552,9 @@ GameObject1:
             - 1972.6943359375
             - -3799.696044921875
           localRotation:
-            - 89.993429424113771
-            - -89.871414105727155
-            - -89.99345115765675
+            - 89.99789279197536
+            - -89.868856924347313
+            - -89.997904866165911
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -34653,7 +34602,7 @@ GameObject1:
       Children: ~
     - name: Cube.212_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34704,7 +34653,7 @@ GameObject1:
       Children: ~
     - name: Cube.213_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34715,9 +34664,9 @@ GameObject1:
             - 1972.6942138671875
             - -3144.035888671875
           localRotation:
-            - -0.21749633215768452
-            - 59.199215265844813
-            - -0.25320544805002432
+            - -0.21749628060854348
+            - 59.199204457276352
+            - -0.25320534836005648
           localScale:
             - 88.9478759765625
             - 202.1011962890625
@@ -34755,7 +34704,7 @@ GameObject1:
       Children: ~
     - name: Cube.214_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34766,9 +34715,9 @@ GameObject1:
             - 1972.6943359375
             - -2994.31640625
           localRotation:
-            - -179.85166696221802
-            - 48.843181796870851
-            - -179.80299503570495
+            - -179.85166694743597
+            - 48.84316246337206
+            - -179.80299500756024
           localScale:
             - 88.947860717773438
             - 202.1011962890625
@@ -34806,7 +34755,7 @@ GameObject1:
       Children: ~
     - name: Cube.215_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34817,9 +34766,9 @@ GameObject1:
             - 2146.18212890625
             - -2985.56982421875
           localRotation:
-            - -179.85166696221802
-            - 48.843181796870851
-            - -179.80299503570495
+            - -179.85166694743597
+            - 48.84316246337206
+            - -179.80299500756024
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -34857,7 +34806,7 @@ GameObject1:
       Children: ~
     - name: Cube.216_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34868,9 +34817,9 @@ GameObject1:
             - 1940.9827880859375
             - -2993.0263671875
           localRotation:
-            - -179.85166696221802
-            - 48.843181796870851
-            - -179.80299503570495
+            - -179.85166694743597
+            - 48.84316246337206
+            - -179.80299500756024
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -35194,9 +35143,9 @@ GameObject1:
             - 1972.6942138671875
             - -14019.3798828125
           localRotation:
-            - -179.93252273591807
-            - 27.497095705833043
-            - -179.85383895025322
+            - -179.9325227340006
+            - 27.497091966123946
+            - -179.85383893812067
           localScale:
             - 88.947868347167969
             - 202.10118103027344
@@ -35510,9 +35459,9 @@ GameObject1:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - 89.993429424113771
-            - -89.871414105727155
-            - -89.99345115765675
+            - 89.99789279197536
+            - -89.868856924347313
+            - -89.997904866165911
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -35571,9 +35520,9 @@ GameObject1:
             - 2396.811767578125
             - -19521.4140625
           localRotation:
-            - 89.990361010966907
-            - -89.924236835922216
-            - -179.99251422851961
+            - 89.989260827652927
+            - -89.928927051030911
+            - -179.99140721501516
           localScale:
             - 274.48114013671875
             - 57.520450592041016
@@ -35622,9 +35571,9 @@ GameObject1:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - -90.006559743616648
-            - 89.871357051163571
-            - -90.006547669426126
+            - -90.004274739085602
+            - 89.867789340416465
+            - -90.004265079732761
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -35794,7 +35743,7 @@ GameObject1:
       Children: ~
     - name: Cube.008_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -35986,7 +35935,7 @@ GameObject2:
   Children:
     - name: playerMesh
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -36054,15 +36003,15 @@ GameObject3:
       localPosition:
         - 0
         - 313.85833740234375
-        - -134.82975769042969
+        - 144.56736755371094
       localRotation:
-        - 64.121003909280915
+        - 64.121004207292373
         - -0
         - 0
       localScale:
         - 1
-        - 0.99999994039535522
-        - 0.99999994039535522
+        - 0.99999995662204766
+        - 0.99999995662204766
     CameraComponent:
       name: CameraComponent
       enabled: true
@@ -36780,4 +36729,69 @@ GameObject25:
         - 0
         - 0
       isTrigger: false
+  Children: ~
+GameObject26:
+  name: bOLTER.012
+  tag: Weapon
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -25.519025802612305
+        - 2.9523322582244873
+        - 520.23406982421875
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: bOLTER.012
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: railgun_DefaultMaterial_BaseColor
+        normal_map: railgun_DefaultMaterial_Normal
+        metallic_map: railgun_DefaultMaterial_Metallic
+        roughness_map: railgun_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: RailgunPickUp
   Children: ~

@@ -740,14 +740,15 @@ void Root::CreateGameplayUI()
 	bloodbar1->AddComponent<UIImageComponent>();
 	bloodbar1->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/healthbar_blood.png");
 	bloodbar1->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.0, 0));
-	bloodbar1->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.064, 0.931, 0), glm::vec3(0.055, 0.018, 1));
-
+	bloodbar1->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.056, 0.887, 0), glm::vec3(0.109, 0.030, 1));
+	
 	auto bloodbar2 = CreateGameObject("blood_bar2");
 	Application->root->ParentGameObject(*bloodbar2, *canvas);
 	bloodbar2->AddComponent<UIImageComponent>();
 	bloodbar2->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/healthbar_blood.png");
 	bloodbar2->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.0, 0));
-	bloodbar2->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.056, 0.887, 0), glm::vec3(0.109, 0.030, 1));
+	bloodbar2->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.064, 0.931, 0), glm::vec3(0.055, 0.018, 1));
+
 
 	auto healthbarbg = CreateGameObject("healthbar_bg");
 	Application->root->ParentGameObject(*healthbarbg, *canvas);
@@ -918,13 +919,6 @@ void Root::CreateGameplayUI()
 	frames->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/powerup_frame.png");
 	frames->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.0, 0));
 	frames->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.847, 0.887, 0), glm::vec3(0.053, 0.057, 1));
-
-	auto bulletIcon = CreateGameObject("bullet");
-	Application->root->ParentGameObject(*bulletIcon, *canvas);
-	bulletIcon->AddComponent<UIImageComponent>();
-	bulletIcon->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/powerupi_bullet_icon_1.png");
-	bulletIcon->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.0, 0.0, 0));
-	bulletIcon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.849, 0.890, 0), glm::vec3(0.023, 0.047, 1));
 
 	auto Lock1 = CreateGameObject("lock_L");
 	Application->root->ParentGameObject(*Lock1, *canvas);
@@ -1203,7 +1197,7 @@ void Root::CreateLoseUI() {
 	auto menuImage = CreateGameObject("Menu_Image");
 	Application->root->ParentGameObject(*menuImage, *canvas);
 	menuImage->AddComponent<UIImageComponent>();
-	menuImage->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/gameover_blockout.png");
+	menuImage->GetComponent<UIImageComponent>()->SetTexture("Library/Textures/UI/GAME_OVER_screen.png");
 	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
 	auto mainMenuButton = CreateGameObject("MM_button");

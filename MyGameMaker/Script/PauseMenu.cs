@@ -29,6 +29,11 @@ public class PauseMenu : MonoBehaviour
 
     private Audio sound;
 
+    private ButtonState prevState_resumeButton = ButtonState.DEFAULT;
+    private ButtonState prevState_optionsMenuButton = ButtonState.DEFAULT;
+    private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
+    private ButtonState prevState_quitButton = ButtonState.DEFAULT;
+
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
 
@@ -88,6 +93,21 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
+    {
+        if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
+        {
+            transform.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
+        }
+        else if (button.GetState() == ButtonState.DEFAULT)
+        {
+            transform.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
+        }
+        prevState = button.GetState();
+    }
+
     public override void Update(float deltaTime)
     {
         if (optionsMenu == null || mainMenu == null || resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
@@ -126,16 +146,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if (button_resumeButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_resumeButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_resumeButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_resumeButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
-        }
+        HandleHoveredState(button_resumeButton, transform_resumeButton, ref prevState_resumeButton);
 
         if (button_optionsMenuButton.GetState() == ButtonState.CLICKED)
         {
@@ -144,16 +155,8 @@ public class PauseMenu : MonoBehaviour
             optionsMenu.SetActive(true);
             isOptionsMenuActive = true;
         }
-        if (button_optionsMenuButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_optionsMenuButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_optionsMenuButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_optionsMenuButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
-        }
+
+        HandleHoveredState(button_optionsMenuButton, transform_optionsMenuButton, ref prevState_optionsMenuButton);
 
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
@@ -164,16 +167,8 @@ public class PauseMenu : MonoBehaviour
             HUDScript.isPaused = false;
             gameObject.SetActive(false);
         }
-        if (button_mainMenuButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_mainMenuButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_mainMenuButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_mainMenuButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
-        }
+
+        HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);
 
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
@@ -182,20 +177,11 @@ public class PauseMenu : MonoBehaviour
             sound?.Play();
         }
 
-        if (button_quitButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_quitButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
-        }
+        HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
 
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
         {
-            if(HUDScript.openedPause)
+            if (HUDScript.openedPause)
             {
                 HUDScript.openedPause = false;
                 Engineson.print("Avoided closure");
@@ -210,5 +196,4 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-
 }

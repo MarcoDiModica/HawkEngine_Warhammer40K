@@ -12,6 +12,9 @@ public class WinScreen : MonoBehaviour
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
     private Audio sound;
+    private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
+    private ButtonState prevState_quitButton = ButtonState.DEFAULT;
+
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
     public override void Awake()
@@ -51,6 +54,21 @@ public class WinScreen : MonoBehaviour
             Engineson.print("ERROR: No Audio object found");
         }
     }
+    private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
+    {
+        if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
+        {
+            transform.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
+        }
+        else if (button.GetState() == ButtonState.DEFAULT)
+        {
+            transform.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+        }
+        prevState = button.GetState();
+    }
+
     public override void Update(float deltaTime)
     {
         if (mainMenu == null || mainMenuButton == null || quitButton == null)
@@ -63,6 +81,7 @@ public class WinScreen : MonoBehaviour
             Engineson.print("ERROR: No Audio object found");
             return;
         }
+
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
             mainMenu.SetActive(true);
@@ -71,16 +90,7 @@ public class WinScreen : MonoBehaviour
             sound?.Play();
         }
 
-        if (button_mainMenuButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_mainMenuButton.DOScaleUI(new Vector3(0.2f, 0.085f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_mainMenuButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_mainMenuButton.DOScaleUI(new Vector3(0.184f, 0.064f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
+        HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);
 
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
@@ -89,16 +99,6 @@ public class WinScreen : MonoBehaviour
             sound?.Play();
         }
 
-        if (button_quitButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.22f, 0.085f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_quitButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.193f, 0.067f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
-
+        HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
     }
 }

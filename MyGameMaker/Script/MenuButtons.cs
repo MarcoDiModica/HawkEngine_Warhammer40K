@@ -27,6 +27,12 @@ public class MenuButtons : MonoBehaviour
     private UITransform transform_creditsButton;
     private UITransform transform_quitButton;
 
+    private ButtonState prevState_newGameButton = ButtonState.DEFAULT;
+    private ButtonState prevState_continueButton = ButtonState.DEFAULT;
+    private ButtonState prevState_optionsButton = ButtonState.DEFAULT;
+    private ButtonState prevState_quitButton = ButtonState.DEFAULT;
+
+
     private Audio sound;
     //private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
@@ -57,6 +63,7 @@ public class MenuButtons : MonoBehaviour
         transform_optionsButton = optionsButton.GetComponent<UITransform>();
         //transform_creditsButton = creditsButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
+
 
         //sound = gameObject.GetComponent<Audio>();
 
@@ -89,6 +96,21 @@ public class MenuButtons : MonoBehaviour
         }
     }
 
+    private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
+    {
+        if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
+        {
+            transform.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
+        }
+        else if (button.GetState() == ButtonState.DEFAULT)
+        {
+            transform.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+        }
+        prevState = button.GetState();
+    }
+
     public override void Update(float deltaTime)
     {
         if (button_newGameButton == null || button_continueButton == null || button_optionsButton == null || button_quitButton == null)
@@ -111,7 +133,7 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: Audio not found");
             return;
         }
-        
+
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
             //SceneManager.LoadScene("DefaultScene");
@@ -123,16 +145,7 @@ public class MenuButtons : MonoBehaviour
             sound?.Play();
         }
 
-        if (button_newGameButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_newGameButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_newGameButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_newGameButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
+        HandleHoveredState(button_newGameButton, transform_newGameButton, ref prevState_newGameButton);
 
         if (button_continueButton.GetState() == ButtonState.CLICKED)
         {
@@ -145,36 +158,17 @@ public class MenuButtons : MonoBehaviour
             HUD.SetActive(true);
             gameObject.SetActive(false);
         }
-        if (button_continueButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_continueButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_continueButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_continueButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
 
+        HandleHoveredState(button_continueButton, transform_continueButton, ref prevState_continueButton);
 
         if (button_optionsButton.GetState() == ButtonState.CLICKED)
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
             optionsCanvas.SetActive(true);
-
         }
 
-        if (button_optionsButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_optionsButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_optionsButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_optionsButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
+        HandleHoveredState(button_optionsButton, transform_optionsButton, ref prevState_optionsButton);
 
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
@@ -183,46 +177,6 @@ public class MenuButtons : MonoBehaviour
             sound?.Play();
         }
 
-        if (button_quitButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_quitButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
-
-        //if (continueButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    EJEMPLO PARA HACER UN TWEEN!!
-        //    transform_continueButton.DOScaleUI(new Vector3(1.0f, 1.0f, 1.0f), 0.2f, Modes.EASE_IN_OUT);
-        //    
-        //    
-        //    Engineson.print("Continue is Clicked");
-        //}
-
-        //if (optionsButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("Options is Clicked");
-        //}
-
-        //if (creditsButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("Credits is Clicked");
-        //}
-
-        //if (quitButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    Engineson.print("quit is Clicked");
-        //}
-
+        HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
     }
 }

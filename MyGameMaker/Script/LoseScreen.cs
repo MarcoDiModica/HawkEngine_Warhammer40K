@@ -18,6 +18,11 @@ public class LoseScreen : MonoBehaviour
     private GameObject Player;
     private PlayerData playerData;
     private Audio sound;
+
+    private ButtonState prevState_loadLastCheckpoint = ButtonState.DEFAULT;
+    private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
+    private ButtonState prevState_quitButton = ButtonState.DEFAULT;
+
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
     public override void Awake()
@@ -82,6 +87,21 @@ public class LoseScreen : MonoBehaviour
             return;
         }
     }
+    private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
+    {
+        if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
+        {
+            transform.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
+        }
+        else if (button.GetState() == ButtonState.DEFAULT)
+        {
+            transform.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+        }
+        prevState = button.GetState();
+    }
+
     public override void Update(float deltaTime)
     {
         if (mainMenu == null || loadLastCheckpoint == null || mainMenuButton == null || quitButton == null)
@@ -128,16 +148,8 @@ public class LoseScreen : MonoBehaviour
             HUD.SetActive(true);
             this.gameObject.SetActive(false);
         }
-        if (button_loadLastCheckpoint.GetState() == ButtonState.HOVERED)
-        {
-            transform_loadLastCheckpoint.DOScaleUI(new Vector3(0.3f, 0.08f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_loadLastCheckpoint.GetState() == ButtonState.DEFAULT)
-        {
-            transform_loadLastCheckpoint.DOScaleUI(new Vector3(0.261f, 0.059f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
+
+        HandleHoveredState(button_loadLastCheckpoint, transform_loadLastCheckpoint, ref prevState_loadLastCheckpoint);
 
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
@@ -146,16 +158,8 @@ public class LoseScreen : MonoBehaviour
             mainMenu.SetActive(true);
             this.gameObject.SetActive(false);
         }
-        if (button_mainMenuButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_mainMenuButton.DOScaleUI(new Vector3(0.2f, 0.080f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_mainMenuButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_mainMenuButton.DOScaleUI(new Vector3(0.175f, 0.058f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
+
+        HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);
 
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
@@ -164,16 +168,6 @@ public class LoseScreen : MonoBehaviour
             sound?.Play();
         }
 
-        if (button_quitButton.GetState() == ButtonState.HOVERED)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.2f, 0.080f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button_quitButton.GetState() == ButtonState.DEFAULT)
-        {
-            transform_quitButton.DOScaleUI(new Vector3(0.181f, 0.060f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
-
+        HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
     }
 }

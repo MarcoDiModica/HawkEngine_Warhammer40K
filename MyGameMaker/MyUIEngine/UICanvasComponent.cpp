@@ -64,6 +64,10 @@ void UICanvasComponent::Update(float deltaTime)
     for (size_t i = 0; i < owner->GetChildren().size(); ++i) {
         GameObject* object = owner->GetChildren()[i].get();
 
+		if(!object->IsActive()){
+			continue;
+		}
+
 		auto rectTransform = object->GetComponent<UITransformComponent>();
 
 		rectTransform->SetCanvasPosition(canvasPos);

@@ -55,7 +55,7 @@ public class EnemyControllerRanged : EnemyController
             return;
         }
 
-        maxHealth = 100.0f;
+        maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Ranged";
     }

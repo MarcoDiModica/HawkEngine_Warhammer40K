@@ -11,6 +11,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected BoxCollider collider;
     protected Transform enemyTransform;
     protected Audio sound;
+    protected ParticleFX particles;
 
     public float currentHealth;
     public float maxHealth;

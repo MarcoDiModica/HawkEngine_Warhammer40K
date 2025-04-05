@@ -9,7 +9,7 @@ public class EnemyControllerMelee : EnemyController
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
     private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tama�o de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(5.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxOffset = new Vector3(5.0f, 3.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
 
     // Perfect Dodge
@@ -80,6 +80,9 @@ public class EnemyControllerMelee : EnemyController
             return;
         }
 
+        particles = gameObject.AddComponent<ParticleFX>();
+        particles.ApplyPreset(2);
+
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
@@ -119,7 +122,7 @@ public class EnemyControllerMelee : EnemyController
                         {
                             CreateHurtbox();
                             anim.SetRandomAttackAnimation();
-                            Engineson.print("Atack is ready");
+                            Engineson.print("Attack is ready");
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
                             dodgewindow = true;
@@ -326,12 +329,13 @@ public class EnemyControllerMelee : EnemyController
     private void CreateHurtbox()
     {
         hurtboxObject = Engineson.CreateGameObject("Hurtbox", null);
-        //hurtboxObject.AddComponent<MeshRenderer>();
+        hurtboxObject.AddComponent<MeshRenderer>();
         var hurtboxTransform = hurtboxObject.AddComponent<Transform>();
         hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
         hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
         var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
         hurtboxCollider.SetTrigger(true);
+        hurtboxObject.tag = "EnemyAttack";
         Attack();
     }
 

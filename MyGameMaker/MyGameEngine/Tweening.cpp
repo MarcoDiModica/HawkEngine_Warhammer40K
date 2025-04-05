@@ -482,6 +482,15 @@ void Tweening::Update(float deltaTime) {
 			continue;
 		}
 
+		static Scene* previousScene = nullptr;
+		Scene* currentScene = Application->root->GetActiveScene().get();
+
+		if (currentScene != previousScene) {
+			tweens.clear();
+			previousScene = currentScene;
+			return;
+		}
+
 		tween.elapsedTime += deltaTime;
 		float t = glm::clamp(tween.elapsedTime / tween.duration, 0.0f, 1.0f);
 

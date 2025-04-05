@@ -145,11 +145,13 @@
     <Compile Include="Rigidbody.cs" />
     <Compile Include="Scene1ToScene2.cs" />
     <Compile Include="Scene2ToMenu.cs" />
+    <Compile Include="SceneAudio.cs" />
     <Compile Include="Shotgun.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="ShotgunPickUp.cs" />
     <Compile Include="ShotgunShells.cs" />
     <Compile Include="SkeletalAnimation.cs" />
+    <Compile Include="SoundTrigger.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />

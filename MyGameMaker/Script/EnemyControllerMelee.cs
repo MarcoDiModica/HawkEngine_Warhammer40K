@@ -38,6 +38,10 @@ public class EnemyControllerMelee : EnemyController
     private float leapTimer = 0f;
     private bool hasLeap = true;
 
+    private bool startedLeaping = false;
+    private bool isLeaping = false;
+    private bool finishedLeaping = false;
+
     public override void Awake() {
 
         music = gameObject.GetComponent<Audio>();
@@ -113,6 +117,8 @@ public class EnemyControllerMelee : EnemyController
                     // Enemy Attack
                     if (IsPlayerInHurtbox(playerPos))
                     {
+                        isAttacking = true;
+
                         hurtboxTimer += deltaTime;
                         if (dodgewindow)
                         {
@@ -158,7 +164,10 @@ public class EnemyControllerMelee : EnemyController
                         Vector3 currentVelocity = rb.GetVelocity();
                         moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
                         Vector3 desiredVelocity = moveDirection * speedMovement;
-                   
+
+                        anim.SetRunningAnimation();
+                        isRunning = true;
+
                         if (desiredVelocity.LengthSquared() > 0)
                         {
                             desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
@@ -169,7 +178,7 @@ public class EnemyControllerMelee : EnemyController
                     }
 
                     // Enemy Leap
-                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap)
+                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && !isLeaping && hasLeap)
                     {
                         Random random = new Random();
                         int rand = random.Next(3, 4);
@@ -184,6 +193,8 @@ public class EnemyControllerMelee : EnemyController
                     }
                     if (!hasLeap)
                     {
+                        isLeaping = false;
+
                         lastLeap += deltaTime;
                         if (lastLeap >= leapCooldown)
                         {
@@ -264,9 +275,21 @@ public class EnemyControllerMelee : EnemyController
 
     public void Leap()
     {
-        isLeaping = true;
-        lastLeap = 0.0f;
-        if (leapTimer <= leapDuration)  rb.SetVelocity(rb.GetVelocity() * 1.8f);
+        if (startedLeaping)
+        {
+
+        }
+        if (leapTimer >= leapDuration)
+        {
+            lastLeap = 0.0f;
+            rb.SetVelocity(rb.GetVelocity() * 1.8f);
+        }
+        else
+        {
+            rb.SetVelocity(Vector3.One);
+            leapTimer = 0.0f;
+            hasLeap = false;
+        }
         anim.SetWholeLeapAnimation();
     }
 

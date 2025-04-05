@@ -21,7 +21,6 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected bool isIdle = false;
     protected bool isDead = false;
     protected bool isAttacking = false;
-    protected bool isLeaping = false;
     protected bool isRunning = false;
     protected bool isFootstepPlaying = false;
     protected bool hasStoppedFootsteps = false;

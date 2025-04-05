@@ -81,7 +81,7 @@ public class EnemyControllerMelee : EnemyController
         }
 
         particles = gameObject.AddComponent<ParticleFX>();
-        particles.ApplyPreset(2);
+        particles.ApplyPreset(9);
 
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
@@ -179,6 +179,7 @@ public class EnemyControllerMelee : EnemyController
                         {
                             leapTimer += deltaTime;
                             Leap();
+                            particles.EmitBurst(1);
                         }
                     }
                     if (!hasLeap)

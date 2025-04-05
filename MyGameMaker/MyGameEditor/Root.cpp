@@ -271,7 +271,7 @@ bool Root::Start()
 	//CreateWinUI();
 	//CreateLoseUI();
 	//CreatePauseMenuUI();
-	CreateGameplayUI();
+	//CreateGameplayUI();
 	//CreateMainMenuUI();
 	//CreateOptionsMenuUI();
 

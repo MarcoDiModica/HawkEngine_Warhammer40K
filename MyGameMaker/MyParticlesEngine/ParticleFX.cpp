@@ -291,8 +291,8 @@ namespace ParticlePresets {
 		1.0f,                          // Alpha end
 		1,                          // Size start
 		1,                          // Size end
-		1,                          // Min lifetime
-		1,                          // Max lifetime
+		0.25f,                          // Min lifetime
+		0.25f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed
@@ -588,7 +588,7 @@ namespace ParticlePresets {
 	1.0f,                          // Alpha start
 	1.0f,                          // Alpha end
 	1,                          // Size start
-	1,                          // Size end
+	10,                          // Size end
 	1,                          // Min lifetime
 	1,                          // Max lifetime
 	0.0f,                          // Min speed
@@ -621,7 +621,7 @@ namespace ParticlePresets {
 		0.35f,                          // Alpha start
 		1.0f,                          // Alpha end
 		0.8f,                          // Size start
-		4.0f,                          // Size end
+		8.0f,                          // Size end
 		1,                          // Min lifetime
 		1,                          // Max lifetime
 		0.0f,                          // Min speed
@@ -1296,8 +1296,21 @@ void ParticleFX::SetGravity(glm::vec3 gravity) {
 
 void ParticleFX::SetTexture(const std::string& texturePath) {
 	auto image = std::make_shared<Image>();
-	image->LoadTexture(texturePath);
-	material->setImage(image);
+	std::string binaryPath = texturePath.substr(texturePath.find_last_of('/') + 1);
+	binaryPath = binaryPath.substr(0, binaryPath.size() - 4);
+	auto binImage = image->LoadBinary(binaryPath);
+	if (binImage == NULL)
+	{
+		image->LoadTexture(texturePath);
+		
+		image->SaveBinary(binaryPath);
+		material->setImage(image);
+	}
+	else
+	{
+		material->setImage(binImage);
+	}
+
 }
 
 void ParticleFX::SetColorGradient(const std::string& texturePath) {

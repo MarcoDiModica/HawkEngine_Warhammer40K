@@ -160,6 +160,13 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
 	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 
+	auto riffleShotFX = CreateGameObject("RiffleShotFX");
+	riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	riffleShotFX->GetTransform()->SetScale(glm::vec3(2, 2, 2));
+	ParentGameObject(*riffleShotFX, *player);
+	riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
+	riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+
 	//particle->ApplyPreset(Particle)
 
 	/*auto itemtest = CreateCube("item");

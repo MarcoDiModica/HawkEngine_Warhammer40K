@@ -1249,7 +1249,7 @@ void EngineBinds::StopParticle(MonoObject* particleRef)
 {
 	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
 	if (particle) {
-		particle->Stop();
+		particle->Pause();
 	}
 }
 

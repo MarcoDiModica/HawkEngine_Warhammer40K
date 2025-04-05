@@ -137,9 +137,9 @@ GameObject0:
             - 110.7918701171875
             - 1311.495361328125
           localRotation:
-            - -89.999997793033387
-            - 74.935084380659745
-            - 1.0819018612450845e-05
+            - -90.000001237861341
+            - 74.935088794589774
+            - 1.4263831772341371e-05
           localScale:
             - 28.372146606445312
             - 21.824729919433594
@@ -341,9 +341,9 @@ GameObject0:
             - 110.7918701171875
             - 1409.2218017578125
           localRotation:
-            - -90.000000906764853
-            - -41.363350129770261
-            - -1.1272982071859779e-05
+            - -90.000000338595584
+            - -41.363353170055667
+            - -1.2778054210369658e-05
           localScale:
             - 28.372146606445312
             - 21.824729919433594
@@ -392,9 +392,9 @@ GameObject0:
             - 110.7918701171875
             - 1369.575439453125
           localRotation:
-            - -90.000027861515107
-            - 61.258938417737568
-            - 3.4169377998264777e-07
+            - -90.000027861509707
+            - 61.258940009590063
+            - 3.416983029284347e-07
           localScale:
             - 28.37214469909668
             - 21.824728012084961
@@ -443,9 +443,9 @@ GameObject0:
             - 110.7918701171875
             - 1332.5806884765625
           localRotation:
-            - -90.000014606308611
-            - 10.111370993650148
-            - -6.8612504980087823e-07
+            - -90.000014579288347
+            - 10.111371909922033
+            - -3.8070122623622771e-07
           localScale:
             - 28.372148513793945
             - 21.824729919433594
@@ -494,9 +494,9 @@ GameObject0:
             - 146.79434204101562
             - 1330.4998779296875
           localRotation:
-            - 89.999998287636316
+            - 90.000001712363698
             - 34.132437990814289
-            - 179.99999442217529
+            - -179.99999442217529
           localScale:
             - 28.372150421142578
             - 21.824731826782227
@@ -582,6 +582,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.027
       tag: Untagged
@@ -633,6 +643,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.028
       tag: Untagged
@@ -684,6 +704,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.004
       tag: Untagged
@@ -698,9 +728,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -89.993016131504675
-            - 89.973830883812823
-            - 0.0070060666111170216
+            - -90.000030735852178
+            - 89.980217671056536
+            - 0
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -735,6 +765,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.029
       tag: Untagged
@@ -749,9 +789,9 @@ GameObject0:
             - 90.798004150390625
             - 2911.414794921875
           localRotation:
-            - -0.39653454606609756
-            - -69.300041486092411
-            - 118.55401285934089
+            - -0.39652036936277829
+            - -69.300097266881039
+            - 118.55400835699892
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -786,6 +826,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.006
       tag: Untagged
@@ -796,17 +846,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 828.29913330078125
-            - 47.038593292236328
-            - 2512.985107421875
+            - 828.29916673452897
+            - 47.038592591306674
+            - 2512.9850394579016
           localRotation:
-            - -89.993016131504675
-            - 89.973830883812823
-            - 0.0070060666111170216
+            - -90.000027320789243
+            - 89.999996584905418
+            - 0
           localScale:
-            - 19.999998092651367
-            - 19.999998092651367
-            - 19.999998092651367
+            - 19.99999731779106
+            - 19.999997317793333
+            - 19.999997317793298
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -837,6 +887,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.009
       tag: Untagged
@@ -847,17 +907,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 786.87884521484375
-            - 47.038593292236328
-            - 3103.147705078125
+            - 786.87887926580186
+            - 47.038592591306674
+            - 3103.1478419430873
           localRotation:
-            - 90.000002884142106
-            - -76.348261708152407
-            - 179.99998851717353
+            - 89.999977030632309
+            - -76.348258793643311
+            - -179.99997930941669
           localScale:
-            - 19.999996185302734
-            - 19.999996185302734
-            - 19.999998092651367
+            - 19.999996727288341
+            - 19.99999665694893
+            - 19.999998509883973
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -888,6 +948,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.010
       tag: Untagged
@@ -902,9 +972,9 @@ GameObject0:
             - 47.038593292236328
             - 2985.45849609375
           localRotation:
-            - -89.993016131504675
-            - 89.973830883812823
-            - 0.0070060666111170216
+            - -90.000030735852178
+            - 89.980217671056536
+            - 0
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -939,6 +1009,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.011
       tag: Untagged
@@ -949,17 +1029,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 1270.4775390625
-            - 47.038593292236328
-            - 2919.60107421875
+            - 1270.4775048721208
+            - 47.038592591306674
+            - 2919.6010917484596
           localRotation:
-            - -90.000009574424595
-            - 13.658696205757547
-            - 1.285437627343042e-06
+            - -90.000009650845527
+            - 13.658696534169048
+            - 1.2854376244030512e-06
           localScale:
-            - 20.000001907348633
-            - 20.000001907348633
-            - 19.999998092651367
+            - 20.000001398867639
+            - 20.000001398867933
+            - 19.999998509884207
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -990,6 +1070,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.012
       tag: Untagged
@@ -1000,17 +1090,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 837.7135009765625
-            - 47.038593292236328
-            - 2648.169677734375
+            - 837.71353427002521
+            - 47.038592591306674
+            - 2648.1698213790382
           localRotation:
-            - 89.999952329243584
-            - 79.548635459116284
-            - 179.99993518250278
+            - 89.999968491199098
+            - 79.548665711932458
+            - 179.99995221587969
           localScale:
-            - 20
-            - 20
-            - 19.999998092651367
+            - 20.000002241049025
+            - 20.000001916680507
+            - 19.999999701977995
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -1041,6 +1131,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.015
       tag: Untagged
@@ -1092,6 +1192,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.016
       tag: Untagged
@@ -1106,9 +1216,9 @@ GameObject0:
             - 51.030010223388672
             - 2952.5986328125
           localRotation:
-            - -90.000016219305991
-            - 72.195360076898893
-            - 179.99999415090141
+            - -89.999997607634825
+            - 72.195372839477628
+            - -179.99998032395635
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1143,6 +1253,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.017
       tag: Untagged
@@ -1153,17 +1273,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -791.94891357421875
-            - 84.395011901855469
-            - 2649.67333984375
+            - -791.94891703204928
+            - 84.39501636631762
+            - 2649.6734224308516
           localRotation:
-            - 129.66969346580595
-            - 27.710424918651992
-            - 20.530353057684181
+            - 129.66969887651547
+            - 27.710424321227311
+            - 20.530356443280397
           localScale:
-            - 20
-            - 19.999998092651367
-            - 19.999996185302734
+            - 20.000000020260412
+            - 20.000001048166929
+            - 19.999999007606046
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -1194,6 +1314,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.018
       tag: Untagged
@@ -1204,17 +1334,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -791.70086669921875
-            - 47.038593292236328
-            - 2512.985107421875
+            - -791.7008854195343
+            - 47.038592591306674
+            - 2512.9850394579016
           localRotation:
-            - -89.993016131504675
-            - 89.973830883812823
-            - 0.0070060666111170216
+            - -90.000027320789243
+            - 89.999996584905418
+            - 0
           localScale:
-            - 19.999998092651367
-            - 19.999998092651367
-            - 19.999998092651367
+            - 19.99999731779106
+            - 19.999997317793333
+            - 19.999997317793298
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -1245,6 +1375,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.019
       tag: Untagged
@@ -1255,17 +1395,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -352.81683349609375
-            - 47.038593292236328
-            - 2642.654541015625
+            - -352.81684349750213
+            - 47.038592591306674
+            - 2642.6546847424702
           localRotation:
-            - -90.001186598047241
-            - -89.566503243473406
-            - 0.001072191558635166
+            - -90.001637461964052
+            - -89.565891901339768
+            - 0.0015221025141178865
           localScale:
-            - 20
-            - 20
-            - 19.999998092651367
+            - 20.000001545737941
+            - 20.000001557350281
+            - 19.99999970201501
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -1296,6 +1436,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.020
       tag: Untagged
@@ -1306,17 +1456,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -371.70089721679688
-            - 47.038593292236328
-            - 2512.985107421875
+            - -371.70089167802195
+            - 47.038592591306674
+            - 2512.9850394579016
           localRotation:
-            - -89.993016131504675
-            - 89.973830883812823
-            - 0.0070060666111170216
+            - -90.000027320789243
+            - 89.999996584905418
+            - 0
           localScale:
-            - 19.999998092651367
-            - 19.999998092651367
-            - 19.999998092651367
+            - 19.99999731779106
+            - 19.999997317793262
+            - 19.999997317793866
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -1347,6 +1497,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.021
       tag: Untagged
@@ -1398,6 +1558,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.022
       tag: Untagged
@@ -1449,6 +1619,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.023
       tag: Untagged
@@ -1500,6 +1680,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.024
       tag: Untagged
@@ -1510,17 +1700,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -1275.89306640625
-            - 47.038593292236328
-            - 2817.2939453125
+            - -1275.8930779115396
+            - 47.038592591306674
+            - 2817.2939643667046
           localRotation:
-            - 89.999975792564229
-            - -1.3094790668462224
-            - -179.99999496884138
+            - 89.99996750496679
+            - -1.3094792355349176
+            - 179.99999499252954
           localScale:
-            - 19.999998092651367
-            - 19.999998092651367
-            - 19.999998092651367
+            - 20.00000387716825
+            - 20.000001492756976
+            - 20.00000208616585
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -1551,6 +1741,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CBenchJusto.025
       tag: Untagged
@@ -1704,6 +1904,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.001
       tag: Untagged
@@ -1755,6 +1965,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.003
       tag: Untagged
@@ -1806,6 +2026,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.005
       tag: Untagged
@@ -1857,6 +2087,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.006
       tag: Untagged
@@ -1872,8 +2112,8 @@ GameObject0:
             - 2915.693359375
           localRotation:
             - -90.00002414871733
-            - -0.62345337567599046
-            - -6.7715145449244906e-10
+            - -0.62345345114298878
+            - -6.7713555078473284e-10
           localScale:
             - 30.347343444824219
             - 93.993881225585938
@@ -1908,6 +2148,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.008
       tag: Untagged
@@ -1959,6 +2209,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.009
       tag: Untagged
@@ -2010,6 +2270,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.010
       tag: Untagged
@@ -2020,17 +2290,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -371.70095825195312
-            - 57.266605377197266
-            - 2582.04150390625
+            - -371.70096797196612
+            - 57.266606431206959
+            - 2582.0415875011445
           localRotation:
-            - -90.000013660378343
+            - 90.451138546787291
             - -90
-            - 0
+            - 179.54886145321274
           localScale:
-            - 30.347343444824219
-            - 93.993881225585938
-            - 3.9120688438415527
+            - 30.347344423125023
+            - 93.993881732319252
+            - 3.9120688451519401
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -2061,6 +2331,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.011
       tag: Untagged
@@ -2071,17 +2351,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -371.70095825195312
-            - 57.266605377197266
-            - 3032.04150390625
+            - -371.70096797196612
+            - 57.266606431206959
+            - 3032.0415807956219
           localRotation:
-            - -90.000013660378343
+            - 90.674036897984521
             - -90
-            - 0
+            - 179.32596310201552
           localScale:
-            - 30.347343444824219
-            - 93.993881225585938
-            - 3.9120688438415527
+            - 30.347344423125023
+            - 93.993881732319252
+            - 3.9120688451519401
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -2112,6 +2392,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.012
       tag: Untagged
@@ -2127,8 +2417,8 @@ GameObject0:
             - 2815.693359375
           localRotation:
             - -90.00002414871733
-            - -0.62345337567599046
-            - -6.7715145449244906e-10
+            - -0.62345345114298878
+            - -6.7713555078473284e-10
           localScale:
             - 30.347343444824219
             - 93.993881225585938
@@ -2163,6 +2453,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.013
       tag: Untagged
@@ -2173,17 +2473,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -1217.6397705078125
-            - 62.46112060546875
-            - 2191.722412109375
+            - -1217.6397523635662
+            - 62.461122535748444
+            - 2191.7223794501665
           localRotation:
-            - 133.10435186330395
-            - -3.6784204074829914
-            - -86.592683109304943
+            - 133.10435171989386
+            - -3.6784199010059155
+            - -86.592693716841225
           localScale:
-            - 30.347347259521484
-            - 93.993881225585938
-            - 3.9120688438415527
+            - 30.347352363369517
+            - 93.993899151620326
+            - 3.912070095566031
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -2214,6 +2514,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_CTableJusto.014
       tag: Untagged
@@ -2330,9 +2640,9 @@ GameObject0:
             - 165.14021301269531
             - 1600.65771484375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2367,6 +2677,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.002
       tag: Untagged
@@ -2381,9 +2701,9 @@ GameObject0:
             - 165.14018249511719
             - 1600.65771484375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2418,6 +2738,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.004
       tag: Untagged
@@ -2432,9 +2762,9 @@ GameObject0:
             - 165.14021301269531
             - 399.342529296875
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2585,9 +2915,9 @@ GameObject0:
             - 165.14018249511719
             - 1600.65771484375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2622,6 +2952,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.008
       tag: Untagged
@@ -2636,9 +2976,9 @@ GameObject0:
             - 165.14022827148438
             - 1600.65771484375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2673,6 +3013,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.018
       tag: Untagged
@@ -2683,17 +3033,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -1399.4114990234375
-            - 165.14021301269531
-            - 2009.41162109375
+            - -1399.4114476530037
+            - 165.1402067372172
+            - 2009.411591151184
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000011620493908
+            - 2.2311794994258633e-05
+            - 179.99999499104268
           localScale:
-            - 29.999998092651367
-            - 29.999998092651367
-            - 19.999998092651367
+            - 29.9999971687818
+            - 29.999997168782304
+            - 19.999997317791511
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -2724,6 +3074,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.005
       tag: Untagged
@@ -2738,9 +3098,9 @@ GameObject0:
             - 165.60502624511719
             - 1587.731689453125
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2775,6 +3135,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.029
       tag: Untagged
@@ -2840,9 +3210,9 @@ GameObject0:
             - 165.60502624511719
             - 1188.865966796875
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2891,9 +3261,9 @@ GameObject0:
             - 165.14018249511719
             - 1187.1800537109375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2928,6 +3298,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.009
       tag: Untagged
@@ -2942,9 +3322,9 @@ GameObject0:
             - 165.14018249511719
             - 1187.1800537109375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -2979,6 +3359,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.010
       tag: Untagged
@@ -2993,9 +3383,9 @@ GameObject0:
             - 165.60502624511719
             - 1189.4329833984375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3044,9 +3434,9 @@ GameObject0:
             - 165.60502624511719
             - 790.567138671875
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3095,9 +3485,9 @@ GameObject0:
             - 165.14018249511719
             - 399.342529296875
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3146,9 +3536,9 @@ GameObject0:
             - 165.60502624511719
             - 388.63430786132812
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3197,9 +3587,9 @@ GameObject0:
             - 165.60502624511719
             - 388.63430786132812
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3248,9 +3638,9 @@ GameObject0:
             - 165.14018249511719
             - 399.34283447265625
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3285,6 +3675,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.016
       tag: Untagged
@@ -3299,9 +3699,9 @@ GameObject0:
             - 165.60502624511719
             - 790.0001220703125
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3350,9 +3750,9 @@ GameObject0:
             - 165.14021301269531
             - 399.34283447265625
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3387,6 +3787,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.019
       tag: Untagged
@@ -3401,9 +3811,9 @@ GameObject0:
             - 165.60507202148438
             - 388.63430786132812
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3452,9 +3862,9 @@ GameObject0:
             - 165.60507202148438
             - 388.63430786132812
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3503,9 +3913,9 @@ GameObject0:
             - 165.60507202148438
             - 790.0001220703125
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3554,9 +3964,9 @@ GameObject0:
             - 165.60507202148438
             - 1188.865966796875
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3605,9 +4015,9 @@ GameObject0:
             - 165.60507202148438
             - 1587.731689453125
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3656,9 +4066,9 @@ GameObject0:
             - 165.14021301269531
             - 1600.65771484375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3707,9 +4117,9 @@ GameObject0:
             - 165.14021301269531
             - 1600.65771484375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3744,6 +4154,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.028
       tag: Untagged
@@ -3758,9 +4178,9 @@ GameObject0:
             - 165.14022827148438
             - 1600.65771484375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3809,9 +4229,9 @@ GameObject0:
             - 165.60507202148438
             - 1189.432861328125
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3860,9 +4280,9 @@ GameObject0:
             - 165.60507202148438
             - 790.567138671875
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3911,9 +4331,9 @@ GameObject0:
             - 165.14021301269531
             - 1187.18017578125
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -3962,9 +4382,9 @@ GameObject0:
             - 165.14021301269531
             - 1187.1800537109375
           localRotation:
-            - -89.993745343790536
-            - -89.964338276847386
-            - -0.0062580713042585398
+            - -90.000003415094582
+            - -89.987389724490413
+            - -3.4150945850063712e-06
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4013,9 +4433,9 @@ GameObject0:
             - 165.14021301269531
             - 3209.412109375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4050,6 +4470,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.035
       tag: Untagged
@@ -4064,9 +4494,9 @@ GameObject0:
             - 165.60507202148438
             - 3221.3662109375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4115,9 +4545,9 @@ GameObject0:
             - 165.60507202148438
             - 3221.36572265625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4166,9 +4596,9 @@ GameObject0:
             - 165.14019775390625
             - 3181.061279296875
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4203,6 +4633,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.038
       tag: Untagged
@@ -4217,9 +4657,9 @@ GameObject0:
             - 165.60507202148438
             - 2810.00048828125
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4268,9 +4708,9 @@ GameObject0:
             - 165.14019775390625
             - 2419.412109375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4305,6 +4745,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.040
       tag: Untagged
@@ -4319,9 +4769,9 @@ GameObject0:
             - 165.60507202148438
             - 2410.00048828125
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4370,9 +4820,9 @@ GameObject0:
             - 165.14019775390625
             - 2009.411865234375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4407,6 +4857,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.042
       tag: Untagged
@@ -4421,9 +4881,9 @@ GameObject0:
             - 165.14019775390625
             - 2009.4119873046875
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4458,6 +4918,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.043
       tag: Untagged
@@ -4472,9 +4942,9 @@ GameObject0:
             - 165.60507202148438
             - 2388.634521484375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4523,9 +4993,9 @@ GameObject0:
             - 165.14019775390625
             - 2431.061279296875
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4560,6 +5030,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.045
       tag: Untagged
@@ -4574,9 +5054,9 @@ GameObject0:
             - 165.14021301269531
             - 2431.06103515625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4611,6 +5091,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.046
       tag: Untagged
@@ -4625,9 +5115,9 @@ GameObject0:
             - 165.60508728027344
             - 2388.634521484375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4676,9 +5166,9 @@ GameObject0:
             - 165.14021301269531
             - 3181.06103515625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4713,6 +5203,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.048
       tag: Untagged
@@ -4727,9 +5227,9 @@ GameObject0:
             - 165.60508728027344
             - 3221.36572265625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4778,9 +5278,9 @@ GameObject0:
             - 165.60508728027344
             - 3221.36572265625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4829,9 +5329,9 @@ GameObject0:
             - 165.14022827148438
             - 3209.41162109375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4866,6 +5366,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.051
       tag: Untagged
@@ -4880,9 +5390,9 @@ GameObject0:
             - 165.14021301269531
             - 2419.411865234375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4917,6 +5427,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.052
       tag: Untagged
@@ -4931,9 +5451,9 @@ GameObject0:
             - 165.60508728027344
             - 2410.000244140625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -4982,9 +5502,9 @@ GameObject0:
             - 165.60508728027344
             - 2810.000244140625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -5033,9 +5553,9 @@ GameObject0:
             - 165.14021301269531
             - 2009.411865234375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 29.999998092651367
             - 29.999998092651367
@@ -5070,6 +5590,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ColumnaEsquina_low.055
       tag: Untagged
@@ -6498,6 +7028,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Cube.008
       tag: Untagged
@@ -6512,9 +7052,9 @@ GameObject0:
             - 74.733970642089844
             - 1414.9453125
           localRotation:
-            - -4.325711717642045e-06
+            - -4.3257126550145095e-06
             - 43.373411189015364
-            - -1.5070808217440945e-13
+            - -3.0442096279724857e-13
           localScale:
             - 0.5
             - 0.5
@@ -6549,6 +7089,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Cube.009
       tag: Untagged
@@ -6563,9 +7113,9 @@ GameObject0:
             - 74.733970642089844
             - 1443.925537109375
           localRotation:
-            - -4.3257117185098438e-06
+            - -4.3257125432052948e-06
             - -10.540255563801361
-            - 7.8536676364906814e-14
+            - 1.5460771111168286e-13
           localScale:
             - 0.5
             - 0.5
@@ -6600,6 +7150,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Cube.011
       tag: Untagged
@@ -6651,6 +7211,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Cube.012
       tag: Untagged
@@ -6665,9 +7235,9 @@ GameObject0:
             - 179.52284240722656
             - 1464.330810546875
           localRotation:
-            - -4.3257109409959331e-06
+            - -4.325710935999849e-06
             - 7.4421700826969319
-            - 6.607938250659989e-14
+            - 1.4289889053876558e-13
           localScale:
             - 0.5
             - 0.5
@@ -6702,6 +7272,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Cube.014
       tag: Untagged
@@ -6869,9 +7449,9 @@ GameObject0:
             - 179.52284240722656
             - 2271.146484375
           localRotation:
-            - -4.325712142178553e-06
+            - -4.3257121101614013e-06
             - 22.365935031672443
-            - -1.0266679283641631e-13
+            - 5.9284310480095478e-14
           localScale:
             - 0.49999997019767761
             - 0.5
@@ -7124,9 +7704,9 @@ GameObject0:
             - 74.326217651367188
             - 1523.705078125
           localRotation:
-            - 89.999966640884026
-            - -65.992076965697507
-            - -179.9999840980891
+            - 89.999950220535581
+            - -65.992070501239837
+            - -179.99996767774118
           localScale:
             - 26.229904174804688
             - 26.229904174804688
@@ -7161,6 +7741,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Cylinder.003
       tag: Untagged
@@ -7175,9 +7765,9 @@ GameObject0:
             - 74.326217651367188
             - 776.99554443359375
           localRotation:
-            - -89.999947582595567
-            - -83.045282500608664
-            - -8.8342038896664429e-05
+            - -89.999904497283651
+            - -83.04536243913023
+            - -0.00012971665340880516
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -7212,6 +7802,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Cylinder.004
       tag: Untagged
@@ -7226,9 +7826,9 @@ GameObject0:
             - 74.326217651367188
             - 1533.9580078125
           localRotation:
-            - -90.00006197405871
-            - -85.076674876270232
-            - 1.7536822467892728e-05
+            - -90.000068811823809
+            - -85.076833009652475
+            - 1.0701595260393905e-05
           localScale:
             - 26.229907989501953
             - 26.229907989501953
@@ -7277,9 +7877,9 @@ GameObject0:
             - 74.326217651367188
             - 1535.664794921875
           localRotation:
-            - -90.00006197405871
-            - -85.076674876270232
-            - 1.7536822467892728e-05
+            - -90.000068811823809
+            - -85.076833009652475
+            - 1.0701595260393905e-05
           localScale:
             - 26.229907989501953
             - 26.229907989501953
@@ -7324,17 +7924,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 3240.679931640625
-            - 74.326217651367188
-            - 1479.6358642578125
+            - 3240.6798833507314
+            - 74.326218451168856
+            - 1479.6359032446755
           localRotation:
-            - -89.999997668907952
-            - -72.097035825934555
-            - -1.9617100846938627e-05
+            - -89.999995799757343
+            - -72.097040659296837
+            - -1.9617099052484794e-05
           localScale:
-            - 26.229902267456055
-            - 26.229902267456055
-            - 26.229902267456055
+            - 26.229902282666821
+            - 26.2299020994394
+            - 26.229900922926973
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -7365,6 +7965,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Cylinder.007
       tag: Untagged
@@ -7379,9 +7989,9 @@ GameObject0:
             - 74.326217651367188
             - 1352.6461181640625
           localRotation:
-            - 89.999966640884026
-            - -65.992076965697507
-            - -179.9999840980891
+            - 89.999950220535581
+            - -65.992070501239837
+            - -179.99996767774118
           localScale:
             - 26.229904174804688
             - 26.229904174804688
@@ -7481,9 +8091,9 @@ GameObject0:
             - 74.326217651367188
             - 1301.0238037109375
           localRotation:
-            - 89.999999589524847
+            - 90.000000410475153
             - 9.6136634444517099
-            - 179.99999511876231
+            - -179.99999511876231
           localScale:
             - 26.229904174804688
             - 26.229904174804688
@@ -7532,9 +8142,9 @@ GameObject0:
             - 74.326217651367188
             - 1352.297607421875
           localRotation:
-            - 90.000001589136232
+            - 89.999998410863782
             - -32.297255960336031
-            - 179.99999451179485
+            - -179.99999451179485
           localScale:
             - 26.229902267456055
             - 26.229902267456055
@@ -7583,9 +8193,9 @@ GameObject0:
             - 74.326217651367188
             - 1345.895263671875
           localRotation:
-            - 89.999966640884026
-            - -65.992076965697507
-            - -179.9999840980891
+            - 89.999950220535581
+            - -65.992070501239837
+            - -179.99996767774118
           localScale:
             - 26.229904174804688
             - 26.229904174804688
@@ -7685,9 +8295,9 @@ GameObject0:
             - 74.326217651367188
             - 1275.58935546875
           localRotation:
-            - 89.999966640884026
-            - -65.992076965697507
-            - -179.9999840980891
+            - 89.999950220535581
+            - -65.992070501239837
+            - -179.99996767774118
           localScale:
             - 26.229904174804688
             - 26.229904174804688
@@ -7736,9 +8346,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999947582595567
-            - -83.045282500608664
-            - -8.8342038896664429e-05
+            - -89.999904497283651
+            - -83.04536243913023
+            - -0.00012971665340880516
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -7787,9 +8397,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999947582595567
-            - -83.045282500608664
-            - -8.8342038896664429e-05
+            - -89.999904497283651
+            - -83.04536243913023
+            - -0.00012971665340880516
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -7838,9 +8448,9 @@ GameObject0:
             - 74.326217651367188
             - 501.02926635742188
           localRotation:
-            - -89.999947582595567
-            - -83.045282500608664
-            - -8.8342038896664429e-05
+            - -89.999904497283651
+            - -83.04536243913023
+            - -0.00012971665340880516
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -7926,6 +8536,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.021
       tag: Untagged
@@ -7977,6 +8597,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.022
       tag: Untagged
@@ -7987,17 +8617,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 421.28768920898438
-            - 76.39813232421875
-            - 576.184326171875
+            - 421.28768293130867
+            - 76.398133093146484
+            - 576.18434047424284
           localRotation:
-            - -179.99999134857768
-            - 1.7268447368749215e-13
-            - 89.999971021961031
+            - -179.99999134857765
+            - 1.7268447292918881e-13
+            - 89.999969060814593
           localScale:
-            - 2.1550710201263428
-            - 2.1550710201263428
-            - 2.1550710201263428
+            - 2.1550710178159189
+            - 2.1550710178158639
+            - 2.1550708688040192
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -8028,6 +8658,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.035
       tag: Untagged
@@ -8079,6 +8719,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.024
       tag: Untagged
@@ -8130,6 +8780,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.025
       tag: Untagged
@@ -8181,6 +8841,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.026
       tag: Untagged
@@ -8195,9 +8865,9 @@ GameObject0:
             - 109.12212371826172
             - 572.74530029296875
           localRotation:
-            - 89.999975851634389
-            - -1.8669335472011058e-05
-            - -179.99999499104399
+            - 89.999975851636037
+            - -1.8669336431644428e-05
+            - 179.99999499104382
           localScale:
             - 2.1550710201263428
             - 2.1550710201263428
@@ -8232,6 +8902,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.036
       tag: Untagged
@@ -8283,6 +8963,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.037
       tag: Untagged
@@ -8297,9 +8987,9 @@ GameObject0:
             - 61.655414581298828
             - 1112.2374267578125
           localRotation:
-            - 90.000743577616689
-            - 88.501941217470872
-            - -179.99943743786287
+            - 90.000740269433891
+            - 88.502325455129736
+            - -179.99943391526247
           localScale:
             - 2.1550707817077637
             - 2.1550707817077637
@@ -8334,6 +9024,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.031
       tag: Untagged
@@ -8348,9 +9048,9 @@ GameObject0:
             - 109.12212371826172
             - 572.74530029296875
           localRotation:
-            - 89.999975851634389
-            - -1.8669335472011058e-05
-            - -179.99999499104399
+            - 89.999975851636037
+            - -1.8669336431644428e-05
+            - 179.99999499104382
           localScale:
             - 2.1550710201263428
             - 2.1550710201263428
@@ -8385,6 +9085,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.032
       tag: Untagged
@@ -8436,6 +9146,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.033
       tag: Untagged
@@ -8487,6 +9207,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.018
       tag: Untagged
@@ -8538,6 +9268,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.038
       tag: Untagged
@@ -8589,6 +9329,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.039
       tag: Untagged
@@ -8603,9 +9353,9 @@ GameObject0:
             - 109.12212371826172
             - 563.698974609375
           localRotation:
-            - 89.999997386197606
-            - -45.000011699171992
-            - -179.99999368972587
+            - 90.000002613801414
+            - -45.000010616502387
+            - 179.99999368972698
           localScale:
             - 2.1550707817077637
             - 2.1550707817077637
@@ -8640,6 +9390,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.040
       tag: Untagged
@@ -8691,6 +9451,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Literal.041
       tag: Untagged
@@ -8742,6 +9512,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.014
       tag: Untagged
@@ -8793,6 +9573,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.015
       tag: Untagged
@@ -8844,6 +9634,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.016
       tag: Untagged
@@ -8895,6 +9695,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.017
       tag: Untagged
@@ -8909,8 +9719,8 @@ GameObject0:
             - 165.00001525878906
             - 1799.589111328125
           localRotation:
-            - -90.000013660378343
-            - -90
+            - 270.00000683018959
+            - -89.972023545715473
             - 0
           localScale:
             - 100
@@ -8946,6 +9756,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.018
       tag: Untagged
@@ -8997,6 +9817,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.006
       tag: Untagged
@@ -9058,17 +9888,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 1200
-            - 165.00001525878906
-            - 1383.9228515625
+            - 1199.9999821186068
+            - 165.00001661479448
+            - 1383.9228614580204
           localRotation:
-            - -90.000009659346318
+            - -90.000007698195432
             - 0
             - 0
           localScale:
-            - 100
-            - 100
-            - 100
+            - 99.999998509883895
+            - 99.99999850988479
+            - 99.99999850988479
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -9099,6 +9929,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - -27.7999992
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.020
       tag: Untagged
@@ -9150,6 +9990,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.021
       tag: Untagged
@@ -9201,6 +10051,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.002
       tag: Untagged
@@ -9419,9 +10279,9 @@ GameObject0:
             - 165.00001525878906
             - 2629.84228515625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -9660,6 +10520,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.010
       tag: Untagged
@@ -9711,6 +10581,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - -21.2000008
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_ParedHabitacion_low.011
       tag: Untagged
@@ -9827,9 +10707,9 @@ GameObject0:
             - 165.00001525878906
             - 3133.245849609375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -9878,9 +10758,9 @@ GameObject0:
             - 165.00001525878906
             - 3133.24609375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -9929,9 +10809,9 @@ GameObject0:
             - 165.00001525878906
             - 2475.951416015625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -9980,9 +10860,9 @@ GameObject0:
             - 165.00001525878906
             - 2475.951171875
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -10031,9 +10911,9 @@ GameObject0:
             - 165.00001525878906
             - 2239.5986328125
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -10082,9 +10962,9 @@ GameObject0:
             - 165.00001525878906
             - 2239.598876953125
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -10133,9 +11013,9 @@ GameObject0:
             - 165.00001525878906
             - 2787.717041015625
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -10439,9 +11319,9 @@ GameObject0:
             - 159.99995422363281
             - 600
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -10476,6 +11356,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.003
       tag: Untagged
@@ -10490,9 +11380,9 @@ GameObject0:
             - 159.99995422363281
             - 1400
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -10527,6 +11417,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.017
       tag: Untagged
@@ -10578,6 +11478,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.002
       tag: Untagged
@@ -10592,13 +11502,13 @@ GameObject0:
             - 159.99996948242188
             - 411.2071533203125
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499148703
+            - -89.979477648004803
+            - -7.0615649671595658e-10
           localScale:
+            - 199.99998474121094
             - 200
-            - 200
-            - 200
+            - 199.99998474121094
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -10629,6 +11539,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1.70000005
+          offset:
+            - -8.10000038
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.004
       tag: Untagged
@@ -10643,13 +11563,13 @@ GameObject0:
             - 159.99998474121094
             - 411.2071533203125
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499148703
+            - -89.979477648004803
+            - -7.0615649671595658e-10
           localScale:
+            - 199.99998474121094
             - 200
-            - 200
-            - 200
+            - 199.99998474121094
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -10680,6 +11600,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1.5
+          offset:
+            - 2.5
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.005
       tag: Untagged
@@ -10694,13 +11624,13 @@ GameObject0:
             - 159.99998474121094
             - 600
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499148703
+            - -89.979477648004803
+            - -7.0615649671595658e-10
           localScale:
+            - 199.99998474121094
             - 200
-            - 200
-            - 200
+            - 199.99998474121094
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -10731,6 +11661,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 2.5
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.006
       tag: Untagged
@@ -10742,16 +11682,16 @@ GameObject0:
           enabled: true
           localPosition:
             - -1388.7928466796875
-            - 159.99998474121094
+            - 159.67585754394531
             - 1400
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499148703
+            - -89.979477648004803
+            - -7.0615649671595658e-10
           localScale:
+            - 199.99998474121094
             - 200
-            - 200
-            - 200
+            - 199.99998474121094
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -10782,6 +11722,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.5
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - -2.29999995
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.007
       tag: Untagged
@@ -10796,9 +11746,9 @@ GameObject0:
             - 159.99995422363281
             - 1588.7928466796875
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -10833,6 +11783,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.008
       tag: Untagged
@@ -10847,9 +11807,9 @@ GameObject0:
             - 159.99995422363281
             - 1217.6168212890625
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -10884,6 +11844,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.009
       tag: Untagged
@@ -10898,9 +11868,9 @@ GameObject0:
             - 159.99993896484375
             - 1399.9998779296875
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -10935,6 +11905,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.010
       tag: Untagged
@@ -10949,9 +11929,9 @@ GameObject0:
             - 159.99996948242188
             - 1400
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -10986,6 +11966,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.011
       tag: Untagged
@@ -11000,9 +11990,9 @@ GameObject0:
             - 159.99996948242188
             - 1588.7928466796875
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -11037,6 +12027,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.036
       tag: Untagged
@@ -11047,12 +12047,12 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -2.384185791015625e-05
+            - 0
             - 160.0626220703125
             - 4210.03173828125
           localRotation:
-            - -2.5044772087678847e-06
-            - 8.6514232123550252e-06
+            - -2.5044772087678233e-06
+            - 8.651424026577023e-06
             - -179.99999134857799
           localScale:
             - 200
@@ -11102,9 +12102,9 @@ GameObject0:
             - 159.99993896484375
             - 1400
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -11139,6 +12139,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.013
       tag: Untagged
@@ -11153,9 +12163,9 @@ GameObject0:
             - 159.99995422363281
             - 1588.7928466796875
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -11190,6 +12200,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.014
       tag: Untagged
@@ -11204,9 +12224,9 @@ GameObject0:
             - 159.99995422363281
             - 1217.6168212890625
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -11241,6 +12261,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.015
       tag: Untagged
@@ -11255,9 +12285,9 @@ GameObject0:
             - 159.99995422363281
             - 1588.792724609375
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -11292,6 +12322,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.016
       tag: Untagged
@@ -11306,9 +12346,9 @@ GameObject0:
             - 159.99996948242188
             - 1400
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -11343,6 +12383,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - -3.20000005
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.018
       tag: Untagged
@@ -11353,17 +12403,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 1388.7926025390625
-            - 159.99998474121094
-            - 600
+            - 1388.7925513268626
+            - 159.99998807907122
+            - 599.9999910593034
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152364
+            - -89.979473765012216
+            - -7.4242639094331195e-10
           localScale:
-            - 200
-            - 200
-            - 200
+            - 199.99999078061475
+            - 199.99999701976856
+            - 199.99999078061549
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -11394,6 +12444,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1.39999998
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 2.4000001
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.019
       tag: Untagged
@@ -11408,9 +12468,9 @@ GameObject0:
             - 159.99998474121094
             - 411.2071533203125
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -11445,6 +12505,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.020
       tag: Untagged
@@ -11496,6 +12566,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.021
       tag: Untagged
@@ -11547,6 +12627,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.022
       tag: Untagged
@@ -11598,6 +12688,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.023
       tag: Untagged
@@ -11608,17 +12708,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 1389.38134765625
-            - 159.99996948242188
-            - 2209.413330078125
+            - 1389.3813879880101
+            - 159.99996900558517
+            - 2209.4132666377236
           localRotation:
-            - 179.99999134857779
-            - 1.2087631704476585e-20
-            - -4.3257111045250829e-06
+            - 179.99999134857796
+            - 1.2087632201658991e-20
+            - -4.3257110231028787e-06
           localScale:
-            - 200
-            - 200
-            - 200
+            - 199.99999701976836
+            - 199.99999701977063
+            - 199.99999701977006
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -11649,6 +12749,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.024
       tag: Untagged
@@ -11700,6 +12810,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.025
       tag: Untagged
@@ -11751,6 +12871,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.026
       tag: Untagged
@@ -11802,6 +12932,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.027
       tag: Untagged
@@ -11853,6 +12993,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.028
       tag: Untagged
@@ -11863,17 +13013,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 400.58837890625
-            - 159.99996948242188
-            - 3198.2060546875
+            - 400.58837293701805
+            - 159.99996900558517
+            - 3198.2061291008272
           localRotation:
-            - 179.99999134857779
-            - 1.2087631704476585e-20
-            - -4.3257111045250829e-06
+            - 179.99999134857796
+            - 1.2087632201658991e-20
+            - -4.3257110231028787e-06
           localScale:
-            - 200
-            - 200
-            - 200
+            - 199.99999701976836
+            - 199.99999701977063
+            - 199.99999701977006
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -11904,6 +13054,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.029
       tag: Untagged
@@ -11955,6 +13115,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.030
       tag: Untagged
@@ -12006,6 +13176,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.031
       tag: Untagged
@@ -12057,6 +13237,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.032
       tag: Untagged
@@ -12108,6 +13298,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.033
       tag: Untagged
@@ -12159,6 +13359,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.034
       tag: Untagged
@@ -12210,6 +13420,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.035
       tag: Untagged
@@ -12261,6 +13481,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.037
       tag: Untagged
@@ -12312,6 +13542,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.038
       tag: Untagged
@@ -12363,6 +13603,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.039
       tag: Untagged
@@ -12377,9 +13627,9 @@ GameObject0:
             - 159.99993896484375
             - 600
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -12414,6 +13664,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.040
       tag: Untagged
@@ -12428,9 +13688,9 @@ GameObject0:
             - 159.99996948242188
             - 411.2071533203125
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -12465,6 +13725,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.041
       tag: Untagged
@@ -12479,9 +13749,9 @@ GameObject0:
             - 159.99995422363281
             - 1400
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -12516,6 +13786,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.042
       tag: Untagged
@@ -12530,9 +13810,9 @@ GameObject0:
             - 159.99998474121094
             - 1400
           localRotation:
-            - -179.99999499141256
-            - -89.981639690758286
-            - 3.6885357811060321e-10
+            - 179.99999499152361
+            - -89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -12567,6 +13847,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Pared_low.043
       tag: Untagged
@@ -13040,9 +14330,9 @@ GameObject0:
             - 159.19488525390625
             - 999.33758544921875
           localRotation:
-            - 179.99999499141256
-            - 89.981639690758286
-            - 3.6885357811060321e-10
+            - -179.99999499152361
+            - 89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -13091,9 +14381,9 @@ GameObject0:
             - 159.19499206542969
             - 999.33746337890625
           localRotation:
-            - 179.99999499141256
-            - 89.981639690758286
-            - 3.6885357811060321e-10
+            - -179.99999499152361
+            - 89.979133952245178
+            - -7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -13142,9 +14432,9 @@ GameObject0:
             - 159.195068359375
             - 410.54458618164062
           localRotation:
-            - 179.99999499141256
-            - -89.981639690758286
-            - -3.6885357811060321e-10
+            - -179.99999499152361
+            - -89.979133952245178
+            - 7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -13179,6 +14469,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_PuertaCerrada_low.003
       tag: Untagged
@@ -13193,9 +14493,9 @@ GameObject0:
             - 159.19511413574219
             - 639.04010009765625
           localRotation:
-            - 179.99999499141256
-            - -89.981639690758286
-            - -3.6885357811060321e-10
+            - -179.99999499152361
+            - -89.979133952245178
+            - 7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -13244,9 +14544,9 @@ GameObject0:
             - 159.19505310058594
             - 999.33740234375
           localRotation:
-            - 179.99999499141256
-            - -89.981639690758286
-            - -3.6885357811060321e-10
+            - -179.99999499152361
+            - -89.979133952245178
+            - 7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -13281,6 +14581,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_PuertaCerrada_low.004
       tag: Untagged
@@ -13295,9 +14605,9 @@ GameObject0:
             - 159.19505310058594
             - 999.33740234375
           localRotation:
-            - 179.99999499141256
-            - -89.981639690758286
-            - -3.6885357811060321e-10
+            - -179.99999499152361
+            - -89.979133952245178
+            - 7.4243083854765811e-10
           localScale:
             - 200
             - 200
@@ -13332,6 +14642,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.021
       tag: Untagged
@@ -19411,17 +20731,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 3063.0400390625
-            - 59.258811950683594
-            - 1296.2694091796875
+            - 3063.0401154899578
+            - 59.258812975007096
+            - 1296.2693593461906
           localRotation:
-            - -90.000021591642351
-            - -46.315281400770388
-            - 1.3559202531565422e-06
+            - -90.000021795253929
+            - -46.315282174938275
+            - 1.3559202916488597e-06
           localScale:
-            - 31.190006256103516
-            - 31.190006256103516
-            - 31.190008163452148
+            - 31.190005246518925
+            - 31.190005246520982
+            - 31.190008652361183
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -19452,6 +20772,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_TableJusto.001
       tag: Untagged
@@ -19503,6 +20833,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_TableJusto.002
       tag: Untagged
@@ -19513,17 +20853,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 3077.57568359375
-            - 59.258811950683594
-            - 914.6470947265625
+            - 3077.5756377342991
+            - 59.258812975007096
+            - 914.64712687362533
           localRotation:
-            - -90.000033851264249
-            - 41.369600735561107
-            - -7.6186098265879282e-06
+            - -90.000052835090443
+            - 41.369597185262549
+            - -1.7448658435270861e-05
           localScale:
-            - 31.190006256103516
-            - 31.190006256103516
-            - 31.190008163452148
+            - 31.190006200845541
+            - 31.190006200852832
+            - 31.190008652368039
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -19554,6 +20894,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_TableJusto.003
       tag: Untagged
@@ -19619,9 +20969,9 @@ GameObject0:
             - 59.258811950683594
             - 1273.9903564453125
           localRotation:
-            - 90.000205993768446
-            - 88.524009933678158
-            - -179.99994086747938
+            - 90.000144001587103
+            - 88.524433396871999
+            - 179.99998860190161
           localScale:
             - 31.190008163452148
             - 31.190008163452148
@@ -19670,9 +21020,9 @@ GameObject0:
             - 59.258811950683594
             - 1379.67333984375
           localRotation:
-            - 90.000016752083255
-            - 45.637780835276764
-            - -179.99998509193006
+            - 90.000038201353206
+            - 45.637777651831847
+            - -179.999983926807
           localScale:
             - 31.190010070800781
             - 31.190010070800781
@@ -19809,6 +21159,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1.39999998
+            - 1
+          offset:
+            - 0
+            - 0
+            - 2.70000005
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.003
       tag: Untagged
@@ -19860,6 +21220,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.004
       tag: Untagged
@@ -19911,6 +21281,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.005
       tag: Untagged
@@ -19962,6 +21342,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.006
       tag: Untagged
@@ -20064,6 +21454,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.008
       tag: Untagged
@@ -20115,6 +21515,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.009
       tag: Untagged
@@ -20166,6 +21576,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.010
       tag: Untagged
@@ -20217,6 +21637,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.011
       tag: Untagged
@@ -20268,6 +21698,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.012
       tag: Untagged
@@ -20319,6 +21759,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Tunel_low.013
       tag: Untagged
@@ -20472,6 +21922,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.001
       tag: Untagged
@@ -20523,6 +21983,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.018
       tag: Untagged
@@ -20537,9 +22007,9 @@ GameObject0:
             - 48.799598693847656
             - 199.99996948242188
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -20676,6 +22146,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.006
       tag: Untagged
@@ -20727,6 +22207,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.007
       tag: Untagged
@@ -20792,9 +22282,9 @@ GameObject0:
             - 48.799598693847656
             - 400.2288818359375
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -20829,6 +22319,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.009
       tag: Untagged
@@ -20880,6 +22380,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.010
       tag: Untagged
@@ -20931,6 +22441,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.019
       tag: Untagged
@@ -20945,9 +22465,9 @@ GameObject0:
             - 48.799598693847656
             - 2200
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -20996,9 +22516,9 @@ GameObject0:
             - 48.799598693847656
             - 1400
           localRotation:
-            - 90.000009659347299
-            - 2.2311795727188781e-05
-            - -179.99999499104294
+            - 90.000009659345352
+            - 2.2311794844410143e-05
+            - 179.99999499104271
           localScale:
             - 100
             - 100
@@ -21033,6 +22553,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 0.899999976
+            - 1
+          offset:
+            - 0
+            - 0
+            - 54.4000015
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.021
       tag: Untagged
@@ -21186,6 +22716,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.016
       tag: Untagged
@@ -21200,9 +22740,9 @@ GameObject0:
             - 48.799598693847656
             - 804
           localRotation:
-            - -90.000013660378343
-            - 90
-            - 0
+            - -89.996506998561287
+            - 89.968722136608804
+            - 0.0035015391755652174
           localScale:
             - 100
             - 100
@@ -21237,6 +22777,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Lvl2Z1_Vallas.017
       tag: Untagged
@@ -21251,8 +22801,8 @@ GameObject0:
             - 48.799598693847656
             - 1603.9998779296875
           localRotation:
-            - -90.000013660378343
-            - 90
+            - -90.000006830189577
+            - 89.972023545715473
             - 0
           localScale:
             - 100
@@ -21288,6 +22838,16 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
 GameObject1:
   name: "BlockingLvl2area2&3"
@@ -21303,13 +22863,13 @@ GameObject1:
         - -33.049053192138672
         - 479.54080200195312
       localRotation:
-        - 179.99999134857305
-        - 9.0312234776746654e-23
-        - 179.99999499103978
+        - 179.99999134857779
+        - -9.0443084146171092e-23
+        - -179.99999499104388
       localScale:
-        - 0.018224498257041047
-        - 0.018224507570267001
-        - 0.018224498257041186
+        - 0.018224498257040977
+        - 0.018224507570266724
+        - 0.018224498257040977
   Children:
     - name: Cube.201_lvl2_lvl2_lvl2
       tag: Untagged
@@ -27801,9 +29361,9 @@ GameObject1:
             - 976.39801025390625
             - -34280.79296875
           localRotation:
-            - -91.585618920214529
-            - 27.109988195496388
-            - -0.2101240978998308
+            - -91.585597686791658
+            - 27.109993344278674
+            - -0.21011899530256276
           localScale:
             - 55.744495391845703
             - 58.483379364013672
@@ -27852,9 +29412,9 @@ GameObject1:
             - 979.06005859375
             - -28945.328125
           localRotation:
-            - -91.585618920214529
-            - 27.109988195496388
-            - -0.2101240978998308
+            - -91.585597686791658
+            - 27.109993344278674
+            - -0.21011899530256276
           localScale:
             - 55.744495391845703
             - 58.483379364013672
@@ -27903,9 +29463,9 @@ GameObject1:
             - 979.06005859375
             - -28945.328125
           localRotation:
-            - -91.585618920214529
-            - 27.109988195496388
-            - -0.2101240978998308
+            - -91.585597686791658
+            - 27.109993344278674
+            - -0.21011899530256276
           localScale:
             - 55.744495391845703
             - 58.483379364013672
@@ -27954,9 +29514,9 @@ GameObject1:
             - 979.06005859375
             - -30502.9453125
           localRotation:
-            - -91.016842996126016
-            - -68.427202679078547
-            - -0.50870542059655222
+            - -91.016875859711121
+            - -68.427235172772356
+            - -0.50868289308015346
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -28005,9 +29565,9 @@ GameObject1:
             - 979.06005859375
             - -32087.380859375
           localRotation:
-            - -91.016842996126016
-            - -68.427202679078547
-            - -0.50870542059655222
+            - -91.016875859711121
+            - -68.427235172772356
+            - -0.50868289308015346
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -28056,9 +29616,9 @@ GameObject1:
             - 976.39788818359375
             - -33297.30078125
           localRotation:
-            - -91.016842996126016
-            - -68.427202679078547
-            - -0.50870542059655222
+            - -91.016875859711121
+            - -68.427235172772356
+            - -0.50868289308015346
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -28515,9 +30075,9 @@ GameObject1:
             - 748.94708251953125
             - -21148.51171875
           localRotation:
-            - 90.021622967604898
-            - -89.98486719831503
-            - 179.98865646706841
+            - 270.01027260448416
+            - -90
+            - 0
           localScale:
             - 1162.4949951171875
             - 1000.994140625
@@ -28566,9 +30126,9 @@ GameObject1:
             - 110.79864501953125
             - -23130.26953125
           localRotation:
-            - 90.021622967604898
-            - -89.98486719831503
-            - 179.98865646706841
+            - 270.01027260448416
+            - -90
+            - 0
           localScale:
             - 1162.4949951171875
             - 1000.994140625
@@ -29076,9 +30636,9 @@ GameObject1:
             - 1729.630615234375
             - 7724.7666015625
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 2544.22900390625
             - 126.90205383300781
@@ -29127,9 +30687,9 @@ GameObject1:
             - 1729.630615234375
             - 7724.7666015625
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 2544.22900390625
             - 126.90205383300781
@@ -29280,9 +30840,9 @@ GameObject1:
             - 1729.630615234375
             - 1690.4364013671875
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 2001.7862548828125
             - 126.90205383300781
@@ -29331,9 +30891,9 @@ GameObject1:
             - 1729.630615234375
             - 1690.4364013671875
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 2001.7862548828125
             - 126.90205383300781
@@ -29383,7 +30943,7 @@ GameObject1:
             - -962.4779052734375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 494.740478515625
@@ -29484,9 +31044,9 @@ GameObject1:
             - 1729.630615234375
             - -1872.7919921875
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 751.6044921875
             - 126.90205383300781
@@ -29535,9 +31095,9 @@ GameObject1:
             - 1729.630615234375
             - -1872.7919921875
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 751.6044921875
             - 126.90205383300781
@@ -29688,9 +31248,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.008821123877993
-            - 89.915055813322155
-            - -0.0028464142153691108
+            - -90.007749026353181
+            - 89.917009197359604
+            - -0.001765779040844555
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -29739,9 +31299,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.008821123877993
-            - 89.915055813322155
-            - -0.0028464142153691108
+            - -90.007749026353181
+            - 89.917009197359604
+            - -0.001765779040844555
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -29790,9 +31350,9 @@ GameObject1:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 90.001825866111332
-            - -89.917386613380401
-            - -179.99584091134045
+            - 89.999249936942633
+            - -89.925065586008145
+            - -179.99328205800467
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -29841,9 +31401,9 @@ GameObject1:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 90.001825866111332
-            - -89.917386613380401
-            - -179.99584091134045
+            - 89.999249936942633
+            - -89.925065586008145
+            - -179.99328205800467
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -29994,9 +31554,9 @@ GameObject1:
             - 1729.630615234375
             - -15975.3642578125
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 517.2039794921875
             - 126.90205383300781
@@ -30096,9 +31656,9 @@ GameObject1:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -30198,9 +31758,9 @@ GameObject1:
             - 1729.630615234375
             - -19515.22265625
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 765.05303955078125
             - 126.90205383300781
@@ -30249,9 +31809,9 @@ GameObject1:
             - 1729.630615234375
             - -15975.3642578125
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 517.2039794921875
             - 126.90205383300781
@@ -30351,9 +31911,9 @@ GameObject1:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -30453,9 +32013,9 @@ GameObject1:
             - 1729.630615234375
             - -19515.22265625
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 765.05303955078125
             - 126.90205383300781
@@ -30504,9 +32064,9 @@ GameObject1:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -30555,9 +32115,9 @@ GameObject1:
             - 1729.630615234375
             - -17600.087890625
           localRotation:
-            - -89.993745343790536
-            - 89.964338276847386
-            - 0.0062580713042585398
+            - -90.000003415094582
+            - 89.987389724490413
+            - 3.4150945850063712e-06
           localScale:
             - 744.78399658203125
             - 126.90205383300781
@@ -30657,9 +32217,9 @@ GameObject1:
             - 1729.630615234375
             - 10724.0029296875
           localRotation:
-            - 89.999926229961318
-            - 86.78123028260508
-            - 179.99983056957555
+            - 89.999797803295536
+            - 86.781248375983949
+            - 179.99971580868163
           localScale:
             - 247.75401306152344
             - 126.90206146240234
@@ -30708,9 +32268,9 @@ GameObject1:
             - 1729.630615234375
             - 10721.7958984375
           localRotation:
-            - 90.000064780130657
-            - -86.719447928348146
-            - 179.99994546935315
+            - 90.000245443364776
+            - -86.719311406612462
+            - 179.99976822261405
           localScale:
             - 247.75398254394531
             - 126.90205383300781
@@ -30759,9 +32319,9 @@ GameObject1:
             - 1729.630615234375
             - 4564.580078125
           localRotation:
-            - 89.999853020138715
-            - 85.312039357611766
-            - 179.9998547291159
+            - 89.999839831527623
+            - 85.312115775270968
+            - 179.99982615971049
           localScale:
             - 247.75399780273438
             - 126.90204620361328
@@ -30810,9 +32370,9 @@ GameObject1:
             - 1729.630615234375
             - 4562.373046875
           localRotation:
-            - 90.000061619355179
-            - -79.581644405660697
-            - 179.99998639025617
+            - 90.000035980355193
+            - -79.581675134821239
+            - -179.99998282686093
           localScale:
             - 247.75399780273438
             - 126.90206146240234
@@ -30861,9 +32421,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -30912,9 +32472,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -30963,9 +32523,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -31014,9 +32574,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -31065,9 +32625,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -31116,9 +32676,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -31167,9 +32727,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -31218,9 +32778,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -31269,9 +32829,9 @@ GameObject1:
             - 1881.1279296875
             - 6345.53662109375
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -31320,9 +32880,9 @@ GameObject1:
             - 1881.1279296875
             - 9196.97265625
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 803.4195556640625
             - 108.18862915039062
@@ -31371,9 +32931,9 @@ GameObject1:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.004146842020205
-            - 89.865870142110253
-            - -90.004144427181984
+            - -90.008356233238985
+            - 89.870564558075472
+            - -90.008348988724975
           localScale:
             - 128.03897094726562
             - 427.90078735351562
@@ -31422,9 +32982,9 @@ GameObject1:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.004146842020205
-            - 89.865870142110253
-            - -90.004144427181984
+            - -90.008356233238985
+            - 89.870564558075472
+            - -90.008348988724975
           localScale:
             - 318.52142333984375
             - 427.90646362304688
@@ -31473,9 +33033,9 @@ GameObject1:
             - 2228.8046875
             - 7750.44482421875
           localRotation:
-            - -90.004146842020205
-            - 89.865870142110253
-            - -90.004144427181984
+            - -90.008356233238985
+            - 89.870564558075472
+            - -90.008348988724975
           localScale:
             - 126.77712249755859
             - 77.251678466796875
@@ -31524,9 +33084,9 @@ GameObject1:
             - 2824.27685546875
             - 7749.7587890625
           localRotation:
-            - -89.997868033923922
-            - 89.870063890052592
-            - -89.997851130057157
+            - -90.000007244514023
+            - 89.873810279478604
+            - -89.999992755485991
           localScale:
             - 133.52845764160156
             - 1154.979736328125
@@ -31575,9 +33135,9 @@ GameObject1:
             - 3463.08984375
             - 7749.7587890625
           localRotation:
-            - -89.992140719812241
-            - 89.876525512704575
-            - -108.02316939597824
+            - -89.99337304071905
+            - 89.881525945165123
+            - -108.02440573007519
           localScale:
             - 87.500289916992188
             - 177.206298828125
@@ -31626,9 +33186,9 @@ GameObject1:
             - 3175.477294921875
             - 7599.7939453125
           localRotation:
-            - 14.999905725748965
-            - -0.065031385301581715
-            - -114.7572961223276
+            - 14.999900592521064
+            - -0.065033124345322657
+            - -114.75729634841279
           localScale:
             - 40.151153564453125
             - 430.76507568359375
@@ -31728,9 +33288,9 @@ GameObject1:
             - 3086.548583984375
             - 7750.44482421875
           localRotation:
-            - -90.001472252115221
-            - 89.868425411838942
-            - 179.99697217125834
+            - -90.004351448982874
+            - 89.863984518909831
+            - 179.99409297429793
           localScale:
             - 43.940093994140625
             - 77.251510620117188
@@ -31779,9 +33339,9 @@ GameObject1:
             - 2866.346435546875
             - 7750.44482421875
           localRotation:
-            - -89.996530311901154
-            - 89.871828644180212
-            - -179.9988337946744
+            - -89.998838867183778
+            - 89.8756874548599
+            - 179.99883886718379
           localScale:
             - 27.383285522460938
             - 48.142822265625
@@ -31881,8 +33441,8 @@ GameObject1:
             - 2111.20556640625
             - 9563.1494140625
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -31932,8 +33492,8 @@ GameObject1:
             - 2111.20556640625
             - 6504.94482421875
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -31983,8 +33543,8 @@ GameObject1:
             - 2111.20556640625
             - 6504.94482421875
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -32034,8 +33594,8 @@ GameObject1:
             - 2111.20556640625
             - 9563.1494140625
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -32085,8 +33645,8 @@ GameObject1:
             - 2111.20556640625
             - 3253.54736328125
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -32136,8 +33696,8 @@ GameObject1:
             - 2111.20556640625
             - 195.34263610839844
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -32187,8 +33747,8 @@ GameObject1:
             - 2111.20556640625
             - 195.34263610839844
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -32238,8 +33798,8 @@ GameObject1:
             - 2111.20556640625
             - 3253.54736328125
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -32289,8 +33849,8 @@ GameObject1:
             - 2111.20556640625
             - 1750.3154296875
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -32340,8 +33900,8 @@ GameObject1:
             - 2111.20556640625
             - 1750.3154296875
           localRotation:
-            - -89.999996584905318
-            - 89.98021765926535
+            - -90
+            - 89.956325304544904
             - 0
           localScale:
             - 127.28877258300781
@@ -32391,9 +33951,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.000647113991164
-            - 89.921330037739082
-            - 0.0053463782504077923
+            - -89.997823939442398
+            - 89.922692784731495
+            - 0.0081661378823876928
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -32442,9 +34002,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.000647113991164
-            - 89.921330037739082
-            - 0.0053463782504077923
+            - -89.997823939442398
+            - 89.922692784731495
+            - 0.0081661378823876928
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -32493,9 +34053,9 @@ GameObject1:
             - 1972.6943359375
             - -3799.696044921875
           localRotation:
-            - 89.991283437058271
-            - -89.873297650384771
-            - -89.99130275576232
+            - 89.989042660500871
+            - -89.871498447670234
+            - -89.989061979205729
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -32545,7 +34105,7 @@ GameObject1:
             - -2924.91943359375
           localRotation:
             - -90
-            - -0.084292850766518504
+            - -0.084292841333556398
             - 0
           localScale:
             - 274.48114013671875
@@ -32595,9 +34155,9 @@ GameObject1:
             - 1972.6942138671875
             - -3144.035888671875
           localRotation:
-            - -0.2174965132128851
-            - 59.199270098247254
-            - -0.25320555593208444
+            - -0.21749643890351961
+            - 59.199242682022259
+            - -0.25320550353287818
           localScale:
             - 88.9478759765625
             - 202.1011962890625
@@ -32646,9 +34206,9 @@ GameObject1:
             - 1972.6943359375
             - -2994.31640625
           localRotation:
-            - -179.85166695628078
-            - 48.843239797336579
-            - -179.80299500940041
+            - -179.85166695237541
+            - 48.843211014089285
+            - -179.80299502520677
           localScale:
             - 88.947860717773438
             - 202.1011962890625
@@ -32697,9 +34257,9 @@ GameObject1:
             - 2146.18212890625
             - -2985.56982421875
           localRotation:
-            - -179.85166695628078
-            - 48.843239797336579
-            - -179.80299500940041
+            - -179.85166695237541
+            - 48.843211014089285
+            - -179.80299502520677
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -32748,9 +34308,9 @@ GameObject1:
             - 1940.9827880859375
             - -2993.0263671875
           localRotation:
-            - -179.85166695628078
-            - 48.843239797336579
-            - -179.80299500940041
+            - -179.85166695237541
+            - 48.843211014089285
+            - -179.80299502520677
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -32799,9 +34359,9 @@ GameObject1:
             - 1972.6943359375
             - -15064.5859375
           localRotation:
-            - -179.99999499104405
-            - -5.0089557898973758e-06
-            - -179.87034070171907
+            - 179.99999499104368
+            - -5.0089549938959893e-06
+            - -179.87034070171865
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -32850,9 +34410,9 @@ GameObject1:
             - 1972.6943359375
             - -15064.5859375
           localRotation:
-            - -179.99999499104405
-            - -5.0089557898973758e-06
-            - -179.87034070171907
+            - 179.99999499104368
+            - -5.0089549938959893e-06
+            - -179.87034070171865
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -33003,9 +34563,9 @@ GameObject1:
             - 1972.6943359375
             - -13730.3359375
           localRotation:
-            - 179.87275858758187
-            - -44.45971391099701
-            - -179.81834930408669
+            - 179.8727585786973
+            - -44.459714719756967
+            - -179.81834929907373
           localScale:
             - 88.947868347167969
             - 202.10121154785156
@@ -33054,9 +34614,9 @@ GameObject1:
             - 1972.6942138671875
             - -14019.3798828125
           localRotation:
-            - -179.93252273808079
-            - 27.497110704522012
-            - -179.85383894623089
+            - -179.93252274139425
+            - 27.497103225111474
+            - -179.85383895118221
           localScale:
             - 88.947868347167969
             - 202.10118103027344
@@ -33105,9 +34665,9 @@ GameObject1:
             - 2192.90966796875
             - -14125.2353515625
           localRotation:
-            - 0.12577887632754542
-            - -56.174578909964104
-            - -90.151418435570761
+            - 0.1257788909254077
+            - -56.174586564284297
+            - -90.151418449369942
           localScale:
             - 274.48110961914062
             - 57.520450592041016
@@ -33360,9 +34920,9 @@ GameObject1:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - 89.991283437058271
-            - -89.873297650384771
-            - -89.99130275576232
+            - 89.989042660500871
+            - -89.871498447670234
+            - -89.989061979205729
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -33411,9 +34971,9 @@ GameObject1:
             - 2396.811767578125
             - -19521.4140625
           localRotation:
-            - 89.988131488691494
-            - -89.918417340589357
-            - -179.99029495165888
+            - 89.988644140713632
+            - -89.916383851824733
+            - -179.99079394329925
           localScale:
             - 274.48114013671875
             - 57.520450592041016
@@ -33462,9 +35022,9 @@ GameObject1:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - -90.004146842020205
-            - 89.865870142110253
-            - -90.004144427181984
+            - -90.008356233238985
+            - 89.870564558075472
+            - -90.008348988724975
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -33866,13 +35426,13 @@ GameObject3:
         - 341.8614501953125
         - -81.226127624511719
       localRotation:
-        - 64.120999644077386
+        - 64.121003909280915
         - -0
         - 0
       localScale:
         - 1
-        - 0.99999992901044588
-        - 0.99999992901044588
+        - 0.99999994039535522
+        - 0.99999994039535522
     CameraComponent:
       name: CameraComponent
       enabled: true
@@ -33886,4 +35446,36 @@ GameObject3:
     ScriptComponents:
       Script0:
         name: PlayerCamera
+  Children: ~
+GameObject4:
+  name: GroundColider
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.23297119140625
+        - -1.8651835918426514
+        - 530.46539306640625
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 595.27581787109375
+        - 6.8095989227294922
+        - 1199.5281982421875
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~

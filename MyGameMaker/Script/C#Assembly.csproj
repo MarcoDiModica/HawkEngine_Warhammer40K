@@ -103,12 +103,14 @@
     <Compile Include="GrenadeLauncher.cs" />
     <Compile Include="Hook.cs" />
     <Compile Include="HookShot.cs" />
+    <Compile Include="HUD.cs" />
     <Compile Include="HormagauntAnimation.cs" />
     <Compile Include="IEnemyController.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
+    <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="MedicaeStimm.cs" />
     <Compile Include="IInteractable.cs" />
@@ -121,6 +123,8 @@
     <Compile Include="MeshRenderer.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="BaseAbilities.cs" />
+    <Compile Include="OptionMenu.cs" />
+    <Compile Include="PauseMenu.cs" />
     <Compile Include="ParticleFX.cs" />
     <Compile Include="PickUpManager.cs" />
     <Compile Include="Physics.cs" />
@@ -149,11 +153,13 @@
     <Compile Include="Test1.cs" />
     <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />
+    <Compile Include="Tweening.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="UICanvas.cs" />
     <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
     <Compile Include="UITransform.cs" />
+    <Compile Include="WinScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,6 +7,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <memory>
 #include <SDL2/SDL_gamecontroller.h>
+#include <MyGameEngine/Tweening.h>
 
 class GameObject;
 
@@ -165,6 +166,32 @@ namespace EngineBinds {
 	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
 
+	//Tweening
+    void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);
+
+    //cambia los de UI a que sean DOMoveUI, es mas intuitivo para el usuario !!!!!IMPORTANTE!!!!!
+    void DOMoveUI(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);
+	void DOMoveX(MonoObject* transformRef, float targetX, float duration, Modes mode);
+	void DOMoveXUI(MonoObject* uiTransformRef, float targetX, float duration, Modes mode);
+	void DOMoveY(MonoObject* transformRef, float targetY, float duration, Modes mode);
+	void DOMoveYUI(MonoObject* uiTransformRef, float targetY, float duration, Modes mode);
+	void DOMoveZ(MonoObject* transformRef, float targetZ, float duration, Modes mode);
+	void DOMoveZUI(MonoObject* uiTransformRef, float targetZ, float duration, Modes mode);
+	void DORotate(MonoObject* transformRef, glm::vec3* targetRotation, float duration, Modes mode);
+	void DORotateX(MonoObject* transformRef, float targetX, float duration, Modes mode);
+	void DORotateY(MonoObject* transformRef, float targetY, float duration, Modes mode);
+	void DORotateZ(MonoObject* transformRef, float targetZ, float duration, Modes mode);
+	void DOScale(MonoObject* transformRef, glm::vec3* targetScale, float duration, Modes mode);
+	void DOScaleUI(MonoObject* uiTransformRef, glm::vec3* targetScale, float duration, Modes mode);
+	void DOScaleX(MonoObject* transformRef, float targetX, float duration, Modes mode);
+	void DOScaleY(MonoObject* transformRef, float targetY, float duration, Modes mode);
+	void DOScaleZ(MonoObject* transformRef, float targetZ, float duration, Modes mode);
+	void DOScaleXUI(MonoObject* uiTransformRef, float targetX, float duration, Modes mode);
+	void DOScaleYUI(MonoObject* uiTransformRef, float targetY, float duration, Modes mode);
+	void DOScaleZUI(MonoObject* uiTransformRef, float targetZ, float duration, Modes mode);
+    void DOColor(glm::vec4* color, const glm::vec4 startColor, const glm::vec4 targetColor, float duration, Modes mode);
+	void DOVec3(glm::vec3* vec, const glm::vec3 start, const glm::vec3 target, float duration, Modes mode);
+    void DOValue(float* value, float start, float target, float duration, Modes mode);
 
     //SceneManagement
     bool LoadScene(MonoString* sceneName);

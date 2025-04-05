@@ -65,6 +65,17 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+
+        //upon pressing B take 10 damage
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            playerData.TakeDamage(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            playerData.AddHealth(10);
+        }
         if (Input.GetKeyDown(KeyCode.Z) )
         {
             if (playerData.GodMode == true)

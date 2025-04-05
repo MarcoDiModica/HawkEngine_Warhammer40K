@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
                 UpdateRotation(moveDirection, deltaTime);
             }
         }
+
     }
 
     override public void OnCollisionEnter(GameObject other)

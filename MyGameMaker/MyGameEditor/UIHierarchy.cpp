@@ -210,29 +210,53 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 	bool open = ImGui::TreeNodeEx(obj.GetName().c_str(), nodeFlags);
 
+	static struct {
+		bool mouseDownOnThisItem = false;
+		GameObject* item = nullptr;
+		bool wasDragged = false;
+	} clickState;
+
 	if (ImGui::IsItemClicked(0) && !ImGui::IsItemToggledOpen()) {
-		if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
-			if (obj.isSelected) {
-				Application->input->RemoveFromSelection(&obj);
-			}
-			else {
-				Application->input->AddToSelection(&obj);
-			}
-		}
-		else {
-			Application->input->ClearSelection();
-			Application->input->AddToSelection(&obj);
-		}
+		clickState.mouseDownOnThisItem = true;
+		clickState.item = &obj;
+		clickState.wasDragged = false;
 	}
 
 	ImGui::PopStyleColor(4);
 
 	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+		if (clickState.item == &obj) {
+			clickState.wasDragged = true;
+		}
+
 		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
 		int id = obj.GetId();
 		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), id);
 		draggedObject = &obj;
 		ImGui::EndDragDropSource();
+	}
+
+	if (clickState.mouseDownOnThisItem && ImGui::IsMouseReleased(0)) {
+		if (!clickState.wasDragged && clickState.item == &obj) {
+			if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
+				if (obj.isSelected) {
+					Application->input->RemoveFromSelection(&obj);
+				}
+				else {
+					Application->input->AddToSelection(&obj);
+				}
+			}
+			else {
+				Application->input->ClearSelection();
+				Application->input->AddToSelection(&obj);
+			}
+		}
+
+		if (clickState.item == &obj) {
+			clickState.mouseDownOnThisItem = false;
+			clickState.item = nullptr;
+			clickState.wasDragged = false;
+		}
 	}
 
 	if (draggedObject) {

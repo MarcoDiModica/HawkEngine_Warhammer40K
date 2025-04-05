@@ -69,6 +69,8 @@ public:
 	void AddScriptToProject(const std::string& scriptName);
 	void RemoveScriptFromProject(const std::string& scriptName);
 
+	MonoObject* CreateGameObjectReference(GameObject* nativeGO);
+
 	std::vector<std::string> scriptNames;
 private:
 	MonoManager();

@@ -20,6 +20,8 @@ public:
 	void RenderSceneHierarchy(Scene* scene);
 	bool DrawSceneObject(GameObject& obj);
 
+	bool startingDrag = false;
+
 	bool Draw();
 
 	GameObject* draggedObject = nullptr;

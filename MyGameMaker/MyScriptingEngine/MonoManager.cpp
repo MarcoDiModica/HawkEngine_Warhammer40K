@@ -431,3 +431,61 @@ void MonoManager::RemoveScriptFromProject(const std::string& scriptName)
 
 	ForceRecompileScripts();
 }
+
+MonoObject* MonoManager::CreateGameObjectReference(GameObject* nativeGO) {
+	if (!nativeGO) {
+		return nullptr;
+	}
+
+	MonoClass* goClass = mono_class_from_name(image, "HawkEngine", "GameObject");
+	if (!goClass) {
+		LOG(LogType::LOG_ERROR, "Failed to find GameObject class in assembly");
+		return nullptr;
+	}
+
+	void* args[2];
+	MonoString* nameStr = mono_string_new(domain, nativeGO->GetName().c_str());
+	args[0] = nameStr;
+
+	uintptr_t ptrValue = reinterpret_cast<uintptr_t>(nativeGO);
+	args[1] = &ptrValue;
+
+	MonoMethod* ctor = nullptr;
+	void* iter = nullptr;
+	while ((ctor = mono_class_get_methods(goClass, &iter))) {
+		if (strcmp(mono_method_get_name(ctor), ".ctor") == 0) {
+			MonoMethodSignature* sig = mono_method_signature(ctor);
+			if (mono_signature_get_param_count(sig) == 2) {
+				break;
+			}
+		}
+	}
+
+	if (!ctor) {
+		LOG(LogType::LOG_ERROR, "Failed to find GameObject constructor with string and UIntPtr parameters");
+		return nullptr;
+	}
+
+	MonoObject* exception = nullptr;
+	MonoObject* managedGO = mono_object_new(domain, goClass);
+	mono_runtime_invoke(ctor, managedGO, args, &exception);
+
+	if (exception) {
+		char* exMsg = mono_string_to_utf8(mono_object_to_string(exception, nullptr));
+		LOG(LogType::LOG_ERROR, "Exception creating GameObject reference: %s", exMsg);
+		mono_free(exMsg);
+		return nullptr;
+	}
+
+	MonoClassField* cppInstanceField = mono_class_get_field_from_name(goClass, "CplusplusInstance");
+	if (cppInstanceField) {
+		uintptr_t storedPtr = 0;
+		mono_field_get_value(managedGO, cppInstanceField, &storedPtr);
+
+		if (storedPtr != ptrValue) {
+			LOG(LogType::LOG_WARNING, "GameObject reference might not be properly initialized!");
+		}
+	}
+
+	return managedGO;
+}

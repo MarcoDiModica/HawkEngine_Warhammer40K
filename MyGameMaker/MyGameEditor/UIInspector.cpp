@@ -1351,6 +1351,21 @@ private:
 			case MONO_TYPE_R8:
 				DrawDoubleField(monoScript, field, fieldName);
 				break;
+			case MONO_TYPE_CLASS:
+			{
+				MonoType* fieldType = mono_field_get_type(field);
+				MonoClass* fieldClass = mono_class_from_mono_type(fieldType);
+				const char* className = mono_class_get_name(fieldClass);
+				const char* nameSpace = mono_class_get_namespace(fieldClass);
+
+				if (strcmp(className, "GameObject") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
+					DrawGameObjectField(monoScript, field, fieldName);
+				}
+				else {
+					ImGui::TextDisabled("(Unsupported object type: %s.%s)", nameSpace, className);
+				}
+			}
+			break;
 			default:
 				ImGui::TextDisabled("(Unsupported type)");
 				break;
@@ -1358,6 +1373,87 @@ private:
 		}
 		catch (...) {
 			ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Error reading field");
+		}
+	}
+
+	static void DrawGameObjectField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		MonoObject* goFieldValue = nullptr;
+		mono_field_get_value(monoScript, field, &goFieldValue);
+
+		std::string goName = "None";
+		GameObject* currentGO = nullptr;
+
+		if (goFieldValue != nullptr) {
+			MonoClass* goClass = mono_object_get_class(goFieldValue);
+			MonoClassField* cppInstanceField = mono_class_get_field_from_name(goClass, "CplusplusInstance");
+
+			if (cppInstanceField) {
+				uintptr_t cppInstance = 0;
+				mono_field_get_value(goFieldValue, cppInstanceField, &cppInstance);
+
+				if (cppInstance != 0) {
+					currentGO = reinterpret_cast<GameObject*>(cppInstance);
+					if (currentGO) {
+						goName = currentGO->GetName();
+					}
+				}
+			}
+
+			MonoProperty* nameProp = mono_class_get_property_from_name(goClass, "name");
+			if (nameProp) {
+				MonoMethod* getMethod = mono_property_get_get_method(nameProp);
+				if (getMethod) {
+					MonoObject* exception = nullptr;
+					MonoString* nameString = (MonoString*)mono_runtime_invoke(getMethod, goFieldValue, nullptr, &exception);
+
+					if (!exception && nameString) {
+						char* name = mono_string_to_utf8(nameString);
+						if (name) {
+							goName = name;
+							mono_free(name);
+						}
+					}
+				}
+			}
+		}
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.3f, 0.4f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.4f, 0.5f, 1.0f));
+		ImGui::Button(goName.c_str(), ImVec2(-1, 0));
+		ImGui::PopStyleColor(2);
+
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+				GameObject* draggedGO = *(GameObject**)payload->Data;
+				if (draggedGO) {
+					MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(draggedGO);
+
+					if (managedGO) {
+						mono_field_set_value(monoScript, field, managedGO);
+
+						LOG(LogType::LOG_INFO, "Set GameObject reference: %s -> %s",
+							fieldName, draggedGO->GetName().c_str());
+					}
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Clear Reference")) {
+				void* nullRef = nullptr;
+				mono_field_set_value(monoScript, field, nullRef);
+
+				LOG(LogType::LOG_INFO, "Cleared GameObject reference: %s", fieldName);
+			}
+			ImGui::EndPopup();
+		}
+
+		if (ImGui::IsItemHovered() && currentGO) {
+			ImGui::BeginTooltip();
+			ImGui::Text("GameObject: %s", goName.c_str());
+			ImGui::Text("ID: %d", currentGO->GetId());
+			ImGui::EndTooltip();
 		}
 	}
 

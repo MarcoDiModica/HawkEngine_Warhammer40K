@@ -193,47 +193,47 @@ bool UIMainMenuBar::Draw()
 		ImGui::Text("GAME FPS: %.1f", game_fps);
 		ImGui::Text("GUI FPS: %.1f", gui_fps);
 
+		if (ImGui::BeginPopupModal("Confirm Script Removal", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::Text("¿Removing script with name '%s'?", scriptToRemove.c_str());
+			ImGui::Separator();
+
+			if (ImGui::Button("Yeah", ImVec2(120, 0)))
+			{
+				MonoManager::GetInstance().RemoveScriptFromProject(scriptToRemove);
+				scriptToRemove = "";
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Nu huh", ImVec2(120, 0)))
+			{
+				scriptToRemove = "";
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
+
+		if (ImGui::BeginPopupModal("Create New Script", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			static char scriptName[128] = "";
+			ImGui::InputText("Script Name", scriptName, IM_ARRAYSIZE(scriptName));
+			if (ImGui::Button("Create"))
+			{
+				MonoManager::GetInstance().CreateNewScript(scriptName);
+				memset(scriptName, 0, sizeof(scriptName));
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Cancel"))
+			{
+				memset(scriptName, 0, sizeof(scriptName));
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
+
 		ImGui::EndMainMenuBar();
-	}
-
-	if (ImGui::BeginPopupModal("Confirm Script Removal", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-	{
-		ImGui::Text("¿Removing script with name '%s'?", scriptToRemove.c_str());
-		ImGui::Separator();
-
-		if (ImGui::Button("Yeah", ImVec2(120, 0)))
-		{
-			MonoManager::GetInstance().RemoveScriptFromProject(scriptToRemove);
-			scriptToRemove = "";
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Nu huh", ImVec2(120, 0)))
-		{
-			scriptToRemove = "";
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::EndPopup();
-	}
-
-	if (ImGui::BeginPopup("Create New Script"))
-	{
-		static char scriptName[128] = "";
-		ImGui::InputText("Script Name", scriptName, IM_ARRAYSIZE(scriptName));
-		if (ImGui::Button("Create"))
-		{
-			MonoManager::GetInstance().CreateNewScript(scriptName);
-			memset(scriptName, 0, sizeof(scriptName));
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::SameLine();
-		if (ImGui::Button("Cancel"))
-		{
-			memset(scriptName, 0, sizeof(scriptName));
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::EndPopup();
-	}
+	}	
 
 	return true;
 }

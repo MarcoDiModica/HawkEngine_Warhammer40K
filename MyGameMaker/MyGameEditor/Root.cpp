@@ -379,12 +379,12 @@ bool Root::Start()
 
 	////CreateGameplayUI();
 
-	//////For rendering Interaction System text, remove the canvas if there is already one
+	//For rendering Interaction System text, remove the canvas if there is already one
 	//auto canvas = CreateGameObject("Canvas");
 	//canvas->AddComponent<UICanvasComponent>();
 	//canvas->AddComponent<UITransformComponent>();
 	//canvas->AddComponent<SoundComponent>();
-
+	//
 	//auto interactText = CreateGameObject("InteractText");
 	//Application->root->ParentGameObject(*interactText, *canvas);
 	//interactText->AddComponent<UIImageComponent>();
@@ -392,8 +392,8 @@ bool Root::Start()
 	//interactText->AddComponent<UIButtonComponent>();
 	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
 	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
-	//
-	//
+	////
+	////
 	//auto areaText = CreateGameObject("dialogueText");
 	//Application->root->ParentGameObject(*areaText, *canvas);
 	//areaText->AddComponent<UIImageComponent>();
@@ -474,6 +474,8 @@ bool Root::Start()
 	//boltgunPickUp->AddComponent<ScriptComponent>()->LoadScript("BoltgunPickUp");
 	//boltgunPickUp->SetTag("Weapon");
 
+
+
 	//CreateMainMenuUI();
 
 
@@ -492,11 +494,25 @@ bool Root::Start()
 
 bool hasAddedColliders = false;	
 
+void AddInteraction() {
+	
+	const auto & gameObjects = SceneManagement->GetActiveScene()->children();
+
+	for (const auto& gameObject : gameObjects) {
+		if (gameObject->GetName() == "ISE" || gameObject->GetName() == "ISE_1" || gameObject->GetName() == "ISE_2") {
+			gameObject->AddComponent<ScriptComponent>()->LoadScript("Item");
+			gameObject->SetTag("Interactable");
+		}
+	}
+}
+
 bool Root::Update(double dt)
 {
 	if (!hasAddedColliders) {
 		hasAddedColliders = true;
+		//AddInteraction();
 	}
+
 
 	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

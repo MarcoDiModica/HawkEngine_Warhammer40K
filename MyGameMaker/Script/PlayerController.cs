@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     public override void Start()
     {
         gameObject.tag = "Player";
+        bloodSplashEffect.ApplyPreset(19);
     }
 
     public override void Update(float deltaTime)
@@ -346,10 +347,19 @@ public class PlayerController : MonoBehaviour
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
-                playerData.TakeDamage(10);
+                sound.LoadAudio(HitAudio);
+                sound.Play(true);
+
+                if (bloodSplashEffect != null)
+                {
+                    bloodSplashEffect.EmitBurst(100);
+                }
+
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
+                    sound.LoadAudio(DeathAudio);
+                    sound.Play(true);
                 }
                 else
                 {
@@ -368,12 +378,11 @@ public class PlayerController : MonoBehaviour
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
-                playerData.TakeDamage(10);
+                //playerData.TakeDamage(10);
 
-                sound?.LoadAudio(HitAudio);
-                sound?.Play(true);
+                sound.LoadAudio(HitAudio);
+                sound.Play(true);
      
-                // Simply emit the blood splash particles
                 if (bloodSplashEffect != null)
                 {
                     bloodSplashEffect.EmitBurst(100);
@@ -382,7 +391,7 @@ public class PlayerController : MonoBehaviour
                 if(playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
-                    sound?.LoadAudio(DeathAudio);
+                    sound.LoadAudio(DeathAudio);
                 }
                 else
                 {
@@ -395,34 +404,5 @@ public class PlayerController : MonoBehaviour
             }
         }
         
-        if (other.tag == "Enemy")
-        {
-            if (!playerDash.isInvulnerable && !playerData.GodMode)
-            {
-                playerData.TakeDamage(10);
-                sound?.LoadAudio(HitAudio);
-                sound?.Play(true);
-                
-                if (bloodSplashEffect != null)
-                {
-                    bloodSplashEffect.EmitBurst(100);
-                }
-                
-                if (playerData.GetHealth() <= 0)
-                {
-                    playerAnimations.SetDeathAnimation();
-                    sound?.LoadAudio(DeathAudio);
-                    sound?.Play(true);
-                }
-                else
-                {
-                    playerAnimations.SetHitIdleAnimation();
-                }
-            }
-            else if (playerDash.isInvulnerable)
-            {
-                playerShooting.CounterAttack(other);
-            }
-        }
     }
 }

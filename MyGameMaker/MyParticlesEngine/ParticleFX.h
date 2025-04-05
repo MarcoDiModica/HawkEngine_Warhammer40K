@@ -313,7 +313,11 @@ protected:
 				node["material"]["billboardAxis"].push_back(axis.y);
 				node["material"]["billboardAxis"].push_back(axis.z);
 			}
+			node["particleType"] = static_cast<int>(GetParticleType());
+
 		}
+
+
 
 		return node;
 	}
@@ -469,7 +473,9 @@ protected:
 					);
 					material->SetBillboardAxis(axis);
 				}
+
 			}
+			ApplyPreset(node["material"]["particleType"].as<int>());
 
 			return true;
 		}

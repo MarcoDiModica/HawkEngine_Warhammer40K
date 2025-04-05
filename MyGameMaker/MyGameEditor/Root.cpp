@@ -42,16 +42,15 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-	Application->root->CreateScene("DefaultScene");
-	Application->root->SetActiveScene("DefaultScene");
+	//Application->root->CreateScene("DefaultScene");
+	//Application->root->SetActiveScene("DefaultScene");
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
 
 	//CreateMainMenuUI();
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.scene");
-
+	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
     return true;
 }
@@ -64,6 +63,17 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
+	//Audio Trigger
+	/*auto audioTrigger = CreateGameObject("AudioTrigger");
+	audioTrigger->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
+	audioTrigger->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	audioTrigger->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	audioTrigger->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1, 1, 1));
+	audioTrigger->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 0, 0));
+	audioTrigger->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	audioTrigger->AddComponent<SoundComponent>();
+	audioTrigger->AddComponent<ScriptComponent>()->LoadScript("SoundTrigger");*/
+
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/Level1.fbx");
 	//auto scenezone1 = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");
 	//	
@@ -72,7 +82,7 @@ bool Root::Start()
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
-	auto player = CreateGameObject("Player");
+	/*auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -107,7 +117,7 @@ bool Root::Start()
 	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");*/
 
 	/*
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
@@ -169,38 +179,38 @@ bool Root::Start()
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	auto objMainCamera = CreateCameraObject("MainCamera");
-	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
-	auto camera = objMainCamera->AddComponent<CameraComponent>();
-	camera->priority = 1;
-	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-	mainCamera = objMainCamera;
-	UpdateCameraPriority();
+	//auto objMainCamera = CreateCameraObject("MainCamera");
+	//objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+	//objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+	//auto camera = objMainCamera->AddComponent<CameraComponent>();
+	//camera->priority = 1;
+	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+	//mainCamera = objMainCamera;
+	//UpdateCameraPriority();
 
 	//
 	
 	//// Test PowerUps
 	//
-	auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
-	powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
-	powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
-	powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	std::shared_ptr<Image> MedicaeStimmBaseColor = std::make_shared<Image>();
-	std::shared_ptr<Image> MedicaeStimmRoughness = std::make_shared<Image>();
-	std::shared_ptr<Image> MedicaeStimmNormal = std::make_shared<Image>();
-	std::shared_ptr<Image> MedicaeStimmMetallic = std::make_shared<Image>();
-	MedicaeStimmBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
-	MedicaeStimmRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
-	MedicaeStimmNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
-	MedicaeStimmMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
-	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(MedicaeStimmBaseColor);
-	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(MedicaeStimmRoughness);
-	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(MedicaeStimmNormal);
-	powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MedicaeStimmMetallic);
-	powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
-	powerUp->SetTag("PowerUp");
+	//auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
+	//powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
+	//powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	//std::shared_ptr<Image> MedicaeStimmBaseColor = std::make_shared<Image>();
+	//std::shared_ptr<Image> MedicaeStimmRoughness = std::make_shared<Image>();
+	//std::shared_ptr<Image> MedicaeStimmNormal = std::make_shared<Image>();
+	//std::shared_ptr<Image> MedicaeStimmMetallic = std::make_shared<Image>();
+	//MedicaeStimmBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	//MedicaeStimmRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	//MedicaeStimmNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	//MedicaeStimmMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	//powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(MedicaeStimmBaseColor);
+	//powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(MedicaeStimmRoughness);
+	//powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(MedicaeStimmNormal);
+	//powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MedicaeStimmMetallic);
+	//powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
+	//powerUp->SetTag("PowerUp");
 
 	//auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
 	//powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
@@ -346,7 +356,7 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
+	/*auto hormagaunt = CreateGameObject("Hormagaunt");
 	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
 	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
@@ -357,7 +367,7 @@ bool Root::Start()
 	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	hormagaunt->SetTag("Enemy");
+	hormagaunt->SetTag("Enemy");*/
 
 	//Mawloc
 	//auto mawloc = CreateGameObject("Mawloc");
@@ -370,10 +380,10 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	auto floor = CreateCube("Floor");
+	/*auto floor = CreateCube("Floor");
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);*/
 
 
 	//////For rendering Interaction System text, remove the canvas if there is already one
@@ -407,14 +417,14 @@ bool Root::Start()
 
 	//CreateLocationBot();
 	//CreateLocationSM();
-	CreateWinUI();
-	CreateLoseUI();
-	CreateGameplayUI();
-	// 
-	// 
-	CreateMainMenuUI();
-	CreateOptionsMenuUI();
-	CreatePauseMenuUI();
+	//CreateWinUI();
+	//CreateLoseUI();
+	//CreateGameplayUI();
+	//// 
+	//// 
+	//CreateMainMenuUI();
+	//CreateOptionsMenuUI();
+	//CreatePauseMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
@@ -513,7 +523,7 @@ bool Root::Update(double dt)
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
 	//}
 
-	Tweening::Update(dt);
+	//Tweening::Update(dt);
 
 	return true;
 }

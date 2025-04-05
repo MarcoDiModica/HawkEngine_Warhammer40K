@@ -548,7 +548,7 @@ private:
 			ImGui::Text("Field of View");
 			ImGui::SameLine(labelWidth);
 			ImGui::PushItemWidth(-1);
-			if (ImGui::SliderFloat("##FOV", &fovDeg, 1.0f, 179.0f, "%.1f°")) {
+			if (ImGui::SliderFloat("##FOV", &fovDeg, 1.0f, 179.0f, "%.1f deg")) {
 				camera->SetFOV(glm::radians(fovDeg));
 			}
 			ImGui::PopItemWidth();
@@ -721,8 +721,11 @@ private:
     #pragma endregion
 
     #pragma region Light
-    static void DrawLightComponent(LightComponent* light) {
-        if (!light) return;
+	static void DrawLightComponent(LightComponent* light) {
+		if (!light) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Light")) return;
 
 		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
@@ -731,61 +734,122 @@ private:
 			ImGui::EndPopup();
 		}
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Light")) return;
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
-        LightType lightType = light->GetLightType();
-        vec3 diffuse = light->GetDiffuse();
-        vec3 specular = light->GetSpecular();
-        vec3 ambient = light->GetAmbient();
-        float intensity = light->GetIntensity();
+		ImGui::BeginGroup();
 
-        if (ImGui::Combo("Type", (int*)&lightType, "Directional\0Point\0")) {
-            light->SetLightType(lightType);
-        }
+		LightType lightType = light->GetLightType();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Light Type");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::Combo("##Type", (int*)&lightType, "Directional\0Point\0")) {
+			light->SetLightType(lightType);
+		}
+		ImGui::PopItemWidth();
 
-        if (ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 100.0f)) {
-            light->SetIntensity(intensity);
-        }
+		float intensity = light->GetIntensity();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Intensity");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Intensity", &intensity, 0.1f, 0.0f, 100.0f)) {
+			light->SetIntensity(intensity);
+		}
+		ImGui::PopItemWidth();
 
-        if (lightType == LightType::POINT) {
-            DrawPointLightProperties(light, diffuse, specular, ambient);
-        }
-    }
+		ImGui::EndGroup();
 
-    static void DrawPointLightProperties(LightComponent* light, vec3& diffuse, vec3& specular, vec3& ambient) {
-        float radius = light->GetRadius();
-        float constant = light->GetConstant();
-        float linear = light->GetLinear();
-        float quadratic = light->GetQuadratic();
+		if (lightType == LightType::POINT) {
+			ImGui::Separator();
+			ImGui::Text("Point Light Properties");
+			ImGui::Spacing();
 
-        float diffuseFloat[3] = { static_cast<float>(diffuse.x), static_cast<float>(diffuse.y), static_cast<float>(diffuse.z) };
-        float specularFloat[3] = { static_cast<float>(specular.x), static_cast<float>(specular.y), static_cast<float>(specular.z) };
-        float ambientFloat[3] = { static_cast<float>(ambient.x), static_cast<float>(ambient.y), static_cast<float>(ambient.z) };
+			ImGui::BeginGroup();
 
-        if (ImGui::DragFloat("Range", &radius, 0.1f, 0.0f, 1000.0f)) {
-            light->SetRadius(radius);
-        }
-        if (ImGui::DragFloat("Constant", &constant, 0.1f, 0.0f, 1000.0f)) {
-            light->SetConstant(constant);
-        }
-        if (ImGui::DragFloat("Linear", &linear, 0.1f, 0.0f, 1000.0f)) {
-            light->SetLinear(linear);
-        }
-        if (ImGui::DragFloat("Quadratic", &quadratic, 0.1f, 0.0f, 1000.0f)) {
-            light->SetQuadratic(quadratic);
-        }
+			vec3 diffuse = light->GetDiffuse();
+			vec3 specular = light->GetSpecular();
+			vec3 ambient = light->GetAmbient();
+			float radius = light->GetRadius();
+			float constant = light->GetConstant();
+			float linear = light->GetLinear();
+			float quadratic = light->GetQuadratic();
 
-        if (ImGui::ColorEdit3("Ambient", ambientFloat)) {
-            light->SetAmbient(vec3(ambientFloat[0], ambientFloat[1], ambientFloat[2]));
-        }
-        if (ImGui::ColorEdit3("Diffuse", diffuseFloat)) {
-            light->SetDiffuse(vec3(diffuseFloat[0], diffuseFloat[1], diffuseFloat[2]));
-        }
-        if (ImGui::ColorEdit3("Specular", specularFloat)) {
-            light->SetSpecular(vec3(specularFloat[0], specularFloat[1], specularFloat[2]));
-        }
-    }
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Range");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Range", &radius, 0.1f, 0.0f, 1000.0f)) {
+				light->SetRadius(radius);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Constant");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Constant", &constant, 0.01f, 0.0f, 10.0f)) {
+				light->SetConstant(constant);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Linear");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Linear", &linear, 0.01f, 0.0f, 10.0f)) {
+				light->SetLinear(linear);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Quadratic");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Quadratic", &quadratic, 0.01f, 0.0f, 10.0f)) {
+				light->SetQuadratic(quadratic);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::Separator();
+			ImGui::Text("Colors");
+			ImGui::Spacing();
+
+			float ambientFloat[3] = { static_cast<float>(ambient.x), static_cast<float>(ambient.y), static_cast<float>(ambient.z) };
+			float diffuseFloat[3] = { static_cast<float>(diffuse.x), static_cast<float>(diffuse.y), static_cast<float>(diffuse.z) };
+			float specularFloat[3] = { static_cast<float>(specular.x), static_cast<float>(specular.y), static_cast<float>(specular.z) };
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Ambient");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##Ambient", ambientFloat)) {
+				light->SetAmbient(vec3(ambientFloat[0], ambientFloat[1], ambientFloat[2]));
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Diffuse");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##Diffuse", diffuseFloat)) {
+				light->SetDiffuse(vec3(diffuseFloat[0], diffuseFloat[1], diffuseFloat[2]));
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Specular");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##Specular", specularFloat)) {
+				light->SetSpecular(vec3(specularFloat[0], specularFloat[1], specularFloat[2]));
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::EndGroup();
+		}
+	}
     #pragma endregion
 
     #pragma region Sound
@@ -918,10 +982,12 @@ private:
     #pragma endregion 
 
     #pragma region SkeletalAnimation
-    static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal) 
-    {
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Animation")) return;
+	static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal)
+	{
+		if (!skeletal) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Animation")) return;
 
 		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
@@ -930,126 +996,112 @@ private:
 			ImGui::EndPopup();
 		}
 
-		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetName().c_str());
-		ImGui::Text("Time: %.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
-        
-        float playSpeed = skeletal->GetAnimator()->GetPlaySpeed();
-        ImGui::DragFloat("Speed", &playSpeed, 0.1f, -10.0f, 10.0f);
-        skeletal->GetAnimator()->SetPlaySpeed(playSpeed);
-		
-        bool isPlaying = skeletal->GetAnimationPlayState();
-        ImGui::Checkbox("IsPlaying", &isPlaying);
-		skeletal->SetAnimationPlayState(isPlaying);
-		
-        float time = skeletal->GetAnimator()->GetCurrentMTime();
-        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-        ImGui::SliderFloat("Timeline", &time, 0, skeletal->GetAnimator()->GetCurrentAnimation()->GetDuration());
-        ImGui::PopItemFlag();
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
-		ImGui::Text("Number of animations: %d", skeletal->GetAnimations().size());
+		ImGui::BeginGroup();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Current Animation");
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%s", skeletal->GetAnimation()->GetName().c_str());
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Time");
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
+
+		float playSpeed = skeletal->GetAnimator()->GetPlaySpeed();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Speed");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Speed", &playSpeed, 0.1f, -10.0f, 10.0f)) {
+			skeletal->GetAnimator()->SetPlaySpeed(playSpeed);
+		}
+		ImGui::PopItemWidth();
+
+		bool isPlaying = skeletal->GetAnimationPlayState();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Playing");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsPlaying", &isPlaying)) {
+			skeletal->SetAnimationPlayState(isPlaying);
+		}
+
+		float time = skeletal->GetAnimator()->GetCurrentMTime();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Timeline");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+		ImGui::SliderFloat("##Timeline", &time, 0, skeletal->GetAnimator()->GetCurrentAnimation()->GetDuration());
+		ImGui::PopItemFlag();
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+
+		ImGui::Separator();
+		ImGui::Text("Animation Selection");
+		ImGui::Spacing();
+
+		ImGui::BeginGroup();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Total Animations");
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%d", skeletal->GetAnimations().size());
+
 		int animationIndex = skeletal->GetAnimationIndex();
-        ImGui::InputInt("Animation Index", &animationIndex, 1, 1, ImGuiInputTextFlags_CharsDecimal);
-        if (animationIndex < 0) animationIndex = 0;
-        if (animationIndex >= skeletal->GetAnimations().size()) animationIndex = skeletal->GetAnimations().size()-1;
-        if (animationIndex != skeletal->GetAnimationIndex()) 
-        {
-			skeletal->SetAnimationIndex(animationIndex);
-        }
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Animation Index");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::InputInt("##AnimationIndex", &animationIndex, 1, 1, ImGuiInputTextFlags_CharsDecimal)) {
+			if (animationIndex < 0) animationIndex = 0;
+			if (animationIndex >= skeletal->GetAnimations().size()) animationIndex = skeletal->GetAnimations().size() - 1;
+			if (animationIndex != skeletal->GetAnimationIndex()) {
+				skeletal->SetAnimationIndex(animationIndex);
+			}
+		}
+		ImGui::PopItemWidth();
 
-        if (ImGui::Button("ChangeAnimation")) 
-        {
-            skeletal->SetAnimation(skeletal->GetAnimations().at(animationIndex).get());
+		ImGui::SetCursorPosX(labelWidth);
+		if (ImGui::Button("Change Animation", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			skeletal->SetAnimation(skeletal->GetAnimations().at(animationIndex).get());
 			skeletal->GetAnimator()->PlayAnimation(skeletal->GetAnimation());
-        }
+		}
 
-		ImGui::DragFloat("Blending Value", &skeletal->blendFactor, 0.01f, 0.0, 1.0f);
-		ImGui::Checkbox("Is Blending", &skeletal->isBlending);
+		ImGui::EndGroup();
 
-    }
+		ImGui::Separator();
+		ImGui::Text("Blending Options");
+		ImGui::Spacing();
+
+		ImGui::BeginGroup();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Blend Factor");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		ImGui::DragFloat("##BlendFactor", &skeletal->blendFactor, 0.01f, 0.0f, 1.0f);
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Enable Blending");
+		ImGui::SameLine(labelWidth);
+		ImGui::Checkbox("##IsBlending", &skeletal->isBlending);
+
+		ImGui::EndGroup();
+	}
     #pragma endregion 
 
-	#pragma region CapsuleCollider
-    static void DrawCapsuleColliderComponent(CapsuleColliderComponent* collider) {
-        if (!collider) return;
-
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("CapsuleCollider")) return;
-
-		if (ImGui::BeginPopupContextItem()) {
-			if (ImGui::MenuItem("Remove Component")) {
-				collider->GetOwner()->RemoveComponent<CapsuleColliderComponent>();
-			}
-			ImGui::EndPopup();
-		}
-
-        DrawCapsuleColliderProperties(collider);
-    }
-
-    static void DrawCapsuleColliderProperties(CapsuleColliderComponent* collider) {
-		glm::vec3 size = collider->GetSize();
-		glm::vec3 offset = collider->GetOffset();
-		float sizeArray[2] = { size.x, size.y };
-
-		bool isTrigger = collider->IsTrigger();
-		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
-			collider->SetTrigger(isTrigger);
-		}
-
-		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
-			collider->SetOffset(offset);
-		}
-
-		if (ImGui::DragFloat2("Collider Size (X, Y)", sizeArray, 0.1f, 0.1f, 100.0f)) {
-			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], size.z));
-		}
-
-    }
-#pragma endregion
-
-	#pragma region MeshCollider
-	static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
-		if (!collider) return;
-
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("MeshCollider")) return;
-
-		if (ImGui::BeginPopupContextItem()) {
-			if (ImGui::MenuItem("Remove Component")) {
-				collider->GetOwner()->RemoveComponent<MeshColliderComponent>();
-			}
-			ImGui::EndPopup();
-		}
-
-		DrawMeshColliderProperties(collider);
-	}
-
-	static void DrawMeshColliderProperties(MeshColliderComponent* collider) {
-		glm::vec3 size = collider->GetSize();
-		glm::vec3 offset = collider->GetOffset();
-		float sizeArray[3] = { size.x, size.y, size.z };
-
-		bool isTrigger = collider->IsTrigger();
-		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
-			collider->SetTrigger(isTrigger);
-		}
-
-		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f)) {
-			collider->SetOffset(offset);
-		}
-
-		if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
-			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
-		}
-
-	}
-#pragma endregion
-
-	#pragma region Collider
+	#pragma region Physics
 	static void DrawColliderComponent(BoxColliderComponent* collider) {
 		if (!collider) return;
 
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("Collider")) return;
+		if (!ImGui::CollapsingHeader("Box Collider")) return;
 
 		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
@@ -1058,36 +1110,146 @@ private:
 			ImGui::EndPopup();
 		}
 
-		DrawColliderProperties(collider);
-	}
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
-	static void DrawColliderProperties(BoxColliderComponent* collider) {
-		glm::vec3 size = collider->GetSize();
-		glm::vec3 offset = collider->GetOffset();
-		float sizeArray[3] = { size.x, size.y, size.z };
+		ImGui::BeginGroup();
 
 		bool isTrigger = collider->IsTrigger();
-		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Trigger");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsTrigger", &isTrigger)) {
 			collider->SetTrigger(isTrigger);
 		}
 
-		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
+		glm::vec3 offset = collider->GetOffset();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Offset");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
 			collider->SetOffset(offset);
 		}
+		ImGui::PopItemWidth();
 
-		if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
-			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+		glm::vec3 size = collider->GetSize();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Size");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Size", &size[0], 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(size);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+	}
+
+	static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
+		if (!collider) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Mesh Collider")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				collider->GetOwner()->RemoveComponent<MeshColliderComponent>();
+			}
+			ImGui::EndPopup();
 		}
 
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
+
+		bool isTrigger = collider->IsTrigger();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Trigger");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsTrigger", &isTrigger)) {
+			collider->SetTrigger(isTrigger);
+		}
+
+		glm::vec3 offset = collider->GetOffset();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Offset");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Offset", &offset[0], 0.1f)) {
+			collider->SetOffset(offset);
+		}
+		ImGui::PopItemWidth();
+
+		glm::vec3 size = collider->GetSize();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Size");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Size", &size[0], 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(size);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
 	}
-#pragma endregion
 
-    #pragma region Rigidbody
-    static void DrawRigidbodyComponent(RigidbodyComponent* rigidbody) {
-        if (!rigidbody) return;
+	static void DrawCapsuleColliderComponent(CapsuleColliderComponent* collider) {
+		if (!collider) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Rigidbody")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Capsule Collider")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				collider->GetOwner()->RemoveComponent<CapsuleColliderComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
+
+		bool isTrigger = collider->IsTrigger();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Trigger");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsTrigger", &isTrigger)) {
+			collider->SetTrigger(isTrigger);
+		}
+
+		glm::vec3 offset = collider->GetOffset();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Offset");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
+			collider->SetOffset(offset);
+		}
+		ImGui::PopItemWidth();
+
+		glm::vec3 size = collider->GetSize();
+		float sizeArray[2] = { size.x, size.y };
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Size (Radius, Height)");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat2("##Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], size.z));
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+	}
+
+	static void DrawRigidbodyComponent(RigidbodyComponent* rigidbody) {
+		if (!rigidbody) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Rigidbody")) return;
 
 		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
@@ -1096,47 +1258,85 @@ private:
 			ImGui::EndPopup();
 		}
 
-        DrawRigidbodyProperties(rigidbody);
-        DrawRigidbodyPhysics(rigidbody);
-    }
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
-    static void DrawRigidbodyProperties(RigidbodyComponent* rigidbody) {
-        float mass = rigidbody->GetMass();
-        if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 10.0f)) {
-            rigidbody->SetMass(mass);
-        }
+		ImGui::BeginGroup();
+
+		float mass = rigidbody->GetMass();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Mass");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Mass", &mass, 0.1f, 0.1f, 10000.0f)) {
+			rigidbody->SetMass(mass);
+		}
+		ImGui::PopItemWidth();
 
 		float friction = rigidbody->GetFriction();
-		if (ImGui::DragFloat("Friction", &friction, 0.1f, 0.0f, 10.0f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Friction");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Friction", &friction, 0.01f, 0.0f, 10.0f)) {
 			rigidbody->SetFriction(friction);
 		}
+		ImGui::PopItemWidth();
 
 		glm::vec3 gravity = rigidbody->GetGravity();
 		float gravityY = gravity.y;
-		if (ImGui::DragFloat("Gravity", &gravityY, 0.1f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Gravity");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Gravity", &gravityY, 0.1f)) {
 			gravity.y = gravityY;
 			rigidbody->SetGravity(gravity);
-		} 
-    }
+		}
+		ImGui::PopItemWidth();
 
-    static void DrawRigidbodyPhysics(RigidbodyComponent* rigidbody) {
-        
+		ImGui::EndGroup();
+
+		ImGui::Separator();
+		ImGui::Text("Physics Properties");
+		ImGui::Spacing();
+
+		ImGui::BeginGroup();
+
 		bool isKinematic = rigidbody->IsKinematic();
-		if (ImGui::Checkbox("Is Kinematic", &isKinematic)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Kinematic");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsKinematic", &isKinematic)) {
 			rigidbody->SetKinematic(isKinematic);
 		}
 
 		bool freezeRotation = rigidbody->IsFreezed();
-		if (ImGui::Checkbox("Freeze Rotation", &freezeRotation)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Freeze Rotation");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##FreezeRotation", &freezeRotation)) {
 			rigidbody->SetFreezeRotations(freezeRotation);
 		}
 
 		float damping[2] = { rigidbody->GetDamping().x, rigidbody->GetDamping().y };
-		if (ImGui::DragFloat2("Damping (Linear, Angular)", damping, 0.1f, 0.0f, 10.0f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Damping");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat2("##Damping", damping, 0.01f, 0.0f, 10.0f)) {
 			rigidbody->SetDamping(damping[0], damping[1]);
 		}
-    }
-#pragma endregion
+		ImGui::PopItemWidth();
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Linear and Angular Damping");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::EndGroup();
+	}
+	#pragma endregion
 
 	#pragma region Scripting
 	class MonoFieldHelper {
@@ -1429,6 +1629,16 @@ private:
 		if (strcmp(className, componentName) == 0 && strcmp(nameSpace, componentNamespace) == 0) {
 			ImGui::Text("%s", className);
 			return;
+		}
+
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+				MonoObject* newFieldValue = *(MonoObject**)payload->Data;
+				if (newFieldValue) {
+					mono_field_set_value(monoScript, field, &newFieldValue);
+				}
+			}
+			ImGui::EndDragDropTarget();
 		}
 
 		ImGui::TextDisabled("(Unsupported type: %s.%s)", nameSpace, className);
@@ -2076,16 +2286,15 @@ private:
 
         ImGui::Text("Canvas");
     }
-#pragma endregion
+	#pragma endregion
 
     #pragma region Image
-    static void DrawImageComponent(UIImageComponent* image) {
-        if (!image) return;
+	static void DrawImageComponent(UIImageComponent* image) {
+		if (!image) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Image")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Image")) return;
 
-		//remove component
 		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
 				image->GetOwner()->RemoveComponent<UIImageComponent>();
@@ -2093,82 +2302,175 @@ private:
 			ImGui::EndPopup();
 		}
 
-        ImGui::Text("Image");
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+		const float previewSize = 24.0f;
 
-        DrawImageFilePath(image);
-    }
+		ImGui::BeginGroup();
 
-    static void DrawImageFilePath(UIImageComponent* image) {
-        char imagePath[256];
-        strcpy_s(imagePath, image->GetImagePath().c_str());
+		auto imageTexture = image->GetTexture();
 
-        if (ImGui::InputText("image File", imagePath, sizeof(imagePath))) {
-            image->SetTexture(imagePath);
-        }
+		ImGui::PushID((void*)image);
+		if (imageTexture && imageTexture->id() != 0) {
+			ImGui::Image((void*)(intptr_t)imageTexture->id(), ImVec2(previewSize, previewSize));
 
-        if (ImGui::BeginDragDropTarget()) {
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-                HandleImageFileDrop(image, static_cast<const char*>(payload->Data));
-            }
-            ImGui::EndDragDropTarget();
-        }
-    }
+			if (ImGui::IsItemHovered()) {
+				ImGui::BeginTooltip();
+				ImVec2 constrainedSize = CalculatePreviewSize(imageTexture->width(), imageTexture->height(), 300);
+				ImGui::Image((void*)(intptr_t)imageTexture->id(), constrainedSize);
+				ImGui::Text("%dx%d", imageTexture->width(), imageTexture->height());
+				ImGui::EndTooltip();
+			}
 
-    static void HandleImageFileDrop(UIImageComponent* image, const char* path) {
-        std::string extension = std::filesystem::path(path).extension().string();
-        std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+			if (ImGui::BeginPopupContextItem("TextureContextMenu")) {
+				ImGui::Text("Texture Options");
+				ImGui::Separator();
+				if (ImGui::MenuItem("Clear")) {
+				}
+				ImGui::EndPopup();
+			}
+		}
+		else {
+			ImVec2 p = ImGui::GetCursorScreenPos();
+			ImDrawList* draw_list = ImGui::GetWindowDrawList();
+			draw_list->AddRect(p, ImVec2(p.x + previewSize, p.y + previewSize), IM_COL32(180, 180, 180, 255));
+			ImGui::Button("##empty", ImVec2(previewSize, previewSize));
+		}
 
-        if (extension == ".jpg" || extension == ".png" || extension == ".img") {
-            image->SetTexture(path);
-        }
-    }
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				const char* path = static_cast<const char*>(payload->Data);
+				std::string extension = std::filesystem::path(path).extension().string();
+				std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 
-#pragma endregion
+				const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".tga" };
+				if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
+					image->SetTexture(path);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+		ImGui::PopID();
+
+		ImGui::SameLine();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Image");
+
+		image->GetColor();
+		float color[4] = { image->GetColor().r, image->GetColor().g, image->GetColor().b, image->GetColor().a };
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::ColorEdit3("##Color", color)) {
+			image->SetColor({ color[0], color[1], color[2], image->GetColor().w });
+		}
+		ImGui::PopItemWidth();
+
+		float alpha = image->GetColor().a;
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Alpha");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::SliderFloat("##Alpha", &alpha, 0.0f, 1.0f)) {
+			image->SetColor({ color[0], color[1], color[2], alpha });
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+	}
+	#pragma endregion
 
     #pragma region RectTransform
-    static void DrawRectTransformComponent(UITransformComponent* transform) {
-        if (!transform) return;
+	static void DrawRectTransformComponent(UITransformComponent* transform) {
+		if (!transform) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("RectTransform")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("RectTransform")) return;
 
-        ImGui::Text("RectTransform");
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				transform->GetOwner()->RemoveComponent<UITransformComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
-        glm::dvec3 currentPosition = transform->GetPosition();
-        glm::dvec3 currentRotation = glm::radians(transform->GetRotation());
-        glm::dvec3 currentScale = transform->GetScale();
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
-        float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
-        float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
-        float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+		ImGui::BeginGroup();
 
-        if (ImGui::DragFloat3("Position", pos, 0.001f, -1.0f, 1.0f)) {
-            glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-            glm::dvec3 deltaPos = newPosition - currentPosition;
-            transform->Translate(deltaPos);
-        }
+		glm::dvec3 currentPosition = transform->GetPosition();
+		glm::dvec3 currentRotation = glm::radians(transform->GetRotation());
+		glm::dvec3 currentScale = transform->GetScale();
 
-        if (ImGui::DragFloat3("Rotation", rot, -1.0f)) {
-            glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-            glm::dvec3 deltaRot = newRotation - currentRotation;
-            transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-            transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-            transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
-        }
+		float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+		float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
+		float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
 
-        if (ImGui::DragFloat3("Scale", sca, 0.001f, -1.0f, 1.0f)) {
-            glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
-            glm::dvec3 deltaScale = newScale / currentScale;
-            transform->Scale(deltaScale);
-        }
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Position");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool posChanged = ImGui::DragFloat3("##Position", pos, 0.001f, -1.0f, 1.0f);
+		ImGui::PopItemWidth();
 
-    }
-    
-  
-#pragma endregion
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("UI position (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		if (posChanged) {
+			glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
+			glm::dvec3 deltaPos = newPosition - currentPosition;
+			transform->Translate(deltaPos);
+		}
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Rotation");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool rotChanged = ImGui::DragFloat3("##Rotation", rot, 0.1f);
+		ImGui::PopItemWidth();
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Rotation in degrees (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		if (rotChanged) {
+			glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
+			glm::dvec3 deltaRot = newRotation - currentRotation;
+			transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+			transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+			transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+		}
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Scale");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool scaChanged = ImGui::DragFloat3("##Scale", sca, 0.001f, 0.001f, 10.0f);
+		ImGui::PopItemWidth();
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("UI scale multiplier (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		if (scaChanged) {
+			glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
+			glm::dvec3 deltaScale = newScale / currentScale;
+			transform->Scale(deltaScale);
+		}
+
+		ImGui::EndGroup();
+	}
+	#pragma endregion
 
 public:
-#pragma region DrawComponents
+	#pragma region DrawComponents
 	static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
 		if (!gameObject) return;
 
@@ -2212,9 +2514,14 @@ public:
 	static void DrawEngineComponents(GameObject* gameObject, bool& snap, float& snapValue) {
 		if (!gameObject) return;
 
-		if (gameObject->HasComponent<Transform_Component>()) {
+		if (gameObject->HasComponent<Transform_Component>() && !gameObject->HasComponent<UITransformComponent>()) {
 			Transform_Component* transform = gameObject->GetComponent<Transform_Component>();
 			DrawTransformComponent(transform, snap, snapValue);
+		}
+
+		if (gameObject->HasComponent<UITransformComponent>()) {
+			UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
+			DrawRectTransformComponent(uiTransformComponent);
 		}
 
 		if (gameObject->HasComponent<MeshRenderer>()) {
@@ -2271,12 +2578,7 @@ public:
 			ParticleFX* emitter = gameObject->GetComponent<ParticleFX>();
 			DrawParticleSystemComponent(emitter);
 		}
-
-		if (gameObject->HasComponent<UITransformComponent>()) {
-			UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
-			DrawRectTransformComponent(uiTransformComponent);
-		}
-
+		
 		if (gameObject->HasComponent<UICanvasComponent>()) {
 			UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
 			DrawCanvasComponent(uiCanvasComponent);
@@ -2296,9 +2598,9 @@ public:
 
 		DrawScriptComponents(gameObject);
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region AddComponentMenu
+	#pragma region AddComponentMenu
 	static void DrawAddComponentButton(GameObject* gameObject) {
 		if (ImGui::Button("Add Component", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
 			ImGui::OpenPopup("AddComponentMenu");

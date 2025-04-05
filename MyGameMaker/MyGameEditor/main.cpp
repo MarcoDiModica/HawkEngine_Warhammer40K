@@ -771,20 +771,6 @@ static double counterUsingDeltaTime = 0.0;
 static double counterUsingChrono = 0.0;
 static hrclock::time_point startTime = hrclock::now();
 
-static void PrintCounters() {
-	//// Counter using delta time
-	//counterUsingDeltaTime += Application->GetDt();
-	//std::cout << "Counter using delta time: " << std::fixed << std::setprecision(2) << counterUsingDeltaTime << " seconds" << std::endl;
-
-	//// Counter using chrono
-	//auto currentTime = hrclock::now();
-	//std::chrono::duration<double> elapsedTime = currentTime - startTime;
-	//counterUsingChrono = elapsedTime.count();
-	//std::cout << "Counter using chrono: " << std::fixed << std::setprecision(2) << counterUsingChrono << " seconds" << std::endl;
-
-	std::cout << "Fps;  %d" << Application->GetFps() << std::endl;
-}
-
 static void GameRelease() {
 	if (Application->root->mainCamera == nullptr) {
 		return;
@@ -947,11 +933,12 @@ int main(int argc, char** argv) {
 		case LOOP:
 
 #ifndef _BUILD
+			Application->gui->Render();
 			EditorRenderer(Application->gui);
 			RenderGameView(); 
-			PrintCounters();
-			Application->gui->Render();
+
 			Application->window->SwapBuffers();
+
 			UndoRedoSystem();
 			ObjectToEditorCamera();
 
@@ -962,8 +949,6 @@ int main(int argc, char** argv) {
 			GameRelease();
 			Application->window->SwapBuffers();
 #endif // ENABLE_EDITOR
-
-			
 		
 			if (!Application->Update()) { state = FREE; }
 			break;

@@ -45,12 +45,22 @@ public class WinScreen : MonoBehaviour
         {
             Engineson.print("ERROR: No Button object found");
         }
+
+        if (sound == null)
+        {
+            Engineson.print("ERROR: No Audio object found");
+        }
     }
     public override void Update(float deltaTime)
     {
         if (mainMenu == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button or object found");
+            return;
+        }
+        if (sound == null)
+        {
+            Engineson.print("ERROR: No Audio object found");
             return;
         }
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)

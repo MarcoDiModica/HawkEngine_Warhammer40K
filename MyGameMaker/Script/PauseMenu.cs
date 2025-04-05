@@ -81,6 +81,11 @@ public class PauseMenu : MonoBehaviour
             Engineson.print("ERROR: HUDScript not found");
             return;
         }
+        if (sound == null)
+        {
+            Engineson.print("ERROR: Sound not found");
+            return;
+        }
     }
 
     public override void Update(float deltaTime)
@@ -88,6 +93,18 @@ public class PauseMenu : MonoBehaviour
         if (optionsMenu == null || mainMenu == null || resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button or Canvas object found");
+            return;
+        }
+
+        if (HUD == null)
+        {
+            Engineson.print("ERROR: HUD not found");
+            return;
+        }
+
+        if (sound == null)
+        {
+            Engineson.print("ERROR: Sound not found");
             return;
         }
 
@@ -112,6 +129,8 @@ public class PauseMenu : MonoBehaviour
         if (button_resumeButton.GetState() == ButtonState.HOVERED)
         {
             transform_resumeButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_resumeButton.GetState() == ButtonState.DEFAULT)
         {
@@ -128,6 +147,8 @@ public class PauseMenu : MonoBehaviour
         if (button_optionsMenuButton.GetState() == ButtonState.HOVERED)
         {
             transform_optionsMenuButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_optionsMenuButton.GetState() == ButtonState.DEFAULT)
         {
@@ -146,6 +167,8 @@ public class PauseMenu : MonoBehaviour
         if (button_mainMenuButton.GetState() == ButtonState.HOVERED)
         {
             transform_mainMenuButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_mainMenuButton.GetState() == ButtonState.DEFAULT)
         {
@@ -162,6 +185,8 @@ public class PauseMenu : MonoBehaviour
         if (button_quitButton.GetState() == ButtonState.HOVERED)
         {
             transform_quitButton.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_quitButton.GetState() == ButtonState.DEFAULT)
         {

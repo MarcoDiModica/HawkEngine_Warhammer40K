@@ -407,8 +407,8 @@ bool Root::Start()
 
 	//CreateLocationBot();
 	//CreateLocationSM();
-	//CreateWinUI();
-	//CreateLoseUI();
+	CreateWinUI();
+	CreateLoseUI();
 	CreateGameplayUI();
 	// 
 	// 

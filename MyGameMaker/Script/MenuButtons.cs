@@ -100,7 +100,18 @@ public class MenuButtons : MonoBehaviour
         {
             Engineson.print("ERROR: No Canvas object found");
             return;
-        }   
+        }
+        if (HUD == null)
+        {
+            Engineson.print("ERROR: HUD not found");
+            return;
+        }
+        if (sound == null)
+        {
+            Engineson.print("ERROR: Audio not found");
+            return;
+        }
+        
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
             //SceneManager.LoadScene("DefaultScene");

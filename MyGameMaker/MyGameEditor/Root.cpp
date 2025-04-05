@@ -268,19 +268,19 @@ bool Root::Start()
 	//emitter->SetTexture("Assets/SmokeParticleTexture.png");
 
 	////Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
-	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
-	//lictor->SetTag("Enemy");
+	/*auto lictor = CreateGameObject("Lictor");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
+	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
+	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	lictorMesh->SetName("LictorMesh");
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	lictor->SetTag("Enemy");*/
 
 
 	//auto cube = CreateCube("Cube");

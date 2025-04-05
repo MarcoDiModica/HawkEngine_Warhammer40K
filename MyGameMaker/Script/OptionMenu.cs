@@ -5,6 +5,8 @@ using System.Numerics;
 
 public class OptionMenu : MonoBehaviour
 {
+    private Audio sound;
+    private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
     public override void Awake()
     {
         //Engineson.print("OptionMenu Awake");
@@ -12,6 +14,7 @@ public class OptionMenu : MonoBehaviour
     public override void Start()
     {
         //Engineson.print("OptionMenu Start");
+        sound = gameObject.GetComponent<Audio>();
 
     }
 
@@ -21,6 +24,8 @@ public class OptionMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
         {
             gameObject.SetActive(false);
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
         }
 
         //if (gamePlaycanvas.GetComponent<UIButton>().GetState() == ButtonState.HOVERED)

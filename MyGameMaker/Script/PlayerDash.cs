@@ -5,7 +5,8 @@ public class PlayerDash : MonoBehaviour
 {
     public float dashSpeed = 1600.0f;
     public float dashDuration = 0.05f;
-    public float dashCooldown = 1.25f; 
+    public float dashCooldown = 1.25f;
+    public bool canDash = true;
 
     private Rigidbody rb;
     private bool isDashing;
@@ -47,7 +48,7 @@ public class PlayerDash : MonoBehaviour
 
     public bool CanDash(float currentTime)
     {
-        return !isDashing && (currentTime - lastDashTime >= dashCooldown);
+        return canDash && !isDashing && (currentTime - lastDashTime >= dashCooldown);
     }
 
     public void InitiateDash(Vector3 direction, float currentTime)

@@ -26,6 +26,10 @@ public class ArcSnare : BaseAbilities
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
 
+    private Audio sound;
+    private string arcLaunch = "Assets/Audio/SFX/Weapons/Boltgun/ArcSnareThrow.wav";
+    
+
 
     public override void Awake()
     {
@@ -33,7 +37,11 @@ public class ArcSnare : BaseAbilities
     }
     public override void Start()
     {
-
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
     }
 
     public override void Update(float deltaTime)
@@ -42,13 +50,13 @@ public class ArcSnare : BaseAbilities
         if (!canThrow)
         {
             abilityTimer += deltaTime;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+           // Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
-                Engineson.print("Cooldown terminado. Habilidad lista.");
+               // Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
 
@@ -87,36 +95,39 @@ public class ArcSnare : BaseAbilities
         if (canThrow)
         {
             Engineson.print("Lanzando granada...");
+            sound?.LoadAudio(arcLaunch);
+            sound?.Play();
             grenade = Engineson.CreateGameObject("Arc", null);
 
             if (grenade == null)
             {
-                Engineson.print("ERROR: No se pudo crear la granada.");
+               // Engineson.print("ERROR: No se pudo crear la granada.");
                 return;
             }
 
             grenade.AddScript("Arc");
             grenade.GetComponent<Arc>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-            
+            grenade.AddComponent<Audio>();
+            grenade.GetComponent<Arc>().Start();
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;
         }
         else
         {
-            Engineson.print("Habilidad en cooldown. Espera...");
+           // Engineson.print("Habilidad en cooldown. Espera...");
         }
 
         if (!canThrow)
         {
             abilityTimer += time;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+          //  Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
-                Engineson.print("Cooldown terminado. Habilidad lista.");
+              //  Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
 
@@ -128,6 +139,7 @@ public class ArcSnare : BaseAbilities
 
         // Crear explosión
         explosion = Engineson.CreateGameObject("Explosion", null);
+        
         if (explosion == null) return;
 
         explosion.AddComponent<MeshRenderer>();

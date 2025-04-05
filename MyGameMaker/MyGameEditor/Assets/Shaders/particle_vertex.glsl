@@ -8,12 +8,22 @@ layout(location = 3) in vec4 aColor;      // Instance color (with alpha)
 layout(location = 4) in vec2 aSize;       // Instance size (x, y)
 layout(location = 5) in float aRotation;  // Instance rotation in radians
 layout(location = 6) in float aLifetime;  // Current lifetime fraction (0-1)
+layout(location = 7) in vec4 endColor;    // End color for gradient
+layout(location = 8) in vec2 aEndSize;    // End size (x, y) for gradient
+layout(location = 9) in vec2 spriteOffset;  // Index of the sprite in the spritesheet
+layout(location = 10) in vec2 spriteSize; // Size of each sprite in the spritesheet (normalized)
+layout(location = 11) in vec2 sheetSize;  // Dimensions of the spritesheet (columns, rows)
+
 
 // Outputs to fragment shader
 out vec2 TexCoord;
 out vec4 ParticleColor;
 out float Lifetime;
+out vec4 EndColor;  // End color for gradient
 
+out vec2 SpriteOffset;  
+out vec2 SpriteSize; 
+out vec2 SheetSize;
 // Uniforms
 uniform mat4 projection;
 uniform mat4 view;
@@ -77,14 +87,26 @@ void main() {
     mat2 rotationMatrix = mat2(c, -s, s, c);
     
     // Apply size and rotation to the quad vertex
-    vec2 rotatedPos = rotationMatrix * (aPos.xy * aSize);
+
+    vec2 totalSize = mix(aSize, aEndSize, aLifetime);
+    vec2 rotatedPos = rotationMatrix * (aPos.xy * totalSize);
     
     // Final position
     vec4 worldPos = billboardMatrix * vec4(rotatedPos.x, rotatedPos.y, 0.0, 1.0);
     gl_Position = projection * view * worldPos;
     
-    // Pass values to fragment shader
+    //spriteSize = new vec21(,)
+    //int column = 1 % int(534);  // Column of the sprite
+    //int row = 1 / int(175);     // Row of the sprite
+    //vec2 spriteOffset = vec2(column, row) * spriteSize;
+    //TexCoord = aTexCoord * spriteSize + spriteOffset;
     TexCoord = aTexCoord;
+    // Pass values to fragment shader
     ParticleColor = aColor;
     Lifetime = aLifetime;
+    EndColor = endColor;  
+    SpriteOffset = spriteOffset;
+    SpriteSize = spriteSize;
+    SheetSize = sheetSize;
+
 }

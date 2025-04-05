@@ -10,7 +10,7 @@ public class BulletData : MonoBehaviour
     public Vector3 direction;
     public bool markedForDestruction;
     public float projectileLifetime;
-    public float projectileSpeed = 0.5f;
+    public float projectileSpeed = 50f;
 
     public void Init(Transform trans, Vector3 dir, GameObject own)
     {
@@ -34,7 +34,7 @@ public class BulletData : MonoBehaviour
     public override void Update(float deltaTime)
     {
 
-        lifetime += deltaTime * 10;
+        lifetime += deltaTime;
 
         if (lifetime >= projectileLifetime)
         {

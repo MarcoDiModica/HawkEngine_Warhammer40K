@@ -1,27 +1,38 @@
 ﻿using System.Collections;
 using System.Numerics;
 using HawkEngine;
-
 public class PlayerController : MonoBehaviour
 {
     private PlayerInput playerInput;
     private PlayerMovement playerMovement;
-    private PlayerDash playerDash;
+    public PlayerDash playerDash;
     public PlayerShooting playerShooting;
     public RedThirstManager redThirstManager;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
     private bool isIdle = false;
-    private bool isRunning = false;
+    public bool isRunning = false;
+    private bool isWalking = false;
+    private bool isMoving = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
-    private bool hasStoppedFootsteps = false;
+    private bool isTransitioning = false;
+    private float transitionTimer = 0f;
+    private float transitionDelay = 0.1f;
+    Vector3 moveDirection;
+    private bool once = false;
+
     private float elapsedTime = 0f;
     private bool isInteracting = false;
+    private float dashDelayTimer = 0f; 
+    private float dashDelayDuration = 0.45f;
 
     private Audio sound;
-    private string footsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
     private bool isFootstepPlaying = false;
+    private bool hasStoppedFootsteps = false;
+    private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
+    private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep.wav";
+
 
     public PlayerData playerData;
 
@@ -46,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     public override void Start()
     {
-        
+        gameObject.tag = "Player";
     }
 
     public override void Update(float deltaTime)
@@ -62,149 +73,361 @@ public class PlayerController : MonoBehaviour
         {
             playerData.AddHealth(10);
         }
+        if (Input.GetKeyDown(KeyCode.Z) )
+        {
+            if (playerData.GodMode == true)
+            {
+                playerData.GodMode = false;
+                Engineson.print("GodMode deactivated");
+            }
+            else
+            {
+                playerData.GodMode = true;
+                Engineson.print("GodMode activated");
 
-        Vector3 moveDirection = playerInput.GetCurrentMoveDirection();
+            }
+
+
+        }
+        
+        dashDelayTimer -= deltaTime;
+        transitionTimer -= deltaTime;
+        if (once == false)
+        {
+            playerAnimations.SetStandardIdleAnimation();
+            once = true;
+        }
+         moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
         elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
 
-        if (moveDirection == Vector3.Zero && !playerInput.IsShooting())
+        if (dashDelayTimer > 0f)
         {
-            // Idle
-            if (!isIdle)
-            {
-                playerAnimations.SetStandardIdleAnimation();
-                isIdle = true;
-            }
-            playerAnimations.SetIdleRandomAnimation();
-            
-            isRunning = false;
-            isShootingStanding = false;
-            isShootingRunning = false;
-            isFootstepPlaying = false;
-
-            if (!hasStoppedFootsteps)
-            {
-                sound?.Stop();
-                hasStoppedFootsteps = true;
-            }
-
-
+            return;
         }
-
-        if (Input.GetControllerButtonDown(ControllerButton.Y))
+        if (playerInput.IsShooting())
         {
-            Vector3 playerCenterPosition = gameObject.GetComponent<Transform>().GetPosition();
-            playerCenterPosition.Y += 1;
-            Vector3 playerDirection = gameObject.GetComponent<Transform>().forward;
-
-            RayCast rayCast = new RayCast();
-            rayCast.PerformRaycast(playerCenterPosition, playerDirection, 10f);
-
-            if (rayCast.hit.isHit)
-            {
-                Engineson.print("Raycast hit: " + rayCast.hit.gameObject.name);
-                Engineson.print("Raycast distance: " + rayCast.hit.distance);
-                Engineson.print("Raycast normal: " + rayCast.hit.normal);
-                Engineson.print("Raycast point: " + rayCast.hit.point);
-            }
-            
-
-        }
-
-
-
-        if (moveDirection != Vector3.Zero && !playerInput.IsShooting() && !isFootstepPlaying)
-        {
-            sound?.LoadAudio(footsteps);
-            sound?.Play(true);
-            isFootstepPlaying = true;
-            hasStoppedFootsteps = false;
-        }
-        else if (playerInput.IsShooting())
-        {
-            isFootstepPlaying = false;
-        }
-        
-     
-
-        if (moveDirection == Vector3.Zero && playerInput.IsShooting() && !isShootingStanding)
-        {
-            // Shooting while standing
-            playerAnimations.SetShootingStandingAnimation();
-            isRunning = false;
-            isShootingStanding = true;
-            isShootingRunning = false;
-            isIdle = false;
-            
-        }
-        
-        if (moveDirection != Vector3.Zero && !isRunning && !playerInput.IsShooting())
-        {
-            // Running
-            playerAnimations.SetRunAnimation();
-            isRunning = true;
-            isShootingStanding = false;
-            isShootingRunning = false;
-            isIdle = false;
-            
-        }
-        
-        if (moveDirection != Vector3.Zero && !isShootingRunning && playerInput.IsShooting() /*&& !isShooting*/)
-        {
-            // Shooting while running
-            playerAnimations.SetShootingRunningAnimation();
-            isRunning = false;
-            isShootingStanding = false;
-            isShootingRunning = true;
+            SetShootingState();
             isIdle = false;
         }
+        else
+        {
 
+           
+            if (moveDirection == Vector3.Zero)
+            {
+                if (isWalking)
+                {
+                    SetWalkingToIdle();
+                }
+                else if (isRunning)
+                {
+                    SetRunningToIdle();
+                }
+                else 
+                {
+                    SetIdleState();
+                }
+                StopFootsteps();
+            }
+            else
+            {
+                if (!isFootstepPlaying) 
+                {
+                    PlayFootstep();
+                }
+                if (playerMovement.moveSpeed == playerMovement.walkSpeed)
+                    SetWalkingState();
+                else if (playerMovement.moveSpeed == playerMovement.runSpeed)
+                    SetRunningState();
+            }
+        }
 
         if (playerInput.IsDashPressed() && playerDash.CanDash(elapsedTime))
         {
             playerDash.InitiateDash(moveDirection, elapsedTime);
+            playerAnimations.SetDashAnimation();
+            dashDelayTimer = dashDelayDuration;
+            isRunning = false;
+            isWalking = false;
+            StopFootsteps();
         }
+        if (isTransitioning && transitionTimer > 0f)
+        {
+            transitionTimer -= deltaTime;
 
+        }
     }
 
-    
 
-    public override void OnCollisionEnter(GameObject other)
+    private void SetIdleState()
     {
-        if (other.tag == "EnemyAttack")
+        if (!isIdle)
         {
-            if (!playerDash.isInvulnerable)
+            if (isShootingStanding)
+            {
+                playerAnimations.SetShootingStandingToIdleAnimation();
+            }
+
+            playerAnimations.SetIdleRandomAnimation();
+            isIdle = true;
+            isRunning = false;
+            isWalking = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = false;
+        }
+
+        if (!hasStoppedFootsteps)
+        {
+            sound?.Stop();
+            hasStoppedFootsteps = true;
+            isFootstepPlaying = false;
+        }
+    }
+
+    private void SetWalkingState()
+    {
+        if (playerInput.IsShooting() && !isShootingRunning)
+        {
+            TransitionShootingStandingToRunning();
+        }
+        else if (isShootingRunning && !playerInput.IsShooting())
+        {
+            playerAnimations.SetShootingRunningToRunAnimation();
+            isRunning = false;
+            isWalking = false;
+            isIdle = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = true;
+            isTransitioning = true;
+            transitionTimer = transitionDelay;
+            PlayFootstep();
+        }
+        else if (transitionTimer <= 0f && !isWalking)
+        {
+            playerAnimations.SetWalkAnimation();
+            isRunning = false;
+            isWalking = true;
+            isIdle = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = true;
+            isTransitioning = false;
+            PlayFootstep();
+        }
+    }
+
+    private void SetRunningState()
+    {
+        if (playerInput.IsShooting() && !isShootingRunning)
+        {
+            TransitionShootingStandingToRunning();
+        }
+        else if (isShootingRunning && !playerInput.IsShooting())
+        {
+            playerAnimations.SetShootingRunningToRunAnimation();
+            isRunning = false;
+            isWalking = false;
+            isIdle = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = true;
+            isTransitioning = true;
+            transitionTimer = transitionDelay;
+            PlayFootstep();
+        }
+        else if (transitionTimer <= 0f && !isRunning)
+        {
+            playerAnimations.SetRunAnimation();
+            isRunning = true;
+            isWalking = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = true;
+            isTransitioning = false;
+            PlayFootstep();
+        }
+    }
+
+    private void SetShootingState()
+    {
+        if (moveDirection != Vector3.Zero && !isShootingRunning)
+        {
+            playerAnimations.SetRunningToShootRunningAnimation();
+            isShootingStanding = false;
+            isShootingRunning = true;
+            isFootstepPlaying = false;
+            isWalking = false;
+            isRunning = false;
+            isIdle = false;
+        }
+        else if (!isShootingStanding && moveDirection == Vector3.Zero)
+        {
+            playerAnimations.SetShootingStandingAnimation();
+            isShootingStanding = true;
+            isShootingRunning = false;
+            isFootstepPlaying = false;
+            isWalking = false;
+            isRunning = false;
+            isIdle = false;
+
+        }
+        Engineson.print(moveDirection.ToString());
+        if (isShootingStanding && moveDirection != Vector3.Zero)
+        {
+            playerAnimations.SetShootingStandingToShootingRunAnimation();
+            isShootingStanding = false;
+            isShootingRunning = true;
+            Engineson.print("Transitioning to shooting running");
+        }
+    }
+    private void SetWalkingToIdle()
+    {
+        if (isWalking)
+        {
+            playerAnimations.SetWalkingToIdleAnimation();
+            isWalking = false;
+            isIdle = true;
+            isRunning = false;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = false;
+            isTransitioning = false;
+            StopFootsteps();
+        }
+    }
+
+    private void SetRunningToIdle()
+    {
+        if (isRunning)
+        {
+            playerAnimations.SetRunningToIdleAnimation();
+            isRunning = false;
+            isWalking = false;
+            isIdle = true;
+            isShootingStanding = false;
+            isShootingRunning = false;
+            isMoving = false;
+            isTransitioning = false;
+            StopFootsteps();
+        }
+    }
+    private void TransitionShootingStandingToRunning()
+    {
+        playerAnimations.SetShootingStandingToShootingRunAnimation();
+        isShootingRunning = true;
+        isShootingStanding = false;
+        isTransitioning = true;
+        transitionTimer = transitionDelay;
+        isWalking = false;
+        isRunning = false;
+        isIdle = false;
+        isMoving = true;
+    }
+    private string currentFootstep = ""; 
+
+    private void PlayFootstep()
+    {
+        string newFootstep = isRunning ? Runfootsteps : Walkfootsteps;
+
+        if (!isFootstepPlaying || currentFootstep != newFootstep)
+        {
+            sound?.Stop(); 
+            sound?.LoadAudio(newFootstep);
+            sound?.Play(true); 
+            isFootstepPlaying = true;
+            hasStoppedFootsteps = false;
+            currentFootstep = newFootstep; 
+        }
+    }
+
+    private void StopFootsteps()
+    {
+        if (isFootstepPlaying)
+        {
+            sound?.Stop();
+            isFootstepPlaying = false;
+            hasStoppedFootsteps = true;
+            currentFootstep = ""; 
+        }
+    }
+
+    public override void OnTriggerEnter(GameObject other)
+    {
+        if (other.name == "Hurtbox")
+        {
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
+                if (playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    Engineson.print("Player is dead!");
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
+                //playerAnimations.SetHitIdleAnimation();
+
                 Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
             {
                 playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
             }
-
-
         }
-
-        if (other.tag == "Enemy")
+    }
+    public override void OnCollisionEnter(GameObject other)
+    {
+        if (other.tag == "EnemyAttack")
         {
-            if (!playerDash.isInvulnerable)
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
+                if(playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    Engineson.print("Player is dead!");
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
+                //playerAnimations.SetHitIdleAnimation();
+
+                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
+            }
+            else if (playerDash.isInvulnerable)
+            {
+                playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
+            }
+        }
+        
+        if (other.tag == "Enemy")
+        {
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
+            {
+                playerData.TakeDamage(10);
+                if (playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    Engineson.print("Player is dead!");
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
                 Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
             {
                 playerShooting.CounterAttack(other);
             }
-
-
         }
     }
-
-  
-
-
 }

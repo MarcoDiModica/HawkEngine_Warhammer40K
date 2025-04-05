@@ -113,6 +113,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ImGuiCurveEditor.h" />
     <ClInclude Include="InputEngine.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Material.h" />

@@ -6,11 +6,12 @@ public class PlayerData
     float healthTemp;
     float maxHealth = 100;
     float maxHealthTemp = 50;
-    public float movSpeed = 20;
+    public float movSpeed = 10;
     public float collectionArea = 1;
     public float bonusCadence = 1;
     public bool isPiercing = false;
     public bool infiniteBullets = false;
+    public bool GodMode = false;
 
 
 

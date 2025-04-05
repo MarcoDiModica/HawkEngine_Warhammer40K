@@ -48,5 +48,6 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Tweening.h" />
+    <ClInclude Include="ImGuiCurveEditor.h" />
   </ItemGroup>
 </Project>

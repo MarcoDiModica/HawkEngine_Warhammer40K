@@ -17,13 +17,20 @@ public class Arc : MonoBehaviour
     public bool needsDestroy = false;
     float deathTimerPrevention = 0;
 
+    private Audio sound;
+    private string arcExplosion = "Assets/Audio/SFX/Weapons/Boltgun/ArcSnareExplosion.wav";
+
     public override void Awake()
     {
 
     }
     public override void Start()
     {
-
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
     }
 
     public void Init(Vector3 pos, Vector3 dir)
@@ -71,6 +78,8 @@ public class Arc : MonoBehaviour
         explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
+        sound?.LoadAudio(arcExplosion);
+        sound?.Play();
         isExploded = true;
     }
 

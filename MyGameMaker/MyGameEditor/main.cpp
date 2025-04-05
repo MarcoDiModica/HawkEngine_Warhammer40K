@@ -333,73 +333,173 @@ static void RenderGameView() {
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }
 
-//WIP Undo/Redo for transform actions
-#pragma region CTRZ+CTRLY
+#pragma region UNDO_REDO
+
+const int MAX_UNDO_STATES = 100; 
+
+bool MatricesAreEqual(const glm::dmat4& a, const glm::dmat4& b, double epsilon = 0.0000001) {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			if (std::abs(a[i][j] - b[i][j]) > epsilon) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 
 struct TransformState {
-	glm::mat4 transform;
+	glm::dmat4 transform;
 	GameObject* gameObject;
+	std::string objectName; 
 };
 
-std::stack<TransformState> undoStack;
-std::stack<TransformState> redoStack;
+struct TransformCommand {
+	std::vector<TransformState> states;
+	std::string description;
+	Uint32 timestamp;
+};
 
+std::stack<TransformCommand> undoStack;
+std::stack<TransformCommand> redoStack;
+bool wasUsingGizmo = false;
+bool transformChanged = false;
+std::map<GameObject*, glm::dmat4> initialTransforms;
 
-void SaveState(GameObject* gameObject, const glm::mat4& currentTransform) {
-	undoStack.push({ currentTransform, gameObject });
+void BeginTransformAction() {
+	if (Application->input->GetSelectedGameObjects().empty()) return;
+
+	initialTransforms.clear();
+	for (auto* gameObject : Application->input->GetSelectedGameObjects()) {
+		if (gameObject && gameObject->GetTransform()) {
+			initialTransforms[gameObject] = gameObject->GetTransform()->GetMatrix();
+		}
+	}
+
+	transformChanged = false;
+}
+
+bool HasTransformationChanged() {
+	if (initialTransforms.empty()) return false;
+
+	for (const auto& pair : initialTransforms) {
+		if (pair.first && pair.first->GetTransform()) {
+			if (!MatricesAreEqual(pair.second, pair.first->GetTransform()->GetMatrix())) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void CommitTransformAction(const std::string& description = "Transform") {
+	if (Application->input->GetSelectedGameObjects().empty() || initialTransforms.empty()) return;
+
+	if (!HasTransformationChanged()) return;
+
+	TransformCommand command;
+	command.description = description;
+	command.timestamp = SDL_GetTicks();
+
+	for (const auto& pair : initialTransforms) {
+		if (pair.first && pair.first->GetTransform()) {
+			TransformState initialState;
+			initialState.gameObject = pair.first;
+			initialState.transform = pair.second;
+			initialState.objectName = pair.first->GetName();
+			command.states.push_back(initialState);
+		}
+	}
 
 	while (!redoStack.empty()) {
 		redoStack.pop();
 	}
+
+	if (undoStack.size() >= MAX_UNDO_STATES) {
+		std::stack<TransformCommand> tempStack;
+		while (undoStack.size() > MAX_UNDO_STATES - 1) {
+			undoStack.pop();
+		}
+	}
+
+	undoStack.push(command);
+	initialTransforms.clear();
+	transformChanged = false;
 }
 
 void Undo() {
-	if (!undoStack.empty()) {
-		TransformState previousState = undoStack.top();
-		undoStack.pop();
+	if (undoStack.empty()) return;
 
-		// Save the current state of the object for redo
-		redoStack.push({ previousState.gameObject->GetTransform()->GetMatrix(), previousState.gameObject });
+	TransformCommand command = undoStack.top();
+	undoStack.pop();
 
-		// Apply the previous transform to the object
-		previousState.gameObject->GetTransform()->SetMatrix(previousState.transform);
+	TransformCommand redoCommand;
+	redoCommand.description = "Redo " + command.description;
+	redoCommand.timestamp = SDL_GetTicks();
+
+	for (const auto& state : command.states) {
+		if (state.gameObject && state.gameObject->GetTransform()) {
+			TransformState currentState;
+			currentState.gameObject = state.gameObject;
+			currentState.transform = state.gameObject->GetTransform()->GetMatrix();
+			currentState.objectName = state.gameObject->GetName();
+			redoCommand.states.push_back(currentState);
+
+			state.gameObject->GetTransform()->SetMatrix(state.transform);
+		}
 	}
+
+	redoStack.push(redoCommand);
 }
 
 void Redo() {
-	if (!redoStack.empty()) {
-		TransformState nextState = redoStack.top();
-		redoStack.pop();
+	if (redoStack.empty()) return;
 
-		// Save the current state of the object for undo
-		undoStack.push({ nextState.gameObject->GetTransform()->GetMatrix(), nextState.gameObject });
+	TransformCommand command = redoStack.top();
+	redoStack.pop();
 
-		// Apply the next transform to the object
-		nextState.gameObject->GetTransform()->SetMatrix(nextState.transform);
+	TransformCommand undoCommand;
+	undoCommand.description = "Undo " + command.description;
+	undoCommand.timestamp = SDL_GetTicks();
+
+	for (const auto& state : command.states) {
+		if (state.gameObject && state.gameObject->GetTransform()) {
+			TransformState currentState;
+			currentState.gameObject = state.gameObject;
+			currentState.transform = state.gameObject->GetTransform()->GetMatrix();
+			currentState.objectName = state.gameObject->GetName();
+			undoCommand.states.push_back(currentState);
+
+			state.gameObject->GetTransform()->SetMatrix(state.transform);
+		}
 	}
+
+	undoStack.push(undoCommand);
 }
 
-void UndoRedo()
-{
-	static bool wasUsingGizmo = false;
-
+void UndoRedoSystem() {
 	if (ImGuizmo::IsUsing()) {
-		wasUsingGizmo = true;
+		if (!wasUsingGizmo) {
+			BeginTransformAction();
+			wasUsingGizmo = true;
+		}
+		transformChanged = true;
 	}
 	else if (wasUsingGizmo) {
-		SaveState(Application->input->GetSelectedGameObjects().at(0), Application->input->GetSelectedGameObjects().at(0)->GetTransform()->GetMatrix());
+		if (transformChanged) {
+			CommitTransformAction("Gizmo Transform");
+		}
 		wasUsingGizmo = false;
 	}
 
-	// Handle undo/redo input
-	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
-		Undo();
+	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
+		if (Application->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
+			Undo();
+		}
+		else if (Application->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) {
+			Redo();
+		}
 	}
-
-	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) {
-		Redo();
-	}
-
 }
 
 #pragma endregion
@@ -852,7 +952,7 @@ int main(int argc, char** argv) {
 			PrintCounters();
 			Application->gui->Render();
 			Application->window->SwapBuffers();
-			UndoRedo();
+			UndoRedoSystem();
 			ObjectToEditorCamera();
 
 			if (MonoManager::GetInstance().IsHotReloadingEnabled()) {

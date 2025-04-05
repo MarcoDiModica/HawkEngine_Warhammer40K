@@ -299,6 +299,8 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 
 	auto img = std::make_shared<Image>();
 
+	img->image_name = baseFilename;
+
 	fin.read(reinterpret_cast<char*>(&img->_width), sizeof(img->_width));
 	fin.read(reinterpret_cast<char*>(&img->_height), sizeof(img->_height));
 	fin.read(reinterpret_cast<char*>(&img->_channels), sizeof(img->_channels));

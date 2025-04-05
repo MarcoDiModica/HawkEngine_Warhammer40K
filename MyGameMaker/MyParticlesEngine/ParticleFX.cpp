@@ -1158,7 +1158,7 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::ENVIRONMENT_SPARK:
 		preset = ParticlePresets::Environment_Spark;
-		SetOneShot(true);
+		SetOneShot(false);
 		break;
 	case ParticleType::ARC_SNARE_IMPACT:
 		preset = ParticlePresets::Arc_Snare_Impact;

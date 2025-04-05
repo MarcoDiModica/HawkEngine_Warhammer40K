@@ -499,135 +499,224 @@ private:
 #pragma endregion
 
     #pragma region Camera
-    static void DrawCameraComponent(CameraComponent* camera) {
-        if (!camera) return;
+	static void DrawCameraComponent(CameraComponent* camera) {
+		if (!camera) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Camera")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Camera")) return;
 
-        if (ImGui::BeginPopupContextItem()) {
+		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
 				camera->GetOwner()->RemoveComponent<CameraComponent>();
 			}
 			ImGui::EndPopup();
 		}
 
-        bool orthographic = camera->IsOrthographic();
-        bool frustum = camera->frustrumCullingEnabled;
-        float orthoSize = camera->GetOrthoSize();
-        float fov = camera->GetFOV();
-        auto nearPlane = static_cast<float>(camera->GetNearPlane());
-        auto farPlane = static_cast<float>(camera->GetFarPlane());
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
-        if (ImGui::Checkbox("Orthographic", &orthographic)) {
-            camera->orthographic = orthographic;
-        }
+		bool orthographic = camera->IsOrthographic();
+		float orthoSize = camera->GetOrthoSize();
+		float fov = camera->GetFOV();
+		auto nearPlane = static_cast<float>(camera->GetNearPlane());
+		auto farPlane = static_cast<float>(camera->GetFarPlane());
+		bool frustum = camera->frustrumCullingEnabled;
+		bool frustumRepresentation = camera->frustrumRepresentation;
+		int priority = camera->GetPriority();
 
-        if (orthographic) {
-            if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
-                camera->SetOrthoSize(orthoSize);
-            }
-        }
-        else {
-            float fovDeg = glm::degrees(camera->GetFOV());
-            if (ImGui::SliderFloat("FOV", &fovDeg, 1.0f, 179.0f)) {
-                camera->SetFOV(glm::radians(fovDeg));
-            }
-        }
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Projection");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("Orthographic", &orthographic)) {
+			camera->orthographic = orthographic;
+		}
 
-        if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
-            camera->SetNearPlane(nearPlane);
-        }
-
-        if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
-            camera->SetFarPlane(farPlane);
-        }
-
-        if (ImGui::Checkbox("Frustum Culling", &frustum)) {
-            camera->frustrumCullingEnabled = frustum;
-        }
-
-        if (frustum) {
-            bool frustumRepresentation = camera->frustrumRepresentation;
-            ImGui::Checkbox("Frustum Representation", &frustumRepresentation);
-            camera->frustrumRepresentation = frustumRepresentation;
-        }
-
-        int priority = camera->GetPriority();
-        if (ImGui::DragInt("Priority", &priority, 0.1f, 1.0f, 10.0f)) {
-            camera->SetPriority(priority);
-			Application->root->UpdateCameraPriority();
-        }
-
-        //follow target look target and shake config
-        GameObject* followTarget = camera->followTarget;
-        if (followTarget) {
-			ImGui::Text("Follow Target: %s", followTarget->GetName().c_str());
-
-            float followDistance = static_cast<float>(camera->GetDistance());
-            glm::dvec3 followOffset = camera->GetOffset();
-            float followSmoothness = static_cast<float>(camera->followSmoothness);
-            bool followX = camera->followX;
-            bool followY = camera->followY;
-            bool followZ = camera->followZ;
-
-            if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
-					GameObject* target = static_cast<GameObject*>(payload->Data);
-					camera->followTarget = target;
-				}
-				ImGui::EndDragDropTarget();
+		if (orthographic) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Size");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
+				camera->SetOrthoSize(orthoSize);
 			}
+			ImGui::PopItemWidth();
+		}
+		else {
+			float fovDeg = glm::degrees(camera->GetFOV());
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Field of View");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::SliderFloat("##FOV", &fovDeg, 1.0f, 179.0f, "%.1f°")) {
+				camera->SetFOV(glm::radians(fovDeg));
+			}
+			ImGui::PopItemWidth();
+		}
 
-            if (ImGui::DragFloat("Distance", &followDistance, 0.1f, 0.1f, 100.0f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Near Plane");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##NearPlane", &nearPlane, 0.1f, 0.1f, farPlane - 0.1f)) {
+			camera->SetNearPlane(nearPlane);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Far Plane");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##FarPlane", &farPlane, 0.1f, nearPlane + 0.1f, 1000.0f)) {
+			camera->SetFarPlane(farPlane);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Priority");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragInt("##Priority", &priority, 0.1f, 1, 10)) {
+			camera->SetPriority(priority);
+			Application->root->UpdateCameraPriority();
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::Separator();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Frustum Culling");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##FrustumCulling", &frustum)) {
+			camera->frustrumCullingEnabled = frustum;
+		}
+
+		if (frustum) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Show Frustum");
+			ImGui::SameLine(labelWidth);
+			if (ImGui::Checkbox("##ShowFrustum", &frustumRepresentation)) {
+				camera->frustrumRepresentation = frustumRepresentation;
+			}
+		}
+
+		ImGui::Separator();
+
+		GameObject* followTarget = camera->followTarget;
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Follow Target");
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%s", followTarget ? followTarget->GetName().c_str() : "None");
+
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+				GameObject* target = static_cast<GameObject*>(payload->Data);
+				camera->followTarget = target;
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (followTarget) {
+			float followDistance = static_cast<float>(camera->GetDistance());
+			glm::dvec3 followOffset = camera->GetOffset();
+			float followSmoothness = static_cast<float>(camera->followSmoothness);
+			bool followX = camera->followX;
+			bool followY = camera->followY;
+			bool followZ = camera->followZ;
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Distance");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Distance", &followDistance, 0.1f, 0.1f, 100.0f)) {
 				camera->SetDistance(followDistance);
 			}
+			ImGui::PopItemWidth();
 
-            float offset[3] = { followOffset.x, followOffset.y, followOffset.z };
-			if (ImGui::DragFloat3("Offset", offset, 0.1f)) {
+			float offset[3] = { followOffset.x, followOffset.y, followOffset.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Offset");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat3("##Offset", offset, 0.1f)) {
 				camera->SetOffset(glm::dvec3(offset[0], offset[1], offset[2]));
 			}
+			ImGui::PopItemWidth();
 
-			if (ImGui::DragFloat("Smoothness", &followSmoothness, 0.01f, 0.01f, 1.0f)) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Smoothness");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Smoothness", &followSmoothness, 0.01f, 0.01f, 1.0f)) {
 				camera->followSmoothness = followSmoothness;
 			}
+			ImGui::PopItemWidth();
 
-			if (ImGui::Checkbox("Follow X", &followX)) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Follow Axes");
+			ImGui::SameLine(labelWidth);
+
+			float axisWidth = (windowWidth - labelWidth - 8) / 3.0f;
+
+			if (ImGui::Checkbox("X##FollowX", &followX)) {
 				camera->followX = followX;
 			}
-			if (ImGui::Checkbox("Follow Y", &followY)) {
+			ImGui::SameLine(0, 4);
+
+			if (ImGui::Checkbox("Y##FollowY", &followY)) {
 				camera->followY = followY;
 			}
-			if (ImGui::Checkbox("Follow Z", &followZ)) {
+			ImGui::SameLine(0, 4);
+
+			if (ImGui::Checkbox("Z##FollowZ", &followZ)) {
 				camera->followZ = followZ;
 			}
 
-            if (ImGui::Button("Clear Follow Target")) {
+			ImGui::SetCursorPosX(labelWidth);
+			if (ImGui::Button("Clear Follow Target", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
 				camera->followTarget = nullptr;
 			}
 		}
 
-        //shake config
-        float shakeIntensity = camera->shakeIntensity;
-        float shakeDuration = camera->shakeDuration;
-        float shakeFrequency = camera->shakeFrequency;
+		ImGui::Separator();
 
-        if (ImGui::DragFloat("Shake Intensity", &shakeIntensity, 0.1f, 0.0f, 10.0f)) {
-            camera->shakeIntensity = shakeIntensity;
-        }
+		ImGui::Text("Camera Shake");
 
-        if (ImGui::DragFloat("Shake Duration", &shakeDuration, 0.1f, 0.0f, 10.0f)) {
+		float shakeIntensity = camera->shakeIntensity;
+		float shakeDuration = camera->shakeDuration;
+		float shakeFrequency = camera->shakeFrequency;
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Intensity");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##ShakeIntensity", &shakeIntensity, 0.1f, 0.0f, 10.0f)) {
+			camera->shakeIntensity = shakeIntensity;
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Duration");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##ShakeDuration", &shakeDuration, 0.1f, 0.0f, 10.0f)) {
 			camera->shakeDuration = shakeDuration;
 		}
+		ImGui::PopItemWidth();
 
-        if (ImGui::DragFloat("Shake Frequency", &shakeFrequency, 0.1f, 0.0f, 10.0f)) {
-            camera->shakeFrequency = shakeFrequency;
-        }
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Frequency");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##ShakeFrequency", &shakeFrequency, 0.1f, 0.0f, 10.0f)) {
+			camera->shakeFrequency = shakeFrequency;
+		}
+		ImGui::PopItemWidth();
 
-        if (ImGui::Button("Shake")) {
-            camera->Shake(shakeIntensity, shakeDuration, shakeFrequency);
-        }
-    }
+		ImGui::SetCursorPosX(labelWidth);
+		if (ImGui::Button("Test Shake", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			camera->Shake(shakeIntensity, shakeDuration, shakeFrequency);
+		}
+	}
     #pragma endregion
 
     #pragma region Light

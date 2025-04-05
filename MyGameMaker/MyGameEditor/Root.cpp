@@ -462,25 +462,13 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	
-	//auto boltgunPickUp = CreateGameObjectWithPath("Assets/boltgun.fbx");
-	//std::shared_ptr<Image> BoltgunBaseColor = std::make_shared<Image>();
-	//std::shared_ptr<Image> BoltgunRoughness = std::make_shared<Image>();
-	//std::shared_ptr<Image> BoltgunNormal = std::make_shared<Image>();
-	//std::shared_ptr<Image> BoltgunMetallic = std::make_shared<Image>();
-	//BoltgunBaseColor->LoadTexture("Assets/Textures/boltgun_DefaultMaterial_BaseColor.png");
-	//BoltgunRoughness->LoadTexture("Assets/Textures/boltgun_DefaultMaterial_Roughness.png");
-	//BoltgunNormal->LoadTexture("Assets/Textures/boltgun_DefaultMaterial_Normal.png");
-	//BoltgunMetallic->LoadTexture("Assets/Textures/boltgun_DefaultMaterial_Metallic.png");
-	//boltgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBaseColor);
-	//boltgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BoltgunRoughness);
-	//boltgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BoltgunNormal);
-	//boltgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(BoltgunMetallic);
-	//boltgunPickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
-	//boltgunPickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//boltgunPickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//boltgunPickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//boltgunPickUp->AddComponent<ScriptComponent>()->LoadScript("BoltgunPickUp");
-	//boltgunPickUp->SetTag("Weapon");
+	auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
+	biblePagePickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	biblePagePickUp->SetTag("BiblePage");
 
 #ifdef _BUILD
 	Application->play = true;

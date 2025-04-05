@@ -1393,7 +1393,10 @@ private:
 					DrawGameObjectField(monoScript, field, fieldName);
 				}
 				else if (strcmp(className, "Transform") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
-					ImGui::TextDisabled("(Transform is not editable in the inspector.)");
+					DrawComponentField(monoScript, field, fieldName, "Transform", "HawkEngine.Transform");
+				}
+				else if (strcmp(className, "Camera") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
+					DrawComponentField(monoScript, field, fieldName, "Camera", "HawkEngine.Camera");
 				}
 				else {
 					ImGui::TextDisabled("(Unsupported object type: %s.%s)", nameSpace, className);
@@ -1408,6 +1411,27 @@ private:
 		catch (...) {
 			ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Error reading field");
 		}
+	}
+
+	static void DrawComponentField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, const char* componentName, const char* componentNamespace) {
+		MonoObject* fieldValue = nullptr;
+		mono_field_get_value(monoScript, field, &fieldValue);
+
+		if (fieldValue == nullptr) {
+			ImGui::Text("None");
+			return;
+		}
+
+		MonoClass* fieldClass = mono_object_get_class(fieldValue);
+		const char* className = mono_class_get_name(fieldClass);
+		const char* nameSpace = mono_class_get_namespace(fieldClass);
+
+		if (strcmp(className, componentName) == 0 && strcmp(nameSpace, componentNamespace) == 0) {
+			ImGui::Text("%s", className);
+			return;
+		}
+
+		ImGui::TextDisabled("(Unsupported type: %s.%s)", nameSpace, className);
 	}
 
 	static void DrawEnumField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, MonoClass* enumClass) {

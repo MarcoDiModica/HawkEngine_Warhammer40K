@@ -24,6 +24,9 @@ public class Test1 : MonoBehaviour
 
     public TestEnum testEnum;
 
+    public Transform testTransform;
+    public Collider testCollider;
+
     public override void Start()
     {
         Engineson.print("Test1 Staart");

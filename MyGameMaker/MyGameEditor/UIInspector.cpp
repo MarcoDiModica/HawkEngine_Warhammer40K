@@ -1392,6 +1392,9 @@ private:
 				if (strcmp(className, "GameObject") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
 					DrawGameObjectField(monoScript, field, fieldName);
 				}
+				else if (strcmp(className, "Transform") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
+					ImGui::TextDisabled("(Transform is not editable in the inspector.)");
+				}
 				else {
 					ImGui::TextDisabled("(Unsupported object type: %s.%s)", nameSpace, className);
 				}

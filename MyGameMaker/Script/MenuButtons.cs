@@ -12,6 +12,9 @@ public class MenuButtons : MonoBehaviour
     private GameObject creditsButton;
     private GameObject quitButton;
     private GameObject optionsCanvas;
+    private GameObject HUD;
+    private GameObject Player;
+    private PlayerData playerData;
 
     private UIButton button_newGameButton;
     private UIButton button_continueButton;
@@ -39,7 +42,7 @@ public class MenuButtons : MonoBehaviour
         optionsButton = GameObject.Find("options_button");
         //creditsButton = GameObject.Find("CreditsButton");
         quitButton = GameObject.Find("exit_button");
-        optionsCanvas = GameObject.Find("Canvas_OptionsMenu_");
+        optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
 
         button_newGameButton = newGameButton.GetComponent<UIButton>();
         button_continueButton = continueButton.GetComponent<UIButton>();
@@ -59,6 +62,20 @@ public class MenuButtons : MonoBehaviour
         {
             Engineson.print("ERROR: No Button object found");
         }
+
+        HUD = GameObject.Find("Canvas_HUD");
+
+        Player = GameObject.Find("Player");
+        if (Player == null)
+        {
+            Engineson.print("ERROR: Player not found");
+        }
+
+        playerData = Player.GetComponent<PlayerController>().playerData;
+        if (playerData == null)
+        {
+            Engineson.print("ERROR: PlayerData not found");
+        }
     }
 
     public override void Update(float deltaTime)
@@ -66,6 +83,9 @@ public class MenuButtons : MonoBehaviour
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
             //SceneManager.LoadScene("DefaultScene");
+            //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
+            playerData.SetHealth(playerData.GetMaxHealth());
+            HUD.SetActive(true);
             gameObject.SetActive(false);
         }
 
@@ -82,6 +102,9 @@ public class MenuButtons : MonoBehaviour
         {
             //Cargar el juego
             //SceneManager.LoadScene("DefaultScene");
+            //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
+            playerData.SetHealth(playerData.GetMaxHealth());
+            HUD.SetActive(true);
             gameObject.SetActive(false);
         }
         if(button_continueButton.GetState() == ButtonState.HOVERED)

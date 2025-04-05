@@ -12,8 +12,10 @@ public class PauseMenu : MonoBehaviour
     private GameObject mainMenuButton;
     private GameObject quitButton;
     private bool isOptionsMenuActive = false;
+    private GameObject HUD;
+    private HUD HUDScript;
 
-    
+
 
     private UIButton button_resumeButton;
     private UIButton button_optionsMenuButton;
@@ -58,7 +60,16 @@ public class PauseMenu : MonoBehaviour
 
         //sound = gameObject.GetComponent<Audio>();
 
-
+        HUD = GameObject.Find("Canvas_HUD");
+        if (HUD == null)
+        {
+            Engineson.print("ERROR: HUD not found");
+        }
+        HUDScript = HUD.GetComponent<HUD>();
+        if (HUDScript == null)
+        {
+            Engineson.print("ERROR: HUDScript not found");
+        }
     }
 
     public override void Update(float deltaTime)
@@ -73,7 +84,8 @@ public class PauseMenu : MonoBehaviour
             }
             else
             {
-                this.gameObject.SetActive(false);
+                HUDScript.isPaused = false;
+                gameObject.SetActive(false);
             }
         }
 
@@ -104,7 +116,8 @@ public class PauseMenu : MonoBehaviour
         {
             //SceneManager.LoadScene("MainMenu");
             mainMenu.SetActive(true);
-            this.gameObject.SetActive(false);
+            HUDScript.isPaused = false;
+            gameObject.SetActive(false);
         }
         if (button_mainMenuButton.GetState() == ButtonState.HOVERED)
         {
@@ -129,10 +142,21 @@ public class PauseMenu : MonoBehaviour
             transform_quitButton.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
         }
 
-        //Esto lo tengo que mover al HUD por ahora y luego ya al script del gameplay o lo que sea
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
         {
-            this.gameObject.SetActive(true);
+            if(HUDScript.openedPause)
+            {
+                HUDScript.openedPause = false;
+                Engineson.print("Avoided closure");
+            }
+            else
+            {
+                optionsMenu.SetActive(false);
+                isOptionsMenuActive = false;
+                Engineson.print("Closing menu");
+                HUDScript.isPaused = false;
+                gameObject.SetActive(false);
+            }
         }
     }
 

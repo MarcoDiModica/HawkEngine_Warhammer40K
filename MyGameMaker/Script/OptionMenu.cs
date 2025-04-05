@@ -5,7 +5,6 @@ using System.Numerics;
 
 public class OptionMenu : MonoBehaviour
 {
-    GameObject gamePlaycanvas;
     public override void Awake()
     {
         //Engineson.print("OptionMenu Awake");
@@ -13,7 +12,6 @@ public class OptionMenu : MonoBehaviour
     public override void Start()
     {
         //Engineson.print("OptionMenu Start");
-        gamePlaycanvas = GameObject.Find("Canvas_OptionsMenu_");
 
     }
 
@@ -22,7 +20,7 @@ public class OptionMenu : MonoBehaviour
         //Engineson.print("OptionMenu Update");
         if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
         {
-            gamePlaycanvas.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         //if (gamePlaycanvas.GetComponent<UIButton>().GetState() == ButtonState.HOVERED)

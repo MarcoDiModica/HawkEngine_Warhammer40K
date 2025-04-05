@@ -2495,7 +2495,7 @@ GameObject6:
 GameObject7:
   name: Canvas_PauseMenu
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:

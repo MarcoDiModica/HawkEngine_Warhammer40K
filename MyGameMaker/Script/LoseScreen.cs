@@ -14,6 +14,9 @@ public class LoseScreen : MonoBehaviour
     private UITransform transform_loadLastCheckpoint;
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
+    private GameObject HUD;
+    private GameObject Player;
+    private PlayerData playerData;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
     public override void Awake()
@@ -42,6 +45,20 @@ public class LoseScreen : MonoBehaviour
         {
             Engineson.print("ERROR: No Button object found");
         }
+
+        HUD = GameObject.Find("Canvas_HUD");
+
+        Player = GameObject.Find("Player");
+        if (Player == null)
+        {
+            Engineson.print("ERROR: Player not found");
+        }
+
+        playerData = Player.GetComponent<PlayerController>().playerData;
+        if (playerData == null)
+        {
+            Engineson.print("ERROR: PlayerData not found");
+        }
     }
     public override void Update(float deltaTime)
     {
@@ -49,6 +66,9 @@ public class LoseScreen : MonoBehaviour
 
         if (button_loadLastCheckpoint.GetState() == ButtonState.CLICKED)
         {
+            //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
+            playerData.SetHealth(playerData.GetMaxHealth());
+            HUD.SetActive(true);
             this.gameObject.SetActive(false);
         }
         if (button_loadLastCheckpoint.GetState() == ButtonState.HOVERED)

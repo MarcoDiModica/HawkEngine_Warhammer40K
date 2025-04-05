@@ -53,6 +53,26 @@ public class HUD : MonoBehaviour
 
     private PlayerPowerUp playerPowerUp;
 
+    private GameObject winScreen;
+    private GameObject loseScreen;
+    private GameObject pauseMenu;
+
+    public bool openedPause = false;
+    public bool isPaused = false;
+
+
+    void win()
+    {
+        winScreen.SetActive(true);
+        gameObject.SetActive(false);
+    }
+
+    void lose()
+    {
+        loseScreen.SetActive(true);
+        gameObject.SetActive(false);
+    }
+
     float CalculateHPBarWidth()
     {
         float hp = playerData.GetHealth();
@@ -203,6 +223,19 @@ public class HUD : MonoBehaviour
         {
             Engineson.print("ERROR: PlayerPowerUp not found");
         }
+
+        winScreen = GameObject.Find("Canvas_win_screen");
+        if (winScreen == null)
+        {
+            Engineson.print("ERROR: WinScreen not found");
+        }
+        loseScreen = GameObject.Find("Canvas_lose_screen");
+        if (loseScreen == null)
+        {
+            Engineson.print("ERROR: LoseScreen not found");
+        }
+
+        pauseMenu = GameObject.Find("Canvas_PauseMenu");
     }
     public override void Update(float deltaTime)
     {
@@ -288,7 +321,7 @@ public class HUD : MonoBehaviour
                 railgunAbility2a.SetActive(false);
                 railgunAbility2b.SetActive(false);
 
-                if(playerShootingScript.hasShotgun)
+                if (playerShootingScript.hasShotgun)
                 {
                     lockR.SetActive(false);
                 }
@@ -331,7 +364,7 @@ public class HUD : MonoBehaviour
                 railgunAbility2a.SetActive(false);
                 railgunAbility2b.SetActive(false);
 
-                if(playerShootingScript.hasRailgun)
+                if (playerShootingScript.hasRailgun)
                 {
                     lockR.SetActive(false);
                 }
@@ -400,7 +433,7 @@ public class HUD : MonoBehaviour
 
 
 
-        if(playerPowerUp.GetHasMedicaeStimm())
+        if (playerPowerUp.GetHasMedicaeStimm())
         {
             msup.SetActive(true);
         }
@@ -419,7 +452,7 @@ public class HUD : MonoBehaviour
             noreload.SetActive(false);
         }
 
-        if(playerPowerUp.GetHasMagnet())
+        if (playerPowerUp.GetHasMagnet())
         {
             magnet.SetActive(true);
         }
@@ -428,7 +461,29 @@ public class HUD : MonoBehaviour
             magnet.SetActive(false);
         }
 
-    }
+        if (playerData.GetHealth() <= 0)
+        {
+            lose();
+        }
 
+        if (Input.GetKeyDown(KeyCode.TAB))
+        {
+            win();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
+        {
+            if (!isPaused)
+            {
+                openedPause = true;
+                Engineson.print("set openedPause to true");
+                pauseMenu.SetActive(true);
+                Engineson.print("opened pause menu");
+                isPaused = true;
+            }
+        }
+
+    }
     
 }

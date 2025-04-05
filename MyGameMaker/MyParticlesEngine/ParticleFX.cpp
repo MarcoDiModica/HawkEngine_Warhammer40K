@@ -1296,8 +1296,21 @@ void ParticleFX::SetGravity(glm::vec3 gravity) {
 
 void ParticleFX::SetTexture(const std::string& texturePath) {
 	auto image = std::make_shared<Image>();
-	image->LoadTexture(texturePath);
-	material->setImage(image);
+	std::string binaryPath = texturePath.substr(texturePath.find_last_of('/') + 1);
+	binaryPath = binaryPath.substr(0, binaryPath.size() - 4);
+	auto binImage = image->LoadBinary(binaryPath);
+	if (binImage == NULL)
+	{
+		image->LoadTexture(texturePath);
+		
+		image->SaveBinary(binaryPath);
+		material->setImage(image);
+	}
+	else
+	{
+		material->setImage(binImage);
+	}
+
 }
 
 void ParticleFX::SetColorGradient(const std::string& texturePath) {

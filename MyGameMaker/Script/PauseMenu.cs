@@ -56,24 +56,38 @@ public class PauseMenu : MonoBehaviour
         if (resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
+            return;
         }
 
+        if (optionsMenu == null || mainMenu == null)
+        {
+            Engineson.print("ERROR: No Canvas object found");
+            return;
+        }
         //sound = gameObject.GetComponent<Audio>();
 
         HUD = GameObject.Find("Canvas_HUD");
         if (HUD == null)
         {
             Engineson.print("ERROR: HUD not found");
+            return;
         }
         HUDScript = HUD.GetComponent<HUD>();
         if (HUDScript == null)
         {
             Engineson.print("ERROR: HUDScript not found");
+            return;
         }
     }
 
     public override void Update(float deltaTime)
     {
+        if (optionsMenu == null || mainMenu == null || resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
+        {
+            Engineson.print("ERROR: No Button or Canvas object found");
+            return;
+        }
+
         //Engineson.print("OptionMenu Update");
         if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B) || button_resumeButton.GetState() == ButtonState.CLICKED)
         {

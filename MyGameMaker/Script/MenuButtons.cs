@@ -62,6 +62,11 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: No Button object found");
         }
 
+        if (optionsCanvas == null)
+        {
+            Engineson.print("ERROR: No Canvas object found");
+        }
+
         HUD = GameObject.Find("Canvas_HUD");
 
         Player = GameObject.Find("Player");
@@ -79,6 +84,16 @@ public class MenuButtons : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if (button_newGameButton == null || button_continueButton == null || button_optionsButton == null || button_quitButton == null)
+        {
+            Engineson.print("ERROR: No Button object found");
+            return;
+        }
+        if (optionsCanvas == null)
+        {
+            Engineson.print("ERROR: No Canvas object found");
+            return;
+        }   
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
             //SceneManager.LoadScene("DefaultScene");

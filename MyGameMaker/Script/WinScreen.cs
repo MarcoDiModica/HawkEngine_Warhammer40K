@@ -28,6 +28,13 @@ public class WinScreen : MonoBehaviour
         if (mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
+            return;
+        }
+
+        if (mainMenu == null)
+        {
+            Engineson.print("ERROR: No Main Menu object found");
+            return;
         }
 
         transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
@@ -39,6 +46,11 @@ public class WinScreen : MonoBehaviour
     }
     public override void Update(float deltaTime)
     {
+        if (mainMenu == null || mainMenuButton == null || quitButton == null)
+        {
+            Engineson.print("ERROR: No Button or object found");
+            return;
+        }
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
             mainMenu.SetActive(true);

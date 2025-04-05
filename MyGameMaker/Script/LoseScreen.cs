@@ -37,6 +37,12 @@ public class LoseScreen : MonoBehaviour
         if (mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
+            return;
+        }
+        if (mainMenu == null)
+        {
+            Engineson.print("Error: No Canvas found");
+            return;
         }
         transform_loadLastCheckpoint = loadLastCheckpoint.GetComponent<UITransform>();
         transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
@@ -48,21 +54,57 @@ public class LoseScreen : MonoBehaviour
 
         HUD = GameObject.Find("Canvas_HUD");
 
+        if (HUD == null)
+        {
+            Engineson.print("ERROR: HUD not found");
+            return;
+        }
+
         Player = GameObject.Find("Player");
         if (Player == null)
         {
             Engineson.print("ERROR: Player not found");
+            return;
         }
 
         playerData = Player.GetComponent<PlayerController>().playerData;
         if (playerData == null)
         {
             Engineson.print("ERROR: PlayerData not found");
+            return;
         }
     }
     public override void Update(float deltaTime)
     {
+        if (mainMenu == null || loadLastCheckpoint == null || mainMenuButton == null || quitButton == null)
+        {
+            Engineson.print("ERROR: No Button or object found");
+            return;
+        }
 
+        if (mainMenu == null)
+        {
+            Engineson.print("ERROR: No Main Menu object found");
+            return;
+        }
+
+        if (Player == null)
+        {
+            Engineson.print("ERROR: Player not found");
+            return;
+        }
+
+        if (playerData == null)
+        {
+            Engineson.print("ERROR: PlayerData not found");
+            return;
+        }
+
+        if (HUD == null)
+        {
+            Engineson.print("ERROR: HUD not found");
+            return;
+        }
 
         if (button_loadLastCheckpoint.GetState() == ButtonState.CLICKED)
         {

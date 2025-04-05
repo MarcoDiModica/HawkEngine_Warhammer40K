@@ -54,6 +54,7 @@ private:
 	double orbitPitch = 0.0;
 	double MAX_PITCH = 89.0;
 	glm::dvec3 orbitPoint = glm::dvec3(0.0, 0.0, 0.0);
+	float movementSmoothness = 0.2f;
 
 	bool isFocusing = false;
 	bool mouseHidden = false;

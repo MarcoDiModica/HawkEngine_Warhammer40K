@@ -138,12 +138,24 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 			glm::dvec3 right = glm::normalize(glm::cross(glm::dvec3(0, 1, 0), forward));
 			glm::dvec3 up = glm::normalize(glm::cross(forward, right));
 
-			if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) transform.Translate(forward * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) transform.Translate(-forward * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) transform.Translate(right * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) transform.Translate(-right * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) transform.Translate(-up * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) transform.Translate(up * static_cast<double>(speed * deltaTime));
+			if (Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+			{
+				if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) transform.Translate(forward * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) transform.Translate(-forward * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) transform.Translate(right * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) transform.Translate(-right * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) transform.Translate(-up * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) transform.Translate(up * static_cast<double>(speed * 2.0f * deltaTime));
+			}
+			else
+			{
+				if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) transform.Translate(forward * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) transform.Translate(-forward * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) transform.Translate(right * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) transform.Translate(-right * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) transform.Translate(-up * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) transform.Translate(up * static_cast<double>(speed * deltaTime));
+			}
 		}
 	}
 	else if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT)

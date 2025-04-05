@@ -412,9 +412,9 @@ bool Root::Start()
 	CreateGameplayUI();
 	// 
 	// 
-	//CreateMainMenuUI();
-	//CreateOptionsMenuUI();
-	//CreatePauseMenuUI();
+	CreateMainMenuUI();
+	CreateOptionsMenuUI();
+	CreatePauseMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
@@ -1122,6 +1122,7 @@ void Root::CreateGameplayUI()
 	bible5Icon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.137, 0.929, 0), glm::vec3(0.003, 0.020, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("HUD");
+	canvas->AddComponent<SoundComponent>();
 }
 
 void Root::CreateMainMenuUI()
@@ -1181,6 +1182,7 @@ void Root::CreateMainMenuUI()
 	emmptyMusic->AddComponent<SoundComponent>();
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
+	canvas->AddComponent<SoundComponent>();
 }
 
 void Root::CreatePauseMenuUI() {
@@ -1228,6 +1230,7 @@ void Root::CreatePauseMenuUI() {
 	quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.631, 0), glm::vec3(0.142, 0.083, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("PauseMenu");
+	canvas->AddComponent<SoundComponent>();
 }
 
 void Root::CreateOptionsMenuUI() {
@@ -1243,6 +1246,7 @@ void Root::CreateOptionsMenuUI() {
 	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("OptionMenu");
+	canvas->AddComponent<SoundComponent>();
 }
 
 void Root::CreateWinUI() {
@@ -1274,6 +1278,7 @@ void Root::CreateWinUI() {
 	quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.579, 0.861, 0), glm::vec3(0.184, 0.064, 1));
 	
 	canvas->AddComponent<ScriptComponent>()->LoadScript("WinScreen");
+	canvas->AddComponent<SoundComponent>();
 
 }
 
@@ -1314,6 +1319,7 @@ void Root::CreateLoseUI() {
 	restartButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.282, 0.755, 0), glm::vec3(0.261, 0.059, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("LoseScreen");
+	canvas->AddComponent<SoundComponent>();
 }
 
 void Root::CreateLocationSM() {

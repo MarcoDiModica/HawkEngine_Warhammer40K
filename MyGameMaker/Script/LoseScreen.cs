@@ -17,6 +17,7 @@ public class LoseScreen : MonoBehaviour
     private GameObject HUD;
     private GameObject Player;
     private PlayerData playerData;
+    private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
     public override void Awake()
@@ -30,6 +31,7 @@ public class LoseScreen : MonoBehaviour
         loadLastCheckpoint = GameObject.Find("LLC_button");
         mainMenuButton = GameObject.Find("MM_button");
         quitButton = GameObject.Find("QUIT_button");
+        sound = gameObject.GetComponent<Audio>();
         button_loadLastCheckpoint = loadLastCheckpoint.GetComponent<UIButton>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
@@ -64,6 +66,12 @@ public class LoseScreen : MonoBehaviour
         if (Player == null)
         {
             Engineson.print("ERROR: Player not found");
+            return;
+        }
+
+        if (sound == null)
+        {
+            Engineson.print("ERROR: Audio not found");
             return;
         }
 
@@ -105,17 +113,26 @@ public class LoseScreen : MonoBehaviour
             Engineson.print("ERROR: HUD not found");
             return;
         }
+        if (sound == null)
+        {
+            Engineson.print("ERROR: Audio not found");
+            return;
+        }
 
         if (button_loadLastCheckpoint.GetState() == ButtonState.CLICKED)
         {
             //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
             playerData.SetHealth(playerData.GetMaxHealth());
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
             HUD.SetActive(true);
             this.gameObject.SetActive(false);
         }
         if (button_loadLastCheckpoint.GetState() == ButtonState.HOVERED)
         {
             transform_loadLastCheckpoint.DOScaleUI(new Vector3(0.3f, 0.08f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_loadLastCheckpoint.GetState() == ButtonState.DEFAULT)
         {
@@ -124,12 +141,16 @@ public class LoseScreen : MonoBehaviour
 
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
             mainMenu.SetActive(true);
             this.gameObject.SetActive(false);
         }
         if (button_mainMenuButton.GetState() == ButtonState.HOVERED)
         {
             transform_mainMenuButton.DOScaleUI(new Vector3(0.2f, 0.080f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_mainMenuButton.GetState() == ButtonState.DEFAULT)
         {
@@ -139,11 +160,15 @@ public class LoseScreen : MonoBehaviour
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
             //Salir del juego
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
         }
 
         if (button_quitButton.GetState() == ButtonState.HOVERED)
         {
             transform_quitButton.DOScaleUI(new Vector3(0.2f, 0.080f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_quitButton.GetState() == ButtonState.DEFAULT)
         {

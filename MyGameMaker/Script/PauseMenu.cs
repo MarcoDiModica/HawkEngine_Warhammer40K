@@ -27,6 +27,8 @@ public class PauseMenu : MonoBehaviour
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
 
+    private Audio sound;
+
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
 
@@ -43,6 +45,7 @@ public class PauseMenu : MonoBehaviour
         optionsMenuButton = GameObject.Find("Options_Button");
         mainMenuButton = GameObject.Find("MainMenu_Button");
         quitButton = GameObject.Find("Exit_Button");
+        sound = gameObject.GetComponent<Audio>();
 
         button_resumeButton = resumeButton.GetComponent<UIButton>();
         button_optionsMenuButton = optionsMenuButton.GetComponent<UIButton>();
@@ -91,7 +94,10 @@ public class PauseMenu : MonoBehaviour
         //Engineson.print("OptionMenu Update");
         if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B) || button_resumeButton.GetState() == ButtonState.CLICKED)
         {
-            if(isOptionsMenuActive)
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+
+            if (isOptionsMenuActive)
             {
                 optionsMenu.SetActive(false);
                 isOptionsMenuActive = false;
@@ -114,6 +120,8 @@ public class PauseMenu : MonoBehaviour
 
         if (button_optionsMenuButton.GetState() == ButtonState.CLICKED)
         {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
             optionsMenu.SetActive(true);
             isOptionsMenuActive = true;
         }
@@ -129,6 +137,8 @@ public class PauseMenu : MonoBehaviour
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
             //SceneManager.LoadScene("MainMenu");
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
             mainMenu.SetActive(true);
             HUDScript.isPaused = false;
             gameObject.SetActive(false);
@@ -145,6 +155,8 @@ public class PauseMenu : MonoBehaviour
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
             //Salir del juego
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
         }
 
         if (button_quitButton.GetState() == ButtonState.HOVERED)

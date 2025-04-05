@@ -26,6 +26,8 @@ public class MenuButtons : MonoBehaviour
     private UITransform transform_optionsButton;
     private UITransform transform_creditsButton;
     private UITransform transform_quitButton;
+
+    private Audio sound;
     //private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
@@ -42,6 +44,7 @@ public class MenuButtons : MonoBehaviour
         //creditsButton = GameObject.Find("CreditsButton");
         quitButton = GameObject.Find("exit_button");
         optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
+        sound = gameObject.GetComponent<Audio>();
 
         button_newGameButton = newGameButton.GetComponent<UIButton>();
         button_continueButton = continueButton.GetComponent<UIButton>();
@@ -80,6 +83,10 @@ public class MenuButtons : MonoBehaviour
         {
             Engineson.print("ERROR: PlayerData not found");
         }
+        if (sound == null)
+        {
+            Engineson.print("ERROR: Audio not found");
+        }
     }
 
     public override void Update(float deltaTime)
@@ -101,11 +108,15 @@ public class MenuButtons : MonoBehaviour
             playerData.SetHealth(playerData.GetMaxHealth());
             HUD.SetActive(true);
             gameObject.SetActive(false);
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
         }
 
         if (button_newGameButton.GetState() == ButtonState.HOVERED)
         {
             transform_newGameButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_newGameButton.GetState() == ButtonState.DEFAULT)
         {
@@ -118,12 +129,16 @@ public class MenuButtons : MonoBehaviour
             //SceneManager.LoadScene("DefaultScene");
             //por ahora lo hacemos asi, pero el problema es que no comienza con la vida temporal
             playerData.SetHealth(playerData.GetMaxHealth());
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
             HUD.SetActive(true);
             gameObject.SetActive(false);
         }
         if (button_continueButton.GetState() == ButtonState.HOVERED)
         {
             transform_continueButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_continueButton.GetState() == ButtonState.DEFAULT)
         {
@@ -133,6 +148,8 @@ public class MenuButtons : MonoBehaviour
 
         if (button_optionsButton.GetState() == ButtonState.CLICKED)
         {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
             optionsCanvas.SetActive(true);
 
         }
@@ -140,6 +157,8 @@ public class MenuButtons : MonoBehaviour
         if (button_optionsButton.GetState() == ButtonState.HOVERED)
         {
             transform_optionsButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_optionsButton.GetState() == ButtonState.DEFAULT)
         {
@@ -149,11 +168,15 @@ public class MenuButtons : MonoBehaviour
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
             //Salir del juego
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
         }
 
         if (button_quitButton.GetState() == ButtonState.HOVERED)
         {
             transform_quitButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            sound?.LoadAudio(buttonHovered);
+            sound?.Play();
         }
         else if (button_quitButton.GetState() == ButtonState.DEFAULT)
         {

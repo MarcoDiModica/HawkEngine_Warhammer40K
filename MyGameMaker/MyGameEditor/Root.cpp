@@ -49,10 +49,7 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-
-	Application->scene_serializer->DeSerialize("Library/Scenes/Level1.scene");
-
-	//Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.scene");
 
 
     return true;
@@ -66,7 +63,8 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-
+	//auto scene = CreateGameObjectWithPath("Assets/Meshes/Level1.fbx");
+	//auto scenezone3 = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");
 	//	
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
@@ -321,17 +319,17 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	hormagauntMesh->SetName("HormagauntMesh");
-	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//auto hormagaunt = CreateGameObject("Hormagaunt");
+	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
+	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh->SetName("HormagauntMesh");
+	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh, *hormagaunt);
+	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 
 	//auto floor = CreateCube("Floor");
 	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
@@ -374,35 +372,35 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	auto floor = CreateCube("Floor");
-	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//auto floor = CreateCube("Floor");
+	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 
-	//CreateGameplayUI();
+	////CreateGameplayUI();
 
-	////For rendering Interaction System text, remove the canvas if there is already one
-	auto canvas = CreateGameObject("Canvas");
-	canvas->AddComponent<UICanvasComponent>();
-	canvas->AddComponent<UITransformComponent>();
-	canvas->AddComponent<SoundComponent>();
+	//////For rendering Interaction System text, remove the canvas if there is already one
+	//auto canvas = CreateGameObject("Canvas");
+	//canvas->AddComponent<UICanvasComponent>();
+	//canvas->AddComponent<UITransformComponent>();
+	//canvas->AddComponent<SoundComponent>();
 
-	auto interactText = CreateGameObject("InteractText");
-	Application->root->ParentGameObject(*interactText, *canvas);
-	interactText->AddComponent<UIImageComponent>();
-	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
-	interactText->AddComponent<UIButtonComponent>();
-	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
-	
-	
-	auto areaText = CreateGameObject("dialogueText");
-	Application->root->ParentGameObject(*areaText, *canvas);
-	areaText->AddComponent<UIImageComponent>();
-	areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
-	areaText->AddComponent<UIButtonComponent>();
-	areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	//auto interactText = CreateGameObject("InteractText");
+	//Application->root->ParentGameObject(*interactText, *canvas);
+	//interactText->AddComponent<UIImageComponent>();
+	//interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	//interactText->AddComponent<UIButtonComponent>();
+	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	//
+	//
+	//auto areaText = CreateGameObject("dialogueText");
+	//Application->root->ParentGameObject(*areaText, *canvas);
+	//areaText->AddComponent<UIImageComponent>();
+	//areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
+	//areaText->AddComponent<UIButtonComponent>();
+	//areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	//areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 
 	//floor->SetActive(false);
 
@@ -410,7 +408,7 @@ bool Root::Start()
 	//collisionNextLevel->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//collisionNextLevel->AddComponent<ScriptComponent>()->LoadScript("Scene2ToMenu");
 
-	CreateGameplayUI();
+	//CreateGameplayUI();
 	//CreateMainMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");

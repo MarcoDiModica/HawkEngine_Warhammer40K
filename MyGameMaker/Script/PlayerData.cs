@@ -6,6 +6,7 @@ public class PlayerData
     float healthTemp;
     float maxHealth = 100;
     float maxHealthTemp = 50;
+    public bool isHit = false;
     public float movSpeed = 10;
     public float collectionArea = 1;
     public float bonusCadence = 1;
@@ -27,6 +28,7 @@ public class PlayerData
         //First take damage from the temporary health, then, if it is 0, take damage from the max health
         if (healthTemp > 0)
         {
+            isHit = true;
             healthTemp -= damage;
             if (healthTemp < 0)
             {
@@ -35,6 +37,7 @@ public class PlayerData
         }
         else
         {
+            isHit = true;
             health -= damage;
         }
 

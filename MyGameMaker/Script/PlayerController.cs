@@ -50,11 +50,6 @@ public class PlayerController : MonoBehaviour
         sound = gameObject.GetComponent<Audio>();
         //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
         playerData = new PlayerData();
-
-        if (playerInput == null || playerMovement == null || playerDash == null || playerShooting == null || playerMesh == null)
-        {
-            Engineson.print("ERROR: PlayerController is missing required components!");
-        }
     }
 
     public override void Start()
@@ -69,16 +64,11 @@ public class PlayerController : MonoBehaviour
             if (playerData.GodMode == true)
             {
                 playerData.GodMode = false;
-                Engineson.print("GodMode deactivated");
             }
             else
             {
                 playerData.GodMode = true;
-                Engineson.print("GodMode activated");
-
             }
-
-
         }
         
         dashDelayTimer -= deltaTime;
@@ -267,13 +257,11 @@ public class PlayerController : MonoBehaviour
             isIdle = false;
 
         }
-        Engineson.print(moveDirection.ToString());
         if (isShootingStanding && moveDirection != Vector3.Zero)
         {
             playerAnimations.SetShootingStandingToShootingRunAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
-            Engineson.print("Transitioning to shooting running");
         }
     }
     private void SetWalkingToIdle()
@@ -357,15 +345,11 @@ public class PlayerController : MonoBehaviour
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
-                    Engineson.print("Player is dead!");
                 }
                 else
                 {
                     playerAnimations.SetHitIdleAnimation();
                 }
-                //playerAnimations.SetHitIdleAnimation();
-
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
             {
@@ -386,15 +370,11 @@ public class PlayerController : MonoBehaviour
                 {
                     playerAnimations.SetDeathAnimation();
                     sound?.LoadAudio(DeathAudio);
-                    Engineson.print("Player is dead!");
                 }
                 else
                 {
                     playerAnimations.SetHitIdleAnimation();
                 }
-                //playerAnimations.SetHitIdleAnimation();
-
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
             {
@@ -414,13 +394,11 @@ public class PlayerController : MonoBehaviour
                     playerAnimations.SetDeathAnimation();
                     sound?.LoadAudio(DeathAudio);
                     sound?.Play(true);
-                    Engineson.print("Player is dead!");
                 }
                 else
                 {
                     playerAnimations.SetHitIdleAnimation();
                 }
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
             {

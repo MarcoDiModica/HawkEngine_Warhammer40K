@@ -29,10 +29,6 @@ public class UIGameplay : MonoBehaviour
         boltgunIcon = GameObject.Find("BoltgunIcon").GetComponent<UIImage>();
         shotgunIcon = GameObject.Find("ShotgunIcon").GetComponent<UIImage>();
         railgunIcon = GameObject.Find("RailgunIcon").GetComponent<UIImage>();
-        if (railgunIcon == null || transform == null)
-        {
-            Engineson.print("ERROR: ImageAsSlider requires a UIImage component!");
-        }
     }
 
     public override void Update(float deltaTime)

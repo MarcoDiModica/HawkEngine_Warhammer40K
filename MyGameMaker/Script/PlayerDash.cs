@@ -32,11 +32,6 @@ public class PlayerDash : MonoBehaviour
     public override void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        if (rb == null)
-        {
-            Engineson.print("ERROR: PlayerDash requires a Rigidbody component!");
-            return;
-        }
         lastDashTime = -dashCooldown;
 
         playerCamera = GameObject.Find("MainCamera");
@@ -77,17 +72,13 @@ public class PlayerDash : MonoBehaviour
     {
         if (currentDashTime > 0)
         {
-            //playerCamera.GetComponent<Camera>().SetCameraFieldOfView(playerCamera.GetComponent<PlayerCamera>().dashFOV * (System.Math.PI / 180.0));
-            //playerCamera.GetComponent<PlayerCamera>().Lerp(playerCamera.GetComponent<PlayerCamera>().originalFOV, playerCamera.GetComponent<PlayerCamera>().dashFOV, 1);
             rb.AddForce(dashDirection * dashSpeed);
             currentDashTime -= deltaTime;
         }
         else
         {
             isDashing = false;
-            //playerCamera.GetComponent<Camera>().SetCameraFieldOfView(playerCamera.GetComponent<PlayerCamera>().originalFOV * (System.Math.PI / 180.0));
-            //playerCamera.GetComponent<PlayerCamera>().Lerp(playerCamera.GetComponent<PlayerCamera>().dashFOV, playerCamera.GetComponent<PlayerCamera>().originalFOV, 1);
-            playerCamera.GetComponent<PlayerCamera>().EndDash(); // Restaura el FOV
+            playerCamera.GetComponent<PlayerCamera>().EndDash();
 
         }
     }

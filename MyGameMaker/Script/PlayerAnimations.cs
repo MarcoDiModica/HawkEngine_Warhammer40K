@@ -18,12 +18,6 @@ public class PlayerAnimations : MonoBehaviour
         esk = gameObject.GetComponent<SkeletalAnimation>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         playerData = playerController.playerData;
-        if (esk == null)
-        {
-            Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
-            return;
-        }
-
         animIndex = esk.GetAnimationIndex();
     }
 

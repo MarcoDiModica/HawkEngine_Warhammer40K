@@ -1359,7 +1359,6 @@ private:
 				const char* className = mono_class_get_name(fieldClass);
 				const char* nameSpace = mono_class_get_namespace(fieldClass);
 
-				// Check for System.Numerics vector types
 				if (strcmp(nameSpace, "System.Numerics") == 0) {
 					if (strcmp(className, "Vector2") == 0) {
 						DrawVector2Field(monoScript, field, fieldName);
@@ -1375,7 +1374,11 @@ private:
 					}
 				}
 
-				// If not a recognized value type
+				if (mono_class_is_enum(fieldClass)) {
+					DrawEnumField(monoScript, field, fieldName, fieldClass);
+					break;
+				}
+
 				ImGui::TextDisabled("(Unsupported value type: %s.%s)", nameSpace, className);
 			}
 			break;
@@ -1404,20 +1407,56 @@ private:
 		}
 	}
 
-	// Structure to match the managed Vector2 layout
+	static void DrawEnumField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, MonoClass* enumClass) {
+		int enumValue = 0;
+		mono_field_get_value(monoScript, field, &enumValue);
+
+		const char* enumTypeName = mono_class_get_name(enumClass);
+
+		MonoType* enumType = mono_class_get_type(enumClass);
+		void* iter = NULL;
+		MonoClassField* enumField = NULL;
+		std::vector<std::string> enumNames;
+
+		while ((enumField = mono_class_get_fields(enumClass, &iter))) {
+			if (mono_field_get_flags(enumField) & MONO_FIELD_ATTR_STATIC) {
+				const char* name = mono_field_get_name(enumField);
+
+				if (strcmp(name, "value__") == 0) continue;
+
+				enumNames.push_back(name);
+			}
+		}
+
+		std::sort(enumNames.begin(), enumNames.end());
+
+		int currentIndex = enumValue;
+		if (currentIndex < -1 || currentIndex >= enumNames.size()) {
+			currentIndex = 0; 
+		}
+
+		std::string comboStr;
+		for (const auto& name : enumNames) {
+			comboStr += name + '\0';
+		}
+		comboStr += '\0'; 
+
+		if (ImGui::Combo("##enum", &currentIndex, comboStr.c_str())) {
+			mono_field_set_value(monoScript, field, &currentIndex);
+		}
+	}
+
 	struct MonoVector2 {
 		float X;
 		float Y;
 	};
 
-	// Structure to match the managed Vector3 layout
 	struct MonoVector3 {
 		float X;
 		float Y;
 		float Z;
 	};
 
-	// Structure to match the managed Vector4 layout
 	struct MonoVector4 {
 		float X;
 		float Y;
@@ -1426,14 +1465,11 @@ private:
 	};
 
 	static void DrawVector2Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-		// Since Vector2 is a value type, we read the struct directly
 		MonoVector2 vector;
 		mono_field_get_value(monoScript, field, &vector);
 
-		// Display the fields
 		float values[2] = { vector.X, vector.Y };
 		if (ImGui::DragFloat2("##vector2value", values, 0.1f)) {
-			// Update values
 			vector.X = values[0];
 			vector.Y = values[1];
 			mono_field_set_value(monoScript, field, &vector);
@@ -1441,14 +1477,11 @@ private:
 	}
 
 	static void DrawVector3Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-		// Since Vector3 is a value type, we read the struct directly
 		MonoVector3 vector;
 		mono_field_get_value(monoScript, field, &vector);
 
-		// Display the fields
 		float values[3] = { vector.X, vector.Y, vector.Z };
 		if (ImGui::DragFloat3("##vector3value", values, 0.1f)) {
-			// Update values
 			vector.X = values[0];
 			vector.Y = values[1];
 			vector.Z = values[2];
@@ -1457,14 +1490,11 @@ private:
 	}
 
 	static void DrawVector4Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-		// Since Vector4 is a value type, we read the struct directly
 		MonoVector4 vector;
 		mono_field_get_value(monoScript, field, &vector);
 
-		// Display the fields
 		float values[4] = { vector.X, vector.Y, vector.Z, vector.W };
 		if (ImGui::DragFloat4("##vector4value", values, 0.1f)) {
-			// Update values
 			vector.X = values[0];
 			vector.Y = values[1];
 			vector.Z = values[2];

@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     private bool hasStoppedFootsteps = false;
     private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
     private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep.wav";
+    public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit.wav";
+    public string DeathAudio = "Assets/Audio/SFX/Player/PlayerDeath.wav";
 
 
     public PlayerData playerData;
@@ -49,15 +51,10 @@ public class PlayerController : MonoBehaviour
         sound = gameObject.GetComponent<Audio>();
         //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
         playerData = new PlayerData();
-
         // Add the blood splash effect directly to the player object
         bloodSplashEffect = gameObject.AddComponent<ParticleFX>();
         bloodSplashEffect.ApplyPreset(19); // BLOOD_SPLASH preset (index 19)
 
-        if (playerInput == null || playerMovement == null || playerDash == null || playerShooting == null || playerMesh == null)
-        {
-            Engineson.print("ERROR: PlayerController is missing required components!");
-        }
     }
 
     public override void Start()
@@ -72,16 +69,11 @@ public class PlayerController : MonoBehaviour
             if (playerData.GodMode == true)
             {
                 playerData.GodMode = false;
-                Engineson.print("GodMode deactivated");
             }
             else
             {
                 playerData.GodMode = true;
-                Engineson.print("GodMode activated");
-
             }
-
-
         }
         
         dashDelayTimer -= deltaTime;
@@ -270,13 +262,11 @@ public class PlayerController : MonoBehaviour
             isIdle = false;
 
         }
-        Engineson.print(moveDirection.ToString());
         if (isShootingStanding && moveDirection != Vector3.Zero)
         {
             playerAnimations.SetShootingStandingToShootingRunAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
-            Engineson.print("Transitioning to shooting running");
         }
     }
     private void SetWalkingToIdle()
@@ -360,15 +350,11 @@ public class PlayerController : MonoBehaviour
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
-                    Engineson.print("Player is dead!");
                 }
                 else
                 {
                     playerAnimations.SetHitIdleAnimation();
                 }
-                //playerAnimations.SetHitIdleAnimation();
-
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
             {
@@ -383,26 +369,25 @@ public class PlayerController : MonoBehaviour
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
-                
+
+                sound?.LoadAudio(HitAudio);
+                sound?.Play(true);
+     
                 // Simply emit the blood splash particles
                 if (bloodSplashEffect != null)
                 {
                     bloodSplashEffect.EmitBurst(100);
-                    Engineson.print("Blood splash emitted!");
                 }
                 
                 if(playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
-                    Engineson.print("Player is dead!");
+                    sound?.LoadAudio(DeathAudio);
                 }
                 else
                 {
                     playerAnimations.SetHitIdleAnimation();
                 }
-                //playerAnimations.SetHitIdleAnimation();
-
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
             {
@@ -415,23 +400,24 @@ public class PlayerController : MonoBehaviour
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
                 playerData.TakeDamage(10);
+                sound?.LoadAudio(HitAudio);
+                sound?.Play(true);
                 
                 if (bloodSplashEffect != null)
                 {
                     bloodSplashEffect.EmitBurst(100);
-                    Engineson.print("Blood splash emitted!");
                 }
                 
                 if (playerData.GetHealth() <= 0)
                 {
                     playerAnimations.SetDeathAnimation();
-                    Engineson.print("Player is dead!");
+                    sound?.LoadAudio(DeathAudio);
+                    sound?.Play(true);
                 }
                 else
                 {
                     playerAnimations.SetHitIdleAnimation();
                 }
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
             }
             else if (playerDash.isInvulnerable)
             {

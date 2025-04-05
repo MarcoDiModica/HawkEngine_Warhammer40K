@@ -456,7 +456,7 @@ Vector3 EngineBinds::GetForward(MonoObject* transformRef) {
 
 // Camera Class functions
 
-void EngineBinds::SetCameraFieldOfView(MonoObject* cameraRef, float fov) {
+void EngineBinds::SetCameraFieldOfView(MonoObject* cameraRef, double fov) {
 
     CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
     camera->fov = fov;

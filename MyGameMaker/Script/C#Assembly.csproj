@@ -150,6 +150,7 @@
     <Compile Include="ShotgunPickUp.cs" />
     <Compile Include="ShotgunShells.cs" />
     <Compile Include="SkeletalAnimation.cs" />
+    <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />

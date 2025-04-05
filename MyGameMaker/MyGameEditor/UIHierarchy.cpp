@@ -18,6 +18,13 @@ UIHierarchy::~UIHierarchy() {
 }
 
 bool UIHierarchy::Draw() {
+	static bool showSavePopup = false;
+
+	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT &&
+		Application->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+		showSavePopup = true;
+	}
+
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
     ImGuiWindowFlags hierarchyFlags = ImGuiWindowFlags_None;
 
@@ -43,7 +50,12 @@ bool UIHierarchy::Draw() {
 			else {
 				currentSceneName.resize(100);
 
-				if (ImGui::InputText("##RenameScene", currentSceneName.data(), 100, ImGuiInputTextFlags_EnterReturnsTrue)) {
+				bool enterPressed = ImGui::InputText("##RenameScene", currentSceneName.data(), 100, ImGuiInputTextFlags_EnterReturnsTrue);
+
+				if (ImGui::IsWindowFocused() && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(0))
+					ImGui::SetKeyboardFocusHere(-1);
+
+				if (enterPressed || (ImGui::IsItemDeactivated() && ImGui::IsMouseClicked(0))) {
 					currentSceneName.resize(strlen(currentSceneName.data()));
 					if (currentSceneName.length() <= 100) {
 						currentScene->SetName(currentSceneName);
@@ -113,6 +125,30 @@ bool UIHierarchy::Draw() {
             draggedObject = nullptr;
         }
     }
+
+	if (showSavePopup) {
+		ImGui::OpenPopup("Save Scene");
+	}
+
+	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+	if (ImGui::BeginPopupModal("Save Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("Do you want to save the current scene?");
+		ImGui::Separator();
+
+		if (ImGui::Button("Save", ImVec2(120, 0))) {
+			Application->scene_serializer->Serialize("Library/Scenes");
+			showSavePopup = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+			showSavePopup = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
 
     ImGui::End();
     ImGui::PopStyleColor();

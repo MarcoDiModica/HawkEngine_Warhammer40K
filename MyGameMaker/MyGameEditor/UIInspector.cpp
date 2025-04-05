@@ -1430,9 +1430,6 @@ private:
 
 					if (managedGO) {
 						mono_field_set_value(monoScript, field, managedGO);
-
-						LOG(LogType::LOG_INFO, "Set GameObject reference: %s -> %s",
-							fieldName, draggedGO->GetName().c_str());
 					}
 				}
 			}
@@ -1443,8 +1440,6 @@ private:
 			if (ImGui::MenuItem("Clear Reference")) {
 				void* nullRef = nullptr;
 				mono_field_set_value(monoScript, field, nullRef);
-
-				LOG(LogType::LOG_INFO, "Cleared GameObject reference: %s", fieldName);
 			}
 			ImGui::EndPopup();
 		}

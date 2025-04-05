@@ -15,7 +15,7 @@ GameObject0:
         - 0
       localRotation:
         - 0
-        - -0
+        - 88.468114088509353
         - 0
       localScale:
         - 1
@@ -24,12 +24,12 @@ GameObject0:
     SoundComponent:
       name: SoundComponent
       enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      audio_path: Assets/Audio/SFX/Player/PlayerFootstep.wav
       volume: 1
       is_music: true
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -140,9 +140,9 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 0
-        - 20
-        - -14
+        - 8.8712882288435964
+        - 25.049151420593262
+        - -15.499999007646615
       localRotation:
         - 54.999999253784715
         - -0
@@ -231,7 +231,7 @@ GameObject3:
       enabled: true
       localPosition:
         - 0
-        - -1
+        - 2
         - 0
       localRotation:
         - 0

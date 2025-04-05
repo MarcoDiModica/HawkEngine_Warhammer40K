@@ -43,6 +43,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "mono/metadata/debug-helpers.h"
 
 typedef unsigned int guint32;
 #pragma endregion
@@ -1351,6 +1352,33 @@ private:
 			case MONO_TYPE_R8:
 				DrawDoubleField(monoScript, field, fieldName);
 				break;
+			case MONO_TYPE_VALUETYPE:
+			{
+				MonoType* fieldType = mono_field_get_type(field);
+				MonoClass* fieldClass = mono_class_from_mono_type(fieldType);
+				const char* className = mono_class_get_name(fieldClass);
+				const char* nameSpace = mono_class_get_namespace(fieldClass);
+
+				// Check for System.Numerics vector types
+				if (strcmp(nameSpace, "System.Numerics") == 0) {
+					if (strcmp(className, "Vector2") == 0) {
+						DrawVector2Field(monoScript, field, fieldName);
+						break;
+					}
+					else if (strcmp(className, "Vector3") == 0) {
+						DrawVector3Field(monoScript, field, fieldName);
+						break;
+					}
+					else if (strcmp(className, "Vector4") == 0) {
+						DrawVector4Field(monoScript, field, fieldName);
+						break;
+					}
+				}
+
+				// If not a recognized value type
+				ImGui::TextDisabled("(Unsupported value type: %s.%s)", nameSpace, className);
+			}
+			break;
 			case MONO_TYPE_CLASS:
 			{
 				MonoType* fieldType = mono_field_get_type(field);
@@ -1373,6 +1401,75 @@ private:
 		}
 		catch (...) {
 			ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Error reading field");
+		}
+	}
+
+	// Structure to match the managed Vector2 layout
+	struct MonoVector2 {
+		float X;
+		float Y;
+	};
+
+	// Structure to match the managed Vector3 layout
+	struct MonoVector3 {
+		float X;
+		float Y;
+		float Z;
+	};
+
+	// Structure to match the managed Vector4 layout
+	struct MonoVector4 {
+		float X;
+		float Y;
+		float Z;
+		float W;
+	};
+
+	static void DrawVector2Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		// Since Vector2 is a value type, we read the struct directly
+		MonoVector2 vector;
+		mono_field_get_value(monoScript, field, &vector);
+
+		// Display the fields
+		float values[2] = { vector.X, vector.Y };
+		if (ImGui::DragFloat2("##vector2value", values, 0.1f)) {
+			// Update values
+			vector.X = values[0];
+			vector.Y = values[1];
+			mono_field_set_value(monoScript, field, &vector);
+		}
+	}
+
+	static void DrawVector3Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		// Since Vector3 is a value type, we read the struct directly
+		MonoVector3 vector;
+		mono_field_get_value(monoScript, field, &vector);
+
+		// Display the fields
+		float values[3] = { vector.X, vector.Y, vector.Z };
+		if (ImGui::DragFloat3("##vector3value", values, 0.1f)) {
+			// Update values
+			vector.X = values[0];
+			vector.Y = values[1];
+			vector.Z = values[2];
+			mono_field_set_value(monoScript, field, &vector);
+		}
+	}
+
+	static void DrawVector4Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		// Since Vector4 is a value type, we read the struct directly
+		MonoVector4 vector;
+		mono_field_get_value(monoScript, field, &vector);
+
+		// Display the fields
+		float values[4] = { vector.X, vector.Y, vector.Z, vector.W };
+		if (ImGui::DragFloat4("##vector4value", values, 0.1f)) {
+			// Update values
+			vector.X = values[0];
+			vector.Y = values[1];
+			vector.Z = values[2];
+			vector.W = values[3];
+			mono_field_set_value(monoScript, field, &vector);
 		}
 	}
 

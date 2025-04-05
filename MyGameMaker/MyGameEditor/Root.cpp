@@ -377,6 +377,42 @@ bool Root::Start()
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);*/
+	
+	
+    auto envObj = CreateGameObject("Environment1");
+    envObj->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    envObj->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    auto encObjScript = envObj->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    auto envObjCollider = envObj->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    envObjCollider->SetTrigger(true); 
+
+    auto envObj2 = CreateGameObject("Environment2");
+    envObj2->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    envObj2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    auto encObjScript2 = envObj2->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    auto envObjCollider2 = envObj2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    envObjCollider2->SetTrigger(true); 
+
+    auto envObj3 = CreateGameObject("Environment3");
+    envObj3->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    envObj3->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    auto encObjScript3 = envObj3->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    auto envObjCollider3 = envObj3->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    envObjCollider3->SetTrigger(true); 
+
+    auto envObj4 = CreateGameObject("Environment4");
+    envObj4->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    envObj4->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    auto encObjScript4 = envObj4->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    auto envObjCollider4 = envObj4->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    envObjCollider4->SetTrigger(true); 
+
+    auto envObj5 = CreateGameObject("Environment5");
+    envObj5->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    envObj5->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    auto encObjScript5 = envObj5->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    auto envObjCollider5 = envObj5->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    envObjCollider5->SetTrigger(true);
 
 
 	//For rendering Interaction System text, remove the canvas if there is already one

@@ -89,21 +89,20 @@ public class PlayerMovement : MonoBehaviour
         float magnitude = leftStick.Length();
 
         
-        if(playerData.GodMode == true)
+        if (!playerInput.IsKeyboardMoving())
+    {
+        if (playerData.GodMode == true)
         {
-            moveSpeed = runSpeed*3;
-        } else if (magnitude > 0.1f)
+            moveSpeed = runSpeed * 3;
+        }
+        else if (magnitude > 0.1f)
         {
             if (magnitude > 0.7f)
-            {
                 moveSpeed = runSpeed;
-            }
             else
-            {
                 moveSpeed = walkSpeed;
-            }
-
         }
+    }
 
         Vector3 desiredVelocity = moveDirection * moveSpeed;
         if (playerInput?.IsShooting() == true)
@@ -136,7 +135,15 @@ public class PlayerMovement : MonoBehaviour
             collider.SetRotation(newRotation);
         }
     }
+    public void SetSpeedToRun()
+    {
+        moveSpeed = runSpeed;
+    }
 
+    public void SetSpeedToWalk()
+    {
+        moveSpeed = walkSpeed;
+    }
     private float Lerp(float start, float end, float t)
     {
         return start + (end - start) * Math.Min(1, Math.Max(0, t));

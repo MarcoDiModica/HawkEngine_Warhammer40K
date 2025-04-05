@@ -179,8 +179,6 @@ std::vector<GameObject*> PhysicsModule::OverlapSphere(const glm::vec3& position,
     int collisionFilterMask = btBroadphaseProxy::AllFilter;
     dynamicsWorld->addCollisionObject(ghostObject.get(), collisionFilterGroup, collisionFilterMask);
 
-	//adjust the world collisions
-    dynamicsWorld->stepSimulation(1.f / 60.f, 10);
 
     //Check collisions
     int numOverlappingObjects = ghostObject->getNumOverlappingObjects();
@@ -495,11 +493,10 @@ bool PhysicsModule::Update(double dt) {
     OPTICK_EVENT();
 #endif // PROFILE
   
-    if (linkPhysicsToScene) {
-        int numSubsteps = glm::clamp(static_cast<int>(dt / fixedDeltaTime), 1, 10);
+    if (linkPhysicsToScene) {  
         int maxSubSteps = 10;
 
-        dynamicsWorld->stepSimulation(dt, maxSubSteps, dt / maxSubSteps);
+        dynamicsWorld->stepSimulation(dt, maxSubSteps, fixedDeltaTime);
 
         SyncTransforms();
         CheckCollisions();
@@ -555,35 +552,45 @@ void PhysicsModule::SetGlobalRestitution(float restitutionValue) {
 
 GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, float maxDistance, btVector3& hitPoint, btVector3& normal, float& distance)
 {
-	rayFrom = origin;
-	btVector3 originRay = origin;
+    rayFrom = origin;
+    btVector3 originRay = origin;
     btVector3 directionRay = origin + direction.normalized() * maxDistance;
 
-	btCollisionWorld::ClosestRayResultCallback rayCallback(originRay, directionRay);
+    btCollisionWorld::ClosestRayResultCallback rayCallback(originRay, directionRay);
+    rayCallback.m_collisionFilterMask = btBroadphaseProxy::DefaultFilter | btBroadphaseProxy::StaticFilter | btBroadphaseProxy::KinematicFilter;
     dynamicsWorld->rayTest(originRay, directionRay, rayCallback);
 
-	
     if (rayCallback.hasHit()) {
-        rayTo = origin + rayCallback.m_closestHitFraction * direction.normalized() * maxDistance;
+        
         const btCollisionObject* hitObject = rayCallback.m_collisionObject;
-        hitPoint = rayCallback.m_hitPointWorld;
-        normal = rayCallback.m_hitNormalWorld;
-        distance = rayCallback.m_closestHitFraction * maxDistance;
-        for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
-            if (rigidBody == hitObject) {
-                return gameObject;
+        if (hitObject->getCollisionFlags() & btCollisionObject::CF_NO_CONTACT_RESPONSE) {
+            rayTo = origin + direction.normalized() * maxDistance;
+            return nullptr; // Ignore triggers
+        }
+        else
+        {
+            rayTo = origin + rayCallback.m_closestHitFraction * direction.normalized() * maxDistance;
+            hitPoint = rayCallback.m_hitPointWorld;
+            normal = rayCallback.m_hitNormalWorld;
+            distance = rayCallback.m_closestHitFraction * maxDistance;
+
+            for (const auto& [gameObject, rigidBody] : gameObjectRigidBodyMap) {
+                if (rigidBody == hitObject) {
+                    return gameObject;
+                }
             }
         }
-
-		
+        
     }
-	else {
-		rayTo = origin + direction.normalized() * maxDistance;
-		return nullptr;
-	}
+    else {
+        rayTo = directionRay;
+        return nullptr;
+    }
 
-	return nullptr;
+    return nullptr;
 }
+
+
 
 
 

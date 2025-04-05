@@ -27,6 +27,10 @@ public class Arc : MonoBehaviour
     public override void Start()
     {
         sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
     }
 
     public void Init(Vector3 pos, Vector3 dir)

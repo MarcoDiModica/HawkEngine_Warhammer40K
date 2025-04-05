@@ -11,10 +11,18 @@ public class EnemyControllerRanged : EnemyController
     public float projectileLifetime = 0.5f;
     protected float shootTimer = 0f;
 
+    //stats
+    private float health = 100.0f;
+    private float damage = 20.0f;
+
+    //audio
+    bool isCombatMusicPlaying = false;
+    private Audio music;
+    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
     public override void Awake()
     {
-        
+        music = gameObject.GetComponent<Audio>();
     }
     public override void Start()
     {
@@ -34,8 +42,8 @@ public class EnemyControllerRanged : EnemyController
             return;
         }
 
-        soundAttack = gameObject.GetComponent<Audio>();
-        if (soundAttack == null)
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
         {
             Engineson.print("PlayerShooting: Audio component not found");
         }
@@ -49,12 +57,18 @@ public class EnemyControllerRanged : EnemyController
 
         maxHealth = 100.0f;
         currentHealth = maxHealth;
+        gameObject.tag = "Ranged";
     }
 
     public override void Update(float deltaTime)
     {
         if (!isStunned)
         {
+            if (currentHealth <= 0)
+            {
+                Engineson.print("This man is dead man.");
+                //Destroy(gameObject);
+            }
             Vector3 playerPos = playerTransform.position;
 
             if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
@@ -62,8 +76,15 @@ public class EnemyControllerRanged : EnemyController
                 if (shootTimer <= 0)
                 {
                     Attack();
-                    soundAttack?.Play();
+                    sound?.Play();
                     shootTimer = shootCooldown;
+                }
+
+                if (isCombatMusicPlaying == false)
+                {
+                    sound?.LoadAudio(combatMusic);
+                    sound?.Play(true);
+                    isCombatMusicPlaying = true;
                 }
                 else
                 {
@@ -167,6 +188,31 @@ public class EnemyControllerRanged : EnemyController
         }
     }
 
+    public override void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Engineson.print("Hit");
+        //anim.SetHitAnimation();
+        //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        //sound?.Play();
+    }
+    override public void OnCollisionEnter(GameObject other)
+    {
+        if (other.tag == "BoltgunProjectile")
+        {
+            currentHealth -= 20.0f;
+            Engineson.print("Boltgun hit!");
+        }
+        else if (other.tag == "ShotgunProjectile")
+        {
+            //cosas de la shotgun
+        }
+        else if (other.tag == "RailgunProjectile")
+        {
+            //Cosas de railgun
+        }
+        //Engineson.print("Player hit!");
+    }
     private void UpdateProjectiles(float deltaTime)
     {
         foreach (var proj in activeProjectiles)

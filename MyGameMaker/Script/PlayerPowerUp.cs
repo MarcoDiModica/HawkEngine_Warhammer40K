@@ -17,7 +17,12 @@ public class PlayerPowerUp : MonoBehaviour
     private float magnetDuration = 5.0f;
     private float magnetTimer = 0.0f;
 
-
+    private Audio sound;
+    private string AmmunitionBlessingActivated = "Assets/Audio/SFX/PickUps/PowerUps/AmmunitionBlessing/AmmunitionBlessingActivated.wav";
+    private string BlackHeartActivated = "Assets/Audio/SFX/PickUps/PowerUps/BlackHeart/BlackHeartActivated.wav";
+    private string ChapterStandardActivated = "Assets/Audio/SFX/PickUps/PowerUps/ChapterStandard/ChapterStandardActivated.wav";
+    private string MagnetEffect = "Assets/Audio/SFX/PickUps/PowerUps/Magnet/MagnetEffect.wav";
+    private string MedicaeStimmActivated = "Assets/Audio/SFX/PickUps/PowerUps/MedicaeStimm/Injection Heal Sound Effect.wav";
 
     public override void Awake()
     {
@@ -27,7 +32,8 @@ public class PlayerPowerUp : MonoBehaviour
     public override void Start()
     {
         playerController = gameObject.GetComponent<PlayerController>();
-        
+        sound = gameObject.GetComponent<Audio>();
+
     }
 
     public override void Update(float deltatime)
@@ -47,8 +53,7 @@ public class PlayerPowerUp : MonoBehaviour
         if (hasAmmunitionBlessing)
         {
             ammunitionBlessingTimer += deltatime;
-
-            if(ammunitionBlessingTimer >= ammunitionBlessingDuration)
+            if (ammunitionBlessingTimer >= ammunitionBlessingDuration)
             {
                 hasAmmunitionBlessing = false;
                 ammunitionBlessingTimer = 0.0f;
@@ -64,6 +69,7 @@ public class PlayerPowerUp : MonoBehaviour
             if (magnetTimer >= magnetDuration)
             {
                 hasMagnet = false;
+                sound.Stop();
                 magnetTimer = 0.0f;
                 playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence * 1.5f;
                 playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 1.5f;
@@ -110,27 +116,37 @@ public class PlayerPowerUp : MonoBehaviour
             if (other.GetComponent<BlackHeart>() != null)
             {
                 other.GetComponent<BlackHeart>().OnPickUp(playerController);
-                
+                sound.LoadAudio(BlackHeartActivated);
+                sound.Play();
+
             }
             else if (other.GetComponent<MedicaeStimm>() != null)
             {
                 other.GetComponent<MedicaeStimm>().OnPickUp(playerController);
                 hasMedicaeStimm = true;
+                sound.LoadAudio(MedicaeStimmActivated);
+                sound.Play();
             }
             else if (other.GetComponent<ChapterStandard>() != null)
             {
                 other.GetComponent<ChapterStandard>().OnPickUp(playerController);
+                sound.LoadAudio(ChapterStandardActivated);
+                sound.Play();
 
             }
             else if (other.GetComponent<AmmunitionBlessing>() != null)
             {
                 other.GetComponent<AmmunitionBlessing>().OnPickUp(playerController);
                 hasAmmunitionBlessing = true;
+                sound.LoadAudio(AmmunitionBlessingActivated);
+                sound.Play();
             }
             else if (other.GetComponent<Magnet>() != null)
             {
                 other.GetComponent<Magnet>().OnPickUp(playerController);
                 hasMagnet = true;
+                sound.LoadAudio(MagnetEffect);
+                sound.Play();
             }
            
 

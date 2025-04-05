@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     public override void Start()
     {
+        gameObject.tag = "Player";
     }
 
     public override void Update(float deltaTime)
@@ -349,7 +350,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public override void OnTriggerEnter(GameObject other)
+    {
+        if (other.name == "Hurtbox")
+        {
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
+            {
+                playerData.TakeDamage(10);
+                if (playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    Engineson.print("Player is dead!");
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
+                //playerAnimations.SetHitIdleAnimation();
 
+                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
+            }
+            else if (playerDash.isInvulnerable)
+            {
+                playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
+            }
+        }
+    }
     public override void OnCollisionEnter(GameObject other)
     {
         if (other.tag == "EnemyAttack")
@@ -383,7 +409,7 @@ public class PlayerController : MonoBehaviour
                 playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
             }
         }
-
+        
         if (other.tag == "Enemy")
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)

@@ -1,5 +1,4 @@
 using HawkEngine;
-using System;
 using System.Numerics;
 
 public class MenuButtons : MonoBehaviour
@@ -28,20 +27,13 @@ public class MenuButtons : MonoBehaviour
     private UITransform transform_creditsButton;
     private UITransform transform_quitButton;
     //private Audio sound;
-    private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
 
     public override void Awake()
     {
-        newGameButton = GameObject.Find("NewGameButton").GetComponent<UIButton>();
-        continueButton = GameObject.Find("ContinueButton").GetComponent<UIButton>();
-        optionsButton = GameObject.Find("OptionsButton").GetComponent<UIButton>();
-        creditsButton = GameObject.Find("CreditsButton").GetComponent<UIButton>();
-        quitButton = GameObject.Find("QuitButton").GetComponent<UIButton>();
-        sound = gameObject.GetComponent<Audio>();
-    }
 
+    }
     public override void Start()
     {
         newGameButton = GameObject.Find("new_game_button");
@@ -64,7 +56,7 @@ public class MenuButtons : MonoBehaviour
         transform_quitButton = quitButton.GetComponent<UITransform>();
 
         //sound = gameObject.GetComponent<Audio>();
-        
+
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
@@ -114,7 +106,7 @@ public class MenuButtons : MonoBehaviour
             HUD.SetActive(true);
             gameObject.SetActive(false);
         }
-        if(button_continueButton.GetState() == ButtonState.HOVERED)
+        if (button_continueButton.GetState() == ButtonState.HOVERED)
         {
             transform_continueButton.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
         }
@@ -127,7 +119,7 @@ public class MenuButtons : MonoBehaviour
         if (button_optionsButton.GetState() == ButtonState.CLICKED)
         {
             optionsCanvas.SetActive(true);
-            
+
         }
 
         if (button_optionsButton.GetState() == ButtonState.HOVERED)
@@ -162,30 +154,26 @@ public class MenuButtons : MonoBehaviour
         //    Engineson.print("Continue is Clicked");
         //}
 
-        if (continueButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.Play();
-            Engineson.print("Continue is Clicked");
-        }
+        //if (optionsButton.GetState() == ButtonState.CLICKED)
+        //{
+        //    sound?.LoadAudio(buttonClicked);
+        //    sound?.Play();
+        //    Engineson.print("Options is Clicked");
+        //}
 
-        if (optionsButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.Play();
-            Engineson.print("Options is Clicked");
-        }
+        //if (creditsButton.GetState() == ButtonState.CLICKED)
+        //{
+        //    sound?.LoadAudio(buttonClicked);
+        //    sound?.Play();
+        //    Engineson.print("Credits is Clicked");
+        //}
 
-        if (creditsButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.Play();
-            Engineson.print("Credits is Clicked");
-        }
-
-        if (quitButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.Play();
-            Engineson.print("quit is Clicked");
-        }
+        //if (quitButton.GetState() == ButtonState.CLICKED)
+        //{
+        //    sound?.LoadAudio(buttonClicked);
+        //    sound?.Play();
+        //    Engineson.print("quit is Clicked");
+        //}
 
     }
 }
-

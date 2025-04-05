@@ -108,6 +108,7 @@ void MonoManager::LoadUserClasses() {
 	MonoClass* klass = nullptr;
 
 	user_classes.clear();
+	scriptNames.clear();
 	for (int i = rows - 1; i > 0; --i)
 	{
 		uint32_t cols[MONO_TYPEDEF_SIZE];
@@ -122,6 +123,12 @@ void MonoManager::LoadUserClasses() {
 			{
 				if (!mono_class_is_enum(klass)) {
 					user_classes.push_back(klass);
+					std::string className = mono_class_get_name(klass);
+					std::string namespaceName = mono_class_get_namespace(klass);
+
+					if (namespaceName.empty()) {
+						scriptNames.push_back(className);
+					}
 				}
 			}
 		}
@@ -170,7 +177,7 @@ void MonoManager::ReloadAssembly(const std::string& newAssemblyPath) {
 
 	UnloadScriptDomain();
 
-	AddUnloadingDelay(400);
+	AddUnloadingDelay(200);
 
 	CreateScriptDomain();
 

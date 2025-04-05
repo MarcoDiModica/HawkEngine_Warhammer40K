@@ -68,6 +68,8 @@ public:
 	void CreateNewScript(std::string scriptName);
 	void AddScriptToProject(const std::string& scriptName);
 	void RemoveScriptFromProject(const std::string& scriptName);
+
+	std::vector<std::string> scriptNames;
 private:
 	MonoManager();
 
@@ -75,7 +77,7 @@ private:
 	MonoAssembly* assembly;
 	MonoImage* image;
 	ComponentMapper mapper;
-	std::vector<MonoClass*> user_classes; 
+	std::vector<MonoClass*> user_classes;
 
 	bool hotReloadEnabled = false; 
 	std::string assemblyPath;
@@ -92,7 +94,7 @@ T* MonoManager::GetMappedObject(MonoObject* sharpObject) const {
 	std::string typeName = mapper.GetMappedName(std::type_index(typeid(T)));
 
 	uintptr_t Cptr;
-	MonoClass* klass = GetClass("HawkEngine", typeName.c_str());
+	MonoClass* klass = GetClass("HawkEngine", typeName);
 
 	if (!klass) {
 		throw std::runtime_error("NO class C#: " + typeName);

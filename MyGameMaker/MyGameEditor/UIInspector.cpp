@@ -94,167 +94,326 @@ private:
     }
     #pragma endregion
 
-    #pragma region MeshRenderer
-	static void DrawMeshProperties(std::shared_ptr<Mesh> mesh) {
+	#pragma region MeshRenderer
+	static void DrawMeshRendererComponent(MeshRenderer* meshRenderer) {
+		if (!meshRenderer) return;
+
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("Mesh")) return;
+		if (!ImGui::CollapsingHeader("MeshRenderer")) return;
 
-		ImGui::Text("Vertices: %d", mesh->getModel()->GetModelData().vertexData.size());
-		ImGui::Text("Indices: %d", mesh->getModel()->GetModelData().indexData.size());
-	}
-
-	static void DrawTexturePreview(std::shared_ptr<Image> image, const char* label) {
-		if (!image || image->id() == 0) return;
-
-		ImGui::PushID(label);
-		if (ImGui::Button("Show Preview")) {
-			ImGui::OpenPopup("TexturePreview");
-		}
-
-		ImGui::SameLine();
-		ImGui::Text("%s: %dx%d", label, image->width(), image->height());
-
-		if (ImGui::BeginPopup("TexturePreview")) {
-			ImVec2 imageSize = CalculatePreviewSize(image->width(), image->height());
-			ImGui::Image((void*)(intptr_t)image->id(), imageSize);
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				meshRenderer->GetOwner()->RemoveComponent<MeshRenderer>();
+			}
 			ImGui::EndPopup();
 		}
-		ImGui::PopID();
-	}
 
-	static void DrawColorPicker(MeshRenderer* meshRenderer) {
-		vec4 matColor = meshRenderer->GetMaterial()->GetColor();
-		float colorArray[4] = {
-			static_cast<float>(matColor.x),
-			static_cast<float>(matColor.y),
-			static_cast<float>(matColor.z),
-			static_cast<float>(matColor.w)
-		};
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+		const float previewSize = 24.0f;
 
-		if (ImGui::ColorEdit4("Color", colorArray)) {
-			vec4 newColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
-			meshRenderer->GetMaterial()->SetColor(newColor);
+		if (ImGui::TreeNodeEx("Mesh", ImGuiTreeNodeFlags_DefaultOpen)) {
+			std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
+			if (mesh) {
+				AlignedProperty("Vertices", static_cast<int>(mesh->getModel()->GetModelData().vertexData.size()), labelWidth);
+				AlignedProperty("Indices", static_cast<int>(mesh->getModel()->GetModelData().indexData.size()), labelWidth);
+			}
+			else {
+				ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "No mesh assigned");
+			}
+			ImGui::TreePop();
 		}
-	}
 
-	static void DrawMaterialProperties(MeshRenderer* meshRenderer) {
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("Material")) return;
-
-		auto material = meshRenderer->GetMaterial();
-		if (!material) return;
-
-		if (ImGui::TreeNodeEx("Base Color", ImGuiTreeNodeFlags_DefaultOpen)) {
-			DrawColorPicker(meshRenderer);
-
-			std::shared_ptr<Image> image = material->imagePtr;
-			if (image) {
-				DrawTexturePreview(image, "Albedo");
+		if (ImGui::TreeNodeEx("Material", ImGuiTreeNodeFlags_DefaultOpen)) {
+			auto material = meshRenderer->GetMaterial();
+			if (!material) {
+				ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "No material assigned");
+				ImGui::TreePop();
+				return;
 			}
 
-			if (ImGui::Button("Load Albedo Texture")) {
-				ImGui::OpenPopup("LoadAlbedoTexture");
+			const char* shaderTypes[] = { "UNLIT", "PBR" };
+			int currentType = static_cast<int>(material->GetShaderType());
+			ImGui::Text("Rendering Mode");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::Combo("##ShaderType", &currentType, shaderTypes, IM_ARRAYSIZE(shaderTypes))) {
+				material->SetShaderType(static_cast<ShaderType>(currentType));
 			}
-			if (ImGui::BeginPopup("LoadAlbedoTexture")) {
-				ImGui::Text("Drag and drop an albedo/diffuse texture file here");
-				ImGui::EndPopup();
-			}
+			ImGui::PopItemWidth();
 
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					std::string extension = std::filesystem::path(path).extension().string();
-					std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+			ImGui::Separator();
+			ImGui::Text("Main Maps");
+			ImGui::Spacing();
 
-					const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".tga" };
-					if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
-						auto newImage = std::make_shared<Image>();
-						if (newImage->LoadTexture(path)) {
-							meshRenderer->SetImage(newImage);
-						}
-					}
+			// Albedo 
+			auto albedoImage = material->imagePtr;
+			TexturePreviewSquare(albedoImage, previewSize, [meshRenderer](const char* path) {
+				auto newImage = std::make_shared<Image>();
+				if (newImage->LoadTexture(path)) {
+					meshRenderer->SetImage(newImage);
 				}
-				ImGui::EndDragDropTarget();
+				});
+			ImGui::SameLine();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Albedo");
+
+			vec4 matColor = material->GetColor();
+			float colorArray[4] = {
+				static_cast<float>(matColor.x),
+				static_cast<float>(matColor.y),
+				static_cast<float>(matColor.z),
+				static_cast<float>(matColor.w)
+			};
+
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit4("##AlbedoColor", colorArray)) {
+				vec4 newColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+				material->SetColor(newColor);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::Spacing();
+
+			if (material->GetShaderType() == ShaderType::PBR) {
+				// Metallic 
+				auto metallicImage = material->metallicMapPtr;
+				TexturePreviewSquare(metallicImage, previewSize, [meshRenderer](const char* path) {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						meshRenderer->GetMaterial()->metallicMapPtr = newImage;
+					}
+					});
+				ImGui::SameLine();
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Metallic");
+
+				float metallic = material->metallic;
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				if (ImGui::SliderFloat("##Metallic", &metallic, 0.0f, 1.0f)) {
+					material->metallic = metallic;
+				}
+				ImGui::PopItemWidth();
+
+				ImGui::Spacing();
+
+				// Roughness
+				auto roughnessImage = material->roughnessMapPtr;
+				TexturePreviewSquare(roughnessImage, previewSize, [meshRenderer](const char* path) {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						meshRenderer->GetMaterial()->roughnessMapPtr = newImage;
+					}
+					});
+				ImGui::SameLine();
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Roughness");
+
+				float smoothness = 1.0f - material->roughness;
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				if (ImGui::SliderFloat("##Roughness", &smoothness, 0.0f, 1.0f)) {
+					material->roughness = 1.0f - smoothness;
+				}
+				ImGui::PopItemWidth();
+
+				ImGui::Spacing();
+
+				// Normal Map
+				auto normalMapImage = material->normalMapPtr;
+				TexturePreviewSquare(normalMapImage, previewSize, [meshRenderer](const char* path) {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						meshRenderer->GetMaterial()->normalMapPtr = newImage;
+					}
+					});
+				ImGui::SameLine();
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Normal Map");
+
+				float normalMapIntensity = 1.0f;
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				ImGui::SliderFloat("##NormalMapIntensity", &normalMapIntensity, 0.0f, 2.0f);
+				ImGui::PopItemWidth();
+
+				ImGui::Spacing();
+
+				//// Height Map (placeholder)
+				//TexturePreviewSquare(nullptr, previewSize, [meshRenderer](const char* path) {
+				//	// Implementation for when height map functionality is added
+				//	});
+				//ImGui::SameLine();
+				//ImGui::AlignTextToFramePadding();
+				//ImGui::Text("Height Map");
+
+				//ImGui::Spacing();
+
+				// Occlusion
+				auto aoImage = material->aoMapPtr;
+				TexturePreviewSquare(aoImage, previewSize, [meshRenderer](const char* path) {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						meshRenderer->GetMaterial()->aoMapPtr = newImage;
+					}
+					});
+				ImGui::SameLine();
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Occlusion");
+
+				float ao = material->ao;
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				if (ImGui::SliderFloat("##AO", &ao, 0.0f, 1.0f)) {
+					material->ao = ao;
+				}
+				ImGui::PopItemWidth();
+
+				ImGui::Spacing();
+
+				//// Emission (placeholder)
+				//TexturePreviewSquare(nullptr, previewSize, [meshRenderer](const char* path) {
+				//	// Implementation for when emission map functionality is added
+				//	});
+				//ImGui::SameLine();
+				//ImGui::AlignTextToFramePadding();
+				//ImGui::Text("Emission");
+
+				//float emission = 0.0f;
+				//ImGui::SameLine(labelWidth);
+				//ImGui::PushItemWidth(-1);
+				//ImGui::SliderFloat("##Emission", &emission, 0.0f, 1.0f);
+				//ImGui::PopItemWidth();
+
+				//ImGui::Spacing();
+
+				//TexturePreviewSquare(nullptr, previewSize, [meshRenderer](const char* path) {
+				//	// Implementation for when detail mask functionality is added
+				//	});
+				//ImGui::SameLine();
+				//ImGui::AlignTextToFramePadding();
+				//ImGui::Text("Detail Mask");
+
+				//ImGui::Spacing();
+
+				float tonemapStrength = material->GetTonemapStrength();
+				ImGui::Text("Tonemap Strength");
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				if (ImGui::SliderFloat("##Tonemap", &tonemapStrength, 0.0f, 10.0f)) {
+					material->SetTonemapStrength(tonemapStrength);
+				}
+				ImGui::PopItemWidth();
 			}
 
 			ImGui::TreePop();
 		}
-
-		if (material->GetShaderType() == ShaderType::PBR) {
-			if (ImGui::TreeNodeEx("Normal Map", ImGuiTreeNodeFlags_DefaultOpen)) {
-				std::shared_ptr<Image> normalMap = material->normalMapPtr;
-				if (normalMap) {
-					DrawTexturePreview(normalMap, "Normal");
-				}
-				else {
-					ImGui::Text("No normal map assigned");
-				}
-				ImGui::TreePop();
-			}
-
-			if (ImGui::TreeNodeEx("Metallic", ImGuiTreeNodeFlags_DefaultOpen)) {
-				std::shared_ptr<Image> metallicMap = material->metallicMapPtr;
-				if (metallicMap) {
-					DrawTexturePreview(metallicMap, "Metallic");
-				}
-				else {
-					float metallic = material->metallic;
-					if (ImGui::SliderFloat("Metallic Value", &metallic, 0.0f, 1.0f)) {
-						material->metallic = metallic;
-					}
-				}
-				ImGui::TreePop();
-			}
-
-			if (ImGui::TreeNodeEx("Roughness", ImGuiTreeNodeFlags_DefaultOpen)) {
-				std::shared_ptr<Image> roughnessMap = material->roughnessMapPtr;
-				if (roughnessMap) {
-					DrawTexturePreview(roughnessMap, "Roughness");
-				}
-				else {
-					float roughness = material->roughness;
-					if (ImGui::SliderFloat("Roughness Value", &roughness, 0.0f, 1.0f)) {
-						material->roughness = roughness;
-					}
-				}
-				ImGui::TreePop();
-			}
-
-			if (ImGui::TreeNodeEx("Ambient Occlusion", ImGuiTreeNodeFlags_DefaultOpen)) {
-				std::shared_ptr<Image> aoMap = material->aoMapPtr;
-				if (aoMap) {
-					DrawTexturePreview(aoMap, "AO");
-				}
-				else {
-					float ao = material->ao;
-					if (ImGui::SliderFloat("AO Value", &ao, 0.0f, 1.0f)) {
-						material->ao = ao;
-					}
-				}
-				ImGui::TreePop();
-			}
-
-            if (ImGui::TreeNodeEx("Tonemap", ImGuiTreeNodeFlags_DefaultOpen)) {
-				float tonemapStrength = material->GetTonemapStrength();
-				if (ImGui::SliderFloat("Tonemap Strength", &tonemapStrength, 0.0f, 10.0f)) {
-					material->SetTonemapStrength(tonemapStrength);
-				}
-				ImGui::TreePop();
-			}
-		}
 	}
 
-	static void DrawMeshRendererComponent(MeshRenderer* meshRenderer) {
-		if (!meshRenderer) return;
+	template<typename Callback>
+	static void TexturePreviewSquare(std::shared_ptr<Image> image, float size, Callback onTextureLoaded) {
+		ImGui::PushID((void*)image.get());
 
-		std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
-		if (mesh) {
-			DrawMeshProperties(mesh);
+		if (image && image->id() != 0) {
+			ImGui::Image((void*)(intptr_t)image->id(), ImVec2(size, size));
+
+			if (ImGui::IsItemHovered()) {
+				ImGui::BeginTooltip();
+				float previewScale = 8.0f; 
+				ImVec2 largePreviewSize(size * previewScale, size * previewScale);
+				ImVec2 constrainedSize = CalculatePreviewSize(image->width(), image->height(), 300);
+				ImGui::Image((void*)(intptr_t)image->id(), constrainedSize);
+				ImGui::Text("%dx%d", image->width(), image->height());
+				ImGui::EndTooltip();
+			}
+
+			if (ImGui::BeginPopupContextItem("TextureContextMenu")) {
+				ImGui::Text("Texture Options");
+				ImGui::Separator();
+				if (ImGui::MenuItem("Clear")) {
+					//TODO
+				}
+				ImGui::EndPopup();
+			}
+		}
+		else {
+			ImVec2 p = ImGui::GetCursorScreenPos();
+			ImDrawList* draw_list = ImGui::GetWindowDrawList();
+			draw_list->AddRect(p, ImVec2(p.x + size, p.y + size), IM_COL32(180, 180, 180, 255));
+
+			ImGui::Button("##empty", ImVec2(size, size));
+
+			if (ImGui::BeginPopupContextItem("EmptyTextureContextMenu")) {
+				ImGui::EndPopup();
+			}
 		}
 
-		DrawMaterialProperties(meshRenderer);
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				const char* path = static_cast<const char*>(payload->Data);
+				std::string extension = std::filesystem::path(path).extension().string();
+				std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+				const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".tga" };
+				if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
+					onTextureLoaded(path);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		ImGui::PopID();
 	}
-    #pragma endregion
+
+	static ImVec2 CalculatePreviewSize(int width, int height, float maxSize = 300.0f) {
+		float aspect = (float)width / (float)height;
+		ImVec2 result;
+
+		if (width >= height) {
+			result.x = std::min((float)width, maxSize);
+			result.y = result.x / aspect;
+		}
+		else {
+			result.y = std::min((float)height, maxSize);
+			result.x = result.y * aspect;
+		}
+
+		return result;
+	}
+
+	static void AlignedProperty(const char* label, const char* value, float labelWidth) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%s", value);
+	}
+
+	static void AlignedProperty(const char* label, int value, float labelWidth) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%d", value);
+	}
+
+	static void AlignedProperty(const char* label, float value, float labelWidth) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%.2f", value);
+	}
+
+	static bool AlignedSliderProperty(const char* label, float& value, float min, float max, float labelWidth) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool changed = ImGui::SliderFloat(("##" + std::string(label)).c_str(), &value, min, max);
+		ImGui::PopItemWidth();
+		return changed;
+	}
+#pragma endregion
 
     #pragma region Camera
     static void DrawCameraComponent(CameraComponent* camera) {
@@ -804,126 +963,6 @@ private:
 			rigidbody->SetDamping(damping[0], damping[1]);
 		}
     }
-#pragma endregion
-
-    #pragma region Shaders
-	static void DrawShaderComponent(ShaderComponent* shader) {
-		if (!shader) return;
-
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("Shader")) return;
-
-		ShaderType currentType = shader->GetShaderType();
-		int shaderType = static_cast<int>(currentType);
-
-		const char* shaderTypes[] = { "Unlit", "PBR" };
-		if (ImGui::Combo("Shader Type", &shaderType, shaderTypes, IM_ARRAYSIZE(shaderTypes))) {
-			shader->SetShaderType(static_cast<ShaderType>(shaderType));
-		}
-
-		// Add texture loading buttons for PBR workflow
-		if (static_cast<ShaderType>(shaderType) == ShaderType::PBR) {
-			ImGui::Separator();
-			ImGui::Text("PBR Textures");
-
-			// Normal map button
-			if (ImGui::Button("Load Normal Map")) {
-				ImGui::OpenPopup("LoadNormalMap");
-			}
-			if (ImGui::BeginPopup("LoadNormalMap")) {
-				ImGui::Text("Drag and drop a normal map file here");
-				ImGui::EndPopup();
-			}
-
-			// Handle drag/drop for normal map
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					shader->SetNormalMap(path);
-				}
-				ImGui::EndDragDropTarget();
-			}
-
-			// Metallic map button
-			if (ImGui::Button("Load Metallic Map")) {
-				ImGui::OpenPopup("LoadMetallicMap");
-			}
-			if (ImGui::BeginPopup("LoadMetallicMap")) {
-				ImGui::Text("Drag and drop a metallic map file here");
-				ImGui::EndPopup();
-			}
-
-			// Handle drag/drop for metallic map
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					shader->SetMetallicMap(path);
-				}
-				ImGui::EndDragDropTarget();
-			}
-
-			// Roughness map button
-			if (ImGui::Button("Load Roughness Map")) {
-				ImGui::OpenPopup("LoadRoughnessMap");
-			}
-			if (ImGui::BeginPopup("LoadRoughnessMap")) {
-				ImGui::Text("Drag and drop a roughness map file here");
-				ImGui::EndPopup();
-			}
-
-			// Handle drag/drop for roughness map
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					shader->SetRoughnessMap(path);
-				}
-				ImGui::EndDragDropTarget();
-			}
-
-			// AO map button
-			if (ImGui::Button("Load AO Map")) {
-				ImGui::OpenPopup("LoadAOMap");
-			}
-			if (ImGui::BeginPopup("LoadAOMap")) {
-				ImGui::Text("Drag and drop an ambient occlusion map file here");
-				ImGui::EndPopup();
-			}
-
-			// Handle drag/drop for AO map
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					shader->SetAOMap(path);
-				}
-				ImGui::EndDragDropTarget();
-			}
-
-			// PBR material properties
-			ImGui::Separator();
-			ImGui::Text("PBR Properties");
-
-			if (!shader->HasMetallicMap()) {
-				float metallic = shader->GetMetallic();
-				if (ImGui::SliderFloat("Metallic", &metallic, 0.0f, 1.0f)) {
-					shader->SetMetallic(metallic);
-				}
-			}
-
-			if (!shader->HasRoughnessMap()) {
-				float roughness = shader->GetRoughness();
-				if (ImGui::SliderFloat("Roughness", &roughness, 0.0f, 1.0f)) {
-					shader->SetRoughness(roughness);
-				}
-			}
-
-			if (!shader->HasAOMap()) {
-				float ao = shader->GetAO();
-				if (ImGui::SliderFloat("Ambient Occlusion", &ao, 0.0f, 1.0f)) {
-					shader->SetAO(ao);
-				}
-			}
-		}
-	}
 #pragma endregion
 
 	#pragma region Scripting
@@ -1712,6 +1751,7 @@ private:
 #pragma endregion
 
 public:
+#pragma region DrawComponents
 	static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
 		if (!gameObject) return;
 
@@ -1820,11 +1860,6 @@ public:
 			DrawRectTransformComponent(uiTransformComponent);
 		}
 
-		if (gameObject->HasComponent<ShaderComponent>()) {
-			ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
-			DrawShaderComponent(shader);
-		}
-
 		if (gameObject->HasComponent<UICanvasComponent>()) {
 			UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
 			DrawCanvasComponent(uiCanvasComponent);
@@ -1844,6 +1879,7 @@ public:
 
 		DrawScriptComponents(gameObject);
 	}
+#pragma endregion
 
 #pragma region AddComponentMenu
 	static void DrawAddComponentButton(GameObject* gameObject) {
@@ -1932,17 +1968,10 @@ public:
 				inCategoryView = false;
 			}
 
-			if (hovered) {
-				ImVec2 buttonMin = ImGui::GetItemRectMin();
-				ImVec2 buttonMax = ImGui::GetItemRectMax();
-				ImVec2 textPos = ImVec2(buttonMax.x - 20, buttonMin.y + (buttonMax.y - buttonMin.y) * 0.5f - ImGui::GetTextLineHeight() * 0.5f);
-				ImGui::GetWindowDrawList()->AddText(textPos, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), ">");
-			}
-			else {
-				float rightPadding = 0;
-				ImGui::SameLine(ImGui::GetContentRegionAvail().x - rightPadding);
-				ImGui::Text(">");
-			}
+			ImVec2 buttonMin = ImGui::GetItemRectMin();
+			ImVec2 buttonMax = ImGui::GetItemRectMax();
+			ImVec2 textPos = ImVec2(buttonMax.x - 20, buttonMin.y + (buttonMax.y - buttonMin.y) * 0.5f - ImGui::GetTextLineHeight() * 0.5f);
+			ImGui::GetWindowDrawList()->AddText(textPos, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), ">");
 
 			ImGui::PopID();
 			ImGui::PopStyleColor(3);
@@ -2056,10 +2085,7 @@ public:
 	static void DrawAddScriptComponents(GameObject* gameObject) {
 		std::vector<std::string> availableScripts;
 		try {
-			auto& scripts = MonoManager::GetInstance().scriptIDs;
-			for (const auto& script : scripts) {
-				availableScripts.push_back(script.first);
-			}
+			availableScripts = MonoManager::GetInstance().scriptNames;
 		}
 		catch (...) {
 			availableScripts = { "PlayerController", "EnemyAI", "ItemCollector", "CameraFollower" };
@@ -2236,12 +2262,7 @@ public:
 
 		std::vector<std::string> availableScripts;
 		try {
-			auto& scripts = MonoManager::GetInstance().scriptIDs;
-			for (const auto& script : scripts) {
-				if (matchesSearch(script.first.c_str())) {
-					availableScripts.push_back(script.first);
-				}
-			}
+			availableScripts = MonoManager::GetInstance().scriptNames;
 		}
 		catch (...) {
 			availableScripts = { "PlayerController", "EnemyAI", "ItemCollector", "CameraFollower" };

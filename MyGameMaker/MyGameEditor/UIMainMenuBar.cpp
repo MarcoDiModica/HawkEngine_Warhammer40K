@@ -190,8 +190,8 @@ bool UIMainMenuBar::Draw()
 		float gui_fps = ImGui::GetIO().Framerate;
 		float game_fps = Application->GetFps();
 		ImGui::SetCursorPosX(menuBarWidth - fpsWidth - 10.0f);
-		ImGui::Text("GUI FPS: %.1f", game_fps);
-		ImGui::Text("GAME FPS: %.1f", gui_fps);
+		ImGui::Text("GAME FPS: %.1f", game_fps);
+		ImGui::Text("GUI FPS: %.1f", gui_fps);
 
 		ImGui::EndMainMenuBar();
 	}

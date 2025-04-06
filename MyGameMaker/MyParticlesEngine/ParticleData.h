@@ -172,7 +172,7 @@ public:
 
 		if (particleData[index].randomAnimIndex == true) 
 		{
-			particleData[index].animIndex = rand() % CalculateMaxIndex(particleData[index].sheetSize, particleData[index].spriteSize);
+			//particleData[index].animIndex = rand() % CalculateMaxIndex(particleData[index].sheetSize, particleData[index].spriteSize);
 		}
 
 		particleData[index] = particle;

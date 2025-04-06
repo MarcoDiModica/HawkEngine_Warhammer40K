@@ -58,6 +58,7 @@ namespace ParticlePresets {
 	extern const ParticlePreset Fire;
 	extern const ParticlePreset MuzzleFlash;
 	extern const ParticlePreset Dust;
+	extern const ParticlePreset Blood_Splash;
 }
 
 class ParticleFX : public Component {
@@ -312,7 +313,11 @@ protected:
 				node["material"]["billboardAxis"].push_back(axis.y);
 				node["material"]["billboardAxis"].push_back(axis.z);
 			}
+			node["particleType"] = static_cast<int>(GetParticleType());
+
 		}
+
+
 
 		return node;
 	}
@@ -468,7 +473,9 @@ protected:
 					);
 					material->SetBillboardAxis(axis);
 				}
+
 			}
+			ApplyPreset(node["material"]["particleType"].as<int>());
 
 			return true;
 		}

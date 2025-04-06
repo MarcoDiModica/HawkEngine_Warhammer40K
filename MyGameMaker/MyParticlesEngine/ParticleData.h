@@ -246,11 +246,11 @@ public:
 			
 		    particleData[i].rotation += particleData[i].rotationSpeed/360.0f;		
 
-			if (particleData[i].useAnimation) 
+			if (particleData[i].useAnimation && particleData[i].sheetSize != glm::vec2(0, 0))
 			{
 				particleData[i].indexTimer += deltaTime;
 
-				if (particleData[i].indexTimer >= particleData[i].animSpeed)
+				if (particleData[i].indexTimer >= particleData[i].animSpeed )
 				{
 					if (particleData[i].indexTimer >= CalculateMaxIndex(particleData[i].sheetSize, particleData[i].spriteSize))
 					{

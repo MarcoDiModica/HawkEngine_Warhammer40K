@@ -43,6 +43,8 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyUIEngine/UIButtonComponent.h"
+
 #include <MyGameEngine/ImGuiCurveEditor.h>
 typedef unsigned int guint32;
 #pragma endregion
@@ -1545,11 +1547,12 @@ private:
         glm::dvec3 currentPosition = transform->GetPosition();
         glm::dvec3 currentRotation = glm::radians(transform->GetRotation());
         glm::dvec3 currentScale = transform->GetScale();
+		glm::dvec1 currentPivot = transform->GetPivotOffset();
 
         float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
         float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
         float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
-
+		float pivot[3] = { static_cast<float>(transform->GetPivotOffset().x), static_cast<float>(transform->GetPivotOffset().y), static_cast<float>(transform->GetPivotOffset().z) };
         if (ImGui::DragFloat3("Position", pos, 0.001f, -1.0f, 1.0f)) {
             glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
             glm::dvec3 deltaPos = newPosition - currentPosition;
@@ -1570,6 +1573,12 @@ private:
             transform->Scale(deltaScale);
         }
 
+		if (ImGui::DragFloat3("Pivot", pivot, 0.001f, -1.0f, 1.0f)) {
+			glm::dvec3 newPivot = { pivot[0], pivot[1], pivot[2] };
+			glm::dvec3 deltaPivot = newPivot - currentPivot;
+			transform->SetPivotOffset(deltaPivot);
+
+		}
     }
     
   
@@ -1759,6 +1768,15 @@ private:
 			}
 		}
 
+		if (!gameObject->HasComponent<UIButtonComponent>()) {
+			if (ImGui::MenuItem("Button")) {
+				if (!gameObject->HasComponent<UIImageComponent>()) {
+					gameObject->AddComponent<UIImageComponent>();
+					gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+				}
+				gameObject->AddComponent<UIButtonComponent>();
+			}
+		}
 		//Aqui mas componentes
 	}
 

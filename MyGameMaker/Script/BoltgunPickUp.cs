@@ -40,5 +40,10 @@ public class BoltgunPickUp : PickUp
             Engineson.print("Boltgun Picked Up");
             playerController.playerShooting.hasBoltgun = true;
         }
+        else
+        {
+            Engineson.print("Player already has Boltgun");
+            
+        }
     }
 }

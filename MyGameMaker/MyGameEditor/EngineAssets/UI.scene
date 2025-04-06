@@ -1,0 +1,3617 @@
+SceneMetadata:
+  SceneName: UI
+GameObject0:
+  name: Player
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
+    CapsuleColliderComponent:
+      size:
+        - 1.70000005
+        - 1.10000002
+        - 1
+      offset:
+        - 0
+        - 2.0999999
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -200
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: PlayerShooting
+      Script1:
+        name: PlayerMovement
+      Script2:
+        name: PlayerInput
+      Script3:
+        name: PlayerDash
+      Script4:
+        name: PlayerController
+      Script5:
+        name: PlayerPowerUp
+      Script6:
+        name: Boltgun
+      Script7:
+        name: Shotgun
+      Script8:
+        name: GrenadeLauncher
+      Script9:
+        name: Railgun
+      Script10:
+        name: ""
+      Script11:
+        name: EnergyBall
+      Script12:
+        name: ""
+      Script13:
+        name: Barrage
+      Script14:
+        name: HookShot
+      Script15:
+        name: ArcSnare
+      Script16:
+        name: RedThirstManager
+      Script17:
+        name: InteractionSystem
+  Children:
+    - name: playerMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90
+            - 0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cylinder.001
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Assets/Textures/dieno zachael jetpack 2_DefaultMaterial_BaseColor.png
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_playerMesh
+        ScriptComponents:
+          Script0:
+            name: PlayerAnimations
+      Children: ~
+GameObject1:
+  name: MainCamera
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999990523487853
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject2:
+  name: Floor
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 50
+        - 1
+        - 50
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Assets/default.png
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject3:
+  name: Canvas_HUD
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: HUD
+  Children:
+    - name: blood_bg1
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 5.5999999046325684
+            - 88.699996948242188
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.10899999737739563
+            - 0.029999999329447746
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0560000017
+            - 0.887000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.10899999
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_blood_bg.png
+      Children: ~
+    - name: blood_bg2
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 5.9000000953674316
+            - 92.900001525878906
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.059000000357627869
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0590000004
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0589999966
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_blood_bg.png
+      Children: ~
+    - name: blood_bar2
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 6.4000000953674316
+            - 93.099998474121094
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.029999999329447746
+            - 0.017999999225139618
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.064000003
+            - 0.930999994
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0549999997
+            - 0.0179999992
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_blood.png
+      Children: ~
+    - name: blood_bar1
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 6.5999999046325684
+            - 88.699996948242188
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1.1499999761581421
+            - 0.032000001519918442
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0659999996
+            - 0.887000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.100000001
+            - 0.0320000015
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_blood.png
+      Children: ~
+    - name: healthbar_bg
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.755000114440918
+            - 13.034999847412109
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.043000001460313797
+            - 0.094999998807907104
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0170000009
+            - 0.85799998
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0430000015
+            - 0.0949999988
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_bg.png
+      Children: ~
+    - name: red_thirst_bar
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 1.8999999761581421
+            - 94.800003051757812
+            - 0
+          localRotation:
+            - 3.7007958640884867e-33
+            - 3.3412843303467436e-08
+            - 4.7626406400713664e-16
+          localScale:
+            - 0.14000000059604645
+            - 3.4800000190734863
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0189999994
+            - 0.948000014
+            - 0
+          rotation:
+            - 25010.4238
+            - 45.3341408
+            - 40318.7188
+          scale:
+            - 0.0370000005
+            - 0.0799999982
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_blood.png
+      Children: ~
+    - name: healthbar_empty
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.0099999997764825821
+            - 0.98000001907348633
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.15999999642372131
+            - 0.125
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.00999999978
+            - 0.980000019
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.159999996
+            - 0.125
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_empty.png
+      Children: ~
+    - name: boltgun_small_L
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 3.9920001029968262
+            - 3.9619998931884766
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.02500000037252903
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.922999978
+            - 0.79400003
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0249999985
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_boltgun_small_icon.png
+      Children: ~
+    - name: railgun_small_L
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 92
+            - 79.599998474121094
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.028999999165534973
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.920000017
+            - 0.796000004
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.029000001
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_railgun_small_icon.png
+      Children: ~
+    - name: shotgun_small_L
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 92.099998474121094
+            - 79.300003051757812
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.028999999165534973
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.921000004
+            - 0.792999983
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.029000001
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_shotgun_small_icon.png
+      Children: ~
+    - name: shotgun
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 3.690000057220459
+            - 4.2140002250671387
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.068999998271465302
+            - 0.10400000214576721
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.917999983
+            - 0.84799999
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0689999983
+            - 0.103999995
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_shotgun_icon_panel.png
+      Children: ~
+    - name: railgun
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 3.4900000095367432
+            - 4.4140000343322754
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.068999998271465302
+            - 0.10400000214576721
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.916000009
+            - 0.850000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0689999983
+            - 0.103999995
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_railgun_icon_panel.png
+      Children: ~
+    - name: boltgun
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 3.4900000095367432
+            - 12.630000114440918
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.069499999284744263
+            - 0.10400000214576721
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.916000009
+            - 0.848999977
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0694999993
+            - 0.103999995
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_boltgun_icon_panel.png
+      Children: ~
+    - name: bullet
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 84.900001525878906
+            - 67.714996337890625
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.023000000044703484
+            - 0.046999998390674591
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.848999977
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0229999982
+            - 0.0469999984
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerupi_bullet_icon_1.png
+      Children: ~
+    - name: weapon_switcher_frame
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 99.5
+            - 98.5
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.15250000357627869
+            - 0.13199999928474426
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.99000001
+            - 0.980000019
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.152500004
+            - 0.131999999
+            - 1
+          pivot_offset:
+            - 1
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gunswitcher_frame.png
+      Children: ~
+    - name: boltgun_small_R
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 95.5
+            - 0.7929999828338623
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.02500000037252903
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.954999983
+            - 0.792999983
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0249999985
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_boltgun_small_icon.png
+      Children: ~
+    - name: railgun_small_R
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 95.300003051757812
+            - 0.89300000667572021
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.028999999165534973
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.953000009
+            - 0.79400003
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.029000001
+            - 0.049999997
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_railgun_small_icon.png
+      Children: ~
+    - name: shotgun_small_R
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 95.300003051757812
+            - 0.89300000667572021
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.028999999165534973
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.953000009
+            - 0.79400003
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.029000001
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_shotgun_small_icon.png
+      Children: ~
+    - name: boltgun_ability_1
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 17.084999084472656
+            - 6.8299999237060547
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.023000000044703484
+            - 0.046999998390674591
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.848999977
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0229999982
+            - 0.0469999984
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerupi_grenade_icon_1.png
+      Children: ~
+    - name: boltgun_ability_2
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 87.900001525878906
+            - 0.88999998569488525
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.023000000044703484
+            - 0.046999998390674591
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.879000008
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0229999982
+            - 0.0469999984
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerup_chainballs.png
+      Children: ~
+    - name: shotgun_ability_1
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.84899997711181641
+            - 0.88999998569488525
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.023000000044703484
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.848999977
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0229999982
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerup_hook.png
+      Children: ~
+    - name: shotgun_ability_2
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.87900000810623169
+            - 0.88999998569488525
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.023000000044703484
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.879000008
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0229999982
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerup_explosion.png
+      Children: ~
+    - name: railgun_ability_1
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.84899997711181641
+            - 0.88999998569488525
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.023000000044703484
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.848999977
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0229999982
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerup_railgun_reload.png
+      Children: ~
+    - name: railgun_ability_2a
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.87900000810623169
+            - 0.88999998569488525
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.023000000044703484
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.879000008
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0229999982
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerup_railgun_Eball.png
+      Children: ~
+    - name: railgun_ability_2b
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.87900000810623169
+            - 0.88999998569488525
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.023000000044703484
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.879000008
+            - 0.889999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0229999982
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerup_railgun_shot.png
+      Children: ~
+    - name: frames
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 84.699996948242188
+            - 90.5
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.057000000029802322
+            - 0.05299999937415123
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.847000003
+            - 0.887000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.057
+            - 0.0529999994
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\powerup_frame.png
+      Children: ~
+    - name: lock_L
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 92.300003051757812
+            - 79.5
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.02500000037252903
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.922999978
+            - 0.795000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0249999985
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\lock.png
+      Children: ~
+    - name: lock_R
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 95.5
+            - 0.79500001668930054
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.02500000037252903
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.954999983
+            - 0.795000017
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0249999985
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\lock.png
+      Children: ~
+    - name: gun_small_frame
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 91.900001525878906
+            - 3.9600000381469727
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.064000003039836884
+            - 0.054499998688697815
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.91900003
+            - 0.791999996
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.064000003
+            - 0.0544999987
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gun_weapon_frames.png
+      Children: ~
+    - name: nodash
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 6.5999999046325684
+            - 86.199996948242188
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.0099999997764825821
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0659999996
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\status_nodash.png
+      Children: ~
+    - name: msup
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 8.3000001907348633
+            - 86.199996948242188
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.014999999664723873
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0829999968
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\status_msup.png
+      Children: ~
+    - name: defenseup
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 9.8999996185302734
+            - 0.8619999885559082
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.014999999664723873
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0989999995
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\status_defenseup.png
+      Children: ~
+    - name: attackup
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 11.600000381469727
+            - 0.8619999885559082
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.014999999664723873
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.115999997
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\status_attackup.png
+      Children: ~
+    - name: noreload
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 13.300000190734863
+            - 0.8619999885559082
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.014999999664723873
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.133000001
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\status_noreload.png
+      Children: ~
+    - name: asup
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 14.899999618530273
+            - 0.8619999885559082
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.014999999664723873
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.149000004
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\status_asup.png
+      Children: ~
+    - name: magnet
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 16.799999237060547
+            - 0.8619999885559082
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.014999999664723873
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.167999998
+            - 0.861999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0149999997
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\status_magnet.png
+      Children: ~
+    - name: bookshelf
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 12.300000190734863
+            - 36.368999481201172
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.0099999997764825821
+            - 0.070000000298023224
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.123000003
+            - 0.926999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0189999994
+            - 0.0249999985
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\bookshelf.png
+      Children: ~
+    - name: bible1
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 12.5
+            - 92.900001525878906
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.63999998569488525
+            - 0.029999999329447746
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.125
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\bible.png
+      Children: ~
+    - name: bible2
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 12.800000190734863
+            - 0.92900002002716064
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.0030000000260770321
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.128000006
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\bible.png
+      Children: ~
+    - name: bible3
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 13.100000381469727
+            - 0.92900002002716064
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.0030000000260770321
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.130999997
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\bible.png
+      Children: ~
+    - name: bible4
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 13.399999618530273
+            - 0.92900002002716064
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.0030000000260770321
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.134000003
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\bible.png
+      Children: ~
+    - name: bible5
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 13.699999809265137
+            - 0.92900002002716064
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.0030000000260770321
+            - 0.019999999552965164
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.136999995
+            - 0.92900002
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00300000003
+            - 0.0199999996
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\bible.png
+      Children: ~
+GameObject4:
+  name: Canvas_Location_SM
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: Location_SM
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\location_sacarium_mortis.png
+      Children: ~
+GameObject5:
+  name: Canvas_Location_BoT
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: Location_BoT
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\location_butcher_of_truth.png
+      Children: ~
+GameObject6:
+  name: Canvas_dialogue_box
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+  Children:
+    - name: dialogue_box
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue.png
+      Children: ~
+    - name: option_1
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_option1.png
+      Children: ~
+    - name: option_2
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_option2.png
+      Children: ~
+GameObject7:
+  name: Canvas_PauseMenu
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: PauseMenu
+  Children:
+    - name: PauseMenu
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\pause_menu.png
+      Children: ~
+    - name: Resume_Button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.5
+            - 5.3720002174377441
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.18999999761581421
+            - 0.20000000298023224
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.323000014
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.147999987
+            - 0.0830000043
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\pause_resume.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: Options_Button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.5
+            - 42.700000762939453
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.090000003576278687
+            - 0.17599999904632568
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.426999986
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.147
+            - 0.0769999996
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\pause_options.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: MainMenu_Button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.5
+            - 52.900001525878906
+            - 5.5
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.40000000596046448
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.528999984
+            - 0.0549999997
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.147999987
+            - 0.0780000016
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\pause_mainmenu.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: Exit_Button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.5
+            - 63.099998474121094
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.97000002861022949
+            - 0.11999999731779099
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.630999982
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.143999994
+            - 0.075000003
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\pause_exit.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+GameObject8:
+  name: Canvas_Main_Menu
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: MenuButtons
+  Children:
+    - name: bg_menu
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\menu_bg.png
+      Children: ~
+    - name: title
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 1.3999999761581421
+            - 8.6999998092651367
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.309999942779541
+            - 1.1499999761581421
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0140000004
+            - 0.0869999975
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.386999995
+            - 0.184
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\title.png
+      Children: ~
+    - name: new_game_button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.17700000107288361
+            - 36.099998474121094
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.18199999630451202
+            - 0.039999999105930328
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.177000001
+            - 0.361000001
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0719999969
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\menu_newgame.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: continue_button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.17700000107288361
+            - -4.1999998092651367
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1.7300000190734863
+            - 0.10999999940395355
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.177000001
+            - 0.469000012
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0710000023
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\menu_continue.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: options_button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.17700000107288361
+            - 15.61400032043457
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.17000000178813934
+            - 0.31000000238418579
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.177000001
+            - 0.565999985
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.184
+            - 0.0729999989
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\menu_options.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: exit_button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 17.700000762939453
+            - 66.900001525878906
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.56999999284744263
+            - 0.059999998658895493
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.177000001
+            - 0.66900003
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.184
+            - 0.074000001
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\menu_exit.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+GameObject9:
+  name: Canvas_OptionsMenu
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: OptionMenu
+  Children:
+    - name: Canvas_OptionsMenu_
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options_menu.png
+      Children: ~
+GameObject10:
+  name: Canvas_win_screen
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: WinScreen
+  Children:
+    - name: win_screen
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1.4700000286102295
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\WIN_screen.png
+      Children: ~
+    - name: Menu_Button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 38.5
+            - -9.2189998626708984
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1.6150000095367432
+            - 0.41499999165534973
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.38499999
+            - 0.861000001
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.184
+            - 0.064000003
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\WinMenu.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: Quit_Button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 57.900001525878906
+            - 42.537998199462891
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.25999999046325684
+            - 0.10999999940395355
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.578999996
+            - 0.864000022
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.193000004
+            - 0.0670000017
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\WinQuit.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+GameObject11:
+  name: Canvas_lose_screen
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: LoseScreen
+  Children:
+    - name: BG
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\GAME_OVER_screen.png
+      Children: ~
+    - name: LLC_button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0.27000001072883606
+            - 75
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.18000000715255737
+            - 0.05000000074505806
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.270000011
+            - 0.75
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.261000007
+            - 0.0590000004
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\game_over_LLC.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: MM_button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 50.599998474121094
+            - 0.75
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.17000000178813934
+            - 0.27000001072883606
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.505999982
+            - 0.75
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.174999982
+            - 0.0579999983
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\game_over_MM.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: QUIT_button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 4.6750001907348633
+            - 0.75
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.039999999105930328
+            - 0.40999999642372131
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.714999974
+            - 0.75
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.180999994
+            - 0.0599999987
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\game_over_quit.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~

@@ -35,6 +35,6 @@ public class BiblePagePickUp : PickUp
 
     public override void OnPickUp(PlayerController playerController)
     {
-        playerController.redThirstManager.biblePages++;
+        playerController.redThirstManager.AddBiblePages(1.0f);
     }
 }

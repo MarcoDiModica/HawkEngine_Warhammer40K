@@ -55,100 +55,110 @@ public class EnemyControllerRanged : EnemyController
             return;
         }
 
-        maxHealth = 100.0f;
+        particles = gameObject.AddComponent<ParticleFX>();
+        maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Ranged";
     }
 
     public override void Update(float deltaTime)
     {
-        if (!isStunned)
+        if (!isDead)
         {
             if (currentHealth <= 0)
             {
                 Engineson.print("This man is dead man.");
                 //Destroy(gameObject);
+                isDead = true;
             }
-            Vector3 playerPos = playerTransform.position;
-
-            if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+            if (!isStunned)
             {
-                if (shootTimer <= 0)
-                {
-                    Attack();
-                    sound?.Play();
-                    shootTimer = shootCooldown;
-                }
+                Vector3 playerPos = playerTransform.position;
 
-                if (isCombatMusicPlaying == false)
+                if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
                 {
-                    sound?.LoadAudio(combatMusic);
-                    sound?.Play(true);
-                    isCombatMusicPlaying = true;
+                    if (shootTimer <= 0)
+                    {
+                        Attack();
+                        sound?.Play();
+                        shootTimer = shootCooldown;
+                    }
+
+                    if (isCombatMusicPlaying == false)
+                    {
+                        sound?.LoadAudio(combatMusic);
+                        sound?.Play(true);
+                        isCombatMusicPlaying = true;
+                    }
+                    else
+                    {
+                        shootTimer -= deltaTime;
+                    }
+
+                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                    {
+                        Vector3 currentVelocity = rb.GetVelocity();
+                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                        Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                        if (desiredVelocity.LengthSquared() > 0)
+                        {
+                            desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                        }
+
+                        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                        rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+
+                        //enemyTransform.position += desiredVelocity * deltaTime;
+                    }
                 }
                 else
                 {
-                    shootTimer -= deltaTime;
+                    rb.SetVelocity(Vector3.Zero);
                 }
 
-                if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                if (moveDirection != Vector3.Zero)
                 {
-                    Vector3 currentVelocity = rb.GetVelocity();
-                    moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                    Vector3 desiredVelocity = moveDirection * speedMovement;
+                    currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                    float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                    float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-                    if (desiredVelocity.LengthSquared() > 0)
-                    {
-                        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                    }
+                    while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                    while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
 
-                    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                    currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
 
-                    //enemyTransform.position += desiredVelocity * deltaTime;
+                    Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                    Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                        eulerRotation.Y * ((float)Math.PI / 180.0f),
+                        eulerRotation.X * ((float)Math.PI / 180.0f),
+                        eulerRotation.Z * ((float)Math.PI / 180.0f)
+                    );
+
+                    // enemyTransform.SetRotationQuat(newRotation);
+                    collider.SetRotation(newRotation);
+                }
+
+            }
+            else if (isStunned)
+            {
+                stunTimer += deltaTime;
+                rb.SetVelocity(Vector3.Zero);
+                if (stunTimer >= stunDuration)
+                {
+                    isStunned = false;
+                    stunTimer = 0.0f;
                 }
             }
-            else
-            {
-                rb.SetVelocity(Vector3.Zero);
-            }
 
-            if (moveDirection != Vector3.Zero)
-            {
-                currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-                while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-                currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-                Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                    eulerRotation.Y * ((float)Math.PI / 180.0f),
-                    eulerRotation.X * ((float)Math.PI / 180.0f),
-                    eulerRotation.Z * ((float)Math.PI / 180.0f)
-                );
-
-                // enemyTransform.SetRotationQuat(newRotation);
-                collider.SetRotation(newRotation);
-            }
-
+            UpdateProjectiles(deltaTime);
+            CleanupProjectiles();
         }
-        else if (isStunned)
+        if (isDead)
         {
-            stunTimer += deltaTime;
-            rb.SetVelocity(Vector3.Zero);
-            if (stunTimer >= stunDuration)
-            {
-                isStunned = false;
-                stunTimer = 0.0f;
-            }
+            // Enemy Death
+            collider.SetActive(false);
         }
-
-        UpdateProjectiles(deltaTime);
-        CleanupProjectiles();
     }
 
     public override void Attack()
@@ -160,13 +170,13 @@ public class EnemyControllerRanged : EnemyController
             // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
             projectile.AddComponent<BoxCollider>();
-
             //sound?.Play();
             projectile.tag = "EnemyAttack";
 
             if (projectile != null)
             {
                 Transform projTransform = projectile.GetComponent<Transform>();
+                BoxCollider projectileCollider = projectile.GetComponent<BoxCollider>();
                 if (projTransform != null)
                 {
                     Vector3 forward = moveDirection;
@@ -177,7 +187,7 @@ public class EnemyControllerRanged : EnemyController
                     projectile.AddScript("BulletData");
                     projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
                     activeProjectiles.Add(projectile.GetComponent<BulletData>());
-
+                    projectileCollider.SetPosition(projTransform.position);
                     Engineson.print("Projectile fired!");
                 }
             }
@@ -191,6 +201,8 @@ public class EnemyControllerRanged : EnemyController
     public override void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        particles.ApplyPreset(19);
+        particles.EmitBurst(1);
         Engineson.print("Hit");
         //anim.SetHitAnimation();
         //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");

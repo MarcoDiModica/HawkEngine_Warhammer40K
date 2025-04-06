@@ -1,5 +1,6 @@
 using HawkEngine;
 using System;
+using System.Media;
 using System.Numerics;
 
 public class UIGameplay : MonoBehaviour
@@ -11,6 +12,7 @@ public class UIGameplay : MonoBehaviour
     private PlayerData playerData;
     private UITransform transform;
     private PlayerShooting playerShootingScript;
+    private Audio sound;
 
     public override void Awake()
     {
@@ -22,28 +24,36 @@ public class UIGameplay : MonoBehaviour
         
         playerData = playerController.playerData;
         playerShootingScript = GameObject.Find("Player").GetComponent<PlayerShooting>();
+        sound = GameObject.Find("Player").GetComponent<Audio>();
         transform = GameObject.Find("PlayerLife").GetComponent<UITransform>();
         boltgunIcon = GameObject.Find("BoltgunIcon").GetComponent<UIImage>();
         shotgunIcon = GameObject.Find("ShotgunIcon").GetComponent<UIImage>();
         railgunIcon = GameObject.Find("RailgunIcon").GetComponent<UIImage>();
-        if (railgunIcon == null || transform == null)
-        {
-            Engineson.print("ERROR: ImageAsSlider requires a UIImage component!");
-        }
     }
 
     public override void Update(float deltaTime)
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
+            
             playerData.SetHealth(playerData.GetHealth() - 10);
+            if (playerData.GetHealth() <= 0)
+            {
+                sound.LoadAudio(playerController.DeathAudio);
+                sound.Play();
+            }
+            else
+            {
+                sound.LoadAudio(playerController.HitAudio);
+                sound.Play();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.M))
         {
             playerData.SetHealth(playerData.GetHealth() + 10);
         }
-        transform.SetUIScale(new Vector3(CaclulateLifeBarWidth(), 0.054f, 1.0f));
+        transform.SetScaleUI(new Vector3(CaclulateLifeBarWidth(), 0.054f, 1.0f));
 
         switch (playerShootingScript.GetCurrentGun())
         {

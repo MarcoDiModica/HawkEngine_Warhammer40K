@@ -186,5 +186,31 @@ public class PlayerPowerUp : MonoBehaviour
 
 
         }
+
+        if (other.tag == "BiblePage")
+        {
+            Engineson.print("Player Collided with:" + other.tag);
+            if (other.GetComponent<BiblePagePickUp>() != null)
+            {
+                other.GetComponent<BiblePagePickUp>().OnPickUp(playerController);
+                Engineson.Destroy(other);
+
+            }
+
+
+        }
+    }
+
+    public bool GetHasMedicaeStimm()
+    {
+        return hasMedicaeStimm;
+    }
+    public bool GetHasAmmunitionBlessing()
+    {
+        return hasAmmunitionBlessing;
+    }
+    public bool GetHasMagnet()
+    {
+        return hasMagnet;
     }
 }

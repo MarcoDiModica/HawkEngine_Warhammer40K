@@ -70,15 +70,15 @@ bool Root::Start()
 	////environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	////environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 	//Audio Trigger
-	auto audioTrigger = CreateGameObject("AudioTrigger");
-	audioTrigger->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
-	audioTrigger->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	audioTrigger->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	audioTrigger->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1, 1, 1));
-	audioTrigger->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 0, 0));
-	audioTrigger->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	audioTrigger->AddComponent<SoundComponent>();
-	audioTrigger->AddComponent<ScriptComponent>()->LoadScript("SoundTrigger");
+	//auto audioTrigger = CreateGameObject("AudioTrigger");
+	//audioTrigger->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
+	//audioTrigger->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//audioTrigger->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//audioTrigger->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1, 1, 1));
+	//audioTrigger->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 0, 0));
+	//audioTrigger->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	//audioTrigger->AddComponent<SoundComponent>();
+	//audioTrigger->AddComponent<ScriptComponent>()->LoadScript("SoundTrigger");
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/Level1.fbx");
 	//auto scenezone1 = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");

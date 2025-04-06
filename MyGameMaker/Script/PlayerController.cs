@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit.wav";
     public string DeathAudio = "Assets/Audio/SFX/Player/PlayerDeath.wav";
 
-
     public PlayerData playerData;
 
     public override void Awake()
@@ -48,6 +47,7 @@ public class PlayerController : MonoBehaviour
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         playerDash = gameObject.GetComponent<PlayerDash>();
         playerShooting = gameObject.GetComponent<PlayerShooting>();
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerMesh = GameObject.Find("playerMesh");
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);

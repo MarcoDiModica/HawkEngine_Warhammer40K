@@ -523,13 +523,13 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	
-	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	//biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
-	//biblePagePickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	//biblePagePickUp->SetTag("BiblePage");
+	auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	biblePagePickUp->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
+	biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	biblePagePickUp->SetTag("BiblePage");
 
 #ifdef _BUILD
 	Application->play = true;

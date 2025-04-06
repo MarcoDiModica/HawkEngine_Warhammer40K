@@ -50,8 +50,8 @@ public class PlayerController : MonoBehaviour
         playerMovement = gameObject.GetComponent<PlayerMovement>();
         playerDash = gameObject.GetComponent<PlayerDash>();
         playerShooting = gameObject.GetComponent<PlayerShooting>();
-        redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerMesh = GameObject.Find("playerMesh");
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
         sound = gameObject.GetComponent<Audio>();

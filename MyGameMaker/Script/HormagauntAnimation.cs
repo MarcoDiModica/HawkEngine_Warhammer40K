@@ -9,7 +9,7 @@ public class HormagauntAnimation : MonoBehaviour
 
     public override void Awake()
     {
-
+        
     }
     public override void Start()
     {

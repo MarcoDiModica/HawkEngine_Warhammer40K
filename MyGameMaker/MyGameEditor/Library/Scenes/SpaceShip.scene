@@ -137,9 +137,9 @@ GameObject0:
             - 110.7918701171875
             - 1311.495361328125
           localRotation:
-            - -90.000006889641696
-            - 74.935080451286481
-            - 6.8896416963790275e-06
+            - -89.999992141259369
+            - 74.935070116829522
+            - 1.8193203179827475e-05
           localScale:
             - 28.372146606445312
             - 21.824729919433594
@@ -239,9 +239,9 @@ GameObject0:
             - 110.7918701171875
             - 1246.791015625
           localRotation:
-            - -89.999996857776324
-            - 66.470762167665271
-            - 1.3607343227599198e-05
+            - -90.000006976746363
+            - 66.470765656038665
+            - 6.9767463638741136e-06
           localScale:
             - 28.372150421142578
             - 21.824728012084961
@@ -728,9 +728,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.03370870402803
-            - 89.813238805205287
-            - -0.033674553036378924
+            - -90.035032447896214
+            - 89.812039200438832
+            - -0.034996589354439479
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -850,9 +850,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.032982221772627
-            - 89.814147292971825
-            - -0.032944655681808814
+            - -90.034594269822762
+            - 89.812786265460502
+            - -0.034556703731936214
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -911,9 +911,9 @@ GameObject0:
             - 47.038593292236328
             - 3103.14794921875
           localRotation:
-            - 89.999993121052611
-            - -76.348259433079363
-            - 179.99999312105263
+            - 89.99999312105281
+            - -76.3482823987584
+            - 179.99999312105282
           localScale:
             - 19.999996185302734
             - 19.999996185302734
@@ -972,9 +972,9 @@ GameObject0:
             - 47.038593292236328
             - 2985.45849609375
           localRotation:
-            - -90.03370870402803
-            - 89.813238805205287
-            - -0.033674553036378924
+            - -90.035032447896214
+            - 89.812039200438832
+            - -0.034996589354439479
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1094,9 +1094,9 @@ GameObject0:
             - 47.038593292236328
             - 2648.169921875
           localRotation:
-            - 89.999955758591014
-            - 79.548672955164008
-            - 179.99993175315532
+            - 89.999972791873731
+            - 79.54866620982169
+            - 179.99995221578541
           localScale:
             - 20.000001907348633
             - 20.000001907348633
@@ -1338,9 +1338,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.032982221772627
-            - 89.814147292971825
-            - -0.032944655681808814
+            - -90.034594269822762
+            - 89.812786265460502
+            - -0.034556703731936214
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1460,9 +1460,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.032982221772627
-            - 89.814147292971825
-            - -0.032944655681808814
+            - -90.034594269822762
+            - 89.812786265460502
+            - -0.034556703731936214
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -2295,7 +2295,7 @@ GameObject0:
             - 2582.04150390625
           localRotation:
             - -90
-            - -89.886054312768621
+            - -89.883313036049941
             - 0
           localScale:
             - 30.347345352172852
@@ -2356,7 +2356,7 @@ GameObject0:
             - 3032.04150390625
           localRotation:
             - -90
-            - -89.886054312768621
+            - -89.883313036049941
             - 0
           localScale:
             - 30.347345352172852
@@ -2641,7 +2641,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -2702,7 +2702,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -2763,7 +2763,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -2916,7 +2916,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -2977,7 +2977,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3099,7 +3099,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3211,7 +3211,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3262,7 +3262,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3323,7 +3323,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3384,7 +3384,7 @@ GameObject0:
             - 1189.4329833984375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3435,7 +3435,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3486,7 +3486,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3537,7 +3537,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3588,7 +3588,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3639,7 +3639,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3700,7 +3700,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3751,7 +3751,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3812,7 +3812,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3863,7 +3863,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3914,7 +3914,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -3965,7 +3965,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -4016,7 +4016,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -4067,7 +4067,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -4118,7 +4118,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -4179,7 +4179,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -4230,7 +4230,7 @@ GameObject0:
             - 1189.432861328125
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -4281,7 +4281,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -4332,7 +4332,7 @@ GameObject0:
             - 1187.18017578125
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -4383,7 +4383,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.892695151275433
+            - -89.88747469861886
             - 0
           localScale:
             - 29.999998092651367
@@ -7235,9 +7235,9 @@ GameObject0:
             - 179.52284240722656
             - 1464.330810546875
           localRotation:
-            - -4.3257108477357049e-06
+            - -4.3257108444049816e-06
             - 7.4421700826969319
-            - 1.5000435324403599e-12
+            - 1.5512565377951369e-12
           localScale:
             - 0.5
             - 0.5
@@ -7765,9 +7765,9 @@ GameObject0:
             - 74.326217651367188
             - 776.99554443359375
           localRotation:
-            - -89.999944158849374
-            - -83.045455133938233
-            - -8.4922995829886757e-05
+            - -89.999960801046612
+            - -83.045457309124345
+            - -7.3412889435608804e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8346,9 +8346,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999944158849374
-            - -83.045455133938233
-            - -8.4922995829886757e-05
+            - -89.999960801046612
+            - -83.045457309124345
+            - -7.3412889435608804e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8397,9 +8397,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999944158849374
-            - -83.045455133938233
-            - -8.4922995829886757e-05
+            - -89.999960801046612
+            - -83.045457309124345
+            - -7.3412889435608804e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8448,9 +8448,9 @@ GameObject0:
             - 74.326217651367188
             - 501.02926635742188
           localRotation:
-            - -89.999944158849374
-            - -83.045455133938233
-            - -8.4922995829886757e-05
+            - -89.999960801046612
+            - -83.045457309124345
+            - -7.3412889435608804e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -9720,7 +9720,7 @@ GameObject0:
             - 1799.589111328125
           localRotation:
             - -90
-            - -89.883313036049941
+            - -89.879346061924039
             - 0
           localScale:
             - 100
@@ -13974,7 +13974,7 @@ GameObject0:
             - 1800
           localRotation:
             - -90
-            - -89.927078428586213
+            - -89.918682505717186
             - 0
           localScale:
             - 140
@@ -20969,9 +20969,9 @@ GameObject0:
             - 59.258811950683594
             - 1273.9903564453125
           localRotation:
-            - 89.999168575019809
-            - 88.526165344734977
-            - 179.9991053905436
+            - 89.999237600941925
+            - 88.526026390742686
+            - 179.99916929339906
           localScale:
             - 31.190008163452148
             - 31.190008163452148
@@ -22781,7 +22781,7 @@ GameObject0:
             - 804
           localRotation:
             - -90
-            - 89.893898520612751
+            - 89.895896651452134
             - 0
           localScale:
             - 100
@@ -22842,7 +22842,7 @@ GameObject0:
             - 1603.9998779296875
           localRotation:
             - -90
-            - 89.896195071005891
+            - 89.896479860573294
             - 0
           localScale:
             - 100
@@ -30593,7 +30593,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 2544.22900390625
@@ -30654,7 +30654,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 2544.22900390625
@@ -30837,7 +30837,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 2001.7862548828125
@@ -30898,7 +30898,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 2001.7862548828125
@@ -31081,7 +31081,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 751.6044921875
@@ -31142,7 +31142,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 751.6044921875
@@ -31324,9 +31324,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -89.976636784657686
-            - 90
-            - 0.02932255521018768
+            - -90.000491696643053
+            - 89.958355114374612
+            - 0.0054659362990035591
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31385,9 +31385,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -89.976636784657686
-            - 90
-            - 0.02932255521018768
+            - -90.000491696643053
+            - 89.958355114374612
+            - 0.0054659362990035591
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31691,7 +31691,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 517.2039794921875
@@ -31813,7 +31813,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 744.78399658203125
@@ -31935,7 +31935,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 765.05303955078125
@@ -31996,7 +31996,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 517.2039794921875
@@ -32118,7 +32118,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 744.78399658203125
@@ -32240,7 +32240,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 765.05303955078125
@@ -32301,7 +32301,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 744.78399658203125
@@ -32362,7 +32362,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.892695151275433
+            - 89.88747469861886
             - 0
           localScale:
             - 744.78399658203125
@@ -32483,9 +32483,9 @@ GameObject1:
             - 1729.630615234375
             - 10724.0029296875
           localRotation:
-            - 89.999788730527086
-            - 86.781554975607875
-            - 179.99966403039437
+            - 89.999759182953341
+            - 86.781461207772253
+            - 179.99963277459398
           localScale:
             - 247.75401306152344
             - 126.90206146240234
@@ -32544,9 +32544,9 @@ GameObject1:
             - 1729.630615234375
             - 10721.7958984375
           localRotation:
-            - 90.000306783402053
-            - -86.719137305938602
-            - 179.99971029907198
+            - 90.000303369390863
+            - -86.719270270675437
+            - 179.99970688009296
           localScale:
             - 247.75398254394531
             - 126.90205383300781
@@ -33237,9 +33237,9 @@ GameObject1:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.004127584647748
-            - 89.865559727826678
-            - -90.004125169809541
+            - -90.008356233238985
+            - 89.870564558075472
+            - -90.008348988724975
           localScale:
             - 128.03897094726562
             - 427.90078735351562
@@ -33400,9 +33400,9 @@ GameObject1:
             - 3463.08984375
             - 7749.7587890625
           localRotation:
-            - -89.989308516442534
-            - 89.918728810409803
-            - -108.02032159803908
+            - -89.991604593360236
+            - 89.920969524270106
+            - -108.02262558678792
           localScale:
             - 87.500289916992188
             - 177.206298828125
@@ -33553,9 +33553,9 @@ GameObject1:
             - 3086.548583984375
             - 7750.44482421875
           localRotation:
-            - -90.004383067135009
-            - 89.888090658805922
-            - 179.99420649817097
+            - -90.006290817326303
+            - 89.889862804210722
+            - 179.99230216307575
           localScale:
             - 43.940093994140625
             - 77.251510620117188
@@ -33604,9 +33604,9 @@ GameObject1:
             - 2866.346435546875
             - 7750.44482421875
           localRotation:
-            - -89.989975557235155
-            - 89.877520019117497
-            - -179.99229953045051
+            - -89.992434241699314
+            - 89.876342208069616
+            - -179.99475650740098
           localScale:
             - 27.383285522460938
             - 48.142822265625
@@ -33707,7 +33707,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -33758,7 +33758,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -33809,7 +33809,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -33860,7 +33860,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -33911,7 +33911,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -33962,7 +33962,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -34013,7 +34013,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -34064,7 +34064,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -34115,7 +34115,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -34166,7 +34166,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.875986586091557
+            - 89.875157936843848
             - 0
           localScale:
             - 127.28877258300781
@@ -34216,9 +34216,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.00016644914713
-            - 89.934296547996922
-            - 0.0058407031175363609
+            - -89.994597377722926
+            - 89.930933389229367
+            - 0.011402944530397741
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34277,9 +34277,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -90.00016644914713
-            - 89.934296547996922
-            - 0.0058407031175363609
+            - -89.994597377722926
+            - 89.930933389229367
+            - 0.011402944530397741
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34501,9 +34501,9 @@ GameObject1:
             - 1972.6943359375
             - -2994.31640625
           localRotation:
-            - -179.8516669417032
-            - 48.842750000262441
-            - -179.80299501166107
+            - -179.85166694956669
+            - 48.842740116555163
+            - -179.80299501339101
           localScale:
             - 88.947860717773438
             - 202.1011962890625
@@ -34552,9 +34552,9 @@ GameObject1:
             - 2146.18212890625
             - -2985.56982421875
           localRotation:
-            - -179.8516669417032
-            - 48.842750000262441
-            - -179.80299501166107
+            - -179.85166694956669
+            - 48.842740116555163
+            - -179.80299501339101
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -34603,9 +34603,9 @@ GameObject1:
             - 1940.9827880859375
             - -2993.0263671875
           localRotation:
-            - -179.8516669417032
-            - 48.842750000262441
-            - -179.80299501166107
+            - -179.85166694956669
+            - 48.842740116555163
+            - -179.80299501339101
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -35306,9 +35306,9 @@ GameObject1:
             - 2396.811767578125
             - -19521.4140625
           localRotation:
-            - 89.978550999524728
-            - -89.94672668220818
-            - -179.98077764139296
+            - 89.980354278213994
+            - -89.945634503472007
+            - -179.98257067486361
           localScale:
             - 274.48114013671875
             - 57.520450592041016
@@ -35357,9 +35357,9 @@ GameObject1:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - -90.004127584647748
-            - 89.865559727826678
-            - -90.004125169809541
+            - -90.008356233238985
+            - 89.870564558075472
+            - -90.008348988724975
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -43691,8 +43691,490 @@ GameObject140:
       particleType: 16
   Children: ~
 GameObject141:
+  name: AudioTrigger
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 1.6504348516464233
+        - 2
+        - -33.276145935058594
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 18.7999992
+        - 13.1999998
+        - 57.2999992
+      offset:
+        - -1.89999998
+        - 0
+        - 3.5
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject142:
+  name: AudioTrigger_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -85.194549560546875
+        - 2
+        - 37.067485809326172
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 17.6000004
+        - 19.1000004
+        - 78.0999985
+      offset:
+        - 4.4000001
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject143:
+  name: AudioTrigger_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -84.941253662109375
+        - 2
+        - 148.06008911132812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 21
+        - 23.2000008
+        - 67.5999985
+      offset:
+        - 4.5
+        - -0.100000001
+        - -4.19999981
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject144:
+  name: AudioTrigger_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -4.1049661636352539
+        - 2
+        - 263.469970703125
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 23.7999992
+        - 30.7000008
+        - 47.5999985
+      offset:
+        - 0
+        - 0
+        - -12.8999996
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject145:
+  name: AudioTrigger_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.12563943862915039
+        - 2
+        - 1.7422757148742676
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 18.7999992
+        - 9.69999981
+        - 15.5
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\cableFailing_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject146:
+  name: AudioTrigger_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 88.472122192382812
+        - 2
+        - 49.566200256347656
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 10.1000004
+        - 9.80000019
+        - 18.1000004
+      offset:
+        - 1.79999995
+        - -0.400000006
+        - -0.5
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\cableFailing_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject147:
+  name: AudioTrigger_6
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -98.890396118164062
+        - 2
+        - 92.321487426757812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 52
+        - 18.8999996
+        - 20.1000004
+      offset:
+        - -11.6999998
+        - -0.300000012
+        - -2.4000001
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\cableFailing_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject148:
+  name: AudioTrigger_7
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 130.77787780761719
+        - 2
+        - 50.757442474365234
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 15.6999998
+        - 8.10000038
+        - 20.2000008
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\cableFailing_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject149:
+  name: BiblePage
+  tag: BiblePage
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -73.678276062011719
+        - 2
+        - 219.79338073730469
+      localRotation:
+        - -90.000009659346318
+        - 0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 0.30000001192092896
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.295719862
+          - 0
+          - 0.0414238684
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+  Children: ~
+GameObject150:
+  name: BiblePage_1
+  tag: BiblePage
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 150.11882019042969
+        - 2
+        - 57.136791229248047
+      localRotation:
+        - -90.000009659346318
+        - 0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 0.30000001192092896
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.294117659
+          - 0
+          - 0.0431372561
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+  Children: ~
+GameObject151:
   name: Player
-  tag: Player
+  tag: Untagged
   active: true
   isStatic: false
   Components:
@@ -43701,7 +44183,7 @@ GameObject141:
       enabled: true
       localPosition:
         - 0
-        - 3.4460749626159668
+        - 1.78778076171875
         - 0
       localRotation:
         - 0
@@ -43711,56 +44193,6 @@ GameObject141:
         - 1
         - 1
         - 1
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 2
-      emissionRate: 15
-      particlesPerSecond: 15
-      minLifetime: 2
-      maxLifetime: 4
-      minSpeed: 0.5
-      maxSpeed: 1.5
-      startSize: 0.5
-      endSize: 2
-      minSize: 0.5
-      maxSize: 0
-      startColor:
-        - 0.800000012
-        - 0.800000012
-        - 0.800000012
-      endColor:
-        - 0.200000003
-        - 0.200000003
-        - 0.200000003
-      startAlpha: 0.699999988
-      endAlpha: 0
-      rotationSpeed: 0.200000003
-      gravity:
-        - 0
-        - -0.100000001
-        - 0
-      shapeParam1: 0.200000003
-      shapeParam2: 1
-      shapeParam3: 20
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 256
-        - 256
-      useAnimation: true
-      animSpeed: 0.5
-      startRotation: 0
-      randomRotation: true
-      material:
-        billboardType: 0
-        particleType: 1
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/Smoke30Frames.png
-      particleType: 1
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -43830,77 +44262,6 @@ GameObject141:
       Script17:
         name: InteractionSystem
   Children:
-    - name: RiffleShotFX
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.80000001192092896
-            - 3
-            - 0.5
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 2
-            - 2
-            - 2
-        ParticleFX:
-          name: ParticleFX
-          enabled: true
-          emitterShape: 0
-          emissionRate: 1
-          particlesPerSecond: 1
-          minLifetime: 0.25
-          maxLifetime: 0.25
-          minSpeed: 0
-          maxSpeed: 0
-          startSize: 1
-          endSize: 1
-          minSize: 1
-          maxSize: 1
-          startColor:
-            - 1
-            - 1
-            - 1
-          endColor:
-            - 1
-            - 1
-            - 1
-          startAlpha: 1
-          endAlpha: 1
-          rotationSpeed: 0
-          gravity:
-            - 0
-            - 0.00100000005
-            - 0
-          shapeParam1: 0.200000003
-          shapeParam2: 1
-          shapeParam3: 20
-          isOneShot: false
-          isPlaying: false
-          isPaused: false
-          burstEmitted: false
-          spriteSize:
-            - 1920
-            - 1080
-          useAnimation: true
-          animSpeed: 0.0500000007
-          startRotation: 0
-          randomRotation: false
-          material:
-            billboardType: 0
-            particleType: 8
-            softness: 0
-            useColorGradient: false
-            texturePath: Assets/Textures/muzzle.png
-          particleType: 8
-      Children: ~
     - name: playerMesh
       tag: Untagged
       active: true
@@ -43914,7 +44275,7 @@ GameObject141:
             - 0
             - 0
           localRotation:
-            - -90
+            - -90.000002504478161
             - 0
             - 0
           localScale:
@@ -43959,485 +44320,216 @@ GameObject141:
           Script0:
             name: PlayerAnimations
       Children: ~
-GameObject142:
-  name: AudioTrigger
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 1.6504348516464233
-        - 2
-        - -33.276145935058594
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 18.7999992
-        - 13.1999998
-        - 57.2999992
-      offset:
-        - -1.89999998
-        - 0
-        - 3.5
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\drippingWater_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject143:
-  name: AudioTrigger_1
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -85.194549560546875
-        - 2
-        - 37.067485809326172
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 17.6000004
-        - 19.1000004
-        - 78.0999985
-      offset:
-        - 4.4000001
-        - 0
-        - 0
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\drippingWater_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject144:
-  name: AudioTrigger_2
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -84.941253662109375
-        - 2
-        - 148.06008911132812
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 21
-        - 23.2000008
-        - 67.5999985
-      offset:
-        - 4.5
-        - -0.100000001
-        - -4.19999981
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\drippingWater_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject145:
-  name: AudioTrigger_3
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -4.1049661636352539
-        - 2
-        - 263.469970703125
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 23.7999992
-        - 30.7000008
-        - 47.5999985
-      offset:
-        - 0
-        - 0
-        - -12.8999996
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\drippingWater_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject146:
-  name: AudioTrigger_4
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -0.12563943862915039
-        - 2
-        - 1.7422757148742676
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 18.7999992
-        - 9.69999981
-        - 15.5
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\cableFailing_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject147:
-  name: AudioTrigger_5
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 88.472122192382812
-        - 2
-        - 49.566200256347656
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 10.1000004
-        - 9.80000019
-        - 18.1000004
-      offset:
-        - 1.79999995
-        - -0.400000006
-        - -0.5
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\cableFailing_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject148:
-  name: AudioTrigger_6
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -98.890396118164062
-        - 2
-        - 92.321487426757812
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 52
-        - 18.8999996
-        - 20.1000004
-      offset:
-        - -11.6999998
-        - -0.300000012
-        - -2.4000001
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\cableFailing_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject149:
-  name: AudioTrigger_7
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 130.77787780761719
-        - 2
-        - 50.757442474365234
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 15.6999998
-        - 8.10000038
-        - 20.2000008
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\cableFailing_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject150:
-  name: BiblePage
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -73.678276062011719
-        - 2
-        - 219.79338073730469
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.295719862
-          - 0
-          - 0.0414238684
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
-GameObject151:
-  name: BiblePage
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 150.11882019042969
-        - 2
-        - 57.136791229248047
-      localRotation:
-        - -90.000009334666828
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1.0000000000000133
-        - 0.30000001192093295
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.294117659
-          - 0
-          - 0.0431372561
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
+    - name: RiffleShotFX
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -0.80000001192092896
+            - 3
+            - 0.5
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 0
+          emissionRate: 1
+          particlesPerSecond: 1
+          minLifetime: 0.25
+          maxLifetime: 0.25
+          minSpeed: 0
+          maxSpeed: 0
+          startSize: 3
+          endSize: 3
+          minSize: 1
+          maxSize: 1
+          startColor:
+            - 1
+            - 1
+            - 1
+          endColor:
+            - 1
+            - 1
+            - 1
+          startAlpha: 1
+          endAlpha: 1
+          rotationSpeed: 0
+          gravity:
+            - 0
+            - 0.00100000005
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: false
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 1920
+            - 1080
+          useAnimation: true
+          animSpeed: 0.0500000007
+          startRotation: 0
+          randomRotation: false
+          material:
+            billboardType: 0
+            particleType: 8
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/muzzle.png
+          particleType: 8
+      Children: ~
+    - name: InactiveDashFX
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 3
+            - -1
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 15
+          particlesPerSecond: 15
+          minLifetime: 2
+          maxLifetime: 4
+          minSpeed: 0.5
+          maxSpeed: 1.5
+          startSize: 2
+          endSize: 2
+          minSize: 0.5
+          maxSize: 0
+          startColor:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+          endColor:
+            - 0.200000003
+            - 0.200000003
+            - 0.200000003
+          startAlpha: 0.699999988
+          endAlpha: 0
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -0.100000001
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: false
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 1
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/Smoke30Frames.png
+          particleType: 1
+      Children: ~
+    - name: WalkingFX
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - -1
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 15
+          particlesPerSecond: 15
+          minLifetime: 2
+          maxLifetime: 4
+          minSpeed: 0.5
+          maxSpeed: 1.5
+          startSize: 0.5
+          endSize: 2
+          minSize: 0.5
+          maxSize: 0
+          startColor:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+          endColor:
+            - 0.200000003
+            - 0.200000003
+            - 0.200000003
+          startAlpha: 0.699999988
+          endAlpha: 0
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -0.100000001
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: false
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 1
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/Smoke30Frames.png
+          particleType: 1
+      Children: ~

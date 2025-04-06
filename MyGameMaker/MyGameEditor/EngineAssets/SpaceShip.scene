@@ -43691,6 +43691,488 @@ GameObject140:
       particleType: 16
   Children: ~
 GameObject141:
+  name: AudioTrigger
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 1.6504348516464233
+        - 2
+        - -33.276145935058594
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 18.7999992
+        - 13.1999998
+        - 57.2999992
+      offset:
+        - -1.89999998
+        - 0
+        - 3.5
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject142:
+  name: AudioTrigger_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -85.194549560546875
+        - 2
+        - 37.067485809326172
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 17.6000004
+        - 19.1000004
+        - 78.0999985
+      offset:
+        - 4.4000001
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject143:
+  name: AudioTrigger_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -84.941253662109375
+        - 2
+        - 148.06008911132812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 21
+        - 23.2000008
+        - 67.5999985
+      offset:
+        - 4.5
+        - -0.100000001
+        - -4.19999981
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject144:
+  name: AudioTrigger_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -4.1049661636352539
+        - 2
+        - 263.469970703125
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 23.7999992
+        - 30.7000008
+        - 47.5999985
+      offset:
+        - 0
+        - 0
+        - -12.8999996
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject145:
+  name: AudioTrigger_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.12563943862915039
+        - 2
+        - 1.7422757148742676
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 18.7999992
+        - 9.69999981
+        - 15.5
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\cableFailing_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject146:
+  name: AudioTrigger_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 88.472122192382812
+        - 2
+        - 49.566200256347656
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 10.1000004
+        - 9.80000019
+        - 18.1000004
+      offset:
+        - 1.79999995
+        - -0.400000006
+        - -0.5
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\cableFailing_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject147:
+  name: AudioTrigger_6
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -98.890396118164062
+        - 2
+        - 92.321487426757812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 52
+        - 18.8999996
+        - 20.1000004
+      offset:
+        - -11.6999998
+        - -0.300000012
+        - -2.4000001
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\cableFailing_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject148:
+  name: AudioTrigger_7
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 130.77787780761719
+        - 2
+        - 50.757442474365234
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 15.6999998
+        - 8.10000038
+        - 20.2000008
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\cableFailing_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject149:
+  name: BiblePage
+  tag: BiblePage
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -73.678276062011719
+        - 2
+        - 219.79338073730469
+      localRotation:
+        - -90.000009659346318
+        - 0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 0.30000001192092896
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.295719862
+          - 0
+          - 0.0414238684
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+  Children: ~
+GameObject150:
+  name: BiblePage_1
+  tag: BiblePage
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 150.11882019042969
+        - 2
+        - 57.136791229248047
+      localRotation:
+        - -90.000009659346318
+        - 0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 0.30000001192092896
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.294117659
+          - 0
+          - 0.0431372561
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+  Children: ~
+GameObject151:
   name: Player
   tag: Player
   active: true
@@ -43701,7 +44183,7 @@ GameObject141:
       enabled: true
       localPosition:
         - 0
-        - 3.4460749626159668
+        - 0
         - 0
       localRotation:
         - 0
@@ -43830,77 +44312,6 @@ GameObject141:
       Script17:
         name: InteractionSystem
   Children:
-    - name: RiffleShotFX
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.80000001192092896
-            - 3
-            - 0.5
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 2
-            - 2
-            - 2
-        ParticleFX:
-          name: ParticleFX
-          enabled: true
-          emitterShape: 0
-          emissionRate: 1
-          particlesPerSecond: 1
-          minLifetime: 0.25
-          maxLifetime: 0.25
-          minSpeed: 0
-          maxSpeed: 0
-          startSize: 1
-          endSize: 1
-          minSize: 1
-          maxSize: 1
-          startColor:
-            - 1
-            - 1
-            - 1
-          endColor:
-            - 1
-            - 1
-            - 1
-          startAlpha: 1
-          endAlpha: 1
-          rotationSpeed: 0
-          gravity:
-            - 0
-            - 0.00100000005
-            - 0
-          shapeParam1: 0.200000003
-          shapeParam2: 1
-          shapeParam3: 20
-          isOneShot: false
-          isPlaying: true
-          isPaused: false
-          burstEmitted: false
-          spriteSize:
-            - 1920
-            - 1080
-          useAnimation: true
-          animSpeed: 0.0500000007
-          startRotation: 0
-          randomRotation: false
-          material:
-            billboardType: 0
-            particleType: 8
-            softness: 0
-            useColorGradient: false
-            texturePath: Assets/Textures/muzzle.png
-          particleType: 8
-      Children: ~
     - name: playerMesh
       tag: Untagged
       active: true
@@ -43914,7 +44325,7 @@ GameObject141:
             - 0
             - 0
           localRotation:
-            - -90
+            - -90.000002504478161
             - 0
             - 0
           localScale:
@@ -43959,550 +44370,216 @@ GameObject141:
           Script0:
             name: PlayerAnimations
       Children: ~
-GameObject142:
-  name: AudioTrigger
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 1.6504348516464233
-        - 2
-        - -33.276145935058594
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 18.7999992
-        - 13.1999998
-        - 57.2999992
-      offset:
-        - -1.89999998
-        - 0
-        - 3.5
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\drippingWater_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject143:
-  name: AudioTrigger_1
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -85.194549560546875
-        - 2
-        - 37.067485809326172
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 17.6000004
-        - 19.1000004
-        - 78.0999985
-      offset:
-        - 4.4000001
-        - 0
-        - 0
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\drippingWater_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject144:
-  name: AudioTrigger_2
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -84.941253662109375
-        - 2
-        - 148.06008911132812
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 21
-        - 23.2000008
-        - 67.5999985
-      offset:
-        - 4.5
-        - -0.100000001
-        - -4.19999981
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\drippingWater_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject145:
-  name: AudioTrigger_3
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -4.1049661636352539
-        - 2
-        - 263.469970703125
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 23.7999992
-        - 30.7000008
-        - 47.5999985
-      offset:
-        - 0
-        - 0
-        - -12.8999996
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\drippingWater_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject146:
-  name: AudioTrigger_4
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -0.12563943862915039
-        - 2
-        - 1.7422757148742676
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 18.7999992
-        - 9.69999981
-        - 15.5
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\cableFailing_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject147:
-  name: AudioTrigger_5
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 88.472122192382812
-        - 2
-        - 49.566200256347656
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 10.1000004
-        - 9.80000019
-        - 18.1000004
-      offset:
-        - 1.79999995
-        - -0.400000006
-        - -0.5
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\cableFailing_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject148:
-  name: AudioTrigger_6
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -98.890396118164062
-        - 2
-        - 92.321487426757812
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 52
-        - 18.8999996
-        - 20.1000004
-      offset:
-        - -11.6999998
-        - -0.300000012
-        - -2.4000001
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\cableFailing_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject149:
-  name: AudioTrigger_7
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 130.77787780761719
-        - 2
-        - 50.757442474365234
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    BoxColliderComponent:
-      size:
-        - 15.6999998
-        - 8.10000038
-        - 20.2000008
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Library\Audio\cableFailing_ready.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ScriptComponents:
-      Script0:
-        name: SoundTrigger
-  Children: ~
-GameObject150:
-  name: BiblePage
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -73.678276062011719
-        - 2
-        - 219.79338073730469
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.295719862
-          - 0
-          - 0.0414238684
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
-GameObject151:
-  name: BiblePage_1
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 150.11882019042969
-        - 2
-        - 57.136791229248047
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.294117659
-          - 0
-          - 0.0431372561
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
-GameObject152:
-  name: Cube
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 30
-        - 2
-        - 3
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
+    - name: RiffleShotFX
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -0.80000001192092896
+            - 3
+            - 0.5
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 0
+          emissionRate: 1
+          particlesPerSecond: 1
+          minLifetime: 0.25
+          maxLifetime: 0.25
+          minSpeed: 0
+          maxSpeed: 0
+          startSize: 3
+          endSize: 3
+          minSize: 1
+          maxSize: 1
+          startColor:
+            - 1
+            - 1
+            - 1
+          endColor:
+            - 1
+            - 1
+            - 1
+          startAlpha: 1
+          endAlpha: 1
+          rotationSpeed: 0
+          gravity:
+            - 0
+            - 0.00100000005
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 1920
+            - 1080
+          useAnimation: true
+          animSpeed: 0.0500000007
+          startRotation: 0
+          randomRotation: false
+          material:
+            billboardType: 0
+            particleType: 8
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/muzzle.png
+          particleType: 8
+      Children: ~
+    - name: InactiveDashFX
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 3
+            - -1
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 15
+          particlesPerSecond: 15
+          minLifetime: 2
+          maxLifetime: 4
+          minSpeed: 0.5
+          maxSpeed: 1.5
+          startSize: 2
+          endSize: 2
+          minSize: 0.5
+          maxSize: 0
+          startColor:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+          endColor:
+            - 0.200000003
+            - 0.200000003
+            - 0.200000003
+          startAlpha: 0.699999988
+          endAlpha: 0
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -0.100000001
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 1
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/Smoke30Frames.png
+          particleType: 1
+      Children: ~
+    - name: WalkingFX
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - -1
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 2
+          emissionRate: 15
+          particlesPerSecond: 15
+          minLifetime: 2
+          maxLifetime: 4
+          minSpeed: 0.5
+          maxSpeed: 1.5
+          startSize: 0.5
+          endSize: 2
+          minSize: 0.5
+          maxSize: 0
+          startColor:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+          endColor:
+            - 0.200000003
+            - 0.200000003
+            - 0.200000003
+          startAlpha: 0.699999988
+          endAlpha: 0
+          rotationSpeed: 0.200000003
+          gravity:
+            - 0
+            - -0.100000001
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: true
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 256
+            - 256
+          useAnimation: true
+          animSpeed: 0.5
+          startRotation: 0
+          randomRotation: true
+          material:
+            billboardType: 0
+            particleType: 1
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/Smoke30Frames.png
+          particleType: 1
+      Children: ~

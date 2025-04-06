@@ -1195,6 +1195,11 @@ void EngineBinds::DOValue(float* value, float start, float target, float duratio
     Tweening::TweenValue(value, start, target, duration, mode);
 }
 
+void EngineBinds::CleanAllTweens()
+{
+    Tweening::CleanAllTweens();
+}
+
 void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, float duration, Modes mode)
 {
 	Tweening::TweenVec3(value, start, target, duration, mode);
@@ -1424,6 +1429,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Tweening::DOVector4", (const void*)&EngineBinds::DOColor);
 	mono_add_internal_call("HawkEngine.Tweening::DOValue", (const void*)&EngineBinds::DOValue);
 	mono_add_internal_call("HawkEngine.Tweening::DOVector3", (const void*)&EngineBinds::DOVec3);
+    mono_add_internal_call("HawkEngine.Tweening::CleanTweens", (const void*)&EngineBinds::CleanAllTweens);
 
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);

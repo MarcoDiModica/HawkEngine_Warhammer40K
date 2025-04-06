@@ -168,13 +168,21 @@ T* GameObject::AddComponent(Args&&... args) {
 
 template <typename T>
 T* GameObject::GetComponent() const {
+    if (destroyed || !this) {
+        return nullptr;
+	}
+
+    if (cachedComponentType == typeid(T) && cachedComponent != nullptr) {
+		return dynamic_cast<T*>(cachedComponent.get());
+	}
+
     for (const auto& scriptComponent : scriptComponents) {
         if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
             return dynamic_cast<T*>(scriptComponent.get());
         }
     }
 
-    auto it = components.find(typeid(T));
+    const auto& it = components.find(typeid(T));
     if (it != components.end()) {
         return dynamic_cast<T*>(it->second.get());
     }

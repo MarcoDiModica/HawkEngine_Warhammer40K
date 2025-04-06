@@ -16,6 +16,10 @@ namespace HawkEngine
         //haz tambien un DOVector3 porfa
         [MethodImpl(MethodImplOptions.InternalCall)]
         public static extern void DOVector3(ref Vector3 color, Vector3 startColor, Vector3 endColor, float duration, Modes mode);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public static extern void CleanTweens();
+
         public Tweening()
         {
             Engineson.print("Tweening default constructor");

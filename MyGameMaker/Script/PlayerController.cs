@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit.wav";
     public string DeathAudio = "Assets/Audio/SFX/Player/PlayerDeath.wav";
 
+    private ParticleFX inactiveDashFX;
+    private ParticleFX walkingFX;
 
     public PlayerData playerData;
 
@@ -54,6 +56,8 @@ public class PlayerController : MonoBehaviour
         // Add the blood splash effect directly to the player object
         bloodSplashEffect = gameObject.AddComponent<ParticleFX>();
         bloodSplashEffect.ApplyPreset(19); // BLOOD_SPLASH preset (index 19)
+        inactiveDashFX = GameObject.Find("InactiveDashFX").GetComponent<ParticleFX>();
+        walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
 
     }
 
@@ -95,7 +99,7 @@ public class PlayerController : MonoBehaviour
             playerAnimations.SetStandardIdleAnimation();
             once = true;
         }
-         moveDirection = playerInput.GetCurrentMoveDirection();
+        moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
         elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
@@ -112,7 +116,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-
            
             if (moveDirection == Vector3.Zero)
             {
@@ -129,9 +132,11 @@ public class PlayerController : MonoBehaviour
                     SetIdleState();
                 }
                 StopFootsteps();
+                walkingFX.Stop();
             }
             else
             {
+                walkingFX.Play();
                 if (!isFootstepPlaying) 
                 {
                     PlayFootstep();
@@ -141,6 +146,15 @@ public class PlayerController : MonoBehaviour
                 else if (playerMovement.moveSpeed == playerMovement.runSpeed)
                     SetRunningState();
             }
+        }
+
+        if (!playerDash.CanDash(elapsedTime))
+        {
+            inactiveDashFX.Play();
+        }
+        else
+        {
+            inactiveDashFX.Stop();
         }
 
         if (playerInput.IsDashPressed() && playerDash.CanDash(elapsedTime))

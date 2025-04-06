@@ -32,6 +32,7 @@ public class Boltgun : BaseWeapon
         currentTotalAmmo = 120;
         reloadTime = 1.5f;
         range = 20f;
+        timeToLerp = 1;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
@@ -48,7 +49,8 @@ public class Boltgun : BaseWeapon
 
         for (int i = bulletsPos.Count - 1; i >= 0; i--)
         {
-            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.1f);
+            bulletIntervals[i] += deltaTime;
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], bulletIntervals[i] / timeToLerp);
             bulletsObjects[i].GetComponent<Transform>().position = bulletsPos[i];
 
             if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.5f)
@@ -60,6 +62,7 @@ public class Boltgun : BaseWeapon
                     Engineson.Destroy(bulletsObjects[i]);
                     bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
                 }
                 else
                 {
@@ -84,6 +87,7 @@ public class Boltgun : BaseWeapon
                     Engineson.Destroy(bulletsObjects[i]);
                     bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
                 }
             }
         }
@@ -114,9 +118,15 @@ public class Boltgun : BaseWeapon
 
             // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
-            projectile.GetComponent<Transform>().SetScale(0.5f, 0.5f, 0.5f);
+            projectile.GetComponent<Transform>().SetScale(0.2f, 0.2f, 0.2f);
 
+            //var bulletFX = Engineson.CreateGameObject("BulletFX", null);
+            //bulletFX.AddComponent<ParticleFX>().ApplyPreset(12);
+            //bulletFX.GetComponent<ParticleFX>().EmitBurst(5);
+
+            //projectile.AddChild(bulletFX);
             bulletsObjects.Add(projectile);
+            bulletIntervals.Add(0);
 
             Vector3 bulletHitPoint = Vector3.Zero;
 

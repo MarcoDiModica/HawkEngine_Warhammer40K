@@ -440,6 +440,13 @@ bool Root::Start()
 
 	//CreateMainMenuUI();
 
+auto itemtest = CreateCube("item");
+itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
+itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
+itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
+itemtest->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+itemtest->SetTag("Destroyable");
+
 #ifdef _BUILD
 	Application->play = true;
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
@@ -455,9 +462,21 @@ bool Root::Start()
 
 bool hasAddedColliders = false;	
 
+
+void AddScriptComponentToExistingObj() {
+	auto scene = SceneManagement->GetActiveScene();
+	for (const auto& gameObject : scene->children()) {
+		if (gameObject->GetName() == "name" || gameObject->GetName() == "name2") {
+			gameObject->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+			gameObject->SetTag("Destroyable");
+		}
+	}
+}
+
 bool Root::Update(double dt)
 {
 	if (!hasAddedColliders) {
+		//AddScriptComponentToExistingObj();
 		hasAddedColliders = true;
 	}
 

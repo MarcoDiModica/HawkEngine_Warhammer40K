@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public class DestroyEnviormentObject : MonoBehaviour { 
+public class DestroyEnviormentObject : MonoBehaviour
+{
 
     public void DestroyObject()
     {
-      gameObject.SetActive(false);
+        gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
+        gameObject.GetComponent<Collider>().SetTrigger(true);
     }
 
     public override void Awake()

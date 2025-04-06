@@ -440,12 +440,7 @@ bool Root::Start()
 
 	//CreateMainMenuUI();
 
-auto itemtest = CreateCube("item");
-itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
-itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
-itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
-itemtest->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
-itemtest->SetTag("Destroyable");
+
 
 #ifdef _BUILD
 	Application->play = true;
@@ -464,14 +459,19 @@ bool hasAddedColliders = false;
 
 
 void AddScriptComponentToExistingObj() {
-	auto scene = SceneManagement->GetActiveScene();
-	for (const auto& gameObject : scene->children()) {
-		if (gameObject->GetName() == "name" || gameObject->GetName() == "name2") {
-			gameObject->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
-			gameObject->SetTag("Destroyable");
-		}
-	}
+	auto gameobject = SceneManagement->FindGOByName("L1Z1_Barrel1_level1");
+	gameobject->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+	gameobject->SetTag("Destroyable");
+
+	auto gameobject2 = SceneManagement->FindGOByName("L1Z1_Barrel2_level1");
+	gameobject2->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+	gameobject2->SetTag("Destroyable");
+
+	auto gameobject3 = SceneManagement->FindGOByName("L1Z1_Barrel3_level1");
+	gameobject3->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+	gameobject3->SetTag("Destroyable");
 }
+
 
 bool Root::Update(double dt)
 {

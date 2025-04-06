@@ -6,7 +6,6 @@ using System.Numerics;
 public class PauseMenu : MonoBehaviour
 {
     private GameObject optionsMenu;
-    private GameObject mainMenu;
     private GameObject resumeButton;
     private GameObject optionsMenuButton;
     private GameObject mainMenuButton;
@@ -14,8 +13,6 @@ public class PauseMenu : MonoBehaviour
     private bool isOptionsMenuActive = false;
     private GameObject HUD;
     private HUD HUDScript;
-
-
 
     private UIButton button_resumeButton;
     private UIButton button_optionsMenuButton;
@@ -45,7 +42,6 @@ public class PauseMenu : MonoBehaviour
     {
         //Engineson.print("OptionMenu Start");
         optionsMenu = GameObject.Find("Canvas_OptionsMenu");
-        mainMenu = GameObject.Find("Canvas_Main_Menu");
         resumeButton = GameObject.Find("Resume_Button");
         optionsMenuButton = GameObject.Find("Options_Button");
         mainMenuButton = GameObject.Find("MainMenu_Button");
@@ -61,16 +57,21 @@ public class PauseMenu : MonoBehaviour
         transform_optionsMenuButton = optionsMenuButton.GetComponent<UITransform>();
         transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
+
         if (resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
             return;
         }
 
-        if (optionsMenu == null || mainMenu == null)
+        if (optionsMenu == null)
         {
             Engineson.print("ERROR: No Canvas object found");
             return;
+        }
+        else
+        {
+            optionsMenu.SetActive(false);
         }
         //sound = gameObject.GetComponent<Audio>();
 
@@ -91,6 +92,8 @@ public class PauseMenu : MonoBehaviour
             Engineson.print("ERROR: Sound not found");
             return;
         }
+
+        this.gameObject.SetActive(false);
     }
 
     private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
@@ -110,7 +113,7 @@ public class PauseMenu : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (optionsMenu == null || mainMenu == null || resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
+        if (optionsMenu == null || resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button or Canvas object found");
             return;
@@ -163,9 +166,7 @@ public class PauseMenu : MonoBehaviour
             //SceneManager.LoadScene("MainMenu");
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
-            mainMenu.SetActive(true);
-            HUDScript.isPaused = false;
-            gameObject.SetActive(false);
+            SceneManager.LoadScene("MainMenu");
         }
 
         HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);

@@ -4,7 +4,6 @@ using System.Numerics;
 
 public class WinScreen : MonoBehaviour
 {
-    private GameObject mainMenu;
     private GameObject mainMenuButton;
     private GameObject quitButton;
     private UIButton button_mainMenuButton;
@@ -23,22 +22,15 @@ public class WinScreen : MonoBehaviour
     }
     public override void Start()
     {
-        //Engineson.print("WinScreen Start");
-        mainMenu = GameObject.Find("Canvas_Main_Menu");
         mainMenuButton = GameObject.Find("Menu_Button");
         quitButton = GameObject.Find("Quit_Button");
         sound = gameObject.GetComponent<Audio>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
+
         if (mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
-            return;
-        }
-
-        if (mainMenu == null)
-        {
-            Engineson.print("ERROR: No Main Menu object found");
             return;
         }
 
@@ -71,7 +63,7 @@ public class WinScreen : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-        if (mainMenu == null || mainMenuButton == null || quitButton == null)
+        if (mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button or object found");
             return;
@@ -84,10 +76,9 @@ public class WinScreen : MonoBehaviour
 
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
-            mainMenu.SetActive(true);
-            this.gameObject.SetActive(false);
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
+            SceneManager.LoadScene("MainMenu");
         }
 
         HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);

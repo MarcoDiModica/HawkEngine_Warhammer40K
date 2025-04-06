@@ -119,7 +119,7 @@ public class Railgun : BaseWeapon
                     }
                     if (enemy.tag == "Stalker")
                     {
-                        enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+                        //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
                     }
                     if (enemy.tag == "Boss")
                     {

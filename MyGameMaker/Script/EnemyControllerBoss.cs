@@ -37,10 +37,10 @@ public class EnemyControllerBoss : EnemyController
     private bool isPreparingAttack = false;
     private Vector3[] fixedPositions = new Vector3[]
     {
-        new Vector3(10,-21.807f,1087),
-        new Vector3(-10,-21.807f,1087),
-        new Vector3(10,-21.807f,1077),
-        new Vector3(-10,-21.807f,1077)
+        new Vector3(10,-21.807f,1020),
+        new Vector3(-10,-21.807f,1020),
+        new Vector3(10,-21.807f,1000),
+        new Vector3(-10,-21.807f,1000)
     };
     private float slamAttackDistance = 20.0f;
     private float slamAttackCooldown = 2.0f;
@@ -88,7 +88,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 150.0f;
+        currentHealth = 600.0f;
         gameObject.tag = "Boss";
         isDead = false;
     }
@@ -108,11 +108,11 @@ public class EnemyControllerBoss : EnemyController
                 collider.SetRotation(newRotation);
             }
 
-            if (currentHealth < 50)
+            if (currentHealth < 200)
             {
                 currentPhase = BossPhase.PHASE3;
             }
-            else if (currentHealth < 100)
+            else if (currentHealth < 400)
             {
                 currentPhase = BossPhase.PHASE2;
             }
@@ -120,7 +120,7 @@ public class EnemyControllerBoss : EnemyController
             {
                 case BossPhase.PHASE1:
 
-                    if (distanceToPlayer <= 300.0f)
+                    if (distanceToPlayer <= 200.0f)
                     {
                         if (isCombatMusicPlaying == false)
                         {
@@ -317,7 +317,7 @@ public class EnemyControllerBoss : EnemyController
             {
                 enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
                 collider.SetPosition(enemyTransform.position);
-                Engineson.print("Unburrowing Attack ");
+                Engineson.print("Unburrowing Attack");
             }
             isBuried = false;
         }
@@ -370,7 +370,7 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             Engineson.print("Burrowed");
-            enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
+            enemyTransform.position = new Vector3(0.0f, -40.0f, 1080.0f);
             collider.SetPosition(enemyTransform.position);
             isBuried = true;
         }
@@ -378,7 +378,7 @@ public class EnemyControllerBoss : EnemyController
 
     private void Die()
     {
-        enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
+        enemyTransform.position = new Vector3(0.0f, -40.0f, 1080.0f);
         collider.SetPosition(enemyTransform.position);
         isDead = true;
         // Triggerear WinScreen

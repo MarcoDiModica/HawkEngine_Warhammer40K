@@ -377,7 +377,7 @@ bool Root::Start()
 	//hormagaunt->SetTag("Enemy");
 
 	auto mawloc = CreateGameObject("Mawloc");
-	mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -19, 1080));
+	mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -16, 1080));
 	mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
 	mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);

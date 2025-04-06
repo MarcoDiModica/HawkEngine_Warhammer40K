@@ -124,7 +124,7 @@ public class EnemyControllerMelee : EnemyController
                         }
                         if (hurtboxTimer >= hurtboxActivationTime)
                         {
-                            CreateHurtbox();
+                            //CreateHurtbox();
                             anim.SetRandomAttackAnimation();
                             Engineson.print("Attack is ready");
                             hurtboxTimer = 0f;
@@ -135,10 +135,11 @@ public class EnemyControllerMelee : EnemyController
                         {
                             Attack();
 
-                            DestroyHurtbox();
+                            //DestroyHurtbox();
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
                             dodgewindow = false;
+                            isAttacking = false;
                         }
                     }
 
@@ -183,11 +184,11 @@ public class EnemyControllerMelee : EnemyController
                     {
                         leapTimer = 0f;
                         Leap();
-                        particles.EmitBurst(1);
                     }
                     else if (isLeaping)
                     {
                         leapTimer += deltaTime;
+                        particles.EmitBurst(1);
                         if (leapTimer >= leapDuration)
                         {
                             isLeaping = false;

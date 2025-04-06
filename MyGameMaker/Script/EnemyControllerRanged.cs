@@ -153,6 +153,11 @@ public class EnemyControllerRanged : EnemyController
             UpdateProjectiles(deltaTime);
             CleanupProjectiles();
         }
+        if (isDead)
+        {
+            // Enemy Death
+            collider.SetActive(false);
+        }
     }
 
     public override void Attack()

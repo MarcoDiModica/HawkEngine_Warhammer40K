@@ -312,6 +312,8 @@ public class EnemyControllerMelee : EnemyController
         {
             currentHealth -= damage;
             anim.SetHitAnimation();
+            particles.ApplyPreset(19);
+            particles.EmitBurst(1);
             sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
             sound?.Play();
         }

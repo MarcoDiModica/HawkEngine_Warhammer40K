@@ -55,6 +55,7 @@ public class EnemyControllerRanged : EnemyController
             return;
         }
 
+        particles = gameObject.AddComponent<ParticleFX>();
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Ranged";
@@ -200,6 +201,8 @@ public class EnemyControllerRanged : EnemyController
     public override void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        particles.ApplyPreset(19);
+        particles.EmitBurst(1);
         Engineson.print("Hit");
         //anim.SetHitAnimation();
         //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");

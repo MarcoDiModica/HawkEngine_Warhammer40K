@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
                     playerAnimations.SetDeathAnimation();
                     sound.LoadAudio(DeathAudio);
                     sound.Play();
+                    SceneManager.LoadScene("LoseScene");
                 }
                 else
                 {

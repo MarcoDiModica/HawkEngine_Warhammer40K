@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
             inactiveDashFX.Stop();
         }
 
-        if (playerInput.IsDashPressed() && playerDash.CanDash(elapsedTime))
+        if (playerInput.GetDashInput() && playerDash.CanDash(elapsedTime))
         {
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();

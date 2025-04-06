@@ -24,7 +24,7 @@ public class PlayerDash : MonoBehaviour
     private float targetFOV;
     private float zoomSpeed = 0.5f;
     private Audio sound;
-    private string DashSound = "Assets/Audio/SFX/Player/PlayerDash.wav";
+    private string DashSound = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
 
     
 

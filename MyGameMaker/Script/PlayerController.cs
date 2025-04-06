@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public bool isRunning = false;
     private bool isWalking = false;
     private bool isMoving = false;
+    private bool isDashInput = false;
+    private bool isShootInput = false;
+    private bool isRunningInput = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
     private bool isTransitioning = false;
@@ -65,11 +68,36 @@ public class PlayerController : MonoBehaviour
     {
         gameObject.tag = "Player";
         bloodSplashEffect.ApplyPreset(19);
+       
     }
 
     public override void Update(float deltaTime)
     {
+        if (playerData.isHit )
+        {
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
+            {
+                sound.LoadAudio(HitAudio);
+                sound.Play();
 
+                if (bloodSplashEffect != null)
+                {
+                    //bloodSplashEffect.EmitBurst(100);
+                }
+
+                if (playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    sound.LoadAudio(DeathAudio);
+                    sound.Play();
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
+            }
+            playerData.isHit = false; 
+        }
         //upon pressing B take 10 damage
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -101,6 +129,22 @@ public class PlayerController : MonoBehaviour
         }
         moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
+        bool isRunningInput = playerInput.IsRunningPressed();
+        bool isKeyboard = playerInput.IsKeyboardMoving();
+        isDashInput = playerInput.GetDashInput();
+        isShootInput = playerInput.GetShootInput();
+        isRunningInput = playerInput.IsRunningPressed();
+        if (isKeyboard)
+        {
+            playerMovement.SetSpeedToRun(); // Teclado siempre corre
+        }
+        else
+        {
+            if (isRunningInput)
+                playerMovement.SetSpeedToRun();
+            else
+                playerMovement.SetSpeedToWalk();
+        }
         elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
@@ -109,7 +153,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        if (playerInput.IsShooting())
+        if (isShootInput)
         {
             SetShootingState();
             isIdle = false;
@@ -143,7 +187,7 @@ public class PlayerController : MonoBehaviour
                 }
                 if (playerMovement.moveSpeed == playerMovement.walkSpeed)
                     SetWalkingState();
-                else if (playerMovement.moveSpeed == playerMovement.runSpeed)
+                else if (isRunningInput)
                     SetRunningState();
             }
         }
@@ -202,11 +246,11 @@ public class PlayerController : MonoBehaviour
 
     private void SetWalkingState()
     {
-        if (playerInput.IsShooting() && !isShootingRunning)
+        if (isShootInput && !isShootingRunning)
         {
             TransitionShootingStandingToRunning();
         }
-        else if (isShootingRunning && !playerInput.IsShooting())
+        else if (isShootingRunning && !isShootInput)
         {
             playerAnimations.SetShootingRunningToRunAnimation();
             isRunning = false;
@@ -235,11 +279,11 @@ public class PlayerController : MonoBehaviour
 
     private void SetRunningState()
     {
-        if (playerInput.IsShooting() && !isShootingRunning)
+        if (isShootInput && !isShootingRunning)
         {
             TransitionShootingStandingToRunning();
         }
-        else if (isShootingRunning && !playerInput.IsShooting())
+        else if (isShootingRunning && !isShootInput)
         {
             playerAnimations.SetShootingRunningToRunAnimation();
             isRunning = false;
@@ -338,8 +382,7 @@ public class PlayerController : MonoBehaviour
         isIdle = false;
         isMoving = true;
     }
-    private string currentFootstep = ""; 
-
+    private string currentFootstep = "";
     private void PlayFootstep()
     {
         string newFootstep = isRunning ? Runfootsteps : Walkfootsteps;
@@ -370,28 +413,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.name == "Hurtbox")
         {
-            if (!playerDash.isInvulnerable && !playerData.GodMode)
-            {
-                sound.LoadAudio(HitAudio);
-                sound.Play(true);
-
-                if (bloodSplashEffect != null)
-                {
-                    bloodSplashEffect.EmitBurst(100);
-                }
-
-                if (playerData.GetHealth() <= 0)
-                {
-                    playerAnimations.SetDeathAnimation();
-                    sound.LoadAudio(DeathAudio);
-                    sound.Play(true);
-                }
-                else
-                {
-                    playerAnimations.SetHitIdleAnimation();
-                }
-            }
-            else if (playerDash.isInvulnerable)
+            if (playerDash.isInvulnerable)
             {
                 playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
             }
@@ -401,32 +423,32 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "EnemyAttack")
         {
-            if (!playerDash.isInvulnerable && !playerData.GodMode)
-            {
-                //playerData.TakeDamage(10);
+            //if (!playerDash.isInvulnerable && !playerData.GodMode)
+            //{
+            //    //playerData.TakeDamage(10);
 
-                sound.LoadAudio(HitAudio);
-                sound.Play(true);
+            //    sound.LoadAudio(HitAudio);
+            //    sound.Play(true);
      
-                if (bloodSplashEffect != null)
-                {
-                    bloodSplashEffect.EmitBurst(100);
-                }
+            //    if (bloodSplashEffect != null)
+            //    {
+            //        bloodSplashEffect.EmitBurst(100);
+            //    }
                 
-                if(playerData.GetHealth() <= 0)
-                {
-                    playerAnimations.SetDeathAnimation();
-                    sound.LoadAudio(DeathAudio);
-                }
-                else
-                {
-                    playerAnimations.SetHitIdleAnimation();
-                }
-            }
-            else if (playerDash.isInvulnerable)
-            {
-                playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
-            }
+            //    if(playerData.GetHealth() <= 0)
+            //    {
+            //        playerAnimations.SetDeathAnimation();
+            //        sound.LoadAudio(DeathAudio);
+            //    }
+            //    else
+            //    {
+            //        playerAnimations.SetHitIdleAnimation();
+            //    }
+            //}
+            //else if (playerDash.isInvulnerable)
+            //{
+            //    playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
+            //}
         }
         
     }

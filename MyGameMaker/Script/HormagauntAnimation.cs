@@ -125,7 +125,7 @@ public class HormagauntAnimation : MonoBehaviour
         if (hormagauntesk.GetAnimationIndex() != 15)
         {
             hormagauntesk.SetAnimation(15);
-            hormagauntesk.SetAnimationSpeed(1.0f);
+            hormagauntesk.SetAnimationSpeed(1.5f);
         }
     }
     public void SetHitAnimation()

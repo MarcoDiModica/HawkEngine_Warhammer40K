@@ -37,10 +37,10 @@ public class EnemyControllerBoss : EnemyController
     private bool isPreparingAttack = false;
     private Vector3[] fixedPositions = new Vector3[]
     {
-        new Vector3(10,0,10),
-        new Vector3(-10,0,10),
-        new Vector3(10,0,-10),
-        new Vector3(-10,0,-10)
+        new Vector3(10,-21.807f,1087),
+        new Vector3(-10,-21.807f,1087),
+        new Vector3(10,-21.807f,1077),
+        new Vector3(-10,-21.807f,1077)
     };
     private float slamAttackDistance = 20.0f;
     private float slamAttackCooldown = 2.0f;
@@ -120,14 +120,14 @@ public class EnemyControllerBoss : EnemyController
             {
                 case BossPhase.PHASE1:
 
-                    if (distanceToPlayer <= 200.0f)
+                    if (distanceToPlayer <= 300.0f)
                     {
-                        //if (isCombatMusicPlaying == false)
-                        //{
-                        //    sound?.LoadAudio(combatMusic);
-                        //    sound?.Play(true);
-                        //    isCombatMusicPlaying = true;
-                        //}
+                        if (isCombatMusicPlaying == false)
+                        {
+                            sound?.LoadAudio(combatMusic);
+                            sound?.Play(true);
+                            isCombatMusicPlaying = true;
+                        }
 
                         timer += deltaTime;
 
@@ -251,6 +251,11 @@ public class EnemyControllerBoss : EnemyController
         if (isDead)
         {
             collider.SetActive(false);
+            if (isCombatMusicPlaying == true)
+            {
+                sound?.Stop();
+                isCombatMusicPlaying = false;
+            }
         }
     }
 
@@ -365,7 +370,7 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             Engineson.print("Burrowed");
-            enemyTransform.position = new Vector3(0.0f, -20.0f, 0.0f);
+            enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
             isBuried = true;
         }
@@ -373,7 +378,7 @@ public class EnemyControllerBoss : EnemyController
 
     private void Die()
     {
-        enemyTransform.position = new Vector3(0.0f, -20.0f, 0.0f);
+        enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
         collider.SetPosition(enemyTransform.position);
         isDead = true;
         // Triggerear WinScreen

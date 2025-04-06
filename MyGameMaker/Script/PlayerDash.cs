@@ -24,6 +24,8 @@ public class PlayerDash : MonoBehaviour
     private float targetFOV;
     private float zoomSpeed = 0.5f;
 
+    
+
     public override void Awake()
     {
 
@@ -36,6 +38,8 @@ public class PlayerDash : MonoBehaviour
 
         playerCamera = GameObject.Find("MainCamera");
         playerCamera.GetComponent<PlayerCamera>();
+
+        
     }
 
     public override void Update(float deltaTime)
@@ -45,6 +49,8 @@ public class PlayerDash : MonoBehaviour
             HandleActiveDash(deltaTime);
             
         }
+
+       
 
         HandleInvulnerability(deltaTime);
     }

@@ -117,7 +117,13 @@ public class Boltgun : BaseWeapon
                 {
                     rayBullet.hit.gameObject.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
                 }
+                if(rayBullet.hit.gameObject.tag == "Destroyable")
+                {
+                    rayBullet.hit.gameObject.GetComponent<DestroyEnviormentObject>().DestroyObject();
+                }
+
                 Engineson.print($"Hit: {bulletHitPoint}");
+
             }
             else
             {

@@ -91,6 +91,7 @@
     <Compile Include="ChapterStandard.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="DestroyEnviormentObject.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="EnemyControllerBoss.cs" />
     <Compile Include="EnemyControllerStalker.cs" />

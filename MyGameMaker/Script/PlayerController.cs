@@ -69,7 +69,31 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if (playerData.isHit )
+        {
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
+            {
+                sound.LoadAudio(HitAudio);
+                sound.Play();
 
+                if (bloodSplashEffect != null)
+                {
+                    //bloodSplashEffect.EmitBurst(100);
+                }
+
+                if (playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    sound.LoadAudio(DeathAudio);
+                    sound.Play();
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
+            }
+            playerData.isHit = false; 
+        }
         //upon pressing B take 10 damage
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -375,28 +399,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.name == "Hurtbox")
         {
-            if (!playerDash.isInvulnerable && !playerData.GodMode)
-            {
-                sound.LoadAudio(HitAudio);
-                sound.Play(true);
-
-                if (bloodSplashEffect != null)
-                {
-                    bloodSplashEffect.EmitBurst(100);
-                }
-
-                if (playerData.GetHealth() <= 0)
-                {
-                    playerAnimations.SetDeathAnimation();
-                    sound.LoadAudio(DeathAudio);
-                    sound.Play(true);
-                }
-                else
-                {
-                    playerAnimations.SetHitIdleAnimation();
-                }
-            }
-            else if (playerDash.isInvulnerable)
+            if (playerDash.isInvulnerable)
             {
                 playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
             }
@@ -406,32 +409,32 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "EnemyAttack")
         {
-            if (!playerDash.isInvulnerable && !playerData.GodMode)
-            {
-                //playerData.TakeDamage(10);
+            //if (!playerDash.isInvulnerable && !playerData.GodMode)
+            //{
+            //    //playerData.TakeDamage(10);
 
-                sound.LoadAudio(HitAudio);
-                sound.Play(true);
+            //    sound.LoadAudio(HitAudio);
+            //    sound.Play(true);
      
-                if (bloodSplashEffect != null)
-                {
-                    bloodSplashEffect.EmitBurst(100);
-                }
+            //    if (bloodSplashEffect != null)
+            //    {
+            //        bloodSplashEffect.EmitBurst(100);
+            //    }
                 
-                if(playerData.GetHealth() <= 0)
-                {
-                    playerAnimations.SetDeathAnimation();
-                    sound.LoadAudio(DeathAudio);
-                }
-                else
-                {
-                    playerAnimations.SetHitIdleAnimation();
-                }
-            }
-            else if (playerDash.isInvulnerable)
-            {
-                playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
-            }
+            //    if(playerData.GetHealth() <= 0)
+            //    {
+            //        playerAnimations.SetDeathAnimation();
+            //        sound.LoadAudio(DeathAudio);
+            //    }
+            //    else
+            //    {
+            //        playerAnimations.SetHitIdleAnimation();
+            //    }
+            //}
+            //else if (playerDash.isInvulnerable)
+            //{
+            //    playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
+            //}
         }
         
     }

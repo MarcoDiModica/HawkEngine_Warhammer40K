@@ -210,6 +210,7 @@ bool Root::Start()
 	
 	//// Test PowerUps
 	//
+
 	//auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
 	//powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
 	//powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
@@ -291,6 +292,7 @@ bool Root::Start()
 	//powerUp2->AddComponent<ScriptComponent>()->LoadScript("Magnet");
 	//powerUp2->SetTag("PowerUp");
 
+
 	//auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/AmmunitionBlessing.fbx");
 	//powerUp3->GetTransform()->SetPosition(glm::vec3(0, 1, 10));
 	//powerUp3->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
@@ -352,44 +354,30 @@ bool Root::Start()
 	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");*/
 
 
-	////Lictor
-	/*auto lictor = CreateGameObject("Lictor");
-	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
-	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
-	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	lictorMesh->SetName("LictorMesh");
-	ParentGameObject(*lictorMesh, *lictor);
-	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
-	lictor->SetTag("Enemy");*/
-
-
 	//auto cube = CreateCube("Cube");
 	//cube->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
 	//auto cubeMesh = CreateCube("CubeMesh");
 	//ParentGameObject(*cubeMesh, *cube);
 
-	//Hormagaunt
-	/*auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	hormagauntMesh->SetName("HormagauntMesh");
-	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	hormagaunt->SetTag("Enemy");*/
+	////Hormagaunt
+	//auto hormagaunt = CreateGameObject("Hormagaunt");
+	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 40));
+	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 1.3, 1.6));
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh->SetName("HormagauntMesh");
+	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	// hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0)); 
+	//hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh, *hormagaunt);
+	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//hormagaunt->SetTag("Enemy");
 
 	//Mawloc
 	//auto mawloc = CreateGameObject("Mawloc");
-	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(10, -100, 10));
+	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(10, -20, 10));
 	//mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
 	//mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -523,13 +511,13 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	
-	auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
-	biblePagePickUp->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
-	biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	biblePagePickUp->SetTag("BiblePage");
+	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	//biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	//biblePagePickUp->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
+	//biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	//biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	//biblePagePickUp->SetTag("BiblePage");
 
 #ifdef _BUILD
 	Application->play = true;

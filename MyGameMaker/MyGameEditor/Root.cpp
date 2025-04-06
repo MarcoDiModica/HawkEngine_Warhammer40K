@@ -476,7 +476,7 @@ void AddScriptComponentToExistingObj() {
 bool Root::Update(double dt)
 {
 	if (!hasAddedColliders) {
-		//AddScriptComponentToExistingObj();
+		AddScriptComponentToExistingObj();
 		hasAddedColliders = true;
 	}
 

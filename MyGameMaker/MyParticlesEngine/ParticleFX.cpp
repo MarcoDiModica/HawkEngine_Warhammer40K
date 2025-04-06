@@ -528,7 +528,7 @@ namespace ParticlePresets {
 	0.0f,                          // Min speed
 	0.0f,                          // Max speed
 	0.0f,						   // End Speed
-	glm::vec3(0.0f,-1.0f,0.0f),	   // Gravity (negative for upward)
+	glm::vec3(0.0f,-10.0f,0.0f),	   // Gravity (negative for upward)
 	0,                          // Rotation speed
 	1,                         // Emission rate (particles per second)
 	EmitterShape::POINT,            // Shape
@@ -541,8 +541,8 @@ namespace ParticlePresets {
 	0.05f,						   // Animation speed
 	180.0f,						   // Start rotation
 	false,						   // Random rotation
-	1.0f,						   // Min scale
-	1.0f,						   // Max scale
+	0.3f,						   // Min scale
+	0.3f,						   // Max scale
 	"Assets/Textures/dropplet.png" // Texture path
 	};
 
@@ -1158,7 +1158,7 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::ENVIRONMENT_SPARK:
 		preset = ParticlePresets::Environment_Spark;
-		SetOneShot(true);
+		SetOneShot(false);
 		break;
 	case ParticleType::ARC_SNARE_IMPACT:
 		preset = ParticlePresets::Arc_Snare_Impact;

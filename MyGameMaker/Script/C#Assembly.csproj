@@ -80,6 +80,7 @@
     <Compile Include="Barrage.cs" />
     <Compile Include="BarrageBullet.cs" />
     <Compile Include="BaseWeapon.cs" />
+    <Compile Include="BiblePagePickUp.cs" />
     <Compile Include="BlackHeart.cs" />
     <Compile Include="Boltgun.cs" />
     <Compile Include="BoltgunBullets.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="ShotgunPickUp.cs" />
     <Compile Include="ShotgunShells.cs" />
     <Compile Include="SkeletalAnimation.cs" />
+    <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="SoundTrigger.cs" />
     <Compile Include="Test1.cs" />
     <Compile Include="ToggleMode.cs" />

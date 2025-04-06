@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     private ParticleFX inactiveDashFX;
     private ParticleFX walkingFX;
-
+    
     public PlayerData playerData;
 
     public override void Awake()
@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
         playerDash = gameObject.GetComponent<PlayerDash>();
         playerShooting = gameObject.GetComponent<PlayerShooting>();
         playerMesh = GameObject.Find("playerMesh");
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
         sound = gameObject.GetComponent<Audio>();

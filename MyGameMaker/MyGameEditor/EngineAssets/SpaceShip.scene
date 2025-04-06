@@ -35708,7 +35708,7 @@ GameObject2:
       name: CameraComponent
       enabled: true
       projection_type: perspective
-      fov: 1.0471975803375244
+      fov: 1.0471975511965976
       size: 0
       near_plane: 0.10000000000000001
       far_plane: 500
@@ -38772,7 +38772,7 @@ GameObject70:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -38844,7 +38844,7 @@ GameObject71:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -38916,7 +38916,7 @@ GameObject72:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -38988,7 +38988,7 @@ GameObject73:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39060,7 +39060,7 @@ GameObject74:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39132,7 +39132,7 @@ GameObject75:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39204,7 +39204,7 @@ GameObject76:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39276,7 +39276,7 @@ GameObject77:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39348,7 +39348,7 @@ GameObject78:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39420,7 +39420,7 @@ GameObject79:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39492,7 +39492,7 @@ GameObject80:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39564,7 +39564,7 @@ GameObject81:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39636,7 +39636,7 @@ GameObject82:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39708,7 +39708,7 @@ GameObject83:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39780,7 +39780,7 @@ GameObject84:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39852,7 +39852,7 @@ GameObject85:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39924,7 +39924,7 @@ GameObject86:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39996,7 +39996,7 @@ GameObject87:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40068,7 +40068,7 @@ GameObject88:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40140,7 +40140,7 @@ GameObject89:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40212,7 +40212,7 @@ GameObject90:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40284,7 +40284,7 @@ GameObject91:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40356,7 +40356,7 @@ GameObject92:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40428,7 +40428,7 @@ GameObject93:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40500,7 +40500,7 @@ GameObject94:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40572,7 +40572,7 @@ GameObject95:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40644,7 +40644,7 @@ GameObject96:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40716,7 +40716,7 @@ GameObject97:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40788,7 +40788,7 @@ GameObject98:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40860,7 +40860,7 @@ GameObject99:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -40932,7 +40932,7 @@ GameObject100:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41004,7 +41004,7 @@ GameObject101:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41076,7 +41076,7 @@ GameObject102:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41148,7 +41148,7 @@ GameObject103:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41220,7 +41220,7 @@ GameObject104:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41292,7 +41292,7 @@ GameObject105:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41364,7 +41364,7 @@ GameObject106:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41436,7 +41436,7 @@ GameObject107:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41508,7 +41508,7 @@ GameObject108:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41580,7 +41580,7 @@ GameObject109:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41652,7 +41652,7 @@ GameObject110:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41724,7 +41724,7 @@ GameObject111:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41796,7 +41796,7 @@ GameObject112:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41868,7 +41868,7 @@ GameObject113:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -41940,7 +41940,7 @@ GameObject114:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42012,7 +42012,7 @@ GameObject115:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42084,7 +42084,7 @@ GameObject116:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42156,7 +42156,7 @@ GameObject117:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42228,7 +42228,7 @@ GameObject118:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42300,7 +42300,7 @@ GameObject119:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42372,7 +42372,7 @@ GameObject120:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42444,7 +42444,7 @@ GameObject121:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42516,7 +42516,7 @@ GameObject122:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42588,7 +42588,7 @@ GameObject123:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42660,7 +42660,7 @@ GameObject124:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42952,7 +42952,7 @@ GameObject130:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43024,7 +43024,7 @@ GameObject131:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43096,7 +43096,7 @@ GameObject132:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43168,7 +43168,7 @@ GameObject133:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43240,7 +43240,7 @@ GameObject134:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43312,7 +43312,7 @@ GameObject135:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43384,7 +43384,7 @@ GameObject136:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43456,7 +43456,7 @@ GameObject137:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43528,7 +43528,7 @@ GameObject138:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43600,7 +43600,7 @@ GameObject139:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -43672,7 +43672,7 @@ GameObject140:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: false
+      isPlaying: true
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -44174,7 +44174,7 @@ GameObject150:
   Children: ~
 GameObject151:
   name: Player
-  tag: Untagged
+  tag: Player
   active: true
   isStatic: false
   Components:
@@ -44183,7 +44183,7 @@ GameObject151:
       enabled: true
       localPosition:
         - 0
-        - 1.78778076171875
+        - 0
         - 0
       localRotation:
         - 0
@@ -44193,6 +44193,56 @@ GameObject151:
         - 1
         - 1
         - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 10
+      particlesPerSecond: 10
+      minLifetime: 0.5
+      maxLifetime: 1
+      minSpeed: 20
+      maxSpeed: 0.00999999978
+      startSize: 1
+      endSize: 1
+      minSize: 10
+      maxSize: 5
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 0
+      rotationSpeed: 0
+      gravity:
+        - 3
+        - 0
+        - 0
+      shapeParam1: 0
+      shapeParam2: 0
+      shapeParam3: 0
+      isOneShot: true
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 512
+        - 512
+      useAnimation: false
+      animSpeed: 0
+      startRotation: 0
+      randomRotation: true
+      material:
+        billboardType: 0
+        particleType: 0
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
+      particleType: 0
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -44373,7 +44423,7 @@ GameObject151:
           shapeParam2: 1
           shapeParam3: 20
           isOneShot: false
-          isPlaying: false
+          isPlaying: true
           isPaused: false
           burstEmitted: false
           spriteSize:
@@ -44444,7 +44494,7 @@ GameObject151:
           shapeParam2: 1
           shapeParam3: 20
           isOneShot: false
-          isPlaying: false
+          isPlaying: true
           isPaused: false
           burstEmitted: false
           spriteSize:
@@ -44515,7 +44565,7 @@ GameObject151:
           shapeParam2: 1
           shapeParam3: 20
           isOneShot: false
-          isPlaying: false
+          isPlaying: true
           isPaused: false
           burstEmitted: false
           spriteSize:

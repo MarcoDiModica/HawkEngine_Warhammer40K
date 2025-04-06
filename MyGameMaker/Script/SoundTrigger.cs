@@ -36,6 +36,18 @@ public class SoundTrigger : MonoBehaviour
         }
     }
 
+    public override void OnTriggerExit(GameObject other)
+    {
+        if (sound != null)
+        {
+            sound.Stop();
+        }
+        else
+        {
+            Engineson.print("Sound not found");
+        }
+    }
+
     public override void OnCollisionStay(GameObject other)
     {
         

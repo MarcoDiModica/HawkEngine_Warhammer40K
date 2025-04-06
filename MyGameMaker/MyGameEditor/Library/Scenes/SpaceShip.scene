@@ -137,9 +137,9 @@ GameObject0:
             - 110.7918701171875
             - 1311.495361328125
           localRotation:
-            - -90.000006889641696
-            - 74.935080451286481
-            - 6.8896416963790275e-06
+            - -89.999992141259369
+            - 74.935070116829522
+            - 1.8193203179827475e-05
           localScale:
             - 28.372146606445312
             - 21.824729919433594
@@ -239,9 +239,9 @@ GameObject0:
             - 110.7918701171875
             - 1246.791015625
           localRotation:
-            - -89.999996857776324
-            - 66.470762167665271
-            - 1.3607343227599198e-05
+            - -90.000006976746363
+            - 66.470765656038665
+            - 6.9767463638741136e-06
           localScale:
             - 28.372150421142578
             - 21.824728012084961
@@ -728,9 +728,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.028989223847148
-            - 89.871126361558822
-            - -0.028963610620586281
+            - -90.028508516764234
+            - 89.831334515733062
+            - -0.028488026173518938
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -789,9 +789,9 @@ GameObject0:
             - 90.798004150390625
             - 2911.414794921875
           localRotation:
-            - -0.3965253660216238
-            - -69.300683763146239
-            - 118.55400274988686
+            - -0.39653213280621946
+            - -69.300721806277323
+            - 118.55401203949233
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -850,9 +850,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.030597150314918
-            - 89.875070223403554
-            - -0.030566414444412198
+            - -90.029892149554925
+            - 89.835212514647679
+            - -0.029866536317670493
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -911,9 +911,9 @@ GameObject0:
             - 47.038593292236328
             - 3103.14794921875
           localRotation:
-            - 89.999977589694964
-            - -76.348270915911542
-            - -179.99997930943178
+            - 89.999987352719714
+            - -76.348277741087429
+            - -179.9999839132459
           localScale:
             - 19.999996185302734
             - 19.999996185302734
@@ -972,9 +972,9 @@ GameObject0:
             - 47.038593292236328
             - 2985.45849609375
           localRotation:
-            - -90.028989223847148
-            - 89.871126361558822
-            - -0.028963610620586281
+            - -90.028508516764234
+            - 89.831334515733062
+            - -0.028488026173518938
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1094,9 +1094,9 @@ GameObject0:
             - 47.038593292236328
             - 2648.169921875
           localRotation:
-            - 89.999972791946732
-            - 79.548693417910982
-            - 179.99995221585962
+            - 89.999955758591014
+            - 79.548672955164008
+            - 179.99993175315532
           localScale:
             - 20.000001907348633
             - 20.000001907348633
@@ -1338,9 +1338,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.030597150314918
-            - 89.875070223403554
-            - -0.030566414444412198
+            - -90.029892149554925
+            - 89.835212514647679
+            - -0.029866536317670493
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1460,9 +1460,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.030597150314918
-            - 89.875070223403554
-            - -0.030566414444412198
+            - -90.029892149554925
+            - 89.835212514647679
+            - -0.029866536317670493
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -2295,7 +2295,7 @@ GameObject0:
             - 2582.04150390625
           localRotation:
             - -90
-            - -89.912392765573131
+            - -89.898859850062223
             - 0
           localScale:
             - 30.347345352172852
@@ -2356,7 +2356,7 @@ GameObject0:
             - 3032.04150390625
           localRotation:
             - -90
-            - -89.912392765573131
+            - -89.898859850062223
             - 0
           localScale:
             - 30.347345352172852
@@ -2641,7 +2641,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -2702,7 +2702,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -2763,7 +2763,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -2916,7 +2916,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -2977,7 +2977,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3099,7 +3099,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3211,7 +3211,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3262,7 +3262,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3323,7 +3323,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3384,7 +3384,7 @@ GameObject0:
             - 1189.4329833984375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3435,7 +3435,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3486,7 +3486,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3537,7 +3537,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3588,7 +3588,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3639,7 +3639,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3700,7 +3700,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3751,7 +3751,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3812,7 +3812,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3863,7 +3863,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3914,7 +3914,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -3965,7 +3965,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -4016,7 +4016,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -4067,7 +4067,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -4118,7 +4118,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -4179,7 +4179,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -4230,7 +4230,7 @@ GameObject0:
             - 1189.432861328125
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -4281,7 +4281,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -4332,7 +4332,7 @@ GameObject0:
             - 1187.18017578125
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -4383,7 +4383,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.909065523631654
             - 0
           localScale:
             - 29.999998092651367
@@ -7235,9 +7235,9 @@ GameObject0:
             - 179.52284240722656
             - 1464.330810546875
           localRotation:
-            - -4.3257108877043741e-06
+            - -4.3257108643893171e-06
             - 7.4421700826969319
-            - 8.8548746818303418e-13
+            - 1.2439785056664742e-12
           localScale:
             - 0.5
             - 0.5
@@ -7765,9 +7765,9 @@ GameObject0:
             - 74.326217651367188
             - 776.99554443359375
           localRotation:
-            - -89.999960801046612
-            - -83.045457309124345
-            - -7.3412889435608804e-05
+            - -89.99997402227217
+            - -83.045435534563097
+            - -5.8480967549021543e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8346,9 +8346,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999960801046612
-            - -83.045457309124345
-            - -7.3412889435608804e-05
+            - -89.99997402227217
+            - -83.045435534563097
+            - -5.8480967549021543e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8397,9 +8397,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999960801046612
-            - -83.045457309124345
-            - -7.3412889435608804e-05
+            - -89.99997402227217
+            - -83.045435534563097
+            - -5.8480967549021543e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8448,9 +8448,9 @@ GameObject0:
             - 74.326217651367188
             - 501.02926635742188
           localRotation:
-            - -89.999960801046612
-            - -83.045457309124345
-            - -7.3412889435608804e-05
+            - -89.99997402227217
+            - -83.045435534563097
+            - -5.8480967549021543e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -9720,7 +9720,7 @@ GameObject0:
             - 1799.589111328125
           localRotation:
             - -90
-            - -89.913988420944676
+            - -89.896195071005891
             - 0
           localScale:
             - 100
@@ -13969,12 +13969,12 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -1800
-            - 162.59999084472656
+            - -1833.4541015625
+            - 162.60000610351562
             - 1800
           localRotation:
-            - -90.000013660378343
             - -90
+            - -89.938366110076316
             - 0
           localScale:
             - 140
@@ -20969,9 +20969,9 @@ GameObject0:
             - 59.258811950683594
             - 1273.9903564453125
           localRotation:
-            - 89.999575296607091
-            - 88.526773777631249
-            - 179.99949503525261
+            - 89.999361579739485
+            - 88.526427247571149
+            - 179.99931034908386
           localScale:
             - 31.190008163452148
             - 31.190008163452148
@@ -22781,7 +22781,7 @@ GameObject0:
             - 804
           localRotation:
             - -90
-            - 89.925058682554038
+            - 89.915856916594365
             - 0
           localScale:
             - 100
@@ -22842,7 +22842,7 @@ GameObject0:
             - 1603.9998779296875
           localRotation:
             - -90
-            - 89.924154116459945
+            - 89.91564437985744
             - 0
           localScale:
             - 100
@@ -29461,9 +29461,9 @@ GameObject1:
             - 979.06005859375
             - -30502.9453125
           localRotation:
-            - -91.017000536197543
-            - -68.427451056197029
-            - -0.50862023297907333
+            - -91.017065905882362
+            - -68.427474859513893
+            - -0.50858438792917426
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -29512,9 +29512,9 @@ GameObject1:
             - 979.06005859375
             - -32087.380859375
           localRotation:
-            - -91.017000536197543
-            - -68.427451056197029
-            - -0.50862023297907333
+            - -91.017065905882362
+            - -68.427474859513893
+            - -0.50858438792917426
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -29563,9 +29563,9 @@ GameObject1:
             - 976.39788818359375
             - -33297.30078125
           localRotation:
-            - -91.017000536197543
-            - -68.427451056197029
-            - -0.50862023297907333
+            - -91.017065905882362
+            - -68.427474859513893
+            - -0.50858438792917426
           localScale:
             - 55.744495391845703
             - 58.483375549316406
@@ -30593,7 +30593,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 2544.22900390625
@@ -30654,7 +30654,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 2544.22900390625
@@ -30837,7 +30837,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 2001.7862548828125
@@ -30898,7 +30898,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 2001.7862548828125
@@ -31081,7 +31081,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 751.6044921875
@@ -31142,7 +31142,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 751.6044921875
@@ -31324,9 +31324,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -89.990739685487355
-            - 89.928519908006592
-            - 0.015238438736334714
+            - -89.990256052312773
+            - 89.941356397343412
+            - 0.015706703538084885
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31385,9 +31385,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -89.990739685487355
-            - 89.928519908006592
-            - 0.015238438736334714
+            - -89.990256052312773
+            - 89.941356397343412
+            - 0.015706703538084885
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31446,9 +31446,9 @@ GameObject1:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 89.98876515518765
-            - -89.953918882154881
-            - -179.98283142790942
+            - -89.991979843229203
+            - -90
+            - -0.0021000904011730824
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31507,9 +31507,9 @@ GameObject1:
             - 1729.630615234375
             - -13943.4267578125
           localRotation:
-            - 89.98876515518765
-            - -89.953918882154881
-            - -179.98283142790942
+            - -89.991979843229203
+            - -90
+            - -0.0021000904011730824
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31691,7 +31691,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 517.2039794921875
@@ -31813,7 +31813,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 744.78399658203125
@@ -31935,7 +31935,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 765.05303955078125
@@ -31996,7 +31996,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 517.2039794921875
@@ -32118,7 +32118,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 744.78399658203125
@@ -32240,7 +32240,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 765.05303955078125
@@ -32301,7 +32301,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 744.78399658203125
@@ -32362,7 +32362,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.918682505717186
+            - 89.909065523631654
             - 0
           localScale:
             - 744.78399658203125
@@ -32483,9 +32483,9 @@ GameObject1:
             - 1729.630615234375
             - 10724.0029296875
           localRotation:
-            - 89.999715993482397
-            - 86.781313794626499
-            - 179.99961520843763
+            - 89.999792194878424
+            - 86.781090713130155
+            - 179.99966066184999
           localScale:
             - 247.75401306152344
             - 126.90206146240234
@@ -33237,9 +33237,9 @@ GameObject1:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.004188254947152
-            - 89.866506714209436
-            - -90.004183425270739
+            - -90.006176319699193
+            - 89.867474903714253
+            - -90.006173904861086
           localScale:
             - 128.03897094726562
             - 427.90078735351562
@@ -33349,9 +33349,9 @@ GameObject1:
             - 2228.8046875
             - 7750.4443359375
           localRotation:
-            - -90.00875253800433
-            - 89.873690770115488
-            - -90.008769441870371
+            - -90.004724976768472
+            - 89.882827829457767
+            - -90.004722561930677
           localScale:
             - 126.77712249755859
             - 77.251678466796875
@@ -33400,9 +33400,9 @@ GameObject1:
             - 3463.08984375
             - 7749.7587890625
           localRotation:
-            - -89.997123064176733
-            - 89.910984574906664
-            - -108.02811229573106
+            - -89.997455136552006
+            - 89.908251222702475
+            - -108.028452279937
           localScale:
             - 87.500289916992188
             - 177.206298828125
@@ -33451,9 +33451,9 @@ GameObject1:
             - 3175.477294921875
             - 7599.7939453125
           localRotation:
-            - 14.999858606434476
-            - -0.065037404939734256
-            - -114.75730060193244
+            - 14.99985743719389
+            - -0.065037661474076594
+            - -114.75730063505338
           localScale:
             - 40.151153564453125
             - 430.76507568359375
@@ -33553,9 +33553,9 @@ GameObject1:
             - 3086.548583984375
             - 7750.44482421875
           localRotation:
-            - -90.00399382117007
-            - 89.873962627083984
-            - 179.99451378156238
+            - -90.004837368275062
+            - 89.875001469574997
+            - 179.99372999867137
           localScale:
             - 43.940093994140625
             - 77.251510620117188
@@ -33604,9 +33604,9 @@ GameObject1:
             - 2866.346435546875
             - 7750.44482421875
           localRotation:
-            - -89.990876765938339
-            - 89.877717228593909
-            - -179.99316829570216
+            - -89.987281312472206
+            - 89.873089792457975
+            - -179.98963943672351
           localScale:
             - 27.383285522460938
             - 48.142822265625
@@ -33707,7 +33707,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -33758,7 +33758,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -33809,7 +33809,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -33860,7 +33860,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -33911,7 +33911,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -33962,7 +33962,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -34013,7 +34013,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -34064,7 +34064,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -34115,7 +34115,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -34166,7 +34166,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.91564437985744
+            - 89.89375140243007
             - 0
           localScale:
             - 127.28877258300781
@@ -34216,9 +34216,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -89.993977677329383
-            - 89.936319797659934
-            - 0.012022644745105834
+            - -89.996133236355419
+            - 89.928912386189879
+            - 0.0098926992015853869
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34277,9 +34277,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -89.993977677329383
-            - 89.936319797659934
-            - 0.012022644745105834
+            - -89.996133236355419
+            - 89.928912386189879
+            - 0.0098926992015853869
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34501,9 +34501,9 @@ GameObject1:
             - 1972.6943359375
             - -2994.31640625
           localRotation:
-            - -179.8516669430513
-            - 48.842953652166393
-            - -179.80299500557342
+            - -179.85166695191262
+            - 48.842837217603986
+            - -179.80299501596141
           localScale:
             - 88.947860717773438
             - 202.1011962890625
@@ -34552,9 +34552,9 @@ GameObject1:
             - 2146.18212890625
             - -2985.56982421875
           localRotation:
-            - -179.8516669430513
-            - 48.842953652166393
-            - -179.80299500557342
+            - -179.85166695191262
+            - 48.842837217603986
+            - -179.80299501596141
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -34603,9 +34603,9 @@ GameObject1:
             - 1940.9827880859375
             - -2993.0263671875
           localRotation:
-            - -179.8516669430513
-            - 48.842953652166393
-            - -179.80299500557342
+            - -179.85166695191262
+            - 48.842837217603986
+            - -179.80299501596141
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -35306,9 +35306,9 @@ GameObject1:
             - 2396.811767578125
             - -19521.4140625
           localRotation:
-            - 89.989699842032664
-            - -89.940032834908379
-            - -179.99188891792235
+            - 89.985328237194437
+            - -89.934759688289589
+            - -179.98753951130041
           localScale:
             - 274.48114013671875
             - 57.520450592041016
@@ -35357,9 +35357,9 @@ GameObject1:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - -90.004188254947152
-            - 89.866506714209436
-            - -90.004183425270739
+            - -90.006176319699193
+            - 89.867474903714253
+            - -90.006173904861086
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -35684,204 +35684,6 @@ GameObject1:
             name: Item
       Children: ~
 GameObject2:
-  name: Player
-  tag: Player
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -2.9257087707519531
-        - 0
-        - 28.66505241394043
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 2
-      emissionRate: 15
-      particlesPerSecond: 15
-      minLifetime: 2
-      maxLifetime: 4
-      minSpeed: 0.5
-      maxSpeed: 1.5
-      startSize: 0.5
-      endSize: 2
-      minSize: 0.5
-      maxSize: 0
-      startColor:
-        - 0.800000012
-        - 0.800000012
-        - 0.800000012
-      endColor:
-        - 0.200000003
-        - 0.200000003
-        - 0.200000003
-      startAlpha: 0.699999988
-      endAlpha: 0
-      rotationSpeed: 0.200000003
-      gravity:
-        - 0
-        - -0.100000001
-        - 0
-      shapeParam1: 0.200000003
-      shapeParam2: 1
-      shapeParam3: 20
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 256
-        - 256
-      useAnimation: true
-      animSpeed: 0.5
-      startRotation: 0
-      randomRotation: true
-      material:
-        billboardType: 0
-        particleType: 1
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/Smoke30Frames.png
-      particleType: 1
-    CapsuleColliderComponent:
-      size:
-        - 1.70000005
-        - 1.10000002
-        - 1
-      offset:
-        - 0
-        - 2.0999999
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -200
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: PlayerShooting
-      Script1:
-        name: PlayerMovement
-      Script2:
-        name: PlayerInput
-      Script3:
-        name: PlayerDash
-      Script4:
-        name: PlayerController
-      Script5:
-        name: PlayerPowerUp
-      Script6:
-        name: Boltgun
-      Script7:
-        name: Shotgun
-      Script8:
-        name: GrenadeLauncher
-      Script9:
-        name: Railgun
-      Script10:
-        name: ""
-      Script11:
-        name: EnergyBall
-      Script12:
-        name: ToggleMode
-      Script13:
-        name: Barrage
-      Script14:
-        name: HookShot
-      Script15:
-        name: ArcSnare
-      Script16:
-        name: RedThirstManager
-      Script17:
-        name: InteractionSystem
-  Children:
-    - name: playerMesh
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - -90
-            - 0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Cylinder.001
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
-            normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
-            metallic_map: ""
-            roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_playerMesh
-        ScriptComponents:
-          Script0:
-            name: PlayerAnimations
-      Children: ~
-GameObject3:
   name: MainCamera
   tag: Untagged
   active: true
@@ -35916,7 +35718,7 @@ GameObject3:
       Script0:
         name: PlayerCamera
   Children: ~
-GameObject4:
+GameObject3:
   name: GroundColider
   tag: Untagged
   active: true
@@ -35948,7 +35750,7 @@ GameObject4:
         - 0
       isTrigger: false
   Children: ~
-GameObject5:
+GameObject4:
   name: EmptyGameObject
   tag: Untagged
   active: true
@@ -35980,7 +35782,7 @@ GameObject5:
         - 0
       isTrigger: false
   Children: ~
-GameObject6:
+GameObject5:
   name: EmptyGameObject_copy
   tag: Untagged
   active: true
@@ -36012,7 +35814,7 @@ GameObject6:
         - 0
       isTrigger: false
   Children: ~
-GameObject7:
+GameObject6:
   name: EmptyGameObject_copy_1
   tag: Untagged
   active: true
@@ -36044,7 +35846,7 @@ GameObject7:
         - 0
       isTrigger: false
   Children: ~
-GameObject8:
+GameObject7:
   name: EmptyGameObject_copy_2
   tag: Untagged
   active: true
@@ -36076,7 +35878,7 @@ GameObject8:
         - 0
       isTrigger: false
   Children: ~
-GameObject9:
+GameObject8:
   name: EmptyGameObject_copy_copy
   tag: Untagged
   active: true
@@ -36108,7 +35910,7 @@ GameObject9:
         - 0
       isTrigger: false
   Children: ~
-GameObject10:
+GameObject9:
   name: EmptyGameObject_copy_copy_1
   tag: Untagged
   active: true
@@ -36140,7 +35942,7 @@ GameObject10:
         - 0
       isTrigger: false
   Children: ~
-GameObject11:
+GameObject10:
   name: EmptyGameObject_copy_copy_2
   tag: Untagged
   active: true
@@ -36172,7 +35974,7 @@ GameObject11:
         - 0
       isTrigger: false
   Children: ~
-GameObject12:
+GameObject11:
   name: EmptyGameObject_copy_copy_3
   tag: Untagged
   active: true
@@ -36204,7 +36006,7 @@ GameObject12:
         - 0
       isTrigger: false
   Children: ~
-GameObject13:
+GameObject12:
   name: EmptyGameObject_copy_copy_copy
   tag: Untagged
   active: true
@@ -36236,7 +36038,7 @@ GameObject13:
         - 0
       isTrigger: false
   Children: ~
-GameObject14:
+GameObject13:
   name: EmptyGameObject_copy_copy_copy_1
   tag: Untagged
   active: true
@@ -36268,7 +36070,7 @@ GameObject14:
         - 0
       isTrigger: false
   Children: ~
-GameObject15:
+GameObject14:
   name: EmptyGameObject_copy_copy_copy_2
   tag: Untagged
   active: true
@@ -36300,7 +36102,7 @@ GameObject15:
         - 0
       isTrigger: false
   Children: ~
-GameObject16:
+GameObject15:
   name: EmptyGameObject_copy_copy_copy_3
   tag: Untagged
   active: true
@@ -36332,7 +36134,7 @@ GameObject16:
         - 0
       isTrigger: false
   Children: ~
-GameObject17:
+GameObject16:
   name: EmptyGameObject_copy_copy_copy_copy
   tag: Untagged
   active: true
@@ -36364,7 +36166,7 @@ GameObject17:
         - 0
       isTrigger: false
   Children: ~
-GameObject18:
+GameObject17:
   name: BossfightGroundCollider
   tag: Untagged
   active: true
@@ -36396,7 +36198,7 @@ GameObject18:
         - 0
       isTrigger: false
   Children: ~
-GameObject19:
+GameObject18:
   name: EmptyGameObject_1
   tag: Untagged
   active: true
@@ -36428,7 +36230,7 @@ GameObject19:
         - 0
       isTrigger: false
   Children: ~
-GameObject20:
+GameObject19:
   name: EmptyGameObject_1_copy
   tag: Untagged
   active: true
@@ -36460,7 +36262,7 @@ GameObject20:
         - 0
       isTrigger: false
   Children: ~
-GameObject21:
+GameObject20:
   name: EmptyGameObject_1_copy_1
   tag: Untagged
   active: true
@@ -36492,7 +36294,7 @@ GameObject21:
         - 0
       isTrigger: false
   Children: ~
-GameObject22:
+GameObject21:
   name: EmptyGameObject_1_copy_2
   tag: Untagged
   active: true
@@ -36524,7 +36326,7 @@ GameObject22:
         - 0
       isTrigger: false
   Children: ~
-GameObject23:
+GameObject22:
   name: EmptyGameObject_1_copy_3
   tag: Untagged
   active: true
@@ -36556,7 +36358,7 @@ GameObject23:
         - 0
       isTrigger: false
   Children: ~
-GameObject24:
+GameObject23:
   name: EmptyGameObject_2_copy
   tag: Untagged
   active: true
@@ -36588,7 +36390,7 @@ GameObject24:
         - 0
       isTrigger: false
   Children: ~
-GameObject25:
+GameObject24:
   name: EmptyGameObject_2_copy_1
   tag: Untagged
   active: true
@@ -36620,7 +36422,7 @@ GameObject25:
         - 0
       isTrigger: false
   Children: ~
-GameObject26:
+GameObject25:
   name: bOLTER.012
   tag: Weapon
   active: false
@@ -36685,7 +36487,7 @@ GameObject26:
       Script0:
         name: RailgunPickUp
   Children: ~
-GameObject27:
+GameObject26:
   name: Cube.233_lvl2.007_lvl2_copy
   tag: Untagged
   active: false
@@ -36737,7 +36539,7 @@ GameObject27:
       name: Shader
       enabled: true
   Children: ~
-GameObject28:
+GameObject27:
   name: ISE
   tag: Interactable
   active: true
@@ -36802,7 +36604,7 @@ GameObject28:
       Script0:
         name: Item
   Children: ~
-GameObject29:
+GameObject28:
   name: ISE_1
   tag: Interactable
   active: true
@@ -36869,7 +36671,7 @@ GameObject29:
       Script1:
         name: Item
   Children: ~
-GameObject30:
+GameObject29:
   name: Canvas
   tag: Untagged
   active: true
@@ -37018,7 +36820,7 @@ GameObject30:
           enabled: true
           state: 1
       Children: ~
-GameObject31:
+GameObject30:
   name: ISE_2
   tag: Interactable
   active: false
@@ -37083,7 +36885,7 @@ GameObject31:
       Script0:
         name: Item
   Children: ~
-GameObject32:
+GameObject31:
   name: Light
   tag: Untagged
   active: true
@@ -37130,7 +36932,7 @@ GameObject32:
         - -1
         - 0
   Children: ~
-GameObject33:
+GameObject32:
   name: Light_copy
   tag: Untagged
   active: true
@@ -37177,7 +36979,7 @@ GameObject33:
         - -1
         - 0
   Children: ~
-GameObject34:
+GameObject33:
   name: Light_copy_1
   tag: Untagged
   active: true
@@ -37224,7 +37026,7 @@ GameObject34:
         - -1
         - 0
   Children: ~
-GameObject35:
+GameObject34:
   name: Light_copy_2
   tag: Untagged
   active: true
@@ -37271,7 +37073,7 @@ GameObject35:
         - -1
         - 0
   Children: ~
-GameObject36:
+GameObject35:
   name: Light_copy_3
   tag: Untagged
   active: true
@@ -37318,7 +37120,7 @@ GameObject36:
         - -1
         - 0
   Children: ~
-GameObject37:
+GameObject36:
   name: Light_copy_4
   tag: Untagged
   active: true
@@ -37365,7 +37167,7 @@ GameObject37:
         - -1
         - 0
   Children: ~
-GameObject38:
+GameObject37:
   name: Light_copy_5
   tag: Untagged
   active: true
@@ -37412,7 +37214,7 @@ GameObject38:
         - -1
         - 0
   Children: ~
-GameObject39:
+GameObject38:
   name: Light_copy_6
   tag: Untagged
   active: true
@@ -37459,7 +37261,7 @@ GameObject39:
         - -1
         - 0
   Children: ~
-GameObject40:
+GameObject39:
   name: Light_copy_7
   tag: Untagged
   active: true
@@ -37506,7 +37308,7 @@ GameObject40:
         - -1
         - 0
   Children: ~
-GameObject41:
+GameObject40:
   name: Light_copy_7_copy
   tag: Untagged
   active: true
@@ -37553,7 +37355,7 @@ GameObject41:
         - -1
         - 0
   Children: ~
-GameObject42:
+GameObject41:
   name: Light_copy_7_copy_1
   tag: Untagged
   active: true
@@ -37600,7 +37402,7 @@ GameObject42:
         - -1
         - 0
   Children: ~
-GameObject43:
+GameObject42:
   name: Light_copy_7_copy_2
   tag: Untagged
   active: true
@@ -37647,7 +37449,7 @@ GameObject43:
         - -1
         - 0
   Children: ~
-GameObject44:
+GameObject43:
   name: Light_copy_7_copy_3
   tag: Untagged
   active: true
@@ -37694,7 +37496,7 @@ GameObject44:
         - -1
         - 0
   Children: ~
-GameObject45:
+GameObject44:
   name: Light_copy_7_copy_4
   tag: Untagged
   active: true
@@ -37741,7 +37543,7 @@ GameObject45:
         - -1
         - 0
   Children: ~
-GameObject46:
+GameObject45:
   name: Light_copy_7_copy_5
   tag: Untagged
   active: true
@@ -37788,7 +37590,7 @@ GameObject46:
         - -1
         - 0
   Children: ~
-GameObject47:
+GameObject46:
   name: Light_copy_7_copy_6
   tag: Untagged
   active: true
@@ -37835,7 +37637,7 @@ GameObject47:
         - -1
         - 0
   Children: ~
-GameObject48:
+GameObject47:
   name: Light_copy_7_copy_7
   tag: Untagged
   active: true
@@ -37882,7 +37684,7 @@ GameObject48:
         - -1
         - 0
   Children: ~
-GameObject49:
+GameObject48:
   name: Light_copy_7_copy_8
   tag: Untagged
   active: true
@@ -37929,7 +37731,7 @@ GameObject49:
         - -1
         - 0
   Children: ~
-GameObject50:
+GameObject49:
   name: Light_copy_7_copy_9
   tag: Untagged
   active: true
@@ -37976,7 +37778,7 @@ GameObject50:
         - -1
         - 0
   Children: ~
-GameObject51:
+GameObject50:
   name: Light_copy_7_copy_10
   tag: Untagged
   active: true
@@ -38023,7 +37825,7 @@ GameObject51:
         - -1
         - 0
   Children: ~
-GameObject52:
+GameObject51:
   name: Light_copy_7_copy_11
   tag: Untagged
   active: true
@@ -38070,7 +37872,7 @@ GameObject52:
         - -1
         - 0
   Children: ~
-GameObject53:
+GameObject52:
   name: Light_copy_7_copy_12
   tag: Untagged
   active: true
@@ -38117,7 +37919,7 @@ GameObject53:
         - -1
         - 0
   Children: ~
-GameObject54:
+GameObject53:
   name: Light_copy_7_copy_13
   tag: Untagged
   active: true
@@ -38164,7 +37966,7 @@ GameObject54:
         - -1
         - 0
   Children: ~
-GameObject55:
+GameObject54:
   name: Light_copy_7_copy_14
   tag: Untagged
   active: true
@@ -38211,7 +38013,7 @@ GameObject55:
         - -1
         - 0
   Children: ~
-GameObject56:
+GameObject55:
   name: Light_copy_7_copy_15
   tag: Untagged
   active: true
@@ -38258,7 +38060,7 @@ GameObject56:
         - -1
         - 0
   Children: ~
-GameObject57:
+GameObject56:
   name: Light_copy_7_copy_16
   tag: Untagged
   active: true
@@ -38305,7 +38107,7 @@ GameObject57:
         - -1
         - 0
   Children: ~
-GameObject58:
+GameObject57:
   name: Light_copy_7_copy_17
   tag: Untagged
   active: true
@@ -38352,7 +38154,7 @@ GameObject58:
         - -1
         - 0
   Children: ~
-GameObject59:
+GameObject58:
   name: Light_copy_7_copy_18
   tag: Untagged
   active: true
@@ -38399,7 +38201,7 @@ GameObject59:
         - -1
         - 0
   Children: ~
-GameObject60:
+GameObject59:
   name: Light_copy_7_copy_19
   tag: Untagged
   active: true
@@ -38446,7 +38248,7 @@ GameObject60:
         - -1
         - 0
   Children: ~
-GameObject61:
+GameObject60:
   name: Light_copy_7_copy_20
   tag: Untagged
   active: true
@@ -38493,7 +38295,7 @@ GameObject61:
         - -1
         - 0
   Children: ~
-GameObject62:
+GameObject61:
   name: Light_copy_7_copy_21
   tag: Untagged
   active: true
@@ -38540,7 +38342,7 @@ GameObject62:
         - -1
         - 0
   Children: ~
-GameObject63:
+GameObject62:
   name: Light_copy_7_copy_22
   tag: Untagged
   active: true
@@ -38587,7 +38389,7 @@ GameObject63:
         - -1
         - 0
   Children: ~
-GameObject64:
+GameObject63:
   name: Light_copy_7_copy_23
   tag: Untagged
   active: true
@@ -38634,7 +38436,7 @@ GameObject64:
         - -1
         - 0
   Children: ~
-GameObject65:
+GameObject64:
   name: Light_copy_7_copy_24
   tag: Untagged
   active: true
@@ -38681,7 +38483,7 @@ GameObject65:
         - -1
         - 0
   Children: ~
-GameObject66:
+GameObject65:
   name: Light_copy_7_copy_25
   tag: Untagged
   active: true
@@ -38728,7 +38530,7 @@ GameObject66:
         - -1
         - 0
   Children: ~
-GameObject67:
+GameObject66:
   name: Light_copy_7_copy_26
   tag: Untagged
   active: true
@@ -38775,7 +38577,7 @@ GameObject67:
         - -1
         - 0
   Children: ~
-GameObject68:
+GameObject67:
   name: Light_copy_7_copy_27
   tag: Untagged
   active: true
@@ -38822,7 +38624,7 @@ GameObject68:
         - -1
         - 0
   Children: ~
-GameObject69:
+GameObject68:
   name: Light_copy_7_copy_28
   tag: Untagged
   active: true
@@ -38869,7 +38671,7 @@ GameObject69:
         - -1
         - 0
   Children: ~
-GameObject70:
+GameObject69:
   name: Light_copy_7_copy_29
   tag: Untagged
   active: true
@@ -38916,7 +38718,7 @@ GameObject70:
         - -1
         - 0
   Children: ~
-GameObject71:
+GameObject70:
   name: BiblePage
   tag: BiblePage
   active: true
@@ -38981,7 +38783,7 @@ GameObject71:
       Script0:
         name: BiblePagePickUp
   Children: ~
-GameObject72:
+GameObject71:
   name: BiblePage_copy
   tag: BiblePage
   active: true
@@ -39043,7 +38845,7 @@ GameObject72:
         - 0
       isTrigger: false
   Children: ~
-GameObject73:
+GameObject72:
   name: DrippingWater_copy
   tag: Untagged
   active: true
@@ -39097,7 +38899,7 @@ GameObject73:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: true
+      isPlaying: false
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -39115,7 +38917,7 @@ GameObject73:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject74:
+GameObject73:
   name: DrippingWater_copy_1
   tag: Untagged
   active: true
@@ -39187,7 +38989,7 @@ GameObject74:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject75:
+GameObject74:
   name: DrippingWater_copy_2
   tag: Untagged
   active: true
@@ -39259,7 +39061,7 @@ GameObject75:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject76:
+GameObject75:
   name: DrippingWater_copy_3
   tag: Untagged
   active: true
@@ -39331,7 +39133,7 @@ GameObject76:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject77:
+GameObject76:
   name: DrippingWater_copy_4
   tag: Untagged
   active: true
@@ -39403,7 +39205,7 @@ GameObject77:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject78:
+GameObject77:
   name: DrippingWater_copy_5
   tag: Untagged
   active: true
@@ -39475,7 +39277,7 @@ GameObject78:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject79:
+GameObject78:
   name: DrippingWater_copy_6
   tag: Untagged
   active: true
@@ -39547,7 +39349,7 @@ GameObject79:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject80:
+GameObject79:
   name: DrippingWater_copy_7
   tag: Untagged
   active: true
@@ -39619,7 +39421,7 @@ GameObject80:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject81:
+GameObject80:
   name: DrippingWater_copy_8
   tag: Untagged
   active: true
@@ -39691,7 +39493,7 @@ GameObject81:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject82:
+GameObject81:
   name: DrippingWater_copy_9
   tag: Untagged
   active: true
@@ -39763,7 +39565,7 @@ GameObject82:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject83:
+GameObject82:
   name: DrippingWater_copy_10
   tag: Untagged
   active: true
@@ -39835,7 +39637,7 @@ GameObject83:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject84:
+GameObject83:
   name: DrippingWater_copy_11
   tag: Untagged
   active: true
@@ -39907,7 +39709,7 @@ GameObject84:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject85:
+GameObject84:
   name: DrippingWater_copy_12
   tag: Untagged
   active: true
@@ -39979,7 +39781,7 @@ GameObject85:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject86:
+GameObject85:
   name: DrippingWater_copy_13
   tag: Untagged
   active: true
@@ -40051,7 +39853,7 @@ GameObject86:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject87:
+GameObject86:
   name: DrippingWater_copy_14
   tag: Untagged
   active: true
@@ -40123,7 +39925,7 @@ GameObject87:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject88:
+GameObject87:
   name: DrippingWater_copy_15
   tag: Untagged
   active: true
@@ -40195,7 +39997,7 @@ GameObject88:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject89:
+GameObject88:
   name: DrippingWater_copy_16
   tag: Untagged
   active: true
@@ -40267,7 +40069,7 @@ GameObject89:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject90:
+GameObject89:
   name: DrippingWater_copy_17
   tag: Untagged
   active: true
@@ -40339,7 +40141,7 @@ GameObject90:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject91:
+GameObject90:
   name: DrippingWater_copy_18
   tag: Untagged
   active: true
@@ -40411,7 +40213,7 @@ GameObject91:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject92:
+GameObject91:
   name: DrippingWater_copy_19
   tag: Untagged
   active: true
@@ -40483,7 +40285,7 @@ GameObject92:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject93:
+GameObject92:
   name: DrippingWater_copy_20
   tag: Untagged
   active: true
@@ -40555,7 +40357,7 @@ GameObject93:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject94:
+GameObject93:
   name: DrippingWater_copy_21
   tag: Untagged
   active: true
@@ -40627,7 +40429,7 @@ GameObject94:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject95:
+GameObject94:
   name: DrippingWater_copy_22
   tag: Untagged
   active: true
@@ -40699,7 +40501,7 @@ GameObject95:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject96:
+GameObject95:
   name: DrippingWater_copy_23
   tag: Untagged
   active: true
@@ -40771,7 +40573,7 @@ GameObject96:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject97:
+GameObject96:
   name: DrippingWater_copy_24
   tag: Untagged
   active: true
@@ -40843,7 +40645,7 @@ GameObject97:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject98:
+GameObject97:
   name: DrippingWater_copy_25
   tag: Untagged
   active: true
@@ -40915,7 +40717,7 @@ GameObject98:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject99:
+GameObject98:
   name: DrippingWater_copy_26
   tag: Untagged
   active: true
@@ -40987,7 +40789,7 @@ GameObject99:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject100:
+GameObject99:
   name: DrippingWater_copy_27
   tag: Untagged
   active: true
@@ -41059,7 +40861,7 @@ GameObject100:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject101:
+GameObject100:
   name: DrippingWater_copy_28
   tag: Untagged
   active: true
@@ -41131,7 +40933,7 @@ GameObject101:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject102:
+GameObject101:
   name: DrippingWater_copy_29
   tag: Untagged
   active: true
@@ -41203,7 +41005,7 @@ GameObject102:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject103:
+GameObject102:
   name: DrippingWater_copy_30
   tag: Untagged
   active: true
@@ -41275,7 +41077,7 @@ GameObject103:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject104:
+GameObject103:
   name: DrippingWater_copy_31
   tag: Untagged
   active: true
@@ -41347,7 +41149,7 @@ GameObject104:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject105:
+GameObject104:
   name: DrippingWater_copy_32
   tag: Untagged
   active: true
@@ -41419,7 +41221,7 @@ GameObject105:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject106:
+GameObject105:
   name: DrippingWater_copy_33
   tag: Untagged
   active: true
@@ -41491,7 +41293,7 @@ GameObject106:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject107:
+GameObject106:
   name: DrippingWater_copy_34
   tag: Untagged
   active: true
@@ -41563,7 +41365,7 @@ GameObject107:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject108:
+GameObject107:
   name: DrippingWater_copy_35
   tag: Untagged
   active: true
@@ -41635,7 +41437,7 @@ GameObject108:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject109:
+GameObject108:
   name: DrippingWater_copy_36
   tag: Untagged
   active: true
@@ -41707,7 +41509,7 @@ GameObject109:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject110:
+GameObject109:
   name: DrippingWater_copy_37
   tag: Untagged
   active: true
@@ -41779,7 +41581,7 @@ GameObject110:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject111:
+GameObject110:
   name: DrippingWater_copy_38
   tag: Untagged
   active: true
@@ -41851,7 +41653,7 @@ GameObject111:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject112:
+GameObject111:
   name: DrippingWater_copy_39
   tag: Untagged
   active: true
@@ -41923,7 +41725,7 @@ GameObject112:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject113:
+GameObject112:
   name: DrippingWater_copy_40
   tag: Untagged
   active: true
@@ -41995,7 +41797,7 @@ GameObject113:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject114:
+GameObject113:
   name: DrippingWater_copy_copy
   tag: Untagged
   active: true
@@ -42067,7 +41869,7 @@ GameObject114:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject115:
+GameObject114:
   name: DrippingWater_copy_copy_1
   tag: Untagged
   active: true
@@ -42139,7 +41941,7 @@ GameObject115:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject116:
+GameObject115:
   name: DrippingWater_copy_copy_2
   tag: Untagged
   active: true
@@ -42193,7 +41995,7 @@ GameObject116:
       shapeParam2: 1
       shapeParam3: 20
       isOneShot: false
-      isPlaying: true
+      isPlaying: false
       isPaused: false
       burstEmitted: false
       spriteSize:
@@ -42211,7 +42013,7 @@ GameObject116:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject117:
+GameObject116:
   name: DrippingWater_copy_copy_3
   tag: Untagged
   active: true
@@ -42283,7 +42085,7 @@ GameObject117:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject118:
+GameObject117:
   name: DrippingWater_copy_copy_4
   tag: Untagged
   active: true
@@ -42355,7 +42157,7 @@ GameObject118:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject119:
+GameObject118:
   name: DrippingWater_copy_copy_5
   tag: Untagged
   active: true
@@ -42427,7 +42229,7 @@ GameObject119:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject120:
+GameObject119:
   name: DrippingWater_copy_copy_6
   tag: Untagged
   active: true
@@ -42499,7 +42301,7 @@ GameObject120:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject121:
+GameObject120:
   name: DrippingWater_copy_copy_7
   tag: Untagged
   active: true
@@ -42571,7 +42373,7 @@ GameObject121:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject122:
+GameObject121:
   name: DrippingWater_copy_copy_8
   tag: Untagged
   active: true
@@ -42643,7 +42445,7 @@ GameObject122:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject123:
+GameObject122:
   name: DrippingWater_copy_copy_9
   tag: Untagged
   active: true
@@ -42715,7 +42517,7 @@ GameObject123:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject124:
+GameObject123:
   name: DrippingWater_copy_copy_10
   tag: Untagged
   active: true
@@ -42787,7 +42589,7 @@ GameObject124:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject125:
+GameObject124:
   name: DrippingWater_copy_copy_11
   tag: Untagged
   active: true
@@ -42859,7 +42661,7 @@ GameObject125:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject126:
+GameObject125:
   name: DrippingWater_copy_copy_12
   tag: Untagged
   active: true
@@ -42931,7 +42733,7 @@ GameObject126:
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
   Children: ~
-GameObject127:
+GameObject126:
   name: DrippingWater_copy_copy_13
   tag: Untagged
   active: true
@@ -43002,4 +42804,1681 @@ GameObject127:
         useColorGradient: false
         texturePath: Assets/Textures/dropplet.png
       particleType: 15
+  Children: ~
+GameObject127:
+  name: Environment1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundEnvironmentController
+  Children: ~
+GameObject128:
+  name: Environment2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundEnvironmentController
+  Children: ~
+GameObject129:
+  name: Environment3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundEnvironmentController
+  Children: ~
+GameObject130:
+  name: Environment4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundEnvironmentController
+  Children: ~
+GameObject131:
+  name: Environment5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundEnvironmentController
+  Children: ~
+GameObject132:
+  name: Sparks
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -88.561737060546875
+        - 13.12371826171875
+        - 87.366889953613281
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject133:
+  name: Sparks_copy
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -2.2345538139343262
+        - 12.413743019104004
+        - -1.2954423427581787
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject134:
+  name: Sparks_copy_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 127.10707855224609
+        - 12.774393081665039
+        - 51.720912933349609
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject135:
+  name: Sparks_copy_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -88.702583312988281
+        - 12.793015480041504
+        - 92.205924987792969
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject136:
+  name: Sparks_copy_copy
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 127.10707855224609
+        - 11.950828552246094
+        - 47.738430023193359
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject137:
+  name: Sparks_copy_copy_copy
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 2.1961069107055664
+        - 12.055973052978516
+        - -1.2954423427581787
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject138:
+  name: Sparks_copy_copy_copy_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 2.1961069107055664
+        - 12.055973052978516
+        - 4.4800882339477539
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject139:
+  name: Sparks_copy_copy_copy_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.89180523157119751
+        - 13.008274078369141
+        - 4.4800882339477539
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject140:
+  name: Sparks_copy_copy_copy_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.89180523157119751
+        - 13.008274078369141
+        - 218.45594787597656
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject141:
+  name: Sparks_copy_copy_copy_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 1.3610113859176636
+        - 12.861258506774902
+        - 218.45594787597656
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject142:
+  name: Sparks_copy_copy_copy_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 1.3610113859176636
+        - 12.861258506774902
+        - 224.27848815917969
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 1
+      endSize: 1
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.100000001
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 144
+        - 174
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 16
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Spark.png
+      particleType: 16
+  Children: ~
+GameObject143:
+  name: Player
+  tag: Player
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 3.4460749626159668
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 2
+      emissionRate: 15
+      particlesPerSecond: 15
+      minLifetime: 2
+      maxLifetime: 4
+      minSpeed: 0.5
+      maxSpeed: 1.5
+      startSize: 0.5
+      endSize: 2
+      minSize: 0.5
+      maxSize: 0
+      startColor:
+        - 0.800000012
+        - 0.800000012
+        - 0.800000012
+      endColor:
+        - 0.200000003
+        - 0.200000003
+        - 0.200000003
+      startAlpha: 0.699999988
+      endAlpha: 0
+      rotationSpeed: 0.200000003
+      gravity:
+        - 0
+        - -0.100000001
+        - 0
+      shapeParam1: 0.200000003
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: false
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 256
+        - 256
+      useAnimation: true
+      animSpeed: 0.5
+      startRotation: 0
+      randomRotation: true
+      material:
+        billboardType: 0
+        particleType: 1
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/Smoke30Frames.png
+      particleType: 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
+    CapsuleColliderComponent:
+      size:
+        - 1.70000005
+        - 1.10000002
+        - 1
+      offset:
+        - 0
+        - 2.0999999
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -200
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: PlayerShooting
+      Script1:
+        name: PlayerMovement
+      Script2:
+        name: PlayerInput
+      Script3:
+        name: PlayerDash
+      Script4:
+        name: PlayerController
+      Script5:
+        name: PlayerPowerUp
+      Script6:
+        name: Boltgun
+      Script7:
+        name: Shotgun
+      Script8:
+        name: GrenadeLauncher
+      Script9:
+        name: Railgun
+      Script10:
+        name: ""
+      Script11:
+        name: EnergyBall
+      Script12:
+        name: ToggleMode
+      Script13:
+        name: Barrage
+      Script14:
+        name: HookShot
+      Script15:
+        name: ArcSnare
+      Script16:
+        name: RedThirstManager
+      Script17:
+        name: InteractionSystem
+  Children:
+    - name: RiffleShotFX
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -0.80000001192092896
+            - 3
+            - 0.5
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2
+            - 2
+            - 2
+        ParticleFX:
+          name: ParticleFX
+          enabled: true
+          emitterShape: 0
+          emissionRate: 1
+          particlesPerSecond: 1
+          minLifetime: 0.25
+          maxLifetime: 0.25
+          minSpeed: 0
+          maxSpeed: 0
+          startSize: 1
+          endSize: 1
+          minSize: 1
+          maxSize: 1
+          startColor:
+            - 1
+            - 1
+            - 1
+          endColor:
+            - 1
+            - 1
+            - 1
+          startAlpha: 1
+          endAlpha: 1
+          rotationSpeed: 0
+          gravity:
+            - 0
+            - 0.00100000005
+            - 0
+          shapeParam1: 0.200000003
+          shapeParam2: 1
+          shapeParam3: 20
+          isOneShot: false
+          isPlaying: false
+          isPaused: false
+          burstEmitted: false
+          spriteSize:
+            - 1920
+            - 1080
+          useAnimation: true
+          animSpeed: 0.0500000007
+          startRotation: 0
+          randomRotation: false
+          material:
+            billboardType: 0
+            particleType: 8
+            softness: 0
+            useColorGradient: false
+            texturePath: Assets/Textures/muzzle.png
+          particleType: 8
+      Children: ~
+    - name: playerMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -90
+            - 0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cylinder.001
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
+            normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
+            metallic_map: ""
+            roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_playerMesh
+        ScriptComponents:
+          Script0:
+            name: PlayerAnimations
+      Children: ~
+GameObject144:
+  name: AudioTrigger
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 1.6504348516464233
+        - 2
+        - -33.276145935058594
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 18.7999992
+        - 13.1999998
+        - 57.2999992
+      offset:
+        - -1.89999998
+        - 0
+        - 3.5
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject145:
+  name: AudioTrigger_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -85.194549560546875
+        - 2
+        - 37.067485809326172
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 17.6000004
+        - 19.1000004
+        - 78.0999985
+      offset:
+        - 4.4000001
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject146:
+  name: AudioTrigger_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -84.941253662109375
+        - 2
+        - 148.06008911132812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 21
+        - 23.2000008
+        - 67.5999985
+      offset:
+        - 4.5
+        - -0.100000001
+        - -4.19999981
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject147:
+  name: AudioTrigger_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -4.1049661636352539
+        - 2
+        - 263.469970703125
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 23.7999992
+        - 30.7000008
+        - 47.5999985
+      offset:
+        - 0
+        - 0
+        - -12.8999996
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\drippingWater_ready.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject148:
+  name: AudioTrigger_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.12563943862915039
+        - 2
+        - 1.7422757148742676
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 18.7999992
+        - 9.69999981
+        - 15.5
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject149:
+  name: AudioTrigger_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 10
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject150:
+  name: AudioTrigger_6
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 10
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject151:
+  name: AudioTrigger_7
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 10
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
+  Children: ~
+GameObject152:
+  name: AudioTrigger_8
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 10
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    ScriptComponents:
+      Script0:
+        name: SoundTrigger
   Children: ~

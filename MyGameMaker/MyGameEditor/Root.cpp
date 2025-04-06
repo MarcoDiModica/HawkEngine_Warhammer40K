@@ -70,7 +70,7 @@ bool Root::Start()
 	////environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 	////environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 	//Audio Trigger
-	/*auto audioTrigger = CreateGameObject("AudioTrigger");
+	auto audioTrigger = CreateGameObject("AudioTrigger");
 	audioTrigger->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
 	audioTrigger->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	audioTrigger->AddComponent<BoxColliderComponent>(Application->physicsModule);
@@ -78,7 +78,7 @@ bool Root::Start()
 	audioTrigger->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 0, 0));
 	audioTrigger->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	audioTrigger->AddComponent<SoundComponent>();
-	audioTrigger->AddComponent<ScriptComponent>()->LoadScript("SoundTrigger");*/
+	audioTrigger->AddComponent<ScriptComponent>()->LoadScript("SoundTrigger");
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/Level1.fbx");
 	//auto scenezone1 = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");
@@ -88,42 +88,49 @@ bool Root::Start()
 
 	////Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
-	/*auto player = CreateGameObject("Player");
-	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
-	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
-	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
-	player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
-	player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
-	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
-	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
-	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
-	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
-
-	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
-
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
-	playerMesh->SetName("playerMesh");
-	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	ParentGameObject(*playerMesh, *player);
-	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
-	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");*/
+	//auto player = CreateGameObject("Player");
+	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
+	//player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
+	//player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
+	//player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
+	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
+	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
+	//
+	//auto riffleShotFX = CreateGameObject("RiffleShotFX");
+	//riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	//riffleShotFX->GetTransform()->SetScale(glm::vec3(2, 2, 2));
+	//ParentGameObject(*riffleShotFX,*player);
+	//riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
+	//riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	//
+	//player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
+	//
+	//auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	//playerMesh->SetName("playerMesh");
+	//playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//ParentGameObject(*playerMesh, *player);
+	//playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	//player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+	//player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	//player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+	//player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	//player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 
 	/*
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
@@ -397,40 +404,40 @@ bool Root::Start()
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);*/
 	
 	
-    auto envObj = CreateGameObject("Environment1");
-    envObj->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-    envObj->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-    auto encObjScript = envObj->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
-    auto envObjCollider = envObj->AddComponent<BoxColliderComponent>(Application->physicsModule);
-    envObjCollider->SetTrigger(true); 
-
-    auto envObj2 = CreateGameObject("Environment2");
-    envObj2->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-    envObj2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-    auto encObjScript2 = envObj2->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
-    auto envObjCollider2 = envObj2->AddComponent<BoxColliderComponent>(Application->physicsModule);
-    envObjCollider2->SetTrigger(true); 
-
-    auto envObj3 = CreateGameObject("Environment3");
-    envObj3->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-    envObj3->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-    auto encObjScript3 = envObj3->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
-    auto envObjCollider3 = envObj3->AddComponent<BoxColliderComponent>(Application->physicsModule);
-    envObjCollider3->SetTrigger(true); 
-
-    auto envObj4 = CreateGameObject("Environment4");
-    envObj4->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-    envObj4->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-    auto encObjScript4 = envObj4->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
-    auto envObjCollider4 = envObj4->AddComponent<BoxColliderComponent>(Application->physicsModule);
-    envObjCollider4->SetTrigger(true); 
-
-    auto envObj5 = CreateGameObject("Environment5");
-    envObj5->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-    envObj5->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-    auto encObjScript5 = envObj5->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
-    auto envObjCollider5 = envObj5->AddComponent<BoxColliderComponent>(Application->physicsModule);
-    envObjCollider5->SetTrigger(true);
+    //auto envObj = CreateGameObject("Environment1");
+    //envObj->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    //envObj->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    //auto encObjScript = envObj->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    //auto envObjCollider = envObj->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    //envObjCollider->SetTrigger(true); 
+	//
+    //auto envObj2 = CreateGameObject("Environment2");
+    //envObj2->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    //envObj2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    //auto encObjScript2 = envObj2->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    //auto envObjCollider2 = envObj2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    //envObjCollider2->SetTrigger(true); 
+	//
+    //auto envObj3 = CreateGameObject("Environment3");
+    //envObj3->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    //envObj3->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    //auto encObjScript3 = envObj3->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    //auto envObjCollider3 = envObj3->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    //envObjCollider3->SetTrigger(true); 
+	//
+    //auto envObj4 = CreateGameObject("Environment4");
+    //envObj4->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    //envObj4->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    //auto encObjScript4 = envObj4->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    //auto envObjCollider4 = envObj4->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    //envObjCollider4->SetTrigger(true); 
+	//
+    //auto envObj5 = CreateGameObject("Environment5");
+    //envObj5->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+    //envObj5->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+    //auto encObjScript5 = envObj5->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
+    //auto envObjCollider5 = envObj5->AddComponent<BoxColliderComponent>(Application->physicsModule);
+    //envObjCollider5->SetTrigger(true);
 
 
 	//For rendering Interaction System text, remove the canvas if there is already one

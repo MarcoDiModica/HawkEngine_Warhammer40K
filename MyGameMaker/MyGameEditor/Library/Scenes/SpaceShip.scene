@@ -239,9 +239,9 @@ GameObject0:
             - 110.7918701171875
             - 1246.791015625
           localRotation:
-            - -90.000006976746363
-            - 66.470765656038665
-            - 6.9767463638741136e-06
+            - -90.00000697674615
+            - 66.470768798262995
+            - 6.9767461514894113e-06
           localScale:
             - 28.372150421142578
             - 21.824728012084961
@@ -728,9 +728,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.035032447896214
-            - 89.812039200438832
-            - -0.034996589354439479
+            - -90.03493479369051
+            - 89.805909830009099
+            - -0.034895520046022845
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -850,9 +850,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.034594269822762
-            - 89.812786265460502
-            - -0.034556703731936214
+            - -90.034839463486563
+            - 89.806655391169272
+            - -0.034800189843237017
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -911,9 +911,9 @@ GameObject0:
             - 47.038593292236328
             - 3103.14794921875
           localRotation:
-            - 89.99999312105281
-            - -76.3482823987584
-            - 179.99999312105282
+            - 89.999980473829751
+            - -76.348250225327803
+            - -179.99999079225114
           localScale:
             - 19.999996185302734
             - 19.999996185302734
@@ -972,9 +972,9 @@ GameObject0:
             - 47.038593292236328
             - 2985.45849609375
           localRotation:
-            - -90.035032447896214
-            - 89.812039200438832
-            - -0.034996589354439479
+            - -90.03493479369051
+            - 89.805909830009099
+            - -0.034895520046022845
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1094,9 +1094,9 @@ GameObject0:
             - 47.038593292236328
             - 2648.169921875
           localRotation:
-            - 89.999972791873731
-            - 79.54866620982169
-            - 179.99995221578541
+            - 89.999955758591014
+            - 79.548672955164008
+            - 179.99993175315532
           localScale:
             - 20.000001907348633
             - 20.000001907348633
@@ -1338,9 +1338,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.034594269822762
-            - 89.812786265460502
-            - -0.034556703731936214
+            - -90.034839463486563
+            - 89.806655391169272
+            - -0.034800189843237017
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1460,9 +1460,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.034594269822762
-            - 89.812786265460502
-            - -0.034556703731936214
+            - -90.034839463486563
+            - 89.806655391169272
+            - -0.034800189843237017
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -2295,7 +2295,7 @@ GameObject0:
             - 2582.04150390625
           localRotation:
             - -90
-            - -89.883313036049941
+            - -89.870343385980505
             - 0
           localScale:
             - 30.347345352172852
@@ -2356,7 +2356,7 @@ GameObject0:
             - 3032.04150390625
           localRotation:
             - -90
-            - -89.883313036049941
+            - -89.870343385980505
             - 0
           localScale:
             - 30.347345352172852
@@ -2641,7 +2641,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -2702,7 +2702,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -2763,7 +2763,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -2916,7 +2916,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -2977,7 +2977,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3099,7 +3099,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3211,7 +3211,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3262,7 +3262,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3323,7 +3323,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3384,7 +3384,7 @@ GameObject0:
             - 1189.4329833984375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3435,7 +3435,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3486,7 +3486,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3537,7 +3537,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3588,7 +3588,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3639,7 +3639,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3700,7 +3700,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3751,7 +3751,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3812,7 +3812,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3863,7 +3863,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3914,7 +3914,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -3965,7 +3965,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -4016,7 +4016,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -4067,7 +4067,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -4118,7 +4118,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -4179,7 +4179,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -4230,7 +4230,7 @@ GameObject0:
             - 1189.432861328125
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -4281,7 +4281,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -4332,7 +4332,7 @@ GameObject0:
             - 1187.18017578125
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -4383,7 +4383,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.88747469861886
+            - -89.87543704611916
             - 0
           localScale:
             - 29.999998092651367
@@ -7235,9 +7235,9 @@ GameObject0:
             - 179.52284240722656
             - 1464.330810546875
           localRotation:
-            - -4.3257108444049816e-06
+            - -4.3257108310820918e-06
             - 7.4421700826969319
-            - 1.5512565377951369e-12
+            - 1.7561085592142456e-12
           localScale:
             - 0.5
             - 0.5
@@ -7765,9 +7765,9 @@ GameObject0:
             - 74.326217651367188
             - 776.99554443359375
           localRotation:
-            - -89.999960801046612
-            - -83.045457309124345
-            - -7.3412889435608804e-05
+            - -89.999917715748524
+            - -83.045489347892854
+            - -0.00011478749022889519
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8346,9 +8346,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999960801046612
-            - -83.045457309124345
-            - -7.3412889435608804e-05
+            - -89.999917715748524
+            - -83.045489347892854
+            - -0.00011478749022889519
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8397,9 +8397,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999960801046612
-            - -83.045457309124345
-            - -7.3412889435608804e-05
+            - -89.999917715748524
+            - -83.045489347892854
+            - -0.00011478749022889519
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8448,9 +8448,9 @@ GameObject0:
             - 74.326217651367188
             - 501.02926635742188
           localRotation:
-            - -89.999960801046612
-            - -83.045457309124345
-            - -7.3412889435608804e-05
+            - -89.999917715748524
+            - -83.045489347892854
+            - -0.00011478749022889519
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -9720,7 +9720,7 @@ GameObject0:
             - 1799.589111328125
           localRotation:
             - -90
-            - -89.879346061924039
+            - -89.871432326871783
             - 0
           localScale:
             - 100
@@ -13974,7 +13974,7 @@ GameObject0:
             - 1800
           localRotation:
             - -90
-            - -89.918682505717186
+            - -89.91522462996592
             - 0
           localScale:
             - 140
@@ -20969,9 +20969,9 @@ GameObject0:
             - 59.258811950683594
             - 1273.9903564453125
           localRotation:
-            - 89.999237600941925
-            - 88.526026390742686
-            - 179.99916929339906
+            - 89.999303282964931
+            - 88.525802058370118
+            - 179.99923668310964
           localScale:
             - 31.190008163452148
             - 31.190008163452148
@@ -22781,7 +22781,7 @@ GameObject0:
             - 804
           localRotation:
             - -90
-            - 89.895896651452134
+            - 89.880655933734033
             - 0
           localScale:
             - 100
@@ -22842,7 +22842,7 @@ GameObject0:
             - 1603.9998779296875
           localRotation:
             - -90
-            - 89.896479860573294
+            - 89.883313036049941
             - 0
           localScale:
             - 100
@@ -26390,7 +26390,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.009_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26441,7 +26441,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.010_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30593,7 +30593,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 2544.22900390625
@@ -30654,7 +30654,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 2544.22900390625
@@ -30703,7 +30703,7 @@ GameObject1:
       Children: ~
     - name: Cube.133_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30764,7 +30764,7 @@ GameObject1:
       Children: ~
     - name: Cube.134_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30825,7 +30825,7 @@ GameObject1:
       Children: ~
     - name: Cube.135_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30837,7 +30837,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 2001.7862548828125
@@ -30886,7 +30886,7 @@ GameObject1:
       Children: ~
     - name: Cube.136_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30898,7 +30898,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 2001.7862548828125
@@ -31081,7 +31081,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 751.6044921875
@@ -31142,7 +31142,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 751.6044921875
@@ -31324,9 +31324,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.000491696643053
-            - 89.958355114374612
-            - 0.0054659362990035591
+            - -89.997376170910528
+            - 89.968642952980332
+            - 0.0085831693125509641
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31385,9 +31385,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -90.000491696643053
-            - 89.958355114374612
-            - 0.0054659362990035591
+            - -89.997376170910528
+            - 89.968642952980332
+            - 0.0085831693125509641
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31691,7 +31691,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 517.2039794921875
@@ -31813,7 +31813,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 744.78399658203125
@@ -31935,7 +31935,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 765.05303955078125
@@ -31996,7 +31996,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 517.2039794921875
@@ -32118,7 +32118,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 744.78399658203125
@@ -32240,7 +32240,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 765.05303955078125
@@ -32301,7 +32301,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 744.78399658203125
@@ -32362,7 +32362,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.87543704611916
             - 0
           localScale:
             - 744.78399658203125
@@ -32483,9 +32483,9 @@ GameObject1:
             - 1729.630615234375
             - 10724.0029296875
           localRotation:
-            - 89.999759182953341
-            - 86.781461207772253
-            - 179.99963277459398
+            - 89.999759174560765
+            - 86.781627229784959
+            - 179.99963276620892
           localScale:
             - 247.75401306152344
             - 126.90206146240234
@@ -32544,9 +32544,9 @@ GameObject1:
             - 1729.630615234375
             - 10721.7958984375
           localRotation:
-            - 90.000303369390863
-            - -86.719270270675437
-            - 179.99970688009296
+            - 90.000242018672225
+            - -86.719314685994263
+            - 179.99976481431699
           localScale:
             - 247.75398254394531
             - 126.90205383300781
@@ -32594,7 +32594,7 @@ GameObject1:
       Children: ~
     - name: Cube.169_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -32655,7 +32655,7 @@ GameObject1:
       Children: ~
     - name: Cube.170_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33237,9 +33237,9 @@ GameObject1:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.008356233238985
-            - 89.870564558075472
-            - -90.008348988724975
+            - -90.004148274419478
+            - 89.865873747325921
+            - -90.004143444743065
           localScale:
             - 128.03897094726562
             - 427.90078735351562
@@ -33400,9 +33400,9 @@ GameObject1:
             - 3463.08984375
             - 7749.7587890625
           localRotation:
-            - -89.991604593360236
-            - 89.920969524270106
-            - -108.02262558678792
+            - -89.988350847269288
+            - 89.913441878338702
+            - -108.01937259751587
           localScale:
             - 87.500289916992188
             - 177.206298828125
@@ -33553,9 +33553,9 @@ GameObject1:
             - 3086.548583984375
             - 7750.44482421875
           localRotation:
-            - -90.006290817326303
-            - 89.889862804210722
-            - 179.99230216307575
+            - -90.004836220416593
+            - 89.890949491906866
+            - 179.99377383542463
           localScale:
             - 43.940093994140625
             - 77.251510620117188
@@ -33604,9 +33604,9 @@ GameObject1:
             - 2866.346435546875
             - 7750.44482421875
           localRotation:
-            - -89.992434241699314
-            - 89.876342208069616
-            - -179.99475650740098
+            - -89.99205455333697
+            - 89.870198872160699
+            - -179.99438877198116
           localScale:
             - 27.383285522460938
             - 48.142822265625
@@ -33707,7 +33707,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -33758,7 +33758,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -33809,7 +33809,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -33860,7 +33860,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -33911,7 +33911,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -33962,7 +33962,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -34013,7 +34013,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -34064,7 +34064,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -34115,7 +34115,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -34166,7 +34166,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.875157936843848
+            - 89.869127707477759
             - 0
           localScale:
             - 127.28877258300781
@@ -34216,9 +34216,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -89.994597377722926
-            - 89.930933389229367
-            - 0.011402944530397741
+            - -89.992378161248936
+            - 89.941138112703413
+            - 0.01362899101573058
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34277,9 +34277,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -89.994597377722926
-            - 89.930933389229367
-            - 0.011402944530397741
+            - -89.992378161248936
+            - 89.941138112703413
+            - 0.01362899101573058
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34501,9 +34501,9 @@ GameObject1:
             - 1972.6943359375
             - -2994.31640625
           localRotation:
-            - -179.85166694956669
-            - 48.842740116555163
-            - -179.80299501339101
+            - -179.85166695246727
+            - 48.842676957523032
+            - -179.80299503162095
           localScale:
             - 88.947860717773438
             - 202.1011962890625
@@ -34552,9 +34552,9 @@ GameObject1:
             - 2146.18212890625
             - -2985.56982421875
           localRotation:
-            - -179.85166694956669
-            - 48.842740116555163
-            - -179.80299501339101
+            - -179.85166695246727
+            - 48.842676957523032
+            - -179.80299503162095
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -34603,9 +34603,9 @@ GameObject1:
             - 1940.9827880859375
             - -2993.0263671875
           localRotation:
-            - -179.85166694956669
-            - 48.842740116555163
-            - -179.80299501339101
+            - -179.85166695246727
+            - 48.842676957523032
+            - -179.80299503162095
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -35306,9 +35306,9 @@ GameObject1:
             - 2396.811767578125
             - -19521.4140625
           localRotation:
-            - 89.980354278213994
-            - -89.945634503472007
-            - -179.98257067486361
+            - 89.982488002602082
+            - -89.947031218342687
+            - -179.98467878600661
           localScale:
             - 274.48114013671875
             - 57.520450592041016
@@ -35357,9 +35357,9 @@ GameObject1:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - -90.008356233238985
-            - 89.870564558075472
-            - -90.008348988724975
+            - -90.004148274419478
+            - 89.865873747325921
+            - -90.004143444743065
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -35529,7 +35529,7 @@ GameObject1:
       Children: ~
     - name: Cube.008_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -35695,7 +35695,7 @@ GameObject2:
       localPosition:
         - 0
         - 313.85833740234375
-        - -81.287979125976562
+        - -45.011699676513672
       localRotation:
         - 64.121003909280915
         - -0
@@ -43729,7 +43729,7 @@ GameObject141:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43773,7 +43773,7 @@ GameObject142:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43817,7 +43817,7 @@ GameObject143:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43861,7 +43861,7 @@ GameObject144:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43905,7 +43905,7 @@ GameObject145:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43949,7 +43949,7 @@ GameObject146:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43993,7 +43993,7 @@ GameObject147:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -44037,7 +44037,7 @@ GameObject148:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -44117,8 +44117,8 @@ GameObject150:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 150.11882019042969
-        - 2
+        - 151.57608032226562
+        - 2.2371292114257812
         - 57.136791229248047
       localRotation:
         - -90.000009659346318
@@ -44126,7 +44126,7 @@ GameObject150:
         - 0
       localScale:
         - 1
-        - 1
+        - 0.99999994039535522
         - 0.30000001192092896
     MeshRenderer:
       name: MeshRenderer
@@ -44275,7 +44275,7 @@ GameObject151:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -44350,8 +44350,8 @@ GameObject151:
           maxLifetime: 0.25
           minSpeed: 0
           maxSpeed: 0
-          startSize: 3
-          endSize: 3
+          startSize: 1
+          endSize: 1
           minSize: 1
           maxSize: 1
           startColor:
@@ -44421,7 +44421,7 @@ GameObject151:
           maxLifetime: 4
           minSpeed: 0.5
           maxSpeed: 1.5
-          startSize: 2
+          startSize: 0.5
           endSize: 2
           minSize: 0.5
           maxSize: 0
@@ -44532,4 +44532,5607 @@ GameObject151:
             useColorGradient: false
             texturePath: Assets/Textures/Smoke30Frames.png
           particleType: 1
+      Children: ~
+GameObject152:
+  name: Termagaunt
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 22.539081573486328
+        - 4.05487060546875
+        - 56.710292816162109
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject153:
+  name: TyranidWarrior
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -35.111362457275391
+        - 3.2329106330871582
+        - 9.9291839599609375
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject154:
+  name: Termagaunt_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -49.152229309082031
+        - 4.05487060546875
+        - 138.89634704589844
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject155:
+  name: Termagaunt_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -22.770217895507812
+        - 4.05487060546875
+        - 39.640560150146484
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject156:
+  name: TyranidWarrior_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.086346626281738281
+        - 3.2329106330871582
+        - 211.02890014648438
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject157:
+  name: TyranidWarrior_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -32.474880218505859
+        - 3.2329106330871582
+        - 45.207405090332031
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject158:
+  name: Termagaunt_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -22.770217895507812
+        - 4.05487060546875
+        - 49.500034332275391
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject159:
+  name: Termagaunt_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -44.260154724121094
+        - 4.05487060546875
+        - 10.757070541381836
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject160:
+  name: TyranidWarrior_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 80.084953308105469
+        - 3.2329106330871582
+        - 16.142498016357422
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject161:
+  name: Termagaunt_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -35.077491760253906
+        - 4.05487060546875
+        - 116.13232421875
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject162:
+  name: TyranidWarrior_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -140.67237854003906
+        - 3.2329106330871582
+        - 89.502288818359375
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject163:
+  name: Termagaunt_6
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 62.301753997802734
+        - 4.05487060546875
+        - 90.872764587402344
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject164:
+  name: Termagaunt_7
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -150.79507446289062
+        - 4.05487060546875
+        - 90.218818664550781
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject165:
+  name: TyranidWarrior_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -63.137996673583984
+        - 3.2329106330871582
+        - 124.50582122802734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject166:
+  name: TyranidWarrior_6
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.074832916259765625
+        - 3.2329106330871582
+        - 95.708633422851562
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject167:
+  name: TyranidWarrior_7
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.074832916259765625
+        - 3.2329106330871582
+        - 149.92196655273438
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject168:
+  name: TyranidWarrior_8
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 70.055221557617188
+        - 3.2329106330871582
+        - 234.48985290527344
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject169:
+  name: Termagaunt_8
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 49.160381317138672
+        - 4.05487060546875
+        - 144.53691101074219
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject170:
+  name: TyranidWarrior_9
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 39.710517883300781
+        - 3.2329106330871582
+        - 115.21138763427734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject171:
+  name: TyranidWarrior_10
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 59.918666839599609
+        - 3.2329106330871582
+        - 124.50582122802734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject172:
+  name: Hormagaunt_36
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -2.8091738224029541
+        - 3.5734810829162598
+        - 39.621837615966797
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject173:
+  name: Hormagaunt_37
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 3.042698860168457
+        - 3.021334171295166
+        - 40
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject174:
+  name: Hormagaunt_38
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -3.0364129543304443
+        - 3.0415821075439453
+        - 33.900730133056641
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject175:
+  name: Hormagaunt_39
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 3.0166640281677246
+        - 3.0430548191070557
+        - 34.027385711669922
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject176:
+  name: Hormagaunt_40
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 36.428562164306641
+        - 3.1139802932739258
+        - 13.034198760986328
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject177:
+  name: Hormagaunt_41
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 36.441524505615234
+        - 3.09147047996521
+        - 7.2741727828979492
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject178:
+  name: Hormagaunt_42
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -30.595159530639648
+        - 3.5418004989624023
+        - 13.672512054443359
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject179:
+  name: Hormagaunt_43
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -30.497913360595703
+        - 3.0778141021728516
+        - 6.6238303184509277
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject180:
+  name: Hormagaunt_44
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -40.195186614990234
+        - 3.1090974807739258
+        - 13.944653511047363
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject181:
+  name: Hormagaunt_45
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -40.233303070068359
+        - 3.006230354309082
+        - 6.6920499801635742
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject182:
+  name: Hormagaunt_46
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 42.465370178222656
+        - 2.9618053436279297
+        - 13.643369674682617
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject183:
+  name: Hormagaunt_47
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 42.635356903076172
+        - 3.0222980976104736
+        - 7.4290227890014648
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject184:
+  name: Hormagaunt_48
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 30.043951034545898
+        - 2.9920449256896973
+        - 45.419654846191406
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject185:
+  name: Hormagaunt_49
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 49.84759521484375
+        - 3.1381156444549561
+        - 45.605037689208984
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject186:
+  name: Hormagaunt_50
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 60.344902038574219
+        - 3.1857454776763916
+        - 54.674079895019531
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject187:
+  name: Hormagaunt_51
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 83.264068603515625
+        - 3.022470235824585
+        - 74.709823608398438
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject188:
+  name: Hormagaunt_52
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 76.892753601074219
+        - 3.1677136421203613
+        - 74.979164123535156
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 2.2204460492503131e-16
+            - 0
+          localRotation:
+            - -1.3660378340025234e-05
+            - 2.4012356376619362e-07
+            - -1.734227086999439e-06
+          localScale:
+            - 0.0075779887475102906
+            - 0.0075779887475105065
+            - 0.0075779887475105031
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject189:
+  name: Hormagaunt_53
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 66.910293579101562
+        - 3.0801832675933838
+        - 85.35272216796875
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject190:
+  name: Hormagaunt_54
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 66.858062744140625
+        - 3.2929065227508545
+        - 95.582359313964844
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject191:
+  name: Hormagaunt_55
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -35.857021331787109
+        - 2.9825911521911621
+        - 105.69984436035156
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject192:
+  name: Hormagaunt_56
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -31.856475830078125
+        - 2.9645345211029053
+        - 111.37568664550781
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject193:
+  name: Hormagaunt_57
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -35.340358734130859
+        - 2.9765176773071289
+        - 115.6116943359375
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject194:
+  name: Hormagaunt_58
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 40
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject195:
+  name: Hormagaunt_59
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -39.878753662109375
+        - 2.9544112682342529
+        - 111.02238464355469
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject196:
+  name: Hormagaunt_60
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -44.070896148681641
+        - 3.1727523803710938
+        - 134.93663024902344
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject197:
+  name: Hormagaunt_61
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -44.070610046386719
+        - 3.1517074108123779
+        - 142.02883911132812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject198:
+  name: Hormagaunt_62
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 9.0847663879394531
+        - 2.9857909679412842
+        - 137.73826599121094
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject199:
+  name: Hormagaunt_63
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 8.9442558288574219
+        - 3.1428489685058594
+        - 141.80801391601562
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject200:
+  name: Hormagaunt_64
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 60.272377014160156
+        - 2.9529383182525635
+        - 190.37667846679688
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject201:
+  name: Hormagaunt_65
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -60.320220947265625
+        - 2.9494657516479492
+        - 190.60208129882812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject202:
+  name: Hormagaunt_66
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 42.73028564453125
+        - 3.0789194107055664
+        - 146.15800476074219
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject203:
+  name: Hormagaunt_67
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 43.149383544921875
+        - 2.9898169040679932
+        - 137.50712585449219
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject204:
+  name: Hormagaunt_68
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -151.55892944335938
+        - 2.9558825492858887
+        - 82.002288818359375
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject205:
+  name: Hormagaunt_69
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -145.41703796386719
+        - 3.0538473129272461
+        - 93.1217041015625
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject206:
+  name: Hormagaunt_70
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -151.65452575683594
+        - 3.1377658843994141
+        - 97.299385070800781
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject207:
+  name: Hormagaunt_71
+  tag: Enemy
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -145.69485473632812
+        - 3.0552957057952881
+        - 86.387115478515625
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
       Children: ~

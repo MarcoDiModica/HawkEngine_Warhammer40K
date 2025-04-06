@@ -35,7 +35,7 @@ public class ShotgunShells : PickUp
         }
         if (elapsedTime >= lifeTime)
         {
-            Destroy();
+            //Destroy();
         }
     }
     public void MoveTowardsPlayer(float deltaTime)

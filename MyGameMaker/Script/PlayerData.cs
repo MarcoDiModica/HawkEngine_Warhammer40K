@@ -14,6 +14,7 @@ public class PlayerData
     public bool infiniteBullets = false;
     public bool GodMode = false;
     public float blackRageSpeed = 0f;
+    public float stimmSpeed = 0f;
 
 
 
@@ -83,7 +84,12 @@ public class PlayerData
 
     }
     public float GetHealth() { return health; }
-
+    public void FullHealth()
+    {
+        health = maxHealth;
+        healthTemp = maxHealthTemp;
+        Engineson.print("PlayerData: " + this.health + " " + this.healthTemp);
+    }
     public float GetHealthTemp() { return healthTemp; }
 
     public float GetMaxHealth()

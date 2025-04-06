@@ -46,7 +46,7 @@ public class PlayerPowerUp : MonoBehaviour
             {
                 hasMedicaeStimm = false;
                 medicaeStimmTimer = 0.0f;
-                playerController.playerData.movSpeed = playerController.playerData.movSpeed / 2;
+                playerController.playerData.movSpeed = playerController.playerData.stimmSpeed = 0;
                 Engineson.print("Medicae Stimm effect passed");
             }
         }

@@ -214,7 +214,7 @@ bool Root::Start()
 	//// Test PowerUps
 	//
 	//auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
-	//powerUp->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
+	//powerUp->GetTransform()->SetPosition(glm::vec3(10, 3, 5));
 	//powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	//powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
@@ -234,7 +234,7 @@ bool Root::Start()
 	//powerUp->SetTag("PowerUp");
 
 	//auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
-	//powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 2, 0));
+	//powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 3, 0));
 	//powerUp5->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	//powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp5->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
@@ -255,7 +255,7 @@ bool Root::Start()
 	//powerUp5->SetTag("PowerUp");
 
 	//auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-	//powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 2, 0));
+	//powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 3, 0));
 	//powerUp6->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	//powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
@@ -275,7 +275,7 @@ bool Root::Start()
 	//powerUp6->SetTag("PowerUp");
 
 	//auto powerUp2 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
-	//powerUp2->GetTransform()->SetPosition(glm::vec3(0, 1, -10));
+	//powerUp2->GetTransform()->SetPosition(glm::vec3(0, 3, -10));
 	//powerUp2->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	//powerUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
@@ -293,9 +293,9 @@ bool Root::Start()
 	//powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MagnetMetallic);
 	//powerUp2->AddComponent<ScriptComponent>()->LoadScript("Magnet");
 	//powerUp2->SetTag("PowerUp");
-	
+	//
 	//auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/AmmunitionBlessing.fbx");
-	//powerUp3->GetTransform()->SetPosition(glm::vec3(0, 1, 10));
+	//powerUp3->GetTransform()->SetPosition(glm::vec3(0, 3, 10));
 	//powerUp3->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	//powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
@@ -315,29 +315,29 @@ bool Root::Start()
 	//powerUp3->SetTag("PowerUp");
 
 	//// Test Ammunition
-	/*auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
-	ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 1, 20));
-	ShotgunShells->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	ShotgunShells->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
-	ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
-	ShotgunShellsBaseColor->LoadTexture("Assets/Textures/ShotgunShells.png");
-	ShotgunShells->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunShellsBaseColor);
-	ShotgunShells->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
-	ShotgunShells->SetTag("Ammunition");
+	//auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
+	//ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 3, 20));
+	//ShotgunShells->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//ShotgunShells->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	//std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
+	//ShotgunShellsBaseColor->LoadTexture("Assets/Textures/ShotgunShells.png");
+	//ShotgunShells->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunShellsBaseColor);
+	//ShotgunShells->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
+	//ShotgunShells->SetTag("Ammunition");
 
-	auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
-	BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 1, 20));
-	BoltgunBullets->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
-	BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();
-	BoltgunBulletsBaseColor->LoadTexture("Assets/Textures/BoltgunBullets.png");
-	BoltgunBullets->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBulletsBaseColor);
-	BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
-	BoltgunBullets->SetTag("Ammunition");*/
+	//auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
+	//BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 3, 20));
+	//BoltgunBullets->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	//std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();
+	//BoltgunBulletsBaseColor->LoadTexture("Assets/Textures/BoltgunBullets.png");
+	//BoltgunBullets->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBulletsBaseColor);
+	//BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
+	//BoltgunBullets->SetTag("Ammunition");
 	
 	//Lictor
 	/*auto lictor = CreateGameObject("Lictor");

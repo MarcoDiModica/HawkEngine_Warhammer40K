@@ -34,10 +34,10 @@ public class PlayerController : MonoBehaviour
     private Audio sound;
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
-    private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
-    private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep.wav";
-    public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit.wav";
-    public string DeathAudio = "Assets/Audio/SFX/Player/PlayerDeath.wav";
+    private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep_ready.wav";
+    private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep_ready.wav";
+    public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit_ready.wav";
+    public string DeathAudio = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
 
     private ParticleFX inactiveDashFX;
     private ParticleFX walkingFX;

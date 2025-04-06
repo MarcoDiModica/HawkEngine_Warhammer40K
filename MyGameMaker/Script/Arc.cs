@@ -50,26 +50,44 @@ public class Arc : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+
+        // ESTO PETA EN RELEASE. SE HA DE ARREGLAR
+        if (explosion == null)
+        {
+            return;
+        }
+
         if (isExploded)
         {
             deathtimer -= deltaTime;
             if (deathtimer <= 0)
             {
-                if (explosion != null) ;
-                //Engineson.Destroy(explosion);
+                if (explosion != null)
+                {
+                    Engineson.Destroy(explosion);
+                    explosion = null; // Asegurarse de que no se acceda a un objeto destruido
+                }
+                return;
             }
         }
+
         deathTimerPrevention += deltaTime;
-        //Engineson.print(deathTimerPrevention.ToString());
 
         if (deathTimerPrevention > .1f)
         {
             if (explosion != null)
-                //Engineson.Destroy(explosion);
+            {
+                Engineson.Destroy(explosion);
+                explosion = null; // Asegurarse de que no se acceda a un objeto destruido
                 needsDestroy = true;
+                return;
+            }
         }
-
     }
+
+
+
+
 
     void Explode()
     {

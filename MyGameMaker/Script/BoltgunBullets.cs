@@ -31,7 +31,7 @@ public class BoltgunBullets : PickUp
         PowerUpMovment(elapsedTime, deltaTime);
         if (elapsedTime >= lifeTime)
         {
-            Destroy();
+            //Destroy();
         }
         if (isDetected)
         {

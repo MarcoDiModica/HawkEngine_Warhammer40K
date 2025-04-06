@@ -51,7 +51,7 @@ public class BlackHeart : PickUp
     public override void OnPickUp(PlayerController playerController)
     {
         Engineson.print("BlackHeart PowerUp applied");
-        playerController.playerData.SetHealth(playerController.playerData.GetMaxHealth());
+        playerController.playerData.FullHealth();
         
     }
 }

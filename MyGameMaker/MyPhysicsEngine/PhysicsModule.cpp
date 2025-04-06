@@ -583,7 +583,7 @@ GameObject* PhysicsModule::Raycast(btVector3& origin, btVector3& direction, floa
         
     }
     else {
-        rayTo = origin + direction.normalized() * maxDistance;
+        rayTo = directionRay;
         return nullptr;
     }
 

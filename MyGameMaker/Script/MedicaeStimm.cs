@@ -54,5 +54,9 @@ public class MedicaeStimm : PickUp
         Engineson.print("MedicaeStimm PowerUp applied");
         playerController.playerData.AddHealth(25);
         playerController.playerData.movSpeed = playerController.playerData.movSpeed * 2;
+        var medicaeFX = Engineson.CreateGameObject("MedicaeFX", null);
+        medicaeFX.GetComponent<Transform>().SetPosition(playerController.GetComponent<Transform>().GetPosition().X + 2, playerController.GetComponent<Transform>().GetPosition().Y + 4f, playerController.GetComponent<Transform>().GetPosition().Z);
+        medicaeFX.AddComponent<ParticleFX>().ApplyPreset(18);
+        medicaeFX.GetComponent<ParticleFX>().EmitBurst(1);
     }
 }

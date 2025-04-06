@@ -12,7 +12,7 @@ namespace HawkEngine
 
         //contructor
         private GameObject owner;
-
+      
         public UIButton(UIntPtr nativeRigidbody, GameObject owner)
         {
             CplusplusInstance = nativeRigidbody;

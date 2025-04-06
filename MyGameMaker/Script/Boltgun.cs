@@ -32,6 +32,7 @@ public class Boltgun : BaseWeapon
         currentTotalAmmo = 120;
         reloadTime = 1.5f;
         range = 20f;
+        timeToLerp = 1;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
@@ -48,8 +49,9 @@ public class Boltgun : BaseWeapon
 
         for (int i = bulletsPos.Count - 1; i >= 0; i--)
         {
-            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.5f);
-            projectile.GetComponent<Transform>().position = bulletsPos[i];
+            bulletIntervals[i] += deltaTime;
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], bulletIntervals[i] / timeToLerp);
+            bulletsObjects[i].GetComponent<Transform>().position = bulletsPos[i];
 
             if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.5f)
             {
@@ -57,12 +59,35 @@ public class Boltgun : BaseWeapon
                 hitPoints.RemoveAt(i);
                 if (collisionNames[i] == "Missed")
                 {
+                    Engineson.Destroy(bulletsObjects[i]);
+                    bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
                 }
                 else
                 {
                     Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
+                    var enemy = GameObject.Find(collisionNames[i]);
+                    if (enemy.tag == "Melee")
+                    {
+                        enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Ranged")
+                    {
+                        enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Stalker")
+                    {
+                        //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Boss")
+                    {
+                        enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                    }
+                    Engineson.Destroy(bulletsObjects[i]);
+                    bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
                 }
             }
         }
@@ -85,15 +110,23 @@ public class Boltgun : BaseWeapon
             // Shoot logic
             
             RayCast rayBullet = new RayCast();
-            Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 1f, 0);
+            Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 2.5f, 0);
 
             rayBullet.PerformRaycast(bulletPosition, transform.forward, range);
 
-            projectile = Engineson.CreateGameObject("Projectile", null);
+            var projectile = Engineson.CreateGameObject("Projectile", null);
 
             // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
-            projectile.GetComponent<Transform>().SetScale(0.1f, 0.1f, 0.1f);
+            projectile.GetComponent<Transform>().SetScale(0.2f, 0.2f, 0.2f);
+
+            //var bulletFX = Engineson.CreateGameObject("BulletFX", null);
+            //bulletFX.AddComponent<ParticleFX>().ApplyPreset(12);
+            //bulletFX.GetComponent<ParticleFX>().EmitBurst(5);
+
+            //projectile.AddChild(bulletFX);
+            bulletsObjects.Add(projectile);
+            bulletIntervals.Add(0);
 
             Vector3 bulletHitPoint = Vector3.Zero;
 
@@ -101,33 +134,12 @@ public class Boltgun : BaseWeapon
             {
                 bulletHitPoint = rayBullet.hit.point;
                 collisionNames.Add(rayBullet.hit.gameObject.name);
-                if (rayBullet.hit.gameObject.tag == "Melee")
-                {
-                    rayBullet.hit.gameObject.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
-                }
-                if (rayBullet.hit.gameObject.tag == "Ranged")
-                {
-                    rayBullet.hit.gameObject.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
-                }
-                if (rayBullet.hit.gameObject.tag == "Stalker")
-                {
-                    rayBullet.hit.gameObject.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
-                }
-                if (rayBullet.hit.gameObject.tag == "Boss")
-                {
-                    rayBullet.hit.gameObject.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
-                }
-                if(rayBullet.hit.gameObject.tag == "Destroyable")
-                {
-                    rayBullet.hit.gameObject.GetComponent<DestroyEnviormentObject>().DestroyObject();
-                }
-
+               
                 Engineson.print($"Hit: {bulletHitPoint}");
-
             }
             else
             {
-                bulletHitPoint = transform.GetPosition() + transform.forward * range;
+                bulletHitPoint = transform.GetPosition() + new Vector3(0, 2.5f, 0) + transform.forward * range;
                 collisionNames.Add("Missed");
                 Engineson.print("Missed");
             }
@@ -178,25 +190,7 @@ public class Boltgun : BaseWeapon
 
     public override void CleanBullets()
     {
-        for (int i = 0; i < bulletsPos.Count; i++)
-        {
-            if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.1f)
-            {
-                bulletsPos.RemoveAt(i);
-                hitPoints.RemoveAt(i);
-                if (collisionNames[i] == "Missed")
-                {
-                    collisionNames.RemoveAt(i);
-                }
-                else
-                {
-                    //Engineson.Destroy(GameObject.Find(collisionNames[i]));
-                    Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
-                    collisionNames.RemoveAt(i);
-                }
-                i--;
-            }
-        }
+        
     }
 
     public override void ResetCooldowns()

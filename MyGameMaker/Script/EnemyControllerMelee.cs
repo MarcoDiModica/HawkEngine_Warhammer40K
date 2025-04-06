@@ -9,7 +9,7 @@ public class EnemyControllerMelee : EnemyController
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
     private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tama�o de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(5.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
 
     // Perfect Dodge
@@ -37,6 +37,8 @@ public class EnemyControllerMelee : EnemyController
     private float leapDuration = 1.5f;
     private float leapTimer = 0f;
     private bool hasLeap = true;
+
+    private bool isLeaping = false;
 
     public override void Awake() {
 
@@ -80,6 +82,9 @@ public class EnemyControllerMelee : EnemyController
             return;
         }
 
+        particles = gameObject.AddComponent<ParticleFX>();
+        particles.ApplyPreset(9);
+
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
@@ -110,6 +115,8 @@ public class EnemyControllerMelee : EnemyController
                     // Enemy Attack
                     if (IsPlayerInHurtbox(playerPos))
                     {
+                        isAttacking = true;
+
                         hurtboxTimer += deltaTime;
                         if (dodgewindow)
                         {
@@ -119,7 +126,7 @@ public class EnemyControllerMelee : EnemyController
                         {
                             //CreateHurtbox();
                             anim.SetRandomAttackAnimation();
-                            Engineson.print("Atack is ready");
+                            Engineson.print("Attack is ready");
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
                             dodgewindow = true;
@@ -132,11 +139,12 @@ public class EnemyControllerMelee : EnemyController
                             hurtboxTimer = 0f;
                             dodgeTimer = 0f;
                             dodgewindow = false;
+                            isAttacking = false;
                         }
                     }
 
                     // Enemy Movement
-                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase && !isAttacking)
+                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
                     {
                         if (!isFootstepPlaying)
                         {
@@ -155,27 +163,37 @@ public class EnemyControllerMelee : EnemyController
                         Vector3 currentVelocity = rb.GetVelocity();
                         moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
                         Vector3 desiredVelocity = moveDirection * speedMovement;
-                   
-                        if (desiredVelocity.LengthSquared() > 0)
+
+                        if (!isLeaping)
                         {
-                            desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                            anim.SetRunningAnimation();
+                            if (desiredVelocity.LengthSquared() > 0)
+                            {
+                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                            }
+
+                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                         }
-                   
-                        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                        rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                        isRunning = true;
+
                     }
 
                     // Enemy Leap
-                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap)
+                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
                     {
-                        Random random = new Random();
-                        int rand = random.Next(3, 4);
-                        int rand2 = random.Next(3, 4);
-
-                        if (rand == rand2)
+                        leapTimer = 0f;
+                        Leap();
+                    }
+                    else if (isLeaping)
+                    {
+                        leapTimer += deltaTime;
+                        particles.EmitBurst(1);
+                        if (leapTimer >= leapDuration)
                         {
-                            leapTimer += deltaTime;
-                            Leap();
+                            isLeaping = false;
+                            hasLeap = false;
+                            lastLeap = 0.0f;
                         }
                     }
                     if (!hasLeap)
@@ -260,10 +278,21 @@ public class EnemyControllerMelee : EnemyController
 
     public void Leap()
     {
-        isLeaping = true;
-        lastLeap = 0.0f;
-        if (leapTimer <= leapDuration)  rb.SetVelocity(rb.GetVelocity() * 1.8f);
-        anim.SetWholeLeapAnimation();
+        if (!isLeaping)
+        {
+            isLeaping = true;
+            anim.SetWholeLeapAnimation();
+            rb.SetVelocity(rb.GetVelocity() * 1.8f);
+            leapTimer = 0.0f;
+        }
+
+        if(leapTimer >= leapDuration)
+        {
+            Engineson.print("Leap ended");
+            isLeaping = false;
+            hasLeap = false;
+            lastLeap = 0.0f;
+        }
     }
 
     private bool IsPlayerInHurtbox(Vector3 playerPos)
@@ -279,41 +308,46 @@ public class EnemyControllerMelee : EnemyController
 
     public override void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        anim.SetHitAnimation();
-        sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-        sound?.Play();
+        if (currentHealth > 0)
+        {
+            currentHealth -= damage;
+            anim.SetHitAnimation();
+            particles.ApplyPreset(19);
+            particles.EmitBurst(1);
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
+        }
     }
 
     override public void OnCollisionEnter(GameObject other)
     {
-        if (other.tag == "BoltgunProjectile")
-        {
-            currentHealth -= 20.0f;
-            Engineson.print("Hit");
-            anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
+        //if (other.tag == "BoltgunProjectile")
+        //{
+        //    currentHealth -= 20.0f;
+        //    Engineson.print("Hit");
+        //    anim.SetHitAnimation();
+        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        //    sound?.Play();
 
-            Engineson.print("Boltgun hit!");
-        }
-        else if (other.tag == "ShotgunProjectile")
-        {
-            //cosas de la shotgun
-            anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
+        //    Engineson.print("Boltgun hit!");
+        //}
+        //else if (other.tag == "ShotgunProjectile")
+        //{
+        //    //cosas de la shotgun
+        //    anim.SetHitAnimation();
+        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        //    sound?.Play();
 
-        }
-        else if (other.tag == "RailgunProjectile")
-        {
-            //Cosas de railgun
-            currentHealth -= 100.0f;
-            anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
-        }
-        else if (other.tag == "Player" && isLeaping)
+        //}
+        //else if (other.tag == "RailgunProjectile")
+        //{
+        //    //Cosas de railgun
+        //    currentHealth -= 100.0f;
+        //    anim.SetHitAnimation();
+        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        //    sound?.Play();
+        //}
+        if (other.tag == "Player" && isLeaping)
         {
             Engineson.print("Player hit while Leaping!");
             pc.playerData.TakeDamage(leapDamage);
@@ -331,6 +365,9 @@ public class EnemyControllerMelee : EnemyController
         hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
         hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
         var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
+        hurtboxCollider.SetTrigger(true);
+        hurtboxObject.tag = "EnemyAttack";
+        //Attack();
     }
 
     private void DestroyHurtbox()

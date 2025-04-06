@@ -900,7 +900,6 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
-			MonoManager::GetInstance().EnableHotReloading();
 			SoundComponent::InitSharedAudioEngine();
 
 			ilInit();

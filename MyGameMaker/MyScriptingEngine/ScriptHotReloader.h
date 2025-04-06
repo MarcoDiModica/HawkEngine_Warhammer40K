@@ -54,6 +54,8 @@ private:
 	void SaveBuildPreference(bool preferMSBuild);
 	bool LoadBuildPreference();
 
+	int ExecuteSilentProcess(const std::string& command, const std::string& workingDir = "");
+
 	std::string m_ScriptFolder;
 	std::string m_OutputAssemblyDir;
 	std::string m_StagingDirectory;

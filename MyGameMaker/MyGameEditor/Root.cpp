@@ -47,7 +47,7 @@ bool Root::Awake()
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
-	MonoManager::GetInstance().ForceRecompileScripts();
+	MonoManager::GetInstance().EnableHotReloading();
 
 	//CreateMainMenuUI();
 

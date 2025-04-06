@@ -8,7 +8,7 @@ public class Test1 : MonoBehaviour
     public GameObject testPrefab;
     public Vector2 testVector2;
     public Vector3 testVector3;
-    public Vector4 testVector4;
+    //public Vector4 testVector4;
 
     public List<GameObject> testList = new List<GameObject>();
     public List<Vector2> testListVector2 = new List<Vector2>();
@@ -47,7 +47,7 @@ public class Test1 : MonoBehaviour
             //Vector values print
             Engineson.print("Test1 Vector2: " + testVector2);
             Engineson.print("Test1 Vector3: " + testVector3);
-            Engineson.print("Test1 Vector4: " + testVector4);
+            //Engineson.print("Test1 Vector4: " + testVector4);
         }
 
         if (Input.GetKeyDown(KeyCode.C))

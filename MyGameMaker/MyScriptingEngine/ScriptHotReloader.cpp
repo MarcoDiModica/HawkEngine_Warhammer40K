@@ -1,4 +1,7 @@
 #include "ScriptHotReloader.h"
+#define NOMINMAX
+#include <Windows.h>
+#include <shellapi.h>  
 #include <sstream>
 #include <thread>
 #include <unordered_set>
@@ -97,6 +100,25 @@ void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::s
 		return;
 	}
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+	LOG(LogType::LOG_INFO, "Realizando compilación inicial del proyecto C#...");
+
+	TryDeleteFile(m_ScriptFolder + "\\build_output.txt");
+	TryDeleteFile(m_ScriptFolder + "\\build_result.txt");
+	TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
+	TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
+
+	if (m_PreferMSBuild && !m_MSBuildPath.empty()) {
+		std::string cleanCmd = "\"" + m_MSBuildPath + "\" \"" + m_ProjectFile +
+			"\" /t:Clean /p:Configuration=Release /nologo";
+		ExecuteSilentProcess(cleanCmd, m_ScriptFolder);
+	}
+	else if (!m_DotnetPath.empty()) {
+		std::string cleanCmd = "\"" + m_DotnetPath + "\" clean \"" + m_ProjectFile + "\"";
+		ExecuteSilentProcess(cleanCmd, m_ScriptFolder);
+	}
+
 	m_IsCompiling = true;
 	bool initialCompilationResult = false;
 
@@ -118,8 +140,32 @@ void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::s
 
 	if (!initialCompilationResult) {
 		LOG(LogType::LOG_ERROR, "Initial compilation failed. Please solve the errors or ask Hawk Developers :)");
-	}
 
+		try {
+			std::ifstream outputFile(m_ScriptFolder + "\\build_output.txt");
+			if (outputFile.is_open()) {
+				std::string line;
+				std::string lastError;
+
+				while (std::getline(outputFile, line)) {
+					if (line.find("error") != std::string::npos) {
+						lastError = line;
+					}
+				}
+
+				if (!lastError.empty()) {
+					LOG(LogType::LOG_ERROR, "Last error: %s", lastError.c_str());
+				}
+
+				outputFile.close();
+			}
+		}
+		catch (...) {
+		}
+	}
+	else {
+		LOG(LogType::LOG_INFO, "Initial compilation completed successfully");
+	}
 }
 
 void ScriptHotReloader::RegisterOnReloadCallback(ReloadCallbackType callback) {
@@ -422,131 +468,98 @@ bool ScriptHotReloader::TestDotnetCompilation(const std::string& dotnetPath) {
 	}
 
 	std::string versionFile = m_ScriptFolder + "\\dotnet_version.txt";
-	std::string testVersionBatch = m_ScriptFolder + "\\test_dotnet_version.bat";
+	std::string versionCommand = "\"" + dotnetPath + "\" --version > \"" + versionFile + "\" 2>&1";
 
-	{
-		std::ofstream batch(testVersionBatch);
-		if (!batch.is_open()) {
-			LOG(LogType::LOG_ERROR, "Couldn't create version test batch file");
-			return false;
-		}
+	int versionResult = ExecuteSilentProcess(versionCommand);
 
-		batch << "@echo off" << std::endl;
-		batch << "\"" << dotnetPath << "\" --version > \"" << versionFile << "\" 2>&1" << std::endl;
-		batch.close();
-
-		std::string command = "cmd /c \"" + testVersionBatch + "\"";
-		int versionResult = system(command.c_str());
-
-		try {
-			std::filesystem::remove(testVersionBatch);
-		}
-		catch (...) {}
-
-		if (versionResult != 0) {
-			LOG(LogType::LOG_INFO, "Dotnet failed to report version, not a valid dotnet installation");
-			try {
-				std::filesystem::remove(versionFile);
-			}
-			catch (...) {}
-			return false;
-		}
-
-		bool validVersionFound = false;
-		try {
-			std::ifstream versionOutput(versionFile);
-			if (versionOutput.is_open()) {
-				std::string versionLine;
-				if (std::getline(versionOutput, versionLine) && !versionLine.empty()) {
-					validVersionFound = true;
-				}
-				versionOutput.close();
-			}
-		}
-		catch (...) {}
-
-		try {
-			std::filesystem::remove(versionFile);
-		}
-		catch (...) {}
-
-		if (!validVersionFound) {
-			LOG(LogType::LOG_INFO, "Dotnet did not return a valid version string");
-			return false;
-		}
+	if (versionResult != 0) {
+		LOG(LogType::LOG_INFO, "Dotnet failed to report version, not a valid dotnet installation");
+		TryDeleteFile(versionFile);
+		return false;
 	}
 
-	std::string testBuildBatch = m_ScriptFolder + "\\test_dotnet_build.bat";
+	bool validVersionFound = false;
+	try {
+		std::ifstream versionOutput(versionFile);
+		if (versionOutput.is_open()) {
+			std::string versionLine;
+			if (std::getline(versionOutput, versionLine) && !versionLine.empty()) {
+				validVersionFound = true;
+			}
+			versionOutput.close();
+		}
+	}
+	catch (...) {}
+
+	TryDeleteFile(versionFile);
+
+	if (!validVersionFound) {
+		LOG(LogType::LOG_INFO, "Dotnet did not return a valid version string");
+		return false;
+	}
+
 	std::string testOutputFile = m_ScriptFolder + "\\test_dotnet_output.txt";
 	std::string testErrorFile = m_ScriptFolder + "\\test_dotnet_error.txt";
+	std::string resultFile = m_ScriptFolder + "\\test_dotnet_result.txt";
 
-	{
-		std::ofstream batch(testBuildBatch);
-		if (!batch.is_open()) {
-			LOG(LogType::LOG_ERROR, "Couldn't create build test batch file");
-			return false;
+	std::string buildCommand = "\"" + dotnetPath + "\" build \"" + m_ProjectFile +
+		"\" -c Release --no-incremental --nologo > \"" +
+		testOutputFile + "\" 2> \"" + testErrorFile + "\"";
+
+	int buildExitCode = ExecuteSilentProcess(buildCommand, m_ScriptFolder);
+
+	std::ofstream resultStream(resultFile);
+	if (resultStream.is_open()) {
+		resultStream << buildExitCode;
+		resultStream.close();
+	}
+
+	int buildResult = -1;
+	try {
+		std::ifstream resultFileStream(resultFile);
+		if (resultFileStream.is_open()) {
+			std::string line;
+			if (std::getline(resultFileStream, line) && !line.empty()) {
+				buildResult = std::stoi(line);
+			}
+			resultFileStream.close();
 		}
+	}
+	catch (...) {}
 
-		batch << "@echo off" << std::endl;
-		batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
-		batch << "\"" << dotnetPath << "\" build \"" << m_ProjectFile << "\" -c Release --no-incremental --nologo > \"" << testOutputFile << "\" 2> \"" << testErrorFile << "\"" << std::endl;
-		batch << "echo %ERRORLEVEL% > \"" << m_ScriptFolder << "\\test_dotnet_result.txt\"" << std::endl;
-		batch.close();
+	bool buildHasErrors = false;
 
-		std::string command = "cmd /c \"" + testBuildBatch + "\"";
-		system(command.c_str());
-
-		int buildResult = -1;
-		try {
-			std::ifstream resultFile(m_ScriptFolder + "\\test_dotnet_result.txt");
-			if (resultFile.is_open()) {
-				std::string line;
-				if (std::getline(resultFile, line) && !line.empty()) {
-					buildResult = std::stoi(line);
+	try {
+		std::ifstream outputFile(testOutputFile);
+		if (outputFile.is_open()) {
+			std::string line;
+			while (std::getline(outputFile, line)) {
+				if (line.find("error") != std::string::npos) {
+					buildHasErrors = true;
+					break;
 				}
-				resultFile.close();
 			}
+			outputFile.close();
 		}
-		catch (...) {}
+	}
+	catch (...) {}
 
-		bool buildHasErrors = false;
-
-		try {
-			std::ifstream outputFile(testOutputFile);
-			if (outputFile.is_open()) {
-				std::string line;
-				while (std::getline(outputFile, line)) {
-					if (line.find("error") != std::string::npos) {
-						buildHasErrors = true;
-						break;
-					}
-				}
-				outputFile.close();
-			}
+	try {
+		std::ifstream errorFile(testErrorFile);
+		if (errorFile.is_open() && errorFile.peek() != std::ifstream::traits_type::eof()) {
+			buildHasErrors = true;
+			errorFile.close();
 		}
-		catch (...) {}
+	}
+	catch (...) {}
 
-		try {
-			std::ifstream errorFile(testErrorFile);
-			if (errorFile.is_open() && errorFile.peek() != std::ifstream::traits_type::eof()) {
-				buildHasErrors = true;
-				errorFile.close();
-			}
-		}
-		catch (...) {}
+	TryDeleteFile(testOutputFile);
+	TryDeleteFile(testErrorFile);
+	TryDeleteFile(resultFile);
 
-		try {
-			std::filesystem::remove(testBuildBatch);
-			std::filesystem::remove(testOutputFile);
-			std::filesystem::remove(testErrorFile);
-			std::filesystem::remove(m_ScriptFolder + "\\test_dotnet_result.txt");
-		}
-		catch (...) {}
-
-		if (buildResult != 0 || buildHasErrors) {
-			LOG(LogType::LOG_INFO, "Dotnet failed to build the project, result code: %d", buildResult);
-			return false;
-		}
+	if (buildResult != 0 || buildHasErrors) {
+		LOG(LogType::LOG_INFO, "Dotnet failed to build the project, result code: %d", buildResult);
+		return false;
 	}
 
 	return true;
@@ -605,33 +618,29 @@ bool ScriptHotReloader::CompileExistingProject() {
 	TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
 	TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
 
-	std::string batchFile = m_ScriptFolder + "\\build.bat";
-	std::ofstream batch(batchFile);
-	if (!batch.is_open()) {
-		LOG(LogType::LOG_ERROR, "Couldn't create batch file");
-		return false;
+	std::string outputFile = m_ScriptFolder + "\\build_output.txt";
+	std::string buildCommand = "\"" + m_DotnetPath + "\" build \"" + m_ProjectFile +
+		"\" -c Release > \"" + outputFile + "\" 2>&1";
+
+	int exitCode = ExecuteSilentProcess(buildCommand, m_ScriptFolder);
+
+	std::ofstream resultFile(m_ScriptFolder + "\\build_result.txt");
+	if (resultFile.is_open()) {
+		resultFile << "Código de salida: " << exitCode;
+		resultFile.close();
 	}
 
-	batch << "@echo off" << std::endl;
-	batch << "echo Compiling project with dotnet" << std::endl;
-	batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
-	batch << "\"" << m_DotnetPath << "\" build \"" << m_ProjectFile << "\" -c Release > build_output.txt 2>&1" << std::endl;
-	batch << "echo Código de salida: %ERRORLEVEL% > build_result.txt" << std::endl;
-
-	batch << "findstr /C:\"warning\" build_output.txt > build_warnings.txt 2>nul" << std::endl;
-	batch << "findstr /C:\"error\" build_output.txt > build_errors.txt 2>nul" << std::endl;
-
-	batch.close();
-
-	std::string command = "cmd /c \"" + batchFile + "\"";
-	int result = system(command.c_str());
+	ExecuteSilentProcess("findstr /C:\"warning\" \"" + outputFile + "\" > \"" +
+		m_ScriptFolder + "\\build_warnings.txt\" 2>nul", m_ScriptFolder);
+	ExecuteSilentProcess("findstr /C:\"error\" \"" + outputFile + "\" > \"" +
+		m_ScriptFolder + "\\build_errors.txt\" 2>nul", m_ScriptFolder);
 
 	int buildResult = -1;
 	try {
-		std::ifstream resultFile(m_ScriptFolder + "\\build_result.txt");
-		if (resultFile.is_open()) {
+		std::ifstream resultFileStream(m_ScriptFolder + "\\build_result.txt");
+		if (resultFileStream.is_open()) {
 			std::string line;
-			if (std::getline(resultFile, line)) {
+			if (std::getline(resultFileStream, line)) {
 				size_t pos = line.find_last_of(":");
 				if (pos != std::string::npos && pos + 1 < line.length()) {
 					std::string codeStr = line.substr(pos + 1);
@@ -639,7 +648,7 @@ bool ScriptHotReloader::CompileExistingProject() {
 					buildResult = std::stoi(codeStr);
 				}
 			}
-			resultFile.close();
+			resultFileStream.close();
 		}
 	}
 	catch (...) {
@@ -953,34 +962,31 @@ bool ScriptHotReloader::TestMSBuildCompilation(const std::string& msbuildPath) {
 		return false;
 	}
 
-	std::string testBuildBatch = m_ScriptFolder + "\\test_msbuild_build.bat";
 	std::string testOutputFile = m_ScriptFolder + "\\test_msbuild_output.txt";
 	std::string testErrorFile = m_ScriptFolder + "\\test_msbuild_error.txt";
+	std::string resultFile = m_ScriptFolder + "\\test_msbuild_result.txt";
 
-	std::ofstream batch(testBuildBatch);
-	if (!batch.is_open()) {
-		LOG(LogType::LOG_ERROR, "Couldn't create MSBuild test batch file");
-		return false;
+	std::string buildCommand = "\"" + msbuildPath + "\" \"" + m_ProjectFile +
+		"\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal > \"" +
+		testOutputFile + "\" 2> \"" + testErrorFile + "\"";
+
+	int buildExitCode = ExecuteSilentProcess(buildCommand, m_ScriptFolder);
+
+	std::ofstream resultStream(resultFile);
+	if (resultStream.is_open()) {
+		resultStream << buildExitCode;
+		resultStream.close();
 	}
-
-	batch << "@echo off" << std::endl;
-	batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
-	batch << "\"" << msbuildPath << "\" \"" << m_ProjectFile << "\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal > \"" << testOutputFile << "\" 2> \"" << testErrorFile << "\"" << std::endl;
-	batch << "echo %ERRORLEVEL% > \"" << m_ScriptFolder << "\\test_msbuild_result.txt\"" << std::endl;
-	batch.close();
-
-	std::string command = "cmd /c \"" + testBuildBatch + "\"";
-	system(command.c_str());
 
 	int buildResult = -1;
 	try {
-		std::ifstream resultFile(m_ScriptFolder + "\\test_msbuild_result.txt");
-		if (resultFile.is_open()) {
+		std::ifstream resultFileStream(resultFile);
+		if (resultFileStream.is_open()) {
 			std::string line;
-			if (std::getline(resultFile, line) && !line.empty()) {
+			if (std::getline(resultFileStream, line) && !line.empty()) {
 				buildResult = std::stoi(line);
 			}
-			resultFile.close();
+			resultFileStream.close();
 		}
 	}
 	catch (...) {}
@@ -1011,13 +1017,9 @@ bool ScriptHotReloader::TestMSBuildCompilation(const std::string& msbuildPath) {
 	}
 	catch (...) {}
 
-	try {
-		std::filesystem::remove(testBuildBatch);
-		std::filesystem::remove(testOutputFile);
-		std::filesystem::remove(testErrorFile);
-		std::filesystem::remove(m_ScriptFolder + "\\test_msbuild_result.txt");
-	}
-	catch (...) {}
+	TryDeleteFile(testOutputFile);
+	TryDeleteFile(testErrorFile);
+	TryDeleteFile(resultFile);
 
 	if (buildResult != 0 || buildHasErrors) {
 		LOG(LogType::LOG_INFO, "MSBuild failed to build the project, result code: %d", buildResult);
@@ -1082,33 +1084,30 @@ bool ScriptHotReloader::CompileWithMSBuild() {
 	TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
 	TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
 
-	std::string batchFile = m_ScriptFolder + "\\build_msbuild.bat";
-	std::ofstream batch(batchFile);
-	if (!batch.is_open()) {
-		LOG(LogType::LOG_ERROR, "Couldn't create MSBuild batch file");
-		return false;
+	std::string outputFile = m_ScriptFolder + "\\build_output.txt";
+	std::string buildCommand = "\"" + m_MSBuildPath + "\" \"" + m_ProjectFile +
+		"\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal > \"" +
+		outputFile + "\" 2>&1";
+
+	int exitCode = ExecuteSilentProcess(buildCommand, m_ScriptFolder);
+
+	std::ofstream resultFile(m_ScriptFolder + "\\build_result.txt");
+	if (resultFile.is_open()) {
+		resultFile << "Código de salida: " << exitCode;
+		resultFile.close();
 	}
 
-	batch << "@echo off" << std::endl;
-	batch << "echo Compiling project with MSBuild..." << std::endl;
-	batch << "cd /d \"" << m_ScriptFolder << "\"" << std::endl;
-	batch << "\"" << m_MSBuildPath << "\" \"" << m_ProjectFile << "\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal > build_output.txt 2>&1" << std::endl;
-	batch << "echo Código de salida: %ERRORLEVEL% > build_result.txt" << std::endl;
-
-	batch << "findstr /C:\"warning\" build_output.txt > build_warnings.txt 2>nul" << std::endl;
-	batch << "findstr /C:\"error\" build_output.txt > build_errors.txt 2>nul" << std::endl;
-
-	batch.close();
-
-	std::string command = "cmd /c \"" + batchFile + "\"";
-	int result = system(command.c_str());
+	ExecuteSilentProcess("findstr /C:\"warning\" \"" + outputFile + "\" > \"" +
+		m_ScriptFolder + "\\build_warnings.txt\" 2>nul", m_ScriptFolder);
+	ExecuteSilentProcess("findstr /C:\"error\" \"" + outputFile + "\" > \"" +
+		m_ScriptFolder + "\\build_errors.txt\" 2>nul", m_ScriptFolder);
 
 	int buildResult = -1;
 	try {
-		std::ifstream resultFile(m_ScriptFolder + "\\build_result.txt");
-		if (resultFile.is_open()) {
+		std::ifstream resultFileStream(m_ScriptFolder + "\\build_result.txt");
+		if (resultFileStream.is_open()) {
 			std::string line;
-			if (std::getline(resultFile, line)) {
+			if (std::getline(resultFileStream, line)) {
 				size_t pos = line.find_last_of(":");
 				if (pos != std::string::npos && pos + 1 < line.length()) {
 					std::string codeStr = line.substr(pos + 1);
@@ -1116,7 +1115,7 @@ bool ScriptHotReloader::CompileWithMSBuild() {
 					buildResult = std::stoi(codeStr);
 				}
 			}
-			resultFile.close();
+			resultFileStream.close();
 		}
 	}
 	catch (...) {
@@ -1235,4 +1234,95 @@ bool ScriptHotReloader::LoadBuildPreference() {
 	}
 
 	return false;
+}
+
+int ScriptHotReloader::ExecuteSilentProcess(const std::string& command, const std::string& workingDir) {
+	SECURITY_ATTRIBUTES sa;
+	ZeroMemory(&sa, sizeof(sa));
+	sa.nLength = sizeof(sa);
+	sa.bInheritHandle = TRUE;
+	sa.lpSecurityDescriptor = NULL;
+
+	HANDLE hOutRead, hOutWrite;
+	if (!CreatePipe(&hOutRead, &hOutWrite, &sa, 0)) {
+		LOG(LogType::LOG_ERROR, "Failed to create output pipe");
+		return -1;
+	}
+	SetHandleInformation(hOutRead, HANDLE_FLAG_INHERIT, 0);
+
+	STARTUPINFOA si;
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	si.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
+	si.hStdOutput = hOutWrite;
+	si.hStdError = hOutWrite;
+	si.wShowWindow = SW_HIDE;
+
+	std::string fullCmd;
+	if (!workingDir.empty()) {
+		fullCmd = "cmd.exe /c cd /d \"" + workingDir + "\" && " + command;
+	}
+	else {
+		fullCmd = "cmd.exe /c " + command;
+	}
+
+	char* cmdCopy = _strdup(fullCmd.c_str());
+
+	PROCESS_INFORMATION pi;
+	ZeroMemory(&pi, sizeof(pi));
+
+	BOOL result = CreateProcessA(
+		NULL,
+		cmdCopy,
+		NULL,
+		NULL,
+		TRUE,
+		CREATE_NO_WINDOW,
+		NULL,
+		NULL,
+		&si,
+		&pi
+	);
+
+	free(cmdCopy);
+	CloseHandle(hOutWrite);
+
+	if (!result) {
+		DWORD error = GetLastError();
+		LOG(LogType::LOG_ERROR, "Failed to create process: error code %d", error);
+		CloseHandle(hOutRead);
+		return -1;
+	}
+
+	const int BUFFER_SIZE = 4096;
+	char buffer[BUFFER_SIZE];
+	DWORD bytesRead;
+	std::string output;
+
+	while (ReadFile(hOutRead, buffer, BUFFER_SIZE - 1, &bytesRead, NULL) && bytesRead > 0) {
+		buffer[bytesRead] = '\0';
+		output += buffer;
+	}
+
+	WaitForSingleObject(pi.hProcess, INFINITE);
+
+	DWORD exitCode = 0;
+	GetExitCodeProcess(pi.hProcess, &exitCode);
+
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+	CloseHandle(hOutRead);
+
+	if (exitCode != 0 && !output.empty()) {
+		std::string logFile = m_ScriptFolder + "\\process_output.log";
+		std::ofstream logStream(logFile);
+		if (logStream.is_open()) {
+			logStream << "Command: " << command << std::endl;
+			logStream << "Exit code: " << exitCode << std::endl;
+			logStream << "Output:" << std::endl << output;
+			logStream.close();
+		}
+	}
+
+	return exitCode;
 }

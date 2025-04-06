@@ -11,6 +11,8 @@ public class PlayerInput : MonoBehaviour
     private bool isAbility1Pressed = false;
     private bool isAbility2Pressed = false;
     private bool isInteractPressed = false;
+    private bool isRunningPressed = false;
+    private bool isKeyboardMoving = false;
 
     private bool isMovementBlocked = false;
     public override void Awake()
@@ -31,22 +33,16 @@ public class PlayerInput : MonoBehaviour
         }
 
         isDashPressed = Input.GetKeyDown(KeyCode.SPACE) || Input.GetControllerButtonDown(ControllerButton.A);
-        if (Input.GetControllerAxis(0, 5) > 0.5f || Input.GetKeyDown(KeyCode.Q))
-        {
-            isShootPressed = true;
-        }
-        else
-        {
-            isShootPressed = false;
-        }
+        isShootPressed = Input.GetKey(KeyCode.J) || Input.GetControllerAxis(0, 5) > 0.5f;
 
         isInteractPressed = Input.GetKeyDown(KeyCode.E) || Input.GetControllerButtonDown(ControllerButton.B);
         isReloadPressed = Input.GetKeyDown(KeyCode.R) || Input.GetControllerButtonDown(ControllerButton.X);
         isAbility1Pressed = Input.GetKeyDown(KeyCode.Y) || Input.GetControllerButtonDown(ControllerButton.RightShoulder);
         isAbility2Pressed = Input.GetKeyDown(KeyCode.G) || Input.GetControllerButtonDown(ControllerButton.LeftShoulder);
 
+      
 
-        if(Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             SceneManager.LoadScene("Level2");
         }
@@ -56,20 +52,46 @@ public class PlayerInput : MonoBehaviour
     {
         Vector3 direction = Vector3.Zero;
 
-        if (Input.GetKey(KeyCode.W)) direction += Vector3.UnitZ;
-        if (Input.GetKey(KeyCode.S)) direction -= Vector3.UnitZ;
-        if (Input.GetKey(KeyCode.D)) direction -= Vector3.UnitX;
-        if (Input.GetKey(KeyCode.A)) direction += Vector3.UnitX;
+        bool isW = Input.GetKey(KeyCode.W);
+        bool isS = Input.GetKey(KeyCode.S);
+        bool isA = Input.GetKey(KeyCode.A);
+        bool isD = Input.GetKey(KeyCode.D);
 
-        if (Input.GetLeftStick() != Vector2.Zero)
+        if (isW) direction += Vector3.UnitZ;
+        if (isS) direction -= Vector3.UnitZ;
+        if (isD) direction -= Vector3.UnitX;
+        if (isA) direction += Vector3.UnitX;
+
+        bool shiftHeld = Input.GetKey(KeyCode.CAPSLOCK);
+        bool isKeyboardMoving = isW || isS || isA || isD;
+
+        isRunningPressed = !shiftHeld && isKeyboardMoving;
+
+        float leftStickMagnitude = Input.GetLeftStick().Length();
+
+        if (leftStickMagnitude > 0.75f)
         {
+            isRunningPressed = true;
             Vector2 leftStickInput = Input.GetLeftStick();
             direction = new Vector3(-leftStickInput.X, 0, -leftStickInput.Y);
         }
-
+        else if (leftStickMagnitude > 0.1f)
+        {
+            isRunningPressed = false;
+            Vector2 leftStickInput = Input.GetLeftStick();
+            direction = new Vector3(-leftStickInput.X, 0, -leftStickInput.Y);
+        }
         currentMoveDirection = direction != Vector3.Zero ? Vector3.Normalize(direction) : direction;
-    }
 
+    }
+    public bool IsRunningPressed()
+    {
+        return isRunningPressed;
+    }
+    public bool IsKeyboardMoving()
+    {
+        return isKeyboardMoving;
+    }
     private void UpdateLookDirection()
     {
         Vector3 direction = Vector3.Zero;
@@ -101,16 +123,19 @@ public class PlayerInput : MonoBehaviour
         return currentLookDirection;
     }
 
-    public bool IsDashPressed()
+    public bool GetShootInput()
     {
-        return isDashPressed;
+        return isShootPressed;
     }
 
     public bool IsShooting()
     {
         return isShootPressed;
     }
-
+    public bool GetDashInput()
+    {
+        return isDashPressed;
+    }
     public bool IsReloading()
     {
         return isReloadPressed;

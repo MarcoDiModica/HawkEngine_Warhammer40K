@@ -10,10 +10,14 @@ public class PlayerController : MonoBehaviour
     public RedThirstManager redThirstManager;
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
+    private ParticleFX bloodSplashEffect;
     private bool isIdle = false;
     public bool isRunning = false;
     private bool isWalking = false;
     private bool isMoving = false;
+    private bool isDashInput = false;
+    private bool isShootInput = false;
+    private bool isRunningInput = false;
     private bool isShootingStanding = false;
     private bool isShootingRunning = false;
     private bool isTransitioning = false;
@@ -32,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private bool hasStoppedFootsteps = false;
     private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
     private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep.wav";
+    public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit.wav";
+    public string DeathAudio = "Assets/Audio/SFX/Player/PlayerDeath.wav";
 
 
     public PlayerData playerData;
@@ -48,35 +54,66 @@ public class PlayerController : MonoBehaviour
         sound = gameObject.GetComponent<Audio>();
         //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
         playerData = new PlayerData();
+        // Add the blood splash effect directly to the player object
+        bloodSplashEffect = gameObject.AddComponent<ParticleFX>();
+        bloodSplashEffect.ApplyPreset(19); // BLOOD_SPLASH preset (index 19)
 
-        if (playerInput == null || playerMovement == null || playerDash == null || playerShooting == null || playerMesh == null)
-        {
-            Engineson.print("ERROR: PlayerController is missing required components!");
-        }
     }
 
     public override void Start()
     {
         gameObject.tag = "Player";
+        bloodSplashEffect.ApplyPreset(19);
+       
     }
 
     public override void Update(float deltaTime)
     {
+        if (playerData.isHit )
+        {
+            if (!playerDash.isInvulnerable && !playerData.GodMode)
+            {
+                sound.LoadAudio(HitAudio);
+                sound.Play();
+
+                if (bloodSplashEffect != null)
+                {
+                    //bloodSplashEffect.EmitBurst(100);
+                }
+
+                if (playerData.GetHealth() <= 0)
+                {
+                    playerAnimations.SetDeathAnimation();
+                    sound.LoadAudio(DeathAudio);
+                    sound.Play();
+                }
+                else
+                {
+                    playerAnimations.SetHitIdleAnimation();
+                }
+            }
+            playerData.isHit = false; 
+        }
+        //upon pressing B take 10 damage
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            playerData.TakeDamage(10);
+        }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            playerData.AddHealth(10);
+        }
         if (Input.GetKeyDown(KeyCode.Z) )
         {
             if (playerData.GodMode == true)
             {
                 playerData.GodMode = false;
-                Engineson.print("GodMode deactivated");
             }
             else
             {
                 playerData.GodMode = true;
-                Engineson.print("GodMode activated");
-
             }
-
-
         }
         
         dashDelayTimer -= deltaTime;
@@ -86,8 +123,24 @@ public class PlayerController : MonoBehaviour
             playerAnimations.SetStandardIdleAnimation();
             once = true;
         }
-         moveDirection = playerInput.GetCurrentMoveDirection();
+        moveDirection = playerInput.GetCurrentMoveDirection();
         Vector3 lookDirection = playerInput.GetCurrentLookDirection();
+        bool isRunningInput = playerInput.IsRunningPressed();
+        bool isKeyboard = playerInput.IsKeyboardMoving();
+        isDashInput = playerInput.GetDashInput();
+        isShootInput = playerInput.GetShootInput();
+        isRunningInput = playerInput.IsRunningPressed();
+        if (isKeyboard)
+        {
+            playerMovement.SetSpeedToRun(); // Teclado siempre corre
+        }
+        else
+        {
+            if (isRunningInput)
+                playerMovement.SetSpeedToRun();
+            else
+                playerMovement.SetSpeedToWalk();
+        }
         elapsedTime += deltaTime;
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
@@ -96,7 +149,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        if (playerInput.IsShooting())
+        if (isShootInput)
         {
             SetShootingState();
             isIdle = false;
@@ -129,12 +182,12 @@ public class PlayerController : MonoBehaviour
                 }
                 if (playerMovement.moveSpeed == playerMovement.walkSpeed)
                     SetWalkingState();
-                else if (playerMovement.moveSpeed == playerMovement.runSpeed)
+                else if (isRunningInput)
                     SetRunningState();
             }
         }
 
-        if (playerInput.IsDashPressed() && playerDash.CanDash(elapsedTime))
+        if (isDashInput && playerDash.CanDash(elapsedTime))
         {
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();
@@ -179,11 +232,11 @@ public class PlayerController : MonoBehaviour
 
     private void SetWalkingState()
     {
-        if (playerInput.IsShooting() && !isShootingRunning)
+        if (isShootInput && !isShootingRunning)
         {
             TransitionShootingStandingToRunning();
         }
-        else if (isShootingRunning && !playerInput.IsShooting())
+        else if (isShootingRunning && !isShootInput)
         {
             playerAnimations.SetShootingRunningToRunAnimation();
             isRunning = false;
@@ -212,11 +265,11 @@ public class PlayerController : MonoBehaviour
 
     private void SetRunningState()
     {
-        if (playerInput.IsShooting() && !isShootingRunning)
+        if (isShootInput && !isShootingRunning)
         {
             TransitionShootingStandingToRunning();
         }
-        else if (isShootingRunning && !playerInput.IsShooting())
+        else if (isShootingRunning && !isShootInput)
         {
             playerAnimations.SetShootingRunningToRunAnimation();
             isRunning = false;
@@ -265,13 +318,11 @@ public class PlayerController : MonoBehaviour
             isIdle = false;
 
         }
-        Engineson.print(moveDirection.ToString());
         if (isShootingStanding && moveDirection != Vector3.Zero)
         {
             playerAnimations.SetShootingStandingToShootingRunAnimation();
             isShootingStanding = false;
             isShootingRunning = true;
-            Engineson.print("Transitioning to shooting running");
         }
     }
     private void SetWalkingToIdle()
@@ -317,8 +368,7 @@ public class PlayerController : MonoBehaviour
         isIdle = false;
         isMoving = true;
     }
-    private string currentFootstep = ""; 
-
+    private string currentFootstep = "";
     private void PlayFootstep()
     {
         string newFootstep = isRunning ? Runfootsteps : Walkfootsteps;
@@ -349,23 +399,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.name == "Hurtbox")
         {
-            if (!playerDash.isInvulnerable && !playerData.GodMode)
-            {
-                playerData.TakeDamage(10);
-                if (playerData.GetHealth() <= 0)
-                {
-                    playerAnimations.SetDeathAnimation();
-                    Engineson.print("Player is dead!");
-                }
-                else
-                {
-                    playerAnimations.SetHitIdleAnimation();
-                }
-                //playerAnimations.SetHitIdleAnimation();
-
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
-            }
-            else if (playerDash.isInvulnerable)
+            if (playerDash.isInvulnerable)
             {
                 playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
             }
@@ -375,48 +409,33 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "EnemyAttack")
         {
-            if (!playerDash.isInvulnerable && !playerData.GodMode)
-            {
-                playerData.TakeDamage(10);
-                if(playerData.GetHealth() <= 0)
-                {
-                    playerAnimations.SetDeathAnimation();
-                    Engineson.print("Player is dead!");
-                }
-                else
-                {
-                    playerAnimations.SetHitIdleAnimation();
-                }
-                //playerAnimations.SetHitIdleAnimation();
+            //if (!playerDash.isInvulnerable && !playerData.GodMode)
+            //{
+            //    //playerData.TakeDamage(10);
 
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
-            }
-            else if (playerDash.isInvulnerable)
-            {
-                playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
-            }
+            //    sound.LoadAudio(HitAudio);
+            //    sound.Play(true);
+     
+            //    if (bloodSplashEffect != null)
+            //    {
+            //        bloodSplashEffect.EmitBurst(100);
+            //    }
+                
+            //    if(playerData.GetHealth() <= 0)
+            //    {
+            //        playerAnimations.SetDeathAnimation();
+            //        sound.LoadAudio(DeathAudio);
+            //    }
+            //    else
+            //    {
+            //        playerAnimations.SetHitIdleAnimation();
+            //    }
+            //}
+            //else if (playerDash.isInvulnerable)
+            //{
+            //    playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
+            //}
         }
         
-        if (other.tag == "Enemy")
-        {
-            if (!playerDash.isInvulnerable && !playerData.GodMode)
-            {
-                playerData.TakeDamage(10);
-                if (playerData.GetHealth() <= 0)
-                {
-                    playerAnimations.SetDeathAnimation();
-                    Engineson.print("Player is dead!");
-                }
-                else
-                {
-                    playerAnimations.SetHitIdleAnimation();
-                }
-                Engineson.print($"Player took damage! Health: {playerData.GetHealth()}");
-            }
-            else if (playerDash.isInvulnerable)
-            {
-                playerShooting.CounterAttack(other);
-            }
-        }
     }
 }

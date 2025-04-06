@@ -49,7 +49,6 @@ void ScriptComponent::Update(float deltaTime) {
     if (monoScript) {
         MonoClass* scriptClass = mono_object_get_class(monoScript);
         MonoMethod* updateMethod = mono_class_get_method_from_name(scriptClass, "Update", 1);
-
         void* args[1];
         args[0] = &deltaTime;
 
@@ -93,7 +92,7 @@ bool ScriptComponent::LoadScript(const std::string& scriptName)
         LOG(LogType::LOG_ERROR, "script %s not found in route %s", scriptName.c_str(), scriptPath.c_str());
         return false;
     }
-
+	name = scriptName;
     MonoClass* scriptClass = mono_class_from_name(MonoManager::GetInstance().GetImage(), "", scriptName.c_str());
     if (!scriptClass) {
         LOG(LogType::LOG_ERROR, "cant find class %s in assembly.", scriptName.c_str());

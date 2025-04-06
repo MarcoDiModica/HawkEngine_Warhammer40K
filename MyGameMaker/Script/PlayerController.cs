@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
                 if (bloodSplashEffect != null)
                 {
-                    //bloodSplashEffect.EmitBurst(100);
+                    bloodSplashEffect.EmitBurst(100);
                 }
 
                 if (playerData.GetHealth() <= 0)

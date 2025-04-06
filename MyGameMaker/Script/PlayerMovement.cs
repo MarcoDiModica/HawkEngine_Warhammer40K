@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     public PlayerData playerData;
 
+
     public override void Awake()
     {
         
@@ -93,14 +94,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerData.GodMode == true)
         {
-            moveSpeed = runSpeed * 3;
+            moveSpeed = (runSpeed + playerData.blackRageSpeed) * 3;
         }
         else if (magnitude > 0.1f)
         {
             if (magnitude > 0.7f)
-                moveSpeed = runSpeed;
+                moveSpeed = runSpeed + playerData.blackRageSpeed;
             else
-                moveSpeed = walkSpeed;
+                moveSpeed = walkSpeed + playerData.blackRageSpeed;
         }
     }
 

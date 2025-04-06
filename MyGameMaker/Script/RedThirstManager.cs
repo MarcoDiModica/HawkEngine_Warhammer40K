@@ -100,7 +100,7 @@ public class RedThirstManager : MonoBehaviour
         isInBlackRage = true;
         blackRageTimer = 0f;
         Engineson.print("Black Rage Activated!");
-        playerController.playerData.movSpeed = playerController.playerData.movSpeed * 1.5f;
+        playerController.playerData.blackRageSpeed = 21f;
         playerController.playerDash.canDash = false;
 
 
@@ -111,7 +111,7 @@ public class RedThirstManager : MonoBehaviour
         isInBlackRage = false;
         redThirstPoints = 0;
         Engineson.print("Black Rage Deactivated");
-        playerController.playerData.movSpeed = playerController.playerData.movSpeed / 1.5f;
+        playerController.playerData.blackRageSpeed = 0f;
         playerController.playerDash.canDash = true;
     }
     private void HandleBlackRage(float deltaTime)

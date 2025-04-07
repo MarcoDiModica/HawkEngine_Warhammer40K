@@ -575,9 +575,22 @@ void AddInteraction() {
 	}
 }
 
+
+
+//void AddScriptComponentToExistingObj() {
+//	auto gameobject = SceneManagement->FindGOByName("Lvl2Z1_Barrel1");
+//	gameobject->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+//	gameobject->SetTag("Destroyable");
+//
+//	auto gameobject2 = SceneManagement->FindGOByName("Lvl2Z1_Barrel2");
+//	gameobject2->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+//	gameobject2->SetTag("Destroyable");
+//}
+
 bool Root::Update(double dt)
 {	
 	if (!hasAddedColliders) {
+		//AddScriptComponentToExistingObj();	
 		hasAddedColliders = true;
 		//AddInteraction();
 	}

@@ -84,6 +84,11 @@ public class Boltgun : BaseWeapon
                     {
                         enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
                     }
+                    if (enemy.tag == "Destroyable")
+                    {
+                        enemy.GetComponent<DestroyEnviormentObject>().DestroyObject(); 
+                    }
+
                     Engineson.Destroy(bulletsObjects[i]);
                     bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);

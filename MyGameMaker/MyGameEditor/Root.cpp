@@ -501,12 +501,13 @@ bool Root::Start()
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
 
 	//auto shotgunPickUp = CreateGameObjectWithPath("Assets/shotgun.fbx");
+	//shotgunPickUp->AddComponent<MeshRenderer>();
 	//std::shared_ptr<Image> ShotgunBaseColor = std::make_shared<Image>();
 	//std::shared_ptr<Image> ShotgunRoughness = std::make_shared<Image>();
 	//std::shared_ptr<Image> ShotgunNormal = std::make_shared<Image>();
 	//std::shared_ptr<Image> ShotgunMetallic = std::make_shared<Image>();
 	//ShotgunBaseColor->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_BaseColor.png");
-	//ShotgunRoughness->LoadTexture("Assets/Textures/shotgunn_DefaultMaterial_Roughness.png");
+	//ShotgunRoughness->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Roughness.png");
 	//ShotgunNormal->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Normal.png");
 	//ShotgunMetallic->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Metallic.png");
 	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunBaseColor);

@@ -28,6 +28,8 @@ public:
     bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint);
 
     bool IsMouseOverWindow() const;
+
+	int msaaSamples = 8;
 private:
     const float iconSize = 25.0f;
     const float iconSpacing = 5.0f; //spacing between icons
@@ -42,8 +44,6 @@ private:
 	ImVec2 marqueeEnd;
 
 	bool IsGameObjectInMarquee(GameObject* gameObject, const ImVec2& start, const ImVec2& end);
-	
-	int msaaSamples = 8;
 
 	bool needsFramebufferUpdate = true;
 	int lastWidth = 0;

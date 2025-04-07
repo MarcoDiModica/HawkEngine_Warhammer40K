@@ -668,48 +668,47 @@ static void RenderOutline(GameObject* object) {
 	}
 }
 
-static void RenderEditor() 
+static void RenderEditor()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
+	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
+	bool useMSAA = sceneWindow->msaaSamples > 0;
+
+	if (useMSAA) {
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
+	}
+	else {
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	}
+
 	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	configureCamera();
 	drawFloorGrid(256, 4);
 
 	auto activeScene = Application->root->GetActiveScene();
 	if (!activeScene) return;
-
 	auto sceneChildrenCopy = Application->root->GetActiveScene()->children();
-
 	std::vector<GameObject*> objects;
-
 	for (const auto& objPtr : sceneChildrenCopy) {
 		if (!objPtr) continue;
-
 		GameObject* object = objPtr.get();
 		if (!object) continue;
-
 		objects.push_back(object);
-
 		for (const auto& childPtr : object->GetChildren()) {
 			if (!childPtr) continue;
-
 			GameObject* child = childPtr.get();
 			if (!child) continue;
-
 			objects.push_back(child);
 		}
-
 		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
-
+			
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 				return;
 			}
-
+			
 			if (object->HasComponent<LightComponent>()) {
 				auto& lights = activeScene->_lights;
 				auto it = std::find(lights.begin(), lights.end(), objPtr);
@@ -719,11 +718,9 @@ static void RenderEditor()
 			}
 		}
 	}
-
+	
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
-
 	Application->physicsModule->Update(Application->GetDt());
-
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
@@ -737,11 +734,13 @@ static void RenderEditor()
 
 	MousePickingCheck(objects);
 
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, Application->gui->multisampleFBO);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, Application->gui->fbo);
-	glBlitFramebuffer(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y,
-		0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y,
-		GL_COLOR_BUFFER_BIT, GL_LINEAR);
+	if (useMSAA) {
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, Application->gui->multisampleFBO);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, Application->gui->fbo);
+		glBlitFramebuffer(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y,
+			0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y,
+			GL_COLOR_BUFFER_BIT, GL_LINEAR);
+	}
 
 	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
 	glGenerateMipmap(GL_TEXTURE_2D);

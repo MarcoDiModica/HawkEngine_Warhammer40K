@@ -37,27 +37,40 @@ void UISceneWindow::Init()
 {
 	GLint maxSamples = 0;
 	glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
-	msaaSamples = std::min(msaaSamples, maxSamples);
 
-	glGenFramebuffers(1, &Application->gui->multisampleFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
+	if (maxSamples <= 0) {
+		msaaSamples = 0;
+	}
+	else {
+		msaaSamples = std::min(msaaSamples, maxSamples);
+	}
 
-	glGenRenderbuffers(1, &Application->gui->multisampleColorBuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
-	glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F,
-		Application->window->width(), Application->window->height());
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-		GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+	if (msaaSamples > 0) {
+		glGenFramebuffers(1, &Application->gui->multisampleFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
 
-	glGenRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
-	glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8,
-		Application->window->width(), Application->window->height());
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
-		GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+		glGenRenderbuffers(1, &Application->gui->multisampleColorBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F,
+			Application->window->width(), Application->window->height());
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+			GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
 
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		std::cerr << "Error: Multisample framebuffer is not complete!" << std::endl;
+		glGenRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8,
+			Application->window->width(), Application->window->height());
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+			GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+			std::cerr << "Error: Multisample framebuffer is not complete! Falling back to non-MSAA." << std::endl;
+			glDeleteRenderbuffers(1, &Application->gui->multisampleColorBuffer);
+			glDeleteRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
+			glDeleteFramebuffers(1, &Application->gui->multisampleFBO);
+			msaaSamples = 0;
+		}
+	}
 
 	glGenFramebuffers(1, &Application->gui->fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
@@ -193,11 +206,13 @@ bool UISceneWindow::Draw()
 
 		if (needsFramebufferUpdate && winSize.x > 1 && winSize.y > 1)
 		{
-			glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
-			glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F, (int)winSize.x, (int)winSize.y);
+			if (msaaSamples > 0) {
+				glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+				glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F, (int)winSize.x, (int)winSize.y);
 
-			glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
-			glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
+				glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+				glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
+			}
 
 			glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, (int)winSize.x, (int)winSize.y, 0, GL_RGBA, GL_FLOAT, nullptr);

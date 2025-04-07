@@ -222,6 +222,9 @@ void MonoManager::EnableHotReloading() {
 			});
 
 		hotReloadEnabled = true;
+
+		LOG(LogType::LOG_INFO, "Hot reloading enabled. Starting initial compilation...");
+		ForceRecompileScripts();
 	}
 }
 

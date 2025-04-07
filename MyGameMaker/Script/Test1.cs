@@ -9,6 +9,7 @@ public class Test1 : MonoBehaviour
     public Vector2 testVector2;
     public Vector3 testVector3;
     //public Vector4 testVector4;
+    public int testInt;
 
     public List<GameObject> testList = new List<GameObject>();
     public List<Vector2> testListVector2 = new List<Vector2>();

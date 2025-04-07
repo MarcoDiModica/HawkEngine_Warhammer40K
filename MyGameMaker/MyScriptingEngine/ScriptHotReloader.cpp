@@ -100,72 +100,7 @@ void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::s
 		return;
 	}
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(500));
-
-	LOG(LogType::LOG_INFO, "Realizando compilación inicial del proyecto C#...");
-
-	TryDeleteFile(m_ScriptFolder + "\\build_output.txt");
-	TryDeleteFile(m_ScriptFolder + "\\build_result.txt");
-	TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
-	TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
-
-	if (m_PreferMSBuild && !m_MSBuildPath.empty()) {
-		std::string cleanCmd = "\"" + m_MSBuildPath + "\" \"" + m_ProjectFile +
-			"\" /t:Clean /p:Configuration=Release /nologo";
-		ExecuteSilentProcess(cleanCmd, m_ScriptFolder);
-	}
-	else if (!m_DotnetPath.empty()) {
-		std::string cleanCmd = "\"" + m_DotnetPath + "\" clean \"" + m_ProjectFile + "\"";
-		ExecuteSilentProcess(cleanCmd, m_ScriptFolder);
-	}
-
-	m_IsCompiling = true;
-	bool initialCompilationResult = false;
-
-	if (m_PreferMSBuild && msbuildAvailable) {
-		initialCompilationResult = CompileWithMSBuild();
-	}
-	else if (!m_PreferMSBuild && dotnetAvailable) {
-		initialCompilationResult = CompileExistingProject();
-	}
-	else if (msbuildAvailable) {
-		initialCompilationResult = CompileWithMSBuild();
-	}
-	else if (dotnetAvailable) {
-		initialCompilationResult = CompileExistingProject();
-	}
-
-	m_IsCompiling = false;
-	m_LastCompilationSuccess = initialCompilationResult;
-
-	if (!initialCompilationResult) {
-		LOG(LogType::LOG_ERROR, "Initial compilation failed. Please solve the errors or ask Hawk Developers :)");
-
-		try {
-			std::ifstream outputFile(m_ScriptFolder + "\\build_output.txt");
-			if (outputFile.is_open()) {
-				std::string line;
-				std::string lastError;
-
-				while (std::getline(outputFile, line)) {
-					if (line.find("error") != std::string::npos) {
-						lastError = line;
-					}
-				}
-
-				if (!lastError.empty()) {
-					LOG(LogType::LOG_ERROR, "Last error: %s", lastError.c_str());
-				}
-
-				outputFile.close();
-			}
-		}
-		catch (...) {
-		}
-	}
-	else {
-		LOG(LogType::LOG_INFO, "Initial compilation completed successfully");
-	}
+	LOG(LogType::LOG_INFO, "Hot reloading initialization complete. Use ForceRecompile to compile scripts.");
 }
 
 void ScriptHotReloader::RegisterOnReloadCallback(ReloadCallbackType callback) {
@@ -187,6 +122,8 @@ bool ScriptHotReloader::CheckForChanges() {
 	}
 
 	bool scriptsModified = false;
+	std::vector<std::string> modifiedFiles;
+
 	for (const auto& entry : std::filesystem::directory_iterator(m_ScriptFolder)) {
 		if (entry.path().extension() == ".cs") {
 			auto lastWriteTime = std::filesystem::last_write_time(entry.path());
@@ -194,19 +131,35 @@ bool ScriptHotReloader::CheckForChanges() {
 			auto it = m_ScriptTimestamps.find(entry.path().string());
 			if (it == m_ScriptTimestamps.end() || it->second < lastWriteTime) {
 				scriptsModified = true;
-				break;
+				modifiedFiles.push_back(entry.path().filename().string());
+
+				m_ScriptTimestamps[entry.path().string()] = lastWriteTime;
 			}
 		}
 	}
 
 	if (scriptsModified) {
-
 		if (Application->root->GetActiveScene()->sceneState == Scene::SceneState::PLAY) {
 			LOG(LogType::LOG_ERROR, "Script changes detected, but engine is in play mode. Please stop the game to reload scripts.");
 			return false;
 		}
 
+		LOG(LogType::LOG_INFO, "Detected changes in %d script(s):", modifiedFiles.size());
+		for (const auto& file : modifiedFiles) {
+			LOG(LogType::LOG_INFO, "  - %s", file.c_str());
+		}
+
 		m_IsCompiling = true;
+
+		if (m_PreferMSBuild && !m_MSBuildPath.empty()) {
+			std::string cleanCmd = "\"" + m_MSBuildPath + "\" \"" + m_ProjectFile +
+				"\" /t:Clean /p:Configuration=Release /nologo";
+			ExecuteSilentProcess(cleanCmd, m_ScriptFolder);
+		}
+		else if (!m_DotnetPath.empty()) {
+			std::string cleanCmd = "\"" + m_DotnetPath + "\" clean \"" + m_ProjectFile + "\"";
+			ExecuteSilentProcess(cleanCmd, m_ScriptFolder);
+		}
 
 		bool result = false;
 		bool dotnetAvailable = !m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath);
@@ -270,21 +223,36 @@ void ScriptHotReloader::TryDeleteFile(const std::string& filePath) {
 }
 
 bool ScriptHotReloader::ForceRecompile() {
-	if (m_IsCompiling || m_CompilationCooldown) {
-		LOG(LogType::LOG_INFO, "Compilation already in progress or cooling down. Please wait.");
+	if (m_IsCompiling) {
+		LOG(LogType::LOG_INFO, "Compilation already in progress. Please wait.");
 		return false;
 	}
 
 	if (Application->root->GetActiveScene()->sceneState == Scene::SceneState::PLAY) {
-		LOG(LogType::LOG_ERROR, "Script changes detected, but engine is in play mode. Please stop the game to reload scripts.");
+		LOG(LogType::LOG_ERROR, "Engine is in play mode. Please stop the game to reload scripts.");
 		return false;
 	}
 
+	if (m_PreferMSBuild && !m_MSBuildPath.empty()) {
+		std::string cleanCmd = "\"" + m_MSBuildPath + "\" \"" + m_ProjectFile +
+			"\" /t:Clean /p:Configuration=Release /nologo";
+		ExecuteSilentProcess(cleanCmd, m_ScriptFolder);
+	}
+	else if (!m_DotnetPath.empty()) {
+		std::string cleanCmd = "\"" + m_DotnetPath + "\" clean \"" + m_ProjectFile + "\"";
+		ExecuteSilentProcess(cleanCmd, m_ScriptFolder);
+	}
+
+	RefreshScriptTimestamps();
+
 	m_IsCompiling = true;
+	m_CompilationCooldown = false;
 
 	bool result = false;
 	bool dotnetAvailable = !m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath);
 	bool msbuildAvailable = !m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath);
+
+	Application->CleanLogs();
 
 	if (m_PreferMSBuild && msbuildAvailable) {
 		result = CompileWithMSBuild();
@@ -302,17 +270,22 @@ bool ScriptHotReloader::ForceRecompile() {
 		LOG(LogType::LOG_ERROR, "No working dotnet or MSBuild available for compilation.");
 	}
 
-	m_CompilationCooldown = true;
+	RefreshScriptTimestamps();
+
 	m_LastCompilationSuccess = result;
 
+	m_CompilationCooldown = true;
 	std::thread([this]() {
-		std::this_thread::sleep_for(std::chrono::seconds(5));
+		std::this_thread::sleep_for(std::chrono::seconds(2));
 		m_CompilationCooldown = false;
 		m_IsCompiling = false;
 		}).detach();
 
 	if (!result) {
 		LOG(LogType::LOG_ERROR, "Forced recompilation failed.");
+	}
+	else {
+		LOG(LogType::LOG_INFO, "Forced recompilation completed successfully.");
 	}
 
 	return result;
@@ -462,107 +435,14 @@ bool ScriptHotReloader::FindWorkingDotnet() {
 }
 
 bool ScriptHotReloader::TestDotnetCompilation(const std::string& dotnetPath) {
-	if (m_ProjectFile.empty()) {
-		LOG(LogType::LOG_ERROR, "No .csproj file found for testing dotnet!");
+	if (!std::filesystem::exists(dotnetPath)) {
 		return false;
 	}
 
-	std::string versionFile = m_ScriptFolder + "\\dotnet_version.txt";
-	std::string versionCommand = "\"" + dotnetPath + "\" --version > \"" + versionFile + "\" 2>&1";
+	std::string versionCommand = "\"" + dotnetPath + "\" --version";
+	int exitCode = ExecuteSilentProcess(versionCommand);
 
-	int versionResult = ExecuteSilentProcess(versionCommand);
-
-	if (versionResult != 0) {
-		LOG(LogType::LOG_INFO, "Dotnet failed to report version, not a valid dotnet installation");
-		TryDeleteFile(versionFile);
-		return false;
-	}
-
-	bool validVersionFound = false;
-	try {
-		std::ifstream versionOutput(versionFile);
-		if (versionOutput.is_open()) {
-			std::string versionLine;
-			if (std::getline(versionOutput, versionLine) && !versionLine.empty()) {
-				validVersionFound = true;
-			}
-			versionOutput.close();
-		}
-	}
-	catch (...) {}
-
-	TryDeleteFile(versionFile);
-
-	if (!validVersionFound) {
-		LOG(LogType::LOG_INFO, "Dotnet did not return a valid version string");
-		return false;
-	}
-
-	std::string testOutputFile = m_ScriptFolder + "\\test_dotnet_output.txt";
-	std::string testErrorFile = m_ScriptFolder + "\\test_dotnet_error.txt";
-	std::string resultFile = m_ScriptFolder + "\\test_dotnet_result.txt";
-
-	std::string buildCommand = "\"" + dotnetPath + "\" build \"" + m_ProjectFile +
-		"\" -c Release --no-incremental --nologo > \"" +
-		testOutputFile + "\" 2> \"" + testErrorFile + "\"";
-
-	int buildExitCode = ExecuteSilentProcess(buildCommand, m_ScriptFolder);
-
-	std::ofstream resultStream(resultFile);
-	if (resultStream.is_open()) {
-		resultStream << buildExitCode;
-		resultStream.close();
-	}
-
-	int buildResult = -1;
-	try {
-		std::ifstream resultFileStream(resultFile);
-		if (resultFileStream.is_open()) {
-			std::string line;
-			if (std::getline(resultFileStream, line) && !line.empty()) {
-				buildResult = std::stoi(line);
-			}
-			resultFileStream.close();
-		}
-	}
-	catch (...) {}
-
-	bool buildHasErrors = false;
-
-	try {
-		std::ifstream outputFile(testOutputFile);
-		if (outputFile.is_open()) {
-			std::string line;
-			while (std::getline(outputFile, line)) {
-				if (line.find("error") != std::string::npos) {
-					buildHasErrors = true;
-					break;
-				}
-			}
-			outputFile.close();
-		}
-	}
-	catch (...) {}
-
-	try {
-		std::ifstream errorFile(testErrorFile);
-		if (errorFile.is_open() && errorFile.peek() != std::ifstream::traits_type::eof()) {
-			buildHasErrors = true;
-			errorFile.close();
-		}
-	}
-	catch (...) {}
-
-	TryDeleteFile(testOutputFile);
-	TryDeleteFile(testErrorFile);
-	TryDeleteFile(resultFile);
-
-	if (buildResult != 0 || buildHasErrors) {
-		LOG(LogType::LOG_INFO, "Dotnet failed to build the project, result code: %d", buildResult);
-		return false;
-	}
-
-	return true;
+	return (exitCode == 0);
 }
 
 void ScriptHotReloader::SaveWorkingDotnetPath(const std::string& dotnetPath) {
@@ -617,6 +497,9 @@ bool ScriptHotReloader::CompileExistingProject() {
 	TryDeleteFile(m_ScriptFolder + "\\build_result.txt");
 	TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
 	TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
+	TryDeleteFile(m_OutputAssemblyDir + "\\Script.dll");
+	TryDeleteFile(m_ScriptFolder + "\\bin\\Debug\\Script.dll");
+	TryDeleteFile(m_ScriptFolder + "\\bin\\Release\\Script.dll");
 
 	std::string outputFile = m_ScriptFolder + "\\build_output.txt";
 	std::string buildCommand = "\"" + m_DotnetPath + "\" build \"" + m_ProjectFile +
@@ -1083,6 +966,9 @@ bool ScriptHotReloader::CompileWithMSBuild() {
 	TryDeleteFile(m_ScriptFolder + "\\build_result.txt");
 	TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
 	TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
+	TryDeleteFile(m_OutputAssemblyDir + "\\Script.dll");
+	TryDeleteFile(m_ScriptFolder + "\\bin\\Debug\\Script.dll");
+	TryDeleteFile(m_ScriptFolder + "\\bin\\Release\\Script.dll");
 
 	std::string outputFile = m_ScriptFolder + "\\build_output.txt";
 	std::string buildCommand = "\"" + m_MSBuildPath + "\" \"" + m_ProjectFile +

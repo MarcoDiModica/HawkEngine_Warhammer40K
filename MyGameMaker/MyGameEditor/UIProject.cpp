@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <chrono>
 #include <future>
+#include <mutex>
 #include <functional>
 #define NOMINMAX
 #include <Windows.h>
@@ -100,6 +101,8 @@ bool UIProject::Draw()
         ImGui::End();
         return true;
     }
+
+    ProcessPendingThumbnails();
 
     HandleShortcuts();
 
@@ -962,13 +965,38 @@ Image* UIProject::GetImageThumbnail(const std::filesystem::path& imagePath)
 		return imagePreviewCache[imagePath];
 	}
 
-	Image* thumbnail = new Image();
-	if (thumbnail->LoadTexture(imagePath.string())) {
-		imagePreviewCache[imagePath] = thumbnail;
-		return thumbnail;
+	auto it = std::find(pendingThumbnails.begin(), pendingThumbnails.end(), imagePath);
+	if (it == pendingThumbnails.end()) {
+		pendingThumbnails.push_back(imagePath);
 	}
-	else {
-		delete thumbnail;
-		return iconCache[".image"];
+
+	return iconCache[".image"];
+}
+
+void UIProject::ProcessPendingThumbnails()
+{
+	if (pendingThumbnails.empty() || processingThumbnails)
+		return;
+
+	processingThumbnails = true;
+
+	int processed = 0;
+	while (!pendingThumbnails.empty() && processed < maxTexturesPerFrame) {
+		auto path = pendingThumbnails.front();
+		pendingThumbnails.erase(pendingThumbnails.begin());
+
+		if (imagePreviewCache.find(path) == imagePreviewCache.end()) {
+			Image* thumbnail = new Image();
+			if (thumbnail->LoadTexture(path.string())) {
+				imagePreviewCache[path] = thumbnail;
+			}
+			else {
+				delete thumbnail;
+			}
+		}
+
+		processed++;
 	}
+
+	processingThumbnails = false;
 }

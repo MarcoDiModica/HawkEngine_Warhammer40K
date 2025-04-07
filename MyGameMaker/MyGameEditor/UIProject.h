@@ -82,5 +82,10 @@ private:
 
 	std::map<std::filesystem::path, Image*> imagePreviewCache;
 	Image* GetImageThumbnail(const std::filesystem::path& imagePath);
-	bool IsImageFile(const std::filesystem::path& path);
+    void ProcessPendingThumbnails();
+    bool IsImageFile(const std::filesystem::path& path);
+
+	std::vector<std::filesystem::path> pendingThumbnails;
+	bool processingThumbnails = false;
+	int maxTexturesPerFrame = 2;
 };

@@ -6,7 +6,7 @@ using System.Numerics;
 public class OptionMenu : MonoBehaviour
 {
     private Audio sound;
-    private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
+    private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private GameObject pauseMenu;
     public override void Awake()
     {

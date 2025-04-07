@@ -50,7 +50,7 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/SpaceShip.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 
     return true;

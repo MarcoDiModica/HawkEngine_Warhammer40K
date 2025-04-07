@@ -20,8 +20,8 @@ public class LoseScreen : MonoBehaviour
     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
 
-    private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
-    private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
+    private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
+    private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     public override void Awake()
     {
 

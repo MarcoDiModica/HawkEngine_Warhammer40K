@@ -50,7 +50,7 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.scene");
 
 
     return true;
@@ -340,19 +340,19 @@ bool Root::Start()
 	//BoltgunBullets->SetTag("Ammunition");
 	
 	//Lictor
-	/*auto lictor = CreateGameObject("Lictor");
-	lictor->SetTag("Enemy");
-	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
-	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
-	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	lictorMesh->SetName("LictorMesh");
-	ParentGameObject(*lictorMesh, *lictor);
-	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");*/
+	//auto lictor = CreateGameObject("Lictor");
+	//lictor->SetTag("Enemy");
+	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
+	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
+	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
+	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	//lictorMesh->SetName("LictorMesh");
+	//ParentGameObject(*lictorMesh, *lictor);
+	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
 
 
 	//auto cube = CreateCube("Cube");

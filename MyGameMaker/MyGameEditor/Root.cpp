@@ -50,7 +50,7 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.scene");
 
 
     return true;
@@ -124,58 +124,58 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/FinalLevel1.Scene");
-	//auto player = CreateGameObject("Player");
-	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
-	//player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
-	//player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
-	//player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
-	//player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
-	//player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
-	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
-	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
-	//player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
-	//
-	//auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
-	//playerMesh->SetName("playerMesh");
-	//playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//ParentGameObject(*playerMesh, *player);
-	//playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	//player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-	//player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
-	//player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-	//player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	//player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
-	//auto riffleShotFX = CreateGameObject("RiffleShotFX");
-	//riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	//ParentGameObject(*riffleShotFX, *player);
-	//riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
-	//riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-	//
-	//auto inactiveDashFX = CreateGameObject("InactiveDashFX");
-	//inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-	//ParentGameObject(*inactiveDashFX, *player);
-	//inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-	//inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-	//
-	//auto walkingFX = CreateGameObject("WalkingFX");
-	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	//ParentGameObject(*walkingFX, *player);
-	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
+	auto player = CreateGameObject("Player");
+	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
+	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
+	player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
+	player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
+	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
+	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
+	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
+	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
+	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
+	
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	playerMesh->SetName("playerMesh");
+	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*playerMesh, *player);
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	auto riffleShotFX = CreateGameObject("RiffleShotFX");
+	riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*riffleShotFX, *player);
+	riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
+	riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	
+	auto inactiveDashFX = CreateGameObject("InactiveDashFX");
+	inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	ParentGameObject(*inactiveDashFX, *player);
+	inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+	
+	auto walkingFX = CreateGameObject("WalkingFX");
+	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	ParentGameObject(*walkingFX, *player);
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
 
 	//particle->ApplyPreset(Particle)
 
@@ -540,13 +540,38 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	
-	//auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	//biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
-	//biblePagePickUp->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
-	//biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	//biblePagePickUp->SetTag("BiblePage");
+	/*auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	biblePagePickUp->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
+	biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	biblePagePickUp->SetTag("BiblePage");
+
+	auto biblePagePickUp2 = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	biblePagePickUp2->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	biblePagePickUp2->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
+	biblePagePickUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	biblePagePickUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	biblePagePickUp2->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	biblePagePickUp2->SetTag("BiblePage");
+
+	auto biblePagePickUp3 = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	biblePagePickUp3->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	biblePagePickUp3->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
+	biblePagePickUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	biblePagePickUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	biblePagePickUp3->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	biblePagePickUp3->SetTag("BiblePage");
+
+	auto biblePagePickUp4= CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	biblePagePickUp4->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	biblePagePickUp4->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
+	biblePagePickUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	biblePagePickUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	biblePagePickUp4->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
+	biblePagePickUp4->SetTag("BiblePage");*/
+
 
 #ifdef _BUILD
 	Application->play = true;

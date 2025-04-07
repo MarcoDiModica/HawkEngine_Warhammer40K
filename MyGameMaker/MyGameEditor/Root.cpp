@@ -490,12 +490,12 @@ bool Root::Start()
 	//CreateLocationSM();
 	//CreateWinUI();
 	//CreateLoseUI();
-	CreateGameplayUI();
+	//CreateGameplayUI();
 	// 
 	// 
 	//CreateMainMenuUI();
-	CreateOptionsMenuUI();
-	CreatePauseMenuUI();
+	//CreateOptionsMenuUI();
+	//CreatePauseMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");

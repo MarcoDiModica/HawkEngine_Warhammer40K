@@ -108,6 +108,8 @@ bool Root::Start()
 	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
 	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 	
+
+	
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");

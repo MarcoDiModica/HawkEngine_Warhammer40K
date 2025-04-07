@@ -490,12 +490,12 @@ bool Root::Start()
 	//CreateLocationSM();
 	//CreateWinUI();
 	//CreateLoseUI();
-	//CreateGameplayUI();
+	CreateGameplayUI();
 	// 
 	// 
 	//CreateMainMenuUI();
-	//CreateOptionsMenuUI();
-	//CreatePauseMenuUI();
+	CreateOptionsMenuUI();
+	CreatePauseMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
@@ -520,7 +520,7 @@ bool Root::Start()
 	//shotgunPickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//shotgunPickUp->AddComponent<ScriptComponent>()->LoadScript("ShotgunPickUp");
 	//shotgunPickUp->SetTag("Weapon");
-	
+	//
 	//auto railgunPickUp = CreateGameObjectWithPath("Assets/railgun.fbx");
 	//std::shared_ptr<Image> RailgunBaseColor = std::make_shared<Image>();
 	//std::shared_ptr<Image> RailgunRoughness = std::make_shared<Image>();

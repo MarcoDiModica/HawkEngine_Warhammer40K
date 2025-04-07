@@ -32,8 +32,9 @@ public class MenuButtons : MonoBehaviour
 
     private Audio sound;
     //private Audio sound;
-    private string buttonHovered = "Assets/Audio/SFX/UI/ButtonSelected.wav";
-    private string buttonClicked = "Assets/Audio/SFX/UI/ButtonPressed.wav";
+    private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
+    private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav";
 
     public override void Awake()
     {
@@ -111,7 +112,7 @@ public class MenuButtons : MonoBehaviour
 
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
+            sound?.LoadAudio(buttonStartGame);
             sound?.Play();
             SceneManager.LoadScene("SpaceShip");
         }
@@ -120,7 +121,7 @@ public class MenuButtons : MonoBehaviour
 
         if (button_continueButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
+            sound?.LoadAudio(buttonStartGame);
             sound?.Play();
             SceneManager.LoadScene("Mortis_Level1");
         }

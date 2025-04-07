@@ -50,7 +50,7 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
 
     return true;

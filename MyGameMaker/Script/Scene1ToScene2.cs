@@ -6,7 +6,7 @@ public class Scene1ToScene2 : MonoBehaviour
 
     public override void Awake()
     {
-        base.Awake();
+
     }
 
     public override void Start()
@@ -20,7 +20,7 @@ public class Scene1ToScene2 : MonoBehaviour
     public override void Update(float deltaTime)
     {
         if (changeScene) {
-            SceneManager.LoadScene("Level2");
+            SceneManager.LoadScene("SpaceShip");
         }
     }
     public override void OnTriggerEnter(GameObject other)

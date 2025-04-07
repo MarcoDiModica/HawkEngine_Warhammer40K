@@ -25,6 +25,5 @@ public class DestroyEnviormentObject : MonoBehaviour
     {
         base.Update(deltaTime);
     }
-
 }
 

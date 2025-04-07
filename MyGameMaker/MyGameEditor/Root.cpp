@@ -377,7 +377,7 @@ bool Root::Start()
 	//hormagaunt->SetTag("Enemy");
 
 	//auto mawloc = CreateGameObject("Mawloc");
-	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(10, -20, 10));
+	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -16, 1080));
 	//mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
 	//mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -501,12 +501,13 @@ bool Root::Start()
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
 
 	//auto shotgunPickUp = CreateGameObjectWithPath("Assets/shotgun.fbx");
+	//shotgunPickUp->AddComponent<MeshRenderer>();
 	//std::shared_ptr<Image> ShotgunBaseColor = std::make_shared<Image>();
 	//std::shared_ptr<Image> ShotgunRoughness = std::make_shared<Image>();
 	//std::shared_ptr<Image> ShotgunNormal = std::make_shared<Image>();
 	//std::shared_ptr<Image> ShotgunMetallic = std::make_shared<Image>();
 	//ShotgunBaseColor->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_BaseColor.png");
-	//ShotgunRoughness->LoadTexture("Assets/Textures/shotgunn_DefaultMaterial_Roughness.png");
+	//ShotgunRoughness->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Roughness.png");
 	//ShotgunNormal->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Normal.png");
 	//ShotgunMetallic->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Metallic.png");
 	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunBaseColor);
@@ -600,9 +601,22 @@ void AddInteraction() {
 	}
 }
 
+
+
+//void AddScriptComponentToExistingObj() {
+//	auto gameobject = SceneManagement->FindGOByName("Lvl2Z1_Barrel1");
+//	gameobject->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+//	gameobject->SetTag("Destroyable");
+//
+//	auto gameobject2 = SceneManagement->FindGOByName("Lvl2Z1_Barrel2");
+//	gameobject2->AddComponent<ScriptComponent>()->LoadScript("DestroyEnviormentObject");
+//	gameobject2->SetTag("Destroyable");
+//}
+
 bool Root::Update(double dt)
 {	
 	if (!hasAddedColliders) {
+		//AddScriptComponentToExistingObj();	
 		hasAddedColliders = true;
 		//AddInteraction();
 	}

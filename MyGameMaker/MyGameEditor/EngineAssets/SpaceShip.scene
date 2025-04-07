@@ -728,9 +728,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.035329589983931
-            - 89.807999930621676
-            - -0.035290316340614622
+            - -90.035051352714945
+            - 89.799485564879149
+            - -0.035008663965834401
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -850,9 +850,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.035958474331721
-            - 89.808814231505337
-            - -0.035914078039927744
+            - -90.034159066364353
+            - 89.801705885872025
+            - -0.034106132318621432
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -911,9 +911,9 @@ GameObject0:
             - 47.038593292236328
             - 3103.14794921875
           localRotation:
-            - 90.000009207792402
-            - -76.348299596145225
-            - 179.99998047378682
+            - 89.999993121052611
+            - -76.348259433079363
+            - 179.99999312105263
           localScale:
             - 19.999996185302734
             - 19.999996185302734
@@ -972,9 +972,9 @@ GameObject0:
             - 47.038593292236328
             - 2985.45849609375
           localRotation:
-            - -90.035329589983931
-            - 89.807999930621676
-            - -0.035290316340614622
+            - -90.035051352714945
+            - 89.799485564879149
+            - -0.035008663965834401
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1094,9 +1094,9 @@ GameObject0:
             - 47.038593292236328
             - 2648.169921875
           localRotation:
-            - 89.999972791946732
-            - 79.548693417910982
-            - 179.99995221585962
+            - 89.999952329243584
+            - 79.548635459116284
+            - 179.99993518250278
           localScale:
             - 20.000001907348633
             - 20.000001907348633
@@ -1338,9 +1338,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.035958474331721
-            - 89.808814231505337
-            - -0.035914078039927744
+            - -90.034159066364353
+            - 89.801705885872025
+            - -0.034106132318621432
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -1460,9 +1460,9 @@ GameObject0:
             - 47.038593292236328
             - 2512.985107421875
           localRotation:
-            - -90.035958474331721
-            - 89.808814231505337
-            - -0.035914078039927744
+            - -90.034159066364353
+            - 89.801705885872025
+            - -0.034106132318621432
           localScale:
             - 19.999998092651367
             - 19.999998092651367
@@ -2295,7 +2295,7 @@ GameObject0:
             - 2582.04150390625
           localRotation:
             - -90
-            - -89.875986586091557
+            - -89.866647488084254
             - 0
           localScale:
             - 30.347345352172852
@@ -2356,7 +2356,7 @@ GameObject0:
             - 3032.04150390625
           localRotation:
             - -90
-            - -89.875986586091557
+            - -89.866647488084254
             - 0
           localScale:
             - 30.347345352172852
@@ -2641,7 +2641,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -2702,7 +2702,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -2763,7 +2763,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -2916,7 +2916,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -2977,7 +2977,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3099,7 +3099,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3211,7 +3211,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3262,7 +3262,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3323,7 +3323,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3384,7 +3384,7 @@ GameObject0:
             - 1189.4329833984375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3435,7 +3435,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3486,7 +3486,7 @@ GameObject0:
             - 399.342529296875
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3537,7 +3537,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3588,7 +3588,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3639,7 +3639,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3700,7 +3700,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3751,7 +3751,7 @@ GameObject0:
             - 399.34283447265625
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3812,7 +3812,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3863,7 +3863,7 @@ GameObject0:
             - 388.63430786132812
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3914,7 +3914,7 @@ GameObject0:
             - 790.0001220703125
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -3965,7 +3965,7 @@ GameObject0:
             - 1188.865966796875
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -4016,7 +4016,7 @@ GameObject0:
             - 1587.731689453125
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -4067,7 +4067,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -4118,7 +4118,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -4179,7 +4179,7 @@ GameObject0:
             - 1600.65771484375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -4230,7 +4230,7 @@ GameObject0:
             - 1189.432861328125
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -4281,7 +4281,7 @@ GameObject0:
             - 790.567138671875
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -4332,7 +4332,7 @@ GameObject0:
             - 1187.18017578125
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -4383,7 +4383,7 @@ GameObject0:
             - 1187.1800537109375
           localRotation:
             - -90
-            - -89.880655933734033
+            - -89.87251377872164
             - 0
           localScale:
             - 29.999998092651367
@@ -7235,9 +7235,9 @@ GameObject0:
             - 179.52284240722656
             - 1464.330810546875
           localRotation:
-            - -4.3257108377435376e-06
+            - -4.3257108177592021e-06
             - 7.4421700826969319
-            - 1.6536825485046914e-12
+            - 1.9609605806333541e-12
           localScale:
             - 0.5
             - 0.5
@@ -7765,9 +7765,9 @@ GameObject0:
             - 74.326217651367188
             - 776.99554443359375
           localRotation:
-            - -89.999977443934995
-            - -83.045441448338053
-            - -6.1902090870657466e-05
+            - -89.999977443645676
+            - -83.045409092492989
+            - -6.1902382541538788e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -7813,8 +7813,8 @@ GameObject0:
             - 0
           isTrigger: false
       Children: ~
-    - name: Lvl2Z1_Cylinder.004
-      tag: Untagged
+    - name: Lvl2Z1_Barrel2
+      tag: Destroyable
       active: true
       isStatic: false
       Components:
@@ -7832,7 +7832,7 @@ GameObject0:
           localScale:
             - 26.229907989501953
             - 26.229907989501953
-            - 26.229902267456055
+            - 26.229904174804688
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -7863,9 +7863,22 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
       Children: ~
-    - name: Lvl2Z1_Cylinder.005
-      tag: Untagged
+    - name: Lvl2Z1_Barrel1
+      tag: Destroyable
       active: true
       isStatic: false
       Components:
@@ -7873,17 +7886,17 @@ GameObject0:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -125.65937042236328
-            - 74.326217651367188
-            - 1535.664794921875
+            - -125.65936854989278
+            - 74.326218451168856
+            - 1535.6648025562642
           localRotation:
-            - -90.000030764238645
-            - -85.076874028864225
-            - -3.0764238643415575e-05
+            - -90.000031118886781
+            - -85.076870173010704
+            - -3.0764241797636877e-05
           localScale:
-            - 26.229907989501953
-            - 26.229907989501953
-            - 26.229902267456055
+            - 26.229907879988787
+            - 26.229907892792049
+            - 26.229903307126612
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -7914,6 +7927,19 @@ GameObject0:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+        ScriptComponents:
+          Script0:
+            name: DestroyEnviormentObject
       Children: ~
     - name: Lvl2Z1_Cylinder.006
       tag: Untagged
@@ -8346,9 +8372,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999977443934995
-            - -83.045441448338053
-            - -6.1902090870657466e-05
+            - -89.999977443645676
+            - -83.045409092492989
+            - -6.1902382541538788e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8397,9 +8423,9 @@ GameObject0:
             - 74.326217651367188
             - 444.17404174804688
           localRotation:
-            - -89.999977443934995
-            - -83.045441448338053
-            - -6.1902090870657466e-05
+            - -89.999977443645676
+            - -83.045409092492989
+            - -6.1902382541538788e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -8448,9 +8474,9 @@ GameObject0:
             - 74.326217651367188
             - 501.02926635742188
           localRotation:
-            - -89.999977443934995
-            - -83.045441448338053
-            - -6.1902090870657466e-05
+            - -89.999977443645676
+            - -83.045409092492989
+            - -6.1902382541538788e-05
           localScale:
             - 26.229900360107422
             - 26.229900360107422
@@ -9720,7 +9746,7 @@ GameObject0:
             - 1799.589111328125
           localRotation:
             - -90
-            - -89.875157936843848
+            - -89.860315708746015
             - 0
           localScale:
             - 100
@@ -13974,7 +14000,7 @@ GameObject0:
             - 1800
           localRotation:
             - -90
-            - -89.911958870952901
+            - -89.902517121216903
             - 0
           localScale:
             - 140
@@ -14655,7 +14681,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.021
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -14706,7 +14732,7 @@ GameObject0:
       Children: ~
     - name: Lvl2Z1_Suel3Suelo_low.022
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -20969,9 +20995,9 @@ GameObject0:
             - 59.258811950683594
             - 1273.9903564453125
           localRotation:
-            - 89.999368682818087
-            - 88.52599223775475
-            - 179.99930379065236
+            - 89.999169240469527
+            - 88.524933170401383
+            - 179.9991060559839
           localScale:
             - 31.190008163452148
             - 31.190008163452148
@@ -22781,7 +22807,7 @@ GameObject0:
             - 804
           localRotation:
             - -90
-            - 89.88747469861886
+            - 89.871068800847851
             - 0
           localScale:
             - 100
@@ -22842,7 +22868,7 @@ GameObject0:
             - 1603.9998779296875
           localRotation:
             - -90
-            - 89.890371777582203
+            - 89.870343385980505
             - 0
           localScale:
             - 100
@@ -26390,7 +26416,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.009_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -26441,7 +26467,7 @@ GameObject1:
       Children: ~
     - name: Cube.233_lvl2.010_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30184,7 +30210,7 @@ GameObject1:
       Children: ~
     - name: Cube.001_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30593,7 +30619,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 2544.22900390625
@@ -30654,7 +30680,7 @@ GameObject1:
             - 7724.7666015625
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 2544.22900390625
@@ -30703,7 +30729,7 @@ GameObject1:
       Children: ~
     - name: Cube.133_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30764,7 +30790,7 @@ GameObject1:
       Children: ~
     - name: Cube.134_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30825,7 +30851,7 @@ GameObject1:
       Children: ~
     - name: Cube.135_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30837,7 +30863,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 2001.7862548828125
@@ -30886,7 +30912,7 @@ GameObject1:
       Children: ~
     - name: Cube.136_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -30898,7 +30924,7 @@ GameObject1:
             - 1690.4364013671875
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 2001.7862548828125
@@ -31081,7 +31107,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 751.6044921875
@@ -31142,7 +31168,7 @@ GameObject1:
             - -1872.7919921875
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 751.6044921875
@@ -31324,9 +31350,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -89.995755479507622
-            - 89.957722833177499
-            - 0.010191908149945958
+            - -89.988394096515037
+            - 89.981308725194864
+            - 0.017556705705314826
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31385,9 +31411,9 @@ GameObject1:
             - 1729.630615234375
             - -3624.50439453125
           localRotation:
-            - -89.995755479507622
-            - 89.957722833177499
-            - 0.010191908149945958
+            - -89.988394096515037
+            - 89.981308725194864
+            - 0.017556705705314826
           localScale:
             - 600.60284423828125
             - 126.94158935546875
@@ -31691,7 +31717,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 517.2039794921875
@@ -31813,7 +31839,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 744.78399658203125
@@ -31935,7 +31961,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 765.05303955078125
@@ -31996,7 +32022,7 @@ GameObject1:
             - -15975.3642578125
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 517.2039794921875
@@ -32118,7 +32144,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 744.78399658203125
@@ -32240,7 +32266,7 @@ GameObject1:
             - -19515.22265625
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 765.05303955078125
@@ -32301,7 +32327,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 744.78399658203125
@@ -32362,7 +32388,7 @@ GameObject1:
             - -17600.087890625
           localRotation:
             - -90
-            - 89.880655933734033
+            - 89.87251377872164
             - 0
           localScale:
             - 744.78399658203125
@@ -32483,9 +32509,9 @@ GameObject1:
             - 1729.630615234375
             - 10724.0029296875
           localRotation:
-            - 89.999733050495124
-            - 86.781495879984035
-            - 179.9995981010324
+            - 89.999759174560765
+            - 86.781627229784959
+            - 179.99963276620892
           localScale:
             - 247.75401306152344
             - 126.90206146240234
@@ -32544,9 +32570,9 @@ GameObject1:
             - 1729.630615234375
             - 10721.7958984375
           localRotation:
-            - 90.000310203001789
-            - -86.719154388295408
-            - 179.99971371246187
+            - 90.00024543814817
+            - -86.719215883944841
+            - 179.99976822783105
           localScale:
             - 247.75398254394531
             - 126.90205383300781
@@ -32594,7 +32620,7 @@ GameObject1:
       Children: ~
     - name: Cube.169_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -32603,13 +32629,13 @@ GameObject1:
           localPosition:
             - 13329.11328125
             - 1729.630615234375
-            - 4564.580078125
+            - 4564.57958984375
           localRotation:
-            - 89.999911112364131
-            - 85.312414864006115
-            - 179.99979661090748
+            - 89.999937966443127
+            - 85.31259871887174
+            - 179.99981150215717
           localScale:
-            - 247.75399780273438
+            - 247.75401306152344
             - 126.90204620361328
             - 100
         MeshRenderer:
@@ -32655,7 +32681,7 @@ GameObject1:
       Children: ~
     - name: Cube.170_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33237,9 +33263,9 @@ GameObject1:
             - 1972.6943359375
             - 7750.44482421875
           localRotation:
-            - -90.006559743616648
-            - 89.871357051163571
-            - -90.006547669426126
+            - -90.006459354578055
+            - 89.870383046967319
+            - -90.006447280387505
           localScale:
             - 128.03897094726562
             - 427.90078735351562
@@ -33400,9 +33426,9 @@ GameObject1:
             - 3463.08984375
             - 7749.7587890625
           localRotation:
-            - -89.990911049465367
-            - 89.90942328531942
-            - -108.02193279971193
+            - -89.995805893182833
+            - 89.916570869445877
+            - -108.02682927161472
           localScale:
             - 87.500289916992188
             - 177.206298828125
@@ -33553,9 +33579,9 @@ GameObject1:
             - 3086.548583984375
             - 7750.44482421875
           localRotation:
-            - -90.00568178000394
-            - 89.893017630195942
-            - 179.9929333985435
+            - -90.004515270141667
+            - 89.885842325151103
+            - 179.99412210642862
           localScale:
             - 43.940093994140625
             - 77.251510620117188
@@ -33604,9 +33630,9 @@ GameObject1:
             - 2866.346435546875
             - 7750.44482421875
           localRotation:
-            - -89.99190239953785
-            - 89.871710594312376
-            - -179.99421612760139
+            - -89.989806693668115
+            - 89.869480154283707
+            - -179.99210846892728
           localScale:
             - 27.383285522460938
             - 48.142822265625
@@ -33707,7 +33733,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -33758,7 +33784,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -33809,7 +33835,7 @@ GameObject1:
             - 6504.94482421875
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -33860,7 +33886,7 @@ GameObject1:
             - 9563.1494140625
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -33899,7 +33925,7 @@ GameObject1:
       Children: ~
     - name: Cube.195_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33911,7 +33937,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -33950,7 +33976,7 @@ GameObject1:
       Children: ~
     - name: Cube.196_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -33962,7 +33988,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -34001,7 +34027,7 @@ GameObject1:
       Children: ~
     - name: Cube.197_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34013,7 +34039,7 @@ GameObject1:
             - 195.34263610839844
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -34052,7 +34078,7 @@ GameObject1:
       Children: ~
     - name: Cube.198_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34064,7 +34090,7 @@ GameObject1:
             - 3253.54736328125
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -34103,7 +34129,7 @@ GameObject1:
       Children: ~
     - name: Cube.199_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34115,7 +34141,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -34154,7 +34180,7 @@ GameObject1:
       Children: ~
     - name: Cube.200_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -34166,7 +34192,7 @@ GameObject1:
             - 1750.3154296875
           localRotation:
             - -90
-            - 89.871432326871783
+            - 89.861005201797511
             - 0
           localScale:
             - 127.28877258300781
@@ -34216,9 +34242,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -89.991582638929088
-            - 89.940487994283544
-            - 0.01441939060350639
+            - -89.9849152122476
+            - 89.963816525118233
+            - 0.021095354395641933
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34277,9 +34303,9 @@ GameObject1:
             - 1729.630615234375
             - -14931.98828125
           localRotation:
-            - -89.991582638929088
-            - 89.940487994283544
-            - 0.01441939060350639
+            - -89.9849152122476
+            - 89.963816525118233
+            - 0.021095354395641933
           localScale:
             - 231.29997253417969
             - 126.94143676757812
@@ -34501,9 +34527,9 @@ GameObject1:
             - 1972.6943359375
             - -2994.31640625
           localRotation:
-            - -179.85166694095292
-            - 48.842710899440867
-            - -179.80299501550869
+            - -179.8516669511788
+            - 48.842604348867624
+            - -179.80299502835689
           localScale:
             - 88.947860717773438
             - 202.1011962890625
@@ -34552,9 +34578,9 @@ GameObject1:
             - 2146.18212890625
             - -2985.56982421875
           localRotation:
-            - -179.85166694095292
-            - 48.842710899440867
-            - -179.80299501550869
+            - -179.8516669511788
+            - 48.842604348867624
+            - -179.80299502835689
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -34603,9 +34629,9 @@ GameObject1:
             - 1940.9827880859375
             - -2993.0263671875
           localRotation:
-            - -179.85166694095292
-            - 48.842710899440867
-            - -179.80299501550869
+            - -179.8516669511788
+            - 48.842604348867624
+            - -179.80299502835689
           localScale:
             - 53.263530731201172
             - 121.02172088623047
@@ -35306,9 +35332,9 @@ GameObject1:
             - 2396.811767578125
             - -19521.4140625
           localRotation:
-            - 89.978049459767746
-            - -89.948048693748134
-            - -179.98024365826723
+            - 89.98092972022431
+            - -89.944821875116958
+            - -179.98312562630397
           localScale:
             - 274.48114013671875
             - 57.520450592041016
@@ -35357,9 +35383,9 @@ GameObject1:
             - 1972.6943359375
             - -19408.578125
           localRotation:
-            - -90.006559743616648
-            - 89.871357051163571
-            - -90.006547669426126
+            - -90.006459354578055
+            - 89.870383046967319
+            - -90.006447280387505
           localScale:
             - 354.75979614257812
             - 427.9080810546875
@@ -35529,7 +35555,7 @@ GameObject1:
       Children: ~
     - name: Cube.008_lvl2_lvl2_lvl2
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
@@ -35695,7 +35721,7 @@ GameObject2:
       localPosition:
         - 0
         - 313.85833740234375
-        - -81.287979125976562
+        - 19.326644897460938
       localRotation:
         - 64.121003909280915
         - -0
@@ -43729,7 +43755,7 @@ GameObject141:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43773,7 +43799,7 @@ GameObject142:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43817,7 +43843,7 @@ GameObject143:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43861,7 +43887,7 @@ GameObject144:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43905,7 +43931,7 @@ GameObject145:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43949,7 +43975,7 @@ GameObject146:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -43993,7 +44019,7 @@ GameObject147:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -44037,7 +44063,7 @@ GameObject148:
       is_music: false
       is_spatial: false
       auto_play: false
-      loop: false
+      loop: true
     ScriptComponents:
       Script0:
         name: SoundTrigger
@@ -44117,8 +44143,8 @@ GameObject150:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 150.11882019042969
-        - 2
+        - 151.57608032226562
+        - 2.2371292114257812
         - 57.136791229248047
       localRotation:
         - -90.000009659346318
@@ -44126,7 +44152,7 @@ GameObject150:
         - 0
       localScale:
         - 1
-        - 1
+        - 0.99999994039535522
         - 0.30000001192092896
     MeshRenderer:
       name: MeshRenderer
@@ -44184,7 +44210,7 @@ GameObject151:
       localPosition:
         - 0
         - 1.78778076171875
-        - 0
+        - -45.358390808105469
       localRotation:
         - 0
         - -0
@@ -44314,7 +44340,7 @@ GameObject151:
   Children:
     - name: playerMesh
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -44584,7 +44610,7 @@ GameObject151:
           particleType: 1
       Children: ~
 GameObject152:
-  name: Canvas_HUD
+  name: Termagaunt
   tag: Untagged
   active: true
   isStatic: false
@@ -44593,53 +44619,49 @@ GameObject152:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 0
-        - 0
-        - 0
+        - 22.539081573486328
+        - 4.05487060546875
+        - 56.710292816162109
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 1
-        - 1
-        - 1
-    SoundComponent:
-      name: SoundComponent
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
       enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    UITransformComponent:
-      name: UITransformComponent
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
       enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 1
-        - 0
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-    ScriptComponents:
-      Script0:
-        name: HUD
   Children:
-    - name: blood_bg1
+    - name: TermagauntWeapon
       tag: Untagged
       active: true
       isStatic: false
@@ -44648,1905 +44670,3328 @@ GameObject152:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 0
-            - 0
-            - 0
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
           localRotation:
             - 0
             - -0
             - 0
           localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0560000017
-            - 0.887000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.108999997
-            - 0.0299999993
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/healthbar_blood_bg.png
-      Children: ~
-    - name: blood_bg2
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0590000004
-            - 0.92900002
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0590000004
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/healthbar_blood_bg.png
-      Children: ~
-    - name: blood_bar1
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0560000017
-            - 0.887000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.108999997
-            - 0.0299999993
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/healthbar_blood.png
-      Children: ~
-    - name: blood_bar2
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.064000003
-            - 0.930999994
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0549999997
-            - 0.0179999992
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/healthbar_blood.png
-      Children: ~
-    - name: healthbar_bg
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0170000009
-            - 0.85799998
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0430000015
-            - 0.0949999988
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/healthbar_bg.png
-      Children: ~
-    - name: red_thirst_bar
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0189999994
-            - 0.948000014
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0370000005
-            - 0.0799999982
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\healthbar_blood.png
-      Children: ~
-    - name: healthbar_empty
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.00999999978
-            - 0.980000019
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.159999996
-            - 0.125
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/healthbar_empty.png
-      Children: ~
-    - name: boltgun_small_L
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.922999978
-            - 0.79400003
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0250000004
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_boltgun_small_icon.png
-      Children: ~
-    - name: railgun_small_L
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.922999978
-            - 0.796000004
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0250000004
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_railgun_small_icon.png
-      Children: ~
-    - name: shotgun_small_L
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.922999978
-            - 0.792999983
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0250000004
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_shotgun_small_icon.png
-      Children: ~
-    - name: boltgun_small_R
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.954999983
-            - 0.79400003
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0250000004
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_boltgun_small_icon.png
-      Children: ~
-    - name: railgun_small_R
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.954999983
-            - 0.796000004
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0250000004
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_railgun_small_icon.png
-      Children: ~
-    - name: shotgun_small_R
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.954999983
-            - 0.792999983
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0250000004
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_shotgun_small_icon.png
-      Children: ~
-    - name: railgun
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.917999983
-            - 0.84799999
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0689999983
-            - 0.104000002
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_railgun_icon_panel.png
-      Children: ~
-    - name: shotgun
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.916000009
-            - 0.850000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0689999983
-            - 0.104000002
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_shotgun_icon_panel.png
-      Children: ~
-    - name: boltgun
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.916000009
-            - 0.850000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0689999983
-            - 0.104000002
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_boltgun_icon_panel.png
-      Children: ~
-    - name: weapon_switcher_frame
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.99000001
-            - 0.980000019
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.152999997
-            - 0.131999999
-            - 1
-          pivot_offset:
-            - 1
-            - 1
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gunswitcher_frame.png
-      Children: ~
-    - name: boltgun_ability_1
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerupi_grenade_icon_1.png
-      Children: ~
-    - name: boltgun_ability_2
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_chainballs.png
-      Children: ~
-    - name: shotgun_ability_1
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_hook.png
-      Children: ~
-    - name: shotgun_ability_2
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_explosion.png
-      Children: ~
-    - name: railgun_ability_1
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.848999977
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_reload.png
-      Children: ~
-    - name: railgun_ability_2a
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_Eball.png
-      Children: ~
-    - name: railgun_ability_2b
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.875999987
-            - 0.889999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.023
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_railgun_shot.png
-      Children: ~
-    - name: gun_small_frame
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.91900003
-            - 0.791999996
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.064000003
-            - 0.0540000014
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gun_weapon_frames.png
-      Children: ~
-    - name: frames
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.847000003
-            - 0.887000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0529999994
-            - 0.057
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/powerup_frame.png
-      Children: ~
-    - name: lock_L
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.922999978
-            - 0.795000017
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0250000004
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/lock.png
-      Children: ~
-    - name: lock_R
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.954999983
-            - 0.795000017
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0250000004
-            - 0.0500000007
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/lock.png
-      Children: ~
-    - name: nodash
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0659999996
-            - 0.861999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0149999997
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/status_nodash.png
-      Children: ~
-    - name: msup
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0829999968
-            - 0.861999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0149999997
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/status_msup.png
-      Children: ~
-    - name: noreload
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.133000001
-            - 0.861999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0149999997
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/status_noreload.png
-      Children: ~
-    - name: defenseup
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0989999995
-            - 0.861999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0149999997
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/status_defenseup.png
-      Children: ~
-    - name: asup
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.149000004
-            - 0.861999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0149999997
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/status_asup.png
-      Children: ~
-    - name: attackup
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.115999997
-            - 0.861999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0149999997
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/status_attackup.png
-      Children: ~
-    - name: magnet
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.167999998
-            - 0.861999989
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0149999997
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/status_magnet.png
-      Children: ~
-    - name: bookshelf
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.123000003
-            - 0.926999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0189999994
-            - 0.0250000004
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UdeI/bookshelf.png
-      Children: ~
-    - name: bible1
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.125
-            - 0.92900002
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.00300000003
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/bible.png
-      Children: ~
-    - name: bible2
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.128000006
-            - 0.92900002
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.00300000003
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/bible.png
-      Children: ~
-    - name: bible3
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.130999997
-            - 0.92900002
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.00300000003
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - -0.5
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/bible.png
-      Children: ~
-    - name: bible4
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.134000003
-            - 0.92900002
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.00300000003
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/bible.png
-      Children: ~
-    - name: bible5
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.136999995
-            - 0.92900002
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.00300000003
-            - 0.0199999996
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
           enabled: true
-          texture_path: Library/Textures/UI/bible.png
       Children: ~
 GameObject153:
-  name: Canvas_OptionsMenu
+  name: TyranidWarrior
   tag: Untagged
-  active: false
+  active: true
   isStatic: false
   Components:
     Transform_Component:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 0
-        - 0
-        - 0
+        - -35.111362457275391
+        - 3.2329106330871582
+        - 9.9291839599609375
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 1
-        - 1
-        - 1
-    SoundComponent:
-      name: SoundComponent
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
       enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    UITransformComponent:
-      name: UITransformComponent
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
       enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
-        - 1
-        - 1
-        - 1
-      pivot_offset:
-        - 0
-        - 1
-        - 0
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
-    ScriptComponents:
-      Script0:
-        name: OptionMenu
-  Children:
-    - name: Canvas_OptionsMenu_
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 1
-            - 1
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/options_menu.png
-      Children: ~
+  Children: ~
 GameObject154:
-  name: Canvas_PauseMenu
+  name: Termagaunt_1
   tag: Untagged
-  active: false
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -49.152229309082031
+        - 4.05487060546875
+        - 138.89634704589844
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject155:
+  name: Termagaunt_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -22.770217895507812
+        - 4.05487060546875
+        - 39.640560150146484
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject156:
+  name: TyranidWarrior_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.086346626281738281
+        - 3.2329106330871582
+        - 211.02890014648438
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject157:
+  name: TyranidWarrior_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -32.474880218505859
+        - 3.2329106330871582
+        - 45.207405090332031
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject158:
+  name: Termagaunt_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -22.770217895507812
+        - 4.05487060546875
+        - 49.500034332275391
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject159:
+  name: Termagaunt_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -44.260154724121094
+        - 4.05487060546875
+        - 10.757070541381836
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject160:
+  name: TyranidWarrior_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 80.084953308105469
+        - 3.2329106330871582
+        - 16.142498016357422
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject161:
+  name: Termagaunt_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -35.077491760253906
+        - 4.05487060546875
+        - 116.13232421875
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject162:
+  name: TyranidWarrior_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -140.67237854003906
+        - 3.2329106330871582
+        - 89.502288818359375
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject163:
+  name: Termagaunt_6
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 62.301753997802734
+        - 4.05487060546875
+        - 90.872764587402344
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject164:
+  name: Termagaunt_7
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -150.79507446289062
+        - 4.05487060546875
+        - 90.218818664550781
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject165:
+  name: TyranidWarrior_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -63.137996673583984
+        - 3.2329106330871582
+        - 124.50582122802734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject166:
+  name: TyranidWarrior_6
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.074832916259765625
+        - 3.2329106330871582
+        - 95.708633422851562
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject167:
+  name: TyranidWarrior_7
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -0.074832916259765625
+        - 3.2329106330871582
+        - 149.92196655273438
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject168:
+  name: TyranidWarrior_8
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 70.055221557617188
+        - 3.2329106330871582
+        - 234.48985290527344
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject169:
+  name: Termagaunt_8
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 49.160381317138672
+        - 4.05487060546875
+        - 144.53691101074219
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.33109995722770691
+        - 0.29010424017906189
+        - 0.33109995722770691
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.260700405
+          - 0.0456479341
+          - 0.0456479341
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children:
+    - name: TermagauntWeapon
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -2.3313460350036621
+            - -1.655590295791626
+            - -2.0828900337219238
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 2.3255815505981445
+            - 5.407804012298584
+            - 2.3255815505981445
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.260700405
+              - 0.0456479341
+              - 0.0456479341
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject170:
+  name: TyranidWarrior_9
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 39.710517883300781
+        - 3.2329106330871582
+        - 115.21138763427734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject171:
+  name: TyranidWarrior_10
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 59.918666839599609
+        - 3.2329106330871582
+        - 124.50582122802734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1.2999999523162842
+        - 3.0459532737731934
+        - 1.2999999523162842
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.0700389147
+          - 0.00735817431
+          - 0.00735817431
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject172:
+  name: Hormagaunt_36
+  tag: Melee
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -2.8091738224029541
+        - 3.5734810829162598
+        - 34.403072357177734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 2
+      endSize: 2
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.200000003
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: true
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 640
+        - 360
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 9
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/EnemyDash.png
+      particleType: 9
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378343659465e-05
+            - 2.4012355493896692e-07
+            - -1.7342271369070097e-06
+          localScale:
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+            - 0.0075779887847602367
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject173:
+  name: HormagauntPlaceholder
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -151.79701232910156
+        - 3.0016283988952637
+        - 81.979995727539062
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject174:
+  name: HormagauntPlaceholder_copy
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 3.0435326099395752
+        - 3.0016283988952637
+        - 34.199363708496094
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject175:
+  name: HormagauntPlaceholder_copy_1
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 3.0435326099395752
+        - 3.0016283988952637
+        - 39.611473083496094
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject176:
+  name: HormagauntPlaceholder_copy_2
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -2.9268598556518555
+        - 3.0016283988952637
+        - 39.611473083496094
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject177:
+  name: HormagauntPlaceholder_copy_3
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 30.021686553955078
+        - 3.0016283988952637
+        - 45.467826843261719
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject178:
+  name: HormagauntPlaceholder_copy_4
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 49.911270141601562
+        - 3.0016283988952637
+        - 45.467826843261719
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject179:
+  name: HormagauntPlaceholder_copy_5
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 60.242237091064453
+        - 3.0016283988952637
+        - 54.31268310546875
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject180:
+  name: HormagauntPlaceholder_copy_6
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 77.009010314941406
+        - 3.0016283988952637
+        - 74.769607543945312
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject181:
+  name: HormagauntPlaceholder_copy_7
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 83.282752990722656
+        - 3.0016283988952637
+        - 74.769607543945312
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject182:
+  name: HormagauntPlaceholder_copy_8
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 67.000839233398438
+        - 3.0016283988952637
+        - 85.544960021972656
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject183:
+  name: HormagauntPlaceholder_copy_9
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 67.000839233398438
+        - 3.0016283988952637
+        - 95.349075317382812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject184:
+  name: HormagauntPlaceholder_copy_10
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 42.639564514160156
+        - 3.0016283988952637
+        - 146.19255065917969
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject185:
+  name: HormagauntPlaceholder_copy_11
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 42.639564514160156
+        - 3.0016283988952637
+        - 137.31246948242188
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject186:
+  name: HormagauntPlaceholder_copy_12
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 9.1171207427978516
+        - 3.0016283988952637
+        - 136.41880798339844
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject187:
+  name: HormagauntPlaceholder_copy_13
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 9.1171207427978516
+        - 3.0016283988952637
+        - 145.61993408203125
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject188:
+  name: HormagauntPlaceholder_copy_14
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -43.644573211669922
+        - 3.0016283988952637
+        - 142.33660888671875
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject189:
+  name: HormagauntPlaceholder_copy_15
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -43.644573211669922
+        - 3.0016283988952637
+        - 134.723388671875
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject190:
+  name: HormagauntPlaceholder_copy_16
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -40.040977478027344
+        - 3.0016283988952637
+        - 111.28829956054688
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject191:
+  name: HormagauntPlaceholder_copy_17
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -31.497499465942383
+        - 3.0016283988952637
+        - 111.28829956054688
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject192:
+  name: HormagauntPlaceholder_copy_18
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -35.146404266357422
+        - 3.0016283988952637
+        - 105.30097198486328
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject193:
+  name: HormagauntPlaceholder_copy_19
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -60.278980255126953
+        - 3.0016283988952637
+        - 190.63751220703125
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject194:
+  name: HormagauntPlaceholder_copy_20
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 60.511962890625
+        - 3.0016283988952637
+        - 190.63751220703125
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject195:
+  name: HormagauntPlaceholder_copy_21
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -30.417816162109375
+        - 3.0016283988952637
+        - 13.783185005187988
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject196:
+  name: HormagauntPlaceholder_copy_22
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -30.417816162109375
+        - 3.0016283988952637
+        - 6.6763668060302734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject197:
+  name: HormagauntPlaceholder_copy_23
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -40.249977111816406
+        - 3.0016283988952637
+        - 6.6763668060302734
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject198:
+  name: HormagauntPlaceholder_copy_24
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -40.249977111816406
+        - 3.0016283988952637
+        - 13.71912956237793
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject199:
+  name: HormagauntPlaceholder_copy_25
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 36.3636474609375
+        - 3.0016283988952637
+        - 13.71912956237793
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject200:
+  name: HormagauntPlaceholder_copy_26
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 42.564804077148438
+        - 3.0016283988952637
+        - 13.71912956237793
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject201:
+  name: HormagauntPlaceholder_copy_27
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 42.564804077148438
+        - 3.0016283988952637
+        - 7.3464188575744629
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject202:
+  name: HormagauntPlaceholder_copy_28
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 36.374691009521484
+        - 3.0016283988952637
+        - 7.3464188575744629
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject203:
+  name: HormagauntPlaceholder_copy_29
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -145.52786254882812
+        - 3.0016283988952637
+        - 86.422035217285156
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject204:
+  name: HormagauntPlaceholder_copy_30
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -145.52786254882812
+        - 3.0016283988952637
+        - 92.802192687988281
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject205:
+  name: HormagauntPlaceholder_copy_31
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -151.79701232910156
+        - 3.0016283988952637
+        - 96.574905395507812
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.7858579158782959
+        - 1.4392794370651245
+        - 0.7858579158782959
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.322957218
+          - 0.0351860039
+          - 0.0351860039
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject206:
+  name: Mawloc
+  tag: Boss
+  active: true
   isStatic: false
   Components:
     Transform_Component:
@@ -46554,54 +47999,54 @@ GameObject154:
       enabled: true
       localPosition:
         - 0
-        - 0
-        - 0
+        - -16
+        - 1080
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 1
-        - 1
-        - 1
+        - 2
+        - 5
+        - 2
     SoundComponent:
       name: SoundComponent
       enabled: true
-      audio_path: ""
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
       volume: 1
       is_music: false
       is_spatial: false
       auto_play: false
       loop: false
-    UITransformComponent:
-      name: UITransformComponent
-      enabled: true
-      position:
-        - 0
-        - 0
-        - 0
-      rotation:
-        - 0
-        - 0
-        - 0
-      scale:
+    BoxColliderComponent:
+      size:
         - 1
         - 1
         - 1
-      pivot_offset:
+      offset:
         - 0
-        - 1
         - 0
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1000
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
     ScriptComponents:
       Script0:
-        name: PauseMenu
+        name: EnemyControllerBoss
   Children:
-    - name: PauseMenu
+    - name: MawlocMesh
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -46619,219 +48064,34 @@ GameObject154:
             - 1
             - 1
             - 1
-        UITransformComponent:
-          name: UITransformComponent
+        MeshRenderer:
+          name: MeshRenderer
           enabled: true
-          position:
-            - 0
-            - 0
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
+          mesh:
+            name: Cube
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.5
+              - 0.5
+              - 0.5
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: default
+            normal_map: ""
+            metallic_map: ""
+            roughness_map: ""
+            ao_map: ""
+          color:
             - 1
             - 1
             - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
+        Shader:
+          name: Shader
           enabled: true
-          texture_path: Library/Textures/UI/pause_menu.png
-      Children: ~
-    - name: Resume_Button
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.323000014
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.142000005
-            - 0.0829999968
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/pause_resume.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
-      Children: ~
-    - name: Options_Button
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.426999986
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.142000005
-            - 0.0829999968
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/pause_options.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
-      Children: ~
-    - name: MainMenu_Button
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.528999984
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.142000005
-            - 0.0829999968
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/pause_mainmenu.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
-      Children: ~
-    - name: Exit_Button
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.5
-            - 0.630999982
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.142000005
-            - 0.0829999968
-            - 1
-          pivot_offset:
-            - 0.5
-            - 0.5
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/pause_exit.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
       Children: ~

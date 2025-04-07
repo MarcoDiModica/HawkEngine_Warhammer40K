@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
     public float walkSpeed = 5f; 
-    public float runSpeed = 14.0f; 
+    public float runSpeed = 30.0f; 
     public float rotationSpeed = 30.0f;
     public float acceleration = 40.0f;
     public float deceleration = 15.0f;

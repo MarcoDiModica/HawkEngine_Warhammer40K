@@ -381,7 +381,7 @@ public class EnemyControllerBoss : EnemyController
         enemyTransform.position = new Vector3(0.0f, -40.0f, 1080.0f);
         collider.SetPosition(enemyTransform.position);
         isDead = true;
-        // Triggerear WinScreen
+        //SceneManager.LoadScene("WinScene");
     }
 
     private void CreateHurtbox()

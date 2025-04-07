@@ -24,15 +24,17 @@
 #include "../MyUIEngine/UITransformComponent.h"
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
 
-unsigned int GameObject::nextGid = 1;
-
-GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), gid(nextGid++)
+GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), m_UUID(), active(true)
 {
+	ObjectRegistry::RegisterObject(m_UUID, this);
+
     AddComponent<Transform_Component>();
 }
 
 GameObject::~GameObject()
 {
+	ObjectRegistry::UnregisterObject(m_UUID);
+
 	for (auto& component : components) {
 		component.second->Destroy();
 	}
@@ -54,7 +56,7 @@ GameObject::~GameObject()
 
 GameObject::GameObject(const GameObject& other) :
     name(other.name),
-    gid(nextGid++),
+    m_UUID(),
     active(other.active),
     //transform(new Transform_Component(this)),
     mesh(other.mesh),
@@ -62,6 +64,8 @@ GameObject::GameObject(const GameObject& other) :
     cachedComponentType(typeid(Component)),
     parent(nullptr)
 {   
+    ObjectRegistry::RegisterObject(m_UUID, this);
+
     for (const auto& component : other.components) {
         components[component.first] = std::move( component.second->Clone(this) );
         components[component.first]->owner = this;
@@ -77,8 +81,10 @@ GameObject::GameObject(const GameObject& other) :
 GameObject& GameObject::operator=(const GameObject& other) {
     if (this != &other)
     {
+        ObjectRegistry::UnregisterObject(m_UUID);
         name = other.name;
-        gid = nextGid++;
+        m_UUID = HawkUUID();
+        ObjectRegistry::RegisterObject(m_UUID, this);
         active = other.active;
         //transform = other.transform;
         mesh = other.mesh;
@@ -110,7 +116,7 @@ GameObject& GameObject::operator=(const GameObject& other) {
 
 GameObject::GameObject(GameObject&& other) noexcept :
 	name(std::move(other.name)),
-	gid(nextGid++),
+    m_UUID(),
 	active(other.active),
 	//transform(std::move(other.transform)),
 	mesh(std::move(other.mesh)),
@@ -120,6 +126,8 @@ GameObject::GameObject(GameObject&& other) noexcept :
     parent(other.parent),
 	cachedComponentType(typeid(Component))
 {
+    ObjectRegistry::RegisterObject(m_UUID, this);
+
     for (auto& child : children) {
         child->parent = this;
     }
@@ -138,7 +146,9 @@ GameObject& GameObject::operator=(GameObject&& other) noexcept
 	if (this != &other)
 	{
 		name = std::move(other.name);
-		gid = nextGid++;
+        ObjectRegistry::UnregisterObject(m_UUID);
+        m_UUID = HawkUUID();
+        ObjectRegistry::RegisterObject(m_UUID, this);
 		active = other.active;
 		//transform = std::move(other.transform);
 		mesh = std::move(other.mesh);

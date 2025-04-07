@@ -1811,7 +1811,7 @@ private:
 		if (ImGui::IsItemHovered() && currentGO) {
 			ImGui::BeginTooltip();
 			ImGui::Text("GameObject: %s", goName.c_str());
-			ImGui::Text("ID: %d", currentGO->GetId());
+			ImGui::Text("ID: %d", currentGO->GetID());
 			ImGui::EndTooltip();
 		}
 	}

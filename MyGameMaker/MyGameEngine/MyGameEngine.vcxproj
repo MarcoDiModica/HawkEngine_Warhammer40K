@@ -119,6 +119,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRendererComponent.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ObjectRegistry.h" />
     <ClInclude Include="Octree.h" />
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="readOnlyView.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TreeExt.h" />
     <ClInclude Include="types.h" />
+    <ClInclude Include="HawkUUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoundingBox.cpp" />
@@ -143,6 +145,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRendererComponent.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ObjectRegistry.cpp" />
     <ClCompile Include="Octree.cpp" />
     <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -150,6 +153,7 @@
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="HawkUUID.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

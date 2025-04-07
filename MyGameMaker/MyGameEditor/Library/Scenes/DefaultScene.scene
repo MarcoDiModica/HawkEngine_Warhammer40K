@@ -2,6 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
+  uuid: 11319603901640217750
   tag: Untagged
   active: true
   isStatic: false
@@ -73,6 +74,7 @@ GameObject0:
         name: Railgun
   Children:
     - name: playerMesh
+      uuid: 826141177042042075
       tag: Untagged
       active: true
       isStatic: false
@@ -132,6 +134,7 @@ GameObject0:
       Children: ~
 GameObject1:
   name: MainCamera
+  uuid: 698248321599220242
   tag: Untagged
   active: true
   isStatic: false
@@ -167,6 +170,7 @@ GameObject1:
   Children: ~
 GameObject2:
   name: Cube
+  uuid: 18314624874426806617
   tag: Untagged
   active: true
   isStatic: false
@@ -222,6 +226,7 @@ GameObject2:
   Children: ~
 GameObject3:
   name: Floor
+  uuid: 16824096306987994822
   tag: Untagged
   active: true
   isStatic: false

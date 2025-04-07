@@ -165,7 +165,6 @@ void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
 
 bool UIHierarchy::DrawSceneObject(GameObject& obj)
 {
-	bool useGray = (obj.GetId() % 2 == 0);
 	bool should_continue = true;
 
 	bool hasChildren = !obj.GetChildren().empty();
@@ -198,7 +197,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 			ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.25f, 0.35f, 0.45f, 0.5f));
 		}
 		else {
-			ImVec4 textColor = useGray
+			ImVec4 textColor = obj.isStatic
 				? ImVec4(0.7f, 0.7f, 0.7f, 1.0f)
 				: ImVec4(0.6f, 0.6f, 0.6f, 1.0f);
 			ImGui::PushStyleColor(ImGuiCol_Text, textColor);
@@ -230,8 +229,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 
 		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
-		int id = obj.GetId();
-		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), id);
+		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), obj.GetID());
 		draggedObject = &obj;
 		ImGui::EndDragDropSource();
 	}

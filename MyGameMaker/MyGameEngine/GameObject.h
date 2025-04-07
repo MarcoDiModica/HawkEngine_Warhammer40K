@@ -8,8 +8,8 @@
 #include "../MyScriptingEngine/EngineBinds.h"
 #include <mono/metadata/object.h>
 #include "../MyScriptingEngine/ScriptComponent.h"
-
-
+#include "HawkUUID.h"
+#include "ObjectRegistry.h"
 
 class SceneSerializer;
 class Scene;
@@ -70,11 +70,13 @@ public:
     BoundingBox boundingBox() const;
     BoundingBox localBoundingBox() const;
 
-	
-
     DrawMode drawMode = DrawMode::PushPopMatrix;
 
-    unsigned int GetId() const { return gid; }
+    HawkUUID GetID() const { return m_UUID; }
+
+	static GameObject* FindByID(const HawkUUID& id) {
+		return ObjectRegistry::FindObject(id);
+	}
 
     void SetParent(GameObject* parent);
     void ApplyWorldToLocalTransform(GameObject* child, const glm::dmat4& childWorldMatrix);
@@ -84,7 +86,7 @@ public:
     const std::vector<std::shared_ptr<GameObject>>& GetChildren() const { return children; }
 
     bool operator==(const GameObject& other) const {
-        return gid == other.gid;
+        return m_UUID == other.m_UUID;
     }
 
     bool operator!=(const GameObject& other) const {
@@ -117,7 +119,7 @@ private:
     void DrawPushPopMatrix() const;
 
     std::string name;
-    unsigned int gid;
+    HawkUUID m_UUID;
     BoundingBox _boundingBox;
 private:
     

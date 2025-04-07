@@ -20,6 +20,8 @@
     <ClCompile Include="InputEngine.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="HawkUUID.cpp" />
+    <ClCompile Include="ObjectRegistry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -46,5 +48,7 @@
     <ClInclude Include="AssimpGLMHelpers.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="HawkUUID.h" />
+    <ClInclude Include="ObjectRegistry.h" />
   </ItemGroup>
 </Project>

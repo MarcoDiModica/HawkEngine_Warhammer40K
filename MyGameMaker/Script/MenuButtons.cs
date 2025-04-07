@@ -114,7 +114,7 @@ public class MenuButtons : MonoBehaviour
         {
             sound?.LoadAudio(buttonStartGame);
             sound?.Play();
-            SceneManager.LoadScene("SpaceShip");
+            SceneManager.LoadScene("Mortis_Level1");
         }
 
         HandleHoveredState(button_newGameButton, transform_newGameButton, ref prevState_newGameButton);
@@ -123,7 +123,7 @@ public class MenuButtons : MonoBehaviour
         {
             sound?.LoadAudio(buttonStartGame);
             sound?.Play();
-            SceneManager.LoadScene("Mortis_Level1");
+            SceneManager.LoadScene("SpaceShip");
         }
 
         HandleHoveredState(button_continueButton, transform_continueButton, ref prevState_continueButton);

@@ -276,7 +276,7 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 		baseFilename = baseFilename.substr(0, baseFilename.size() - 6);
 	}
 
-	std::string fullPath = "Library/Images/" + fpath + ".image";
+	std::string fullPath = "Library/Images/" + filename + ".image";
 	auto it = imageCache.find(fullPath);
 	if (it != imageCache.end()) {
 		LOG(LogType::LOG_INFO, "Found image in cache: %s", fullPath.c_str());

@@ -228,6 +228,11 @@ bool ScriptHotReloader::ForceRecompile() {
 		return false;
 	}
 
+	if (!Application->root->GetActiveScene()) {
+		LOG(LogType::LOG_ERROR, "No active scene found. Cannot force recompilation.");
+		return false;
+	}
+
 	if (Application->root->GetActiveScene()->sceneState == Scene::SceneState::PLAY) {
 		LOG(LogType::LOG_ERROR, "Engine is in play mode. Please stop the game to reload scripts.");
 		return false;

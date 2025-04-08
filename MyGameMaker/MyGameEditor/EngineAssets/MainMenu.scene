@@ -2,6 +2,7 @@ SceneMetadata:
   SceneName: MainMenu
 GameObject0:
   name: MainCamera
+  uuid: 17744684983473525164
   tag: Untagged
   active: true
   isStatic: false
@@ -37,6 +38,7 @@ GameObject0:
   Children: ~
 GameObject1:
   name: Canvas_Main_Menu
+  uuid: 16563286557815334383
   tag: Untagged
   active: true
   isStatic: false
@@ -92,6 +94,7 @@ GameObject1:
         name: MenuButtons
   Children:
     - name: bg_menu
+      uuid: 17984706911577183402
       tag: Untagged
       active: true
       isStatic: false
@@ -136,6 +139,7 @@ GameObject1:
           texture_path: Library/Textures/UI/menu_bg.png
       Children: ~
     - name: title
+      uuid: 4531136190338770446
       tag: Untagged
       active: true
       isStatic: false
@@ -180,6 +184,7 @@ GameObject1:
           texture_path: Library/Textures/UI/title.png
       Children: ~
     - name: new_game_button
+      uuid: 16510706592461469768
       tag: Untagged
       active: true
       isStatic: false
@@ -228,6 +233,7 @@ GameObject1:
           state: 1
       Children: ~
     - name: continue_button
+      uuid: 10930749328843579174
       tag: Untagged
       active: true
       isStatic: false
@@ -276,6 +282,7 @@ GameObject1:
           state: 1
       Children: ~
     - name: options_button
+      uuid: 12410664120970636399
       tag: Untagged
       active: true
       isStatic: false
@@ -324,6 +331,7 @@ GameObject1:
           state: 1
       Children: ~
     - name: exit_button
+      uuid: 13190043886673714102
       tag: Untagged
       active: true
       isStatic: false
@@ -373,6 +381,7 @@ GameObject1:
       Children: ~
 GameObject2:
   name: EmptyMusic
+  uuid: 12012277570636175952
   tag: Untagged
   active: true
   isStatic: false
@@ -404,6 +413,7 @@ GameObject2:
   Children: ~
 GameObject3:
   name: Canvas_OptionsMenu
+  uuid: 17083250313622973829
   tag: Untagged
   active: false
   isStatic: false
@@ -459,6 +469,7 @@ GameObject3:
         name: OptionMenu
   Children:
     - name: Canvas_OptionsMenu_
+      uuid: 12589931413285180384
       tag: Untagged
       active: true
       isStatic: false

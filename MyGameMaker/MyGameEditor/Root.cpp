@@ -43,8 +43,8 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-	//Application->root->CreateScene("DefaultScene");
-	//Application->root->SetActiveScene("DefaultScene");
+	Application->root->CreateScene("DefaultScene");
+	Application->root->SetActiveScene("DefaultScene");
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
@@ -52,8 +52,7 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
     return true;
 }
@@ -204,14 +203,19 @@ bool Root::Start()
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	/*auto objMainCamera = CreateCameraObject("MainCamera");
+	auto cube = CreateCube("Cube");
+	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+
+	auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
 	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
 	auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
 	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
 	mainCamera = objMainCamera;
-	UpdateCameraPriority();*/
+	UpdateCameraPriority();
 	
 	//// Test PowerUps
 	//

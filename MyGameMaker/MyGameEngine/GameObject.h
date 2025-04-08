@@ -192,11 +192,6 @@ T* GameObject::GetComponent() const {
         return dynamic_cast<T*>(it->second.get());
     }
 
-	auto it = components.find(typeid(T));
-	if (it != components.end()) {
-		return dynamic_cast<T*>(it->second.get());
-	}
-
 	return nullptr;
 }
 

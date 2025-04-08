@@ -17,7 +17,6 @@ ScriptComponent::~ScriptComponent() {}
 
 void ScriptComponent::Awake()
 {
-    std::string name = scriptName;
     if (monoScript) {
         MonoClass* scriptClass = mono_object_get_class(monoScript);
         MonoMethod* awakeMethod = mono_class_get_method_from_name(scriptClass, "Awake", 0);

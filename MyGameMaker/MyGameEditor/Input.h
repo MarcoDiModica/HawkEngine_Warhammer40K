@@ -82,6 +82,10 @@ private:
 	std::vector<GameObject*> copiedObjects;
 	GameObject* draggedObject;*/
 	EditorCamera* camera;
+
+	std::vector<GameObject*> objectsUnderCursor;
+	int currentSelectionIndex = 0;
+	glm::vec2 lastClickPos = glm::vec2(0, 0);
 };
 
 #endif // !__INPUT_H__

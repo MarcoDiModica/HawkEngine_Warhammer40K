@@ -53,7 +53,7 @@ void Image::load(int width, int height, int channels, void* data) {
 	_channels = channels;
 
 	if (!data || width <= 0 || height <= 0) {
-		LOG(LogType::LOG_ERROR, "Datos de imagen inválidos: ancho=%d, alto=%d, canales=%d",
+		LOG(LogType::LOG_ERROR, "Datos de imagen invï¿½lidos: ancho=%d, alto=%d, canales=%d",
 			width, height, channels);
 		return;
 	}
@@ -79,7 +79,7 @@ void Image::load(int width, int height, int channels, void* data) {
 		format = GL_RGBA;
 		break;
 	default:
-		LOG(LogType::LOG_WARNING, "Número de canales inesperado: %d, usando RGB", channels);
+		LOG(LogType::LOG_WARNING, "Nï¿½mero de canales inesperado: %d, usando RGB", channels);
 		internalFormat = GL_RGB8;
 		format = GL_RGB;
 		break;
@@ -155,7 +155,6 @@ std::istream& operator>>(std::istream& is, Image& img) {
 }
 
 bool Image::LoadTexture(const std::string& path) {
-	LOG(LogType::LOG_INFO, "loading tex: %s", path.c_str());
 	image_path = path;
 
 	if (!std::filesystem::exists(path)) {
@@ -182,8 +181,6 @@ bool Image::LoadTexture(const std::string& path) {
 	auto format = ilGetInteger(IL_IMAGE_FORMAT);
 	auto bpp = ilGetInteger(IL_IMAGE_BPP);
 
-	LOG(LogType::LOG_INFO, "og image: BPP=%d, format=%d", bpp, format);
-
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 
 	if (ilGetInteger(IL_IMAGE_ORIGIN) != IL_ORIGIN_UPPER_LEFT) {
@@ -194,9 +191,6 @@ bool Image::LoadTexture(const std::string& path) {
 	auto height = ilGetInteger(IL_IMAGE_HEIGHT);
 	auto channels = ilGetInteger(IL_IMAGE_BPP);
 	auto data = ilGetData();
-
-	LOG(LogType::LOG_INFO, "converted image: w=%d, h=%d, ch=%d, f=%d",
-		width, height, channels, ilGetInteger(IL_IMAGE_FORMAT));
 
 	load(width, height, channels, data);
 
@@ -282,9 +276,7 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 		baseFilename = baseFilename.substr(0, baseFilename.size() - 6);
 	}
 
-	std::string fullPath = "Library/Images/" + baseFilename + ".image";
-	LOG(LogType::LOG_INFO, "Loading image from: %s", fullPath.c_str());
-
+	std::string fullPath = "Library/Images/" + filename + ".image";
 	auto it = imageCache.find(fullPath);
 	if (it != imageCache.end()) {
 		LOG(LogType::LOG_INFO, "Found image in cache: %s", fullPath.c_str());

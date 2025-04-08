@@ -20,6 +20,8 @@
     <ClCompile Include="InputEngine.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="HawkUUID.cpp" />
+    <ClCompile Include="ObjectRegistry.cpp" />
     <ClCompile Include="Tweening.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +49,8 @@
     <ClInclude Include="AssimpGLMHelpers.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="HawkUUID.h" />
+    <ClInclude Include="ObjectRegistry.h" />
     <ClInclude Include="Tweening.h" />
     <ClInclude Include="ImGuiCurveEditor.h" />
   </ItemGroup>

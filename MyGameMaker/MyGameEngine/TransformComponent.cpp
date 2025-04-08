@@ -308,9 +308,6 @@ bool Transform_Component::decode(const YAML::Node& node)
 
 MonoObject* Transform_Component::GetSharp()
 {
-    if (CsharpReference) {
-        return CsharpReference;
-    }
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Transform");
     if (!klass) {
         return nullptr;
@@ -335,8 +332,7 @@ MonoObject* Transform_Component::GetSharp()
     args[0] = &componentPtr;
     args[1] = ownerGo;
     mono_runtime_invoke(method, monoObject, args, nullptr);
-    CsharpReference = monoObject;
-    return CsharpReference;
+    return monoObject;
 }
 
 void Transform_Component::PreserveWorldTransform()

@@ -3,11 +3,11 @@
 #pragma once
 
 #include <string>
-
 #include "UIElement.h"
 #include "MyGameEngine/types.h"
 #include "MyGameEngine/BoundingBox.h"
 #include "MyGameEngine/Image.h"
+#include "imgui.h"
 
 class UISceneWindow : public UIElement
 {
@@ -28,6 +28,8 @@ public:
     bool CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint);
 
     bool IsMouseOverWindow() const;
+
+	int msaaSamples = 8;
 private:
     const float iconSize = 25.0f;
     const float iconSpacing = 5.0f; //spacing between icons
@@ -36,6 +38,15 @@ private:
     Image m_Trans;
     Image m_Rot;
     Image m_Sca;
-    Image m_Setting;
+
+	bool isMarqueeSelecting = false;
+	ImVec2 marqueeStart;
+	ImVec2 marqueeEnd;
+
+	bool IsGameObjectInMarquee(GameObject* gameObject, const ImVec2& start, const ImVec2& end);
+
+	bool needsFramebufferUpdate = true;
+	int lastWidth = 0;
+	int lastHeight = 0;
 };
 #endif // !__UI_SCENE_WINDOW_H__

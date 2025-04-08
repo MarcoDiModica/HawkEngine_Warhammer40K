@@ -42,16 +42,21 @@ bool InputEngine::Update(double dt)
     return ret;
 }
 
-glm::vec3 InputEngine::getRayFromMouse(int mouseX, int mouseY, const glm::mat4& projection, const glm::mat4& view, const glm::ivec2& viewportSize) {
-    float x = (2.0f * mouseX) / viewportSize.x - 1.0f;
-    float y = 1.0f - (2.0f * mouseY) / viewportSize.y;
-    glm::vec4 rayClip = glm::vec4(x, y, -1.0f, 1.0f);
+glm::vec3 InputEngine::getRayFromMouse(int mouseX, int mouseY, const glm::mat4& projection, const glm::mat4& view, const glm::ivec2& viewportSize)
+{
+	float normalizedX = (2.0f * mouseX) / viewportSize.x - 1.0f;
+	float normalizedY = 1.0f - (2.0f * mouseY) / viewportSize.y;
 
-    glm::vec4 rayEye = glm::inverse(projection) * rayClip;
-    rayEye = glm::vec4(rayEye.x, rayEye.y, -1.0f, 0.0f);
+	glm::vec4 clipCoords = glm::vec4(normalizedX, normalizedY, -1.0f, 1.0f);
 
-    glm::vec3 rayWorld = glm::normalize(glm::vec3(glm::inverse(view) * rayEye));
-    return rayWorld;
+	glm::vec4 viewCoords = glm::inverse(projection) * clipCoords;
+	viewCoords = glm::vec4(viewCoords.x, viewCoords.y, -1.0f, 0.0f);
+
+	glm::vec4 worldCoords = glm::inverse(view) * viewCoords;
+
+	glm::vec3 rayDirection = glm::normalize(glm::vec3(worldCoords));
+
+	return rayDirection;
 }
 
 void InputEngine::AddToSelection(GameObject* gameObject) {

@@ -18,6 +18,13 @@ UIHierarchy::~UIHierarchy() {
 }
 
 bool UIHierarchy::Draw() {
+	static bool showSavePopup = false;
+
+	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT &&
+		Application->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+		showSavePopup = true;
+	}
+
     ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
     ImGuiWindowFlags hierarchyFlags = ImGuiWindowFlags_None;
 
@@ -43,7 +50,12 @@ bool UIHierarchy::Draw() {
 			else {
 				currentSceneName.resize(100);
 
-				if (ImGui::InputText("##RenameScene", currentSceneName.data(), 100, ImGuiInputTextFlags_EnterReturnsTrue)) {
+				bool enterPressed = ImGui::InputText("##RenameScene", currentSceneName.data(), 100, ImGuiInputTextFlags_EnterReturnsTrue);
+
+				if (ImGui::IsWindowFocused() && !ImGui::IsAnyItemActive() && !ImGui::IsMouseClicked(0))
+					ImGui::SetKeyboardFocusHere(-1);
+
+				if (enterPressed || (ImGui::IsItemDeactivated() && ImGui::IsMouseClicked(0))) {
 					currentSceneName.resize(strlen(currentSceneName.data()));
 					if (currentSceneName.length() <= 100) {
 						currentScene->SetName(currentSceneName);
@@ -114,6 +126,30 @@ bool UIHierarchy::Draw() {
         }
     }
 
+	if (showSavePopup) {
+		ImGui::OpenPopup("Save Scene");
+	}
+
+	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+	if (ImGui::BeginPopupModal("Save Scene", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+		ImGui::Text("Do you want to save the current scene?");
+		ImGui::Separator();
+
+		if (ImGui::Button("Save", ImVec2(120, 0))) {
+			Application->scene_serializer->Serialize("Library/Scenes");
+			showSavePopup = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+			showSavePopup = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+
     ImGui::End();
     ImGui::PopStyleColor();
     return true;
@@ -122,14 +158,13 @@ bool UIHierarchy::Draw() {
 void UIHierarchy::RenderSceneHierarchy(Scene* currentScene) {
     int size = static_cast<int>(Application->root->GetActiveScene()->children().size());
 
-    for (size_t i = 0; i < Application->root->GetActiveScene()->children().size(); ++i) {
-        DrawSceneObject(*Application->root->GetActiveScene()->children()[i]);
-    }
+	for (auto& go : Application->root->GetActiveScene()->children()) {
+		DrawSceneObject(*go);
+	}
 }
 
 bool UIHierarchy::DrawSceneObject(GameObject& obj)
 {
-	bool useGray = (obj.GetId() % 2 == 0);
 	bool should_continue = true;
 
 	bool hasChildren = !obj.GetChildren().empty();
@@ -162,7 +197,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 			ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.25f, 0.35f, 0.45f, 0.5f));
 		}
 		else {
-			ImVec4 textColor = useGray
+			ImVec4 textColor = obj.isStatic
 				? ImVec4(0.7f, 0.7f, 0.7f, 1.0f)
 				: ImVec4(0.6f, 0.6f, 0.6f, 1.0f);
 			ImGui::PushStyleColor(ImGuiCol_Text, textColor);
@@ -174,29 +209,52 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 	bool open = ImGui::TreeNodeEx(obj.GetName().c_str(), nodeFlags);
 
+	static struct {
+		bool mouseDownOnThisItem = false;
+		GameObject* item = nullptr;
+		bool wasDragged = false;
+	} clickState;
+
 	if (ImGui::IsItemClicked(0) && !ImGui::IsItemToggledOpen()) {
-		if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
-			if (obj.isSelected) {
-				Application->input->RemoveFromSelection(&obj);
-			}
-			else {
-				Application->input->AddToSelection(&obj);
-			}
-		}
-		else {
-			Application->input->ClearSelection();
-			Application->input->AddToSelection(&obj);
-		}
+		clickState.mouseDownOnThisItem = true;
+		clickState.item = &obj;
+		clickState.wasDragged = false;
 	}
 
 	ImGui::PopStyleColor(4);
 
 	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+		if (clickState.item == &obj) {
+			clickState.wasDragged = true;
+		}
+
 		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
-		int id = obj.GetId();
-		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), id);
+		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), obj.GetID());
 		draggedObject = &obj;
 		ImGui::EndDragDropSource();
+	}
+
+	if (clickState.mouseDownOnThisItem && ImGui::IsMouseReleased(0)) {
+		if (!clickState.wasDragged && clickState.item == &obj) {
+			if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
+				if (obj.isSelected) {
+					Application->input->RemoveFromSelection(&obj);
+				}
+				else {
+					Application->input->AddToSelection(&obj);
+				}
+			}
+			else {
+				Application->input->ClearSelection();
+				Application->input->AddToSelection(&obj);
+			}
+		}
+
+		if (clickState.item == &obj) {
+			clickState.mouseDownOnThisItem = false;
+			clickState.item = nullptr;
+			clickState.wasDragged = false;
+		}
 	}
 
 	if (draggedObject) {

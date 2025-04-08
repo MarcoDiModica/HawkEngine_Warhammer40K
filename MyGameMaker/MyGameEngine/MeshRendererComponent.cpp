@@ -109,10 +109,6 @@ void MeshRenderer::SetImage(std::shared_ptr<Image> image) {
 }
 
 MonoObject* MeshRenderer::GetSharp() {
-	if (CsharpReference) {
-		return CsharpReference;
-	}
-
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "MeshRenderer");
 	if (!klass) {
 		return nullptr;
@@ -144,8 +140,7 @@ MonoObject* MeshRenderer::GetSharp() {
 	mono_runtime_invoke(method, monoObject, args, nullptr);
 	mono_method_desc_free(constructorDesc);
 
-	CsharpReference = monoObject;
-	return CsharpReference;
+	return monoObject;
 }
 
 void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const {

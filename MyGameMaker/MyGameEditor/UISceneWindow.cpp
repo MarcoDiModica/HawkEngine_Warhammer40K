@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <functional>
 
 #include "UISceneWindow.h"
 #include "UIInspector.h"
@@ -26,7 +27,6 @@ UISceneWindow::UISceneWindow(UIType type, std::string name) : UIElement(type, na
     m_Trans.LoadTextureLocalPath("EngineAssets/trans.png");
     m_Rot.LoadTextureLocalPath("EngineAssets/rot.png");
     m_Sca.LoadTextureLocalPath("EngineAssets/sca.png");
-    m_Setting.LoadTextureLocalPath("EngineAssets/settings.png");
 }
 
 UISceneWindow::~UISceneWindow()
@@ -35,26 +35,78 @@ UISceneWindow::~UISceneWindow()
 
 void UISceneWindow::Init()
 {
+	GLint maxSamples = 0;
+	glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
 
-    glGenFramebuffers(1, &Application->gui->fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	if (maxSamples <= 0) {
+		msaaSamples = 0;
+	}
+	else {
+		msaaSamples = std::min(msaaSamples, maxSamples);
+	}
 
-    glGenTextures(1, &Application->gui->fboTexture);
-    glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Application->window->width(), Application->window->height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, Application->gui->fboTexture, 0);
+	if (msaaSamples > 0) {
+		glGenFramebuffers(1, &Application->gui->multisampleFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
 
-    glGenRenderbuffers(1, &Application->gui->rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Application->window->width(), Application->window->height());
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, Application->gui->rbo);
+		glGenRenderbuffers(1, &Application->gui->multisampleColorBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F,
+			Application->window->width(), Application->window->height());
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+			GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
 
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        std::cerr << "Error: Framebuffer is not complete!" << std::endl;
+		glGenRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+		glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8,
+			Application->window->width(), Application->window->height());
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+			GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+			std::cerr << "Error: Multisample framebuffer is not complete! Falling back to non-MSAA." << std::endl;
+			glDeleteRenderbuffers(1, &Application->gui->multisampleColorBuffer);
+			glDeleteRenderbuffers(1, &Application->gui->multisampleDepthBuffer);
+			glDeleteFramebuffers(1, &Application->gui->multisampleFBO);
+			msaaSamples = 0;
+		}
+	}
+
+	glGenFramebuffers(1, &Application->gui->fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+
+	glGenTextures(1, &Application->gui->fboTexture);
+	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, Application->window->width(),
+		Application->window->height(), 0, GL_RGBA, GL_FLOAT, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (GLEW_EXT_texture_filter_anisotropic)
+	{
+		GLfloat maxAniso = 0.0f;
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAniso);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAniso);
+	}
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+		Application->gui->fboTexture, 0);
+
+	glGenRenderbuffers(1, &Application->gui->rbo);
+	glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8,
+		Application->window->width(), Application->window->height());
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT,
+		GL_RENDERBUFFER, Application->gui->rbo);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		std::cerr << "Error: Framebuffer is not complete!" << std::endl;
+
+	lastWidth = Application->window->width();
+	lastHeight = Application->window->height();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiConfigFlags_DockingEnable;
@@ -100,48 +152,36 @@ glm::vec3 UISceneWindow::GetMousePickDir(int mouse_x, int mouse_y, int screen_wi
     return world_coords;
 }
 
-bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint) {
-    float tmin = (bBox.min.x - rayOrigin.x) / rayDir.x;
-    float tmax = (bBox.max.x - rayOrigin.x) / rayDir.x;
+bool UISceneWindow::CheckRayAABBCollision(const glm::vec3& rayOrigin, const glm::vec3& rayDir, const BoundingBox& bBox, glm::vec3& collisionPoint) 
+{
+	glm::vec3 dirInv = glm::vec3(
+		rayDir.x != 0.0f ? 1.0f / rayDir.x : std::numeric_limits<float>::infinity(),
+		rayDir.y != 0.0f ? 1.0f / rayDir.y : std::numeric_limits<float>::infinity(),
+		rayDir.z != 0.0f ? 1.0f / rayDir.z : std::numeric_limits<float>::infinity()
+	);
 
-    if (tmin > tmax) std::swap(tmin, tmax);
+	float t1 = (bBox.min.x - rayOrigin.x) * dirInv.x;
+	float t2 = (bBox.max.x - rayOrigin.x) * dirInv.x;
+	float t3 = (bBox.min.y - rayOrigin.y) * dirInv.y;
+	float t4 = (bBox.max.y - rayOrigin.y) * dirInv.y;
+	float t5 = (bBox.min.z - rayOrigin.z) * dirInv.z;
+	float t6 = (bBox.max.z - rayOrigin.z) * dirInv.z;
 
-    float tymin = (bBox.min.y - rayOrigin.y) / rayDir.y;
-    float tymax = (bBox.max.y - rayOrigin.y) / rayDir.y;
+	float tmin = glm::max(glm::max(glm::min(t1, t2), glm::min(t3, t4)), glm::min(t5, t6));
+	float tmax = glm::min(glm::min(glm::max(t1, t2), glm::max(t3, t4)), glm::max(t5, t6));
 
-    if (tymin > tymax) std::swap(tymin, tymax);
+	if (tmax < 0) {
+		return false;
+	}
 
-    if ((tmin > tymax) || (tymin > tmax))
-        return false;
+	if (tmin > tmax) {
+		return false;
+	}
 
-    if (tymin > tmin)
-        tmin = tymin;
+	float t = tmin < 0 ? tmax : tmin;
 
-    if (tymax < tmax)
-        tmax = tymax;
-
-    float tzmin = (bBox.min.z - rayOrigin.z) / rayDir.z;
-    float tzmax = (bBox.max.z - rayOrigin.z) / rayDir.z;
-
-    if (tzmin > tzmax) std::swap(tzmin, tzmax);
-
-    if ((tmin > tzmax) || (tzmin > tmax))
-        return false;
-
-    if (tzmin > tmin)
-        tmin = tzmin;
-
-    if (tzmax < tmax)
-        tmax = tzmax;
-
-    float t = tmin;
-    if (t < 0) {
-        t = tmax;
-        if (t < 0) return false;
-    }
-
-    collisionPoint = rayOrigin + t * rayDir;
-    return true;
+	collisionPoint = rayOrigin + t * rayDir;
+	return true;
 }
 
 bool UISceneWindow::Draw()
@@ -157,20 +197,36 @@ bool UISceneWindow::Draw()
 
         winPos = vec2(windowPos.x, windowPos.y);
 
-        if (winSize.x != contentRegionSize.x || winSize.y != contentRegionSize.y)
-        {
-            winSize = vec2(contentRegionSize.x, contentRegionSize.y);
+		if (abs((int)winSize.x - (int)contentRegionSize.x) > 20 ||
+			abs((int)winSize.y - (int)contentRegionSize.y) > 20)
+		{
+			winSize = vec2(contentRegionSize.x, contentRegionSize.y);
+			needsFramebufferUpdate = true;
+		}
 
-            glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (int)winSize.x, (int)winSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+		if (needsFramebufferUpdate && winSize.x > 1 && winSize.y > 1)
+		{
+			if (msaaSamples > 0) {
+				glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleColorBuffer);
+				glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_RGBA16F, (int)winSize.x, (int)winSize.y);
 
-            glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
-            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
+				glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->multisampleDepthBuffer);
+				glRenderbufferStorageMultisample(GL_RENDERBUFFER, msaaSamples, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
+			}
 
-            Application->camera->UpdateCameraView(winSize.x, winSize.y, winSize.x, winSize.y);
+			glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, (int)winSize.x, (int)winSize.y, 0, GL_RGBA, GL_FLOAT, nullptr);
 
-            Application->gui->camSize = winSize;
-        }
+			glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)winSize.x, (int)winSize.y);
+
+			Application->camera->UpdateCameraView(winSize.x, winSize.y, winSize.x, winSize.y);
+			Application->gui->camSize = winSize;
+
+			lastWidth = (int)winSize.x;
+			lastHeight = (int)winSize.y;
+			needsFramebufferUpdate = false;
+		}
 
         ImRect titleBarRect(windowPos, ImVec2(windowPos.x + windowSize.x, windowPos.y + ImGui::GetFrameHeight()));
 
@@ -188,7 +244,7 @@ bool UISceneWindow::Draw()
 
         ImVec2 viewportPosition = ImGui::GetCursorScreenPos();
 
-        ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, contentRegionSize, ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((ImTextureID)(uintptr_t)Application->gui->fboTexture, contentRegionSize, ImVec2(0, 1), ImVec2(1, 0));
 
         ImGuizmo::SetDrawlist();
         ImGuizmo::SetRect(viewportPosition.x, viewportPosition.y, contentRegionSize.x, contentRegionSize.y);
@@ -247,55 +303,6 @@ bool UISceneWindow::Draw()
         }
         ImGui::PopStyleColor(2);
 
-        ImGui::SameLine(0, iconSpacing);
-        setActiveButtonColor(false);
-        if (ImGui::ImageButton(reinterpret_cast<void*>(static_cast<intptr_t>(m_Setting.id())), ImVec2(iconSize, iconSize))) {
-            ImGui::OpenPopup("CameraConfigPopup");
-        }
-        ImGui::PopStyleColor(2);
-
-        if (ImGui::BeginPopup("CameraConfigPopup")) {
-            ImGui::Text("Camera Settings");
-            ImGui::Separator();
-
-            static int msaaSamples = 4;
-            const char* msaaOptions[] = { "Off", "2x", "4x", "8x" };
-            if (ImGui::Combo("Antialiasing", &msaaSamples, msaaOptions, IM_ARRAYSIZE(msaaOptions))) {
-                int actualSamples = (msaaSamples == 0) ? 0 : (1 << msaaSamples);
-                // update renderer setting as needed
-            }
-
-            static float resolutionScale = 1.0f;
-            if (ImGui::SliderFloat("Resolution Scale", &resolutionScale, 0.5f, 2.0f, "%.2fx")) {
-                int newWidth = static_cast<int>(winSize.x * resolutionScale);
-                int newHeight = static_cast<int>(winSize.y * resolutionScale);
-
-                glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, newWidth, newHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-
-                glBindRenderbuffer(GL_RENDERBUFFER, Application->gui->rbo);
-                glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, newWidth, newHeight);
-            }
-
-            static int shadowQuality = 1;
-            const char* shadowOptions[] = { "Off", "Low", "Medium", "High" };
-            if (ImGui::Combo("Shadow Quality", &shadowQuality, shadowOptions, IM_ARRAYSIZE(shadowOptions))) {
-                // update shadows, not implemented yet
-            }
-
-            static bool enableBloom = true;
-            if (ImGui::Checkbox("Bloom", &enableBloom)) {
-                // not implemented yet
-            }
-
-            static bool enableSSAO = false;
-            if (ImGui::Checkbox("Ambient Occlusion (SSAO)", &enableSSAO)) {
-                // not implemented yet
-            }
-
-            ImGui::EndPopup();
-        }
-
         if (isViewportHovered && !ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
             if (ImGui::IsKeyPressed(ImGuiKey_W)) operation = ManipulationOperation::TRANSLATE;
             if (ImGui::IsKeyPressed(ImGuiKey_E)) operation = ManipulationOperation::ROTATE;
@@ -347,7 +354,91 @@ bool UISceneWindow::Draw()
         // --- END GIZMO MATRIX HANDLING ---
 
         isFoucused = ImGui::IsWindowHovered();
+
+		bool isShiftHeld = ImGui::GetIO().KeyShift;
+		bool isCtrlHeld = ImGui::GetIO().KeyCtrl;
+
+		if (isViewportHovered && !ImGuizmo::IsUsing() && !ImGui::IsMouseDown(ImGuiMouseButton_Right)) {
+			bool isOverUIButtons = (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup) || ImGui::IsAnyItemHovered());
+
+			if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGuizmo::IsOver() &&
+				!isShiftHeld && !isCtrlHeld && !isOverUIButtons) {
+				isMarqueeSelecting = true;
+				marqueeStart = ImGui::GetMousePos();
+			}
+
+			if (isMarqueeSelecting) {
+				marqueeEnd = ImGui::GetMousePos();
+
+				ImDrawList* drawList = ImGui::GetWindowDrawList();
+				drawList->AddRect(
+					marqueeStart,
+					marqueeEnd,
+					IM_COL32(0, 255, 255, 255),
+					0.0f,                   
+					NULL,
+					2.0f            
+				);
+
+				drawList->AddRectFilled(
+					marqueeStart,
+					marqueeEnd,
+					IM_COL32(0, 255, 255, 64) 
+				);
+			}
+
+			if (isMarqueeSelecting && ImGui::IsMouseReleased(ImGuiMouseButton_Left)) {
+				float dragDistance = glm::distance(
+					glm::vec2(marqueeStart.x, marqueeStart.y),
+					glm::vec2(marqueeEnd.x, marqueeEnd.y)
+				);
+
+				if (dragDistance > 5.0f) { 
+					if (!isShiftHeld && !isCtrlHeld) {
+						Application->input->ClearSelection();
+					}
+
+					auto activeScene = Application->root->GetActiveScene();
+					if (activeScene) {
+						std::vector<GameObject*> allObjects;
+						for (const auto& objPtr : activeScene->children()) {
+							if (objPtr && objPtr->IsActive()) {
+								GameObject* object = objPtr.get();
+								allObjects.push_back(object);
+
+								std::function<void(GameObject*, std::vector<GameObject*>&)> collectChildren;
+								collectChildren = [&collectChildren](GameObject* parent, std::vector<GameObject*>& list) {
+									for (const auto& childPtr : parent->GetChildren()) {
+										if (childPtr && childPtr->IsActive()) {
+											GameObject* child = childPtr.get();
+											list.push_back(child);
+											collectChildren(child, list);
+										}
+									}
+									};
+
+								collectChildren(object, allObjects);
+							}
+						}
+
+						for (GameObject* obj : allObjects) {
+							if (IsGameObjectInMarquee(obj, marqueeStart, marqueeEnd)) {
+								if (isCtrlHeld && Application->input->IsGameObjectSelected(obj)) {
+									Application->input->RemoveFromSelection(obj);
+								}
+								else {
+									Application->input->AddToSelection(obj);
+								}
+							}
+						}
+					}
+				}
+
+				isMarqueeSelecting = false;
+			}
+		}
     }
+
     ImGui::End();
 
     ImGui::PopStyleVar();
@@ -368,4 +459,52 @@ bool UISceneWindow::IsMouseOverWindow() const
         mousePos.y >= minY && mousePos.y <= maxY);
 
     return isOverWindow;
+}
+
+bool UISceneWindow::IsGameObjectInMarquee(GameObject* gameObject, const ImVec2& start, const ImVec2& end) {
+	if (!gameObject->HasComponent<MeshRenderer>()) return false;
+
+	glm::mat4 viewMatrix = Application->camera->view();
+	glm::mat4 projectionMatrix = Application->camera->projection();
+	glm::mat4 modelMatrix = gameObject->GetTransform()->GetMatrix();
+	glm::mat4 mvp = projectionMatrix * viewMatrix * modelMatrix;
+
+	BoundingBox bbox = gameObject->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+	std::vector<glm::vec3> corners = {
+		glm::vec3(bbox.min.x, bbox.min.y, bbox.min.z),
+		glm::vec3(bbox.max.x, bbox.min.y, bbox.min.z),
+		glm::vec3(bbox.min.x, bbox.max.y, bbox.min.z),
+		glm::vec3(bbox.max.x, bbox.max.y, bbox.min.z),
+		glm::vec3(bbox.min.x, bbox.min.y, bbox.max.z),
+		glm::vec3(bbox.max.x, bbox.min.y, bbox.max.z),
+		glm::vec3(bbox.min.x, bbox.max.y, bbox.max.z),
+		glm::vec3(bbox.max.x, bbox.max.y, bbox.max.z)
+	};
+
+	bool anyInside = false;
+	bool allOutside = true;
+
+	for (const auto& corner : corners) {
+		glm::vec4 clipSpace = mvp * glm::vec4(corner, 1.0f);
+
+		if (clipSpace.w != 0.0f) {
+			glm::vec3 ndcPos = glm::vec3(clipSpace) / clipSpace.w;
+
+			float screenX = (ndcPos.x * 0.5f + 0.5f) * winSize.x + winPos.x;
+			float screenY = (ndcPos.y * -0.5f + 0.5f) * winSize.y + winPos.y;
+
+			bool isInsideMarquee =
+				screenX >= fmin(start.x, end.x) && screenX <= fmax(start.x, end.x) &&
+				screenY >= fmin(start.y, end.y) && screenY <= fmax(start.y, end.y);
+
+			if (isInsideMarquee) {
+				anyInside = true;
+			}
+			else {
+				allOutside = false;
+			}
+		}
+	}
+
+	return anyInside;
 }

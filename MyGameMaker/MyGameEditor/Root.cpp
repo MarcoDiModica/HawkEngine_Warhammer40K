@@ -30,6 +30,7 @@
 #include "MyGameEngine/ShaderManager.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include "../MyScriptingEngine/MonoManager.h"
 #include "../MyGameEngine/Tweening.h"
 
 class GameObject;
@@ -42,16 +43,16 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
-	//Application->root->CreateScene("DefaultScene");
-	//Application->root->SetActiveScene("DefaultScene");
+	Application->root->CreateScene("DefaultScene");
+	Application->root->SetActiveScene("DefaultScene");
     
 	SoundComponent::InitSharedAudioEngine();
 	ShaderManager::GetInstance().Initialize();
+	MonoManager::GetInstance().EnableHotReloading();
 
 	//CreateMainMenuUI();
 
-	Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
-
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
     return true;
 }
@@ -202,14 +203,19 @@ bool Root::Start()
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	/*auto objMainCamera = CreateCameraObject("MainCamera");
+	auto cube = CreateCube("Cube");
+	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+
+	auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
 	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
 	auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
 	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
 	mainCamera = objMainCamera;
-	UpdateCameraPriority();*/
+	UpdateCameraPriority();
 	
 	//// Test PowerUps
 	//
@@ -720,7 +726,8 @@ shared_ptr<GameObject> Root::CreateMeshObject(string name, shared_ptr<Mesh> mesh
 
 void Root::RemoveGameObject(GameObject* gameObject) {
     
-    SceneManagement->RemoveGameObject(gameObject);
+    Application->input->ClearSelection();
+	SceneManagement->RemoveGameObject(gameObject);
 }
 
 std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name)
@@ -728,23 +735,23 @@ std::shared_ptr<GameObject> Root::CreateGameObject(const std::string& name)
     return SceneManagement->CreateGameObject(name);
 }
 
-std::shared_ptr<GameObject> Root::CreateCube(const std::string& name) {
-    
+std::shared_ptr<GameObject> Root::CreateCube(const std::string& name) 
+{    
     return SceneManagement->CreateCube(name);
 }
 
-std::shared_ptr<GameObject> Root::CreateSphere(const std::string& name) {
-    
+std::shared_ptr<GameObject> Root::CreateSphere(const std::string& name) 
+{    
     return SceneManagement->CreateSphere(name);
 }
-std::shared_ptr<GameObject> Root::CreateCylinder(const std::string& name) {
-    
+std::shared_ptr<GameObject> Root::CreateCylinder(const std::string& name) 
+{    
     return SceneManagement->CreateCylinder(name);
 }
 
 std::shared_ptr<GameObject> Root::CreatePlane(const std::string& name) {
     
-       return SceneManagement->CreatePlane(name);
+    return SceneManagement->CreatePlane(name);
 }
 
 std::shared_ptr<GameObject> Root::CreateCameraObject(const std::string& name) {
@@ -887,9 +894,6 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 	const double minScale = 0.001;
 	const double maxScale = 100.0;
 	scaleFactor = std::min(std::max(scaleFactor, minScale), maxScale);
-
-	LOG(LogType::LOG_INFO, "Modelo '%s' cargado. Tamaño original: [%.2f, %.2f, %.2f], Factor de escala: %.5f",
-		path.c_str(), modelSize.x, modelSize.y, modelSize.z, scaleFactor);
 
 	/*for (auto& obj : createdObjects) {
 		glm::mat4 originalMatrix = obj->GetTransform()->GetLocalMatrix();

@@ -5,8 +5,6 @@
 #include <unordered_map>
 #include "AudioAsset.h"
 
-namespace MyGameEngine {
-
 class AudioAssetProcessor {
 public:
     // Process audio file into engine-friendly format
@@ -30,5 +28,3 @@ private:
     static std::string GetFileExtension(const std::string& path);
     static bool IsAudioFile(const std::string& path);
 };
-
-} 

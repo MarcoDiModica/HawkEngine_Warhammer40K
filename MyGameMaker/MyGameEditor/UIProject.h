@@ -27,6 +27,7 @@ public:
 
 private:
     std::filesystem::path directoryPath;
+    std::filesystem::path assetsPath;
     std::filesystem::path selectedDirectory;
     std::filesystem::path draggedItemPath;
     std::filesystem::path copiedItemPath;
@@ -78,4 +79,13 @@ private:
 
     void HandleShortcuts();
     bool showLoadScenePopUp = false;
+
+	std::map<std::filesystem::path, Image*> imagePreviewCache;
+	Image* GetImageThumbnail(const std::filesystem::path& imagePath);
+    void ProcessPendingThumbnails();
+    bool IsImageFile(const std::filesystem::path& path);
+
+	std::vector<std::filesystem::path> pendingThumbnails;
+	bool processingThumbnails = false;
+	int maxTexturesPerFrame = 2;
 };

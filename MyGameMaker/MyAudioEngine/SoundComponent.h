@@ -17,7 +17,7 @@ public:
 
     static void InitSharedAudioEngine();
     static void ShutdownSharedAudioEngine();
-    static std::shared_ptr<MyGameEngine::AudioEngine>& GetSharedAudioEngine() { return s_SharedAudioEngine; }
+    static std::shared_ptr<AudioEngine>& GetSharedAudioEngine() { return s_SharedAudioEngine; }
 
 	void Awake() override;
     void Start() override;
@@ -100,8 +100,8 @@ protected:
     }
 
 private:
-    static std::shared_ptr<MyGameEngine::AudioEngine> s_SharedAudioEngine;
-    std::shared_ptr<MyGameEngine::AudioAsset> m_AudioAsset;
+    static std::shared_ptr<AudioEngine> s_SharedAudioEngine;
+    std::shared_ptr<AudioAsset> m_AudioAsset;
     ALuint m_SourceId;
     
     std::string m_AudioPath;

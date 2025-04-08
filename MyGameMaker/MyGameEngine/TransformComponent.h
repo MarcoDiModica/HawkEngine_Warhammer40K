@@ -96,6 +96,30 @@ public:
 		UpdateWorldMatrix();
 	}
 
+    glm::dquat GetLocalRotation() const { return localRotation; }
+    void SetLocalRotation(const glm::dquat& rot) {
+        localRotation = rot;
+		RecalculateLocalMatrix();
+		UpdateWorldMatrix();
+	}
+
+    glm::dvec3 GetLocalEulerAngles() const {
+        return glm::degrees(glm::eulerAngles(localRotation));
+	}
+
+    void SetLocalEulerAngles(const glm::dvec3& euler) {
+		localRotation = glm::normalize(glm::quat(glm::radians(euler)));
+        RecalculateLocalMatrix();
+        UpdateWorldMatrix();
+    }
+
+    glm::dvec3 GetLocalScale() const { return localScale; }
+	void SetLocalScale(const glm::dvec3& scale) {
+		localScale = scale;
+		RecalculateLocalMatrix();
+		UpdateWorldMatrix();
+	}
+
 	glm::dvec3 GetWorldPosition() const {
 		return glm::dvec3(worldMatrix[3]);
 	}
@@ -104,7 +128,6 @@ public:
     // For legacy code that set the local matrix directly, delegate to SetMatrix()
     void SetLocalMatrix(const glm::dmat4& mat) { SetMatrix(mat); }
 
-    MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
     ComponentType GetType() const override { return ComponentType::TRANSFORM; }

@@ -8,22 +8,23 @@ public class DestroyEnviormentObject : MonoBehaviour
 
     public void DestroyObject()
     {
-        gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
-        gameObject.GetComponent<Collider>().SetTrigger(true);
+        //gameObject.GetComponent<Transform>().position = new Vector3(0, -100, 0);
+        //gameObject.GetComponent<Collider>().SetTrigger(true);
+        Engineson.Destroy(gameObject);
     }
 
     public override void Awake()
     {
-        base.Awake();
+        //base.Awake();
     }
     public override void Start()
     {
-        base.Start();
+        //base.Start();
     }
 
     public override void Update(float deltaTime)
     {
-        base.Update(deltaTime);
+        //base.Update(deltaTime);
     }
 }
 

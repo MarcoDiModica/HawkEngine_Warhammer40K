@@ -111,13 +111,8 @@ void EngineBinds::Destroy(MonoObject* object_to_destroy) {
         return;
     }
 
-	SceneManagement->RemoveGameObject(ConvertFromSharp(object_to_destroy));
-
-    //uintptr_t Cptr;
-    //MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    //mono_field_get_value(object_to_destroy, mono_class_get_field_from_name(klass, "CplusplusInstance"), &Cptr);
-    //GameObject* actor = reinterpret_cast<GameObject*>(Cptr);
-    //SceneManagement->RemoveGameObject(actor); //SUSTITUIR POR ROOT DEL ENGINE
+    GameObject* go = ConvertFromSharp(object_to_destroy);
+    Application->root->RemoveGameObject(go);
 }
 
 MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* component_name)
@@ -631,31 +626,31 @@ void EngineBinds::SetColliderPosition(MonoObject* colliderRef, glm::vec3* positi
 }
 
 
-MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
-    if (!gameObject) return nullptr;
+MonoObject* GetMonoObjectFromGameObjectHelper(GameObject* gameObject) {
+	if (!gameObject) return nullptr;
 
-    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    if (!gameObjectClass) {
-        return nullptr;
-    }
+	MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+	if (!gameObjectClass) {
+		return nullptr;
+	}
 
-    MonoObject* monoGameObject = mono_object_new(mono_domain_get(), gameObjectClass);
-    if (!monoGameObject) {
-        return nullptr;
-    }
+	MonoObject* monoGameObject = mono_object_new(mono_domain_get(), gameObjectClass);
+	if (!monoGameObject) {
+		return nullptr;
+	}
 
-    MonoClassField* nativePtrField = mono_class_get_field_from_name(gameObjectClass, "CplusplusInstance");
-    if (!nativePtrField) {
-        return nullptr;
-    }
+	MonoClassField* nativePtrField = mono_class_get_field_from_name(gameObjectClass, "CplusplusInstance");
+	if (!nativePtrField) {
+		return nullptr;
+	}
 
-    uintptr_t nativePtr = reinterpret_cast<uintptr_t>(gameObject);
-    mono_field_set_value(monoGameObject, nativePtrField, &nativePtr);
+	uintptr_t nativePtr = reinterpret_cast<uintptr_t>(gameObject);
+	mono_field_set_value(monoGameObject, nativePtrField, &nativePtr);
 
-    return monoGameObject;
+	return monoGameObject;
 }
 
-
+// mirarse esta funcion rarilla
 MonoArray* EngineBinds::OverlapSphere(glm::vec3* position, float radius, MonoString* tag) {
     if (!Application || !Application->physicsModule) {
         return nullptr;
@@ -671,7 +666,7 @@ MonoArray* EngineBinds::OverlapSphere(glm::vec3* position, float radius, MonoStr
     MonoArray* monoArray = mono_array_new(domain, gameObjectClass, overlappingObjects.size());
 
     for (size_t i = 0; i < overlappingObjects.size(); i++) {
-        MonoObject* monoGameObject = GetMonoObjectFromGameObject(overlappingObjects[i]);
+        MonoObject* monoGameObject = GetMonoObjectFromGameObjectHelper(overlappingObjects[i]);
         if (monoGameObject) {
             mono_array_set(monoArray, MonoObject*, i, monoGameObject);
         }
@@ -837,7 +832,7 @@ MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float 
 	normal = glm::vec3(hitNormal.getX(), hitNormal.getY(), hitNormal.getZ());
 
 	if (hitObject) {
-		return GetMonoObjectFromGameObject(hitObject);
+		return GetMonoObjectFromGameObjectHelper(hitObject);
 	}
 
     return nullptr;
@@ -1215,7 +1210,6 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
 		return true;
     }
 	return false;
-    
 }
 
 void EngineBinds::SetScenePlay()

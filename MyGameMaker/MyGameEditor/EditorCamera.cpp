@@ -138,12 +138,24 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 			glm::dvec3 right = glm::normalize(glm::cross(glm::dvec3(0, 1, 0), forward));
 			glm::dvec3 up = glm::normalize(glm::cross(forward, right));
 
-			if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) transform.Translate(forward * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) transform.Translate(-forward * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) transform.Translate(right * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) transform.Translate(-right * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) transform.Translate(-up * static_cast<double>(speed * deltaTime));
-			if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) transform.Translate(up * static_cast<double>(speed * deltaTime));
+			if (Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+			{
+				if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) transform.Translate(forward * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) transform.Translate(-forward * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) transform.Translate(right * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) transform.Translate(-right * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) transform.Translate(-up * static_cast<double>(speed * 2.0f * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) transform.Translate(up * static_cast<double>(speed * 2.0f * deltaTime));
+			}
+			else
+			{
+				if (Application->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) transform.Translate(forward * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) transform.Translate(-forward * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) transform.Translate(right * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) transform.Translate(-right * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) transform.Translate(-up * static_cast<double>(speed * deltaTime));
+				if (Application->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) transform.Translate(up * static_cast<double>(speed * deltaTime));
+			}
 		}
 	}
 	else if (Application->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && Application->input->GetMouseButton(1) == KEY_REPEAT)
@@ -225,11 +237,32 @@ void EditorCamera::move_camera(float speed, float deltaTime)
 	}
 }
 
-void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, double imageWidth, double imageHeight)
+void EditorCamera::UpdateCameraView(double windowWidth, double windowHeight, double viewportWidth, double viewportHeight)
 {
-	double aspectRatio = windowWidth / windowHeight;
+	this->windowWidth = windowWidth;
+	this->windowHeight = windowHeight;
+	this->viewportWidth = viewportWidth;
+	this->viewportHeight = viewportHeight;
+
+	double aspectRatio = viewportWidth / viewportHeight;
 
 	UpdateAspectRatio(aspectRatio);
 
-	SetFOV(glm::radians(60.0f));
+	SetFOV(glm::radians(45.0f));
+
+	frustum.Update(GetProjectionMatrix() * GetViewMatrix(transform));
+}
+
+glm::vec2 EditorCamera::ScreenToViewport(int screenX, int screenY) const
+{
+	ImVec2 windowPos = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winPos.x),
+		static_cast<float>(Application->gui->UISceneWindowPanel->winPos.y));
+
+	float relativeX = screenX - windowPos.x;
+	float relativeY = screenY - windowPos.y;
+
+	float normalizedX = relativeX / static_cast<float>(viewportWidth);
+	float normalizedY = relativeY / static_cast<float>(viewportHeight);
+
+	return glm::vec2(normalizedX, normalizedY);
 }

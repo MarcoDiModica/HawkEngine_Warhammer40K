@@ -13,5 +13,12 @@ public:
 	~UIConsole();
 
 	bool Draw();
+
+private:
+	bool showInfo;
+	bool showWarnings;
+	bool showErrors;
+	bool showScriptOutput;
+	bool autoScroll;
 };
-#endif // !__UI_CONSOLE_H__s
+#endif // !__UI_CONSOLE_H__

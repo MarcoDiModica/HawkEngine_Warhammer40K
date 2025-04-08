@@ -48,7 +48,7 @@ public:
 
     bool DeparentGameObjectKeepWorld(GameObject& child);
 
-    void RemoveGameObject(GameObject* gameObject);
+    void RemoveGameObject(GameObject* gameObject) const;
 
     bool ParentGameObjectPreserve(GameObject& child, GameObject& father);
 

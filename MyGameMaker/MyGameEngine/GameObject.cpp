@@ -25,19 +25,26 @@
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "External/Optick/include/optick.h"
 
-unsigned int GameObject::nextGid = 1;
-
-GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), gid(nextGid++)
+GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), m_UUID(), active(true)
 {
+	ObjectRegistry::RegisterObject(m_UUID, this);
+
     AddComponent<Transform_Component>();
 }
 
 GameObject::~GameObject()
 {
-    for (auto& component : components) {
-        component.second->Destroy();
-    }
-    components.clear();
+	ObjectRegistry::UnregisterObject(m_UUID);
+
+	for (auto& component : components) {
+		component.second->Destroy();
+	}
+	components.clear();
+
+	for (auto& scriptComponent : scriptComponents) {
+		scriptComponent->Destroy();
+	}
+	scriptComponents.clear();
 
     for (auto& child : children) {
         child->Destroy();
@@ -50,7 +57,7 @@ GameObject::~GameObject()
 
 GameObject::GameObject(const GameObject& other) :
     name(other.name),
-    gid(nextGid++),
+    m_UUID(),
     active(other.active),
     //transform(new Transform_Component(this)),
     mesh(other.mesh),
@@ -58,10 +65,9 @@ GameObject::GameObject(const GameObject& other) :
     cachedComponentType(typeid(Component)),
     parent(nullptr)
 {   
+    ObjectRegistry::RegisterObject(m_UUID, this);
 
-	for (auto& scriptComponents : other.scriptComponents) {
-		
-	}
+    //TODO copiar los scrits
 
     for (const auto& component : other.components) {
         components[component.first] = std::move( component.second->Clone(this) );
@@ -78,8 +84,10 @@ GameObject::GameObject(const GameObject& other) :
 GameObject& GameObject::operator=(const GameObject& other) {
     if (this != &other)
     {
+        ObjectRegistry::UnregisterObject(m_UUID);
         name = other.name;
-        gid = nextGid++;
+        m_UUID = HawkUUID();
+        ObjectRegistry::RegisterObject(m_UUID, this);
         active = other.active;
         //transform = other.transform;
         mesh = other.mesh;
@@ -111,7 +119,7 @@ GameObject& GameObject::operator=(const GameObject& other) {
 
 GameObject::GameObject(GameObject&& other) noexcept :
 	name(std::move(other.name)),
-	gid(nextGid++),
+    m_UUID(),
 	active(other.active),
 	//transform(std::move(other.transform)),
 	mesh(std::move(other.mesh)),
@@ -121,6 +129,8 @@ GameObject::GameObject(GameObject&& other) noexcept :
     parent(other.parent),
 	cachedComponentType(typeid(Component))
 {
+    ObjectRegistry::RegisterObject(m_UUID, this);
+
     for (auto& child : children) {
         child->parent = this;
     }
@@ -139,7 +149,9 @@ GameObject& GameObject::operator=(GameObject&& other) noexcept
 	if (this != &other)
 	{
 		name = std::move(other.name);
-		gid = nextGid++;
+        ObjectRegistry::UnregisterObject(m_UUID);
+        m_UUID = HawkUUID();
+        ObjectRegistry::RegisterObject(m_UUID, this);
 		active = other.active;
 		//transform = std::move(other.transform);
 		mesh = std::move(other.mesh);
@@ -238,73 +250,79 @@ void GameObject::Update(float deltaTime)
 		return;
 	}
 
-    for (auto& component : components)
-	{
-		if (!component.second)
-		{
-			throw std::runtime_error("Component is null");
+	for (auto it = components.begin(); it != components.end(); ) {
+		if (!it->second) {
+			it = components.erase(it);
+			continue;
 		}
+		++it;
 	}
-    
-    for (auto& component : components)
-	{
+
+	for (auto& component : components) {
 		if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 			component.second->Update(deltaTime);
 		}
-        else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
-        {
-			if (component.second->updateInStop)
-			{
+		else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP ||
+			SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE) {
+			if (component.second->updateInStop) {
 				component.second->Update(deltaTime);
-			}
-        }
-	}
-
-	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
-		for (auto& scriptComponent : scriptComponents)
-		{
-			scriptComponent->Update(deltaTime);
-			if (Application->hasChangedScene) {
-				return;
 			}
 		}
 	}
-    
 
-    for (auto& child : children)
-    {
-        child->Update(deltaTime);
-    }
+	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+		for (size_t i = 0; i < scriptComponents.size(); ++i) {
+			if (scriptComponents[i] && !destroyed) {
+				try {
+					scriptComponents[i]->Update(deltaTime);
 
-    if (active) 
-    {
-        Draw();
-    }
+					if (Application->hasChangedScene) {
+						return;
+					}
+				}
+				catch (const std::exception& e) {
+					LOG(LogType::LOG_ERROR, "Exception in script component update: %s", e.what());
+				}
+			}
+		}
+
+		scriptComponents.erase(
+			std::remove_if(scriptComponents.begin(), scriptComponents.end(),
+				[](const auto& component) { return component == nullptr; }),
+			scriptComponents.end());
+	}
+
+	auto childrenCopy = children;
+	for (auto& child : childrenCopy) {
+		if (child) {
+			child->Update(deltaTime);
+		}
+	}
+
+	if (active && !destroyed) {
+		Draw();
+	}
 }
 
 void GameObject::Destroy()
 {
-    if (!this) {
-        return;
-    }
+	if (!this || destroyed) {
+		return;
+	}
 
-    destroyed = true;
+	destroyed = true;
 
-	/*for (auto& component : components)
-	{
+	for (auto& component : components) {
 		component.second->Destroy();
 	}
 
 	for (auto& scriptComponent : scriptComponents) {
 		scriptComponent->Destroy();
 	}
-	scriptComponents.clear();*/
 
-	for (auto& child : children)
-	{
+	for (auto& child : children) {
 		child->Destroy();
 	}
-	children.clear();
 }
 
 void GameObject::Draw() const
@@ -400,6 +418,20 @@ std::string GameObject::GetTag() const
 bool GameObject::CompareTag(const std::string& tag) const
 {
     return this->tag == tag;
+}
+
+Transform_Component* GameObject::GetTransform() const {
+	if (destroyed) {
+		return nullptr;
+	}
+
+	auto transform = GetComponent<Transform_Component>();
+
+	if (!transform) {
+		LOG(LogType::LOG_WARNING, "Attempting to get Transform from destroyed GameObject %s", name.c_str());
+	}
+
+	return transform;
 }
 
 BoundingBox GameObject::boundingBox() const
@@ -572,13 +604,23 @@ void GameObject::RemoveChild(GameObject* child)
 
 
 MonoObject* GameObject::GetSharp() {
-    if (CsharpReference) {
-        return CsharpReference;
-    }
-    
     //Obtenemos el nombre del GO, creamos el string en mono y llamamos a la funcion que crea el GO
     MonoString* monoString = mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
     CsharpReference = EngineBinds::CreateGameObjectSharp(monoString, this);
 
     return CsharpReference;
+}
+
+void GameObject::SelfDestroy()
+{
+	auto self = shared_from_this();
+
+	if (parent) {
+		parent->RemoveChild(this);
+	}
+	else if (scene) {
+		scene->RemoveGameObject(self);
+	}
+
+	destroyed = true;
 }

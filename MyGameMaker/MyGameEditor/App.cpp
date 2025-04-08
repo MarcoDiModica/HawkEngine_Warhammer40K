@@ -271,12 +271,26 @@ bool App::CleanUP() { return true; }
 
 void App::AddLog(LogType type, const char* entry)
 {
+	std::string toAdd = entry;
+
+	for (auto it = logs.begin(); it != logs.end(); ++it)
+	{
+		if (it->type == type && it->message == toAdd)
+		{
+			int newCount = it->repeatCount + 1;
+
+			logs.erase(it);
+
+			LogInfo info = { type, toAdd, newCount };
+			logs.push_back(info);
+			return;
+		}
+	}
+
 	if (logs.size() > MAX_LOGS_CONSOLE)
 		logs.erase(logs.begin());
 
-	std::string toAdd = entry;
-	LogInfo info = { type, toAdd };
-
+	LogInfo info = { type, toAdd, 1 };
 	logs.push_back(info);
 }
 

@@ -3,8 +3,6 @@
 #include <fstream>
 #include <filesystem>
 
-namespace MyGameEngine {
-
 uint32_t AudioAsset::s_NextAssetID = 1;
 
 AudioAsset::AudioAsset()
@@ -138,5 +136,3 @@ bool AudioAsset::ProcessAudioFile(AudioFile<float>& audioFile) {
     m_IsValid = true;
     return true;
 }
-
-} 

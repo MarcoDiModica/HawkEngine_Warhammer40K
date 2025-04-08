@@ -68,6 +68,15 @@ void Window::Open(const char* title, unsigned short width, unsigned short height
     if (!_ctx) throw exception(SDL_GetError());
     if (SDL_GL_MakeCurrent(_window, _ctx) != 0) throw exception(SDL_GetError());
     SDL_GL_SetSwapInterval(-1); //vsync
+
+	SDL_Surface* icon = SDL_LoadBMP("Assets/Icons/casco.bmp");
+	if (icon) {
+		SDL_SetWindowIcon(_window, icon);
+		SDL_FreeSurface(icon);
+	}
+	else {
+		LOG(LogType::LOG_ERROR, "Failed to load icon: %s", SDL_GetError());
+	}
 }
 
 void Window::Close() {
@@ -82,6 +91,11 @@ void Window::Close() {
 
 void Window::SwapBuffers() const {
     SDL_GL_SwapWindow(static_cast<SDL_Window*>(_window));
+}
+
+bool Window::IsForeground() const
+{
+    return SDL_GetWindowFlags(static_cast<SDL_Window*>(_window)) & SDL_WINDOW_INPUT_FOCUS;
 }
 
 bool Window::ProcessEvents(IEventProcessor* event_processor) {

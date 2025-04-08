@@ -1,4 +1,4 @@
-#pragma region Includes
+﻿#pragma region Includes
 #include <glm/glm.hpp>
 #include <algorithm>
 #include <iostream>
@@ -43,6 +43,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "mono/metadata/debug-helpers.h"
 #include "../MyUIEngine/UIButtonComponent.h"
 
 #include <MyGameEngine/ImGuiCurveEditor.h>
@@ -52,403 +53,805 @@ typedef unsigned int guint32;
 class ComponentDrawer {
 private:
     #pragma region Transform
-    static void DrawTransformComponent(Transform_Component* transform, bool& snap, float& snapValue) {
-        if (!transform) return;
+	static void DrawTransformComponent(Transform_Component* transform, bool& snap, float& snapValue) {
+		if (!transform) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Transform")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Transform")) return;
 
-        if (ImGui::BeginPopupContextItem()) {
+		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Reset Transform")) {
 				transform->ResetTransform();
 			}
 			ImGui::EndPopup();
 		}
 
-        GameObject* parent = transform->GetOwner()->GetParent();
-        bool hasParent = parent != nullptr;
-        ImGui::Text("Parent: %s", hasParent ? parent->GetName().c_str() : "None");
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+		const ImVec4 posColor(0.7f, 0.9f, 0.7f, 1.0f);
+		const ImVec4 rotColor(0.9f, 0.7f, 0.7f, 1.0f);
+		const ImVec4 scaleColor(0.7f, 0.7f, 0.9f, 1.0f);
 
-        glm::dvec3 currentPosition = transform->GetPosition();
-        glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
-        glm::dvec3 currentScale = transform->GetScale();
+		ImGui::BeginGroup();
 
-        float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
-        float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
-        float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+		GameObject* parent = transform->GetOwner()->GetParent();
+		bool hasParent = parent != nullptr;
+		AlignedProperty("Parent", hasParent ? parent->GetName().c_str() : "None", labelWidth);
 
-        if (ImGui::DragFloat3("Position", pos, 0.1f)) {
-            glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-            transform->SetPosition(newPosition);
-        }
+		ImGui::Separator();
 
-        if (ImGui::DragFloat3("Rotation", rot, 0.1f)) {
-            glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-            transform->SetRotation(newRotation);
-        }
-        if (ImGui::DragFloat3("Scale", sca, 0.01f, 0.01f, 100.0f)) {
-            glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
-            transform->SetScale(newScale);
-        }
+		glm::dvec3 currentPosition = transform->GetPosition();
+		glm::dvec3 currentRotation = glm::radians(transform->GetEulerAngles());
+		glm::dvec3 currentScale = transform->GetScale();
 
-        ImGui::Checkbox("Snap", &snap);
-        ImGui::DragFloat("Snap Value", &snapValue, 0.1f, 0.1f, 10.0f);
-    }
-    #pragma endregion
+		float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+		float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
+		float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
 
-    #pragma region MeshRenderer
-	static void DrawMeshProperties(std::shared_ptr<Mesh> mesh) {
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("Mesh")) return;
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Position");
+		ImGui::PopStyleColor();
 
-		ImGui::Text("Vertices: %d", mesh->getModel()->GetModelData().vertexData.size());
-		ImGui::Text("Indices: %d", mesh->getModel()->GetModelData().indexData.size());
-	}
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-20);
+		bool posChanged = ImGui::DragFloat3("##Position", pos, 0.1f);
 
-	static void DrawTexturePreview(std::shared_ptr<Image> image, const char* label) {
-		if (!image || image->id() == 0) return;
-
-		ImGui::PushID(label);
-		if (ImGui::Button("Show Preview")) {
-			ImGui::OpenPopup("TexturePreview");
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("World position (X, Y, Z)");
+			ImGui::EndTooltip();
 		}
 
 		ImGui::SameLine();
-		ImGui::Text("%s: %dx%d", label, image->width(), image->height());
+		if (ImGui::Button("R##PosReset", ImVec2(25, 25))) {
+			transform->SetPosition({ 0, 0, 0 });
+		}
+		else if (posChanged) {
+			transform->SetPosition({ pos[0], pos[1], pos[2] });
+		}
+		ImGui::PopItemWidth();
 
-		if (ImGui::BeginPopup("TexturePreview")) {
-			ImVec2 imageSize = CalculatePreviewSize(image->width(), image->height());
-			ImGui::Image((void*)(intptr_t)image->id(), imageSize);
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Rotation");
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-20);
+		bool rotChanged = ImGui::DragFloat3("##Rotation", rot, 0.1f);
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Rotation in degrees (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("R##RotReset", ImVec2(25, 25))) {
+			transform->SetRotation({ 0, 0, 0 });
+		}
+		else if (rotChanged) {
+			transform->SetRotation(glm::radians(glm::dvec3(rot[0], rot[1], rot[2])));
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Scale");
+		ImGui::PopStyleColor();
+
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-20);
+		bool scaChanged = ImGui::DragFloat3("##Scale", sca, 0.01f, 0.01f, 100.0f);
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Scale multiplier (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		ImGui::SameLine();
+		if (ImGui::Button("R", ImVec2(25, 25))) {
+			transform->SetScale({ 1, 1, 1 });
+		}
+		else if (scaChanged) {
+			transform->SetScale({ sca[0], sca[1], sca[2] });
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+
+		ImGui::Separator();
+		ImGui::BeginGroup();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Snap");
+		ImGui::SameLine(labelWidth);
+		ImGui::Checkbox("##Snap", &snap);
+
+		if (snap) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Snap Value");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			ImGui::DragFloat("##SnapValue", &snapValue, 0.1f, 0.1f, 10.0f);
+			ImGui::PopItemWidth();
+		}
+
+		ImGui::EndGroup();
+	}
+    #pragma endregion
+
+	#pragma region MeshRenderer
+	static void DrawMeshRendererComponent(MeshRenderer* meshRenderer) {
+		if (!meshRenderer) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("MeshRenderer")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				meshRenderer->GetOwner()->RemoveComponent<MeshRenderer>();
+			}
 			ImGui::EndPopup();
 		}
-		ImGui::PopID();
-	}
 
-	static void DrawColorPicker(MeshRenderer* meshRenderer) {
-		vec4 matColor = meshRenderer->GetMaterial()->GetColor();
-		float colorArray[4] = {
-			static_cast<float>(matColor.x),
-			static_cast<float>(matColor.y),
-			static_cast<float>(matColor.z),
-			static_cast<float>(matColor.w)
-		};
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+		const float previewSize = 24.0f;
 
-		if (ImGui::ColorEdit4("Color", colorArray)) {
-			vec4 newColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
-			meshRenderer->GetMaterial()->SetColor(newColor);
+		if (ImGui::TreeNodeEx("Mesh", ImGuiTreeNodeFlags_DefaultOpen)) {
+			std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
+			if (mesh) {
+				AlignedProperty("Vertices", static_cast<int>(mesh->getModel()->GetModelData().vertexData.size()), labelWidth);
+				AlignedProperty("Indices", static_cast<int>(mesh->getModel()->GetModelData().indexData.size()), labelWidth);
+			}
+			else {
+				ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "No mesh assigned");
+			}
+			ImGui::TreePop();
 		}
-	}
 
-	static void DrawMaterialProperties(MeshRenderer* meshRenderer) {
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("Material")) return;
-
-		auto material = meshRenderer->GetMaterial();
-		if (!material) return;
-
-		if (ImGui::TreeNodeEx("Base Color", ImGuiTreeNodeFlags_DefaultOpen)) {
-			DrawColorPicker(meshRenderer);
-
-			std::shared_ptr<Image> image = material->imagePtr;
-			if (image) {
-				DrawTexturePreview(image, "Albedo");
+		if (ImGui::TreeNodeEx("Material", ImGuiTreeNodeFlags_DefaultOpen)) {
+			auto material = meshRenderer->GetMaterial();
+			if (!material) {
+				ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "No material assigned");
+				ImGui::TreePop();
+				return;
 			}
 
-			if (ImGui::Button("Load Albedo Texture")) {
-				ImGui::OpenPopup("LoadAlbedoTexture");
+			const char* shaderTypes[] = { "UNLIT", "PBR" };
+			int currentType = static_cast<int>(material->GetShaderType());
+			ImGui::Text("Rendering Mode");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::Combo("##ShaderType", &currentType, shaderTypes, IM_ARRAYSIZE(shaderTypes))) {
+				material->SetShaderType(static_cast<ShaderType>(currentType));
 			}
-			if (ImGui::BeginPopup("LoadAlbedoTexture")) {
-				ImGui::Text("Drag and drop an albedo/diffuse texture file here");
-				ImGui::EndPopup();
-			}
+			ImGui::PopItemWidth();
 
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					std::string extension = std::filesystem::path(path).extension().string();
-					std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+			ImGui::Separator();
+			ImGui::Text("Main Maps");
+			ImGui::Spacing();
 
-					const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".tga" };
-					if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
-						auto newImage = std::make_shared<Image>();
-						if (newImage->LoadTexture(path)) {
-							meshRenderer->SetImage(newImage);
-						}
-					}
+			// Albedo 
+			auto albedoImage = material->imagePtr;
+			TexturePreviewSquare(albedoImage, previewSize, [meshRenderer](const char* path) {
+				auto newImage = std::make_shared<Image>();
+				if (newImage->LoadTexture(path)) {
+					meshRenderer->SetImage(newImage);
 				}
-				ImGui::EndDragDropTarget();
+				});
+			ImGui::SameLine();
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Albedo");
+
+			vec4 matColor = material->GetColor();
+			float colorArray[4] = {
+				static_cast<float>(matColor.x),
+				static_cast<float>(matColor.y),
+				static_cast<float>(matColor.z),
+				static_cast<float>(matColor.w)
+			};
+
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit4("##AlbedoColor", colorArray)) {
+				vec4 newColor(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+				material->SetColor(newColor);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::Spacing();
+
+			if (material->GetShaderType() == ShaderType::PBR) {
+				// Metallic 
+				auto metallicImage = material->metallicMapPtr;
+				TexturePreviewSquare(metallicImage, previewSize, [meshRenderer](const char* path) {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						meshRenderer->GetMaterial()->metallicMapPtr = newImage;
+					}
+					});
+				ImGui::SameLine();
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Metallic");
+
+				float metallic = material->metallic;
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				if (ImGui::SliderFloat("##Metallic", &metallic, 0.0f, 1.0f)) {
+					material->metallic = metallic;
+				}
+				ImGui::PopItemWidth();
+
+				ImGui::Spacing();
+
+				// Roughness
+				auto roughnessImage = material->roughnessMapPtr;
+				TexturePreviewSquare(roughnessImage, previewSize, [meshRenderer](const char* path) {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						meshRenderer->GetMaterial()->roughnessMapPtr = newImage;
+					}
+					});
+				ImGui::SameLine();
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Roughness");
+
+				float smoothness = 1.0f - material->roughness;
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				if (ImGui::SliderFloat("##Roughness", &smoothness, 0.0f, 1.0f)) {
+					material->roughness = 1.0f - smoothness;
+				}
+				ImGui::PopItemWidth();
+
+				ImGui::Spacing();
+
+				// Normal Map
+				auto normalMapImage = material->normalMapPtr;
+				TexturePreviewSquare(normalMapImage, previewSize, [meshRenderer](const char* path) {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						meshRenderer->GetMaterial()->normalMapPtr = newImage;
+					}
+					});
+				ImGui::SameLine();
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Normal Map");
+
+				float normalMapIntensity = 1.0f;
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				ImGui::SliderFloat("##NormalMapIntensity", &normalMapIntensity, 0.0f, 2.0f);
+				ImGui::PopItemWidth();
+
+				ImGui::Spacing();
+
+				//// Height Map (placeholder)
+				//TexturePreviewSquare(nullptr, previewSize, [meshRenderer](const char* path) {
+				//	// Implementation for when height map functionality is added
+				//	});
+				//ImGui::SameLine();
+				//ImGui::AlignTextToFramePadding();
+				//ImGui::Text("Height Map");
+
+				//ImGui::Spacing();
+
+				// Occlusion
+				auto aoImage = material->aoMapPtr;
+				TexturePreviewSquare(aoImage, previewSize, [meshRenderer](const char* path) {
+					auto newImage = std::make_shared<Image>();
+					if (newImage->LoadTexture(path)) {
+						meshRenderer->GetMaterial()->aoMapPtr = newImage;
+					}
+					});
+				ImGui::SameLine();
+				ImGui::AlignTextToFramePadding();
+				ImGui::Text("Occlusion");
+
+				float ao = material->ao;
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				if (ImGui::SliderFloat("##AO", &ao, 0.0f, 1.0f)) {
+					material->ao = ao;
+				}
+				ImGui::PopItemWidth();
+
+				ImGui::Spacing();
+
+				//// Emission (placeholder)
+				//TexturePreviewSquare(nullptr, previewSize, [meshRenderer](const char* path) {
+				//	// Implementation for when emission map functionality is added
+				//	});
+				//ImGui::SameLine();
+				//ImGui::AlignTextToFramePadding();
+				//ImGui::Text("Emission");
+
+				//float emission = 0.0f;
+				//ImGui::SameLine(labelWidth);
+				//ImGui::PushItemWidth(-1);
+				//ImGui::SliderFloat("##Emission", &emission, 0.0f, 1.0f);
+				//ImGui::PopItemWidth();
+
+				//ImGui::Spacing();
+
+				//TexturePreviewSquare(nullptr, previewSize, [meshRenderer](const char* path) {
+				//	// Implementation for when detail mask functionality is added
+				//	});
+				//ImGui::SameLine();
+				//ImGui::AlignTextToFramePadding();
+				//ImGui::Text("Detail Mask");
+
+				//ImGui::Spacing();
+
+				float tonemapStrength = material->GetTonemapStrength();
+				ImGui::Text("Tonemap Strength");
+				ImGui::SameLine(labelWidth);
+				ImGui::PushItemWidth(-1);
+				if (ImGui::SliderFloat("##Tonemap", &tonemapStrength, 0.0f, 10.0f)) {
+					material->SetTonemapStrength(tonemapStrength);
+				}
+				ImGui::PopItemWidth();
 			}
 
 			ImGui::TreePop();
 		}
-
-		if (material->GetShaderType() == ShaderType::PBR) {
-			if (ImGui::TreeNodeEx("Normal Map", ImGuiTreeNodeFlags_DefaultOpen)) {
-				std::shared_ptr<Image> normalMap = material->normalMapPtr;
-				if (normalMap) {
-					DrawTexturePreview(normalMap, "Normal");
-				}
-				else {
-					ImGui::Text("No normal map assigned");
-				}
-				ImGui::TreePop();
-			}
-
-			if (ImGui::TreeNodeEx("Metallic", ImGuiTreeNodeFlags_DefaultOpen)) {
-				std::shared_ptr<Image> metallicMap = material->metallicMapPtr;
-				if (metallicMap) {
-					DrawTexturePreview(metallicMap, "Metallic");
-				}
-				else {
-					float metallic = material->metallic;
-					if (ImGui::SliderFloat("Metallic Value", &metallic, 0.0f, 1.0f)) {
-						material->metallic = metallic;
-					}
-				}
-				ImGui::TreePop();
-			}
-
-			if (ImGui::TreeNodeEx("Roughness", ImGuiTreeNodeFlags_DefaultOpen)) {
-				std::shared_ptr<Image> roughnessMap = material->roughnessMapPtr;
-				if (roughnessMap) {
-					DrawTexturePreview(roughnessMap, "Roughness");
-				}
-				else {
-					float roughness = material->roughness;
-					if (ImGui::SliderFloat("Roughness Value", &roughness, 0.0f, 1.0f)) {
-						material->roughness = roughness;
-					}
-				}
-				ImGui::TreePop();
-			}
-
-			if (ImGui::TreeNodeEx("Ambient Occlusion", ImGuiTreeNodeFlags_DefaultOpen)) {
-				std::shared_ptr<Image> aoMap = material->aoMapPtr;
-				if (aoMap) {
-					DrawTexturePreview(aoMap, "AO");
-				}
-				else {
-					float ao = material->ao;
-					if (ImGui::SliderFloat("AO Value", &ao, 0.0f, 1.0f)) {
-						material->ao = ao;
-					}
-				}
-				ImGui::TreePop();
-			}
-
-            if (ImGui::TreeNodeEx("Tonemap", ImGuiTreeNodeFlags_DefaultOpen)) {
-				float tonemapStrength = material->GetTonemapStrength();
-				if (ImGui::SliderFloat("Tonemap Strength", &tonemapStrength, 0.0f, 10.0f)) {
-					material->SetTonemapStrength(tonemapStrength);
-				}
-				ImGui::TreePop();
-			}
-		}
 	}
 
-	static void DrawMeshRendererComponent(MeshRenderer* meshRenderer) {
-		if (!meshRenderer) return;
+	template<typename Callback>
+	static void TexturePreviewSquare(std::shared_ptr<Image> image, float size, Callback onTextureLoaded) {
+		ImGui::PushID((void*)image.get());
 
-		std::shared_ptr<Mesh> mesh = meshRenderer->GetMesh();
-		if (mesh) {
-			DrawMeshProperties(mesh);
+		if (image && image->id() != 0) {
+			ImGui::Image((void*)(intptr_t)image->id(), ImVec2(size, size));
+
+			if (ImGui::IsItemHovered()) {
+				ImGui::BeginTooltip();
+				float previewScale = 8.0f; 
+				ImVec2 largePreviewSize(size * previewScale, size * previewScale);
+				ImVec2 constrainedSize = CalculatePreviewSize(image->width(), image->height(), 300);
+				ImGui::Image((void*)(intptr_t)image->id(), constrainedSize);
+				ImGui::Text("%dx%d", image->width(), image->height());
+				ImGui::EndTooltip();
+			}
+
+			if (ImGui::BeginPopupContextItem("TextureContextMenu")) {
+				ImGui::Text("Texture Options");
+				ImGui::Separator();
+				if (ImGui::MenuItem("Clear")) {
+					//TODO
+				}
+				ImGui::EndPopup();
+			}
+		}
+		else {
+			ImVec2 p = ImGui::GetCursorScreenPos();
+			ImDrawList* draw_list = ImGui::GetWindowDrawList();
+			draw_list->AddRect(p, ImVec2(p.x + size, p.y + size), IM_COL32(180, 180, 180, 255));
+
+			ImGui::Button("##empty", ImVec2(size, size));
+
+			if (ImGui::BeginPopupContextItem("EmptyTextureContextMenu")) {
+				ImGui::EndPopup();
+			}
 		}
 
-		DrawMaterialProperties(meshRenderer);
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				const char* path = static_cast<const char*>(payload->Data);
+				std::string extension = std::filesystem::path(path).extension().string();
+				std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+				const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".tga" };
+				if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
+					onTextureLoaded(path);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		ImGui::PopID();
 	}
-    #pragma endregion
+
+	static ImVec2 CalculatePreviewSize(int width, int height, float maxSize = 300.0f) {
+		float aspect = (float)width / (float)height;
+		ImVec2 result;
+
+		if (width >= height) {
+			result.x = std::min((float)width, maxSize);
+			result.y = result.x / aspect;
+		}
+		else {
+			result.y = std::min((float)height, maxSize);
+			result.x = result.y * aspect;
+		}
+
+		return result;
+	}
+
+	static void AlignedProperty(const char* label, const char* value, float labelWidth) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%s", value);
+	}
+
+	static void AlignedProperty(const char* label, int value, float labelWidth) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%d", value);
+	}
+
+	static void AlignedProperty(const char* label, float value, float labelWidth) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%.2f", value);
+	}
+
+	static bool AlignedSliderProperty(const char* label, float& value, float min, float max, float labelWidth) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("%s", label);
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool changed = ImGui::SliderFloat(("##" + std::string(label)).c_str(), &value, min, max);
+		ImGui::PopItemWidth();
+		return changed;
+	}
+#pragma endregion
 
     #pragma region Camera
-    static void DrawCameraComponent(CameraComponent* camera) {
-        if (!camera) return;
+	static void DrawCameraComponent(CameraComponent* camera) {
+		if (!camera) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Camera")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Camera")) return;
 
-        if (ImGui::BeginPopupContextItem()) {
+		if (ImGui::BeginPopupContextItem()) {
 			if (ImGui::MenuItem("Remove Component")) {
 				camera->GetOwner()->RemoveComponent<CameraComponent>();
 			}
 			ImGui::EndPopup();
 		}
 
-        bool orthographic = camera->IsOrthographic();
-        bool frustum = camera->frustrumCullingEnabled;
-        float orthoSize = camera->GetOrthoSize();
-        float fov = camera->GetFOV();
-        auto nearPlane = static_cast<float>(camera->GetNearPlane());
-        auto farPlane = static_cast<float>(camera->GetFarPlane());
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
-        if (ImGui::Checkbox("Orthographic", &orthographic)) {
-            camera->orthographic = orthographic;
-        }
+		bool orthographic = camera->IsOrthographic();
+		float orthoSize = camera->GetOrthoSize();
+		float fov = camera->GetFOV();
+		auto nearPlane = static_cast<float>(camera->GetNearPlane());
+		auto farPlane = static_cast<float>(camera->GetFarPlane());
+		bool frustum = camera->frustrumCullingEnabled;
+		bool frustumRepresentation = camera->frustrumRepresentation;
+		int priority = camera->GetPriority();
 
-        if (orthographic) {
-            if (ImGui::DragFloat("Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
-                camera->SetOrthoSize(orthoSize);
-            }
-        }
-        else {
-            float fovDeg = glm::degrees(camera->GetFOV());
-            if (ImGui::SliderFloat("FOV", &fovDeg, 1.0f, 179.0f)) {
-                camera->SetFOV(glm::radians(fovDeg));
-            }
-        }
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Projection");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("Orthographic", &orthographic)) {
+			camera->orthographic = orthographic;
+		}
 
-        if (ImGui::DragFloat("Near Plane", &nearPlane, 0.1f, 0.1f, 100.0f)) {
-            camera->SetNearPlane(nearPlane);
-        }
-
-        if (ImGui::DragFloat("Far Plane", &farPlane, 0.1f, 0.1f, 1000.0f)) {
-            camera->SetFarPlane(farPlane);
-        }
-
-        if (ImGui::Checkbox("Frustum Culling", &frustum)) {
-            camera->frustrumCullingEnabled = frustum;
-        }
-
-        if (frustum) {
-            bool frustumRepresentation = camera->frustrumRepresentation;
-            ImGui::Checkbox("Frustum Representation", &frustumRepresentation);
-            camera->frustrumRepresentation = frustumRepresentation;
-        }
-
-        int priority = camera->GetPriority();
-        if (ImGui::DragInt("Priority", &priority, 0.1f, 1.0f, 10.0f)) {
-            camera->SetPriority(priority);
-			Application->root->UpdateCameraPriority();
-        }
-
-        //follow target look target and shake config
-        GameObject* followTarget = camera->followTarget;
-        if (followTarget) {
-			ImGui::Text("Follow Target: %s", followTarget->GetName().c_str());
-
-            float followDistance = static_cast<float>(camera->GetDistance());
-            glm::dvec3 followOffset = camera->GetOffset();
-            float followSmoothness = static_cast<float>(camera->followSmoothness);
-            bool followX = camera->followX;
-            bool followY = camera->followY;
-            bool followZ = camera->followZ;
-
-            if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
-					GameObject* target = static_cast<GameObject*>(payload->Data);
-					camera->followTarget = target;
-				}
-				ImGui::EndDragDropTarget();
+		if (orthographic) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Size");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Size", &orthoSize, 0.1f, 0.1f, 100.0f)) {
+				camera->SetOrthoSize(orthoSize);
 			}
+			ImGui::PopItemWidth();
+		}
+		else {
+			float fovDeg = glm::degrees(camera->GetFOV());
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Field of View");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::SliderFloat("##FOV", &fovDeg, 1.0f, 179.0f, "%.1f deg")) {
+				camera->SetFOV(glm::radians(fovDeg));
+			}
+			ImGui::PopItemWidth();
+		}
 
-            if (ImGui::DragFloat("Distance", &followDistance, 0.1f, 0.1f, 100.0f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Near Plane");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##NearPlane", &nearPlane, 0.1f, 0.1f, farPlane - 0.1f)) {
+			camera->SetNearPlane(nearPlane);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Far Plane");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##FarPlane", &farPlane, 0.1f, nearPlane + 0.1f, 1000.0f)) {
+			camera->SetFarPlane(farPlane);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Priority");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragInt("##Priority", &priority, 0.1f, 1, 10)) {
+			camera->SetPriority(priority);
+			Application->root->UpdateCameraPriority();
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::Separator();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Frustum Culling");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##FrustumCulling", &frustum)) {
+			camera->frustrumCullingEnabled = frustum;
+		}
+
+		if (frustum) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Show Frustum");
+			ImGui::SameLine(labelWidth);
+			if (ImGui::Checkbox("##ShowFrustum", &frustumRepresentation)) {
+				camera->frustrumRepresentation = frustumRepresentation;
+			}
+		}
+
+		ImGui::Separator();
+
+		GameObject* followTarget = camera->followTarget;
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Follow Target");
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%s", followTarget ? followTarget->GetName().c_str() : "None");
+
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+				GameObject* target = static_cast<GameObject*>(payload->Data);
+				camera->followTarget = target;
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (followTarget) {
+			float followDistance = static_cast<float>(camera->GetDistance());
+			glm::dvec3 followOffset = camera->GetOffset();
+			float followSmoothness = static_cast<float>(camera->followSmoothness);
+			bool followX = camera->followX;
+			bool followY = camera->followY;
+			bool followZ = camera->followZ;
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Distance");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Distance", &followDistance, 0.1f, 0.1f, 100.0f)) {
 				camera->SetDistance(followDistance);
 			}
+			ImGui::PopItemWidth();
 
-            float offset[3] = { followOffset.x, followOffset.y, followOffset.z };
-			if (ImGui::DragFloat3("Offset", offset, 0.1f)) {
+			float offset[3] = { followOffset.x, followOffset.y, followOffset.z };
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Offset");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat3("##Offset", offset, 0.1f)) {
 				camera->SetOffset(glm::dvec3(offset[0], offset[1], offset[2]));
 			}
+			ImGui::PopItemWidth();
 
-			if (ImGui::DragFloat("Smoothness", &followSmoothness, 0.01f, 0.01f, 1.0f)) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Smoothness");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Smoothness", &followSmoothness, 0.01f, 0.01f, 1.0f)) {
 				camera->followSmoothness = followSmoothness;
 			}
+			ImGui::PopItemWidth();
 
-			if (ImGui::Checkbox("Follow X", &followX)) {
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Follow Axes");
+			ImGui::SameLine(labelWidth);
+
+			float axisWidth = (windowWidth - labelWidth - 8) / 3.0f;
+
+			if (ImGui::Checkbox("X##FollowX", &followX)) {
 				camera->followX = followX;
 			}
-			if (ImGui::Checkbox("Follow Y", &followY)) {
+			ImGui::SameLine(0, 4);
+
+			if (ImGui::Checkbox("Y##FollowY", &followY)) {
 				camera->followY = followY;
 			}
-			if (ImGui::Checkbox("Follow Z", &followZ)) {
+			ImGui::SameLine(0, 4);
+
+			if (ImGui::Checkbox("Z##FollowZ", &followZ)) {
 				camera->followZ = followZ;
 			}
 
-            if (ImGui::Button("Clear Follow Target")) {
+			ImGui::SetCursorPosX(labelWidth);
+			if (ImGui::Button("Clear Follow Target", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
 				camera->followTarget = nullptr;
 			}
 		}
 
-        //shake config
-        float shakeIntensity = camera->shakeIntensity;
-        float shakeDuration = camera->shakeDuration;
-        float shakeFrequency = camera->shakeFrequency;
+		ImGui::Separator();
 
-        if (ImGui::DragFloat("Shake Intensity", &shakeIntensity, 0.1f, 0.0f, 10.0f)) {
-            camera->shakeIntensity = shakeIntensity;
-        }
+		ImGui::Text("Camera Shake");
 
-        if (ImGui::DragFloat("Shake Duration", &shakeDuration, 0.1f, 0.0f, 10.0f)) {
+		float shakeIntensity = camera->shakeIntensity;
+		float shakeDuration = camera->shakeDuration;
+		float shakeFrequency = camera->shakeFrequency;
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Intensity");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##ShakeIntensity", &shakeIntensity, 0.1f, 0.0f, 10.0f)) {
+			camera->shakeIntensity = shakeIntensity;
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Duration");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##ShakeDuration", &shakeDuration, 0.1f, 0.0f, 10.0f)) {
 			camera->shakeDuration = shakeDuration;
 		}
+		ImGui::PopItemWidth();
 
-        if (ImGui::DragFloat("Shake Frequency", &shakeFrequency, 0.1f, 0.0f, 10.0f)) {
-            camera->shakeFrequency = shakeFrequency;
-        }
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Frequency");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##ShakeFrequency", &shakeFrequency, 0.1f, 0.0f, 10.0f)) {
+			camera->shakeFrequency = shakeFrequency;
+		}
+		ImGui::PopItemWidth();
 
-        if (ImGui::Button("Shake")) {
-            camera->Shake(shakeIntensity, shakeDuration, shakeFrequency);
-        }
-    }
+		ImGui::SetCursorPosX(labelWidth);
+		if (ImGui::Button("Test Shake", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			camera->Shake(shakeIntensity, shakeDuration, shakeFrequency);
+		}
+	}
     #pragma endregion
 
     #pragma region Light
-    static void DrawLightComponent(LightComponent* light) {
-        if (!light) return;
+	static void DrawLightComponent(LightComponent* light) {
+		if (!light) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Light")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Light")) return;
 
-        LightType lightType = light->GetLightType();
-        vec3 diffuse = light->GetDiffuse();
-        vec3 specular = light->GetSpecular();
-        vec3 ambient = light->GetAmbient();
-        float intensity = light->GetIntensity();
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				light->GetOwner()->RemoveComponent<LightComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
-        if (ImGui::Combo("Type", (int*)&lightType, "Directional\0Point\0")) {
-            light->SetLightType(lightType);
-        }
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
-        if (ImGui::DragFloat("Intensity", &intensity, 0.1f, 0.0f, 100.0f)) {
-            light->SetIntensity(intensity);
-        }
+		ImGui::BeginGroup();
 
-        if (lightType == LightType::POINT) {
-            DrawPointLightProperties(light, diffuse, specular, ambient);
-        }
-    }
+		LightType lightType = light->GetLightType();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Light Type");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::Combo("##Type", (int*)&lightType, "Directional\0Point\0")) {
+			light->SetLightType(lightType);
+		}
+		ImGui::PopItemWidth();
 
-    static void DrawPointLightProperties(LightComponent* light, vec3& diffuse, vec3& specular, vec3& ambient) {
-        float radius = light->GetRadius();
-        float constant = light->GetConstant();
-        float linear = light->GetLinear();
-        float quadratic = light->GetQuadratic();
+		float intensity = light->GetIntensity();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Intensity");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Intensity", &intensity, 0.1f, 0.0f, 100.0f)) {
+			light->SetIntensity(intensity);
+		}
+		ImGui::PopItemWidth();
 
-        float diffuseFloat[3] = { static_cast<float>(diffuse.x), static_cast<float>(diffuse.y), static_cast<float>(diffuse.z) };
-        float specularFloat[3] = { static_cast<float>(specular.x), static_cast<float>(specular.y), static_cast<float>(specular.z) };
-        float ambientFloat[3] = { static_cast<float>(ambient.x), static_cast<float>(ambient.y), static_cast<float>(ambient.z) };
+		ImGui::EndGroup();
 
-        if (ImGui::DragFloat("Range", &radius, 0.1f, 0.0f, 1000.0f)) {
-            light->SetRadius(radius);
-        }
-        if (ImGui::DragFloat("Constant", &constant, 0.1f, 0.0f, 1000.0f)) {
-            light->SetConstant(constant);
-        }
-        if (ImGui::DragFloat("Linear", &linear, 0.1f, 0.0f, 1000.0f)) {
-            light->SetLinear(linear);
-        }
-        if (ImGui::DragFloat("Quadratic", &quadratic, 0.1f, 0.0f, 1000.0f)) {
-            light->SetQuadratic(quadratic);
-        }
+		if (lightType == LightType::POINT) {
+			ImGui::Separator();
+			ImGui::Text("Point Light Properties");
+			ImGui::Spacing();
 
-        if (ImGui::ColorEdit3("Ambient", ambientFloat)) {
-            light->SetAmbient(vec3(ambientFloat[0], ambientFloat[1], ambientFloat[2]));
-        }
-        if (ImGui::ColorEdit3("Diffuse", diffuseFloat)) {
-            light->SetDiffuse(vec3(diffuseFloat[0], diffuseFloat[1], diffuseFloat[2]));
-        }
-        if (ImGui::ColorEdit3("Specular", specularFloat)) {
-            light->SetSpecular(vec3(specularFloat[0], specularFloat[1], specularFloat[2]));
-        }
-    }
+			ImGui::BeginGroup();
+
+			vec3 diffuse = light->GetDiffuse();
+			vec3 specular = light->GetSpecular();
+			vec3 ambient = light->GetAmbient();
+			float radius = light->GetRadius();
+			float constant = light->GetConstant();
+			float linear = light->GetLinear();
+			float quadratic = light->GetQuadratic();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Range");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Range", &radius, 0.1f, 0.0f, 1000.0f)) {
+				light->SetRadius(radius);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Constant");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Constant", &constant, 0.01f, 0.0f, 10.0f)) {
+				light->SetConstant(constant);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Linear");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Linear", &linear, 0.01f, 0.0f, 10.0f)) {
+				light->SetLinear(linear);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Quadratic");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::DragFloat("##Quadratic", &quadratic, 0.01f, 0.0f, 10.0f)) {
+				light->SetQuadratic(quadratic);
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::Separator();
+			ImGui::Text("Colors");
+			ImGui::Spacing();
+
+			float ambientFloat[3] = { static_cast<float>(ambient.x), static_cast<float>(ambient.y), static_cast<float>(ambient.z) };
+			float diffuseFloat[3] = { static_cast<float>(diffuse.x), static_cast<float>(diffuse.y), static_cast<float>(diffuse.z) };
+			float specularFloat[3] = { static_cast<float>(specular.x), static_cast<float>(specular.y), static_cast<float>(specular.z) };
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Ambient");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##Ambient", ambientFloat)) {
+				light->SetAmbient(vec3(ambientFloat[0], ambientFloat[1], ambientFloat[2]));
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Diffuse");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##Diffuse", diffuseFloat)) {
+				light->SetDiffuse(vec3(diffuseFloat[0], diffuseFloat[1], diffuseFloat[2]));
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::AlignTextToFramePadding();
+			ImGui::Text("Specular");
+			ImGui::SameLine(labelWidth);
+			ImGui::PushItemWidth(-1);
+			if (ImGui::ColorEdit3("##Specular", specularFloat)) {
+				light->SetSpecular(vec3(specularFloat[0], specularFloat[1], specularFloat[2]));
+			}
+			ImGui::PopItemWidth();
+
+			ImGui::EndGroup();
+		}
+	}
     #pragma endregion
 
     #pragma region Sound
@@ -457,6 +860,13 @@ private:
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Sound")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				sound->GetOwner()->RemoveComponent<SoundComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
         DrawAudioFilePath(sound);
         DrawSoundProperties(sound);
@@ -553,6 +963,13 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Audio Listener")) return;
 
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				listener->GetOwner()->RemoveComponent<AudioListener>();
+			}
+			ImGui::EndPopup();
+		}
+
         Transform_Component* transform = gameObject->GetTransform();
         if (transform) {
             glm::dvec3 position = transform->GetPosition();
@@ -566,465 +983,887 @@ private:
     }
     #pragma endregion 
 
-   
-
     #pragma region SkeletalAnimation
-    static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal) 
-    {
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Animation")) return;
-
-		ImGui::Text("Animation: %s", skeletal->GetAnimation()->GetName().c_str());
-		ImGui::Text("Time: %.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
-        
-        float playSpeed = skeletal->GetAnimator()->GetPlaySpeed();
-        ImGui::DragFloat("Speed", &playSpeed, 0.1f, -10.0f, 10.0f);
-        skeletal->GetAnimator()->SetPlaySpeed(playSpeed);
-		
-        bool isPlaying = skeletal->GetAnimationPlayState();
-        ImGui::Checkbox("IsPlaying", &isPlaying);
-		skeletal->SetAnimationPlayState(isPlaying);
-		
-        float time = skeletal->GetAnimator()->GetCurrentMTime();
-        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
-        ImGui::SliderFloat("Timeline", &time, 0, skeletal->GetAnimator()->GetCurrentAnimation()->GetDuration());
-        ImGui::PopItemFlag();
-
-		ImGui::Text("Number of animations: %d", skeletal->GetAnimations().size());
-		int animationIndex = skeletal->GetAnimationIndex();
-        ImGui::InputInt("Animation Index", &animationIndex, 1, 1, ImGuiInputTextFlags_CharsDecimal);
-        if (animationIndex < 0) animationIndex = 0;
-        if (animationIndex >= skeletal->GetAnimations().size()) animationIndex = skeletal->GetAnimations().size()-1;
-        if (animationIndex != skeletal->GetAnimationIndex()) 
-        {
-			skeletal->SetAnimationIndex(animationIndex);
-        }
-
-        if (ImGui::Button("ChangeAnimation")) 
-        {
-            skeletal->SetAnimation(skeletal->GetAnimations().at(animationIndex).get());
-			skeletal->GetAnimator()->PlayAnimation(skeletal->GetAnimation());
-        }
-
-		ImGui::DragFloat("Blending Value", &skeletal->blendFactor, 0.01f, 0.0, 1.0f);
-		ImGui::Checkbox("Is Blending", &skeletal->isBlending);
-
-    }
-    #pragma endregion 
-
-#pragma region CapsuleCollider
-    static void DrawCapsuleColliderComponent(CapsuleColliderComponent* collider) {
-        if (!collider) return;
-
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("CapsuleCollider")) return;
-
-        DrawCapsuleColliderProperties(collider);
-    }
-
-    static void DrawCapsuleColliderProperties(CapsuleColliderComponent* collider) {
-		glm::vec3 size = collider->GetSize();
-		glm::vec3 offset = collider->GetOffset();
-		float sizeArray[2] = { size.x, size.y };
-
-		bool isTrigger = collider->IsTrigger();
-		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
-			collider->SetTrigger(isTrigger);
-		}
-
-		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
-			collider->SetOffset(offset);
-		}
-
-		if (ImGui::DragFloat2("Collider Size (X, Y)", sizeArray, 0.1f, 0.1f, 100.0f)) {
-			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], size.z));
-		}
-
-    }
-#pragma endregion
-
-#pragma region MeshCollider
-	static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
-		if (!collider) return;
+	static void DrawSkeletalAnimationComponent(SkeletalAnimationComponent* skeletal)
+	{
+		if (!skeletal) return;
 
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("MeshCollider")) return;
+		if (!ImGui::CollapsingHeader("Animation")) return;
 
-		DrawMeshColliderProperties(collider);
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				skeletal->GetOwner()->RemoveComponent<SkeletalAnimationComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Current Animation");
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%s", skeletal->GetAnimation()->GetName().c_str());
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Time");
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%.1f / %.1f", skeletal->GetAnimator()->GetCurrentMTime(), skeletal->GetAnimation()->GetDuration());
+
+		float playSpeed = skeletal->GetAnimator()->GetPlaySpeed();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Speed");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Speed", &playSpeed, 0.1f, -10.0f, 10.0f)) {
+			skeletal->GetAnimator()->SetPlaySpeed(playSpeed);
+		}
+		ImGui::PopItemWidth();
+
+		bool isPlaying = skeletal->GetAnimationPlayState();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Playing");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsPlaying", &isPlaying)) {
+			skeletal->SetAnimationPlayState(isPlaying);
+		}
+
+		float time = skeletal->GetAnimator()->GetCurrentMTime();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Timeline");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+		ImGui::SliderFloat("##Timeline", &time, 0, skeletal->GetAnimator()->GetCurrentAnimation()->GetDuration());
+		ImGui::PopItemFlag();
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+
+		ImGui::Separator();
+		ImGui::Text("Animation Selection");
+		ImGui::Spacing();
+
+		ImGui::BeginGroup();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Total Animations");
+		ImGui::SameLine(labelWidth);
+		ImGui::Text("%d", skeletal->GetAnimations().size());
+
+		int animationIndex = skeletal->GetAnimationIndex();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Animation Index");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::InputInt("##AnimationIndex", &animationIndex, 1, 1, ImGuiInputTextFlags_CharsDecimal)) {
+			if (animationIndex < 0) animationIndex = 0;
+			if (animationIndex >= skeletal->GetAnimations().size()) animationIndex = skeletal->GetAnimations().size() - 1;
+			if (animationIndex != skeletal->GetAnimationIndex()) {
+				skeletal->SetAnimationIndex(animationIndex);
+			}
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::SetCursorPosX(labelWidth);
+		if (ImGui::Button("Change Animation", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			skeletal->SetAnimation(skeletal->GetAnimations().at(animationIndex).get());
+			skeletal->GetAnimator()->PlayAnimation(skeletal->GetAnimation());
+		}
+
+		ImGui::EndGroup();
+
+		ImGui::Separator();
+		ImGui::Text("Blending Options");
+		ImGui::Spacing();
+
+		ImGui::BeginGroup();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Blend Factor");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		ImGui::DragFloat("##BlendFactor", &skeletal->blendFactor, 0.01f, 0.0f, 1.0f);
+		ImGui::PopItemWidth();
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Enable Blending");
+		ImGui::SameLine(labelWidth);
+		ImGui::Checkbox("##IsBlending", &skeletal->isBlending);
+
+		ImGui::EndGroup();
 	}
+    #pragma endregion 
 
-	static void DrawMeshColliderProperties(MeshColliderComponent* collider) {
-		glm::vec3 size = collider->GetSize();
-		glm::vec3 offset = collider->GetOffset();
-		float sizeArray[3] = { size.x, size.y, size.z };
-
-		bool isTrigger = collider->IsTrigger();
-		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
-			collider->SetTrigger(isTrigger);
-		}
-
-		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f)) {
-			collider->SetOffset(offset);
-		}
-
-		if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
-			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
-		}
-
-	}
-#pragma endregion
-
-#pragma region Collider
+	#pragma region Physics
 	static void DrawColliderComponent(BoxColliderComponent* collider) {
 		if (!collider) return;
 
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("Collider")) return;
+		if (!ImGui::CollapsingHeader("Box Collider")) return;
 
-		DrawColliderProperties(collider);
-	}
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				collider->GetOwner()->RemoveComponent<BoxColliderComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
-	static void DrawColliderProperties(BoxColliderComponent* collider) {
-		glm::vec3 size = collider->GetSize();
-		glm::vec3 offset = collider->GetOffset();
-		float sizeArray[3] = { size.x, size.y, size.z };
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
 
 		bool isTrigger = collider->IsTrigger();
-		if (ImGui::Checkbox("Is Trigger", &isTrigger)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Trigger");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsTrigger", &isTrigger)) {
 			collider->SetTrigger(isTrigger);
 		}
 
-		if (ImGui::DragFloat3("Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
+		glm::vec3 offset = collider->GetOffset();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Offset");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
 			collider->SetOffset(offset);
 		}
+		ImGui::PopItemWidth();
 
-		if (ImGui::DragFloat3("Collider Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
-			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], sizeArray[2]));
+		glm::vec3 size = collider->GetSize();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Size");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Size", &size[0], 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(size);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+	}
+
+	static void DrawMeshColliderComponent(MeshColliderComponent* collider) {
+		if (!collider) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Mesh Collider")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				collider->GetOwner()->RemoveComponent<MeshColliderComponent>();
+			}
+			ImGui::EndPopup();
 		}
 
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
+
+		bool isTrigger = collider->IsTrigger();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Trigger");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsTrigger", &isTrigger)) {
+			collider->SetTrigger(isTrigger);
+		}
+
+		glm::vec3 offset = collider->GetOffset();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Offset");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Offset", &offset[0], 0.1f)) {
+			collider->SetOffset(offset);
+		}
+		ImGui::PopItemWidth();
+
+		glm::vec3 size = collider->GetSize();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Size");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Size", &size[0], 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(size);
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
 	}
-#pragma endregion
 
-    #pragma region Rigidbody
-    static void DrawRigidbodyComponent(RigidbodyComponent* rigidbody) {
-        if (!rigidbody) return;
+	static void DrawCapsuleColliderComponent(CapsuleColliderComponent* collider) {
+		if (!collider) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Rigidbody")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Capsule Collider")) return;
 
-        DrawRigidbodyProperties(rigidbody);
-        DrawRigidbodyPhysics(rigidbody);
-    }
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				collider->GetOwner()->RemoveComponent<CapsuleColliderComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
-    static void DrawRigidbodyProperties(RigidbodyComponent* rigidbody) {
-        float mass = rigidbody->GetMass();
-        if (ImGui::DragFloat("Mass", &mass, 0.1f, 0.1f, 10.0f)) {
-            rigidbody->SetMass(mass);
-        }
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
+
+		bool isTrigger = collider->IsTrigger();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Trigger");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsTrigger", &isTrigger)) {
+			collider->SetTrigger(isTrigger);
+		}
+
+		glm::vec3 offset = collider->GetOffset();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Offset");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat3("##Offset", &offset[0], 0.1f, -100.0f, 100.0f)) {
+			collider->SetOffset(offset);
+		}
+		ImGui::PopItemWidth();
+
+		glm::vec3 size = collider->GetSize();
+		float sizeArray[2] = { size.x, size.y };
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Size (Radius, Height)");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat2("##Size", sizeArray, 0.1f, 0.1f, 100.0f)) {
+			collider->SetSize(glm::vec3(sizeArray[0], sizeArray[1], size.z));
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+	}
+
+	static void DrawRigidbodyComponent(RigidbodyComponent* rigidbody) {
+		if (!rigidbody) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Rigidbody")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				rigidbody->GetOwner()->RemoveComponent<RigidbodyComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
+
+		float mass = rigidbody->GetMass();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Mass");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Mass", &mass, 0.1f, 0.1f, 10000.0f)) {
+			rigidbody->SetMass(mass);
+		}
+		ImGui::PopItemWidth();
 
 		float friction = rigidbody->GetFriction();
-		if (ImGui::DragFloat("Friction", &friction, 0.1f, 0.0f, 10.0f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Friction");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Friction", &friction, 0.01f, 0.0f, 10.0f)) {
 			rigidbody->SetFriction(friction);
 		}
+		ImGui::PopItemWidth();
 
 		glm::vec3 gravity = rigidbody->GetGravity();
 		float gravityY = gravity.y;
-		if (ImGui::DragFloat("Gravity", &gravityY, 0.1f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Gravity");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##Gravity", &gravityY, 0.1f)) {
 			gravity.y = gravityY;
 			rigidbody->SetGravity(gravity);
-		} 
-    }
+		}
+		ImGui::PopItemWidth();
 
-    static void DrawRigidbodyPhysics(RigidbodyComponent* rigidbody) {
-        
+		ImGui::EndGroup();
+
+		ImGui::Separator();
+		ImGui::Text("Physics Properties");
+		ImGui::Spacing();
+
+		ImGui::BeginGroup();
+
 		bool isKinematic = rigidbody->IsKinematic();
-		if (ImGui::Checkbox("Is Kinematic", &isKinematic)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Is Kinematic");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##IsKinematic", &isKinematic)) {
 			rigidbody->SetKinematic(isKinematic);
 		}
 
 		bool freezeRotation = rigidbody->IsFreezed();
-		if (ImGui::Checkbox("Freeze Rotation", &freezeRotation)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Freeze Rotation");
+		ImGui::SameLine(labelWidth);
+		if (ImGui::Checkbox("##FreezeRotation", &freezeRotation)) {
 			rigidbody->SetFreezeRotations(freezeRotation);
 		}
 
 		float damping[2] = { rigidbody->GetDamping().x, rigidbody->GetDamping().y };
-		if (ImGui::DragFloat2("Damping (Linear, Angular)", damping, 0.1f, 0.0f, 10.0f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Damping");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat2("##Damping", damping, 0.01f, 0.0f, 10.0f)) {
 			rigidbody->SetDamping(damping[0], damping[1]);
 		}
-    }
-#pragma endregion
-
-    #pragma region Shaders
-	static void DrawShaderComponent(ShaderComponent* shader) {
-		if (!shader) return;
-
-		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-		if (!ImGui::CollapsingHeader("Shader")) return;
-
-		ShaderType currentType = shader->GetShaderType();
-		int shaderType = static_cast<int>(currentType);
-
-		const char* shaderTypes[] = { "Unlit", "PBR" };
-		if (ImGui::Combo("Shader Type", &shaderType, shaderTypes, IM_ARRAYSIZE(shaderTypes))) {
-			shader->SetShaderType(static_cast<ShaderType>(shaderType));
+		ImGui::PopItemWidth();
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Linear and Angular Damping");
+			ImGui::EndTooltip();
 		}
 
-		// Add texture loading buttons for PBR workflow
-		if (static_cast<ShaderType>(shaderType) == ShaderType::PBR) {
-			ImGui::Separator();
-			ImGui::Text("PBR Textures");
+		ImGui::EndGroup();
+	}
+	#pragma endregion
 
-			// Normal map button
-			if (ImGui::Button("Load Normal Map")) {
-				ImGui::OpenPopup("LoadNormalMap");
-			}
-			if (ImGui::BeginPopup("LoadNormalMap")) {
-				ImGui::Text("Drag and drop a normal map file here");
-				ImGui::EndPopup();
-			}
+	#pragma region Scripting
+	class MonoFieldHelper {
+	public:
+		static bool IsPublicField(MonoClassField* field) {
+			return (mono_field_get_flags(field) & MONO_FIELD_ATTR_PUBLIC) != 0;
+		}
 
-			// Handle drag/drop for normal map
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					shader->SetNormalMap(path);
-				}
-				ImGui::EndDragDropTarget();
-			}
+		static bool IsStaticField(MonoClassField* field) {
+			return (mono_field_get_flags(field) & MONO_FIELD_ATTR_STATIC) != 0;
+		}
 
-			// Metallic map button
-			if (ImGui::Button("Load Metallic Map")) {
-				ImGui::OpenPopup("LoadMetallicMap");
-			}
-			if (ImGui::BeginPopup("LoadMetallicMap")) {
-				ImGui::Text("Drag and drop a metallic map file here");
-				ImGui::EndPopup();
-			}
+		static std::string GetStringValue(MonoObject* obj, MonoClassField* field) {
+			MonoString* monoString = nullptr;
+			mono_field_get_value(obj, field, &monoString);
+			if (!monoString) return "";
 
-			// Handle drag/drop for metallic map
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					shader->SetMetallicMap(path);
-				}
-				ImGui::EndDragDropTarget();
+			char* cstr = mono_string_to_utf8(monoString);
+			std::string result(cstr);
+			mono_free(cstr);
+			return result;
+		}
+
+		static void SetStringValue(MonoObject* obj, MonoClassField* field, const std::string& value) {
+			MonoString* monoString = mono_string_new(mono_domain_get(), value.c_str());
+			mono_field_set_value(obj, field, monoString);
+		}
+
+		static bool OpenScriptFile(const std::string& path) {
+			if (!std::filesystem::exists(path)) {
+				return false;
 			}
 
-			// Roughness map button
-			if (ImGui::Button("Load Roughness Map")) {
-				ImGui::OpenPopup("LoadRoughnessMap");
-			}
-			if (ImGui::BeginPopup("LoadRoughnessMap")) {
-				ImGui::Text("Drag and drop a roughness map file here");
-				ImGui::EndPopup();
-			}
+#ifdef _WIN32
+			HINSTANCE result = ShellExecuteA(nullptr, "open", path.c_str(), nullptr, nullptr, SW_SHOW);
+			return ((intptr_t)result > 32);
+#elif defined(__APPLE__)
+			std::string command = "open \"" + path + "\"";
+			return system(command.c_str()) == 0;
+#else // Linux and others
+			std::string command = "xdg-open \"" + path + "\"";
+			return system(command.c_str()) == 0;
+#endif
+		}
+	};
 
-			// Handle drag/drop for roughness map
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					shader->SetRoughnessMap(path);
-				}
-				ImGui::EndDragDropTarget();
-			}
+	static void DrawScriptComponents(GameObject* gameObject) {
+		if (gameObject->scriptComponents.empty()) return;
 
-			// AO map button
-			if (ImGui::Button("Load AO Map")) {
-				ImGui::OpenPopup("LoadAOMap");
-			}
-			if (ImGui::BeginPopup("LoadAOMap")) {
-				ImGui::Text("Drag and drop an ambient occlusion map file here");
-				ImGui::EndPopup();
-			}
+		for (auto& scriptComponent : gameObject->scriptComponents) {
+			if (!scriptComponent || !scriptComponent->monoScript) continue;
 
-			// Handle drag/drop for AO map
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-					const char* path = static_cast<const char*>(payload->Data);
-					shader->SetAOMap(path);
-				}
-				ImGui::EndDragDropTarget();
-			}
-
-			// PBR material properties
-			ImGui::Separator();
-			ImGui::Text("PBR Properties");
-
-			if (!shader->HasMetallicMap()) {
-				float metallic = shader->GetMetallic();
-				if (ImGui::SliderFloat("Metallic", &metallic, 0.0f, 1.0f)) {
-					shader->SetMetallic(metallic);
-				}
-			}
-
-			if (!shader->HasRoughnessMap()) {
-				float roughness = shader->GetRoughness();
-				if (ImGui::SliderFloat("Roughness", &roughness, 0.0f, 1.0f)) {
-					shader->SetRoughness(roughness);
-				}
-			}
-
-			if (!shader->HasAOMap()) {
-				float ao = shader->GetAO();
-				if (ImGui::SliderFloat("Ambient Occlusion", &ao, 0.0f, 1.0f)) {
-					shader->SetAO(ao);
-				}
-			}
+			ImGui::PushID(scriptComponent.get());
+			DrawSingleScriptComponent(scriptComponent.get());
+			ImGui::PopID();
 		}
 	}
-#pragma endregion
 
-    #pragma region Scripting
-    static void DrawScriptComponents(GameObject* gameObject) {
-        if (gameObject->scriptComponents.empty()) return;
+	static void DrawSingleScriptComponent(ScriptComponent* scriptComponent) {
+		if (!scriptComponent || !scriptComponent->monoScript) return;
 
-        for (auto& scriptComponent : gameObject->scriptComponents) {
-            if (!scriptComponent || !scriptComponent->monoScript) continue;
+		MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
+		if (!scriptClass) {
+			ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Error: Invalid script class");
+			return;
+		}
 
-            ImGui::PushID(scriptComponent.get());
-            DrawSingleScriptComponent(scriptComponent.get());
-            ImGui::PopID();
-        }
-    }
+		std::string scriptName = mono_class_get_name(scriptClass);
 
-    static void DrawSingleScriptComponent(ScriptComponent* scriptComponent) {
-        if (!scriptComponent || !scriptComponent->monoScript) return;
+		std::string headerName = scriptComponent->GetTypeName();
+		if (scriptComponent->HasErrors()) {
+			headerName += " [ERROR]";
+			ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
+		}
 
-        std::string scriptName = mono_class_get_name(mono_object_get_class(scriptComponent->monoScript));
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		bool isOpen = ImGui::CollapsingHeader(headerName.c_str());
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader(scriptComponent->GetName().c_str())) {
-            return;
-        }
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				scriptComponent->GetOwner()->scriptComponents.erase(
+					std::remove_if(scriptComponent->GetOwner()->scriptComponents.begin(),
+						scriptComponent->GetOwner()->scriptComponents.end(),
+						[&](const auto& component) { return component.get() == scriptComponent; }),
+					scriptComponent->GetOwner()->scriptComponents.end());
+			}
+			ImGui::EndPopup();
+		}
 
-        ImGui::Text("Script: %s", scriptName.c_str());
-        DrawScriptControls(scriptComponent, scriptName);
-        DrawScriptFields(scriptComponent);
-    }
+		if (scriptComponent->HasErrors()) {
+			ImGui::PopStyleColor();
+		}
 
-    static void DrawScriptControls(ScriptComponent* scriptComponent, const std::string& scriptName) {
-        if (ImGui::Button("Open Script")) {
-            std::string scriptPath = std::filesystem::absolute("../Script/" + scriptName + ".cs").string();
-            LOG(LogType::LOG_INFO, "Absolute script path: %s", scriptPath.c_str());
+		if (!isOpen) return;
 
-            if (!std::filesystem::exists(scriptPath)) {
-                LOG(LogType::LOG_ERROR, "Script file does not exist at path: %s", scriptPath.c_str());
-                return;
-            }
+		if (scriptComponent->HasErrors()) {
+			ImGui::Spacing();
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+			ImGui::TextWrapped("This script has errors. Check the console for details.");
+			ImGui::PopStyleColor();
+			ImGui::Spacing();
+		}
 
-            HINSTANCE result = ShellExecuteA(nullptr, "open", scriptPath.c_str(), nullptr, nullptr, SW_SHOW);
-            if ((int)result <= 32) {
-                LOG(LogType::LOG_ERROR, "Failed to open script file: %s. Error code: %d", scriptPath.c_str(), (int)result);
-            }
-            else {
-                LOG(LogType::LOG_INFO, "Successfully opened script: %s", scriptPath.c_str());
-            }
-        }
+		if (ImGui::Button("Open Script")) {
+			std::string scriptPath = std::filesystem::absolute(
+				std::filesystem::path(std::string("../Script/") + scriptName + ".cs")).string();
 
-        if (ImGui::Button("Reload Script")) {
-            if (!scriptComponent->LoadScript(scriptName)) {
-                LOG(LogType::LOG_ERROR, "Failed to reload script %s.", scriptName.c_str());
-            }
-            else {
-                LOG(LogType::LOG_INFO, "Script %s reloaded successfully.", scriptName.c_str());
-            }
-        }
-    }
+			if (MonoFieldHelper::OpenScriptFile(scriptPath)) {
+				LOG(LogType::LOG_INFO, "Opened script: %s", scriptName.c_str());
+			}
+			else {
+				ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Failed to open script file!");
+				LOG(LogType::LOG_ERROR, "Failed to open script file: %s", scriptPath.c_str());
+			}
+		}
 
-    static void DrawScriptFields(ScriptComponent* scriptComponent) {
-        if (!scriptComponent || !scriptComponent->monoScript) return;
+		static bool showPublicOnly = true;
+		ImGui::SameLine();
+		ImGui::Checkbox("Public Fields Only", &showPublicOnly);
 
-        MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
-        void* iter = nullptr;
-        MonoClassField* field = nullptr;
+		ImGui::Separator();
 
-        while ((field = mono_class_get_fields(scriptClass, &iter))) {
-            guint32 flags = mono_field_get_flags(field);
-            if (flags & MONO_FIELD_ATTR_STATIC) {
-                continue;
-            }
+		DrawScriptFields(scriptComponent, showPublicOnly);
+	}
 
-            const char* fieldName = mono_field_get_name(field);
-            MonoType* fieldType = mono_field_get_type(field);
-            int typeCode = mono_type_get_type(fieldType);
+	static void DrawScriptFields(ScriptComponent* scriptComponent) {
+		DrawScriptFields(scriptComponent, true);
+	}
 
-            ImGui::PushID(field);
-            DrawScriptField(scriptComponent->monoScript, field, fieldName, typeCode);
-            ImGui::PopID();
-        }
-    }
+	static void DrawScriptFields(ScriptComponent* scriptComponent, bool publicOnly = true) {
+		if (!scriptComponent || !scriptComponent->monoScript) return;
 
-    static void DrawScriptField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, int typeCode) {
-        if (mono_field_get_flags(field) & MONO_FIELD_ATTR_STATIC) {
-            return;
-        }
+		MonoClass* scriptClass = mono_object_get_class(scriptComponent->monoScript);
+		void* iter = nullptr;
+		MonoClassField* field = nullptr;
+		bool hasFields = false;
 
-        switch (typeCode) {
-        case MONO_TYPE_STRING:
-            DrawStringField(monoScript, field, fieldName);
-            break;
-        case MONO_TYPE_BOOLEAN:
-            DrawBoolField(monoScript, field, fieldName);
-            break;
-        case MONO_TYPE_I4:
-            DrawIntField(monoScript, field, fieldName);
-            break;
-        case MONO_TYPE_R4:
-            DrawFloatField(monoScript, field, fieldName);
-            break;
-        case MONO_TYPE_R8:
-            DrawDoubleField(monoScript, field, fieldName);
-            break;
-        }
-    }
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(8, 8));
+		ImGui::Indent(10.0f);
 
-    static void DrawStringField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        MonoString* monoString = nullptr;
-        mono_field_get_value(monoScript, field, &monoString);
-        std::string value = monoString ? mono_string_to_utf8(monoString) : "";
+		while ((field = mono_class_get_fields(scriptClass, &iter))) {
+			if (MonoFieldHelper::IsStaticField(field)) {
+				continue;
+			}
 
-        char buffer[128];
-        strncpy_s(buffer, value.c_str(), sizeof(buffer));
-        buffer[sizeof(buffer) - 1] = '\0';
+			if (publicOnly && !MonoFieldHelper::IsPublicField(field)) {
+				continue;
+			}
 
-        if (ImGui::InputText(fieldName, buffer, sizeof(buffer))) {
-            MonoString* newMonoString = mono_string_new(mono_domain_get(), buffer);
-            mono_field_set_value(monoScript, field, newMonoString);
-        }
-    }
+			const char* fieldName = mono_field_get_name(field);
+			MonoType* fieldType = mono_field_get_type(field);
+			int typeCode = mono_type_get_type(fieldType);
 
-    static void DrawBoolField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        bool value = false;
-        mono_field_get_value(monoScript, field, &value);
-        if (ImGui::Checkbox(fieldName, &value)) {
-            mono_field_set_value(monoScript, field, &value);
-        }
-    }
+			ImGui::PushID(field);
+			ImGui::AlignTextToFramePadding();
 
-    static void DrawIntField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        int value = 0;
-        mono_field_get_value(monoScript, field, &value);
-        if (ImGui::InputInt(fieldName, &value)) {
-            mono_field_set_value(monoScript, field, &value);
-        }
-    }
+			switch (typeCode) {
+			case MONO_TYPE_BOOLEAN:
+				//ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 1.0f, 0.5f, 1.0f));
+				break;
+			case MONO_TYPE_I4:
+				//ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.7f, 1.0f, 1.0f));
+				break;
+			case MONO_TYPE_R4:
+			case MONO_TYPE_R8:
+				//ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.7f, 0.4f, 1.0f));
+				break;
+			case MONO_TYPE_STRING:
+				//ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.9f, 0.9f, 0.5f, 1.0f));
+				break;
+			default:
+				//ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.8f, 0.8f, 1.0f));
+				break;
+			}
 
-    static void DrawFloatField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        float value = 0.0f;
-        mono_field_get_value(monoScript, field, &value);
-        if (ImGui::InputFloat(fieldName, &value)) {
-            mono_field_set_value(monoScript, field, &value);
-        }
-    }
+			float availWidth = ImGui::GetContentRegionAvail().x;
+			float labelWidth = std::min(150.0f, availWidth * 0.4f);
 
-    static void DrawDoubleField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
-        double value = 0.0;
-        mono_field_get_value(monoScript, field, &value);
-        if (ImGui::InputDouble(fieldName, &value)) {
-            mono_field_set_value(monoScript, field, &value);
-        }
-    }
-    #pragma endregion
+			ImGui::Text("%s", fieldName);
+			ImGui::SameLine(labelWidth);
+			ImGui::SetNextItemWidth(availWidth - labelWidth);
+
+			DrawScriptField(scriptComponent->monoScript, field, fieldName, typeCode);
+			ImGui::PopStyleColor();
+			ImGui::PopID();
+
+			hasFields = true;
+		}
+
+		if (!hasFields) {
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No fields to display");
+		}
+
+		ImGui::Unindent(10.0f);
+		ImGui::PopStyleVar();
+	}
+
+	static void DrawScriptField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, int typeCode) {
+		try {
+			switch (typeCode) {
+			case MONO_TYPE_STRING:
+				DrawStringField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_BOOLEAN:
+				DrawBoolField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_I4:
+				DrawIntField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_R4:
+				DrawFloatField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_R8:
+				DrawDoubleField(monoScript, field, fieldName);
+				break;
+			case MONO_TYPE_VALUETYPE:
+			{
+				MonoType* fieldType = mono_field_get_type(field);
+				MonoClass* fieldClass = mono_class_from_mono_type(fieldType);
+				const char* className = mono_class_get_name(fieldClass);
+				const char* nameSpace = mono_class_get_namespace(fieldClass);
+
+				if (strcmp(nameSpace, "System.Numerics") == 0) {
+					if (strcmp(className, "Vector2") == 0) {
+						DrawVector2Field(monoScript, field, fieldName);
+						break;
+					}
+					else if (strcmp(className, "Vector3") == 0) {
+						DrawVector3Field(monoScript, field, fieldName);
+						break;
+					}
+					else if (strcmp(className, "Vector4") == 0) {
+						DrawVector4Field(monoScript, field, fieldName);
+						break;
+					}
+				}
+
+				if (mono_class_is_enum(fieldClass)) {
+					DrawEnumField(monoScript, field, fieldName, fieldClass);
+					break;
+				}
+
+				ImGui::TextDisabled("(Unsupported value type: %s.%s)", nameSpace, className);
+			}
+			break;
+			case MONO_TYPE_CLASS:
+			{
+				MonoType* fieldType = mono_field_get_type(field);
+				MonoClass* fieldClass = mono_class_from_mono_type(fieldType);
+				const char* className = mono_class_get_name(fieldClass);
+				const char* nameSpace = mono_class_get_namespace(fieldClass);
+
+				if (strcmp(className, "GameObject") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
+					DrawGameObjectField(monoScript, field, fieldName);
+				}
+				else if (strcmp(className, "Transform") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
+					DrawComponentField(monoScript, field, fieldName, "Transform", "HawkEngine.Transform");
+				}
+				else if (strcmp(className, "Camera") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
+					DrawComponentField(monoScript, field, fieldName, "Camera", "HawkEngine.Camera");
+				}
+				else {
+					ImGui::TextDisabled("(Unsupported object type: %s.%s)", nameSpace, className);
+				}
+			}
+			break;
+			default:
+				ImGui::TextDisabled("(Unsupported type)");
+				break;
+			}
+		}
+		catch (...) {
+			ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Error reading field");
+		}
+	}
+
+	static void DrawComponentField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, const char* componentName, const char* componentNamespace) {
+		MonoObject* fieldValue = nullptr;
+		mono_field_get_value(monoScript, field, &fieldValue);
+
+		if (fieldValue == nullptr) {
+			ImGui::Text("None");
+			return;
+		}
+
+		MonoClass* fieldClass = mono_object_get_class(fieldValue);
+		const char* className = mono_class_get_name(fieldClass);
+		const char* nameSpace = mono_class_get_namespace(fieldClass);
+
+		if (strcmp(className, componentName) == 0 && strcmp(nameSpace, componentNamespace) == 0) {
+			ImGui::Text("%s", className);
+			return;
+		}
+
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+				MonoObject* newFieldValue = *(MonoObject**)payload->Data;
+				if (newFieldValue) {
+					mono_field_set_value(monoScript, field, &newFieldValue);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		ImGui::TextDisabled("(Unsupported type: %s.%s)", nameSpace, className);
+	}
+
+	static void DrawEnumField(MonoObject* monoScript, MonoClassField* field, const char* fieldName, MonoClass* enumClass) {
+		int enumValue = 0;
+		mono_field_get_value(monoScript, field, &enumValue);
+
+		const char* enumTypeName = mono_class_get_name(enumClass);
+
+		MonoType* enumType = mono_class_get_type(enumClass);
+		void* iter = NULL;
+		MonoClassField* enumField = NULL;
+		std::vector<std::string> enumNames;
+
+		while ((enumField = mono_class_get_fields(enumClass, &iter))) {
+			if (mono_field_get_flags(enumField) & MONO_FIELD_ATTR_STATIC) {
+				const char* name = mono_field_get_name(enumField);
+
+				if (strcmp(name, "value__") == 0) continue;
+
+				enumNames.push_back(name);
+			}
+		}
+
+		std::sort(enumNames.begin(), enumNames.end());
+
+		int currentIndex = enumValue;
+		if (currentIndex < -1 || currentIndex >= enumNames.size()) {
+			currentIndex = 0; 
+		}
+
+		std::string comboStr;
+		for (const auto& name : enumNames) {
+			comboStr += name + '\0';
+		}
+		comboStr += '\0'; 
+
+		if (ImGui::Combo("##enum", &currentIndex, comboStr.c_str())) {
+			mono_field_set_value(monoScript, field, &currentIndex);
+		}
+	}
+
+	struct MonoVector2 {
+		float X;
+		float Y;
+	};
+
+	struct MonoVector3 {
+		float X;
+		float Y;
+		float Z;
+	};
+
+	struct MonoVector4 {
+		float X;
+		float Y;
+		float Z;
+		float W;
+	};
+
+	static void DrawVector2Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		MonoVector2 vector;
+		mono_field_get_value(monoScript, field, &vector);
+
+		float values[2] = { vector.X, vector.Y };
+		if (ImGui::DragFloat2("##vector2value", values, 0.1f)) {
+			vector.X = values[0];
+			vector.Y = values[1];
+			mono_field_set_value(monoScript, field, &vector);
+		}
+	}
+
+	static void DrawVector3Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		MonoVector3 vector;
+		mono_field_get_value(monoScript, field, &vector);
+
+		float values[3] = { vector.X, vector.Y, vector.Z };
+		if (ImGui::DragFloat3("##vector3value", values, 0.1f)) {
+			vector.X = values[0];
+			vector.Y = values[1];
+			vector.Z = values[2];
+			mono_field_set_value(monoScript, field, &vector);
+		}
+	}
+
+	static void DrawVector4Field(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		MonoVector4 vector;
+		mono_field_get_value(monoScript, field, &vector);
+
+		float values[4] = { vector.X, vector.Y, vector.Z, vector.W };
+		if (ImGui::DragFloat4("##vector4value", values, 0.1f)) {
+			vector.X = values[0];
+			vector.Y = values[1];
+			vector.Z = values[2];
+			vector.W = values[3];
+			mono_field_set_value(monoScript, field, &vector);
+		}
+	}
+
+	static void DrawGameObjectField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		MonoObject* goFieldValue = nullptr;
+		mono_field_get_value(monoScript, field, &goFieldValue);
+
+		std::string goName = "None";
+		GameObject* currentGO = nullptr;
+
+		if (goFieldValue != nullptr) {
+			MonoClass* goClass = mono_object_get_class(goFieldValue);
+			MonoClassField* cppInstanceField = mono_class_get_field_from_name(goClass, "CplusplusInstance");
+
+			if (cppInstanceField) {
+				uintptr_t cppInstance = 0;
+				mono_field_get_value(goFieldValue, cppInstanceField, &cppInstance);
+
+				if (cppInstance != 0) {
+					currentGO = reinterpret_cast<GameObject*>(cppInstance);
+					if (currentGO) {
+						goName = currentGO->GetName();
+					}
+				}
+			}
+
+			MonoProperty* nameProp = mono_class_get_property_from_name(goClass, "name");
+			if (nameProp) {
+				MonoMethod* getMethod = mono_property_get_get_method(nameProp);
+				if (getMethod) {
+					MonoObject* exception = nullptr;
+					MonoString* nameString = (MonoString*)mono_runtime_invoke(getMethod, goFieldValue, nullptr, &exception);
+
+					if (!exception && nameString) {
+						char* name = mono_string_to_utf8(nameString);
+						if (name) {
+							goName = name;
+							mono_free(name);
+						}
+					}
+				}
+			}
+		}
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.3f, 0.4f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.4f, 0.5f, 1.0f));
+		ImGui::Button(goName.c_str(), ImVec2(-1, 0));
+		ImGui::PopStyleColor(2);
+
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+				GameObject* draggedGO = *(GameObject**)payload->Data;
+				if (draggedGO) {
+					MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(draggedGO);
+
+					if (managedGO) {
+						mono_field_set_value(monoScript, field, managedGO);
+					}
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Clear Reference")) {
+				void* nullRef = nullptr;
+				mono_field_set_value(monoScript, field, nullRef);
+			}
+			ImGui::EndPopup();
+		}
+
+		if (ImGui::IsItemHovered() && currentGO) {
+			ImGui::BeginTooltip();
+			ImGui::Text("GameObject: %s", goName.c_str());
+			ImGui::Text("ID: %d", currentGO->GetID());
+			ImGui::EndTooltip();
+		}
+	}
+
+	static void DrawStringField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		std::string value = MonoFieldHelper::GetStringValue(monoScript, field);
+		char buffer[256];
+		strcpy_s(buffer, value.c_str());
+
+		if (ImGui::InputText("##value", buffer, IM_ARRAYSIZE(buffer))) {
+			MonoFieldHelper::SetStringValue(monoScript, field, buffer);
+		}
+	}
+
+	static void DrawBoolField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		bool value = false;
+		mono_field_get_value(monoScript, field, &value);
+
+		if (ImGui::Checkbox("##value", &value)) {
+			mono_field_set_value(monoScript, field, &value);
+		}
+	}
+
+	static void DrawIntField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		int value = 0;
+		mono_field_get_value(monoScript, field, &value);
+
+		if (ImGui::DragInt("##value", &value)) {
+			mono_field_set_value(monoScript, field, &value);
+		}
+	}
+
+	static void DrawFloatField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		float value = 0.0f;
+		mono_field_get_value(monoScript, field, &value);
+
+		if (ImGui::DragFloat("##value", &value)) {
+			mono_field_set_value(monoScript, field, &value);
+		}
+	}
+
+	static void DrawDoubleField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		double value = 0.0;
+		mono_field_get_value(monoScript, field, &value);
+
+		if (ImGui::InputDouble("##value", &value, 0.0, 0.0, "%.6f")) {
+			mono_field_set_value(monoScript, field, &value);
+		}
+	}
+	#pragma endregion
 
 	#pragma region ParticleFX
 	static void DrawParticleSystemComponent(ParticleFX* system) {
@@ -1034,6 +1873,13 @@ private:
 		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		bool isOpen = ImGui::CollapsingHeader("Particle System", ImGuiTreeNodeFlags_DefaultOpen);
 		ImGui::PopStyleVar();
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				system->GetOwner()->RemoveComponent<ParticleFX>();
+			}
+			ImGui::EndPopup();
+		}
 
 		if (!isOpen) return;
 
@@ -1492,104 +2338,256 @@ private:
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
         if (!ImGui::CollapsingHeader("Canvas")) return;
 
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				canvas->GetOwner()->RemoveComponent<UICanvasComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
         ImGui::Text("Canvas");
     }
-#pragma endregion
+	#pragma endregion
 
     #pragma region Image
-    static void DrawImageComponent(UIImageComponent* image) {
-        if (!image) return;
+	static void DrawImageComponent(UIImageComponent* image) {
+		if (!image) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("Image")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Image")) return;
 
-        ImGui::Text("Image");
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				image->GetOwner()->RemoveComponent<UIImageComponent>();
+			}
+			ImGui::EndPopup();
+		}
 
-        DrawImageFilePath(image);
-    }
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+		const float previewSize = 24.0f;
 
-    static void DrawImageFilePath(UIImageComponent* image) {
-        char imagePath[256];
-        strcpy_s(imagePath, image->GetImagePath().c_str());
+		ImGui::BeginGroup();
 
-        if (ImGui::InputText("image File", imagePath, sizeof(imagePath))) {
-            image->SetTexture(imagePath);
-        }
+		auto imageTexture = image->GetTexture();
 
-        if (ImGui::BeginDragDropTarget()) {
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
-                HandleImageFileDrop(image, static_cast<const char*>(payload->Data));
-            }
-            ImGui::EndDragDropTarget();
-        }
-    }
+		ImGui::PushID((void*)image);
+		if (imageTexture && imageTexture->id() != 0) {
+			ImGui::Image((void*)(intptr_t)imageTexture->id(), ImVec2(previewSize, previewSize));
 
-    static void HandleImageFileDrop(UIImageComponent* image, const char* path) {
-        std::string extension = std::filesystem::path(path).extension().string();
-        std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+			if (ImGui::IsItemHovered()) {
+				ImGui::BeginTooltip();
+				ImVec2 constrainedSize = CalculatePreviewSize(imageTexture->width(), imageTexture->height(), 300);
+				ImGui::Image((void*)(intptr_t)imageTexture->id(), constrainedSize);
+				ImGui::Text("%dx%d", imageTexture->width(), imageTexture->height());
+				ImGui::EndTooltip();
+			}
 
-        if (extension == ".jpg" || extension == ".png" || extension == ".img") {
-            image->SetTexture(path);
-        }
-    }
+			if (ImGui::BeginPopupContextItem("TextureContextMenu")) {
+				ImGui::Text("Texture Options");
+				ImGui::Separator();
+				if (ImGui::MenuItem("Clear")) {
+				}
+				ImGui::EndPopup();
+			}
+		}
+		else {
+			ImVec2 p = ImGui::GetCursorScreenPos();
+			ImDrawList* draw_list = ImGui::GetWindowDrawList();
+			draw_list->AddRect(p, ImVec2(p.x + previewSize, p.y + previewSize), IM_COL32(180, 180, 180, 255));
+			ImGui::Button("##empty", ImVec2(previewSize, previewSize));
+		}
 
-#pragma endregion
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				const char* path = static_cast<const char*>(payload->Data);
+				std::string extension = std::filesystem::path(path).extension().string();
+				std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+
+				const std::array<std::string, 5> validExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".tga" };
+				if (std::find(validExtensions.begin(), validExtensions.end(), extension) != validExtensions.end()) {
+					image->SetTexture(path);
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+		ImGui::PopID();
+
+		ImGui::SameLine();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Image");
+
+		image->GetColor();
+		float color[4] = { image->GetColor().r, image->GetColor().g, image->GetColor().b, image->GetColor().a };
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::ColorEdit3("##Color", color)) {
+			image->SetColor({ color[0], color[1], color[2], image->GetColor().w });
+		}
+		ImGui::PopItemWidth();
+
+		float alpha = image->GetColor().a;
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Alpha");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::SliderFloat("##Alpha", &alpha, 0.0f, 1.0f)) {
+			image->SetColor({ color[0], color[1], color[2], alpha });
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+	}
+	#pragma endregion
 
     #pragma region RectTransform
-    static void DrawRectTransformComponent(UITransformComponent* transform) {
-        if (!transform) return;
+	static void DrawRectTransformComponent(UITransformComponent* transform) {
+		if (!transform) return;
 
-        ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-        if (!ImGui::CollapsingHeader("RectTransform")) return;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("RectTransform")) return;
 
-        ImGui::Text("RectTransform");
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				transform->GetOwner()->RemoveComponent<UITransformComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
 
         glm::dvec3 currentPosition = transform->GetPosition();
         glm::dvec3 currentRotation = glm::radians(transform->GetRotation());
         glm::dvec3 currentScale = transform->GetScale();
 		glm::dvec1 currentPivot = transform->GetPivotOffset();
 
-        float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
-        float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
-        float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
-		float pivot[3] = { static_cast<float>(transform->GetPivotOffset().x), static_cast<float>(transform->GetPivotOffset().y), static_cast<float>(transform->GetPivotOffset().z) };
-        if (ImGui::DragFloat3("Position", pos, 0.001f, -1.0f, 1.0f)) {
-            glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
-            glm::dvec3 deltaPos = newPosition - currentPosition;
-            transform->Translate(deltaPos);
-        }
+		float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+		float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
+		float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
 
-        if (ImGui::DragFloat3("Rotation", rot, -1.0f)) {
-            glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
-            glm::dvec3 deltaRot = newRotation - currentRotation;
-            transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
-            transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
-            transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
-        }
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Position");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool posChanged = ImGui::DragFloat3("##Position", pos, 0.001f, -1.0f, 1.0f);
+		ImGui::PopItemWidth();
 
-        if (ImGui::DragFloat3("Scale", sca, 0.001f, -1.0f, 1.0f)) {
-            glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
-            glm::dvec3 deltaScale = newScale / currentScale;
-            transform->Scale(deltaScale);
-        }
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("UI position (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
 
-		if (ImGui::DragFloat3("Pivot", pivot, 0.001f, -1.0f, 1.0f)) {
+		if (posChanged) {
+			glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
+			glm::dvec3 deltaPos = newPosition - currentPosition;
+			transform->Translate(deltaPos);
+		}
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Rotation");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool rotChanged = ImGui::DragFloat3("##Rotation", rot, 0.1f);
+		ImGui::PopItemWidth();
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Rotation in degrees (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		if (rotChanged) {
+			glm::dvec3 newRotation = glm::radians(glm::dvec3(rot[0], rot[1], rot[2]));
+			glm::dvec3 deltaRot = newRotation - currentRotation;
+			transform->Rotate(deltaRot.x, glm::dvec3(1, 0, 0));
+			transform->Rotate(deltaRot.y, glm::dvec3(0, 1, 0));
+			transform->Rotate(deltaRot.z, glm::dvec3(0, 0, 1));
+		}
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Scale");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool scaChanged = ImGui::DragFloat3("##Scale", sca, 0.001f, 0.001f, 10.0f);
+		ImGui::PopItemWidth();
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("UI scale multiplier (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		if (scaChanged) {
+			glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
+			glm::dvec3 deltaScale = newScale / currentScale;
+			transform->Scale(deltaScale);
+		}
+
+		/*if (ImGui::DragFloat3("Pivot", pivot, 0.001f, -1.0f, 1.0f)) {
 			glm::dvec3 newPivot = { pivot[0], pivot[1], pivot[2] };
 			glm::dvec3 deltaPivot = newPivot - currentPivot;
 			transform->SetPivotOffset(deltaPivot);
+		}*/
 
-		}
-    }
-    
-  
-#pragma endregion
+		ImGui::EndGroup();
+	}
+	#pragma endregion
+
 public:
-    static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
+	#pragma region DrawComponents
+	static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
 		if (!gameObject) return;
 
-		Transform_Component* transform = gameObject->GetTransform();
-		if (transform) {
+		static bool showComponents = true;
+
+		ImGui::PushStyleColor(ImGuiCol_Button, showComponents ? ImVec4(0.4f, 0.4f, 0.4f, 1.0f) : ImVec4(0.2f, 0.2f, 0.2f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));
+
+		if (ImGui::Button("Components", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, 0))) {
+			showComponents = true;
+		}
+
+		ImGui::PopStyleColor(3);
+		ImGui::SameLine(0, 0);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, !showComponents ? ImVec4(0.4f, 0.4f, 0.4f, 1.0f) : ImVec4(0.2f, 0.2f, 0.2f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.5f, 0.5f, 0.5f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.4f, 0.4f, 0.4f, 1.0f));
+
+		if (ImGui::Button("Scripts", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			showComponents = false;
+		}
+
+		ImGui::PopStyleColor(3);
+		ImGui::Separator();
+
+		if (showComponents) {
+			DrawEngineComponents(gameObject, snap, snapValue);
+		}
+		else {
+			if (!gameObject->scriptComponents.empty()) {
+				DrawScriptComponents(gameObject);
+			}
+			else {
+				ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No script components attached");
+			}
+		}
+	}
+
+	static void DrawEngineComponents(GameObject* gameObject, bool& snap, float& snapValue) {
+		if (!gameObject) return;
+
+		if (gameObject->HasComponent<Transform_Component>() && !gameObject->HasComponent<UITransformComponent>()) {
+			Transform_Component* transform = gameObject->GetComponent<Transform_Component>();
 			DrawTransformComponent(transform, snap, snapValue);
+		}
+
+		if (gameObject->HasComponent<UITransformComponent>()) {
+			UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
+			DrawRectTransformComponent(uiTransformComponent);
 		}
 
 		if (gameObject->HasComponent<MeshRenderer>()) {
@@ -1602,17 +2600,17 @@ public:
 			DrawSkeletalAnimationComponent(animationComponent);
 		}
 
-        if (gameObject->HasComponent<CameraComponent>()) {
+		if (gameObject->HasComponent<CameraComponent>()) {
 			CameraComponent* camera = gameObject->GetComponent<CameraComponent>();
 			DrawCameraComponent(camera);
 		}
 
-        if (gameObject->HasComponent<LightComponent>()) {
+		if (gameObject->HasComponent<LightComponent>()) {
 			LightComponent* light = gameObject->GetComponent<LightComponent>();
 			DrawLightComponent(light);
 		}
 
-        if (gameObject->HasComponent<SoundComponent>()) {
+		if (gameObject->HasComponent<SoundComponent>()) {
 			SoundComponent* sound = gameObject->GetComponent<SoundComponent>();
 			DrawSoundComponent(sound);
 		}
@@ -1626,9 +2624,9 @@ public:
 			BoxColliderComponent* collider = gameObject->GetComponent<BoxColliderComponent>();
 			DrawColliderComponent(collider);
 		}
-        
-        if (gameObject->HasComponent<MeshColliderComponent>()) {
-            MeshColliderComponent* meshCollider = gameObject->GetComponent<MeshColliderComponent>();
+
+		if (gameObject->HasComponent<MeshColliderComponent>()) {
+			MeshColliderComponent* meshCollider = gameObject->GetComponent<MeshColliderComponent>();
 			DrawMeshColliderComponent(meshCollider);
 		}
 
@@ -1637,149 +2635,485 @@ public:
 			DrawCapsuleColliderComponent(capsuleCollider);
 		}
 
-        if (gameObject->HasComponent<RigidbodyComponent>()) {
-            RigidbodyComponent* rigidbody = gameObject->GetComponent<RigidbodyComponent>();
+		if (gameObject->HasComponent<RigidbodyComponent>()) {
+			RigidbodyComponent* rigidbody = gameObject->GetComponent<RigidbodyComponent>();
 			DrawRigidbodyComponent(rigidbody);
 		}
 
 		if (gameObject->HasComponent<ParticleFX>()) {
-            ParticleFX* emitter = gameObject->GetComponent<ParticleFX>();
+			ParticleFX* emitter = gameObject->GetComponent<ParticleFX>();
 			DrawParticleSystemComponent(emitter);
 		}
-
-        if (gameObject->HasComponent<UITransformComponent>()) {
-            UITransformComponent* uiTransformComponent = gameObject->GetComponent<UITransformComponent>();
-            DrawRectTransformComponent(uiTransformComponent);
-        }
-      
-		if (gameObject->HasComponent<ShaderComponent>()) {
-			ShaderComponent* shader = gameObject->GetComponent<ShaderComponent>();
-			DrawShaderComponent(shader);
-		}
-
+		
 		if (gameObject->HasComponent<UICanvasComponent>()) {
-            UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
+			UICanvasComponent* uiCanvasComponent = gameObject->GetComponent<UICanvasComponent>();
 			DrawCanvasComponent(uiCanvasComponent);
 		}
-        if (gameObject->HasComponent<UIImageComponent>()) {
-            UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
-            DrawImageComponent(uiImageComponent);
-        }
-        if (gameObject->scriptComponents.size() > 0) {
-			DrawScriptComponents(gameObject);
-		}
 
-		//Aqui mas componentes
+		if (gameObject->HasComponent<UIImageComponent>()) {
+			UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
+			DrawImageComponent(uiImageComponent);
+		}
 	}
 
-    static void DrawAddComponentButton(GameObject* gameObject) {
-        if (ImGui::Button("Add Component")) {
-            ImGui::OpenPopup("AddComponentMenu");
-        }
+	static void DrawScriptsTab(GameObject* gameObject) {
+		if (gameObject->scriptComponents.empty()) {
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No script components attached");
+			return;
+		}
 
-        if (ImGui::BeginPopup("AddComponentMenu")) {
-            DrawAddComponentMenu(gameObject);
-            ImGui::EndPopup();
-        }
-    }
+		DrawScriptComponents(gameObject);
+	}
+	#pragma endregion
 
-private:
-    static void DrawAddComponentMenu(GameObject* gameObject) {
-		if (!gameObject) return;
+	#pragma region AddComponentMenu
+	static void DrawAddComponentButton(GameObject* gameObject) {
+		if (ImGui::Button("Add Component", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			ImGui::OpenPopup("AddComponentMenu");
+		}
 
-		if (!gameObject->HasComponent<CameraComponent>()) {
-			if (ImGui::MenuItem("Camera")) {
+		ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+		ImGui::SetNextWindowSize(ImVec2(350, 450), ImGuiCond_Appearing);
+
+		static bool inCategoryView = true;
+		static int currentCategory = 0;
+		static char searchBuffer[64] = "";
+
+		if (ImGui::BeginPopupModal("AddComponentMenu", nullptr, ImGuiWindowFlags_NoCollapse)) {
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(6, 6));
+			ImGui::SetNextItemWidth(ImGui::GetContentRegionAvail().x);
+			bool searchEdited = ImGui::InputTextWithHint("##ComponentSearch", "Search...", searchBuffer, sizeof(searchBuffer));
+			ImGui::PopStyleVar();
+
+			ImGui::Separator();
+
+			if (searchBuffer[0] != '\0') {
+				inCategoryView = false;
+				DrawSearchResults(gameObject, searchBuffer);
+			}
+			else {
+				if (inCategoryView) {
+					DrawCategoryList(inCategoryView, currentCategory);
+				}
+				else {
+					if (ImGui::Button("Back to Categories")) {
+						inCategoryView = true;
+					}
+
+					ImGui::Separator();
+
+					const char* categoryTitle = GetCategoryTitle(currentCategory);
+					ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize(categoryTitle).x) * 0.5f);
+					ImGui::Text("%s", categoryTitle);
+
+					ImGui::Separator();
+
+					DrawCategoryComponents(gameObject, currentCategory);
+				}
+			}
+
+			ImGui::Separator();
+
+			ImGui::SetCursorPosX((ImGui::GetWindowWidth() - 120) * 0.5f);
+			if (ImGui::Button("Close", ImVec2(120, 0))) {
+				inCategoryView = true;
+				searchBuffer[0] = '\0';
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
+	static void DrawCategoryList(bool& inCategoryView, int& currentCategory) {
+		const char* categories[] = {
+			"Rendering",
+			"Physics",
+			"Audio",
+			"UI",
+			"Effects",
+			"Scripts",
+			"Input",
+			"Navigation"
+		};
+
+		for (int i = 0; i < IM_ARRAYSIZE(categories); i++) {
+			bool hovered = false;
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.15f, 0.15f, 0.15f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.25f, 0.40f, 0.70f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.25f, 0.40f, 0.70f, 1.0f));
+
+			ImGui::PushID(i);
+			ImGui::Button(categories[i], ImVec2(ImGui::GetContentRegionAvail().x, 35));
+			hovered = ImGui::IsItemHovered();
+
+			if (hovered && ImGui::IsMouseClicked(0)) {
+				currentCategory = i;
+				inCategoryView = false;
+			}
+
+			ImVec2 buttonMin = ImGui::GetItemRectMin();
+			ImVec2 buttonMax = ImGui::GetItemRectMax();
+			ImVec2 textPos = ImVec2(buttonMax.x - 20, buttonMin.y + (buttonMax.y - buttonMin.y) * 0.5f - ImGui::GetTextLineHeight() * 0.5f);
+			ImGui::GetWindowDrawList()->AddText(textPos, ImGui::GetColorU32(ImVec4(1, 1, 1, 1)), ">");
+
+			ImGui::PopID();
+			ImGui::PopStyleColor(3);
+		}
+	}
+
+	static void DrawCategoryComponents(GameObject* gameObject, int category) {
+		switch (category) {
+		case 0:
+			DrawComponentButton(gameObject, "Camera", [gameObject]() {
 				gameObject->AddComponent<CameraComponent>();
-			}
-		}
+				}, !gameObject->HasComponent<CameraComponent>());
 
-		if (!gameObject->HasComponent<MeshRenderer>()) {
-			if (ImGui::MenuItem("MeshRenderer")) {
+			DrawComponentButton(gameObject, "Mesh Renderer", [gameObject]() {
 				Application->root->AddMeshRenderer(*gameObject, Mesh::CreateCube(), "Assets/default.png");
-			}
-		}
+				}, !gameObject->HasComponent<MeshRenderer>());
 
-		if (!gameObject->HasComponent<LightComponent>()) {
-			if (ImGui::MenuItem("Light")) {
+			DrawComponentButton(gameObject, "Light", [gameObject]() {
 				gameObject->AddComponent<LightComponent>();
-			}
-		}
+				}, !gameObject->HasComponent<LightComponent>());
 
-		if (!gameObject->HasComponent<SoundComponent>()) {
-			if (ImGui::MenuItem("Sound")) {
-				gameObject->AddComponent<SoundComponent>();
-			}
-		}
+			DrawComponentButton(gameObject, "Shader", [gameObject]() {
+				gameObject->AddComponent<ShaderComponent>();
+				}, !gameObject->HasComponent<ShaderComponent>());
 
-		if (!gameObject->HasComponent<AudioListener>()) {
-			if (ImGui::MenuItem("Audio Listener")) {
-				gameObject->AddComponent<AudioListener>();
-			}
-		}
+			break;
 
-		if (!gameObject->HasComponent<BoxColliderComponent>() 
-			&& !gameObject->HasComponent<CapsuleColliderComponent>() 
-			&& !gameObject->HasComponent<MeshColliderComponent>()) 
-		{
-			if (ImGui::MenuItem("BoxCollider")) {
+		case 1:
+			DrawComponentButton(gameObject, "Box Collider", [gameObject]() {
 				gameObject->AddComponent<BoxColliderComponent>(Application->physicsModule);
-			}
-			if (ImGui::MenuItem("CapsuleCollider")) {
-				gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-			}
-			if (ImGui::MenuItem("MeshCollider")) {
-				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
-			}
-		}
-        
-        if (!gameObject->HasComponent<RigidbodyComponent>()) {
-			if (ImGui::MenuItem("RigidBody")) {
-				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
-			}
-		}
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
 
-		if (!gameObject->HasComponent<ParticleFX>()) {
-			if (ImGui::MenuItem("ParticleEmitter")) {
-				gameObject->AddComponent<ParticleFX>();
-			}
-		}
-        
-		if (!gameObject->HasComponent<UICanvasComponent>()) {
-			if (ImGui::MenuItem("Canvas")) {
-                if (!gameObject->HasComponent<UITransformComponent>()) {
-                    gameObject->AddComponent<UITransformComponent>();
-                }
-				gameObject->AddComponent<UICanvasComponent>();
-			}
-		}
-		if (!gameObject->HasComponent<UIImageComponent>()) {
-			if (ImGui::MenuItem("Image")) {
+			DrawComponentButton(gameObject, "Capsule Collider", [gameObject]() {
+				gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+
+			DrawComponentButton(gameObject, "Mesh Collider", [gameObject]() {
+				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+
+			DrawComponentButton(gameObject, "Rigidbody", [gameObject]() {
+				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<RigidbodyComponent>());
+
+			break;
+
+		case 2:
+			DrawComponentButton(gameObject, "Sound", [gameObject]() {
+				gameObject->AddComponent<SoundComponent>();
+				}, !gameObject->HasComponent<SoundComponent>());
+
+			DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
+				gameObject->AddComponent<AudioListener>();
+				}, !gameObject->HasComponent<AudioListener>());
+
+			break;
+
+		case 3:
+			DrawComponentButton(gameObject, "Canvas", [gameObject]() {
 				if (!gameObject->HasComponent<UITransformComponent>()) {
 					gameObject->AddComponent<UITransformComponent>();
-				}				
-                gameObject->AddComponent<UIImageComponent>();
-				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
-			}
-		}
-        
-		if (!gameObject->HasComponent<UITransformComponent>()) {
-			if (ImGui::MenuItem("RectTransform")) {
-				gameObject->AddComponent<UITransformComponent>();
-			}
-		}
-
-		if (!gameObject->HasComponent<UIButtonComponent>()) {
-			if (ImGui::MenuItem("Button")) {
-				if (!gameObject->HasComponent<UIImageComponent>()) {
-					gameObject->AddComponent<UIImageComponent>();
-					gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
 				}
-				gameObject->AddComponent<UIButtonComponent>();
-			}
+				gameObject->AddComponent<UICanvasComponent>();
+				}, !gameObject->HasComponent<UICanvasComponent>());
+
+			DrawComponentButton(gameObject, "Image", [gameObject]() {
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}
+				gameObject->AddComponent<UIImageComponent>();
+				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+				}, !gameObject->HasComponent<UIImageComponent>());
+
+			DrawComponentButton(gameObject, "Rect Transform", [gameObject]() {
+				gameObject->AddComponent<UITransformComponent>();
+				}, !gameObject->HasComponent<UITransformComponent>());
+
+			break;
+
+		case 4:
+			DrawComponentButton(gameObject, "Particle System", [gameObject]() {
+				gameObject->AddComponent<ParticleFX>();
+				}, !gameObject->HasComponent<ParticleFX>());
+
+			DrawComponentButton(gameObject, "Skeletal Animation", [gameObject]() {
+				gameObject->AddComponent<SkeletalAnimationComponent>();
+				}, !gameObject->HasComponent<SkeletalAnimationComponent>());
+
+			break;
+
+		case 5:
+			DrawAddScriptComponents(gameObject);
+			break;
+
+		case 6:
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No input components available");
+			break;
+
+		case 7:
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "No navigation components available");
+			break;
 		}
-		//Aqui mas componentes
 	}
 
+	static void DrawAddScriptComponents(GameObject* gameObject) {
+		std::vector<std::string> availableScripts;
+		try {
+			availableScripts = MonoManager::GetInstance().scriptNames;
+		}
+		catch (...) {
+			availableScripts = { "PlayerController", "EnemyAI", "ItemCollector", "CameraFollower" };
+		}
+
+		for (const auto& scriptName : availableScripts) {
+			DrawComponentButton(gameObject, scriptName.c_str(), [gameObject, scriptName]() {
+				gameObject->AddComponent<ScriptComponent>()->LoadScript(scriptName);
+				}, true);
+		}
+
+		ImGui::Separator();
+		if (ImGui::Button("Add New Script", ImVec2(ImGui::GetContentRegionAvail().x, 30))) {
+			ImGui::OpenPopup("AddCustomScript");
+		}
+
+		static char scriptNameBuffer[64] = "";
+		if (ImGui::BeginPopupModal("AddCustomScript", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+			ImGui::Text("Enter the name of the script to add:");
+			ImGui::InputText("##ScriptName", scriptNameBuffer, sizeof(scriptNameBuffer));
+
+			ImGui::Separator();
+
+			if (ImGui::Button("Add", ImVec2(120, 0))) {
+				if (strlen(scriptNameBuffer) > 0) {
+					MonoManager::GetInstance().CreateNewScript(scriptNameBuffer);
+					gameObject->AddComponent<ScriptComponent>()->LoadScript(scriptNameBuffer);
+					scriptNameBuffer[0] = '\0';
+					ImGui::ClosePopupToLevel(0, true);
+				}
+
+			}
+
+			ImGui::SameLine();
+
+			if (ImGui::Button("Cancel", ImVec2(120, 0))) {
+				scriptNameBuffer[0] = '\0';
+				ImGui::CloseCurrentPopup();
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
+	static void DrawSearchResults(GameObject* gameObject, const char* searchStr) {
+		std::string searchLower = searchStr;
+		std::transform(searchLower.begin(), searchLower.end(), searchLower.begin(), ::tolower);
+
+		bool anyFound = false;
+
+		auto matchesSearch = [&searchLower](const char* name) {
+			std::string nameLower = name;
+			std::transform(nameLower.begin(), nameLower.end(), nameLower.begin(), ::tolower);
+			return nameLower.find(searchLower) != std::string::npos;
+			};
+
+		if (matchesSearch("Camera")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Camera", [gameObject]() {
+				gameObject->AddComponent<CameraComponent>();
+				}, !gameObject->HasComponent<CameraComponent>());
+		}
+
+		if (matchesSearch("Mesh Renderer")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Mesh Renderer", [gameObject]() {
+				Application->root->AddMeshRenderer(*gameObject, Mesh::CreateCube(), "Assets/default.png");
+				}, !gameObject->HasComponent<MeshRenderer>());
+		}
+
+		if (matchesSearch("Light")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Light", [gameObject]() {
+				gameObject->AddComponent<LightComponent>();
+				}, !gameObject->HasComponent<LightComponent>());
+		}
+
+		if (matchesSearch("Box Collider")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Box Collider", [gameObject]() {
+				gameObject->AddComponent<BoxColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+		}
+
+		if (matchesSearch("Capsule Collider")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Capsule Collider", [gameObject]() {
+				gameObject->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+		}
+
+		if (matchesSearch("Mesh Collider")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Mesh Collider", [gameObject]() {
+				gameObject->AddComponent<MeshColliderComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<BoxColliderComponent>() &&
+					!gameObject->HasComponent<CapsuleColliderComponent>() &&
+					!gameObject->HasComponent<MeshColliderComponent>());
+		}
+
+		if (matchesSearch("Rigidbody")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Rigidbody", [gameObject]() {
+				gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);
+				}, !gameObject->HasComponent<RigidbodyComponent>());
+		}
+
+		if (matchesSearch("Sound")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Sound", [gameObject]() {
+				gameObject->AddComponent<SoundComponent>();
+				}, !gameObject->HasComponent<SoundComponent>());
+		}
+
+		if (matchesSearch("Audio Listener")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
+				gameObject->AddComponent<AudioListener>();
+				}, !gameObject->HasComponent<AudioListener>());
+		}
+
+		if (matchesSearch("Canvas")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Canvas", [gameObject]() {
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}
+				gameObject->AddComponent<UICanvasComponent>();
+				}, !gameObject->HasComponent<UICanvasComponent>());
+		}
+
+		if (matchesSearch("Image")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Image", [gameObject]() {
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}
+				gameObject->AddComponent<UIImageComponent>();
+				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+				}, !gameObject->HasComponent<UIImageComponent>());
+		}
+
+		if (matchesSearch("Rect Transform")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Rect Transform", [gameObject]() {
+				gameObject->AddComponent<UITransformComponent>();
+				}, !gameObject->HasComponent<UITransformComponent>());
+		}
+
+		if (matchesSearch("Particle") || matchesSearch("System")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Particle System", [gameObject]() {
+				gameObject->AddComponent<ParticleFX>();
+				}, !gameObject->HasComponent<ParticleFX>());
+		}
+
+		if (matchesSearch("Skeletal") || matchesSearch("Animation")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Skeletal Animation", [gameObject]() {
+				gameObject->AddComponent<SkeletalAnimationComponent>();
+				}, !gameObject->HasComponent<SkeletalAnimationComponent>());
+		}
+
+		if (matchesSearch("Shader")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "Shader", [gameObject]() {
+				gameObject->AddComponent<ShaderComponent>();
+				}, !gameObject->HasComponent<ShaderComponent>());
+		}
+
+		std::vector<std::string> availableScripts;
+		try {
+			availableScripts = MonoManager::GetInstance().scriptNames;
+		}
+		catch (...) {
+			availableScripts = { "PlayerController", "EnemyAI", "ItemCollector", "CameraFollower" };
+		}
+
+		for (const auto& scriptName : availableScripts) {
+			if (matchesSearch(scriptName.c_str())) {
+				anyFound = true;
+				DrawComponentButton(gameObject, scriptName.c_str(), [gameObject, scriptName]() {
+					gameObject->AddComponent<ScriptComponent>()->LoadScript(scriptName);
+					}, true);
+			}
+		}
+
+		if (!anyFound) {
+			ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f),
+				"No components match your search criteria");
+		}
+	}
+
+	static void DrawComponentButton(GameObject* gameObject, const char* name, std::function<void()> addAction, bool available) {
+		ImGui::PushID(name);
+
+		ImVec4 buttonColor = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);
+		ImVec4 buttonHoveredColor = ImVec4(0.25f, 0.40f, 0.70f, 1.0f);
+		ImVec4 buttonActiveColor = ImVec4(0.25f, 0.40f, 0.70f, 1.0f);
+		ImVec4 textColor = available ? ImVec4(1.0f, 1.0f, 1.0f, 1.0f) : ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
+
+		ImGui::PushStyleColor(ImGuiCol_Button, buttonColor);
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, buttonHoveredColor);
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, buttonActiveColor);
+		ImGui::PushStyleColor(ImGuiCol_Text, textColor);
+
+		bool clicked = ImGui::Button(name, ImVec2(ImGui::GetContentRegionAvail().x, 35));
+
+		ImGui::PopStyleColor(4);
+
+		if (clicked && available) {
+			addAction();
+			ImGui::CloseCurrentPopup();
+		}
+
+		ImGui::PopID();
+	}
+
+	static const char* GetCategoryTitle(int category) {
+		const char* titles[] = {
+			"Rendering Components",
+			"Physics Components",
+			"Audio Components",
+			"UI Components",
+			"Effects Components",
+			"Scripts",
+			"Input Components",
+			"Navigation Components"
+		};
+
+		if (category >= 0 && category < IM_ARRAYSIZE(titles)) {
+			return titles[category];
+		}
+
+		return "Components";
+	}
+#pragma endregion
+
+private:
     static ImVec2 CalculatePreviewSize(int width, int height) {
         const float maxPreviewSize = 200.0f;
         float aspectRatio = static_cast<float>(width) / height;

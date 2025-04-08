@@ -6,7 +6,7 @@
 
 UIAudioTest::UIAudioTest(UIType type, std::string name) : UIElement(type, name)
 {
-    m_AudioEngine = std::make_shared<MyGameEngine::AudioEngine>();
+    m_AudioEngine = std::make_shared<AudioEngine>();
     if (!m_AudioEngine->Initialize()) {
         LOG(LogType::LOG_ERROR, "Failed to initialize Audio Engine");
     } else {

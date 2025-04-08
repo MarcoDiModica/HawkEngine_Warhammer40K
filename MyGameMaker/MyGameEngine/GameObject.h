@@ -8,8 +8,8 @@
 #include "../MyScriptingEngine/EngineBinds.h"
 #include <mono/metadata/object.h>
 #include "../MyScriptingEngine/ScriptComponent.h"
-
-
+#include "HawkUUID.h"
+#include "ObjectRegistry.h"
 
 class SceneSerializer;
 class Scene;
@@ -69,14 +69,17 @@ public:
 
     bool CompareTag(const std::string& tag) const;
 
+    Transform_Component* GetTransform() const;
     BoundingBox boundingBox() const;
     BoundingBox localBoundingBox() const;
 
-    Transform_Component* GetTransform() const { return GetComponent<Transform_Component>(); }
-
     DrawMode drawMode = DrawMode::PushPopMatrix;
 
-    unsigned int GetId() const { return gid; }
+    HawkUUID GetID() const { return m_UUID; }
+
+	static GameObject* FindByID(const HawkUUID& id) {
+		return ObjectRegistry::FindObject(id);
+	}
 
     void SetParent(GameObject* parent);
     void ApplyWorldToLocalTransform(GameObject* child, const glm::dmat4& childWorldMatrix);
@@ -86,7 +89,7 @@ public:
     const std::vector<std::shared_ptr<GameObject>>& GetChildren() const { return children; }
 
     bool operator==(const GameObject& other) const {
-        return gid == other.gid;
+        return m_UUID == other.m_UUID;
     }
 
     bool operator!=(const GameObject& other) const {
@@ -108,6 +111,8 @@ public:
 
     void setBoundingBox(const BoundingBox& bbox) { _boundingBox = bbox; }
 
+    void SelfDestroy();
+
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -117,7 +122,7 @@ private:
     void DrawPushPopMatrix() const;
 
     std::string name;
-    unsigned int gid;
+    HawkUUID m_UUID;
     BoundingBox _boundingBox;
 private:
     
@@ -187,7 +192,7 @@ T* GameObject::GetComponent() const {
         return dynamic_cast<T*>(it->second.get());
     }
 
-    return nullptr;
+	return nullptr;
 }
 
 template <IsComponent T>

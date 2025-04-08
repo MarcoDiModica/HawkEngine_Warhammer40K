@@ -36,10 +36,6 @@ std::unique_ptr<Component> MeshColliderComponent::Clone(GameObject* new_owner) {
 
 MonoObject* MeshColliderComponent::GetSharp()
 {
-    if (CsharpReference) {
-        return CsharpReference;
-    }
-
     MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Collider");
     if (!klass) {
         MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "MeshCollider");
@@ -73,8 +69,7 @@ MonoObject* MeshColliderComponent::GetSharp()
 
     mono_runtime_invoke(method, monoObject, args, nullptr);
 
-    CsharpReference = monoObject;
-    return CsharpReference;
+    return monoObject;
 }
 
 void MeshColliderComponent::CreateCollider() {

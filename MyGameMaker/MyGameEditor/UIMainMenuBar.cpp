@@ -9,6 +9,7 @@
 #include "Input.h"
 #include "MyGameEngine/Image.h"
 #include "Log.h"
+#include "../MyScriptingEngine/MonoManager.h"
 
 void SetRedStyle();
 
@@ -27,7 +28,8 @@ UIMainMenuBar::~UIMainMenuBar()
 bool UIMainMenuBar::Draw()
 {
 	if (ImGui::BeginMainMenuBar()) {
-		// Inicia el men� "General"
+		float menuBarWidth = ImGui::GetWindowWidth();
+		float buttonWidth = 11.0f * 3 + 10.0f;
 
 		if (ImGui::BeginMenu("File"))
 		{
@@ -44,18 +46,15 @@ bool UIMainMenuBar::Draw()
 		}
 		if (ImGui::BeginMenu("General"))
 		{
-
 			if (ImGui::MenuItem("About")) { ShellExecute(0, 0, "https://github.com/CITM-UPC/HawkEngine", 0, 0, SW_SHOW); }
 			if (ImGui::MenuItem("Quit")) {
 				SDL_Quit();
 				exit(0);
 			}
-			//Aqui abajo mas botones para esconder las diferentes ventanas de Imgui
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Create"))
 		{
-
 			if (ImGui::MenuItem("EmptyGameObject")) { Application->root->CreateGameObject("EmptyGameObject"); }
 			if (ImGui::MenuItem("Cube")) { Application->root->CreateCube("Cube"); }
 			if (ImGui::MenuItem("Sphere")) { Application->root->CreateSphere("Sphere"); }
@@ -76,6 +75,45 @@ bool UIMainMenuBar::Draw()
 
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Scripting"))
+		{
+			if (ImGui::MenuItem("Compile Scripts")) { MonoManager::GetInstance().ForceRecompileScripts(); }
+			if (!MonoManager::GetInstance().IsHotReloadingEnabled())
+			{
+				if (ImGui::MenuItem("Enable Hot Reloading")) { MonoManager::GetInstance().EnableHotReloading(); }
+			}
+			else
+			{
+				if (ImGui::MenuItem("Disable Hot Reloading")) { MonoManager::GetInstance().DisableHotReloading(); }
+			}
+
+			if (ImGui::MenuItem("Create New Script"))
+			{
+				createScriptPopupOpen = true;
+			}
+
+			if (ImGui::BeginMenu("Remove Script"))
+			{
+				for (auto& script : MonoManager::GetInstance().scriptIDs)
+				{
+					if (ImGui::MenuItem(script.first.c_str()))
+					{
+						scriptToRemove = script.first;
+						confirmRemovePopupOpen = true;
+					}
+				}
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndMenu();
+		}
+
+		float currentPos = ImGui::GetCursorPosX();
+		float centerPos = (menuBarWidth - buttonWidth) * 0.5f;
+		if (centerPos > currentPos) {
+			ImGui::SetCursorPosX(centerPos);
+		}
+
 		//---------Play and Stop Button----------//
 		if (Application->play == false) {
 			Application->gui->SetColorScheme();
@@ -95,7 +133,7 @@ bool UIMainMenuBar::Draw()
 					Application->physicsModule->linkPhysicsToScene = true;
 				}
 			}
-			
+
 			if (isPaused)
 			{
 				SetRedStyle();
@@ -107,6 +145,7 @@ bool UIMainMenuBar::Draw()
 					Application->physicsModule->linkPhysicsToScene = false;
 					Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");
 				}
+				ImGui::SameLine();
 				if (ImGui::ImageButton("Pause Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(pause_image.id())), ImVec2(11.0f, 11.0f)))
 				{
 					Application->play = true;
@@ -126,6 +165,7 @@ bool UIMainMenuBar::Draw()
 				Application->physicsModule->linkPhysicsToScene = false;
 				Application->scene_serializer->DeSerialize("EngineAssets/" + Application->root->GetActiveScene()->GetName() + ".scene");				
 			}
+			ImGui::SameLine();
 			if (ImGui::ImageButton("Pause Button", reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(pause_image.id())), ImVec2(11.0f, 11.0f)))
 			{
 				Application->play = false;
@@ -135,14 +175,66 @@ bool UIMainMenuBar::Draw()
 			}
 		}
 
-		fps = ImGui::GetIO().Framerate;
-		ImGui::Text("GUI FPS: %.1f", fps);
-		float gameFPS = Application->GetFps();
-		ImGui::Text("Game FPS: %.1f", gameFPS);
+		if (createScriptPopupOpen)
+		{
+			ImGui::OpenPopup("Create New Script");
+			createScriptPopupOpen = false;
+		}
 
-		// Finaliza la barra de men� principal
+		if (confirmRemovePopupOpen)
+		{
+			ImGui::OpenPopup("Confirm Script Removal");
+			confirmRemovePopupOpen = false;
+		}
+
+		float fpsWidth = ImGui::CalcTextSize("GAME FPS: 999.99").x * 2.0f;
+		float gui_fps = ImGui::GetIO().Framerate;
+		float game_fps = Application->GetFps();
+		ImGui::SetCursorPosX(menuBarWidth - fpsWidth - 10.0f);
+		ImGui::Text("GAME FPS: %.1f", game_fps);
+		ImGui::Text("GUI FPS: %.1f", gui_fps);
+
+		if (ImGui::BeginPopupModal("Confirm Script Removal", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			ImGui::Text("¿Removing script with name '%s'?", scriptToRemove.c_str());
+			ImGui::Separator();
+
+			if (ImGui::Button("Yeah", ImVec2(120, 0)))
+			{
+				MonoManager::GetInstance().RemoveScriptFromProject(scriptToRemove);
+				scriptToRemove = "";
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Nu huh", ImVec2(120, 0)))
+			{
+				scriptToRemove = "";
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
+
+		if (ImGui::BeginPopupModal("Create New Script", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+		{
+			static char scriptName[128] = "";
+			ImGui::InputText("Script Name", scriptName, IM_ARRAYSIZE(scriptName));
+			if (ImGui::Button("Create"))
+			{
+				MonoManager::GetInstance().CreateNewScript(scriptName);
+				memset(scriptName, 0, sizeof(scriptName));
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Cancel"))
+			{
+				memset(scriptName, 0, sizeof(scriptName));
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
+
 		ImGui::EndMainMenuBar();
-	}
+	}	
 
 	return true;
 }

@@ -47,19 +47,15 @@ Input::~Input()
 bool Input::Awake()
 {
     bool ret = true;
-    LOG(LogType::LOG_INFO, "Initializing Input Events...");
 
-    if (SDL_InitSubSystem(SDL_INIT_EVENTS) == 0)
-    {
-        LOG(LogType::LOG_OK, "Init SDL Input Event subsystem");
-    }
-    else
-    {
-        LOG(LogType::LOG_ERROR, "SDL Input Event subsystem could not be initialized! %s", SDL_GetError());
-        ret = false;
-    }
-
-    LOG(LogType::LOG_OK, "-File System current path: %s", std::filesystem::current_path().string().c_str());
+	if (SDL_InitSubSystem(SDL_INIT_EVENTS) == 0)
+	{
+	}
+	else
+	{
+		LOG(LogType::LOG_ERROR, "SDL Input Event subsystem could not be initialized! %s", SDL_GetError());
+		ret = false;
+	}
 
 	camera = Application->camera;
     
@@ -98,8 +94,6 @@ std::string CopyFBXFileToProject(const std::string& sourceFilePath) {
     return assetsDir.string();
 }
 
-
-
 void SpawnPhysCube() {
     //auto cube = Application->root->CreateCube("PhysicsCube");
     //cube->GetTransform()->SetPosition(glm::vec3(0, 10, 0));
@@ -109,11 +103,12 @@ void SpawnPhysCube() {
     //glm::vec3 cameraDirection = Application->camera->GetTransform().GetForward();
     //Application->physicsModule->SpawnPhysSphereWithForce(,*sphere, 1.0f, 15.0f, cameraPosition,cameraDirection, 500.0f);
 }
+
 bool Input::processSDLEvents()
 {
     SDL_PumpEvents();
 
-    const Uint8* keys = SDL_GetKeyboardState(NULL);
+    const Uint8* keys = SDL_GetKeyboardState(nullptr);
 
     for (int j = 0; j < SDL_CONTROLLER_BUTTON_MAX; ++j) {
         if (SDL_GameControllerGetButton(InputManagement->gamepads[0].controller, (SDL_GameControllerButton)j))
@@ -457,7 +452,7 @@ void Input::HandleFileDrop(const std::string& fileDir)
             }
 
             // Then process to Library
-            MyGameEngine::AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
+            AudioAssetProcessor::ProcessAudioFile(targetPath.string(), libraryPath.string());
             LOG(LogType::LOG_OK, "Audio file processed to Library: %s", libraryPath.string().c_str());
         }
         catch (const std::exception& e) {
@@ -508,21 +503,38 @@ void Input::HandleFileDrop(const std::string& fileDir)
 
 glm::vec3 Input::getMousePickRay()
 {
-    ImVec2 windowPos = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winPos.x), static_cast<float>(Application->gui->UISceneWindowPanel->winPos.y));
-    ImVec2 windowSize = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winSize.x), static_cast<float>(Application->gui->UISceneWindowPanel->winSize.y));
+	ImVec2 windowPos = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winPos.x),
+		static_cast<float>(Application->gui->UISceneWindowPanel->winPos.y));
+	ImVec2 windowSize = ImVec2(static_cast<float>(Application->gui->UISceneWindowPanel->winSize.x),
+		static_cast<float>(Application->gui->UISceneWindowPanel->winSize.y));
 
-    float mouseX = Application->input->GetMouseX() - windowPos.x + 10;
-    float mouseY = Application->input->GetMouseY() - windowPos.y + 20;
+	int mouseX = Application->input->GetMouseX();
+	int mouseY = Application->input->GetMouseY();
 
-    glm::ivec2 size = glm::ivec2(windowSize.x, windowSize.y);
+	if (mouseX < windowPos.x || mouseX >(windowPos.x + windowSize.x) ||
+		mouseY < windowPos.y || mouseY >(windowPos.y + windowSize.y)) {
+		return glm::vec3(0, 0, -1);
+	}
 
-    // Ensure the mouse coordinates are within the bounds of the ImGui window
-    if (mouseX >= 0 && mouseX <= windowSize.x && mouseY >= 0 && mouseY <= windowSize.y) {
+	float relX = mouseX - windowPos.x;
+	float relY = mouseY - windowPos.y;
 
-    }
+	float normalizedX = (2.0f * relX / windowSize.x) - 1.0f;
+	float normalizedY = 1.0f - (2.0f * relY / windowSize.y);
 
-    glm::vec3 rayDirection = Application->input->getRayFromMouse(static_cast<int>(mouseX), static_cast<int>(mouseY), camera->projection(), camera->view(), size);
-    return rayDirection;
+	glm::vec4 clipCoords = glm::vec4(normalizedX, normalizedY, -1.0f, 1.0f);
+
+	glm::mat4 projMatrix = camera->projection();
+	glm::mat4 viewMatrix = camera->view();
+
+	glm::vec4 viewCoords = glm::inverse(projMatrix) * clipCoords;
+	viewCoords = glm::vec4(viewCoords.x, viewCoords.y, -1.0f, 0.0f);
+
+	glm::vec4 worldCoords = glm::inverse(viewMatrix) * viewCoords;
+
+	glm::vec3 rayDirection = glm::normalize(glm::vec3(worldCoords));
+
+	return rayDirection;
 }
 
 KEY_STATE Input::GetKey(int id)

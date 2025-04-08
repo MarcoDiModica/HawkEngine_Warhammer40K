@@ -66,6 +66,7 @@ YAML::Node SceneSerializer::SerializeGameObject(GameObject& gameObject) {
 	YAML::Node node;
 
 	node["name"] = gameObject.GetName();
+	node["uuid"] = gameObject.GetID().GetValue();
 	node["tag"] = gameObject.tag;
 	node["active"] = gameObject.IsActive();
 	node["isStatic"] = gameObject.isStatic;
@@ -189,6 +190,11 @@ std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::N
 
 	auto objectName = node["name"].as<std::string>();
 	std::shared_ptr<GameObject> gameObject = Application->root->CreateGameObject(objectName);
+
+	if (node["uuid"].IsDefined()) {
+		uint64_t idValue = node["uuid"].as<uint64_t>();
+		gameObject->m_UUID = HawkUUID(idValue);
+	}
 
 	if (node["tag"].IsDefined()) {
 		gameObject->tag = node["tag"].as<std::string>();

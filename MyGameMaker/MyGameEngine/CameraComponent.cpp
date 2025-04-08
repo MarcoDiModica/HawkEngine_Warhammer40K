@@ -238,10 +238,6 @@ void CameraComponent::Shake(float intensity, float duration, float frequency)
 
 MonoObject* CameraComponent::GetSharp()
 {
-	if (CsharpReference) {
-		return CsharpReference;
-	}
-
 	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "Camera");
 	if (!klass) {
 		return nullptr;
@@ -272,6 +268,5 @@ MonoObject* CameraComponent::GetSharp()
 
 	mono_runtime_invoke(method, monoObject, args, NULL);
 
-	CsharpReference = monoObject;
-	return CsharpReference;
+	return monoObject;
 }

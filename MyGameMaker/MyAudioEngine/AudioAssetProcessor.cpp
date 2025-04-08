@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <fstream>
 
-namespace MyGameEngine {
 
 std::unordered_map<std::string, std::weak_ptr<AudioAsset>> AudioAssetProcessor::audioCache;
 
@@ -92,5 +91,3 @@ bool AudioAssetProcessor::IsAudioFile(const std::string& path) {
     std::string ext = GetFileExtension(path);
     return ext == ".wav" || ext == ".ogg" || ext == ".mp3";
 }
-
-} 

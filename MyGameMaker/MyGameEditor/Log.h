@@ -4,8 +4,6 @@
 
 #include <string>
 
-#include "UIConsole.h"
-
 enum class LogType
 {
 	LOG_INFO,
@@ -16,18 +14,21 @@ enum class LogType
 	LOG_WARNING,
 	LOG_ERROR,
 
-	LOG_C_SHARP
+	LOG_C_SHARP,
+	LOG_C_SHARP_WARNING,
+	LOG_C_SHARP_ERROR
 };
 
 struct LogInfo
 {
 	LogType type;
 	std::string message;
+	int repeatCount;
 };
 
 #define LOG(type, format, ...) Log(__FILE__, __LINE__, type, format, ## __VA_ARGS__)
 
 void Log(const char file[], int line, LogType type, const char* format, ...);
-
+bool IsValidFormatString(const char* format);
 
 #endif  // !__LOG_H__

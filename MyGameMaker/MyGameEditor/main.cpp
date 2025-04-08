@@ -63,6 +63,7 @@
 #include "MyAudioEngine/SoundComponent.h"
 #include "MyGameEngine/ShaderManager.h"
 #include "MyParticlesEngine/ParticleFX.h"
+#include "SDL2/SDL_timer.h"
 
 using namespace std;
 
@@ -338,73 +339,173 @@ static void RenderGameView() {
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }
 
-//WIP Undo/Redo for transform actions
-#pragma region CTRZ+CTRLY
+#pragma region UNDO_REDO
+
+const int MAX_UNDO_STATES = 100; 
+
+bool MatricesAreEqual(const glm::dmat4& a, const glm::dmat4& b, double epsilon = 0.0000001) {
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			if (std::abs(a[i][j] - b[i][j]) > epsilon) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
 
 struct TransformState {
-	glm::mat4 transform;
+	glm::dmat4 transform;
 	GameObject* gameObject;
+	std::string objectName; 
 };
 
-std::stack<TransformState> undoStack;
-std::stack<TransformState> redoStack;
+struct TransformCommand {
+	std::vector<TransformState> states;
+	std::string description;
+	Uint32 timestamp;
+};
 
+std::stack<TransformCommand> undoStack;
+std::stack<TransformCommand> redoStack;
+bool wasUsingGizmo = false;
+bool transformChanged = false;
+std::map<GameObject*, glm::dmat4> initialTransforms;
 
-void SaveState(GameObject* gameObject, const glm::mat4& currentTransform) {
-	undoStack.push({ currentTransform, gameObject });
+void BeginTransformAction() {
+	if (Application->input->GetSelectedGameObjects().empty()) return;
+
+	initialTransforms.clear();
+	for (auto* gameObject : Application->input->GetSelectedGameObjects()) {
+		if (gameObject && gameObject->GetTransform()) {
+			initialTransforms[gameObject] = gameObject->GetTransform()->GetMatrix();
+		}
+	}
+
+	transformChanged = false;
+}
+
+bool HasTransformationChanged() {
+	if (initialTransforms.empty()) return false;
+
+	for (const auto& pair : initialTransforms) {
+		if (pair.first && pair.first->GetTransform()) {
+			if (!MatricesAreEqual(pair.second, pair.first->GetTransform()->GetMatrix())) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+void CommitTransformAction(const std::string& description = "Transform") {
+	if (Application->input->GetSelectedGameObjects().empty() || initialTransforms.empty()) return;
+
+	if (!HasTransformationChanged()) return;
+
+	TransformCommand command;
+	command.description = description;
+	command.timestamp = SDL_GetTicks();
+
+	for (const auto& pair : initialTransforms) {
+		if (pair.first && pair.first->GetTransform()) {
+			TransformState initialState;
+			initialState.gameObject = pair.first;
+			initialState.transform = pair.second;
+			initialState.objectName = pair.first->GetName();
+			command.states.push_back(initialState);
+		}
+	}
 
 	while (!redoStack.empty()) {
 		redoStack.pop();
 	}
+
+	if (undoStack.size() >= MAX_UNDO_STATES) {
+		std::stack<TransformCommand> tempStack;
+		while (undoStack.size() > MAX_UNDO_STATES - 1) {
+			undoStack.pop();
+		}
+	}
+
+	undoStack.push(command);
+	initialTransforms.clear();
+	transformChanged = false;
 }
 
 void Undo() {
-	if (!undoStack.empty()) {
-		TransformState previousState = undoStack.top();
-		undoStack.pop();
+	if (undoStack.empty()) return;
 
-		// Save the current state of the object for redo
-		redoStack.push({ previousState.gameObject->GetTransform()->GetMatrix(), previousState.gameObject });
+	TransformCommand command = undoStack.top();
+	undoStack.pop();
 
-		// Apply the previous transform to the object
-		previousState.gameObject->GetTransform()->SetMatrix(previousState.transform);
+	TransformCommand redoCommand;
+	redoCommand.description = "Redo " + command.description;
+	redoCommand.timestamp = SDL_GetTicks();
+
+	for (const auto& state : command.states) {
+		if (state.gameObject && state.gameObject->GetTransform()) {
+			TransformState currentState;
+			currentState.gameObject = state.gameObject;
+			currentState.transform = state.gameObject->GetTransform()->GetMatrix();
+			currentState.objectName = state.gameObject->GetName();
+			redoCommand.states.push_back(currentState);
+
+			state.gameObject->GetTransform()->SetMatrix(state.transform);
+		}
 	}
+
+	redoStack.push(redoCommand);
 }
 
 void Redo() {
-	if (!redoStack.empty()) {
-		TransformState nextState = redoStack.top();
-		redoStack.pop();
+	if (redoStack.empty()) return;
 
-		// Save the current state of the object for undo
-		undoStack.push({ nextState.gameObject->GetTransform()->GetMatrix(), nextState.gameObject });
+	TransformCommand command = redoStack.top();
+	redoStack.pop();
 
-		// Apply the next transform to the object
-		nextState.gameObject->GetTransform()->SetMatrix(nextState.transform);
+	TransformCommand undoCommand;
+	undoCommand.description = "Undo " + command.description;
+	undoCommand.timestamp = SDL_GetTicks();
+
+	for (const auto& state : command.states) {
+		if (state.gameObject && state.gameObject->GetTransform()) {
+			TransformState currentState;
+			currentState.gameObject = state.gameObject;
+			currentState.transform = state.gameObject->GetTransform()->GetMatrix();
+			currentState.objectName = state.gameObject->GetName();
+			undoCommand.states.push_back(currentState);
+
+			state.gameObject->GetTransform()->SetMatrix(state.transform);
+		}
 	}
+
+	undoStack.push(undoCommand);
 }
 
-void UndoRedo()
-{
-	static bool wasUsingGizmo = false;
-
+void UndoRedoSystem() {
 	if (ImGuizmo::IsUsing()) {
-		wasUsingGizmo = true;
+		if (!wasUsingGizmo) {
+			BeginTransformAction();
+			wasUsingGizmo = true;
+		}
+		transformChanged = true;
 	}
 	else if (wasUsingGizmo) {
-		SaveState(Application->input->GetSelectedGameObjects().at(0), Application->input->GetSelectedGameObjects().at(0)->GetTransform()->GetMatrix());
+		if (transformChanged) {
+			CommitTransformAction("Gizmo Transform");
+		}
 		wasUsingGizmo = false;
 	}
 
-	// Handle undo/redo input
-	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
-		Undo();
+	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {
+		if (Application->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
+			Undo();
+		}
+		else if (Application->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) {
+			Redo();
+		}
 	}
-
-	if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT && Application->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) {
-		Redo();
-	}
-
 }
 
 #pragma endregion
@@ -417,117 +518,241 @@ static void ObjectToEditorCamera()
 	}
 }
 
-static void MousePickingCheck(std::vector<std::shared_ptr<GameObject>> objects)
-{	
-	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
-	glm::vec3 rayDirection = Application->input->getMousePickRay();
-	std::shared_ptr<GameObject> selectedObject = nullptr;
-	bool selecting = false;
-	float distance = 0.0f;
-	float closestDistance = 0.0f;
-	
-	if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused) 
-	{
+static void MousePickingCheck(std::vector<GameObject*> objects)
+{
+	if (Application->input->GetMouseButton(1) != KEY_DOWN && !ImGuizmo::IsUsing()) {
+		return;
+	}
 
+	glm::vec3 rayOrigin = glm::vec3(glm::inverse(Application->camera->view()) * glm::vec4(0, 0, 0, 1));
+
+	glm::vec3 rayDirection = Application->input->getMousePickRay();
+
+	if (rayDirection == glm::vec3(0, 0, -1) && Application->input->GetMouseButton(1) != KEY_DOWN) {
+		return;
+	}
+
+	bool selecting = false;
+	bool isMultiSelect = Application->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT ||
+		Application->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT;
+	bool isCtrlHeld = Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT ||
+		Application->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT;
+
+	static Uint32 lastClickTime = 0;
+	static glm::vec2 lastClickPos(0, 0);
+	static int cyclicIndex = -1;
+
+	glm::vec2 currentMousePos(Application->input->GetMouseX(), Application->input->GetMouseY());
+	Uint32 currentTime = SDL_GetTicks();
+	bool isSamePosition = glm::distance(currentMousePos, lastClickPos) < 5.0f;
+	bool isDoubleClick = (currentTime - lastClickTime < 500) && isSamePosition;
+
+	std::vector<std::pair<GameObject*, float>> objectsHit;
+
+	if (Application->input->GetMouseButton(1) == KEY_DOWN && Application->gui->UISceneWindowPanel->isFoucused)
+	{
 		if (ImGuizmo::IsOver()) {
 			return;
 		}
 
-		selecting = true;
-		for (auto & object : objects)
-		{
-			if (object->HasComponent<MeshRenderer>() && object->IsActive())
-			{
-				BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+		if (!isSamePosition) {
+			cyclicIndex = -1;
+			objectsHit.clear();
+		}
 
-				bbox = object->GetTransform()->GetMatrix() * bbox;
-				glm::vec3 collisionPoint;
-				if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
+		lastClickTime = currentTime;
+		lastClickPos = currentMousePos;
+
+		selecting = true;
+
+		if (isDoubleClick && !objectsHit.empty()) {
+			cyclicIndex = (cyclicIndex + 1) % objectsHit.size();
+		}
+		else {
+			objectsHit.clear();
+			cyclicIndex = 0;
+
+			for (auto & object : objects)
+			{
+				if (object->HasComponent<MeshRenderer>() && object->IsActive())
 				{
-                    distance = glm::distance(rayOrigin, collisionPoint);
-					if (distance < closestDistance || closestDistance == 0.0f)
+					BoundingBox bbox = object->GetComponent<MeshRenderer>()->GetMesh()->boundingBox();
+					bbox = object->GetTransform()->GetMatrix() * bbox;
+					glm::vec3 collisionPoint;
+
+					if (Application->gui->UISceneWindowPanel->CheckRayAABBCollision(rayOrigin, rayDirection, bbox, collisionPoint))
 					{
-						closestDistance = distance;
-						selectedObject = object;
+						float distance = glm::distance(rayOrigin, collisionPoint);
+						objectsHit.emplace_back(object, distance);
 					}
 				}
 			}
-		}
-	}
 
-	if (selectedObject != nullptr && selecting == true)
-	{
-		Application->input->ClearSelection();
-		Application->input->SetDraggedGameObject(selectedObject.get());
-		Application->input->AddToSelection(selectedObject.get());
+			std::sort(objectsHit.begin(), objectsHit.end(),
+				[](const auto& a, const auto& b) {
+					return a.second < b.second;
+				});
+		}
+
+		if (!objectsHit.empty()) {
+			GameObject* selectedObject = objectsHit[cyclicIndex].first;
+
+			if (!isMultiSelect && !isCtrlHeld) {
+				Application->input->ClearSelection();
+			}
+
+			if (isCtrlHeld && Application->input->IsGameObjectSelected(selectedObject)) {
+				Application->input->RemoveFromSelection(selectedObject);
+			}
+			else {
+				Application->input->SetDraggedGameObject(selectedObject);
+				Application->input->AddToSelection(selectedObject);
+			}
+		}
+		else if (!isMultiSelect && !isCtrlHeld) {
+			Application->input->ClearSelection();
+		}
 	}
 }
 
 static void RenderOutline(GameObject* object) {
 	if (!object->isSelected || !object->HasComponent<MeshRenderer>()) return;
-	
+
+	GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+	GLboolean depthTestEnabled;
+	glGetBooleanv(GL_DEPTH_TEST, &depthTestEnabled);
+	GLboolean blendEnabled;
+	glGetBooleanv(GL_BLEND, &blendEnabled);
+	GLint blendSrcFunc, blendDstFunc;
+	glGetIntegerv(GL_BLEND_SRC, &blendSrcFunc);
+	glGetIntegerv(GL_BLEND_DST, &blendDstFunc);
+	GLfloat lineWidth;
+	glGetFloatv(GL_LINE_WIDTH, &lineWidth);
+
+	glUseProgram(0);
+
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_STENCIL_TEST);
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	glStencilMask(0xFF);
+	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+
 	glm::mat4 modelMatrix = object->GetTransform()->GetMatrix();
-
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(-5.0f, -5.0f);
-	
-	glColor3f(1.0f, 0.5f, 0.0f); // Red outline
-
 	glPushMatrix();
 	glMultMatrixf(glm::value_ptr(modelMatrix));
 	object->GetComponent<MeshRenderer>()->Render();
 	glPopMatrix();
 
-	glDisable(GL_POLYGON_OFFSET_FILL);
+	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+	glStencilMask(0x00);
 
-	glColor3f(1.0f, 1.0f, 1.0f);
+	float outlineScale = 1.03f;
+	glm::mat4 outlineMatrix = glm::scale(modelMatrix, glm::vec3(outlineScale));
+
+	glColor4f(1.0f, 0.5f, 0.0f, 0.8f);
+
+	glPushMatrix();
+	glMultMatrixf(glm::value_ptr(outlineMatrix));
+	object->GetComponent<MeshRenderer>()->Render();
+	glPopMatrix();
+
+	glDisable(GL_STENCIL_TEST);
+	if (depthTestEnabled) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+	if (blendEnabled) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+	glBlendFunc(blendSrcFunc, blendDstFunc);
+	glStencilMask(0xFF);
+	glStencilFunc(GL_ALWAYS, 0, 0xFF);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}
 }
 
-static void RenderEditor() {
+static void RenderEditor()
+{
+	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
+	bool useMSAA = sceneWindow->msaaSamples > 0;
 
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	if (useMSAA) {
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->multisampleFBO);
+	}
+	else {
+		glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
+	}
+
 	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	configureCamera();
 	drawFloorGrid(256, 4);
-	std::vector<std::shared_ptr<GameObject>> objects;
-	for (auto& object : Application->root->GetActiveScene()->children()) {
-		
-		objects.push_back(object);
 
-		for (const auto& child : object->GetChildren()) {
+	auto activeScene = Application->root->GetActiveScene();
+	if (!activeScene) return;
+	auto sceneChildrenCopy = Application->root->GetActiveScene()->children();
+	std::vector<GameObject*> objects;
+	for (const auto& objPtr : sceneChildrenCopy) {
+		if (!objPtr) continue;
+		GameObject* object = objPtr.get();
+		if (!object) continue;
+		objects.push_back(object);
+		for (const auto& childPtr : object->GetChildren()) {
+			if (!childPtr) continue;
+			GameObject* child = childPtr.get();
+			if (!child) continue;
 			objects.push_back(child);
 		}
-
-		if (object->IsActive()) 
-		{
+		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
-
-			if (Application->hasChangedScene)
-			{
+			
+			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
-				break;
+				return;
 			}
-
+			
 			if (object->HasComponent<LightComponent>()) {
-				auto& lights = Application->root->GetActiveScene()->_lights;
-				auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
+				auto& lights = activeScene->_lights;
+				auto it = std::find(lights.begin(), lights.end(), objPtr);
 				if (it == lights.end()) {
-					lights.push_back(object->shared_from_this());
+					lights.push_back(objPtr);
 				}
 			}
 		}
 	}
-
+	
+	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
 	Application->physicsModule->Update(Application->GetDt());
-
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
+	/*std::vector<GameObject*> selectedObjects = Application->input->GetSelectedGameObjects();
+	for (auto& object : objects) {
+		if (object->IsActive()) {
+			RenderOutline(object);
+		}
+	}*/
+
 	MousePickingCheck(objects);
+
+	if (useMSAA) {
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, Application->gui->multisampleFBO);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, Application->gui->fbo);
+		glBlitFramebuffer(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y,
+			0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y,
+			GL_COLOR_BUFFER_BIT, GL_LINEAR);
+	}
+
+	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 static void EditorRenderer(MyGUI* gui) {
@@ -559,20 +784,6 @@ static void EditorRenderer(MyGUI* gui) {
 static double counterUsingDeltaTime = 0.0;
 static double counterUsingChrono = 0.0;
 static hrclock::time_point startTime = hrclock::now();
-
-static void PrintCounters() {
-	//// Counter using delta time
-	//counterUsingDeltaTime += Application->GetDt();
-	//std::cout << "Counter using delta time: " << std::fixed << std::setprecision(2) << counterUsingDeltaTime << " seconds" << std::endl;
-
-	//// Counter using chrono
-	//auto currentTime = hrclock::now();
-	//std::chrono::duration<double> elapsedTime = currentTime - startTime;
-	//counterUsingChrono = elapsedTime.count();
-	//std::cout << "Counter using chrono: " << std::fixed << std::setprecision(2) << counterUsingChrono << " seconds" << std::endl;
-
-	std::cout << "Fps;  %d" << Application->GetFps() << std::endl;
-}
 
 static void GameRelease() {
 
@@ -686,18 +897,22 @@ int main(int argc, char** argv) {
 		case LOOP:
 
 #ifndef _BUILD
+			Application->gui->Render();
 			EditorRenderer(Application->gui);
-			
 			RenderGameView(); 
-			PrintCounters();
-			//Application->gui->Render();
+
 			Application->window->SwapBuffers();
-			UndoRedo();
+
+			UndoRedoSystem();
 			ObjectToEditorCamera();
+
+			if (MonoManager::GetInstance().IsHotReloadingEnabled()) {
+				ScriptHotReloader::GetInstance().Update();
+			}
 #else
 			GameRelease();
 			Application->window->SwapBuffers();
-#endif // ENABLE_EDITOR	
+#endif // ENABLE_EDITOR
 		
 			if (!Application->Update()) { state = FREE; }
 			break;

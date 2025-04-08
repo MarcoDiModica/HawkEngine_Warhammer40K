@@ -24,7 +24,9 @@ public class PlayerDash : MonoBehaviour
     private float targetFOV;
     private float zoomSpeed = 0.5f;
     private Audio sound;
-    private string DashSound = "Assets/Audio/SFX/Player/PlayerDash.wav";
+    private string DashSound = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
+
+    
 
     public override void Awake()
     {
@@ -37,7 +39,7 @@ public class PlayerDash : MonoBehaviour
         lastDashTime = -dashCooldown;
 
         playerCamera = GameObject.Find("MainCamera");
-        playerCamera.GetComponent<PlayerCamera>();
+        playerCamera.GetComponent<PlayerCamera>();    
         sound = gameObject.GetComponent<Audio>();
     }
 
@@ -48,6 +50,8 @@ public class PlayerDash : MonoBehaviour
             HandleActiveDash(deltaTime);
             
         }
+
+       
 
         HandleInvulnerability(deltaTime);
     }

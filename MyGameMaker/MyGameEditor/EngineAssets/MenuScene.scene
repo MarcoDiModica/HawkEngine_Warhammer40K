@@ -1,0 +1,408 @@
+SceneMetadata:
+  SceneName: MenuScene
+GameObject0:
+  name: MainCamera
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999735770004
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject1:
+  name: Canvas
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/UI/ButtonPressed.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 0
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: MenuButtons
+  Children:
+    - name: MenuImage
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 0
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/Main_Menu_1.png
+      Children: ~
+    - name: NewGameButton
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.128000006
+            - 0.317999989
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0909999982
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/New_Game.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: ContinueButton
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.128000006
+            - 0.460999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0909999982
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/Continue_button.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: OptionsButton
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.128000006
+            - 0.603999972
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0909999982
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/Options_Button.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: CreditsButton
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.127000004
+            - 0.748000026
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0909999982
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/Credits_Buttom.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+    - name: QuitButton
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.127000004
+            - 0.906000018
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0909999982
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Assets/Textures/Quit_button.png
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+      Children: ~
+GameObject2:
+  name: EmptyMusic
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\Retro Ambience 02.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: true
+      loop: true
+  Children: ~

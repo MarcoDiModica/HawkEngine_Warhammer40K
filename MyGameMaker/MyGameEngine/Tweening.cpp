@@ -10,7 +10,6 @@
 #include "MyGameEditor/App.h"
 
 std::vector<Tweening::Tween> Tweening::tweens;
-std::mutex tweenMutex;
 
 Tweening::Tween Tweening::CreateTween(GameObject* object, float duration, Modes mode) {
 	Tween tween;
@@ -469,9 +468,12 @@ glm::vec3 Tweening::CalculateVec3(const glm::vec3& startVec3, const glm::vec3& t
 	return glm::mix(startVec3, targetVec3, easedT);
 }
 
-void Tweening::Update(float deltaTime) {
-	std::lock_guard<std::mutex> lock(tweenMutex);
+void Tweening::CleanAllTweens()
+{
+	tweens.clear();
+}
 
+void Tweening::Update(float deltaTime) {
 	if (Application->root->GetActiveScene()->sceneState != Scene::SceneState::PLAY) {
 		tweens.clear();
 		return;
@@ -480,6 +482,15 @@ void Tweening::Update(float deltaTime) {
 	for (auto& tween : tweens) {
 		if (tween.object == nullptr) {
 			continue;
+		}
+
+		static Scene* previousScene = nullptr;
+		Scene* currentScene = Application->root->GetActiveScene().get();
+
+		if (currentScene != previousScene) {
+			tweens.clear();
+			previousScene = currentScene;
+			return;
 		}
 
 		tween.elapsedTime += deltaTime;

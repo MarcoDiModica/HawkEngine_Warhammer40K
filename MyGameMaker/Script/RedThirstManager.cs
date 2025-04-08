@@ -90,6 +90,11 @@ public class RedThirstManager : MonoBehaviour
         lastActionTime = 0f;
     }
 
+    public void AddBiblePages(float points)
+    {
+        biblePages += points;
+    }
+
     private void ActivateBlackRage()
     {
         isInBlackRage = true;

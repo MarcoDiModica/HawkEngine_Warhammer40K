@@ -58,6 +58,11 @@ GameObject::GameObject(const GameObject& other) :
     cachedComponentType(typeid(Component)),
     parent(nullptr)
 {   
+
+	for (auto& scriptComponents : other.scriptComponents) {
+		
+	}
+
     for (const auto& component : other.components) {
         components[component.first] = std::move( component.second->Clone(this) );
         components[component.first]->owner = this;

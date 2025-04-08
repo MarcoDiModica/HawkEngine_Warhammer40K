@@ -589,57 +589,18 @@ static void GameRelease() {
 		return;
 	}
 
-	/*GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-
-	GLint lastFBO;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
-
-	GLint lastVP[4];
-	glGetIntegerv(GL_VIEWPORT, lastVP);*/
-
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	/*glPushAttrib(GL_ALL_ATTRIB_BITS);
-
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();*/
-
-	//glm::dmat4 projectionMatrix = gameCamera->projection();
-	//glm::dmat4 viewMatrix = gameCamera->view();
-
-	/*glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glLoadMatrixd(glm::value_ptr(projectionMatrix));
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glLoadMatrixd(glm::value_ptr(viewMatrix));
-
-	glUseProgram(0);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	glActiveTexture(GL_TEXTURE0);*/
-
-	std::shared_ptr<GameObject> UI = nullptr;
+	std::vector<std::shared_ptr<GameObject>> UI;
 
 	for (auto& object : Application->root->GetActiveScene()->children())
 	{
 		if (object->HasComponent<UICanvasComponent>()) {
-			UI = object;
+			UI.push_back(object);
 			continue;
 		}
 		if (object->IsActive())
@@ -652,7 +613,13 @@ static void GameRelease() {
 				break;
 			}
 		}
-		
+		if (object->HasComponent<LightComponent>()) {
+			auto& lights = Application->root->GetActiveScene()->_lights;
+			auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
+			if (it == lights.end()) {
+				lights.push_back(object->shared_from_this());
+			}
+		}
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
@@ -661,34 +628,13 @@ static void GameRelease() {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	if (UI != nullptr)
-		UI->Update(static_cast<float>(Application->GetDt()));
-
-	/*glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-
-	glPopAttrib();
-
-	glUseProgram(0);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
+	for (size_t i = 0; i < UI.size(); i++)
+	{
+		if (UI[i]->IsActive())
+		{
+			UI[i]->Update(static_cast<float>(Application->GetDt()));
+		}
 	}
-	glActiveTexture(GL_TEXTURE0);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
-	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
-
-	if (lastProgram > 0) {
-		glUseProgram(lastProgram);
-	}*/
 
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 }

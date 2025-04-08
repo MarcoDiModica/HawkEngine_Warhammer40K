@@ -34,12 +34,14 @@ public class PlayerController : MonoBehaviour
     private Audio sound;
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
-    private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep.wav";
-    private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep.wav";
-    public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit.wav";
-    public string DeathAudio = "Assets/Audio/SFX/Player/PlayerDeath.wav";
+    private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep_ready.wav";
+    private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep_ready.wav";
+    public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit_ready.wav";
+    public string DeathAudio = "Assets/Audio/SFX/PlayerPlayerDeath_ready.wav";
 
-
+    private ParticleFX inactiveDashFX;
+    private ParticleFX walkingFX;
+    
     public PlayerData playerData;
 
     public override void Awake()
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
         playerDash = gameObject.GetComponent<PlayerDash>();
         playerShooting = gameObject.GetComponent<PlayerShooting>();
         playerMesh = GameObject.Find("playerMesh");
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
         sound = gameObject.GetComponent<Audio>();
@@ -57,6 +60,8 @@ public class PlayerController : MonoBehaviour
         // Add the blood splash effect directly to the player object
         bloodSplashEffect = gameObject.AddComponent<ParticleFX>();
         bloodSplashEffect.ApplyPreset(19); // BLOOD_SPLASH preset (index 19)
+        inactiveDashFX = GameObject.Find("InactiveDashFX").GetComponent<ParticleFX>();
+        walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
 
     }
 
@@ -86,6 +91,7 @@ public class PlayerController : MonoBehaviour
                     playerAnimations.SetDeathAnimation();
                     sound.LoadAudio(DeathAudio);
                     sound.Play();
+                    SceneManager.LoadScene("LoseScene");
                 }
                 else
                 {
@@ -156,7 +162,6 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-
            
             if (moveDirection == Vector3.Zero)
             {
@@ -173,9 +178,11 @@ public class PlayerController : MonoBehaviour
                     SetIdleState();
                 }
                 StopFootsteps();
+                walkingFX.Stop();
             }
             else
             {
+                walkingFX.Play();
                 if (!isFootstepPlaying) 
                 {
                     PlayFootstep();
@@ -187,7 +194,16 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (isDashInput && playerDash.CanDash(elapsedTime))
+        if (!playerDash.CanDash(elapsedTime))
+        {
+            inactiveDashFX.Play();
+        }
+        else
+        {
+            inactiveDashFX.Stop();
+        }
+
+        if (playerInput.GetDashInput() && playerDash.CanDash(elapsedTime))
         {
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();

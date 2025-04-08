@@ -65,6 +65,8 @@ public:
 	static glm::vec4 CalculateColor(const glm::vec4& startColor, const glm::vec4& targetColor, float t, Modes mode);
 	static glm::vec3 CalculateVec3(const glm::vec3& start, const glm::vec3& target, float t, Modes mode);
 
+	static void CleanAllTweens();
+
 	/*class Sequence {
 	public:
 		Sequence();

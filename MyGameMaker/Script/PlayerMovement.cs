@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 10.0f;
     public float walkSpeed = 5f; 
-    public float runSpeed = 14.0f; 
+    public float runSpeed = 30.0f; 
     public float rotationSpeed = 30.0f;
     public float acceleration = 40.0f;
     public float deceleration = 15.0f;
@@ -94,14 +94,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerData.GodMode == true)
         {
-            moveSpeed = (runSpeed + playerData.blackRageSpeed) * 3;
+            moveSpeed = (runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed) * 3;
         }
         else if (magnitude > 0.1f)
         {
-            if (magnitude > 0.7f)
-                moveSpeed = runSpeed + playerData.blackRageSpeed;
+                if (magnitude > 0.7f)
+                    moveSpeed = runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed ;
             else
-                moveSpeed = walkSpeed + playerData.blackRageSpeed;
+                moveSpeed = walkSpeed + playerData.blackRageSpeed + playerData.stimmSpeed;
         }
     }
 

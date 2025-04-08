@@ -53,8 +53,6 @@ public class HUD : MonoBehaviour
 
     private PlayerPowerUp playerPowerUp;
 
-    private GameObject winScreen;
-    private GameObject loseScreen;
     private GameObject pauseMenu;
 
     public bool openedPause = false;
@@ -63,14 +61,12 @@ public class HUD : MonoBehaviour
 
     void win()
     {
-        winScreen.SetActive(true);
-        gameObject.SetActive(false);
+        SceneManager.LoadScene("WinScene");
     }
 
     void lose()
     {
-        loseScreen.SetActive(true);
-        gameObject.SetActive(false);
+        SceneManager.LoadScene("LoseScene");
     }
 
     float CalculateHPBarWidth()
@@ -222,17 +218,6 @@ public class HUD : MonoBehaviour
         if (playerPowerUp == null)
         {
             Engineson.print("ERROR: PlayerPowerUp not found");
-        }
-
-        winScreen = GameObject.Find("Canvas_win_screen");
-        if (winScreen == null)
-        {
-            Engineson.print("ERROR: WinScreen not found");
-        }
-        loseScreen = GameObject.Find("Canvas_lose_screen");
-        if (loseScreen == null)
-        {
-            Engineson.print("ERROR: LoseScreen not found");
         }
 
         pauseMenu = GameObject.Find("Canvas_PauseMenu");

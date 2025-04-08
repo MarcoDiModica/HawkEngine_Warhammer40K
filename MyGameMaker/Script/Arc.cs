@@ -50,34 +50,62 @@ public class Arc : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+
+        // ESTO PETA EN RELEASE. SE HA DE ARREGLAR
+        if (explosion == null)
+        {
+            return;
+        }
+
         if (isExploded)
         {
             deathtimer -= deltaTime;
             if (deathtimer <= 0)
             {
-                if (explosion != null) ;
-                //Engineson.Destroy(explosion);
+                if (explosion != null)
+                {
+                    Engineson.Destroy(explosion);
+                    explosion = null; // Asegurarse de que no se acceda a un objeto destruido
+                }
+                return;
             }
         }
+
         deathTimerPrevention += deltaTime;
-        //Engineson.print(deathTimerPrevention.ToString());
 
         if (deathTimerPrevention > .1f)
         {
             if (explosion != null)
-                //Engineson.Destroy(explosion);
+            {
+                Engineson.Destroy(explosion);
+                explosion = null; // Asegurarse de que no se acceda a un objeto destruido
                 needsDestroy = true;
+                return;
+            }
         }
-
     }
+
+
+
+
 
     void Explode()
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
         explosion = Engineson.CreateGameObject("Explosion", null);
-        explosion.AddComponent<MeshRenderer>();
+        //explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
+        var explosionFX = Engineson.CreateGameObject("ExplosionFX", null);
+        gameObject.AddChild(explosionFX);
+        explosionFX.AddComponent<ParticleFX>().ApplyPreset(17);
+        explosionFX.GetComponent<ParticleFX>().EmitBurst(1);
+        explosionFX.GetComponent<Transform>().SetPosition(
+            GetComponent<Transform>().GetPosition().X,
+            GetComponent<Transform>().GetPosition().Y,
+            GetComponent<Transform>().GetPosition().Z
+        );
+        Engineson.print("Explosion");
         sound?.LoadAudio(arcExplosion);
         sound?.Play();
         isExploded = true;

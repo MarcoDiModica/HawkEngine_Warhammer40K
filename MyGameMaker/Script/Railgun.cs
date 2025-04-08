@@ -44,6 +44,7 @@ public class Railgun : BaseWeapon
         currentTotalAmmo = 0;
         reloadTime = 2f;
         range = 25f;
+        timeToLerp = 2;
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
@@ -92,7 +93,8 @@ public class Railgun : BaseWeapon
 
         for (int i = bulletsPos.Count - 1; i >= 0; i--)
         {
-            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], 0.1f);
+            bulletIntervals[i] += deltaTime;
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], bulletIntervals[i] / timeToLerp);
             bulletsObjects[i].GetComponent<Transform>().position = bulletsPos[i];
 
             if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.5f)
@@ -104,6 +106,7 @@ public class Railgun : BaseWeapon
                     Engineson.Destroy(bulletsObjects[i]);
                     bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
                 }
                 else
                 {
@@ -125,9 +128,14 @@ public class Railgun : BaseWeapon
                     {
                         enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
                     }
+                    if (enemy.tag == "Destroyable")
+                    {
+                        enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
+                    }
                     Engineson.Destroy(bulletsObjects[i]);
                     bulletsObjects.RemoveAt(i);
                     collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
                 }
             }
         }
@@ -160,6 +168,7 @@ public class Railgun : BaseWeapon
             projectile.GetComponent<Transform>().SetScale(0.5f, 0.5f, 0.5f);
 
             bulletsObjects.Add(projectile);
+            bulletIntervals.Add(0);
 
             Vector3 bulletHitPoint = Vector3.Zero;
 
@@ -218,7 +227,7 @@ public class Railgun : BaseWeapon
     {
         if (railgunMode == RailgunMode.AUTOMATIC)
         {
-            laserBeam.TriggerAbility();
+          //  laserBeam.TriggerAbility();
         }
         else
         {

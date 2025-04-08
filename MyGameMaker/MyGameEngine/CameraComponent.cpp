@@ -116,53 +116,52 @@ void CameraComponent::Update(float deltaTime)
         }
     }
 
-    if (frustrumCullingEnabled)
-    {
-        //frustum.Update(GetViewMatrix(*owner->GetTransform()) * GetProjectionMatrix());
-        glm::mat4 view = GetViewMatrix(*owner->GetTransform());
-        glm::mat4 projection = GetProjectionMatrix();
-        glm::mat4 vpm = projection * view;
+	if (frustrumCullingEnabled) {
+		glm::mat4 view = GetViewMatrix(*owner->GetTransform());
+		glm::mat4 projection = GetProjectionMatrix();
+		glm::mat4 vpm = projection * view;
+
 		frustum.Update(vpm);
 
-        if (frustrumRepresentation)
-		{
-            #ifndef _BUILD
-                DrawFrustrum();
-            #endif // !_BUILD            
+		if (frustrumRepresentation) {
+#ifndef _BUILD
+			DrawFrustrum();
+#endif
 		}
 
-        std::function<void(std::shared_ptr<GameObject>)> checkGameObject = [&](std::shared_ptr<GameObject> gameObject) {
-            if (gameObject.get() == owner) {
-                return;
-            }
+		std::function<void(std::shared_ptr<GameObject>, bool)> cullHierarchy =
+			[&](std::shared_ptr<GameObject> gameObject, bool parentVisible) {
+			if (gameObject.get() == owner) {
+				return; 
+			}
 
-            if (gameObject->HasComponent<MeshRenderer>()) {
-                if (IsInsideFrustrum(gameObject->boundingBox())) {
-                    gameObject->SetActive(true);
-                }
-                else {
-                    gameObject->SetActive(false);
-                }
-            }
+			bool isVisible = parentVisible;
 
-            for (auto& child : gameObject->GetChildren()) {
-                checkGameObject(child);
-            }
-        };
+			if (parentVisible && gameObject->HasComponent<MeshRenderer>()) {
+				FrustumIntersection result = TestFrustumAABB(gameObject->boundingBox());
+				isVisible = (result != FrustumIntersection::OUTSIDE);
+			}
 
-        for (auto& gameObject : owner->GetScene()->children()) {
-            checkGameObject(gameObject);
-        }
-    }
+			if (gameObject->IsActive() != isVisible) {
+				gameObject->SetActive(isVisible);
+			}
 
-    if (orthographic)
-    {
-        projectionType = ProjectionType::Orthographic;
-    }
-    else
-    {
-        projectionType = ProjectionType::Perspective;
-    }
+			for (auto& child : gameObject->GetChildren()) {
+				cullHierarchy(child, isVisible);
+			}
+			};
+
+		for (auto& gameObject : owner->GetScene()->children()) {
+			cullHierarchy(gameObject, true);
+		}
+	}
+
+	if (orthographic) {
+		projectionType = ProjectionType::Orthographic;
+	}
+	else {
+		projectionType = ProjectionType::Perspective;
+	}
 }
 
 std::unique_ptr<Component> CameraComponent::Clone(GameObject* owner)

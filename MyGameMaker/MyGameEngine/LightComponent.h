@@ -35,6 +35,7 @@ class LightComponent : public Component {
 public:
     LightComponent(GameObject* owner);
 
+    void Awake() override;
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;
@@ -90,30 +91,51 @@ private:
 protected:
 
     friend class SceneSerializer;
+YAML::Node encode() override {
 
-    YAML::Node encode() override {
+    YAML::Node node = Component::encode();
 
-		YAML::Node node = Component::encode();
+    node["light_type"] = static_cast<int>(type);
+    node["ambient"] = YAML::Node(YAML::NodeType::Sequence);
+    node["ambient"].push_back(ambient.r);
+    node["ambient"].push_back(ambient.g);
+    node["ambient"].push_back(ambient.b);
+    node["diffuse"] = YAML::Node(YAML::NodeType::Sequence);
+    node["diffuse"].push_back(diffuse.r);
+    node["diffuse"].push_back(diffuse.g);
+    node["diffuse"].push_back(diffuse.b);
+    node["specular"] = YAML::Node(YAML::NodeType::Sequence);
+    node["specular"].push_back(specular.r);
+    node["specular"].push_back(specular.g);
+    node["specular"].push_back(specular.b);
+    node["constant"] = constant;
+    node["linear"] = linear;
+    node["quadratic"] = quadratic;
+    node["radius"] = radius;
+    node["intensity"] = intensity;
+    node["direction"] = YAML::Node(YAML::NodeType::Sequence);
+    node["direction"].push_back(direction.x);
+    node["direction"].push_back(direction.y);
+    node["direction"].push_back(direction.z);
 
-		node["light_type"] = static_cast<int>(type);
-		//node["color"] = { color.r, color.g, color.b };
-		node["intensity"] = intensity;
-		node["radius"] = radius;
-		//node["direction"] = { direction.x, direction.y, direction.z };
-
-		return node;
-	}
+    return node;
+}
 
     bool decode(const YAML::Node& node) override {
 
-		Component::decode(node);
+        Component::decode(node);
 
-		type = static_cast<LightType>(node["light_type"].as<int>());
-		//color = { node["color"][0].as<float>(), node["color"][1].as<float>(), node["color"][2].as<float>() };
-		intensity = node["intensity"].as<float>();
-		radius = node["radius"].as<float>();
-		//direction = { node["direction"][0].as<float>(), node["direction"][1].as<float>(), node["direction"][2].as<float>() };
+        type = static_cast<LightType>(node["light_type"].as<int>());
+        ambient = { node["ambient"][0].as<float>(), node["ambient"][1].as<float>(), node["ambient"][2].as<float>() };
+        diffuse = { node["diffuse"][0].as<float>(), node["diffuse"][1].as<float>(), node["diffuse"][2].as<float>() };
+        specular = { node["specular"][0].as<float>(), node["specular"][1].as<float>(), node["specular"][2].as<float>() };
+        constant = node["constant"].as<float>();
+        linear = node["linear"].as<float>();
+        quadratic = node["quadratic"].as<float>();
+        radius = node["radius"].as<float>();
+        intensity = node["intensity"].as<float>();
+        direction = { node["direction"][0].as<float>(), node["direction"][1].as<float>(), node["direction"][2].as<float>() };
 
-		return true;
-	}
+        return true;
+    }
 };

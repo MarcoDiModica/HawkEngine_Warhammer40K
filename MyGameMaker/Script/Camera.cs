@@ -11,7 +11,7 @@ namespace HawkEngine
         //public extern static void SetMainCamera();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern void SetCameraFieldOfView(float fieldOfView);
+        public extern void SetCameraFieldOfView(double fieldOfView);
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetCameraNearClipPlane(float nearClipPlane);
@@ -36,6 +36,9 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetOffset(Vector3 offset);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern float GetCameraFieldOfView();
 
         public bool ortographic
         {
@@ -70,6 +73,7 @@ namespace HawkEngine
             Engineson.print("Camera created");
         }
 
+        public override void Awake() { }
         public override void Start() { }
         public override void Update(float deltaTime)
         {

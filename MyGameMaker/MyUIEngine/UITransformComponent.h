@@ -22,6 +22,7 @@ public:
 	UITransformComponent(UITransformComponent&&) noexcept = default;
 	UITransformComponent& operator=(UITransformComponent&&) noexcept = default;
 
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;
@@ -70,6 +71,7 @@ private:
 	glm::vec3 position;
 	glm::vec3 rotation;
 	glm::vec3 scale;
+	glm::vec3 pivot;
 
 	glm::vec3 canvasPosition;
 	glm::vec3 canvasSize;

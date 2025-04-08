@@ -11,12 +11,17 @@ public class Railgun : BaseWeapon
     private float coolingTime = 3f;
     private float coolTimer = 0f;
     private float reloadTimer = 0f;
+    private PlayerController playerController;
+    ToggleMode toggleMode;
+    EnergyBall energyBall;
+    LaserBeam laserBeam;
+    public PlayerData playerData;
 
     private Audio sound;
     private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
     private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
 
-
+    private float timeSinceLastShot = 0.0f;
     public enum RailgunMode
     {
         SEMIAUTOMATIC,
@@ -25,36 +30,52 @@ public class Railgun : BaseWeapon
 
     public RailgunMode railgunMode = RailgunMode.SEMIAUTOMATIC;
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
+        damage = 100.0f;
         shootCadence = 0.66f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
         maxAmmo = 0;
         currentTotalAmmo = 0;
         reloadTime = 2f;
+        range = 25f;
+        timeToLerp = 2;
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
+        playerController = gameObject.GetComponent<PlayerController>();
+        playerData = playerController.playerData;
+        toggleMode = gameObject.GetComponent<ToggleMode>();
+        energyBall = gameObject.GetComponent<EnergyBall>();
+        laserBeam = gameObject.GetComponent<LaserBeam>();
     }
 
     public override void Update(float deltaTime)
     {
+        timeSinceLastShot += deltaTime;
 
         if (railgunMode == RailgunMode.SEMIAUTOMATIC)
         {
+
+            damage = 100.0f;
             shootCadence = 0.66f;
             magazineSize = 4;
         }
         else
         {
+            damage = 50.0f;
             shootCadence = 2f;
             magazineSize = 10;
         }
 
         if (isCooling)
         {
-            coolTimer += deltaTime * 10;
+            coolTimer += deltaTime;
             if (coolTimer >= coolingTime)
             {
                 Cooling();
@@ -63,48 +84,110 @@ public class Railgun : BaseWeapon
 
         if (isReloading)
         {
-            reloadTimer += deltaTime * 10;
+            reloadTimer += deltaTime;
             if (reloadTimer >= reloadTime)
             {
                 Reload();
             }
         }
 
-        CleanBullets();
+        for (int i = bulletsPos.Count - 1; i >= 0; i--)
+        {
+            bulletIntervals[i] += deltaTime;
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], bulletIntervals[i] / timeToLerp);
+            bulletsObjects[i].GetComponent<Transform>().position = bulletsPos[i];
+
+            if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.5f)
+            {
+                bulletsPos.RemoveAt(i);
+                hitPoints.RemoveAt(i);
+                if (collisionNames[i] == "Missed")
+                {
+                    Engineson.Destroy(bulletsObjects[i]);
+                    bulletsObjects.RemoveAt(i);
+                    collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
+                }
+                else
+                {
+                    Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
+                    var enemy = GameObject.Find(collisionNames[i]);
+                    if (enemy.tag == "Melee")
+                    {
+                        enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Ranged")
+                    {
+                        enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Stalker")
+                    {
+                        //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Boss")
+                    {
+                        enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Destroyable")
+                    {
+                        enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
+                    }
+                    Engineson.Destroy(bulletsObjects[i]);
+                    bulletsObjects.RemoveAt(i);
+                    collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
+                }
+            }
+        }
+
+        //CleanBullets();
     }
 
     public override void Shoot()
     {
         isReloading = false;
-        if (currentMagazineAmmo > 0 && isCooling == false && isRecharged)
+        if (currentMagazineAmmo > 0 && isCooling == false && isRecharged && timeSinceLastShot >= shootCadence)
         {
-            currentMagazineAmmo--;
+            timeSinceLastShot = 0f;
+            if (!playerData.infiniteBullets)
+            {
+                currentMagazineAmmo--;
+            }
             sound?.LoadAudio(railgunShot);
             sound?.Play();
             // Shoot logic
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
+            RayCast rayBullet = new RayCast();
+            Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 2.5f, 0);
+
+            rayBullet.PerformRaycast(bulletPosition, transform.forward, range);
+
+            var projectile = Engineson.CreateGameObject("Projectile", null);
 
             // TODO: add custom mesh to the projectile
             projectile.AddComponent<MeshRenderer>();
-            projectile.AddComponent<BoxCollider>();
+            projectile.GetComponent<Transform>().SetScale(0.5f, 0.5f, 0.5f);
 
-            if (projectile != null)
+            bulletsObjects.Add(projectile);
+            bulletIntervals.Add(0);
+
+            Vector3 bulletHitPoint = Vector3.Zero;
+
+            if (rayBullet.hit.isHit)
             {
-                Transform projTransform = projectile.GetComponent<Transform>();
-                if (projTransform != null)
-                {
-                    Vector3 forward = transform.forward;
-                    Vector3 spawnPos = transform.position + forward * 1.0f;
-                    projTransform.position = spawnPos;
-                    projTransform.SetScale(0.1f, 0.1f, 0.1f);
+                bulletHitPoint = rayBullet.hit.point;
+                collisionNames.Add(rayBullet.hit.gameObject.name);
 
-                    projectile.AddScript("BulletData");
-                    projectile.GetComponent<BulletData>().Init(projTransform, forward);
-                    bullets.Add(projectile.GetComponent<BulletData>());
-
-                    Engineson.print("Projectile fired!");
-                }
+                Engineson.print($"Hit: {bulletHitPoint}");
             }
+            else
+            {
+                bulletHitPoint = transform.GetPosition() + new Vector3(0, 2.5f, 0) + transform.forward * range;
+                collisionNames.Add("Missed");
+                Engineson.print("Missed");
+            }
+
+            hitPoints.Add(bulletHitPoint);
+            bulletsPos.Add(bulletPosition);
         }
         
         if (currentMagazineAmmo <= 0)
@@ -137,12 +220,19 @@ public class Railgun : BaseWeapon
 
     public override void UseAbility1()
     {
-
+        toggleMode.TriggerAbility();
     }
 
     public override void UseAbility2()
     {
-
+        if (railgunMode == RailgunMode.AUTOMATIC)
+        {
+          //  laserBeam.TriggerAbility();
+        }
+        else
+        {
+            energyBall.TriggerAbility();
+        }
     }
 
     public override void CleanBullets()
@@ -176,5 +266,9 @@ public class Railgun : BaseWeapon
         {
             railgunMode = RailgunMode.SEMIAUTOMATIC;
         }
+    }
+
+    public override void ResetCooldowns()
+    {
     }
 }

@@ -10,6 +10,7 @@
 #include "Log.h"
 #include "UISettings.h"
 #include "UIMainMenuBar.h"
+#include "External/Optick/include/optick.h"
 
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
@@ -101,6 +102,10 @@ bool App::Start() {
 
 bool App::Update()
 {
+#ifdef PROFILE
+	OPTICK_FRAME("Main Loop")
+#endif // PROFILE
+
 	bool ret = true;
 	PrepareUpdate();
 
@@ -137,7 +142,11 @@ void App::PrepareUpdate()
 
 bool App::PreUpdate()
 {
-	//OPTICK_CATEGORY("PreUpdate", Optick::Category::GameLogic);
+
+#ifdef PROFILE
+	OPTICK_CATEGORY("PreUpdate", Optick::Category::GameLogic);
+#endif // PROFILE
+
 	bool ret = true;
 
 	for (const auto& module : modules)
@@ -154,7 +163,10 @@ bool App::PreUpdate()
 
 bool App::DoUpdate()
 {
-	//OPTICK_CATEGORY("DoUpdate", Optick::Category::GameLogic);
+
+#ifdef PROFILE
+	OPTICK_CATEGORY("DoUpdate", Optick::Category::GameLogic);
+#endif // PROFILE
 
 	fixedCounter += dt;
 	int numFixedUpdates = 0;
@@ -197,7 +209,9 @@ bool App::DoUpdate()
 
 bool App::PostUpdate()
 {
-	//OPTICK_CATEGORY("PostUpdate", Optick::Category::GameLogic);
+#ifdef PROFILE
+	OPTICK_CATEGORY("PostUpdate", Optick::Category::GameLogic);
+#endif // PROFILE
 
 	for (const auto& module : modules)
 	{

@@ -12,7 +12,7 @@ namespace HawkEngine
 
         //contructor
         private GameObject owner;
-
+      
         public UIButton(UIntPtr nativeRigidbody, GameObject owner)
         {
             CplusplusInstance = nativeRigidbody;
@@ -25,6 +25,7 @@ namespace HawkEngine
             Engineson.print("UIButton default constructor");
         }
 
+        public override void Awake() { }
         public override void Start() { }
 
         public override void Update(float deltaTime) { }

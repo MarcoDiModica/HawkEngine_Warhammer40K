@@ -8,17 +8,24 @@ class ScriptComponent : public Component
 public:
 	ScriptComponent(GameObject* owner);
 	~ScriptComponent() override;
+
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;
+
 	ComponentType GetType() const override { return ComponentType::SCRIPT; };
 	std::unique_ptr<Component> Clone(GameObject* new_owner) override;
+
 	void SetMonoScript(MonoObject* script) { monoScript = script; }
 	bool LoadScript(const std::string& scriptName);
+
 	bool RefreshScriptInstance();
 	MonoObject* GetSharpObject() const { return monoScript; }
+
 	std::string GetTypeName() const;
 	std::string GetCurrentScriptName() const { return currentScriptName; }
+	
 	void InvokeMonoMethod(const std::string& methodName, GameObject& other);
 
 	bool HasErrors() const { return hasErrors; }
@@ -29,6 +36,7 @@ public:
 	void SetLastWriteTime(std::filesystem::file_time_type newTime) { lastWriteTime = newTime; }
 	std::filesystem::file_time_type lastWriteTime;
 	std::string currentScriptName;
+	
 protected:
 	friend class SceneSerializer;
 	YAML::Node encode() override {

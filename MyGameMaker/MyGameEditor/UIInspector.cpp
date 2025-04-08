@@ -44,7 +44,9 @@
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
 #include "mono/metadata/debug-helpers.h"
+#include "../MyUIEngine/UIButtonComponent.h"
 
+#include <MyGameEngine/ImGuiCurveEditor.h>
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -1903,18 +1905,13 @@ private:
 
 		if (system->IsPlaying()) {
 			if (ImGui::Button("Stop", ImVec2(width, 0))) {
-				system->Stop();
+				system->Pause();
 			}
 		}
 		else {
 			if (ImGui::Button("Play", ImVec2(width, 0))) {
 				system->Play();
 			}
-		}
-
-		ImGui::SameLine();
-		if (ImGui::Button("Pause", ImVec2(width, 0))) {
-			system->Pause();
 		}
 
 		ImGui::SameLine();
@@ -1929,6 +1926,12 @@ private:
 		if (ImGui::IsItemHovered()) {
 			ImGui::SetTooltip("Emit particles once and then stop");
 		}
+
+		bool playOnAwake = system->GetPlayOnAwake();
+		if (ImGui::Checkbox("Play on awake", &playOnAwake)) {
+			system->SetPlayOnAwake(playOnAwake);
+		}
+		
 
 		ImGui::EndGroup();
 		ImGui::Separator();
@@ -1964,6 +1967,14 @@ private:
 
 		ImGui::BeginGroup();
 
+		//Duration 
+
+		float duration = system->GetDuration();
+
+		if (ImGui::DragFloat("Duration", &duration, 0.1f, 0.1f, 1000.0f)) {
+			system->SetDuration(duration);
+		}
+
 		// Lifetime
 		float minLifetime = system->GetMinLifetime();
 		float maxLifetime = system->GetMaxLifetime();
@@ -1974,15 +1985,27 @@ private:
 		// Speed
 		float minSpeed = system->GetMinSpeed();
 		float maxSpeed = system->GetMaxSpeed();
-		if (ImGui::DragFloatRange2("Speed", &minSpeed, &maxSpeed, 0.05f, 0.0f, 50.0f)) {
+		if (ImGui::DragFloatRange2("Speed in a range", &minSpeed, &maxSpeed, 0.05f, 0.0f, 50.0f)) {
 			system->SetParticleSpeed(minSpeed, maxSpeed);
 		}
 
+		float endSpeed = system->GetEndSpeed();
+
+		if (ImGui::DragFloat("Set final speed", &endSpeed, 0.05f, -50.0f,50.0f)) {
+			system->SetEndSpeed(endSpeed);
+		}
+
 		// Size
-		float startSize = system->GetStartSize();
 		float endSize = system->GetEndSize();
-		if (ImGui::DragFloatRange2("Size", &startSize, &endSize, 0.05f, 0.01f, 10.0f)) {
-			system->SetParticleSize(startSize, endSize);
+		if (ImGui::DragFloat("Size end", &endSize, 0.05f, 0.01f, 10.0f)) {
+			system->SetParticleEndSize(endSize);
+		}
+	
+		float minScale = system->GetMinScale();
+		float maxScale = system->GetMaxScale();
+		if (ImGui::DragFloatRange2("Size in a range", &minScale, &maxScale, 0.05f, 0.00f, 10.0f)) {
+			system->SetMinScale(minScale);
+			system->SetMaxScale(maxScale);
 		}
 
 		// Rotation
@@ -1990,12 +2013,22 @@ private:
 		if (ImGui::DragFloat("Rotation Speed", &rotationSpeed, 0.1f, 0.0f, 10.0f)) {
 			system->SetParticleRotation(rotationSpeed);
 		}
+		bool randomRotation = system->GetRandomRotation();
+		if (ImGui::Checkbox("Random Rotation", &randomRotation)) {
+			system->SetRandomRotation(randomRotation);
+		}
+		float startRotation = system->GetStartRotation();
+		
+		if (ImGui::DragFloat("Start rotation", &startRotation, 0.1f, 0.0f, 360.0f)) {
+			
+			system->SetStartRotation(startRotation);
+		}
 
 		// Gravity
-		float gravity = system->GetGravity();
-		if (ImGui::DragFloat("Gravity", &gravity, 0.01f, -10.0f, 10.0f)) {
-			system->SetGravity(gravity);
-		}
+        float gravity[3] = { system->GetGravity().x, system->GetGravity().y, system->GetGravity().z };
+        if (ImGui::DragFloat3("Gravity", gravity, 0.01f, -10.0f, 10.0f)) {
+        system->SetGravity(glm::vec3(gravity[0], gravity[1], gravity[2]));
+        }
 		if (ImGui::IsItemHovered()) {
 			ImGui::SetTooltip("Negative values make particles rise");
 		}
@@ -2130,29 +2163,43 @@ private:
 
 		float width = (ImGui::GetContentRegionAvail().x - 9.0f) / 4.0f; // 3 spaces between buttons
 
-		if (ImGui::Button("Smoke", ImVec2(width, 0))) {
-			system->ConfigureSmoke();
-		}
-		ImGui::SameLine(0, 3);
+		int particleID = system->particleID;
 
-		if (ImGui::Button("Fire", ImVec2(width, 0))) {
-			system->ConfigureFire();
+		if (ImGui::InputInt("Particle preset ID", &particleID)) {
+			system->particleID = particleID;
 		}
-		ImGui::SameLine(0, 3);
 
-		if (ImGui::Button("Muzzle Flash", ImVec2(width, 0))) {
-			system->ConfigureMuzzleFlash();
-		}
-		ImGui::SameLine(0, 3);
-
-		if (ImGui::Button("Dust", ImVec2(width, 0))) {
-			system->ConfigureDust();
+		if (ImGui::Button("Set particle preset", ImVec2(width, 0))) {
+			system->ApplyPreset(particleID);
 		}
 
 		// Softness
 		float softness = system->GetSoftness();
 		if (ImGui::SliderFloat("Edge Softness", &softness, 0.0f, 1.0f)) {
 			system->SetSoftness(softness);
+		}
+
+		//SpriteSheet Animation
+		bool useAnimation = system->GetUseAnimation();
+		if (ImGui::Checkbox("Use animation", &useAnimation)) 
+		{
+			system->SetUseAnimation(useAnimation);
+		}
+
+		bool randomStartIndex = system->GetRandomStartIndex();
+		if (ImGui::Checkbox("Random start index", &randomStartIndex)) {
+			system->SetRandomStartIndex(randomStartIndex);
+		}
+
+		glm::vec2 spriteSize = system->GetSpriteSize();
+		float spriteSizeArray[2] = { spriteSize.x, spriteSize.y };
+		if (ImGui::DragFloat2("Sprite Size", spriteSizeArray, 0.1f, 0.1f, 4600.0f)) {
+			system->SetSpriteSize(glm::vec2(spriteSizeArray[0], spriteSizeArray[1]));
+		}
+
+		float animSpeed = system->GetAnimSpeed();
+		if (ImGui::DragFloat("Animation Speed", &animSpeed, 0.1f, 0.1f, 100.0f)) {
+			system->SetAnimSpeed(animSpeed);
 		}
 
 		ImGui::EndGroup();
@@ -2235,6 +2282,20 @@ private:
 				system->DisableColorGradient();
 			}
 		}
+
+		
+		int selectionIdx = -1;
+		
+		if (ImGui::Button("Add Color Point", ImVec2(ImGui::GetContentRegionAvail().x, 0))) {
+			Application->gui->foo[0].x = ImGui::CurveTerminator;
+		}
+
+		if (ImGui::Curve("", ImVec2(600, 200), 10, Application->gui->foo,&selectionIdx))
+		{
+			// curve changed
+		}
+
+		float value_you_care_about = ImGui::CurveValue(0.7f, 10, Application->gui->foo); // calculate value at position 0.7
 
 		ImGui::Button("Drop Gradient Here", ImVec2(ImGui::GetContentRegionAvail().x, 30));
 		HandleParticleTextureDrop(system, true);
@@ -2393,14 +2454,20 @@ private:
 			ImGui::EndPopup();
 		}
 
-		const float windowWidth = ImGui::GetContentRegionAvail().x;
-		const float labelWidth = windowWidth * 0.4f;
+        glm::dvec3 currentPosition = transform->GetPosition();
+        glm::dvec3 currentRotation = glm::radians(transform->GetRotation());
+        glm::dvec3 currentScale = transform->GetScale();
+		glm::dvec1 currentPivot = transform->GetPivotOffset();
 
-		ImGui::BeginGroup();
-
-		glm::dvec3 currentPosition = transform->GetPosition();
-		glm::dvec3 currentRotation = glm::radians(transform->GetRotation());
-		glm::dvec3 currentScale = transform->GetScale();
+        float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
+        float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
+        float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+		float pivot[3] = { static_cast<float>(transform->GetPivotOffset().x), static_cast<float>(transform->GetPivotOffset().y), static_cast<float>(transform->GetPivotOffset().z) };
+        if (ImGui::DragFloat3("Position", pos, 0.001f, -1.0f, 1.0f)) {
+            glm::dvec3 newPosition = { pos[0], pos[1], pos[2] };
+            glm::dvec3 deltaPos = newPosition - currentPosition;
+            transform->Translate(deltaPos);
+        }
 
 		float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
 		float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
@@ -2463,6 +2530,12 @@ private:
 			glm::dvec3 newScale = { sca[0], sca[1], sca[2] };
 			glm::dvec3 deltaScale = newScale / currentScale;
 			transform->Scale(deltaScale);
+		}
+
+		if (ImGui::DragFloat3("Pivot", pivot, 0.001f, -1.0f, 1.0f)) {
+			glm::dvec3 newPivot = { pivot[0], pivot[1], pivot[2] };
+			glm::dvec3 deltaPivot = newPivot - currentPivot;
+			transform->SetPivotOffset(deltaPivot);
 		}
 
 		ImGui::EndGroup();
@@ -3114,23 +3187,60 @@ bool UIInspector::Draw() {
 }
 
 void UIInspector::DrawGameObjectHeader(GameObject* gameObject) {
-    char newName[128] = {};
-    strncpy_s(newName, gameObject->GetName().c_str(), sizeof(newName));
+	char newName[128] = {};
+	strncpy_s(newName, gameObject->GetName().c_str(), sizeof(newName));
 
-    ImGui::Text("GameObject:");
-    if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue)) {
-        if (strlen(newName) > 0) {
-            gameObject->SetName(newName);
-        }
-    }
+	ImGui::Text("GameObject:");
+	if (ImGui::InputText("##GameObjectName", newName, sizeof(newName), ImGuiInputTextFlags_EnterReturnsTrue)) {
+		if (strlen(newName) > 0) {
+			gameObject->SetName(newName);
+		}
+	}
 
-    ImGui::SameLine();
-    ImGui::Checkbox("Static", &gameObject->isStatic);
+	ImGui::SameLine();
+	ImGui::Checkbox("Static", &gameObject->isStatic);
 
-    ImGui::Separator();
+	ImGui::Separator();
 
-    bool isActive = gameObject->IsActive();
-    if (ImGui::Checkbox("Active", &isActive)) {
+	bool isActive = gameObject->IsActive();
+	if (ImGui::Checkbox("Active", &isActive)) {
 		gameObject->SetActive(isActive);
+	}
+
+	ImGui::Separator();
+	ImGui::Text("Tag:");
+
+	const std::vector<std::string>& tags = SceneManagement->GetTags();
+	int selectedTagIndex = -1;
+
+	std::string currentTag = gameObject->GetTag();
+	for (size_t i = 0; i < tags.size(); ++i) {
+		if (tags[i] == currentTag) {
+			selectedTagIndex = static_cast<int>(i);
+			break;
+		}
+	}
+
+	if (ImGui::BeginCombo("##GameObjectTag", currentTag.c_str())) {
+		for (size_t i = 0; i < tags.size(); ++i) {
+			bool isSelected = (selectedTagIndex == static_cast<int>(i));
+			if (ImGui::Selectable(tags[i].c_str(), isSelected)) {
+				gameObject->SetTag(tags[i]);
+			}
+			if (isSelected) {
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	static char newTag[128] = {};
+	ImGui::InputText("New Tag", newTag, sizeof(newTag));
+
+	if (ImGui::Button("Add Tag") && strlen(newTag) > 0) {
+		std::string newTagStr(newTag);
+		SceneManagement->AddTag(newTagStr);
+		gameObject->SetTag(newTagStr);
+		memset(newTag, 0, sizeof(newTag));  
 	}
 }

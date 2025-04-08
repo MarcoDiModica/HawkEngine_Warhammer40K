@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "MyWindow.h"
 #include "App.h"
+#include <imgui.h>
 
 #pragma once
 
@@ -77,6 +78,8 @@ public:
     GLuint fboTextureGame = 0;
     GLuint rboGame = 0;
 
+    ImVec2 foo[10];
+    int selectionIdx = -1;
 private:
     std::list<UIElement*> elements;
 

@@ -23,6 +23,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "External/Optick/include/optick.h"
 
 GameObject::GameObject(const std::string& name) : name(name), cachedComponentType(typeid(Component)), m_UUID(), active(true)
 {
@@ -65,6 +66,8 @@ GameObject::GameObject(const GameObject& other) :
     parent(nullptr)
 {   
     ObjectRegistry::RegisterObject(m_UUID, this);
+
+    //TODO copiar los scrits
 
     for (const auto& component : other.components) {
         components[component.first] = std::move( component.second->Clone(this) );
@@ -173,6 +176,35 @@ GameObject& GameObject::operator=(GameObject&& other) noexcept
 	return *this;
 }
 
+void GameObject::Awake()
+{
+    for (auto& component : components)
+    {
+        if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+            component.second->Awake();
+        }
+        else if (SceneManagement->currentScene->sceneState == Scene::SceneState::STOP || SceneManagement->currentScene->sceneState == Scene::SceneState::PAUSE)
+        {
+            if (component.second->updateInStop)
+            {
+                component.second->Awake();
+            }
+        }
+    }
+
+    if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
+        for (auto& scriptComponent : scriptComponents)
+        {
+            scriptComponent->Awake();
+        }
+    }
+
+    for (auto& child : children)
+    {
+        child->Awake();
+    }
+}
+
 void GameObject::Start()
 {
     for (auto& component : components)
@@ -204,7 +236,17 @@ void GameObject::Start()
 
 void GameObject::Update(float deltaTime)
 {
-	if (!this || destroyed || !active) {
+
+#ifdef PROFILE
+    OPTICK_CATEGORY(name.c_str(), Optick::Category::GameLogic);
+#endif // PROFILE
+
+    if (!this || destroyed)
+    {
+        return;
+    }
+	if (!active) 
+    {
 		return;
 	}
 
@@ -286,7 +328,9 @@ void GameObject::Destroy()
 void GameObject::Draw() const
 {
     if (!active) { return; }
-
+#ifdef PROFILE
+    OPTICK_EVENT();
+#endif // PROFILE
     switch (drawMode)
     {
     case DrawMode::AccumultedMatrix:
@@ -359,6 +403,16 @@ std::string GameObject::GetName() const
 void GameObject::SetName(const std::string& name)
 {
     this->name = name;
+}
+
+void GameObject::SetTag(const std::string& tag)
+{
+	this->tag = tag;
+}
+
+std::string GameObject::GetTag() const
+{
+	return tag;
 }
 
 bool GameObject::CompareTag(const std::string& tag) const

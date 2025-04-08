@@ -16,10 +16,21 @@ public class Grenade : MonoBehaviour
     float deathtimer = 0.2f;
     public bool needsDestroy = false;
     float deathTimerPrevention = 0;
+    private Audio sound;
+    private string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
 
+    public override void Awake()
+    {
+
+    }
     public override void Start()
     {
-      
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
+        
     }
 
     public void Init(Vector3 pos, Vector3 dir)
@@ -43,17 +54,20 @@ public class Grenade : MonoBehaviour
             deathtimer -= deltaTime;
             if (deathtimer <= 0)
             {
-                    //Engineson.Destroy(explosion);
+                if (explosion != null) ;
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
+                needsDestroy = false;
             }
         }
         deathTimerPrevention += deltaTime;
         //Engineson.print(deathTimerPrevention.ToString());
 
-        if (deathTimerPrevention > .1f) 
+        if (deathTimerPrevention > .1f)
         {
-            if (explosion != null)
-                //Engineson.Destroy(explosion);
-            needsDestroy = true;
+            if (explosion != null) { 
+                GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
+                needsDestroy = false;
+            }
         }
 
     }
@@ -61,7 +75,9 @@ public class Grenade : MonoBehaviour
     void Explode()
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
-        explosion = Engineson.CreateGameObject("Exxplosion", null);
+        explosion = Engineson.CreateGameObject("Explosion", null);
+        sound.LoadAudio(granadeExplosion);
+        sound.Play();
         explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);

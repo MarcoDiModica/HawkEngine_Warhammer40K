@@ -2,10 +2,12 @@
 
 #include <memory>
 #include <vector>
+#include <chrono>
 #include "Image.h"
 #include "Shaders.h"
 #include "types.h"
 #include "yaml-cpp/yaml.h"
+#include "../MyGameEditor/Log.h"
 
 class Material
 {
@@ -109,11 +111,25 @@ protected:
         }
         node["shader_type"] = shaderTypeStr;
 
-        node["image"] = imagePtr ? imagePtr->image_path : "";
-        node["normal_map"] = normalMapPtr ? normalMapPtr->image_path : "";
-        node["metallic_map"] = metallicMapPtr ? metallicMapPtr->image_path : "";
-        node["roughness_map"] = roughnessMapPtr ? roughnessMapPtr->image_path : "";
-        node["ao_map"] = aoMapPtr ? aoMapPtr->image_path : "";
+        std::string imageName = imagePtr ? imagePtr->image_name : "";
+        node["image"] = imageName;
+        if (imagePtr) imagePtr->SaveBinary(imagePtr->image_name);
+
+        std::string normalMapName = normalMapPtr ? normalMapPtr->image_name : "";
+        node["normal_map"] = normalMapName;
+        if (normalMapPtr) normalMapPtr->SaveBinary(normalMapPtr->image_name);
+
+        std::string metallicMapName = metallicMapPtr ? metallicMapPtr->image_name : "";
+        node["metallic_map"] = metallicMapName;
+        if (metallicMapPtr) metallicMapPtr->SaveBinary(metallicMapPtr->image_name);
+
+        std::string roughnessMapName = roughnessMapPtr ? roughnessMapPtr->image_name : "";
+        node["roughness_map"] = roughnessMapName;
+        if (roughnessMapPtr) roughnessMapPtr->SaveBinary(roughnessMapPtr->image_name);
+
+        std::string aoMapName = aoMapPtr ? aoMapPtr->image_name : "";
+        node["ao_map"] = aoMapName;
+        if (aoMapPtr) aoMapPtr->SaveBinary(aoMapPtr->image_name);
 
         return node;
     }
@@ -125,6 +141,9 @@ protected:
         {
             return false;
         }
+
+        //timer to see how long it takes to load the scene
+        auto start = std::chrono::high_resolution_clock::now();
 
         std::string wrapModeStr = node["wrap_mode"].as<std::string>();
         if (wrapModeStr == "Repeat")
@@ -165,7 +184,7 @@ protected:
             std::string imagePath = node["image"].as<std::string>();
             if (!imagePath.empty()) {
                 imagePtr = std::make_shared<Image>();
-                imagePtr->LoadTexture(imagePath);
+                imagePtr = imagePtr->LoadBinary(imagePath);
             }
         }
 
@@ -173,7 +192,7 @@ protected:
             std::string normalMapPath = node["normal_map"].as<std::string>();
             if (!normalMapPath.empty()) {
                 normalMapPtr = std::make_shared<Image>();
-                normalMapPtr->LoadTexture(normalMapPath);
+                normalMapPtr = normalMapPtr->LoadBinary(normalMapPath);
             }
         }
 
@@ -181,7 +200,7 @@ protected:
             std::string metallicMapPath = node["metallic_map"].as<std::string>();
             if (!metallicMapPath.empty()) {
                 metallicMapPtr = std::make_shared<Image>();
-                metallicMapPtr->LoadTexture(metallicMapPath);
+                metallicMapPtr = metallicMapPtr->LoadBinary(metallicMapPath);
             }
         }
 
@@ -189,7 +208,7 @@ protected:
             std::string roughnessMapPath = node["roughness_map"].as<std::string>();
             if (!roughnessMapPath.empty()) {
                 roughnessMapPtr = std::make_shared<Image>();
-                roughnessMapPtr->LoadTexture(roughnessMapPath);
+                roughnessMapPtr = roughnessMapPtr->LoadBinary(roughnessMapPath);
             }
         }
 
@@ -197,9 +216,14 @@ protected:
             std::string aoMapPath = node["ao_map"].as<std::string>();
             if (!aoMapPath.empty()) {
                 aoMapPtr = std::make_shared<Image>();
-                aoMapPtr->LoadTextureLocalPath(aoMapPath);
+                aoMapPtr = aoMapPtr->LoadBinary(aoMapPath);
             }
         }
+
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed = end - start;
+        LOG(LogType::LOG_INFO, "Material loaded in: %f seconds", elapsed.count());
+
         return true;
     }
 

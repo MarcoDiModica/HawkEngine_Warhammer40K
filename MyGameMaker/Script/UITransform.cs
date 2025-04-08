@@ -8,7 +8,32 @@ namespace HawkEngine
     {
         //funciones
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SetUIScale(Vector3 scale);
+
+        public extern void DOMoveUI(Vector3 position,float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOMoveXUI(float positionX, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOMoveYUI(float positionY, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOMoveZUI(float positionZ, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOScaleUI(Vector3 scale, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOScaleXUI(float scaleX, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void DOScaleYUI(float scaleY, float duration, Modes modes);
+
+        [MethodImpl (MethodImplOptions.InternalCall)]
+        public extern void DOScaleZUI(float scaleZ, float duration, Modes modes);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetScaleUI(Vector3 scale);
 
         //contructor
         private GameObject owner;
@@ -25,6 +50,7 @@ namespace HawkEngine
             Engineson.print("UITransform default constructor");
         }
 
+        public override void Awake() { }
         public override void Start() { }
 
         public override void Update(float deltaTime) { }

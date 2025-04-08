@@ -31,9 +31,12 @@ GameObject0:
       far_plane: 500
       priority: 1
     AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
   Children: ~
 GameObject1:
-  name: Canvas
+  name: Canvas_Main_Menu
   tag: Untagged
   active: true
   isStatic: false
@@ -70,8 +73,17 @@ GameObject1:
         - 1
       pivot_offset:
         - 0
+        - 1
         - 0
-        - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -79,7 +91,7 @@ GameObject1:
       Script0:
         name: MenuButtons
   Children:
-    - name: MenuImage
+    - name: bg_menu
       tag: Untagged
       active: true
       isStatic: false
@@ -121,9 +133,9 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/Main_Menu_Reference.png
+          texture_path: Library/Textures/UI/menu_bg.png
       Children: ~
-    - name: NewGameButton
+    - name: title
       tag: Untagged
       active: true
       isStatic: false
@@ -147,16 +159,16 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.0140000004
+            - 0.0869999975
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.45811519
-            - 0.232693434
+            - 0.386999995
+            - 0.184
             - 1
           pivot_offset:
             - 0
@@ -165,13 +177,57 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/New_Game.png
+          texture_path: Library/Textures/UI/title.png
+      Children: ~
+    - name: new_game_button
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.177000001
+            - 0.361000001
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.181999996
+            - 0.0719999969
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/menu_newGame.png
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
       Children: ~
-    - name: ContinueButton
+    - name: continue_button
       tag: Untagged
       active: true
       isStatic: false
@@ -195,31 +251,31 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.177000001
+            - 0.469000012
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.45811519
-            - 0.232693434
+            - 0.181999996
+            - 0.0719999969
             - 1
           pivot_offset:
-            - 0
-            - 0
+            - 0.5
+            - 0.5
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/Continue_button.png
+          texture_path: Library/Textures/UI/menu_continue.png
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
       Children: ~
-    - name: OptionsButton
+    - name: options_button
       tag: Untagged
       active: true
       isStatic: false
@@ -243,31 +299,31 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.177000001
+            - 0.565999985
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.45811519
-            - 0.232693434
+            - 0.181999996
+            - 0.0719999969
             - 1
           pivot_offset:
-            - 0
-            - 0
+            - 0.5
+            - 0.5
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/Options_Button.png
+          texture_path: Library/Textures/UI/menu_options.png
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
       Children: ~
-    - name: CreditsButton
+    - name: exit_button
       tag: Untagged
       active: true
       isStatic: false
@@ -291,31 +347,118 @@ GameObject1:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.177000001
+            - 0.66900003
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.45811519
-            - 0.232693434
+            - 0.181999996
+            - 0.0719999969
             - 1
           pivot_offset:
-            - 0
-            - 0
+            - 0.5
+            - 0.5
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/Credits_Buttom.png
+          texture_path: Library/Textures/UI/menu_exit.png
         UIButtonComponent:
           name: UIButtonComponent
           enabled: true
           state: 1
       Children: ~
-    - name: QuitButton
+GameObject2:
+  name: EmptyMusic
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Library\Audio\PlaceHolder_MainMenuMusic.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: true
+  Children: ~
+GameObject3:
+  name: Canvas_OptionsMenu
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: OptionMenu
+  Children:
+    - name: Canvas_OptionsMenu_
       tag: Untagged
       active: true
       isStatic: false
@@ -347,8 +490,8 @@ GameObject1:
             - 0
             - 0
           scale:
-            - 0.45811519
-            - 0.232693434
+            - 1
+            - 1
             - 1
           pivot_offset:
             - 0
@@ -357,9 +500,5 @@ GameObject1:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: ../MyGameEditor/Assets/Textures/Quit_button.png
-        UIButtonComponent:
-          name: UIButtonComponent
-          enabled: true
-          state: 1
+          texture_path: Library/Textures/UI/options_menu.png
       Children: ~

@@ -39,6 +39,9 @@ MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
 	owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::PBR);
 }
 
+void MeshRenderer::Awake() {
+}
+
 void MeshRenderer::Start() {
 }
 
@@ -200,7 +203,6 @@ void MeshRenderer::Render() const {
 	if (!mesh || !material || !owner || !mesh->model) return;
 
 	glm::dvec4 materialColor = material->GetColor();
-	std::string texturePath = material->image().image_path;
 
 	GLboolean blendEnabled;
 	glGetBooleanv(GL_BLEND, &blendEnabled);

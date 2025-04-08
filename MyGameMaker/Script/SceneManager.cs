@@ -16,6 +16,8 @@ namespace HawkEngine
         //funciones
         public static void LoadScene(string sceneName)
         {
+            Tweening.CleanTweens();
+            
             if (LoadSceneInternal("Library/Scenes/" + sceneName + ".scene"))
             {
                SetSceneToPlay();

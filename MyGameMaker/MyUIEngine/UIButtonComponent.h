@@ -24,6 +24,7 @@ public:
 	UIButtonComponent(UIButtonComponent&&) noexcept = default;
 	UIButtonComponent& operator=(UIButtonComponent&&) noexcept = default;
 
+	void Awake() override;
 	void Start() override;
 	void Update(float deltaTime) override;
 	void Destroy() override;

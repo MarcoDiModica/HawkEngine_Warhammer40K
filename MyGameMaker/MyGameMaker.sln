@@ -46,6 +46,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shaders", "Shaders", "{6949
 		MyGameEditor\Assets\Shaders\unlit_vertex.glsl = MyGameEditor\Assets\Shaders\unlit_vertex.glsl
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{0C97F528-AC21-4BDC-A66B-E57C887B7A7B}"
+	ProjectSection(SolutionItems) = preProject
+		Script\BiblePagePickUp.cs = Script\BiblePagePickUp.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Build|Any CPU = Build|Any CPU

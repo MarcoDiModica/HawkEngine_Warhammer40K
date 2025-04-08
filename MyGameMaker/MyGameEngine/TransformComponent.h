@@ -20,6 +20,7 @@ public:
     Transform_Component(Transform_Component&& other) noexcept;
     Transform_Component& operator=(Transform_Component&& other) noexcept;
 
+	void Awake() override {}
     void Start() override {}
     void Update(float deltaTime) override;
     void Destroy() override;

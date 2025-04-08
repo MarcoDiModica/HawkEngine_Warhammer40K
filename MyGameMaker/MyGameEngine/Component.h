@@ -28,7 +28,7 @@ enum class ComponentType {
 	SHADER,
 	COLLIDER,
 	RIGIDBODY,
-	PARTICLES_EMITTER,
+	PARTICLEFX, 
 	ANIMATION,
 	UI,
 	LIGHT,
@@ -46,6 +46,7 @@ public:
 	explicit Component(GameObject* owner) : owner(owner) {}
 	virtual ~Component() = default;
 
+	virtual void Awake() = 0;
 	virtual void Start() = 0;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Destroy() = 0;

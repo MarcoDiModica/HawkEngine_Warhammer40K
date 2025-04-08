@@ -113,6 +113,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ImGuiCurveEditor.h" />
     <ClInclude Include="InputEngine.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Material.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="TreeExt.h" />
+    <ClInclude Include="Tweening.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="HawkUUID.h" />
   </ItemGroup>
@@ -154,6 +156,7 @@
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="HawkUUID.cpp" />
+    <ClCompile Include="Tweening.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

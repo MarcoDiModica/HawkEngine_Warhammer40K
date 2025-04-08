@@ -20,8 +20,10 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyGameEngine/Tweening.h"
 
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
+#include "../MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
 
@@ -35,6 +37,11 @@ MonoObject* EngineBinds::GetGameObject(MonoObject* ref) {
 
 MonoString* EngineBinds::GameObjectGetName(MonoObject* sharpRef) {
     std::string name = ConvertFromSharp(sharpRef)->GetName();
+    return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
+}
+
+MonoString* EngineBinds::GameObjectGetTag(MonoObject* sharpRef) {
+    std::string name = ConvertFromSharp(sharpRef)->GetTag();
     return mono_string_new(MonoManager::GetInstance().GetDomain(), name.c_str());
 }
 
@@ -174,6 +181,9 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 	else if (componentName == "HawkEngine.ScriptComponent") {
 		return GO->GetComponent<ScriptComponent>()->GetSharp();
 	}
+	else if (componentName == "HawkEngine.ParticleFX") {
+		return GO->GetComponent<ParticleFX>()->GetSharp();
+	}
 
 
     return nullptr;
@@ -211,6 +221,9 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break; 
     case 12: _component = static_cast<Component*>(go->AddComponent<CapsuleColliderComponent>(Application->physicsModule));
         break;
+	case 13: _component = static_cast<Component*>(go->AddComponent<ParticleFX>());
+		break;
+
     }
 
 	
@@ -236,12 +249,31 @@ void EngineBinds::AddScript(MonoObject* ref, MonoString* scriptName) {
 	go->AddComponent<ScriptComponent>()->LoadScript(C_name);
 }
 
+void EngineBinds::SetActive(MonoObject* ref, bool active) {
+	ConvertFromSharp(ref)->SetActive(active);
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
     char* C_name = mono_string_to_utf8(sharpName);
     ConvertFromSharp(ref)->SetName(std::string(C_name));
 }
+void EngineBinds::SetTag(MonoObject* ref, MonoString* sharpName) {
+
+    char* C_name = mono_string_to_utf8(sharpName);
+    ConvertFromSharp(ref)->SetTag(std::string(C_name));
+}
+
+void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
+    ConvertFromSharp(ref)->SetActive(active);
+}
+
+MonoString* EngineBinds::GetTag(MonoObject* ref) {
+	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
+}
+
+
 
 MonoObject* EngineBinds::GetGameObjectByName(MonoString* name)
 {
@@ -420,7 +452,7 @@ Vector3 EngineBinds::GetForward(MonoObject* transformRef) {
 
 // Camera Class functions
 
-void EngineBinds::SetCameraFieldOfView(MonoObject* cameraRef, float fov) {
+void EngineBinds::SetCameraFieldOfView(MonoObject* cameraRef, double fov) {
 
     CameraComponent* camera = ConvertFromSharpComponent<CameraComponent>(cameraRef);
     camera->fov = fov;
@@ -593,6 +625,57 @@ void EngineBinds::SetColliderPosition(MonoObject* colliderRef, glm::vec3* positi
     }
 }
 
+
+MonoObject* GetMonoObjectFromGameObject(GameObject* gameObject) {
+    if (!gameObject) return nullptr;
+
+    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    if (!gameObjectClass) {
+        return nullptr;
+    }
+
+    MonoObject* monoGameObject = mono_object_new(mono_domain_get(), gameObjectClass);
+    if (!monoGameObject) {
+        return nullptr;
+    }
+
+    MonoClassField* nativePtrField = mono_class_get_field_from_name(gameObjectClass, "CplusplusInstance");
+    if (!nativePtrField) {
+        return nullptr;
+    }
+
+    uintptr_t nativePtr = reinterpret_cast<uintptr_t>(gameObject);
+    mono_field_set_value(monoGameObject, nativePtrField, &nativePtr);
+
+    return monoGameObject;
+}
+
+
+MonoArray* EngineBinds::OverlapSphere(glm::vec3* position, float radius, MonoString* tag) {
+    if (!Application || !Application->physicsModule) {
+        return nullptr;
+    }
+
+    std::string tagStr = mono_string_to_utf8(tag);
+    auto overlappingObjects = Application->physicsModule->OverlapSphere(*position, radius, tagStr);
+
+    MonoDomain* domain = mono_domain_get();
+    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+    if (!gameObjectClass) return nullptr;
+
+    MonoArray* monoArray = mono_array_new(domain, gameObjectClass, overlappingObjects.size());
+
+    for (size_t i = 0; i < overlappingObjects.size(); i++) {
+        MonoObject* monoGameObject = GetMonoObjectFromGameObject(overlappingObjects[i]);
+        if (monoGameObject) {
+            mono_array_set(monoArray, MonoObject*, i, monoGameObject);
+        }
+    }
+
+    return monoArray;
+}
+
+
 glm::quat EngineBinds::GetColliderRotation(MonoObject* colliderRef) {
     auto collider = ConvertFromSharpComponent<BaseColliderComponent>(colliderRef);
     return collider ? collider->GetColliderRotation() : glm::quat();
@@ -724,6 +807,35 @@ void EngineBinds::EnableContinuousCollision(MonoObject* rigidbodyRef) {
     if (rigidbody) {
         rigidbody->EnableContinuousCollision();
     }
+}
+
+// Raycast
+MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance)
+{
+    btVector3 from;
+	from.setValue(origin->x, origin->y, origin->z);
+
+	btVector3 to;
+	to.setValue(direction->x, direction->y, direction->z);
+
+    btVector3 hitPos;
+    hitPos.setValue(hitPoint.x, hitPoint.y, hitPoint.z);
+
+    btVector3 hitNormal;
+    hitNormal.setValue(normal.x, normal.y, normal.z);
+
+	GameObject* hitObject;
+	hitObject = Application->physicsModule->Raycast(from, to, maxDistance, hitPos, hitNormal, distance);
+
+	
+	hitPoint = glm::vec3(hitPos.getX(), hitPos.getY(), hitPos.getZ());
+	normal = glm::vec3(hitNormal.getX(), hitNormal.getY(), hitNormal.getZ());
+
+	if (hitObject) {
+		return GetMonoObjectFromGameObject(hitObject);
+	}
+
+    return nullptr;
 }
 
 
@@ -884,6 +996,210 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
 	}
 }
+
+//Tween
+// tienes que referenciar al componente que vas a usar o al gameobject que vas a usar, en el caso de que sea
+// un gameobject se usara el transform del gameobject
+void EngineBinds::DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode) {
+	auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+	if (transform) {
+		GameObject* object = transform->GetOwner();
+		Tweening::Move(object, *targetPosition, duration, mode);
+	}
+}
+
+void EngineBinds::DOMoveX(MonoObject* transformRef, float targetPosition, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::MoveX(object, targetPosition, duration, mode);
+    }
+}
+
+void EngineBinds::DOMoveY(MonoObject* transformRef, float targetPosition, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+		GameObject* object = transform->GetOwner();
+		Tweening::MoveY(object, targetPosition, duration, mode);
+	}
+	
+}
+
+void EngineBinds::DOMoveZ(MonoObject* transformRef, float targetPosition, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+	    Tweening::MoveZ(object, targetPosition, duration, mode);
+	}
+}   
+
+void EngineBinds::DORotate(MonoObject* transformRef, glm::vec3* targetRotation, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::Rotate(object, *targetRotation, duration, mode);
+    }
+}
+
+void EngineBinds::DORotateX(MonoObject* transformRef, float targetRotation, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::RotateX(object, targetRotation, duration, mode);
+    }
+}
+
+void EngineBinds::DORotateY(MonoObject* transformRef, float targetRotation, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::RotateY(object, targetRotation, duration, mode);
+    }
+}
+
+void EngineBinds::DORotateZ(MonoObject* transformRef, float targetRotation, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::RotateZ(object, targetRotation, duration, mode);
+    }
+}
+
+void EngineBinds::DOScale(MonoObject* transformRef, glm::vec3* targetScale, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::Scale(object, *targetScale, duration, mode);
+    }
+}
+
+void EngineBinds::DOScaleX(MonoObject* transformRef, float targetScale, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::ScaleX(object, targetScale, duration, mode);
+    }
+}
+
+void EngineBinds::DOScaleY(MonoObject* transformRef, float targetScale, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::ScaleY(object, targetScale, duration, mode);
+    }
+}
+
+void EngineBinds::DOScaleZ(MonoObject* transformRef, float targetScale, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::ScaleZ(object, targetScale, duration, mode);
+    }
+}
+
+void EngineBinds::DOMoveUI(MonoObject* uiTransformRef, glm::vec3* targetPosition, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIMove(object, *targetPosition, duration, mode);
+    }
+}
+
+void EngineBinds::DOMoveXUI(MonoObject* uiTransformRef, float targetPosition, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIMoveX(object, targetPosition, duration, mode);
+    }
+}
+
+void EngineBinds::DOMoveYUI(MonoObject* uiTransformRef, float targetPosition, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIMoveY(object, targetPosition, duration, mode);
+    }
+}
+
+void EngineBinds::DOMoveZUI(MonoObject* uiTransformRef, float targetPosition, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIMoveZ(object, targetPosition, duration, mode);
+    }
+}
+
+void EngineBinds::DOScaleUI(MonoObject* uiTransformRef, glm::vec3* targetScale, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+	    Tweening::UIScale(object, *targetScale, duration, mode);
+	}
+}
+
+void EngineBinds::DOScaleXUI(MonoObject* uiTransformRef, float targetScale, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIScaleX(object, targetScale, duration, mode);
+    }
+}
+
+void EngineBinds::DOScaleYUI(MonoObject* uiTransformRef, float targetScale, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIScaleY(object, targetScale, duration, mode);
+    }
+}
+
+void EngineBinds::DOScaleZUI(MonoObject* uiTransformRef, float targetScale, float duration, Modes mode)
+{
+    auto transform = ConvertFromSharpComponent<UITransformComponent>(uiTransformRef);
+    if (transform) {
+        GameObject* object = transform->GetOwner();
+        Tweening::UIScaleZ(object, targetScale, duration, mode);
+    }
+}
+
+void EngineBinds::DOColor(glm::vec4 *color, const glm::vec4 startColor, const glm::vec4 targetColor, float duration, Modes mode)
+{
+	Tweening::TweenColor(color, startColor, targetColor, duration, mode);
+}
+
+void EngineBinds::DOValue(float* value, float start, float target, float duration, Modes mode)
+{
+    Tweening::TweenValue(value, start, target, duration, mode);
+}
+
+void EngineBinds::CleanAllTweens()
+{
+    Tweening::CleanAllTweens();
+}
+
+void EngineBinds::DOVec3(glm::vec3* value, glm::vec3 start, glm::vec3 target, float duration, Modes mode)
+{
+	Tweening::TweenVec3(value, start, target, duration, mode);
+}
+    
 bool EngineBinds::LoadScene(MonoString* sceneName)
 {
     char* C_sceneName = mono_string_to_utf8(sceneName);
@@ -899,7 +1215,49 @@ bool EngineBinds::LoadScene(MonoString* sceneName)
 void EngineBinds::SetScenePlay()
 {
 	SceneManagement->currentScene->sceneState = Scene::SceneState::PLAY;
+	SceneManagement->Awake();
 	SceneManagement->currentScene->Start();
+}
+
+void EngineBinds::ApplyPreset(MonoObject* particleRef, int particleType)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+
+	if (particle) {
+		particle->ApplyPreset(particleType);
+	}
+}
+
+void EngineBinds::SetOneShot(MonoObject* particleRef, bool oneShot)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->SetOneShot(oneShot);
+	}
+}
+
+void EngineBinds::PlayParticle(MonoObject* particleRef)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->Play();
+	}
+}
+
+void EngineBinds::StopParticle(MonoObject* particleRef)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->Pause();
+	}
+}
+
+void EngineBinds::EmitBurst(MonoObject* particleRef, int burstCount)
+{
+	auto particle = ConvertFromSharpComponent<ParticleFX>(particleRef);
+	if (particle) {
+		particle->EmitBurst(burstCount);
+	}
 }
 
 void EngineBinds::BindEngine() {
@@ -908,13 +1266,18 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
+    mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);
     mono_add_internal_call("HawkEngine.GameObject::SetName", (const void*) SetName );
+	mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GetTag);
+	mono_add_internal_call("HawkEngine.GameObject::SetTag", (const void*)SetTag);
     mono_add_internal_call("HawkEngine.GameObject::AddChild", (const void*)GameObjectAddChild);
     mono_add_internal_call("HawkEngine.Engineson::Destroy", (const void*)Destroy);
     mono_add_internal_call("HawkEngine.GameObject::TryGetComponent", (const void*)GetSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::TryAddComponent", (const void*)AddSharpComponent);
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
+    mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
+
 
     // Input
     mono_add_internal_call("HawkEngine.Input::GetKey", (const void*)GetKey);
@@ -968,6 +1331,10 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.MeshRenderer::GetMaterial", (const void*)&EngineBinds::GetMaterial);
     mono_add_internal_call("HawkEngine.MeshRenderer::SetColor", (const void*)&EngineBinds::SetColor);
 
+
+    //Physics
+    mono_add_internal_call("HawkEngine.Physics::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);
+
     // Physics Collider
     mono_add_internal_call("HawkEngine.Collider::SetTrigger", (const void*)&EngineBinds::SetTrigger);
     mono_add_internal_call("HawkEngine.Collider::IsTrigger", (const void*)&EngineBinds::IsTrigger);
@@ -979,6 +1346,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Collider::SetSize", (const void*)&EngineBinds::SetColliderSize);
     mono_add_internal_call("HawkEngine.Collider::SetActive", (const void*)&EngineBinds::SetColliderActive);
     mono_add_internal_call("HawkEngine.Collider::SnapToPosition", (const void*)&EngineBinds::SnapColliderToPosition);
+    mono_add_internal_call("HawkEngine.Collider::OverlapSphere", (const void*)&EngineBinds::OverlapSphere);
 
     // Physics Rigidbody
     mono_add_internal_call("HawkEngine.Rigidbody::SetVelocity", (const void*)&EngineBinds::SetVelocity);
@@ -995,6 +1363,9 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Rigidbody::SetKinematic", (const void*)&EngineBinds::SetKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::IsKinematic", (const void*)&EngineBinds::IsKinematic);
     mono_add_internal_call("HawkEngine.Rigidbody::EnableContinuousCollision", (const void*)&EngineBinds::EnableContinuousCollision);
+
+	// Raycast
+	mono_add_internal_call("HawkEngine.RayCast::Raycast", (const void*)&EngineBinds::Raycast);
 
     // Audio
     mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);
@@ -1013,7 +1384,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);
 
 	// UI Transform
-	mono_add_internal_call("HawkEngine.UITransform::SetUIScale", (const void*)&EngineBinds::SetUIScale);
+	mono_add_internal_call("HawkEngine.UITransform::SetScaleUI", (const void*)&EngineBinds::SetUIScale);
   
     // SkeletalAnimation
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationSpeed", (const void*)&EngineBinds::SetAnimationSpeed);
@@ -1027,9 +1398,43 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationPlayState", (const void*)&EngineBinds::GetAnimationPlayState);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
 
+	// Tween
+    
+	mono_add_internal_call("HawkEngine.Transform::DOMove", (const void*)&EngineBinds::DOMove);
+	mono_add_internal_call("HawkEngine.Transform::DOMoveX", (const void*)&EngineBinds::DOMoveX);
+	mono_add_internal_call("HawkEngine.Transform::DOMoveY", (const void*)&EngineBinds::DOMoveY);
+	mono_add_internal_call("HawkEngine.Transform::DOMoveZ", (const void*)&EngineBinds::DOMoveZ);
+	mono_add_internal_call("HawkEngine.Transform::DORotate", (const void*)&EngineBinds::DORotate);
+	mono_add_internal_call("HawkEngine.Transform::DORotateX", (const void*)&EngineBinds::DORotateX);
+	mono_add_internal_call("HawkEngine.Transform::DORotateY", (const void*)&EngineBinds::DORotateY);
+	mono_add_internal_call("HawkEngine.Transform::DORotateZ", (const void*)&EngineBinds::DORotateZ);
+	mono_add_internal_call("HawkEngine.Transform::DOScale", (const void*)&EngineBinds::DOScale);
+	mono_add_internal_call("HawkEngine.Transform::DOScaleX", (const void*)&EngineBinds::DOScaleX);
+	mono_add_internal_call("HawkEngine.Transform::DOScaleY", (const void*)&EngineBinds::DOScaleY);
+	mono_add_internal_call("HawkEngine.Transform::DOScaleZ", (const void*)&EngineBinds::DOScaleZ);
+	mono_add_internal_call("HawkEngine.UITransform::DOMoveUI", (const void*)&EngineBinds::DOMoveUI);
+	mono_add_internal_call("HawkEngine.UITransform::DOMoveXUI", (const void*)&EngineBinds::DOMoveXUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOMoveYUI", (const void*)&EngineBinds::DOMoveYUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOMoveZUI", (const void*)&EngineBinds::DOMoveZUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOScaleUI", (const void*)&EngineBinds::DOScaleUI);
+	mono_add_internal_call("HawkEngine.UITransform::DOScaleXUI", (const void*)&EngineBinds::DOScaleXUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOScaleYUI", (const void*)&EngineBinds::DOScaleYUI);
+    mono_add_internal_call("HawkEngine.UITransform::DOScaleZUI", (const void*)&EngineBinds::DOScaleZUI);
+    mono_add_internal_call("HawkEngine.Tweening::DOVector4", (const void*)&EngineBinds::DOColor);
+	mono_add_internal_call("HawkEngine.Tweening::DOValue", (const void*)&EngineBinds::DOValue);
+	mono_add_internal_call("HawkEngine.Tweening::DOVector3", (const void*)&EngineBinds::DOVec3);
+    mono_add_internal_call("HawkEngine.Tweening::CleanTweens", (const void*)&EngineBinds::CleanAllTweens);
+
 	// Scene
 	mono_add_internal_call("HawkEngine.SceneManager::LoadSceneInternal", (const void*)&EngineBinds::LoadScene);
 	mono_add_internal_call("HawkEngine.SceneManager::SetSceneToPlay", (const void*)&EngineBinds::SetScenePlay);
+
+	// VFX (particles)
+	mono_add_internal_call("HawkEngine.ParticleFX::ApplyPreset", (const void*)&EngineBinds::ApplyPreset);
+    mono_add_internal_call("HawkEngine.ParticleFX::SetOneShot", (const void*)&EngineBinds::SetOneShot);
+	mono_add_internal_call("HawkEngine.ParticleFX::Play", (const void*)&EngineBinds::PlayParticle);
+	mono_add_internal_call("HawkEngine.ParticleFX::Stop", (const void*)&EngineBinds::StopParticle);
+	mono_add_internal_call("HawkEngine.ParticleFX::EmitBurst", (const void*)&EngineBinds::EmitBurst);
 }
 
 template <class T>

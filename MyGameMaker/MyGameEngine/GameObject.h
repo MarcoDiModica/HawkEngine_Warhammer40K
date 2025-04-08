@@ -47,7 +47,7 @@ public:
     template <IsComponent T>
     bool HasComponent() const;
 
-    //void Awake();
+    void Awake();
     void Start();
     //void FixedUpdate(float fixedDeltaTime);
     void Update(float deltaTime);
@@ -63,6 +63,9 @@ public:
     
     std::string GetName() const;
     void SetName(const std::string& name);
+
+    std::string GetTag() const;
+    void SetTag(const std::string& newTag);
 
     bool CompareTag(const std::string& tag) const;
 
@@ -170,15 +173,24 @@ T* GameObject::AddComponent(Args&&... args) {
 
 template <typename T>
 T* GameObject::GetComponent() const {
-	if (destroyed) {
-		return nullptr;
+    if (destroyed || !this) {
+        return nullptr;
 	}
 
-	for (const auto& scriptComponent : scriptComponents) {
-		if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
-			return dynamic_cast<T*>(scriptComponent.get());
-		}
+    if (cachedComponentType == typeid(T) && cachedComponent != nullptr) {
+		return dynamic_cast<T*>(cachedComponent.get());
 	}
+
+    for (const auto& scriptComponent : scriptComponents) {
+        if (dynamic_cast<T*>(scriptComponent.get()) != nullptr) {
+            return dynamic_cast<T*>(scriptComponent.get());
+        }
+    }
+
+    const auto& it = components.find(typeid(T));
+    if (it != components.end()) {
+        return dynamic_cast<T*>(it->second.get());
+    }
 
 	auto it = components.find(typeid(T));
 	if (it != components.end()) {

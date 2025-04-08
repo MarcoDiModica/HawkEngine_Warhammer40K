@@ -11,6 +11,10 @@ AudioListener::AudioListener(GameObject* owner)
     name = "AudioListener";
 }
 
+void AudioListener::Awake() {
+	
+}
+
 void AudioListener::Start() {
     UpdateListenerPosition();
 }

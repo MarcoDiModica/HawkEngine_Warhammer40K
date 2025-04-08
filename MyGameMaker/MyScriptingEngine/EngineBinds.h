@@ -7,6 +7,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <memory>
 #include <SDL2/SDL_gamecontroller.h>
+#include <MyGameEngine/Tweening.h>
 
 class GameObject;
 
@@ -34,10 +35,15 @@ namespace EngineBinds {
     T* ConvertFromSharpComponent(MonoObject* sharpComp);
 
 	void AddScript(MonoObject* ref, MonoString* scriptName);
+	void SetActive(MonoObject* ref, bool active);
 
     MonoString* GameObjectGetName(MonoObject* sharpRef);
+    MonoString* GameObjectGetTag(MonoObject* sharpRef);
     void SetName(MonoObject* ref, MonoString* sharpName);
+	MonoString* GetTag(MonoObject* ref);
+	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
+    void GameObjectSetActive(MonoObject* ref, bool active);
 
     // Input
     bool GetKey(int keyID);
@@ -74,7 +80,7 @@ namespace EngineBinds {
     void SetForward(MonoObject* transformRef, glm::vec3* forward);
 
 	// Camera
-    void SetCameraFieldOfView(MonoObject* cameraRef, float fov);
+    void SetCameraFieldOfView(MonoObject* cameraRef, double fov);
     void SetCameraNearClipPlane(MonoObject* cameraRef, float nearClipPlane);
     void SetCameraFarClipPlane(MonoObject* cameraRef, float farClipPlane);
     void SetCameraAspectRatio(MonoObject* cameraRef, float aspectRatio);
@@ -93,7 +99,10 @@ namespace EngineBinds {
 	void SetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void GetColor(MonoObject* meshRendererRef, glm::vec3* color);
     void Render(MonoObject* meshRendererRef);
+    
 
+    //Physics
+    MonoArray* OverlapSphere(glm::vec3* position, float radius, MonoString* tag);
 
     //Physics Collider
     void SetTrigger(MonoObject* colliderRef, bool trigger);
@@ -122,6 +131,9 @@ namespace EngineBinds {
     void SetKinematic(MonoObject* rigidbodyRef, bool isKinematic);
     bool IsKinematic(MonoObject* rigidbodyRef);
     void EnableContinuousCollision(MonoObject* rigidbodyRef);
+
+    // Raycast
+	MonoObject* Raycast(glm::vec3* origin, glm::vec3* direction, float maxDistance, glm::vec3& hitPoint, glm::vec3& normal, float& distance);
     
     //Audio
     void Play(MonoObject* audioRef, bool loop = false);
@@ -154,10 +166,44 @@ namespace EngineBinds {
 	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
 
+	//Tweening
+    void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);
+
+    //cambia los de UI a que sean DOMoveUI, es mas intuitivo para el usuario !!!!!IMPORTANTE!!!!!
+    void DOMoveUI(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);
+	void DOMoveX(MonoObject* transformRef, float targetX, float duration, Modes mode);
+	void DOMoveXUI(MonoObject* uiTransformRef, float targetX, float duration, Modes mode);
+	void DOMoveY(MonoObject* transformRef, float targetY, float duration, Modes mode);
+	void DOMoveYUI(MonoObject* uiTransformRef, float targetY, float duration, Modes mode);
+	void DOMoveZ(MonoObject* transformRef, float targetZ, float duration, Modes mode);
+	void DOMoveZUI(MonoObject* uiTransformRef, float targetZ, float duration, Modes mode);
+	void DORotate(MonoObject* transformRef, glm::vec3* targetRotation, float duration, Modes mode);
+	void DORotateX(MonoObject* transformRef, float targetX, float duration, Modes mode);
+	void DORotateY(MonoObject* transformRef, float targetY, float duration, Modes mode);
+	void DORotateZ(MonoObject* transformRef, float targetZ, float duration, Modes mode);
+	void DOScale(MonoObject* transformRef, glm::vec3* targetScale, float duration, Modes mode);
+	void DOScaleUI(MonoObject* uiTransformRef, glm::vec3* targetScale, float duration, Modes mode);
+	void DOScaleX(MonoObject* transformRef, float targetX, float duration, Modes mode);
+	void DOScaleY(MonoObject* transformRef, float targetY, float duration, Modes mode);
+	void DOScaleZ(MonoObject* transformRef, float targetZ, float duration, Modes mode);
+	void DOScaleXUI(MonoObject* uiTransformRef, float targetX, float duration, Modes mode);
+	void DOScaleYUI(MonoObject* uiTransformRef, float targetY, float duration, Modes mode);
+	void DOScaleZUI(MonoObject* uiTransformRef, float targetZ, float duration, Modes mode);
+    void DOColor(glm::vec4* color, const glm::vec4 startColor, const glm::vec4 targetColor, float duration, Modes mode);
+	void DOVec3(glm::vec3* vec, const glm::vec3 start, const glm::vec3 target, float duration, Modes mode);
+    void DOValue(float* value, float start, float target, float duration, Modes mode);
+    void CleanAllTweens();
 
     //SceneManagement
     bool LoadScene(MonoString* sceneName);
     void SetScenePlay();
+
+    //VFX (particles)
+    void ApplyPreset(MonoObject* particleRef, int presetName);
+	void SetOneShot(MonoObject* particleRef, bool oneShot);
+	void PlayParticle(MonoObject* particleRef);
+	void StopParticle(MonoObject* particleRef);
+	void EmitBurst(MonoObject* particleRef, int burstCount);
 }
 
 #endif // ENGINE_BINDS_H

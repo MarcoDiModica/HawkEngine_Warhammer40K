@@ -10,6 +10,7 @@ public:
     BaseColliderComponent(GameObject* owner, PhysicsModule* physicsModule);
     ~BaseColliderComponent() override;
 
+	void Awake() override;
     void Start() override;
     void Update(float deltaTime) override;
     void Destroy() override;
@@ -48,6 +49,9 @@ public:
 
     MonoObject* CsharpReference = nullptr;
 
+public:
+    PhysicsModule* physics;
+
 
 protected:
 
@@ -57,7 +61,6 @@ protected:
 
     bool hasSnappedToInitialPosition = false;
 
-    PhysicsModule* physics;
 
     virtual void CreateCollider() = 0;
 

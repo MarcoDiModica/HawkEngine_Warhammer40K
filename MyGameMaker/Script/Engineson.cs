@@ -56,6 +56,10 @@ namespace HawkEngine
             {
                 return 12;
             }
+            else if (type == typeof(ParticleFX))
+            {
+                return 13;
+            }
 
 
 

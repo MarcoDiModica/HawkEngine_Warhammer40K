@@ -6,6 +6,10 @@ ShaderComponent::ShaderComponent(GameObject* owner)
 	name = "Shader";
 }
 
+void ShaderComponent::Awake() {
+	// Initialize shader component
+}
+
 void ShaderComponent::Start() {
 	// Initialize shader component
 }

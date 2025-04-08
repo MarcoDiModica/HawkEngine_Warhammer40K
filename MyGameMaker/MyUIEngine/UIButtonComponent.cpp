@@ -15,6 +15,10 @@ UIButtonComponent::UIButtonComponent(GameObject* owner) : Component(owner)
 	name = "UIButtonComponent";
 }
 
+void UIButtonComponent::Awake()
+{
+}
+
 void UIButtonComponent::Start()
 {
 }

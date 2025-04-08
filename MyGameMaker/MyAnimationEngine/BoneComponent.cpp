@@ -39,6 +39,10 @@ BoneComponent& BoneComponent::operator=(BoneComponent&& other) noexcept
 	return *this;
 }
 
+void BoneComponent::Awake()
+{
+}
+
 void BoneComponent::Start()
 {
 

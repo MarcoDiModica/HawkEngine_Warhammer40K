@@ -79,11 +79,20 @@ public:
 	//has to be removed when the scene serializer is implemented
     void CreateGameplayUI();
 	void CreateMainMenuUI();
+	void CreatePauseMenuUI();
+    void CreateOptionsMenuUI();
+    void CreateLocationSM();
+    void CreateLocationBot();
+	void CreateWinUI();
+    void CreateLoseUI();
+
 
     void SetMainCamera(std::shared_ptr<GameObject> camera);
 
 private:
     std::shared_ptr<GameObject> player;
+    std::shared_ptr<GameObject> canvas;
+    std::shared_ptr<GameObject> newGameButton;
     std::vector<std::shared_ptr<Scene>> scenes;
 	int prevCameraPriority = 0;
 };

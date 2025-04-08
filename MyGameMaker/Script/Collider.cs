@@ -34,7 +34,10 @@ namespace HawkEngine
         public extern void SetActive(bool active);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void SnapToPosition();
+        public extern void SnapToPosition();      
+        
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void OverlapSphere(Vector3 position, float radius);
 
         public GameObject owner;
 
@@ -50,6 +53,7 @@ namespace HawkEngine
             Engineson.print("Collider default constructor");
         }
 
+        public override void Awake() { }
         public override void Start() { }
         public override void Update(float deltaTime) { }
         public override void Destroy() { }

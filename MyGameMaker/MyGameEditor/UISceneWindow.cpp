@@ -335,17 +335,17 @@ bool UISceneWindow::Draw()
 
 				ImGuizmo::MODE guizmoMode = (transformSpace == TransformSpace::WORLD) ? ImGuizmo::WORLD : ImGuizmo::LOCAL;
 
-				ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
+				 ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
 					guizmoOperation, guizmoMode, matrixForManipulation, NULL,
 					(Application->gui->UIinspectorPanel->snap ? snap : nullptr));
 
 				if (ImGuizmo::IsUsing()) {
 					glm::mat4 manipulatedMatrix = glm::make_mat4(matrixForManipulation);
 
-					if (hasParent) {
+				/*	if (hasParent) {
 						glm::mat4 parentWorldMatrix = selectedObject->GetParent()->GetTransform()->GetMatrix();
 						manipulatedMatrix = glm::inverse(parentWorldMatrix) * manipulatedMatrix;
-					}
+				}*/
 
 					selectedObject->GetTransform()->SetMatrix(manipulatedMatrix);
 				}

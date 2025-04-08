@@ -3,231 +3,42 @@ using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public class EnemyController : MonoBehaviour
+public abstract class EnemyController : MonoBehaviour, IEnemyController
 {
-    //movement variables
-    private Transform playerTranform;
-    private float distToChase = 20.0f;
-    private float minDistToChase = 5.0f;
-    private float speedMovement = 5.0f;
-    private Rigidbody rb;
+    // Variables comunes
+    protected Transform playerTransform;
+    protected Rigidbody rb;
+    protected BoxCollider collider;
+    protected Transform enemyTransform;
+    protected Audio sound;
+    protected ParticleFX particles;
+
+    public float currentHealth;
+    public float maxHealth;
+    public bool isStunned = false;
+    protected float stunDuration = 2.0f;
+    protected float stunTimer = 0.0f;
+    protected bool isIdle = false;
+    protected bool isDead = false;
+    protected bool isAttacking = false;
+    protected bool isRunning = false;
+    protected bool isFootstepPlaying = false;
+    protected bool hasStoppedFootsteps = false;
+
+    public float distToChase = 50.0F;
+    public float minDistToChase = 5.0f;
+    public float speedMovement = 10.0f;
     public float acceleration = 15.0f;
-    Vector3 moveDirection;
-    private float currentRotationAngle;
     public float rotationSpeed = 300.0f;
-    private BoxCollider collider;
-    private Transform enemyTransform;
-    private Audio soundAtack;
+    protected Vector3 moveDirection;
+    protected float currentRotationAngle;
 
-    //shoting variables
-    public float shootCooldown = 2.0f;
-    public float projectileSpeed = 90.0f;
-    public float projectileLifetime = 0.5f;
-    private float shootTimer = 0f;
-    private List<ProjectileInfo> activeProjectiles = new List<ProjectileInfo>();
-
-    private class ProjectileInfo
-    {
-        public GameObject gameObject;
-        public Transform transform;
-        public float lifetime;
-        public Vector3 direction;
-        public bool markedForDestruction;
-
-        public ProjectileInfo(GameObject obj, Transform trans, Vector3 dir)
-        {
-            gameObject = obj;
-            transform = trans;
-            direction = dir;
-            lifetime = 0f;
-            markedForDestruction = false;
-        }
-    }
-
-    public override void Start()
-    {
-
-        playerTranform = GameObject.Find("Player").GetComponent<Transform>();
-        rb = gameObject.GetComponent<Rigidbody>();
-
-        if (playerTranform == null)
-        {
-            Engineson.print("ERROR: Player couldn't be found!");
-        }
-
-        collider = gameObject.GetComponent<BoxCollider>();
-        if (collider == null)
-        {
-            Engineson.print("ERROR: PlayerMovement requires a Collider component!");
-            return;
-        }
-
-        soundAtack = gameObject.GetComponent<Audio>();
-        if (soundAtack == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
-
-        enemyTransform = gameObject.GetComponent<Transform>();
-        if (enemyTransform == null)
-        {
-            Engineson.print("ERROR: PlayerMovement requires a Transform component!");
-            return;
-        }
-    }
-
-    public override void Update(float deltaTime)
-    {
-        Vector3 playerPos = playerTranform.position;
-
-        if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
-        {
-            if (shootTimer <= 0)
-            {
-                Shoot();
-                soundAtack?.Play();
-                shootTimer = shootCooldown;
-            }
-            else
-            {
-                shootTimer -= deltaTime;
-            }
-
-            if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
-            {
-                Vector3 currentVelocity = rb.GetVelocity();
-                moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                if (desiredVelocity.LengthSquared() > 0)
-                {
-                    desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                }
-
-                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-
-                //enemyTransform.position += desiredVelocity * deltaTime;
-            }
-        }
-        else
-        {
-            rb.SetVelocity(Vector3.Zero);
-        }
-
-        if (moveDirection != Vector3.Zero)
-        {
-            currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-            float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-            float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-            while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-            while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-            currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-            Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-            Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                eulerRotation.Y * ((float)Math.PI / 180.0f),
-                eulerRotation.X * ((float)Math.PI / 180.0f),
-                eulerRotation.Z * ((float)Math.PI / 180.0f)
-            );
-
-           // enemyTransform.SetRotationQuat(newRotation);
-            collider.SetRotation(newRotation);
-        }
-
-        UpdateProjectiles(deltaTime);
-        CleanupProjectiles();
-    }
-    private float Lerp(float start, float end, float t)
+    public abstract void Start();
+    public abstract void Update(float deltaTime);
+    public abstract void Attack();
+    public abstract void TakeDamage(float damage);
+    public float Lerp(float start, float end, float t)
     {
         return start + (end - start) * Math.Min(1, Math.Max(0, t));
     }
-
-    private void Shoot()
-    {
-        try
-        {
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-            Engineson.print("Projectile created!" + enemyTransform.forward);
-            // TODO: add custom mesh to the projectile
-            projectile.AddComponent<MeshRenderer>();
-            projectile.AddComponent<BoxCollider>();
-
-            //sound?.Play();
-
-            if (projectile != null)
-            {
-                Transform projTransform = projectile.GetComponent<Transform>();
-                if (projTransform != null)
-                {
-                    Vector3 forward = moveDirection;
-                    Vector3 spawnPos = enemyTransform.position + forward * 1.0f;
-                    projTransform.position = spawnPos;
-                    projTransform.SetScale(0.1f, 0.1f, 0.1f);
-
-                    ProjectileInfo projInfo = new ProjectileInfo(projectile, projTransform, forward);
-                    activeProjectiles.Add(projInfo);
-
-                    Engineson.print("Projectile fired!");
-                }
-            }
-        }
-        catch (System.Exception e)
-        {
-            Engineson.print($"Error creating projectile: {e.Message}");
-        }
-    }
-
-    private void UpdateProjectiles(float deltaTime)
-    {
-        foreach (var proj in activeProjectiles)
-        {
-            if (proj.markedForDestruction) continue;
-
-            proj.lifetime += deltaTime;
-
-            if (proj.lifetime >= projectileLifetime)
-            {
-                proj.markedForDestruction = true;
-                continue;
-            }
-
-            try
-            {
-                if (proj.transform != null)
-                {
-                    proj.transform.position += proj.direction * projectileSpeed * deltaTime;
-                }
-            }
-            catch (System.Exception e)
-            {
-                proj.markedForDestruction = true;
-                Engineson.print($"Error updating projectile: {e.Message}");
-            }
-        }
-    }
-
-    private void CleanupProjectiles()
-    {
-        for (int i = activeProjectiles.Count - 1; i >= 0; i--)
-        {
-            var proj = activeProjectiles[i];
-            if (proj.markedForDestruction)
-            {
-                try
-                {
-                    Engineson.Destroy(proj.gameObject);
-                    activeProjectiles.RemoveAt(i);
-                }
-                catch (System.Exception e)
-                {
-                    Engineson.print($"Error destroying projectile: {e.Message}");
-                    activeProjectiles.RemoveAt(i);
-                }
-            }
-        }
-    }
-
 }

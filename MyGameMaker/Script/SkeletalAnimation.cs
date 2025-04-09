@@ -40,6 +40,9 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void TransitionAnimations(int oldAnim, int newAnim, float timeToAnim);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetLoop(bool loop);
+
 
 
         private GameObject owner;

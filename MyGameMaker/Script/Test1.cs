@@ -17,8 +17,7 @@ public class Test1 : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Engineson.print("B key was pressed");
-            SceneManager.LoadScene("Scene2");
+            GetComponent<SkeletalAnimation>().SetLoop(false);
         }
     }
 }

@@ -64,6 +64,13 @@ Animator& Animator::operator=(Animator&& other) noexcept
 void Animator::UpdateAnimation(float dt)
 {
     m_DeltaTime = dt;
+    if (isLooping == false && m_CurrentTime >= m_CurrentAnimation->GetDuration())
+    {
+		m_CurrentTime = m_CurrentAnimation->GetDuration();
+		m_CurrentAnimation = nullptr;
+		return;
+    }
+	
     if (m_CurrentAnimation)
     {
         m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt * m_PlaySpeed;
@@ -114,9 +121,9 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
         CalculateBoneTransform(&node->children[i], globalTransformation);
 }
 
-void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation, float transitionDuration, float deltaTime)
+void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation,bool loopAnim ,float transitionDuration, float deltaTime)
 {
-   
+	isLooping = loopAnim;
     transitionTime += deltaTime;
 
     float blendFactor = transitionTime / transitionDuration;
@@ -127,6 +134,13 @@ void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAn
     }
 
     BlendTwoAnimations(pOldAnimation, pNewAnimation, blendFactor, deltaTime);
+}
+
+void Animator::PlayAnimationOnce(Animation* pAnimation)
+{
+	m_CurrentAnimation = pAnimation;
+	m_CurrentTime = 0.0f;
+	isLooping = true;
 }
 
 void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime)

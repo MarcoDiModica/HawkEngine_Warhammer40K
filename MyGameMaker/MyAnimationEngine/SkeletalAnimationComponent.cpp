@@ -75,7 +75,7 @@ void SkeletalAnimationComponent::Update(float deltaTime)
     {
         if (isBlending) 
         {
-            animator->TransitionToAnimation(animation1.get(), newAnimation.get(), timeToTransition, deltaTime);
+            animator->TransitionToAnimation(animation1.get(), newAnimation.get(), loopAnimation,timeToTransition, deltaTime);
 			//animator->BlendTwoAnimations(animations[0].get(), animations[2].get(), blendFactor, deltaTime);
         }
         else 
@@ -86,14 +86,17 @@ void SkeletalAnimationComponent::Update(float deltaTime)
     }
 }
 
-void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, float timeToTransitionAnim) 
+void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, bool loopAnim,float timeToTransitionAnim) 
 {
     animation1 = std::make_unique<Animation>(*animations[oldAnim].get());
     newAnimation = std::make_unique<Animation>(*animations[newAnim].get());
+	loopAnimation = loopAnim;
 	timeToTransition = timeToTransitionAnim;
     animator->SetTransitionTime(0);
 	isBlending = true;
 }
+
+
 
 void SkeletalAnimationComponent::Destroy()
 {
@@ -101,6 +104,11 @@ void SkeletalAnimationComponent::Destroy()
 
 int SkeletalAnimationComponent::GetAnimationIndex() {
     return animationIndex;
+}
+
+void SkeletalAnimationComponent::SetLoop(bool isLoop) 
+{
+	loopAnimation = isLoop;
 }
 
 MonoObject* SkeletalAnimationComponent::GetSharp()

@@ -16,6 +16,7 @@ private:
     float m_DeltaTime;
 	float m_PlaySpeed = 1;
     float transitionTime = 0.0f;
+    bool isLooping = true;
 
 public:
     Animator(Animation* Animation);
@@ -30,12 +31,13 @@ public:
 	void UpdateAnimation(float dt);
 	void PlayAnimation(Animation* pAnimation);
     void CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform);
+	void PlayAnimationOnce(Animation* pAnimation);
 
     void BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime);
     void CalculateBlendedBoneTransform( Animation* pAnimationBase, const AssimpNodeData* node, Animation* pAnimationLayer, const AssimpNodeData* nodeLayered,
         const float currentTimeBase, const float currentTimeLayered, const glm::mat4& parentTransform, const float blendFactor);
 
-	void TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation, float transitionDuration, float deltaTime);
+	void TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation, bool loopAnim,float transitionDuration, float deltaTime);
 
     float GetCurrentMTime()
     {

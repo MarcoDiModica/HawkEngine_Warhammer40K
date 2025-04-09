@@ -26,7 +26,9 @@ public:
 
     void Destroy() override;
 
-    void TransitionAnimations(int oldAnim, int newAnim, float timeToTransition);
+    void TransitionAnimations(int oldAnim, int newAnim, bool loopAnim, float timeToTransition);
+
+    void SetLoop(bool isLoop);
 
     ComponentType GetType() const override {
         return ComponentType::ANIMATION; // Cambia a un tipo espec�fico si es necesario
@@ -113,7 +115,7 @@ public:
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
-
+	bool loopAnimation = true;
     float blendFactor = 0.0f;
     bool isBlending = false;
 	void SaveBinary(const std::string& filename) const;

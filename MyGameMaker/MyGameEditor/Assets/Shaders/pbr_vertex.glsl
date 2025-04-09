@@ -27,21 +27,37 @@ void main()
     // Pass the texture coordinates to the fragment shader
     TexCoord = aTexCoord;
 
+    vec4 tPos = vec4(aPos, 1.0);
+    vec3 tNormal = aNormal;
+
+    if (isAnimated == 1)
+    {
+        // Apply bone transformations to the position
+        mat4 BoneTransform = finalBonesMatrices[boneIds[0]] * weights[0];
+        BoneTransform += finalBonesMatrices[boneIds[1]] * weights[1];
+        BoneTransform += finalBonesMatrices[boneIds[2]] * weights[2];
+        BoneTransform += finalBonesMatrices[boneIds[3]] * weights[3];
+        tPos = BoneTransform * vec4(aPos, 1.0);
+
+        // Apply bone transformations to the normal
+        tNormal = mat3(BoneTransform) * aNormal;
+    }
+
     // Calculate world-space fragment position
-    FragPos = vec3(model * vec4(aPos, 1.0));
+    FragPos = vec3(model * tPos);
 
     // Calculate normal matrix (properly handles non-uniform scaling)
     mat3 normalMatrix = transpose(inverse(mat3(model)));
-    
-    // Transform normal, tangent and bitangent to world space
-    vec3 N = normalize(normalMatrix * aNormal);
-    
+
+    // Transform normal, tangent, and bitangent to world space
+    vec3 N = normalize(normalMatrix * tNormal);
+
     // Check if we have tangent/bitangent data
     vec3 T = vec3(0.0);
     vec3 B = vec3(0.0);
-    
+
     // Only build TBN if we have valid tangent data
-    if(length(aTangent) > 0.0) {
+    if (length(aTangent) > 0.0) {
         T = normalize(normalMatrix * aTangent);
         // Re-orthogonalize T with respect to N
         T = normalize(T - dot(T, N) * N);
@@ -50,30 +66,17 @@ void main()
     } else {
         // Create arbitrary TBN (less accurate but functional)
         T = normalize(cross(N, vec3(0.0, 1.0, 0.0)));
-        if(length(T) < 0.01) {
+        if (length(T) < 0.01) {
             T = normalize(cross(N, vec3(1.0, 0.0, 0.0)));
         }
         B = normalize(cross(N, T));
     }
-    
+
     // Output TBN matrix for normal mapping
     TBN = mat3(T, B, N);
-    
+
     // Output regular normal for fallback
     Normal = N;
-    vec4 tPos = vec4(aPos, 1.0);
-
-    if (isAnimated == 1)
-    {
-    mat4 BoneTransform = finalBonesMatrices[ boneIds[0] ] * weights[0];
-    BoneTransform += finalBonesMatrices[ boneIds[1] ] * weights[1];
-    BoneTransform += finalBonesMatrices[ boneIds[2] ] * weights[2];
-    BoneTransform += finalBonesMatrices[ boneIds[3] ] * weights[3];
-    tPos = BoneTransform * vec4(aPos, 1.0);
-    }
-   
-
-
 
     // Transform vertex position
     gl_Position = projection * view * model * tPos;

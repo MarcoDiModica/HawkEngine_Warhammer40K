@@ -18,6 +18,44 @@ ScriptHotReloader::ScriptHotReloader() : m_IsCompiling(false), m_CompilationCool
 }
 
 ScriptHotReloader::~ScriptHotReloader() {
+	if (!m_ScriptFolder.empty()) {
+		TryDeleteFile(m_ScriptFolder + "\\dotnet_config.txt");
+		TryDeleteFile(m_ScriptFolder + "\\msbuild_config.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_preference.txt");
+
+		TryDeleteFile(m_ScriptFolder + "\\build_output.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_result.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
+		TryDeleteFile(m_ScriptFolder + "\\process_output.log");
+
+		if (!m_StagingDirectory.empty() && std::filesystem::exists(m_StagingDirectory)) {
+			try {
+				std::filesystem::remove_all(m_StagingDirectory);
+				std::filesystem::create_directories(m_StagingDirectory);
+				LOG(LogType::LOG_INFO, "Staging directory cleaned");
+			}
+			catch (const std::filesystem::filesystem_error& e) {
+				LOG(LogType::LOG_ERROR, "Failed to clean staging directory: %s", e.what());
+			}
+		}
+
+		try {
+			std::vector<std::string> foldersToClean = {
+				m_ScriptFolder + "\\obj",
+				m_ScriptFolder + "\\bin"
+			};
+
+			for (const auto& folder : foldersToClean) {
+				if (std::filesystem::exists(folder)) {
+					std::filesystem::remove_all(folder);
+				}
+			}
+		}
+		catch (const std::filesystem::filesystem_error& e) {
+			LOG(LogType::LOG_ERROR, "Error cleaning build directories: %s", e.what());
+		}
+	}
 }
 
 void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::string& outputAssemblyDir) {

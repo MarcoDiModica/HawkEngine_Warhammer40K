@@ -13,7 +13,7 @@ ScriptHotReloader& ScriptHotReloader::GetInstance() {
 	return instance;
 }
 
-ScriptHotReloader::ScriptHotReloader() : m_IsCompiling(false), m_CompilationCooldown(false), m_LastCompilationSuccess(true), m_PreferMSBuild(true) {
+ScriptHotReloader::ScriptHotReloader() : m_IsCompiling(false), m_CompilationCooldown(false), m_LastCompilationSuccess(true), m_PreferMSBuild(false) {
 	m_PreferMSBuild = LoadBuildPreference();
 }
 
@@ -263,13 +263,13 @@ bool ScriptHotReloader::ForceRecompile() {
 		result = CompileWithMSBuild();
 		LOG(LogType::LOG_C_SHARP, "Compiled with MSBUILD");
 	}
-	else if (!m_PreferMSBuild && dotnetAvailable) {
-		result = CompileExistingProject();
-		LOG(LogType::LOG_C_SHARP, "NOT Compiled with MSBUILD AAAAAA");
-	}
 	else if (msbuildAvailable) {
 		result = CompileWithMSBuild();
 		LOG(LogType::LOG_C_SHARP, "Compiled with MSBUILD");
+	}
+	else if (!m_PreferMSBuild && dotnetAvailable) {
+		result = CompileExistingProject();
+		LOG(LogType::LOG_C_SHARP, "NOT Compiled with MSBUILD AAAAAA");
 	}
 	else if (dotnetAvailable) {
 		result = CompileExistingProject();
@@ -771,8 +771,13 @@ bool ScriptHotReloader::FindWorkingMSBuild() {
 			for (const auto& entry : std::filesystem::directory_iterator(basePath)) {
 				if (!entry.is_directory()) continue;
 
+				// Eliminamos el ciclo adicional que estaba causando duplicación del año.
 				for (const auto& year : vsYears) {
-					std::string yearPath = entry.path().string() + "\\" + year;
+					// Verificamos si la ruta ya contiene el año antes de agregarlo
+					std::string yearPath = entry.path().string();
+					if (yearPath.find(year) == std::string::npos) { // Si no contiene el año, lo agregamos
+						yearPath += "\\" + year;
+					}
 					if (!std::filesystem::exists(yearPath)) continue;
 
 					for (const auto& edition : vsEditions) {
@@ -815,6 +820,7 @@ bool ScriptHotReloader::FindWorkingMSBuild() {
 		}
 	}
 
+	// Verificar en las rutas del PATH del sistema
 	const char* pathEnv = getenv("PATH");
 	if (pathEnv) {
 		std::string path = pathEnv;
@@ -836,6 +842,7 @@ bool ScriptHotReloader::FindWorkingMSBuild() {
 		}
 	}
 
+	// Probar cada MSBuild encontrado
 	for (const auto& msbuildPath : potentialMSBuildPaths) {
 		if (TestMSBuildCompilation(msbuildPath)) {
 			m_MSBuildPath = msbuildPath;

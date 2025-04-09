@@ -13,7 +13,7 @@ ScriptHotReloader& ScriptHotReloader::GetInstance() {
 	return instance;
 }
 
-ScriptHotReloader::ScriptHotReloader() : m_IsCompiling(false), m_CompilationCooldown(false), m_LastCompilationSuccess(true), m_PreferMSBuild(false) {
+ScriptHotReloader::ScriptHotReloader() : m_IsCompiling(false), m_CompilationCooldown(false), m_LastCompilationSuccess(true), m_PreferMSBuild(true) {
 	m_PreferMSBuild = LoadBuildPreference();
 }
 
@@ -257,19 +257,23 @@ bool ScriptHotReloader::ForceRecompile() {
 	bool dotnetAvailable = !m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath);
 	bool msbuildAvailable = !m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath);
 
-	Application->CleanLogs();
+	//Application->CleanLogs();
 
 	if (m_PreferMSBuild && msbuildAvailable) {
 		result = CompileWithMSBuild();
+		LOG(LogType::LOG_C_SHARP, "Compiled with MSBUILD");
 	}
 	else if (!m_PreferMSBuild && dotnetAvailable) {
 		result = CompileExistingProject();
+		LOG(LogType::LOG_C_SHARP, "NOT Compiled with MSBUILD AAAAAA");
 	}
 	else if (msbuildAvailable) {
 		result = CompileWithMSBuild();
+		LOG(LogType::LOG_C_SHARP, "Compiled with MSBUILD");
 	}
 	else if (dotnetAvailable) {
 		result = CompileExistingProject();
+		LOG(LogType::LOG_C_SHARP, "NOT Compiled with MSBUILD");
 	}
 	else {
 		LOG(LogType::LOG_ERROR, "No working dotnet or MSBuild available for compilation.");
@@ -850,70 +854,23 @@ bool ScriptHotReloader::TestMSBuildCompilation(const std::string& msbuildPath) {
 		return false;
 	}
 
-	std::string testOutputFile = m_ScriptFolder + "\\test_msbuild_output.txt";
-	std::string testErrorFile = m_ScriptFolder + "\\test_msbuild_error.txt";
-	std::string resultFile = m_ScriptFolder + "\\test_msbuild_result.txt";
-
 	std::string buildCommand = "\"" + msbuildPath + "\" \"" + m_ProjectFile +
-		"\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal > \"" +
-		testOutputFile + "\" 2> \"" + testErrorFile + "\"";
+		"\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal";
 
+	std::string buildOutput;
 	int buildExitCode = ExecuteSilentProcess(buildCommand, m_ScriptFolder);
 
-	std::ofstream resultStream(resultFile);
-	if (resultStream.is_open()) {
-		resultStream << buildExitCode;
-		resultStream.close();
-	}
-
-	int buildResult = -1;
-	try {
-		std::ifstream resultFileStream(resultFile);
-		if (resultFileStream.is_open()) {
-			std::string line;
-			if (std::getline(resultFileStream, line) && !line.empty()) {
-				buildResult = std::stoi(line);
-			}
-			resultFileStream.close();
-		}
-	}
-	catch (...) {}
-
-	bool buildHasErrors = false;
-
-	try {
-		std::ifstream outputFile(testOutputFile);
-		if (outputFile.is_open()) {
-			std::string line;
-			while (std::getline(outputFile, line)) {
-				if (line.find("error") != std::string::npos) {
-					buildHasErrors = true;
-					break;
-				}
-			}
-			outputFile.close();
-		}
-	}
-	catch (...) {}
-
-	try {
-		std::ifstream errorFile(testErrorFile);
-		if (errorFile.is_open() && errorFile.peek() != std::ifstream::traits_type::eof()) {
-			buildHasErrors = true;
-			errorFile.close();
-		}
-	}
-	catch (...) {}
-
-	TryDeleteFile(testOutputFile);
-	TryDeleteFile(testErrorFile);
-	TryDeleteFile(resultFile);
-
-	if (buildResult != 0 || buildHasErrors) {
-		LOG(LogType::LOG_INFO, "MSBuild failed to build the project, result code: %d", buildResult);
+	if (buildExitCode != 0) {
+		LOG(LogType::LOG_WARNING, "MSBuild exited with code %d", buildExitCode);
 		return false;
 	}
 
+	if (buildOutput.find("error") != std::string::npos) {
+		LOG(LogType::LOG_ERROR, "MSBuild compilation failed due to errors in the output");
+		return false;
+	}
+
+	LOG(LogType::LOG_INFO, "MSBuild compilation succeeded.");
 	return true;
 }
 

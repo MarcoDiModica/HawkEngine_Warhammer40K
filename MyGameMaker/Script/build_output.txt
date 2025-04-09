@@ -1,11 +1,9 @@
-The command could not be loaded, possibly because:
-  * You intended to execute a .NET application:
-      The application 'build' does not exist.
-  * You intended to execute a .NET SDK command:
-      No .NET SDKs were found.
+  Determinando los proyectos que se van a restaurar...
+  No hay nada que hacer. Ninguno de los proyectos especificados contiene paquetes para restaurar.
+  C#Assembly -> C:\Users\pau\source\repos\lab4\HawkEngine_Warhammer40K\MyGameMaker\Script\obj\Script.dll
 
-Download a .NET SDK:
-https://aka.ms/dotnet/download
+Compilación correcta.
+    0 Advertencia(s)
+    0 Errores
 
-Learn about SDK resolution:
-https://aka.ms/dotnet/sdk-not-found
+Tiempo transcurrido 00:00:00.34

@@ -42,16 +42,16 @@ public class PlayerAnimations : MonoBehaviour
     }
     public void SetHitIdleAnimation()
     {
-        esk.TransitionAnimations(2, 5, 0.1f);
+        esk.TransitionAnimations(2, 5,true, 0.1f);
     }
     public void SetDeathAnimation()
     {
-        esk.TransitionAnimations(2, 1, 0.1f);
+        esk.TransitionAnimations(2, 1, true, 0.1f);
     }
     public void SetStandardIdleAnimation()
     {
 
-        esk.TransitionAnimations(5, 5, 0.1f);
+        esk.TransitionAnimations(5, 5, true, 0.1f);
         esk.SetAnimationSpeed(2f);
       
     }
@@ -70,61 +70,61 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetShootingStandingAnimation()
     {
-        esk.TransitionAnimations(5, 7, 0.1f);
+        esk.TransitionAnimations(5, 7, true, 0.1f);
         esk.SetAnimationSpeed(5f);
     }
 
     public void SetRunningToShootRunningAnimation()
     {
-        esk.TransitionAnimations(6, 8, 0.1f);
+        esk.TransitionAnimations(6, 8, true, 0.1f);
         esk.SetAnimationSpeed(1f);
     }
     public void SetWalkAnimation()
     {
-        esk.TransitionAnimations(5, 9, 0.1f);
+        esk.TransitionAnimations(5, 9, true, 0.1f);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetRunAnimation()
     {
-        esk.TransitionAnimations(9, 6, 0.1f);
+        esk.TransitionAnimations(9, 6, true, 0.1f);
         esk.SetAnimationSpeed(1.2f);
     }
 
     public void SetDashAnimation()
     {
-        esk.TransitionAnimations(6, 0, 0.1f);
+        esk.TransitionAnimations(6, 0, true, 0.1f);
         esk.SetAnimationSpeed(1.5f);
         
     }
 
     public void SetShootingStandingToIdleAnimation()
     {
-        esk.TransitionAnimations(7, 5, 0.1f);
+        esk.TransitionAnimations(7, 5, true, 0.1f);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetRunningToIdleAnimation()
     {
-        esk.TransitionAnimations(6, 5, 0.1f);
+        esk.TransitionAnimations(6, 5, true, 0.1f);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetWalkingToIdleAnimation()
     {
-        esk.TransitionAnimations(9, 5, 0.1f);
+        esk.TransitionAnimations(9, 5, true, 0.1f);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetShootingRunningToRunAnimation()
     {
-        esk.TransitionAnimations(8, 6, 0.1f);
+        esk.TransitionAnimations(8, 6, true, 0.1f);
         esk.SetAnimationSpeed(1.5f);
 
     }
     public void SetShootingStandingToShootingRunAnimation()
     {
-        esk.TransitionAnimations(7, 8, 0.1f);
+        esk.TransitionAnimations(7, 8, true, 0.1f);
         esk.SetAnimationSpeed(1.5f);
 
     }

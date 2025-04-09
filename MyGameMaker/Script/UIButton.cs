@@ -31,6 +31,11 @@ namespace HawkEngine
         public override void Update(float deltaTime) { }
 
         public override void Destroy() { }
+
+        internal void SetState(ButtonState hOVERED)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum ButtonState

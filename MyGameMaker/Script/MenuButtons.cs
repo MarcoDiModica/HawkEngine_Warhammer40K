@@ -36,6 +36,9 @@ public class MenuButtons : MonoBehaviour
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav";
 
+    private int selectedButtonIndex = 0;
+    private UIButton[] buttons;
+    private UITransform[] transforms;
     public override void Awake()
     {
 
@@ -59,6 +62,9 @@ public class MenuButtons : MonoBehaviour
         transform_optionsButton = optionsButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
 
+        buttons = new UIButton[] { button_newGameButton, button_continueButton, button_optionsButton, button_quitButton };
+        transforms = new UITransform[] { transform_newGameButton, transform_continueButton, transform_optionsButton, transform_quitButton };
+
         if (newGameButton == null || optionsButton == null || creditsButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
@@ -74,7 +80,6 @@ public class MenuButtons : MonoBehaviour
         {
             emptyMusic.Play();
         }
-
     }
 
     private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
@@ -90,6 +95,35 @@ public class MenuButtons : MonoBehaviour
             transform.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
         }
         prevState = button.GetState();
+    }
+
+    private void NavigateMenu()
+    {
+        if (Input.GetControllerButtonDown(ControllerButton.DPadDown))
+        {
+            selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+        }
+        else if (Input.GetControllerButtonDown(ControllerButton.DPadUp))
+        {
+            selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+        }
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (i == selectedButtonIndex)
+            {
+                buttons[i].SetState(ButtonState.HOVERED);
+            }
+            else
+            {
+                buttons[i].SetState(ButtonState.DEFAULT);
+            }
+        }
+
+        if (Input.GetControllerButton(ControllerButton.A))
+        {
+            buttons[selectedButtonIndex].SetState(ButtonState.CLICKED);
+        }
     }
 
     public override void Update(float deltaTime)
@@ -109,6 +143,8 @@ public class MenuButtons : MonoBehaviour
             Engineson.print("ERROR: Audio not found");
             return;
         }
+
+        NavigateMenu();
 
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
@@ -139,7 +175,6 @@ public class MenuButtons : MonoBehaviour
 
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
-            //Salir del juego
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
         }

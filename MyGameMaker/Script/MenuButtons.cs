@@ -82,21 +82,6 @@ public class MenuButtons : MonoBehaviour
         }
     }
 
-    private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
-    {
-        if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
-        {
-            transform.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
-        }
-        else if (button.GetState() == ButtonState.DEFAULT)
-        {
-            transform.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
-        }
-        prevState = button.GetState();
-    }
-
     private void NavigateMenu()
     {
         if (Input.GetControllerButtonDown(ControllerButton.DPadDown))
@@ -110,20 +95,31 @@ public class MenuButtons : MonoBehaviour
 
         for (int i = 0; i < buttons.Length; i++)
         {
+            if (buttons[i] == null)
+            {
+                Engineson.print($"WARNING: Button at index {i} is null.");
+                continue;
+            }
+
             if (i == selectedButtonIndex)
             {
                 buttons[i].SetState(ButtonState.HOVERED);
+                transforms[i].DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
             }
             else
             {
                 buttons[i].SetState(ButtonState.DEFAULT);
+                transforms[i].DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
             }
+
         }
 
-        if (Input.GetControllerButton(ControllerButton.A))
+        if (Input.GetControllerButtonDown(ControllerButton.A))
         {
             buttons[selectedButtonIndex].SetState(ButtonState.CLICKED);
         }
+        Engineson.print("Selected Button Index: " + selectedButtonIndex);
+
     }
 
     public override void Update(float deltaTime)
@@ -153,8 +149,7 @@ public class MenuButtons : MonoBehaviour
             SceneManager.LoadScene("Mortis_Level1");
         }
 
-        HandleHoveredState(button_newGameButton, transform_newGameButton, ref prevState_newGameButton);
-
+        
         if (button_continueButton.GetState() == ButtonState.CLICKED)
         {
             sound?.LoadAudio(buttonStartGame);
@@ -162,8 +157,7 @@ public class MenuButtons : MonoBehaviour
             SceneManager.LoadScene("SpaceShip");
         }
 
-        HandleHoveredState(button_continueButton, transform_continueButton, ref prevState_continueButton);
-
+        
         if (button_optionsButton.GetState() == ButtonState.CLICKED)
         {
             sound?.LoadAudio(buttonClicked);
@@ -171,14 +165,13 @@ public class MenuButtons : MonoBehaviour
             optionsCanvas.SetActive(true);
         }
 
-        HandleHoveredState(button_optionsButton, transform_optionsButton, ref prevState_optionsButton);
-
+        
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
             sound?.LoadAudio(buttonClicked);
             sound?.Play();
         }
 
-        HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
+        
     }
 }

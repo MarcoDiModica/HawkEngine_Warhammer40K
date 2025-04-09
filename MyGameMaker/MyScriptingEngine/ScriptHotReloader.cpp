@@ -257,23 +257,19 @@ bool ScriptHotReloader::ForceRecompile() {
 	bool dotnetAvailable = !m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath);
 	bool msbuildAvailable = !m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath);
 
-	//Application->CleanLogs();
+	Application->CleanLogs();
 
 	if (m_PreferMSBuild && msbuildAvailable) {
 		result = CompileWithMSBuild();
-		LOG(LogType::LOG_C_SHARP, "Compiled with MSBUILD");
 	}
 	else if (msbuildAvailable) {
 		result = CompileWithMSBuild();
-		LOG(LogType::LOG_C_SHARP, "Compiled with MSBUILD");
 	}
 	else if (!m_PreferMSBuild && dotnetAvailable) {
 		result = CompileExistingProject();
-		LOG(LogType::LOG_C_SHARP, "NOT Compiled with MSBUILD AAAAAA");
 	}
 	else if (dotnetAvailable) {
 		result = CompileExistingProject();
-		LOG(LogType::LOG_C_SHARP, "NOT Compiled with MSBUILD");
 	}
 	else {
 		LOG(LogType::LOG_ERROR, "No working dotnet or MSBuild available for compilation.");

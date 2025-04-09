@@ -150,11 +150,6 @@ bool ScriptHotReloader::CheckForChanges() {
 		return false;
 	}
 
-	if (!m_LastCompilationSuccess) {
-		LOG(LogType::LOG_INFO, "Previous compilation failed. Please fix errors.");
-		return false;
-	}
-
 	if (!IsEngineInForeground()) {
 		return false;
 	}
@@ -177,14 +172,13 @@ bool ScriptHotReloader::CheckForChanges() {
 	}
 
 	if (scriptsModified) {
+		if (!m_LastCompilationSuccess) {
+			LOG(LogType::LOG_INFO, "Previous compilation failed, but changes detected. Attempting recompilation...");
+		}
+
 		if (Application->root->GetActiveScene()->sceneState == Scene::SceneState::PLAY) {
 			LOG(LogType::LOG_ERROR, "Script changes detected, but engine is in play mode. Please stop the game to reload scripts.");
 			return false;
-		}
-
-		LOG(LogType::LOG_INFO, "Detected changes in %d script(s):", modifiedFiles.size());
-		for (const auto& file : modifiedFiles) {
-			LOG(LogType::LOG_INFO, "  - %s", file.c_str());
 		}
 
 		m_IsCompiling = true;
@@ -206,11 +200,11 @@ bool ScriptHotReloader::CheckForChanges() {
 		if (m_PreferMSBuild && msbuildAvailable) {
 			result = CompileWithMSBuild();
 		}
-		else if (!m_PreferMSBuild && dotnetAvailable) {
-			result = CompileExistingProject();
-		}
 		else if (msbuildAvailable) {
 			result = CompileWithMSBuild();
+		}
+		else if (!m_PreferMSBuild && dotnetAvailable) {
+			result = CompileExistingProject();
 		}
 		else if (dotnetAvailable) {
 			result = CompileExistingProject();
@@ -229,6 +223,9 @@ bool ScriptHotReloader::CheckForChanges() {
 			}).detach();
 
 		return result;
+	}
+	else if (!m_LastCompilationSuccess) {
+		LOG(LogType::LOG_INFO, "Previous compilation failed. Please fix errors and save the file.");
 	}
 
 	return false;
@@ -805,11 +802,9 @@ bool ScriptHotReloader::FindWorkingMSBuild() {
 			for (const auto& entry : std::filesystem::directory_iterator(basePath)) {
 				if (!entry.is_directory()) continue;
 
-				// Eliminamos el ciclo adicional que estaba causando duplicación del año.
 				for (const auto& year : vsYears) {
-					// Verificamos si la ruta ya contiene el año antes de agregarlo
 					std::string yearPath = entry.path().string();
-					if (yearPath.find(year) == std::string::npos) { // Si no contiene el año, lo agregamos
+					if (yearPath.find(year) == std::string::npos) {
 						yearPath += "\\" + year;
 					}
 					if (!std::filesystem::exists(yearPath)) continue;
@@ -854,7 +849,6 @@ bool ScriptHotReloader::FindWorkingMSBuild() {
 		}
 	}
 
-	// Verificar en las rutas del PATH del sistema
 	const char* pathEnv = getenv("PATH");
 	if (pathEnv) {
 		std::string path = pathEnv;
@@ -876,7 +870,6 @@ bool ScriptHotReloader::FindWorkingMSBuild() {
 		}
 	}
 
-	// Probar cada MSBuild encontrado
 	for (const auto& msbuildPath : potentialMSBuildPaths) {
 		if (TestMSBuildCompilation(msbuildPath)) {
 			m_MSBuildPath = msbuildPath;

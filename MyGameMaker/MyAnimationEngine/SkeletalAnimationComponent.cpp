@@ -65,6 +65,7 @@ void SkeletalAnimationComponent::Start()
 	}
     //animator = std::make_unique<Animator>(testAnimation.get());
     animator->PlayAnimation(animation1.get());
+	animator->UpdateAnimation(0.0f);
 
 }
 

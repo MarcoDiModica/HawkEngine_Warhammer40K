@@ -4,6 +4,7 @@ in vec2 TexCoord;
 in vec3 FragPos;
 in vec3 Normal;
 in mat3 TBN;
+in vec4 InstanceColor; 
 
 out vec4 FragColor;
 
@@ -57,7 +58,7 @@ uniform int numPointLights;
 // Constants for PBR calculations
 const float PI = 3.14159265359;
 
-// Tonemapping control (added)
+// Tonemapping control
 uniform float tonemapStrength = 1.0;
 
 // PBR functions
@@ -83,8 +84,8 @@ void main()
     // Sample textures or use uniform values
     vec4 texColor = (u_HasAlbedoMap == 1) ? texture(albedoMap, TexCoord) : vec4(1.0);
     
-    // CAMBIO IMPORTANTE: Siempre aplicar el albedoColor, como en el shader unlit
-    vec4 albedoTexture = texColor * albedoColor;
+    // CAMBIO PARA INSTANCED RENDERING: Aplicar color de instancia
+    vec4 albedoTexture = texColor * albedoColor * InstanceColor;
     vec3 albedo = albedoTexture.rgb;
     float alpha = albedoTexture.a;
     
@@ -184,15 +185,10 @@ void main()
     vec3 fallbackAmbient = vec3(0.03) * albedo * ao;
     Lo += fallbackAmbient;
     
-    // Debug mode - uncomment to see just the albedo texture
-    //FragColor = vec4(albedo, alpha);
-    //return;
-    
-    // CAMBIO IMPORTANTE: Mejor tonemapping usando ACES
+    // Tonemapping
     vec3 color;
     
     // Mezclar entre el resultado crudo (sin tonemapping) y el resultado con tonemapping
-    // Para debugging, puedes ajustar tonemapStrength a 0 para ver colores sin procesar
     if (tonemapStrength > 0.0) {
         // Usar ACES tonemapping
         color = mix(Lo, ACESFilm(Lo), tonemapStrength);

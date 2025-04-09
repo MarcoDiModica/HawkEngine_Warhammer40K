@@ -1,15 +1,9 @@
 #include "Model.h"
 #include "AssimpGLMHelpers.h"
 
-//void Model::calculateBoundingBox()
-//{
-//    //if (modelData.vertexData.empty()) {
-//    //    m_BoundingBox = BoundingBox(); // Bounding box vac�a si no hay v�rtices
-//    //    return;
-//    //}
-//    //// Calcula la bounding box a partir de los v�rtices
-//    //m_BoundingBox = BoundingBox(modelData.vertexData.data()->position, modelData.vertexData.size());
-//}
+uint32_t Model::s_NextID = 1;
+std::unordered_map<uint32_t, std::weak_ptr<Model>> ModelRegistry::s_Models;
+
 
 void Model::SetVertexBoneDataToDefault(Vertex& vertex)
 {
@@ -80,4 +74,23 @@ void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* 
 			SetVertexBoneData(vertices[vertexId], boneID, weight);
 		}
 	}
+}
+
+void ModelRegistry::RegisterModel(std::shared_ptr<Model> model)
+{
+	if (model)
+		s_Models[model->GetID()] = model;
+}
+
+void ModelRegistry::UnregisterModel(uint32_t id)
+{
+	s_Models.erase(id);
+}
+
+std::shared_ptr<Model> ModelRegistry::GetModelByID(uint32_t id)
+{
+	auto it = s_Models.find(id);
+	if (it != s_Models.end() && !it->second.expired())
+		return it->second.lock();
+	return nullptr;
 }

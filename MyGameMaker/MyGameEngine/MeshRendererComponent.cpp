@@ -143,6 +143,12 @@ MonoObject* MeshRenderer::GetSharp() {
 	return monoObject;
 }
 
+void MeshRenderer::PrepareForRendering() const {
+	if (!mesh || !material || !owner || !mesh->model) return;
+
+	// NO ENTIENDO DEL TODO ESTA FUNCION
+}
+
 void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const {
 	if (!shader) return;
 
@@ -171,8 +177,8 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 		i++;
 	}
 
-	glBindVertexArray(mesh->model.get()->GetModelData().vA);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model.get()->GetModelData().iBID);
+	glBindVertexArray(mesh->model->GetModelData().vA);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model->GetModelData().iBID);
 
 	shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
 	shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));

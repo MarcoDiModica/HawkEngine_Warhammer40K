@@ -918,6 +918,9 @@ void Mesh::SaveBinary(const std::string& filename) const
 	fout.write(reinterpret_cast<const char*>(&_boundingBox.min), sizeof(glm::dvec3));
 	fout.write(reinterpret_cast<const char*>(&_boundingBox.max), sizeof(glm::dvec3));
 
+	uint32_t modelID = model->GetID();
+	fout.write(reinterpret_cast<const char*>(&modelID), sizeof(modelID));
+
 	LOG(LogType::LOG_INFO, "Mesh saved successfully: %s", fullPath.c_str());
 }
 
@@ -1013,6 +1016,10 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 	meshCache[fullPath] = mesh;
 	mesh->nameM = filename;
 	mesh->filePath = filename;
+
+	uint32_t modelID;
+	fin.read(reinterpret_cast<char*>(&modelID), sizeof(modelID));
+	mesh->model->SetID(modelID);
 
 	LOG(LogType::LOG_INFO, "Mesh loaded successfully: %s", fullPath.c_str());
 	return mesh;

@@ -298,10 +298,6 @@ void GameObject::Update(float deltaTime)
 			child->Update(deltaTime);
 		}
 	}
-
-	if (active && !destroyed) {
-		Draw();
-	}
 }
 
 void GameObject::Destroy()

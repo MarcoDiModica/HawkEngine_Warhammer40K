@@ -64,6 +64,7 @@
 #include "MyGameEngine/ShaderManager.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include "SDL2/SDL_timer.h"
+#include "RenderManager.h"
 
 using namespace std;
 
@@ -122,6 +123,8 @@ static void init_openGL() {
 	glScaled(1.0, (double)WINDOW_SIZE.x / WINDOW_SIZE.y, 1.0);
 
 	glMatrixMode(GL_MODELVIEW);
+
+	RenderManager::GetInstance().Initialize();
 }
 
 static void drawFloorGrid(int size, double step) {
@@ -243,7 +246,6 @@ static void RenderObjectAndChildren(std::shared_ptr<GameObject> object) {
 }
 
 static void RenderGameView() {
-
 #ifdef PROFILE
 	OPTICK_EVENT();
 #endif // PROFILE
@@ -272,62 +274,17 @@ static void RenderGameView() {
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	RenderManager::GetInstance().ClearRenderQueues();
 
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-
-	glm::dmat4 projectionMatrix = gameCamera->projection();
-	glm::dmat4 viewMatrix = gameCamera->view();
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glLoadMatrixd(glm::value_ptr(projectionMatrix));
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	glLoadMatrixd(glm::value_ptr(viewMatrix));
-
-	glUseProgram(0);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	glActiveTexture(GL_TEXTURE0);
-
-	for (auto& object : Application->root->GetActiveScene()->children()) 
-	{
-		if (object->IsActive())
-		{
-			RenderObjectAndChildren(object);
+	for (auto& object : Application->root->GetActiveScene()->children()) {
+		if (object->IsActive()) {
+			RenderManager::GetInstance().SubmitGameObject(object.get());
 		}
 	}
 
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
+	RenderManager::GetInstance().SortRenderCommands();
 
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-
-	glPopAttrib();
-
-	glUseProgram(0);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	glActiveTexture(GL_TEXTURE0);
+	RenderManager::GetInstance().RenderFromCamera(gameCamera);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
 	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
@@ -674,8 +631,7 @@ static void RenderOutline(GameObject* object) {
 	}
 }
 
-static void RenderEditor()
-{
+static void RenderEditor() {
 	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
 	bool useMSAA = sceneWindow->msaaSamples > 0;
 
@@ -694,27 +650,33 @@ static void RenderEditor()
 
 	auto activeScene = Application->root->GetActiveScene();
 	if (!activeScene) return;
-	auto sceneChildrenCopy = Application->root->GetActiveScene()->children();
+
+	RenderManager::GetInstance().ClearRenderQueues();
+
+	auto sceneChildrenCopy = activeScene->children();
 	std::vector<GameObject*> objects;
+
 	for (const auto& objPtr : sceneChildrenCopy) {
 		if (!objPtr) continue;
 		GameObject* object = objPtr.get();
 		if (!object) continue;
 		objects.push_back(object);
+
 		for (const auto& childPtr : object->GetChildren()) {
 			if (!childPtr) continue;
 			GameObject* child = childPtr.get();
 			if (!child) continue;
 			objects.push_back(child);
 		}
+
 		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
-			
+
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 				return;
 			}
-			
+
 			if (object->HasComponent<LightComponent>()) {
 				auto& lights = activeScene->_lights;
 				auto it = std::find(lights.begin(), lights.end(), objPtr);
@@ -722,21 +684,23 @@ static void RenderEditor()
 					lights.push_back(objPtr);
 				}
 			}
+
+			if (object->HasComponent<MeshRenderer>()) {
+				RenderManager::GetInstance().SubmitGameObject(object);
+			}
 		}
 	}
-	
+
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
 	Application->physicsModule->Update(Application->GetDt());
+
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	/*std::vector<GameObject*> selectedObjects = Application->input->GetSelectedGameObjects();
-	for (auto& object : objects) {
-		if (object->IsActive()) {
-			RenderOutline(object);
-		}
-	}*/
+	RenderManager::GetInstance().SortRenderCommands();
+
+	RenderManager::GetInstance().RenderEditor(Application->camera->view(), Application->camera->projection());
 
 	MousePickingCheck(objects);
 
@@ -786,7 +750,6 @@ static double counterUsingChrono = 0.0;
 static hrclock::time_point startTime = hrclock::now();
 
 static void GameRelease() {
-
 #ifdef PROFILE
 	OPTICK_CATEGORY("GameRelease", Optick::Category::GameLogic);
 #endif // PROFILE
@@ -806,29 +769,32 @@ static void GameRelease() {
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	RenderManager::GetInstance().ClearRenderQueues();
+
 	std::vector<std::shared_ptr<GameObject>> UI;
 
-	for (auto& object : Application->root->GetActiveScene()->children())
-	{
+	for (auto& object : Application->root->GetActiveScene()->children()) {
 		if (object->HasComponent<UICanvasComponent>()) {
 			UI.push_back(object);
 			continue;
 		}
-		if (object->IsActive())
-		{
+
+		if (object->IsActive()) {
 			object->Update(static_cast<float>(Application->GetDt()));
 
-			if (Application->hasChangedScene)
-			{
+			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 				break;
 			}
+
+			RenderManager::GetInstance().SubmitGameObject(object.get());
 		}
+
 		if (object->HasComponent<LightComponent>()) {
 			auto& lights = Application->root->GetActiveScene()->_lights;
-			auto it = std::find(lights.begin(), lights.end(), object->shared_from_this());
+			auto it = std::find(lights.begin(), lights.end(), object);
 			if (it == lights.end()) {
-				lights.push_back(object->shared_from_this());
+				lights.push_back(object);
 			}
 		}
 	}
@@ -839,10 +805,12 @@ static void GameRelease() {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	for (size_t i = 0; i < UI.size(); i++)
-	{
-		if (UI[i]->IsActive())
-		{
+	RenderManager::GetInstance().SortRenderCommands();
+
+	RenderManager::GetInstance().RenderGame();
+
+	for (size_t i = 0; i < UI.size(); i++) {
+		if (UI[i]->IsActive()) {
 			UI[i]->Update(static_cast<float>(Application->GetDt()));
 		}
 	}
@@ -918,9 +886,10 @@ int main(int argc, char** argv) {
 			break;
 
 		case FREE:
-
 			MonoManager::GetInstance().Shutdown();
 			ShaderManager::GetInstance().Cleanup();
+
+			RenderManager::GetInstance().Cleanup();
 
 			if (Application->CleanUP()) {
 				state = EXIT;

@@ -47,6 +47,8 @@ public:
 	MonoObject* CsharpReference = nullptr;
 	MonoObject* GetSharp() override;
 
+    void PrepareForRendering() const;
+
 	void SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const;
 	void SetUpAnimationProperties(Shaders* shader) const;
 	void BindMeshForRendering() const;

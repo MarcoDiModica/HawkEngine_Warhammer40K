@@ -89,11 +89,13 @@ public class MenuButtons : MonoBehaviour
 
     private void NavigateMenu()
     {
-        if (Input.GetControllerButtonDown(ControllerButton.DPadDown))
+        Vector2 leftStick = Input.GetLeftStick();
+
+        if (Input.GetControllerButtonDown(ControllerButton.DPadDown) || leftStick.Y < -0.5f)
         {
             selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
         }
-        else if (Input.GetControllerButtonDown(ControllerButton.DPadUp))
+        else if (Input.GetControllerButtonDown(ControllerButton.DPadUp) || leftStick.Y > 0.5f)
         {
             selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
         }

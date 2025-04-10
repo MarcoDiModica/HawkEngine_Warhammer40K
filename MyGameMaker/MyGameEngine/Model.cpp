@@ -1,9 +1,7 @@
 #include "Model.h"
 #include "AssimpGLMHelpers.h"
 
-uint32_t Model::s_NextID = 1;
 std::unordered_map<uint32_t, std::weak_ptr<Model>> ModelRegistry::s_Models;
-
 
 void Model::SetVertexBoneDataToDefault(Vertex& vertex)
 {

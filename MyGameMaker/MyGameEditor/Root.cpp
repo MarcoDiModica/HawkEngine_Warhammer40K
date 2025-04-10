@@ -126,7 +126,7 @@ bool Root::Start()
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
-	auto player = CreateGameObject("Player");
+	/*auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -146,7 +146,7 @@ bool Root::Start()
 	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
 	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 	player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
-	
+
 	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 	playerMesh->SetName("playerMesh");
 	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
@@ -166,17 +166,19 @@ bool Root::Start()
 	ParentGameObject(*riffleShotFX, *player);
 	riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
 	riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-	
+
 	auto inactiveDashFX = CreateGameObject("InactiveDashFX");
 	inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
 	ParentGameObject(*inactiveDashFX, *player);
 	inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 	inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-	
+
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+
+	//auto player2mesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 
 	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 
@@ -209,6 +211,10 @@ bool Root::Start()
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+
+	auto cube2 = CreateCube("Cube2");
+	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 
 	auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -394,10 +400,10 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	//auto floor = CreateCube("Floor");
-	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	
 	
     //auto envObj = CreateGameObject("Environment1");

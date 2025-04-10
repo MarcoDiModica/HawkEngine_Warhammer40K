@@ -85,4 +85,5 @@ private:
 
     bool showGUI = true;
 
+    bool showRenderStats = true;
 };

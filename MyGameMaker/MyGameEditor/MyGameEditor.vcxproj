@@ -162,6 +162,7 @@
     <ClCompile Include="MyWindow.cpp" />
     <ClCompile Include="RenderCommand.cpp" />
     <ClCompile Include="RenderManager.cpp" />
+    <ClCompile Include="RenderStats.cpp" />
     <ClCompile Include="Root.cpp" />
     <ClCompile Include="SceneSerializer.cpp" />
     <ClCompile Include="UIAudioTest.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="MyWindow.h" />
     <ClInclude Include="RenderCommand.h" />
     <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="RenderStats.h" />
     <ClInclude Include="Root.h" />
     <ClInclude Include="SceneSerializer.h" />
     <ClInclude Include="UIAudioTest.h" />

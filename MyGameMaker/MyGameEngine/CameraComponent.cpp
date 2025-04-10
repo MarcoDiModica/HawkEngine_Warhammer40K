@@ -79,8 +79,8 @@ void CameraComponent::Update(float deltaTime)
             desiredPosition.z = currentPosition.z;
         }
 
-        double t = glm::clamp(followSmoothness * deltaTime, 0.0, 1.0);
-        glm::dvec3 newPosition = glm::mix(currentPosition, desiredPosition, followSmoothness * deltaTime);
+		double t = glm::clamp(followSmoothness * deltaTime, 0.0, 1.0);
+		glm::dvec3 newPosition = glm::mix(currentPosition, desiredPosition, followSmoothness * deltaTime);
         owner->GetTransform()->SetPosition(newPosition);
     }
 

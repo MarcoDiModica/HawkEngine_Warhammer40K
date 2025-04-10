@@ -59,8 +59,9 @@ private:
 	void RenderInstanced(const RenderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 	void RenderStandard(const RenderCommand& command, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 
+	void PrintFrameStats();
 	void SetShaderState(Shaders* shader, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-	void SetMaterialState(const std::shared_ptr<Material>& material);
+	void SetMaterialState(const std::shared_ptr<Material>& material, Shaders* shader);
 	void SetMeshState(const std::shared_ptr<Mesh>& mesh);
 	void RestoreState();
 
@@ -69,6 +70,7 @@ private:
 	GLuint CreateInstanceBuffer(const std::vector<InstanceData>& instances);
 	void UpdateInstanceBuffer(GLuint buffer, const std::vector<InstanceData>& instances);
 
+	void ResetStateTracking();
 	void ProcessBatches();
 
 	struct GLStateCache {
@@ -91,10 +93,15 @@ private:
 	std::unordered_map<ShaderType, std::vector<RenderBatch>> renderBatches;
 
 	std::unordered_map<unsigned int, GLuint> instanceBuffers;
+	std::unordered_map<unsigned int, size_t> instanceBufferSizes;
 
 	Shaders* currentShader = nullptr;
 	std::shared_ptr<Material> currentMaterial = nullptr;
 	std::shared_ptr<Mesh> currentMesh = nullptr;
+
+	Shaders* currentBoundShader = nullptr;
+	unsigned int currentBoundMaterialId = 0;
+	unsigned int currentBoundMeshId = 0;
 
 	bool instancedRenderingEnabled = true;
 	int maxInstancesPerBatch = 100;

@@ -82,7 +82,7 @@ struct ModelData
 class Model
 {
 public:
-	Model() : m_ID(GenerateUniqueID()) {}
+	Model() {}
 	~Model() {}
 
 	std::string& GetMeshName() { return meshName; }
@@ -109,8 +109,6 @@ public:
 	uint32_t GetID() const { return m_ID; }
 	void SetID(uint32_t id) { m_ID = id; }
 
-	static uint32_t GenerateUniqueID() { return s_NextID++; }
-
 	bool isAnimated = true;
 private:
 	std::string meshName;
@@ -123,7 +121,6 @@ private:
 	BoundingBox m_BoundingBox;
 
 	uint32_t m_ID = 0;
-	static uint32_t s_NextID;
 
 	//void calculateBoundingBox(); // M�todo privado para calcular la bounding box
 };

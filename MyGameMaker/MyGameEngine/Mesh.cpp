@@ -300,6 +300,7 @@ void Mesh::Draw() const
 
 std::shared_ptr<Mesh> Mesh::CreateCube()
 {
+
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 
@@ -1112,6 +1113,14 @@ void Mesh::loadToOpenGL()
 		glEnableVertexAttribArray(4);
 		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
 	}
+
+	uint32_t hash = 0;
+	for (const auto& v : model->GetModelData().vertexData) {
+		hash = hash * 31 + std::hash<float>{}(v.position.x);
+		hash = hash * 31 + std::hash<float>{}(v.position.y);
+		hash = hash * 31 + std::hash<float>{}(v.position.z);
+	}
+	model->SetID(hash);
 
 
 	//buffer de index

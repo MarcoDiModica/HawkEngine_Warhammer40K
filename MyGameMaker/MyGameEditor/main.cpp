@@ -632,6 +632,10 @@ static void RenderOutline(GameObject* object) {
 }
 
 static void RenderEditor() {
+	//lastprogram
+	GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
 	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
 	bool useMSAA = sceneWindow->msaaSamples > 0;
 
@@ -715,6 +719,10 @@ static void RenderEditor() {
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}
 }
 
 static void EditorRenderer(MyGUI* gui) {

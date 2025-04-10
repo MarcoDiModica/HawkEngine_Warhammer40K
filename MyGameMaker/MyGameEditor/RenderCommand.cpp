@@ -5,7 +5,6 @@
 void RenderCommand::GenerateSortKey() {
 
 	unsigned int materialID = material ? material->GetId() : 0;
-	//TODO: Add Id to the meshes
 	unsigned int meshID = mesh ? mesh->getModel()->GetID() : 0;
 
 	unsigned int distanceKey = isTransparent

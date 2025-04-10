@@ -203,6 +203,8 @@ private:
 			if (mesh) {
 				AlignedProperty("Vertices", static_cast<int>(mesh->getModel()->GetModelData().vertexData.size()), labelWidth);
 				AlignedProperty("Indices", static_cast<int>(mesh->getModel()->GetModelData().indexData.size()), labelWidth);
+				AlignedProperty("Mesh Name", mesh->getModel()->GetMeshName().c_str(), labelWidth);
+				AlignedProperty("Mesh ID", static_cast<int>(mesh->getModel()->GetID()), labelWidth);
 			}
 			else {
 				ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "No mesh assigned");

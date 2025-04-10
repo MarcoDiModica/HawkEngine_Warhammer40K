@@ -282,6 +282,8 @@ void MyGUI::Render() {
 		UIGameViewPanel->Draw();
 	}
 
+	DrawRenderStatsWindow(&showRenderStats);
+
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
@@ -389,4 +391,144 @@ void MyGUI::SetColorScheme()
 
 	// Change the color of the docking preview area
 	colors[ImGuiCol_DockingPreview] = ImVec4(0.3f, 0.3f, 0.3f, 0.5f);       // Highlight color during docking
+}
+
+
+
+
+#include "RenderStats.h"
+#include "RenderManager.h"
+
+void DrawRenderStatsWindow(bool* p_open) {
+	ImGui::SetNextWindowSize(ImVec2(350, 400), ImGuiCond_FirstUseEver);
+
+	if (!ImGui::Begin("Render Statistics", p_open)) {
+		ImGui::End();
+		return;
+	}
+
+	RenderStats& stats = RenderStats::GetInstance();
+
+	if (ImGui::CollapsingHeader("Draw Calls", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Indent(10.0f);
+
+		int totalDrawCalls = stats.GetTotalDrawCalls();
+		int standardDrawCalls = stats.GetStandardDrawCalls();
+		int instancedDrawCalls = stats.GetInstancedDrawCalls();
+
+		ImGui::Text("Total: %d", totalDrawCalls);
+
+		ImVec4 standardColor = (standardDrawCalls > 100) ? ImVec4(1.0f, 0.4f, 0.4f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		ImGui::TextColored(standardColor, "Standard: %d", standardDrawCalls);
+
+		ImVec4 instancedColor = ImVec4(0.2f, 1.0f, 0.2f, 1.0f);
+		ImGui::TextColored(instancedColor, "Instanced: %d", instancedDrawCalls);
+
+		ImGui::Unindent(10.0f);
+	}
+
+	if (ImGui::CollapsingHeader("Geometry", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Indent(10.0f);
+
+		int totalObjects = stats.GetTotalObjectsRendered();
+		int totalTriangles = stats.GetTotalTrianglesRendered();
+
+		ImGui::Text("Objects: %d", totalObjects);
+		ImGui::Text("Triangles: %d", totalTriangles);
+
+		ImGui::Unindent(10.0f);
+	}
+
+	if (ImGui::CollapsingHeader("State Changes", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Indent(10.0f);
+
+		int shaderChanges = stats.GetShaderChanges();
+		int materialChanges = stats.GetMaterialChanges();
+		int vaoBindings = stats.GetVAOBindings();
+		int textureBindings = stats.GetTextureBindings();
+
+		ImVec4 shaderColor = (shaderChanges > 20) ? ImVec4(1.0f, 0.4f, 0.4f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		ImGui::TextColored(shaderColor, "Shader Changes: %d", shaderChanges);
+
+		ImVec4 materialColor = (materialChanges > 50) ? ImVec4(1.0f, 0.4f, 0.4f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		ImGui::TextColored(materialColor, "Material Changes: %d", materialChanges);
+
+		ImVec4 vaoColor = (vaoBindings > 50) ? ImVec4(1.0f, 0.4f, 0.4f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		ImGui::TextColored(vaoColor, "VAO Bindings: %d", vaoBindings);
+
+		ImVec4 textureColor = (textureBindings > 100) ? ImVec4(1.0f, 0.4f, 0.4f, 1.0f) : ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+		ImGui::TextColored(textureColor, "Texture Bindings: %d", textureBindings);
+
+		ImGui::Unindent(10.0f);
+	}
+
+	if (ImGui::CollapsingHeader("Memory", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Indent(10.0f);
+
+		float memoryKB = stats.GetTotalBufferMemoryUpdated() / 1024.0f;
+		ImGui::Text("Buffer Updates: %.2f KB", memoryKB);
+
+		ImGui::Unindent(10.0f);
+	}
+
+	if (ImGui::CollapsingHeader("Performance", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Indent(10.0f);
+
+		auto timings = stats.GetAllSectionTimes();
+		if (!timings.empty()) {
+			if (ImGui::BeginTable("TimingTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
+				ImGui::TableSetupColumn("Section", ImGuiTableColumnFlags_WidthFixed, 150.0f);
+				ImGui::TableSetupColumn("Time (ms)", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+				ImGui::TableHeadersRow();
+
+				for (const auto& timing : timings) {
+					ImGui::TableNextRow();
+					ImGui::TableNextColumn();
+					ImGui::Text("%s", timing.first.c_str());
+					ImGui::TableNextColumn();
+
+					ImVec4 timeColor =
+						timing.second > 16.0f ? ImVec4(1.0f, 0.0f, 0.0f, 1.0f) :
+						timing.second > 8.0f ? ImVec4(1.0f, 0.5f, 0.0f, 1.0f) :
+						timing.second > 4.0f ? ImVec4(1.0f, 1.0f, 0.0f, 1.0f) :
+						ImVec4(0.0f, 1.0f, 0.0f, 1.0f);
+
+					ImGui::TextColored(timeColor, "%.2f ms", timing.second);
+				}
+
+				ImGui::EndTable();
+			}
+		}
+
+		ImGui::Unindent(10.0f);
+	}
+
+	ImGui::Separator();
+
+	if (ImGui::CollapsingHeader("Settings", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Indent(10.0f);
+
+		static const char* verbosityLabels[] = {
+			"None", "Basic", "Detailed", "Per Frame", "Full"
+		};
+
+		int verbosityIndex = static_cast<int>(stats.GetVerbosityLevel());
+		if (ImGui::Combo("Verbosity Level", &verbosityIndex, verbosityLabels, IM_ARRAYSIZE(verbosityLabels))) {
+			stats.SetVerbosityLevel(static_cast<RenderStats::VerbosityLevel>(verbosityIndex));
+		}
+
+		bool instancingEnabled = RenderManager::GetInstance().IsInstancedRenderingEnabled();
+		if (ImGui::Checkbox("Enable Instanced Rendering", &instancingEnabled)) {
+			RenderManager::GetInstance().SetInstancedRenderingEnabled(instancingEnabled);
+		}
+
+		int maxInstances = 1000;
+		if (ImGui::SliderInt("Max Instances Per Batch", &maxInstances, 10, 1000)) {
+			RenderManager::GetInstance().SetMaxInstancesPerBatch(maxInstances);
+		}
+
+		ImGui::Unindent(10.0f);
+	}
+
+	ImGui::End();
 }

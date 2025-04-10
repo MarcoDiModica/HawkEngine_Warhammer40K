@@ -80,6 +80,9 @@ protected:
 
         node["color"] = std::vector<float>{ color.x, color.y, color.z };
 
+        int id = mesh->getModel()->GetID();
+        node["id"] = id;
+
         return node;
     }
 
@@ -109,6 +112,11 @@ protected:
             decodedColor.z = node["color"][2].as<float>();
             SetColor(decodedColor);
         }
+
+        if (node["id"]) {
+			int id = node["id"].as<int>();
+			mesh->getModel()->SetID(id);
+		}
 
         return true;
     }

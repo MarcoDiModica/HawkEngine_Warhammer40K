@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <iostream>
 #include "RenderCommand.h"
+#include "RenderStats.h"
 
 extern App* Application;
 
@@ -23,6 +24,8 @@ RenderManager::RenderManager() {
 	//Initialize default values
 	instancedRenderingEnabled = true;
 	maxInstancesPerBatch = 1000;
+
+	RenderStats::GetInstance().SetVerbosityLevel(RenderStats::VerbosityLevel::BASIC);
 }
 
 RenderManager::~RenderManager() {
@@ -32,6 +35,11 @@ RenderManager::~RenderManager() {
 bool RenderManager::Initialize() {
 	// Create any necessary OpenGL objects/buffers
 	ClearRenderQueues();
+
+#ifdef _DEBUG
+	RenderStats::GetInstance().SetupOpenGLDebugCallback();
+#endif
+
 	return true;
 }
 
@@ -48,6 +56,10 @@ void RenderManager::Cleanup() {
 }
 
 void RenderManager::Render(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
+	START_TIMING("FullRenderPass");
+
+	ResetStateTracking();
+	
 	bool hasOpaque = false;
 	bool hasTransparent = false;
 
@@ -66,6 +78,7 @@ void RenderManager::Render(const glm::mat4& viewMatrix, const glm::mat4& project
 	}
 
 	if (!hasOpaque && !hasTransparent) {
+		END_TIMING("FullRenderPass");
 		return;
 	}
 
@@ -78,19 +91,29 @@ void RenderManager::Render(const glm::mat4& viewMatrix, const glm::mat4& project
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	if (instancedRenderingEnabled) {
+		START_TIMING("ProcessBatches");
 		ProcessBatches();
+		END_TIMING("ProcessBatches");
 	}
 
+	START_TIMING("RenderOpaqueObjects");
 	for (const auto& pair : opaqueQueues) {
+		
 		TheRenderQueue(pair.second, viewMatrix, projectionMatrix);
 	}
+	END_TIMING("RenderOpaqueObjects");
+
+	START_TIMING("RenderTransparentObjects");
 
 	for (const auto& pair : transparentQueues) {
 		glEnable(GL_BLEND);
 		TheRenderQueue(pair.second, viewMatrix, projectionMatrix);
 	}
+	END_TIMING("RenderTransparentObjects");
+
 
 	RestoreGLState();
+	END_TIMING("FullRenderPass");
 }
 
 void RenderManager::RenderFromCamera(CameraComponent* camera) {
@@ -182,11 +205,51 @@ void RenderManager::SubmitGameObject(GameObject* gameObject) {
 
 void RenderManager::SortRenderCommands() {
 	for (auto& pair : opaqueQueues) {
-		pair.second.Sort();
+		auto& commands = pair.second.commands;
+
+		for (auto& command : commands) {
+			if (!command.mesh || !command.material) continue;
+
+			unsigned int shaderId = static_cast<unsigned int>(command.material->GetShaderType());
+			unsigned int materialId = command.material->GetId();
+			unsigned int meshId = command.mesh->getModel()->GetID();
+
+			unsigned int distanceKey = static_cast<unsigned int>(command.distanceToCamera * 100.0f);
+
+			command.sortKey = (shaderId << 28) |
+				((materialId & 0xFF) << 20) |
+				((meshId & 0xFF) << 12) |
+				(distanceKey & 0xFFF);
+		}
+
+		std::sort(commands.begin(), commands.end(),
+			[](const RenderCommand& a, const RenderCommand& b) {
+				return a.sortKey < b.sortKey;
+			});
 	}
 
 	for (auto& pair : transparentQueues) {
-		pair.second.Sort();
+		auto& commands = pair.second.commands;
+
+		for (auto& command : commands) {
+			if (!command.mesh || !command.material) continue;
+
+			unsigned int shaderId = static_cast<unsigned int>(command.material->GetShaderType());
+			unsigned int materialId = command.material->GetId();
+			unsigned int meshId = command.mesh->getModel()->GetID();
+
+			unsigned int distanceKey = 0xFFF - static_cast<unsigned int>(command.distanceToCamera * 100.0f);
+
+			command.sortKey = (shaderId << 28) |
+				((materialId & 0xFF) << 20) |
+				((meshId & 0xFF) << 12) |
+				(distanceKey & 0xFFF);
+		}
+
+		std::sort(commands.begin(), commands.end(),
+			[](const RenderCommand& a, const RenderCommand& b) {
+				return a.sortKey < b.sortKey;
+			});
 	}
 }
 
@@ -263,113 +326,39 @@ void RenderManager::TheRenderQueue(const RenderQueue& queue, const glm::mat4& vi
 void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
 	if (batch.commands.empty() || !batch.mesh || !batch.material) return;
 
+	START_TIMING("RenderInstanced");
+	RENDER_STATS.BeginBatch("Instanced_" + std::to_string(batch.commands.size()));
+
 	Shaders* shader = ShaderManager::GetInstance().GetShader(batch.shaderType);
-	if (!shader) return;
-
-	GLint lastProgram = 0, lastVAO = 0, lastArrayBuffer = 0, lastElementArrayBuffer = 0;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &lastVAO);
-	glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &lastArrayBuffer);
-	glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &lastElementArrayBuffer);
-
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
+	if (!shader) {
+		END_TIMING("RenderInstanced");
+		RENDER_STATS.EndBatch();
+		return;
 	}
-	glActiveTexture(GL_TEXTURE0);
 
-	shader->Bind();
-	shader->SetUniform("view", viewMatrix);
-	shader->SetUniform("projection", projectionMatrix);
+	SetShaderState(shader, viewMatrix, projectionMatrix);
+
 	shader->SetUniform("isInstanced", 1);
 
-	shader->SetUniform("albedoColor", batch.material->GetColor());
+	SetMaterialState(batch.material, shader);
+
+	SetMeshState(batch.mesh);
 
 	if (batch.shaderType == ShaderType::PBR) {
-		shader->SetUniform("metallicFactor", batch.material->metallic);
-		shader->SetUniform("roughnessFactor", batch.material->roughness);
-		shader->SetUniform("aoFactor", batch.material->ao);
 		shader->SetUniform("viewPos", Application->camera->GetTransform().GetPosition());
-		shader->SetUniform("tonemapStrength", batch.material->tonemapStrength);
 
 		if (!batch.commands.empty() && batch.commands[0].gameObject) {
 			batch.commands[0].gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(
 				shader, Application->camera->GetTransform().GetPosition());
 		}
-
-		batch.material->bind();
-
-		auto imagePtr = batch.material->getImage();
-		if (imagePtr && imagePtr->id() != 0) {
-			shader->SetUniform("u_HasAlbedoMap", 1);
-			shader->SetUniform("albedoMap", 0);
-		}
-		else {
-			shader->SetUniform("u_HasAlbedoMap", 0);
-		}
-
-		auto normalMapPtr = batch.material->getNormalMap();
-		if (normalMapPtr && normalMapPtr->id() != 0) {
-			shader->SetUniform("u_HasNormalMap", 1);
-			shader->SetUniform("normalMap", 1);
-		}
-		else {
-			shader->SetUniform("u_HasNormalMap", 0);
-		}
-
-		auto metallicMapPtr = batch.material->getMetallicMap();
-		if (metallicMapPtr && metallicMapPtr->id() != 0) {
-			shader->SetUniform("u_HasMetallicMap", 1);
-			shader->SetUniform("metallicMap", 2);
-		}
-		else {
-			shader->SetUniform("u_HasMetallicMap", 0);
-		}
-
-		auto roughnessMapPtr = batch.material->getRoughnessMap();
-		if (roughnessMapPtr && roughnessMapPtr->id() != 0) {
-			shader->SetUniform("u_HasRoughnessMap", 1);
-			shader->SetUniform("roughnessMap", 3);
-		}
-		else {
-			shader->SetUniform("u_HasRoughnessMap", 0);
-		}
-
-		auto aoMapPtr = batch.material->getAoMap();
-		if (aoMapPtr && aoMapPtr->id() != 0) {
-			shader->SetUniform("u_HasAoMap", 1);
-			shader->SetUniform("aoMap", 4);
-		}
-		else {
-			shader->SetUniform("u_HasAoMap", 0);
-		}
-	}
-	else if (batch.shaderType == ShaderType::UNLIT) {
-		batch.material->bind();
-
-		auto imagePtr = batch.material->getImage();
-		if (imagePtr && imagePtr->id() != 0) {
-			shader->SetUniform("u_HasTexture", 1);
-			shader->SetUniform("texture1", 0);
-		}
-		else {
-			shader->SetUniform("u_HasTexture", 0);
-		}
 	}
 
-	glBindVertexArray(batch.mesh->getModel()->GetModelData().vA);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, batch.mesh->getModel()->GetModelData().iBID);
-
+	START_TIMING("PrepareInstanceData");
 	std::vector<InstanceData> instanceData;
-	instanceData.reserve(batch.commands.size());
+	batch.GenerateInstanceData(instanceData);
+	END_TIMING("PrepareInstanceData");
 
-	for (const auto& command : batch.commands) {
-		InstanceData data;
-		data.modelMatrix = command.modelMatrix;
-		data.color = command.material ? command.material->GetColor() : glm::vec4(1.0f);
-		instanceData.push_back(data);
-	}
-
+	START_TIMING("UpdateInstanceBuffer");
 	GLuint instanceBuffer = 0;
 	unsigned int meshId = batch.mesh->getModel()->GetID();
 
@@ -382,6 +371,7 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 		instanceBuffer = CreateInstanceBuffer(instanceData);
 		instanceBuffers[meshId] = instanceBuffer;
 	}
+	END_TIMING("UpdateInstanceBuffer");
 
 	glBindBuffer(GL_ARRAY_BUFFER, instanceBuffer);
 
@@ -402,8 +392,14 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 	glVertexAttribDivisor(colorAttrLoc, 1);
 
 	auto modelData = batch.mesh->getModel()->GetModelData();
+	int triangleCount = modelData.indexData.size() / 3;
+
+	START_TIMING("DrawElementsInstanced");
 	glDrawElementsInstanced(GL_TRIANGLES, modelData.indexData.size(), GL_UNSIGNED_INT, nullptr,
 		instanceData.size());
+	END_TIMING("DrawElementsInstanced");
+
+	RECORD_DRAWCALL(true, instanceData.size(), triangleCount);
 
 	for (int i = 0; i < 4; i++) {
 		glVertexAttribDivisor(matrixAttrStart + i, 0);
@@ -413,157 +409,151 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 	glDisableVertexAttribArray(colorAttrLoc);
 
 	shader->SetUniform("isInstanced", 0);
-	batch.material->unbind();
 
-	glBindBuffer(GL_ARRAY_BUFFER, lastArrayBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lastElementArrayBuffer);
-	glBindVertexArray(lastVAO);
-
-	if (lastProgram > 0) {
-		glUseProgram(lastProgram);
-	}
-	else {
-		glUseProgram(0);
-	}
+	RENDER_STATS.EndBatch();
+	END_TIMING("RenderInstanced");
 }
 
 void RenderManager::RenderStandard(const RenderCommand& command, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
 	if (!command.mesh || !command.material || !command.gameObject) return;
-
 	if (!command.gameObject->HasComponent<MeshRenderer>()) return;
 
-	GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-	glActiveTexture(GL_TEXTURE0);
+	START_TIMING("RenderStandard");
 
 	Shaders* shader = ShaderManager::GetInstance().GetShader(command.material->GetShaderType());
-	if (!shader) return;
+	if (!shader) {
+		END_TIMING("RenderStandard");
+		return;
+	}
 
-	shader->Bind();
+	SetShaderState(shader, viewMatrix, projectionMatrix);
 
 	shader->SetUniform("model", command.modelMatrix);
-	shader->SetUniform("view", viewMatrix);
-	shader->SetUniform("projection", projectionMatrix);
 
-	shader->SetUniform("albedoColor", command.material->GetColor());
+	SetMaterialState(command.material, shader);
+
+	SetMeshState(command.mesh);
 
 	if (command.material->GetShaderType() == ShaderType::PBR) {
-		shader->SetUniform("metallicFactor", command.material->metallic);
-		shader->SetUniform("roughnessFactor", command.material->roughness);
-		shader->SetUniform("aoFactor", command.material->ao);
 		shader->SetUniform("viewPos", Application->camera->GetTransform().GetPosition());
-		shader->SetUniform("tonemapStrength", command.material->tonemapStrength);
-
-		command.material->bind();
-
-		auto imagePtr = command.material->getImg();
-		if (imagePtr && imagePtr->id() != 0) {
-			shader->SetUniform("u_HasAlbedoMap", 1);
-			shader->SetUniform("albedoMap", 0);
-		}
-		else {
-			shader->SetUniform("u_HasAlbedoMap", 0);
-		}
-
-		auto normalMapPtr = command.material->normalMapPtr;
-		if (normalMapPtr && normalMapPtr->id() != 0) {
-			shader->SetUniform("u_HasNormalMap", 1);
-			shader->SetUniform("normalMap", 1);
-		}
-		else {
-			shader->SetUniform("u_HasNormalMap", 0);
-		}
-
-		auto metallicMapPtr = command.material->metallicMapPtr;
-		if (metallicMapPtr && metallicMapPtr->id() != 0) {
-			shader->SetUniform("u_HasMetallicMap", 1);
-			shader->SetUniform("metallicMap", 2);
-		}
-		else {
-			shader->SetUniform("u_HasMetallicMap", 0);
-		}
-
-		auto roughnessMapPtr = command.material->roughnessMapPtr;
-		if (roughnessMapPtr && roughnessMapPtr->id() != 0) {
-			shader->SetUniform("u_HasRoughnessMap", 1);
-			shader->SetUniform("roughnessMap", 3);
-		}
-		else {
-			shader->SetUniform("u_HasRoughnessMap", 0);
-		}
-
-		auto aoMapPtr = command.material->aoMapPtr;
-		if (aoMapPtr && aoMapPtr->id() != 0) {
-			shader->SetUniform("u_HasAoMap", 1);
-			shader->SetUniform("aoMap", 4);
-		}
-		else {
-			shader->SetUniform("u_HasAoMap", 0);
-		}
-
 		command.gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(shader, Application->camera->GetTransform().GetPosition());
 		command.gameObject->GetComponent<MeshRenderer>()->SetUpAnimationProperties(shader);
 	}
-	else if (command.material->GetShaderType() == ShaderType::UNLIT) {
-		command.material->bind();
 
-		auto imagePtr = command.material->getImg();
-		if (imagePtr && imagePtr->id() != 0) {
-			shader->SetUniform("u_HasTexture", 1);
-			shader->SetUniform("texture1", 0);
-		}
-		else {
-			shader->SetUniform("u_HasTexture", 0);
-		}
-	}
+	int triangleCount = command.mesh->getModel()->GetModelData().indexData.size() / 3;
+	glDrawElements(GL_TRIANGLES, command.mesh->getModel()->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
+	RECORD_DRAWCALL(false, 1, triangleCount);
 
-	command.gameObject->GetComponent<MeshRenderer>()->BindMeshForRendering();
-	command.gameObject->GetComponent<MeshRenderer>()->DrawMeshElements();
-	command.gameObject->GetComponent<MeshRenderer>()->UnbindMeshAfterRendering();
+	END_TIMING("RenderStandard");
+}
 
-	command.material->unbind();
-
-	if (lastProgram > 0) {
-		glUseProgram(lastProgram);
-	}
-	else {
-		glUseProgram(0);
+void RenderManager::PrintFrameStats() {
+	if (RenderStats::GetInstance().GetVerbosityLevel() >= RenderStats::VerbosityLevel::BASIC) {
+		std::cout << RenderStats::GetInstance().GetStatsReport() << std::endl;
 	}
 }
 
 void RenderManager::SetShaderState(Shaders* shader, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
 	if (!shader) return;
 
-	if (shader != currentShader) {
+	if (shader != currentBoundShader) {
 		shader->Bind();
-		currentShader = shader;
+		RENDER_STATS.RecordShaderChange();
 
 		shader->SetUniform("view", viewMatrix);
 		shader->SetUniform("projection", projectionMatrix);
+
+		currentBoundMaterialId = 0;
+		currentBoundMeshId = 0;
+		currentBoundShader = shader;
 	}
 }
 
-void RenderManager::SetMaterialState(const std::shared_ptr<Material>& material) {
-	if (!material) return;
+void RenderManager::SetMaterialState(const std::shared_ptr<Material>& material, Shaders* shader) {
+	if (!material || !shader) return;
 
-	if (material != currentMaterial) {
+	unsigned int materialId = material->GetId();
+	if (materialId != currentBoundMaterialId) {
 		material->bind();
-		currentMaterial = material;
+		RENDER_STATS.RecordMaterialChange();
+
+		shader->SetUniform("albedoColor", material->GetColor());
+
+		if (material->GetShaderType() == ShaderType::PBR) {
+			shader->SetUniform("metallicFactor", material->metallic);
+			shader->SetUniform("roughnessFactor", material->roughness);
+			shader->SetUniform("aoFactor", material->ao);
+			shader->SetUniform("tonemapStrength", material->tonemapStrength);
+
+			auto imagePtr = material->getImage();
+			if (imagePtr && imagePtr->id() != 0) {
+				shader->SetUniform("u_HasAlbedoMap", 1);
+				shader->SetUniform("albedoMap", 0);
+			}
+			else {
+				shader->SetUniform("u_HasAlbedoMap", 0);
+			}
+
+			auto normalMapPtr = material->getNormalMap();
+			if (normalMapPtr && normalMapPtr->id() != 0) {
+				shader->SetUniform("u_HasNormalMap", 1);
+				shader->SetUniform("normalMap", 1);
+			}
+			else {
+				shader->SetUniform("u_HasNormalMap", 0);
+			}
+
+			auto metallicMapPtr = material->getMetallicMap();
+			if (metallicMapPtr && metallicMapPtr->id() != 0) {
+				shader->SetUniform("u_HasMetallicMap", 1);
+				shader->SetUniform("metallicMap", 2);
+			}
+			else {
+				shader->SetUniform("u_HasMetallicMap", 0);
+			}
+
+			auto roughnessMapPtr = material->getRoughnessMap();
+			if (roughnessMapPtr && roughnessMapPtr->id() != 0) {
+				shader->SetUniform("u_HasRoughnessMap", 1);
+				shader->SetUniform("roughnessMap", 3);
+			}
+			else {
+				shader->SetUniform("u_HasRoughnessMap", 0);
+			}
+
+			auto aoMapPtr = material->getAoMap();
+			if (aoMapPtr && aoMapPtr->id() != 0) {
+				shader->SetUniform("u_HasAoMap", 1);
+				shader->SetUniform("aoMap", 4);
+			}
+			else {
+				shader->SetUniform("u_HasAoMap", 0);
+			}
+		}
+		else if (material->GetShaderType() == ShaderType::UNLIT) {
+			auto imagePtr = material->getImage();
+			if (imagePtr && imagePtr->id() != 0) {
+				shader->SetUniform("u_HasTexture", 1);
+				shader->SetUniform("texture1", 0);
+			}
+			else {
+				shader->SetUniform("u_HasTexture", 0);
+			}
+		}
+
+		currentBoundMaterialId = materialId;
 	}
 }
 
 void RenderManager::SetMeshState(const std::shared_ptr<Mesh>& mesh) {
 	if (!mesh) return;
 
-	if (mesh != currentMesh) {
+	unsigned int meshId = mesh->getModel()->GetID();
+	if (meshId != currentBoundMeshId) {
 		glBindVertexArray(mesh->getModel()->GetModelData().vA);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getModel()->GetModelData().iBID);
-		currentMesh = mesh;
+		RENDER_STATS.RecordVAOBinding();
+		currentBoundMeshId = meshId;
 	}
 }
 
@@ -652,18 +642,24 @@ GLuint RenderManager::CreateInstanceBuffer(const std::vector<InstanceData>& inst
 void RenderManager::UpdateInstanceBuffer(GLuint buffer, const std::vector<InstanceData>& instances) {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 
-	GLint currentSize = 0;
-	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &currentSize);
-
 	size_t requiredSize = instances.size() * sizeof(InstanceData);
 
-	if (requiredSize > static_cast<size_t>(currentSize)) {
-		size_t newSize = requiredSize * 1.5;
-		glBufferData(GL_ARRAY_BUFFER, newSize, instances.data(), GL_DYNAMIC_DRAW);
+	if (instanceBufferSizes.find(buffer) == instanceBufferSizes.end() ||
+		requiredSize > instanceBufferSizes[buffer]) {
+		glBufferData(GL_ARRAY_BUFFER, requiredSize, instances.data(), GL_DYNAMIC_DRAW);
+		instanceBufferSizes[buffer] = requiredSize;
+		RENDER_STATS.RecordBufferUpdate(requiredSize);
 	}
 	else {
 		glBufferSubData(GL_ARRAY_BUFFER, 0, requiredSize, instances.data());
+		RENDER_STATS.RecordBufferUpdate(requiredSize);
 	}
+}
+
+void RenderManager::ResetStateTracking() {
+	currentBoundShader = nullptr;
+	currentBoundMaterialId = 0;
+	currentBoundMeshId = 0;
 }
 
 void RenderManager::ProcessBatches() {

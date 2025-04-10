@@ -11,6 +11,7 @@
 #include "UISettings.h"
 #include "UIMainMenuBar.h"
 #include "External/Optick/include/optick.h"
+#include "RenderStats.h"
 
 #define MAX_LOGS_CONSOLE 1000
 #define MAX_FIXED_UPDATES 5
@@ -102,6 +103,8 @@ bool App::Start() {
 
 bool App::Update()
 {
+	RenderStats::GetInstance().Reset();
+
 #ifdef PROFILE
 	OPTICK_FRAME("Main Loop")
 #endif // PROFILE

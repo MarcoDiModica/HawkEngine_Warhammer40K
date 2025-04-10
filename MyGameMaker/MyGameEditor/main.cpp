@@ -685,9 +685,7 @@ static void RenderEditor() {
 				}
 			}
 
-			if (object->HasComponent<MeshRenderer>()) {
-				RenderManager::GetInstance().SubmitGameObject(object);
-			}
+			RenderManager::GetInstance().SubmitGameObject(object);
 		}
 	}
 

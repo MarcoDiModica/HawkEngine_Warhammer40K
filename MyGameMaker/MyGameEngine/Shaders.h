@@ -25,11 +25,11 @@ public:
 
 	virtual ShaderType GetShaderType() const = 0;
 
+	GLint GetUniformLocation(const std::string& name);
+
 protected:
 	GLuint CompileShader(const std::string& shaderSource, GLenum shaderType);
 	std::string LoadShaderSource(const std::string& shaderFile);
-
-	GLint GetUniformLocation(const std::string& name);
 
 	// Support for shader preprocessing (for future extensions)
 	virtual std::string PreprocessShader(const std::string& source);

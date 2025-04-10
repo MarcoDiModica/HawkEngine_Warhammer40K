@@ -39,6 +39,7 @@ public:
 
 	void ClearRenderQueues();
 
+	bool ShouldUseInstancing(const RenderBatch& batch) const;
 	void SetInstancedRenderingEnabled(bool enabled) { instancedRenderingEnabled = enabled; }
 	bool IsInstancedRenderingEnabled() const { return instancedRenderingEnabled; }
 

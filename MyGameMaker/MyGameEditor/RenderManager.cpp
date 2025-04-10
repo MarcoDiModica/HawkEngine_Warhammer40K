@@ -22,6 +22,7 @@ RenderManager& RenderManager::GetInstance() {
 RenderManager::RenderManager() {
 	//Initialize default values
 	instancedRenderingEnabled = true;
+	maxInstancesPerBatch = 1000;
 }
 
 RenderManager::~RenderManager() {
@@ -201,11 +202,32 @@ void RenderManager::ClearRenderQueues() {
 	renderBatches.clear();
 }
 
+bool RenderManager::ShouldUseInstancing(const RenderBatch& batch) const {
+	if (!instancedRenderingEnabled) return false;
+
+	if (batch.commands.size() < 2) return false;
+
+	ShaderType firstShaderType = batch.commands[0].material->GetShaderType();
+	for (const auto& command : batch.commands) {
+		if (command.material->GetShaderType() != firstShaderType) {
+			return false;
+		}
+	}
+
+	for (const auto& command : batch.commands) {
+		if (command.specialData.isAnimated) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void RenderManager::TheRenderQueue(const RenderQueue& queue, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
 	if (queue.IsEmpty()) return;
 
 	if (instancedRenderingEnabled) {
-		ShaderType shaderType = ShaderType::PBR; 
+		ShaderType shaderType = ShaderType::PBR;
 
 		if (!queue.commands.empty() && queue.commands[0].material) {
 			shaderType = queue.commands[0].material->GetShaderType();
@@ -220,7 +242,14 @@ void RenderManager::TheRenderQueue(const RenderQueue& queue, const glm::mat4& vi
 					continue;
 				}
 
-				RenderInstanced(batch, viewMatrix, projectionMatrix);
+				if (ShouldUseInstancing(batch)) {
+					RenderInstanced(batch, viewMatrix, projectionMatrix);
+				}
+				else {
+					for (const auto& command : batch.commands) {
+						RenderStandard(command, viewMatrix, projectionMatrix);
+					}
+				}
 			}
 		}
 	}
@@ -237,16 +266,109 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 	Shaders* shader = ShaderManager::GetInstance().GetShader(batch.shaderType);
 	if (!shader) return;
 
-	SetShaderState(shader, viewMatrix, projectionMatrix);
+	GLint lastProgram = 0, lastVAO = 0, lastArrayBuffer = 0, lastElementArrayBuffer = 0;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &lastVAO);
+	glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &lastArrayBuffer);
+	glGetIntegerv(GL_ELEMENT_ARRAY_BUFFER_BINDING, &lastElementArrayBuffer);
 
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	shader->Bind();
+	shader->SetUniform("view", viewMatrix);
+	shader->SetUniform("projection", projectionMatrix);
 	shader->SetUniform("isInstanced", 1);
 
-	SetMaterialState(batch.material);
+	shader->SetUniform("albedoColor", batch.material->GetColor());
 
-	SetMeshState(batch.mesh);
+	if (batch.shaderType == ShaderType::PBR) {
+		shader->SetUniform("metallicFactor", batch.material->metallic);
+		shader->SetUniform("roughnessFactor", batch.material->roughness);
+		shader->SetUniform("aoFactor", batch.material->ao);
+		shader->SetUniform("viewPos", Application->camera->GetTransform().GetPosition());
+		shader->SetUniform("tonemapStrength", batch.material->tonemapStrength);
+
+		if (!batch.commands.empty() && batch.commands[0].gameObject) {
+			batch.commands[0].gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(
+				shader, Application->camera->GetTransform().GetPosition());
+		}
+
+		batch.material->bind();
+
+		auto imagePtr = batch.material->getImage();
+		if (imagePtr && imagePtr->id() != 0) {
+			shader->SetUniform("u_HasAlbedoMap", 1);
+			shader->SetUniform("albedoMap", 0);
+		}
+		else {
+			shader->SetUniform("u_HasAlbedoMap", 0);
+		}
+
+		auto normalMapPtr = batch.material->getNormalMap();
+		if (normalMapPtr && normalMapPtr->id() != 0) {
+			shader->SetUniform("u_HasNormalMap", 1);
+			shader->SetUniform("normalMap", 1);
+		}
+		else {
+			shader->SetUniform("u_HasNormalMap", 0);
+		}
+
+		auto metallicMapPtr = batch.material->getMetallicMap();
+		if (metallicMapPtr && metallicMapPtr->id() != 0) {
+			shader->SetUniform("u_HasMetallicMap", 1);
+			shader->SetUniform("metallicMap", 2);
+		}
+		else {
+			shader->SetUniform("u_HasMetallicMap", 0);
+		}
+
+		auto roughnessMapPtr = batch.material->getRoughnessMap();
+		if (roughnessMapPtr && roughnessMapPtr->id() != 0) {
+			shader->SetUniform("u_HasRoughnessMap", 1);
+			shader->SetUniform("roughnessMap", 3);
+		}
+		else {
+			shader->SetUniform("u_HasRoughnessMap", 0);
+		}
+
+		auto aoMapPtr = batch.material->getAoMap();
+		if (aoMapPtr && aoMapPtr->id() != 0) {
+			shader->SetUniform("u_HasAoMap", 1);
+			shader->SetUniform("aoMap", 4);
+		}
+		else {
+			shader->SetUniform("u_HasAoMap", 0);
+		}
+	}
+	else if (batch.shaderType == ShaderType::UNLIT) {
+		batch.material->bind();
+
+		auto imagePtr = batch.material->getImage();
+		if (imagePtr && imagePtr->id() != 0) {
+			shader->SetUniform("u_HasTexture", 1);
+			shader->SetUniform("texture1", 0);
+		}
+		else {
+			shader->SetUniform("u_HasTexture", 0);
+		}
+	}
+
+	glBindVertexArray(batch.mesh->getModel()->GetModelData().vA);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, batch.mesh->getModel()->GetModelData().iBID);
 
 	std::vector<InstanceData> instanceData;
-	BuildInstanceData(batch, instanceData);
+	instanceData.reserve(batch.commands.size());
+
+	for (const auto& command : batch.commands) {
+		InstanceData data;
+		data.modelMatrix = command.modelMatrix;
+		data.color = command.material ? command.material->GetColor() : glm::vec4(1.0f);
+		instanceData.push_back(data);
+	}
 
 	GLuint instanceBuffer = 0;
 	unsigned int meshId = batch.mesh->getModel()->GetID();
@@ -263,37 +385,64 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 
 	glBindBuffer(GL_ARRAY_BUFFER, instanceBuffer);
 
+	const GLint matrixAttrStart = 7;
+	const GLint colorAttrLoc = 11;
+
 	for (int i = 0; i < 4; i++) {
-		GLuint attribLocation = 7 + i;
-		glEnableVertexAttribArray(attribLocation);
-		glVertexAttribPointer(attribLocation, 4, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
+		GLuint attrLoc = matrixAttrStart + i;
+		glEnableVertexAttribArray(attrLoc);
+		glVertexAttribPointer(attrLoc, 4, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
 			(void*)(sizeof(float) * 4 * i));
-		glVertexAttribDivisor(attribLocation, 1);
+		glVertexAttribDivisor(attrLoc, 1);
 	}
 
-	GLuint colorAttribLocation = 11;
-	glEnableVertexAttribArray(colorAttribLocation);
-	glVertexAttribPointer(colorAttribLocation, 4, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
+	glEnableVertexAttribArray(colorAttrLoc);
+	glVertexAttribPointer(colorAttrLoc, 4, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
 		(void*)(sizeof(float) * 16));
-	glVertexAttribDivisor(colorAttribLocation, 1);
+	glVertexAttribDivisor(colorAttrLoc, 1);
 
 	auto modelData = batch.mesh->getModel()->GetModelData();
-	glDrawElementsInstanced(GL_TRIANGLES, modelData.indexData.size(), GL_UNSIGNED_INT, nullptr, instanceData.size());
+	glDrawElementsInstanced(GL_TRIANGLES, modelData.indexData.size(), GL_UNSIGNED_INT, nullptr,
+		instanceData.size());
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	for (int i = 0; i < 4; i++) {
+		glVertexAttribDivisor(matrixAttrStart + i, 0);
+		glDisableVertexAttribArray(matrixAttrStart + i);
+	}
+	glVertexAttribDivisor(colorAttrLoc, 0);
+	glDisableVertexAttribArray(colorAttrLoc);
 
 	shader->SetUniform("isInstanced", 0);
+	batch.material->unbind();
+
+	glBindBuffer(GL_ARRAY_BUFFER, lastArrayBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lastElementArrayBuffer);
+	glBindVertexArray(lastVAO);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}
+	else {
+		glUseProgram(0);
+	}
 }
 
 void RenderManager::RenderStandard(const RenderCommand& command, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
-	if (!command.mesh || !command.material) return;
+	if (!command.mesh || !command.material || !command.gameObject) return;
 
-	Shaders* shader = ShaderManager::GetInstance().GetShader(command.material->GetShaderType());
-	if (!shader) return;
+	if (!command.gameObject->HasComponent<MeshRenderer>()) return;
 
 	GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	glActiveTexture(GL_TEXTURE0);
+
+	Shaders* shader = ShaderManager::GetInstance().GetShader(command.material->GetShaderType());
+	if (!shader) return;
 
 	shader->Bind();
 
@@ -307,24 +456,83 @@ void RenderManager::RenderStandard(const RenderCommand& command, const glm::mat4
 		shader->SetUniform("metallicFactor", command.material->metallic);
 		shader->SetUniform("roughnessFactor", command.material->roughness);
 		shader->SetUniform("aoFactor", command.material->ao);
+		shader->SetUniform("viewPos", Application->camera->GetTransform().GetPosition());
+		shader->SetUniform("tonemapStrength", command.material->tonemapStrength);
 
 		command.material->bind();
 
-		if (command.gameObject) {
-			command.gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(shader, Application->camera->GetTransform().GetPosition());
+		auto imagePtr = command.material->getImg();
+		if (imagePtr && imagePtr->id() != 0) {
+			shader->SetUniform("u_HasAlbedoMap", 1);
+			shader->SetUniform("albedoMap", 0);
+		}
+		else {
+			shader->SetUniform("u_HasAlbedoMap", 0);
+		}
 
-			command.gameObject->GetComponent<MeshRenderer>()->SetUpAnimationProperties(shader);
+		auto normalMapPtr = command.material->normalMapPtr;
+		if (normalMapPtr && normalMapPtr->id() != 0) {
+			shader->SetUniform("u_HasNormalMap", 1);
+			shader->SetUniform("normalMap", 1);
+		}
+		else {
+			shader->SetUniform("u_HasNormalMap", 0);
+		}
+
+		auto metallicMapPtr = command.material->metallicMapPtr;
+		if (metallicMapPtr && metallicMapPtr->id() != 0) {
+			shader->SetUniform("u_HasMetallicMap", 1);
+			shader->SetUniform("metallicMap", 2);
+		}
+		else {
+			shader->SetUniform("u_HasMetallicMap", 0);
+		}
+
+		auto roughnessMapPtr = command.material->roughnessMapPtr;
+		if (roughnessMapPtr && roughnessMapPtr->id() != 0) {
+			shader->SetUniform("u_HasRoughnessMap", 1);
+			shader->SetUniform("roughnessMap", 3);
+		}
+		else {
+			shader->SetUniform("u_HasRoughnessMap", 0);
+		}
+
+		auto aoMapPtr = command.material->aoMapPtr;
+		if (aoMapPtr && aoMapPtr->id() != 0) {
+			shader->SetUniform("u_HasAoMap", 1);
+			shader->SetUniform("aoMap", 4);
+		}
+		else {
+			shader->SetUniform("u_HasAoMap", 0);
+		}
+
+		command.gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(shader, Application->camera->GetTransform().GetPosition());
+		command.gameObject->GetComponent<MeshRenderer>()->SetUpAnimationProperties(shader);
+	}
+	else if (command.material->GetShaderType() == ShaderType::UNLIT) {
+		command.material->bind();
+
+		auto imagePtr = command.material->getImg();
+		if (imagePtr && imagePtr->id() != 0) {
+			shader->SetUniform("u_HasTexture", 1);
+			shader->SetUniform("texture1", 0);
+		}
+		else {
+			shader->SetUniform("u_HasTexture", 0);
 		}
 	}
 
 	command.gameObject->GetComponent<MeshRenderer>()->BindMeshForRendering();
-
 	command.gameObject->GetComponent<MeshRenderer>()->DrawMeshElements();
-
 	command.gameObject->GetComponent<MeshRenderer>()->UnbindMeshAfterRendering();
+
+	command.material->unbind();
 
 	if (lastProgram > 0) {
 		glUseProgram(lastProgram);
+	}
+	else {
+		glUseProgram(0);
 	}
 }
 
@@ -443,7 +651,19 @@ GLuint RenderManager::CreateInstanceBuffer(const std::vector<InstanceData>& inst
 
 void RenderManager::UpdateInstanceBuffer(GLuint buffer, const std::vector<InstanceData>& instances) {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, instances.size() * sizeof(InstanceData), instances.data(), GL_DYNAMIC_DRAW);
+
+	GLint currentSize = 0;
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &currentSize);
+
+	size_t requiredSize = instances.size() * sizeof(InstanceData);
+
+	if (requiredSize > static_cast<size_t>(currentSize)) {
+		size_t newSize = requiredSize * 1.5;
+		glBufferData(GL_ARRAY_BUFFER, newSize, instances.data(), GL_DYNAMIC_DRAW);
+	}
+	else {
+		glBufferSubData(GL_ARRAY_BUFFER, 0, requiredSize, instances.data());
+	}
 }
 
 void RenderManager::ProcessBatches() {
@@ -453,13 +673,18 @@ void RenderManager::ProcessBatches() {
 		ShaderType shaderType = pair.first;
 		const auto& queue = pair.second;
 
+		if (queue.commands.empty()) continue;
+
 		std::unordered_map<unsigned int, std::unordered_map<unsigned int, RenderBatch>> batchMap;
 
 		for (const auto& command : queue.commands) {
+			if (!command.mesh || !command.material || !command.gameObject) continue;
+
 			unsigned int meshId = command.mesh->getModel()->GetID();
 			unsigned int materialId = command.material->GetId();
 
 			auto& batch = batchMap[meshId][materialId];
+
 			if (batch.commands.empty()) {
 				batch.mesh = command.mesh;
 				batch.material = command.material;
@@ -470,6 +695,10 @@ void RenderManager::ProcessBatches() {
 			batch.commands.push_back(command);
 
 			if (batch.commands.size() >= maxInstancesPerBatch) {
+				if (renderBatches.find(shaderType) == renderBatches.end()) {
+					renderBatches[shaderType] = std::vector<RenderBatch>();
+				}
+
 				renderBatches[shaderType].push_back(batch);
 				batch.commands.clear();
 			}
@@ -478,6 +707,10 @@ void RenderManager::ProcessBatches() {
 		for (auto& meshPair : batchMap) {
 			for (auto& materialPair : meshPair.second) {
 				if (!materialPair.second.commands.empty()) {
+					if (renderBatches.find(shaderType) == renderBatches.end()) {
+						renderBatches[shaderType] = std::vector<RenderBatch>();
+					}
+
 					renderBatches[shaderType].push_back(materialPair.second);
 				}
 			}
@@ -488,23 +721,32 @@ void RenderManager::ProcessBatches() {
 		ShaderType shaderType = pair.first;
 		const auto& queue = pair.second;
 
+		if (queue.commands.empty()) continue;
+
 		std::unordered_map<unsigned int, std::unordered_map<unsigned int, RenderBatch>> batchMap;
 
 		for (const auto& command : queue.commands) {
+			if (!command.mesh || !command.material || !command.gameObject) continue;
+
 			unsigned int meshId = command.mesh->getModel()->GetID();
 			unsigned int materialId = command.material->GetId();
 
 			auto& batch = batchMap[meshId][materialId];
+
 			if (batch.commands.empty()) {
 				batch.mesh = command.mesh;
 				batch.material = command.material;
 				batch.shaderType = shaderType;
-				batch.isTransparent = true;
+				batch.isTransparent = true; 
 			}
 
 			batch.commands.push_back(command);
 
 			if (batch.commands.size() >= maxInstancesPerBatch) {
+				if (renderBatches.find(shaderType) == renderBatches.end()) {
+					renderBatches[shaderType] = std::vector<RenderBatch>();
+				}
+
 				renderBatches[shaderType].push_back(batch);
 				batch.commands.clear();
 			}
@@ -513,6 +755,10 @@ void RenderManager::ProcessBatches() {
 		for (auto& meshPair : batchMap) {
 			for (auto& materialPair : meshPair.second) {
 				if (!materialPair.second.commands.empty()) {
+					if (renderBatches.find(shaderType) == renderBatches.end()) {
+						renderBatches[shaderType] = std::vector<RenderBatch>();
+					}
+
 					renderBatches[shaderType].push_back(materialPair.second);
 				}
 			}

@@ -180,11 +180,11 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 	glBindVertexArray(mesh->model->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model->GetModelData().iBID);
 
-	shader->SetUniform("dirLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+	shader->SetUniform("dirLight.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
 	shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
 	shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 	shader->SetUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
-	shader->SetUniform("dirLight.intensity", 3.0f);
+	shader->SetUniform("dirLight.intensity", 0.5f);
 }
 
 void MeshRenderer::BindMeshForRendering() const {

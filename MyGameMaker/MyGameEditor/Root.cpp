@@ -125,7 +125,7 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
-	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
 	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -176,7 +176,9 @@ bool Root::Start()
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+
+	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
 
 	//particle->ApplyPreset(Particle)
 

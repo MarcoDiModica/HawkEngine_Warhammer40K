@@ -43,11 +43,19 @@ public:
 	virtual void bind() const;
 	virtual void unbind() const;
 
+    //setters
 	void setImage(const std::shared_ptr<Image>& img_ptr) { imagePtr = img_ptr; }
 	void setNormalMap(const std::shared_ptr<Image>& img_ptr) { normalMapPtr = img_ptr; }
 	void setMetallicMap(const std::shared_ptr<Image>& img_ptr) { metallicMapPtr = img_ptr; }
 	void setRoughnessMap(const std::shared_ptr<Image>& img_ptr) { roughnessMapPtr = img_ptr; }
 	void setAoMap(const std::shared_ptr<Image>& img_ptr) { aoMapPtr = img_ptr; }
+
+    //getters
+    const std::shared_ptr<Image>& getImage() const { return imagePtr; }
+    const std::shared_ptr<Image>& getNormalMap() const { return normalMapPtr; }
+    const std::shared_ptr<Image>& getMetallicMap() const { return metallicMapPtr; }
+    const std::shared_ptr<Image>& getRoughnessMap() const { return roughnessMapPtr; }
+    const std::shared_ptr<Image>& getAoMap() const { return aoMapPtr; }
 
 	auto& image() { return *imagePtr; }
 	std::shared_ptr<Image> getImg() { return imagePtr; }

@@ -867,7 +867,7 @@ int main(int argc, char** argv) {
 #ifndef _BUILD
 			Application->gui->Render();
 			EditorRenderer(Application->gui);
-			RenderGameView(); 
+			RenderGameView();
 
 			Application->window->SwapBuffers();
 

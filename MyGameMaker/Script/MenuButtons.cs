@@ -1,4 +1,5 @@
 using HawkEngine;
+using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
@@ -41,6 +42,7 @@ public class MenuButtons : MonoBehaviour
     private UIButton[] buttons;
     private UITransform[] transforms;
 
+    private long lastInputTime = 0;
     public override void Awake()
     {
 
@@ -89,15 +91,29 @@ public class MenuButtons : MonoBehaviour
 
     private void NavigateMenu()
     {
+        if (buttons == null || buttons.Length == 0)
+        {
+            Engineson.print("ERROR: Buttons array is null or empty.");
+            return;
+        }
+        long currentTime = DateTime.Now.Ticks;
+
+        if (currentTime - lastInputTime < 2500000)
+        {
+            return; 
+        }
+
         Vector2 leftStick = Input.GetLeftStick();
 
         if (Input.GetControllerButtonDown(ControllerButton.DPadDown) || leftStick.Y > 0.75f)
         {
             selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+            lastInputTime = currentTime;
         }
         else if (Input.GetControllerButtonDown(ControllerButton.DPadUp) || leftStick.Y < -0.75f)
         {
             selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+            lastInputTime = currentTime;
         }
 
         for (int i = 0; i < buttons.Length; i++)
@@ -155,7 +171,6 @@ public class MenuButtons : MonoBehaviour
             {
                 sound?.LoadAudio(buttonClicked);
                 sound?.Play();
-                // Aquí puedes agregar la lógica para salir del juego
             }
         }
     }

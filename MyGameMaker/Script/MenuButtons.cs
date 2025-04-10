@@ -43,6 +43,13 @@ public class MenuButtons : MonoBehaviour
     private UITransform[] transforms;
 
     private long lastInputTime = 0;
+    private enum InputMethod
+    {
+        None,
+        Joystick,
+        DPad
+    }
+    private InputMethod currentInputMethod = InputMethod.None;
     public override void Awake()
     {
 
@@ -105,17 +112,42 @@ public class MenuButtons : MonoBehaviour
 
         Vector2 leftStick = Input.GetLeftStick();
 
-        if (Input.GetControllerButtonDown(ControllerButton.DPadDown) || leftStick.Y > 0.75f)
+        if (Math.Abs(leftStick.Y) > 0.75f && currentInputMethod != InputMethod.DPad)
         {
-            selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
-            lastInputTime = currentTime;
+            currentInputMethod = InputMethod.Joystick;
+
+            if (leftStick.Y < -0.75f)
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+            else if (leftStick.Y > 0.75f)
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+                lastInputTime = currentTime;
+            }
         }
-        else if (Input.GetControllerButtonDown(ControllerButton.DPadUp) || leftStick.Y < -0.75f)
+        
+        else if ((Input.GetControllerButton(ControllerButton.DPadDown) || Input.GetControllerButton(ControllerButton.DPadUp)) && currentInputMethod != InputMethod.Joystick)
         {
-            selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
-            lastInputTime = currentTime;
+            currentInputMethod = InputMethod.DPad; 
+
+            if (Input.GetControllerButton(ControllerButton.DPadDown))
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+            else if (Input.GetControllerButton(ControllerButton.DPadUp))
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+                lastInputTime = currentTime;
+            }
         }
 
+        else if (Math.Abs(leftStick.Y) <= 0.75f && !Input.GetControllerButton(ControllerButton.DPadDown) && !Input.GetControllerButton(ControllerButton.DPadUp))
+        {
+            currentInputMethod = InputMethod.None;
+        }
         for (int i = 0; i < buttons.Length; i++)
         {
             if (buttons[i] == null)

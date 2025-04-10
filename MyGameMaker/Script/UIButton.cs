@@ -35,7 +35,6 @@ namespace HawkEngine
         public void SetState(ButtonState state)
         {
             this.state = state;
-            Engineson.print("UIButton state set to " + state);
         }
 
     }

@@ -91,11 +91,11 @@ public class MenuButtons : MonoBehaviour
     {
         Vector2 leftStick = Input.GetLeftStick();
 
-        if (Input.GetControllerButtonDown(ControllerButton.DPadDown) || leftStick.Y < -0.5f)
+        if (Input.GetControllerButtonDown(ControllerButton.DPadDown) || leftStick.Y > 0.75f)
         {
             selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
         }
-        else if (Input.GetControllerButtonDown(ControllerButton.DPadUp) || leftStick.Y > 0.5f)
+        else if (Input.GetControllerButtonDown(ControllerButton.DPadUp) || leftStick.Y < -0.75f)
         {
             selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
         }

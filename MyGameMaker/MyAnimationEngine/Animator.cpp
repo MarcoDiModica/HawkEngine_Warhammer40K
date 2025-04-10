@@ -64,12 +64,12 @@ Animator& Animator::operator=(Animator&& other) noexcept
 void Animator::UpdateAnimation(float dt)
 {
     m_DeltaTime = dt;
-    if (isLooping == false && m_CurrentTime >= m_CurrentAnimation->GetDuration())
+   /* if (isLooping == false && m_CurrentTime >= m_CurrentAnimation->GetDuration())
     {
 		m_CurrentTime = m_CurrentAnimation->GetDuration();
 		m_CurrentAnimation = nullptr;
 		return;
-    }
+    }*/
 	
     if (m_CurrentAnimation)
     {
@@ -121,9 +121,8 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
         CalculateBoneTransform(&node->children[i], globalTransformation);
 }
 
-void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation,bool loopAnim ,float transitionDuration, float deltaTime)
+void Animator::TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation,float transitionDuration, float deltaTime)
 {
-	isLooping = loopAnim;
     transitionTime += deltaTime;
 
     float blendFactor = transitionTime / transitionDuration;
@@ -156,10 +155,28 @@ void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayered
     static float currentTimeBase = 0.0f;
     currentTimeBase += pBaseAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierUp * m_PlaySpeed;
     currentTimeBase = fmod(currentTimeBase, pBaseAnimation->GetDuration());
-
+	//m_CurrentTime += deltaTime * animSpeedMultiplierUp * m_PlaySpeed;
     static float currentTimeLayered = 0.0f;
     currentTimeLayered += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown * m_PlaySpeed;
     currentTimeLayered = fmod(currentTimeLayered, pLayeredAnimation->GetDuration());
+
+    if (isLooping) 
+    {
+        LOG(LogType::LOG_INFO, "isLooping true");
+    }
+    else 
+    {
+        LOG(LogType::LOG_INFO, "isLooping false");
+    }
+	std::string currentTime = std::to_string(currentTimeBase);
+	
+    if (!isLooping && m_CurrentTime >= pLayeredAnimation->GetDuration())
+    {
+		LOG(LogType::LOG_INFO, "Animation finished");
+		animationFinished = true;
+        return;
+    }
+    
 
     CalculateBlendedBoneTransform(pBaseAnimation, &pBaseAnimation->GetRootNode(), pLayeredAnimation, &pLayeredAnimation->GetRootNode(), currentTimeBase, currentTimeLayered, glm::mat4(1.0f), blendFactor);
 }

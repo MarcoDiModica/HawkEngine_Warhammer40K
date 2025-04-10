@@ -16,7 +16,7 @@ private:
     float m_DeltaTime;
 	float m_PlaySpeed = 1;
     float transitionTime = 0.0f;
-  
+	float currentDuration = 0.0f;
 
 public:
     Animator(Animation* Animation);

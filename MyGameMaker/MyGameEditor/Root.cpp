@@ -154,6 +154,7 @@ bool Root::Start()
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("Test1");
 	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);

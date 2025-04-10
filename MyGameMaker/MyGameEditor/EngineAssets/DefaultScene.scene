@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
-  uuid: 5089778265202852619
+  uuid: 12855207956070291268
   tag: Player
   active: true
   isStatic: false
@@ -142,7 +142,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 8864190831041394578
+      uuid: 11312118358987955329
       tag: Untagged
       active: true
       isStatic: false
@@ -203,7 +203,7 @@ GameObject0:
             name: Test1
       Children: ~
     - name: RiffleShotFX
-      uuid: 3990178109756564452
+      uuid: 4416307234238150305
       tag: Untagged
       active: true
       isStatic: false
@@ -275,7 +275,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 14672547470972124325
+      uuid: 15297058993984472023
       tag: Untagged
       active: true
       isStatic: false
@@ -347,7 +347,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 17055666661300790825
+      uuid: 7148541358547105539
       tag: Untagged
       active: true
       isStatic: false
@@ -420,7 +420,7 @@ GameObject0:
       Children: ~
 GameObject1:
   name: MainCamera
-  uuid: 13200321325045811080
+  uuid: 18150080037878441616
   tag: Untagged
   active: true
   isStatic: false
@@ -456,7 +456,7 @@ GameObject1:
   Children: ~
 GameObject2:
   name: Floor
-  uuid: 10525688554260404682
+  uuid: 17334214100701247768
   tag: Untagged
   active: true
   isStatic: false

@@ -139,7 +139,7 @@ void Animator::PlayAnimationOnce(Animation* pAnimation)
 {
 	m_CurrentAnimation = pAnimation;
 	m_CurrentTime = 0.0f;
-	isLooping = true;
+	isLooping = false;
 }
 
 void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime)
@@ -159,7 +159,7 @@ void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayered
     static float currentTimeLayered = 0.0f;
     currentTimeLayered += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown * m_PlaySpeed;
     currentTimeLayered = fmod(currentTimeLayered, pLayeredAnimation->GetDuration());
-
+	currentDuration += pLayeredAnimation->GetTicksPerSecond() * deltaTime * animSpeedMultiplierDown * m_PlaySpeed;
     if (isLooping) 
     {
         LOG(LogType::LOG_INFO, "isLooping true");
@@ -169,8 +169,8 @@ void Animator::BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayered
         LOG(LogType::LOG_INFO, "isLooping false");
     }
 	std::string currentTime = std::to_string(currentTimeBase);
-	
-    if (!isLooping && m_CurrentTime >= pLayeredAnimation->GetDuration())
+
+    if (!isLooping && currentDuration >= pLayeredAnimation->GetDuration())
     {
 		LOG(LogType::LOG_INFO, "Animation finished");
 		animationFinished = true;

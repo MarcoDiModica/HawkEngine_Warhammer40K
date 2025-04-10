@@ -22,33 +22,49 @@ public class LoseScreen : MonoBehaviour
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+
+    private int selectedButtonIndex = 0;
+    private UIButton[] buttons;
+    private UITransform[] transforms;
+    private bool[] hasPlayedHoverSound;
+    private long lastInputTime = 0;
+
+    private enum InputMethod
+    {
+        None,
+        Joystick,
+        DPad
+    }
+    private InputMethod currentInputMethod = InputMethod.None;
+
     public override void Awake()
     {
-
     }
+
     public override void Start()
     {
         loadLastCheckpoint = GameObject.Find("LLC_button");
         mainMenuButton = GameObject.Find("MM_button");
         quitButton = GameObject.Find("QUIT_button");
         sound = gameObject.GetComponent<Audio>();
+
         button_loadLastCheckpoint = loadLastCheckpoint.GetComponent<UIButton>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
-
-        if (mainMenuButton == null || quitButton == null)
-        {
-            Engineson.print("ERROR: No Button object found");
-            return;
-        }
 
         transform_loadLastCheckpoint = loadLastCheckpoint.GetComponent<UITransform>();
         transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
 
-        if (mainMenuButton == null || quitButton == null)
+        buttons = new UIButton[] { button_loadLastCheckpoint, button_mainMenuButton, button_quitButton };
+        transforms = new UITransform[] { transform_loadLastCheckpoint, transform_mainMenuButton, transform_quitButton };
+
+        hasPlayedHoverSound = new bool[buttons.Length];
+
+        if (loadLastCheckpoint == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
+            return;
         }
 
         if (sound == null)
@@ -57,19 +73,110 @@ public class LoseScreen : MonoBehaviour
             return;
         }
     }
-    private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
+
+    private void NavigateMenu()
     {
-        if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
+        if (buttons == null || buttons.Length == 0)
         {
-            transform.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
+            Engineson.print("ERROR: Buttons array is null or empty.");
+            return;
         }
-        else if (button.GetState() == ButtonState.DEFAULT)
+        long currentTime = DateTime.Now.Ticks;
+
+        if (currentTime - lastInputTime < 2500000)
         {
-            transform.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+            return;
         }
-        prevState = button.GetState();
+
+        Vector2 leftStick = Input.GetLeftStick();
+
+        if (Math.Abs(leftStick.X) > 0.75f && currentInputMethod != InputMethod.DPad)
+        {
+            currentInputMethod = InputMethod.Joystick;
+
+            if (leftStick.X < -0.75f)
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+            else if (leftStick.X > 0.75f)
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+        }
+        else if ((Input.GetControllerButton(ControllerButton.DPadRight) || Input.GetControllerButton(ControllerButton.DPadLeft)) && currentInputMethod != InputMethod.Joystick)
+        {
+            currentInputMethod = InputMethod.DPad;
+
+            if (Input.GetControllerButton(ControllerButton.DPadRight))
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+            else if (Input.GetControllerButton(ControllerButton.DPadLeft))
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+        }
+        else if (Math.Abs(leftStick.Y) <= 0.75f && !Input.GetControllerButton(ControllerButton.DPadRight) && !Input.GetControllerButton(ControllerButton.DPadLeft))
+        {
+            currentInputMethod = InputMethod.None;
+        }
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (buttons[i] == null)
+            {
+                Engineson.print($"WARNING: Button at index {i} is null.");
+                continue;
+            }
+
+            if (i == selectedButtonIndex)
+            {
+                buttons[i].SetState(ButtonState.HOVERED);
+                transforms[i].DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+
+                if (!hasPlayedHoverSound[i])
+                {
+                    sound?.LoadAudio(buttonHovered);
+                    sound?.Play();
+                    hasPlayedHoverSound[i] = true;
+                }
+            }
+            else
+            {
+                buttons[i].SetState(ButtonState.DEFAULT);
+                transforms[i].DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+                hasPlayedHoverSound[i] = false;
+            }
+        }
+
+        if (Input.GetControllerButtonDown(ControllerButton.A))
+        {
+            UIButton selectedButton = buttons[selectedButtonIndex];
+            selectedButton.SetState(ButtonState.CLICKED);
+
+            if (selectedButton == button_loadLastCheckpoint)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                SceneManager.LoadScene("SpaceShip");
+            }
+            else if (selectedButton == button_mainMenuButton)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                SceneManager.LoadScene("MainMenu");
+            }
+            else if (selectedButton == button_quitButton)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                // Aquí puedes agregar la lógica para salir del juego
+            }
+        }
     }
 
     public override void Update(float deltaTime)
@@ -86,31 +193,6 @@ public class LoseScreen : MonoBehaviour
             return;
         }
 
-        if (button_loadLastCheckpoint.GetState() == ButtonState.CLICKED)
-        {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-            SceneManager.LoadScene("SpaceShip");
-        }
-
-        HandleHoveredState(button_loadLastCheckpoint, transform_loadLastCheckpoint, ref prevState_loadLastCheckpoint);
-
-        if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-            SceneManager.LoadScene("MainMenu");
-        }
-
-        HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);
-
-        if (button_quitButton.GetState() == ButtonState.CLICKED)
-        {
-            //Salir del juego
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-        }
-
-        HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
+        NavigateMenu();
     }
 }

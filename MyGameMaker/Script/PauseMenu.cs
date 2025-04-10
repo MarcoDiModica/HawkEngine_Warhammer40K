@@ -2,7 +2,6 @@ using HawkEngine;
 using System;
 using System.Numerics;
 
-
 public class PauseMenu : MonoBehaviour
 {
     private GameObject optionsMenu;
@@ -34,13 +33,26 @@ public class PauseMenu : MonoBehaviour
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
 
+    private int selectedButtonIndex = 0;
+    private UIButton[] buttons;
+    private UITransform[] transforms;
+    private bool[] hasPlayedHoverSound;
+    private long lastInputTime = 0;
+
+    private enum InputMethod
+    {
+        None,
+        Joystick,
+        DPad
+    }
+    private InputMethod currentInputMethod = InputMethod.None;
+
     public override void Awake()
     {
-        //Engineson.print("OptionMenu Awake");
     }
+
     public override void Start()
     {
-        //Engineson.print("OptionMenu Start");
         optionsMenu = GameObject.Find("Canvas_OptionsMenu");
         resumeButton = GameObject.Find("Resume_Button");
         optionsMenuButton = GameObject.Find("Options_Button");
@@ -58,6 +70,11 @@ public class PauseMenu : MonoBehaviour
         transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
         transform_quitButton = quitButton.GetComponent<UITransform>();
 
+        buttons = new UIButton[] { button_resumeButton, button_optionsMenuButton, button_mainMenuButton, button_quitButton };
+        transforms = new UITransform[] { transform_resumeButton, transform_optionsMenuButton, transform_mainMenuButton, transform_quitButton };
+
+        hasPlayedHoverSound = new bool[buttons.Length];
+
         if (resumeButton == null || optionsMenuButton == null || mainMenuButton == null || quitButton == null)
         {
             Engineson.print("ERROR: No Button object found");
@@ -73,7 +90,6 @@ public class PauseMenu : MonoBehaviour
         {
             optionsMenu.SetActive(false);
         }
-        //sound = gameObject.GetComponent<Audio>();
 
         HUD = GameObject.Find("Canvas_HUD");
         if (HUD == null)
@@ -96,19 +112,117 @@ public class PauseMenu : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
+    private void NavigateMenu()
     {
-        if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
+        if (buttons == null || buttons.Length == 0)
         {
-            transform.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
+            Engineson.print("ERROR: Buttons array is null or empty.");
+            return;
         }
-        else if (button.GetState() == ButtonState.DEFAULT)
+        long currentTime = DateTime.Now.Ticks;
+
+        if (currentTime - lastInputTime < 2500000)
         {
-            transform.DOScaleUI(new Vector3(0.148f, 0.083f, 0.5f), 0.3f, Modes.EASE_OUT);
+            return;
         }
-        prevState = button.GetState();
+
+        Vector2 leftStick = Input.GetLeftStick();
+
+        if (Math.Abs(leftStick.Y) > 0.75f && currentInputMethod != InputMethod.DPad)
+        {
+            currentInputMethod = InputMethod.Joystick;
+
+            if (leftStick.Y < -0.75f)
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+            else if (leftStick.Y > 0.75f)
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+        }
+        else if ((Input.GetControllerButton(ControllerButton.DPadDown) || Input.GetControllerButton(ControllerButton.DPadUp)) && currentInputMethod != InputMethod.Joystick)
+        {
+            currentInputMethod = InputMethod.DPad;
+
+            if (Input.GetControllerButton(ControllerButton.DPadDown))
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+            else if (Input.GetControllerButton(ControllerButton.DPadUp))
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+        }
+        else if (Math.Abs(leftStick.Y) <= 0.75f && !Input.GetControllerButton(ControllerButton.DPadDown) && !Input.GetControllerButton(ControllerButton.DPadUp))
+        {
+            currentInputMethod = InputMethod.None;
+        }
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (buttons[i] == null)
+            {
+                Engineson.print($"WARNING: Button at index {i} is null.");
+                continue;
+            }
+
+            if (i == selectedButtonIndex)
+            {
+                buttons[i].SetState(ButtonState.HOVERED);
+                transforms[i].DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+
+                if (!hasPlayedHoverSound[i])
+                {
+                    sound?.LoadAudio(buttonHovered);
+                    sound?.Play();
+                    hasPlayedHoverSound[i] = true;
+                }
+            }
+            else
+            {
+                buttons[i].SetState(ButtonState.DEFAULT);
+                transforms[i].DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+                hasPlayedHoverSound[i] = false;
+            }
+        }
+
+        if (Input.GetControllerButtonDown(ControllerButton.A))
+        {
+            UIButton selectedButton = buttons[selectedButtonIndex];
+            selectedButton.SetState(ButtonState.CLICKED);
+
+            if (selectedButton == button_resumeButton)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                HUDScript.isPaused = false;
+                gameObject.SetActive(false);
+            }
+            else if (selectedButton == button_optionsMenuButton)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                optionsMenu.SetActive(true);
+                isOptionsMenuActive = true;
+            }
+            else if (selectedButton == button_mainMenuButton)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                SceneManager.LoadScene("MainMenu");
+            }
+            else if (selectedButton == button_quitButton)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                // Aquí puedes agregar la lógica para salir del juego
+            }
+        }
     }
 
     public override void Update(float deltaTime)
@@ -131,70 +245,6 @@ public class PauseMenu : MonoBehaviour
             return;
         }
 
-        //Engineson.print("OptionMenu Update");
-        if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B) || button_resumeButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-
-            if (isOptionsMenuActive)
-            {
-                optionsMenu.SetActive(false);
-                isOptionsMenuActive = false;
-            }
-            else
-            {
-                HUDScript.isPaused = false;
-                gameObject.SetActive(false);
-            }
-        }
-
-        HandleHoveredState(button_resumeButton, transform_resumeButton, ref prevState_resumeButton);
-
-        if (button_optionsMenuButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-            optionsMenu.SetActive(true);
-            isOptionsMenuActive = true;
-        }
-
-        HandleHoveredState(button_optionsMenuButton, transform_optionsMenuButton, ref prevState_optionsMenuButton);
-
-        if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
-        {
-            //SceneManager.LoadScene("MainMenu");
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-            SceneManager.LoadScene("MainMenu");
-        }
-
-        HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);
-
-        if (button_quitButton.GetState() == ButtonState.CLICKED)
-        {
-            //Salir del juego
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-        }
-
-        HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
-
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
-        {
-            if (HUDScript.openedPause)
-            {
-                HUDScript.openedPause = false;
-                Engineson.print("Avoided closure");
-            }
-            else
-            {
-                optionsMenu.SetActive(false);
-                isOptionsMenuActive = false;
-                Engineson.print("Closing menu");
-                HUDScript.isPaused = false;
-                gameObject.SetActive(false);
-            }
-        }
+        NavigateMenu();
     }
 }

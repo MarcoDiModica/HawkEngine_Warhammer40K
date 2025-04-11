@@ -23,7 +23,7 @@ RenderManager& RenderManager::GetInstance() {
 RenderManager::RenderManager() {
 	//Initialize default values
 	instancedRenderingEnabled = false;
-	maxInstancesPerBatch = 1000;
+	maxInstancesPerBatch = 100;
 
 	RenderStats::GetInstance().SetVerbosityLevel(RenderStats::VerbosityLevel::FULL);
 }
@@ -644,32 +644,9 @@ void RenderManager::UpdateInstanceBuffer(GLuint buffer, const std::vector<Instan
 
 	size_t requiredSize = instances.size() * sizeof(InstanceData);
 
-	static std::unordered_map<GLuint, std::vector<InstanceData>> lastFrameData;
-	bool dataChanged = true;
-
-	auto it = lastFrameData.find(buffer);
-	if (it != lastFrameData.end()) {
-		const auto& lastData = it->second;
-		if (lastData.size() == instances.size()) {
-			dataChanged = false;
-			for (size_t i = 0; i < instances.size(); i++) {
-				if (memcmp(&lastData[i], &instances[i], sizeof(InstanceData)) != 0) {
-					dataChanged = true;
-					break;
-				}
-			}
-		}
-	}
-
-	if (!dataChanged) {
-		return;
-	}
-
-	lastFrameData[buffer] = instances;
-
 	if (instanceBufferSizes.find(buffer) == instanceBufferSizes.end() ||
 		requiredSize > instanceBufferSizes[buffer]) {
-		glBufferData(GL_ARRAY_BUFFER, requiredSize, instances.data(), GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, requiredSize, instances.data(), GL_DYNAMIC_DRAW);
 		instanceBufferSizes[buffer] = requiredSize;
 	}
 	else {
@@ -686,21 +663,35 @@ void RenderManager::ResetStateTracking() {
 void RenderManager::ProcessBatches() {
 	renderBatches.clear();
 
+	struct BatchKey {
+		unsigned int meshId;
+		unsigned int materialId;
+
+		bool operator==(const BatchKey& other) const {
+			return meshId == other.meshId && materialId == other.materialId;
+		}
+	};
+
+	struct KeyHasher {
+		std::size_t operator()(const BatchKey& k) const {
+			return ((std::size_t)k.meshId << 32) | k.materialId;
+		}
+	};
+
 	for (const auto& pair : opaqueQueues) {
 		ShaderType shaderType = pair.first;
 		const auto& queue = pair.second;
 
 		if (queue.commands.empty()) continue;
 
-		std::unordered_map<unsigned int, std::unordered_map<unsigned int, RenderBatch>> batchMap;
+		std::unordered_map<BatchKey, RenderBatch, KeyHasher> batchMap;
 
 		for (const auto& command : queue.commands) {
 			if (!command.mesh || !command.material || !command.gameObject) continue;
 
-			unsigned int meshId = command.mesh->getModel()->GetID();
-			unsigned int materialId = command.material->GetId();
+			BatchKey key{ command.mesh->getModel()->GetID(), command.material->GetId() };
 
-			auto& batch = batchMap[meshId][materialId];
+			auto& batch = batchMap[key];
 
 			if (batch.commands.empty()) {
 				batch.mesh = command.mesh;
@@ -721,15 +712,13 @@ void RenderManager::ProcessBatches() {
 			}
 		}
 
-		for (auto& meshPair : batchMap) {
-			for (auto& materialPair : meshPair.second) {
-				if (!materialPair.second.commands.empty()) {
-					if (renderBatches.find(shaderType) == renderBatches.end()) {
-						renderBatches[shaderType] = std::vector<RenderBatch>();
-					}
-
-					renderBatches[shaderType].push_back(materialPair.second);
+		for (auto& pair : batchMap) {
+			if (!pair.second.commands.empty()) {
+				if (renderBatches.find(shaderType) == renderBatches.end()) {
+					renderBatches[shaderType] = std::vector<RenderBatch>();
 				}
+
+				renderBatches[shaderType].push_back(pair.second);
 			}
 		}
 	}
@@ -740,15 +729,14 @@ void RenderManager::ProcessBatches() {
 
 		if (queue.commands.empty()) continue;
 
-		std::unordered_map<unsigned int, std::unordered_map<unsigned int, RenderBatch>> batchMap;
+		std::unordered_map<BatchKey, RenderBatch, KeyHasher> batchMap;
 
 		for (const auto& command : queue.commands) {
 			if (!command.mesh || !command.material || !command.gameObject) continue;
 
-			unsigned int meshId = command.mesh->getModel()->GetID();
-			unsigned int materialId = command.material->GetId();
+			BatchKey key{ command.mesh->getModel()->GetID(), command.material->GetId() };
 
-			auto& batch = batchMap[meshId][materialId];
+			auto& batch = batchMap[key];
 
 			if (batch.commands.empty()) {
 				batch.mesh = command.mesh;
@@ -769,15 +757,13 @@ void RenderManager::ProcessBatches() {
 			}
 		}
 
-		for (auto& meshPair : batchMap) {
-			for (auto& materialPair : meshPair.second) {
-				if (!materialPair.second.commands.empty()) {
-					if (renderBatches.find(shaderType) == renderBatches.end()) {
-						renderBatches[shaderType] = std::vector<RenderBatch>();
-					}
-
-					renderBatches[shaderType].push_back(materialPair.second);
+		for (auto& pair : batchMap) {
+			if (!pair.second.commands.empty()) {
+				if (renderBatches.find(shaderType) == renderBatches.end()) {
+					renderBatches[shaderType] = std::vector<RenderBatch>();
 				}
+
+				renderBatches[shaderType].push_back(pair.second);
 			}
 		}
 	}

@@ -3,15 +3,14 @@
 #include "../MyGameEngine/MeshRendererComponent.h"
 
 void RenderCommand::GenerateSortKey() {
-
 	unsigned int materialID = material ? material->GetId() : 0;
 	unsigned int meshID = mesh ? mesh->getModel()->GetID() : 0;
 
 	unsigned int distanceKey = isTransparent
-		? 0xFFFFFFFF - static_cast<unsigned int>(distanceToCamera * 1000.0f)
-		: static_cast<unsigned int>(distanceToCamera * 1000.0f);
+		? 0xFF - static_cast<unsigned int>(distanceToCamera * 10.0f) & 0xFF
+		: static_cast<unsigned int>(distanceToCamera * 10.0f) & 0xFF;
 
-	sortKey = (materialID << 24) | (meshID << 16) | (distanceKey & 0xFFFF);
+	sortKey = (materialID << 24) | (meshID << 16) | (distanceKey);
 }
 
 bool RenderCommand::Compare(const RenderCommand& a, const RenderCommand& b) {

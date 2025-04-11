@@ -8,7 +8,6 @@ layout(location = 4) in vec4 weights;
 layout(location = 5) in vec3 aTangent;
 layout(location = 6) in vec3 aBitangent;
 
-// Instance attributes
 layout(location = 7) in vec4 instanceMatrix0;
 layout(location = 8) in vec4 instanceMatrix1;
 layout(location = 9) in vec4 instanceMatrix2;
@@ -41,47 +40,36 @@ void main()
 
     if (isAnimated == 1)
     {
-        mat4 BoneTransform = finalBonesMatrices[boneIds[0]] * weights[0];
-        BoneTransform += finalBonesMatrices[boneIds[1]] * weights[1];
-        BoneTransform += finalBonesMatrices[boneIds[2]] * weights[2];
-        BoneTransform += finalBonesMatrices[boneIds[3]] * weights[3];
-        tPos = BoneTransform * vec4(aPos, 1.0);
-        tNormal = mat3(BoneTransform) * aNormal;
+        mat4 BoneTransform = weights[0] * finalBonesMatrices[boneIds[0]];
+        BoneTransform += weights[1] * finalBonesMatrices[boneIds[1]];
+        BoneTransform += weights[2] * finalBonesMatrices[boneIds[2]];
+        BoneTransform += weights[3] * finalBonesMatrices[boneIds[3]];
+        
+        tPos = BoneTransform * tPos;
+        tNormal = mat3(BoneTransform) * tNormal;
     }
 
-    // Use instanced or regular model matrix
-    mat4 modelMatrix;
-    if (isInstanced == 1) {
-        modelMatrix = mat4(
-            instanceMatrix0,
-            instanceMatrix1,
-            instanceMatrix2,
-            instanceMatrix3
-        );
-    } else {
-        modelMatrix = model;
-    }
+    mat4 modelMatrix = isInstanced == 1 ? 
+        mat4(instanceMatrix0, instanceMatrix1, instanceMatrix2, instanceMatrix3) : 
+        model;
 
     FragPos = vec3(modelMatrix * tPos);
+    
     mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
     vec3 N = normalize(normalMatrix * tNormal);
-
-    vec3 T = vec3(0.0);
-    vec3 B = vec3(0.0);
-
+    Normal = N;
+    
+    vec3 T;
     if (length(aTangent) > 0.0) {
         T = normalize(normalMatrix * aTangent);
         T = normalize(T - dot(T, N) * N);
-        B = normalize(cross(N, T));
     } else {
-        T = normalize(cross(N, vec3(0.0, 1.0, 0.0)));
-        if (length(T) < 0.01) {
-            T = normalize(cross(N, vec3(1.0, 0.0, 0.0)));
-        }
-        B = normalize(cross(N, T));
+        vec3 tempVec = abs(N.y) < 0.999 ? vec3(0.0, 1.0, 0.0) : vec3(1.0, 0.0, 0.0);
+        T = normalize(cross(tempVec, N));
     }
-
+    
+    vec3 B = normalize(cross(N, T));
+    
     TBN = mat3(T, B, N);
-    Normal = N;
     gl_Position = projection * view * modelMatrix * tPos;
 }

@@ -644,15 +644,36 @@ void RenderManager::UpdateInstanceBuffer(GLuint buffer, const std::vector<Instan
 
 	size_t requiredSize = instances.size() * sizeof(InstanceData);
 
+	static std::unordered_map<GLuint, std::vector<InstanceData>> lastFrameData;
+	bool dataChanged = true;
+
+	auto it = lastFrameData.find(buffer);
+	if (it != lastFrameData.end()) {
+		const auto& lastData = it->second;
+		if (lastData.size() == instances.size()) {
+			dataChanged = false;
+			for (size_t i = 0; i < instances.size(); i++) {
+				if (memcmp(&lastData[i], &instances[i], sizeof(InstanceData)) != 0) {
+					dataChanged = true;
+					break;
+				}
+			}
+		}
+	}
+
+	if (!dataChanged) {
+		return;
+	}
+
+	lastFrameData[buffer] = instances;
+
 	if (instanceBufferSizes.find(buffer) == instanceBufferSizes.end() ||
 		requiredSize > instanceBufferSizes[buffer]) {
-		glBufferData(GL_ARRAY_BUFFER, requiredSize, instances.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, requiredSize, instances.data(), GL_STATIC_DRAW);
 		instanceBufferSizes[buffer] = requiredSize;
-		RENDER_STATS.RecordBufferUpdate(requiredSize);
 	}
 	else {
 		glBufferSubData(GL_ARRAY_BUFFER, 0, requiredSize, instances.data());
-		RENDER_STATS.RecordBufferUpdate(requiredSize);
 	}
 }
 

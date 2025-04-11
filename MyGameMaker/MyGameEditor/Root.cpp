@@ -180,7 +180,27 @@ bool Root::Start()
 
 	//auto player2mesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 
-	environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+
+	//auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+
+	//auto firstMaterial = playerMesh1->GetComponent<MeshRenderer>()->GetMaterial();
+	//auto firstMesh = playerMesh1->GetComponent<MeshRenderer>()->GetMesh();
+
+	//auto playerMesh2 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+	//playerMesh2->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+
+	//auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+	//playerMesh3->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+
+	//auto playerMesh4 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+	//playerMesh4->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+
+	//auto playerMesh5 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+	//playerMesh5->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+
+	//auto playerMesh6 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
+	//playerMesh6->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
 
 	//particle->ApplyPreset(Particle)
 
@@ -635,6 +655,12 @@ bool Root::Update(double dt)
 		//AddInteraction();
 	}
 
+	//update window title with fps with sdl
+	std::string title = "FPS: " + std::to_string(Application->GetFps());
+	title += " | " + std::to_string(Application->GetDt()) + "ms";
+
+	//set title
+	SDL_SetWindowTitle(Application->window->windowPtr(), title.c_str());
 
 	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

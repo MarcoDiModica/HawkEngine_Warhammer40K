@@ -316,7 +316,17 @@ void App::AddModule(Module* module, bool activate) {
 
 }
 
-int App::GetFps() const { return frameRate;}
+int App::GetFps() const {
+	//return fps based on the dt
+	if (dt > 0)
+	{
+		return (int)(1.0f / dt);
+	}
+	else
+	{
+		return 0;
+	}
+}
 
 double App::GetDt() const { return dt; }
 

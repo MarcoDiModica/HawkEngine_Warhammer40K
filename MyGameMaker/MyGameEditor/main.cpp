@@ -203,48 +203,6 @@ static void configureCamera() {
 	Application->camera->frustum.Update(projectionMatrix * viewMatrix);
 }
 
-static void RenderObjectAndChildren(std::shared_ptr<GameObject> object) {
-	if (object->HasComponent<MeshRenderer>()) {
-		GLint lastProgram;
-		glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-
-		glUseProgram(0);
-		for (GLenum i = 0; i < 5; i++) {
-			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, 0);
-		}
-		glActiveTexture(GL_TEXTURE0);
-
-		object->GetComponent<MeshRenderer>()->RenderMainCamera();
-
-		glUseProgram(0);
-		for (GLenum i = 0; i < 5; i++) {
-			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, 0);
-		}
-		glActiveTexture(GL_TEXTURE0);
-
-		if (lastProgram > 0) {
-			glUseProgram(lastProgram);
-		}
-	}
-
-	if (object->HasComponent<UICanvasComponent>()) {
-		object->GetComponent<UICanvasComponent>()->Update(Application->GetDt());
-	}
-
-	if (object->HasComponent<ParticleFX>()) {
-		object->GetComponent<ParticleFX>()->RenderGameView();
-	}
-
-	for (const auto& child : object->GetChildren()) {
-		if (child->IsActive()) 
-		{
-			RenderObjectAndChildren(child);
-		}
-	}
-}
-
 static void RenderGameView() {
 #ifdef PROFILE
 	OPTICK_EVENT();
@@ -273,16 +231,6 @@ static void RenderGameView() {
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	RenderManager::GetInstance().ClearRenderQueues();
-
-	for (auto& object : Application->root->GetActiveScene()->children()) {
-		if (object->IsActive()) {
-			RenderManager::GetInstance().SubmitGameObject(object.get());
-		}
-	}
-
-	RenderManager::GetInstance().SortRenderCommands();
 
 	RenderManager::GetInstance().RenderFromCamera(gameCamera);
 
@@ -632,7 +580,6 @@ static void RenderOutline(GameObject* object) {
 }
 
 static void RenderEditor() {
-	//lastprogram
 	GLint lastProgram;
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
 
@@ -694,7 +641,6 @@ static void RenderEditor() {
 	}
 
 	objects.erase(std::remove(objects.begin(), objects.end(), nullptr), objects.end());
-	Application->physicsModule->Update(Application->GetDt());
 
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
@@ -702,6 +648,7 @@ static void RenderEditor() {
 
 	RenderManager::GetInstance().SortRenderCommands();
 
+	//LO QUE MAS CONSUME / EL RESTO CASI NI CONSUME
 	RenderManager::GetInstance().RenderEditor(Application->camera->view(), Application->camera->projection());
 
 	MousePickingCheck(objects);
@@ -724,36 +671,6 @@ static void RenderEditor() {
 		glUseProgram(lastProgram);
 	}
 }
-
-static void EditorRenderer(MyGUI* gui) {
-	if (Application->window->IsOpen()) {
-
-#ifdef PROFILE
-		OPTICK_CATEGORY("RenderEditor", Optick::Category::GameLogic);
-#endif // PROFILE
-
-		const auto t0 = hrclock::now();
-
-		RenderEditor();
-
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-#ifdef PROFILE
-		OPTICK_CATEGORY("GUIRender", Optick::Category::GameLogic);
-#endif // PROFILE
-
-		gui->Render();
-
-		const auto t1 = hrclock::now();
-		const auto dt = t1 - t0;
-		//if (dt < FRAME_DT) this_thread::sleep_for(FRAME_DT - dt);
-	}
-}
-
-static double counterUsingDeltaTime = 0.0;
-static double counterUsingChrono = 0.0;
-static hrclock::time_point startTime = hrclock::now();
 
 static void GameRelease() {
 #ifdef PROFILE
@@ -805,8 +722,6 @@ static void GameRelease() {
 		}
 	}
 
-	Application->physicsModule->Update(Application->GetDt());
-
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
@@ -815,13 +730,33 @@ static void GameRelease() {
 
 	RenderManager::GetInstance().RenderGame();
 
-	for (size_t i = 0; i < UI.size(); i++) {
-		if (UI[i]->IsActive()) {
-			UI[i]->Update(static_cast<float>(Application->GetDt()));
+	for (const auto & i : UI) {
+		if (i->IsActive()) {
+			i->Update(static_cast<float>(Application->GetDt()));
 		}
 	}
 
 	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+}
+
+static void Render(MyGUI* gui) {
+	if (Application->window->IsOpen()) {
+
+#ifdef PROFILE
+		OPTICK_CATEGORY("RenderEditor", Optick::Category::GameLogic);
+#endif // PROFILE
+
+		//estos 2 consumen casi lo mismo
+		RenderEditor();
+		RenderGameView();
+
+#ifdef PROFILE
+		OPTICK_CATEGORY("GUIRender", Optick::Category::GameLogic);
+#endif // PROFILE
+
+		//muchiiiiiissiiiiimo rendimiento
+		gui->Render();
+	}
 }
 
 int main(int argc, char** argv) {
@@ -856,14 +791,12 @@ int main(int argc, char** argv) {
 
 		case AWAKE:
 
-			Application->physicsModule->Awake();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;
 
 		case START:
 
-			Application->physicsModule->Start();
 			if (Application->Start()) { state = LOOP; }
 			else { state = FAIL; printf("Failed on START"); }
 			break;
@@ -871,9 +804,7 @@ int main(int argc, char** argv) {
 		case LOOP:
 
 #ifndef _BUILD
-			Application->gui->Render();
-			EditorRenderer(Application->gui);
-			RenderGameView();
+			Render(Application->gui);
 
 			Application->window->SwapBuffers();
 
@@ -894,7 +825,6 @@ int main(int argc, char** argv) {
 		case FREE:
 			MonoManager::GetInstance().Shutdown();
 			ShaderManager::GetInstance().Cleanup();
-
 			RenderManager::GetInstance().Cleanup();
 
 			if (Application->CleanUP()) {

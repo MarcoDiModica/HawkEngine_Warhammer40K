@@ -22,10 +22,10 @@ RenderManager& RenderManager::GetInstance() {
 
 RenderManager::RenderManager() {
 	//Initialize default values
-	instancedRenderingEnabled = true;
+	instancedRenderingEnabled = false;
 	maxInstancesPerBatch = 1000;
 
-	RenderStats::GetInstance().SetVerbosityLevel(RenderStats::VerbosityLevel::BASIC);
+	RenderStats::GetInstance().SetVerbosityLevel(RenderStats::VerbosityLevel::FULL);
 }
 
 RenderManager::~RenderManager() {

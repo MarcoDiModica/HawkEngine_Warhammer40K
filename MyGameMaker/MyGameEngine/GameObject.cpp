@@ -271,10 +271,10 @@ void GameObject::Update(float deltaTime)
 	}
 
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
-		for (size_t i = 0; i < scriptComponents.size(); ++i) {
-			if (scriptComponents[i] && !destroyed) {
+		for (const auto & scriptComponent : scriptComponents) {
+			if (scriptComponent && !destroyed) {
 				try {
-					scriptComponents[i]->Update(deltaTime);
+					scriptComponent->Update(deltaTime);
 
 					if (Application->hasChangedScene) {
 						return;

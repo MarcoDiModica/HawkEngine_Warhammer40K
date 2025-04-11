@@ -1,6 +1,7 @@
 #include "RenderCommand.h"
 #include "../MyGameEngine/GameObject.h"
 #include "../MyGameEngine/MeshRendererComponent.h"
+#include <glm/gtc/matrix_inverse.hpp>
 
 void RenderCommand::GenerateSortKey() {
 	unsigned int materialID = material ? material->GetId() : 0;
@@ -35,6 +36,12 @@ void RenderBatch::GenerateInstanceData(std::vector<InstanceData>& instanceData) 
 		else {
 			data.color = glm::vec4(1.0f);
 		}
+
+		glm::mat3 normalMatrix = glm::inverseTranspose(glm::mat3(command.modelMatrix));
+
+		data.normalMatrix0 = normalMatrix[0];
+		data.normalMatrix1 = normalMatrix[1];
+		data.normalMatrix2 = normalMatrix[2];
 
 		instanceData.push_back(data);
 	}

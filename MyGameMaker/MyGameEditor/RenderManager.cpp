@@ -423,6 +423,9 @@ void RenderManager::RenderBatchStandard(const RenderBatch& batch, const glm::mat
 	for (const auto& command : batch.commands) {
 		shader->SetUniform("model", command.modelMatrix);
 
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(command.modelMatrix)));
+		shader->SetUniform("normalMatrix", normalMatrix);
+
 		if (command.specialData.isAnimated && command.gameObject->HasComponent<MeshRenderer>()) {
 			command.gameObject->GetComponent<MeshRenderer>()->SetUpAnimationProperties(shader);
 		}
@@ -501,6 +504,7 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 
 	const GLint matrixAttrStart = 7;
 	const GLint colorAttrLoc = 11;
+	const GLint normalMatrixAttrStart = 12; 
 
 	for (int i = 0; i < 4; i++) {
 		GLuint attrLoc = matrixAttrStart + i;
@@ -514,6 +518,15 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 	glVertexAttribPointer(colorAttrLoc, 4, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
 		(void*)(sizeof(float) * 16));
 	glVertexAttribDivisor(colorAttrLoc, 1);
+
+	size_t normalMatrixOffset = sizeof(float) * 20; 
+	for (int i = 0; i < 3; i++) {
+		GLuint attrLoc = normalMatrixAttrStart + i;
+		glEnableVertexAttribArray(attrLoc);
+		glVertexAttribPointer(attrLoc, 3, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
+			(void*)(normalMatrixOffset + sizeof(float) * 3 * i));
+		glVertexAttribDivisor(attrLoc, 1);
+	}
 
 	auto modelData = batch.mesh->getModel()->GetModelData();
 	int triangleCount = modelData.indexData.size() / 3;
@@ -529,8 +542,14 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 		glVertexAttribDivisor(matrixAttrStart + i, 0);
 		glDisableVertexAttribArray(matrixAttrStart + i);
 	}
+
 	glVertexAttribDivisor(colorAttrLoc, 0);
 	glDisableVertexAttribArray(colorAttrLoc);
+
+	for (int i = 0; i < 3; i++) {
+		glVertexAttribDivisor(normalMatrixAttrStart + i, 0);
+		glDisableVertexAttribArray(normalMatrixAttrStart + i);
+	}
 
 	shader->SetUniform("isInstanced", 0);
 

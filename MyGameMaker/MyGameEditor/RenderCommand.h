@@ -15,6 +15,9 @@ class GameObject;
 struct InstanceData {
 	glm::mat4 modelMatrix;
 	glm::vec4 color;
+	glm::vec3 normalMatrix0;
+	glm::vec3 normalMatrix1;
+	glm::vec3 normalMatrix2;
 };
 
 struct RenderCommand {

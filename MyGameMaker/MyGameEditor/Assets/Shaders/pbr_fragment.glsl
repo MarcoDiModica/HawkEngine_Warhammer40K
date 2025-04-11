@@ -57,35 +57,22 @@ uniform float tonemapStrength = 1.0;
 vec3 getNormalFromMap() {
     vec3 normalSample = texture(normalMap, TexCoord).rgb;
     vec3 normalTangent = normalSample * 2.0 - 1.0;
-    return (length(normalTangent) < 0.1) ? normalize(Normal) : normalize(TBN * normalTangent);
+    return normalize(TBN * normalTangent);
 }
 
 float DistributionGGX(float NdotH, float roughness) {
-    float a = roughness*roughness;
-    float a2 = a*a;
-    float NdotH2 = NdotH*NdotH;
-    
-    float nom = a2;
-    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = PI * denom * denom;
-    
-    return nom / max(denom, 0.0001);
+    float a2 = roughness * roughness;
+    float denom = NdotH * NdotH * (a2 - 1.0) + 1.0;
+    return a2 / (PI * denom * denom);
 }
 
 float GeometrySchlickGGX(float NdotV, float roughness) {
-    float r = (roughness + 1.0);
-    float k = (r*r) / 8.0;
-
-    float nom = NdotV;
-    float denom = NdotV * (1.0 - k) + k;
-    
-    return nom / max(denom, 0.0001);
+    float k = roughness * 0.5;
+    return NdotV / (NdotV * (1.0 - k) + k);
 }
 
 float GeometrySmith(float NdotV, float NdotL, float roughness) {
-    float ggx2 = GeometrySchlickGGX(NdotV, roughness);
-    float ggx1 = GeometrySchlickGGX(NdotL, roughness);
-    return ggx1 * ggx2;
+    return GeometrySchlickGGX(NdotV, roughness) * GeometrySchlickGGX(NdotL, roughness);
 }
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0) {
@@ -93,26 +80,32 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0) {
 }
 
 vec3 ACESFilm(vec3 x) {
-    float a = 2.51f;
-    float b = 0.03f;
-    float c = 2.43f;
-    float d = 0.59f;
-    float e = 0.14f;
-    return clamp(x * (a * x + b) / (x * (c * x + d) + e), 0.0, 1.0);
+    return clamp((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0.0, 1.0);
 }
 
 void main() {
-    vec4 texColor = (u_HasAlbedoMap == 1) ? texture(albedoMap, TexCoord) : vec4(1.0);
-    vec4 albedoTexture = texColor * albedoColor * vInstanceColor;
+    vec4 albedoTexture = albedoColor * vInstanceColor;
+    if (u_HasAlbedoMap == 1) 
+        albedoTexture *= texture(albedoMap, TexCoord);
+    
     vec3 albedo = albedoTexture.rgb;
     float alpha = albedoTexture.a;
     
-    float metallic = (u_HasMetallicMap == 1) ? texture(metallicMap, TexCoord).r : metallicFactor;
-    float roughness = max((u_HasRoughnessMap == 1) ? texture(roughnessMap, TexCoord).r : roughnessFactor, 0.08);
-    float ao = (u_HasAoMap == 1) ? texture(aoMap, TexCoord).r : aoFactor;
+    float metallic = metallicFactor;
+    if (u_HasMetallicMap == 1) 
+        metallic = texture(metallicMap, TexCoord).r;
     
-    vec3 N = (u_HasNormalMap == 1) ? getNormalFromMap() : normalize(Normal);
-    N = (length(N) < 0.5) ? normalize(Normal) : N;
+    float roughness = max(roughnessFactor, 0.08);
+    if (u_HasRoughnessMap == 1) 
+        roughness = max(texture(roughnessMap, TexCoord).r, 0.08);
+    
+    float ao = aoFactor;
+    if (u_HasAoMap == 1) 
+        ao = texture(aoMap, TexCoord).r;
+    
+    vec3 N = normalize(Normal);
+    if (u_HasNormalMap == 1)
+        N = getNormalFromMap();
     
     vec3 V = normalize(viewPos - FragPos);
     float NdotV = max(dot(N, V), 0.0);

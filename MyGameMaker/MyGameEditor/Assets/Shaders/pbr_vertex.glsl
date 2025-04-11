@@ -14,6 +14,10 @@ layout(location = 9) in vec4 instanceMatrix2;
 layout(location = 10) in vec4 instanceMatrix3;
 layout(location = 11) in vec4 instanceColor;
 
+layout(location = 12) in vec3 instanceNormalMatrix0;
+layout(location = 13) in vec3 instanceNormalMatrix1;
+layout(location = 14) in vec3 instanceNormalMatrix2;
+
 out vec2 TexCoord;
 out vec3 FragPos;
 out vec3 Normal;
@@ -25,6 +29,7 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform int isAnimated = 0;
 uniform int isInstanced = 0;
+uniform mat3 normalMatrix;
 
 const int MAX_BONES = 200;
 const int MAX_BONE_INFLUENCE = 4;
@@ -55,13 +60,23 @@ void main()
 
     FragPos = vec3(modelMatrix * tPos);
     
-    mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)));
-    vec3 N = normalize(normalMatrix * tNormal);
+    mat3 normalMat;
+    if (isInstanced == 1) {
+        normalMat = mat3(
+            instanceNormalMatrix0,
+            instanceNormalMatrix1,
+            instanceNormalMatrix2
+        );
+    } else {
+        normalMat = normalMatrix;
+    }
+    
+    vec3 N = normalize(normalMat * tNormal);
     Normal = N;
     
     vec3 T;
     if (length(aTangent) > 0.0) {
-        T = normalize(normalMatrix * aTangent);
+        T = normalize(normalMat * aTangent);
         T = normalize(T - dot(T, N) * N);
     } else {
         vec3 tempVec = abs(N.y) < 0.999 ? vec3(0.0, 1.0, 0.0) : vec3(1.0, 0.0, 0.0);

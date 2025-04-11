@@ -810,14 +810,14 @@ int main(int argc, char** argv) {
 
 			UndoRedoSystem();
 			ObjectToEditorCamera();
-
-			if (MonoManager::GetInstance().IsHotReloadingEnabled()) {
-				ScriptHotReloader::GetInstance().Update();
-			}
 #else
 			GameRelease();
 			Application->window->SwapBuffers();
 #endif // ENABLE_EDITOR
+
+			if (MonoManager::GetInstance().IsHotReloadingEnabled()) {
+				ScriptHotReloader::GetInstance().Update();
+			}
 		
 			if (!Application->Update()) { state = FREE; }
 			break;

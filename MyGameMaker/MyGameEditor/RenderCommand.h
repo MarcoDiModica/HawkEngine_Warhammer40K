@@ -45,10 +45,25 @@ struct RenderBatch {
 	bool isTransparent;                      // Whether this batch contains transparent objects
 
 	void GenerateInstanceData(std::vector<InstanceData>& instanceData) const;
+
+	void SortCommands() {
+		if (isTransparent) {
+			std::sort(commands.begin(), commands.end(),
+				[](const RenderCommand& a, const RenderCommand& b) {
+					return a.distanceToCamera > b.distanceToCamera;
+				});
+		}
+		else {
+			std::sort(commands.begin(), commands.end(),
+				[](const RenderCommand& a, const RenderCommand& b) {
+					return a.sortKey < b.sortKey;
+				});
+		}
+	}
 };
 
 struct RenderQueue {
-	std::vector<RenderCommand> commands;   
+	std::vector<RenderCommand> commands;
 
 	void AddCommand(const RenderCommand& command);
 

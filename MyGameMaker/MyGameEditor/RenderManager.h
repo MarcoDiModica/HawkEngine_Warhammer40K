@@ -12,6 +12,7 @@
 #include "../MyGameEngine/Mesh.h"
 #include "../MyGameEngine/GameObject.h"
 #include "RenderCommand.h"
+#include "glm/detail/setup.hpp"
 
 class Camera;
 class GameObject;
@@ -39,7 +40,15 @@ public:
 
 	void ClearRenderQueues();
 
-	bool ShouldUseInstancing(const RenderBatch& batch) const;
+	// Check if two render commands can be batched together
+	bool CanBatchCommands(const RenderCommand& a, const RenderCommand& b) const;
+
+	// Render all batches of a specific transparency type
+	void RenderBatches(bool transparent, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+
+	// Render a batch without using instancing
+	void RenderBatchStandard(const RenderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+
 	void SetInstancedRenderingEnabled(bool enabled) { instancedRenderingEnabled = enabled; }
 	bool IsInstancedRenderingEnabled() const { return instancedRenderingEnabled; }
 

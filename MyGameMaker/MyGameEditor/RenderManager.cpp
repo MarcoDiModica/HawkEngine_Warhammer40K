@@ -21,7 +21,6 @@ RenderManager& RenderManager::GetInstance() {
 }
 
 RenderManager::RenderManager() {
-	//Initialize default values
 	instancedRenderingEnabled = false;
 	maxInstancesPerBatch = 100;
 
@@ -44,7 +43,6 @@ bool RenderManager::Initialize() {
 }
 
 void RenderManager::Cleanup() {
-	// Clean up any OpenGL objects
 	for (auto& buffer : instanceBuffers) {
 		if (buffer.second != 0) {
 			glDeleteBuffers(1, &buffer.second);
@@ -59,7 +57,7 @@ void RenderManager::Render(const glm::mat4& viewMatrix, const glm::mat4& project
 	START_TIMING("FullRenderPass");
 
 	ResetStateTracking();
-	
+
 	bool hasOpaque = false;
 	bool hasTransparent = false;
 
@@ -90,27 +88,18 @@ void RenderManager::Render(const glm::mat4& viewMatrix, const glm::mat4& project
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	if (instancedRenderingEnabled) {
-		START_TIMING("ProcessBatches");
-		ProcessBatches();
-		END_TIMING("ProcessBatches");
-	}
+	START_TIMING("ProcessBatches");
+	ProcessBatches();
+	END_TIMING("ProcessBatches");
 
 	START_TIMING("RenderOpaqueObjects");
-	for (const auto& pair : opaqueQueues) {
-		
-		TheRenderQueue(pair.second, viewMatrix, projectionMatrix);
-	}
+	RenderBatches(false, viewMatrix, projectionMatrix);
 	END_TIMING("RenderOpaqueObjects");
 
 	START_TIMING("RenderTransparentObjects");
-
-	for (const auto& pair : transparentQueues) {
-		glEnable(GL_BLEND);
-		TheRenderQueue(pair.second, viewMatrix, projectionMatrix);
-	}
+	glEnable(GL_BLEND);
+	RenderBatches(true, viewMatrix, projectionMatrix);
 	END_TIMING("RenderTransparentObjects");
-
 
 	RestoreGLState();
 	END_TIMING("FullRenderPass");
@@ -205,51 +194,11 @@ void RenderManager::SubmitGameObject(GameObject* gameObject) {
 
 void RenderManager::SortRenderCommands() {
 	for (auto& pair : opaqueQueues) {
-		auto& commands = pair.second.commands;
-
-		for (auto& command : commands) {
-			if (!command.mesh || !command.material) continue;
-
-			unsigned int shaderId = static_cast<unsigned int>(command.material->GetShaderType());
-			unsigned int materialId = command.material->GetId();
-			unsigned int meshId = command.mesh->getModel()->GetID();
-
-			unsigned int distanceKey = static_cast<unsigned int>(command.distanceToCamera * 100.0f);
-
-			command.sortKey = (shaderId << 28) |
-				((materialId & 0xFF) << 20) |
-				((meshId & 0xFF) << 12) |
-				(distanceKey & 0xFFF);
-		}
-
-		std::sort(commands.begin(), commands.end(),
-			[](const RenderCommand& a, const RenderCommand& b) {
-				return a.sortKey < b.sortKey;
-			});
+		pair.second.Sort();
 	}
 
 	for (auto& pair : transparentQueues) {
-		auto& commands = pair.second.commands;
-
-		for (auto& command : commands) {
-			if (!command.mesh || !command.material) continue;
-
-			unsigned int shaderId = static_cast<unsigned int>(command.material->GetShaderType());
-			unsigned int materialId = command.material->GetId();
-			unsigned int meshId = command.mesh->getModel()->GetID();
-
-			unsigned int distanceKey = 0xFFF - static_cast<unsigned int>(command.distanceToCamera * 100.0f);
-
-			command.sortKey = (shaderId << 28) |
-				((materialId & 0xFF) << 20) |
-				((meshId & 0xFF) << 12) |
-				(distanceKey & 0xFFF);
-		}
-
-		std::sort(commands.begin(), commands.end(),
-			[](const RenderCommand& a, const RenderCommand& b) {
-				return a.sortKey < b.sortKey;
-			});
+		pair.second.Sort();
 	}
 }
 
@@ -265,62 +214,237 @@ void RenderManager::ClearRenderQueues() {
 	renderBatches.clear();
 }
 
-bool RenderManager::ShouldUseInstancing(const RenderBatch& batch) const {
-	if (!instancedRenderingEnabled) return false;
+bool RenderManager::CanBatchCommands(const RenderCommand& a, const RenderCommand& b) const {
+	if (!a.mesh || !b.mesh || !a.material || !b.material)
+		return false;
 
-	if (batch.commands.size() < 2) return false;
+	if (a.isTransparent != b.isTransparent)
+		return false;
 
-	ShaderType firstShaderType = batch.commands[0].material->GetShaderType();
-	for (const auto& command : batch.commands) {
-		if (command.material->GetShaderType() != firstShaderType) {
-			return false;
-		}
-	}
+	if (a.material->GetShaderType() != b.material->GetShaderType())
+		return false;
 
-	for (const auto& command : batch.commands) {
-		if (command.specialData.isAnimated) {
-			return false;
-		}
-	}
+	if (a.mesh->getModel()->GetID() != b.mesh->getModel()->GetID())
+		return false;
+
+	if (a.material->GetId() != b.material->GetId())
+		return false;
+
+	if (a.specialData.isAnimated != b.specialData.isAnimated)
+		return false;
 
 	return true;
 }
 
-void RenderManager::TheRenderQueue(const RenderQueue& queue, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
-	if (queue.IsEmpty()) return;
+void RenderManager::ProcessBatches() {
+	renderBatches.clear();
 
-	if (instancedRenderingEnabled) {
-		ShaderType shaderType = ShaderType::PBR;
+	struct BatchKey {
+		unsigned int meshId;
+		unsigned int materialId;
+		ShaderType shaderType;
+		bool isTransparent;
+		bool isAnimated;
 
-		if (!queue.commands.empty() && queue.commands[0].material) {
-			shaderType = queue.commands[0].material->GetShaderType();
+		bool operator==(const BatchKey& other) const {
+			return meshId == other.meshId &&
+				materialId == other.materialId &&
+				shaderType == other.shaderType &&
+				isTransparent == other.isTransparent &&
+				isAnimated == other.isAnimated;
+		}
+	};
+
+	struct KeyHasher {
+		std::size_t operator()(const BatchKey& k) const {
+			std::size_t h1 = std::hash<unsigned int>{}(k.meshId);
+			std::size_t h2 = std::hash<unsigned int>{}(k.materialId);
+			std::size_t h3 = std::hash<int>{}(static_cast<int>(k.shaderType));
+			std::size_t h4 = std::hash<bool>{}(k.isTransparent);
+			std::size_t h5 = std::hash<bool>{}(k.isAnimated);
+			return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3) ^ (h5 << 4);
+		}
+	};
+
+	for (const auto& pair : opaqueQueues) {
+		const ShaderType shaderType = pair.first;
+		const auto& queue = pair.second;
+
+		if (queue.commands.empty()) continue;
+
+		std::unordered_map<BatchKey, RenderBatch, KeyHasher> batchMap;
+
+		for (const auto& command : queue.commands) {
+			if (!command.mesh || !command.material) continue;
+
+			BatchKey key{
+				command.mesh->getModel()->GetID(),
+				command.material->GetId(),
+				shaderType,
+				false,
+				command.specialData.isAnimated
+			};
+
+			auto& batch = batchMap[key];
+
+			if (batch.commands.empty()) {
+				batch.mesh = command.mesh;
+				batch.material = command.material;
+				batch.shaderType = shaderType;
+				batch.isTransparent = false;
+			}
+
+			batch.commands.push_back(command);
+
+			if (batch.commands.size() >= maxInstancesPerBatch) {
+				if (renderBatches.find(shaderType) == renderBatches.end()) {
+					renderBatches[shaderType] = std::vector<RenderBatch>();
+				}
+				renderBatches[shaderType].push_back(batch);
+				batch.commands.clear();
+			}
 		}
 
-		auto batchIt = renderBatches.find(shaderType);
-		if (batchIt != renderBatches.end()) {
-			const auto& batches = batchIt->second;
-
-			for (const auto& batch : batches) {
-				if (batch.isTransparent != queue.commands[0].isTransparent) {
-					continue;
+		for (auto& pair : batchMap) {
+			if (!pair.second.commands.empty()) {
+				if (renderBatches.find(shaderType) == renderBatches.end()) {
+					renderBatches[shaderType] = std::vector<RenderBatch>();
 				}
-
-				if (ShouldUseInstancing(batch)) {
-					RenderInstanced(batch, viewMatrix, projectionMatrix);
-				}
-				else {
-					for (const auto& command : batch.commands) {
-						RenderStandard(command, viewMatrix, projectionMatrix);
-					}
-				}
+				renderBatches[shaderType].push_back(pair.second);
 			}
 		}
 	}
-	else {
+
+	for (const auto& pair : transparentQueues) {
+		const ShaderType shaderType = pair.first;
+		const auto& queue = pair.second;
+
+		if (queue.commands.empty()) continue;
+
+		std::unordered_map<BatchKey, RenderBatch, KeyHasher> batchMap;
+
 		for (const auto& command : queue.commands) {
-			RenderStandard(command, viewMatrix, projectionMatrix);
+			if (!command.mesh || !command.material) continue;
+
+			BatchKey key{
+				command.mesh->getModel()->GetID(),
+				command.material->GetId(),
+				shaderType,
+				true, 
+				command.specialData.isAnimated
+			};
+
+			auto& batch = batchMap[key];
+
+			if (batch.commands.empty()) {
+				batch.mesh = command.mesh;
+				batch.material = command.material;
+				batch.shaderType = shaderType;
+				batch.isTransparent = true;
+			}
+
+			batch.commands.push_back(command);
+
+			if (batch.commands.size() >= maxInstancesPerBatch) {
+				if (renderBatches.find(shaderType) == renderBatches.end()) {
+					renderBatches[shaderType] = std::vector<RenderBatch>();
+				}
+				renderBatches[shaderType].push_back(batch);
+				batch.commands.clear();
+			}
+		}
+
+		for (auto& pair : batchMap) {
+			if (!pair.second.commands.empty()) {
+				if (renderBatches.find(shaderType) == renderBatches.end()) {
+					renderBatches[shaderType] = std::vector<RenderBatch>();
+				}
+
+				if (pair.second.isTransparent) {
+					std::sort(pair.second.commands.begin(), pair.second.commands.end(),
+						[](const RenderCommand& a, const RenderCommand& b) {
+							return a.distanceToCamera > b.distanceToCamera;
+						});
+				}
+
+				renderBatches[shaderType].push_back(pair.second);
+			}
 		}
 	}
+}
+
+void RenderManager::RenderBatches(bool transparent, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
+	for (const auto& pair : renderBatches) {
+		ShaderType shaderType = pair.first;
+		const auto& batches = pair.second;
+
+		for (const auto& batch : batches) {
+			if (batch.isTransparent != transparent)
+				continue;
+
+			if (instancedRenderingEnabled && batch.commands.size() > 1 && !batch.commands[0].specialData.isAnimated) {
+				RenderInstanced(batch, viewMatrix, projectionMatrix);
+			}
+			else {
+				RenderBatchStandard(batch, viewMatrix, projectionMatrix);
+			}
+		}
+	}
+}
+
+void RenderManager::RenderBatchStandard(const RenderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
+	if (batch.commands.empty() || !batch.mesh || !batch.material)
+		return;
+
+	START_TIMING("RenderBatchStandard");
+	RENDER_STATS.BeginBatch("Standard_" + std::to_string(batch.commands.size()));
+
+	Shaders* shader = ShaderManager::GetInstance().GetShader(batch.shaderType);
+	if (!shader) {
+		END_TIMING("RenderBatchStandard");
+		RENDER_STATS.EndBatch();
+		return;
+	}
+
+	SetShaderState(shader, viewMatrix, projectionMatrix);
+
+	SetMaterialState(batch.material, shader);
+
+	SetMeshState(batch.mesh);
+
+	if (batch.shaderType == ShaderType::PBR) {
+#ifndef _BUILD
+		shader->SetUniform("viewPos", Application->camera->GetTransform().GetPosition());
+#else
+		shader->SetUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
+#endif
+	}
+
+	for (const auto& command : batch.commands) {
+		shader->SetUniform("model", command.modelMatrix);
+
+		if (command.specialData.isAnimated && command.gameObject->HasComponent<MeshRenderer>()) {
+			command.gameObject->GetComponent<MeshRenderer>()->SetUpAnimationProperties(shader);
+		}
+
+		if (batch.shaderType == ShaderType::PBR && command.gameObject->HasComponent<MeshRenderer>()) {
+#ifndef _BUILD
+			command.gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(
+				shader, Application->camera->GetTransform().GetPosition());
+#else
+			command.gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(
+				shader, Application->root->mainCamera->GetTransform()->GetPosition());
+#endif
+		}
+
+		int triangleCount = command.mesh->getModel()->GetModelData().indexData.size() / 3;
+		glDrawElements(GL_TRIANGLES, command.mesh->getModel()->GetModelData().indexData.size(),
+			GL_UNSIGNED_INT, nullptr);
+		RECORD_DRAWCALL(false, 1, triangleCount);
+	}
+
+	RENDER_STATS.EndBatch();
+	END_TIMING("RenderBatchStandard");
 }
 
 void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
@@ -412,39 +536,6 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 
 	RENDER_STATS.EndBatch();
 	END_TIMING("RenderInstanced");
-}
-
-void RenderManager::RenderStandard(const RenderCommand& command, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
-	if (!command.mesh || !command.material || !command.gameObject) return;
-	if (!command.gameObject->HasComponent<MeshRenderer>()) return;
-
-	START_TIMING("RenderStandard");
-
-	Shaders* shader = ShaderManager::GetInstance().GetShader(command.material->GetShaderType());
-	if (!shader) {
-		END_TIMING("RenderStandard");
-		return;
-	}
-
-	SetShaderState(shader, viewMatrix, projectionMatrix);
-
-	shader->SetUniform("model", command.modelMatrix);
-
-	SetMaterialState(command.material, shader);
-
-	SetMeshState(command.mesh);
-
-	if (command.material->GetShaderType() == ShaderType::PBR) {
-		shader->SetUniform("viewPos", Application->camera->GetTransform().GetPosition());
-		command.gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(shader, Application->camera->GetTransform().GetPosition());
-		command.gameObject->GetComponent<MeshRenderer>()->SetUpAnimationProperties(shader);
-	}
-
-	int triangleCount = command.mesh->getModel()->GetModelData().indexData.size() / 3;
-	glDrawElements(GL_TRIANGLES, command.mesh->getModel()->GetModelData().indexData.size(), GL_UNSIGNED_INT, nullptr);
-	RECORD_DRAWCALL(false, 1, triangleCount);
-
-	END_TIMING("RenderStandard");
 }
 
 void RenderManager::PrintFrameStats() {
@@ -581,23 +672,33 @@ void RenderManager::RestoreState() {
 	glActiveTexture(GL_TEXTURE0);
 }
 
-void RenderManager::BuildInstanceData(const RenderBatch& batch, std::vector<InstanceData>& instanceData) {
-	instanceData.clear();
-	instanceData.reserve(batch.commands.size());
+GLuint RenderManager::CreateInstanceBuffer(const std::vector<InstanceData>& instances) {
+	GLuint buffer;
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, instances.size() * sizeof(InstanceData), instances.data(), GL_DYNAMIC_DRAW);
+	return buffer;
+}
 
-	for (const auto& command : batch.commands) {
-		InstanceData data;
-		data.modelMatrix = command.modelMatrix;
+void RenderManager::UpdateInstanceBuffer(GLuint buffer, const std::vector<InstanceData>& instances) {
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 
-		if (command.material) {
-			data.color = command.material->GetColor();
-		}
-		else {
-			data.color = glm::vec4(1.0f);
-		}
+	size_t requiredSize = instances.size() * sizeof(InstanceData);
 
-		instanceData.push_back(data);
+	if (instanceBufferSizes.find(buffer) == instanceBufferSizes.end() ||
+		requiredSize > instanceBufferSizes[buffer]) {
+		glBufferData(GL_ARRAY_BUFFER, requiredSize, instances.data(), GL_DYNAMIC_DRAW);
+		instanceBufferSizes[buffer] = requiredSize;
 	}
+	else {
+		glBufferSubData(GL_ARRAY_BUFFER, 0, requiredSize, instances.data());
+	}
+}
+
+void RenderManager::ResetStateTracking() {
+	currentBoundShader = nullptr;
+	currentBoundMaterialId = 0;
+	currentBoundMeshId = 0;
 }
 
 void RenderManager::SaveGLState() {
@@ -628,143 +729,5 @@ void RenderManager::RestoreGLState() {
 	}
 	else {
 		glUseProgram(0);
-	}
-}
-
-GLuint RenderManager::CreateInstanceBuffer(const std::vector<InstanceData>& instances) {
-	GLuint buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, instances.size() * sizeof(InstanceData), instances.data(), GL_DYNAMIC_DRAW);
-	return buffer;
-}
-
-void RenderManager::UpdateInstanceBuffer(GLuint buffer, const std::vector<InstanceData>& instances) {
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-
-	size_t requiredSize = instances.size() * sizeof(InstanceData);
-
-	if (instanceBufferSizes.find(buffer) == instanceBufferSizes.end() ||
-		requiredSize > instanceBufferSizes[buffer]) {
-		glBufferData(GL_ARRAY_BUFFER, requiredSize, instances.data(), GL_DYNAMIC_DRAW);
-		instanceBufferSizes[buffer] = requiredSize;
-	}
-	else {
-		glBufferSubData(GL_ARRAY_BUFFER, 0, requiredSize, instances.data());
-	}
-}
-
-void RenderManager::ResetStateTracking() {
-	currentBoundShader = nullptr;
-	currentBoundMaterialId = 0;
-	currentBoundMeshId = 0;
-}
-
-void RenderManager::ProcessBatches() {
-	renderBatches.clear();
-
-	struct BatchKey {
-		unsigned int meshId;
-		unsigned int materialId;
-
-		bool operator==(const BatchKey& other) const {
-			return meshId == other.meshId && materialId == other.materialId;
-		}
-	};
-
-	struct KeyHasher {
-		std::size_t operator()(const BatchKey& k) const {
-			return ((std::size_t)k.meshId << 32) | k.materialId;
-		}
-	};
-
-	for (const auto& pair : opaqueQueues) {
-		ShaderType shaderType = pair.first;
-		const auto& queue = pair.second;
-
-		if (queue.commands.empty()) continue;
-
-		std::unordered_map<BatchKey, RenderBatch, KeyHasher> batchMap;
-
-		for (const auto& command : queue.commands) {
-			if (!command.mesh || !command.material || !command.gameObject) continue;
-
-			BatchKey key{ command.mesh->getModel()->GetID(), command.material->GetId() };
-
-			auto& batch = batchMap[key];
-
-			if (batch.commands.empty()) {
-				batch.mesh = command.mesh;
-				batch.material = command.material;
-				batch.shaderType = shaderType;
-				batch.isTransparent = false;
-			}
-
-			batch.commands.push_back(command);
-
-			if (batch.commands.size() >= maxInstancesPerBatch) {
-				if (renderBatches.find(shaderType) == renderBatches.end()) {
-					renderBatches[shaderType] = std::vector<RenderBatch>();
-				}
-
-				renderBatches[shaderType].push_back(batch);
-				batch.commands.clear();
-			}
-		}
-
-		for (auto& pair : batchMap) {
-			if (!pair.second.commands.empty()) {
-				if (renderBatches.find(shaderType) == renderBatches.end()) {
-					renderBatches[shaderType] = std::vector<RenderBatch>();
-				}
-
-				renderBatches[shaderType].push_back(pair.second);
-			}
-		}
-	}
-
-	for (const auto& pair : transparentQueues) {
-		ShaderType shaderType = pair.first;
-		const auto& queue = pair.second;
-
-		if (queue.commands.empty()) continue;
-
-		std::unordered_map<BatchKey, RenderBatch, KeyHasher> batchMap;
-
-		for (const auto& command : queue.commands) {
-			if (!command.mesh || !command.material || !command.gameObject) continue;
-
-			BatchKey key{ command.mesh->getModel()->GetID(), command.material->GetId() };
-
-			auto& batch = batchMap[key];
-
-			if (batch.commands.empty()) {
-				batch.mesh = command.mesh;
-				batch.material = command.material;
-				batch.shaderType = shaderType;
-				batch.isTransparent = true; 
-			}
-
-			batch.commands.push_back(command);
-
-			if (batch.commands.size() >= maxInstancesPerBatch) {
-				if (renderBatches.find(shaderType) == renderBatches.end()) {
-					renderBatches[shaderType] = std::vector<RenderBatch>();
-				}
-
-				renderBatches[shaderType].push_back(batch);
-				batch.commands.clear();
-			}
-		}
-
-		for (auto& pair : batchMap) {
-			if (!pair.second.commands.empty()) {
-				if (renderBatches.find(shaderType) == renderBatches.end()) {
-					renderBatches[shaderType] = std::vector<RenderBatch>();
-				}
-
-				renderBatches[shaderType].push_back(pair.second);
-			}
-		}
 	}
 }

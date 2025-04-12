@@ -143,7 +143,7 @@ public class LoseScreen : MonoBehaviour
             if (i == selectedButtonIndex)
             {
                 buttons[i].SetState(ButtonState.HOVERED);
-                transforms[i].DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+                transforms[i].DOScaleUI(new Vector3(0.22f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
 
                 if (!hasPlayedHoverSound[i])
                 {

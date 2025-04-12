@@ -50,6 +50,12 @@ void RenderManager::Cleanup() {
 	}
 	instanceBuffers.clear();
 
+	instanceBufferPool.Cleanup();
+
+	instanceBufferSizes.clear();
+
+	frameInstanceBuffers.clear();
+
 	ClearRenderQueues();
 }
 
@@ -102,6 +108,9 @@ void RenderManager::Render(const glm::mat4& viewMatrix, const glm::mat4& project
 	END_TIMING("RenderTransparentObjects");
 
 	RestoreGLState();
+
+	EndFrame();
+
 	END_TIMING("FullRenderPass");
 }
 
@@ -464,7 +473,6 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 	}
 
 	SetShaderState(shader, viewMatrix, projectionMatrix);
-
 	shader->SetUniform("isInstanced", 1);
 
 	SetMaterialState(batch.material, shader);
@@ -472,83 +480,107 @@ void RenderManager::RenderInstanced(const RenderBatch& batch, const glm::mat4& v
 	SetMeshState(batch.mesh);
 
 	if (batch.shaderType == ShaderType::PBR) {
+		#ifndef _BUILD
 		shader->SetUniform("viewPos", Application->camera->GetTransform().GetPosition());
-
+		#else
+		shader->SetUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
+		#endif
 		if (!batch.commands.empty() && batch.commands[0].gameObject) {
+			#ifndef _BUILD
 			batch.commands[0].gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(
 				shader, Application->camera->GetTransform().GetPosition());
+			#else
+			batch.commands[0].gameObject->GetComponent<MeshRenderer>()->SetupLightProperties(
+				shader, Application->root->mainCamera->GetTransform()->GetPosition());
+			#endif
 		}
-	}
+}
 
-	START_TIMING("PrepareInstanceData");
-	std::vector<InstanceData> instanceData;
-	batch.GenerateInstanceData(instanceData);
-	END_TIMING("PrepareInstanceData");
+	const size_t instanceCount = batch.commands.size();
+	const unsigned int meshId = batch.mesh->getModel()->GetID();
 
-	START_TIMING("UpdateInstanceBuffer");
-	GLuint instanceBuffer = 0;
-	unsigned int meshId = batch.mesh->getModel()->GetID();
+	const size_t STACK_ALLOC_THRESHOLD = 32; 
+	const size_t requiredBufferSize = instanceCount * sizeof(InstanceData);
 
-	auto bufferIt = instanceBuffers.find(meshId);
-	if (bufferIt != instanceBuffers.end()) {
-		instanceBuffer = bufferIt->second;
-		UpdateInstanceBuffer(instanceBuffer, instanceData);
-	}
-	else {
-		instanceBuffer = CreateInstanceBuffer(instanceData);
-		instanceBuffers[meshId] = instanceBuffer;
-	}
-	END_TIMING("UpdateInstanceBuffer");
-
+	GLuint instanceBuffer = GetInstanceBuffer(meshId, requiredBufferSize);
 	glBindBuffer(GL_ARRAY_BUFFER, instanceBuffer);
 
-	const GLint matrixAttrStart = 7;
-	const GLint colorAttrLoc = 11;
-	const GLint normalMatrixAttrStart = 12; 
+	if (instanceCount <= STACK_ALLOC_THRESHOLD) {
+		InstanceData stackData[STACK_ALLOC_THRESHOLD];
 
-	for (int i = 0; i < 4; i++) {
-		GLuint attrLoc = matrixAttrStart + i;
-		glEnableVertexAttribArray(attrLoc);
-		glVertexAttribPointer(attrLoc, 4, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
-			(void*)(sizeof(float) * 4 * i));
-		glVertexAttribDivisor(attrLoc, 1);
+		CreateInstanceData(batch, stackData, STACK_ALLOC_THRESHOLD);
+
+		glBufferSubData(GL_ARRAY_BUFFER, 0, requiredBufferSize, stackData);
+	}
+	else {
+		std::vector<InstanceData> instanceData(instanceCount);
+
+		CreateInstanceData(batch, instanceData.data(), instanceCount);
+
+		glBufferSubData(GL_ARRAY_BUFFER, 0, requiredBufferSize, instanceData.data());
 	}
 
-	glEnableVertexAttribArray(colorAttrLoc);
-	glVertexAttribPointer(colorAttrLoc, 4, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
-		(void*)(sizeof(float) * 16));
-	glVertexAttribDivisor(colorAttrLoc, 1);
+	static constexpr GLuint MATRIX_ATTR_START = 7;
+	static constexpr GLuint COLOR_ATTR_LOC = 11;
+	static constexpr GLuint NORMAL_MATRIX_ATTR_START = 12;
 
-	size_t normalMatrixOffset = sizeof(float) * 20; 
+	for (int i = 0; i < 4; i++) {
+		glEnableVertexAttribArray(MATRIX_ATTR_START + i);
+		glVertexAttribPointer(
+			MATRIX_ATTR_START + i,
+			4, GL_FLOAT, GL_FALSE,
+			sizeof(InstanceData),
+			reinterpret_cast<void*>(offsetof(InstanceData, modelMatrix) + sizeof(float) * 4 * i)
+		);
+		glVertexAttribDivisor(MATRIX_ATTR_START + i, 1);
+	}
+
+	glEnableVertexAttribArray(COLOR_ATTR_LOC);
+	glVertexAttribPointer(
+		COLOR_ATTR_LOC,
+		4, GL_FLOAT, GL_FALSE,
+		sizeof(InstanceData),
+		reinterpret_cast<void*>(offsetof(InstanceData, color))
+	);
+	glVertexAttribDivisor(COLOR_ATTR_LOC, 1);
+
 	for (int i = 0; i < 3; i++) {
-		GLuint attrLoc = normalMatrixAttrStart + i;
-		glEnableVertexAttribArray(attrLoc);
-		glVertexAttribPointer(attrLoc, 3, GL_FLOAT, GL_FALSE, sizeof(InstanceData),
-			(void*)(normalMatrixOffset + sizeof(float) * 3 * i));
-		glVertexAttribDivisor(attrLoc, 1);
+		glEnableVertexAttribArray(NORMAL_MATRIX_ATTR_START + i);
+		glVertexAttribPointer(
+			NORMAL_MATRIX_ATTR_START + i,
+			3, GL_FLOAT, GL_FALSE,
+			sizeof(InstanceData),
+			reinterpret_cast<void*>(offsetof(InstanceData, normalMatrix0) + sizeof(float) * 3 * i)
+		);
+		glVertexAttribDivisor(NORMAL_MATRIX_ATTR_START + i, 1);
 	}
 
 	auto modelData = batch.mesh->getModel()->GetModelData();
 	int triangleCount = modelData.indexData.size() / 3;
 
 	START_TIMING("DrawElementsInstanced");
-	glDrawElementsInstanced(GL_TRIANGLES, modelData.indexData.size(), GL_UNSIGNED_INT, nullptr,
-		instanceData.size());
+	glDrawElementsInstanced(
+		GL_TRIANGLES,
+		modelData.indexData.size(),
+		GL_UNSIGNED_INT,
+		nullptr,
+		instanceCount
+	);
 	END_TIMING("DrawElementsInstanced");
 
-	RECORD_DRAWCALL(true, instanceData.size(), triangleCount);
+	RECORD_DRAWCALL(true, instanceCount, triangleCount);
 
 	for (int i = 0; i < 4; i++) {
-		glVertexAttribDivisor(matrixAttrStart + i, 0);
-		glDisableVertexAttribArray(matrixAttrStart + i);
+		glVertexAttribDivisor(MATRIX_ATTR_START + i, 0);
+		glDisableVertexAttribArray(MATRIX_ATTR_START + i);
 	}
 
-	glVertexAttribDivisor(colorAttrLoc, 0);
-	glDisableVertexAttribArray(colorAttrLoc);
+	glVertexAttribDivisor(COLOR_ATTR_LOC, 0);
+	glDisableVertexAttribArray(COLOR_ATTR_LOC);
 
 	for (int i = 0; i < 3; i++) {
-		glVertexAttribDivisor(normalMatrixAttrStart + i, 0);
-		glDisableVertexAttribArray(normalMatrixAttrStart + i);
+		glVertexAttribDivisor(NORMAL_MATRIX_ATTR_START + i, 0);
+		glDisableVertexAttribArray(NORMAL_MATRIX_ATTR_START + i);
 	}
 
 	shader->SetUniform("isInstanced", 0);
@@ -691,12 +723,93 @@ void RenderManager::RestoreState() {
 	glActiveTexture(GL_TEXTURE0);
 }
 
-GLuint RenderManager::CreateInstanceBuffer(const std::vector<InstanceData>& instances) {
-	GLuint buffer;
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
-	glBufferData(GL_ARRAY_BUFFER, instances.size() * sizeof(InstanceData), instances.data(), GL_DYNAMIC_DRAW);
+GLuint RenderManager::BufferPool::GetBuffer(size_t requiredSize) {
+	for (auto it = availableBuffers.begin(); it != availableBuffers.end(); ++it) {
+		GLuint bufferId = *it;
+		if (bufferCapacities[bufferId] >= requiredSize) {
+			availableBuffers.erase(it);
+			return bufferId;
+		}
+	}
+
+	GLuint newBuffer;
+	glGenBuffers(1, &newBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, newBuffer);
+	glBufferData(GL_ARRAY_BUFFER, requiredSize, nullptr, GL_STREAM_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	bufferCapacities[newBuffer] = requiredSize;
+	return newBuffer;
+}
+
+void RenderManager::BufferPool::ReturnBuffer(GLuint bufferId) {
+	if (std::find(availableBuffers.begin(), availableBuffers.end(), bufferId) == availableBuffers.end()) {
+		availableBuffers.push_back(bufferId);
+	}
+}
+
+void RenderManager::BufferPool::Cleanup() {
+	for (GLuint buffer : availableBuffers) {
+		glDeleteBuffers(1, &buffer);
+	}
+	availableBuffers.clear();
+	bufferCapacities.clear();
+}
+
+GLuint RenderManager::GetInstanceBuffer(unsigned int meshId, size_t requiredSize) {
+	auto it = frameInstanceBuffers.find(meshId);
+	if (it != frameInstanceBuffers.end()) {
+		GLuint buffer = it->second;
+
+		if (instanceBufferPool.bufferCapacities[buffer] < requiredSize) {
+			instanceBufferPool.ReturnBuffer(buffer);
+
+			buffer = instanceBufferPool.GetBuffer(requiredSize);
+			frameInstanceBuffers[meshId] = buffer;
+		}
+
+		return buffer;
+	}
+
+	GLuint buffer = instanceBufferPool.GetBuffer(requiredSize);
+	frameInstanceBuffers[meshId] = buffer;
 	return buffer;
+}
+
+void RenderManager::ResetFrameBuffers() {
+	for (const auto& pair : frameInstanceBuffers) {
+		instanceBufferPool.ReturnBuffer(pair.second);
+	}
+	frameInstanceBuffers.clear();
+}
+
+void RenderManager::CreateInstanceData(const RenderBatch& batch, void* outputData, size_t maxCount) {
+	const size_t count = std::min(batch.commands.size(), maxCount);
+	InstanceData* instanceData = static_cast<InstanceData*>(outputData);
+
+	constexpr size_t CHUNK_SIZE = 16;
+
+	for (size_t chunkStart = 0; chunkStart < count; chunkStart += CHUNK_SIZE) {
+		const size_t chunkEnd = std::min(chunkStart + CHUNK_SIZE, count);
+
+		for (size_t i = chunkStart; i < chunkEnd; i++) {
+			const auto& command = batch.commands[i];
+
+			instanceData[i].modelMatrix = command.modelMatrix;
+
+			instanceData[i].color = command.material ?
+				command.material->GetColor() : glm::vec4(1.0f);
+
+			const glm::mat3 normalMatrix = glm::transpose(glm::inverse(glm::mat3(command.modelMatrix)));
+			instanceData[i].normalMatrix0 = normalMatrix[0];
+			instanceData[i].normalMatrix1 = normalMatrix[1];
+			instanceData[i].normalMatrix2 = normalMatrix[2];
+		}
+	}
+}
+
+void RenderManager::EndFrame() {
+	ResetFrameBuffers();
 }
 
 void RenderManager::UpdateInstanceBuffer(GLuint buffer, const std::vector<InstanceData>& instances) {

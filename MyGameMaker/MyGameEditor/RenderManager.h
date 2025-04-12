@@ -112,4 +112,24 @@ private:
 	bool instancedRenderingEnabled = true;
 	int maxInstancesPerBatch = 100;
 	bool frustumCullingEnabled = true;
+
+	struct BufferPool {
+		std::vector<GLuint> availableBuffers;
+		std::unordered_map<GLuint, size_t> bufferCapacities;
+
+		GLuint GetBuffer(size_t requiredSize);
+		void ReturnBuffer(GLuint bufferId);
+		void Cleanup();
+	};
+
+	BufferPool instanceBufferPool;
+
+	std::unordered_map<unsigned int, GLuint> frameInstanceBuffers;
+
+	GLuint GetInstanceBuffer(unsigned int meshId, size_t requiredSize);
+	void ResetFrameBuffers();
+
+	void CreateInstanceData(const RenderBatch& batch, void* outputData, size_t maxCount);
+
+	void EndFrame();
 };

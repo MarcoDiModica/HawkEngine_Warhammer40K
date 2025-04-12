@@ -52,7 +52,6 @@ bool Root::Awake()
 
 	//CreateMainMenuUI();
 
-	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 
     return true;
 }
@@ -65,6 +64,9 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
+
+	//Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
+
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");
 	////	
@@ -126,7 +128,7 @@ bool Root::Start()
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
-	/*auto player = CreateGameObject("Player");
+	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -176,31 +178,53 @@ bool Root::Start()
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
 	//auto player2mesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 
-	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
+	//environment = CreateGameObjectWithPath("Assets/Meshes/Level2 Zone1.fbx");
 
-auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-
-auto firstMaterial = playerMesh1->GetComponent<MeshRenderer>()->GetMaterial();
-auto firstMesh = playerMesh1->GetComponent<MeshRenderer>()->GetMesh();
-
-auto playerMesh2 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-playerMesh2->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-
-auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-playerMesh3->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-
-auto playerMesh4 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-playerMesh4->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-
-auto playerMesh5 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-playerMesh5->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-
-auto playerMesh6 = CreateGameObjectWithPath("Assets/Meshes/player.fbx");
-playerMesh6->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//
+//auto firstMaterial = playerMesh1->GetComponent<MeshRenderer>()->GetMaterial();
+//auto firstMesh = playerMesh1->GetComponent<MeshRenderer>()->GetMesh();
+//
+//auto playerMesh2 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh2->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh3->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh4 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh4->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh5 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh5->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh6->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh7 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh7->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh8 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh8->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh9 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh9->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh10 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh10->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh11 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh11->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh12 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh12->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh13 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh13->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh14 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh14->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh15 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh15->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh16 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh16->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh17 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh17->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh18 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh18->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+//auto playerMesh19 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+//playerMesh19->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
 
 	//particle->ApplyPreset(Particle)
 

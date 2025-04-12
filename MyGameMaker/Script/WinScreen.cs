@@ -17,7 +17,7 @@ public class WinScreen : MonoBehaviour
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
 
-    private int selectedButtonIndex = 0;
+    private int selectedButtonIndex = -1;
     private UIButton[] buttons;
     private UITransform[] transforms;
     private bool[] hasPlayedHoverSound;
@@ -27,7 +27,8 @@ public class WinScreen : MonoBehaviour
     {
         None,
         Joystick,
-        DPad
+        DPad,
+        Mouse
     }
     private InputMethod currentInputMethod = InputMethod.None;
 
@@ -110,7 +111,7 @@ public class WinScreen : MonoBehaviour
                 lastInputTime = currentTime;
             }
         }
-        else if (Math.Abs(leftStick.Y) <= 0.75f && !Input.GetControllerButton(ControllerButton.DPadRight) && !Input.GetControllerButton(ControllerButton.DPadLeft))
+        else if (Math.Abs(leftStick.X) <= 0.75f && !Input.GetControllerButton(ControllerButton.DPadRight) && !Input.GetControllerButton(ControllerButton.DPadLeft))
         {
             currentInputMethod = InputMethod.None;
         }
@@ -121,6 +122,12 @@ public class WinScreen : MonoBehaviour
             {
                 Engineson.print($"WARNING: Button at index {i} is null.");
                 continue;
+            }
+
+            if (IsMouseOverButton(buttons[i]))
+            {
+                currentInputMethod = InputMethod.Mouse;
+                selectedButtonIndex = i;
             }
 
             if (i == selectedButtonIndex)
@@ -143,7 +150,8 @@ public class WinScreen : MonoBehaviour
             }
         }
 
-        if (Input.GetControllerButtonDown(ControllerButton.A))
+        // Detectar clic del ratón
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
         {
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
@@ -162,7 +170,10 @@ public class WinScreen : MonoBehaviour
             }
         }
     }
-
+    private bool IsMouseOverButton(UIButton button)
+    {
+        return button.GetState() == ButtonState.HOVERED;
+    }
     public override void Update(float deltaTime)
     {
         if (mainMenuButton == null || quitButton == null)

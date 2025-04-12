@@ -38,7 +38,7 @@ public class MenuButtons : MonoBehaviour
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav";
 
-    private int selectedButtonIndex = 0;
+    private int selectedButtonIndex = -1;
     private UIButton[] buttons;
     private UITransform[] transforms;
 
@@ -47,7 +47,8 @@ public class MenuButtons : MonoBehaviour
     {
         None,
         Joystick,
-        DPad
+        DPad,
+        Mouse
     }
     private InputMethod currentInputMethod = InputMethod.None;
     public override void Awake()
@@ -105,14 +106,14 @@ public class MenuButtons : MonoBehaviour
         }
         long currentTime = DateTime.Now.Ticks;
 
-        if (currentTime - lastInputTime < 2500000)
+        if (currentInputMethod != InputMethod.Mouse && currentTime - lastInputTime < 2500000)
         {
-            return; 
+            return;
         }
 
         Vector2 leftStick = Input.GetLeftStick();
 
-        if (Math.Abs(leftStick.Y) > 0.75f && currentInputMethod != InputMethod.DPad)
+        if (Math.Abs(leftStick.Y) > 0.75f && currentInputMethod != InputMethod.DPad && currentInputMethod != InputMethod.Mouse)
         {
             currentInputMethod = InputMethod.Joystick;
 
@@ -127,10 +128,9 @@ public class MenuButtons : MonoBehaviour
                 lastInputTime = currentTime;
             }
         }
-        
-        else if ((Input.GetControllerButton(ControllerButton.DPadDown) || Input.GetControllerButton(ControllerButton.DPadUp)) && currentInputMethod != InputMethod.Joystick)
+        else if ((Input.GetControllerButton(ControllerButton.DPadDown) || Input.GetControllerButton(ControllerButton.DPadUp)) && currentInputMethod != InputMethod.Joystick && currentInputMethod != InputMethod.Mouse)
         {
-            currentInputMethod = InputMethod.DPad; 
+            currentInputMethod = InputMethod.DPad;
 
             if (Input.GetControllerButton(ControllerButton.DPadDown))
             {
@@ -143,17 +143,24 @@ public class MenuButtons : MonoBehaviour
                 lastInputTime = currentTime;
             }
         }
-
         else if (Math.Abs(leftStick.Y) <= 0.75f && !Input.GetControllerButton(ControllerButton.DPadDown) && !Input.GetControllerButton(ControllerButton.DPadUp))
         {
             currentInputMethod = InputMethod.None;
         }
+
+        // Detectar si el ratón está sobre un botón
         for (int i = 0; i < buttons.Length; i++)
         {
             if (buttons[i] == null)
             {
                 Engineson.print($"WARNING: Button at index {i} is null.");
                 continue;
+            }
+
+            if (IsMouseOverButton(buttons[i]))
+            {
+                currentInputMethod = InputMethod.Mouse;
+                selectedButtonIndex = i;
             }
 
             if (i == selectedButtonIndex)
@@ -176,7 +183,8 @@ public class MenuButtons : MonoBehaviour
             }
         }
 
-        if (Input.GetControllerButtonDown(ControllerButton.A))
+        // Detectar clic del ratón
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1)|| Input.GetControllerButtonDown(ControllerButton.A))
         {
             UIButton selectedButton = buttons[selectedButtonIndex];
             selectedButton.SetState(ButtonState.CLICKED);
@@ -205,6 +213,11 @@ public class MenuButtons : MonoBehaviour
                 sound?.Play();
             }
         }
+    }
+
+    private bool IsMouseOverButton(UIButton button)
+    {
+        return button.GetState() == ButtonState.HOVERED;
     }
 
     public override void Update(float deltaTime)

@@ -64,11 +64,18 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\core\inc;C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\studio\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\core\lib;C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\studio\lib</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -79,7 +86,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\core\inc;C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\studio\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -87,6 +94,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\core\lib;C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\studio\lib</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Build|x64'">
     <ClCompile>
@@ -97,7 +110,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\core\inc;C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\studio\inc</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,25 +118,23 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>fmod_vc.lib;fmodstudio_vc.lib</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\core\lib;C:\Users\didac\Documents\GitHub\HawkEngine_Warhammer40K\MyGameMaker\External\FMOD\api\studio\lib</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="AudioAsset.h" />
-    <ClInclude Include="AudioAssetProcessor.h" />
-    <ClInclude Include="AudioEngine.h" />
-    <ClInclude Include="SoundComponent.h" />
-    <ClInclude Include="AudioListener.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="AudioAsset.cpp" />
-    <ClCompile Include="AudioAssetProcessor.cpp" />
-    <ClCompile Include="AudioEngine.cpp" />
-    <ClCompile Include="SoundComponent.cpp" />
-    <ClCompile Include="AudioListener.cpp" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameEngine\MyGameEngine.vcxproj">
       <Project>{8c9f68c3-7d4d-4baf-af26-eb77a948b534}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AudioEngine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AudioEngine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,7 +4,7 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/ShaderManager.h"
 #include "../MyGameEngine/GameObject.h"
-#include "../MyGameEditor/App.h"
+#include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -12,6 +12,7 @@
 #include <iostream>
 #include "RenderCommand.h"
 #include "RenderStats.h"
+#include "App.h"
 
 extern App* Application;
 
@@ -21,7 +22,7 @@ RenderManager& RenderManager::GetInstance() {
 }
 
 RenderManager::RenderManager() {
-	instancedRenderingEnabled = false;
+	instancedRenderingEnabled = true;
 	maxInstancesPerBatch = 100;
 
 	RenderStats::GetInstance().SetVerbosityLevel(RenderStats::VerbosityLevel::FULL);
@@ -157,6 +158,13 @@ void RenderManager::SubmitMesh(GameObject* gameObject, const std::shared_ptr<Mes
 	command.mesh = mesh;
 	command.material = material;
 	command.modelMatrix = gameObject->GetTransform()->GetMatrix();
+	command.specialData.isAnimated = gameObject->HasComponent<SkeletalAnimationComponent>() &&
+		gameObject->GetComponent<SkeletalAnimationComponent>()->GetAnimator() != nullptr;
+
+	if (command.specialData.isAnimated) {
+		command.specialData.boneMatrices =
+			gameObject->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices();
+	}
 
 	glm::vec3 cameraPos;
 	if (Application->root->mainCamera) {
@@ -416,6 +424,9 @@ void RenderManager::RenderBatchStandard(const RenderBatch& batch, const glm::mat
 	}
 
 	SetShaderState(shader, viewMatrix, projectionMatrix);
+
+	shader->SetUniform("isInstanced", 0);
+	shader->SetUniform("isAnimated", batch.commands[0].specialData.isAnimated);
 
 	SetMaterialState(batch.material, shader);
 

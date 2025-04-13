@@ -195,11 +195,6 @@ bool App::PostUpdate() {
 }
 
 void App::FinishUpdate() {
-	auto now = high_res_clock::now();
-	m_deltaTime = std::chrono::duration<double>(now - m_lastFrameTime).count();
-
-	m_deltaTime = std::clamp(m_deltaTime, MIN_FRAME_TIME, MAX_FRAME_TIME);
-
 	m_fpsUpdateTimer += m_deltaTime;
 	m_frameCount++;
 
@@ -213,11 +208,11 @@ void App::FinishUpdate() {
 			gui->UIsettingsPanel->AddFpsMark(m_fps.load());
 		}
 #endif
-}
+	}
 
 	if (m_capFrames && m_targetFrameRate > 0) {
 		double targetFrameTime = 1.0 / m_targetFrameRate;
-		double frameDuration = std::chrono::duration<double>(now - m_frameStart).count();
+		double frameDuration = std::chrono::duration<double>(high_res_clock::now() - m_frameStart).count();
 
 		if (frameDuration < targetFrameTime) {
 			Uint32 delayMS = static_cast<Uint32>((targetFrameTime - frameDuration) * 1000);
@@ -227,7 +222,10 @@ void App::FinishUpdate() {
 		}
 	}
 
-	m_lastFrameTime = high_res_clock::now();
+	auto now = high_res_clock::now();
+	m_deltaTime = std::chrono::duration<double>(now - m_lastFrameTime).count();
+	m_deltaTime = std::clamp(m_deltaTime, MIN_FRAME_TIME, MAX_FRAME_TIME);
+	m_lastFrameTime = now;
 }
 
 bool App::CleanUP() {

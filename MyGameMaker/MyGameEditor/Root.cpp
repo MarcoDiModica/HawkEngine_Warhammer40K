@@ -184,29 +184,29 @@ bool Root::Start()
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Level2 Zone1.fbx");
 
-//auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//
-//auto firstMaterial = playerMesh1->GetComponent<MeshRenderer>()->GetMaterial();
-//auto firstMesh = playerMesh1->GetComponent<MeshRenderer>()->GetMesh();
-//
-//auto playerMesh2 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh2->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh3->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh4 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh4->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh5 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh5->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh6->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh7 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh7->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh8 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh8->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh9 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh9->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh10 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh10->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+
+	auto firstMaterial = playerMesh1->GetComponent<MeshRenderer>()->GetMaterial();
+	auto firstMesh = playerMesh1->GetComponent<MeshRenderer>()->GetMesh();
+
+	auto playerMesh2 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh2->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh3->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh4 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh4->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh5 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh5->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh6->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh7 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh7->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh8 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh8->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh9 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh9->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh10 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh10->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
 //auto playerMesh11 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 //playerMesh11->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
 //auto playerMesh12 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
@@ -251,14 +251,14 @@ bool Root::Start()
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	auto cube = CreateCube("Cube");
+	/*auto cube = CreateCube("Cube");
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
 	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
 
 	auto cube2 = CreateCube("Cube2");
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
 
 	auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));

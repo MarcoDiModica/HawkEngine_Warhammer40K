@@ -91,7 +91,7 @@ private:
 	double m_deltaTime = 0.016;
 	double m_fixedTimeAccumulator = 0.0;
 
-	bool m_capFrames = true;
+	bool m_capFrames = false;
 	int m_targetFrameRate = 60;
 	double m_targetFrameTime = 1.0 / 60.0;
 

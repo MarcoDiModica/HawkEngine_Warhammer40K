@@ -197,6 +197,13 @@ public class PauseMenu : MonoBehaviour
                 transforms[i].DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
                 hasPlayedHoverSound[i] = false;
             }
+            if (currentTime - lastInputTime > 20000000) // 2 segundos en ticks (1 segundo = 10,000,000 ticks)
+            {
+                if (currentInputMethod == InputMethod.None)
+                {
+                    selectedButtonIndex = -1;
+                }
+            }
         }
 
         // Detectar clic del ratón

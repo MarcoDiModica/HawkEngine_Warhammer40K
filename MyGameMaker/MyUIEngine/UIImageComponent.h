@@ -93,7 +93,10 @@ protected:
     }  
 
     bool decode(const YAML::Node& node) override {  
-       Component::decode(node);  
+		if (!Component::decode(node)) {
+			return false;
+		}
+		
        std::string path = node["texture_path"].as<std::string>();  
        useAnimation = node["use_animation"].as<bool>();  
 

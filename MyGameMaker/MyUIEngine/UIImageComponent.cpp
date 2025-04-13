@@ -48,6 +48,7 @@ glm::vec2 CalculateSpriteOffset(int index, const glm::vec2& sheetSize, const glm
 void UIImageComponent::Update(float deltaTime)
 {
 	if (!enabled) return;
+	if (shader == nullptr) return;
 
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
 

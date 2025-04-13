@@ -34,7 +34,7 @@ void Implementation::Update() {
 
 Implementation* sgpImplementation = nullptr;
 
-void AudioEngine::Start() {
+void AudioEngine::Init() {
     sgpImplementation = new Implementation;
 }
 
@@ -101,6 +101,53 @@ int AudioEngine::PlaySound(const std::string& strSoundName, const glm::vec3& vPo
         sgpImplementation->mChannels[nChannelId] = pChannel;
     }
     return nChannelId;
+}
+
+void AudioEngine::StopSound(int nChannelId) {
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+
+	tFoundIt->second->stop();
+	sgpImplementation->mChannels.erase(tFoundIt);
+}
+
+void AudioEngine::PauseSound(int nChannelId) {
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+
+	tFoundIt->second->setPaused(true);
+}
+
+void AudioEngine::ResumeSound(int nChannelId) {
+	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
+	if (tFoundIt == sgpImplementation->mChannels.end())
+		return;
+
+	tFoundIt->second->setPaused(false);
+}
+
+void AudioEngine::StopAllChannels() {
+	for (auto& channel : sgpImplementation->mChannels) {
+		channel.second->stop();
+	}
+	sgpImplementation->mChannels.clear();
+}
+
+int AudioEngine::GetChannelId(const std::string& strSoundName) {
+	auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
+	if (tFoundIt == sgpImplementation->mSounds.end())
+		return -1;
+
+	for (auto& channel : sgpImplementation->mChannels) {
+		FMOD::Sound* pSound = nullptr;
+		channel.second->getCurrentSound(&pSound);
+		if (pSound == tFoundIt->second) {
+			return channel.first;
+		}
+	}
+	return -1;
 }
 
 void AudioEngine::SetChannel3dPosition(int nChannelId, const glm::vec3& vPosition)

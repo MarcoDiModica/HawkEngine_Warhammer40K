@@ -40,6 +40,7 @@ App::App() {
 
 	
 	physicsModule = new PhysicsModule();
+	audioEngine = new AudioEngine();
 
 	//gizmos = new Gizmos(this);
 

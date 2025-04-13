@@ -839,59 +839,58 @@ MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float 
 }
 
 
-void EngineBinds::Play(MonoObject* audioRef, bool loop /*= false*/)
+void EngineBinds::Play(MonoObject* audioRef, MonoString* path)
 {
     auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+    char* C_path = mono_string_to_utf8(path);
 	if (sound) {
-		sound->Play(loop);
+		sound->PlaySound(C_path);
 	}
 
 }
 
-void EngineBinds::Stop(MonoObject* audioRef)
+void EngineBinds::Stop(MonoObject* audioRef, MonoString* path)
 {
     auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+    char* C_path = mono_string_to_utf8(path);
 	if (sound) {
-		sound->Stop();
+		sound->StopSound(C_path);
 	}
 }
 
-void EngineBinds::Pause(MonoObject* audioRef)
+void EngineBinds::Pause(MonoObject* audioRef, MonoString* path)
 {
 	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+    char* C_path = mono_string_to_utf8(path);
 	if (sound) {
-		sound->Pause();
+		sound->PauseSound(C_path);
 	}
 }
 
-void EngineBinds::Resume(MonoObject* audioRef)
+void EngineBinds::Resume(MonoObject* audioRef, MonoString* path)
 {
 	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+    char* C_path = mono_string_to_utf8(path);
 	if (sound) {
-		sound->Resume();
+		sound->ResumeSound(C_path);
 	}
 }
 
-void EngineBinds::SetVolume(MonoObject* audioRef, float volume)
+void EngineBinds::SetVolume(MonoObject* audioRef, MonoString* path, float volume)
 {
 	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
+    char* C_path = mono_string_to_utf8(path);
 	if (sound) {
-		sound->SetVolume(volume);
+		sound->SetVolume(C_path, volume);
 	}
 }
 
-float EngineBinds::GetVolume(MonoObject* audioRef)
-{
-    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-    return sound ? sound->GetVolume() : 0.0f;
-}
-
-void EngineBinds::LoadAudioClip(MonoObject* audioRef, MonoString* path)
+void EngineBinds::LoadAudioClip(MonoObject* audioRef, MonoString* path, bool is3D, bool loop)
 {
 	char* C_path = mono_string_to_utf8(path);
 	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
 	if (sound) {
-		sound->LoadAudio(C_path, true);
+		sound->LoadSound(C_path, is3D, loop);
 	}
 }
 

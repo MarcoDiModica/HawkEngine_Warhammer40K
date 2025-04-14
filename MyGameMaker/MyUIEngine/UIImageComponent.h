@@ -61,6 +61,8 @@ public:
 	void SetAnimationIndexLimit(int limit) { anim1IndexLimit = limit; }
 	int GetAnimationIndexLimit() const { return anim1IndexLimit; }
 
+	void SetAnimationIndex(int index) { animIndex = index; }
+
 private:
 	//texture
 	std::string texturePath;

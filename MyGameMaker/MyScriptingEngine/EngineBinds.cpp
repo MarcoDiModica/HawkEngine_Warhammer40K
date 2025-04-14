@@ -935,6 +935,15 @@ void EngineBinds::SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexL
 void EngineBinds::SetImageAnimation(MonoObject* uiImageRef, int index) {
 	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
 	if (uiImage) {
+        if (index == 0) 
+        {
+            uiImage->SetAnimationIndex(0);
+        }
+        else 
+        {
+            uiImage->SetAnimationIndex(uiImage->GetAnimationIndexLimit());
+        }
+
 		uiImage->SetAnimationNum(index);
 	}
 }

@@ -238,6 +238,30 @@ void Transform_Component::SetForward(const glm::dvec3& newFwd)
     UpdateWorldMatrix();
 }
 
+void Transform_Component::SetRight(const glm::dvec3& right)
+{
+    glm::dvec3 normRight = glm::normalize(right);
+    glm::dvec3 refUp = glm::dvec3(0, 1, 0);
+    glm::dvec3 newForward = glm::normalize(glm::cross(normRight, refUp));
+    glm::dvec3 newUp = glm::cross(newForward, normRight);
+    glm::dmat3 rotMat(normRight, newUp, newForward);
+    localRotation = glm::quat_cast(glm::dmat4(rotMat));
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
+}
+
+void Transform_Component::SetUp(const glm::dvec3& up)
+{
+    glm::dvec3 normUp = glm::normalize(up);
+    glm::dvec3 refForward = glm::dvec3(0, 0, 1);
+    glm::dvec3 newRight = glm::normalize(glm::cross(normUp, refForward));
+    glm::dvec3 newForward = glm::cross(newRight, normUp);
+    glm::dmat3 rotMat(newRight, normUp, newForward);
+    localRotation = glm::quat_cast(glm::dmat4(rotMat));
+    RecalculateLocalMatrix();
+    UpdateWorldMatrix();
+}
+
 void Transform_Component::LookAt(const glm::dvec3& target)
 {
     glm::dvec3 currentPos = GetPosition();

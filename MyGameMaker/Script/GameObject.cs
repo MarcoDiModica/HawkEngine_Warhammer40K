@@ -35,9 +35,6 @@ namespace HawkEngine
         public extern T RemoveComponent<T>();
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern bool HasComponent();
-
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
         //  there is an extra monoComponent, this ptr to the object instance
         extern internal T TryGetComponent<T>( /* monoObject ,*/ string type, int inputType = 0);
 
@@ -110,6 +107,14 @@ namespace HawkEngine
             set
             {
                 SetName(value);
+            }
+        }
+
+        public Transform transform
+        {
+            get
+            {
+                return GetComponent<Transform>();
             }
         }
 

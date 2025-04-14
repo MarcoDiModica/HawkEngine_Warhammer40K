@@ -93,6 +93,8 @@
     <Compile Include="ChapterStandard.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="Coroutine.cs" />
+    <Compile Include="CoroutineManager.cs" />
     <Compile Include="DestroyEnviormentObject.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="EnemyControllerBoss.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
     <Compile Include="UITransform.cs" />
+    <Compile Include="WaitForSeconds.cs" />
     <Compile Include="WinScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -237,34 +237,27 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
 	case 13: _component = static_cast<Component*>(go->AddComponent<ParticleFX>());
 		break;
+    default:
+        //for (const auto& [className, id] : MonoManager::GetInstance().scriptIDs) {
+        //    if (component == id) {
+        //        MonoClass* klass = MonoManager::GetInstance().GetClass("", className.c_str());
+        //        if (!klass) return nullptr;
 
-    }
 
-	
+        //        //Commented for the moment but in case is abstract or interface  should give an error 
+        //       /* if (mono_class_is_interface(klass) || mono_class_is_abstract(klass)) {
+        //            Logger::LogError("[AddSharpComponent] Cannot instantiate abstract/interface script: " + className);
+        //            return nullptr;
+        //        }*/
 
-    // loop through all the scripts and grant them unique ids
-    for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it)
-    {
-        if (component == it->second)
-        {
-            const std::string& className = it->first;
-
-            MonoClass* klass = MonoManager::GetInstance().GetClass("", className.c_str());
-            if (!klass)
-                return nullptr;
-
-            if (mono_class_is_interface(klass) || (mono_class_is_abstract(klass) && !mono_class_is_interface(klass)))
-            {
-                Logger::LogError("[EngineBinds::AddSharpComponent] Cannot add abstract or interface type: " + className);
-                return nullptr;
-            }
-
-            auto script = go->AddComponent<ScriptComponent>();
-            script->LoadScript(className);
-            return script->GetSharpObject();
-        }
-    }
-
+        //        auto script = go->AddComponent<ScriptComponent>();
+        //        script->LoadScript(className);
+        //        return script->GetSharpObject();
+        //    }
+        //}
+        break;
+    
+	}
 
     return _component->GetSharp();
 

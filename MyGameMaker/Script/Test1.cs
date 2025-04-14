@@ -64,27 +64,15 @@ public class Test1 : MonoBehaviour, IInteractable
         //    transform.position = new Vector3(transform.position.X, transform.position.Y, z);
         //}
 
-        //-----------AddComponent----------------//
+        //-----------GetComponent----------------//     
         if (Input.GetKey(KeyCode.A))
-        {
-            gameObject.AddComponent<IInteractable>();
-        }
-        if (Input.GetKey(KeyCode.D))
         {
             if (gameObject.GetComponent<IInteractable>() != null)
             {
                 Engineson.print("Has IInteractable");
                 //gameObject.RemoveComponent<IInteractable>();
             }
-        }
-        //if (Input.GetKey(KeyCode.J))
-        //{
-        //    if (gameObject.HasComponent<IInteractable>())
-        //    {
-        //        Engineson.print("Has IInteractable");
-        //        gameObject.RemoveComponent<IInteractable>();
-        //    }
-        //}
+        }     
 
         //-------------- TRANSFORM TEST -------------------//
         //var tf = gameObject.transform;

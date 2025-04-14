@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Script</RootNamespace>
     <AssemblyName>Script</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -113,6 +114,7 @@
     <Compile Include="LaserBeam.cs" />
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
+    <Compile Include="Mathf.cs" />
     <Compile Include="MedicaeStimm.cs" />
     <Compile Include="IInteractable.cs" />
     <Compile Include="ImageAsSlider.cs" />

@@ -911,6 +911,41 @@ void EngineBinds::SetImageEnabled(MonoObject* uiImageRef, bool enabled) {
     }
 }
 
+void EngineBinds::SetImageHasAnimation(MonoObject* uiImageRef, bool hasAnimation) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetUseAnimation(hasAnimation);
+	}
+}
+
+void EngineBinds::SetImageAnimationSpeed(MonoObject* uiImageRef, float speed) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetAnimSpeed(speed);
+	}
+}
+
+void EngineBinds::SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetAnimationIndexLimit(indexLimit);
+	}
+}
+
+void EngineBinds::SetImageAnimation(MonoObject* uiImageRef, int index) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetAnimationNum(index);
+	}
+}
+
+void EngineBinds::SetImageSpriteSize(MonoObject* uiImageRef, float width, float height) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetSpriteSize(vec2(width, height));
+	}
+}
+
 int EngineBinds::GetState(MonoObject* uiButtonRef)
 {
 	auto uiButton = ConvertFromSharpComponent<UIButtonComponent>(uiButtonRef);
@@ -1379,6 +1414,11 @@ void EngineBinds::BindEngine() {
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
 	mono_add_internal_call("HawkEngine.UIImage::SetImageEnabled", (const void*)&EngineBinds::SetImageEnabled);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageHasAnimation", (const void*)&EngineBinds::SetImageHasAnimation);
+    mono_add_internal_call("HawkEngine.UIImage::SetImageAnimationSpeed", (const void*)&EngineBinds::SetImageAnimationSpeed);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimationIndexLimit", (const void*)&EngineBinds::SetImageAnimationIndexLimit);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimation", (const void*)&EngineBinds::SetImageAnimation);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageSpriteSize", (const void*)&EngineBinds::SetImageSpriteSize);
 
 	// UI Button
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);

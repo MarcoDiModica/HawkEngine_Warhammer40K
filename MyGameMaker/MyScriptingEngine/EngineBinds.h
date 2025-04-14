@@ -147,6 +147,11 @@ namespace EngineBinds {
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
 	void SetImageEnabled(MonoObject* uiImageRef, bool enabled);
+	void SetImageHasAnimation(MonoObject* uiImageRef, bool hasAnimation);
+	void SetImageAnimationSpeed(MonoObject* uiImageRef, float speed);
+	void SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit);
+	void SetImageAnimation(MonoObject* uiImageRef, int index);
+	void SetImageSpriteSize(MonoObject* uiImageRef, float width, float height);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);

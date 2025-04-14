@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
 
-    private Audio sound;
+    private AudioSource sound;
 
     private ButtonState prevState_resumeButton = ButtonState.DEFAULT;
     private ButtonState prevState_optionsMenuButton = ButtonState.DEFAULT;
@@ -33,6 +33,8 @@ public class PauseMenu : MonoBehaviour
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    private AudioClip buttonHoveredFX;
+    private AudioClip buttonClickedFX;
 
     public override void Awake()
     {
@@ -46,7 +48,7 @@ public class PauseMenu : MonoBehaviour
         optionsMenuButton = GameObject.Find("Options_Button");
         mainMenuButton = GameObject.Find("MainMenu_Button");
         quitButton = GameObject.Find("Exit_Button");
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
 
         button_resumeButton = resumeButton.GetComponent<UIButton>();
         button_optionsMenuButton = optionsMenuButton.GetComponent<UIButton>();
@@ -93,6 +95,9 @@ public class PauseMenu : MonoBehaviour
             return;
         }
 
+        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+
         this.gameObject.SetActive(false);
     }
 
@@ -101,8 +106,7 @@ public class PauseMenu : MonoBehaviour
         if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
         {
             transform.DOScaleUI(new Vector3(0.2f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
+            sound?.Play(buttonHoveredFX);
         }
         else if (button.GetState() == ButtonState.DEFAULT)
         {
@@ -134,8 +138,8 @@ public class PauseMenu : MonoBehaviour
         //Engineson.print("OptionMenu Update");
         if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B) || button_resumeButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+
+            sound?.Play(buttonClickedFX);
 
             if (isOptionsMenuActive)
             {
@@ -153,8 +157,8 @@ public class PauseMenu : MonoBehaviour
 
         if (button_optionsMenuButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+
+            sound?.Play(buttonClickedFX);
             optionsMenu.SetActive(true);
             isOptionsMenuActive = true;
         }
@@ -164,8 +168,8 @@ public class PauseMenu : MonoBehaviour
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
             //SceneManager.LoadScene("MainMenu");
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+
+            sound?.Play(buttonClickedFX);
             SceneManager.LoadScene("MainMenu");
         }
 
@@ -174,8 +178,8 @@ public class PauseMenu : MonoBehaviour
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
             //Salir del juego
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+
+            sound?.Play(buttonClickedFX);
         }
 
         HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);

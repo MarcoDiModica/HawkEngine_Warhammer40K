@@ -54,22 +54,22 @@ public class AudioSource : Component
     }
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern int LoadSound(string path, bool is3D, bool loop);
+    private extern int LoadSound(string path, bool is3D, bool loop);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern void PlaySound(string path);
+    private extern void PlaySound(string path);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern void StopSound(string path);
+    private extern void StopSound(string path);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern void PauseSound(string path);
+    private extern void PauseSound(string path);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern void ResumeSound(string path);
+    private extern void ResumeSound(string path);
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public extern void SetVolumeSound(string path, float volume);
+    private extern void SetVolumeSound(string path, float volume);
 
     
 

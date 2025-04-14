@@ -21,8 +21,17 @@ public class EnemyControllerMelee : EnemyController
 
     //audio
     bool isCombatMusicPlaying = false;
-    private Audio music;
+    private AudioSource music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    private string deathFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
+    private string footStepFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
+    private string meleeAttackFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
+    private string hitFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
+    private AudioClip musicClip;
+    private AudioClip deathSound;
+    private AudioClip footStepSound;
+    private AudioClip meleeAttackSound;
+    private AudioClip hitSound;
 
     // Enemy Stats
     private float health = 100.0f;
@@ -42,7 +51,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Awake() {
 
-        music = gameObject.GetComponent<Audio>();
+        music = gameObject.GetComponent<AudioSource>();
     }
 
     public override void Start()
@@ -62,7 +71,7 @@ public class EnemyControllerMelee : EnemyController
             return;
         }
 
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         if (sound == null)
         {
             Engineson.print("ERROR: Audio component not found");
@@ -90,6 +99,17 @@ public class EnemyControllerMelee : EnemyController
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
         isDead = false;
+
+        musicClip = new AudioClip(combatMusic, "CombatMusic", false, true);
+        deathSound = new AudioClip(deathFX, "DeathFX", false, false);
+        footStepSound = new AudioClip(footStepFX, "FootstepFX", false, true);
+        meleeAttackSound = new AudioClip(meleeAttackFX, "MeleeAttackFX", false, false);
+        hitSound = new AudioClip(hitFX, "HitFX", false, false);
+        sound.LoadAudioClip(musicClip);
+        sound.LoadAudioClip(deathSound);
+        sound.LoadAudioClip(footStepSound);
+        sound.LoadAudioClip(meleeAttackSound);
+        sound.LoadAudioClip(hitSound);
     }
 
     public override void Update(float deltaTime)
@@ -102,8 +122,7 @@ public class EnemyControllerMelee : EnemyController
                 //Destroy(gameObject);
                 anim.SetDeathAnimation();
                 isDead = true;
-                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
-                sound?.Play();
+                sound.Play(deathSound);
             }
             if (!isStunned)
             {
@@ -148,15 +167,13 @@ public class EnemyControllerMelee : EnemyController
                     {
                         if (!isFootstepPlaying)
                         {
-                            sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                            sound?.Play(true);
+                            sound?.Play(footStepSound);
                             isFootstepPlaying = true;
                             hasStoppedFootsteps = false;
                         }
                         if (isCombatMusicPlaying == false)
                         {
-                            sound?.LoadAudio(combatMusic);
-                            sound?.Play(true);
+                            sound?.Play(musicClip);
                             isCombatMusicPlaying = true;
                         }
 
@@ -242,7 +259,7 @@ public class EnemyControllerMelee : EnemyController
                     isFootstepPlaying = false;
                     if (!hasStoppedFootsteps)
                     {
-                        sound?.Stop();
+                        sound.Stop(footStepSound);
                         hasStoppedFootsteps = true;
                     }
                 }
@@ -272,8 +289,7 @@ public class EnemyControllerMelee : EnemyController
         pc.playerData.TakeDamage(clawDamage);
         Engineson.print("Player health: " + (pc.playerData.GetHealth()));
 
-        sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
-        sound?.Play();
+        sound?.Play(meleeAttackSound);
     }
 
     public void Leap()
@@ -314,8 +330,7 @@ public class EnemyControllerMelee : EnemyController
             anim.SetHitAnimation();
             particles.ApplyPreset(19);
             particles.EmitBurst(1);
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
+            sound?.Play(hitSound);
         }
     }
 

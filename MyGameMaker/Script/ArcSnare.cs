@@ -26,9 +26,9 @@ public class ArcSnare : BaseAbilities
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
 
-    private Audio sound;
+    private AudioSource sound;
     private string arcLaunch = "Assets/Audio/SFX/Weapons/Boltgun/ArcSnareThrow.wav";
-    
+    AudioClip arcFX;
 
 
     public override void Awake()
@@ -37,11 +37,14 @@ public class ArcSnare : BaseAbilities
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         if (sound == null)
         {
             Engineson.print("PlayerShooting: Audio component not found");
         }
+
+        arcFX = new AudioClip(arcLaunch, "ArcLaunchFX", false, false);
+        sound.LoadAudioClip(arcFX);
     }
 
     public override void Update(float deltaTime)
@@ -98,8 +101,7 @@ public class ArcSnare : BaseAbilities
         if (canThrow)
         {
             Engineson.print("Lanzando granada...");
-            sound?.LoadAudio(arcLaunch);
-            sound?.Play();
+            sound.Play(arcFX);
             grenade = Engineson.CreateGameObject("Arc", null);
 
             if (grenade == null)
@@ -110,7 +112,7 @@ public class ArcSnare : BaseAbilities
 
             grenade.AddScript("Arc");
             grenade.GetComponent<Arc>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-            grenade.AddComponent<Audio>();
+            grenade.AddComponent<AudioSource>();
             grenade.GetComponent<Arc>().Start();
 
 

@@ -32,7 +32,8 @@ void SoundComponent::Update(float deltaTime)
 
 void SoundComponent::Destroy()
 {
-	
+	// Clean up any resources
+	audioEngine->Shutdown();
 }
 
 void SoundComponent::LoadSound(const std::string& soundFile, bool is3D, bool loop)

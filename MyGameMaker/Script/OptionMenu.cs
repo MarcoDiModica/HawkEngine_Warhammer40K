@@ -5,8 +5,9 @@ using System.Numerics;
 
 public class OptionMenu : MonoBehaviour
 {
-    private Audio sound;
+    private AudioSource sound;
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    private AudioClip buttonClickedFX;
     private GameObject pauseMenu;
     public override void Awake()
     {
@@ -15,8 +16,23 @@ public class OptionMenu : MonoBehaviour
     public override void Start()
     {
         //Engineson.print("OptionMenu Start");
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
+
+        if (pauseMenu == null)
+        {
+            Engineson.print("ERROR: No PauseMenu object found");
+            return;
+        }
+
+        if (sound == null)
+        {
+            Engineson.print("ERROR: Audio not found");
+            return;
+        }
+
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+        sound.LoadAudioClip(buttonClickedFX);
 
     }
 
@@ -35,8 +51,7 @@ public class OptionMenu : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
             gameObject.SetActive(false);
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            sound?.Play(buttonClickedFX);
         }
 
         //if (gamePlaycanvas.GetComponent<UIButton>().GetState() == ButtonState.HOVERED)

@@ -26,9 +26,9 @@ public class Barrage : BaseAbilities
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
 
-    private Audio sound;
+    private AudioSource sound;
     private string barrage = "Assets/Audio/SFX/Weapons/Shotgun/BarrageShot.wav";
-    
+    private AudioClip barrageFX;
 
 
     public override void Awake()
@@ -37,11 +37,14 @@ public class Barrage : BaseAbilities
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         if (sound == null)
         {
             Engineson.print("PlayerShooting: Audio component not found");
         }
+
+        barrageFX = new AudioClip(barrage, "BarrageFX", false, false);
+        sound.LoadAudioClip(barrageFX);
     }
 
     public override void Update(float deltaTime)
@@ -85,8 +88,7 @@ public class Barrage : BaseAbilities
         if (canThrow)
         {
             Engineson.print("Lanzando granada...");
-            sound.LoadAudio(barrage);
-            sound.Play();
+            sound.Play(barrageFX);
 
             grenade = Engineson.CreateGameObject("Barrage", null);
 

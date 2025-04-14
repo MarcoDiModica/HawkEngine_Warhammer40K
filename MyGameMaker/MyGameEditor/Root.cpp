@@ -46,7 +46,7 @@ bool Root::Awake()
 	Application->root->CreateScene("DefaultScene");
 	Application->root->SetActiveScene("DefaultScene");
     
-	SoundComponent::InitSharedAudioEngine();
+	
 	ShaderManager::GetInstance().Initialize();
 	MonoManager::GetInstance().EnableHotReloading();
 
@@ -59,7 +59,7 @@ bool Root::Awake()
 
 bool Root::CleanUp()
 {
-    SoundComponent::ShutdownSharedAudioEngine();
+    
     return true;
 }
 

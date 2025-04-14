@@ -13,7 +13,7 @@
 
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyGameEditor/Log.h"
-#include "../MyAudioEngine/AudioListener.h"
+//#include "../MyAudioEngine/AudioListener.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "glm/gtx/matrix_decompose.inl"
 
@@ -224,7 +224,7 @@ std::shared_ptr<GameObject> SceneManager::CreatePlane(const std::string& name) {
 std::shared_ptr<GameObject> SceneManager::CreateCameraObject(const std::string& name) {
     auto camera = CreateGameObject(name);
     camera->AddComponent<CameraComponent>();
-    camera->AddComponent<AudioListener>();
+    //camera->AddComponent<AudioListener>();
     return camera;
 }
 

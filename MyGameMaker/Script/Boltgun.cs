@@ -11,9 +11,13 @@ public class Boltgun : BaseWeapon
     ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
-    private Audio sound;
+    private AudioSource sound;
     private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
     private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
+
+    AudioClip shotFX;
+    AudioClip reloadFX;
+
     GameObject projectile;
 
     private float timeSinceLastShot = 0.0f;
@@ -37,9 +41,19 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         arcSnare = gameObject.GetComponent<ArcSnare>();
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
+
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
+
+        shotFX = new AudioClip(boltgunShot, "BoltgunShotFX", false, false);
+        reloadFX = new AudioClip(boltgunReload, "BoltgunReloadFX", false, false);
+        sound.LoadAudioClip(shotFX);
+        sound.LoadAudioClip(reloadFX);
     }
 
     public override void Update(float deltaTime)
@@ -110,10 +124,10 @@ public class Boltgun : BaseWeapon
                 currentMagazineAmmo--;
             }
 
-            sound?.LoadAudio(boltgunShot);
-            sound?.Play();
-            // Shoot logic
             
+            sound.Play(shotFX);
+            // Shoot logic
+
             RayCast rayBullet = new RayCast();
             Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 2.5f, 0);
 
@@ -160,8 +174,8 @@ public class Boltgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
-            sound?.LoadAudio(boltgunReload);
-            sound?.Play();
+            
+            sound.Play(reloadFX);
            
             if(currentTotalAmmo >= magazineSize)
             {

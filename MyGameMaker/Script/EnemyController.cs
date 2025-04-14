@@ -10,7 +10,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected Rigidbody rb;
     protected BoxCollider collider;
     protected Transform enemyTransform;
-    protected Audio sound;
+    protected AudioSource sound;
     protected ParticleFX particles;
 
     public float currentHealth;

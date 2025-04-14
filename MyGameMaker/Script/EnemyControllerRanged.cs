@@ -17,12 +17,13 @@ public class EnemyControllerRanged : EnemyController
 
     //audio
     bool isCombatMusicPlaying = false;
-    private Audio music;
+    private AudioSource music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    private AudioClip combatSound;
 
     public override void Awake()
     {
-        music = gameObject.GetComponent<Audio>();
+        music = gameObject.GetComponent<AudioSource>();
     }
     public override void Start()
     {
@@ -42,7 +43,7 @@ public class EnemyControllerRanged : EnemyController
             return;
         }
 
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         if (sound == null)
         {
             Engineson.print("PlayerShooting: Audio component not found");
@@ -59,6 +60,9 @@ public class EnemyControllerRanged : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Ranged";
+
+        combatSound = new AudioClip(combatMusic, "CombatMusic", false, true);
+        sound.LoadAudioClip(combatSound);
     }
 
     public override void Update(float deltaTime)
@@ -80,14 +84,12 @@ public class EnemyControllerRanged : EnemyController
                     if (shootTimer <= 0)
                     {
                         Attack();
-                        sound?.Play();
                         shootTimer = shootCooldown;
                     }
 
                     if (isCombatMusicPlaying == false)
                     {
-                        sound?.LoadAudio(combatMusic);
-                        sound?.Play(true);
+                        sound?.Play(combatSound);
                         isCombatMusicPlaying = true;
                     }
                     else

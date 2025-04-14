@@ -14,7 +14,7 @@ public class LoseScreen : MonoBehaviour
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
 
-    private Audio sound;
+    private AudioSource sound;
 
     private ButtonState prevState_loadLastCheckpoint = ButtonState.DEFAULT;
     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
@@ -22,6 +22,8 @@ public class LoseScreen : MonoBehaviour
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    private AudioClip buttonHoveredFX;
+    private AudioClip buttonClickedFX;
     public override void Awake()
     {
 
@@ -31,7 +33,7 @@ public class LoseScreen : MonoBehaviour
         loadLastCheckpoint = GameObject.Find("LLC_button");
         mainMenuButton = GameObject.Find("MM_button");
         quitButton = GameObject.Find("QUIT_button");
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         button_loadLastCheckpoint = loadLastCheckpoint.GetComponent<UIButton>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
@@ -56,14 +58,18 @@ public class LoseScreen : MonoBehaviour
             Engineson.print("ERROR: Audio not found");
             return;
         }
+
+        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+        sound.LoadAudioClip(buttonHoveredFX);
+        sound.LoadAudioClip(buttonClickedFX);
     }
     private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
     {
         if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
         {
             transform.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
+            sound?.Play(buttonHoveredFX);
         }
         else if (button.GetState() == ButtonState.DEFAULT)
         {
@@ -88,8 +94,7 @@ public class LoseScreen : MonoBehaviour
 
         if (button_loadLastCheckpoint.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            sound?.Play(buttonClickedFX);
             SceneManager.LoadScene("SpaceShip");
         }
 
@@ -97,8 +102,7 @@ public class LoseScreen : MonoBehaviour
 
         if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            sound?.Play(buttonClickedFX);
             SceneManager.LoadScene("MainMenu");
         }
 
@@ -107,8 +111,7 @@ public class LoseScreen : MonoBehaviour
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
             //Salir del juego
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            sound?.Play(buttonClickedFX);
         }
 
         HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);

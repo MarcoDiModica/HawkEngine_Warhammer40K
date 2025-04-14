@@ -78,15 +78,31 @@ void UIImageComponent::Update(float deltaTime)
 
 		if (indexTimer >= animSpeed)
 		{
-			if (indexTimer >= CalculateMaxIndex(sheetSize, spriteSize))
+			if (animationNum == 0) 
 			{
-				indexTimer = 0;
-				animIndex = 0;
+				if (animIndex >= anim1IndexLimit - 1)
+				{
+					indexTimer = 0;
+					animIndex = 0;
+				}
+				else
+				{
+					animIndex++;
+				}
 			}
-			else
+			else if (animationNum == 1)
 			{
-				animIndex++;
+				if (animIndex >= CalculateMaxIndex(sheetSize, spriteSize))
+				{
+					animIndex = anim1IndexLimit+ 1;
+					indexTimer = 0;
+				}
+				else
+				{
+					animIndex++;
+				}
 			}
+			
 			indexTimer = 0.0f;
 			spriteOffset = CalculateSpriteOffset(animIndex, sheetSize, spriteSize);
 

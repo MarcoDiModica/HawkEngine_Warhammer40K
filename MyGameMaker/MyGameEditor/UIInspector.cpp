@@ -2452,6 +2452,16 @@ private:
 			image->SetAnimSpeed(animSpeed);
 		}
 
+		int animNum = image->GetAnimationNum();
+		if (ImGui::DragInt("Animation Num", &animNum, 1, 0, 1)) {
+			image->SetAnimationNum(animNum);
+		}
+
+		int animIndexLimit = image->GetAnimationIndexLimit();
+		if (ImGui::DragInt("Animation Index Limit", &animIndexLimit, 1, 1, 100)) {
+			image->SetAnimationIndexLimit(animIndexLimit);
+		}
+
 		ImGui::EndGroup();
 	}
 	#pragma endregion

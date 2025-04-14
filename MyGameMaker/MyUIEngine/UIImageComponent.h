@@ -55,6 +55,12 @@ public:
 	void SetUseAnimation(bool use) { useAnimation = use; }
 	bool GetUseAnimation() const { return useAnimation; }
 
+	void SetAnimationNum(int num) { animationNum = num; }
+	int GetAnimationNum() const { return animationNum; }
+
+	void SetAnimationIndexLimit(int limit) { anim1IndexLimit = limit; }
+	int GetAnimationIndexLimit() const { return anim1IndexLimit; }
+
 private:
 	//texture
 	std::string texturePath;
@@ -71,6 +77,9 @@ private:
 	float indexTimer = 0.0f;
 	float animSpeed = 0.0f;
 	int animIndex = 0;
+	int anim1IndexLimit = 0;
+
+	int animationNum = 0;
 
 protected:
 

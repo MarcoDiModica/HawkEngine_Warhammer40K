@@ -47,7 +47,7 @@ bool Root::Awake()
 	Application->root->SetActiveScene("DefaultScene");
     
 	SoundComponent::InitSharedAudioEngine();
-	ShaderManager::GetInstance().Initialize();
+	//ShaderManager::GetInstance().Initialize();
 	MonoManager::GetInstance().EnableHotReloading();
 
 	//CreateMainMenuUI();
@@ -128,7 +128,7 @@ bool Root::Start()
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
-	auto player = CreateGameObject("Player");
+	/*auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
@@ -178,7 +178,7 @@ bool Root::Start()
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
 
 	//auto player2mesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
 
@@ -207,24 +207,24 @@ bool Root::Start()
 	playerMesh9->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
 	auto playerMesh10 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 	playerMesh10->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh11 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh11->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh12 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh12->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh13 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh13->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh14 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh14->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh15 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh15->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh16 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh16->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh17 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh17->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh18 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh18->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
-//auto playerMesh19 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-//playerMesh19->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh11 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh11->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh12 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh12->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh13 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh13->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh14 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh14->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh15 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh15->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh16 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh16->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh17 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh17->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh18 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh18->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	auto playerMesh19 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh19->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
 
 	//particle->ApplyPreset(Particle)
 
@@ -873,7 +873,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
 		auto shaderComponent = go->AddComponent<ShaderComponent>();
 		shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-		shaderComponent->SetShaderType(ShaderType::PBR);
+		shaderComponent->SetShaderType(ShaderType::BINDLESS_PBR);
 
 		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 		const auto& vertices = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData;

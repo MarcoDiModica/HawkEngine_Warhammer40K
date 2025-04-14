@@ -292,7 +292,7 @@ bool ScriptHotReloader::ForceRecompile() {
 	bool dotnetAvailable = !m_DotnetPath.empty() && std::filesystem::exists(m_DotnetPath);
 	bool msbuildAvailable = !m_MSBuildPath.empty() && std::filesystem::exists(m_MSBuildPath);
 
-	Application->CleanLogs();
+	//Application->CleanLogs();
 
 	if (m_PreferMSBuild && msbuildAvailable) {
 		result = CompileWithMSBuild();

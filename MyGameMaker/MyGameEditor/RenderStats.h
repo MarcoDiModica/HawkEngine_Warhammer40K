@@ -1,99 +1,61 @@
 #pragma once
 
-#include <string>
-#include <unordered_map>
-#include <chrono>
 #include <vector>
-#include <GL/glew.h>
+#include <deque>
+#include <string>
+#include "RenderManager.h"
+#include "ForwardPlus.h"
+#include "GPUDrivenRenderer.h"
 
-#ifndef GLDEBUGPROC
-#ifdef _WIN32
-#define APIENTRY __stdcall
-#else
-#define APIENTRY
-#endif
-typedef void (APIENTRY* GLDEBUGPROC)(GLenum source, GLenum type, GLuint id, GLenum severity,
-	GLsizei length, const GLchar* message, const void* userParam);
-#endif
-
-class RenderStats {
+class RenderDebugPanel {
 public:
-	static RenderStats& GetInstance();
+	static RenderDebugPanel& GetInstance();
 
-	void Reset();
+	void Initialize();
+	void Shutdown();
 
-	void RecordDrawCall(bool instanced, int instanceCount, int triangleCount);
-	void RecordShaderChange();
-	void RecordTextureBinding();
-	void RecordMaterialChange();
-	void RecordVAOBinding();
-	void RecordBufferUpdate(size_t bytes);
+	void Render();
 
-	void StartTimingSection(const std::string& section);
-	void EndTimingSection(const std::string& section);
+	void SetVisible(bool visible) { isVisible = visible; }
+	bool IsVisible() const { return isVisible; }
 
-	void BeginBatch(const std::string& tag);
-	void EndBatch();
-
-	int GetTotalDrawCalls() const;
-	int GetInstancedDrawCalls() const;
-	int GetStandardDrawCalls() const;
-	int GetTotalObjectsRendered() const;
-	int GetTotalTrianglesRendered() const;
-	int GetShaderChanges() const;
-	int GetTextureBindings() const;
-	int GetMaterialChanges() const;
-	int GetVAOBindings() const;
-	size_t GetTotalBufferMemoryUpdated() const;
-
-	float GetSectionTime(const std::string& section) const;
-	std::vector<std::pair<std::string, float>> GetAllSectionTimes() const;
-
-	std::string GetStatsReport() const;
-
-	enum class VerbosityLevel {
-		NONE,
-		BASIC,
-		DETAILED,
-		PERFRAME,
-		FULL
-	};
-
-	void SetVerbosityLevel(VerbosityLevel level);
-	VerbosityLevel GetVerbosityLevel() const;
-
-	static void SetupOpenGLDebugCallback();
-
-	static void DebugCallback(GLenum source, GLenum type, GLuint id,
-		GLenum severity, GLsizei length,
-		const GLchar* message, const void* userParam);
+	void ToggleVisibility() { isVisible = !isVisible; }
 
 private:
-	RenderStats();
-	~RenderStats() = default;
+	RenderDebugPanel() = default;
+	~RenderDebugPanel() = default;
 
-	RenderStats(const RenderStats&) = delete;
-	RenderStats& operator=(const RenderStats&) = delete;
+	RenderDebugPanel(const RenderDebugPanel&) = delete;
+	RenderDebugPanel& operator=(const RenderDebugPanel&) = delete;
 
-	int drawCallsStandard;
-	int drawCallsInstanced;
-	int totalObjectsRendered;
-	int totalTrianglesRendered;
-	int shaderChanges;
-	int textureBindings;
-	int materialChanges;
-	int vaoBindings;
-	size_t bufferMemoryUpdated;
+	void RenderGeneralSettings();
+	void RenderForwardPlusSettings();
+	void RenderPerformanceGraph();
+	void RenderDebugSettings();
 
-	std::unordered_map<std::string, std::chrono::high_resolution_clock::time_point> sectionStartTimes;
-	std::unordered_map<std::string, float> sectionTimes; 
+	void UpdateStatistics();
 
-	std::string currentBatchTag;
+	bool isVisible = true;
+	int currentTab = 0;
 
-	VerbosityLevel verbosityLevel;
+	struct Settings {
+		bool useForwardPlus = true;
+		bool useGPUCulling = true;
+		bool useFrustumCulling = true;
+		bool useOcclusionCulling = false;
+		int tileSize = 16;
+		int maxLightsPerTile = 64;
+		bool showBoundingSpheres = false;
+		bool showLightVolumes = false;
+		bool showTileGrid = false;
+	} settings;
+
+	struct PerformanceData {
+		std::deque<float> frameTimeHistory;
+		std::deque<float> gpuTimeHistory;
+		std::deque<float> drawCallsHistory;
+		std::deque<float> visibleObjectsHistory;
+		std::deque<float> visibleLightsHistory;
+		int maxFrameHistory = 120;
+	} perfData;
 };
-
-#define RENDER_STATS RenderStats::GetInstance()
-#define START_TIMING(section) RenderStats::GetInstance().StartTimingSection(section)
-#define END_TIMING(section) RenderStats::GetInstance().EndTimingSection(section)
-#define RECORD_DRAWCALL(instanced, count, triangles) RenderStats::GetInstance().RecordDrawCall(instanced, count, triangles)

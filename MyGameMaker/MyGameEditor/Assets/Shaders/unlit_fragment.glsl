@@ -1,20 +1,19 @@
-#version 450 core
+#version 460 core
 
-in vec2 TexCoord;    // Coordenadas de textura del fragmento
-in vec3 Normal;      // Normal del fragmento
+in vec2 TexCoord;
+in vec3 Normal;
 
-out vec4 FragColor;  // Color final del fragmento
+out vec4 FragColor;
 
-uniform sampler2D texture1;   // Textura
-uniform bool u_HasTexture;
-uniform vec4 modColor;
+uniform sampler2D texture1;
+uniform vec4 color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform bool useTexture = false;
 
-void main()
-{
-	if(u_HasTexture){
-		vec4 texColor = texture(texture1, TexCoord);
-		FragColor = texColor * modColor;
-	}else{
-		FragColor = modColor;
-	}
-};
+void main() {
+    if (useTexture) {
+        vec4 texColor = texture(texture1, TexCoord);
+        FragColor = texColor * color;
+    } else {
+        FragColor = color;
+    }
+}

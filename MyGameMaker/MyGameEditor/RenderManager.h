@@ -1,135 +1,81 @@
 #pragma once
 
-#include <unordered_map>
+#include <GL/glew.h>
 #include <vector>
 #include <memory>
-#include <functional>
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "../MyGameEngine/Shaders.h"
-#include "../MyGameEngine/Material.h"
-#include "../MyGameEngine/Mesh.h"
 #include "../MyGameEngine/GameObject.h"
-#include "RenderCommand.h"
-#include "glm/detail/setup.hpp"
+#include "../MyGameEngine/CameraComponent.h"
+#include "BindlessManager.h"
+#include "GPUDrivenRenderer.h"
+#include "ForwardPlus.h"
 
-class Camera;
-class GameObject;
-class CameraComponent;
-class Transform_Component;
+struct RenderStatistics {
+	int totalGameObjects = 0;
+	int visibleGameObjects = 0;
+	int totalBatches = 0;
+	int totalDrawCalls = 0;
+	int totalLights = 0;
+	int visibleLights = 0;
+	float frameTimeMs = 0.0f;
+	float gpuTimeMs = 0.0f;
+};
 
-class RenderManager
-{
+class RenderManager {
 public:
 	static RenderManager& GetInstance();
 
 	bool Initialize();
+	void Shutdown();
 
-	void Cleanup();
+	void BeginFrame();
+	void EndFrame();
 
-	void Render(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-	void RenderFromCamera(CameraComponent* camera);
-	void RenderEditor(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-	void RenderGame();
-
-	void SubmitMesh(GameObject* gameObject, const std::shared_ptr<Mesh>& mesh, const std::shared_ptr<Material>& material);
 	void SubmitGameObject(GameObject* gameObject);
 
-	void SortRenderCommands();
+	void RenderDebugQuad();
+	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix/*, const Frustum& frustum*/);
+	void RenderFromCamera(CameraComponent* camera);
 
-	void ClearRenderQueues();
+	void SetWindowSize(int width, int height);
 
-	bool CanBatchCommands(const RenderCommand& a, const RenderCommand& b) const;
+	void SetUseForwardPlus(bool enable) { useForwardPlus = enable; }
+	void SetUseGPUCulling(bool enable);
+	void SetUseOcclusionCulling(bool enable);
 
-	void RenderBatches(bool transparent, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-
-	void RenderBatchStandard(const RenderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-
-	void SetInstancedRenderingEnabled(bool enabled) { instancedRenderingEnabled = enabled; }
-	bool IsInstancedRenderingEnabled() const { return instancedRenderingEnabled; }
-
-	void SetMaxInstancesPerBatch(int count) { maxInstancesPerBatch = count; }
-
-	void SetFrustumCullingEnabled(bool enabled) { frustumCullingEnabled = enabled; }
-	bool IsFrustumCullingEnabled() const { return frustumCullingEnabled; }
+	const RenderStatistics& GetStatistics() const { return stats; }
 
 private:
-	RenderManager();
-	~RenderManager();
+	RenderManager() = default;
+	~RenderManager() = default;
 
 	RenderManager(const RenderManager&) = delete;
 	RenderManager& operator=(const RenderManager&) = delete;
 
-	void TheRenderQueue(const RenderQueue& queue, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-	void RenderInstanced(const RenderBatch& batch, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-	void RenderStandard(const RenderCommand& command, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+	bool InitializeShaders();
 
-	void PrintFrameStats();
-	void SetShaderState(Shaders* shader, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
-	void SetMaterialState(const std::shared_ptr<Material>& material, Shaders* shader);
-	void SetMeshState(const std::shared_ptr<Mesh>& mesh);
-	void RestoreState();
+	void ProcessGameObject(GameObject* gameObject);
+	void CreateInstanceGroups();
 
-	void BuildInstanceData(const RenderBatch& batch, std::vector<InstanceData>& instances);
+	void BeginGPUQuery();
+	void EndGPUQuery();
+	float GetGPUTimeMs();
 
-	GLuint CreateInstanceBuffer(const std::vector<InstanceData>& instances);
-	void UpdateInstanceBuffer(GLuint buffer, const std::vector<InstanceData>& instances);
+	GLuint bindlessPBRShader = 0;
 
-	void ResetStateTracking();
-	void ProcessBatches();
+	GLuint defaultVAO = 0;
 
-	struct GLStateCache {
-		GLint lastProgram = 0;
-		GLint lastVAO = 0;
-		GLint lastElementArrayBuffer = 0;
-		GLint lastActiveTexture = 0;
-		bool blendEnabled = false;
-		GLint blendSrc = 0;
-		GLint blendDst = 0;
-	} stateCache;
+	int windowWidth = 1280;
+	int windowHeight = 720;
 
-	void SaveGLState();
+	std::vector<GameObject*> queuedObjects;
+	std::unordered_map<uint32_t, std::vector<GPUInstance>> instanceGroups;
 
-	void RestoreGLState();
+	bool useForwardPlus = true;
 
-	std::unordered_map<ShaderType, RenderQueue> opaqueQueues;
-	std::unordered_map<ShaderType, RenderQueue> transparentQueues;
+	GLuint timeQueries[3] = { 0 };
+	int currentQueryIndex = 0;
 
-	std::unordered_map<ShaderType, std::vector<RenderBatch>> renderBatches;
-
-	std::unordered_map<unsigned int, GLuint> instanceBuffers;
-	std::unordered_map<unsigned int, size_t> instanceBufferSizes;
-
-	Shaders* currentShader = nullptr;
-	std::shared_ptr<Material> currentMaterial = nullptr;
-	std::shared_ptr<Mesh> currentMesh = nullptr;
-
-	Shaders* currentBoundShader = nullptr;
-	unsigned int currentBoundMaterialId = 0;
-	unsigned int currentBoundMeshId = 0;
-
-	bool instancedRenderingEnabled = true;
-	int maxInstancesPerBatch = 100;
-	bool frustumCullingEnabled = true;
-
-	struct BufferPool {
-		std::vector<GLuint> availableBuffers;
-		std::unordered_map<GLuint, size_t> bufferCapacities;
-
-		GLuint GetBuffer(size_t requiredSize);
-		void ReturnBuffer(GLuint bufferId);
-		void Cleanup();
-	};
-
-	BufferPool instanceBufferPool;
-
-	std::unordered_map<unsigned int, GLuint> frameInstanceBuffers;
-
-	GLuint GetInstanceBuffer(unsigned int meshId, size_t requiredSize);
-	void ResetFrameBuffers();
-
-	void CreateInstanceData(const RenderBatch& batch, void* outputData, size_t maxCount);
-
-	void EndFrame();
+	RenderStatistics stats;
 };

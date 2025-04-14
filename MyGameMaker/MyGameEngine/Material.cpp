@@ -98,11 +98,11 @@ void Material::ApplyShader(const glm::mat4& model, const glm::mat4& view, const 
 
 	shader->Bind();
 
-	shader->SetUniform("model", model);
-	shader->SetUniform("view", view);
-	shader->SetUniform("projection", projection);
+	shader->SetUniformMat4("model", model);
+	shader->SetUniformMat4("view", view);
+	shader->SetUniformMat4("projection", projection);
 
-	shader->SetUniform("albedoColor", glm::vec4(color));
+	shader->SetUniformVec4("albedoColor", glm::vec4(color));
 
 	if (shaderType == ShaderType::PBR) {
 		shader->SetUniform("metallicFactor", metallic);

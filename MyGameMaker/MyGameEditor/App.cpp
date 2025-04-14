@@ -98,7 +98,7 @@ bool App::Start() {
 }
 
 bool App::Update() {
-	RenderStats::GetInstance().Reset();
+	//RenderStats::GetInstance().Reset();
 
 #ifdef PROFILE
 	OPTICK_FRAME("Main Loop")

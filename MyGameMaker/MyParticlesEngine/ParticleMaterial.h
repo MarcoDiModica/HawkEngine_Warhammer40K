@@ -65,17 +65,17 @@ public:
 
         shader->Bind();
 
-        shader->SetUniform("model", model);
-        shader->SetUniform("view", view);
-        shader->SetUniform("projection", projection);
+        shader->SetUniformMat4("model", model);
+        shader->SetUniformMat4("view", view);
+        shader->SetUniformMat4("projection", projection);
 
         shader->SetUniform("billboardType", billboardType);
         shader->SetUniform("particleType", particleType);
         shader->SetUniform("softness", softness);
         shader->SetUniform("useColorGradient", useColorGradient ? 1 : 0);
 
-		shader->SetUniform("startColor", startColor);
-		shader->SetUniform("endColor", endColor);
+		shader->SetUniformVec4("startColor", startColor);
+		shader->SetUniformVec4("endColor", endColor);
 
         //shader->SetUniform("spriteIndex",spriteIndex);
 		//shader->SetUniform("spriteSize",spriteSize );
@@ -85,9 +85,9 @@ public:
         glm::vec3 cameraPosition(0.0f);
         glm::vec3 cameraUp(0.0f, 1.0f, 0.0f);
 
-        shader->SetUniform("cameraPosition", cameraPosition);
-        shader->SetUniform("cameraUp", cameraUp);
-        shader->SetUniform("billboardAxis", billboardAxis);
+        shader->SetUniformVec3("cameraPosition", cameraPosition);
+        shader->SetUniformVec3("cameraUp", cameraUp);
+        shader->SetUniformVec3("billboardAxis", billboardAxis);
 
         if (imagePtr && imagePtr->id() != 0) {
             glActiveTexture(GL_TEXTURE0);

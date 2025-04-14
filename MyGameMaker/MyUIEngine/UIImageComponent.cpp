@@ -76,10 +76,10 @@ void UIImageComponent::Update(float deltaTime)
 		glm::rotate(glm::mat4(1.0f), glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f)) *
 		glm::scale(glm::mat4(1.0f), scale);
 
-	shader->SetUniform("model", modelMatrix);
-	shader->SetUniform("view", viewMatrix);
-	shader->SetUniform("projection", projection);
-	shader->SetUniform("modColor", color);
+	shader->SetUniformMat4("model", modelMatrix);
+	shader->SetUniformMat4("view", viewMatrix);
+	shader->SetUniformMat4("projection", projection);
+	shader->SetUniformVec4("modColor", color);
 
 	glBindVertexArray(mesh->getModel()->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->getModel()->GetModelData().iBID);

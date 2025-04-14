@@ -65,7 +65,7 @@ void ShaderComponent::SetVec3(const std::string& name, const glm::vec3& value) {
 	Shaders* shader = ShaderManager::GetInstance().GetShader(shaderType);
 	if (shader) {
 		shader->Bind();
-		shader->SetUniform(name, value);
+		shader->SetUniformVec3(name, value);
 		shader->UnBind();
 	}
 }
@@ -74,7 +74,7 @@ void ShaderComponent::SetVec4(const std::string& name, const glm::vec4& value) {
 	Shaders* shader = ShaderManager::GetInstance().GetShader(shaderType);
 	if (shader) {
 		shader->Bind();
-		shader->SetUniform(name, value);
+		shader->SetUniformVec4(name, value);
 		shader->UnBind();
 	}
 }
@@ -83,7 +83,7 @@ void ShaderComponent::SetMatrix(const std::string& name, const glm::mat4& value)
 	Shaders* shader = ShaderManager::GetInstance().GetShader(shaderType);
 	if (shader) {
 		shader->Bind();
-		shader->SetUniform(name, value);
+		shader->SetUniformMat4(name, value);
 		shader->UnBind();
 	}
 }

@@ -153,14 +153,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="BindlessManager.cpp" />
     <ClCompile Include="EditorCamera.cpp" />
+    <ClCompile Include="ForwardPlus.cpp" />
+    <ClCompile Include="GPUDrivenRenderer.cpp" />
     <ClCompile Include="HardwareSettings.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyGUI.cpp" />
     <ClCompile Include="MyWindow.cpp" />
-    <ClCompile Include="RenderCommand.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="RenderStats.cpp" />
     <ClCompile Include="Root.cpp" />
@@ -178,14 +180,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="BindlessManager.h" />
     <ClInclude Include="EditorCamera.h" />
+    <ClInclude Include="ForwardPlus.h" />
+    <ClInclude Include="GPUDrivenRenderer.h" />
     <ClInclude Include="HardwareSettings.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="MyGUI.h" />
     <ClInclude Include="MyWindow.h" />
-    <ClInclude Include="RenderCommand.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="RenderStats.h" />
     <ClInclude Include="Root.h" />

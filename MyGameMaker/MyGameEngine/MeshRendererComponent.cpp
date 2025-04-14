@@ -146,7 +146,7 @@ MonoObject* MeshRenderer::GetSharp() {
 void MeshRenderer::PrepareForRendering() const {
 	if (!mesh || !material || !owner || !mesh->model) return;
 
-	// NO ENTIENDO DEL TODO ESTA FUNCION
+	// NO ENTIENDO ESTA FUNCION
 }
 
 void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPos) const {
@@ -165,10 +165,10 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 
 		if (!transformComponent || !lightComponent) continue;
 
-		shader->SetUniform(pointLightstr + ".position", transformComponent->GetPosition());
-		shader->SetUniform(pointLightstr + ".ambient", lightComponent->GetAmbient());
-		shader->SetUniform(pointLightstr + ".diffuse", lightComponent->GetDiffuse());
-		shader->SetUniform(pointLightstr + ".specular", lightComponent->GetSpecular());
+		shader->SetUniformVec3(pointLightstr + ".position", transformComponent->GetPosition());
+		shader->SetUniformVec3(pointLightstr + ".ambient", lightComponent->GetAmbient());
+		shader->SetUniformVec3(pointLightstr + ".diffuse", lightComponent->GetDiffuse());
+		shader->SetUniformVec3(pointLightstr + ".specular", lightComponent->GetSpecular());
 		shader->SetUniform(pointLightstr + ".constant", lightComponent->GetConstant());
 		shader->SetUniform(pointLightstr + ".linear", lightComponent->GetLinear());
 		shader->SetUniform(pointLightstr + ".quadratic", lightComponent->GetQuadratic());
@@ -180,10 +180,10 @@ void MeshRenderer::SetupLightProperties(Shaders* shader, const glm::vec3& viewPo
 	glBindVertexArray(mesh->model->GetModelData().vA);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->model->GetModelData().iBID);
 
-	shader->SetUniform("dirLight.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
-	shader->SetUniform("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-	shader->SetUniform("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-	shader->SetUniform("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
+	shader->SetUniformVec3("dirLight.ambient", glm::vec3(1.0f, 1.0f, 1.0f));
+	shader->SetUniformVec3("dirLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+	shader->SetUniformVec3("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+	shader->SetUniformVec3("dirLight.direction", glm::vec3(-0.2f, -1.0f, -0.3f));
 	shader->SetUniform("dirLight.intensity", 0.5f);
 }
 
@@ -252,7 +252,7 @@ void MeshRenderer::Render() const {
 		if (shader) 
 		{
 #ifdef _BUILD
-			shader->SetUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
+			shader->SetUniformVec3("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
 			SetupLightProperties(shader, Application->root->mainCamera->GetTransform()->GetPosition());
 #endif 
 			SetUpAnimationProperties(shader);
@@ -300,8 +300,8 @@ void MeshRenderer::Render() const {
 void MeshRenderer::RenderWithUnlitShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const {
 	if (!shader) return;
 
-	shader->SetUniform("view", view);
-	shader->SetUniform("projection", projection);
+	shader->SetUniformMat4("view", view);
+	shader->SetUniformMat4("projection", projection);
 }
 
 void MeshRenderer::SetUpAnimationProperties(Shaders* shader) const
@@ -313,17 +313,17 @@ void MeshRenderer::SetUpAnimationProperties(Shaders* shader) const
 		shader->SetUniform("isAnimated", 1);
 		auto transforms = owner->GetComponent<SkeletalAnimationComponent>()->GetAnimator()->GetFinalBoneMatrices();
 		for (int i = 0; i < transforms.size(); ++i)
-			shader->SetUniform("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
+			shader->SetUniformMat4("finalBonesMatrices[" + std::to_string(i) + "]", transforms[i]);
 	}
 }
 
 void MeshRenderer::RenderWithPBRShader(Shaders* shader, const glm::mat4& view, const glm::mat4& projection) const {
 	if (!shader) return;
 
-	shader->SetUniform("view", view);
-	shader->SetUniform("projection", projection);
+	shader->SetUniformMat4("view", view);
+	shader->SetUniformMat4("projection", projection);
 
-	shader->SetUniform("viewPos", Application->camera->GetTransform().GetPosition());
+	shader->SetUniformVec3("viewPos", Application->camera->GetTransform().GetPosition());
 
 	SetupLightProperties(shader, Application->camera->GetTransform().GetPosition());
 }
@@ -373,7 +373,7 @@ void MeshRenderer::RenderMainCamera() const {
 		Shaders* shader = ShaderManager::GetInstance().GetShader(material->GetShaderType());
 		if (shader) 
 		{
-			shader->SetUniform("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
+			shader->SetUniformVec3("viewPos", Application->root->mainCamera->GetTransform()->GetPosition());
 			SetupLightProperties(shader, Application->root->mainCamera->GetTransform()->GetPosition());
 			SetUpAnimationProperties(shader);
 		}

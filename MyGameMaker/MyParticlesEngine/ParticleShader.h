@@ -16,15 +16,15 @@ public:
 	}
 
 	void SetCameraPosition(const glm::vec3& position) {
-		SetUniform("cameraPosition", position);
+		SetUniformVec3("cameraPosition", position);
 	}
 
 	void SetCameraUp(const glm::vec3& up) {
-		SetUniform("cameraUp", up);
+		SetUniformVec3("cameraUp", up);
 	}
 
 	void SetBillboardAxis(const glm::vec3& axis) {
-		SetUniform("billboardAxis", axis);
+		SetUniformVec3("billboardAxis", axis);
 	}
 
 	void SetParticleType(int type) {

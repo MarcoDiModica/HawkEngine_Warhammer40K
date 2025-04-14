@@ -1,291 +1,301 @@
 #include "RenderStats.h"
-#include <sstream>
-#include <iomanip>
+#include "imgui.h"
 #include <iostream>
+#include <algorithm>
+#include <chrono>
 
-RenderStats& RenderStats::GetInstance() {
-	static RenderStats instance;
+RenderDebugPanel& RenderDebugPanel::GetInstance() {
+	static RenderDebugPanel instance;
 	return instance;
 }
 
-RenderStats::RenderStats()
-	: drawCallsStandard(0)
-	, drawCallsInstanced(0)
-	, totalObjectsRendered(0)
-	, totalTrianglesRendered(0)
-	, shaderChanges(0)
-	, textureBindings(0)
-	, materialChanges(0)
-	, vaoBindings(0)
-	, bufferMemoryUpdated(0)
-	, verbosityLevel(VerbosityLevel::BASIC) {
+void RenderDebugPanel::Initialize() {
+	perfData.frameTimeHistory.resize(perfData.maxFrameHistory, 0.0f);
+	perfData.gpuTimeHistory.resize(perfData.maxFrameHistory, 0.0f);
+	perfData.drawCallsHistory.resize(perfData.maxFrameHistory, 0.0f);
+	perfData.visibleObjectsHistory.resize(perfData.maxFrameHistory, 0.0f);
+	perfData.visibleLightsHistory.resize(perfData.maxFrameHistory, 0.0f);
+
+	settings.useForwardPlus = true;
+	//settings.useGPUCulling = GPUDrivenRenderer::GetInstance().SetUseGPUCulling(true);
+	settings.useFrustumCulling = true;
 }
 
-void RenderStats::Reset() {
-	drawCallsStandard = 0;
-	drawCallsInstanced = 0;
-	totalObjectsRendered = 0;
-	totalTrianglesRendered = 0;
-	shaderChanges = 0;
-	textureBindings = 0;
-	materialChanges = 0;
-	vaoBindings = 0;
-	bufferMemoryUpdated = 0;
-
-	sectionTimes.clear();
-	currentBatchTag.clear();
+void RenderDebugPanel::Shutdown() {
 }
 
-void RenderStats::RecordDrawCall(bool instanced, int instanceCount, int triangleCount) {
-	if (instanced) {
-		drawCallsInstanced++;
-		totalObjectsRendered += instanceCount;
-	}
-	else {
-		drawCallsStandard++;
-		totalObjectsRendered++;
-	}
+void RenderDebugPanel::Render() {
+	if (!isVisible) return;
 
-	totalTrianglesRendered += triangleCount * (instanced ? instanceCount : 1);
+	UpdateStatistics();
 
-	if (verbosityLevel >= VerbosityLevel::PERFRAME) {
-		std::stringstream ss;
-		ss << "DrawCall: " << (instanced ? "Instanced (" + std::to_string(instanceCount) + ")" : "Standard")
-			<< " Triangles: " << triangleCount * (instanced ? instanceCount : 1);
+	ImGuiWindowFlags flags = ImGuiWindowFlags_MenuBar;
+	ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
 
-		if (!currentBatchTag.empty()) {
-			ss << " Batch: " << currentBatchTag;
+	if (ImGui::Begin("Render System Debug", &isVisible, flags)) {
+		if (ImGui::BeginMenuBar()) {
+			if (ImGui::BeginMenu("File")) {
+				if (ImGui::MenuItem("Clear Statistics")) {
+					std::fill(perfData.frameTimeHistory.begin(), perfData.frameTimeHistory.end(), 0.0f);
+					std::fill(perfData.gpuTimeHistory.begin(), perfData.gpuTimeHistory.end(), 0.0f);
+					std::fill(perfData.drawCallsHistory.begin(), perfData.drawCallsHistory.end(), 0.0f);
+					std::fill(perfData.visibleObjectsHistory.begin(), perfData.visibleObjectsHistory.end(), 0.0f);
+					std::fill(perfData.visibleLightsHistory.begin(), perfData.visibleLightsHistory.end(), 0.0f);
+				}
+
+				ImGui::Separator();
+
+				if (ImGui::MenuItem("Close")) {
+					isVisible = false;
+				}
+
+				ImGui::EndMenu();
+			}
+
+			const auto& stats = RenderManager::GetInstance().GetStatistics();
+			float frameTime = stats.frameTimeMs;
+			float fps = frameTime > 0 ? 1000.0f / frameTime : 0.0f;
+
+			/*char fpsText[32];
+			sprintf(fpsText, "%.1f FPS (%.2f ms)", fps, frameTime);
+
+			float textWidth = ImGui::CalcTextSize(fpsText).x;
+			ImGui::SameLine(ImGui::GetWindowWidth() - textWidth - 20);
+			ImGui::Text("%s", fpsText);*/
+
+			ImGui::EndMenuBar();
 		}
 
-		std::cout << ss.str() << std::endl;
-	}
-}
+		if (ImGui::BeginTabBar("SettingsTabs")) {
+			if (ImGui::BeginTabItem("General")) {
+				currentTab = 0;
+				RenderGeneralSettings();
+				ImGui::EndTabItem();
+			}
 
-void RenderStats::RecordShaderChange() {
-	shaderChanges++;
+			if (ImGui::BeginTabItem("Forward+")) {
+				currentTab = 1;
+				RenderForwardPlusSettings();
+				ImGui::EndTabItem();
+			}
 
-	if (verbosityLevel >= VerbosityLevel::FULL) {
-		std::cout << "Shader change #" << shaderChanges << std::endl;
-	}
-}
+			if (ImGui::BeginTabItem("Performance")) {
+				currentTab = 2;
+				RenderPerformanceGraph();
+				ImGui::EndTabItem();
+			}
 
-void RenderStats::RecordTextureBinding() {
-	textureBindings++;
+			if (ImGui::BeginTabItem("Debug")) {
+				currentTab = 3;
+				RenderDebugSettings();
+				ImGui::EndTabItem();
+			}
 
-	if (verbosityLevel >= VerbosityLevel::FULL) {
-		std::cout << "Texture binding #" << textureBindings << std::endl;
-	}
-}
-
-void RenderStats::RecordMaterialChange() {
-	materialChanges++;
-
-	if (verbosityLevel >= VerbosityLevel::FULL) {
-		std::cout << "Material change #" << materialChanges << std::endl;
-	}
-}
-
-void RenderStats::RecordVAOBinding() {
-	vaoBindings++;
-
-	if (verbosityLevel >= VerbosityLevel::FULL) {
-		std::cout << "VAO binding #" << vaoBindings << std::endl;
-	}
-}
-
-void RenderStats::RecordBufferUpdate(size_t bytes) {
-	bufferMemoryUpdated += bytes;
-
-	if (verbosityLevel >= VerbosityLevel::FULL) {
-		std::cout << "Buffer update: " << bytes << " bytes" << std::endl;
-	}
-}
-
-void RenderStats::StartTimingSection(const std::string& section) {
-	sectionStartTimes[section] = std::chrono::high_resolution_clock::now();
-}
-
-void RenderStats::EndTimingSection(const std::string& section) {
-	auto endTime = std::chrono::high_resolution_clock::now();
-
-	auto it = sectionStartTimes.find(section);
-	if (it != sectionStartTimes.end()) {
-		auto startTime = it->second;
-		float duration = std::chrono::duration<float, std::milli>(endTime - startTime).count();
-		sectionTimes[section] = duration;
-
-		if (verbosityLevel >= VerbosityLevel::DETAILED) {
-			std::cout << "Section '" << section << "' took " << duration << " ms" << std::endl;
+			ImGui::EndTabBar();
 		}
 	}
+	ImGui::End();
 }
 
-void RenderStats::BeginBatch(const std::string& tag) {
-	currentBatchTag = tag;
+void RenderDebugPanel::RenderGeneralSettings() {
+	ImGui::BeginChild("GeneralSettings", ImVec2(0, 0), true);
 
-	if (verbosityLevel >= VerbosityLevel::DETAILED) {
-		std::cout << "--- Begin batch: " << tag << " ---" << std::endl;
-	}
-}
+	// Título
+	ImGui::TextColored(ImVec4(0.3f, 0.5f, 0.8f, 1.0f), "Render System Settings");
+	ImGui::Separator();
 
-void RenderStats::EndBatch() {
-	if (verbosityLevel >= VerbosityLevel::DETAILED && !currentBatchTag.empty()) {
-		std::cout << "--- End batch: " << currentBatchTag << " ---" << std::endl;
-	}
+	const auto& stats = RenderManager::GetInstance().GetStatistics();
 
-	currentBatchTag.clear();
-}
+	ImGui::Text("Total GameObjects: %d", stats.totalGameObjects);
+	ImGui::Text("Visible GameObjects: %d", stats.visibleGameObjects);
+	ImGui::Text("Total Draw Calls: %d", stats.totalDrawCalls);
+	ImGui::Text("Total Lights: %d", stats.totalLights);
+	ImGui::Text("Visible Lights: %d", stats.visibleLights);
 
-int RenderStats::GetTotalDrawCalls() const {
-	return drawCallsStandard + drawCallsInstanced;
-}
+	ImGui::Separator();
 
-int RenderStats::GetInstancedDrawCalls() const {
-	return drawCallsInstanced;
-}
-
-int RenderStats::GetStandardDrawCalls() const {
-	return drawCallsStandard;
-}
-
-int RenderStats::GetTotalObjectsRendered() const {
-	return totalObjectsRendered;
-}
-
-int RenderStats::GetTotalTrianglesRendered() const {
-	return totalTrianglesRendered;
-}
-
-int RenderStats::GetShaderChanges() const {
-	return shaderChanges;
-}
-
-int RenderStats::GetTextureBindings() const {
-	return textureBindings;
-}
-
-int RenderStats::GetMaterialChanges() const {
-	return materialChanges;
-}
-
-int RenderStats::GetVAOBindings() const {
-	return vaoBindings;
-}
-
-size_t RenderStats::GetTotalBufferMemoryUpdated() const {
-	return bufferMemoryUpdated;
-}
-
-float RenderStats::GetSectionTime(const std::string& section) const {
-	auto it = sectionTimes.find(section);
-	if (it != sectionTimes.end()) {
-		return it->second;
-	}
-	return 0.0f;
-}
-
-std::vector<std::pair<std::string, float>> RenderStats::GetAllSectionTimes() const {
-	std::vector<std::pair<std::string, float>> result;
-	result.reserve(sectionTimes.size());
-
-	for (const auto& pair : sectionTimes) {
-		result.emplace_back(pair.first, pair.second);
+	if (ImGui::Checkbox("Use Forward+ Lighting", &settings.useForwardPlus)) {
+		RenderManager::GetInstance().SetUseForwardPlus(settings.useForwardPlus);
 	}
 
-	return result;
+	if (ImGui::IsItemHovered()) {
+		ImGui::BeginTooltip();
+		ImGui::Text("Forward+ permite cientos de luces\ncon culling de luces por tile.");
+		ImGui::EndTooltip();
+	}
+
+	if (ImGui::Checkbox("Use GPU Culling", &settings.useGPUCulling)) {
+		RenderManager::GetInstance().SetUseGPUCulling(settings.useGPUCulling);
+	}
+
+	if (ImGui::IsItemHovered()) {
+		ImGui::BeginTooltip();
+		ImGui::Text("Delega culling de objetos a la GPU\npara mejor rendimiento con muchos objetos.");
+		ImGui::EndTooltip();
+	}
+
+	if (ImGui::Checkbox("Use Frustum Culling", &settings.useFrustumCulling)) {
+		GPUDrivenRenderer::GetInstance().SetUseFrustumCulling(settings.useFrustumCulling);
+	}
+
+	if (ImGui::Checkbox("Use Occlusion Culling", &settings.useOcclusionCulling)) {
+		RenderManager::GetInstance().SetUseOcclusionCulling(settings.useOcclusionCulling);
+	}
+
+	if (ImGui::IsItemHovered()) {
+		ImGui::BeginTooltip();
+		ImGui::Text("Culling de oclusión basado en Hi-Z.\nRequiere GPU con todas las extensiones.");
+		ImGui::EndTooltip();
+	}
+
+	ImGui::EndChild();
 }
 
-std::string RenderStats::GetStatsReport() const {
-	std::stringstream ss;
-	ss << std::fixed << std::setprecision(2);
+void RenderDebugPanel::RenderForwardPlusSettings() {
+	ImGui::BeginChild("ForwardPlusSettings", ImVec2(0, 0), true);
 
-	ss << "===== RENDER STATISTICS =====\n";
-	ss << "Draw Calls: " << GetTotalDrawCalls()
-		<< " (Standard: " << drawCallsStandard
-		<< ", Instanced: " << drawCallsInstanced << ")\n";
-	ss << "Objects Rendered: " << totalObjectsRendered << "\n";
-	ss << "Triangles Rendered: " << totalTrianglesRendered << "\n";
-	ss << "State Changes: [Shader: " << shaderChanges
-		<< ", Material: " << materialChanges
-		<< ", VAO: " << vaoBindings
-		<< ", Texture: " << textureBindings << "]\n";
-	ss << "Buffer Memory Updated: " << (bufferMemoryUpdated / 1024.0f) << " KB\n";
+	ImGui::TextColored(ImVec4(0.8f, 0.5f, 0.2f, 1.0f), "Forward+ Lighting Settings");
+	ImGui::Separator();
 
-	ss << "--- Timing Information ---\n";
-	for (const auto& pair : sectionTimes) {
-		ss << pair.first << ": " << pair.second << " ms\n";
+	if (!settings.useForwardPlus) {
+		ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "Forward+ Lighting está desactivado.");
+		ImGui::Text("Actívalo en la pestaña 'General' para configurar.");
+		ImGui::EndChild();
+		return;
 	}
-	ss << "============================\n";
 
-	return ss.str();
+	ImGui::Text("Tile Size: %d x %d", settings.tileSize, settings.tileSize);
+	ImGui::Text("Screen Tiles: %d x %d = %d tiles",
+		ForwardPlusLighting::GetInstance().GetTilesX(),
+		ForwardPlusLighting::GetInstance().GetTilesY(),
+		ForwardPlusLighting::GetInstance().GetTilesX() * ForwardPlusLighting::GetInstance().GetTilesY());
+	ImGui::Text("Max Lights per Tile: %d", settings.maxLightsPerTile);
+	ImGui::Text("Total Lights: %d", ForwardPlusLighting::GetInstance().GetTotalLights());
+	ImGui::Text("Visible Lights: %d", ForwardPlusLighting::GetInstance().GetVisibleLights());
+	ImGui::Text("Culled Lights: %d", ForwardPlusLighting::GetInstance().GetCulledLights());
+
+	ImGui::Separator();
+
+	int tileSize = settings.tileSize;
+	if (ImGui::SliderInt("Tile Size", &tileSize, 8, 64)) {
+		tileSize = tileSize & ~0x7;
+		if (tileSize < 8) tileSize = 8;
+
+		settings.tileSize = tileSize;
+		ForwardPlusLighting::GetInstance().SetTileSize(tileSize);
+	}
+
+	int maxLights = settings.maxLightsPerTile;
+	if (ImGui::SliderInt("Max Lights Per Tile", &maxLights, 16, 256)) {
+		settings.maxLightsPerTile = maxLights;
+		ForwardPlusLighting::GetInstance().SetMaxLightsPerTile(maxLights);
+	}
+
+	ImGui::Separator();
+
+	ImGui::Checkbox("Show Tile Grid", &settings.showTileGrid);
+	ImGui::Checkbox("Show Light Volumes", &settings.showLightVolumes);
+
+	ImGui::EndChild();
 }
 
-void RenderStats::SetVerbosityLevel(VerbosityLevel level) {
-	verbosityLevel = level;
+void RenderDebugPanel::RenderPerformanceGraph() {
+	ImGui::BeginChild("PerformanceGraphs", ImVec2(0, 0), true);
+
+	ImGui::TextColored(ImVec4(0.2f, 0.7f, 0.4f, 1.0f), "Performance Monitoring");
+	ImGui::Separator();
+
+	ImVec2 graphSize(ImGui::GetContentRegionAvail().x, 80);
+
+	ImGui::Text("Frame Time (ms)");
+	
+
+	float avgFrameTime = 0.0f, minFrameTime = FLT_MAX, maxFrameTime = 0.0f;
+	for (float time : perfData.frameTimeHistory) {
+		avgFrameTime += time;
+		minFrameTime = std::min(minFrameTime, time);
+		maxFrameTime = std::max(maxFrameTime, time);
+	}
+	avgFrameTime /= perfData.frameTimeHistory.size();
+
+	ImGui::Text("Avg: %.2f ms (%.1f FPS)   Min: %.2f ms   Max: %.2f ms",
+		avgFrameTime, 1000.0f / avgFrameTime,
+		minFrameTime, maxFrameTime);
+
+	ImGui::Separator();
+
+	ImGui::Text("GPU Time (ms)");
+
+	float avgGPUTime = 0.0f, minGPUTime = FLT_MAX, maxGPUTime = 0.0f;
+	for (float time : perfData.gpuTimeHistory) {
+		avgGPUTime += time;
+		minGPUTime = std::min(minGPUTime, time);
+		maxGPUTime = std::max(maxGPUTime, time);
+	}
+	avgGPUTime /= perfData.gpuTimeHistory.size();
+
+	ImGui::Text("Avg: %.2f ms   Min: %.2f ms   Max: %.2f ms",
+		avgGPUTime, minGPUTime, maxGPUTime);
+
+	ImGui::Separator();
+
+	ImGui::Text("Draw Calls");
+	
+
+	ImGui::Separator();
+
+	ImGui::Text("Visible Objects");
+	
+
+	ImGui::Separator();
+
+	ImGui::Text("Visible Lights");
+
+	ImGui::EndChild();
 }
 
-RenderStats::VerbosityLevel RenderStats::GetVerbosityLevel() const {
-	return verbosityLevel;
+void RenderDebugPanel::RenderDebugSettings() {
+	ImGui::BeginChild("DebugSettings", ImVec2(0, 0), true);
+
+	ImGui::TextColored(ImVec4(0.8f, 0.3f, 0.6f, 1.0f), "Debug Visualization");
+	ImGui::Separator();
+
+	ImGui::Checkbox("Show Bounding Spheres", &settings.showBoundingSpheres);
+	ImGui::Checkbox("Show Light Volumes", &settings.showLightVolumes);
+	ImGui::Checkbox("Show Tile Grid", &settings.showTileGrid);
+
+	ImGui::Separator();
+
+	static int debugViewMode = 0;
+	const char* debugModes[] = {
+		"Normal", "Wireframe", "Albedo", "Normals", "Metallic",
+		"Roughness", "AO", "Light Count", "Depth"
+	};
+
+	ImGui::Text("Debug View Mode:");
+	ImGui::Combo("##DebugViewMode", &debugViewMode, debugModes, IM_ARRAYSIZE(debugModes));
+
+	// Aquí se implementaría código para aplicar modo seleccionado
+	// ...
+
+	ImGui::EndChild();
 }
 
-void RenderStats::SetupOpenGLDebugCallback() {
-	if (GLEW_ARB_debug_output || GLEW_KHR_debug) {
-		std::cout << "OpenGL debug callback enabled" << std::endl;
+void RenderDebugPanel::UpdateStatistics() {
+	const auto& stats = RenderManager::GetInstance().GetStatistics();
 
-		glEnable(GL_DEBUG_OUTPUT);
-		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	perfData.frameTimeHistory.pop_front();
+	perfData.frameTimeHistory.push_back(stats.frameTimeMs);
 
-		glDebugMessageCallback((GLDEBUGPROC)DebugCallback, nullptr);
+	perfData.gpuTimeHistory.pop_front();
+	perfData.gpuTimeHistory.push_back(stats.gpuTimeMs);
 
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_MEDIUM, 0, nullptr, GL_TRUE);
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_LOW, 0, nullptr, GL_FALSE);
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, nullptr, GL_FALSE);
-	}
-	else {
-		std::cout << "OpenGL debug callback not supported" << std::endl;
-	}
-}
+	perfData.drawCallsHistory.pop_front();
+	perfData.drawCallsHistory.push_back(static_cast<float>(stats.totalDrawCalls));
 
-void RenderStats::DebugCallback(GLenum source, GLenum type, GLuint id,
-	GLenum severity, GLsizei length,
-	const GLchar* message, const void* userParam) {
-	if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
+	perfData.visibleObjectsHistory.pop_front();
+	perfData.visibleObjectsHistory.push_back(static_cast<float>(stats.visibleGameObjects));
 
-	std::string sourceStr;
-	switch (source) {
-	case GL_DEBUG_SOURCE_API:             sourceStr = "API"; break;
-	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   sourceStr = "Window System"; break;
-	case GL_DEBUG_SOURCE_SHADER_COMPILER: sourceStr = "Shader Compiler"; break;
-	case GL_DEBUG_SOURCE_THIRD_PARTY:     sourceStr = "Third Party"; break;
-	case GL_DEBUG_SOURCE_APPLICATION:     sourceStr = "Application"; break;
-	case GL_DEBUG_SOURCE_OTHER:           sourceStr = "Other"; break;
-	default:                              sourceStr = "Unknown"; break;
-	}
-
-	std::string typeStr;
-	switch (type) {
-	case GL_DEBUG_TYPE_ERROR:               typeStr = "Error"; break;
-	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: typeStr = "Deprecated Behavior"; break;
-	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  typeStr = "Undefined Behavior"; break;
-	case GL_DEBUG_TYPE_PORTABILITY:         typeStr = "Portability"; break;
-	case GL_DEBUG_TYPE_PERFORMANCE:         typeStr = "Performance"; break;
-	case GL_DEBUG_TYPE_MARKER:              typeStr = "Marker"; break;
-	case GL_DEBUG_TYPE_PUSH_GROUP:          typeStr = "Push Group"; break;
-	case GL_DEBUG_TYPE_POP_GROUP:           typeStr = "Pop Group"; break;
-	case GL_DEBUG_TYPE_OTHER:               typeStr = "Other"; break;
-	default:                                typeStr = "Unknown"; break;
-	}
-
-	std::string severityStr;
-	switch (severity) {
-	case GL_DEBUG_SEVERITY_HIGH:         severityStr = "High"; break;
-	case GL_DEBUG_SEVERITY_MEDIUM:       severityStr = "Medium"; break;
-	case GL_DEBUG_SEVERITY_LOW:          severityStr = "Low"; break;
-	case GL_DEBUG_SEVERITY_NOTIFICATION: severityStr = "Notification"; break;
-	default:                             severityStr = "Unknown"; break;
-	}
-
-	std::cout << "OpenGL Debug: [" << severityStr << "] " << typeStr
-		<< " (" << sourceStr << ") " << id << ": " << message << std::endl;
+	perfData.visibleLightsHistory.pop_front();
+	perfData.visibleLightsHistory.push_back(static_cast<float>(stats.visibleLights));
 }

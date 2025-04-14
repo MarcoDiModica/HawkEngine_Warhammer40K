@@ -47,6 +47,7 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 
 #include <MyGameEngine/ImGuiCurveEditor.h>
+#include "RenderManager.h"
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -220,15 +221,25 @@ private:
 				return;
 			}
 
-			const char* shaderTypes[] = { "UNLIT", "PBR" };
+			const char* shaderTypes[] = { "UNLIT", "PBR", "PARTICLE", "BINDLESS_PBR", "BINDLESS_UNLIT" };
 			int currentType = static_cast<int>(material->GetShaderType());
 			ImGui::Text("Rendering Mode");
 			ImGui::SameLine(labelWidth);
 			ImGui::PushItemWidth(-1);
 			if (ImGui::Combo("##ShaderType", &currentType, shaderTypes, IM_ARRAYSIZE(shaderTypes))) {
 				material->SetShaderType(static_cast<ShaderType>(currentType));
+
+				//material->UpdateShader();
 			}
 			ImGui::PopItemWidth();
+
+			ImGui::TextColored(ImVec4(0.5f, 1.0f, 0.5f, 1.0f), "Current Shader: %s (ID: %d)",
+				shaderTypes[currentType]);
+
+			if (ImGui::Button("Reinitialize Renderer")) {
+				RenderManager::GetInstance().Shutdown();
+				RenderManager::GetInstance().Initialize();
+			}
 
 			ImGui::Separator();
 			ImGui::Text("Main Maps");

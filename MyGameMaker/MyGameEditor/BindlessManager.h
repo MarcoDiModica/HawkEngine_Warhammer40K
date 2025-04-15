@@ -58,7 +58,6 @@ public:
 	bool Initialize();
 	void Shutdown();
 
-	uint32_t RegisterModel(Model* model);
 	uint32_t RegisterMesh(Mesh* mesh);
 	uint32_t RegisterMaterial(const Material* material);
 	uint32_t AddInstance(const GPUInstance& instance);
@@ -70,11 +69,12 @@ public:
 	BindlessHandle CreateTextureHandle(GLuint textureId);
 	void ReleaseTextureHandle(BindlessHandle& handle);
 
-	GLuint GetMeshBuffer() const { return meshBuffer; }
-	GLuint GetMaterialBuffer() const { return materialBuffer; }
-	GLuint GetInstanceBuffer() const { return instanceBuffer; }
+	GLuint GetMeshBuffer() const { return meshBuffers[renderBufferIndex]; }
+	GLuint GetMaterialBuffer() const { return materialBuffers[renderBufferIndex]; }
+	GLuint GetInstanceBuffer() const { return instanceBuffers[renderBufferIndex]; }
 
 	void UpdateBuffers();
+	void EndFrame();  
 	void ClearInstances();
 
 	uint32_t GetMeshCount() const { return (uint32_t)meshes.size(); }
@@ -90,9 +90,14 @@ private:
 
 	GLuint CreateStorageBuffer(size_t size, GLenum usage);
 
-	GLuint meshBuffer = 0;
-	GLuint materialBuffer = 0;
-	GLuint instanceBuffer = 0;
+	GLuint meshBuffers[2] = { 0, 0 };        
+	GLuint materialBuffers[2] = { 0, 0 };    
+	GLuint instanceBuffers[2] = { 0, 0 };    
+
+	int updateBufferIndex = 0;
+	int renderBufferIndex = 1;
+
+	GLsync fences[2] = { nullptr, nullptr };
 
 	std::vector<GPUMesh> meshes;
 	std::vector<GPUMaterial> materials;
@@ -102,11 +107,10 @@ private:
 	std::unordered_map<const Material*, uint32_t> materialIndices;
 	std::unordered_map<GLuint, BindlessHandle> textureHandles;
 
-	static constexpr size_t MAX_MESHES = 1024; // modificable
-	static constexpr size_t MAX_MATERIALS = 1024; // modificable
-	static constexpr size_t MAX_INSTANCES = 1000; // modifufucable
+	static constexpr size_t MAX_MESHES = 1024;
+	static constexpr size_t MAX_MATERIALS = 1024;
+	static constexpr size_t MAX_INSTANCES = 1000;
 
-	//fallbacktexture
 	GLuint fallbackTextureID = 0;
 	BindlessHandle fallbackTextureHandle;
 
@@ -136,7 +140,6 @@ private:
 		}
 	}
 
-	//mesh fallback
 	GLuint fallbackVAO = 0;
 	GLuint fallbackVBO = 0;
 	GLuint fallbackIBO = 0;
@@ -144,7 +147,6 @@ private:
 	GPUMesh fallbackMesh;
 
 	void CreateFallbackCubeMesh() {
-		// Vértices del cubo (posiciones)
 		const float vertices[] = {
 			// Cara frontal
 			-1.0f, -1.0f,  1.0f,
@@ -180,38 +182,32 @@ private:
 			1, 0, 4
 		};
 
-		fallbackIndexCount = 36; // 6 caras * 2 triángulos * 3 vértices
+		fallbackIndexCount = 36; 
 
-		// Crear VAO
 		glGenVertexArrays(1, &fallbackVAO);
 		glBindVertexArray(fallbackVAO);
 
-		// Crear VBO para vértices
 		glGenBuffers(1, &fallbackVBO);
 		glBindBuffer(GL_ARRAY_BUFFER, fallbackVBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-		// Configurar atributo de posición
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-		// Crear IBO
 		glGenBuffers(1, &fallbackIBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fallbackIBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-		// Desenlazar VAO
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-		// Configurar la estructura GPUMesh para fallback
 		fallbackMesh.vertexArray = fallbackVAO;
 		fallbackMesh.indexBuffer = fallbackIBO;
 		fallbackMesh.vertexBuffer = fallbackVBO;
 		fallbackMesh.indexCount = fallbackIndexCount;
-		fallbackMesh.vertexCount = 8; // 8 vértices para el cubo
-		fallbackMesh.meshId = UINT32_MAX; // Un ID especial para indicar que es el fallback
+		fallbackMesh.vertexCount = 8; 
+		fallbackMesh.meshId = UINT32_MAX;
 		fallbackMesh.padding = 0;
 
 		LOG(LogType::LOG_INFO, "Malla de cubo fallback creada correctamente (VAO: %u, IBO: %u)", fallbackVAO, fallbackIBO);

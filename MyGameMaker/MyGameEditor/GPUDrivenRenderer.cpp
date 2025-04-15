@@ -196,7 +196,6 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 		return;
 	}
 
-	// Obtener shader para renderizado bindless
 	GLuint bindlessShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::BINDLESS_PBR);
 
 	if (bindlessShader == 0) {
@@ -206,11 +205,9 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 
 	glUseProgram(bindlessShader);
 
-	// Pasar matrices de cámara al shader
 	glUniformMatrix4fv(glGetUniformLocation(bindlessShader, "view"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(bindlessShader, "projection"), 1, GL_FALSE, glm::value_ptr(projMatrix));
 
-	// Bind buffers para bindless rendering
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetMaterialBuffer());
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, BindlessManager::GetInstance().GetMeshBuffer());
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, BindlessManager::GetInstance().GetInstanceBuffer());

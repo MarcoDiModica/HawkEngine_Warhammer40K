@@ -142,12 +142,10 @@ void RenderManager::RenderDebugQuad() {
 void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix/*, const Frustum& frustum*/) {
 	if (queuedObjects.empty()) return;
 
-	// Procesar todos los objetos y configurar instancias
 	for (auto* obj : queuedObjects) {
 		ProcessGameObject(obj);
 	}
 
-	// Recopilar y procesar luces si usamos Forward+
 	if (useForwardPlus) {
 		ForwardPlusLighting::GetInstance().CollectLights(queuedObjects);
 		ForwardPlusLighting::GetInstance().UpdateLights();
@@ -157,17 +155,13 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 		stats.visibleLights = ForwardPlusLighting::GetInstance().GetVisibleLights();
 	}
 
-	// Organizar instancias por grupo (por malla)
 	CreateInstanceGroups();
 
-	// Preparar comandos de dibujo para GPU-driven rendering
 	GPUDrivenRenderer::GetInstance().PrepareDrawCommands(/*frustum*/);
 
-	// Renderizar todo
 	GLuint bindlessPBRShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::BINDLESS_PBR);
 
 	if (bindlessPBRShader != 0) {
-		// Configurar lighting buffers para Forward+
 		if (useForwardPlus) {
 			glUseProgram(bindlessPBRShader);
 
@@ -185,7 +179,6 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 			glUniform1i(glGetUniformLocation(bindlessPBRShader, "tileSize"),
 				ForwardPlusLighting::GetInstance().GetTileSize());
 
-			// Posición de la cámara para cálculos PBR
 			glm::vec3 viewPos = glm::vec3(glm::inverse(viewMatrix)[3]);
 			glUniform3fv(glGetUniformLocation(bindlessPBRShader, "viewPos"), 1, glm::value_ptr(viewPos));
 
@@ -197,12 +190,12 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 		queuedObjects.size(),
 		GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount());
 
-	// Ejecutar render
 	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix);
 
-	// Actualizar estadísticas
 	stats.visibleGameObjects = GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount();
 	stats.totalDrawCalls = GPUDrivenRenderer::GetInstance().GetTotalDrawCommands();
+
+	BindlessManager::GetInstance().EndFrame();
 }
 
 void RenderManager::RenderFromCamera(CameraComponent* camera) {
@@ -273,10 +266,8 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 }
 
 void RenderManager::CreateInstanceGroups() {
-	// Actualizar todos los buffers en BindlessManager
 	BindlessManager::GetInstance().UpdateBuffers();
 
-	// Procesar grupos de instancias y enviarlos al GPUDrivenRenderer
 	for (const auto& group : instanceGroups) {
 		uint32_t meshIndex = group.first;
 		const auto& instances = group.second;

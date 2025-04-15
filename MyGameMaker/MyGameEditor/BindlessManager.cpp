@@ -24,18 +24,27 @@ bool BindlessManager::Initialize() {
 	materials.reserve(MAX_MATERIALS);
 	instances.reserve(MAX_INSTANCES);
 
-	meshBuffer = CreateStorageBuffer(MAX_MESHES * sizeof(GPUMesh), GL_DYNAMIC_STORAGE_BIT);
-	materialBuffer = CreateStorageBuffer(MAX_MATERIALS * sizeof(GPUMaterial), GL_DYNAMIC_STORAGE_BIT);
-	instanceBuffer = CreateStorageBuffer(MAX_INSTANCES * sizeof(GPUInstance), GL_DYNAMIC_STORAGE_BIT);
+	for (int i = 0; i < 2; i++) {
+		meshBuffers[i] = CreateStorageBuffer(MAX_MESHES * sizeof(GPUMesh),
+			GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+		materialBuffers[i] = CreateStorageBuffer(MAX_MATERIALS * sizeof(GPUMaterial),
+			GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+		instanceBuffers[i] = CreateStorageBuffer(MAX_INSTANCES * sizeof(GPUInstance),
+			GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
 
-	if (!meshBuffer || !materialBuffer || !instanceBuffer) {
-		LOG(LogType::LOG_ERROR, "Error: No se pudieron crear los buffers de almacenamiento");
-		Shutdown();
-		return false;
+		if (!meshBuffers[i] || !materialBuffers[i] || !instanceBuffers[i]) {
+			LOG(LogType::LOG_ERROR, "Error: No se pudieron crear los buffers de almacenamiento (set %d)", i);
+			Shutdown();
+			return false;
+		}
 	}
 
 	CreateFallbackTexture();
 
+	updateBufferIndex = 0;
+	renderBufferIndex = 1;
+
+	LOG(LogType::LOG_INFO, "BindlessManager inicializado con sistema de doble buffer");
 	return true;
 }
 
@@ -45,13 +54,20 @@ void BindlessManager::Shutdown() {
 	}
 	textureHandles.clear();
 
-	if (meshBuffer) glDeleteBuffers(1, &meshBuffer);
-	if (materialBuffer) glDeleteBuffers(1, &materialBuffer);
-	if (instanceBuffer) glDeleteBuffers(1, &instanceBuffer);
+	for (int i = 0; i < 2; i++) {
+		if (meshBuffers[i]) glDeleteBuffers(1, &meshBuffers[i]);
+		if (materialBuffers[i]) glDeleteBuffers(1, &materialBuffers[i]);
+		if (instanceBuffers[i]) glDeleteBuffers(1, &instanceBuffers[i]);
 
-	meshBuffer = 0;
-	materialBuffer = 0;
-	instanceBuffer = 0;
+		if (fences[i]) {
+			glDeleteSync(fences[i]);
+		}
+	}
+
+	meshBuffers[0] = meshBuffers[1] = 0;
+	materialBuffers[0] = materialBuffers[1] = 0;
+	instanceBuffers[0] = instanceBuffers[1] = 0;
+	fences[0] = fences[1] = nullptr;
 
 	meshes.clear();
 	materials.clear();
@@ -72,7 +88,7 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	}
 
 	if (meshes.size() >= MAX_MESHES) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de mallas registradas (%zu)", MAX_MESHES);
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de mallas registradas");
 		return UINT32_MAX;
 	}
 
@@ -92,6 +108,9 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 		if (meshes[i].meshId == modelID) {
 			uint32_t existingIndex = static_cast<uint32_t>(i);
 			meshIndices[mesh] = existingIndex;
+
+			LOG(LogType::LOG_INFO, "Malla '%s' ya registrada con ID=%u (Idx=%u), reutilizando",
+				model->GetMeshName().c_str(), modelID, existingIndex);
 
 			return existingIndex;
 		}
@@ -114,66 +133,27 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	gpuMesh.meshId = modelID; 
 	gpuMesh.padding = 0;
 
-	auto index = static_cast<uint32_t>(meshes.size());
+	uint32_t index = static_cast<uint32_t>(meshes.size());
 	meshes.push_back(gpuMesh);
 	meshIndices[mesh] = index;
+
+	LOG(LogType::LOG_INFO, "Malla '%s' registrada: Idx=%u, ID=%u, VAO=%u, VBO=%u, IBO=%u, Vértices=%u, Índices=%u",
+		model->GetMeshName().c_str(), index, modelID, gpuMesh.vertexArray,
+		gpuMesh.vertexBuffer, gpuMesh.indexBuffer, gpuMesh.vertexCount, gpuMesh.indexCount);
 
 	return index;
 }
 
 uint32_t BindlessManager::RegisterMaterial(const Material* material) {
-	if (!material) {
-		LOG(LogType::LOG_ERROR, "Error: Intento de registrar un material nulo");
-		return UINT32_MAX;
-	}
+	if (!material) return UINT32_MAX;
 
 	auto it = materialIndices.find(material);
 	if (it != materialIndices.end()) {
 		return it->second;
 	}
 
-	uint32_t materialHash = 0;
-	materialHash = std::hash<float>{}(material->GetColor().r) ^
-		(std::hash<float>{}(material->GetColor().g) << 1) ^
-		(std::hash<float>{}(material->GetColor().b) << 2) ^
-		(std::hash<float>{}(material->GetColor().a) << 3) ^
-		(std::hash<float>{}(material->metallic) << 4) ^
-		(std::hash<float>{}(material->roughness) << 5) ^
-		(std::hash<float>{}(material->ao) << 6);
-
-	if (material->getImage()) materialHash ^= (material->getImage()->id() << 7);
-	if (material->getNormalMap()) materialHash ^= (material->getNormalMap()->id() << 8);
-	if (material->getMetallicMap()) materialHash ^= (material->getMetallicMap()->id() << 9);
-	if (material->getRoughnessMap()) materialHash ^= (material->getRoughnessMap()->id() << 10);
-	if (material->getAoMap()) materialHash ^= (material->getAoMap()->id() << 11);
-
-	for (size_t i = 0; i < materials.size(); ++i) {
-		if (glm::all(glm::epsilonEqual(materials[i].albedoColor, material->GetColor(), 0.001f)) &&
-			glm::all(glm::epsilonEqual(materials[i].pbrParams,
-				glm::vec4(material->metallic, material->roughness, material->ao, 0.0f),
-				0.001f))) {
-
-			bool texturesMatch = true;
-
-			if (materials[i].flags == (materials[i].flags & materialHash)) {
-				uint32_t existingIndex = static_cast<uint32_t>(i);
-				materialIndices[material] = existingIndex;
-
-				LOG(LogType::LOG_INFO, "Material similar encontrado (Idx=%u), reutilizando para '%p'",
-					existingIndex, material);
-
-				return existingIndex;
-			}
-		}
-	}
-
 	if (materials.size() >= MAX_MATERIALS) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de materiales registrados (%zu)", MAX_MATERIALS);
-		return UINT32_MAX;
-	}
-
-	if (!GLEW_ARB_bindless_texture) {
-		LOG(LogType::LOG_ERROR, "Error: Intento de registrar material bindless sin soporte en GPU");
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de materiales registrados");
 		return UINT32_MAX;
 	}
 
@@ -186,16 +166,6 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 		0.0f
 	);
 
-	if (fallbackTextureHandle.handle == 0 || !fallbackTextureHandle.isResident) {
-		LOG(LogType::LOG_ERROR, "Error: Textura fallback no inicializada correctamente");
-		CreateFallbackTexture();
-
-		if (fallbackTextureHandle.handle == 0 || !fallbackTextureHandle.isResident) {
-			LOG(LogType::LOG_ERROR, "Error fatal: No se pudo crear textura fallback");
-			return UINT32_MAX;
-		}
-	}
-
 	gpuMaterial.albedoTexture = fallbackTextureHandle.handle;
 	gpuMaterial.normalTexture = fallbackTextureHandle.handle;
 	gpuMaterial.metallicTexture = fallbackTextureHandle.handle;
@@ -204,26 +174,20 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 	gpuMaterial.emissiveTexture = fallbackTextureHandle.handle;
 
 	gpuMaterial.flags = 0;
+
 	bool hasFallbackTextures = false;
 	std::vector<std::string> fallbackReasons;
 
 	auto albedoMap = material->getImage();
 	if (albedoMap && albedoMap->id() != 0) {
-		GLboolean isTexture = glIsTexture(albedoMap->id());
-		if (isTexture == GL_FALSE) {
-			fallbackReasons.push_back("Albedo: ID inválido");
-			hasFallbackTextures = true;
+		BindlessHandle handle = CreateTextureHandle(albedoMap->id());
+		if (handle.isResident) {
+			gpuMaterial.albedoTexture = handle.handle;
+			gpuMaterial.flags |= (1 << 0);
 		}
 		else {
-			BindlessHandle handle = CreateTextureHandle(albedoMap->id());
-			if (handle.isResident) {
-				gpuMaterial.albedoTexture = handle.handle;
-				gpuMaterial.flags |= (1 << 0);
-			}
-			else {
-				fallbackReasons.push_back("Albedo: Handle no residente");
-				hasFallbackTextures = true;
-			}
+			fallbackReasons.push_back("Albedo: Handle no residente");
+			hasFallbackTextures = true;
 		}
 	}
 	else {
@@ -233,21 +197,14 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 
 	auto normalMap = material->getNormalMap();
 	if (normalMap && normalMap->id() != 0) {
-		GLboolean isTexture = glIsTexture(normalMap->id());
-		if (isTexture == GL_FALSE) {
-			fallbackReasons.push_back("Normal: ID inválido");
-			hasFallbackTextures = true;
+		BindlessHandle handle = CreateTextureHandle(normalMap->id());
+		if (handle.isResident) {
+			gpuMaterial.normalTexture = handle.handle;
+			gpuMaterial.flags |= (1 << 1);
 		}
 		else {
-			BindlessHandle handle = CreateTextureHandle(normalMap->id());
-			if (handle.isResident) {
-				gpuMaterial.normalTexture = handle.handle;
-				gpuMaterial.flags |= (1 << 1);
-			}
-			else {
-				fallbackReasons.push_back("Normal: Handle no residente");
-				hasFallbackTextures = true;
-			}
+			fallbackReasons.push_back("Normal: Handle no residente");
+			hasFallbackTextures = true;
 		}
 	}
 	else {
@@ -257,21 +214,14 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 
 	auto metallicMap = material->getMetallicMap();
 	if (metallicMap && metallicMap->id() != 0) {
-		GLboolean isTexture = glIsTexture(metallicMap->id());
-		if (isTexture == GL_FALSE) {
-			fallbackReasons.push_back("Metallic: ID inválido");
-			hasFallbackTextures = true;
+		BindlessHandle handle = CreateTextureHandle(metallicMap->id());
+		if (handle.isResident) {
+			gpuMaterial.metallicTexture = handle.handle;
+			gpuMaterial.flags |= (1 << 2);
 		}
 		else {
-			BindlessHandle handle = CreateTextureHandle(metallicMap->id());
-			if (handle.isResident) {
-				gpuMaterial.metallicTexture = handle.handle;
-				gpuMaterial.flags |= (1 << 2);
-			}
-			else {
-				fallbackReasons.push_back("Metallic: Handle no residente");
-				hasFallbackTextures = true;
-			}
+			fallbackReasons.push_back("Metallic: Handle no residente");
+			hasFallbackTextures = true;
 		}
 	}
 	else {
@@ -281,21 +231,14 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 
 	auto roughnessMap = material->getRoughnessMap();
 	if (roughnessMap && roughnessMap->id() != 0) {
-		GLboolean isTexture = glIsTexture(roughnessMap->id());
-		if (isTexture == GL_FALSE) {
-			fallbackReasons.push_back("Roughness: ID inválido");
-			hasFallbackTextures = true;
+		BindlessHandle handle = CreateTextureHandle(roughnessMap->id());
+		if (handle.isResident) {
+			gpuMaterial.roughnessTexture = handle.handle;
+			gpuMaterial.flags |= (1 << 3);
 		}
 		else {
-			BindlessHandle handle = CreateTextureHandle(roughnessMap->id());
-			if (handle.isResident) {
-				gpuMaterial.roughnessTexture = handle.handle;
-				gpuMaterial.flags |= (1 << 3);
-			}
-			else {
-				fallbackReasons.push_back("Roughness: Handle no residente");
-				hasFallbackTextures = true;
-			}
+			fallbackReasons.push_back("Roughness: Handle no residente");
+			hasFallbackTextures = true;
 		}
 	}
 	else {
@@ -305,21 +248,14 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 
 	auto aoMap = material->getAoMap();
 	if (aoMap && aoMap->id() != 0) {
-		GLboolean isTexture = glIsTexture(aoMap->id());
-		if (isTexture == GL_FALSE) {
-			fallbackReasons.push_back("AO: ID inválido");
-			hasFallbackTextures = true;
+		BindlessHandle handle = CreateTextureHandle(aoMap->id());
+		if (handle.isResident) {
+			gpuMaterial.aoTexture = handle.handle;
+			gpuMaterial.flags |= (1 << 4);
 		}
 		else {
-			BindlessHandle handle = CreateTextureHandle(aoMap->id());
-			if (handle.isResident) {
-				gpuMaterial.aoTexture = handle.handle;
-				gpuMaterial.flags |= (1 << 4);
-			}
-			else {
-				fallbackReasons.push_back("AO: Handle no residente");
-				hasFallbackTextures = true;
-			}
+			fallbackReasons.push_back("AO: Handle no residente");
+			hasFallbackTextures = true;
 		}
 	}
 	else {
@@ -426,8 +362,6 @@ BindlessHandle BindlessManager::CreateTextureHandle(GLuint textureId) {
 		return fallbackTextureHandle;
 	}
 
-	GLint maxHandles = 0;
-
 	handle.handle = glGetTextureHandleARB(textureId);
 	if (handle.handle == 0) {
 		GLenum error = glGetError();
@@ -461,6 +395,9 @@ BindlessHandle BindlessManager::CreateTextureHandle(GLuint textureId) {
 	handle.isResident = true;
 	textureHandles[textureId] = handle;
 
+	LOG(LogType::LOG_INFO, "Handle bindless creado exitosamente para textura %u (Handle: %llu)",
+		textureId, handle.handle);
+
 	return handle;
 }
 
@@ -472,17 +409,83 @@ void BindlessManager::ReleaseTextureHandle(BindlessHandle& handle) {
 }
 
 void BindlessManager::UpdateBuffers() {
+	if (fences[updateBufferIndex]) {
+		GLenum result = glClientWaitSync(fences[updateBufferIndex], GL_SYNC_FLUSH_COMMANDS_BIT, 10000000); // 10ms timeout
+
+		if (result == GL_TIMEOUT_EXPIRED) {
+			LOG(LogType::LOG_WARNING, "UpdateBuffers: Timeout esperando a que la GPU libere el buffer %d", updateBufferIndex);
+		}
+
+		glDeleteSync(fences[updateBufferIndex]);
+		fences[updateBufferIndex] = nullptr;
+	}
+
+	GLuint currentMeshBuffer = meshBuffers[updateBufferIndex];
+	GLuint currentMaterialBuffer = materialBuffers[updateBufferIndex];
+	GLuint currentInstanceBuffer = instanceBuffers[updateBufferIndex];
+
+	LOG(LogType::LOG_INFO, "UpdateBuffers: Actualizando conjunto de buffers %d (mesh=%u, material=%u, instance=%u)",
+		updateBufferIndex, currentMeshBuffer, currentMaterialBuffer, currentInstanceBuffer);
+
 	if (!meshes.empty()) {
-		glNamedBufferSubData(meshBuffer, 0, meshes.size() * sizeof(GPUMesh), meshes.data());
+		size_t requiredSize = meshes.size() * sizeof(GPUMesh);
+
+		void* mappedData = glMapNamedBuffer(currentMeshBuffer, GL_WRITE_ONLY);
+		if (mappedData) {
+			memcpy(mappedData, meshes.data(), requiredSize);
+			glUnmapNamedBuffer(currentMeshBuffer);
+			LOG(LogType::LOG_INFO, "UpdateBuffers: Buffer de mallas actualizado (%zu mallas, %zu bytes)",
+				meshes.size(), requiredSize);
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de mallas %d (Error: 0x%X)",
+				updateBufferIndex, glGetError());
+		}
 	}
 
 	if (!materials.empty()) {
-		glNamedBufferSubData(materialBuffer, 0, materials.size() * sizeof(GPUMaterial), materials.data());
+		size_t requiredSize = materials.size() * sizeof(GPUMaterial);
+
+		void* mappedData = glMapNamedBuffer(currentMaterialBuffer, GL_WRITE_ONLY);
+		if (mappedData) {
+			memcpy(mappedData, materials.data(), requiredSize);
+			glUnmapNamedBuffer(currentMaterialBuffer);
+			LOG(LogType::LOG_INFO, "UpdateBuffers: Buffer de materiales actualizado (%zu materiales, %zu bytes)",
+				materials.size(), requiredSize);
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de materiales %d (Error: 0x%X)",
+				updateBufferIndex, glGetError());
+		}
 	}
 
 	if (!instances.empty()) {
-		glNamedBufferSubData(instanceBuffer, 0, instances.size() * sizeof(GPUInstance), instances.data());
+		size_t requiredSize = instances.size() * sizeof(GPUInstance);
+
+		void* mappedData = glMapNamedBuffer(currentInstanceBuffer, GL_WRITE_ONLY);
+		if (mappedData) {
+			memcpy(mappedData, instances.data(), requiredSize);
+			glUnmapNamedBuffer(currentInstanceBuffer);
+			LOG(LogType::LOG_INFO, "UpdateBuffers: Buffer de instancias actualizado (%zu instancias, %zu bytes)",
+				instances.size(), requiredSize);
+		}
+		else {
+			LOG(LogType::LOG_ERROR, "UpdateBuffers: Fallo al mapear buffer de instancias %d (Error: 0x%X)",
+				updateBufferIndex, glGetError());
+		}
 	}
+}
+
+void BindlessManager::EndFrame() {
+	std::swap(updateBufferIndex, renderBufferIndex);
+
+	if (fences[renderBufferIndex]) {
+		glDeleteSync(fences[renderBufferIndex]);
+	}
+	fences[renderBufferIndex] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+
+	LOG(LogType::LOG_INFO, "EndFrame: Buffers intercambiados - Render: %d, Update: %d",
+		renderBufferIndex, updateBufferIndex);
 }
 
 void BindlessManager::ClearInstances() {
@@ -490,8 +493,55 @@ void BindlessManager::ClearInstances() {
 }
 
 GLuint BindlessManager::CreateStorageBuffer(size_t size, GLenum usage) {
-	GLuint buffer;
+	if (size == 0) {
+		LOG(LogType::LOG_ERROR, "CreateStorageBuffer: Tamaño de buffer inválido (0)");
+		return 0;
+	}
+
+	GLint maxBufferSize = 0;
+	glGetIntegerv(GL_MAX_SHADER_STORAGE_BLOCK_SIZE, &maxBufferSize);
+
+	if (size > static_cast<size_t>(maxBufferSize)) {
+		LOG(LogType::LOG_WARNING, "CreateStorageBuffer: Tamaño solicitado (%zu bytes) excede el máximo soportado (%d bytes), ajustando",
+			size, maxBufferSize);
+		size = static_cast<size_t>(maxBufferSize);
+	}
+
+	GLuint buffer = 0;
 	glCreateBuffers(1, &buffer);
+
+	if (buffer == 0) {
+		LOG(LogType::LOG_ERROR, "CreateStorageBuffer: Fallo al crear el buffer");
+		return 0;
+	}
+
 	glNamedBufferStorage(buffer, size, nullptr, usage);
+
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		std::string errorMsg = "Desconocido";
+
+		switch (error) {
+		case GL_OUT_OF_MEMORY:
+			errorMsg = "GL_OUT_OF_MEMORY - No hay memoria disponible";
+			break;
+		case GL_INVALID_VALUE:
+			errorMsg = "GL_INVALID_VALUE - Parámetro inválido";
+			break;
+		case GL_INVALID_OPERATION:
+			errorMsg = "GL_INVALID_OPERATION - Operación inválida";
+			break;
+		}
+
+		LOG(LogType::LOG_ERROR, "CreateStorageBuffer: Error al asignar almacenamiento de %zu bytes (Error: 0x%X - %s)",
+			size, error, errorMsg.c_str());
+
+		glDeleteBuffers(1, &buffer);
+		return 0;
+	}
+
+	LOG(LogType::LOG_INFO, "CreateStorageBuffer: Buffer creado exitosamente (ID: %u, Tamaño: %zu bytes, Flags: 0x%X)",
+		buffer, size, usage);
+
 	return buffer;
 }

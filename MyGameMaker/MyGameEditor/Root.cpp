@@ -125,7 +125,7 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
-	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
+	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");*/
 	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -176,7 +176,7 @@ bool Root::Start()
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
 	//particle->ApplyPreset(Particle)
 
@@ -203,14 +203,14 @@ bool Root::Start()
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	auto cube = CreateCube("Cube");
+	/*auto cube = CreateCube("Cube");
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");*/
 
 	auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
+	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(48.0), glm::radians(45.0), 0.0));
 	auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
 	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
@@ -392,10 +392,10 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	//auto floor = CreateCube("Floor");
-	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	
 	
     //auto envObj = CreateGameObject("Environment1");

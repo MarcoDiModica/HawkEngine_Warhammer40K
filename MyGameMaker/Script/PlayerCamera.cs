@@ -7,13 +7,13 @@ public class PlayerCamera : MonoBehaviour
     private GameObject playerRef;
     private Camera cameraRef;
     private PlayerInput playerInput;
-
+    private Transform cameraTransform;
     public float smoothness = 19.0f;
 
     public float maxOffsetDistance = 3.6f;
     public float offsetSmoothness = 25.0f;
 
-    private Vector3 currentOffset = new Vector3(0, 20, -10.5f);
+    public Vector3 currentOffset = new Vector3(0, 20, -10.5f);
     private Vector3 targetOffset = new Vector3(0, 20, 0);
     private double fieldOfView;
 
@@ -33,7 +33,7 @@ public class PlayerCamera : MonoBehaviour
     {
         playerRef = GameObject.Find("Player");
         cameraRef = gameObject.GetComponent<Camera>();
-
+        cameraTransform = gameObject.GetComponent<Transform>();
         if (playerRef == null)
         {
             //Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
@@ -56,41 +56,78 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public override void Update(float deltaTime)
-    {    
+    {
         Vector2 leftStickInput = Input.GetLeftStick();
         Vector2 rightStickInput = Input.GetRightStick();
 
-        Vector3 baseOffset = new Vector3(0, 35.07492f, -18.5f);
+        Vector3 baseOffset = new Vector3(-11.9f, 19.8f, -12.2f);
 
+        // Si se está usando el left stick, ajustamos la posición de la cámara en base a la dirección de movimiento
         if (leftStickInput != Vector2.Zero)
         {
             Vector3 movementDirection = new Vector3(leftStickInput.X, 0, leftStickInput.Y);
 
+            // Calculamos la magnitud del input del stick izquierdo
             float inputMagnitude = GetMagnitude(leftStickInput);
-            targetOffset = baseOffset + (-movementDirection * maxOffsetDistance * inputMagnitude);
+
+            // Obtenemos la dirección de la cámara (local)
+            Vector3 camForward = cameraTransform.forward;
+            Vector3 camRight = cameraTransform.right;
+
+            // Descartamos la componente Y de los vectores forward y right de la cámara, ya que no nos interesa el movimiento en el eje Y
+            camForward.Y = 0;
+            camRight.Y = 0;
+
+            // Normalizamos los vectores para asegurarnos de que son direcciones unitarias
+            camForward = Vector3.Normalize(camForward);
+            camRight = Vector3.Normalize(camRight);
+
+            // Calculamos el nuevo offset basándonos en la rotación de la cámara
+            // Movimiento basado en la dirección hacia adelante (forward) y derecha (right) de la cámara
+            targetOffset = baseOffset + (-camForward * maxOffsetDistance * movementDirection.Z + camRight * maxOffsetDistance * movementDirection.X);
         }
+        // Si se está utilizando el right stick, ajustamos la cámara según la dirección de la mira
         else if (rightStickInput != Vector2.Zero)
         {
             Vector3 aimDirection = new Vector3(rightStickInput.X, 0, rightStickInput.Y);
 
+            // Calculamos la magnitud del input del stick derecho
             float inputMagnitude = GetMagnitude(rightStickInput);
-            targetOffset = baseOffset + (-aimDirection * maxOffsetDistance * inputMagnitude);
+
+            // Obtenemos la dirección de la cámara (local)
+            Vector3 camForward = cameraTransform.forward;
+            Vector3 camRight = cameraTransform.right;
+
+            // Descartamos la componente Y de los vectores forward y right de la cámara, ya que no nos interesa el movimiento en el eje Y
+            camForward.Y = 0;
+            camRight.Y = 0;
+
+            // Normalizamos los vectores para asegurarnos de que son direcciones unitarias
+            camForward = Vector3.Normalize(camForward);
+            camRight = Vector3.Normalize(camRight);
+
+            // Calculamos el nuevo offset basándonos en la rotación de la cámara
+            // Movimiento basado en la dirección hacia adelante (forward) y derecha (right) de la cámara
+            targetOffset = baseOffset + (-camForward * maxOffsetDistance * aimDirection.Z + camRight * maxOffsetDistance * -aimDirection.X);
         }
+        // Si no hay input, mantenemos el offset base
         else
         {
             targetOffset = baseOffset;
         }
 
+        // Interpolamos suavemente el offset actual hacia el offset objetivo
         currentOffset = LerpVector3(currentOffset, targetOffset, offsetSmoothness * deltaTime);
 
+        // Aplicamos el nuevo offset a la cámara
         cameraRef.SetOffset(currentOffset);
 
+        // Si el FOV objetivo no coincide con el actual, interpolamos hacia el objetivo
         if (targetFOV != currentFOV)
         {
             currentFOV = Lerp(currentFOV, targetFOV, deltaTime * zoomSpeed);
-            cameraRef.SetCameraFieldOfView(currentFOV * (System.Math.PI / 180.0));
+            cameraRef.SetCameraFieldOfView(currentFOV * (System.Math.PI / 180.0)); // Convertimos el FOV de grados a radianes
         }
-
     }
 
     private float GetMagnitude(Vector2 vector)

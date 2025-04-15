@@ -62,6 +62,8 @@ public:
 
     std::shared_ptr<GameObject> CreateGameObjectWithPath(const std::string& path);
 
+    bool CheckMesh(const std::string& path);
+
     void ChangeShader(GameObject& go, ShaderType shader);
 
     void RemoveGameObject(GameObject* gameObject);

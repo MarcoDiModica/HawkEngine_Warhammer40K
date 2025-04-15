@@ -31,6 +31,7 @@
 #define MAX_KEYS 300
 #define SCREEN_SIZE 1
 #define ASSETS_PATH "Assets\\"
+#define LIBRARY_PATH "Library\\"
 
 namespace fs = std::filesystem;
 
@@ -384,9 +385,18 @@ void Input::HandleFileDrop(const std::string& fileDir)
     fs::path targetPath = fs::path(LIBRARY_PATH) / fileNameExt;
 
     if (fileExt == "fbx" || fileExt == "FBX") {
-        LOG(LogType::LOG_ASSIMP, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+        LOG(LogType::LOG_INFO, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
+        
+        // Create FBX directory if it doesn't exist
+        fs::path fbxDir = fs::path(LIBRARY_PATH) / "FBX";
+        if (!fs::exists(fbxDir)) {
+            fs::create_directories(fbxDir);
+        }
 
-        Application->root->CreateGameObjectWithPath(fileDir);
+		// Copy the FBX file to the Library directory
+        targetPath = fs::current_path() / fbxDir / fileNameExt;
+
+        //Application->root->CreateGameObjectWithPath(fileDir);
 
     }
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {

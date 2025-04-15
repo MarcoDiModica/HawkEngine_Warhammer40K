@@ -203,10 +203,10 @@ bool Root::Start()
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	auto cube = CreateCube("Cube");
+	/*auto cube = CreateCube("Cube");
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");*/
 
 	auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -914,6 +914,13 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 	}
 
 	return (meshImp.meshes.size() > 1) ? rootObject : go;
+}
+
+bool Root::CheckMesh(const std::string& path)
+{
+	ModelImporter meshImp;
+
+	return false;
 }
 
 void Root::ChangeShader(GameObject& go, ShaderType shader)

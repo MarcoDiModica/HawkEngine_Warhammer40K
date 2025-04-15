@@ -190,12 +190,13 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 		queuedObjects.size(),
 		GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount());
 
+	BindlessManager::GetInstance().EndFrame();
+
 	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix);
 
 	stats.visibleGameObjects = GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount();
 	stats.totalDrawCalls = GPUDrivenRenderer::GetInstance().GetTotalDrawCommands();
 
-	BindlessManager::GetInstance().EndFrame();
 }
 
 void RenderManager::RenderFromCamera(CameraComponent* camera) {

@@ -323,6 +323,31 @@ public class EnemyControllerBoss : EnemyController
         }
     }
 
+    private void SlamAttack()
+    {
+        if (isDead == false)
+        {
+            CreateSlamHurtbox();
+            hurtboxDuration = 0.0f;
+            isSlamActive = true;
+            slamAttackTimer = 0.0f;
+        }
+    }
+
+    private void ClawStrike()
+    {
+        if (isDead == false)
+        {
+            CreateClawHurtbox();
+            // cono delante del cuerpo, offset de pocas unidades
+        }
+    }
+
+    private void MetalSlide()
+    {
+
+    }
+
     public void ChangePositionToClosest()
     {
         if (isDead == false)
@@ -354,17 +379,6 @@ public class EnemyControllerBoss : EnemyController
         return closestIndex;
     }
 
-    private void SlamAttack()
-    {
-        if (isDead == false)
-        {
-            CreateHurtbox();
-            hurtboxDuration = 0.0f;
-            isSlamActive = true;
-            slamAttackTimer = 0.0f;
-        }
-    }
-
     private void Burrow()
     {
         if (isDead == false)
@@ -384,7 +398,7 @@ public class EnemyControllerBoss : EnemyController
         SceneManager.LoadScene("WinScene");
     }
 
-    private void CreateHurtbox()
+    private void CreateSlamHurtbox()
     {
         hurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
         hurtboxObject.AddComponent<MeshRenderer>();
@@ -396,6 +410,11 @@ public class EnemyControllerBoss : EnemyController
         hurtboxObject.AddComponent<BoxCollider>();
         hurtboxObject.GetComponent<BoxCollider>().SetTrigger(true);
         hurtboxObject.tag = "EnemyAttack";
+    }
+
+    private void CreateClawHurtbox()
+    {
+
     }
 
     private void DestroyHurtbox()

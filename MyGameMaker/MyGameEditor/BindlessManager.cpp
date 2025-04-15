@@ -61,7 +61,10 @@ void BindlessManager::Shutdown() {
 }
 
 uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
-	if (!mesh) return UINT32_MAX;
+	if (!mesh) {
+		LOG(LogType::LOG_ERROR, "Error: Intento de registrar una malla nula");
+		return UINT32_MAX;
+	}
 
 	auto it = meshIndices.find(mesh);
 	if (it != meshIndices.end()) {
@@ -69,23 +72,49 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	}
 
 	if (meshes.size() >= MAX_MESHES) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de mallas registradas");
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de mallas registradas (%zu)", MAX_MESHES);
 		return UINT32_MAX;
 	}
 
-	const auto& modelData = mesh->getModel()->GetModelData();
+	std::shared_ptr<Model> model = mesh->getModel();
+	if (!model) {
+		LOG(LogType::LOG_ERROR, "Error: La malla no tiene un modelo asociado");
+		return UINT32_MAX;
+	}
 
-	//mirar la clase de ModelData
+	uint32_t modelID = model->GetID();
+	if (modelID == 0) {
+		LOG(LogType::LOG_ERROR, "Error: El modelo no tiene un ID válido");
+		return UINT32_MAX;
+	}
+
+	for (size_t i = 0; i < meshes.size(); ++i) {
+		if (meshes[i].meshId == modelID) {
+			uint32_t existingIndex = static_cast<uint32_t>(i);
+			meshIndices[mesh] = existingIndex;
+
+			return existingIndex;
+		}
+	}
+
+	const auto& modelData = model->GetModelData();
+
+	if (modelData.vA == 0 || modelData.iBID == 0 || modelData.vBPosID == 0) {
+		LOG(LogType::LOG_ERROR, "Error: Buffers inválidos (VAO: %u, IBO: %u, VBO: %u) para malla '%s'",
+			modelData.vA, modelData.iBID, modelData.vBPosID, model->GetMeshName().c_str());
+		return UINT32_MAX;
+	}
+
 	GPUMesh gpuMesh;
 	gpuMesh.vertexArray = modelData.vA;
 	gpuMesh.indexBuffer = modelData.iBID;
 	gpuMesh.vertexBuffer = modelData.vBPosID;
 	gpuMesh.indexCount = static_cast<uint32_t>(modelData.indexData.size());
 	gpuMesh.vertexCount = static_cast<uint32_t>(modelData.vertexData.size());
-	gpuMesh.meshId = static_cast<uint32_t>(meshes.size());
+	gpuMesh.meshId = modelID; 
 	gpuMesh.padding = 0;
 
-	uint32_t index = static_cast<uint32_t>(meshes.size());
+	auto index = static_cast<uint32_t>(meshes.size());
 	meshes.push_back(gpuMesh);
 	meshIndices[mesh] = index;
 

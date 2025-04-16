@@ -5,21 +5,13 @@ using System.Numerics;
 public class BarrageBullet : MonoBehaviour
 {
     public float value = 0.0f;
-
-    private float distance = 6;
-    private float damage = 100;
-    private float explosionRadius = 2;
     private Rigidbody rigidbody;
-
     private float deathtimer = 0.2f;
     private bool needsDestroy = false;
     private float deathTimerPrevention = 0;
-
     public override void Awake()
-    {
-        
+    { 
     }
-
     public void Init(Vector3 pos, Vector3 dir)
     {
         AddComponent<MeshRenderer>();
@@ -34,11 +26,7 @@ public class BarrageBullet : MonoBehaviour
         rigidbody.SetGravity(new Vector3(0.0f, 0.0f, 0.0f) * 20);
         rigidbody.AddForce(dir * 140);
         rigidbody.SetFriction(0.5f);
-
-        
-        
     }
-
     public override void Update(float deltaTime)
     {
         if (needsDestroy)

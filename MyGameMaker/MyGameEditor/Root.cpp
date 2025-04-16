@@ -125,7 +125,7 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
-	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
 	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -176,7 +176,7 @@ bool Root::Start()
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
 	//particle->ApplyPreset(Particle)
 
@@ -203,10 +203,10 @@ bool Root::Start()
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	auto cube = CreateCube("Cube");
+	/*auto cube = CreateCube("Cube");
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");*/
 
 	auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -392,10 +392,10 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	//auto floor = CreateCube("Floor");
-	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	
 	
     //auto envObj = CreateGameObject("Environment1");
@@ -506,46 +506,46 @@ bool Root::Start()
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
 
-	//auto shotgunPickUp = CreateGameObjectWithPath("Assets/shotgun.fbx");
-	//shotgunPickUp->AddComponent<MeshRenderer>();
-	//std::shared_ptr<Image> ShotgunBaseColor = std::make_shared<Image>();
-	//std::shared_ptr<Image> ShotgunRoughness = std::make_shared<Image>();
-	//std::shared_ptr<Image> ShotgunNormal = std::make_shared<Image>();
-	//std::shared_ptr<Image> ShotgunMetallic = std::make_shared<Image>();
-	//ShotgunBaseColor->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_BaseColor.png");
-	//ShotgunRoughness->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Roughness.png");
-	//ShotgunNormal->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Normal.png");
-	//ShotgunMetallic->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Metallic.png");
-	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunBaseColor);
-	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(ShotgunRoughness);
-	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(ShotgunNormal);
-	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(ShotgunMetallic);
-	//shotgunPickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
-	//shotgunPickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//shotgunPickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//shotgunPickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//shotgunPickUp->AddComponent<ScriptComponent>()->LoadScript("ShotgunPickUp");
-	//shotgunPickUp->SetTag("Weapon");
-	//
-	//auto railgunPickUp = CreateGameObjectWithPath("Assets/railgun.fbx");
-	//std::shared_ptr<Image> RailgunBaseColor = std::make_shared<Image>();
-	//std::shared_ptr<Image> RailgunRoughness = std::make_shared<Image>();
-	//std::shared_ptr<Image> RailgunNormal = std::make_shared<Image>();
-	//std::shared_ptr<Image> RailgunMetallic = std::make_shared<Image>();
-	//RailgunBaseColor->LoadTexture("Assets/Textures/railgun_DefaultMaterial_BaseColor.png");
-	//RailgunRoughness->LoadTexture("Assets/Textures/railgun_DefaultMaterial_Roughness.png");
-	//RailgunNormal->LoadTexture("Assets/Textures/railgun_DefaultMaterial_Normal.png");
-	//RailgunMetallic->LoadTexture("Assets/Textures/railgun_DefaultMaterial_Metallic.png");
-	//railgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(RailgunBaseColor);
-	//railgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(RailgunRoughness);
-	//railgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(RailgunNormal);
-	//railgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(RailgunMetallic);
-	//railgunPickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
-	//railgunPickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//railgunPickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//railgunPickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
-	//railgunPickUp->SetTag("Weapon");
+	auto shotgunPickUp = CreateGameObjectWithPath("Assets/shotgun.fbx");
+	shotgunPickUp->AddComponent<MeshRenderer>();
+	std::shared_ptr<Image> ShotgunBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> ShotgunRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> ShotgunNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> ShotgunMetallic = std::make_shared<Image>();
+	ShotgunBaseColor->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_BaseColor.png");
+	ShotgunRoughness->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Roughness.png");
+	ShotgunNormal->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Normal.png");
+	ShotgunMetallic->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Metallic.png");
+	shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunBaseColor);
+	shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(ShotgunRoughness);
+	shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(ShotgunNormal);
+	shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(ShotgunMetallic);
+	shotgunPickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
+	shotgunPickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	shotgunPickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	shotgunPickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	shotgunPickUp->AddComponent<ScriptComponent>()->LoadScript("ShotgunPickUp");
+	shotgunPickUp->SetTag("Weapon");
+	
+	auto railgunPickUp = CreateGameObjectWithPath("Assets/railgun.fbx");
+	std::shared_ptr<Image> RailgunBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> RailgunRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> RailgunNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> RailgunMetallic = std::make_shared<Image>();
+	RailgunBaseColor->LoadTexture("Assets/Textures/railgun_DefaultMaterial_BaseColor.png");
+	RailgunRoughness->LoadTexture("Assets/Textures/railgun_DefaultMaterial_Roughness.png");
+	RailgunNormal->LoadTexture("Assets/Textures/railgun_DefaultMaterial_Normal.png");
+	RailgunMetallic->LoadTexture("Assets/Textures/railgun_DefaultMaterial_Metallic.png");
+	railgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(RailgunBaseColor);
+	railgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(RailgunRoughness);
+	railgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(RailgunNormal);
+	railgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(RailgunMetallic);
+	railgunPickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
+	railgunPickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	railgunPickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	railgunPickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
+	railgunPickUp->SetTag("Weapon");
 	
 	/*auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
 	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 3));

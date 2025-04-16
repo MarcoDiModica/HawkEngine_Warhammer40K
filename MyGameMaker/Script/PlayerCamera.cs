@@ -23,6 +23,9 @@ public class PlayerCamera : MonoBehaviour
 
     private double targetFOV;
     private float zoomSpeed = 5.0f;
+    private Vector3 offsetVelocity = Vector3.Zero;
+    private double fovVelocity = 0;
+
     public override void Awake()
     {
         currentFOV = originalFOV;
@@ -62,74 +65,120 @@ public class PlayerCamera : MonoBehaviour
 
         Vector3 baseOffset = new Vector3(-11.9f, 19.8f, -12.2f);
 
-        // Si se está usando el left stick, ajustamos la posición de la cámara en base a la dirección de movimiento
         if (leftStickInput != Vector2.Zero)
         {
             Vector3 movementDirection = new Vector3(leftStickInput.X, 0, leftStickInput.Y);
 
-            // Calculamos la magnitud del input del stick izquierdo
             float inputMagnitude = GetMagnitude(leftStickInput);
 
-            // Obtenemos la dirección de la cámara (local)
             Vector3 camForward = cameraTransform.forward;
             Vector3 camRight = cameraTransform.right;
 
-            // Descartamos la componente Y de los vectores forward y right de la cámara, ya que no nos interesa el movimiento en el eje Y
             camForward.Y = 0;
             camRight.Y = 0;
 
-            // Normalizamos los vectores para asegurarnos de que son direcciones unitarias
             camForward = Vector3.Normalize(camForward);
             camRight = Vector3.Normalize(camRight);
 
-            // Calculamos el nuevo offset basándonos en la rotación de la cámara
-            // Movimiento basado en la dirección hacia adelante (forward) y derecha (right) de la cámara
             targetOffset = baseOffset + (-camForward * maxOffsetDistance * movementDirection.Z + camRight * maxOffsetDistance * movementDirection.X);
         }
-        // Si se está utilizando el right stick, ajustamos la cámara según la dirección de la mira
         else if (rightStickInput != Vector2.Zero)
         {
             Vector3 aimDirection = new Vector3(rightStickInput.X, 0, rightStickInput.Y);
 
-            // Calculamos la magnitud del input del stick derecho
             float inputMagnitude = GetMagnitude(rightStickInput);
 
-            // Obtenemos la dirección de la cámara (local)
             Vector3 camForward = cameraTransform.forward;
             Vector3 camRight = cameraTransform.right;
 
-            // Descartamos la componente Y de los vectores forward y right de la cámara, ya que no nos interesa el movimiento en el eje Y
             camForward.Y = 0;
             camRight.Y = 0;
 
-            // Normalizamos los vectores para asegurarnos de que son direcciones unitarias
             camForward = Vector3.Normalize(camForward);
             camRight = Vector3.Normalize(camRight);
 
-            // Calculamos el nuevo offset basándonos en la rotación de la cámara
-            // Movimiento basado en la dirección hacia adelante (forward) y derecha (right) de la cámara
             targetOffset = baseOffset + (-camForward * maxOffsetDistance * aimDirection.Z + camRight * maxOffsetDistance * -aimDirection.X);
         }
-        // Si no hay input, mantenemos el offset base
         else
         {
             targetOffset = baseOffset;
         }
 
-        // Interpolamos suavemente el offset actual hacia el offset objetivo
-        currentOffset = LerpVector3(currentOffset, targetOffset, offsetSmoothness * deltaTime);
+        currentOffset = SmoothDampVector3(currentOffset, targetOffset, ref offsetVelocity, 1f / offsetSmoothness, deltaTime);
 
-        // Aplicamos el nuevo offset a la cámara
         cameraRef.SetOffset(currentOffset);
 
-        // Si el FOV objetivo no coincide con el actual, interpolamos hacia el objetivo
         if (targetFOV != currentFOV)
         {
-            currentFOV = Lerp(currentFOV, targetFOV, deltaTime * zoomSpeed);
-            cameraRef.SetCameraFieldOfView(currentFOV * (System.Math.PI / 180.0)); // Convertimos el FOV de grados a radianes
+            currentFOV = SmoothDamp(currentFOV, targetFOV, ref fovVelocity, 1f / zoomSpeed, deltaTime);
+            cameraRef.SetCameraFieldOfView(currentFOV * (System.Math.PI / 180.0));
         }
     }
+    public Vector3 SmoothDampVector3(Vector3 current, Vector3 target, ref Vector3 velocity, float smoothTime, float deltaTime)
+    {
+        if (smoothTime < 0.0001f) smoothTime = 0.0001f;
 
+        float omega = 2f / smoothTime;
+        float x = omega * deltaTime;
+        float exp = 1f / (1f + x + 0.48f * x * x + 0.235f * x * x * x);
+
+        Vector3 change = current - target;
+        Vector3 originalTarget = target;
+        float sqrmag = change.X * change.X + change.Y * change.Y + change.Z * change.Z;
+        float maxChange = 1000f * smoothTime;
+        float maxChangeSq = maxChange * maxChange;
+
+        if (sqrmag > maxChangeSq)
+        {
+            float mag = (float)Math.Sqrt(sqrmag);
+            change = change * (maxChange / mag);
+        }
+
+        target = current - change;
+
+        Vector3 temp = (velocity + change * omega) * deltaTime;
+        velocity = (velocity - temp * omega) * exp;
+
+        Vector3 output = target + (change + temp) * exp;
+
+        Vector3 diffOriginalToCurrent = originalTarget - current;
+        Vector3 diffOutputToTarget = output - originalTarget;
+
+        float alignment =
+            diffOriginalToCurrent.X * diffOutputToTarget.X +
+            diffOriginalToCurrent.Y * diffOutputToTarget.Y +
+            diffOriginalToCurrent.Z * diffOutputToTarget.Z;
+
+        if (alignment > 0)
+        {
+            output = originalTarget;
+            velocity = Vector3.Zero;
+        }
+
+        return output;
+    }
+    public double SmoothDamp(double current, double target, ref double velocity, float smoothTime, float deltaTime)
+    {
+        if (smoothTime < 0.0001f) smoothTime = 0.0001f;
+
+        double omega = 2.0 / smoothTime;
+        double x = omega * deltaTime;
+        double exp = 1.0 / (1.0 + x + 0.48 * x * x + 0.235 * x * x * x);
+
+        double change = current - target;
+        double temp = (velocity + change * omega) * deltaTime;
+        velocity = (velocity - temp * omega) * exp;
+
+        double output = target + (change + temp) * exp;
+
+        if ((target - current) * (output - target) > 0)
+        {
+            output = target;
+            velocity = 0;
+        }
+
+        return output;
+    }
     private float GetMagnitude(Vector2 vector)
     {
         return (float)System.Math.Sqrt((vector.X * vector.X) + (vector.Y * vector.Y));

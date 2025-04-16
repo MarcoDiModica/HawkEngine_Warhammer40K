@@ -21,7 +21,6 @@ public class Grenade : MonoBehaviour
 
     public override void Awake()
     {
-
     }
     public override void Start()
     {
@@ -60,8 +59,6 @@ public class Grenade : MonoBehaviour
             }
         }
         deathTimerPrevention += deltaTime;
-        //Engineson.print(deathTimerPrevention.ToString());
-
         if (deathTimerPrevention > .1f)
         {
             if (explosion != null) { 
@@ -71,7 +68,6 @@ public class Grenade : MonoBehaviour
         }
 
     }
-
     void Explode()
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
@@ -83,7 +79,6 @@ public class Grenade : MonoBehaviour
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
         isExploded = true;
     }
-
     public override void OnCollisionEnter(GameObject other)
     {
         Explode();

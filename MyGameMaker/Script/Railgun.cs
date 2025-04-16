@@ -12,8 +12,8 @@ public class Railgun : BaseWeapon
     private float coolTimer = 0f;
     private float reloadTimer = 0f;
     private PlayerController playerController;
-    ToggleMode toggleMode;
-    EnergyBall energyBall;
+    public ToggleMode toggleMode;
+    public EnergyBall energyBall;
     LaserBeam laserBeam;
     public PlayerData playerData;
 

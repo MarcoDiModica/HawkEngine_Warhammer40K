@@ -7,15 +7,15 @@ using HawkEngine;
 public class Boltgun : BaseWeapon
 {
 
-    GrenadeLauncher grenadeLauncher;
-    ArcSnare arcSnare;
+    public GrenadeLauncher grenadeLauncher;
+    public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
     private Audio sound;
     private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
     private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
     GameObject projectile;
-
+    private RedThirstManager redThirstManager;
     private float timeSinceLastShot = 0.0f;
 
     public override void Awake()
@@ -40,13 +40,13 @@ public class Boltgun : BaseWeapon
         sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
     }
 
     public override void Update(float deltaTime)
     {
         
         timeSinceLastShot += deltaTime;
-
         for (int i = bulletsPos.Count - 1; i >= 0; i--)
         {
             bulletIntervals[i] += deltaTime;
@@ -70,11 +70,27 @@ public class Boltgun : BaseWeapon
                     var enemy = GameObject.Find(collisionNames[i]);
                     if (enemy.tag == "Melee")
                     {
-                        enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                        redThirstManager.OnWeaponUsed();
+                        if (redThirstManager.IsInBlackRage())
+                        {
+                            enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                        }
+                        else
+                        {
+                            enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                        }
                     }
                     if (enemy.tag == "Ranged")
                     {
-                        enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                        redThirstManager.OnWeaponUsed();
+                        if (redThirstManager.IsInBlackRage())
+                        {
+                            enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                        }
+                        else
+                        {
+                            enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                        }
                     }
                     if (enemy.tag == "Stalker")
                     {
@@ -82,7 +98,16 @@ public class Boltgun : BaseWeapon
                     }
                     if (enemy.tag == "Boss")
                     {
-                        enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                        redThirstManager.OnWeaponUsed();
+                        if (redThirstManager.IsInBlackRage())
+                        {
+                            enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                        }
+                        else
+                        {
+                            enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                        }
+                       
                     }
                     if (enemy.tag == "Destroyable")
                     {

@@ -10,6 +10,9 @@ public class RedThirstManager : MonoBehaviour
 
     private float abilityUseTimer = 0f;
     private int abilityCount = 0;
+    private int differentGunsUsed = 0;
+    private float differentGunsUsedTimer = 0;
+    private const float differentGunsUsedTimeLimit = 3f;
     private const float abilityTimeLimit = 3f;
 
     private float redThirstDecayTimer = 0f;
@@ -21,6 +24,7 @@ public class RedThirstManager : MonoBehaviour
     private PlayerController playerController;
     private float lastActionTime = 0f;
 
+    public float redThirstDamageBonus = 1.2f;
     public float biblePages = 0f;
     public override void Awake()
     {
@@ -42,7 +46,15 @@ public class RedThirstManager : MonoBehaviour
                 ResetAbilityCombo();
             }
         }
-
+        if (differentGunsUsed > 0)
+        {
+            differentGunsUsedTimer += deltaTime;
+            if (differentGunsUsedTimer >= differentGunsUsedTimeLimit)
+            {
+                ResetWeaponCombo();
+            }
+        }
+        //redThirstDamageBonus = 5f + (biblePages * biblePages);
         if (isInBlackRage)
         {
             HandleBlackRage(deltaTime);
@@ -65,13 +77,28 @@ public class RedThirstManager : MonoBehaviour
         lastActionTime = 0f;
     }
 
+    public void OnWeaponUsed()
+    {
+        differentGunsUsed++;
+        if (differentGunsUsed == 2)
+        {
+            AddRedThirstPoint(1);
+            ResetWeaponCombo();
+        }
+        lastActionTime = 0f;
+    }
+    private void ResetWeaponCombo()
+    {
+        differentGunsUsed = 0;
+        differentGunsUsedTimer = 0f;
+    }
     private void ResetAbilityCombo()
     {
         abilityCount = 0;
         abilityUseTimer = 0f;
     }
 
-    private void AddRedThirstPoint(int points)
+    public void AddRedThirstPoint(int points)
     {
         //Actualizar el HUD por cada Red Thirst Point
         redThirstPoints += points;

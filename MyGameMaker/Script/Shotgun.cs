@@ -11,8 +11,9 @@ public class Shotgun : BaseWeapon
 
     private PlayerController playerController;
     public PlayerData playerData;
-    Barrage barrage;
-    HookShot hookShot;
+    public Barrage barrage;
+    public HookShot hookShot;
+    private RedThirstManager redThirstManager;
 
     private float timeSinceLastShot = 0.0f;
 
@@ -38,7 +39,7 @@ public class Shotgun : BaseWeapon
         playerData = playerController.playerData;
         barrage = gameObject.GetComponent<Barrage>();
         hookShot = gameObject.GetComponent<HookShot>();
-        
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
     }
 
     public override void Update(float deltaTime)
@@ -68,11 +69,29 @@ public class Shotgun : BaseWeapon
                     var enemy = GameObject.Find(collisionNames[i]);
                     if (enemy.tag == "Melee")
                     {
-                        enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                        redThirstManager.OnWeaponUsed();
+
+                        if (redThirstManager.IsInBlackRage())
+                        {
+                            enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                        }
+                        else
+                        {
+                            enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                        }
                     }
                     if (enemy.tag == "Ranged")
                     {
-                        enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                        redThirstManager.OnWeaponUsed();
+
+                        if (redThirstManager.IsInBlackRage())
+                        {
+                            enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                        }
+                        else
+                        {
+                            enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                        }
                     }
                     if (enemy.tag == "Stalker")
                     {
@@ -80,7 +99,16 @@ public class Shotgun : BaseWeapon
                     }
                     if (enemy.tag == "Boss")
                     {
-                        enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                        redThirstManager.OnWeaponUsed();
+
+                        if (redThirstManager.IsInBlackRage())
+                        {
+                            enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                        }
+                        else
+                        {
+                            enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                        }
                     }
                     if (enemy.tag == "Destroyable")
                     {

@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include "Log.h"
 #include "MyGameEngine/Model.h"
+#include "../MyGameEngine/Shaders.h" 
 
 class Mesh;
 class Material;
@@ -27,8 +28,9 @@ struct GPUMaterial {
 	GLuint64 roughnessTexture;
 	GLuint64 aoTexture;
 	GLuint64 emissiveTexture;
-	uint32_t flags;         // Bit flags para configuración
-	float padding[3];       // Alineación a 16 bytes
+	uint32_t flags;         
+	uint32_t shaderType;    // PBR, UNLIT, etc.
+	float padding[2];      
 };
 
 struct GPUMesh {
@@ -60,6 +62,9 @@ public:
 
 	uint32_t RegisterMesh(Mesh* mesh);
 	uint32_t RegisterMaterial(const Material* material);
+
+	bool UpdateMaterial(const Material* material);
+
 	uint32_t AddInstance(const GPUInstance& instance);
 
 	GPUMesh* GetMeshData(uint32_t index);
@@ -74,12 +79,14 @@ public:
 	GLuint GetInstanceBuffer() const { return instanceBuffers[renderBufferIndex]; }
 
 	void UpdateBuffers();
-	void EndFrame();  
+	void EndFrame();
 	void ClearInstances();
 
 	uint32_t GetMeshCount() const { return (uint32_t)meshes.size(); }
 	uint32_t GetMaterialCount() const { return (uint32_t)materials.size(); }
 	uint32_t GetInstanceCount() const { return (uint32_t)instances.size(); }
+
+	bool HasMaterialChanged(const Material* material);
 
 private:
 	BindlessManager() = default;
@@ -88,11 +95,13 @@ private:
 	BindlessManager(const BindlessManager&) = delete;
 	BindlessManager& operator=(const BindlessManager&) = delete;
 
+	void SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material* material);
+
 	GLuint CreateStorageBuffer(size_t size, GLenum usage);
 
-	GLuint meshBuffers[2] = { 0, 0 };        
-	GLuint materialBuffers[2] = { 0, 0 };    
-	GLuint instanceBuffers[2] = { 0, 0 };    
+	GLuint meshBuffers[2] = { 0, 0 };
+	GLuint materialBuffers[2] = { 0, 0 };
+	GLuint instanceBuffers[2] = { 0, 0 };
 
 	int updateBufferIndex = 0;
 	int renderBufferIndex = 1;
@@ -106,6 +115,8 @@ private:
 	std::unordered_map<const Mesh*, uint32_t> meshIndices;
 	std::unordered_map<const Material*, uint32_t> materialIndices;
 	std::unordered_map<GLuint, BindlessHandle> textureHandles;
+
+	std::unordered_map<const Material*, uint64_t> materialHashes;
 
 	static constexpr size_t MAX_MESHES = 1024;
 	static constexpr size_t MAX_MATERIALS = 1024;
@@ -182,7 +193,7 @@ private:
 			1, 0, 4
 		};
 
-		fallbackIndexCount = 36; 
+		fallbackIndexCount = 36;
 
 		glGenVertexArrays(1, &fallbackVAO);
 		glBindVertexArray(fallbackVAO);
@@ -206,7 +217,7 @@ private:
 		fallbackMesh.indexBuffer = fallbackIBO;
 		fallbackMesh.vertexBuffer = fallbackVBO;
 		fallbackMesh.indexCount = fallbackIndexCount;
-		fallbackMesh.vertexCount = 8; 
+		fallbackMesh.vertexCount = 8;
 		fallbackMesh.meshId = UINT32_MAX;
 		fallbackMesh.padding = 0;
 

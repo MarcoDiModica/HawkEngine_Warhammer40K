@@ -3,6 +3,7 @@
 #include "../MyGameEngine/Material.h"
 #include <iostream>
 #include <glm/gtc/type_ptr.hpp>
+#include <functional> 
 
 BindlessManager& BindlessManager::GetInstance() {
 	static BindlessManager instance;
@@ -40,6 +41,7 @@ bool BindlessManager::Initialize() {
 	}
 
 	CreateFallbackTexture();
+	CreateFallbackCubeMesh();
 
 	updateBufferIndex = 0;
 	renderBufferIndex = 1;
@@ -64,6 +66,26 @@ void BindlessManager::Shutdown() {
 		}
 	}
 
+	if (fallbackTextureID) {
+		glDeleteTextures(1, &fallbackTextureID);
+		fallbackTextureID = 0;
+	}
+
+	if (fallbackVAO) {
+		glDeleteVertexArrays(1, &fallbackVAO);
+		fallbackVAO = 0;
+	}
+
+	if (fallbackVBO) {
+		glDeleteBuffers(1, &fallbackVBO);
+		fallbackVBO = 0;
+	}
+
+	if (fallbackIBO) {
+		glDeleteBuffers(1, &fallbackIBO);
+		fallbackIBO = 0;
+	}
+
 	meshBuffers[0] = meshBuffers[1] = 0;
 	materialBuffers[0] = materialBuffers[1] = 0;
 	instanceBuffers[0] = instanceBuffers[1] = 0;
@@ -74,6 +96,7 @@ void BindlessManager::Shutdown() {
 	instances.clear();
 	meshIndices.clear();
 	materialIndices.clear();
+	materialHashes.clear();
 }
 
 uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
@@ -130,7 +153,7 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	gpuMesh.vertexBuffer = modelData.vBPosID;
 	gpuMesh.indexCount = static_cast<uint32_t>(modelData.indexData.size());
 	gpuMesh.vertexCount = static_cast<uint32_t>(modelData.vertexData.size());
-	gpuMesh.meshId = modelID; 
+	gpuMesh.meshId = modelID;
 	gpuMesh.padding = 0;
 
 	uint32_t index = static_cast<uint32_t>(meshes.size());
@@ -144,27 +167,55 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	return index;
 }
 
-uint32_t BindlessManager::RegisterMaterial(const Material* material) {
-	if (!material) return UINT32_MAX;
+uint64_t CalculateMaterialHash(const Material* material) {
+	if (!material) return 0;
 
-	auto it = materialIndices.find(material);
-	if (it != materialIndices.end()) {
-		return it->second;
-	}
+	std::size_t hash = 0;
 
-	if (materials.size() >= MAX_MATERIALS) {
-		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de materiales registrados");
-		return UINT32_MAX;
-	}
+	hash = std::hash<int>{}(static_cast<int>(material->GetShaderType()));
+	hash ^= std::hash<float>{}(material->GetColor().r) << 1;
+	hash ^= std::hash<float>{}(material->GetColor().g) << 2;
+	hash ^= std::hash<float>{}(material->GetColor().b) << 3;
+	hash ^= std::hash<float>{}(material->GetColor().a) << 4;
+	hash ^= std::hash<float>{}(material->metallic) << 5;
+	hash ^= std::hash<float>{}(material->roughness) << 6;
+	hash ^= std::hash<float>{}(material->ao) << 7;
+	hash ^= std::hash<float>{}(material->tonemapStrength) << 8;
 
-	GPUMaterial gpuMaterial;
+	if (material->getImage())
+		hash ^= std::hash<unsigned int>{}(material->getImage()->id()) << 9;
+	if (material->getNormalMap())
+		hash ^= std::hash<unsigned int>{}(material->getNormalMap()->id()) << 10;
+	if (material->getMetallicMap())
+		hash ^= std::hash<unsigned int>{}(material->getMetallicMap()->id()) << 11;
+	if (material->getRoughnessMap())
+		hash ^= std::hash<unsigned int>{}(material->getRoughnessMap()->id()) << 12;
+	if (material->getAoMap())
+		hash ^= std::hash<unsigned int>{}(material->getAoMap()->id()) << 13;
+
+	return hash;
+}
+
+bool BindlessManager::HasMaterialChanged(const Material* material) {
+	if (!material) return false;
+
+	auto it = materialHashes.find(material);
+	if (it == materialHashes.end()) return true;
+
+	uint64_t currentHash = CalculateMaterialHash(material);
+	return currentHash != it->second;
+}
+
+void BindlessManager::SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material* material) {
 	gpuMaterial.albedoColor = material->GetColor();
 	gpuMaterial.pbrParams = glm::vec4(
 		material->metallic,
 		material->roughness,
 		material->ao,
-		0.0f
+		material->tonemapStrength // Usar tonemapStrength como emisiive de momento
 	);
+
+	gpuMaterial.shaderType = static_cast<uint32_t>(material->GetShaderType());
 
 	gpuMaterial.albedoTexture = fallbackTextureHandle.handle;
 	gpuMaterial.normalTexture = fallbackTextureHandle.handle;
@@ -195,72 +246,82 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 		hasFallbackTextures = true;
 	}
 
-	auto normalMap = material->getNormalMap();
-	if (normalMap && normalMap->id() != 0) {
-		BindlessHandle handle = CreateTextureHandle(normalMap->id());
-		if (handle.isResident) {
-			gpuMaterial.normalTexture = handle.handle;
-			gpuMaterial.flags |= (1 << 1);
+	if (material->GetShaderType() == ShaderType::PBR) {
+		// Normal map
+		auto normalMap = material->getNormalMap();
+		if (normalMap && normalMap->id() != 0) {
+			BindlessHandle handle = CreateTextureHandle(normalMap->id());
+			if (handle.isResident) {
+				gpuMaterial.normalTexture = handle.handle;
+				gpuMaterial.flags |= (1 << 1);
+			}
+			else {
+				fallbackReasons.push_back("Normal: Handle no residente");
+				hasFallbackTextures = true;
+			}
 		}
 		else {
-			fallbackReasons.push_back("Normal: Handle no residente");
+			fallbackReasons.push_back("Normal: No presente");
 			hasFallbackTextures = true;
 		}
-	}
-	else {
-		fallbackReasons.push_back("Normal: No presente");
-		hasFallbackTextures = true;
+
+		auto metallicMap = material->getMetallicMap();
+		if (metallicMap && metallicMap->id() != 0) {
+			BindlessHandle handle = CreateTextureHandle(metallicMap->id());
+			if (handle.isResident) {
+				gpuMaterial.metallicTexture = handle.handle;
+				gpuMaterial.flags |= (1 << 2);
+			}
+			else {
+				fallbackReasons.push_back("Metallic: Handle no residente");
+				hasFallbackTextures = true;
+			}
+		}
+		else {
+			fallbackReasons.push_back("Metallic: No presente");
+			hasFallbackTextures = true;
+		}
+
+		auto roughnessMap = material->getRoughnessMap();
+		if (roughnessMap && roughnessMap->id() != 0) {
+			BindlessHandle handle = CreateTextureHandle(roughnessMap->id());
+			if (handle.isResident) {
+				gpuMaterial.roughnessTexture = handle.handle;
+				gpuMaterial.flags |= (1 << 3);
+			}
+			else {
+				fallbackReasons.push_back("Roughness: Handle no residente");
+				hasFallbackTextures = true;
+			}
+		}
+		else {
+			fallbackReasons.push_back("Roughness: No presente");
+			hasFallbackTextures = true;
+		}
+
+		auto aoMap = material->getAoMap();
+		if (aoMap && aoMap->id() != 0) {
+			BindlessHandle handle = CreateTextureHandle(aoMap->id());
+			if (handle.isResident) {
+				gpuMaterial.aoTexture = handle.handle;
+				gpuMaterial.flags |= (1 << 4);
+			}
+			else {
+				fallbackReasons.push_back("AO: Handle no residente");
+				hasFallbackTextures = true;
+			}
+		}
+		else {
+			fallbackReasons.push_back("AO: No presente");
+			hasFallbackTextures = true;
+		}
 	}
 
-	auto metallicMap = material->getMetallicMap();
-	if (metallicMap && metallicMap->id() != 0) {
-		BindlessHandle handle = CreateTextureHandle(metallicMap->id());
-		if (handle.isResident) {
-			gpuMaterial.metallicTexture = handle.handle;
-			gpuMaterial.flags |= (1 << 2);
-		}
-		else {
-			fallbackReasons.push_back("Metallic: Handle no residente");
-			hasFallbackTextures = true;
-		}
+	if (material->GetShaderType() == ShaderType::PBR) {
+		gpuMaterial.flags |= (1 << 16);
 	}
 	else {
-		fallbackReasons.push_back("Metallic: No presente");
-		hasFallbackTextures = true;
-	}
-
-	auto roughnessMap = material->getRoughnessMap();
-	if (roughnessMap && roughnessMap->id() != 0) {
-		BindlessHandle handle = CreateTextureHandle(roughnessMap->id());
-		if (handle.isResident) {
-			gpuMaterial.roughnessTexture = handle.handle;
-			gpuMaterial.flags |= (1 << 3);
-		}
-		else {
-			fallbackReasons.push_back("Roughness: Handle no residente");
-			hasFallbackTextures = true;
-		}
-	}
-	else {
-		fallbackReasons.push_back("Roughness: No presente");
-		hasFallbackTextures = true;
-	}
-
-	auto aoMap = material->getAoMap();
-	if (aoMap && aoMap->id() != 0) {
-		BindlessHandle handle = CreateTextureHandle(aoMap->id());
-		if (handle.isResident) {
-			gpuMaterial.aoTexture = handle.handle;
-			gpuMaterial.flags |= (1 << 4);
-		}
-		else {
-			fallbackReasons.push_back("AO: Handle no residente");
-			hasFallbackTextures = true;
-		}
-	}
-	else {
-		fallbackReasons.push_back("AO: No presente");
-		hasFallbackTextures = true;
+		gpuMaterial.flags &= ~(1 << 16);
 	}
 
 	if (hasFallbackTextures) {
@@ -272,17 +333,65 @@ uint32_t BindlessManager::RegisterMaterial(const Material* material) {
 		LOG(LogType::LOG_WARNING, "Material '%p' usando texturas fucsia fallback: %s",
 			material, reasons.c_str());
 	}
+}
+
+uint32_t BindlessManager::RegisterMaterial(const Material* material) {
+	if (!material) return UINT32_MAX;
+
+	auto it = materialIndices.find(material);
+	if (it != materialIndices.end()) {
+		if (HasMaterialChanged(material)) {
+			LOG(LogType::LOG_INFO, "Material registrado ha cambiado, actualizando: Idx=%u", it->second);
+			UpdateMaterial(material);
+		}
+		return it->second;
+	}
+
+	if (materials.size() >= MAX_MATERIALS) {
+		LOG(LogType::LOG_WARNING, "Warning: Alcanzado límite máximo de materiales registrados");
+		return UINT32_MAX;
+	}
+
+	GPUMaterial gpuMaterial;
+	SetupGPUMaterial(gpuMaterial, material);
 
 	uint32_t index = static_cast<uint32_t>(materials.size());
 	materials.push_back(gpuMaterial);
 	materialIndices[material] = index;
 
-	LOG(LogType::LOG_INFO, "Material registrado: Idx=%u, Color=(%f,%f,%f,%f), Flags=%u, Fallback=%s",
+	materialHashes[material] = CalculateMaterialHash(material);
+
+	LOG(LogType::LOG_INFO, "Material registrado: Idx=%u, Color=(%f,%f,%f,%f), ShaderType=%u, Flags=%u",
 		index, gpuMaterial.albedoColor.r, gpuMaterial.albedoColor.g,
 		gpuMaterial.albedoColor.b, gpuMaterial.albedoColor.a,
-		gpuMaterial.flags, hasFallbackTextures ? "Sí" : "No");
+		gpuMaterial.shaderType, gpuMaterial.flags);
 
 	return index;
+}
+
+bool BindlessManager::UpdateMaterial(const Material* material) {
+	if (!material) return false;
+
+	auto it = materialIndices.find(material);
+	if (it == materialIndices.end()) {
+		LOG(LogType::LOG_WARNING, "UpdateMaterial: Material no registrado previamente");
+		return false;
+	}
+
+	uint32_t materialIndex = it->second;
+	if (materialIndex >= materials.size()) {
+		LOG(LogType::LOG_ERROR, "UpdateMaterial: Índice de material fuera de rango: %u", materialIndex);
+		return false;
+	}
+
+	SetupGPUMaterial(materials[materialIndex], material);
+
+	materialHashes[material] = CalculateMaterialHash(material);
+
+	LOG(LogType::LOG_INFO, "Material actualizado: Idx=%u, ShaderType=%u, Flags=%u",
+		materialIndex, materials[materialIndex].shaderType, materials[materialIndex].flags);
+
+	return true;
 }
 
 uint32_t BindlessManager::AddInstance(const GPUInstance& instance) {

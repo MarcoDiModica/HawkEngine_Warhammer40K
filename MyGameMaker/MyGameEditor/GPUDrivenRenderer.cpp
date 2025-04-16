@@ -330,81 +330,15 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 
 	//// Retornar tempranamente para evitar ejecutar el resto del código
 	//return;
-
-	if (drawCommands.empty()) {
-		return;
-	}
-
-	GLuint bindlessShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::BINDLESS_PBR);
-
-	if (bindlessShader == 0) {
-		LOG(LogType::LOG_ERROR, "Error: No se pudo encontrar shader bindless para renderizado");
-		return;
-	}
-
-	glUseProgram(bindlessShader);
-
-	glUniformMatrix4fv(glGetUniformLocation(bindlessShader, "view"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(bindlessShader, "projection"), 1, GL_FALSE, glm::value_ptr(projMatrix));
-
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, BindlessManager::GetInstance().GetMaterialBuffer());
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, BindlessManager::GetInstance().GetMeshBuffer());
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, BindlessManager::GetInstance().GetInstanceBuffer());
-
-	glBindVertexArray(defaultVAO);
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
-
-	if (GLEW_ARB_multi_draw_indirect) {
-		LOG(LogType::LOG_INFO, "Usando multi-draw indirecto para renderizado bindless");
-		glMultiDrawElementsIndirect(
-			GL_TRIANGLES,
-			GL_UNSIGNED_INT,
-			nullptr,
-			(GLsizei)drawCommands.size(),
-			sizeof(DrawElementsCommand)
-		);
-	}
-	else {
-		LOG(LogType::LOG_INFO, "Usando fallback de multi-draw indirecto (no soportado por la GPU)");
-		// Fallback cuando multi-draw indirect no está disponible
-		for (size_t i = 0; i < drawCommands.size(); i++) {
-			const DrawElementsCommand& cmd = drawCommands[i];
-
-			// Obtener datos de malla para este draw command
-			GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullData[i].meshIndex);
-			if (!meshData) continue;
-
-			// Bind VAO y buffers específicos para esta malla
-			glBindVertexArray(meshData->vertexArray);
-
-			glDrawElementsInstancedBaseVertexBaseInstance(
-				GL_TRIANGLES,
-				cmd.count,
-				GL_UNSIGNED_INT,
-				(void*)(intptr_t)(cmd.firstIndex * sizeof(GLuint)),
-				cmd.instanceCount,
-				cmd.baseVertex,
-				cmd.baseInstance
-			);
-		}
-	}
-
-	glBindVertexArray(0);
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
-	glUseProgram(0);
-
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, 0);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, 0);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, 0);
 }
 
 bool GPUDrivenRenderer::CompileCullingShader() {
-	// TODO: Implementar shader de culling en GPU
-	// Por ahora retornamos false para indicar que no está implementado
+	//pillar el shader de ShaderManager GetShaderPorgram
+	cullingShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::CULLING_COMPUTE);
+	if (cullingShader == 0) {
+		LOG(LogType::LOG_ERROR, "Error: No se pudo obtener el programa de shader de culling");
+		return false;
+	}
+
 	return false;
 }

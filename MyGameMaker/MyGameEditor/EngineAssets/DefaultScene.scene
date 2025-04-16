@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
-  uuid: 10078735961177156755
+  uuid: 13379086930109445952
   tag: Player
   active: true
   isStatic: false
@@ -22,6 +22,15 @@ GameObject0:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -72,15 +81,6 @@ GameObject0:
         useColorGradient: false
         texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
       particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -142,7 +142,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 8872158522166618613
+      uuid: 16021111896310561444
       tag: Untagged
       active: true
       isStatic: false
@@ -155,7 +155,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -201,7 +201,7 @@ GameObject0:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 5982206921408468220
+      uuid: 14685569622938531847
       tag: Untagged
       active: true
       isStatic: false
@@ -231,8 +231,8 @@ GameObject0:
           maxLifetime: 0.25
           minSpeed: 0
           maxSpeed: 0
-          startSize: 3
-          endSize: 3
+          startSize: 1
+          endSize: 1
           minSize: 1
           maxSize: 1
           startColor:
@@ -273,7 +273,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 2978857256785473088
+      uuid: 18151852433815862355
       tag: Untagged
       active: true
       isStatic: false
@@ -303,7 +303,7 @@ GameObject0:
           maxLifetime: 4
           minSpeed: 0.5
           maxSpeed: 1.5
-          startSize: 2
+          startSize: 0.5
           endSize: 2
           minSize: 0.5
           maxSize: 0
@@ -345,7 +345,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 6645642857405608966
+      uuid: 8200342410190110718
       tag: Untagged
       active: true
       isStatic: false
@@ -418,7 +418,7 @@ GameObject0:
       Children: ~
 GameObject1:
   name: MainCamera
-  uuid: 6814382364244980304
+  uuid: 13053418020080560094
   tag: Untagged
   active: true
   isStatic: false
@@ -431,7 +431,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -453,9 +453,9 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
-  name: Lictor
-  uuid: 3579198574048065780
-  tag: Ranged
+  name: Hormagaunt
+  uuid: 5120899802372832100
+  tag: Melee
   active: true
   isStatic: false
   Components:
@@ -465,65 +465,15 @@ GameObject2:
       localPosition:
         - 0
         - 0
-        - 40
+        - 10
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 5
-        - 5
-        - 5
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 10
-      particlesPerSecond: 10
-      minLifetime: 1
-      maxLifetime: 3
-      minSpeed: 1
-      maxSpeed: 3
-      startSize: 1
-      endSize: 1
-      minSize: 0
-      maxSize: 0
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 0
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0
-        - 0
-      shapeParam1: 0.5
-      shapeParam2: 1
-      shapeParam3: 0
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 133
-        - 175
-      useAnimation: false
-      animSpeed: 0
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 0
-        softness: 0
-        useColorGradient: false
-        texturePath: ""
-      particleType: 0
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -533,15 +483,65 @@ GameObject2:
       is_spatial: false
       auto_play: false
       loop: false
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 2
+      endSize: 2
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.200000003
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: true
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 640
+        - 360
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 9
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/EnemyDash.png
+      particleType: 9
     BoxColliderComponent:
       size:
-        - 0.25
-        - 1
-        - 0.25
+        - 0.699999988
+        - 1.29999995
+        - 1.60000002
       offset:
         - 0
-        - 3
-        - -1.39999998
+        - 0
+        - 0
       isTrigger: false
     RigidbodyComponent:
       mass: 1
@@ -557,34 +557,34 @@ GameObject2:
         angular: 0
     ScriptComponents:
       Script0:
-        name: EnemyControllerRanged
+        name: EnemyControllerMelee
   Children:
-    - name: LictorMesh
-      uuid: 5247888274084393736
+    - name: HormagauntMesh
+      uuid: 3755360163900037706
       tag: Untagged
-      active: false
+      active: true
       isStatic: false
       Components:
         Transform_Component:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -0.00024597215815447271
-            - 0.0018853993387892842
-            - -0.0003092930419370532
-          localRotation:
             - 0
+            - 0
+            - 0
+          localRotation:
+            - 0.87002267044394355
             - -0
             - 0
           localScale:
-            - 0.004091363400220871
-            - 0.004091363400220871
-            - 0.004091363400220871
+            - 0.0099999997764825821
+            - 0.0099999997764825821
+            - 0.0099999997764825821
         MeshRenderer:
           name: MeshRenderer
           enabled: true
           mesh:
-            name: Plane.010
+            name: mesh.102
           material:
             wrap_mode: Repeat
             filter: Nearest
@@ -598,10 +598,10 @@ GameObject2:
             ao: 1
             tonemap_strength: 1
             shader_type: PBR
-            image: Material_Base_color
-            normal_map: Material_Normal_OpenGL
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
             metallic_map: ""
-            roughness_map: Material_Roughness
+            roughness_map: Low_BSurfaceMesh_Roughness
             ao_map: ""
           color:
             - 1
@@ -610,10 +610,17 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
       Children: ~
 GameObject3:
   name: Floor
-  uuid: 6391462890732996715
+  uuid: 8185538279445432638
   tag: Untagged
   active: true
   isStatic: false

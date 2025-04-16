@@ -127,6 +127,7 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 		return UINT32_MAX;
 	}
 
+	// Check if mesh with this ID already exists
 	for (size_t i = 0; i < meshes.size(); ++i) {
 		if (meshes[i].meshId == modelID) {
 			uint32_t existingIndex = static_cast<uint32_t>(i);
@@ -150,19 +151,33 @@ uint32_t BindlessManager::RegisterMesh(Mesh* mesh) {
 	GPUMesh gpuMesh;
 	gpuMesh.vertexArray = modelData.vA;
 	gpuMesh.indexBuffer = modelData.iBID;
-	gpuMesh.vertexBuffer = modelData.vBPosID;
-	gpuMesh.indexCount = static_cast<uint32_t>(modelData.indexData.size());
-	gpuMesh.vertexCount = static_cast<uint32_t>(modelData.vertexData.size());
+	gpuMesh.positionBuffer = modelData.vBPosID;
+	gpuMesh.texCoordBuffer = modelData.vBTCoordsID;
+	gpuMesh.normalBuffer = modelData.vBNormalsID;
+	gpuMesh.tangentBuffer = modelData.vBTangentsID;
+	gpuMesh.bitangentBuffer = modelData.vBBitangentsID;
+	gpuMesh.colorBuffer = modelData.vBColorsID;
+
+	gpuMesh.indexCount = modelData.indexData.size();
+	gpuMesh.vertexCount = modelData.vertexData.size();
 	gpuMesh.meshId = modelID;
-	gpuMesh.padding = 0;
+
+	// Set attribute flags based on which buffers are available
+	gpuMesh.attributeFlags = 0;
+	if (modelData.vBPosID != 0) gpuMesh.attributeFlags |= (1 << 0);  // Position
+	if (modelData.vBTCoordsID != 0) gpuMesh.attributeFlags |= (1 << 1);  // TexCoord
+	if (modelData.vBNormalsID != 0) gpuMesh.attributeFlags |= (1 << 2);  // Normal
+	if (modelData.vBTangentsID != 0) gpuMesh.attributeFlags |= (1 << 3);  // Tangent
+	if (modelData.vBBitangentsID != 0) gpuMesh.attributeFlags |= (1 << 4);  // Bitangent
+	if (modelData.vBColorsID != 0) gpuMesh.attributeFlags |= (1 << 5);  // Color
 
 	uint32_t index = static_cast<uint32_t>(meshes.size());
 	meshes.push_back(gpuMesh);
 	meshIndices[mesh] = index;
 
-	LOG(LogType::LOG_INFO, "Malla '%s' registrada: Idx=%u, ID=%u, VAO=%u, VBO=%u, IBO=%u, Vértices=%u, Índices=%u",
+	LOG(LogType::LOG_INFO, "Malla '%s' registrada: Idx=%u, ID=%u, VAO=%u, PosBuffer=%u, IBO=%u, Attrs=0x%X",
 		model->GetMeshName().c_str(), index, modelID, gpuMesh.vertexArray,
-		gpuMesh.vertexBuffer, gpuMesh.indexBuffer, gpuMesh.vertexCount, gpuMesh.indexCount);
+		gpuMesh.positionBuffer, gpuMesh.indexBuffer, gpuMesh.attributeFlags);
 
 	return index;
 }
@@ -635,7 +650,7 @@ GLuint BindlessManager::CreateStorageBuffer(size_t size, GLenum usage) {
 			errorMsg = "GL_OUT_OF_MEMORY - No hay memoria disponible";
 			break;
 		case GL_INVALID_VALUE:
-			errorMsg = "GL_INVALID_VALUE - Parámetro inválido";
+			errorMsg = "GL_INVALID_VALUE - Parámet	ro inválido";
 			break;
 		case GL_INVALID_OPERATION:
 			errorMsg = "GL_INVALID_OPERATION - Operación inválida";
@@ -653,4 +668,119 @@ GLuint BindlessManager::CreateStorageBuffer(size_t size, GLenum usage) {
 		buffer, size, usage);
 
 	return buffer;
+}
+
+void BindlessManager::CreateFallbackCubeMesh() {
+	const float vertices[] = {
+		// Cara frontal
+		-1.0f, -1.0f,  1.0f,
+		 1.0f, -1.0f,  1.0f,
+		 1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		// Cara trasera
+		-1.0f, -1.0f, -1.0f,
+		 1.0f, -1.0f, -1.0f,
+		 1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f
+	};
+
+	// Normal data for cube
+	const float normals[] = {
+		// Front face
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f,
+		// Back face
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f,
+		0.0f, 0.0f, -1.0f
+	};
+
+	// Texcoords for cube
+	const float texCoords[] = {
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f
+	};
+
+	// Índices para el cubo (6 caras, 2 triángulos por cara)
+	const unsigned int indices[] = {
+		// Cara frontal
+		0, 1, 2,
+		2, 3, 0,
+		// Cara derecha
+		1, 5, 6,
+		6, 2, 1,
+		// Cara trasera
+		7, 6, 5,
+		5, 4, 7,
+		// Cara izquierda
+		4, 0, 3,
+		3, 7, 4,
+		// Cara superior
+		3, 2, 6,
+		6, 7, 3,
+		// Cara inferior
+		4, 5, 1,
+		1, 0, 4
+	};
+
+	fallbackIndexCount = 36;
+
+	glGenVertexArrays(1, &fallbackVAO);
+	glBindVertexArray(fallbackVAO);
+
+	// Position buffer
+	glGenBuffers(1, &fallbackVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, fallbackVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+	// Normal buffer 
+	GLuint normalBuffer;
+	glGenBuffers(1, &normalBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(normals), normals, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+	// TexCoord buffer
+	GLuint texCoordBuffer;
+	glGenBuffers(1, &texCoordBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), nullptr);
+
+	// Index buffer
+	glGenBuffers(1, &fallbackIBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fallbackIBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	fallbackMesh.vertexArray = fallbackVAO;
+	fallbackMesh.indexBuffer = fallbackIBO;
+	fallbackMesh.positionBuffer = fallbackVBO;
+	fallbackMesh.texCoordBuffer = texCoordBuffer;
+	fallbackMesh.normalBuffer = normalBuffer;
+	fallbackMesh.tangentBuffer = 0; // No tangents for fallback
+	fallbackMesh.bitangentBuffer = 0; // No bitangents for fallback
+	fallbackMesh.colorBuffer = 0; // No colors for fallback
+	fallbackMesh.indexCount = fallbackIndexCount;
+	fallbackMesh.vertexCount = 8;
+	fallbackMesh.meshId = UINT32_MAX;
+	fallbackMesh.attributeFlags = (1 << 0) | (1 << 1) | (1 << 2); // Has positions, normals, texcoords
+
+	LOG(LogType::LOG_INFO, "Malla de cubo fallback creada correctamente (VAO: %u, IBO: %u)", fallbackVAO, fallbackIBO);
 }

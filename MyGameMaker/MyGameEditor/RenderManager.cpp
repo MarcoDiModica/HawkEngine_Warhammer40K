@@ -47,7 +47,7 @@ bool RenderManager::Initialize() {
 	}
 
 	if (!InitializeShaders()) {
-		LOG(LogType::LOG_ERROR, "Error: No se pudieron inicializar shaders bindless PBR");
+		LOG(LogType::LOG_ERROR, "Error: No se pudieron inicializar shaders bindless");
 		return false;
 	}
 
@@ -86,6 +86,7 @@ void RenderManager::Shutdown() {
 	defaultVAO = 0;
 	timeQueries[0] = timeQueries[1] = timeQueries[2] = 0;
 	bindlessPBRShader = 0;
+	bindlessUnlitShader = 0;
 
 	queuedObjects.clear();
 	instanceGroups.clear();
@@ -159,12 +160,15 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 
 	GPUDrivenRenderer::GetInstance().PrepareDrawCommands(/*frustum*/);
 
-	GLuint bindlessPBRShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::BINDLESS_PBR);
-
+	// Configuración para el shader PBR
 	if (bindlessPBRShader != 0) {
-		if (useForwardPlus) {
-			glUseProgram(bindlessPBRShader);
+		glUseProgram(bindlessPBRShader);
 
+		// Activar modo bindless
+		glUniform1i(glGetUniformLocation(bindlessPBRShader, "useBindlessMode"), 1);
+
+		// Configurar forward plus si es necesario
+		if (useForwardPlus) {
 			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3,
 				ForwardPlusLighting::GetInstance().GetPointLightBuffer());
 			glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4,
@@ -178,12 +182,22 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 			glUniform2i(glGetUniformLocation(bindlessPBRShader, "screenSize"), windowWidth, windowHeight);
 			glUniform1i(glGetUniformLocation(bindlessPBRShader, "tileSize"),
 				ForwardPlusLighting::GetInstance().GetTileSize());
-
-			glm::vec3 viewPos = glm::vec3(glm::inverse(viewMatrix)[3]);
-			glUniform3fv(glGetUniformLocation(bindlessPBRShader, "viewPos"), 1, glm::value_ptr(viewPos));
-
-			glUseProgram(0);
 		}
+
+		glm::vec3 viewPos = glm::vec3(glm::inverse(viewMatrix)[3]);
+		glUniform3fv(glGetUniformLocation(bindlessPBRShader, "viewPos"), 1, glm::value_ptr(viewPos));
+
+		glUseProgram(0);
+	}
+
+	// Configuración para el shader UNLIT
+	if (bindlessUnlitShader != 0) {
+		glUseProgram(bindlessUnlitShader);
+
+		// Activar modo bindless
+		glUniform1i(glGetUniformLocation(bindlessUnlitShader, "useBindlessMode"), 1);
+
+		glUseProgram(0);
 	}
 
 	LOG(LogType::LOG_INFO, "Rendering %d objects, %d instances",
@@ -196,7 +210,6 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 
 	stats.visibleGameObjects = GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount();
 	stats.totalDrawCalls = GPUDrivenRenderer::GetInstance().GetTotalDrawCommands();
-
 }
 
 void RenderManager::RenderFromCamera(CameraComponent* camera) {
@@ -227,14 +240,20 @@ void RenderManager::SetUseOcclusionCulling(bool enable) {
 }
 
 bool RenderManager::InitializeShaders() {
+	// Obtener shader PBR
 	bindlessPBRShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::BINDLESS_PBR);
-
 	if (bindlessPBRShader == 0) {
-		LOG(LogType::LOG_ERROR, "Error: Shader bindless PBR no encontrado en ShaderManager");
+		LOG(LogType::LOG_WARNING, "Warning: Shader bindless PBR no encontrado en ShaderManager");
+	}
+
+	// Obtener shader UNLIT (usamos el shader normal que ahora soporta bindless)
+	bindlessUnlitShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::UNLIT);
+	if (bindlessUnlitShader == 0) {
+		LOG(LogType::LOG_ERROR, "Error: Shader UNLIT no encontrado en ShaderManager");
 		return false;
 	}
 
-	return true;
+	return bindlessUnlitShader != 0; // Al menos necesitamos el shader UNLIT
 }
 
 void RenderManager::ProcessGameObject(GameObject* gameObject) {
@@ -254,13 +273,15 @@ void RenderManager::ProcessGameObject(GameObject* gameObject) {
 				GPUInstance instance;
 				instance.modelMatrix = gameObject->GetTransform()->GetMatrix();
 				instance.prevModelMatrix = instance.modelMatrix;
-				instance.objectData = glm::vec4(0.0f);
+				instance.objectData = glm::vec4(1.0f);
 				instance.meshIndex = meshIndex;
 				instance.materialIndex = materialIndex;
 				instance.objectId = gameObject->GetID().GetValue();
 				instance.flags = 0;
 
-				instanceGroups[meshIndex].push_back(instance);
+				MeshMaterialKey key{ meshIndex, materialIndex };
+
+				instanceGroups[key].push_back(instance);
 			}
 		}
 	}
@@ -270,7 +291,7 @@ void RenderManager::CreateInstanceGroups() {
 	BindlessManager::GetInstance().UpdateBuffers();
 
 	for (const auto& group : instanceGroups) {
-		uint32_t meshIndex = group.first;
+		const MeshMaterialKey& key = group.first;
 		const auto& instances = group.second;
 
 		if (!instances.empty()) {
@@ -279,7 +300,13 @@ void RenderManager::CreateInstanceGroups() {
 			// En una implementación real calcularías esto basado en las posiciones de los objetos
 			glm::vec4 boundingSphere(0.0f, 0.0f, 0.0f, 1000.0f);
 
-			GPUDrivenRenderer::GetInstance().AddInstanceGroup(meshIndex, boundingSphere, instances);
+			// Ahora pasamos tanto meshIndex como materialIndex
+			GPUDrivenRenderer::GetInstance().AddInstanceGroup(
+				key.meshIndex,
+				key.materialIndex,
+				boundingSphere,
+				instances
+			);
 		}
 	}
 }

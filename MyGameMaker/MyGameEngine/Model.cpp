@@ -1,8 +1,6 @@
 #include "Model.h"
 #include "AssimpGLMHelpers.h"
 
-std::unordered_map<uint32_t, std::weak_ptr<Model>> ModelRegistry::s_Models;
-
 void Model::SetVertexBoneDataToDefault(Vertex& vertex)
 {
 	for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
@@ -72,23 +70,4 @@ void Model::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, aiMesh* 
 			SetVertexBoneData(vertices[vertexId], boneID, weight);
 		}
 	}
-}
-
-void ModelRegistry::RegisterModel(std::shared_ptr<Model> model)
-{
-	if (model)
-		s_Models[model->GetID()] = model;
-}
-
-void ModelRegistry::UnregisterModel(uint32_t id)
-{
-	s_Models.erase(id);
-}
-
-std::shared_ptr<Model> ModelRegistry::GetModelByID(uint32_t id)
-{
-	auto it = s_Models.find(id);
-	if (it != s_Models.end() && !it->second.expired())
-		return it->second.lock();
-	return nullptr;
 }

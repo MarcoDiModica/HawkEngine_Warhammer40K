@@ -121,17 +121,4 @@ private:
 	BoundingBox m_BoundingBox;
 
 	uint32_t m_ID = 0;
-
-	//void calculateBoundingBox(); // M�todo privado para calcular la bounding box
-};
-
-class ModelRegistry
-{
-public:
-	static void RegisterModel(std::shared_ptr<Model> model);
-	static void UnregisterModel(uint32_t id);
-	static std::shared_ptr<Model> GetModelByID(uint32_t id);
-
-private:
-	static std::unordered_map<uint32_t, std::weak_ptr<Model>> s_Models;
 };

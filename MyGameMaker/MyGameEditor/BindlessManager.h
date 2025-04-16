@@ -34,13 +34,18 @@ struct GPUMaterial {
 };
 
 struct GPUMesh {
-	GLuint vertexArray;     // VAO de la malla
-	GLuint indexBuffer;     // Índices de la malla
-	GLuint vertexBuffer;    // Vértices de la malla
-	uint32_t indexCount;    // Número de índices
-	uint32_t vertexCount;   // Número de vértices
-	uint32_t meshId;        // ID único de la malla
-	uint32_t padding;       // Alineación
+	GLuint vertexArray;        // VAO de la malla
+	GLuint indexBuffer;        // Índices de la malla
+	GLuint positionBuffer;     // Buffer de posiciones
+	GLuint texCoordBuffer;     // Buffer de coordenadas de textura
+	GLuint normalBuffer;       // Buffer de normales
+	GLuint tangentBuffer;      // Buffer de tangentes
+	GLuint bitangentBuffer;    // Buffer de bitangentes
+	GLuint colorBuffer;        // Buffer de colores
+	uint32_t indexCount;       // Número de índices
+	uint32_t vertexCount;      // Número de vértices
+	uint32_t meshId;           // ID único de la malla
+	uint32_t attributeFlags;   // Flags para indicar qué atributos están disponibles
 };
 
 struct GPUInstance {
@@ -98,6 +103,7 @@ private:
 	void SetupGPUMaterial(GPUMaterial& gpuMaterial, const Material* material);
 
 	GLuint CreateStorageBuffer(size_t size, GLenum usage);
+	void CreateFallbackCubeMesh();
 
 	GLuint meshBuffers[2] = { 0, 0 };
 	GLuint materialBuffers[2] = { 0, 0 };
@@ -156,73 +162,6 @@ private:
 	GLuint fallbackIBO = 0;
 	uint32_t fallbackIndexCount = 0;
 	GPUMesh fallbackMesh;
-
-	void CreateFallbackCubeMesh() {
-		const float vertices[] = {
-			// Cara frontal
-			-1.0f, -1.0f,  1.0f,
-			 1.0f, -1.0f,  1.0f,
-			 1.0f,  1.0f,  1.0f,
-			-1.0f,  1.0f,  1.0f,
-			// Cara trasera
-			-1.0f, -1.0f, -1.0f,
-			 1.0f, -1.0f, -1.0f,
-			 1.0f,  1.0f, -1.0f,
-			-1.0f,  1.0f, -1.0f
-		};
-
-		// Índices para el cubo (6 caras, 2 triángulos por cara)
-		const unsigned int indices[] = {
-			// Cara frontal
-			0, 1, 2,
-			2, 3, 0,
-			// Cara derecha
-			1, 5, 6,
-			6, 2, 1,
-			// Cara trasera
-			7, 6, 5,
-			5, 4, 7,
-			// Cara izquierda
-			4, 0, 3,
-			3, 7, 4,
-			// Cara superior
-			3, 2, 6,
-			6, 7, 3,
-			// Cara inferior
-			4, 5, 1,
-			1, 0, 4
-		};
-
-		fallbackIndexCount = 36;
-
-		glGenVertexArrays(1, &fallbackVAO);
-		glBindVertexArray(fallbackVAO);
-
-		glGenBuffers(1, &fallbackVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, fallbackVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-
-		glGenBuffers(1, &fallbackIBO);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fallbackIBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-		fallbackMesh.vertexArray = fallbackVAO;
-		fallbackMesh.indexBuffer = fallbackIBO;
-		fallbackMesh.vertexBuffer = fallbackVBO;
-		fallbackMesh.indexCount = fallbackIndexCount;
-		fallbackMesh.vertexCount = 8;
-		fallbackMesh.meshId = UINT32_MAX;
-		fallbackMesh.padding = 0;
-
-		LOG(LogType::LOG_INFO, "Malla de cubo fallback creada correctamente (VAO: %u, IBO: %u)", fallbackVAO, fallbackIBO);
-	}
 
 	uint32_t GetFallbackMeshIndex() {
 		if (meshes.empty()) {

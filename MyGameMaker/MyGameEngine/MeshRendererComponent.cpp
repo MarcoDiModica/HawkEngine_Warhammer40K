@@ -302,6 +302,8 @@ void MeshRenderer::RenderWithUnlitShader(Shaders* shader, const glm::mat4& view,
 
 	shader->SetUniformMat4("view", view);
 	shader->SetUniformMat4("projection", projection);
+
+	//the same as pbr
 }
 
 void MeshRenderer::SetUpAnimationProperties(Shaders* shader) const

@@ -184,7 +184,7 @@ bool Root::Start()
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Level2 Zone1.fbx");
 
-	auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	/*auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 
 	auto firstMaterial = playerMesh1->GetComponent<MeshRenderer>()->GetMaterial();
 	auto firstMesh = playerMesh1->GetComponent<MeshRenderer>()->GetMesh();
@@ -224,7 +224,10 @@ bool Root::Start()
 	auto playerMesh18 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 	playerMesh18->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
 	auto playerMesh19 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
-	playerMesh19->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);
+	playerMesh19->GetComponent<MeshRenderer>()->SetMaterial(firstMaterial);*/
+
+	auto Kevin = CreateCube("Kevin");
+	Kevin->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
 
 	//particle->ApplyPreset(Particle)
 
@@ -265,7 +268,7 @@ bool Root::Start()
 	objMainCamera->GetTransform()->Rotate(glm::radians(55.0f), glm::dvec3(1, 0, 0));
 	auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
-	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
 	mainCamera = objMainCamera;
 	UpdateCameraPriority();
 	
@@ -444,10 +447,10 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	auto floor = CreateCube("Floor");
+	/*auto floor = CreateCube("Floor");
 	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);*/
 	
 	
     //auto envObj = CreateGameObject("Environment1");

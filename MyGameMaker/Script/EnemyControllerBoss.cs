@@ -8,9 +8,10 @@ using HawkEngine;
 public class EnemyControllerBoss : EnemyController
 {
     private float hurtboxDuration = 0.5f; 
-    private Vector3 hurtboxSize = new Vector3(10.0f, 1.0f, 10.0f); 
-    private Vector3 hurtboxOffset = new Vector3(3.0f, 0.0f, 0.0f); 
-    private GameObject hurtboxObject;
+    private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 10.0f); 
+    private GameObject slamHurtboxObject;
+
+    private GameObject clawHurtboxObject;
 
     //audio
     private Audio music;
@@ -35,12 +36,20 @@ public class EnemyControllerBoss : EnemyController
     private float postAttackDelay = 2.0f;
     private float burrowTime = 2.0f;
     private bool isPreparingAttack = false;
+    //private Vector3[] fixedPositions = new Vector3[]
+    //{
+    //    new Vector3(10,-21.807f,1020),
+    //    new Vector3(-10,-21.807f,1020),
+    //    new Vector3(10,-21.807f,1000),
+    //    new Vector3(-10,-21.807f,1000)
+    //};
+
     private Vector3[] fixedPositions = new Vector3[]
     {
-        new Vector3(10,-21.807f,1020),
-        new Vector3(-10,-21.807f,1020),
-        new Vector3(10,-21.807f,1000),
-        new Vector3(-10,-21.807f,1000)
+        new Vector3(10, 0, -10),
+        new Vector3(-10, 0, -10),
+        new Vector3(10, 0, 10),
+        new Vector3(-10, 0, 10)
     };
     private float slamAttackDistance = 20.0f;
     private float slamAttackCooldown = 2.0f;
@@ -88,7 +97,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 600.0f;
+        currentHealth = 399.0f;
         gameObject.tag = "Boss";
         isDead = false;
     }
@@ -174,16 +183,32 @@ public class EnemyControllerBoss : EnemyController
                     {
                         if (playerTransform != null)
                         {
-
-                            if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                            if (slamAttackTimer <= 0.0f)
                             {
-                                SlamAttack();
+                                if (distanceToPlayer >= 5.0f && distanceToPlayer <= 10.0f)
+                                {
+                                    ClawStrike();
+                                }
+                                else if (distanceToPlayer <= slamAttackDistance)
+                                {
+                                    SlamAttack();
+                                }
                                 slamAttackTimer = slamAttackCooldown;
                             }
+                            //if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                            //{
+                            //    ClawStrike();
+                            //    slamAttackTimer = slamAttackCooldown;
+                            //}
+                            //else
+                            //{
+                            //    ChangePositionToClosest();
+                            //}
                             else
                             {
                                 ChangePositionToClosest();
                             }
+                        
                         }
                         timer = 0.0f;
                     }
@@ -218,7 +243,7 @@ public class EnemyControllerBoss : EnemyController
 
                             if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
                             {
-                                SlamAttack();
+                                ClawStrike();
                                 slamAttackTimer = slamAttackCooldown;
                             }
                             else
@@ -236,12 +261,12 @@ public class EnemyControllerBoss : EnemyController
                     break;
         }
 
-        if (hurtboxObject != null)
+        if (slamHurtboxObject != null || clawHurtboxObject != null)
         {
             hurtboxDuration += deltaTime;
             if (hurtboxDuration >= 0.5)
             {
-                DestroyHurtbox();
+                DestroyHurtboxes();
                 hurtboxDuration = 0.0f;
             }
         }
@@ -339,7 +364,7 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             CreateClawHurtbox();
-            // cono delante del cuerpo, offset de pocas unidades
+         
         }
     }
 
@@ -384,7 +409,7 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             Engineson.print("Burrowed");
-            enemyTransform.position = new Vector3(0.0f, -40.0f, 1080.0f);
+            enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
             collider.SetPosition(enemyTransform.position);
             isBuried = true;
         }
@@ -400,29 +425,85 @@ public class EnemyControllerBoss : EnemyController
 
     private void CreateSlamHurtbox()
     {
-        hurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
-        hurtboxObject.AddComponent<MeshRenderer>();
+        if (playerTransform == null) return;
 
-        var hurtboxTransform = hurtboxObject.GetComponent<Transform>();
-        hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X);
-        hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
+        slamHurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
+        slamHurtboxObject.AddComponent<MeshRenderer>();
+        slamHurtboxObject.AddComponent<BoxCollider>();
+        slamHurtboxObject.GetComponent<BoxCollider>().SetTrigger(true);
+        slamHurtboxObject.tag = "EnemyAttack";
+        
+        Vector3 bossPosition = enemyTransform.position;
+        Vector3 playerPosition = playerTransform.position;
+        Vector3 direction = Vector3.Normalize(new Vector3(playerPosition.X - bossPosition.X, 0, playerPosition.Z - bossPosition.Z));
 
-        hurtboxObject.AddComponent<BoxCollider>();
-        hurtboxObject.GetComponent<BoxCollider>().SetTrigger(true);
-        hurtboxObject.tag = "EnemyAttack";
+        float angle = (float)Math.Atan2(direction.X, direction.Z);
+        Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
+
+        float halfLength = slamHurtboxSize.Z / 2.0f;
+        float offset = 5.0f;
+
+        Vector3 hurtboxPosition = bossPosition + direction * (halfLength + offset);
+
+        var hurtboxTransform = slamHurtboxObject.GetComponent<Transform>();
+        hurtboxTransform.position = hurtboxPosition;
+        hurtboxTransform.SetScale(slamHurtboxSize.X, slamHurtboxSize.Y, slamHurtboxSize.Z);
+        hurtboxTransform.SetRotationQuat(rotation);
     }
 
     private void CreateClawHurtbox()
     {
+        if (playerTransform == null) return;
+
+        int segments = 4;
+        float baseWidth = 2.0f;
+        float segmentLength = 1.5f;
+        float height = 1.0f;
+        float spacing = 1.0f;
+
+        Vector3 forward = Vector3.Normalize(enemyTransform.forward);
+        Vector3 origin = enemyTransform.position;
+
+        for (int i = 1; i <= segments; i++)
+        {
+            float width = baseWidth + (i * 0.5f);
+            float length = segmentLength;
+            Vector3 size = new Vector3(width, height, length);
+
+            Vector3 offset = forward * ((length + spacing) * i);
+            Vector3 position = origin + offset;
+
+            clawHurtboxObject = Engineson.CreateGameObject("ClawHurtbox", null);
+            clawHurtboxObject.AddComponent<MeshRenderer>();
+            clawHurtboxObject.AddComponent<BoxCollider>();
+            clawHurtboxObject.GetComponent<BoxCollider>().SetTrigger(true);
+            clawHurtboxObject.tag = "EnemyAttack";
+
+            var hurtboxTransform = clawHurtboxObject.GetComponent<Transform>();
+            hurtboxTransform.position = position;
+            hurtboxTransform.SetScale(size.X, size.Y, size.Z);
+
+            float angle = (float)Math.Atan2(forward.X, forward.Z);
+            Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
+            hurtboxTransform.SetRotationQuat(rotation);
+
+         
+        }
 
     }
 
-    private void DestroyHurtbox()
+    private void DestroyHurtboxes()
     {
-        if (hurtboxObject != null)
+        if (slamHurtboxObject != null)
         {
-            Engineson.Destroy(hurtboxObject);
-            hurtboxObject = null;
+            Engineson.Destroy(slamHurtboxObject);
+            slamHurtboxObject = null;
+        }
+
+        if (clawHurtboxObject != null)
+        {
+            Engineson.Destroy(clawHurtboxObject);
+            clawHurtboxObject = null;
         }
     }
 }

@@ -125,7 +125,7 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
-	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
+	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");*/
 	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -176,7 +176,7 @@ bool Root::Start()
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
 	//particle->ApplyPreset(Particle)
 
@@ -382,20 +382,20 @@ bool Root::Start()
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt->SetTag("Enemy");
 
-	//auto mawloc = CreateGameObject("Mawloc");
-	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -16, 1080));
-	//mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
-	//mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto mawlocMesh = CreateCube("MawlocMesh");
-	//ParentGameObject(*mawlocMesh, *mawloc);
-	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
+	auto mawloc = CreateGameObject("Mawloc");
+	mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
+	mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto mawlocMesh = CreateCube("MawlocMesh");
+	ParentGameObject(*mawlocMesh, *mawloc);
+	mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	//auto floor = CreateCube("Floor");
-	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	
 	
     //auto envObj = CreateGameObject("Environment1");

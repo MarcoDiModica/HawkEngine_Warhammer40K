@@ -5,24 +5,14 @@ using System.Numerics;
 public class Ball : MonoBehaviour
 {
     public float value = 0.0f;
-
-    private float distance = 6;
-    private float damage = 100;
-    
     private Rigidbody rigidbody;
-
     private float deathtimer = 0.2f;
     private bool needsDestroy = false;
     private float deathTimerPrevention = 0;
-
-    public override void Awake()
-    {
-
-    }
+    public override void Awake(){ }
 
     public void Init(Vector3 pos, Vector3 dir)
     {
-
         AddComponent<MeshRenderer>();
         GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
         GetComponent<Transform>().SetScale(2.0f, 2.0f, 2.0f);
@@ -33,9 +23,7 @@ public class Ball : MonoBehaviour
         rigidbody.SetGravity(new Vector3(0.0f, 0.0f, 0.0f) * 20);
         rigidbody.AddForce(dir * 20);
         rigidbody.SetFriction(0.5f);
-
     }
-
     public override void Update(float deltaTime)
     {
         if (needsDestroy)
@@ -43,9 +31,8 @@ public class Ball : MonoBehaviour
             deathTimerPrevention += deltaTime;
             if (deathTimerPrevention >= deathtimer)
             {
-                // En vez de destruir, se mueve 100 unidades hacia abajo
                 GetComponent<Transform>().position -= new Vector3(0, 100, 0);
-                needsDestroy = false; // Para que no siga moviéndose constantemente
+                needsDestroy = false;
             }
         }
     }

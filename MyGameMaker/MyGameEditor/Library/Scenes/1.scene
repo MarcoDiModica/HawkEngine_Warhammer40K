@@ -1,5 +1,5 @@
 SceneMetadata:
-  SceneName: DefaultScene
+  SceneName: 1
 GameObject0:
   name: MainCamera
   uuid: 5442281204832746374
@@ -15,7 +15,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -51,18 +51,71 @@ GameObject1:
         - 0.55956631898880005
         - 0.046262465417385101
       localRotation:
-        - -90.000016164857669
+        - -90.000014489018881
         - 0
         - 0
       localScale:
         - 0.23759564757347107
-        - 0.23759564757348053
-        - 0.23759564757348053
+        - 0.23759564757347107
+        - 0.23759564757347107
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
         name: 2938377707842750082
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject2:
+  name: Cylinder.010
+  uuid: 1854560615525380155
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0015566733200103045
+        - 0.0015566733200103045
+        - 0.0015566733200103045
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 2058912538061341143
       material:
         wrap_mode: Repeat
         filter: Nearest

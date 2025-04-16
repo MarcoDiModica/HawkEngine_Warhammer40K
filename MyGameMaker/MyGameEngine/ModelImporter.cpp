@@ -12,6 +12,7 @@
 #include <assimp/mesh.h>
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "MyAnimationEngine/Animation.h"
+#include "../MyGameEditor/Root.h"
 
 #include "Material.h"
 #include "MeshRendererComponent.h"
@@ -29,7 +30,6 @@
 #include "glm/gtx/matrix_decompose.hpp"
 // cosa ilegal
 #include "../MyGameEditor/Log.h"
-#define LIBRARY_PATH "Library\\"
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -250,29 +250,17 @@ std::vector<std::shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 			}
 		}
 
-		fs::path targetPath = fs::current_path() / fs::path(LIBRARY_PATH) / "Mesh";
 		size_t hash = GenerateMeshID(*modelsData[i]);
-		std::string fileName = std::to_string(hash) + ".mesh";
-		targetPath /= fileName;
-
-		if (fs::exists(targetPath)) {
-			LOG(LogType::LOG_INFO, "Mesh already exist");
-		}
-		else {
-			models[i]->SetID(hash);
-			LOG(LogType::LOG_INFO, "Mesh ID: %zu", hash);
-		}
+		models[i]->SetID(hash);
 
 		models[i]->SetModelData(*modelsData[i]);
 	}
 
 	for (int i = 0; i < models.size(); i++) {
-		if (models[i]->GetID() == 0) continue;
 		meshes.push_back(std::make_shared<Mesh>());
 		meshes[i] = std::make_shared<Mesh>();
 		meshes[i]->setModel(models[i]);
-		std::string str = std::to_string(models[i]->GetID());
-		meshes[i]->SaveBinary(str);
+		meshes[i] = Application->root->GetResourceManager()->AddMesh(meshes[i]);
 	}
 
 	return meshes;

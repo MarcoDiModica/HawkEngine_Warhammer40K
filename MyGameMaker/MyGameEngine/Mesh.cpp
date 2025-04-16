@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include <unordered_map>
 #include <unordered_set>
 #include <zlib.h>
 #include <queue>
@@ -17,7 +16,9 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "GameObject.h"
+#include "../MyGameEditor/App.h"
 #include "../MyGameEditor/Log.h"
+#include "ResourceManager.h"
 
 Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 {
@@ -824,14 +825,16 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	return mesh;
 }
 
-std::unordered_map<std::string, std::shared_ptr<Mesh>> meshCache;
-
 void Mesh::SaveBinary(const std::string& filename) const
 {
 	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
 
 	if (!std::filesystem::exists("Library/Mesh")) {
 		std::filesystem::create_directory("Library/Mesh");
+	}
+
+	if (std::filesystem::exists(fullPath)) {
+		return;
 	}
 
 	std::ofstream fout(fullPath, std::ios::binary);
@@ -905,9 +908,11 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 {
 	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
 
-	auto it = meshCache.find(fullPath);
-	if (it != meshCache.end()) {
-		return it->second;
+	if (Application->root->GetResourceManager()->GetMesh(std::stoull(filename)) != nullptr)
+	{
+		auto mesh = Application->root->GetResourceManager()->GetMesh(std::stoull(filename));
+		mesh->loadToOpenGL();
+		return mesh;
 	}
 
 	std::ifstream fin(fullPath, std::ios::binary);
@@ -992,9 +997,9 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 		mesh->_texCoords = modelData.vertex_texCoords;
 	}
 
+	mesh = Application->root->GetResourceManager()->AddMesh(mesh);
 	mesh->loadToOpenGL();
 
-	meshCache[fullPath] = mesh;
 	mesh->nameM = filename;
 	mesh->filePath = filename;
 

@@ -7,6 +7,8 @@
 #include "Image.h"
 #include "../MyGameEditor/Log.h"
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "../MyGameEditor/Root.h"
+#include "ResourceManager.h"
 #include "GameObject.h"
 #include "yaml-cpp/yaml.h"
 
@@ -88,7 +90,7 @@ protected:
                 LOG(LogType::LOG_ERROR, "Failed to decode mesh in MeshRenderer");
                 return false;
             }
-            SetMesh(loadedMesh);
+            SetMesh(Application->root->GetResourceManager()->AddMesh(loadedMesh));
         }
 
         if (node["material"]) {

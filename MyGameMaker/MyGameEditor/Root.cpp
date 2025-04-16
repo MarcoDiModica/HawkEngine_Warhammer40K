@@ -43,6 +43,7 @@ std::shared_ptr<GameObject> environment;
 bool Root::Awake()
 {
     SceneManagement = new SceneManager();
+	resourceManager = new ResourceManager();
 	Application->root->CreateScene("DefaultScene");
 	Application->root->SetActiveScene("DefaultScene");
     
@@ -627,6 +628,7 @@ bool Root::Update(double dt)
 		//AddInteraction();
 	}
 
+	LOG(LogType::LOG_INFO, "ResourceManager Meshes: %d", resourceManager->GetMeshCount());
 
 	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");
@@ -914,13 +916,6 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 	}
 
 	return (meshImp.meshes.size() > 1) ? rootObject : go;
-}
-
-bool Root::CheckMesh(const std::string& path)
-{
-	ModelImporter meshImp;
-
-	return false;
 }
 
 void Root::ChangeShader(GameObject& go, ShaderType shader)

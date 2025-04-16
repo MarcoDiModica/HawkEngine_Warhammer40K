@@ -11,6 +11,7 @@
 #include "../MyGameEditor/App.h"
 #include "../MyGameEngine/SceneManager.h"
 #include "../MyGameEngine/Shaders.h"
+#include "../MyGameEngine/ResourceManager.h"
 #include "SceneSerializer.h"
 
 class Material;
@@ -62,8 +63,6 @@ public:
 
     std::shared_ptr<GameObject> CreateGameObjectWithPath(const std::string& path);
 
-    bool CheckMesh(const std::string& path);
-
     void ChangeShader(GameObject& go, ShaderType shader);
 
     void RemoveGameObject(GameObject* gameObject);
@@ -91,11 +90,14 @@ public:
 
     void SetMainCamera(std::shared_ptr<GameObject> camera);
 
+    ResourceManager* GetResourceManager() const { return resourceManager; }
+
 private:
     std::shared_ptr<GameObject> player;
     std::shared_ptr<GameObject> canvas;
     std::shared_ptr<GameObject> newGameButton;
     std::vector<std::shared_ptr<Scene>> scenes;
+    ResourceManager* resourceManager = new ResourceManager;
 	int prevCameraPriority = 0;
 };
 

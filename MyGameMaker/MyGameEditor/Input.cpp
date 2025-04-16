@@ -396,7 +396,7 @@ void Input::HandleFileDrop(const std::string& fileDir)
 		// Copy the FBX file to the Library directory
         targetPath = fs::current_path() / fbxDir / fileNameExt;
 
-        //Application->root->CreateGameObjectWithPath(fileDir);
+        Application->root->CreateGameObjectWithPath(fileDir);
 
     }
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {

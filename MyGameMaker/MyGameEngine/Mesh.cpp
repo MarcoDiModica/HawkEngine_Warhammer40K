@@ -27,29 +27,6 @@ Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 
 Mesh::~Mesh() {}
 
-
-//void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs, const int* boneIDs, const float* weights)
-//{
-//	_boundingBox.min = _vertices.front();
-//	_boundingBox.max = _vertices.front();
-//
-//	for (const auto& v : _vertices) {
-//		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v.position));
-//		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
-//	}
-//	for (size_t i = 0; i < num_verts; ++i) {
-//		_vertices[i].position = vertices[i];
-//		for (int j = 0; j < MAX_BONE_INFLUENCE; ++j) {
-//			_vertices[i].m_BoneIDs[j] = boneIDs[i * MAX_BONE_INFLUENCE + j];
-//			_vertices[i].m_Weights[j] = weights[i * MAX_BONE_INFLUENCE + j];
-//		}
-//	}
-//	
-//
-//	CalculateNormals();
-//}
-
-
 void Mesh::drawBoundingBox(const BoundingBox& bbox) {
 	glLineWidth(2.0);
 	drawWiredQuad(bbox.v000(), bbox.v001(), bbox.v011(), bbox.v010());
@@ -863,6 +840,9 @@ void Mesh::SaveBinary(const std::string& filename) const
 		return;
 	}
 
+	size_t id = static_cast<size_t>(model->GetID());
+	fout.write(reinterpret_cast<const char*>(&id), sizeof(size_t));
+
 	uint32_t nameLength = static_cast<uint32_t>(model->GetMeshName().length());
 	fout.write(reinterpret_cast<const char*>(&nameLength), sizeof(nameLength));
 	fout.write(model->GetMeshName().c_str(), nameLength);
@@ -939,6 +919,10 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 	auto mesh = std::make_shared<Mesh>();
 	mesh->setModel(std::make_shared<Model>());
 	auto& modelData = mesh->model->GetModelData();
+
+	size_t id;
+	fin.read(reinterpret_cast<char*>(&id), sizeof(size_t));
+	mesh->model->SetID(id);
 
 	uint32_t nameLength;
 	fin.read(reinterpret_cast<char*>(&nameLength), sizeof(nameLength));

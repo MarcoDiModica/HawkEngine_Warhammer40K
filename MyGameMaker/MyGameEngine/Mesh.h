@@ -73,6 +73,7 @@ class Mesh {
     BoundingBox _boundingBox;
     std::vector<Mesh> subMeshes;
     std::shared_ptr<Model> model;
+    size_t id;
 
 public:
     Mesh();
@@ -129,7 +130,7 @@ protected:
 
     YAML::Node encode() {
         YAML::Node node;
-        std::string name = model->GetMeshName();
+        std::string name = std::to_string(model->GetID());
         node["name"] = name;
 
         SaveBinary(name);

@@ -107,7 +107,12 @@ public:
 	void SetBoundingBox(const BoundingBox& bbox) { m_BoundingBox = bbox; }
 
 	bool isAnimated = true;
+
+	size_t GetID() const { return id; }
+	void SetID(size_t id) { this->id = id; }
+
 private:
+	size_t id = 0;
 	std::string meshName;
 	ModelData modelData;
 	int materialIndex = -1;

@@ -29,6 +29,7 @@
 #include "glm/gtx/matrix_decompose.hpp"
 // cosa ilegal
 #include "../MyGameEditor/Log.h"
+#define LIBRARY_PATH "Library\\"
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -165,9 +166,37 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 	}
 }
 
-std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
+size_t GenerateMeshID(ModelData& model) {
+	std::hash<float> floatHasher;
+	std::hash<unsigned int> intHasher;
+
+	size_t hash = 0;
+
+	for (size_t i = 0; i < model.vertexData.size(); i++) {
+		// Posición
+		hash ^= floatHasher(model.vertexData.at(i).position.x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertexData.at(i).position.y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertexData.at(i).position.z) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+
+		// Normal
+		hash ^= floatHasher(model.vertex_normals.at(i).x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_normals.at(i).y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_normals.at(i).z) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+
+		// Texcoord
+		hash ^= floatHasher(model.vertex_texCoords.at(i).x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_texCoords.at(i).y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+
+	for (unsigned int index : model.indexData) {
+		hash ^= intHasher(index) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+
+	return hash;
+}
+
+std::vector<std::shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 	std::vector<std::shared_ptr<Mesh>> meshes;
-	meshes.resize(scene.mNumMeshes);
 
 	std::vector<std::shared_ptr<Model>> models;
 	models.resize(scene.mNumMeshes);
@@ -221,12 +250,29 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 			}
 		}
 
+		fs::path targetPath = fs::current_path() / fs::path(LIBRARY_PATH) / "Mesh";
+		size_t hash = GenerateMeshID(*modelsData[i]);
+		std::string fileName = std::to_string(hash) + ".mesh";
+		targetPath /= fileName;
+
+		if (fs::exists(targetPath)) {
+			LOG(LogType::LOG_INFO, "Mesh already exist");
+		}
+		else {
+			models[i]->SetID(hash);
+			LOG(LogType::LOG_INFO, "Mesh ID: %zu", hash);
+		}
+
 		models[i]->SetModelData(*modelsData[i]);
 	}
 
 	for (int i = 0; i < models.size(); i++) {
+		if (models[i]->GetID() == 0) continue;
+		meshes.push_back(std::make_shared<Mesh>());
 		meshes[i] = std::make_shared<Mesh>();
 		meshes[i]->setModel(models[i]);
+		std::string str = std::to_string(models[i]->GetID());
+		meshes[i]->SaveBinary(str);
 	}
 
 	return meshes;
@@ -298,13 +344,13 @@ void ModelImporter::loadFromFile(const std::string& path) {
 	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_Triangulate | 
 		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
 	aiGetErrorString();
+
+	scenePath = path;
 	
 	// Create models and materials from FBX
 	meshes = createMeshesFromFBX(*fbx_scene);
 
 	materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/");
-
-	scenePath = path;
 
 	// Create the GameObject hierarchy
 	graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);

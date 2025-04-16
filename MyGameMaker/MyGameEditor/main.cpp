@@ -208,60 +208,6 @@ static void configureCamera() {
 	Application->camera->frustum.Update(projectionMatrix * viewMatrix);
 }
 
-static void RenderGameView() {
-#ifdef PROFILE
-	OPTICK_EVENT();
-#endif // PROFILE
-
-	if (Application->root->mainCamera == nullptr) {
-		return;
-	}
-
-	CameraComponent* gameCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
-	if (!gameCamera) {
-		return;
-	}
-
-	GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
-
-	GLint lastFBO;
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
-
-	GLint lastVP[4];
-	glGetIntegerv(GL_VIEWPORT, lastVP);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
-	glViewport(0, 0, 1280, 720);
-
-	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	RenderManager::GetInstance().BeginFrame();
-
-	auto activeScene = Application->root->GetActiveScene();
-	if (activeScene) {
-		for (auto& object : activeScene->children()) {
-			if (object && object->IsActive()) {
-				RenderManager::GetInstance().SubmitGameObject(object.get());
-			}
-		}
-	}
-
-	RenderManager::GetInstance().RenderFromCamera(gameCamera);
-
-	RenderManager::GetInstance().EndFrame();
-
-	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
-	glViewport(lastVP[0], lastVP[1], lastVP[2], lastVP[3]);
-
-	if (lastProgram > 0) {
-		glUseProgram(lastProgram);
-	}
-
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
-}
-
 #pragma region UNDO_REDO
 
 const int MAX_UNDO_STATES = 100; 
@@ -598,8 +544,29 @@ static void RenderOutline(GameObject* object) {
 }
 
 static void RenderEditor() {
-	GLint lastProgram;
+	GLint lastProgram = 0;
+	GLint lastFBO = 0;
+	GLint lastViewport[4] = { 0 };
+	GLboolean lastDepthTest = GL_FALSE;
+	GLboolean lastCullFace = GL_FALSE;
+	GLboolean lastBlend = GL_FALSE;
+	GLint lastBlendSrcRGB = GL_ONE;
+	GLint lastBlendDstRGB = GL_ZERO;
+	GLint lastBlendSrcAlpha = GL_ONE;
+	GLint lastBlendDstAlpha = GL_ZERO;
+	GLfloat lastClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
 	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+	glGetIntegerv(GL_VIEWPORT, lastViewport);
+	glGetBooleanv(GL_DEPTH_TEST, &lastDepthTest);
+	glGetBooleanv(GL_CULL_FACE, &lastCullFace);
+	glGetBooleanv(GL_BLEND, &lastBlend);
+	glGetIntegerv(GL_BLEND_SRC_RGB, &lastBlendSrcRGB);
+	glGetIntegerv(GL_BLEND_DST_RGB, &lastBlendDstRGB);
+	glGetIntegerv(GL_BLEND_SRC_ALPHA, &lastBlendSrcAlpha);
+	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDstAlpha);
+	glGetFloatv(GL_COLOR_CLEAR_VALUE, lastClearColor);
 
 	UISceneWindow* sceneWindow = static_cast<UISceneWindow*>(Application->gui->UISceneWindowPanel);
 	bool useMSAA = sceneWindow->msaaSamples > 0;
@@ -614,11 +581,30 @@ static void RenderEditor() {
 	glViewport(0, 0, (int)Application->gui->camSize.x, (int)Application->gui->camSize.y);
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	configureCamera();
 	drawFloorGrid(256, 4);
 
 	auto activeScene = Application->root->GetActiveScene();
-	if (!activeScene) return;
+	if (!activeScene) {
+		glUseProgram(lastProgram);
+		glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+		glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
+
+		if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+		if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+		if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+
+		glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
+		glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
+
+		return;
+	}
 
 	RenderManager::GetInstance().BeginFrame();
 
@@ -644,6 +630,18 @@ static void RenderEditor() {
 			if (Application->hasChangedScene) {
 				Application->hasChangedScene = false;
 				RenderManager::GetInstance().EndFrame();
+
+				glUseProgram(lastProgram);
+				glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+				glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
+
+				if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+				if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+				if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+
+				glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
+				glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
+
 				return;
 			}
 
@@ -660,7 +658,6 @@ static void RenderEditor() {
 	RenderManager::GetInstance().RenderScene(
 		Application->camera->view(),
 		Application->camera->projection()
-		/*Application->camera->frustum*/
 	);
 
 	RenderManager::GetInstance().EndFrame();
@@ -673,20 +670,26 @@ static void RenderEditor() {
 			GL_COLOR_BUFFER_BIT, GL_LINEAR);
 	}
 
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fbo);
 	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTexture);
 	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glUseProgram(lastProgram);
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+	glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
 
-	if (lastProgram > 0) {
-		glUseProgram(lastProgram);
-	}
+	if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+	if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+	if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+
+	glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
+	glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
 }
 
-static void GameRelease() {
+static void RenderGameView() {
 #ifdef PROFILE
-	OPTICK_CATEGORY("GameRelease", Optick::Category::GameLogic);
+	OPTICK_EVENT();
 #endif // PROFILE
 
 	if (Application->root->mainCamera == nullptr) {
@@ -698,11 +701,120 @@ static void GameRelease() {
 		return;
 	}
 
+	GLint lastProgram = 0;
+	GLint lastFBO = 0;
+	GLint lastViewport[4] = { 0 };
+	GLboolean lastDepthTest = GL_FALSE;
+	GLboolean lastCullFace = GL_FALSE;
+	GLboolean lastBlend = GL_FALSE;
+	GLint lastBlendSrcRGB = GL_ONE;
+	GLint lastBlendDstRGB = GL_ZERO;
+	GLint lastBlendSrcAlpha = GL_ONE;
+	GLint lastBlendDstAlpha = GL_ZERO;
+	GLfloat lastClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+	glGetIntegerv(GL_VIEWPORT, lastViewport);
+	glGetBooleanv(GL_DEPTH_TEST, &lastDepthTest);
+	glGetBooleanv(GL_CULL_FACE, &lastCullFace);
+	glGetBooleanv(GL_BLEND, &lastBlend);
+	glGetIntegerv(GL_BLEND_SRC_RGB, &lastBlendSrcRGB);
+	glGetIntegerv(GL_BLEND_DST_RGB, &lastBlendDstRGB);
+	glGetIntegerv(GL_BLEND_SRC_ALPHA, &lastBlendSrcAlpha);
+	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDstAlpha);
+	glGetFloatv(GL_COLOR_CLEAR_VALUE, lastClearColor);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, Application->gui->fboGame);
+	glViewport(0, 0, 1280, 720);
+
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	RenderManager::GetInstance().BeginFrame();
+
+	auto activeScene = Application->root->GetActiveScene();
+	if (activeScene) {
+		for (auto& object : activeScene->children()) {
+			if (object && object->IsActive()) {
+				RenderManager::GetInstance().SubmitGameObject(object.get());
+			}
+		}
+	}
+
+	RenderManager::GetInstance().RenderFromCamera(gameCamera);
+
+	RenderManager::GetInstance().EndFrame();
+
+	glBindTexture(GL_TEXTURE_2D, Application->gui->fboTextureGame);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glUseProgram(lastProgram);
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+	glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
+
+	if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+	if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+	if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+
+	glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
+	glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
+}
+
+static void GameRelease() {
+#ifdef PROFILE
+	OPTICK_CATEGORY("GameRelease", Optick::Category::GameLogic);
+#endif // PROFILE
+
+	if (Application->root->mainCamera == nullptr) {
+		return;
+	}
+
+	CameraComponent* gameCamera = Application->root->mainCamera->GetComponent<CameraComponent>();
+	if (!gameCamera) {
+		return;
+	}
+
+	GLint lastProgram = 0;
+	GLint lastFBO = 0;
+	GLint lastViewport[4] = { 0 };
+	GLboolean lastDepthTest = GL_FALSE;
+	GLboolean lastCullFace = GL_FALSE;
+	GLboolean lastBlend = GL_FALSE;
+	GLint lastBlendSrcRGB = GL_ONE;
+	GLint lastBlendDstRGB = GL_ZERO;
+	GLint lastBlendSrcAlpha = GL_ONE;
+	GLint lastBlendDstAlpha = GL_ZERO;
+	GLfloat lastClearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &lastFBO);
+	glGetIntegerv(GL_VIEWPORT, lastViewport);
+	glGetBooleanv(GL_DEPTH_TEST, &lastDepthTest);
+	glGetBooleanv(GL_CULL_FACE, &lastCullFace);
+	glGetBooleanv(GL_BLEND, &lastBlend);
+	glGetIntegerv(GL_BLEND_SRC_RGB, &lastBlendSrcRGB);
+	glGetIntegerv(GL_BLEND_DST_RGB, &lastBlendDstRGB);
+	glGetIntegerv(GL_BLEND_SRC_ALPHA, &lastBlendSrcAlpha);
+	glGetIntegerv(GL_BLEND_DST_ALPHA, &lastBlendDstAlpha);
+	glGetFloatv(GL_COLOR_CLEAR_VALUE, lastClearColor);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, Application->window->width(), Application->window->height());
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	RenderManager::GetInstance().BeginFrame();
 
@@ -722,6 +834,18 @@ static void GameRelease() {
 				if (Application->hasChangedScene) {
 					Application->hasChangedScene = false;
 					RenderManager::GetInstance().EndFrame();
+
+					glUseProgram(lastProgram);
+					glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+					glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
+
+					if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+					if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+					if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+
+					glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
+					glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
+
 					break;
 				}
 
@@ -744,7 +868,16 @@ static void GameRelease() {
 		}
 	}
 
-	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+	glUseProgram(lastProgram);
+	glBindFramebuffer(GL_FRAMEBUFFER, lastFBO);
+	glViewport(lastViewport[0], lastViewport[1], lastViewport[2], lastViewport[3]);
+
+	if (lastDepthTest) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+	if (lastCullFace) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+	if (lastBlend) glEnable(GL_BLEND); else glDisable(GL_BLEND);
+
+	glBlendFuncSeparate(lastBlendSrcRGB, lastBlendDstRGB, lastBlendSrcAlpha, lastBlendDstAlpha);
+	glClearColor(lastClearColor[0], lastClearColor[1], lastClearColor[2], lastClearColor[3]);
 }
 
 static void Render(MyGUI* gui) {

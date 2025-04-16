@@ -205,7 +205,7 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
 		break;
     case 4: _component = static_cast<Component*>(go->AddComponent<RigidbodyComponent>(Application->physicsModule));
         break;
-    case 5: _component = static_cast<Component*>(go->AddComponent<SoundComponent>());
+    case 5: _component = static_cast<Component*>(go->AddComponent<SoundComponent>(Application->audioEngine));
         break;
     case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
 		break;
@@ -1367,13 +1367,12 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.RayCast::Raycast", (const void*)&EngineBinds::Raycast);
 
     // Audio
-    mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::Play);
-    mono_add_internal_call("HawkEngine.Audio::Stop", (const void*)&EngineBinds::Stop);
-    mono_add_internal_call("HawkEngine.Audio::Pause", (const void*)&EngineBinds::Pause);
-    mono_add_internal_call("HawkEngine.Audio::Resume", (const void*)&EngineBinds::Resume);
-    mono_add_internal_call("HawkEngine.Audio::SetVolume", (const void*)&EngineBinds::SetVolume);
-    mono_add_internal_call("HawkEngine.Audio::GetVolume", (const void*)&EngineBinds::GetVolume);
-	mono_add_internal_call("HawkEngine.Audio::LoadAudio", (const void*)&EngineBinds::LoadAudioClip);
+    mono_add_internal_call("HawkEngine.AudioSource::PlaySound", (const void*)&EngineBinds::Play);
+    mono_add_internal_call("HawkEngine.AudioSource::StopSound", (const void*)&EngineBinds::Stop);
+    mono_add_internal_call("HawkEngine.AudioSource::PauseSound", (const void*)&EngineBinds::Pause);
+    mono_add_internal_call("HawkEngine.AudioSource::ResumeSound", (const void*)&EngineBinds::Resume);
+    mono_add_internal_call("HawkEngine.AudioSource::SetVolumeSound", (const void*)&EngineBinds::SetVolume);
+	mono_add_internal_call("HawkEngine.AudioSource::LoadAudioSound", (const void*)&EngineBinds::LoadAudioClip);
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);

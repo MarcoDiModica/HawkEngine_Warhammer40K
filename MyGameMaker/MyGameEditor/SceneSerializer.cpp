@@ -12,7 +12,7 @@
 #include "MyGameEngine/LightComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
 #include "MyAudioEngine/SoundComponent.h"
-#include "MyAudioEngine/AudioListener.h"
+//#include "MyAudioEngine/AudioListener.h"
 #include "MyPhysicsEngine/BoxColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
@@ -256,12 +256,12 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			shader->decode(componentData);
 		}
 		else if (componentName == "SoundComponent") {
-			auto sound = gameObject->AddComponent<SoundComponent>();
+			auto sound = gameObject->AddComponent<SoundComponent>(Application->audioEngine);
 			sound->decode(componentData);
 		}
 		else if (componentName == "AudioListener") {
-			auto listener = gameObject->AddComponent<AudioListener>();
-			listener->decode(componentData);
+			/*auto listener = gameObject->AddComponent<AudioListener>();
+			listener->decode(componentData);*/
 		}
 		else if (componentName == "RigidbodyComponent") {
 			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);

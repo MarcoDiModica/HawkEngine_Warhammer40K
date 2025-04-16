@@ -10,6 +10,7 @@
 #include "Material.h"
 #include "ModelImporter.h"
 #include <string>
+#include <fstream>
 
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyGameEditor/Log.h"

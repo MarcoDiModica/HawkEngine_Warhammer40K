@@ -1,12 +1,15 @@
 #pragma once
 #include "../MyGameEngine/Component.h"
 #include "AudioEngine.h"
+#include <string>
+#include <memory>
+
 
 class SoundComponent : public Component
 {
 public:
 	SoundComponent(GameObject* owner, AudioEngine* audioEngine);
-	virtual ~SoundComponent() = default;
+	~SoundComponent();
 
 	void Awake() override;
 
@@ -21,7 +24,7 @@ public:
 	}
 
 	std::unique_ptr<Component> Clone(GameObject* new_owner) override {
-		return std::make_unique<SoundComponent>(new_owner);
+		return nullptr;
 	}
 
 	AudioEngine* audioEngine = nullptr;

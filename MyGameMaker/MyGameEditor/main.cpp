@@ -865,7 +865,7 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
-			SoundComponent::InitSharedAudioEngine();
+			//SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
 			iluInit();
@@ -883,6 +883,7 @@ int main(int argc, char** argv) {
 		case AWAKE:
 
 			Application->physicsModule->Awake();
+			Application->audioEngine->Init();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;

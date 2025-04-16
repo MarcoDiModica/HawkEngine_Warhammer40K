@@ -16,7 +16,6 @@
 #include "../MyPhysicsEngine/RigidBodyComponent.h"
 #include "App.h"
 #include "Input.h"
-#include "../MyAudioEngine/SoundComponent.h"
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
@@ -1282,7 +1281,7 @@ void Root::CreateGameplayUI()
 	bible5Icon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.137, 0.929, 0), glm::vec3(0.003, 0.020, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("HUD");
-	canvas->AddComponent<SoundComponent>();
+	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreateMainMenuUI()
@@ -1290,7 +1289,7 @@ void Root::CreateMainMenuUI()
     auto canvas = CreateGameObject("Canvas_Main_Menu");
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
-	canvas->AddComponent<SoundComponent>();
+	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 
     auto menuImage = CreateGameObject("bg_menu");
     Application->root->ParentGameObject(*menuImage, *canvas);
@@ -1339,11 +1338,11 @@ void Root::CreateMainMenuUI()
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.177, 0.669, 0), glm::vec3(0.182, 0.072, 1));
 
 	auto emmptyMusic = CreateGameObject("EmptyMusic");
-	emmptyMusic->AddComponent<SoundComponent>();
+	emmptyMusic->AddComponent<SoundComponent>(Application->audioEngine);
 	emmptyMusic->GetComponent<ScriptComponent>()->LoadScript("SceneAudio");
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
-	canvas->AddComponent<SoundComponent>();
+	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreatePauseMenuUI() {
@@ -1391,7 +1390,7 @@ void Root::CreatePauseMenuUI() {
 	quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.631, 0), glm::vec3(0.142, 0.083, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("PauseMenu");
-	canvas->AddComponent<SoundComponent>();
+	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreateOptionsMenuUI() {
@@ -1407,7 +1406,7 @@ void Root::CreateOptionsMenuUI() {
 	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("OptionMenu");
-	canvas->AddComponent<SoundComponent>();
+	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreateWinUI() {
@@ -1439,7 +1438,7 @@ void Root::CreateWinUI() {
 	quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.579, 0.861, 0), glm::vec3(0.184, 0.064, 1));
 	
 	canvas->AddComponent<ScriptComponent>()->LoadScript("WinScreen");
-	canvas->AddComponent<SoundComponent>();
+	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 
 }
 
@@ -1480,7 +1479,7 @@ void Root::CreateLoseUI() {
 	restartButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.282, 0.755, 0), glm::vec3(0.261, 0.059, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("LoseScreen");
-	canvas->AddComponent<SoundComponent>();
+	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreateLocationSM() {
@@ -1522,7 +1521,7 @@ std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
     }
 
     // Add SoundComponent
-    auto soundComponent = gameObject->AddComponent<SoundComponent>();
+    auto soundComponent = gameObject->AddComponent<SoundComponent>(Application->audioEngine);
     if (!soundComponent) {
         LOG(LogType::LOG_ERROR, "Failed to add SoundComponent to audio object");
         return nullptr;

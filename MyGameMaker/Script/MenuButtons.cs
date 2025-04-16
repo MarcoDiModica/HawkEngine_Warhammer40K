@@ -30,11 +30,14 @@ public class MenuButtons : MonoBehaviour
     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
 
 
-    private Audio sound;
+    private AudioSource sound;
     //private Audio sound;
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private string buttonStartGame = "Assets/Audio/SFX/UI/UI_Confirm.wav";
+    private AudioClip hoveredFX;
+    private AudioClip clickedFX;
+    private AudioClip startGameFX;
 
     public override void Awake()
     {
@@ -47,7 +50,7 @@ public class MenuButtons : MonoBehaviour
         optionsButton = GameObject.Find("options_button");
         quitButton = GameObject.Find("exit_button");
         optionsCanvas = GameObject.Find("Canvas_OptionsMenu");
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
 
         button_newGameButton = newGameButton.GetComponent<UIButton>();
         button_continueButton = continueButton.GetComponent<UIButton>();
@@ -69,11 +72,18 @@ public class MenuButtons : MonoBehaviour
             optionsCanvas.SetActive(false);
         }
 
-        Audio emptyMusic = GameObject.Find("EmptyMusic").GetComponent<Audio>();
+        AudioSource emptyMusic = GameObject.Find("EmptyMusic").GetComponent<AudioSource>();
         if (emptyMusic != null)
         {
-            emptyMusic.Play();
+            //emptyMusic.Play();
         }
+
+        hoveredFX = new AudioClip(buttonHovered, "HoveredFX", false, false);
+        clickedFX = new AudioClip(buttonClicked, "ClickedFX", false, false);
+        startGameFX = new AudioClip(buttonStartGame, "StartGameFX", false, false);
+        sound?.LoadAudioClip(hoveredFX);
+        sound?.LoadAudioClip(clickedFX);
+        sound?.LoadAudioClip(startGameFX);
 
     }
 
@@ -82,8 +92,7 @@ public class MenuButtons : MonoBehaviour
         if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
         {
             transform.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
-            sound?.LoadAudio(buttonHovered);
-            sound?.Play();
+            sound?.Play(hoveredFX);
         }
         else if (button.GetState() == ButtonState.DEFAULT)
         {
@@ -112,8 +121,7 @@ public class MenuButtons : MonoBehaviour
 
         if (button_newGameButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonStartGame);
-            sound?.Play();
+            sound?.Play(startGameFX);
             SceneManager.LoadScene("Mortis_Level1");
         }
 
@@ -121,8 +129,7 @@ public class MenuButtons : MonoBehaviour
 
         if (button_continueButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonStartGame);
-            sound?.Play();
+            sound?.Play(startGameFX);
             SceneManager.LoadScene("SpaceShip");
         }
 
@@ -130,8 +137,7 @@ public class MenuButtons : MonoBehaviour
 
         if (button_optionsButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            sound?.Play(clickedFX);
             optionsCanvas.SetActive(true);
         }
 
@@ -140,8 +146,7 @@ public class MenuButtons : MonoBehaviour
         if (button_quitButton.GetState() == ButtonState.CLICKED)
         {
             //Salir del juego
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            sound?.Play(clickedFX);
         }
 
         HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);

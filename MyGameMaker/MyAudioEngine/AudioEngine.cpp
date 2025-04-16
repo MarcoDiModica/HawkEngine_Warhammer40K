@@ -1,5 +1,6 @@
 #include "AudioEngine.h"
 
+
 Implementation::Implementation() {
     mpStudioSystem = NULL;
     FMOD::Studio::System::create(&mpStudioSystem);
@@ -12,6 +13,14 @@ Implementation::Implementation() {
 Implementation::~Implementation() {
     mpStudioSystem->unloadAll();
     mpStudioSystem->release();
+}
+
+AudioEngine::AudioEngine() {
+
+}
+
+AudioEngine::~AudioEngine() {
+	Shutdown();
 }
 
 void Implementation::Update() {
@@ -73,7 +82,7 @@ void AudioEngine::UnLoadSound(const std::string& strSoundName) {
     sgpImplementation->mSounds.erase(tFoundIt);
 }
 
-int AudioEngine::PlaySound(const std::string& strSoundName, const glm::vec3& vPos = glm::vec3{ 0, 0, 0 }, float fVolumedB = 0.0f)
+int AudioEngine::PlaySound(const std::string& strSoundName, const glm::vec3& vPos, float fVolumedB)
 {
     int nChannelId = sgpImplementation->mnNextChannelId++;
     auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);

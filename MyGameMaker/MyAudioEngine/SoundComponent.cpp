@@ -16,7 +16,7 @@ SoundComponent::~SoundComponent()
 void SoundComponent::Awake()
 {
 	// Initialize the audio engine or any other setup needed
-	audioEngine->Init();
+	//audioEngine->Init();
 }
 
 void SoundComponent::Start()

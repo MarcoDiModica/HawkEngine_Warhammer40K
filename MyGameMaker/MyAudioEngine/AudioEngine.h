@@ -34,10 +34,11 @@ struct Implementation {
 class AudioEngine
 {
 public:
+	AudioEngine();
+	~AudioEngine();
     static void Init();
     static void Update();
     static void Shutdown();
-    static int ErrorCheck(FMOD_RESULT result);
 
 public :
 

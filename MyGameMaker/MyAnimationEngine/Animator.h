@@ -13,10 +13,12 @@ private:
 	std::vector<std::shared_ptr<GameObject>> m_BonesGameObjects;
     Animation* m_CurrentAnimation;
     float m_CurrentTime;
+    float currentTimeBase = 0.0f;
+    float currentTimeLayered = 0.0f;
     float m_DeltaTime;
 	float m_PlaySpeed = 1;
     float transitionTime = 0.0f;
-	float currentDuration = 0.0f;
+
 
 public:
     Animator(Animation* Animation);
@@ -46,10 +48,13 @@ public:
 
     bool animationFinished = false;
     bool isLooping = true;
+    float currentDuration = 0.0f;
 
 	void SetCurrentMTime(float time)
 	{
 		m_CurrentTime = time;
+		currentTimeBase = time;
+		currentTimeLayered = time;  
 	}
 
     void UpdateAnimTime(float time)

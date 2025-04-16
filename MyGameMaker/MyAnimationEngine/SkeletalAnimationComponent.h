@@ -26,7 +26,11 @@ public:
 
     void Destroy() override;
 
-    void TransitionAnimations(int oldAnim, int newAnim, bool loopAnim, float timeToTransition);
+    void TransitionAnimations(int oldAnim, int newAnim, float timeToTransition);
+
+    void AutoTransitionAnimation(int newAnim, float timeToTransitionAnim, bool loopAnim = false);
+
+    void PlayAnimOnce(int index, float timeToTransitionAnim = 0.0f);
 
     void SetLoop(bool isLoop);
 

@@ -87,11 +87,10 @@ void SkeletalAnimationComponent::Update(float deltaTime)
         {
             animator->UpdateAnimation(deltaTime);
         }
-        
     }
 }
 
-void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, bool loopAnim,float timeToTransitionAnim) 
+void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, float timeToTransitionAnim) 
 {
     animation1 = std::make_unique<Animation>(*animations[oldAnim].get());
     newAnimation = std::make_unique<Animation>(*animations[newAnim].get());
@@ -100,7 +99,27 @@ void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, 
 	isBlending = true;
 }
 
+void SkeletalAnimationComponent::AutoTransitionAnimation(int newAnim, float timeToTransitionAnim, bool loopAnim)
+{
+	animation1 = std::make_unique<Animation>(*animator->GetCurrentAnimation());
+	newAnimation = std::make_unique<Animation>(*animations[newAnim].get());
+	timeToTransition = timeToTransitionAnim;
+	animator->SetTransitionTime(0);
+	isBlending = true;
+}
 
+void SkeletalAnimationComponent::PlayAnimOnce(int index, float timeToTransitionAnim) 
+{
+	animation1 = std::make_unique<Animation>(*animator->GetCurrentAnimation());
+	newAnimation = std::make_unique<Animation>(*animations[index].get());
+	animator->isLooping = false; 
+	animator->currentDuration = 0.0f;
+	animator->animationFinished = false;
+	timeToTransition = timeToTransitionAnim;
+	animator->SetCurrentMTime(0.0f);
+	animator->SetTransitionTime(timeToTransitionAnim);
+	isBlending = true;
+}
 
 void SkeletalAnimationComponent::Destroy()
 {

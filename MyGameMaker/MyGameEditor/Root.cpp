@@ -154,7 +154,7 @@ bool Root::Start()
 	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	ParentGameObject(*playerMesh, *player);
 	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	playerMesh->AddComponent<ScriptComponent>()->LoadScript("Test1");
+	//playerMesh->AddComponent<ScriptComponent>()->LoadScript("Test1");
 	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
 	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
@@ -178,6 +178,20 @@ bool Root::Start()
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
 	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+
+	auto playerMesh2 = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	playerMesh2->SetName("playerMesh2");
+	playerMesh2->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	playerMesh2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	playerMesh2->AddComponent<ScriptComponent>()->LoadScript("Test1");
+
+	//auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	//playerMesh3->SetName("playerMesh3");
+	//playerMesh3->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//playerMesh3->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//playerMesh3->GetTransform()->SetPosition(glm::vec3(10, 0, 0));
+	//playerMesh3->AddComponent<ScriptComponent>()->LoadScript("Test1");
 
 	//particle->ApplyPreset(Particle)
 

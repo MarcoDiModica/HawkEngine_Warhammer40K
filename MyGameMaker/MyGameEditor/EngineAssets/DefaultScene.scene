@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
-  uuid: 12855207956070291268
+  uuid: 6931722677830741595
   tag: Player
   active: true
   isStatic: false
@@ -142,7 +142,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 11312118358987955329
+      uuid: 2957374176166596554
       tag: Untagged
       active: true
       isStatic: false
@@ -199,11 +199,9 @@ GameObject0:
         ScriptComponents:
           Script0:
             name: PlayerAnimations
-          Script1:
-            name: Test1
       Children: ~
     - name: RiffleShotFX
-      uuid: 4416307234238150305
+      uuid: 8135897789436421644
       tag: Untagged
       active: true
       isStatic: false
@@ -275,7 +273,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 15297058993984472023
+      uuid: 1668253576745974415
       tag: Untagged
       active: true
       isStatic: false
@@ -347,7 +345,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 7148541358547105539
+      uuid: 7870928222350148108
       tag: Untagged
       active: true
       isStatic: false
@@ -419,8 +417,68 @@ GameObject0:
           particleType: 1
       Children: ~
 GameObject1:
+  name: playerMesh2
+  uuid: 11931360793986839785
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - -90.000002504478161
+        - 0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cylinder.001
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
+        normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
+        metallic_map: ""
+        roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    SkeletalAnimationComponent:
+      name: SkeletalAnimationComponent
+      enabled: true
+      animation_file: skeletal_anim_playerMesh2
+    ScriptComponents:
+      Script0:
+        name: Test1
+  Children: ~
+GameObject2:
   name: MainCamera
-  uuid: 18150080037878441616
+  uuid: 5948234495556321751
   tag: Untagged
   active: true
   isStatic: false
@@ -454,9 +512,9 @@ GameObject1:
       Script0:
         name: PlayerCamera
   Children: ~
-GameObject2:
+GameObject3:
   name: Floor
-  uuid: 17334214100701247768
+  uuid: 13363543306882787876
   tag: Untagged
   active: true
   isStatic: false

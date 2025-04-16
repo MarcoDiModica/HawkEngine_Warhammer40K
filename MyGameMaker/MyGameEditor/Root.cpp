@@ -125,7 +125,7 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
-	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
+	//Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
 	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
@@ -176,7 +176,7 @@ bool Root::Start()
 	auto walkingFX = CreateGameObject("WalkingFX");
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
 	//particle->ApplyPreset(Particle)
 
@@ -202,11 +202,6 @@ bool Root::Start()
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Level1.fbx");
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
-
-	auto cube = CreateCube("Cube");
-	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
 
 	auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -346,19 +341,19 @@ bool Root::Start()
 	//BoltgunBullets->SetTag("Ammunition");
 	
 	//Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->SetTag("Enemy");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(-5, 0, -5));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 0.5, 0.25));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 1));
-	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	auto lictor = CreateGameObject("Lictor");
+	lictor->SetTag("Enemy");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 40));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
+	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 3, -1.4));
+	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
+	lictorMesh->SetName("LictorMesh");
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
 
 
 	//auto cube = CreateCube("Cube");
@@ -392,10 +387,10 @@ bool Root::Start()
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	//Floor
-	//auto floor = CreateCube("Floor");
-	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	
 	
     //auto envObj = CreateGameObject("Environment1");

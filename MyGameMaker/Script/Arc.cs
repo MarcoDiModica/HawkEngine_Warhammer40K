@@ -93,7 +93,6 @@ public class Arc : MonoBehaviour
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
         explosion = Engineson.CreateGameObject("Explosion", null);
-        //explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
         var explosionFX = Engineson.CreateGameObject("ExplosionFX", null);
@@ -105,7 +104,6 @@ public class Arc : MonoBehaviour
             GetComponent<Transform>().GetPosition().Y,
             GetComponent<Transform>().GetPosition().Z
         );
-        Engineson.print("Explosion");
         sound?.LoadAudio(arcExplosion);
         sound?.Play();
         isExploded = true;

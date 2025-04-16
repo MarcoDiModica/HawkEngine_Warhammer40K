@@ -14,7 +14,7 @@ public class ArcSnare : BaseAbilities
     private float yHeight = 0.0f;
     private float timer = 0;
     private bool exploded = false;
-    GameObject grenade;
+    GameObject arcSnare;
     Rigidbody rigidbody;
     BoxCollider collider;
     bool canThrow = true;
@@ -54,26 +54,10 @@ public class ArcSnare : BaseAbilities
 
             if (abilityTimer >= abilityCooldown)
             {
-                Engineson.Destroy(grenade);
+                Engineson.Destroy(arcSnare);
                 canThrow = true;
                 abilityTimer = 0.0f;
                // Engineson.print("Cooldown terminado. Habilidad lista.");
-            }
-        }
-
-        if (rigidbody != null && !exploded && collider != null)
-        {
-            timer += deltaTime;
-
-            if (rigidbody.GetVelocity() != null && grenade != null && grenade.GetComponent<Transform>() != null)
-            {
-                float grenadeY = grenade.GetComponent<Transform>().GetPosition().Y;
-
-                if (rigidbody.GetVelocity().Y <= 0.1f && timer > 0.1f && yHeight > grenadeY)
-                {
-                    Explode();
-                    
-                }
             }
         }
 
@@ -97,41 +81,33 @@ public class ArcSnare : BaseAbilities
     {
         if (canThrow)
         {
-            Engineson.print("Lanzando granada...");
             sound?.LoadAudio(arcLaunch);
             sound?.Play();
-            grenade = Engineson.CreateGameObject("Arc", null);
+            arcSnare = Engineson.CreateGameObject("Arc", null);
 
-            if (grenade == null)
+            if (arcSnare == null)
             {
-               // Engineson.print("ERROR: No se pudo crear la granada.");
                 return;
             }
 
-            grenade.AddScript("Arc");
-            grenade.GetComponent<Arc>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-            grenade.AddComponent<Audio>();
-            grenade.GetComponent<Arc>().Start();
+            arcSnare.AddScript("Arc");
+            arcSnare.GetComponent<Arc>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+            arcSnare.AddComponent<Audio>();
+            arcSnare.GetComponent<Arc>().Start();
 
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;
         }
-        else
-        {
-           // Engineson.print("Habilidad en cooldown. Espera...");
-        }
 
         if (!canThrow)
         {
             abilityTimer += time;
-          //  Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
-              //  Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
 
@@ -139,19 +115,19 @@ public class ArcSnare : BaseAbilities
 
     void Explode()
     {
-        if (grenade == null) return;
+        if (arcSnare == null) return;
 
         // Crear explosión
         explosion = Engineson.CreateGameObject("Explosion", null);
-        
+        Engineson.Destroy(arcSnare);
 
         if (explosion == null) return;
 
         explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(
-            grenade.GetComponent<Transform>().GetPosition().X,
-            grenade.GetComponent<Transform>().GetPosition().Y,
-            grenade.GetComponent<Transform>().GetPosition().Z
+            arcSnare.GetComponent<Transform>().GetPosition().X,
+            arcSnare.GetComponent<Transform>().GetPosition().Y,
+            arcSnare.GetComponent<Transform>().GetPosition().Z
         );
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
 

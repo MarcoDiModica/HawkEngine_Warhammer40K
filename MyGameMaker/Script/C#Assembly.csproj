@@ -98,6 +98,7 @@
     <Compile Include="DestroyEnviormentObject.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="EnemyControllerBoss.cs" />
+    <Compile Include="EnemyControllerBossTail.cs" />
     <Compile Include="EnergyBall.cs" />
     <Compile Include="EnemyControllerMelee.cs" />
     <Compile Include="EnemyControllerRanged.cs" />

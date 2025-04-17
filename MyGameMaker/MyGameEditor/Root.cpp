@@ -352,7 +352,7 @@ bool Root::Start()
 	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
 	//lictorMesh->SetName("LictorMesh");
 	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
+	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 
 
 	//auto cube = CreateCube("Cube");
@@ -367,7 +367,7 @@ bool Root::Start()
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 1.3, 1.6));
-	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt2.fbx");
+	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
 	hormagauntMesh->SetName("HormagauntMesh");
 	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0)); 
@@ -376,6 +376,22 @@ bool Root::Start()
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	hormagaunt->SetTag("Enemy");
+
+	auto hormagaunt2 = CreateGameObject("hormagaunt2");
+	hormagaunt2->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	hormagaunt2->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	hormagaunt2->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	hormagaunt2->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	hormagaunt2->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 1.3, 1.6));
+	auto hormagaunt2Mesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	hormagaunt2Mesh->SetName("Hormagaunt2Mesh");
+	hormagaunt2Mesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	hormagaunt2Mesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	hormagaunt2Mesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	hormagaunt2Mesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	ParentGameObject(*hormagaunt2Mesh, *hormagaunt2);
+	hormagaunt2->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	hormagaunt2->SetTag("Enemy");
 
 	//auto mawloc = CreateGameObject("Mawloc");
 	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -16, 1080));

@@ -56,9 +56,41 @@ public:
 		meshIndex.clear();
 	}
 
+	std::shared_ptr<Material> AddMaterial(std::shared_ptr<Material> material) {
+		if (materialIndex.find(material->GetId()) != materialIndex.end()) {
+			return materials[materialIndex[material->GetId()]];
+		}
+		materials.push_back(material);
+		materialIndex[material->GetId()] = materials.size() - 1;
+		std::string str = std::to_string(material->GetId());
+		materials[materials.size() - 1]->SaveBinary(str);
+		return materials.back();
+	}
+
+	std::shared_ptr<Material> GetMaterial(size_t id) {
+		if (materialIndex.find(id) != materialIndex.end()) {
+			return materials[materialIndex[id]];
+		}
+		return nullptr;
+	}
+
+	void ClearMaterial(size_t id) {
+		if (materialIndex.find(id) != materialIndex.end()) {
+			materials.erase(materials.begin() + materialIndex[id]);
+			materialIndex.erase(id);
+		}
+	}
+
+	int GetMaterialCount() const {
+		return materials.size();
+	}
+
 private:
+	//meshes
 	std::unordered_map<size_t, size_t> meshIndex;
 	std::vector<std::shared_ptr<Mesh>> meshes;
+	//materials
+	std::unordered_map<size_t, size_t> materialIndex;
 	std::vector<std::shared_ptr<Material>> materials;
 };
 

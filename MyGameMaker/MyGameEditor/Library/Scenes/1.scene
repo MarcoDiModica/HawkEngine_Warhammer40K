@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: 1
 GameObject0:
   name: MainCamera
-  uuid: 5442281204832746374
+  uuid: 10716285214742275271
   tag: Untagged
   active: true
   isStatic: false
@@ -15,7 +15,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999735770004
+        - 54.999999253784715
         - -0
         - 0
       localScale:
@@ -38,7 +38,7 @@ GameObject0:
   Children: ~
 GameObject1:
   name: Gran_Piedra2_PabloFlipnormal
-  uuid: 17762016873670146785
+  uuid: 13337629215013707044
   tag: Untagged
   active: true
   isStatic: false
@@ -48,16 +48,16 @@ GameObject1:
       enabled: true
       localPosition:
         - 4.3359360694885254
-        - 0.55956631898880005
+        - 2.781590461730957
         - 0.046262465417385101
       localRotation:
-        - -90.000014489018881
+        - -90.000016164857669
         - 0
         - 0
       localScale:
         - 0.23759564757347107
-        - 0.23759564757347107
-        - 0.23759564757347107
+        - 0.23759564757348053
+        - 0.23759564757348053
     MeshRenderer:
       name: MeshRenderer
       enabled: true
@@ -90,8 +90,114 @@ GameObject1:
       enabled: true
   Children: ~
 GameObject2:
+  name: Gran_Piedra2_PabloFlipnormal_1
+  uuid: 13027826863677118242
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 4.3359360694885254
+        - 4.8547935485839844
+        - 0.046262465417385101
+      localRotation:
+        - -90.000016164857669
+        - 0
+        - 0
+      localScale:
+        - 0.23759564757347107
+        - 0.23759564757348053
+        - 0.23759564757348053
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 2938377707842750082
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject3:
+  name: Gran_Piedra2_PabloFlipnormal_2
+  uuid: 1901578071992781326
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 4.3359360694885254
+        - 0.55956631898880005
+        - 0.046262465417385101
+      localRotation:
+        - -90.000016164857669
+        - 0
+        - 0
+      localScale:
+        - 0.23759564757347107
+        - 0.23759564757348053
+        - 0.23759564757348053
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 2938377707842750082
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject4:
   name: Cylinder.010
-  uuid: 1854560615525380155
+  uuid: 15889107978251458471
   tag: Untagged
   active: true
   isStatic: false
@@ -101,7 +207,60 @@ GameObject2:
       enabled: true
       localPosition:
         - 0
+        - 5.3426532745361328
         - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0015566733200103045
+        - 0.0015566733200103045
+        - 0.0015566733200103045
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 2058912538061341143
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject5:
+  name: Cylinder.010_1
+  uuid: 11070012785530897942
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 3.1578724384307861
         - 0
       localRotation:
         - 0

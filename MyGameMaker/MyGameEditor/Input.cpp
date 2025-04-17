@@ -26,6 +26,7 @@
 #include <iostream> 
 #include <filesystem>
 #include "../MyShadersEngine/ShaderComponent.h"
+#include "../MyGameEngine/ModelImporter.h"
 
 
 #define MAX_KEYS 300
@@ -382,13 +383,13 @@ void Input::HandleFileDrop(const std::string& fileDir)
     std::string fileNameExt = fileDir.substr(fileDir.find_last_of("\\/") + 1);
     std::string fileExt = fileDir.substr(fileDir.find_last_of('.') + 1);
 
-    fs::path targetPath = fs::path(LIBRARY_PATH) / fileNameExt;
+    fs::path targetPath = fs::path(ASSETS_PATH) / fileNameExt;
 
     if (fileExt == "fbx" || fileExt == "FBX") {
         LOG(LogType::LOG_INFO, "Importing FBX: %s from: %s", fileNameExt.c_str(), fileDir.c_str());
         
         // Create FBX directory if it doesn't exist
-        fs::path fbxDir = fs::path(LIBRARY_PATH) / "FBX";
+        fs::path fbxDir = fs::path(ASSETS_PATH) / "FBX";
         if (!fs::exists(fbxDir)) {
             fs::create_directories(fbxDir);
         }
@@ -396,7 +397,8 @@ void Input::HandleFileDrop(const std::string& fileDir)
 		// Copy the FBX file to the Library directory
         targetPath = fs::current_path() / fbxDir / fileNameExt;
 
-        Application->root->CreateGameObjectWithPath(fileDir);
+		ModelImporter modelImporter;
+		modelImporter.loadFromFile(fileDir);
 
     }
     else if (fileExt == "png" || fileExt == "dds" || fileExt == "tga" || fileExt == "jpg" || fileExt == "jpeg") {

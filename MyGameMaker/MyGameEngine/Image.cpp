@@ -228,12 +228,16 @@ void Image::LoadTextureLocalPath(const std::string& path) {
 std::unordered_map<std::string, std::shared_ptr<Image>> imageCache;
 
 void Image::SaveBinary(const std::string& filename) const {
+
+	std::string fullPath = "Library/Images/" + image_name + ".image";
+
 	if (!std::filesystem::exists("Library/Images")) {
 		std::filesystem::create_directories("Library/Images");
 	}
 
-	std::string fullPath = "Library/Images/" + filename + ".image";
-	LOG(LogType::LOG_INFO, "Saving image to: %s", fullPath.c_str());
+	if (std::filesystem::exists(fullPath)) {
+		return;
+	}
 
 	std::ofstream fout(fullPath, std::ios::binary);
 	if (!fout.is_open()) {
@@ -266,7 +270,7 @@ void Image::SaveBinary(const std::string& filename) const {
 	}
 
 	fout.close();
-	LOG(LogType::LOG_INFO, "Successfully saved image to: %s", fullPath.c_str());
+	LOG(LogType::LOG_INFO, "Successfully saved %s image to: %s", image_name.c_str(), fullPath.c_str());
 }
 
 std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {

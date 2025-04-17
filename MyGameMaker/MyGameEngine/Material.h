@@ -37,7 +37,8 @@ public:
 	std::shared_ptr<Image> roughnessMapPtr = nullptr;             // Roughness map
 	std::shared_ptr<Image> aoMapPtr = nullptr;                    // Ambient occlusion map
 
-	unsigned int GetId() const { return gid; }
+	void SetID(size_t id) { matID = id; }
+	size_t GetId() const { return matID; }
 	unsigned int id() const { return imagePtr ? imagePtr->id() : 0; }
 
 	virtual void bind() const;
@@ -67,7 +68,7 @@ public:
 	float GetTonemapStrength() const { return tonemapStrength; }
 
 protected:
-	unsigned int gid;
+	size_t matID;
 	static unsigned int next_id;
 	std::string image_path;
 

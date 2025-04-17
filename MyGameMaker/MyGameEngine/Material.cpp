@@ -9,7 +9,7 @@
 
 unsigned int Material::next_id = 0;
 
-Material::Material() : gid(next_id++) {
+Material::Material() : matID(next_id++) {
 	color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	imagePtr = std::make_shared<Image>();
 	shaderType = ShaderType::PBR;
@@ -183,6 +183,10 @@ void Material::SaveBinary(const std::string& filename) const {
 
 	if (!std::filesystem::exists("Library/Materials")) {
 		std::filesystem::create_directory("Library/Materials");
+	}
+
+	if (std::filesystem::exists(fullPath)) {
+		return;
 	}
 
 	std::ofstream fout(fullPath, std::ios::binary);

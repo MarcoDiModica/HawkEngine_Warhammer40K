@@ -67,39 +67,7 @@ public:
 
 	static void CleanAllTweens();
 
-	/*class Sequence {
-	public:
-		Sequence();
-
-		Sequence& Append(std::function<TweenHandle()> tweenCreator);
-		Sequence& AppendDelay(float duration);
-		Sequence& AppendCallback(std::function<void()> callback);
-
-		void Play();
-		void Stop();
-
-	private:
-		enum class StepType {
-			TWEEN,
-			DELAY,
-			CALLBACK
-		};
-
-		struct Step {
-			std::function<TweenHandle()> tweenCreator;
-			float duration;
-			StepType type;
-		};
-
-		std::vector<Step> steps;
-		size_t currentIndex;
-		bool isPlaying;
-		TweenHandle currentTweenHandle = 0;
-
-		void PlayCurrentStep();
-	};*/
-
-	/*static Sequence CreateSequence();*/
+	
 
 	static void Update(float deltaTime);
 
@@ -171,3 +139,37 @@ private:
 	static std::vector<Tween> tweens;
 	static Tween CreateTween(GameObject* object, float duration, Modes mode);
 };
+
+class Sequence {
+	public:
+		Sequence();
+
+		Sequence& Append(std::function<Tweening::TweenHandle()> tweenCreator);
+		Sequence& AppendDelay(float duration);
+		Sequence& AppendCallback(std::function<void()> callback);
+
+		void Play();
+		void Stop();
+
+	private:
+		enum class StepType {
+			TWEEN,
+			DELAY,
+			CALLBACK
+		};
+
+		struct Step {
+			std::function<Tweening::TweenHandle()> tweenCreator;
+			float duration;
+			StepType type;
+		};
+
+		std::vector<Step> steps;
+		size_t currentIndex;
+		bool isPlaying;
+		Tweening::TweenHandle currentTweenHandle = 0;
+
+		void PlayCurrentStep();
+	};
+
+	static Sequence CreateSequence();

@@ -17,6 +17,7 @@ public class Railgun : BaseWeapon
     LaserBeam laserBeam;
     public PlayerData playerData;
 
+    private RedThirstManager redThirstManager;
     private Audio sound;
     private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
     private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
@@ -53,6 +54,7 @@ public class Railgun : BaseWeapon
         toggleMode = gameObject.GetComponent<ToggleMode>();
         energyBall = gameObject.GetComponent<EnergyBall>();
         laserBeam = gameObject.GetComponent<LaserBeam>();
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
     }
 
     public override void Update(float deltaTime)
@@ -114,11 +116,11 @@ public class Railgun : BaseWeapon
                     var enemy = GameObject.Find(collisionNames[i]);
                     if (enemy.tag == "Melee")
                     {
-                        enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                        enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage + redThirstManager.redThirstBonus); //placeholder damage
                     }
                     if (enemy.tag == "Ranged")
                     {
-                        enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                        enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage + redThirstManager.redThirstBonus); //placeholder damage
                     }
                     if (enemy.tag == "Stalker")
                     {
@@ -126,7 +128,7 @@ public class Railgun : BaseWeapon
                     }
                     if (enemy.tag == "Boss")
                     {
-                        enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                        enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage + redThirstManager.redThirstBonus); //placeholder damage
                     }
                     if (enemy.tag == "Destroyable")
                     {

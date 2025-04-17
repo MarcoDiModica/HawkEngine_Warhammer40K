@@ -73,7 +73,7 @@ public class Boltgun : BaseWeapon
                         redThirstManager.OnWeaponUsed();
                         if (redThirstManager.IsInBlackRage())
                         {
-                            enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                            enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage + redThirstManager.redThirstBonus);
                         }
                         else
                         {
@@ -85,7 +85,7 @@ public class Boltgun : BaseWeapon
                         redThirstManager.OnWeaponUsed();
                         if (redThirstManager.IsInBlackRage())
                         {
-                            enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                            enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage + redThirstManager.redThirstBonus);
                         }
                         else
                         {
@@ -101,7 +101,7 @@ public class Boltgun : BaseWeapon
                         redThirstManager.OnWeaponUsed();
                         if (redThirstManager.IsInBlackRage())
                         {
-                            enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage * redThirstManager.redThirstDamageBonus);
+                            enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage + redThirstManager.redThirstBonus);
                         }
                         else
                         {

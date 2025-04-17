@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject playerCamera;
     private Transform cameraTransform;
     private PlayerController playerController;
-
+    private RedThirstManager redThirstManager;
     public PlayerData playerData;
 
 
@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         cameraTransform = playerCamera.GetComponent<Transform>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
+        redThirstManager = gameObject.GetComponent<RedThirstManager>();
     }
 
     public override void Update(float deltaTime)
@@ -94,14 +95,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerData.GodMode == true)
         {
-            moveSpeed = (runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed) * 3;
+            moveSpeed = (runSpeed + redThirstManager.redThirstBonus + playerData.stimmSpeed) * 3;
         }
         else if (magnitude > 0.1f)
         {
                 if (magnitude > 0.7f)
-                    moveSpeed = runSpeed + playerData.blackRageSpeed + playerData.stimmSpeed ;
+                    moveSpeed = runSpeed + redThirstManager.redThirstBonus + playerData.stimmSpeed ;
             else
-                moveSpeed = walkSpeed + playerData.blackRageSpeed + playerData.stimmSpeed;
+                moveSpeed = walkSpeed + redThirstManager.redThirstBonus + playerData.stimmSpeed;
         }
     }
 

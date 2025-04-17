@@ -13,7 +13,6 @@ public class PlayerData
     public bool isPiercing = false;
     public bool infiniteBullets = false;
     public bool GodMode = false;
-    public float blackRageSpeed = 0f;
     public float stimmSpeed = 0f;
 
 

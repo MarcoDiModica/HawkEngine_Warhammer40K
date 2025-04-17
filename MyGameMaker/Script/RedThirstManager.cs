@@ -24,7 +24,7 @@ public class RedThirstManager : MonoBehaviour
     private PlayerController playerController;
     private float lastActionTime = 0f;
 
-    public float redThirstDamageBonus = 1.2f;
+    public float redThirstBonus = 5f;
     public float biblePages = 0f;
     public override void Awake()
     {
@@ -63,6 +63,7 @@ public class RedThirstManager : MonoBehaviour
         {
            
         }
+
     }
 
     public void OnAbilityUsed()
@@ -120,6 +121,7 @@ public class RedThirstManager : MonoBehaviour
     public void AddBiblePages(float points)
     {
         biblePages += points;
+        redThirstBonus = 5f + (biblePages * biblePages);
     }
 
     private void ActivateBlackRage()

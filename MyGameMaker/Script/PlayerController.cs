@@ -418,7 +418,6 @@ public class PlayerController : MonoBehaviour
             if (playerDash.isInvulnerable)
             {
                 playerShooting.CounterAttack(other.GetComponent<BulletData>().owner);
-                redThirstManager.AddRedThirstPoint(2);
             }
         }
     }

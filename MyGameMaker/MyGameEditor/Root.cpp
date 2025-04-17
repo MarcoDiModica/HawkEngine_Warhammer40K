@@ -125,6 +125,15 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
+	auto objMainCamera = CreateCameraObject("MainCamera");
+	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
+	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(48.0), glm::radians(45.0), 0.0));
+	auto camera = objMainCamera->AddComponent<CameraComponent>();
+	camera->priority = 1;
+	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
+	mainCamera = objMainCamera;
+	UpdateCameraPriority();
+
 	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");*/
 	auto player = CreateGameObject("Player");
 	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
@@ -203,19 +212,14 @@ bool Root::Start()
 	/*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
-	/*auto cube = CreateCube("Cube");
-	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");*/
 
-	auto objMainCamera = CreateCameraObject("MainCamera");
-	objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
-	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(48.0), glm::radians(45.0), 0.0));
-	auto camera = objMainCamera->AddComponent<CameraComponent>();
-	camera->priority = 1;
-	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-	mainCamera = objMainCamera;
-	UpdateCameraPriority();
+	//auto cube = CreateCube("Cube");
+	//cube->GetTransform()->SetPosition(glm::vec3(0, -10, 0));
+	//cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+
+
+	
 	
 	//// Test PowerUps
 	//
@@ -464,27 +468,27 @@ bool Root::Start()
 
 
 	//For rendering Interaction System text, remove the canvas if there is already one
-	auto canvas = CreateGameObject("Canvas");
-	canvas->AddComponent<UICanvasComponent>();
-	canvas->AddComponent<UITransformComponent>();
-	canvas->AddComponent<SoundComponent>();
-	
-	auto interactText = CreateGameObject("InteractText");
-	Application->root->ParentGameObject(*interactText, *canvas);
-	interactText->AddComponent<UIImageComponent>();
-	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
-	interactText->AddComponent<UIButtonComponent>();
-	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	//auto canvas = CreateGameObject("Canvas");
+	//canvas->AddComponent<UICanvasComponent>();
+	//canvas->AddComponent<UITransformComponent>();
+	//canvas->AddComponent<SoundComponent>();
 	//
-	//
-	auto areaText = CreateGameObject("dialogueText");
-	Application->root->ParentGameObject(*areaText, *canvas);
-	areaText->AddComponent<UIImageComponent>();
-	areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
-	areaText->AddComponent<UIButtonComponent>();
-	areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	//auto interactText = CreateGameObject("InteractText");
+	//Application->root->ParentGameObject(*interactText, *canvas);
+	//interactText->AddComponent<UIImageComponent>();
+	//interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	//interactText->AddComponent<UIButtonComponent>();
+	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	////
+	////
+	//auto areaText = CreateGameObject("dialogueText");
+	//Application->root->ParentGameObject(*areaText, *canvas);
+	//areaText->AddComponent<UIImageComponent>();
+	//areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
+	//areaText->AddComponent<UIButtonComponent>();
+	//areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	//areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 
 	//floor->SetActive(false);
 
@@ -494,14 +498,14 @@ bool Root::Start()
 
 	//CreateLocationBot();
 	//CreateLocationSM();
-	CreateWinUI();
-	CreateLoseUI();
-	CreateGameplayUI();
-	 
-	 
-	CreateMainMenuUI();
-	CreateOptionsMenuUI();
-	CreatePauseMenuUI();
+	//CreateWinUI();
+	//CreateLoseUI();
+	//CreateGameplayUI();
+	// 
+	// 
+	//CreateMainMenuUI();
+	//CreateOptionsMenuUI();
+	//CreatePauseMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");

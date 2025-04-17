@@ -4,7 +4,7 @@ using HawkEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    private GameObject playerRef;
+    public GameObject playerRef;
     private Camera cameraRef;
     private PlayerInput playerInput;
     private Transform cameraTransform;
@@ -39,23 +39,22 @@ public class PlayerCamera : MonoBehaviour
         cameraTransform = gameObject.GetComponent<Transform>();
         if (playerRef == null)
         {
-            //Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
+            Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
             return;
         }
         else
         {
-            cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
+                cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
+                cameraRef.SetCameraFieldOfView(originalFOV * (System.Math.PI / 180.0));
+                Engineson.print("Camera FOV: " + originalFOV * (System.Math.PI / 180.0));
+ 
         }
 
         if (cameraRef == null)
         {
-            //Engineson.print("ERROR: PlayerCamera requires a Camera component!");
+            Engineson.print("ERROR: PlayerCamera requires a Camera component!");
             return;
         }
-
-        cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
-        cameraRef.SetCameraFieldOfView(originalFOV*(System.Math.PI/180.0));
-        Engineson.print("Camera FOV: " + originalFOV * (System.Math.PI / 180.0));
     }
 
     public override void Update(float deltaTime)

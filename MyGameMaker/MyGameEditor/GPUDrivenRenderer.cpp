@@ -112,7 +112,7 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	cullItem.boundingSphere = boundingSphere;
 	cullItem.drawID = static_cast<uint32_t>(cullData.size());
 	cullItem.meshIndex = meshIndex;
-	cullItem.materialIndex = materialIndex; // Guardar el índice del material
+	cullItem.materialIndex = materialIndex;
 	cullItem.instanceOffset = currentInstanceOffset;
 	cullItem.instanceCount = static_cast<uint32_t>(instances.size());
 
@@ -124,21 +124,27 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	cullData.push_back(cullItem);
 }
 
+// PrepareDrawCommands - Improved version
 void GPUDrivenRenderer::PrepareDrawCommands(/*const Frustum& frustum*/) {
 	if (cullData.empty()) {
 		return;
 	}
 
+	// Upload all cullData to the GPU buffer
 	glNamedBufferSubData(cullDataBuffer, 0,
 		cullData.size() * sizeof(CullData),
 		cullData.data());
 
+	// Clear previous draw commands
 	drawCommands.clear();
 	visibleInstanceCount = 0;
 
 	for (const auto& cullItem : cullData) {
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
-		if (!meshData) continue;
+		if (!meshData) {
+			LOG(LogType::LOG_WARNING, "Mesh data no encontrado para índice %u, omitiendo", cullItem.meshIndex);
+			continue;
+		}
 
 		DrawElementsCommand command;
 		command.count = meshData->indexCount;
@@ -149,6 +155,8 @@ void GPUDrivenRenderer::PrepareDrawCommands(/*const Frustum& frustum*/) {
 
 		drawCommands.push_back(command);
 		visibleInstanceCount += cullItem.instanceCount;
+
+		DebugMeshInfo(cullItem.meshIndex);
 	}
 
 	if (!drawCommands.empty()) {
@@ -157,36 +165,26 @@ void GPUDrivenRenderer::PrepareDrawCommands(/*const Frustum& frustum*/) {
 			drawCommands.data());
 	}
 
-	// Después de preparar los draw commands, agrupamos por shader
 	BatchCommandsByShaderType();
-
-	LOG(LogType::LOG_INFO, "Total de instancias visibles: %d", visibleInstanceCount);
-	LOG(LogType::LOG_INFO, "Total de draw commands: %d", (int)drawCommands.size());
-	LOG(LogType::LOG_INFO, "Total de batches por shader: %d", (int)shaderBatches.size());
 }
 
 void GPUDrivenRenderer::BatchCommandsByShaderType() {
-	// Limpiar batches anteriores
 	shaderBatches.clear();
 
 	for (size_t i = 0; i < cullData.size(); i++) {
 		const CullData& cullItem = cullData[i];
 
-		// Obtener el material para determinar el tipo de shader
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(cullItem.materialIndex);
 		if (!materialData) {
 			LOG(LogType::LOG_WARNING, "Material inválido en índice %u, omitiendo", cullItem.materialIndex);
 			continue;
 		}
 
-		// Convertir el valor uint32_t a ShaderType
 		ShaderType shaderType = static_cast<ShaderType>(materialData->shaderType);
 
-		// Obtener o crear el batch para este tipo de shader
 		ShaderBatch& batch = shaderBatches[shaderType];
 		batch.shaderType = shaderType;
 
-		// Añadir el comando al batch
 		if (i < drawCommands.size()) {
 			batch.commands.push_back(drawCommands[i]);
 			batch.meshIndices.push_back(cullItem.meshIndex);
@@ -194,7 +192,6 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 		}
 	}
 
-	// Registrar estadísticas
 	for (const auto& [type, batch] : shaderBatches) {
 		std::string shaderName;
 		switch (type) {
@@ -209,48 +206,29 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 }
 
 void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
-	// Si no hay nada que renderizar, salir temprano
 	if (shaderBatches.empty()) {
 		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
 		return;
 	}
 
-	// Guardar estado de OpenGL
-	GLboolean depthTestEnabled;
-	glGetBooleanv(GL_DEPTH_TEST, &depthTestEnabled);
-
-	GLboolean cullFaceEnabled;
-	glGetBooleanv(GL_CULL_FACE, &cullFaceEnabled);
-
-	// Configurar estado global de OpenGL
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-
-	// Preparar buffer de comandos de dibujo indirecto
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
 
-	// Actualizar los buffers antes de renderizar
-	BindlessManager::GetInstance().UpdateBuffers();
-
-	// Renderizar cada batch de shader
 	for (const auto& [shaderType, batch] : shaderBatches) {
-		RenderUnlitBatch(batch, viewMatrix, projMatrix);
+		switch (shaderType) {
+		case ShaderType::UNLIT:
+			RenderUnlitBatch(batch, viewMatrix, projMatrix);
+			break;
+		case ShaderType::PBR:
+
+			LOG(LogType::LOG_INFO, "Renderizado PBR no implementado aún");
+			break;
+		default:
+			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
+			break;
+		}
 	}
 
-	// Limpiar estado
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
-
-	// Restaurar estado de OpenGL
-	if (!depthTestEnabled) glDisable(GL_DEPTH_TEST);
-	if (!cullFaceEnabled) glDisable(GL_CULL_FACE);
-
-	// Estadísticas de renderizado
-	LOG(LogType::LOG_INFO, "Renderizado completado: %d instancias en %zu batches",
-		visibleInstanceCount, shaderBatches.size());
-
-	// Intercambiar buffers en BindlessManager al final del frame
-	BindlessManager::GetInstance().EndFrame();
 }
 
 void GPUDrivenRenderer::RenderUnlitBatch(
@@ -258,18 +236,24 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	const glm::mat4& viewMatrix,
 	const glm::mat4& projMatrix) {
 
-	if (batch.commands.empty()) return;
+	if (batch.commands.empty()) {
+		LOG(LogType::LOG_WARNING, "RenderUnlitBatch: No hay comandos en el batch");
+		return;
+	}
 
-	// Temporarily disable culling and depth test to debug visibility issues
-	GLboolean depthEnabled = glIsEnabled(GL_DEPTH_TEST);
-	GLboolean cullEnabled = glIsEnabled(GL_CULL_FACE);
+	/*GLboolean blendEnabled;
+	glGetBooleanv(GL_BLEND, &blendEnabled);
 
-	glDisable(GL_CULL_FACE);  // Disable face culling temporarily 
+	GLint blendSrc, blendDst;
+	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
+	glGetIntegerv(GL_BLEND_DST, &blendDst);
 
-	// Get the shader
+	GLint lastProgram;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);*/
+
 	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
 	if (!shader) {
-		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader UNLIT");
+		LOG(LogType::LOG_ERROR, "RenderUnlitBatch: No se pudo obtener el shader UNLIT");
 		return;
 	}
 
@@ -277,7 +261,20 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 
-	// Loop through each mesh/material in the batch
+	GLint viewLoc = glGetUniformLocation(shader->GetProgram(), "view");
+	GLint projLoc = glGetUniformLocation(shader->GetProgram(), "projection");
+	GLint modelLoc = glGetUniformLocation(shader->GetProgram(), "model");
+	GLint colorLoc = glGetUniformLocation(shader->GetProgram(), "albedoColor");
+	GLint textureLoc = glGetUniformLocation(shader->GetProgram(), "texture1");
+	GLint hasTextureLoc = glGetUniformLocation(shader->GetProgram(), "u_HasTexture");
+
+	LOG(LogType::LOG_INFO, "Uniform locations: view=%d, proj=%d, model=%d, color=%d, texture=%d, hasTexture=%d",
+		viewLoc, projLoc, modelLoc, colorLoc, textureLoc, hasTextureLoc);
+
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Process each mesh and material in the batch
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];
@@ -285,56 +282,171 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
 
-		if (!meshData || !materialData) continue;
+		if (!meshData || !materialData) {
+			LOG(LogType::LOG_WARNING, "RenderUnlitBatch: Mesh data o Material data nulos - mesh: %p, material: %p",
+				(void*)meshData, (void*)materialData);
+			continue;
+		}
 
-		// Set a bright color for visibility
-		glm::vec4 debugColor(1.0f, 0.0f, 1.0f, 1.0f);  // Magenta - very visible
-		shader->SetUniformVec4("color", debugColor);
+		// Debug: Log mesh and material data
+		LOG(LogType::LOG_INFO, "Mesh %u: VAO=%u, IBO=%u, VBO=%u, indexCount=%u, vertexCount=%u, flags=0x%X",
+			meshIndex, meshData->vertexArray, meshData->indexBuffer, meshData->positionBuffer,
+			meshData->indexCount, meshData->vertexCount, meshData->attributeFlags);
 
-		// Position the cube at the center of the view with some scale
+		LOG(LogType::LOG_INFO, "Material %u: Color=(%f,%f,%f,%f), flags=0x%X",
+			materialIndex, materialData->albedoColor.r, materialData->albedoColor.g,
+			materialData->albedoColor.b, materialData->albedoColor.a, materialData->flags);
+
+		// Debug: Verify VAO and buffers exist
+		GLboolean isVAO = glIsVertexArray(meshData->vertexArray);
+		GLboolean isIBO = glIsBuffer(meshData->indexBuffer);
+		GLboolean isVBO = glIsBuffer(meshData->positionBuffer);
+
+		LOG(LogType::LOG_INFO, "Buffer validation: VAO=%s, IBO=%s, VBO=%s",
+			isVAO ? "válido" : "INVÁLIDO",
+			isIBO ? "válido" : "INVÁLIDO",
+			isVBO ? "válido" : "INVÁLIDO");
+
+		// Set material properties using data from GPUMaterial
+		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
+
+		// Debug: Log vertex positions (first few vertices)
+		if (isVBO == GL_TRUE) {
+			// Temporary buffer to read vertex data
+			glBindBuffer(GL_ARRAY_BUFFER, meshData->positionBuffer);
+			GLfloat* vertices = nullptr;
+			GLint bufferSize = 0;
+			glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+
+			if (bufferSize > 0) {
+				vertices = (GLfloat*)malloc(bufferSize);
+				if (vertices) {
+					glGetBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, vertices);
+
+					// Display first 3 vertices (up to 9 floats - 3 vertices with xyz)
+					int numVerts = std::min(3, (int)(bufferSize / (3 * sizeof(GLfloat))));
+					LOG(LogType::LOG_INFO, "Primeros %d vértices:", numVerts);
+
+					for (int v = 0; v < numVerts; v++) {
+						LOG(LogType::LOG_INFO, "  Vert %d: (%f, %f, %f)",
+							v, vertices[v * 3], vertices[v * 3 + 1], vertices[v * 3 + 2]);
+					}
+
+					free(vertices);
+				}
+			}
+			else {
+				LOG(LogType::LOG_WARNING, "Buffer de posición tiene tamaño cero");
+			}
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+
+		// Set model matrix (identity for now, or instance transform)
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -5.0f));  // Move it in front of camera
-		model = glm::scale(model, glm::vec3(2.0f));  // Make it larger
 		shader->SetUniformMat4("model", model);
 
-		// Bind the VAO
+		// Bind texture if the material has one
+		if (materialData->flags & (1 << 0)) { // Check if albedo texture is present
+			glActiveTexture(GL_TEXTURE0);
+			shader->SetUniform("u_HasTexture", 1);
+			shader->SetUniform("texture1", 0);
+
+			// Note: In a bindless texture setup, we'd use something like:
+			// if (GLEW_ARB_bindless_texture) {
+			//    glUniformHandleui64ARB(glGetUniformLocation(shader->GetProgram(), "albedoTexture"), 
+			//                          materialData->albedoTexture);
+			// }
+
+			LOG(LogType::LOG_INFO, "Textura albedo habilitada");
+		}
+		else {
+			shader->SetUniform("u_HasTexture", 0);
+			LOG(LogType::LOG_INFO, "Textura albedo deshabilitada");
+		}
+
+		// Bind the VAO and index buffer
 		glBindVertexArray(meshData->vertexArray);
 
-		// Make sure index buffer is bound
+		// Debug: Check VAO attributes
+		GLint maxAttribs;
+		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttribs);
+		LOG(LogType::LOG_INFO, "Máximo de atributos soportados: %d", maxAttribs);
+
+		for (GLint attrib = 0; attrib < std::min(16, maxAttribs); attrib++) {
+			GLint enabled;
+			glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &enabled);
+			if (enabled) {
+				GLint size, type, normalized, stride, offset;
+				glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_SIZE, &size);
+				glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_TYPE, &type);
+				glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, &normalized);
+				glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_STRIDE, &stride);
+				glGetVertexAttribPointerv(attrib, GL_VERTEX_ATTRIB_ARRAY_POINTER, (void**)&offset);
+
+				LOG(LogType::LOG_INFO, "  Atributo %d: habilitado, size=%d, type=0x%X, stride=%d",
+					attrib, size, type, stride);
+			}
+		}
+
+		// Make sure index buffer is bound if needed
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
 
-		// Check which draw command to use
+		// Get the draw command for this mesh/material combination
 		if (i < batch.commands.size()) {
 			const DrawElementsCommand& cmd = batch.commands[i];
 
-			LOG(LogType::LOG_INFO, "Dibujando mesh %u, material %u: %u indices (VAO=%u, IBO=%u)",
-				meshIndex, materialIndex, cmd.count, meshData->vertexArray, meshData->indexBuffer);
+			// Debug: Log indices (first few)
+			if (isIBO == GL_TRUE) {
+				GLint indexBufferSize = 0;
+				glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &indexBufferSize);
 
-			// For debugging, draw wireframe
-			GLint polygonMode[2];
-			glGetIntegerv(GL_POLYGON_MODE, polygonMode);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				if (indexBufferSize > 0) {
+					GLuint* indices = (GLuint*)malloc(indexBufferSize);
+					if (indices) {
+						glGetBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexBufferSize, indices);
+
+						// Display first few indices
+						int numIndices = std::min(9, (int)(indexBufferSize / sizeof(GLuint)));
+						LOG(LogType::LOG_INFO, "Primeros %d índices:", numIndices);
+
+						for (int idx = 0; idx < numIndices; idx++) {
+							LOG(LogType::LOG_INFO, "  Índice %d: %u", idx, indices[idx]);
+						}
+
+						free(indices);
+					}
+				}
+			}
+
+			LOG(LogType::LOG_INFO, "Ejecutando DrawElements: count=%u, instanceCount=%u, baseInstance=%u",
+				cmd.count, cmd.instanceCount, cmd.baseInstance);
 
 			// Draw elements
-			glDrawElements(
+			/*glDrawElements(
 				GL_TRIANGLES,
 				cmd.count,
 				GL_UNSIGNED_INT,
 				(void*)(0)
+			);*/
+
+			//multidraw
+			glMultiDrawElementsIndirect(
+				GL_TRIANGLES,
+				GL_UNSIGNED_INT,
+				(void*)(cmd.baseInstance * sizeof(DrawElementsCommand)),
+				cmd.instanceCount,
+				sizeof(DrawElementsCommand)
 			);
 
-			// Restore polygon mode
-			glPolygonMode(GL_FRONT_AND_BACK, polygonMode[0]);
+			GLenum err = glGetError();
+			if (err != GL_NO_ERROR) {
+				LOG(LogType::LOG_ERROR, "Error en glDrawElements: 0x%X", err);
+			}
 		}
 	}
 
-	// Clean up state
 	glBindVertexArray(0);
 	shader->UnBind();
-
-	// Restore OpenGL state
-	if (depthEnabled) glEnable(GL_DEPTH_TEST);
-	if (cullEnabled) glEnable(GL_CULL_FACE);
 }
 
 bool GPUDrivenRenderer::CompileCullingShader() {
@@ -346,4 +458,116 @@ bool GPUDrivenRenderer::CompileCullingShader() {
 	}
 
 	return true;
+}
+
+void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
+	GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+	if (!meshData) {
+		LOG(LogType::LOG_ERROR, "DebugMeshInfo: Mesh %u no encontrado", meshIndex);
+		return;
+	}
+
+	LOG(LogType::LOG_INFO, "=== Información detallada de GPUMesh %u ===", meshIndex);
+
+	// Verificar IDs de buffer
+	LOG(LogType::LOG_INFO, "VAO: %u (válido: %s)",
+		meshData->vertexArray,
+		glIsVertexArray(meshData->vertexArray) ? "sí" : "NO");
+
+	LOG(LogType::LOG_INFO, "IBO: %u (válido: %s)",
+		meshData->indexBuffer,
+		glIsBuffer(meshData->indexBuffer) ? "sí" : "NO");
+
+	LOG(LogType::LOG_INFO, "VBO Posición: %u (válido: %s)",
+		meshData->positionBuffer,
+		glIsBuffer(meshData->positionBuffer) ? "sí" : "NO");
+
+	LOG(LogType::LOG_INFO, "VBO TexCoord: %u (válido: %s)",
+		meshData->texCoordBuffer,
+		glIsBuffer(meshData->texCoordBuffer) ? "sí" : "NO");
+
+	LOG(LogType::LOG_INFO, "VBO Normal: %u (válido: %s)",
+		meshData->normalBuffer,
+		glIsBuffer(meshData->normalBuffer) ? "sí" : "NO");
+
+	// Información de conteo
+	LOG(LogType::LOG_INFO, "Índices: %u", meshData->indexCount);
+	LOG(LogType::LOG_INFO, "Vértices: %u", meshData->vertexCount);
+	LOG(LogType::LOG_INFO, "ID de malla: %u", meshData->meshId);
+	LOG(LogType::LOG_INFO, "Flags de atributos: 0x%X", meshData->attributeFlags);
+
+	// Decodificar flags de atributos
+	LOG(LogType::LOG_INFO, "Atributos habilitados:");
+	if (meshData->attributeFlags & (1 << 0)) LOG(LogType::LOG_INFO, " - Posición");
+	if (meshData->attributeFlags & (1 << 1)) LOG(LogType::LOG_INFO, " - TexCoord");
+	if (meshData->attributeFlags & (1 << 2)) LOG(LogType::LOG_INFO, " - Normal");
+	if (meshData->attributeFlags & (1 << 3)) LOG(LogType::LOG_INFO, " - Tangente");
+	if (meshData->attributeFlags & (1 << 4)) LOG(LogType::LOG_INFO, " - Bitangente");
+	if (meshData->attributeFlags & (1 << 5)) LOG(LogType::LOG_INFO, " - Color");
+
+	// Verificar y mostrar posiciones de vértices
+	if (glIsBuffer(meshData->positionBuffer)) {
+		glBindBuffer(GL_ARRAY_BUFFER, meshData->positionBuffer);
+
+		GLint bufferSize = 0;
+		glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+
+		LOG(LogType::LOG_INFO, "Tamaño del buffer de posición: %d bytes", bufferSize);
+
+		if (bufferSize > 0) {
+			// Leer los datos del buffer
+			float* positions = (float*)malloc(bufferSize);
+			if (positions) {
+				glGetBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, positions);
+
+				// Mostrar las primeras posiciones (hasta 5 vértices)
+				int numVerts = std::min(5, (int)(bufferSize / (3 * sizeof(float))));
+				LOG(LogType::LOG_INFO, "Primeras %d posiciones de vértices:", numVerts);
+
+				for (int i = 0; i < numVerts; i++) {
+					LOG(LogType::LOG_INFO, " Vértice %d: (%f, %f, %f)",
+						i, positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+				}
+
+				free(positions);
+			}
+		}
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	// Verificar y mostrar índices
+	if (glIsBuffer(meshData->indexBuffer)) {
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		GLint bufferSize = 0;
+		glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
+
+		LOG(LogType::LOG_INFO, "Tamaño del buffer de índices: %d bytes", bufferSize);
+
+		if (bufferSize > 0) {
+			// Leer los datos del buffer
+			unsigned int* indices = (unsigned int*)malloc(bufferSize);
+			if (indices) {
+				glGetBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, bufferSize, indices);
+
+				// Mostrar los primeros índices (hasta 15 índices, o 5 triángulos)
+				int numIndices = std::min(15, (int)(bufferSize / sizeof(unsigned int)));
+				LOG(LogType::LOG_INFO, "Primeros %d índices:", numIndices);
+
+				for (int i = 0; i < numIndices; i += 3) {
+					if (i + 2 < numIndices) {
+						LOG(LogType::LOG_INFO, " Triángulo %d: %u, %u, %u",
+							i / 3, indices[i], indices[i + 1], indices[i + 2]);
+					}
+				}
+
+				free(indices);
+			}
+		}
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	LOG(LogType::LOG_INFO, "=== Fin de información de GPUMesh ===");
 }

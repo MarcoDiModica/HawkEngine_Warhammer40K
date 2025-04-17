@@ -190,11 +190,9 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 		glUseProgram(0);
 	}
 
-	// Configuración para el shader UNLIT
 	if (bindlessUnlitShader != 0) {
 		glUseProgram(bindlessUnlitShader);
 
-		// Activar modo bindless
 		glUniform1i(glGetUniformLocation(bindlessUnlitShader, "useBindlessMode"), 1);
 
 		glUseProgram(0);
@@ -204,9 +202,9 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 		queuedObjects.size(),
 		GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount());
 
-	BindlessManager::GetInstance().EndFrame();
-
 	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix);
+
+	BindlessManager::GetInstance().EndFrame();
 
 	stats.visibleGameObjects = GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount();
 	stats.totalDrawCalls = GPUDrivenRenderer::GetInstance().GetTotalDrawCommands();
@@ -240,20 +238,18 @@ void RenderManager::SetUseOcclusionCulling(bool enable) {
 }
 
 bool RenderManager::InitializeShaders() {
-	// Obtener shader PBR
 	bindlessPBRShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::BINDLESS_PBR);
 	if (bindlessPBRShader == 0) {
 		LOG(LogType::LOG_WARNING, "Warning: Shader bindless PBR no encontrado en ShaderManager");
 	}
 
-	// Obtener shader UNLIT (usamos el shader normal que ahora soporta bindless)
 	bindlessUnlitShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::UNLIT);
 	if (bindlessUnlitShader == 0) {
 		LOG(LogType::LOG_ERROR, "Error: Shader UNLIT no encontrado en ShaderManager");
 		return false;
 	}
 
-	return bindlessUnlitShader != 0; // Al menos necesitamos el shader UNLIT
+	return bindlessUnlitShader != 0; 
 }
 
 void RenderManager::ProcessGameObject(GameObject* gameObject) {

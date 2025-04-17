@@ -26,7 +26,6 @@ struct CullData {
 	uint32_t materialIndex;    // Índice del material (añadido para agrupar por material)
 };
 
-// Estructura para agrupar comandos por shader
 struct ShaderBatch {
 	ShaderType shaderType;                    // Tipo de shader para este batch
 	std::vector<DrawElementsCommand> commands; // Comandos de dibujo para este shader
@@ -42,7 +41,6 @@ public:
 	void BeginFrame();
 	void EndFrame();
 
-	// Versión modificada que también toma en cuenta el índice del material
 	void AddInstanceGroup(
 		uint32_t meshIndex,
 		uint32_t materialIndex,
@@ -52,7 +50,6 @@ public:
 
 	void PrepareDrawCommands(/*const Frustum& frustum*/);
 
-	// Versión mejorada que maneja diferentes tipos de shader
 	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix);
 
 	void SetUseGPUCulling(bool enabled) { useGPUCulling = enabled; }
@@ -71,7 +68,7 @@ private:
 	//void CPUFrustumCulling(const Frustum& frustum);
 	bool CompileCullingShader();
 
-	// Método nuevo para agrupar comandos por tipo de shader
+	void DebugMeshInfo(uint32_t meshIndex);
 	void BatchCommandsByShaderType();
 
 	// Por ahora solo implementamos renderizado de materiales UNLIT
@@ -88,7 +85,6 @@ private:
 	std::vector<CullData> cullData;
 	std::vector<DrawElementsCommand> drawCommands;
 
-	// Nueva estructura para almacenar batches por tipo de shader
 	std::map<ShaderType, ShaderBatch> shaderBatches;
 
 	uint32_t currentInstanceOffset = 0;

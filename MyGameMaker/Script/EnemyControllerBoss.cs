@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using HawkEngine;
 
 public class EnemyControllerBoss : EnemyController
@@ -18,7 +19,6 @@ public class EnemyControllerBoss : EnemyController
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
    
     //stats
-
     bool isCombatMusicPlaying = false;
     private float health = 1500.0f;
     private float damage = 25.0f;
@@ -56,6 +56,18 @@ public class EnemyControllerBoss : EnemyController
     private float slamAttackTimer = 0.0f;
     private bool isSlamActive = false;
 
+    // Metal Slide stats
+    private float metalSlideDuration = 7.0f;
+    private float metalSlideTimer = 0.0f;
+    private bool isMetalSlideActive = false;
+    private float metalSlideStartTime = 0.0f;
+    private List<(float impactTime, Vector3 position)> pendingImpacts = new List<(float, Vector3)>();
+    private float maxFragmentOffset = 3.0f;
+    private int numberOfFragments;
+    private Random random;
+    private Vector3 playerVelocity;
+    private float bossTime = 0.0f;
+
     private enum BossPhase
     {
         PHASE1,
@@ -65,6 +77,12 @@ public class EnemyControllerBoss : EnemyController
 
     private BossPhase currentPhase;
 
+    private class FragmentImpact
+    {
+        public Vector3 position;
+        public float impactTime;
+    }
+
     public override void Awake()
     {
         music = gameObject.GetComponent<Audio>();
@@ -73,6 +91,7 @@ public class EnemyControllerBoss : EnemyController
     public override void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        playerVelocity = GameObject.Find("Player").GetComponent<Rigidbody>().GetVelocity();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.SetMass(1000.0f);
         currentHealth = maxHealth;
@@ -106,6 +125,8 @@ public class EnemyControllerBoss : EnemyController
     {
         if (!isDead)
         {
+            bossTime += deltaTime;
+
             float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
             if (playerTransform != null)
@@ -259,17 +280,36 @@ public class EnemyControllerBoss : EnemyController
                         slamAttackTimer -= deltaTime;
                     }
                     break;
-        }
-
-        if (slamHurtboxObject != null || clawHurtboxObject != null)
-        {
-            hurtboxDuration += deltaTime;
-            if (hurtboxDuration >= 0.5)
-            {
-                DestroyHurtboxes();
-                hurtboxDuration = 0.0f;
             }
-        }
+
+            //if (isMetalSlideActive)
+            //{
+            //    float currentTime = bossTime;
+            //    for (int i = pendingImpacts.Count - 1; i>= 0; i--)
+            //    {
+            //        if (currentTime >= pendingImpacts[i].impactTime)
+            //        {
+            //            CreateSlideHurtbox(pendingImpacts[i].position);
+            //            pendingImpacts.RemoveAt(i);
+            //        }
+            //    }
+
+            //    if (pendingImpacts.Count == 0)
+            //    {
+            //        isMetalSlideActive = false;
+            //    }
+
+            //}
+
+            if (slamHurtboxObject != null || clawHurtboxObject != null)
+            {
+                hurtboxDuration += deltaTime;
+                if (hurtboxDuration >= 0.5)
+                {
+                    DestroyHurtboxes();
+                    hurtboxDuration = 0.0f;
+                }
+            }
 
         }
 
@@ -364,13 +404,40 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             CreateClawHurtbox();
-         
+            
         }
     }
 
     private void MetalSlide()
     {
+        if (playerTransform == null) return;
 
+        if (isDead == false)
+        {
+            numberOfFragments = random.Next(5, 9);
+            pendingImpacts.Clear();
+            metalSlideStartTime = bossTime;
+            isMetalSlideActive = true;
+
+            Vector3 playerPosition = playerTransform.position;
+
+            for (int i = 0; i<numberOfFragments; i++)
+            {
+                float baseTime = i * metalSlideDuration / numberOfFragments;
+                float randomOffset = ((float)random.NextDouble() - 0.5f) * (metalSlideDuration / numberOfFragments);
+                float ti = metalSlideStartTime + baseTime + randomOffset;
+
+                Vector3 predictedPosition = playerPosition + playerVelocity * (ti - bossTime);
+
+                float offsetX = ((float)random.NextDouble() * 2 - 1) * maxFragmentOffset;
+                float offsetZ = ((float)random.NextDouble() * 2 - 1) * maxFragmentOffset;
+
+                Vector3 impactPosition = predictedPosition + new Vector3(offsetX, 0, offsetZ);
+                pendingImpacts.Add((ti, impactPosition));
+
+                Engineson.print($"Fragment {i} will impact at {impactPosition} at time {ti}");
+            }
+        }
     }
 
     public void ChangePositionToClosest()
@@ -425,29 +492,28 @@ public class EnemyControllerBoss : EnemyController
 
     private void CreateSlamHurtbox()
     {
-        if (playerTransform == null) return;
+        if (enemyTransform == null) return;
 
         slamHurtboxObject = Engineson.CreateGameObject("SlamHurtbox", null);
         slamHurtboxObject.AddComponent<MeshRenderer>();
         slamHurtboxObject.AddComponent<BoxCollider>();
         slamHurtboxObject.GetComponent<BoxCollider>().SetTrigger(true);
         slamHurtboxObject.tag = "EnemyAttack";
-        
-        Vector3 bossPosition = enemyTransform.position;
-        Vector3 playerPosition = playerTransform.position;
-        Vector3 direction = Vector3.Normalize(new Vector3(playerPosition.X - bossPosition.X, 0, playerPosition.Z - bossPosition.Z));
 
-        float angle = (float)Math.Atan2(direction.X, direction.Z);
-        Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
+        Vector3 forward = enemyTransform.forward;
+        Vector3 bossPosition = enemyTransform.position;
 
         float halfLength = slamHurtboxSize.Z / 2.0f;
         float offset = 5.0f;
 
-        Vector3 hurtboxPosition = bossPosition + direction * (halfLength + offset);
+        Vector3 hurtboxPosition = bossPosition + forward * (halfLength + offset);
 
         var hurtboxTransform = slamHurtboxObject.GetComponent<Transform>();
         hurtboxTransform.position = hurtboxPosition;
         hurtboxTransform.SetScale(slamHurtboxSize.X, slamHurtboxSize.Y, slamHurtboxSize.Z);
+
+        float angle = (float)Math.Atan2(forward.X, forward.Z);
+        Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
         hurtboxTransform.SetRotationQuat(rotation);
     }
 
@@ -486,11 +552,24 @@ public class EnemyControllerBoss : EnemyController
             float angle = (float)Math.Atan2(forward.X, forward.Z);
             Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
             hurtboxTransform.SetRotationQuat(rotation);
-
-         
         }
 
     }
+
+    private void CreateSlideHurtbox(Vector3 position)
+    {
+        var fragment = Engineson.CreateGameObject("FragmentImpact", null);
+        fragment.AddComponent<MeshRenderer>();
+        fragment.AddComponent<BoxCollider>();
+        fragment.GetComponent<BoxCollider>().SetTrigger(true);
+        fragment.tag = "EnemyAttack";
+
+        var fragmentTransform = fragment.GetComponent<Transform>();
+        fragmentTransform.position = position;
+        fragmentTransform.SetScale(4.0f, 1.0f, 4.0f);
+
+    }
+
 
     private void DestroyHurtboxes()
     {

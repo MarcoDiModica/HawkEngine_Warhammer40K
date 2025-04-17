@@ -63,7 +63,10 @@ public class RedThirstManager : MonoBehaviour
         {
            
         }
-
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            AddRedThirstPoint(1);
+        }
     }
 
     public void OnAbilityUsed()
@@ -129,7 +132,7 @@ public class RedThirstManager : MonoBehaviour
         isInBlackRage = true;
         blackRageTimer = 0f;
         Engineson.print("Black Rage Activated!");
-        playerController.playerData.blackRageSpeed = 21f;
+        playerController.playerData.blackRageSpeed = redThirstBonus;
         playerController.playerDash.canDash = false;
 
 

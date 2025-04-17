@@ -367,20 +367,20 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//Hormagaunt
-	//auto hormagaunt = CreateGameObject("Hormagaunt");
-	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 40));
-	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 1.3, 1.6));
-	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh->SetName("HormagauntMesh");
-	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	// hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0)); 
-	//hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagauntMesh, *hormagaunt);
-	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	//hormagaunt->SetTag("Enemy");
+	auto hormagaunt = CreateGameObject("Hormagaunt");
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 40));
+	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 1.3, 1.6));
+	auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	hormagauntMesh->SetName("HormagauntMesh");
+	hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	 hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0)); 
+	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	ParentGameObject(*hormagauntMesh, *hormagaunt);
+	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	hormagaunt->SetTag("Enemy");
 
 	//auto mawloc = CreateGameObject("Mawloc");
 	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -16, 1080));
@@ -464,27 +464,27 @@ bool Root::Start()
 
 
 	//For rendering Interaction System text, remove the canvas if there is already one
-	//auto canvas = CreateGameObject("Canvas");
-	//canvas->AddComponent<UICanvasComponent>();
-	//canvas->AddComponent<UITransformComponent>();
-	//canvas->AddComponent<SoundComponent>();
+	auto canvas = CreateGameObject("Canvas");
+	canvas->AddComponent<UICanvasComponent>();
+	canvas->AddComponent<UITransformComponent>();
+	canvas->AddComponent<SoundComponent>();
+	
+	auto interactText = CreateGameObject("InteractText");
+	Application->root->ParentGameObject(*interactText, *canvas);
+	interactText->AddComponent<UIImageComponent>();
+	interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
+	interactText->AddComponent<UIButtonComponent>();
+	interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 	//
-	//auto interactText = CreateGameObject("InteractText");
-	//Application->root->ParentGameObject(*interactText, *canvas);
-	//interactText->AddComponent<UIImageComponent>();
-	//interactText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/PressE.png");
-	//interactText->AddComponent<UIButtonComponent>();
-	//interactText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	//interactText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
-	////
-	////
-	//auto areaText = CreateGameObject("dialogueText");
-	//Application->root->ParentGameObject(*areaText, *canvas);
-	//areaText->AddComponent<UIImageComponent>();
-	//areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
-	//areaText->AddComponent<UIButtonComponent>();
-	//areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
-	//areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
+	//
+	auto areaText = CreateGameObject("dialogueText");
+	Application->root->ParentGameObject(*areaText, *canvas);
+	areaText->AddComponent<UIImageComponent>();
+	areaText->GetComponent<UIImageComponent>()->SetTexture("Assets/Textures/dialogueText.png");
+	areaText->AddComponent<UIButtonComponent>();
+	areaText->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
+	areaText->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.559, 0.624, 0), glm::vec3(0.262, 0.464, 1));
 
 	//floor->SetActive(false);
 
@@ -494,14 +494,14 @@ bool Root::Start()
 
 	//CreateLocationBot();
 	//CreateLocationSM();
-	//CreateWinUI();
-	//CreateLoseUI();
-	//CreateGameplayUI();
-	// 
-	// 
-	//CreateMainMenuUI();
-	//CreateOptionsMenuUI();
-	//CreatePauseMenuUI();
+	CreateWinUI();
+	CreateLoseUI();
+	CreateGameplayUI();
+	 
+	 
+	CreateMainMenuUI();
+	CreateOptionsMenuUI();
+	CreatePauseMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
@@ -547,8 +547,8 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	
-	/*auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(10, 2, 3));
 	biblePagePickUp->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
 	biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
@@ -556,7 +556,7 @@ bool Root::Start()
 	biblePagePickUp->SetTag("BiblePage");
 
 	auto biblePagePickUp2 = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	biblePagePickUp2->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	biblePagePickUp2->GetTransform()->SetPosition(glm::vec3(20, 2, 3));
 	biblePagePickUp2->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
 	biblePagePickUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	biblePagePickUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
@@ -572,12 +572,12 @@ bool Root::Start()
 	biblePagePickUp3->SetTag("BiblePage");
 
 	auto biblePagePickUp4= CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	biblePagePickUp4->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
+	biblePagePickUp4->GetTransform()->SetPosition(glm::vec3(40, 2, 3));
 	biblePagePickUp4->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
 	biblePagePickUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	biblePagePickUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	biblePagePickUp4->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	biblePagePickUp4->SetTag("BiblePage");*/
+	biblePagePickUp4->SetTag("BiblePage");
 
 
 #ifdef _BUILD

@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
-  uuid: 15869436551392992083
+  uuid: 67649687859738345
   tag: Player
   active: true
   isStatic: false
@@ -142,7 +142,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 1662977444797720955
+      uuid: 18086942109998781942
       tag: Untagged
       active: true
       isStatic: false
@@ -201,7 +201,7 @@ GameObject0:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 13323192856513770243
+      uuid: 13774829548983151897
       tag: Untagged
       active: true
       isStatic: false
@@ -273,7 +273,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 10838704912306337311
+      uuid: 13442422157667207512
       tag: Untagged
       active: true
       isStatic: false
@@ -345,7 +345,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 17922979923678210687
+      uuid: 14023866074034578651
       tag: Untagged
       active: true
       isStatic: false
@@ -418,7 +418,7 @@ GameObject0:
       Children: ~
 GameObject1:
   name: MainCamera
-  uuid: 11320051163053952029
+  uuid: 9600939649634646090
   tag: Untagged
   active: true
   isStatic: false
@@ -454,7 +454,7 @@ GameObject1:
   Children: ~
 GameObject2:
   name: Floor
-  uuid: 16577944369733838606
+  uuid: 7984057457625782396
   tag: Untagged
   active: true
   isStatic: false
@@ -517,7 +517,7 @@ GameObject2:
   Children: ~
 GameObject3:
   name: shotgun
-  uuid: 11899417066040221790
+  uuid: 16699071219007960241
   tag: Weapon
   active: false
   isStatic: false
@@ -582,7 +582,7 @@ GameObject3:
         name: ShotgunPickUp
   Children:
     - name: bOLTER.010
-      uuid: 5598706966055677710
+      uuid: 11680986200474905217
       tag: Untagged
       active: true
       isStatic: false
@@ -634,7 +634,7 @@ GameObject3:
           enabled: true
       Children: ~
     - name: Cone
-      uuid: 12456003660109497041
+      uuid: 16948710611410430587
       tag: Untagged
       active: false
       isStatic: false
@@ -687,7 +687,7 @@ GameObject3:
       Children: ~
 GameObject4:
   name: bOLTER.012
-  uuid: 7846649724983617308
+  uuid: 11260610872285030166
   tag: Weapon
   active: false
   isStatic: false

@@ -63,7 +63,7 @@ public class Barrage : BaseAbilities
             }
 
             barrage.AddScript("BarrageBullet");
-            barrage.GetComponent<BarrageBullet>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+            barrage.GetComponent<BarrageBullet>().Init(gameObject);
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;

@@ -340,16 +340,15 @@ bool Root::Start()
 	//BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
 	//BoltgunBullets->SetTag("Ammunition");
 	
-	////Lictor
+	//Lictor
 	//auto lictor = CreateGameObject("Lictor");
 	//lictor->SetTag("Enemy");
 	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 40));
 	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
 	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
 	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 3, -1.4));
-	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/Lictor without armature.fbx");
 	//lictorMesh->SetName("LictorMesh");
 	//ParentGameObject(*lictorMesh, *lictor);

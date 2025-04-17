@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
-  uuid: 13379086930109445952
+  uuid: 2112736607741713415
   tag: Player
   active: true
   isStatic: false
@@ -22,15 +22,6 @@ GameObject0:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -81,6 +72,15 @@ GameObject0:
         useColorGradient: false
         texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
       particleType: 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -142,7 +142,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 16021111896310561444
+      uuid: 15255348824305825332
       tag: Untagged
       active: true
       isStatic: false
@@ -201,7 +201,7 @@ GameObject0:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 14685569622938531847
+      uuid: 13653444717985095464
       tag: Untagged
       active: true
       isStatic: false
@@ -273,7 +273,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 18151852433815862355
+      uuid: 17512501346156332628
       tag: Untagged
       active: true
       isStatic: false
@@ -345,7 +345,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 8200342410190110718
+      uuid: 3892730839428673009
       tag: Untagged
       active: true
       isStatic: false
@@ -418,7 +418,7 @@ GameObject0:
       Children: ~
 GameObject1:
   name: MainCamera
-  uuid: 13053418020080560094
+  uuid: 13016914175605053309
   tag: Untagged
   active: true
   isStatic: false
@@ -454,7 +454,7 @@ GameObject1:
   Children: ~
 GameObject2:
   name: Hormagaunt
-  uuid: 5120899802372832100
+  uuid: 479115510030822618
   tag: Melee
   active: true
   isStatic: false
@@ -474,15 +474,6 @@ GameObject2:
         - 2.2000000476837158
         - 2.2000000476837158
         - 2.2000000476837158
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -533,6 +524,15 @@ GameObject2:
         useColorGradient: false
         texturePath: Assets/Textures/EnemyDash.png
       particleType: 9
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     BoxColliderComponent:
       size:
         - 0.699999988
@@ -560,7 +560,7 @@ GameObject2:
         name: EnemyControllerMelee
   Children:
     - name: HormagauntMesh
-      uuid: 3755360163900037706
+      uuid: 12107649534593927024
       tag: Untagged
       active: true
       isStatic: false
@@ -620,7 +620,7 @@ GameObject2:
       Children: ~
 GameObject3:
   name: Floor
-  uuid: 8185538279445432638
+  uuid: 14149058529820965359
   tag: Untagged
   active: true
   isStatic: false

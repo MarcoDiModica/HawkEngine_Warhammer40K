@@ -435,7 +435,16 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("Counter Attack to: " + target.name);
             Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerRanged>().currentHealth);
         }
-        
+        else if (target.GetComponent<EnemyControllerStalker>() != null)
+        {
+            target.GetComponent<EnemyControllerStalker>().currentHealth -= 10;
+            if (target.GetComponent<EnemyControllerStalker>().currentHealth > 0)
+            {
+                target.GetComponent<EnemyControllerStalker>().isStunned = true;
+            }
+            Engineson.print("Counter Attack to: " + target.name);
+            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerStalker>().currentHealth);
+        }
     }
 
     public void ResetAbilityCooldown()

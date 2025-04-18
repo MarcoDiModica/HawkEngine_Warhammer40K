@@ -2866,9 +2866,11 @@ public:
 				gameObject->AddComponent<UITransformComponent>();
 				}, !gameObject->HasComponent<UITransformComponent>());
 
-			DrawComponentButton(gameObject, "UI Button", [gameObject]() {
+			DrawComponentButton(gameObject, "UI Button", [gameObject](){
 				gameObject->AddComponent<UIButtonComponent>();
 				}, !gameObject->HasComponent<UIButtonComponent>());
+
+			
 
 			break;
 

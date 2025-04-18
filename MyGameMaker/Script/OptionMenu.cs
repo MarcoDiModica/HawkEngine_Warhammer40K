@@ -9,8 +9,8 @@ public class OptionMenu : MonoBehaviour
     private Audio sound;
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private GameObject pauseMenu;
-    private List<string> resolutions;
-    private string currentResolution;
+    private List<string> resolutions = new List<string>();
+    public string currentResolution;
 
 
 
@@ -41,7 +41,7 @@ public class OptionMenu : MonoBehaviour
     }
     public override void Start()
     {
-        //Engineson.print("OptionMenu Start");
+        Engineson.print("OptionMenu Start");
         sound = gameObject.GetComponent<Audio>();
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
         resolutions.Add("1280x720");
@@ -54,16 +54,16 @@ public class OptionMenu : MonoBehaviour
     public override void Update(float deltaTime)
     {
         //Engineson.print("OptionMenu Update");
-        if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
-        {
-            if (pauseMenu != null)
-            {
-                pauseMenu.SetActive(true);
-            }
-            gameObject.SetActive(false);
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
-        }
+        //if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
+        //{
+        //    if (pauseMenu != null)
+        //    {
+        //        pauseMenu.SetActive(true);
+        //    }
+        //    gameObject.SetActive(false);
+        //    sound?.LoadAudio(buttonClicked);
+        //    sound?.Play();
+        //}
 
         //if (gamePlaycanvas.GetComponent<UIButton>().GetState() == ButtonState.HOVERED)
         //{

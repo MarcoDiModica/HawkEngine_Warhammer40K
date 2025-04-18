@@ -213,13 +213,17 @@ bool Root::Start()
 	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
 
 
-	//auto cube = CreateCube("Cube");
-	//cube->GetTransform()->SetPosition(glm::vec3(0, -10, 0));
-	//cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+	auto cube = CreateCube("Cube");
+	cube->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
+	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	cube->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	cube->SetTag("Melee");
 
 
-	
+	auto cube2 = CreateCube("Cube2");
+	cube2->GetTransform()->SetPosition(glm::vec3(20, 2, 0));
+	cube2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	cube2->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	
 	//// Test PowerUps
 	//
@@ -371,7 +375,7 @@ bool Root::Start()
 	//ParentGameObject(*cubeMesh, *cube);
 
 	//Hormagaunt
-	auto hormagaunt = CreateGameObject("Hormagaunt");
+	/*auto hormagaunt = CreateGameObject("Hormagaunt");
 	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 40));
 	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
@@ -384,7 +388,7 @@ bool Root::Start()
 	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	hormagaunt->SetTag("Enemy");
+	hormagaunt->SetTag("Enemy");*/
 
 	//auto mawloc = CreateGameObject("Mawloc");
 	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -16, 1080));
@@ -510,26 +514,26 @@ bool Root::Start()
 	//auto audioScene1 = CreateGameObject("AudioScene");
 	//audioScene1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/Scene1.wav");
 
-	//auto shotgunPickUp = CreateGameObjectWithPath("Assets/shotgun.fbx");
-	//shotgunPickUp->AddComponent<MeshRenderer>();
-	//std::shared_ptr<Image> ShotgunBaseColor = std::make_shared<Image>();
-	//std::shared_ptr<Image> ShotgunRoughness = std::make_shared<Image>();
-	//std::shared_ptr<Image> ShotgunNormal = std::make_shared<Image>();
-	//std::shared_ptr<Image> ShotgunMetallic = std::make_shared<Image>();
-	//ShotgunBaseColor->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_BaseColor.png");
-	//ShotgunRoughness->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Roughness.png");
-	//ShotgunNormal->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Normal.png");
-	//ShotgunMetallic->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Metallic.png");
-	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunBaseColor);
-	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(ShotgunRoughness);
-	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(ShotgunNormal);
-	//shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(ShotgunMetallic);
-	//shotgunPickUp->GetTransform()->SetPosition(glm::vec3(30, 2, 0));
-	//shotgunPickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
-	//shotgunPickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//shotgunPickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//shotgunPickUp->AddComponent<ScriptComponent>()->LoadScript("ShotgunPickUp");
-	//shotgunPickUp->SetTag("Weapon");
+	auto shotgunPickUp = CreateGameObjectWithPath("Assets/shotgun.fbx");
+	shotgunPickUp->AddComponent<MeshRenderer>();
+	std::shared_ptr<Image> ShotgunBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> ShotgunRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> ShotgunNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> ShotgunMetallic = std::make_shared<Image>();
+	ShotgunBaseColor->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_BaseColor.png");
+	ShotgunRoughness->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Roughness.png");
+	ShotgunNormal->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Normal.png");
+	ShotgunMetallic->LoadTexture("Assets/Textures/shotgun_DefaultMaterial_Metallic.png");
+	shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunBaseColor);
+	shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(ShotgunRoughness);
+	shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(ShotgunNormal);
+	shotgunPickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(ShotgunMetallic);
+	shotgunPickUp->GetTransform()->SetPosition(glm::vec3(0, 2, 0));
+	shotgunPickUp->GetTransform()->SetScale(glm::vec3(0.003, 0.003, 0.003));
+	shotgunPickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	shotgunPickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	shotgunPickUp->AddComponent<ScriptComponent>()->LoadScript("ShotgunPickUp");
+	shotgunPickUp->SetTag("Weapon");
 	//
 	//auto railgunPickUp = CreateGameObjectWithPath("Assets/railgun.fbx");
 	//std::shared_ptr<Image> RailgunBaseColor = std::make_shared<Image>();

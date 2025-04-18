@@ -328,6 +328,26 @@ bool Root::Start()
 	//powerUp3->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
 	//powerUp3->SetTag("PowerUp");
 
+	auto powerUp4 = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
+	powerUp4->GetTransform()->SetPosition(glm::vec3(2, 3, 10));
+	powerUp4->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	powerUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	powerUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> PiercingBulletsBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> PiercingBulletsRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> PiercingBulletsNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> PiercingBulletsMetallic = std::make_shared<Image>();
+	PiercingBulletsBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	PiercingBulletsRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	PiercingBulletsNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	PiercingBulletsMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setImage(PiercingBulletsBaseColor);
+	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(PiercingBulletsRoughness);
+	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(PiercingBulletsNormal);
+	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(PiercingBulletsMetallic);
+	powerUp4->AddComponent<ScriptComponent>()->LoadScript("PiercingBullets");
+	powerUp4->SetTag("PowerUp");
+
 	//// Test Ammunition
 	//auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
 	//ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 3, 20));

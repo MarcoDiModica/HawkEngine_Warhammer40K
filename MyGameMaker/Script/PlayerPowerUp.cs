@@ -9,13 +9,15 @@ public class PlayerPowerUp : MonoBehaviour
     private bool hasMedicaeStimm = false;
     private bool hasAmmunitionBlessing = false;
     private bool hasMagnet = false;
-    private bool hasChapterStandard = false;
+    private bool hasPiercingBullets = false;
     private float medicaeStimmDuration = 5.0f;
     private float medicaeStimmTimer = 0.0f;
     private float ammunitionBlessingDuration = 5.0f;
     private float ammunitionBlessingTimer = 0.0f;
     private float magnetDuration = 5.0f;
     private float magnetTimer = 0.0f;
+    private float piercingBulletsDuration = 5.0f;
+    private float piercingBulletsTimer = 0.0f;
 
     private Audio sound;
     private string AmmunitionBlessingActivated = "Assets/Audio/SFX/PickUps/PowerUps/AmmunitionBlessing/AmmunitionBlessingActivated.wav";
@@ -50,6 +52,7 @@ public class PlayerPowerUp : MonoBehaviour
                 Engineson.print("Medicae Stimm effect passed");
             }
         }
+
         if (hasAmmunitionBlessing)
         {
             ammunitionBlessingTimer += deltatime;
@@ -62,7 +65,19 @@ public class PlayerPowerUp : MonoBehaviour
             }
         }
 
-        if(hasMagnet)
+        if (hasPiercingBullets)
+        {
+            piercingBulletsTimer += deltatime;
+            if (piercingBulletsTimer >= piercingBulletsDuration)
+            {
+                hasPiercingBullets = false;
+                piercingBulletsTimer = 0.0f;
+                playerController.playerData.isPiercing = false;
+                Engineson.print("Piercing Bullets effect passed");
+            }
+        }
+
+        if (hasMagnet)
         {
             magnetTimer += deltatime;
 
@@ -148,7 +163,14 @@ public class PlayerPowerUp : MonoBehaviour
                 sound.LoadAudio(MagnetEffect);
                 sound.Play();
             }
-           
+            else if(other.GetComponent<PiercingBullets>() != null)
+            {
+                other.GetComponent<PiercingBullets>().OnPickUp(playerController);
+                hasPiercingBullets = true;
+                //sound.LoadAudio(MagnetEffect);
+                sound.Play();
+            }
+
 
             Engineson.Destroy(other);
         }

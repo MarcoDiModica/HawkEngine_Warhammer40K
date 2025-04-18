@@ -263,6 +263,10 @@ public class EnemyControllerMelee : EnemyController
         {
             // Enemy Death
             collider.SetActive(false);
+            if (pc.playerData.isPiercing == true)
+            {
+                pc.playerData.AddHealth(5.0f);
+            }
         }
     }
 

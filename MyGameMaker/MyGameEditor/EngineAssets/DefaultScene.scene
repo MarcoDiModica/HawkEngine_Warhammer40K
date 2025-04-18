@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: MainCamera
-  uuid: 12418878643798345603
+  uuid: 3966988983788251712
   tag: Untagged
   active: true
   isStatic: false
@@ -38,7 +38,7 @@ GameObject0:
   Children: ~
 GameObject1:
   name: Player
-  uuid: 8558422892959640629
+  uuid: 13857402542796880342
   tag: Player
   active: true
   isStatic: false
@@ -58,6 +58,15 @@ GameObject1:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -108,15 +117,6 @@ GameObject1:
         useColorGradient: false
         texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
       particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -178,7 +178,7 @@ GameObject1:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 1180095883078470237
+      uuid: 17025515717987155332
       tag: Untagged
       active: true
       isStatic: false
@@ -191,7 +191,7 @@ GameObject1:
             - 0
             - 0
           localRotation:
-            - -90.000002504478161
+            - -90
             - 0
             - 0
           localScale:
@@ -237,7 +237,7 @@ GameObject1:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 14972311104891000166
+      uuid: 788777887244832910
       tag: Untagged
       active: true
       isStatic: false
@@ -267,8 +267,8 @@ GameObject1:
           maxLifetime: 0.25
           minSpeed: 0
           maxSpeed: 0
-          startSize: 3
-          endSize: 3
+          startSize: 1
+          endSize: 1
           minSize: 1
           maxSize: 1
           startColor:
@@ -309,7 +309,7 @@ GameObject1:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 9220362024437922424
+      uuid: 10013640443689914548
       tag: Untagged
       active: true
       isStatic: false
@@ -339,7 +339,7 @@ GameObject1:
           maxLifetime: 4
           minSpeed: 0.5
           maxSpeed: 1.5
-          startSize: 2
+          startSize: 0.5
           endSize: 2
           minSize: 0.5
           maxSize: 0
@@ -381,7 +381,7 @@ GameObject1:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 15990510620128675238
+      uuid: 7487103704782176906
       tag: Untagged
       active: true
       isStatic: false
@@ -454,7 +454,7 @@ GameObject1:
       Children: ~
 GameObject2:
   name: Cube
-  uuid: 16071523229769272783
+  uuid: 13491139760484218199
   tag: Melee
   active: true
   isStatic: false
@@ -471,9 +471,9 @@ GameObject2:
         - -0
         - 0
       localScale:
-        - 1
-        - 1
-        - 1
+        - 3.25
+        - 3.25
+        - 3.25
     MeshRenderer:
       name: MeshRenderer
       enabled: true
@@ -517,7 +517,7 @@ GameObject2:
   Children: ~
 GameObject3:
   name: Cube2
-  uuid: 12680696932963842242
+  uuid: 13524674053943551578
   tag: Untagged
   active: true
   isStatic: false
@@ -579,8 +579,74 @@ GameObject3:
       isTrigger: false
   Children: ~
 GameObject4:
+  name: bullet.001
+  uuid: 10040642183720644234
+  tag: PowerUp
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 2
+        - 3
+        - 10
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.014999999664723873
+        - 0.014999999664723873
+        - 0.014999999664723873
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: bullet.001
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: powerups_DefaultMaterial_BaseColor
+        normal_map: powerups_DefaultMaterial_Normal
+        metallic_map: powerups_DefaultMaterial_Metallic
+        roughness_map: powerups_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: PiercingBullets
+  Children: ~
+GameObject5:
   name: Floor
-  uuid: 16057917018413392298
+  uuid: 18286338153203903295
   tag: Untagged
   active: true
   isStatic: false
@@ -641,9 +707,9 @@ GameObject4:
         - 0
       isTrigger: false
   Children: ~
-GameObject5:
+GameObject6:
   name: shotgun
-  uuid: 15250643853234838146
+  uuid: 4041353218076323046
   tag: Weapon
   active: true
   isStatic: false
@@ -708,7 +774,7 @@ GameObject5:
         name: ShotgunPickUp
   Children:
     - name: bOLTER.010
-      uuid: 14901313532557549209
+      uuid: 1126212514101417038
       tag: Untagged
       active: true
       isStatic: false
@@ -760,7 +826,7 @@ GameObject5:
           enabled: true
       Children: ~
     - name: Cone
-      uuid: 2139716153734552761
+      uuid: 1930334813594818896
       tag: Untagged
       active: true
       isStatic: false
@@ -811,9 +877,9 @@ GameObject5:
           name: Shader
           enabled: true
       Children: ~
-GameObject6:
+GameObject7:
   name: Cube_1
-  uuid: 9447504679722546
+  uuid: 11367814032504211232
   tag: BiblePage
   active: true
   isStatic: false
@@ -826,73 +892,7 @@ GameObject6:
         - 2
         - 3
       localRotation:
-        - -90.000009334666601
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
-GameObject7:
-  name: Cube_2
-  uuid: 3881786170949664609
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 20
-        - 2
-        - 3
-      localRotation:
-        - -90.000009334666601
+        - -90.000009659346318
         - 0
         - 0
       localScale:
@@ -944,8 +944,8 @@ GameObject7:
         name: BiblePagePickUp
   Children: ~
 GameObject8:
-  name: Cube_3
-  uuid: 6642182972833146349
+  name: Cube_2
+  uuid: 7279227989833826192
   tag: BiblePage
   active: true
   isStatic: false
@@ -954,11 +954,11 @@ GameObject8:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 30
+        - 20
         - 2
         - 3
       localRotation:
-        - -90.000009334666601
+        - -90.000009659346318
         - 0
         - 0
       localScale:
@@ -1010,8 +1010,74 @@ GameObject8:
         name: BiblePagePickUp
   Children: ~
 GameObject9:
+  name: Cube_3
+  uuid: 646795591442911791
+  tag: BiblePage
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 30
+        - 2
+        - 3
+      localRotation:
+        - -90.000009659346318
+        - 0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 0.30000001192092896
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BiblePagePickUp
+  Children: ~
+GameObject10:
   name: Cube_4
-  uuid: 12746623665671811479
+  uuid: 10024420160248338646
   tag: BiblePage
   active: true
   isStatic: false
@@ -1024,7 +1090,7 @@ GameObject9:
         - 2
         - 3
       localRotation:
-        - -90.000009334666601
+        - -90.000009659346318
         - 0
         - 0
       localScale:

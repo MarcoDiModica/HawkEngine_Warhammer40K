@@ -71,7 +71,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -114,9 +114,6 @@ GameObject2:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -145,6 +142,9 @@ GameObject2:
         - 0
         - 1
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     ScriptComponents:
       Script0:
         name: MenuButtons
@@ -523,9 +523,6 @@ GameObject3:
         - 1
         - 1
         - 1
-    UICanvasComponent:
-      name: UICanvasComponent
-      enabled: true
     SoundComponent:
       name: SoundComponent
       enabled: true
@@ -554,6 +551,9 @@ GameObject3:
         - 0
         - 1
         - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
     ScriptComponents:
       Script0:
         name: OptionMenu
@@ -655,7 +655,7 @@ GameObject3:
             - 1
             - 0
       Children: ~
-    - name: Checkbox
+    - name: Fullscreen_checkbox
       uuid: 16556212074351752562
       tag: Untagged
       active: true
@@ -680,26 +680,45 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.493999988
+            - 0.414000005
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.0160000008
+            - 0.0270000007
             - 1
           pivot_offset:
+            - 0.5
+            - 0.5
             - 0
-            - 1
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\opt_box.png
+          use_animation: false
+          sprite_size:
+            - 50
+            - 50
+          sheet_size:
+            - 50
+            - 50
+          sprite_offset:
             - 0
+            - 0
+          anim_speed: 0
       Children: ~
-    - name: Checkbox_tick
+    - name: Fullscreen_tick
       uuid: 7730456045344259776
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -721,21 +740,36 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.488000005
+            - 0.421999991
             - 0
           rotation:
+            - 5036.40088
             - 0
-            - 0
-            - 0
+            - 360
           scale:
-            - 1
-            - 1
+            - 0.0179999992
+            - 0.0320000015
             - 1
           pivot_offset:
             - 0
             - 1
             - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\opt_tick.png
+          use_animation: false
+          sprite_size:
+            - 63
+            - 62
+          sheet_size:
+            - 63
+            - 62
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
       Children: ~
     - name: Resolution_left
       uuid: 3472564617500388130
@@ -762,21 +796,40 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.472000003
+            - 0.363000005
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.0199999996
+            - 0.0249999985
             - 1
           pivot_offset:
+            - 0.5
+            - 0.5
             - 0
-            - 1
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_left.png
+          use_animation: false
+          sprite_size:
+            - 80
+            - 40
+          sheet_size:
+            - 80
+            - 40
+          sprite_offset:
             - 0
+            - 0
+          anim_speed: 0
       Children: ~
     - name: Resolution_right
       uuid: 8010766881467333463
@@ -803,21 +856,40 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.601000011
+            - 0.363000005
             - 0
           rotation:
+            - 10761.6924
             - 0
-            - 0
-            - 0
+            - 4217.40479
           scale:
-            - 1
-            - 1
+            - 0.0199999996
+            - 0.0249999985
             - 1
           pivot_offset:
+            - 0.5
+            - 0.5
             - 0
-            - 1
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_right.png
+          use_animation: false
+          sprite_size:
+            - 80
+            - 40
+          sheet_size:
+            - 80
+            - 40
+          sprite_offset:
             - 0
+            - 0
+          anim_speed: 0
       Children: ~
     - name: Resolution_box
       uuid: 8412594646623045601
@@ -844,26 +916,41 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.486999989
+            - 0.38499999
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.100000009
+            - 0.0399999991
             - 1
           pivot_offset:
             - 0
             - 1
             - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_box.png
+          use_animation: false
+          sprite_size:
+            - 307
+            - 71
+          sheet_size:
+            - 307
+            - 71
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
       Children: ~
     - name: Resolution_1280x720
       uuid: 9636127124073272434
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -885,21 +972,36 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.497999996
+            - 0.375
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.0790000036
+            - 0.0209999979
             - 1
           pivot_offset:
             - 0
             - 1
             - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_1280x720.png
+          use_animation: false
+          sprite_size:
+            - 235
+            - 37
+          sheet_size:
+            - 235
+            - 37
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
       Children: ~
     - name: Resolution_1920x1080
       uuid: 5130278200220903765
@@ -926,26 +1028,41 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.495000005
+            - 0.375
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.0790000036
+            - 0.0209999979
             - 1
           pivot_offset:
             - 0
             - 1
             - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_1920x1080.png
+          use_animation: false
+          sprite_size:
+            - 265
+            - 37
+          sheet_size:
+            - 265
+            - 37
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
       Children: ~
     - name: Resolution_2560x1440
       uuid: 16196207300972504472
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -967,26 +1084,41 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.499000013
+            - 0.375
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.0790000036
+            - 0.0209999979
             - 1
           pivot_offset:
             - 0
             - 1
             - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_2560x1440.png
+          use_animation: false
+          sprite_size:
+            - 267
+            - 37
+          sheet_size:
+            - 267
+            - 37
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
       Children: ~
     - name: Resolution_3840x2160
       uuid: 16350772990751827680
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -1008,19 +1140,34 @@ GameObject3:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.499000013
+            - 0.375
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.0790000036
+            - 0.0209999979
             - 1
           pivot_offset:
             - 0
             - 1
             - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_3840x2160.png
+          use_animation: false
+          sprite_size:
+            - 267
+            - 37
+          sheet_size:
+            - 267
+            - 37
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
       Children: ~

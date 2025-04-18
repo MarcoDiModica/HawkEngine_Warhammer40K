@@ -11,7 +11,17 @@ public class OptionMenu : MonoBehaviour
     private GameObject pauseMenu;
     private List<string> resolutions = new List<string>();
     public string currentResolution;
-
+    GameObject r1280x720;
+    GameObject r1920x1080;
+    GameObject r2560x1440;
+    GameObject r3840x2160;
+    GameObject rLeft;
+    GameObject rRight;
+    UIButton rLeftButton;
+    UIButton rRightButton;
+    GameObject fullScreenCheckbox;
+    GameObject fullScreenTick;
+    UIButton fullScreenButton;
 
 
 
@@ -49,26 +59,93 @@ public class OptionMenu : MonoBehaviour
         resolutions.Add("2560x1440");
         resolutions.Add("3840x2160");
         currentResolution = resolutions[1];
+
+        r1280x720 = GameObject.Find("Resolution_1280x720");
+        r1920x1080 = GameObject.Find("Resolution_1920x1080");
+        r2560x1440 = GameObject.Find("Resolution_2560x1440");
+        r3840x2160 = GameObject.Find("Resolution_3840x2160");
+        rLeft = GameObject.Find("Resolution_left");
+        rRight = GameObject.Find("Resolution_right");
+        rLeftButton = rLeft.GetComponent<UIButton>();
+        rRightButton = rRight.GetComponent<UIButton>();
+        fullScreenCheckbox = GameObject.Find("Fullscreen_checkbox");
+        fullScreenTick = GameObject.Find("Fullscreen_tick");
+        fullScreenButton = fullScreenCheckbox.GetComponent<UIButton>();
     }
 
     public override void Update(float deltaTime)
     {
         //Engineson.print("OptionMenu Update");
-        //if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
-        //{
-        //    if (pauseMenu != null)
-        //    {
-        //        pauseMenu.SetActive(true);
-        //    }
-        //    gameObject.SetActive(false);
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //}
+        if (Input.GetKeyDown(KeyCode.ESCAPE) || Input.GetControllerButtonDown(ControllerButton.B))
+        {
+            if (pauseMenu != null)
+            {
+                pauseMenu.SetActive(true);
+            }
+            gameObject.SetActive(false);
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+        }
 
-        //if (gamePlaycanvas.GetComponent<UIButton>().GetState() == ButtonState.HOVERED)
-        //{
-        //    gamePlaycanvas.GetComponent<UITransform>().DOScaleUI(new Vector3(1.1f, 1.1f, 1.1f), 0.2f,Modes.EASE_OUT);
-        //}
+        if (rLeftButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            PreviousResolution();
+        }
+
+        if (rRightButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            NextResolution();
+        }
+
+        switch (currentResolution)
+        {
+            case "1280x720":
+                r1280x720.SetActive(true);
+                r1920x1080.SetActive(false);
+                r2560x1440.SetActive(false);
+                r3840x2160.SetActive(false);
+                break;
+            case "1920x1080":
+                r1280x720.SetActive(false);
+                r1920x1080.SetActive(true);
+                r2560x1440.SetActive(false);
+                r3840x2160.SetActive(false);
+                break;
+            case "2560x1440":
+                r1280x720.SetActive(false);
+                r1920x1080.SetActive(false);
+                r2560x1440.SetActive(true);
+                r3840x2160.SetActive(false);
+                break;
+            case "3840x2160":
+                r1280x720.SetActive(false);
+                r1920x1080.SetActive(false);
+                r2560x1440.SetActive(false);
+                r3840x2160.SetActive(true);
+                break;
+        }
+
+        if (fullScreenButton.GetState() == ButtonState.CLICKED)
+        {
+
+            if (fullScreenTick.IsActive())
+            {
+                fullScreenTick.SetActive(false);
+                // Set windowed mode
+                // Example: GameEngine.SetFullscreen(false);
+            }
+            else
+            {
+                fullScreenTick.SetActive(true);
+                // Set fullscreen mode
+                // Example: GameEngine.SetFullscreen(true);
+            }
+        }
+
     }
 
 }

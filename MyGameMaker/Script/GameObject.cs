@@ -58,6 +58,9 @@ namespace HawkEngine
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetActive(bool active);
 
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern bool IsActive();
+
         //----LifeCycleMethods----// 
         //these will be called from C++ editor
         public virtual void Awake() { }

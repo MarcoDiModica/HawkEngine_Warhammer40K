@@ -8,6 +8,9 @@
 #include "Root.h"
 #include "MyGameEditor/Input.h"
 #include "MyGameEngine/GameObject.h"
+#include "MyGameEngine/PrefabManager.h"
+
+static GameObject* gameObjectBeingDragged = nullptr;
 
 UIHierarchy::UIHierarchy(UIType type, std::string name) : UIElement(type, name) {
 }
@@ -230,10 +233,26 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
 		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), obj.GetID());
+
+		if (ImGui::IsMouseReleased(0)) {
+			PrefabManager::EnsurePrefabDirectoryExists();
+			std::string sanitized = PrefabManager::SanitizeName(obj.GetName());
+			std::string path = PrefabManager::GetPrefabDirectory() + sanitized + ".prefab.yaml";
+			PrefabManager::SavePrefab(obj.shared_from_this(), path);
+            
+		}
+
 		draggedObject = &obj;
+		gameObjectBeingDragged = &obj;
 		ImGui::EndDragDropSource();
 	}
-
+	if (gameObjectBeingDragged && ImGui::IsMouseReleased(0)) {
+		PrefabManager::EnsurePrefabDirectoryExists();
+		std::string sanitized = obj.GetName(); // fallback, or use custom util
+		std::string path = PrefabManager::GetPrefabDirectory() + sanitized + ".prefab.yaml";
+		PrefabManager::SavePrefab(gameObjectBeingDragged->shared_from_this(), path);
+		gameObjectBeingDragged = nullptr;
+	}
 	if (clickState.mouseDownOnThisItem && ImGui::IsMouseReleased(0)) {
 		if (!clickState.wasDragged && clickState.item == &obj) {
 			if (Application->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT) {

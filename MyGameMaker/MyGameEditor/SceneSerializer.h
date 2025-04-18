@@ -19,13 +19,13 @@ public:
 
 	void Serialize(const std::string& directoryPath, bool play = false);
 	bool DeSerialize(const std::string& path);
+	YAML::Node SerializeGameObject(GameObject& gameObject);
+	std::shared_ptr<GameObject> DeserializeGameObject(const YAML::Node& node);
 
 private:
-	YAML::Node SerializeGameObject(GameObject& gameObject);
 	YAML::Node SerializeComponents(GameObject& gameObject);
 	void SerializeChildren(YAML::Node& parentNode, GameObject& gameObject);
 
-	std::shared_ptr<GameObject> DeserializeGameObject(const YAML::Node& node);
 	void DeserializeComponents(GameObject* gameObject, const YAML::Node& node);
 	void DeserializeChildren(GameObject* parentGameObject, const YAML::Node& node);
 

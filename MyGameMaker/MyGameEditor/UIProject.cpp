@@ -520,6 +520,10 @@ void UIProject::HandleItemInteractions(const std::filesystem::path& entry, const
         std::string fullPath = entry.string();
         ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
 
+        if (entry.extension() == ".yaml" && entry.string().find(".prefab") != std::string::npos) {
+            ImGui::SetDragDropPayload("ASSET_PATH", fullPath.c_str(), fullPath.length() + 1);
+        }
+
         if (ImGui::IsMouseDragging(0)) {
             ImGui::BeginTooltip();
             ImGui::Image(reinterpret_cast<ImTextureID>(static_cast<uintptr_t>(icon->id())),

@@ -26,6 +26,10 @@ public class RedThirstManager : MonoBehaviour
 
     public float redThirstBonus = 5f;
     public float biblePages = 0f;
+
+    private bool boltgunUsed = false;
+    private bool shotgunUsed = false;
+    private bool railgunUsed = false;
     public override void Awake()
     {
         playerController = gameObject.GetComponent<PlayerController>();
@@ -83,18 +87,42 @@ public class RedThirstManager : MonoBehaviour
 
     public void OnWeaponUsed()
     {
-        differentGunsUsed++;
-        if (differentGunsUsed == 2)
+        //differentGunsUsed++;
+        if(boltgunUsed && shotgunUsed || boltgunUsed && railgunUsed || shotgunUsed && railgunUsed)
         {
             AddRedThirstPoint(1);
             ResetWeaponCombo();
         }
         lastActionTime = 0f;
+        //if (differentGunsUsed == 2)
+        //{
+        //    AddRedThirstPoint(1);
+        //    ResetWeaponCombo();
+        //}
+        //lastActionTime = 0f;
+    }
+    public void OnBoltgunUsed()
+    {
+        boltgunUsed = true;
+        OnWeaponUsed();
+    }
+    public void OnShotgunUsed()
+    {
+        shotgunUsed = true;
+        OnWeaponUsed();
+    }
+    public void OnRailgunUsed()
+    {
+        railgunUsed = true;
+        OnWeaponUsed();
     }
     private void ResetWeaponCombo()
     {
         differentGunsUsed = 0;
         differentGunsUsedTimer = 0f;
+        boltgunUsed = false;
+        shotgunUsed = false;
+        railgunUsed = false;
     }
     private void ResetAbilityCombo()
     {

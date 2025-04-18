@@ -79,7 +79,7 @@ public class Shotgun : BaseWeapon
                             bulletHitEnemies[i].Add(hitObject);
 
                             float finalDamage = damage;
-                            redThirstManager.OnWeaponUsed();
+                            redThirstManager.OnShotgunUsed();
 
                             if (redThirstManager.IsInBlackRage())
                                 finalDamage += redThirstManager.redThirstBonus;

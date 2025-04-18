@@ -87,7 +87,7 @@ public class Boltgun : BaseWeapon
                             bulletHitEnemies[i].Add(hitObject);
 
                             float finalDamage = damage;
-                            redThirstManager.OnWeaponUsed();
+                            redThirstManager.OnBoltgunUsed();
 
                             if (redThirstManager.IsInBlackRage())
                                 finalDamage += redThirstManager.redThirstBonus;

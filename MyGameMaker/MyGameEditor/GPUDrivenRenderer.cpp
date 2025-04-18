@@ -274,7 +274,6 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	// Process each mesh and material in the batch
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
 		uint32_t materialIndex = batch.materialIndices[i];
@@ -288,16 +287,6 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 			continue;
 		}
 
-		// Debug: Log mesh and material data
-		LOG(LogType::LOG_INFO, "Mesh %u: VAO=%u, IBO=%u, VBO=%u, indexCount=%u, vertexCount=%u, flags=0x%X",
-			meshIndex, meshData->vertexArray, meshData->indexBuffer, meshData->positionBuffer,
-			meshData->indexCount, meshData->vertexCount, meshData->attributeFlags);
-
-		LOG(LogType::LOG_INFO, "Material %u: Color=(%f,%f,%f,%f), flags=0x%X",
-			materialIndex, materialData->albedoColor.r, materialData->albedoColor.g,
-			materialData->albedoColor.b, materialData->albedoColor.a, materialData->flags);
-
-		// Debug: Verify VAO and buffers exist
 		GLboolean isVAO = glIsVertexArray(meshData->vertexArray);
 		GLboolean isIBO = glIsBuffer(meshData->indexBuffer);
 		GLboolean isVBO = glIsBuffer(meshData->positionBuffer);
@@ -307,46 +296,16 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 			isIBO ? "válido" : "INVÁLIDO",
 			isVBO ? "válido" : "INVÁLIDO");
 
-		// Set material properties using data from GPUMaterial
 		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
 
-		// Debug: Log vertex positions (first few vertices)
-		if (isVBO == GL_TRUE) {
-			// Temporary buffer to read vertex data
-			glBindBuffer(GL_ARRAY_BUFFER, meshData->positionBuffer);
-			GLfloat* vertices = nullptr;
-			GLint bufferSize = 0;
-			glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &bufferSize);
-
-			if (bufferSize > 0) {
-				vertices = (GLfloat*)malloc(bufferSize);
-				if (vertices) {
-					glGetBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, vertices);
-
-					// Display first 3 vertices (up to 9 floats - 3 vertices with xyz)
-					int numVerts = std::min(3, (int)(bufferSize / (3 * sizeof(GLfloat))));
-					LOG(LogType::LOG_INFO, "Primeros %d vértices:", numVerts);
-
-					for (int v = 0; v < numVerts; v++) {
-						LOG(LogType::LOG_INFO, "  Vert %d: (%f, %f, %f)",
-							v, vertices[v * 3], vertices[v * 3 + 1], vertices[v * 3 + 2]);
-					}
-
-					free(vertices);
-				}
-			}
-			else {
-				LOG(LogType::LOG_WARNING, "Buffer de posición tiene tamaño cero");
-			}
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		if (isVBO != GL_TRUE) {
+			LOG(LogType::LOG_WARNING, "Buffer de posición tiene tamaño cero");
 		}
 
-		// Set model matrix (identity for now, or instance transform)
 		glm::mat4 model = glm::mat4(1.0f);
 		shader->SetUniformMat4("model", model);
 
-		// Bind texture if the material has one
-		if (materialData->flags & (1 << 0)) { // Check if albedo texture is present
+		if (materialData->flags & (1 << 0)) {
 			glActiveTexture(GL_TEXTURE0);
 			shader->SetUniform("u_HasTexture", 1);
 			shader->SetUniform("texture1", 0);
@@ -364,13 +323,10 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 			LOG(LogType::LOG_INFO, "Textura albedo deshabilitada");
 		}
 
-		// Bind the VAO and index buffer
 		glBindVertexArray(meshData->vertexArray);
 
-		// Debug: Check VAO attributes
 		GLint maxAttribs;
 		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttribs);
-		LOG(LogType::LOG_INFO, "Máximo de atributos soportados: %d", maxAttribs);
 
 		for (GLint attrib = 0; attrib < std::min(16, maxAttribs); attrib++) {
 			GLint enabled;

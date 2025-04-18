@@ -184,7 +184,7 @@ bool Root::Start()
 
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Level2 Zone1.fbx");
 
-//auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 
 	/*auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 

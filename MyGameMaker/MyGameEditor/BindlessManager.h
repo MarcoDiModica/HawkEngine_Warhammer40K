@@ -93,6 +93,26 @@ public:
 
 	bool HasMaterialChanged(const Material* material);
 
+	bool GetTextureIDFromHandle(GLuint64 handle, GLuint& outTextureID) {
+		if (handle == 0) {
+			return false;
+		}
+
+		for (const auto& pair : textureHandles) {
+			if (pair.second.handle == handle) {
+				outTextureID = pair.first;
+				return true;
+			}
+		}
+
+		if (handle == fallbackTextureHandle.handle) {
+			outTextureID = fallbackTextureID;
+			return true;
+		}
+
+		return false;
+	}
+
 private:
 	BindlessManager() = default;
 	~BindlessManager() = default;

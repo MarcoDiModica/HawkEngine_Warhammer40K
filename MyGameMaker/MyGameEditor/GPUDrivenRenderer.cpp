@@ -156,7 +156,7 @@ void GPUDrivenRenderer::PrepareDrawCommands(/*const Frustum& frustum*/) {
 		drawCommands.push_back(command);
 		visibleInstanceCount += cullItem.instanceCount;
 
-		DebugMeshInfo(cullItem.meshIndex);
+		//DebugMeshInfo(cullItem.meshIndex);
 	}
 
 	if (!drawCommands.empty()) {
@@ -236,12 +236,9 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	const glm::mat4& viewMatrix,
 	const glm::mat4& projMatrix) {
 
-	if (batch.commands.empty()) {
-		LOG(LogType::LOG_WARNING, "RenderUnlitBatch: No hay comandos en el batch");
-		return;
-	}
+	if (batch.commands.empty()) return;
 
-	/*GLboolean blendEnabled;
+	GLboolean blendEnabled;
 	glGetBooleanv(GL_BLEND, &blendEnabled);
 
 	GLint blendSrc, blendDst;
@@ -249,11 +246,13 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	glGetIntegerv(GL_BLEND_DST, &blendDst);
 
 	GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);*/
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	GLint lastActiveTexture;
+	glGetIntegerv(GL_ACTIVE_TEXTURE, &lastActiveTexture);
 
 	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
 	if (!shader) {
-		LOG(LogType::LOG_ERROR, "RenderUnlitBatch: No se pudo obtener el shader UNLIT");
 		return;
 	}
 
@@ -261,18 +260,12 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 
-	GLint viewLoc = glGetUniformLocation(shader->GetProgram(), "view");
-	GLint projLoc = glGetUniformLocation(shader->GetProgram(), "projection");
-	GLint modelLoc = glGetUniformLocation(shader->GetProgram(), "model");
-	GLint colorLoc = glGetUniformLocation(shader->GetProgram(), "albedoColor");
-	GLint textureLoc = glGetUniformLocation(shader->GetProgram(), "texture1");
-	GLint hasTextureLoc = glGetUniformLocation(shader->GetProgram(), "u_HasTexture");
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	LOG(LogType::LOG_INFO, "Uniform locations: view=%d, proj=%d, model=%d, color=%d, texture=%d, hasTexture=%d",
-		viewLoc, projLoc, modelLoc, colorLoc, textureLoc, hasTextureLoc);
+	bool supportsBindless = GLEW_ARB_bindless_texture == GL_TRUE;
 
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	bool supportsInstancing = GLEW_ARB_draw_instanced == GL_TRUE;
 
 	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		uint32_t meshIndex = batch.meshIndices[i];
@@ -281,128 +274,112 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
 		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
 
-		if (!meshData || !materialData) {
-			LOG(LogType::LOG_WARNING, "RenderUnlitBatch: Mesh data o Material data nulos - mesh: %p, material: %p",
-				(void*)meshData, (void*)materialData);
-			continue;
-		}
-
-		GLboolean isVAO = glIsVertexArray(meshData->vertexArray);
-		GLboolean isIBO = glIsBuffer(meshData->indexBuffer);
-		GLboolean isVBO = glIsBuffer(meshData->positionBuffer);
-
-		LOG(LogType::LOG_INFO, "Buffer validation: VAO=%s, IBO=%s, VBO=%s",
-			isVAO ? "válido" : "INVÁLIDO",
-			isIBO ? "válido" : "INVÁLIDO",
-			isVBO ? "válido" : "INVÁLIDO");
+		if (!meshData || !materialData) continue;
 
 		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
 
-		if (isVBO != GL_TRUE) {
-			LOG(LogType::LOG_WARNING, "Buffer de posición tiene tamaño cero");
-		}
-
-		glm::mat4 model = glm::mat4(1.0f);
-		shader->SetUniformMat4("model", model);
-
-		if (materialData->flags & (1 << 0)) {
-			glActiveTexture(GL_TEXTURE0);
+		if (materialData->flags & (1 << 0)) { 
 			shader->SetUniform("u_HasTexture", 1);
-			shader->SetUniform("texture1", 0);
 
-			// Note: In a bindless texture setup, we'd use something like:
-			// if (GLEW_ARB_bindless_texture) {
-			//    glUniformHandleui64ARB(glGetUniformLocation(shader->GetProgram(), "albedoTexture"), 
-			//                          materialData->albedoTexture);
-			// }
+			if (supportsBindless) {
+				GLuint64 textureHandle = materialData->albedoTexture;
+				if (textureHandle != 0) {
+					if (!glIsTextureHandleResidentARB(textureHandle)) {
+						glMakeTextureHandleResidentARB(textureHandle);
+					}
 
-			LOG(LogType::LOG_INFO, "Textura albedo habilitada");
-		}
-		else {
-			shader->SetUniform("u_HasTexture", 0);
-			LOG(LogType::LOG_INFO, "Textura albedo deshabilitada");
-		}
-
-		glBindVertexArray(meshData->vertexArray);
-
-		GLint maxAttribs;
-		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttribs);
-
-		for (GLint attrib = 0; attrib < std::min(16, maxAttribs); attrib++) {
-			GLint enabled;
-			glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &enabled);
-			if (enabled) {
-				GLint size, type, normalized, stride, offset;
-				glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_SIZE, &size);
-				glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_TYPE, &type);
-				glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, &normalized);
-				glGetVertexAttribiv(attrib, GL_VERTEX_ATTRIB_ARRAY_STRIDE, &stride);
-				glGetVertexAttribPointerv(attrib, GL_VERTEX_ATTRIB_ARRAY_POINTER, (void**)&offset);
-
-				LOG(LogType::LOG_INFO, "  Atributo %d: habilitado, size=%d, type=0x%X, stride=%d",
-					attrib, size, type, stride);
-			}
-		}
-
-		// Make sure index buffer is bound if needed
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
-
-		// Get the draw command for this mesh/material combination
-		if (i < batch.commands.size()) {
-			const DrawElementsCommand& cmd = batch.commands[i];
-
-			// Debug: Log indices (first few)
-			if (isIBO == GL_TRUE) {
-				GLint indexBufferSize = 0;
-				glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &indexBufferSize);
-
-				if (indexBufferSize > 0) {
-					GLuint* indices = (GLuint*)malloc(indexBufferSize);
-					if (indices) {
-						glGetBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexBufferSize, indices);
-
-						// Display first few indices
-						int numIndices = std::min(9, (int)(indexBufferSize / sizeof(GLuint)));
-						LOG(LogType::LOG_INFO, "Primeros %d índices:", numIndices);
-
-						for (int idx = 0; idx < numIndices; idx++) {
-							LOG(LogType::LOG_INFO, "  Índice %d: %u", idx, indices[idx]);
-						}
-
-						free(indices);
+					GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTextureHandle");
+					if (loc != -1) {
+						glUniformHandleui64ARB(loc, textureHandle);
 					}
 				}
 			}
+			else {
+				GLuint textureID = 0;
 
-			LOG(LogType::LOG_INFO, "Ejecutando DrawElements: count=%u, instanceCount=%u, baseInstance=%u",
-				cmd.count, cmd.instanceCount, cmd.baseInstance);
+				if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->albedoTexture, textureID)) {
+					glActiveTexture(GL_TEXTURE0);
+					glBindTexture(GL_TEXTURE_2D, textureID);
+					shader->SetUniform("texture1", 0);
+				}
+				else {
+					shader->SetUniform("u_HasTexture", 0);
+				}
+			}
+		}
+		else {
+			shader->SetUniform("u_HasTexture", 0);
+		}
 
-			// Draw elements
-			/*glDrawElements(
-				GL_TRIANGLES,
-				cmd.count,
-				GL_UNSIGNED_INT,
-				(void*)(0)
-			);*/
+		glBindVertexArray(meshData->vertexArray);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
 
-			//multidraw
-			glMultiDrawElementsIndirect(
-				GL_TRIANGLES,
-				GL_UNSIGNED_INT,
-				(void*)(cmd.baseInstance * sizeof(DrawElementsCommand)),
-				cmd.instanceCount,
-				sizeof(DrawElementsCommand)
-			);
+		const DrawElementsCommand& cmd = batch.commands[i];
 
-			GLenum err = glGetError();
-			if (err != GL_NO_ERROR) {
-				LOG(LogType::LOG_ERROR, "Error en glDrawElements: 0x%X", err);
+		// Decide rendering approach based on capabilities and batch size
+		if (supportsInstancing && cmd.instanceCount > 1) {
+			// Approach 1: Hardware instancing (more efficient for many instances)
+			// This needs instanced attributes to be set up, which we'd implement elsewhere
+
+			// Setup for instanced model matrices would go here
+			// (this is complex and would need additional infrastructure)
+
+			// For now, we'll use standard approach for simplicity
+			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
+				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
+				if (!instanceData) continue;
+
+				// Set model matrix for this instance
+				shader->SetUniformMat4("model", instanceData->modelMatrix);
+
+				// Draw this instance
+				glDrawElements(
+					GL_TRIANGLES,
+					cmd.count,
+					GL_UNSIGNED_INT,
+					(void*)(0)
+				);
+			}
+		}
+		else {
+			// Approach 2: Individual draw calls (simpler but less efficient)
+			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
+				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
+				if (!instanceData) continue;
+
+				shader->SetUniformMat4("model", instanceData->modelMatrix);
+
+				glDrawElements(
+					GL_TRIANGLES,
+					cmd.count,
+					GL_UNSIGNED_INT,
+					(void*)(0)
+				);
 			}
 		}
 	}
 
+	for (GLenum i = 0; i < 5; i++) {
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
 	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	shader->UnBind();
+
+	if (!blendEnabled) {
+		glDisable(GL_BLEND);
+	}
+	else {
+		glBlendFunc(blendSrc, blendDst);
+	}
+
+	glActiveTexture(lastActiveTexture);
+
+	if (lastProgram > 0) {
+		glUseProgram(lastProgram);
+	}
 }
 
 bool GPUDrivenRenderer::CompileCullingShader() {

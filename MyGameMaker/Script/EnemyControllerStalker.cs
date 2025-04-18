@@ -16,8 +16,6 @@ public class EnemyControllerStalker : EnemyController
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
-
-    // Auxs
     private HormagauntAnimation anim;
     PlayerController pc;
 
@@ -31,6 +29,18 @@ public class EnemyControllerStalker : EnemyController
     private float clawDamage = 25.0f;
     private float pounceDamage = 35.0f;
 
+        // Invisibility
+    private float invisibilityRange = 35.0f;
+    private GameObject lictorMesh;
+    private bool isInvisible = false;
+
+        // Pounce+
+    private float pounceRange = 15.0f;
+    private float pounceTimer = 0f;
+    private float pounceDuration = 1.0f;
+    private bool hasPounced = false;
+    private bool isPouncing = false;
+
     public override void Awake()
     {
         music = gameObject.GetComponent<Audio>();
@@ -43,6 +53,13 @@ public class EnemyControllerStalker : EnemyController
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player not found!");
+        }
+
+        lictorMesh = GameObject.Find("LictorMesh");
+        if (lictorMesh == null)
+        {
+            Engineson.print("ERROR: LictorMesh not found!");
+            return;
         }
 
         collider = gameObject.GetComponent<BoxCollider>();
@@ -72,7 +89,7 @@ public class EnemyControllerStalker : EnemyController
         //    return;
         //}
 
-        particles = gameObject.GetComponent<ParticleFX>();
+        //particles = gameObject.GetComponent<ParticleFX>();
         //particles.ApplyPreset(9);
 
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -87,24 +104,44 @@ public class EnemyControllerStalker : EnemyController
         {
             if (currentHealth <= 0)
             {
-                Engineson.print("Lictor is dead");
                 currentState = EnemyState.DEAD;
+                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
+                sound?.Play();
                 return;
             }
 
             if (currentState != EnemyState.STUNNED)
             {
-                Vector3 playerPos = playerTransform.position;
-                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
+                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
                 if (distanceToPlayer < distToChase)
                 {
-                    currentState = EnemyState.CHASE;
-                    Engineson.print("Lictor is chasing");
+                    // Attack
+                    if (IsPlayerInHurtbox(playerTransform.position))
+                    {
+                        currentState = EnemyState.ATTACK;
+                    }
 
-                    Vector3 currentVelocity = rb.GetVelocity();
-                    moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                    Vector3 desiredVelocity = moveDirection * speedMovement;
+                    // Chasing
+                    if (distanceToPlayer > minDistToChase)
+                    {
+                        currentState = EnemyState.CHASE;
+                    }
+
+                    // Invisibility
+                    if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK)
+                    {
+                        Invisibility();
+
+                        if (distanceToPlayer < pounceRange && !hasPounced && !isPouncing)
+                        {
+                            Pounce(deltaTime);
+                        }
+                    }
+                    else
+                    {
+                        lictorMesh.SetActive(true);
+                    }
 
                     if (moveDirection != Vector3.Zero)
                     {
@@ -130,24 +167,27 @@ public class EnemyControllerStalker : EnemyController
                 }
                 else
                 {
-                    currentState = EnemyState.IDLE;
-                    Engineson.print("Lictor is idle");
+                    if (currentState != EnemyState.IDLE)
+                    {
+                        currentState = EnemyState.IDLE;
+                        rb.SetVelocity(Vector3.Zero);
+                        //anim.SetStandardIdleAnimation();
+                    }
                 }
             }
-            else
-            {
-                Engineson.print("Lictor is stunned");
-            }
         }
-        else
-        {
-            Engineson.print("Lictor is dead");
-            collider.SetActive(false);
-        }
+
+        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
 
         switch (currentState)
         {
             case EnemyState.IDLE:
+                isFootstepPlaying = false;
+                if (!hasStoppedFootsteps)
+                {
+                    sound?.Stop();
+                    hasStoppedFootsteps = true;
+                }
                 break;
 
             case EnemyState.CHASE:
@@ -165,18 +205,60 @@ public class EnemyControllerStalker : EnemyController
                     isCombatMusicPlaying = true;
                 }
 
+                Vector3 currentVelocity = rb.GetVelocity();
+                moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
+                Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                if (desiredVelocity.LengthSquared() > 0)
+                {
+                    desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                }
+
+                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                 break;
 
             case EnemyState.ATTACK:
+
+                hurtboxTimer += deltaTime;
+                if (dodgewindow)
+                {
+                    dodgeTimer += deltaTime;
+                }
+                if (hurtboxTimer >= hurtboxActivationTime)
+                {
+                    //CreateHurtbox();
+                    //anim.SetRandomAttackAnimation();
+                    hurtboxTimer = 0f;
+                    dodgeTimer = 0f;
+                    dodgewindow = true;
+                }
+                else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
+                {
+                    Attack();
+
+                    //DestroyHurtbox();
+                    hurtboxTimer = 0f;
+                    dodgeTimer = 0f;
+                    dodgewindow = false;
+                    isAttacking = false;
+                }
+
                 break;
 
             case EnemyState.STUNNED:
+                stunTimer += deltaTime;
+                rb.SetVelocity(Vector3.Zero);
+                if (stunTimer >= stunDuration)
+                {
+                    isStunned = false;
+                    stunTimer = 0.0f;
+                }
                 break;
 
             case EnemyState.DEAD:
-                //anim.SetDeathAnimation();
-                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
-                sound?.Play();
+                collider.SetActive(false);
+
                 break;
 
             default:
@@ -186,12 +268,77 @@ public class EnemyControllerStalker : EnemyController
 
     public override void Attack()
     {
-        throw new NotImplementedException();
+        pc.playerData.TakeDamage(clawDamage);
+        sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
+        sound?.Play();
     }
 
     public override void TakeDamage(float damage)
     {
-        throw new NotImplementedException();
+        if (currentHealth > 0)
+        {
+            currentHealth -= damage;
+            //anim.SetHitAnimation();
+            //particles.ApplyPreset(19);
+            //particles.EmitBurst(1);
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
+        }
+    }
+
+    public void Invisibility()
+    {
+        lictorMesh.SetActive(false);
+    }
+
+    public void Pounce(float deltaTime)
+    {
+        if (!hasPounced)
+        {
+            isPouncing = true;
+            hasPounced = true;
+            pounceTimer += deltaTime;
+            rb.SetVelocity(rb.GetVelocity() * 2.5f);
+
+            if (pounceTimer >= pounceDuration)
+            {
+                isPouncing = false;
+                pounceTimer = 0f;
+                hasPounced = false;
+            }
+        }
+    }
+
+    private bool IsPlayerInHurtbox(Vector3 playerPos)
+    {
+        Vector3 hurtboxCenter = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
+        Vector3 halfSize = hurtboxSize * 0.5f;
+
+        return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
+               (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
+               (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
+    }
+
+    //For testing
+    private void CreateHurtbox()
+    {
+        hurtboxObject = Engineson.CreateGameObject("Hurtbox", null);
+        hurtboxObject.AddComponent<MeshRenderer>();
+        var hurtboxTransform = hurtboxObject.AddComponent<Transform>();
+        hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
+        hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);
+        var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
+        hurtboxCollider.SetTrigger(true);
+        hurtboxObject.tag = "EnemyAttack";
+        //Attack();
+    }
+
+    private void DestroyHurtbox()
+    {
+        if (hurtboxObject != null)
+        {
+            Engineson.Destroy(hurtboxObject);
+        }
     }
 }
 

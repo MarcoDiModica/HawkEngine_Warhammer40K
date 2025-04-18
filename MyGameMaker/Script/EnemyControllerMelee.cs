@@ -88,7 +88,6 @@ public class EnemyControllerMelee : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
-        isDead = false;
     }
 
     public override void Update(float deltaTime)
@@ -98,7 +97,6 @@ public class EnemyControllerMelee : EnemyController
             if (currentHealth <= 0)
             {
                 currentState = EnemyState.DEAD;
-
                 anim.SetDeathAnimation();
                 sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
                 sound?.Play();
@@ -107,53 +105,23 @@ public class EnemyControllerMelee : EnemyController
 
             if (currentState != EnemyState.STUNNED)
             {
-                Vector3 playerPos = playerTransform.position;
-                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
+                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
                 if (distanceToPlayer < distToChase)
                 {
-                    if (IsPlayerInHurtbox(playerPos))
+                    // Attack
+                    if (IsPlayerInHurtbox(playerTransform.position))
                     {
                         currentState = EnemyState.ATTACK;
                     }
 
-                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                    // Chase
+                    if (distanceToPlayer > minDistToChase)
                     {
                         currentState = EnemyState.CHASE;
-
-                        if (!isFootstepPlaying)
-                        {
-                            sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                            sound?.Play(true);
-                            isFootstepPlaying = true;
-                            hasStoppedFootsteps = false;
-                        }
-                        if (isCombatMusicPlaying == false)
-                        {
-                            sound?.LoadAudio(combatMusic);
-                            sound?.Play(true);
-                            isCombatMusicPlaying = true;
-                        }
-
-                        Vector3 currentVelocity = rb.GetVelocity();
-                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                        Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                        if (!isLeaping)
-                        {
-                            anim.SetRunningAnimation();
-                            if (desiredVelocity.LengthSquared() > 0)
-                            {
-                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                            }
-
-                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-                        }
-                        isRunning = true;
                     }
 
-                    // Enemy Leap
+                    // Leap
                     if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
                     {
                         leapTimer = 0f;
@@ -211,26 +179,55 @@ public class EnemyControllerMelee : EnemyController
                         rb.SetVelocity(Vector3.Zero);
                         anim.SetStandardIdleAnimation();
                     }
-
-                    isRunning = false;
-                    isFootstepPlaying = false;
-                    if (!hasStoppedFootsteps)
-                    {
-                        sound?.Stop();
-                        hasStoppedFootsteps = true;
-                    }
                 }
             }
         }
 
-        Engineson.print("CURRENT STATE: " + currentState.ToString());
+        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
 
         switch (currentState)
         {
             case EnemyState.IDLE:
+                isRunning = false;
+                isFootstepPlaying = false;
+                if (!hasStoppedFootsteps)
+                {
+                    sound?.Stop();
+                    hasStoppedFootsteps = true;
+                }
                 break;
 
             case EnemyState.CHASE:
+                if (!isFootstepPlaying)
+                {
+                    sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
+                    sound?.Play(true);
+                    isFootstepPlaying = true;
+                    hasStoppedFootsteps = false;
+                }
+                if (isCombatMusicPlaying == false)
+                {
+                    sound?.LoadAudio(combatMusic);
+                    sound?.Play(true);
+                    isCombatMusicPlaying = true;
+                }
+
+                Vector3 currentVelocity = rb.GetVelocity();
+                moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
+                Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                if (!isLeaping)
+                {
+                    anim.SetRunningAnimation();
+                    if (desiredVelocity.LengthSquared() > 0)
+                    {
+                        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                    }
+
+                    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                }
+                isRunning = true;
                 break;
 
             case EnemyState.ATTACK:
@@ -243,7 +240,6 @@ public class EnemyControllerMelee : EnemyController
                 {
                     //CreateHurtbox();
                     anim.SetRandomAttackAnimation();
-                    Engineson.print("ATTACK READY");
                     hurtboxTimer = 0f;
                     dodgeTimer = 0f;
                     dodgewindow = true;
@@ -282,9 +278,21 @@ public class EnemyControllerMelee : EnemyController
     public override void Attack()
     {
         pc.playerData.TakeDamage(clawDamage);
-
         sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
         sound?.Play();
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        if (currentHealth > 0)
+        {
+            currentHealth -= damage;
+            anim.SetHitAnimation();
+            particles.ApplyPreset(19);
+            particles.EmitBurst(1);
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
+        }
     }
 
     public void Leap()
@@ -310,26 +318,13 @@ public class EnemyControllerMelee : EnemyController
     {
         Vector3 hurtboxCenter = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
         Vector3 halfSize = hurtboxSize * 0.5f;
-        //Engineson.print("Player in hurtbox");
 
         return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
                (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
     }
 
-    public override void TakeDamage(float damage)
-    {
-        if (currentHealth > 0)
-        {
-            currentHealth -= damage;
-            anim.SetHitAnimation();
-            particles.ApplyPreset(19);
-            particles.EmitBurst(1);
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
-        }
-    }
-
+   
     override public void OnCollisionEnter(GameObject other)
     {
         //if (other.tag == "BoltgunProjectile")

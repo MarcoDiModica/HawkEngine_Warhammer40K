@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
-  uuid: 7797262412052676098
+  uuid: 194252347536159446
   tag: Player
   active: true
   isStatic: false
@@ -22,6 +22,15 @@ GameObject0:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -72,15 +81,6 @@ GameObject0:
         useColorGradient: false
         texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
       particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -142,7 +142,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 11310782165304986693
+      uuid: 59418807112549466
       tag: Untagged
       active: true
       isStatic: false
@@ -201,7 +201,7 @@ GameObject0:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 15844076460002877675
+      uuid: 1416326982916404249
       tag: Untagged
       active: true
       isStatic: false
@@ -273,7 +273,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 12273291349947792413
+      uuid: 11571189197228875057
       tag: Untagged
       active: true
       isStatic: false
@@ -345,7 +345,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 3020730954688671556
+      uuid: 16205726948479028766
       tag: Untagged
       active: true
       isStatic: false
@@ -418,7 +418,7 @@ GameObject0:
       Children: ~
 GameObject1:
   name: MainCamera
-  uuid: 11574037401583614475
+  uuid: 2544104100295685661
   tag: Untagged
   active: true
   isStatic: false
@@ -453,8 +453,117 @@ GameObject1:
         name: PlayerCamera
   Children: ~
 GameObject2:
+  name: Lictor
+  uuid: 7555932153181318919
+  tag: Stalker
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 40
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 5
+        - 5
+        - 5
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.25
+        - 1
+        - 0.25
+      offset:
+        - 0
+        - 3
+        - -1.39999998
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerStalker
+  Children:
+    - name: LictorMesh
+      uuid: 4426548267774869479
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - -0.00024597215815447271
+            - 0.0018853993387892842
+            - -0.0003092930419370532
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 0.004091363400220871
+            - 0.004091363400220871
+            - 0.004091363400220871
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: Plane.010
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Material_Base_color
+            normal_map: Material_Normal_OpenGL
+            metallic_map: ""
+            roughness_map: Material_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+GameObject3:
   name: Hormagaunt
-  uuid: 16788573231064973293
+  uuid: 6494446209563680775
   tag: Melee
   active: true
   isStatic: false
@@ -463,7 +572,7 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -4.7440862655639648
+        - 0
         - 0
         - 10
       localRotation:
@@ -474,6 +583,15 @@ GameObject2:
         - 2.2000000476837158
         - 2.2000000476837158
         - 2.2000000476837158
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -524,15 +642,6 @@ GameObject2:
         useColorGradient: false
         texturePath: Assets/Textures/EnemyDash.png
       particleType: 9
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     BoxColliderComponent:
       size:
         - 0.699999988
@@ -560,7 +669,7 @@ GameObject2:
         name: EnemyControllerMelee
   Children:
     - name: HormagauntMesh
-      uuid: 15397439588267282460
+      uuid: 13096841514655106282
       tag: Untagged
       active: true
       isStatic: false
@@ -618,175 +727,9 @@ GameObject2:
           Script0:
             name: HormagauntAnimation
       Children: ~
-GameObject3:
-  name: hormagaunt2
-  uuid: 7320900353462781920
-  tag: Melee
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 5.6916227340698242
-        - 0
-        - 10
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 2.2000000476837158
-        - 2.2000000476837158
-        - 2.2000000476837158
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 1
-      particlesPerSecond: 1
-      minLifetime: 1
-      maxLifetime: 1
-      minSpeed: 0
-      maxSpeed: 0
-      startSize: 2
-      endSize: 2
-      minSize: 1
-      maxSize: 1
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 1
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0.00100000005
-        - 0
-      shapeParam1: 0.200000003
-      shapeParam2: 1
-      shapeParam3: 20
-      isOneShot: true
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 640
-        - 360
-      useAnimation: true
-      animSpeed: 0.0500000007
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 9
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/EnemyDash.png
-      particleType: 9
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 0.699999988
-        - 1.29999995
-        - 1.60000002
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerMelee
-  Children:
-    - name: Hormagaunt2Mesh
-      uuid: 11411699561983384531
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0.87002267044394355
-            - -0
-            - 0
-          localScale:
-            - 0.0099999997764825821
-            - 0.0099999997764825821
-            - 0.0099999997764825821
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: mesh.102
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Low_BSurfaceMesh_BaseColor
-            normal_map: Low_BSurfaceMesh_Normal
-            metallic_map: ""
-            roughness_map: Low_BSurfaceMesh_Roughness
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_Hormagaunt2Mesh
-        ScriptComponents:
-          Script0:
-            name: HormagauntAnimation
-      Children: ~
 GameObject4:
   name: Floor
-  uuid: 7011278291636573481
+  uuid: 9668645262912271146
   tag: Untagged
   active: true
   isStatic: false

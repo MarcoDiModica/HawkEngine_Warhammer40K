@@ -2866,6 +2866,10 @@ public:
 				gameObject->AddComponent<UITransformComponent>();
 				}, !gameObject->HasComponent<UITransformComponent>());
 
+			DrawComponentButton(gameObject, "UI Button", [gameObject]() {
+				gameObject->AddComponent<UIButtonComponent>();
+				}, !gameObject->HasComponent<UIButtonComponent>());
+
 			break;
 
 		case 4:
@@ -3041,6 +3045,13 @@ public:
 				gameObject->AddComponent<UIImageComponent>();
 				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
 				}, !gameObject->HasComponent<UIImageComponent>());
+		}
+
+		if (matchesSearch("UIButtonComponent")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "UI Button", [gameObject]() {
+				gameObject->AddComponent<UIButtonComponent>();
+				}, !gameObject->HasComponent<UIButtonComponent>());
 		}
 
 		if (matchesSearch("Rect Transform")) {

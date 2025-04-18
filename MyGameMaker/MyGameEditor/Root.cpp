@@ -1338,9 +1338,9 @@ void Root::CreateMainMenuUI()
     quitButton->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0.5, 0.5, 0));
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.177, 0.669, 0), glm::vec3(0.182, 0.072, 1));
 
-	auto emmptyMusic = CreateGameObject("EmptyMusic");
-	emmptyMusic->AddComponent<SoundComponent>();
-	emmptyMusic->GetComponent<ScriptComponent>()->LoadScript("SceneAudio");
+	//auto emmptyMusic = CreateGameObject("EmptyMusic");
+	//emmptyMusic->AddComponent<SoundComponent>();
+	//emmptyMusic->GetComponent<ScriptComponent>()->LoadScript("SceneAudio");
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 	canvas->AddComponent<SoundComponent>();

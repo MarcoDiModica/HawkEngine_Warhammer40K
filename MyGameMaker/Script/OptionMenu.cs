@@ -22,6 +22,16 @@ public class OptionMenu : MonoBehaviour
     GameObject fullScreenCheckbox;
     GameObject fullScreenTick;
     UIButton fullScreenButton;
+    GameObject masterSlider;
+    GameObject masterLeft;
+    GameObject masterRight;
+    UIButton masterLeftButton;
+    UIButton masterRightButton;
+    UITransform transform_masterSlider;
+    int masterVolume = 100; // Default volume level
+    float defaultSliderPos = 0.575f;
+    float sliderScale = 0.009f;
+    float sliderPos = 0.575f;
 
 
 
@@ -71,7 +81,14 @@ public class OptionMenu : MonoBehaviour
         fullScreenCheckbox = GameObject.Find("Fullscreen_checkbox");
         fullScreenTick = GameObject.Find("Fullscreen_tick");
         fullScreenButton = fullScreenCheckbox.GetComponent<UIButton>();
+        masterSlider = GameObject.Find("Master_slider");
+        masterLeft = GameObject.Find("Master_left");
+        masterRight = GameObject.Find("Master_right");
+        masterLeftButton = masterLeft.GetComponent<UIButton>();
+        masterRightButton = masterRight.GetComponent<UIButton>();
+        transform_masterSlider = masterSlider.GetComponent<UITransform>();
     }
+
 
     public override void Update(float deltaTime)
     {
@@ -131,6 +148,8 @@ public class OptionMenu : MonoBehaviour
 
         if (fullScreenButton.GetState() == ButtonState.CLICKED)
         {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
 
             if (fullScreenTick.IsActive())
             {
@@ -146,6 +165,30 @@ public class OptionMenu : MonoBehaviour
             }
         }
 
+
+        if (masterLeftButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            if (masterVolume > 0)
+            {
+                masterVolume -= 10;
+                sliderPos -= sliderScale;
+                transform_masterSlider.DOMoveXUI(sliderPos, 0, Modes.LINEAR);
+            }
+        }
+
+        if (masterRightButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            if (masterVolume < 100)
+            {
+                masterVolume += 10;
+                sliderPos += sliderScale;
+                transform_masterSlider.DOMoveXUI(sliderPos, 0, Modes.LINEAR);
+            }
+        }
     }
 
 }

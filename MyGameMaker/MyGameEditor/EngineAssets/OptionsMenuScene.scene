@@ -114,6 +114,15 @@ GameObject2:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -133,15 +142,6 @@ GameObject2:
         - 0
         - 1
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -523,6 +523,15 @@ GameObject3:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -542,15 +551,6 @@ GameObject3:
         - 0
         - 1
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -1166,6 +1166,238 @@ GameObject3:
           sheet_size:
             - 267
             - 37
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_bar
+      uuid: 17663599820097691372
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.486999989
+            - 0.512000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0890000015
+            - 0.00800000038
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\opt_bar.png
+          use_animation: false
+          sprite_size:
+            - 296
+            - 6
+          sheet_size:
+            - 296
+            - 6
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_slider
+      uuid: 11930234545378636580
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.574999988
+            - 0.52700001
+            - 0
+          rotation:
+            - 360
+            - -84.4482727
+            - 360
+          scale:
+            - 0.00499999989
+            - 0.0379999988
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\opt_bar.png
+          use_animation: false
+          sprite_size:
+            - 296
+            - 6
+          sheet_size:
+            - 296
+            - 6
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_left
+      uuid: 15547088547176944008
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.472000003
+            - 0.508000016
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0249999985
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_left.png
+          use_animation: false
+          sprite_size:
+            - 80
+            - 40
+          sheet_size:
+            - 80
+            - 40
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_right
+      uuid: 2509985108634686895
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.600000024
+            - 0.508000016
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0249999985
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\res_right.png
+          use_animation: false
+          sprite_size:
+            - 80
+            - 40
+          sheet_size:
+            - 80
+            - 40
           sprite_offset:
             - 0
             - 0

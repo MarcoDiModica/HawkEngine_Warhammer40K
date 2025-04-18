@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <filesystem>
 #include "../MyGameEditor/Log.h"
+#include "../MyGameEditor/App.h"
+#include "ResourceManager.h"
 
 unsigned int Material::next_id = 0;
 
@@ -179,7 +181,6 @@ std::unordered_map<std::string, std::shared_ptr<Material>> materialCache;
 
 void Material::SaveBinary(const std::string& filename) const {
 	std::string fullPath = "Library/Materials/" + filename + ".mat";
-	LOG(LogType::LOG_INFO, "Saving material to: %s", fullPath.c_str());
 
 	if (!std::filesystem::exists("Library/Materials")) {
 		std::filesystem::create_directory("Library/Materials");
@@ -199,18 +200,33 @@ void Material::SaveBinary(const std::string& filename) const {
 	fout.write(reinterpret_cast<const char*>(&color), sizeof(color));
 	fout.write(reinterpret_cast<const char*>(&shaderType), sizeof(shaderType));
 
-	if (imagePtr && !imagePtr->image_path.empty()) {
-		fout.write("IMG", 3);
-		imagePtr->SaveBinary(filename);
-	}
-	else {
-		fout.write("NOI", 3);
-	}
+	auto writeTexture = [&](const std::string& tag, const std::shared_ptr<Image>& img) {
+		if (img && !img->image_name.empty()) {
+			fout.write(tag.c_str(), 3); // Escribe tipo
+			uint32_t len = img->image_name.size();
+			fout.write(reinterpret_cast<char*>(&len), sizeof(len));
+			fout.write(img->image_name.c_str(), len);
+			img->SaveBinary(img->image_name);
+		}
+		};
+
+	writeTexture("IMG", imagePtr);
+	writeTexture("NML", normalMapPtr);
+	writeTexture("MTL", metallicMapPtr);
+	writeTexture("RGL", roughnessMapPtr);
+	writeTexture("AOM", aoMapPtr);
+
+	LOG(LogType::LOG_INFO, "Material saved to: %s", fullPath.c_str());
 }
 
 std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 	std::string fullPath = "Library/Materials/" + filename + ".mat";
-	LOG(LogType::LOG_INFO, "Loading material from: %s", fullPath.c_str());
+	
+	if (Application->root->GetResourceManager()->GetMaterial(std::stoull(filename)) != nullptr)
+	{
+		auto material = Application->root->GetResourceManager()->GetMaterial(std::stoull(filename));
+		return material;
+	}
 
 	auto it = materialCache.find(fullPath);
 	if (it != materialCache.end()) {
@@ -226,20 +242,44 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 
 	mat = std::make_shared<Material>();
 
+	mat->matID = std::stoull(filename);
+
 	fin.read(reinterpret_cast<char*>(&mat->wrapMode), sizeof(mat->wrapMode));
 	fin.read(reinterpret_cast<char*>(&mat->filter), sizeof(mat->filter));
 	fin.read(reinterpret_cast<char*>(&mat->color), sizeof(mat->color));
 	fin.read(reinterpret_cast<char*>(&mat->shaderType), sizeof(mat->shaderType));
 
-	char type[4];
-	fin.read(type, 3);
-	type[3] = '\0';
+	while (fin.peek() != EOF) {
+		char type[4];
+		fin.read(type, 3);
+		type[3] = '\0';
 
-	if (strcmp(type, "IMG") == 0) {
-		std::shared_ptr<Image> img = Image::LoadBinary(filename);
-		mat->setImage(img);
+		uint32_t pathLen;
+		fin.read(reinterpret_cast<char*>(&pathLen), sizeof(pathLen));
+
+		std::string texturePath(pathLen, '\0');
+		fin.read(&texturePath[0], pathLen);
+
+		std::shared_ptr<Image> img = Image::LoadBinary(texturePath);
+
+		if (strcmp(type, "IMG") == 0) {
+			mat->setImage(img);
+		}
+		else if (strcmp(type, "NML") == 0) {
+			mat->setNormalMap(img);
+		}
+		else if (strcmp(type, "MTL") == 0) {
+			mat->setMetallicMap(img);
+		}
+		else if (strcmp(type, "RGL") == 0) {
+			mat->setRoughnessMap(img);
+		}
+		else if (strcmp(type, "AOM") == 0) {
+			mat->setAoMap(img);
+		}
 	}
 
 	materialCache[fullPath] = mat;
+	LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
 	return mat;
 }

@@ -366,16 +366,16 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
 				materials[i]->imagePtr->LoadTexture(materials[i]->imagePtr->image_path);
 			}
 			if (materials[i]->normalMapPtr != nullptr) {
-				materials[i]->normalMapPtr->LoadTexture(materials[i]->imagePtr->image_path);
+				materials[i]->normalMapPtr->LoadTexture(materials[i]->normalMapPtr->image_path);
 			}
 			if (materials[i]->metallicMapPtr != nullptr) {
-				materials[i]->metallicMapPtr->LoadTexture(materials[i]->imagePtr->image_path);
+				materials[i]->metallicMapPtr->LoadTexture(materials[i]->metallicMapPtr->image_path);
 			}
 			if (materials[i]->roughnessMapPtr != nullptr) {
-				materials[i]->roughnessMapPtr->LoadTexture(materials[i]->imagePtr->image_path);
+				materials[i]->roughnessMapPtr->LoadTexture(materials[i]->roughnessMapPtr->image_path);
 			}
 			if (materials[i]->aoMapPtr != nullptr) {
-				materials[i]->aoMapPtr->LoadTexture(materials[i]->imagePtr->image_path);
+				materials[i]->aoMapPtr->LoadTexture(materials[i]->aoMapPtr->image_path);
 			}
 
 			materials[i] = Application->root->GetResourceManager()->AddMaterial(materials[i]);

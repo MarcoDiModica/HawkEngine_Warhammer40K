@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: MainCamera
-  uuid: 16281670540988236012
+  uuid: 6916000810688179318
   tag: Untagged
   active: true
   isStatic: false
@@ -15,7 +15,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -38,7 +38,7 @@ GameObject0:
   Children: ~
 GameObject1:
   name: mesh.089
-  uuid: 9085875958016417349
+  uuid: 5192229686046428139
   tag: Untagged
   active: true
   isStatic: false
@@ -47,40 +47,24 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 8.8216047286987305
-        - 0.79266130924224854
-        - -5.9472222328186035
+        - 1.3814347982406616
+        - 2.5073287487030029
+        - 0.040891114622354507
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 0.018888585269451141
-        - 0.018888585269451141
-        - 0.018888585269451141
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+        - 0.0060735000297427177
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
         name: 6746157562630164320
       material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Low_BSurfaceMesh_BaseColor
-        normal_map: Low_BSurfaceMesh_Normal
-        metallic_map: ""
-        roughness_map: Low_BSurfaceMesh_Roughness
-        ao_map: ""
+        name: 11912488466231723779
       color:
         - 1
         - 1
@@ -91,7 +75,7 @@ GameObject1:
   Children: ~
 GameObject2:
   name: mesh.089_1
-  uuid: 9855072850104584401
+  uuid: 2561049430195014879
   tag: Untagged
   active: true
   isStatic: false
@@ -100,7 +84,7 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - -1.8388817310333252
+        - -1.4428092241287231
         - 0.79262250661849976
         - 0.040951989591121674
       localRotation:
@@ -117,23 +101,7 @@ GameObject2:
       mesh:
         name: 6746157562630164320
       material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Low_BSurfaceMesh_BaseColor
-        normal_map: Low_BSurfaceMesh_Normal
-        metallic_map: ""
-        roughness_map: Low_BSurfaceMesh_Roughness
-        ao_map: ""
+        name: 11912488466231723779
       color:
         - 1
         - 1
@@ -144,7 +112,81 @@ GameObject2:
   Children: ~
 GameObject3:
   name: mesh.089_2
-  uuid: 13666343186179850592
+  uuid: 12289446552060136292
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0.00024807715089991689
+        - 2.982485294342041
+        - 0.040951989591121674
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 6746157562630164320
+      material:
+        name: 11912488466231723779
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject4:
+  name: mesh.089_3
+  uuid: 12375405208465368795
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -2.0719823837280273
+        - 2.5140266418457031
+        - 0.040951989591121674
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 6746157562630164320
+      material:
+        name: 11912488466231723779
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject5:
+  name: mesh.089_4
+  uuid: 5706167199993150269
   tag: Untagged
   active: true
   isStatic: false
@@ -170,23 +212,7 @@ GameObject3:
       mesh:
         name: 6746157562630164320
       material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Low_BSurfaceMesh_BaseColor
-        normal_map: Low_BSurfaceMesh_Normal
-        metallic_map: ""
-        roughness_map: Low_BSurfaceMesh_Roughness
-        ao_map: ""
+        name: 11912488466231723779
       color:
         - 1
         - 1
@@ -194,216 +220,4 @@ GameObject3:
     Shader:
       name: Shader
       enabled: true
-  Children: ~
-GameObject4:
-  name: mesh.089_copy
-  uuid: 10289963570693072971
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 2.4774606227874756
-        - 0.79262250661849976
-        - 0.040951989591121674
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.018888585269451141
-        - 0.018888585269451141
-        - 0.018888585269451141
-    Shader:
-      name: Shader
-      enabled: true
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 6746157562630164320
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Low_BSurfaceMesh_BaseColor
-        normal_map: Low_BSurfaceMesh_Normal
-        metallic_map: ""
-        roughness_map: Low_BSurfaceMesh_Roughness
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-  Children: ~
-GameObject5:
-  name: mesh.089_copy
-  uuid: 10640006681565868392
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -5.7587761878967285
-        - 0.79262250661849976
-        - 0.040951989591121674
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.018888585269451141
-        - 0.018888585269451141
-        - 0.018888585269451141
-    Shader:
-      name: Shader
-      enabled: true
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 6746157562630164320
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Low_BSurfaceMesh_BaseColor
-        normal_map: Low_BSurfaceMesh_Normal
-        metallic_map: ""
-        roughness_map: Low_BSurfaceMesh_Roughness
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-  Children: ~
-GameObject6:
-  name: mesh.089_copy
-  uuid: 11875153809003676621
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 1.9915326833724976
-        - 0.79266130924224854
-        - -5.9472222328186035
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.018888585269451141
-        - 0.018888585269451141
-        - 0.018888585269451141
-    Shader:
-      name: Shader
-      enabled: true
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 6746157562630164320
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Low_BSurfaceMesh_BaseColor
-        normal_map: Low_BSurfaceMesh_Normal
-        metallic_map: ""
-        roughness_map: Low_BSurfaceMesh_Roughness
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-  Children: ~
-GameObject7:
-  name: mesh.089_copy
-  uuid: 16439078266896029779
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - -5.1756548881530762
-        - 0.79266130924224854
-        - -5.9472222328186035
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.018888585269451141
-        - 0.018888585269451141
-        - 0.018888585269451141
-    Shader:
-      name: Shader
-      enabled: true
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 6746157562630164320
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: Low_BSurfaceMesh_BaseColor
-        normal_map: Low_BSurfaceMesh_Normal
-        metallic_map: ""
-        roughness_map: Low_BSurfaceMesh_Roughness
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
   Children: ~

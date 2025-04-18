@@ -85,6 +85,11 @@ public:
 		return materials.size();
 	}
 
+	void ClearAllMaterials() {
+		materials.clear();
+		materialIndex.clear();
+	}
+
 private:
 	//meshes
 	std::unordered_map<size_t, size_t> meshIndex;

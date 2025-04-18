@@ -92,6 +92,7 @@ public:
 private:
     std::shared_ptr<GameObject> player;
     std::shared_ptr<GameObject> canvas;
+    std::shared_ptr<GameObject> cube;
     std::shared_ptr<GameObject> newGameButton;
     std::vector<std::shared_ptr<Scene>> scenes;
 	int prevCameraPriority = 0;

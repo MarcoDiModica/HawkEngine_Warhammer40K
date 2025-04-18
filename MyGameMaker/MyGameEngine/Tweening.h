@@ -10,7 +10,14 @@ enum class Modes {
 	EASE_IN,
 	EASE_OUT,
 	EASE_IN_OUT,
-	LINEAR
+	LINEAR,
+	
+};
+
+enum class StepType {
+	TWEEN,
+	DELAY,
+	TESTCALLBACK
 };
 
 class Tweening
@@ -18,12 +25,12 @@ class Tweening
 public:
 	typedef int TweenHandle;
 
-	static void Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode = Modes::LINEAR);
+	static TweenHandle Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode = Modes::LINEAR);
 	static void MoveX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
 	static void MoveY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
 	static void MoveZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
 
-	static void Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode = Modes::LINEAR);
+	static TweenHandle Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode = Modes::LINEAR);
 	static void RotateX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
 	static void RotateY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
 	static void RotateZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
@@ -67,8 +74,35 @@ public:
 
 	static void CleanAllTweens();
 
-	
+	class Sequence 
+	{
+	public:
+		Sequence();
 
+		Sequence& Append(std::function<Tweening::TweenHandle()> tweenCreator);
+		Sequence& AppendDelay(float duration);
+		Sequence& AppendCallback(std::function<void()> callback);
+
+		void Play();
+		void Stop();
+
+	private:
+		
+		struct Step {
+			std::function<Tweening::TweenHandle()> tweenCreator;
+			float duration;
+			StepType type;
+		};
+
+		std::vector<Step> steps;
+		size_t currentIndex;
+		bool isPlaying;
+		Tweening::TweenHandle currentTweenHandle = 0;
+
+		void PlayCurrentStep();
+	};
+
+	static Sequence CreateSequence();
 	static void Update(float deltaTime);
 
 private:
@@ -140,36 +174,3 @@ private:
 	static Tween CreateTween(GameObject* object, float duration, Modes mode);
 };
 
-class Sequence {
-	public:
-		Sequence();
-
-		Sequence& Append(std::function<Tweening::TweenHandle()> tweenCreator);
-		Sequence& AppendDelay(float duration);
-		Sequence& AppendCallback(std::function<void()> callback);
-
-		void Play();
-		void Stop();
-
-	private:
-		enum class StepType {
-			TWEEN,
-			DELAY,
-			CALLBACK
-		};
-
-		struct Step {
-			std::function<Tweening::TweenHandle()> tweenCreator;
-			float duration;
-			StepType type;
-		};
-
-		std::vector<Step> steps;
-		size_t currentIndex;
-		bool isPlaying;
-		Tweening::TweenHandle currentTweenHandle = 0;
-
-		void PlayCurrentStep();
-	};
-
-	static Sequence CreateSequence();

@@ -22,8 +22,8 @@ Tweening::Tween Tweening::CreateTween(GameObject* object, float duration, Modes 
 	return tween;
 }
 
-void Tweening::Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode) {
-	if (!object) return;
+Tweening::TweenHandle Tweening::Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode) {
+	if (!object) return 0;
 
 	auto tween = CreateTween(object, duration, mode);
 	tween.object = object;
@@ -31,7 +31,11 @@ void Tweening::Move(GameObject* object, const glm::dvec3& targetPosition, float 
 	tween.targetPosition = targetPosition;
 	tween.tweenType = TweenType::POSITION;
 
+	static int nextHandle = 1;
+	tween.handle = nextHandle++;
+
 	tweens.push_back(tween);
+	return tween.handle;
 }
 
 void Tweening::UIMove(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode) {
@@ -129,8 +133,8 @@ void Tweening::UIMoveZ(GameObject* object, float targetZ, float duration, Modes 
 	}
 }
 
-void Tweening::Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode) {
-	if (!object) return;
+Tweening::TweenHandle Tweening::Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode) {
+	if (!object) return 0;
 
 	auto tween = CreateTween(object, duration, mode);
 	tween.object = object;
@@ -138,7 +142,11 @@ void Tweening::Rotate(GameObject* object, const glm::dvec3& targetRotation, floa
 	tween.targetRotation = targetRotation;
 	tween.tweenType = TweenType::ROTATION;
 
+	static int nextHandle = 1;
+	tween.handle = nextHandle++;
+
 	tweens.push_back(tween);
+	return tween.handle;
 }
 
 void Tweening::UIRotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode) {
@@ -603,87 +611,87 @@ void Tweening::Update(float deltaTime) {
 		tweens.end());
 }
 
-//Tweening::Sequence Tweening::CreateSequence() {
-//	return Sequence();
-//}
-//
-//Tweening::Sequence::Sequence() : currentIndex(0), isPlaying(false) {}
-//
-//Tweening::Sequence& Tweening::Sequence::Append(std::function<TweenHandle()> tweenCreator) {
-//	steps.push_back({ tweenCreator, 0, StepType::TWEEN });
-//	return *this;
-//}
-//
-//Tweening::Sequence& Tweening::Sequence::AppendDelay(float duration) {
-//	steps.push_back({ nullptr, duration, StepType::DELAY });
-//	return *this;
-//}
-//
-//Tweening::Sequence& Tweening::Sequence::AppendCallback(std::function<void()> callback) {
-//	steps.push_back({ [callback]() -> TweenHandle {
-//		callback();
-//		return 0;
-//	}, 0, StepType::CALLBACK });
-//	return *this;
-//}
-//
-//void Tweening::Sequence::Play() {
-//	if (steps.empty()) return;
-//
-//	isPlaying = true;
-//	currentIndex = 0;
-//	PlayCurrentStep();
-//}
-//
-//void Tweening::Sequence::Stop() {
-//	isPlaying = false;
-//	if (currentTweenHandle != 0) {
-//		Tweening::Cancel(currentTweenHandle);
-//		currentTweenHandle = 0;
-//	}
-//}
-//
-//void Tweening::Sequence::PlayCurrentStep() {
-//	if (!isPlaying || currentIndex >= steps.size()) {
-//		isPlaying = false;
-//		return;
-//	}
-//
-//	auto& step = steps[currentIndex];
-//
-//	switch (step.type) {
-//	case StepType::TWEEN: {
-//		if (step.tweenCreator) {
-//			currentTweenHandle = step.tweenCreator();
-//			Tweening::SetOnComplete(currentTweenHandle, [this]() {
-//				currentIndex++;
-//				PlayCurrentStep();
-//				});
-//		}
-//		else {
-//			currentIndex++;
-//			PlayCurrentStep();
-//		}
-//		break;
-//	}
-//
-//	case StepType::DELAY: {
-//		float dummyValue = 0.0f;
-//		currentTweenHandle = Tweening::TweenValue(&dummyValue, 0.0f, 1.0f, step.duration, Modes::LINEAR);
-//		Tweening::SetOnComplete(currentTweenHandle, [this]() {
-//			currentIndex++;
-//			PlayCurrentStep();
-//			});
-//		break;
-//	}
-//
-//	case StepType::CALLBACK: {
-//		if (step.tweenCreator) {
-//			step.tweenCreator();
-//		}
-//		currentIndex++;
-//		PlayCurrentStep();
-//		break;
-//	}
-//	}
-//}
+Tweening::Sequence Tweening::CreateSequence() {
+	return Sequence();
+}
+
+Tweening::Sequence::Sequence() : currentIndex(0), isPlaying(false) {}
+
+Tweening::Sequence& Tweening::Sequence::Append(std::function<Tweening::TweenHandle()> tweenCreator) {
+	steps.push_back({ tweenCreator, 0, StepType::TWEEN });
+	return *this;
+}
+
+Tweening::Sequence& Tweening::Sequence::AppendDelay(float duration) {
+	steps.push_back({ nullptr, duration, StepType::DELAY });
+	return *this;
+}
+
+Tweening::Sequence& Tweening::Sequence::AppendCallback(std::function<void()> callback) {
+	steps.push_back({ [callback]() -> TweenHandle {
+		callback();
+		return 0;
+	}, 0, StepType::TESTCALLBACK });
+	return *this;
+}
+
+void Tweening::Sequence::Play() {
+	if (steps.empty()) return;
+
+	isPlaying = true;
+	currentIndex = 0;
+	PlayCurrentStep();
+}
+
+void Tweening::Sequence::Stop() {
+	isPlaying = false;
+	if (currentTweenHandle != 0) {
+		Tweening::Cancel(currentTweenHandle);
+		currentTweenHandle = 0;
+	}
+}
+
+void Tweening::Sequence::PlayCurrentStep() {
+	if (!isPlaying || currentIndex >= steps.size()) {
+		isPlaying = false;
+		return;
+	}
+
+	auto& step = steps[currentIndex];
+
+	switch (step.type) {
+	case StepType::TWEEN: {
+		if (step.tweenCreator) {
+			currentTweenHandle = step.tweenCreator(); // Ejecutar la función para generar el TweenHandle
+			Tweening::SetOnComplete(currentTweenHandle, [this]() {
+				currentIndex++;
+				PlayCurrentStep();
+				});
+		}
+		else {
+			currentIndex++;
+			PlayCurrentStep();
+		}
+		break;
+	}
+
+	case StepType::DELAY: {
+		float dummyValue = 0.0f;
+		currentTweenHandle = Tweening::TweenValue(&dummyValue, 0.0f, 1.0f, step.duration, Modes::LINEAR);
+		Tweening::SetOnComplete(currentTweenHandle, [this]() {
+			currentIndex++;
+			PlayCurrentStep();
+			});
+		break;
+	}
+
+	case StepType::TESTCALLBACK: {
+		if (step.tweenCreator) {
+			step.tweenCreator(); // Ejecutar la función de callback
+		}
+		currentIndex++;
+		PlayCurrentStep();
+		break;
+	}
+	}
+}

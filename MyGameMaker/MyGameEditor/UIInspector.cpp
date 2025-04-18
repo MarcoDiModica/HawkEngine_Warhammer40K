@@ -2866,13 +2866,15 @@ public:
 				gameObject->AddComponent<UITransformComponent>();
 				}, !gameObject->HasComponent<UITransformComponent>());
 
-			DrawComponentButton(gameObject, "UI Button", [gameObject]() {
+			DrawComponentButton(gameObject, "UI Button", [gameObject](){
 				gameObject->AddComponent<UIButtonComponent>();
 				if (!gameObject->HasComponent<UIImageComponent>()) {
 					gameObject->AddComponent<UIImageComponent>();
 					gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
 				}
 				}, !gameObject->HasComponent<UIButtonComponent>());
+
+			
 
 			break;
 

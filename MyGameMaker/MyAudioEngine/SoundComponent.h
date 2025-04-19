@@ -39,5 +39,7 @@ public:
 	void SetVolume(const std::string& soundName, float volume);
 	int GetChannelId(const std::string& soundName);
 
+	MonoObject* CsharpReference = nullptr;
+	MonoObject* GetSharp() override;
 };
 

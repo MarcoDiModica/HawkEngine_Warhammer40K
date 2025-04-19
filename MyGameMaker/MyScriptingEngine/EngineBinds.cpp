@@ -15,7 +15,6 @@
 #include <mono/metadata/debug-helpers.h>
 #include <MyPhysicsEngine/RigidBodyComponent.h>
 #include "../MyGameEditor/App.h"
-#include "../MyAudioEngine/SoundComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UIButtonComponent.h"
 #include "../MyUIEngine/UICanvasComponent.h"
@@ -174,7 +173,7 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.Rigidbody") {
 		return GO->GetComponent<RigidbodyComponent>()->GetSharp();
 	}
-    else if (componentName == "HawkEngine.Audio") {
+    else if (componentName == "HawkEngine.AudioSource") {
         return GO->GetComponent<SoundComponent>()->GetSharp();
     }
     else if (componentName == "HawkEngine.UIImage") {

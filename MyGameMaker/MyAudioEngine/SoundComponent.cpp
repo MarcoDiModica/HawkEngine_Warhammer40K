@@ -1,4 +1,6 @@
 #include "SoundComponent.h"
+#include <MyScriptingEngine/MonoManager.h>
+#include <mono/metadata/debug-helpers.h>
 
 SoundComponent::SoundComponent(GameObject* owner, AudioEngine* audioEngine)
 	: Component(owner)
@@ -75,5 +77,40 @@ void SoundComponent::SetVolume(const std::string& soundName, float volume)
 int SoundComponent::GetChannelId(const std::string& soundName)
 {
 	return audioEngine->GetChannelId(soundName);
+}
+
+MonoObject* SoundComponent::GetSharp()
+{
+	MonoClass* klass = MonoManager::GetInstance().GetClass("HawkEngine", "AudioSource");
+	if (!klass) {
+		return nullptr;
+	}
+
+	MonoObject* monoObject = mono_object_new(MonoManager::GetInstance().GetDomain(), klass);
+	if (!monoObject) {
+		return nullptr;
+	}
+
+	MonoMethodDesc* constructorDesc = mono_method_desc_new("HawkEngine.AudioSource:.ctor(uintptr,HawkEngine.GameObject)", true);
+	MonoMethod* method = mono_method_desc_search_in_class(constructorDesc, klass);
+	if (!method)
+	{
+		return nullptr;
+	}
+
+	uintptr_t componentPtr = reinterpret_cast<uintptr_t>(this);
+	MonoObject* ownerGo = owner->GetSharp();
+	if (!ownerGo)
+	{
+		return nullptr;
+	}
+
+	void* args[2];
+	args[0] = &componentPtr;
+	args[1] = ownerGo;
+
+	mono_runtime_invoke(method, monoObject, args, NULL);
+
+	return monoObject;
 }
 

@@ -56,7 +56,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Start()
     {
-        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
+        //playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
 
         if (playerTransform == null)
@@ -94,7 +94,7 @@ public class EnemyControllerMelee : EnemyController
         particles = gameObject.AddComponent<ParticleFX>();
         particles.ApplyPreset(9);
 
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+        //pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
@@ -126,7 +126,7 @@ public class EnemyControllerMelee : EnemyController
             }
             if (!isStunned)
             {
-                Vector3 playerPos = playerTransform.position;
+                Vector3 playerPos = Vector3.Zero;//playerTransform.position;
                 float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
 
                 if (distanceToPlayer < distToChase)

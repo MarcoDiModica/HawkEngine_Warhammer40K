@@ -163,6 +163,7 @@
     <Compile Include="Transform.cs" />
     <Compile Include="Tweening.cs" />
     <Compile Include="TyranidCorpse.cs" />
+    <Compile Include="TyranidTentacles.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="UICanvas.cs" />
     <Compile Include="UIGameplay.cs" />

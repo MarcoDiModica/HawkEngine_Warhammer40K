@@ -516,7 +516,7 @@ GameObject2:
       isTrigger: false
   Children: ~
 GameObject3:
-  name: Cube
+  name: TyranidCorpse
   uuid: 17506780188724273894
   tag: Untagged
   active: true
@@ -584,4 +584,70 @@ GameObject3:
         name: ""
       Script2:
         name: TyranidCorpse
+  Children: ~
+GameObject4:
+  name: TyranidTentacles1
+  uuid: 2292637422249724224
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 12.643946647644043
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.5799999237060547
+        - 2.5799999237060547
+        - 2.5799999237060547
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cube
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: default
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: TyranidTentacles
   Children: ~

@@ -6,15 +6,15 @@ public class TyranidCorpse : MonoBehaviour
     private bool playerInside = false;
     private GameObject player;
 
-    private float exposureTime = 0f;        // Tiempo total en el ácido
-    private float timeSinceLastTick = 0f;   // Daño cada 0.5s
+    private float exposureTime = 0f;       
+    private float timeSinceLastTick = 0f;   
 
     public override void Start()
     {
         acidCollider = gameObject.GetComponent<Collider>();
         if (acidCollider == null)
         {
-            Engineson.print("Error: No se encontró el collider del charco ácido.");
+            Engineson.print("Error: There is no collider");
         }
     }
 
@@ -36,7 +36,7 @@ public class TyranidCorpse : MonoBehaviour
                         float damage = 2f * (exposureTime * 0.3f + 1f);
                         data.TakeDamage(damage);
 
-                        Engineson.print($"Daño ácido: {damage:F2} | Vida actual: {data.GetHealth():F2}");
+                        Engineson.print($"Damage: {damage:F2} | Current Health: {data.GetHealth():F2}");
 
                         timeSinceLastTick = 0f;
                     }
@@ -53,7 +53,6 @@ public class TyranidCorpse : MonoBehaviour
             player = other;
             exposureTime = 0f;
             timeSinceLastTick = 0f;
-            Engineson.print("Jugador entró en el ácido.");
         }
     }
 
@@ -64,7 +63,6 @@ public class TyranidCorpse : MonoBehaviour
             playerInside = false;
             player = null;
             exposureTime = 0f;
-            Engineson.print("Jugador salió del ácido.");
         }
     }
 }

@@ -64,24 +64,24 @@ public class PlayerCamera : MonoBehaviour
 
         Vector3 baseOffset = new Vector3(-11.9f, 19.8f, -12.2f);
 
-        if (leftStickInput != Vector2.Zero)
-        {
-            Vector3 movementDirection = new Vector3(leftStickInput.X, 0, leftStickInput.Y);
+        //if (leftStickInput != Vector2.Zero)
+        //{
+        //    Vector3 movementDirection = new Vector3(leftStickInput.X, 0, leftStickInput.Y);
 
-            float inputMagnitude = GetMagnitude(leftStickInput);
+        //    float inputMagnitude = GetMagnitude(leftStickInput);
 
-            Vector3 camForward = cameraTransform.forward;
-            Vector3 camRight = cameraTransform.right;
+        //    Vector3 camForward = cameraTransform.forward;
+        //    Vector3 camRight = cameraTransform.right;
 
-            camForward.Y = 0;
-            camRight.Y = 0;
+        //    camForward.Y = 0;
+        //    camRight.Y = 0;
 
-            camForward = Vector3.Normalize(camForward);
-            camRight = Vector3.Normalize(camRight);
+        //    camForward = Vector3.Normalize(camForward);
+        //    camRight = Vector3.Normalize(camRight);
 
-            targetOffset = baseOffset + (-camForward * maxOffsetDistance * movementDirection.Z + camRight * maxOffsetDistance * movementDirection.X);
-        }
-        else if (rightStickInput != Vector2.Zero)
+        //    targetOffset = baseOffset + (-camForward * maxOffsetDistance * movementDirection.Z + camRight * maxOffsetDistance * movementDirection.X);
+        //}
+         if (rightStickInput != Vector2.Zero)
         {
             Vector3 aimDirection = new Vector3(rightStickInput.X, 0, rightStickInput.Y);
 

@@ -34,7 +34,7 @@ public class Shotgun : BaseWeapon
         currentTotalAmmo = 16;
         reloadTime = 2.5f;
         range = 20f;
-        timeToLerp = 2;
+        timeToLerp = 0.3f;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
         sound = gameObject.GetComponent<Audio>();
@@ -144,7 +144,6 @@ public class Shotgun : BaseWeapon
 
             for (int i = 0; i < numProjectiles; i++)
             {
-                Vector3 forward = transform.forward;
                 float angle = startAngle + angleStep * i;
                 Vector3 direction = Vector3.Normalize(Vector3.Transform(transform.forward, Matrix4x4.CreateRotationY(angle * (3.14f / 180f))));
 

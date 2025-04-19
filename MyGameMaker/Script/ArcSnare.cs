@@ -9,14 +9,8 @@ public class ArcSnare : BaseAbilities
     public string name;
     public bool enabled;
     public float cooldown;
-    GameObject explosion;
-
-    private float yHeight = 0.0f;
-    private float timer = 0;
     private bool exploded = false;
     GameObject arcSnare;
-    Rigidbody rigidbody;
-    BoxCollider collider;
     bool canThrow = true;
 
     private float explosionCooldown = 1.0f;
@@ -111,29 +105,6 @@ public class ArcSnare : BaseAbilities
             }
         }
 
-    }
-
-    void Explode()
-    {
-        if (arcSnare == null) return;
-
-        // Crear explosión
-        explosion = Engineson.CreateGameObject("Explosion", null);
-        Engineson.Destroy(arcSnare);
-
-        if (explosion == null) return;
-
-        explosion.AddComponent<MeshRenderer>();
-        explosion.GetComponent<Transform>().SetPosition(
-            arcSnare.GetComponent<Transform>().GetPosition().X,
-            arcSnare.GetComponent<Transform>().GetPosition().Y,
-            arcSnare.GetComponent<Transform>().GetPosition().Z
-        );
-        explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
-
-        
-
-        exploded = true;
     }
 
     public override void ResetCooldowns()

@@ -1,15 +1,14 @@
 using HawkEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
 
 public class Arc : MonoBehaviour
 {
     public float value = 0.0f;
     private Transform transform;
-
-    float distance = 6;
-    float damage = 100;
-    float explosionRadius = 2;
+    public List<string> collisionNames = new List<string>();
+    float damage = 20;
     Rigidbody rigidbody;
     bool isExploded = false;
     GameObject explosion;
@@ -107,6 +106,31 @@ public class Arc : MonoBehaviour
         sound?.LoadAudio(arcExplosion);
         sound?.Play();
         isExploded = true;
+
+        for (int i = 0; i < collisionNames.Count; i++)
+        {
+            var enemy = GameObject.Find(collisionNames[i]);
+            if (enemy.tag == "Melee")
+            {
+                enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Ranged")
+            {
+                enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Stalker")
+            {
+                //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Boss")
+            {
+                enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Destroyable")
+            {
+                enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
+            }
+        }
     }
 
     public override void OnCollisionEnter(GameObject other)

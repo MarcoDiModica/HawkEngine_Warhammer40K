@@ -177,8 +177,6 @@ void Material::ApplyShader(const glm::mat4& model, const glm::mat4& view, const 
 	}
 }
 
-std::unordered_map<std::string, std::shared_ptr<Material>> materialCache;
-
 void Material::SaveBinary(const std::string& filename) const {
 	std::string fullPath = "Library/Materials/" + filename + ".mat";
 
@@ -228,17 +226,12 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 		return material;
 	}
 
-	auto it = materialCache.find(fullPath);
-	if (it != materialCache.end()) {
-		return it->second;
-	}
-
-	std::shared_ptr<Material> mat;
-
 	std::ifstream fin(fullPath, std::ios::binary);
 	if (!fin.is_open()) {
 		throw std::runtime_error("Error opening material file: " + fullPath);
 	}
+
+	std::shared_ptr<Material> mat;
 
 	mat = std::make_shared<Material>();
 
@@ -279,7 +272,6 @@ std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 		}
 	}
 
-	materialCache[fullPath] = mat;
 	LOG(LogType::LOG_INFO, "Material loaded successfully: %s", fullPath.c_str());
 	return mat;
 }

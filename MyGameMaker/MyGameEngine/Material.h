@@ -102,6 +102,7 @@ protected:
 
 		std::ifstream fin(fullPath, std::ios::binary);
 		if (!fin.is_open()) {
+			return false;
 			throw std::runtime_error("Error opening material file: " + fullPath);
 		}
 

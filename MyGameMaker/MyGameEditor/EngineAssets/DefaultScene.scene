@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: MainCamera
-  uuid: 15579685786073393257
+  uuid: 10287014934215194840
   tag: Untagged
   active: true
   isStatic: false
@@ -38,7 +38,7 @@ GameObject0:
   Children: ~
 GameObject1:
   name: Player
-  uuid: 64719282768233791
+  uuid: 3450169510497973971
   tag: Player
   active: true
   isStatic: false
@@ -58,15 +58,6 @@ GameObject1:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -117,6 +108,15 @@ GameObject1:
         useColorGradient: false
         texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
       particleType: 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -178,7 +178,7 @@ GameObject1:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 9458655873704192153
+      uuid: 147881353847817867
       tag: Untagged
       active: true
       isStatic: false
@@ -191,7 +191,7 @@ GameObject1:
             - 0
             - 0
           localRotation:
-            - -90
+            - -90.000002504478161
             - 0
             - 0
           localScale:
@@ -237,7 +237,7 @@ GameObject1:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 4195590559513452133
+      uuid: 9612851440157061585
       tag: Untagged
       active: true
       isStatic: false
@@ -267,8 +267,8 @@ GameObject1:
           maxLifetime: 0.25
           minSpeed: 0
           maxSpeed: 0
-          startSize: 1
-          endSize: 1
+          startSize: 3
+          endSize: 3
           minSize: 1
           maxSize: 1
           startColor:
@@ -309,7 +309,7 @@ GameObject1:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 18433261114916899202
+      uuid: 10803567137948061274
       tag: Untagged
       active: true
       isStatic: false
@@ -339,7 +339,7 @@ GameObject1:
           maxLifetime: 4
           minSpeed: 0.5
           maxSpeed: 1.5
-          startSize: 0.5
+          startSize: 2
           endSize: 2
           minSize: 0.5
           maxSize: 0
@@ -381,7 +381,7 @@ GameObject1:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 15129171399640403244
+      uuid: 12280619664409744643
       tag: Untagged
       active: true
       isStatic: false
@@ -454,7 +454,7 @@ GameObject1:
       Children: ~
 GameObject2:
   name: Cube
-  uuid: 5873952954916488861
+  uuid: 5051036533144841090
   tag: Melee
   active: true
   isStatic: false
@@ -517,7 +517,7 @@ GameObject2:
   Children: ~
 GameObject3:
   name: Cube2
-  uuid: 7001422299683927102
+  uuid: 3149378803183638167
   tag: Untagged
   active: true
   isStatic: false
@@ -579,8 +579,338 @@ GameObject3:
       isTrigger: false
   Children: ~
 GameObject4:
+  name: stim.001
+  uuid: 1075352791588268645
+  tag: PowerUp
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 10
+        - 3
+        - 5
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.014999999664723873
+        - 0.014999999664723873
+        - 0.014999999664723873
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: stim.001
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: powerups_DefaultMaterial_BaseColor
+        normal_map: powerups_DefaultMaterial_Normal
+        metallic_map: powerups_DefaultMaterial_Metallic
+        roughness_map: powerups_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: MedicaeStimm
+  Children: ~
+GameObject5:
+  name: estandarte.001
+  uuid: 6214821430161556058
+  tag: PowerUp
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -30
+        - 3
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.014999999664723873
+        - 0.014999999664723873
+        - 0.014999999664723873
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: estandarte.001
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: powerups_DefaultMaterial_BaseColor
+        normal_map: powerups_DefaultMaterial_Normal
+        metallic_map: powerups_DefaultMaterial_Metallic
+        roughness_map: powerups_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 2.5
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: ChapterStandard
+  Children: ~
+GameObject6:
+  name: heart
+  uuid: 18100153485403291930
+  tag: PowerUp
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -40
+        - 3
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.014999999664723873
+        - 0.014999999664723873
+        - 0.014999999664723873
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: heart
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: powerups_DefaultMaterial_BaseColor
+        normal_map: powerups_DefaultMaterial_Normal
+        metallic_map: powerups_DefaultMaterial_Metallic
+        roughness_map: powerups_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: BlackHeart
+  Children: ~
+GameObject7:
+  name: magnet.001
+  uuid: 15353620471702570755
+  tag: PowerUp
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 3
+        - -10
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.014999999664723873
+        - 0.014999999664723873
+        - 0.014999999664723873
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: magnet.001
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: powerups_DefaultMaterial_BaseColor
+        normal_map: powerups_DefaultMaterial_Normal
+        metallic_map: powerups_DefaultMaterial_Metallic
+        roughness_map: powerups_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: Magnet
+  Children: ~
+GameObject8:
+  name: bullett.001
+  uuid: 16950257894002976731
+  tag: PowerUp
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 3
+        - 10
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.014999999664723873
+        - 0.014999999664723873
+        - 0.014999999664723873
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: bullett.001
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: powerups_DefaultMaterial_BaseColor
+        normal_map: powerups_DefaultMaterial_Normal
+        metallic_map: powerups_DefaultMaterial_Metallic
+        roughness_map: powerups_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: AmmunitionBlessing
+  Children: ~
+GameObject9:
   name: bullet.001
-  uuid: 7981856679524455601
+  uuid: 4037206191305213974
   tag: PowerUp
   active: true
   isStatic: false
@@ -593,8 +923,8 @@ GameObject4:
         - 3
         - 10
       localRotation:
+        - -90.000002504478161
         - 0
-        - -0
         - 0
       localScale:
         - 0.014999999664723873
@@ -644,9 +974,9 @@ GameObject4:
       Script0:
         name: PiercingBullets
   Children: ~
-GameObject5:
+GameObject10:
   name: Hormagaunt
-  uuid: 8443449948141783776
+  uuid: 10727187089283985784
   tag: Melee
   active: true
   isStatic: false
@@ -666,15 +996,6 @@ GameObject5:
         - 2.2000000476837158
         - 2.2000000476837158
         - 2.2000000476837158
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -725,6 +1046,15 @@ GameObject5:
         useColorGradient: false
         texturePath: Assets/Textures/EnemyDash.png
       particleType: 9
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     BoxColliderComponent:
       size:
         - 0.699999988
@@ -752,7 +1082,7 @@ GameObject5:
         name: EnemyControllerMelee
   Children:
     - name: HormagauntMesh
-      uuid: 3845403536559136077
+      uuid: 4958767883847337032
       tag: Untagged
       active: true
       isStatic: false
@@ -765,13 +1095,13 @@ GameObject5:
             - 0
             - 0
           localRotation:
-            - -1.3660378343659465e-05
-            - 2.4012355493896692e-07
-            - -1.7342271369070097e-06
+            - -1.3660378731687233e-05
+            - 2.4012357443917309e-07
+            - -1.7342270674115732e-06
           localScale:
-            - 0.0075779887847602367
-            - 0.0075779887847602367
-            - 0.0075779887847602367
+            - 0.0075779887847602402
+            - 0.0075779887847605421
+            - 0.0075779887847605386
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -810,175 +1140,9 @@ GameObject5:
           Script0:
             name: HormagauntAnimation
       Children: ~
-GameObject6:
-  name: Hormagaunt2
-  uuid: 8159225705639671186
-  tag: Melee
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 30
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 2.2000000476837158
-        - 2.2000000476837158
-        - 2.2000000476837158
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 1
-      particlesPerSecond: 1
-      minLifetime: 1
-      maxLifetime: 1
-      minSpeed: 0
-      maxSpeed: 0
-      startSize: 2
-      endSize: 2
-      minSize: 1
-      maxSize: 1
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 1
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0.00100000005
-        - 0
-      shapeParam1: 0.200000003
-      shapeParam2: 1
-      shapeParam3: 20
-      isOneShot: true
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 640
-        - 360
-      useAnimation: true
-      animSpeed: 0.0500000007
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 9
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/EnemyDash.png
-      particleType: 9
-    BoxColliderComponent:
-      size:
-        - 0.699999988
-        - 3.29999995
-        - 1.60000002
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerMelee
-  Children:
-    - name: HormagauntMesh2
-      uuid: 8874015888284220749
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - -1.3660378343659465e-05
-            - 2.4012355493896692e-07
-            - -1.7342271369070097e-06
-          localScale:
-            - 0.0075779887847602367
-            - 0.0075779887847602367
-            - 0.0075779887847602367
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: mesh.005
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Low_BSurfaceMesh_BaseColor
-            normal_map: Low_BSurfaceMesh_Normal
-            metallic_map: ""
-            roughness_map: Low_BSurfaceMesh_Roughness
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_HormagauntMesh2
-        ScriptComponents:
-          Script0:
-            name: HormagauntAnimation
-      Children: ~
-GameObject7:
+GameObject11:
   name: Floor
-  uuid: 18105854307650301659
+  uuid: 10276539880262320214
   tag: Untagged
   active: true
   isStatic: false
@@ -1039,9 +1203,9 @@ GameObject7:
         - 0
       isTrigger: false
   Children: ~
-GameObject8:
+GameObject12:
   name: shotgun
-  uuid: 12583364186889918625
+  uuid: 10079865421990956641
   tag: Weapon
   active: true
   isStatic: false
@@ -1106,7 +1270,7 @@ GameObject8:
         name: ShotgunPickUp
   Children:
     - name: bOLTER.010
-      uuid: 14874868182508897096
+      uuid: 12420400385284714428
       tag: Untagged
       active: true
       isStatic: false
@@ -1158,7 +1322,7 @@ GameObject8:
           enabled: true
       Children: ~
     - name: Cone
-      uuid: 13530056674300698592
+      uuid: 7197997978175941158
       tag: Untagged
       active: true
       isStatic: false
@@ -1209,9 +1373,9 @@ GameObject8:
           name: Shader
           enabled: true
       Children: ~
-GameObject9:
-  name: Cube_1
-  uuid: 9020139010683805661
+GameObject13:
+  name: Plane.001
+  uuid: 4958483177539236764
   tag: BiblePage
   active: true
   isStatic: false
@@ -1224,18 +1388,18 @@ GameObject9:
         - 2
         - 3
       localRotation:
-        - -90.000009659346318
         - 0
+        - -0
         - 0
       localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
+        - 0.014999999664723873
+        - 0.014999999664723873
+        - 0.014999999664723873
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
-        name: Cube
+        name: Plane.001
       material:
         wrap_mode: Repeat
         filter: Nearest
@@ -1249,208 +1413,10 @@ GameObject9:
         ao: 1
         tonemap_strength: 1
         shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
-GameObject10:
-  name: Cube_2
-  uuid: 3455581422337199367
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 20
-        - 2
-        - 3
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
-GameObject11:
-  name: Cube_3
-  uuid: 15059396871288312752
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 30
-        - 2
-        - 3
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: BiblePagePickUp
-  Children: ~
-GameObject12:
-  name: Cube_4
-  uuid: 9790946625488349112
-  tag: BiblePage
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 40
-        - 2
-        - 3
-      localRotation:
-        - -90.000009659346318
-        - 0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 0.30000001192092896
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
+        image: bible page_DefaultMaterial_BaseColor
+        normal_map: bible page_DefaultMaterial_Normal
+        metallic_map: bible page_DefaultMaterial_Metallic
+        roughness_map: bible page_DefaultMaterial_Roughness
         ao_map: ""
       color:
         - 1

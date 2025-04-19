@@ -328,50 +328,49 @@ bool Root::Start()
 	//powerUp3->AddComponent<ScriptComponent>()->LoadScript("AmmunitionBlessing");
 	//powerUp3->SetTag("PowerUp");
 
-	auto powerUp4 = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
-	powerUp4->GetTransform()->SetPosition(glm::vec3(2, 3, 10));
-	powerUp4->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
-	powerUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	powerUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	std::shared_ptr<Image> PiercingBulletsBaseColor = std::make_shared<Image>();
-	std::shared_ptr<Image> PiercingBulletsRoughness = std::make_shared<Image>();
-	std::shared_ptr<Image> PiercingBulletsNormal = std::make_shared<Image>();
-	std::shared_ptr<Image> PiercingBulletsMetallic = std::make_shared<Image>();
-	PiercingBulletsBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
-	PiercingBulletsRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
-	PiercingBulletsNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
-	PiercingBulletsMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
-	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setImage(PiercingBulletsBaseColor);
-	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(PiercingBulletsRoughness);
-	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(PiercingBulletsNormal);
-	powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(PiercingBulletsMetallic);
-	powerUp4->AddComponent<ScriptComponent>()->LoadScript("PiercingBullets");
-	powerUp4->SetTag("PowerUp");
+	//auto powerUp4 = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
+	//powerUp4->GetTransform()->SetPosition(glm::vec3(2, 3, 10));
+	//powerUp4->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//powerUp4->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//powerUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	//powerUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	//std::shared_ptr<Image> PiercingBulletsBaseColor = std::make_shared<Image>();
+	//std::shared_ptr<Image> PiercingBulletsRoughness = std::make_shared<Image>();
+	//std::shared_ptr<Image> PiercingBulletsNormal = std::make_shared<Image>();
+	//std::shared_ptr<Image> PiercingBulletsMetallic = std::make_shared<Image>();
+	//PiercingBulletsBaseColor->LoadTexture("Assets/Textures/powerups_DefaultMaterial_BaseColor.png");
+	//PiercingBulletsRoughness->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Roughness.png");
+	//PiercingBulletsNormal->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Normal.png");
+	//PiercingBulletsMetallic->LoadTexture("Assets/Textures/powerups_DefaultMaterial_Metallic.png");
+	//powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setImage(PiercingBulletsBaseColor);
+	//powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(PiercingBulletsRoughness);
+	//powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(PiercingBulletsNormal);
+	//powerUp4->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(PiercingBulletsMetallic);
+	//powerUp4->AddComponent<ScriptComponent>()->LoadScript("PiercingBullets");
+	//powerUp4->SetTag("PowerUp");
 
 	//// Test Ammunition
-	//auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
-	//ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 3, 20));
-	//ShotgunShells->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//ShotgunShells->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
-	//ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
-	//ShotgunShellsBaseColor->LoadTexture("Assets/Textures/ShotgunShells.png");
-	//ShotgunShells->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunShellsBaseColor);
-	//ShotgunShells->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
-	//ShotgunShells->SetTag("Ammunition");
+	/*auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/ShotgunShells.fbx");
+	ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 3, 20));
+	ShotgunShells->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
+	ShotgunShellsBaseColor->LoadTexture("Assets/Textures/ShotgunShells.png");
+	ShotgunShells->GetComponent<MeshRenderer>()->GetMaterial()->setImage(ShotgunShellsBaseColor);
+	ShotgunShells->AddComponent<ScriptComponent>()->LoadScript("ShotgunShells");
+	ShotgunShells->SetTag("Ammunition");
 
-	//auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
-	//BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 3, 20));
-	//BoltgunBullets->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
-	//BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();
-	//BoltgunBulletsBaseColor->LoadTexture("Assets/Textures/BoltgunBullets.png");
-	//BoltgunBullets->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBulletsBaseColor);
-	//BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
-	//BoltgunBullets->SetTag("Ammunition");
+	auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/BoltgunBullets.fbx");
+	BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 3, 20));
+	BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
+	std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();
+	BoltgunBulletsBaseColor->LoadTexture("Assets/Textures/BoltgunBullets.png");
+	BoltgunBullets->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BoltgunBulletsBaseColor);
+	BoltgunBullets->AddComponent<ScriptComponent>()->LoadScript("BoltgunBullets");
+	BoltgunBullets->SetTag("Ammunition");*/
 	
 	//Lictor
 	//auto lictor = CreateGameObject("Lictor");
@@ -589,37 +588,25 @@ bool Root::Start()
 	//railgunPickUp->AddComponent<ScriptComponent>()->LoadScript("RailgunPickUp");
 	//railgunPickUp->SetTag("Weapon");
 	
-	auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
+	auto biblePagePickUp = CreateGameObjectWithPath("Assets/Meshes/BibblePage.fbx");
+	std::shared_ptr<Image> BiblePageBaseColor = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageRoughness = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageNormal = std::make_shared<Image>();
+	std::shared_ptr<Image> BiblePageMetallic = std::make_shared<Image>();
+	BiblePageBaseColor->LoadTexture("Assets/Textures/bible page_DefaultMaterial_BaseColor.png");
+	BiblePageRoughness->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Roughness.png");
+	BiblePageNormal->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Normal.png");
+	BiblePageMetallic->LoadTexture("Assets/Textures/bible page_DefaultMaterial_Metallic.png");
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setImage(BiblePageBaseColor);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setRoughnessMap(BiblePageRoughness);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setNormalMap(BiblePageNormal);
+	biblePagePickUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(BiblePageMetallic);
 	biblePagePickUp->GetTransform()->SetPosition(glm::vec3(10, 2, 3));
-	biblePagePickUp->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
+	biblePagePickUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
 	biblePagePickUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	biblePagePickUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	biblePagePickUp->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
 	biblePagePickUp->SetTag("BiblePage");
-
-	auto biblePagePickUp2 = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	biblePagePickUp2->GetTransform()->SetPosition(glm::vec3(20, 2, 3));
-	biblePagePickUp2->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
-	biblePagePickUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	biblePagePickUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	biblePagePickUp2->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	biblePagePickUp2->SetTag("BiblePage");
-
-	auto biblePagePickUp3 = CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	biblePagePickUp3->GetTransform()->SetPosition(glm::vec3(30, 2, 3));
-	biblePagePickUp3->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
-	biblePagePickUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	biblePagePickUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	biblePagePickUp3->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	biblePagePickUp3->SetTag("BiblePage");
-
-	auto biblePagePickUp4= CreateGameObjectWithPath("Assets/Meshes/BiblePage.fbx");
-	biblePagePickUp4->GetTransform()->SetPosition(glm::vec3(40, 2, 3));
-	biblePagePickUp4->GetTransform()->SetScale(glm::vec3(1, 1, 0.3));
-	biblePagePickUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	biblePagePickUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	biblePagePickUp4->AddComponent<ScriptComponent>()->LoadScript("BiblePagePickUp");
-	biblePagePickUp4->SetTag("BiblePage");
 
 
 #ifdef _BUILD

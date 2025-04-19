@@ -1,5 +1,8 @@
 ﻿#pragma region Includes
+#undef max
+#undef T 
 #include <glm/glm.hpp>
+
 #include <algorithm>
 #include <iostream>
 #include <filesystem>
@@ -9,6 +12,8 @@
 #include <mono/metadata/class.h> 
 #include <mono/metadata/reflection.h>
 #include <Windows.h>
+#include <shellapi.h>
+
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -38,7 +43,6 @@
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
-#include <Windows.h>
 #include "../MyParticlesEngine/ParticleFX.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"

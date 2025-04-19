@@ -730,6 +730,7 @@ static void RenderEditor()
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
+	Application->audioEngine->Update();
 
 	/*std::vector<GameObject*> selectedObjects = Application->input->GetSelectedGameObjects();
 	for (auto& object : objects) {

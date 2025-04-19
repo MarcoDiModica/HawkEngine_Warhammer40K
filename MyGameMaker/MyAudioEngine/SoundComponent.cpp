@@ -27,13 +27,15 @@ void SoundComponent::Start()
 void SoundComponent::Update(float deltaTime)
 {
 	// Update the audio engine
-	audioEngine->Update();
+	// No hacer el update aqui porque si no se hara un update por cada sound component
+	//audioEngine->Update();
 }
 
 void SoundComponent::Destroy()
 {
 	// Clean up any resources
-	audioEngine->Shutdown();
+	// No hacer shutdown del audio engine aqui, ya que lo rompera para todos los componentes
+	//audioEngine->Shutdown();
 }
 
 void SoundComponent::LoadSound(const std::string& soundFile, bool is3D, bool loop)

@@ -8,7 +8,7 @@ public class EnemyControllerMelee : EnemyController
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tama�o de la hurtbox
+    private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tamanyo de la hurtbox
     private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
 
@@ -49,8 +49,8 @@ public class EnemyControllerMelee : EnemyController
 
     private bool isLeaping = false;
 
-    public override void Awake() {
-
+    public override void Awake() 
+    {
         music = gameObject.GetComponent<AudioSource>();
     }
 
@@ -114,15 +114,15 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Update(float deltaTime)
     {
+        if (collider == null) return;
         if (!isDead)
         {
             if (currentHealth <= 0)
             {
                 Engineson.print("This man is dead man.");
-                //Destroy(gameObject);
                 anim.SetDeathAnimation();
                 isDead = true;
-                sound.Play(deathSound);
+                sound?.Play(deathSound);
             }
             if (!isStunned)
             {
@@ -259,7 +259,7 @@ public class EnemyControllerMelee : EnemyController
                     isFootstepPlaying = false;
                     if (!hasStoppedFootsteps)
                     {
-                        sound.Stop(footStepSound);
+                        sound?.Stop(footStepSound);
                         hasStoppedFootsteps = true;
                     }
                 }

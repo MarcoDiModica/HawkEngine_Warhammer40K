@@ -1,7 +1,8 @@
 #pragma once
-
-#include "fmod_studio.hpp"
+#undef max
+#undef T 
 #include "fmod.hpp"
+#include "fmod_studio.hpp"
 #include <string>
 #include <map>
 #include <vector>

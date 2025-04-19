@@ -62,7 +62,6 @@ App::App() {
 	
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
-
 };
 
 

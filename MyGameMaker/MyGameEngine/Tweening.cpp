@@ -659,29 +659,23 @@ void Tweening::Sequence::Play() {
 void Tweening::Sequence::Stop() {
 	isPlaying = false;
 	if (currentTweenHandle != 0) {
-		Tweening::Cancel(currentTweenHandle);
+		ClearSteps();
 		currentTweenHandle = 0;
 	}
 
-	steps.clear();
+	
 }
 
 void Tweening::Sequence::ClearSteps() {
 	steps.clear();
 	currentIndex = 0;
 }
+
 void Tweening::Sequence::PlayCurrentStep() {
 	if (Application->root->GetActiveScene()->sceneState != Scene::SceneState::PLAY) {
-		tweens.clear();
+		steps.clear();
 		return;
 	}
-
-	tweens.erase(
-		std::remove_if(tweens.begin(), tweens.end(),
-			[](const Tween& tween) {
-				return tween.object == nullptr || tween.object->GetTransform() == nullptr;
-			}),
-		tweens.end());
 
 	if (!isPlaying || steps.empty() || currentIndex >= steps.size()) {
 		isPlaying = false;

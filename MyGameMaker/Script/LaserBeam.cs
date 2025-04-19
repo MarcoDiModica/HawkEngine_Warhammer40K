@@ -1,71 +1,98 @@
-﻿using HawkEngine;
-using System;
+﻿using System.Collections.Generic;
 using System.Numerics;
+using HawkEngine;
+using static BaseWeapon;
 
-internal class LaserBeam : BaseAbilities
+public class LaserBeam : BaseAbilities
 {
-    private GameObject laserBlock;
-    private float activeTime = 0.0f;
-    private float maxDuration = 3.0f; // Duración en segundos
-    private bool isActive = false;
-    private PlayerController playerController;
-
-    public override void TriggerAbility()
+    public string name;
+    public bool enabled;
+    public float cooldown;
+    private float yHeight = 0.0f;
+    private float timer = 0;
+    GameObject laserBeam;
+    Rigidbody rigidbody;
+    BoxCollider collider;
+    bool canThrow = true;
+    private float abilityCooldown = 3.0f; // Cooldown de la habilidad
+    private float abilityTimer = 0.0f;    // Contador del cooldown
+    private float time = 0.0f;
+    private Audio sound;
+    private string laserBeamSound = "Assets/Audio/SFX/Weapons/Railgun/BarrageShot.wav";
+    public override void Awake()
     {
-        if (isActive) return;
-
-        // Crear objeto láser y asignar script
-        laserBlock = Engineson.CreateGameObject("LaserBeamObject", null);
-        laserBlock.AddScript("LaserBeamObject");
-
-        LaserBeamObject laserScript = laserBlock.GetComponent<LaserBeamObject>();
-        laserScript.Init(gameObject); // gameObject es el jugador
-        //laserScript.SetLifeTime(maxDuration); // duración del láser
-
-        // Poner como hijo del jugador
-        Transform blockTransform = laserBlock.GetComponent<Transform>();
-        Transform playerTransform = gameObject.GetComponent<Transform>(); // Usa gameObject, no playerController
-
-        //blockTransform.SetParent(playerTransform); // Esto asume que SetParent existe, si no, confirma el método correcto
-        blockTransform.localPosition = new Vector3(0, 1.5f, 2.0f);
-        //blockTransform.localRotation = Quaternion.Identity;
-        blockTransform.SetScale(1.0f, 1.0f, 1.0f);
-
-        // Activar temporizador
-        activeTime = 0.0f;
-        isActive = true;
     }
-
+    public override void Start()
+    {
+        sound = gameObject.GetComponent<Audio>();
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
+    }
     public override void Update(float deltaTime)
     {
-        if (!isActive) return;
-
-        activeTime += deltaTime;
-
-        if (activeTime >= maxDuration)
+        // Manejo del cooldown de la habilidad
+        if (!canThrow)
         {
-            // Destruir o esconder el bloque
-            if (laserBlock != null)
+            abilityTimer += deltaTime;
+            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+
+            if (abilityTimer >= abilityCooldown)
             {
-                laserBlock.GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0)); // Lo manda lejos
-                laserBlock = null;
+                canThrow = true;
+                abilityTimer = 0.0f;
+                //Engineson.print("Cooldown terminado. Habilidad lista.");
+            }
+        }
+    }
+    public override void TriggerAbility()
+    {
+        if (canThrow)
+        {
+            //Engineson.print("Lanzando granada...");
+            sound.LoadAudio(laserBeamSound);
+            sound.Play();
+
+            laserBeam = Engineson.CreateGameObject("LaserBeam", null);
+
+            if (laserBeam == null)
+            {
+                //Engineson.print("ERROR: No se pudo crear la granada.");
+                return;
             }
 
-            isActive = false;
-            activeTime = 0.0f;
+            laserBeam.AddScript("LaserBeamObject");
+            laserBeam.GetComponent<LaserBeamObject>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+
+            canThrow = false; // Inicia el cooldown
+            abilityTimer = 0.0f;
         }
+        else
+        {
+            //Engineson.print("Habilidad en cooldown. Espera...");
+        }
+
+        if (!canThrow)
+        {
+            abilityTimer += time;
+            //Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
+
+            if (abilityTimer >= abilityCooldown)
+            {
+                canThrow = true;
+                abilityTimer = 0.0f;
+                //Engineson.print("Cooldown terminado. Habilidad lista.");
+            }
+        }
+
     }
 
     public override void ResetCooldowns()
     {
-        // También puede usarse para forzar la desaparición
-        if (laserBlock != null)
-        {
-            laserBlock.GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
-            laserBlock = null;
-        }
-
-        isActive = false;
-        activeTime = 0.0f;
+        canThrow = true;
     }
+
+
 }
+

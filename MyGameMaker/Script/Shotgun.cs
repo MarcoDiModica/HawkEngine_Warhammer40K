@@ -16,10 +16,11 @@ public class Shotgun : BaseWeapon
     private RedThirstManager redThirstManager;
 
     private float timeSinceLastShot = 0.0f;
-    private List<float> bulletLifetimes = new List<float>();
     private List<Vector3> bulletDirections = new List<Vector3>();
     private List<HashSet<GameObject>> bulletHitEnemies = new List<HashSet<GameObject>>();
-    private float hitRayLength = 0.5f;
+    private List<Vector3> bulletStartPositions = new List<Vector3>();
+    private List<float> bulletLifetimes = new List<float>();
+    private float hitRayLength = 1f;
     public override void Awake()
     {
 
@@ -57,62 +58,60 @@ public class Shotgun : BaseWeapon
             Vector3 currentPos = bulletsPos[i];
             Vector3 direction = bulletDirections[i];
             float speed = range / timeToLerp;
-            Vector3 newPos = currentPos + direction * speed * deltaTime;
+            Vector3 displacement = direction * speed * deltaTime;
+            Vector3 newPos = currentPos + displacement;
 
             bool shouldDestroy = false;
+            GameObject hitObject = null;
 
             RayCast ray = new RayCast();
-            ray.PerformRaycast(currentPos, direction, hitRayLength);
+            ray.PerformRaycast(currentPos, direction, displacement.Length());
 
             if (ray.hit.isHit)
+                hitObject = ray.hit.gameObject;
+
+            if (hitObject != null)
             {
-                GameObject hitObject = ray.hit.gameObject;
-
-                if (hitObject != null)
+                string tag = hitObject.tag;
+                if (tag != "PowerUp" && tag != "Ammunition" && tag != "Player")
                 {
-                    string tag = hitObject.tag;
-
-                    if (tag != "PowerUp" && tag != "Ammunition" && tag != "Player")
+                    if (!bulletHitEnemies[i].Contains(hitObject))
                     {
-                        if (!bulletHitEnemies[i].Contains(hitObject))
+                        bulletHitEnemies[i].Add(hitObject);
+
+                        float finalDamage = damage;
+                        redThirstManager.OnShotgunUsed();
+
+                        if (redThirstManager.IsInBlackRage())
+                            finalDamage += redThirstManager.redThirstBonus;
+
+                        switch (tag)
                         {
-                            bulletHitEnemies[i].Add(hitObject);
-
-                            float finalDamage = damage;
-                            redThirstManager.OnShotgunUsed();
-
-                            if (redThirstManager.IsInBlackRage())
-                                finalDamage += redThirstManager.redThirstBonus;
-
-                            switch (tag)
-                            {
-                                case "Melee":
-                                    hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
-                                    break;
-                                case "Ranged":
-                                    hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
-                                    break;
-                                case "Boss":
-                                    hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
-                                    break;
-                                case "Destroyable":
-                                    hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
-                                    break;
-                            }
-                        }
-
-                        if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
-                        {
-                            shouldDestroy = true;
+                            case "Melee":
+                                hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
+                                break;
+                            case "Ranged":
+                                hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
+                                break;
+                            case "Boss":
+                                hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
+                                break;
+                            case "Destroyable":
+                                hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
+                                break;
                         }
                     }
+
+                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
+                        shouldDestroy = true;
                 }
             }
 
             bulletsPos[i] = newPos;
             bulletsObjects[i].GetComponent<Transform>().position = newPos;
 
-            if (bulletLifetimes[i] > timeToLerp || shouldDestroy)
+            float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
+            if (distanceTraveled > range || shouldDestroy)
             {
                 Engineson.Destroy(bulletsObjects[i]);
                 bulletsObjects.RemoveAt(i);
@@ -121,6 +120,7 @@ public class Shotgun : BaseWeapon
                 bulletIntervals.RemoveAt(i);
                 bulletLifetimes.RemoveAt(i);
                 bulletHitEnemies.RemoveAt(i);
+                bulletStartPositions.RemoveAt(i);
             }
         }
     }
@@ -154,12 +154,14 @@ public class Shotgun : BaseWeapon
                                       (transform.forward * localOffset.Z);
                 bulletStart.Y += 0.5f;
 
-                Vector3 bulletRotation = transform.GetEulerAngles();
+                float yaw = (float)(System.Math.Atan2(direction.X, direction.Z) * (180.0 / System.Math.PI));
+                float pitch = (float)(-System.Math.Asin(direction.Y) * (180.0 / System.Math.PI));
+
                 GameObject projectile = Engineson.CreateGameObject("Projectile", null);
                 projectile.AddComponent<MeshRenderer>();
                 projectile.transform.SetScale(0.2f, 0.2f, 0.2f);
                 projectile.transform.position = bulletStart;
-                projectile.transform.SetRotation(bulletRotation.X, bulletRotation.Y, bulletRotation.Z);
+                projectile.transform.SetRotation(pitch, yaw, 0f);
 
 
                 bulletsObjects.Add(projectile);
@@ -168,6 +170,8 @@ public class Shotgun : BaseWeapon
                 bulletIntervals.Add(0);
                 bulletLifetimes.Add(0);
                 bulletHitEnemies.Add(new HashSet<GameObject>());
+                bulletStartPositions.Add(bulletStart);
+
             }
         }
     }

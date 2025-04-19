@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: MainCamera
-  uuid: 9117534463301041981
+  uuid: 3917298812824385320
   tag: Untagged
   active: true
   isStatic: false
@@ -38,7 +38,7 @@ GameObject0:
   Children: ~
 GameObject1:
   name: Player
-  uuid: 15253357000827170527
+  uuid: 3429908589057342823
   tag: Player
   active: true
   isStatic: false
@@ -178,7 +178,7 @@ GameObject1:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 958783328795013774
+      uuid: 15536183211158848931
       tag: Untagged
       active: true
       isStatic: false
@@ -237,7 +237,7 @@ GameObject1:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 874496064344339086
+      uuid: 8461781527869244095
       tag: Untagged
       active: true
       isStatic: false
@@ -309,7 +309,7 @@ GameObject1:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 4532867717373868985
+      uuid: 2058412742432278937
       tag: Untagged
       active: true
       isStatic: false
@@ -381,7 +381,7 @@ GameObject1:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 5967477798236229794
+      uuid: 16082467955655873732
       tag: Untagged
       active: true
       isStatic: false
@@ -454,7 +454,7 @@ GameObject1:
       Children: ~
 GameObject2:
   name: Cube
-  uuid: 823540023994182600
+  uuid: 7774777178821026409
   tag: Melee
   active: true
   isStatic: false
@@ -464,7 +464,7 @@ GameObject2:
       enabled: true
       localPosition:
         - 10
-        - 2
+        - 3
         - 0
       localRotation:
         - 0
@@ -517,7 +517,7 @@ GameObject2:
   Children: ~
 GameObject3:
   name: Cube2
-  uuid: 6204275493640542150
+  uuid: 18085382679680289058
   tag: Untagged
   active: true
   isStatic: false
@@ -527,7 +527,7 @@ GameObject3:
       enabled: true
       localPosition:
         - 20
-        - 2
+        - 3
         - 0
       localRotation:
         - 0
@@ -580,7 +580,7 @@ GameObject3:
   Children: ~
 GameObject4:
   name: bullet.001
-  uuid: 16243418726984442380
+  uuid: 10354014541675990069
   tag: PowerUp
   active: true
   isStatic: false
@@ -645,8 +645,174 @@ GameObject4:
         name: PiercingBullets
   Children: ~
 GameObject5:
+  name: Hormagaunt
+  uuid: 1355026944212090567
+  tag: Melee
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 40
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 2
+      endSize: 2
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.200000003
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: true
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 640
+        - 360
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 9
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/EnemyDash.png
+      particleType: 9
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 3.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      uuid: 787424422294509828
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378731687233e-05
+            - 2.4012357443917309e-07
+            - -1.7342270674115732e-06
+          localScale:
+            - 0.0075779887847602402
+            - 0.0075779887847605421
+            - 0.0075779887847605386
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject6:
   name: Floor
-  uuid: 14253327823496380948
+  uuid: 16580263477483294145
   tag: Untagged
   active: true
   isStatic: false
@@ -707,9 +873,9 @@ GameObject5:
         - 0
       isTrigger: false
   Children: ~
-GameObject6:
+GameObject7:
   name: shotgun
-  uuid: 12641867183431163901
+  uuid: 11651531350924344201
   tag: Weapon
   active: true
   isStatic: false
@@ -774,7 +940,7 @@ GameObject6:
         name: ShotgunPickUp
   Children:
     - name: bOLTER.010
-      uuid: 11464024249750542487
+      uuid: 5298322427819450587
       tag: Untagged
       active: true
       isStatic: false
@@ -826,7 +992,7 @@ GameObject6:
           enabled: true
       Children: ~
     - name: Cone
-      uuid: 16674868531728827037
+      uuid: 7379490078187477194
       tag: Untagged
       active: true
       isStatic: false
@@ -877,9 +1043,9 @@ GameObject6:
           name: Shader
           enabled: true
       Children: ~
-GameObject7:
+GameObject8:
   name: Cube_1
-  uuid: 17722039632137962523
+  uuid: 4303844140158944104
   tag: BiblePage
   active: true
   isStatic: false
@@ -943,9 +1109,9 @@ GameObject7:
       Script0:
         name: BiblePagePickUp
   Children: ~
-GameObject8:
+GameObject9:
   name: Cube_2
-  uuid: 986298416007434090
+  uuid: 17683513751688161746
   tag: BiblePage
   active: true
   isStatic: false
@@ -1009,9 +1175,9 @@ GameObject8:
       Script0:
         name: BiblePagePickUp
   Children: ~
-GameObject9:
+GameObject10:
   name: Cube_3
-  uuid: 8277352680323552859
+  uuid: 9558812270118878368
   tag: BiblePage
   active: true
   isStatic: false
@@ -1075,9 +1241,9 @@ GameObject9:
       Script0:
         name: BiblePagePickUp
   Children: ~
-GameObject10:
+GameObject11:
   name: Cube_4
-  uuid: 17647394852955131388
+  uuid: 3289987943254680967
   tag: BiblePage
   active: true
   isStatic: false

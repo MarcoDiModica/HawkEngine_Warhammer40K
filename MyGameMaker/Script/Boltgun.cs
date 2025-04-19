@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
@@ -20,6 +21,7 @@ public class Boltgun : BaseWeapon
 
     private List<Vector3> bulletDirections = new List<Vector3>();
     List<HashSet<GameObject>> bulletHitEnemies = new List<HashSet<GameObject>>();
+    private List<Vector3> bulletStartPositions = new List<Vector3>();
 
     private List<float> bulletLifetimes = new List<float>();
     private float bulletSpeed = 60f;
@@ -38,7 +40,7 @@ public class Boltgun : BaseWeapon
         maxAmmo = 240;
         currentTotalAmmo = 120;
         reloadTime = 1.5f;
-        range = 20f;
+        range = 30f;
         timeToLerp = 0.1f;
         ammoType = AmmoType.BOLTGUN;
         transform = gameObject.GetComponent<Transform>();
@@ -61,78 +63,66 @@ public class Boltgun : BaseWeapon
             bulletLifetimes[i] += deltaTime;
 
             Vector3 currentPos = bulletsPos[i];
-            Vector3 direction = Vector3.Normalize(transform.forward);
-            bulletDirections.Add(direction);
-
+            Vector3 direction = bulletDirections[i];
             float speed = range / timeToLerp;
-            Vector3 newPos = currentPos + bulletsObjects[i].transform.forward * speed * deltaTime;
+            Vector3 displacement = direction * speed * deltaTime;
+            Vector3 newPos = currentPos + displacement;
 
-            bool shouldDestroy = false; //  inicializamos en falso
+            bool shouldDestroy = false;
+            GameObject hitObject = null;
 
             RayCast ray = new RayCast();
-            ray.PerformRaycast(currentPos, bulletDirections[i], hitRayLength);
+            ray.PerformRaycast(currentPos, direction, displacement.Length());
 
             if (ray.hit.isHit)
             {
-                GameObject hitObject = ray.hit.gameObject;
+                hitObject = ray.hit.gameObject;
+            }
 
-                if (hitObject != null)
+            if (hitObject != null)
+            {
+                string tag = hitObject.tag;
+
+                if (tag != "PowerUp" && tag != "Ammunition" && tag != "Player")
                 {
-                    string tag = hitObject.tag;
-
-                    if (tag != "PowerUp" && tag != "Ammunition" && tag != "Player")
+                    if (!bulletHitEnemies[i].Contains(hitObject))
                     {
-                        if (!bulletHitEnemies[i].Contains(hitObject))
+                        bulletHitEnemies[i].Add(hitObject);
+
+                        float finalDamage = damage;
+                        redThirstManager.OnShotgunUsed();
+
+                        if (redThirstManager.IsInBlackRage())
+                            finalDamage += redThirstManager.redThirstBonus;
+
+                        switch (tag)
                         {
-                            bulletHitEnemies[i].Add(hitObject);
-
-                            float finalDamage = damage;
-                            redThirstManager.OnBoltgunUsed();
-
-                            if (redThirstManager.IsInBlackRage())
-                                finalDamage += redThirstManager.redThirstBonus;
-
-                            switch (tag)
-                            {
-                                case "Melee":
-                                    hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
-                                    break;
-                                case "Ranged":
-                                    hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
-                                    break;
-                                case "Boss":
-                                    hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
-                                    break;
-                                case "Destroyable":
-                                    hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
-                                    break;
-                            }
-                        }
-
-                        // Determinar si la bala debe destruirse:
-                        if (!playerData.isPiercing)
-                        {
-                            shouldDestroy = true;
-                        }
-                        else
-                        {
-                            // Si es perforante pero impacta algo que no es un enemigo, también se destruye
-                            if (tag != "Melee" && tag != "Ranged" && tag != "Boss" && tag != "Destroyable")
-                            {
-                                shouldDestroy = true;
-                            }
+                            case "Melee":
+                                hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
+                                break;
+                            case "Ranged":
+                                hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
+                                break;
+                            case "Boss":
+                                hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
+                                break;
+                            case "Destroyable":
+                                hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
+                                break;
                         }
                     }
 
+                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
+                    {
+                        shouldDestroy = true;
+                    }
                 }
             }
 
-            // Actualizar posición
             bulletsPos[i] = newPos;
             bulletsObjects[i].GetComponent<Transform>().position = newPos;
-
-            // Si debe destruirse o ha pasado su tiempo de vida
-            if (bulletLifetimes[i] > timeToLerp || shouldDestroy)
+            float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
+            if (distanceTraveled > range || shouldDestroy)
             {
                 Engineson.Destroy(bulletsObjects[i]);
                 bulletsObjects.RemoveAt(i);
@@ -141,6 +131,7 @@ public class Boltgun : BaseWeapon
                 bulletIntervals.RemoveAt(i);
                 bulletLifetimes.RemoveAt(i);
                 bulletHitEnemies.RemoveAt(i);
+                bulletStartPositions.RemoveAt(i);
             }
         }
     }
@@ -164,14 +155,18 @@ public class Boltgun : BaseWeapon
                                   (transform.up * localOffset.Y) +
                                   (transform.forward * localOffset.Z);
             bulletStart.Y += 0.5f;
-            Vector3 direction = transform.forward;
-            Vector3 bulletRotation = transform.GetEulerAngles();
+            Vector3 direction = Vector3.Normalize(transform.forward);
+
+            // Calcular rotación desde la dirección (LookAt-like)
+            float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
+            float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
+
 
             GameObject projectile = Engineson.CreateGameObject("Projectile", null);
             projectile.AddComponent<MeshRenderer>();
             projectile.transform.SetScale(0.2f, 0.2f, 0.2f);
             projectile.transform.position = bulletStart;
-            projectile.transform.SetRotation(bulletRotation.X, bulletRotation.Y, bulletRotation.Z);
+            projectile.transform.SetRotation(pitch, yaw, 0f);
 
             bulletsObjects.Add(projectile);
             bulletsPos.Add(bulletStart);
@@ -179,6 +174,8 @@ public class Boltgun : BaseWeapon
             bulletIntervals.Add(0);
             bulletLifetimes.Add(0);
             bulletHitEnemies.Add(new HashSet<GameObject>());
+            bulletStartPositions.Add(bulletStart);
+
         }
 
     }

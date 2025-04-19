@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
+using static System.Net.Mime.MediaTypeNames;
 using static BaseWeapon;
 
 public class LaserBeam : BaseAbilities
@@ -19,6 +20,9 @@ public class LaserBeam : BaseAbilities
     private float time = 0.0f;
     private Audio sound;
     private string laserBeamSound = "Assets/Audio/SFX/Weapons/Railgun/BarrageShot.wav";
+
+    //stats
+    private float damage = 20.0f;
     public override void Awake()
     {
     }
@@ -29,6 +33,8 @@ public class LaserBeam : BaseAbilities
         {
             Engineson.print("PlayerShooting: Audio component not found");
         }
+
+        
     }
     public override void Update(float deltaTime)
     {

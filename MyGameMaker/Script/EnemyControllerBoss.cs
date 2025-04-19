@@ -12,7 +12,7 @@ public class EnemyControllerBoss : EnemyController
     private Vector3 slamHurtboxSize = new Vector3(3.0f, 1.0f, 10.0f); 
     private GameObject slamHurtboxObject;
 
-    private GameObject clawHurtboxObject;
+    private List<GameObject> clawHurtboxObjects = new List<GameObject>();
 
     //audio
     private Audio music;
@@ -29,7 +29,7 @@ public class EnemyControllerBoss : EnemyController
     private float restAfterThirdAttack = 4.0f;
     private float timer = 0.0f;
     private int attackCount = 0;
-    private bool isBuried = true;
+    public bool isBuried = true;
 
     // phase 2 unburrowing/slam stats
     private float unburrowingAttackCooldownPhase2 = 5.0f;
@@ -68,6 +68,8 @@ public class EnemyControllerBoss : EnemyController
     private Vector3 playerVelocity;
     private float bossTime = 0.0f;
 
+    //private EnemyControllerBossTail tailController;
+
     private enum BossPhase
     {
         PHASE1,
@@ -94,6 +96,8 @@ public class EnemyControllerBoss : EnemyController
         playerVelocity = GameObject.Find("Player").GetComponent<Rigidbody>().GetVelocity();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.SetMass(1000.0f);
+        //tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
+        //tailController?.gameObject.SetActive(false);
         currentHealth = maxHealth;
         if (playerTransform == null)
         {
@@ -301,7 +305,7 @@ public class EnemyControllerBoss : EnemyController
 
             //}
 
-            if (slamHurtboxObject != null || clawHurtboxObject != null)
+            if (slamHurtboxObject != null || clawHurtboxObjects != null)
             {
                 hurtboxDuration += deltaTime;
                 if (hurtboxDuration >= 0.5)
@@ -539,19 +543,21 @@ public class EnemyControllerBoss : EnemyController
             Vector3 offset = forward * ((length + spacing) * i);
             Vector3 position = origin + offset;
 
-            clawHurtboxObject = Engineson.CreateGameObject("ClawHurtbox", null);
-            clawHurtboxObject.AddComponent<MeshRenderer>();
-            clawHurtboxObject.AddComponent<BoxCollider>();
-            clawHurtboxObject.GetComponent<BoxCollider>().SetTrigger(true);
-            clawHurtboxObject.tag = "EnemyAttack";
+            GameObject clawSegment = Engineson.CreateGameObject("ClawHurtbox", null);
+            clawSegment.AddComponent<MeshRenderer>();
+            clawSegment.AddComponent<BoxCollider>();
+            clawSegment.GetComponent<BoxCollider>().SetTrigger(true);
+            clawSegment.tag = "EnemyAttack";
 
-            var hurtboxTransform = clawHurtboxObject.GetComponent<Transform>();
+            var hurtboxTransform = clawSegment.GetComponent<Transform>();
             hurtboxTransform.position = position;
             hurtboxTransform.SetScale(size.X, size.Y, size.Z);
 
             float angle = (float)Math.Atan2(forward.X, forward.Z);
             Quaternion rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, angle);
             hurtboxTransform.SetRotationQuat(rotation);
+
+            clawHurtboxObjects.Add(clawSegment);
         }
 
     }
@@ -570,7 +576,6 @@ public class EnemyControllerBoss : EnemyController
 
     }
 
-
     private void DestroyHurtboxes()
     {
         if (slamHurtboxObject != null)
@@ -579,10 +584,10 @@ public class EnemyControllerBoss : EnemyController
             slamHurtboxObject = null;
         }
 
-        if (clawHurtboxObject != null)
+        foreach (var hurtbox in clawHurtboxObjects)
         {
-            Engineson.Destroy(clawHurtboxObject);
-            clawHurtboxObject = null;
+            Engineson.Destroy(hurtbox);
         }
+        clawHurtboxObjects.Clear();
     }
 }

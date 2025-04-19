@@ -637,11 +637,11 @@ bool Root::Update(double dt)
 
 
 			sequence
-				.Append([this]() {
+				.Append(cube.get(), [this]() {
 				glm::dvec3 currentRotation = cube->GetTransform()->GetScale();
 				return Tweening::Scale(cube.get(), glm::dvec3(currentRotation.x + 1.0, currentRotation.y, currentRotation.z), 1.0f, Modes::EASE_IN_OUT);
 					})
-				.Append([this]() {
+				.Append(cube.get(), [this]() {
 				glm::dvec3 currentPosition = cube->GetTransform()->GetPosition();
 				return Tweening::Move(cube.get(), glm::dvec3(currentPosition.x + 10.0, currentPosition.y, currentPosition.z), 1.5f, Modes::EASE_IN_OUT);
 					})

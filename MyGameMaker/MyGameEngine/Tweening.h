@@ -78,13 +78,14 @@ public:
 	{
 	public:
 		Sequence();
-
-		Sequence& Append(std::function<void()> action);
+		~Sequence();
+		Sequence& Append(GameObject* object,std::function<void()> action);
 		Sequence& AppendDelay(float duration);
 		Sequence& AppendCallback(std::function<void()> callback);
 
 		void Play();
 		void Stop();
+		void ClearSteps();
 
 	private:
 		

@@ -10,6 +10,7 @@
 #include "MyGameEditor/App.h"
 
 std::vector<Tweening::Tween> Tweening::tweens;
+static std::list<Tweening::Sequence*> activeSequences;
 
 Tweening::Tween Tweening::CreateTween(GameObject* object, float duration, Modes mode) {
 	Tween tween;
@@ -479,18 +480,23 @@ void Tweening::Update(float deltaTime) {
 		return;
 	}
 
+	static Scene* previousScene = nullptr;
+	Scene* currentScene = Application->root->GetActiveScene().get();
+
+	if (currentScene != previousScene) {
+		// Limpiar los steps de todas las secuencias activas
+		for (auto* sequence : activeSequences) {
+			sequence->Stop(); // Detener y limpiar los steps
+		}
+
+		tweens.clear();
+		previousScene = currentScene;
+		return;
+	}
+
 	for (auto& tween : tweens) {
 		if (tween.object == nullptr) {
 			continue;
-		}
-
-		static Scene* previousScene = nullptr;
-		Scene* currentScene = Application->root->GetActiveScene().get();
-
-		if (currentScene != previousScene) {
-			tweens.clear();
-			previousScene = currentScene;
-			return;
 		}
 
 		tween.elapsedTime += deltaTime;
@@ -607,9 +613,18 @@ Tweening::Sequence Tweening::CreateSequence() {
 	return Sequence();
 }
 
-Tweening::Sequence::Sequence() : currentIndex(0), isPlaying(false) {}
+Tweening::Sequence::Sequence() : currentIndex(0), isPlaying(false) {
+	activeSequences.push_back(this);
+}
+Tweening::Sequence::~Sequence() {
+	Stop();
+	activeSequences.remove(this);
+}
+Tweening::Sequence& Tweening::Sequence::Append(GameObject* object,std::function<void()> action) {
 
-Tweening::Sequence& Tweening::Sequence::Append(std::function<void()> action) {
+	if (object == nullptr || object->GetTransform() == nullptr) {
+		return *this;
+	}
 	steps.push_back({ [action]() -> TweenHandle {
 		action();
 		return 0;
@@ -647,11 +662,30 @@ void Tweening::Sequence::Stop() {
 		Tweening::Cancel(currentTweenHandle);
 		currentTweenHandle = 0;
 	}
+
+	steps.clear();
 }
 
+void Tweening::Sequence::ClearSteps() {
+	steps.clear();
+	currentIndex = 0;
+}
 void Tweening::Sequence::PlayCurrentStep() {
+	if (Application->root->GetActiveScene()->sceneState != Scene::SceneState::PLAY) {
+		tweens.clear();
+		return;
+	}
+
+	tweens.erase(
+		std::remove_if(tweens.begin(), tweens.end(),
+			[](const Tween& tween) {
+				return tween.object == nullptr || tween.object->GetTransform() == nullptr;
+			}),
+		tweens.end());
+
 	if (!isPlaying || steps.empty() || currentIndex >= steps.size()) {
 		isPlaying = false;
+		ClearSteps();
 		return;
 	}
 

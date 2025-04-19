@@ -29,8 +29,8 @@ bool ShaderManager::Initialize() {
 	LOG(LogType::LOG_INFO, "Registering ForwardPlusComputeShader...");
 	success &= RegisterShader<ForwardPlusComputeShader>();
 
-	LOG(LogType::LOG_INFO, "Registering Culling Compute Shader...");
-	success &= RegisterComputeShader("culling", "Assets/Shaders/light_culling.glsl", ShaderType::CULLING_COMPUTE);
+	LOG(LogType::LOG_INFO, "Registering CullingComputeShader...");
+	success &= RegisterShader<CullingComputeShader>();
 
 	LOG(LogType::LOG_INFO, "Registering Debug Shader...");
 	success &= RegisterCustomShader("debug", "Assets/Shaders/debug_vertex.glsl",

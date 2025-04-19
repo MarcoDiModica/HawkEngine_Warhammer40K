@@ -129,6 +129,13 @@ public:
     bool Initialize() override;
 };
 
+class CullingComputeShader : public Shaders {
+public:
+    CullingComputeShader();
+    ShaderType GetShaderType() const override { return ShaderType::CULLING_COMPUTE; }
+    bool Initialize() override;
+};
+
 class ComputeShader : public Shaders {
 public:
     ComputeShader(const std::string& filename, ShaderType type = ShaderType::CUSTOM);

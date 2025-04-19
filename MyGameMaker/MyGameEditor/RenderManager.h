@@ -50,7 +50,7 @@ public:
 	void EndFrame();
 	void SubmitGameObject(GameObject* gameObject);
 	void RenderDebugQuad();
-	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix/*, const Frustum& frustum*/);
+	void RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 	void RenderFromCamera(CameraComponent* camera);
 	void SetWindowSize(int width, int height);
 	void SetUseForwardPlus(bool enable) { useForwardPlus = enable; }

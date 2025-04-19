@@ -4,6 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Log.h"
 #include "MyGameEngine/ShaderManager.h"
+#include "MyGameEngine/CameraComponent.h"
 
 GPUDrivenRenderer& GPUDrivenRenderer::GetInstance() {
 	static GPUDrivenRenderer instance;
@@ -124,27 +125,87 @@ void GPUDrivenRenderer::AddInstanceGroup(
 	cullData.push_back(cullItem);
 }
 
-// PrepareDrawCommands - Improved version
-void GPUDrivenRenderer::PrepareDrawCommands(/*const Frustum& frustum*/) {
+void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
 	if (cullData.empty()) {
+		LOG(LogType::LOG_INFO, "No hay datos de culling para procesar");
 		return;
 	}
 
-	// Upload all cullData to the GPU buffer
-	glNamedBufferSubData(cullDataBuffer, 0,
-		cullData.size() * sizeof(CullData),
-		cullData.data());
+	GLuint zero = 0;
+	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
 
-	// Clear previous draw commands
+	glNamedBufferSubData(cullDataBuffer, 0,
+		cullData.size() * sizeof(CullData), cullData.data());
+
+	if (!useGPUCulling) {
+		CPUFrustumCulling();
+	}
+	else {
+		glUseProgram(cullingShader);
+		SetCullingUniforms(viewMatrix, projMatrix, cameraPos);
+
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, cullDataBuffer);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, drawCommandBuffer);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, visibleCountBuffer);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, BindlessManager::GetInstance().GetMeshBuffer());
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, BindlessManager::GetInstance().GetInstanceBuffer());
+
+		GLuint numGroups = (cullData.size() + 63) / 64;
+
+		glDispatchCompute(numGroups, 1, 1);
+
+		glMemoryBarrier(GL_COMMAND_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
+
+		glGetNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &visibleInstanceCount);
+
+		drawCommands.resize(cullData.size());
+		glGetNamedBufferSubData(drawCommandBuffer, 0,
+			cullData.size() * sizeof(DrawElementsCommand), drawCommands.data());
+
+		LOG(LogType::LOG_INFO, "Draw commands generados: %zu", drawCommands.size());
+		if (!drawCommands.empty()) {
+			LOG(LogType::LOG_INFO, "Primer draw command: count=%u, instanceCount=%u",
+				drawCommands[0].count, drawCommands[0].instanceCount);
+		}
+	}
+
+	BatchCommandsByShaderType();
+
+	LOG(LogType::LOG_INFO, "Total de instancias visibles: %d", visibleInstanceCount);
+	LOG(LogType::LOG_INFO, "Total de comandos de dibujo: %d", (int)drawCommands.size());
+	LOG(LogType::LOG_INFO, "Total de batches por shader: %d", (int)shaderBatches.size());
+}
+
+void GPUDrivenRenderer::SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
+	glm::mat4 atrViewMatrix = viewMatrix;
+	glm::mat4 atrProjMatrix = projMatrix;
+	glm::vec3 atrCameraPos = cameraPos;
+
+	glUniformMatrix4fv(glGetUniformLocation(cullingShader, "u_viewMatrix"),
+		1, GL_FALSE, glm::value_ptr(atrViewMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(cullingShader, "u_projMatrix"),
+		1, GL_FALSE, glm::value_ptr(atrProjMatrix));
+	glUniform3fv(glGetUniformLocation(cullingShader, "u_cameraPosition"),
+		1, glm::value_ptr(atrCameraPos));
+	glUniform1i(glGetUniformLocation(cullingShader, "u_useFrustumCulling"),
+		useFrustumCulling ? 1 : 0);
+	glUniform1i(glGetUniformLocation(cullingShader, "u_useOcclusionCulling"),
+		useOcclusionCulling ? 1 : 0);
+	glUniform1f(glGetUniformLocation(cullingShader, "u_maxDrawDistance"),
+		1000.0f);
+
+	if (useFrustumCulling) {
+		SetFrustumPlanes(viewMatrix, projMatrix);
+	}
+}
+
+void GPUDrivenRenderer::CPUFrustumCulling() {
 	drawCommands.clear();
 	visibleInstanceCount = 0;
 
 	for (const auto& cullItem : cullData) {
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
-		if (!meshData) {
-			LOG(LogType::LOG_WARNING, "Mesh data no encontrado para índice %u, omitiendo", cullItem.meshIndex);
-			continue;
-		}
+		if (!meshData) continue;
 
 		DrawElementsCommand command;
 		command.count = meshData->indexCount;
@@ -155,8 +216,6 @@ void GPUDrivenRenderer::PrepareDrawCommands(/*const Frustum& frustum*/) {
 
 		drawCommands.push_back(command);
 		visibleInstanceCount += cullItem.instanceCount;
-
-		//DebugMeshInfo(cullItem.meshIndex);
 	}
 
 	if (!drawCommands.empty()) {
@@ -164,8 +223,57 @@ void GPUDrivenRenderer::PrepareDrawCommands(/*const Frustum& frustum*/) {
 			drawCommands.size() * sizeof(DrawElementsCommand),
 			drawCommands.data());
 	}
+}
 
-	BatchCommandsByShaderType();
+void GPUDrivenRenderer::SetFrustumPlanes(const glm::mat4& view, const glm::mat4& proj) {
+	glm::mat4 vp = proj * view;
+
+	glm::vec4 frustumPlanes[6];
+
+	// Left plane
+	frustumPlanes[0].x = vp[0][3] + vp[0][0];
+	frustumPlanes[0].y = vp[1][3] + vp[1][0];
+	frustumPlanes[0].z = vp[2][3] + vp[2][0];
+	frustumPlanes[0].w = vp[3][3] + vp[3][0];
+
+	// Right plane
+	frustumPlanes[1].x = vp[0][3] - vp[0][0];
+	frustumPlanes[1].y = vp[1][3] - vp[1][0];
+	frustumPlanes[1].z = vp[2][3] - vp[2][0];
+	frustumPlanes[1].w = vp[3][3] - vp[3][0];
+
+	// Bottom plane
+	frustumPlanes[2].x = vp[0][3] + vp[0][1];
+	frustumPlanes[2].y = vp[1][3] + vp[1][1];
+	frustumPlanes[2].z = vp[2][3] + vp[2][1];
+	frustumPlanes[2].w = vp[3][3] + vp[3][1];
+
+	// Top plane
+	frustumPlanes[3].x = vp[0][3] - vp[0][1];
+	frustumPlanes[3].y = vp[1][3] - vp[1][1];
+	frustumPlanes[3].z = vp[2][3] - vp[2][1];
+	frustumPlanes[3].w = vp[3][3] - vp[3][1];
+
+	// Near plane
+	frustumPlanes[4].x = vp[0][3] + vp[0][2];
+	frustumPlanes[4].y = vp[1][3] + vp[1][2];
+	frustumPlanes[4].z = vp[2][3] + vp[2][2];
+	frustumPlanes[4].w = vp[3][3] + vp[3][2];
+
+	// Far plane
+	frustumPlanes[5].x = vp[0][3] - vp[0][2];
+	frustumPlanes[5].y = vp[1][3] - vp[1][2];
+	frustumPlanes[5].z = vp[2][3] - vp[2][2];
+	frustumPlanes[5].w = vp[3][3] - vp[3][2];
+
+	// Normalizar planos
+	for (auto & frustumPlane : frustumPlanes) {
+		float length = glm::length(glm::vec3(frustumPlane));
+		frustumPlane /= length;
+	}
+
+	glUniform4fv(glGetUniformLocation(cullingShader, "u_frustum.planes"),
+		6, glm::value_ptr(frustumPlanes[0]));
 }
 
 void GPUDrivenRenderer::BatchCommandsByShaderType() {
@@ -185,6 +293,16 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 		ShaderBatch& batch = shaderBatches[shaderType];
 		batch.shaderType = shaderType;
 
+		//log drawCommands
+		if (i < drawCommands.size()) {
+			LOG(LogType::LOG_INFO, "Comando de dibujo %zu: %u instancias", i, drawCommands[i].instanceCount);
+		}
+		//log cullItem
+		LOG(LogType::LOG_INFO, "CullItem %zu: Malla %u, Material %u, Offset %u, Count %u",
+			i, cullItem.meshIndex, cullItem.materialIndex,
+			cullItem.instanceOffset, cullItem.instanceCount);
+
+
 		if (i < drawCommands.size()) {
 			batch.commands.push_back(drawCommands[i]);
 			batch.meshIndices.push_back(cullItem.meshIndex);
@@ -199,13 +317,10 @@ void GPUDrivenRenderer::BatchCommandsByShaderType() {
 		case ShaderType::UNLIT: shaderName = "UNLIT"; break;
 		default: shaderName = "DESCONOCIDO";
 		}
-
-		LOG(LogType::LOG_INFO, "Batch de shader %s: %zu comandos",
-			shaderName.c_str(), batch.commands.size());
 	}
 }
 
-void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
+void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
 	if (shaderBatches.empty()) {
 		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
 		return;
@@ -219,7 +334,7 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 			RenderUnlitBatch(batch, viewMatrix, projMatrix);
 			break;
 		case ShaderType::PBR:
-
+			// Implementar renderizado PBR
 			LOG(LogType::LOG_INFO, "Renderizado PBR no implementado aún");
 			break;
 		default:
@@ -238,6 +353,17 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 
 	if (batch.commands.empty()) return;
 
+	// Obtener el shader unlit
+	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
+	if (!shader) {
+		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader UNLIT");
+		return;
+	}
+
+	// Guardar estado actual de OpenGL
+	GLboolean depthTestEnabled;
+	glGetBooleanv(GL_DEPTH_TEST, &depthTestEnabled);
+
 	GLboolean blendEnabled;
 	glGetBooleanv(GL_BLEND, &blendEnabled);
 
@@ -245,151 +371,134 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
 	glGetIntegerv(GL_BLEND_DST, &blendDst);
 
-	GLint lastProgram;
-	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+	// Configurar estado de OpenGL para renderizado
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	GLint lastActiveTexture;
-	glGetIntegerv(GL_ACTIVE_TEXTURE, &lastActiveTexture);
-
-	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
-	if (!shader) {
-		return;
-	}
-
+	// Vincular shader y establecer uniforms
 	shader->Bind();
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	// Comprobar si soporta multi-draw-indirect
+	bool supportsMultiDraw = GLEW_ARB_multi_draw_indirect == GL_TRUE;
 
-	bool supportsBindless = GLEW_ARB_bindless_texture == GL_TRUE;
+	// Si hay soporte para multi-draw y tenemos suficientes comandos, usarlo
+	if (supportsMultiDraw && batch.commands.size() > 1) {
+		// Preparar VAO para multi-draw
+		glBindVertexArray(defaultVAO);
 
-	bool supportsInstancing = GLEW_ARB_draw_instanced == GL_TRUE;
+		// Dibujar todos los comandos de una vez
+		glMultiDrawElementsIndirect(
+			GL_TRIANGLES,
+			GL_UNSIGNED_INT,
+			0,  // Offset en el buffer
+			batch.commands.size(),
+			sizeof(DrawElementsCommand)
+		);
 
-	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
-		uint32_t meshIndex = batch.meshIndices[i];
-		uint32_t materialIndex = batch.materialIndices[i];
+		LOG(LogType::LOG_INFO, "Multi-draw-indirect: %zu comandos", batch.commands.size());
+	}
+	else {
+		// Renderizado convencional para cada objeto
+		for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+			uint32_t meshIndex = batch.meshIndices[i];
+			uint32_t materialIndex = batch.materialIndices[i];
 
-		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
-		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
+			GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+			GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
 
-		if (!meshData || !materialData) continue;
+			if (!meshData || !materialData) continue;
 
-		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
+			// Configurar material
+			shader->SetUniformVec4("albedoColor", materialData->albedoColor);
 
-		if (materialData->flags & (1 << 0)) { 
-			shader->SetUniform("u_HasTexture", 1);
+			// Configurar textura si existe
+			if (materialData->flags & (1 << 0)) {
+				shader->SetUniform("u_HasTexture", 1);
 
-			if (supportsBindless) {
-				GLuint64 textureHandle = materialData->albedoTexture;
-				if (textureHandle != 0) {
-					if (!glIsTextureHandleResidentARB(textureHandle)) {
-						glMakeTextureHandleResidentARB(textureHandle);
+				// Usar textura bindless si está disponible
+				if (GLEW_ARB_bindless_texture) {
+					GLuint64 textureHandle = materialData->albedoTexture;
+					if (textureHandle != 0) {
+						if (!glIsTextureHandleResidentARB(textureHandle)) {
+							glMakeTextureHandleResidentARB(textureHandle);
+						}
+
+						GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTextureHandle");
+						if (loc != -1) {
+							glUniformHandleui64ARB(loc, textureHandle);
+						}
 					}
-
-					GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTextureHandle");
-					if (loc != -1) {
-						glUniformHandleui64ARB(loc, textureHandle);
+				}
+				else {
+					// Fallback a texturas tradicionales
+					GLuint textureID = 0;
+					if (BindlessManager::GetInstance().GetTextureIDFromHandle(
+						materialData->albedoTexture, textureID)) {
+						glActiveTexture(GL_TEXTURE0);
+						glBindTexture(GL_TEXTURE_2D, textureID);
+						shader->SetUniform("texture1", 0);
 					}
 				}
 			}
 			else {
-				GLuint textureID = 0;
-
-				if (BindlessManager::GetInstance().GetTextureIDFromHandle(materialData->albedoTexture, textureID)) {
-					glActiveTexture(GL_TEXTURE0);
-					glBindTexture(GL_TEXTURE_2D, textureID);
-					shader->SetUniform("texture1", 0);
-				}
-				else {
-					shader->SetUniform("u_HasTexture", 0);
-				}
+				shader->SetUniform("u_HasTexture", 0);
 			}
-		}
-		else {
-			shader->SetUniform("u_HasTexture", 0);
-		}
 
-		glBindVertexArray(meshData->vertexArray);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+			// Vincular VAO del mesh
+			glBindVertexArray(meshData->vertexArray);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
 
-		const DrawElementsCommand& cmd = batch.commands[i];
+			if (i < batch.commands.size()) {
+				const DrawElementsCommand& cmd = batch.commands[i];
 
-		// Decide rendering approach based on capabilities and batch size
-		if (supportsInstancing && cmd.instanceCount > 1) {
-			// Approach 1: Hardware instancing (more efficient for many instances)
-			// This needs instanced attributes to be set up, which we'd implement elsewhere
+				// Obtener y configurar instancias
+				for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
+					GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
+					if (!instanceData) continue;
 
-			// Setup for instanced model matrices would go here
-			// (this is complex and would need additional infrastructure)
+					// Establecer matriz de modelo para esta instancia
+					shader->SetUniformMat4("model", instanceData->modelMatrix);
 
-			// For now, we'll use standard approach for simplicity
-			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
-				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
-				if (!instanceData) continue;
-
-				// Set model matrix for this instance
-				shader->SetUniformMat4("model", instanceData->modelMatrix);
-
-				// Draw this instance
-				glDrawElements(
-					GL_TRIANGLES,
-					cmd.count,
-					GL_UNSIGNED_INT,
-					(void*)(0)
-				);
-			}
-		}
-		else {
-			// Approach 2: Individual draw calls (simpler but less efficient)
-			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
-				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
-				if (!instanceData) continue;
-
-				shader->SetUniformMat4("model", instanceData->modelMatrix);
-
-				glDrawElements(
-					GL_TRIANGLES,
-					cmd.count,
-					GL_UNSIGNED_INT,
-					(void*)(0)
-				);
+					// Dibujar instancia
+					glDrawElements(
+						GL_TRIANGLES,
+						cmd.count,
+						GL_UNSIGNED_INT,
+						nullptr
+					);
+				}
 			}
 		}
 	}
 
-	for (GLenum i = 0; i < 5; i++) {
-		glActiveTexture(GL_TEXTURE0 + i);
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
+	// Limpiar estado
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	// Restaurar estado anterior
+	if (!depthTestEnabled) glDisable(GL_DEPTH_TEST);
+	if (!blendEnabled) glDisable(GL_BLEND); else glBlendFunc(blendSrc, blendDst);
+
+	// Desactivar shader
 	shader->UnBind();
-
-	if (!blendEnabled) {
-		glDisable(GL_BLEND);
-	}
-	else {
-		glBlendFunc(blendSrc, blendDst);
-	}
-
-	glActiveTexture(lastActiveTexture);
-
-	if (lastProgram > 0) {
-		glUseProgram(lastProgram);
-	}
 }
 
 bool GPUDrivenRenderer::CompileCullingShader() {
-	//pillar el shader de ShaderManager GetShaderPorgram
+	if (!GLEW_ARB_compute_shader) {
+		LOG(LogType::LOG_ERROR, "Compute shaders no soportados, no se puede compilar el shader de culling");
+		return false;
+	}
+
 	cullingShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::CULLING_COMPUTE);
 	if (cullingShader == 0) {
 		LOG(LogType::LOG_ERROR, "Error: No se pudo obtener el programa de shader de culling");
 		return false;
 	}
 
+	LOG(LogType::LOG_INFO, "Shader de culling compilado exitosamente (ID: %u)", cullingShader);
 	return true;
 }
 

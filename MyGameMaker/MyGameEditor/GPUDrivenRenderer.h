@@ -48,9 +48,10 @@ public:
 		const std::vector<GPUInstance>& instances
 	);
 
-	void PrepareDrawCommands(/*const Frustum& frustum*/);
-
-	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix);
+	void PrepareDrawCommands(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
+	void SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
+	
+	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 
 	void SetUseGPUCulling(bool enabled) { useGPUCulling = enabled; }
 	void SetUseOcclusionCulling(bool enabled) { useOcclusionCulling = enabled; }
@@ -65,7 +66,8 @@ private:
 	GPUDrivenRenderer(const GPUDrivenRenderer&) = delete;
 	GPUDrivenRenderer& operator=(const GPUDrivenRenderer&) = delete;
 
-	//void CPUFrustumCulling(const Frustum& frustum);
+	void SetFrustumPlanes(const glm::mat4& view, const glm::mat4& proj);
+	void CPUFrustumCulling();
 	bool CompileCullingShader();
 
 	void DebugMeshInfo(uint32_t meshIndex);

@@ -508,6 +508,13 @@ bool ForwardPlusComputeShader::Initialize() {
 	return LoadComputeShader("Assets/Shaders/light_culling.glsl");
 }
 
+CullingComputeShader::CullingComputeShader() {
+}
+
+bool CullingComputeShader::Initialize() {
+	return LoadComputeShader("Assets/Shaders/compute_culling.glsl");
+}
+
 ComputeShader::ComputeShader(const std::string& filename, ShaderType type)
 	: filename(filename), shaderType(type) {
 }

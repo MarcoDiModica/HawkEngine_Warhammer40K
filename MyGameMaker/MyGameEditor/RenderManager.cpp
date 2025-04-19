@@ -140,7 +140,7 @@ void RenderManager::RenderDebugQuad() {
 	glBindVertexArray(0);
 }
 
-void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix/*, const Frustum& frustum*/) {
+void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
 	if (queuedObjects.empty()) return;
 
 	for (auto* obj : queuedObjects) {
@@ -158,7 +158,7 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 
 	CreateInstanceGroups();
 
-	GPUDrivenRenderer::GetInstance().PrepareDrawCommands(/*frustum*/);
+	GPUDrivenRenderer::GetInstance().PrepareDrawCommands(viewMatrix, projMatrix, cameraPos);
 
 	// Configuración para el shader PBR
 	if (bindlessPBRShader != 0) {
@@ -198,11 +198,7 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 		glUseProgram(0);
 	}
 
-	LOG(LogType::LOG_INFO, "Rendering %d objects, %d instances",
-		queuedObjects.size(),
-		GPUDrivenRenderer::GetInstance().GetVisibleInstanceCount());
-
-	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix);
+	GPUDrivenRenderer::GetInstance().RenderAll(viewMatrix, projMatrix, cameraPos);
 
 	BindlessManager::GetInstance().EndFrame();
 
@@ -213,11 +209,11 @@ void RenderManager::RenderScene(const glm::mat4& viewMatrix, const glm::mat4& pr
 void RenderManager::RenderFromCamera(CameraComponent* camera) {
 	if (!camera) return;
 
-	const glm::mat4& viewMatrix = camera->view();
-	const glm::mat4& projMatrix = camera->projection();
-	//const Frustum& frustum = camera->frustum;
+	glm::mat4 viewMatrix = camera->view();
+	glm::mat4 projMatrix = camera->projection();
+	glm::vec3 cameraPos = camera->owner->GetTransform()->GetPosition();
 
-	RenderScene(viewMatrix, projMatrix/*, frustum*/);
+	RenderScene(viewMatrix, projMatrix, cameraPos);
 }
 
 void RenderManager::SetWindowSize(int width, int height) {

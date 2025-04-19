@@ -655,10 +655,7 @@ static void RenderEditor() {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
 
-	RenderManager::GetInstance().RenderScene(
-		Application->camera->view(),
-		Application->camera->projection()
-	);
+	RenderManager::GetInstance().RenderScene(Application->camera->view(), Application->camera->view(), Application->camera->GetTransform().GetPosition());
 
 	RenderManager::GetInstance().EndFrame();
 

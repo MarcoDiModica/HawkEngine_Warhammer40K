@@ -22,20 +22,15 @@ Tweening::Tween Tweening::CreateTween(GameObject* object, float duration, Modes 
 	return tween;
 }
 
-Tweening::TweenHandle Tweening::Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode) {
-	if (!object) return 0;
+void Tweening::Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode) {
+	if (!object) return;
 
 	auto tween = CreateTween(object, duration, mode);
 	tween.object = object;
 	tween.startPosition = object->GetTransform()->GetPosition();
 	tween.targetPosition = targetPosition;
 	tween.tweenType = TweenType::POSITION;
-
-	static int nextHandle = 1;
-	tween.handle = nextHandle++;
-
 	tweens.push_back(tween);
-	return tween.handle;
 }
 
 void Tweening::UIMove(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode) {
@@ -133,8 +128,8 @@ void Tweening::UIMoveZ(GameObject* object, float targetZ, float duration, Modes 
 	}
 }
 
-Tweening::TweenHandle Tweening::Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode) {
-	if (!object) return 0;
+void Tweening::Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode) {
+	if (!object) return;
 
 	auto tween = CreateTween(object, duration, mode);
 	tween.object = object;
@@ -142,11 +137,8 @@ Tweening::TweenHandle Tweening::Rotate(GameObject* object, const glm::dvec3& tar
 	tween.targetRotation = targetRotation;
 	tween.tweenType = TweenType::ROTATION;
 
-	static int nextHandle = 1;
-	tween.handle = nextHandle++;
-
 	tweens.push_back(tween);
-	return tween.handle;
+
 }
 
 void Tweening::UIRotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode) {
@@ -617,13 +609,19 @@ Tweening::Sequence Tweening::CreateSequence() {
 
 Tweening::Sequence::Sequence() : currentIndex(0), isPlaying(false) {}
 
-Tweening::Sequence& Tweening::Sequence::Append(std::function<Tweening::TweenHandle()> tweenCreator) {
-	steps.push_back({ tweenCreator, 0, StepType::TWEEN });
+Tweening::Sequence& Tweening::Sequence::Append(std::function<void()> action) {
+	steps.push_back({ [action]() -> TweenHandle {
+		action();
+		return 0;
+	}, 0, StepType::TWEEN });
 	return *this;
 }
 
 Tweening::Sequence& Tweening::Sequence::AppendDelay(float duration) {
-	steps.push_back({ nullptr, duration, StepType::DELAY });
+	steps.push_back({ [duration]() -> TweenHandle {
+		float dummyValue = 0.0f;
+		return Tweening::TweenValue(&dummyValue, 0.0f, 1.0f, duration, Modes::LINEAR);
+	}, duration, StepType::DELAY });
 	return *this;
 }
 
@@ -652,7 +650,7 @@ void Tweening::Sequence::Stop() {
 }
 
 void Tweening::Sequence::PlayCurrentStep() {
-	if (!isPlaying || currentIndex >= steps.size()) {
+	if (!isPlaying || steps.empty() || currentIndex >= steps.size()) {
 		isPlaying = false;
 		return;
 	}
@@ -662,22 +660,17 @@ void Tweening::Sequence::PlayCurrentStep() {
 	switch (step.type) {
 	case StepType::TWEEN: {
 		if (step.tweenCreator) {
-			currentTweenHandle = step.tweenCreator(); // Ejecutar la función para generar el TweenHandle
-			Tweening::SetOnComplete(currentTweenHandle, [this]() {
-				currentIndex++;
-				PlayCurrentStep();
-				});
+			step.tweenCreator();
 		}
-		else {
-			currentIndex++;
-			PlayCurrentStep();
-		}
+		currentIndex++;
+		PlayCurrentStep();
 		break;
 	}
 
 	case StepType::DELAY: {
-		float dummyValue = 0.0f;
-		currentTweenHandle = Tweening::TweenValue(&dummyValue, 0.0f, 1.0f, step.duration, Modes::LINEAR);
+		if (step.tweenCreator) {
+			currentTweenHandle = step.tweenCreator();
+		}
 		Tweening::SetOnComplete(currentTweenHandle, [this]() {
 			currentIndex++;
 			PlayCurrentStep();
@@ -687,7 +680,7 @@ void Tweening::Sequence::PlayCurrentStep() {
 
 	case StepType::TESTCALLBACK: {
 		if (step.tweenCreator) {
-			step.tweenCreator(); // Ejecutar la función de callback
+			step.tweenCreator();
 		}
 		currentIndex++;
 		PlayCurrentStep();

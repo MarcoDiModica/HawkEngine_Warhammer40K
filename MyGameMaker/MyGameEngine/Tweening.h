@@ -25,12 +25,12 @@ class Tweening
 public:
 	typedef int TweenHandle;
 
-	static TweenHandle Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode = Modes::LINEAR);
+	static void Move(GameObject* object, const glm::dvec3& targetPosition, float duration, Modes mode = Modes::LINEAR);
 	static void MoveX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
 	static void MoveY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
 	static void MoveZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
 
-	static TweenHandle Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode = Modes::LINEAR);
+	static void Rotate(GameObject* object, const glm::dvec3& targetRotation, float duration, Modes mode = Modes::LINEAR);
 	static void RotateX(GameObject* object, float targetX, float duration, Modes mode = Modes::LINEAR);
 	static void RotateY(GameObject* object, float targetY, float duration, Modes mode = Modes::LINEAR);
 	static void RotateZ(GameObject* object, float targetZ, float duration, Modes mode = Modes::LINEAR);
@@ -79,7 +79,7 @@ public:
 	public:
 		Sequence();
 
-		Sequence& Append(std::function<Tweening::TweenHandle()> tweenCreator);
+		Sequence& Append(std::function<void()> action);
 		Sequence& AppendDelay(float duration);
 		Sequence& AppendCallback(std::function<void()> callback);
 

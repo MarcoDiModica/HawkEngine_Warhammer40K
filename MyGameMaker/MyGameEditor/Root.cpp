@@ -205,7 +205,9 @@ bool Root::Start()
 
 	cube = CreateCube("Cube");
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	cube->GetTransform()->SetRotation(glm::vec3( 0, 0, 0)); 
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+
 	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
 
 	auto objMainCamera = CreateCameraObject("MainCamera");
@@ -636,7 +638,8 @@ bool Root::Update(double dt)
 
 			sequence
 				.Append([this]() {
-				return Tweening::Rotate(cube.get(), glm::dvec3(90.0, 0.0, 0.0), 1.0f, Modes::EASE_IN_OUT);
+				glm::dvec3 currentRotation = cube->GetTransform()->GetScale();
+				return Tweening::Scale(cube.get(), glm::dvec3(currentRotation.x + 1.0, currentRotation.y, currentRotation.z), 1.0f, Modes::EASE_IN_OUT);
 					})
 				.Append([this]() {
 				glm::dvec3 currentPosition = cube->GetTransform()->GetPosition();

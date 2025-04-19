@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
 
-    private Audio sound;
+    private AudioSource sound;
 
     private ButtonState prevState_resumeButton = ButtonState.DEFAULT;
     private ButtonState prevState_optionsMenuButton = ButtonState.DEFAULT;
@@ -32,6 +32,8 @@ public class PauseMenu : MonoBehaviour
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    private AudioClip buttonHoveredFX;
+    private AudioClip buttonClickedFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
@@ -59,7 +61,7 @@ public class PauseMenu : MonoBehaviour
         optionsMenuButton = GameObject.Find("Options_Button");
         mainMenuButton = GameObject.Find("MainMenu_Button");
         quitButton = GameObject.Find("Exit_Button");
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
 
         button_resumeButton = resumeButton.GetComponent<UIButton>();
         button_optionsMenuButton = optionsMenuButton.GetComponent<UIButton>();
@@ -109,7 +111,10 @@ public class PauseMenu : MonoBehaviour
             Engineson.print("ERROR: Sound not found");
             return;
         }
-
+        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+        sound.LoadAudioClip(buttonHoveredFX);
+        sound.LoadAudioClip(buttonClickedFX);
         this.gameObject.SetActive(false);
     }
 
@@ -186,8 +191,7 @@ public class PauseMenu : MonoBehaviour
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    sound?.LoadAudio(buttonHovered);
-                    sound?.Play();
+                    sound?.Play(buttonHoveredFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }
@@ -214,28 +218,24 @@ public class PauseMenu : MonoBehaviour
 
             if (selectedButton == button_resumeButton)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                sound?.Play(buttonClickedFX);
                 HUDScript.isPaused = false;
                 gameObject.SetActive(false);
             }
             else if (selectedButton == button_optionsMenuButton)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                sound?.Play(buttonClickedFX);
                 optionsMenu.SetActive(true);
                 isOptionsMenuActive = true;
             }
             else if (selectedButton == button_mainMenuButton)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                sound?.Play(buttonClickedFX);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                sound?.Play(buttonClickedFX);
                 // Aquí puedes agregar la lógica para salir del juego
             }
         }

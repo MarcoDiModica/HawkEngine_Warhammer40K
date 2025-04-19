@@ -380,8 +380,6 @@ bool Root::Start()
 	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
 	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("BoxCollider");
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("Rigidbody");
 	hormagaunt->SetTag("Enemy");
 
 	//auto mawloc = CreateGameObject("Mawloc");

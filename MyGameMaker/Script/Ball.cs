@@ -1,6 +1,8 @@
 using HawkEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
+using static System.Net.Mime.MediaTypeNames;
 
 public class Ball : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class Ball : MonoBehaviour
     private float deathtimer = 0.2f;
     private bool needsDestroy = false;
     private float deathTimerPrevention = 0;
+    public List<string> collisionNames = new List<string>();
+    private float damage = 100.0f; // Placeholder damage value
     public override void Awake(){ }
 
     public void Init(Vector3 pos, Vector3 dir)
@@ -33,6 +37,34 @@ public class Ball : MonoBehaviour
             {
                 GetComponent<Transform>().position -= new Vector3(0, 100, 0);
                 needsDestroy = false;
+            }
+        }
+    }
+
+    public override void OnCollisionEnter(GameObject other)
+    {
+        for (int i = 0; i < collisionNames.Count; i++)
+        {
+            var enemy = GameObject.Find(collisionNames[i]);
+            if (enemy.tag == "Melee")
+            {
+                enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Ranged")
+            {
+                enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Stalker")
+            {
+                //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Boss")
+            {
+                enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Destroyable")
+            {
+                enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
             }
         }
     }

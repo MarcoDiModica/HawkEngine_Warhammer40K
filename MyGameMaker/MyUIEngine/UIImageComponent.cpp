@@ -26,9 +26,29 @@ void UIImageComponent::Start()
 	
 }
 
+int CalculateMaxIndex(const glm::vec2& sheetSize, const glm::vec2& spriteSize) {
+	int columns = static_cast<int>(sheetSize.x / spriteSize.x);
+	int rows = static_cast<int>(sheetSize.y / spriteSize.y);
+	return columns * rows - 1;
+}
+
+glm::vec2 CalculateSpriteOffset(int index, const glm::vec2& sheetSize, const glm::vec2& spriteSize) {
+	int columns = static_cast<int>(sheetSize.x / spriteSize.x);
+	int rows = static_cast<int>(sheetSize.y / spriteSize.y);
+
+	int currentColumn = index % columns;
+	int currentRow = index / columns;
+
+	float offsetX = currentColumn * spriteSize.x;
+	float offsetY = currentRow * spriteSize.y;
+
+	return glm::vec2(offsetX, offsetY);
+}
+
 void UIImageComponent::Update(float deltaTime)
 {
 	if (!enabled) return;
+	if (shader == nullptr) return;
 
 	auto uiTransform = owner->GetComponent<UITransformComponent>();
 
@@ -52,11 +72,55 @@ void UIImageComponent::Update(float deltaTime)
 
 	shader->Bind();
 
+	if (useAnimation && sheetSize != glm::vec2(0, 0))
+	{
+		indexTimer += deltaTime;
+
+		if (indexTimer >= animSpeed)
+		{
+			if (animationNum == 0) 
+			{
+				if (animIndex >= anim1IndexLimit - 1)
+				{
+					indexTimer = 0;
+					animIndex = 0;
+				}
+				else
+				{
+					animIndex++;
+				}
+			}
+			else if (animationNum == 1)
+			{
+				if (animIndex >= CalculateMaxIndex(sheetSize, spriteSize))
+				{
+					animIndex = anim1IndexLimit+ 1;
+					indexTimer = 0;
+				}
+				else
+				{
+					animIndex++;
+				}
+			}
+			
+			indexTimer = 0.0f;
+			spriteOffset = CalculateSpriteOffset(animIndex, sheetSize, spriteSize);
+
+		}
+	}
+	else
+	{
+		spriteOffset = glm::vec2(0.0f, 0.0f);
+		spriteSize = sheetSize;
+	}
 
 	if (texture->image_path != "") {
 		texture->bind();
 		shader->SetUniform("u_HasTexture", true);
 		shader->SetUniform("texture1", 0);
+		shader->SetUniformVec2("SpriteSize", spriteSize);
+		shader->SetUniformVec2("SpriteOffset", spriteOffset);
+		shader->SetUniformVec2("SheetSize", sheetSize);
 	}
 	else {
 		shader->SetUniform("u_HasTexture", false);
@@ -111,6 +175,7 @@ void UIImageComponent::SetTexture(std::string path)
 {
 	texture = std::make_shared<Image>();
 	texture->LoadTexture(path);
+	sheetSize = glm::vec2(texture->width(), texture->height());
 	shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
 	LoadMesh();
 }

@@ -10,25 +10,48 @@ public class WinScreen : MonoBehaviour
     private UIButton button_quitButton;
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
-    private AudioSource sound;
+    private Audio sound;
     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-    private AudioClip buttonHoveredFX;
-    private AudioClip buttonClickedFX;
+
+    private int selectedButtonIndex = -1;
+    private UIButton[] buttons;
+    private UITransform[] transforms;
+    private bool[] hasPlayedHoverSound;
+    private long lastInputTime = 0;
+
+    private enum InputMethod
+    {
+        None,
+        Joystick,
+        DPad,
+        Mouse
+    }
+    private InputMethod currentInputMethod = InputMethod.None;
+
     public override void Awake()
     {
         //Engineson.print("WinScreen Awake");
     }
+
     public override void Start()
     {
         mainMenuButton = GameObject.Find("Menu_Button");
         quitButton = GameObject.Find("Quit_Button");
-        sound = gameObject.GetComponent<AudioSource>();
+        sound = gameObject.GetComponent<Audio>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
+
+        transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
+        transform_quitButton = quitButton.GetComponent<UITransform>();
+
+        buttons = new UIButton[] { button_mainMenuButton, button_quitButton };
+        transforms = new UITransform[] { transform_mainMenuButton, transform_quitButton };
+
+        hasPlayedHoverSound = new bool[buttons.Length];
 
         if (mainMenuButton == null || quitButton == null)
         {
@@ -36,38 +59,129 @@ public class WinScreen : MonoBehaviour
             return;
         }
 
-        transform_mainMenuButton = mainMenuButton.GetComponent<UITransform>();
-        transform_quitButton = quitButton.GetComponent<UITransform>();
-        if (mainMenuButton == null || quitButton == null)
-        {
-            Engineson.print("ERROR: No Button object found");
-        }
-
         if (sound == null)
         {
             Engineson.print("ERROR: No Audio object found");
         }
-
-        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
-        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
-        sound.LoadAudioClip(buttonHoveredFX);
-        sound.LoadAudioClip(buttonClickedFX);
     }
-    private void HandleHoveredState(UIButton button, UITransform transform, ref ButtonState prevState)
+
+    private void NavigateMenu()
     {
-        if (button.GetState() == ButtonState.HOVERED && prevState != ButtonState.HOVERED)
+        if (buttons == null || buttons.Length == 0)
         {
-            transform.DOScaleUI(new Vector3(0.25f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+            Engineson.print("ERROR: Buttons array is null or empty.");
+            return;
+        }
+        long currentTime = DateTime.Now.Ticks;
 
-            sound?.Play(buttonHoveredFX);
-        }
-        else if (button.GetState() == ButtonState.DEFAULT)
+        if (currentTime - lastInputTime < 2500000)
         {
-            transform.DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+            return;
         }
-        prevState = button.GetState();
+
+        Vector2 leftStick = Input.GetLeftStick();
+
+        if (Math.Abs(leftStick.X) > 0.75f && currentInputMethod != InputMethod.DPad)
+        {
+            currentInputMethod = InputMethod.Joystick;
+
+            if (leftStick.X < -0.75f)
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+            else if (leftStick.X > 0.75f)
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+        }
+        else if ((Input.GetControllerButton(ControllerButton.DPadRight) || Input.GetControllerButton(ControllerButton.DPadLeft)) && currentInputMethod != InputMethod.Joystick)
+        {
+            currentInputMethod = InputMethod.DPad;
+
+            if (Input.GetControllerButton(ControllerButton.DPadRight))
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+            else if (Input.GetControllerButton(ControllerButton.DPadLeft))
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Length) % buttons.Length;
+                lastInputTime = currentTime;
+            }
+        }
+        else if (Math.Abs(leftStick.X) <= 0.75f && !Input.GetControllerButton(ControllerButton.DPadRight) && !Input.GetControllerButton(ControllerButton.DPadLeft))
+        {
+            currentInputMethod = InputMethod.None;
+        }
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            if (buttons[i] == null)
+            {
+                Engineson.print($"WARNING: Button at index {i} is null.");
+                continue;
+            }
+
+            if (IsMouseOverButton(buttons[i]))
+            {
+                currentInputMethod = InputMethod.Mouse;
+                selectedButtonIndex = i;
+            }
+
+            if (i == selectedButtonIndex)
+            {
+                buttons[i].SetState(ButtonState.HOVERED);
+                transforms[i].DOScaleUI(new Vector3(0.22f, 0.1f, 0.5f), 0.3f, Modes.EASE_OUT);
+
+                if (!hasPlayedHoverSound[i])
+                {
+                    sound?.LoadAudio(buttonHovered);
+                    sound?.Play();
+                    hasPlayedHoverSound[i] = true;
+                }
+            }
+            else
+            {
+                buttons[i].SetState(ButtonState.DEFAULT);
+                transforms[i].DOScaleUI(new Vector3(0.182f, 0.070f, 0.4f), 0.3f, Modes.EASE_OUT);
+                hasPlayedHoverSound[i] = false;
+            }
+
+            if (currentTime - lastInputTime > 20000000) // 2 segundos en ticks (1 segundo = 10,000,000 ticks)
+            {
+                if (currentInputMethod == InputMethod.None)
+                {
+                    selectedButtonIndex = -1;
+                }
+            }
+        }
+
+        // Detectar clic del ratón
+        if ((Input.GetMouseButtonDown(1) && currentInputMethod == InputMethod.Mouse && selectedButtonIndex != -1) || Input.GetControllerButtonDown(ControllerButton.A))
+        {
+            UIButton selectedButton = buttons[selectedButtonIndex];
+            selectedButton.SetState(ButtonState.CLICKED);
+
+            if (selectedButton == button_mainMenuButton)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                SceneManager.LoadScene("MainMenu");
+            }
+            else if (selectedButton == button_quitButton)
+            {
+                sound?.LoadAudio(buttonClicked);
+                sound?.Play();
+                // Aquí puedes agregar la lógica para salir del juego
+            }
+        }
     }
-
+    private bool IsMouseOverButton(UIButton button)
+    {
+        return button.GetState() == ButtonState.HOVERED;
+    }
     public override void Update(float deltaTime)
     {
         if (mainMenuButton == null || quitButton == null)
@@ -81,20 +195,6 @@ public class WinScreen : MonoBehaviour
             return;
         }
 
-        if (button_mainMenuButton.GetState() == ButtonState.CLICKED)
-        {
-            sound?.Play(buttonClickedFX);
-            SceneManager.LoadScene("MainMenu");
-        }
-
-        HandleHoveredState(button_mainMenuButton, transform_mainMenuButton, ref prevState_mainMenuButton);
-
-        if (button_quitButton.GetState() == ButtonState.CLICKED)
-        {
-            //Salir del juego
-            sound?.Play(buttonClickedFX);
-        }
-
-        HandleHoveredState(button_quitButton, transform_quitButton, ref prevState_quitButton);
+        NavigateMenu();
     }
 }

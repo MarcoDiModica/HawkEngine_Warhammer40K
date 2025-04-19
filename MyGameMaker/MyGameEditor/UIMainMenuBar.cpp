@@ -18,7 +18,6 @@ UIMainMenuBar::UIMainMenuBar(UIType type, std::string name) : UIElement(type, na
 	play_image.LoadTextureLocalPath("EngineAssets/plabtn.png");
 	stop_image.LoadTextureLocalPath("EngineAssets/stobtn.png");
 	pause_image.LoadTextureLocalPath("EngineAssets/scene.png");
-
 }
 
 UIMainMenuBar::~UIMainMenuBar()
@@ -94,11 +93,11 @@ bool UIMainMenuBar::Draw()
 
 			if (ImGui::BeginMenu("Remove Script"))
 			{
-				for (auto& script : MonoManager::GetInstance().scriptIDs)
+				for (auto& script : MonoManager::GetInstance().scriptNames)
 				{
-					if (ImGui::MenuItem(script.first.c_str()))
+					if (ImGui::MenuItem(script.c_str()))
 					{
-						scriptToRemove = script.first;
+						scriptToRemove = script;
 						confirmRemovePopupOpen = true;
 					}
 				}

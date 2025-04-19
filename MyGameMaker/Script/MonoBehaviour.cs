@@ -1,6 +1,7 @@
 ﻿using HawkEngine;
 using System;
 using System.Runtime.CompilerServices;
+using System.Collections;
 
 public  class MonoBehaviour
 {
@@ -23,7 +24,14 @@ public  class MonoBehaviour
 
     public virtual void Update(float deltaTime)
     {
-        
+        CoroutineManager.Update(deltaTime);
+    }
+
+
+    protected Coroutine StartCoroutine(IEnumerator routine)
+    {
+        CoroutineManager.Start(routine);
+        return null; 
     }
 
 

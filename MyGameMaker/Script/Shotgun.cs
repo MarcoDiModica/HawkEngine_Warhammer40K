@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
@@ -27,7 +28,7 @@ public class Shotgun : BaseWeapon
     }
     public override void Start()
     {
-        damage = 70.0f;
+        damage = 12.0f;
         shootCadence = 0.7f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
@@ -138,15 +139,27 @@ public class Shotgun : BaseWeapon
             sound?.Play();
 
             int numProjectiles = 5;
-            float spreadAngle = 45f;
-            float angleStep = spreadAngle / (numProjectiles - 1);
-            float startAngle = -spreadAngle / 2;
+            float maxSpreadAngle = 5f;
+
+            Random random = new Random();
 
             for (int i = 0; i < numProjectiles; i++)
             {
-                float angle = startAngle + angleStep * i;
-                Vector3 direction = Vector3.Normalize(Vector3.Transform(transform.forward, Matrix4x4.CreateRotationY(angle * (3.14f / 180f))));
+                Vector3 baseDirection = transform.forward;
 
+                // Obtener valores aleatorios entre -maxSpreadAngle y +maxSpreadAngle
+                float randomYaw = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle);   // izquierda/derecha
+                float randomPitch = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle); // arriba/abajo
+
+                // Convertir variaciones a radianes
+                float yawRad = randomYaw * (float)(Math.PI / 180f);
+                float pitchRad = randomPitch * (float)(Math.PI / 180f);
+
+                // Aplicar rotación a la dirección base
+                Matrix4x4 rotationMatrix = Matrix4x4.CreateFromYawPitchRoll(yawRad, pitchRad, 0);
+                Vector3 direction = Vector3.Normalize(Vector3.Transform(baseDirection, rotationMatrix));
+
+                // Posición inicial del proyectil
                 Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f);
                 Vector3 bulletStart = transform.position +
                                       (transform.right * localOffset.X) +
@@ -154,15 +167,15 @@ public class Shotgun : BaseWeapon
                                       (transform.forward * localOffset.Z);
                 bulletStart.Y += 0.5f;
 
-                float yaw = (float)(System.Math.Atan2(direction.X, direction.Z) * (180.0 / System.Math.PI));
-                float pitch = (float)(-System.Math.Asin(direction.Y) * (180.0 / System.Math.PI));
+                // Rotación del proyectil
+                float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
+                float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 
                 GameObject projectile = Engineson.CreateGameObject("Projectile", null);
                 projectile.AddComponent<MeshRenderer>();
                 projectile.transform.SetScale(0.2f, 0.2f, 0.2f);
                 projectile.transform.position = bulletStart;
                 projectile.transform.SetRotation(pitch, yaw, 0f);
-
 
                 bulletsObjects.Add(projectile);
                 bulletsPos.Add(bulletStart);
@@ -171,7 +184,6 @@ public class Shotgun : BaseWeapon
                 bulletLifetimes.Add(0);
                 bulletHitEnemies.Add(new HashSet<GameObject>());
                 bulletStartPositions.Add(bulletStart);
-
             }
         }
     }

@@ -114,6 +114,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
+    <Compile Include="LaserBeamObject.cs" />
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="Mathf.cs" />

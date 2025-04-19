@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: MainCamera
-  uuid: 18434520341186466998
+  uuid: 11431892096504339413
   tag: Untagged
   active: true
   isStatic: false
@@ -31,14 +31,198 @@ GameObject0:
       near_plane: 0.10000000000000001
       far_plane: 500
       priority: 1
-    AudioListener: ~
     ScriptComponents:
       Script0:
         name: PlayerCamera
   Children: ~
 GameObject1:
-  name: Floor
-  uuid: 4464402535078459771
+  name: mesh.089
+  uuid: 10295314346063592746
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0.00024807715089991689
+        - 0.79262250661849976
+        - 0.040951989591121674
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 6746157562630164320
+      material:
+        name: Low_BSurfaceMesh_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject2:
+  name: Pablo_Tree.001
+  uuid: 16139804894841423280
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 3.4000000953674316
+        - 0
+        - 3.1000001430511475
+      localRotation:
+        - -90.000009334667297
+        - 0
+        - 0
+      localScale:
+        - 0.10000000149011612
+        - 0.10000000149011745
+        - 0.10000000149011745
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 11069185952561667453
+      material:
+        name: Trees_1_Low_1001_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject3:
+  name: Pablo_Tree3.001
+  uuid: 9809115070233702359
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 2.8000001907348633
+        - 0
+        - 0
+      localRotation:
+        - -90.000009334666814
+        - 0
+        - 0
+      localScale:
+        - 0.18319201469421387
+        - 0.14365652203560067
+        - 0.079474195837975603
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 12205224942985165398
+      material:
+        name: Trees_3_Low_1001_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject4:
+  name: Pablo_Tree2.001
+  uuid: 17670296390224828097
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 3.6000001430511475
+        - 0
+        - 6.1000003814697266
+      localRotation:
+        - 90.000011155900722
+        - -2.2311801437935788e-05
+        - 180
+      localScale:
+        - 0.1000000014901237
+        - 0.1000000014901256
+        - 0.10000000149011802
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 14275735642517751438
+      material:
+        name: Trees_2_Low_1001_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject5:
+  name: mesh.089_1
+  uuid: 4298045327052752867
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -1.7535771131515503
+        - 0.79262250661849976
+        - 0.040951989591121674
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 6746157562630164320
+      material:
+        name: Low_BSurfaceMesh_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject6:
+  name: test_Bushes
+  uuid: 4806288507352950972
   tag: Untagged
   active: true
   isStatic: false
@@ -48,53 +232,6 @@ GameObject1:
       enabled: true
       localPosition:
         - 0
-        - -1
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 50
-        - 1
-        - 50
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 0
-      material:
-        name: 2
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject2:
-  name: Player
-  uuid: 16246928450561451397
-  tag: Player
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
         - 0
         - 0
       localRotation:
@@ -102,130 +239,12 @@ GameObject2:
         - -0
         - 0
       localScale:
-        - 1
-        - 1
-        - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 2
-      emissionRate: 15
-      particlesPerSecond: 15
-      minLifetime: 2
-      maxLifetime: 4
-      minSpeed: 0.5
-      maxSpeed: 1.5
-      startSize: 0.5
-      endSize: 2
-      minSize: 0.5
-      maxSize: 0
-      startColor:
-        - 0.800000012
-        - 0.800000012
-        - 0.800000012
-      endColor:
-        - 0.200000003
-        - 0.200000003
-        - 0.200000003
-      startAlpha: 0.699999988
-      endAlpha: 0
-      rotationSpeed: 0.200000003
-      gravity:
-        - 0
-        - -0.100000001
-        - 0
-      shapeParam1: 0.200000003
-      shapeParam2: 1
-      shapeParam3: 20
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 256
-        - 256
-      useAnimation: true
-      animSpeed: 0.5
-      startRotation: 0
-      randomRotation: true
-      material:
-        billboardType: 0
-        particleType: 1
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/Smoke30Frames.png
-      particleType: 1
-    CapsuleColliderComponent:
-      size:
-        - 1.70000005
-        - 1.10000002
-        - 1
-      offset:
-        - 0
-        - 2.0999999
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -200
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: PlayerShooting
-      Script1:
-        name: PlayerMovement
-      Script2:
-        name: PlayerInput
-      Script3:
-        name: PlayerDash
-      Script4:
-        name: PlayerController
-      Script5:
-        name: PlayerPowerUp
-      Script6:
-        name: Boltgun
-      Script7:
-        name: Shotgun
-      Script8:
-        name: GrenadeLauncher
-      Script9:
-        name: Railgun
-      Script10:
-        name: ""
-      Script11:
-        name: EnergyBall
-      Script12:
-        name: ToggleMode
-      Script13:
-        name: Barrage
-      Script14:
-        name: HookShot
-      Script15:
-        name: ArcSnare
-      Script16:
-        name: RedThirstManager
-      Script17:
-        name: InteractionSystem
+        - 0.0011182444868609309
+        - 0.0011182444868609309
+        - 0.0011182444868609309
   Children:
-    - name: playerMesh
-      uuid: 3509437015434926677
+    - name: Sphere
+      uuid: 15639555666944061292
       tag: Untagged
       active: true
       isStatic: false
@@ -234,24 +253,24 @@ GameObject2:
           name: Transform_Component
           enabled: true
           localPosition:
-            - 0
-            - 0
-            - 0
+            - -14356.048828125
+            - 200
+            - -47.169876098632812
           localRotation:
-            - -90
+            - -90.000009334667737
             - 0
             - 0
           localScale:
-            - 1
-            - 1
-            - 1
+            - 282.38177490234375
+            - 282.38177490234744
+            - 235.2487792968781
         MeshRenderer:
           name: MeshRenderer
           enabled: true
           mesh:
-            name: 17597220777981042704
+            name: 14475309758313613559
           material:
-            name: 17803050850064222258
+            name: Bush_2_1001_BaseColor
           color:
             - 1
             - 1
@@ -259,16 +278,9 @@ GameObject2:
         Shader:
           name: Shader
           enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_playerMesh
-        ScriptComponents:
-          Script0:
-            name: PlayerAnimations
       Children: ~
-    - name: RiffleShotFX
-      uuid: 6742846795934487336
+    - name: Plane.012
+      uuid: 10982654289998549134
       tag: Untagged
       active: true
       isStatic: false
@@ -277,209 +289,66 @@ GameObject2:
           name: Transform_Component
           enabled: true
           localPosition:
-            - -0.80000001192092896
-            - 3
-            - 0.5
+            - -12387.5537109375
+            - 305.47171020507812
+            - -270.08514404296875
           localRotation:
-            - 0
+            - 69.999999334810667
             - -0
             - 0
           localScale:
-            - 1
-            - 1
-            - 1
-        ParticleFX:
-          name: ParticleFX
+            - -116.92026519775391
+            - -116.92027347111747
+            - -116.92027347111747
+        MeshRenderer:
+          name: MeshRenderer
           enabled: true
-          emitterShape: 0
-          emissionRate: 1
-          particlesPerSecond: 1
-          minLifetime: 0.25
-          maxLifetime: 0.25
-          minSpeed: 0
-          maxSpeed: 0
-          startSize: 1
-          endSize: 1
-          minSize: 1
-          maxSize: 1
-          startColor:
-            - 1
-            - 1
-            - 1
-          endColor:
-            - 1
-            - 1
-            - 1
-          startAlpha: 1
-          endAlpha: 1
-          rotationSpeed: 0
-          gravity:
-            - 0
-            - 0.00100000005
-            - 0
-          shapeParam1: 0.200000003
-          shapeParam2: 1
-          shapeParam3: 20
-          isOneShot: false
-          isPlaying: false
-          isPaused: false
-          burstEmitted: false
-          spriteSize:
-            - 1920
-            - 1080
-          useAnimation: true
-          animSpeed: 0.0500000007
-          startRotation: 0
-          randomRotation: false
+          mesh:
+            name: 1916236728428485169
           material:
-            billboardType: 0
-            particleType: 8
-            softness: 0
-            useColorGradient: false
-            texturePath: Assets/Textures/muzzle.png
-          particleType: 8
+            name: Bush_1_1001_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
       Children: ~
-    - name: InactiveDashFX
-      uuid: 14057382545250422934
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 3
-            - -1
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        ParticleFX:
-          name: ParticleFX
-          enabled: true
-          emitterShape: 2
-          emissionRate: 15
-          particlesPerSecond: 15
-          minLifetime: 2
-          maxLifetime: 4
-          minSpeed: 0.5
-          maxSpeed: 1.5
-          startSize: 0.5
-          endSize: 2
-          minSize: 0.5
-          maxSize: 0
-          startColor:
-            - 0.800000012
-            - 0.800000012
-            - 0.800000012
-          endColor:
-            - 0.200000003
-            - 0.200000003
-            - 0.200000003
-          startAlpha: 0.699999988
-          endAlpha: 0
-          rotationSpeed: 0.200000003
-          gravity:
-            - 0
-            - -0.100000001
-            - 0
-          shapeParam1: 0.200000003
-          shapeParam2: 1
-          shapeParam3: 20
-          isOneShot: false
-          isPlaying: false
-          isPaused: false
-          burstEmitted: false
-          spriteSize:
-            - 256
-            - 256
-          useAnimation: true
-          animSpeed: 0.5
-          startRotation: 0
-          randomRotation: true
-          material:
-            billboardType: 0
-            particleType: 1
-            softness: 0
-            useColorGradient: false
-            texturePath: Assets/Textures/Smoke30Frames.png
-          particleType: 1
-      Children: ~
-    - name: WalkingFX
-      uuid: 13370977158998369653
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - -1
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        ParticleFX:
-          name: ParticleFX
-          enabled: true
-          emitterShape: 2
-          emissionRate: 15
-          particlesPerSecond: 15
-          minLifetime: 2
-          maxLifetime: 4
-          minSpeed: 0.5
-          maxSpeed: 1.5
-          startSize: 0.5
-          endSize: 2
-          minSize: 0.5
-          maxSize: 0
-          startColor:
-            - 0.800000012
-            - 0.800000012
-            - 0.800000012
-          endColor:
-            - 0.200000003
-            - 0.200000003
-            - 0.200000003
-          startAlpha: 0.699999988
-          endAlpha: 0
-          rotationSpeed: 0.200000003
-          gravity:
-            - 0
-            - -0.100000001
-            - 0
-          shapeParam1: 0.200000003
-          shapeParam2: 1
-          shapeParam3: 20
-          isOneShot: false
-          isPlaying: false
-          isPaused: false
-          burstEmitted: false
-          spriteSize:
-            - 256
-            - 256
-          useAnimation: true
-          animSpeed: 0.5
-          startRotation: 0
-          randomRotation: true
-          material:
-            billboardType: 0
-            particleType: 1
-            softness: 0
-            useColorGradient: false
-            texturePath: Assets/Textures/Smoke30Frames.png
-          particleType: 1
-      Children: ~
+GameObject7:
+  name: mesh.089_2
+  uuid: 1230376608063875649
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -4.7415556907653809
+        - 0.79262250661849976
+        - 0.040951989591121674
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 6746157562630164320
+      material:
+        name: Low_BSurfaceMesh_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~

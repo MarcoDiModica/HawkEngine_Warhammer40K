@@ -28,8 +28,6 @@ public:
 		}
 		meshes.push_back(mesh);
 		meshIndex[mesh->getModel()->GetID()] = meshes.size() - 1;
-		std::string str = std::to_string(mesh->getModel()->GetID());
-		meshes[meshes.size() - 1]->SaveBinary(str);
 		return meshes.back();
 	}
 
@@ -57,24 +55,23 @@ public:
 	}
 
 	std::shared_ptr<Material> AddMaterial(std::shared_ptr<Material> material) {
-		if (materialIndex.find(material->GetId()) != materialIndex.end()) {
-			return materials[materialIndex[material->GetId()]];
+		if (materialIndex.find(material->GetMatName()) != materialIndex.end()) {
+			return materials[materialIndex[material->GetMatName()]];
 		}
 		materials.push_back(material);
-		materialIndex[material->GetId()] = materials.size() - 1;
-		std::string str = std::to_string(material->GetId());
-		materials[materials.size() - 1]->SaveBinary(str);
+		materialIndex[material->GetMatName()] = materials.size() - 1;
+		materials[materials.size() - 1]->SaveBinary(material->GetMatName());
 		return materials.back();
 	}
 
-	std::shared_ptr<Material> GetMaterial(size_t id) {
+	std::shared_ptr<Material> GetMaterial(std::string id) {
 		if (materialIndex.find(id) != materialIndex.end()) {
 			return materials[materialIndex[id]];
 		}
 		return nullptr;
 	}
 
-	void ClearMaterial(size_t id) {
+	void ClearMaterial(std::string id) {
 		if (materialIndex.find(id) != materialIndex.end()) {
 			materials.erase(materials.begin() + materialIndex[id]);
 			materialIndex.erase(id);
@@ -95,7 +92,8 @@ private:
 	std::unordered_map<size_t, size_t> meshIndex;
 	std::vector<std::shared_ptr<Mesh>> meshes;
 	//materials
-	std::unordered_map<size_t, size_t> materialIndex;
+	std::unordered_map<std::string, size_t> materialIndex;
 	std::vector<std::shared_ptr<Material>> materials;
+
 };
 

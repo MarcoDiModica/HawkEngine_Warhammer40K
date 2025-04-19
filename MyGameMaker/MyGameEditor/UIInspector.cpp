@@ -218,6 +218,9 @@ private:
 				return;
 			}
 
+			std::string MatName = "Material Name:" + material->matName;
+			ImGui::Text(MatName.c_str());
+
 			const char* shaderTypes[] = { "UNLIT", "PBR" };
 			int currentType = static_cast<int>(material->GetShaderType());
 			ImGui::Text("Rendering Mode");

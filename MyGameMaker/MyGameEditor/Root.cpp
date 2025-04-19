@@ -52,7 +52,7 @@ bool Root::Awake()
 	MonoManager::GetInstance().EnableHotReloading();
 
 	//CreateMainMenuUI();
-
+	//Application->scene_serializer->DeSerialize("Library/Scenes/TestScene.scene");
 	
     return true;
 }
@@ -65,7 +65,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	Application->scene_serializer->DeSerialize("Library/Scenes/TestScene.scene");
+	
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");
@@ -879,6 +879,8 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 		}
 
 		meshRenderer->GetMesh()->setBoundingBox(*meshBBox);
+		std::string str = std::to_string(meshRenderer->GetMesh()->getModel()->GetID());
+		meshRenderer->GetMesh()->SaveBinary(str);
 
 		go->GetTransform()->SetLocalMatrix(meshImp.fbx_object[i]->GetTransform()->GetLocalMatrix());
 

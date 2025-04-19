@@ -15,7 +15,7 @@ GameObject0:
         - 20
         - -14
       localRotation:
-        - 54.999999253784715
+        - 54.999999735770004
         - -0
         - 0
       localScale:
@@ -37,8 +37,8 @@ GameObject0:
         name: PlayerCamera
   Children: ~
 GameObject1:
-  name: Gran_Piedra2_PabloFlipnormal
-  uuid: 13337629215013707044
+  name: Cylinder.001
+  uuid: 17639490210551017302
   tag: Untagged
   active: true
   isStatic: false
@@ -47,40 +47,24 @@ GameObject1:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 4.3359360694885254
-        - 2.781590461730957
-        - 0.046262465417385101
+        - -3.8649706840515137
+        - 0
+        - 0
       localRotation:
-        - -90.000016164857669
+        - -89.999998038848886
         - 0
         - 0
       localScale:
-        - 0.23759564757347107
-        - 0.23759564757348053
-        - 0.23759564757348053
+        - 1
+        - 0.99999994039535589
+        - 0.99999994039535589
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
-        name: 2938377707842750082
+        name: 17597220777981042704
       material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
+        name: dieno zachael jetpack 2_DefaultMaterial_BaseColor
       color:
         - 1
         - 1
@@ -88,10 +72,14 @@ GameObject1:
     Shader:
       name: Shader
       enabled: true
+    SkeletalAnimationComponent:
+      name: SkeletalAnimationComponent
+      enabled: true
+      animation_file: skeletal_anim_Cylinder.001
   Children: ~
 GameObject2:
-  name: Gran_Piedra2_PabloFlipnormal_1
-  uuid: 13027826863677118242
+  name: Cylinder.001_1
+  uuid: 10051554048666350600
   tag: Untagged
   active: true
   isStatic: false
@@ -100,40 +88,24 @@ GameObject2:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 4.3359360694885254
-        - 4.8547935485839844
-        - 0.046262465417385101
+        - 3.8636906147003174
+        - 0
+        - 0
       localRotation:
-        - -90.000016164857669
+        - -89.999998038848886
         - 0
         - 0
       localScale:
-        - 0.23759564757347107
-        - 0.23759564757348053
-        - 0.23759564757348053
+        - 1
+        - 0.99999994039535589
+        - 0.99999994039535589
     MeshRenderer:
       name: MeshRenderer
       enabled: true
       mesh:
-        name: 2938377707842750082
+        name: 17597220777981042704
       material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
+        name: dieno zachael jetpack 2_DefaultMaterial_BaseColor
       color:
         - 1
         - 1
@@ -141,63 +113,14 @@ GameObject2:
     Shader:
       name: Shader
       enabled: true
+    SkeletalAnimationComponent:
+      name: SkeletalAnimationComponent
+      enabled: true
+      animation_file: skeletal_anim_Cylinder.001_1
   Children: ~
 GameObject3:
-  name: Gran_Piedra2_PabloFlipnormal_2
-  uuid: 1901578071992781326
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 4.3359360694885254
-        - 0.55956631898880005
-        - 0.046262465417385101
-      localRotation:
-        - -90.000016164857669
-        - 0
-        - 0
-      localScale:
-        - 0.23759564757347107
-        - 0.23759564757348053
-        - 0.23759564757348053
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2938377707842750082
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-  Children: ~
-GameObject4:
-  name: Cylinder.010
-  uuid: 15889107978251458471
+  name: wall_low
+  uuid: 1814637894974779039
   tag: Untagged
   active: true
   isStatic: false
@@ -207,97 +130,266 @@ GameObject4:
       enabled: true
       localPosition:
         - 0
-        - 5.3426532745361328
+        - 0
         - 0
       localRotation:
         - 0
         - -0
         - 0
       localScale:
-        - 0.0015566733200103045
-        - 0.0015566733200103045
-        - 0.0015566733200103045
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2058912538061341143
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-  Children: ~
-GameObject5:
-  name: Cylinder.010_1
-  uuid: 11070012785530897942
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 3.1578724384307861
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.0015566733200103045
-        - 0.0015566733200103045
-        - 0.0015566733200103045
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: 2058912538061341143
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: ""
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-  Children: ~
+        - 0.0010000000474974513
+        - 0.0010000000474974513
+        - 0.0010000000474974513
+  Children:
+    - name: Cylinder.001_2
+      uuid: 4507495891841223440
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 207.51304626464844
+            - 487.43869018554688
+            - -2292.390380859375
+          localRotation:
+            - -90.000016164856447
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100.00000000000398
+            - 100.00000000000398
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 669858816990601429
+          material:
+            name: MurallaLow_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.021
+      uuid: 18428232191324110262
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 2.3411393165588379
+          localRotation:
+            - -90.000016164856447
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100.00000000000398
+            - 100.00000000000398
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 12931621863054904715
+          material:
+            name: MurallaLow_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.058
+      uuid: 7912673912564742482
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 150
+            - 556.4293212890625
+            - -4346.6455078125
+          localRotation:
+            - -90.000016164856447
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100.00000000000398
+            - 100.00000000000398
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 9454083524437904454
+          material:
+            name: MurallaLow_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.046
+      uuid: 1355217007904565165
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 88.614479064941406
+            - 556.995849609375
+            - -6250.65087890625
+          localRotation:
+            - -90.000016164856447
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100.00000000000398
+            - 100.00000000000398
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 2737575465388902391
+          material:
+            name: MurallaLow_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.093
+      uuid: 163652968040336246
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 185.8612060546875
+            - 883.4892578125
+            - -3296.03955078125
+          localRotation:
+            - -90.000016164856447
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100.00000000000398
+            - 100.00000000000398
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 14514756318648228179
+          material:
+            name: MurallaLow_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.054
+      uuid: 3980342565654984503
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 50.617992401123047
+            - 556.59820556640625
+            - -5284.3916015625
+          localRotation:
+            - -90.000016164856447
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100.00000000000398
+            - 100.00000000000398
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 13985638887542757982
+          material:
+            name: MurallaLow_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~
+    - name: Cube.055
+      uuid: 16096932632428149469
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0.90133547782897949
+          localRotation:
+            - -90.000016164856447
+            - 0
+            - 0
+          localScale:
+            - 100
+            - 100.00000000000398
+            - 100.00000000000398
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: 17231871134953224366
+          material:
+            name: MurallaLow_DefaultMaterial_BaseColor
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+      Children: ~

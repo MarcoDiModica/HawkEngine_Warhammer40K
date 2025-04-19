@@ -220,9 +220,9 @@ void Material::SaveBinary(const std::string& filename) const {
 std::shared_ptr<Material> Material::LoadBinary(const std::string& filename) {
 	std::string fullPath = "Library/Materials/" + filename + ".mat";
 	
-	if (Application->root->GetResourceManager()->GetMaterial(std::stoull(filename)) != nullptr)
+	if (Application->root->GetResourceManager()->GetMaterial(filename) != nullptr)
 	{
-		auto material = Application->root->GetResourceManager()->GetMaterial(std::stoull(filename));
+		auto material = Application->root->GetResourceManager()->GetMaterial(filename);
 		return material;
 	}
 

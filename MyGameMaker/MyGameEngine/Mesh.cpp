@@ -997,8 +997,14 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 		mesh->_texCoords = modelData.vertex_texCoords;
 	}
 
-	mesh = Application->root->GetResourceManager()->AddMesh(mesh);
-	mesh->loadToOpenGL();
+	if(Application->root->GetResourceManager()->GetMesh(mesh->model->GetID()) == nullptr){
+		mesh = Application->root->GetResourceManager()->AddMesh(mesh);
+		mesh->loadToOpenGL();
+	}
+	else {
+		mesh = Application->root->GetResourceManager()->GetMesh(mesh->model->GetID());
+	}
+	
 
 	mesh->nameM = filename;
 	mesh->filePath = filename;

@@ -224,7 +224,7 @@ std::shared_ptr<GameObject> SceneManager::CreatePlane(const std::string& name) {
 std::shared_ptr<GameObject> SceneManager::CreateCameraObject(const std::string& name) {
     auto camera = CreateGameObject(name);
     camera->AddComponent<CameraComponent>();
-    camera->AddComponent<AudioListener>();
+    //camera->AddComponent<AudioListener>();
     return camera;
 }
 

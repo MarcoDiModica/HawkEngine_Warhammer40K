@@ -107,9 +107,9 @@ protected:
             std::shared_ptr<Material> loadedMaterial;
 			YAML::Node matnode = node["material"];
             std::string name = matnode["name"].as<std::string>();
-            if (Application->root->GetResourceManager()->GetMaterial(std::stoull(name)) != nullptr)
+            if (Application->root->GetResourceManager()->GetMaterial(name) != nullptr)
             {
-                SetMaterial(Application->root->GetResourceManager()->GetMaterial(std::stoull(name)));
+                SetMaterial(Application->root->GetResourceManager()->GetMaterial(name));
 			}
             else
             {

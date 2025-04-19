@@ -317,7 +317,12 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
             aiString texturePath;
             fbx_material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
             const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
-            materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
+			materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
+			std::string name = std::filesystem::path(texturePath.C_Str()).stem().string();
+			if (Application->root->GetResourceManager()->GetMaterial(name) != nullptr) {
+				materials[i] = Application->root->GetResourceManager()->GetMaterial(name);
+				continue;
+			}
         }
 
         if (fbx_material->GetTextureCount(aiTextureType_NORMALS) > 0) {
@@ -356,32 +361,28 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
         fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
         materials[i]->color = glm::vec4(color.r, color.g, color.b, color.a);
 
-		size_t hash = GenerateMaterialID(*materials[i]);
+		bool hasTexture = false;
 
-		if (Application->root->GetResourceManager()->GetMaterial(hash) == nullptr) {
-
-			materials[i]->SetID(hash);
-
-			if (materials[i]->imagePtr != nullptr) {
-				materials[i]->imagePtr->LoadTexture(materials[i]->imagePtr->image_path);
-			}
-			if (materials[i]->normalMapPtr != nullptr) {
-				materials[i]->normalMapPtr->LoadTexture(materials[i]->normalMapPtr->image_path);
-			}
-			if (materials[i]->metallicMapPtr != nullptr) {
-				materials[i]->metallicMapPtr->LoadTexture(materials[i]->metallicMapPtr->image_path);
-			}
-			if (materials[i]->roughnessMapPtr != nullptr) {
-				materials[i]->roughnessMapPtr->LoadTexture(materials[i]->roughnessMapPtr->image_path);
-			}
-			if (materials[i]->aoMapPtr != nullptr) {
-				materials[i]->aoMapPtr->LoadTexture(materials[i]->aoMapPtr->image_path);
-			}
-
-			materials[i] = Application->root->GetResourceManager()->AddMaterial(materials[i]);
+		if (materials[i]->imagePtr != nullptr) {
+			hasTexture = true;
+			materials[i]->imagePtr->LoadTexture(materials[i]->imagePtr->image_path);
 		}
-		else {
-			materials[i] = Application->root->GetResourceManager()->GetMaterial(hash);
+		if (materials[i]->normalMapPtr != nullptr) {
+			materials[i]->normalMapPtr->LoadTexture(materials[i]->normalMapPtr->image_path);
+		}
+		if (materials[i]->metallicMapPtr != nullptr) {
+			materials[i]->metallicMapPtr->LoadTexture(materials[i]->metallicMapPtr->image_path);
+		}
+		if (materials[i]->roughnessMapPtr != nullptr) {
+			materials[i]->roughnessMapPtr->LoadTexture(materials[i]->roughnessMapPtr->image_path);
+		}
+		if (materials[i]->aoMapPtr != nullptr) {
+			materials[i]->aoMapPtr->LoadTexture(materials[i]->aoMapPtr->image_path);
+		}
+
+		if (hasTexture) {
+			materials[i]->SetMatName(materials[i]->imagePtr->image_name);
+			materials[i] = Application->root->GetResourceManager()->AddMaterial(materials[i]);
 		}
 
     }

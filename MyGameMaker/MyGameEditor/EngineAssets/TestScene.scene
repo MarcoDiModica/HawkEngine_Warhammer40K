@@ -657,7 +657,7 @@ GameObject7:
     - name: Cylinder.001
       uuid: 3309075318469311062
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -693,7 +693,7 @@ GameObject7:
     - name: Cube.021
       uuid: 8928282168126562555
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -729,7 +729,7 @@ GameObject7:
     - name: Cube.058
       uuid: 3908714304330349359
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -765,7 +765,7 @@ GameObject7:
     - name: Cube.046
       uuid: 4051178191361669783
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -801,7 +801,7 @@ GameObject7:
     - name: Cube.093
       uuid: 7545451639931674548
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -837,7 +837,7 @@ GameObject7:
     - name: Cube.054
       uuid: 12193443532927966650
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -873,7 +873,7 @@ GameObject7:
     - name: Cube.055
       uuid: 11434313623903232300
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -910,7 +910,7 @@ GameObject8:
   name: Cone.006_copy
   uuid: 5350241866129660068
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -947,7 +947,7 @@ GameObject9:
   name: Cone.006_copy_copy
   uuid: 3166110390460516282
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -979,4 +979,40 @@ GameObject9:
     Shader:
       name: Shader
       enabled: true
+  Children: ~
+GameObject10:
+  name: MainCamera_1
+  uuid: 13982254388249204610
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999253784715
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975511965976
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
   Children: ~

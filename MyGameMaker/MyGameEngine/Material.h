@@ -71,9 +71,14 @@ public:
 
 	size_t matID;
 
+	void SetMatName(const std::string& name) { matName = name; }
+	std::string GetMatName() const { return matName; }
+
+	std::string matName = "";
+
 protected:
 	static unsigned int next_id;
-	std::string matPath;
+	
 
 	void bindTexture(const std::shared_ptr<Image>& texture, GLenum textureUnit) const;
 
@@ -84,7 +89,7 @@ protected:
     YAML::Node encode() const {
         YAML::Node node;
 
-        std::string name = std::to_string(matID);
+        std::string name = matName;
         node["name"] = name;
 
 		SaveBinary(name);
@@ -106,7 +111,7 @@ protected:
 			throw std::runtime_error("Error opening material file: " + fullPath);
 		}
 
-		matID = std::stoull(name);
+		matName = name;
 
 		fin.read(reinterpret_cast<char*>(&wrapMode), sizeof(wrapMode));
 		fin.read(reinterpret_cast<char*>(&filter), sizeof(filter));

@@ -19,9 +19,13 @@ public class OptionMenu : MonoBehaviour
     GameObject rRight;
     UIButton rLeftButton;
     UIButton rRightButton;
+
     GameObject fullScreenCheckbox;
     GameObject fullScreenTick;
     UIButton fullScreenButton;
+
+    float defaultSliderPos = 0.575f;
+
     GameObject masterSlider;
     GameObject masterLeft;
     GameObject masterRight;
@@ -29,9 +33,27 @@ public class OptionMenu : MonoBehaviour
     UIButton masterRightButton;
     UITransform transform_masterSlider;
     int masterVolume = 100; // Default volume level
-    float defaultSliderPos = 0.575f;
     float sliderScale = 0.009f;
-    float sliderPos = 0.575f;
+    float sliderPosMaster = 0.575f;
+
+    GameObject bgmSlider;
+    GameObject bgmLeft;
+    GameObject bgmRight;
+    UIButton bgmLeftButton;
+    UIButton bgmRightButton;
+    UITransform transform_bgmSlider;
+    int bgmVolume = 100; // Default volume level
+    float sliderPosBGM = 0.575f;
+
+
+    GameObject sfxSlider;
+    GameObject sfxLeft;
+    GameObject sfxRight;
+    UIButton sfxLeftButton;
+    UIButton sfxRightButton;
+    UITransform transform_sfxSlider;
+    int sfxVolume = 100; // Default volume level
+    float sliderPosSFX = 0.575f;
 
 
 
@@ -87,6 +109,21 @@ public class OptionMenu : MonoBehaviour
         masterLeftButton = masterLeft.GetComponent<UIButton>();
         masterRightButton = masterRight.GetComponent<UIButton>();
         transform_masterSlider = masterSlider.GetComponent<UITransform>();
+
+        bgmSlider = GameObject.Find("BGM_slider");
+        bgmLeft = GameObject.Find("BGM_left");
+        bgmRight = GameObject.Find("BGM_right");
+        bgmLeftButton = bgmLeft.GetComponent<UIButton>();
+        bgmRightButton = bgmRight.GetComponent<UIButton>();
+        transform_bgmSlider = bgmSlider.GetComponent<UITransform>();
+
+        sfxSlider = GameObject.Find("SFX_slider");
+        sfxLeft = GameObject.Find("SFX_left");
+        sfxRight = GameObject.Find("SFX_right");
+        sfxLeftButton = sfxLeft.GetComponent<UIButton>();
+        sfxRightButton = sfxRight.GetComponent<UIButton>();
+        transform_sfxSlider = sfxSlider.GetComponent<UITransform>();
+
     }
 
 
@@ -173,8 +210,8 @@ public class OptionMenu : MonoBehaviour
             if (masterVolume > 0)
             {
                 masterVolume -= 10;
-                sliderPos -= sliderScale;
-                transform_masterSlider.DOMoveXUI(sliderPos, 0, Modes.LINEAR);
+                sliderPosMaster -= sliderScale;
+                transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
             }
         }
 
@@ -185,10 +222,60 @@ public class OptionMenu : MonoBehaviour
             if (masterVolume < 100)
             {
                 masterVolume += 10;
-                sliderPos += sliderScale;
-                transform_masterSlider.DOMoveXUI(sliderPos, 0, Modes.LINEAR);
+                sliderPosMaster += sliderScale;
+                transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
             }
         }
+
+        if (bgmLeftButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            if (bgmVolume > 0)
+            {
+                bgmVolume -= 10;
+                sliderPosBGM -= sliderScale;
+                transform_bgmSlider.DOMoveXUI(sliderPosBGM, 0, Modes.LINEAR);
+            }
+        }
+
+        if (bgmRightButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            if (bgmVolume < 100)
+            {
+                bgmVolume += 10;
+                sliderPosBGM += sliderScale;
+                transform_bgmSlider.DOMoveXUI(sliderPosBGM, 0, Modes.LINEAR);
+            }
+        }
+
+        if (sfxLeftButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            if (sfxVolume > 0)
+            {
+                sfxVolume -= 10;
+                sliderPosSFX -= sliderScale;
+                transform_sfxSlider.DOMoveXUI(sliderPosSFX, 0, Modes.LINEAR);
+            }
+        }
+
+        if (sfxRightButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            if (sfxVolume < 100)
+            {
+                sfxVolume += 10;
+                sliderPosSFX += sliderScale;
+                transform_sfxSlider.DOMoveXUI(sliderPosSFX, 0, Modes.LINEAR);
+            }
+        }
+
+
     }
 
 }

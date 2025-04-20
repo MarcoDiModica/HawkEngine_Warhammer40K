@@ -105,14 +105,18 @@ void Animator::CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 pare
     {
         int index = boneInfoMap[nodeName].id;
         glm::mat4 offset = boneInfoMap[nodeName].offset;
-		for (int i = 0; i < m_BonesGameObjects.size(); i++)
-		{
-			if (m_BonesGameObjects[i]->GetName() == nodeName)
-			{
-				m_BonesGameObjects[i]->GetTransform()->SetLocalMatrix(globalTransformation * offset);
-				break;
-			}
-		}
+        
+        glm::mat4 finalTransformation = (glm::mat4)ownerMatrix * globalTransformation;
+
+        for (int i = 0; i < m_BonesGameObjects.size(); i++)
+        {
+            if (m_BonesGameObjects[i]->GetName() == nodeName)
+            {
+                m_BonesGameObjects[i]->GetTransform()->SetLocalMatrix(finalTransformation);
+                break;
+            }
+        }
+
 
         m_FinalBoneMatrices[index] = globalTransformation * offset;
     }
@@ -220,6 +224,17 @@ void Animator::CalculateBlendedBoneTransform(
     {
         const int index = boneInfoMap.at(nodeName).id;
         const glm::mat4& offset = boneInfoMap.at(nodeName).offset;
+
+        glm::mat4 finalTransformation = (glm::mat4)ownerMatrix * globalTransformation;
+
+        for (int i = 0; i < m_BonesGameObjects.size(); i++)
+        {
+            if (m_BonesGameObjects[i]->GetName() == nodeName)
+            {
+                m_BonesGameObjects[i]->GetTransform()->SetLocalMatrix(finalTransformation);
+                break;
+            }
+        }
 
         m_FinalBoneMatrices[index] = globalTransformation * offset;
     }

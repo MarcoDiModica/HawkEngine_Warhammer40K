@@ -59,18 +59,23 @@ void SkeletalAnimationComponent::Awake()
 
 void SkeletalAnimationComponent::Start()
 {
+
 	if (animator == nullptr) 
     {
 		animator = std::make_unique<Animator>(animation1.get());
 	}
     //animator = std::make_unique<Animator>(testAnimation.get());
+	animator->SetOwnerMatrix(owner->GetTransform()->GetMatrix());
     animator->PlayAnimation(animation1.get());
-	animator->UpdateAnimation(0.0f);
+	animator->UpdateAnimation(0.01f);
+	LinkBonesWithGameObjects();
 
 }
 
 void SkeletalAnimationComponent::Update(float deltaTime)
 {
+	animator->SetOwnerMatrix(owner->GetTransform()->GetMatrix());
+
     if (isPlaying) 
     {
 		if (!loopAnimation && animator->animationFinished) 
@@ -123,6 +128,53 @@ void SkeletalAnimationComponent::PlayAnimOnce(int index, float timeToTransitionA
 
 void SkeletalAnimationComponent::Destroy()
 {
+}
+
+void SkeletalAnimationComponent::LinkBonesWithGameObjects()
+{
+	if (!animator || boneNames.empty() || !owner) {
+		return;
+	}
+
+	// Limpiamos la lista de huesos actual para evitar duplicados
+	animator->m_BonesGameObjects.clear();
+
+	// Para cada nombre de hueso guardado
+	for (const auto& boneName : boneNames) {
+		// Si el nombre no está vacío
+		if (!boneName.empty()) {
+			// Buscamos recursivamente empezando por el owner
+			FindAndLinkBoneInHierarchy(owner, boneName);
+		}
+	}
+}
+
+// Nueva función auxiliar para búsqueda recursiva
+bool SkeletalAnimationComponent::FindAndLinkBoneInHierarchy(GameObject* node, const std::string& boneName)
+{
+	if (!node || !animator) {
+		return false;
+	}
+
+	// Primero verificamos si el nodo actual coincide con el nombre del hueso
+	if (node->GetName() == boneName) {
+		animator->AddBoneGameObject(std::shared_ptr<GameObject>(node->shared_from_this()));
+		return true;
+	}
+
+	// Si no coincide, buscamos en sus hijos
+	const auto& children = node->GetChildren();
+	for (const auto& child : children) {
+		if (child) {
+			// Si encontramos el hueso en algún hijo, devolvemos true
+			if (FindAndLinkBoneInHierarchy(child.get(), boneName)) {
+				return true;
+			}
+		}
+	}
+
+	// No encontramos el hueso en este subárbol
+	return false;
 }
 
 int SkeletalAnimationComponent::GetAnimationIndex() {
@@ -260,6 +312,37 @@ void SkeletalAnimationComponent::SaveBinary(const std::string& filename) const
 
 			WriteAssimpNodeData(fout, animation->GetRootNode());
 		}
+	}
+
+	if (animator) {
+		// Acceder a m_BonesGameObjects requiere un método getter en Animator
+		// Como está en la clase privada, asumimos que podemos acceder a través de m_BonesGameObjects directamente 
+		// si se modifica el acceso, o a través de un método que añadiremos
+		const auto& boneGameObjects = animator->m_BonesGameObjects; // Este es un placeholder, necesitarías un getter real
+
+		// Guardamos el número de bone GameObjects
+		uint32_t numBoneGameObjects = static_cast<uint32_t>(animator->m_BonesGameObjects.size());
+		fout.write(reinterpret_cast<const char*>(&numBoneGameObjects), sizeof(numBoneGameObjects));
+
+		// Guardamos cada nombre de GameObject de hueso
+		for (const auto& boneGO : animator->m_BonesGameObjects) {
+			if (boneGO) {
+				std::string boneName = boneGO->GetName();
+				uint32_t boneNameLength = static_cast<uint32_t>(boneName.length());
+				fout.write(reinterpret_cast<const char*>(&boneNameLength), sizeof(boneNameLength));
+				fout.write(boneName.c_str(), boneNameLength);
+			}
+			else {
+				// Si el GameObject es nulo, guardamos un nombre vacío
+				uint32_t boneNameLength = 0;
+				fout.write(reinterpret_cast<const char*>(&boneNameLength), sizeof(boneNameLength));
+			}
+		}
+	}
+	else {
+		// Si no hay animator, guardamos 0 como número de huesos
+		uint32_t numBoneGameObjects = 0;
+		fout.write(reinterpret_cast<const char*>(&numBoneGameObjects), sizeof(numBoneGameObjects));
 	}
 
 	LOG(LogType::LOG_INFO, "Animación esqueletal guardada correctamente: %s", fullPath.c_str());
@@ -413,6 +496,27 @@ bool SkeletalAnimationComponent::LoadBinary(const std::string& filename)
 	if (!animations.empty()) {
 		animation1 = std::make_unique<Animation>(*animations[animationIndex]);
 	}
+
+	Start();
+
+	// Verificamos si hay datos de huesos guardados en el archivo
+    uint32_t numBoneGameObjects;
+    if (fin.read(reinterpret_cast<char*>(&numBoneGameObjects), sizeof(numBoneGameObjects))) {
+		// Si hay datos de huesos, leemos cada nombre
+		for (uint32_t i = 0; i < numBoneGameObjects; ++i) {
+			uint32_t boneNameLength;
+			fin.read(reinterpret_cast<char*>(&boneNameLength), sizeof(boneNameLength));
+
+			if (boneNameLength > 0) {
+				std::string boneName(boneNameLength, '\0');
+				fin.read(&boneName[0], boneNameLength);
+
+				// Guardamos el nombre del hueso en la variable boneNames
+				boneNames.push_back(boneName);
+
+			}
+		}
+    }
 
 	Start();
 

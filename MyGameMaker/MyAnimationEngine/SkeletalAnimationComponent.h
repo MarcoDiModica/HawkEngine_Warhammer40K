@@ -86,6 +86,10 @@ public:
 
     int GetAnimationIndex();
 
+    void LinkBonesWithGameObjects();
+
+    bool FindAndLinkBoneInHierarchy(GameObject* node, const std::string& boneName);
+   
 	void SetAnimationIndex(int index) {
 		animationIndex = index;
 	}
@@ -189,6 +193,7 @@ private:
     int animationIndex = 0;
 	bool isPlaying = true;
 	float timeToTransition = 0.0f;
+	std::vector<std::string> boneNames;
 
 
 

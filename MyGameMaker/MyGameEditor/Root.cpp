@@ -860,33 +860,34 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
 			std::unordered_map<std::string, std::shared_ptr<GameObject>> boneMap;
 
-			//for (auto& bone : meshImp.bonesGameObjects[i]) {
-			//	if (!bone) continue;
+			for (auto& bone : meshImp.bonesGameObjects[i]) {
+				if (!bone) continue;
 
-			//	auto boneGO = Application->root->CreateGameObject(bone->GetName());
-			//	Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
-			//	animationComponent->GetAnimator()->AddBoneGameObject(boneGO);
-			//	boneMap[bone->GetName()] = boneGO;
-			//}
+				auto boneGO = Application->root->CreateGameObject(bone->GetName());
+				Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+				animationComponent->GetAnimator()->AddBoneGameObject(boneGO);
+				boneMap[bone->GetName()] = boneGO;
+			}
 
-			//for (auto& bone : meshImp.bonesGameObjects[i]) {
-			//	if (!bone) continue;
+			for (auto& bone : meshImp.bonesGameObjects[i]) {
+				if (!bone) continue;
 
-			//	auto boneGO = boneMap[bone->GetName()];
-			//	Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
-			//	if (boneTransform && !boneTransform->GetParentName().empty()) {
-			//		auto it = boneMap.find(boneTransform->GetParentName());
-			//		if (it != boneMap.end()) {
-			//			ParentGameObject(*boneGO, *(it->second));
-			//		}
-			//		else {
-			//			ParentGameObject(*boneGO, *go);
-			//		}
-			//	}
-			//	else {
-			//		ParentGameObject(*boneGO, *go);
-			//	}
-			//}
+				auto boneGO = boneMap[bone->GetName()];
+				Bone* boneTransform = meshImp.animations[0].get()->FindBone(bone->GetName());
+				if (boneTransform && !boneTransform->GetParentName().empty()) {
+					auto it = boneMap.find(boneTransform->GetParentName());
+					if (it != boneMap.end()) {
+						ParentGameObject(*boneGO, *(it->second));
+					}
+					else {
+						ParentGameObject(*boneGO, *go);
+					}
+				}
+				else {
+					ParentGameObject(*boneGO, *go);
+				}
+			}
+			animationComponent->Start();
 		}
 
 		meshRenderer->GetMesh()->setBoundingBox(*meshBBox);

@@ -10,7 +10,7 @@ class Animator
 {
 private:
     std::vector<glm::mat4> m_FinalBoneMatrices;
-	std::vector<std::shared_ptr<GameObject>> m_BonesGameObjects;
+	
     Animation* m_CurrentAnimation;
     float m_CurrentTime;
     float currentTimeBase = 0.0f;
@@ -18,7 +18,7 @@ private:
     float m_DeltaTime;
 	float m_PlaySpeed = 1;
     float transitionTime = 0.0f;
-
+	glm::dmat4 ownerMatrix;
 
 public:
     Animator(Animation* Animation);
@@ -45,6 +45,11 @@ public:
     {
 		return m_CurrentTime;
     }
+    std::vector<std::shared_ptr<GameObject>> m_BonesGameObjects;
+	void SetOwnerMatrix(glm::dmat4 matrix)
+	{
+		ownerMatrix = matrix;
+	}
 
     bool animationFinished = false;
     bool isLooping = true;

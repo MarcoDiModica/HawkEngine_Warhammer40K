@@ -52,7 +52,7 @@ bool Root::Awake()
 	MonoManager::GetInstance().EnableHotReloading();
 
 	//CreateMainMenuUI();
-	//Application->scene_serializer->DeSerialize("Library/Scenes/TestScene.scene");
+	
 	
     return true;
 }
@@ -65,7 +65,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");
@@ -106,6 +106,7 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
+	//Application->scene_serializer->DeSerialize("Library/Scenes/Level1SundayDelivery.Scene");
 
 	//auto objMainCamera = CreateCameraObject("MainCamera");
 	//objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
@@ -115,9 +116,6 @@ bool Root::Start()
 	//objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
 	//mainCamera = objMainCamera;
 	//UpdateCameraPriority();
-
-	Application->scene_serializer->DeSerialize("Library/Scenes/Level1SundayDelivery.Scene");
-
 
 	//particle->ApplyPreset(Particle)
 
@@ -298,20 +296,20 @@ bool Root::Start()
 	BoltgunBullets->SetTag("Ammunition");*/
 	
 	//Lictor
-	auto lictor = CreateGameObject("Lictor");
-	lictor->SetTag("Enemy");
-	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
-	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
-	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
-	lictorMesh->SetName("LictorMesh");
-	lictorMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	ParentGameObject(*lictorMesh, *lictor);
-	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
+	//auto lictor = CreateGameObject("Lictor");
+	//lictor->SetTag("Enemy");
+	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
+	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
+	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
+	//lictorMesh->SetName("LictorMesh");
+	//lictorMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
+	//ParentGameObject(*lictorMesh, *lictor);
+	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 
 	//auto lictor2 = CreateGameObject("lictor2");
 	//lictor2->SetTag("Enemy");
@@ -383,8 +381,8 @@ bool Root::Start()
 	//hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	//hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 1.3, 1.6));
-	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt2.fbx");
+	//hormagaunt->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//auto hormagauntMesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
 	//hormagauntMesh->SetName("HormagauntMesh");
 	//hormagauntMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//hormagauntMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0)); 
@@ -393,22 +391,88 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt->SetTag("Enemy");
-
-	//auto hormagaunt2 = CreateGameObject("hormagaunt2");
+	//
+	//auto hormagaunt1= CreateGameObject("Hormagaunt1");
+	//hormagaunt1->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	//hormagaunt1->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//hormagaunt1->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//hormagaunt1->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//auto hormagauntMesh1 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh1->SetName("HormagauntMesh1");
+	//hormagauntMesh1->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//hormagauntMesh1->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//hormagauntMesh1->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//hormagauntMesh1->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh1, *hormagaunt1);
+	//hormagaunt1->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//hormagaunt1->SetTag("Enemy");
+	//
+	//auto hormagaunt2 = CreateGameObject("Hormagaunt2");
 	//hormagaunt2->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//hormagaunt2->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	//hormagaunt2->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//hormagaunt2->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt2->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 1.3, 1.6));
-	//auto hormagaunt2Mesh = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagaunt2Mesh->SetName("Hormagaunt2Mesh");
-	//hormagaunt2Mesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//hormagaunt2Mesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//hormagaunt2Mesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//hormagaunt2Mesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagaunt2Mesh, *hormagaunt2);
+	//hormagaunt2->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//auto hormagauntMesh2 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh2->SetName("HormagauntMesh2");
+	//hormagauntMesh2->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//hormagauntMesh2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//hormagauntMesh2->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//hormagauntMesh2->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh2, *hormagaunt2);
 	//hormagaunt2->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt2->SetTag("Enemy");
+	//
+	//auto hormagaunt3 = CreateGameObject("Hormagaunt3");
+	//hormagaunt3->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	//hormagaunt3->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt3->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//hormagaunt3->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//hormagaunt3->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//auto hormagauntMesh3 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh3->SetName("HormagauntMesh3");
+	//hormagauntMesh3->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//hormagauntMesh3->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//hormagauntMesh3->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//hormagauntMesh3->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh3, *hormagaunt3);
+	//hormagaunt3->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//hormagaunt3->SetTag("Enemy");
+	//
+	//auto hormagaunt4 = CreateGameObject("Hormagaunt4");
+	//hormagaunt4->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	//hormagaunt4->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt4->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//hormagaunt4->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//hormagaunt4->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//auto hormagauntMesh4 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh4->SetName("HormagauntMesh4");
+	//hormagauntMesh4->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//hormagauntMesh4->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//hormagauntMesh4->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//hormagauntMesh4->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh4, *hormagaunt4);
+	//hormagaunt4->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//hormagaunt4->SetTag("Enemy");
+	//
+	//auto hormagaunt5 = CreateGameObject("Hormagaunt5");
+	//hormagaunt5->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	//hormagaunt5->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
+	//hormagaunt5->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//hormagaunt5->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//hormagaunt5->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
+	//auto hormagauntMesh5 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
+	//hormagauntMesh5->SetName("HormagauntMesh5");
+	//hormagauntMesh5->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
+	//hormagauntMesh5->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//hormagauntMesh5->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
+	//hormagauntMesh5->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
+	//ParentGameObject(*hormagauntMesh5, *hormagaunt5);
+	//hormagaunt5->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	//hormagaunt5->SetTag("Enemy");
+
+
 
 	//auto mawloc = CreateGameObject("Mawloc");
 	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));

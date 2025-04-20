@@ -68,16 +68,16 @@ public class Railgun : BaseWeapon
     {
         timeSinceLastShot += deltaTime;
 
-        if (railgunMode == RailgunMode.SEMIAUTOMATIC)
+        if (railgunMode == RailgunMode.AUTOMATIC)
         {
 
-            damage = 100.0f;
+            damage = 50.0f;
             shootCadence = 0.66f;
             magazineSize = 4;
         }
         else
         {
-            damage = 50.0f;
+            damage = 100.0f;
             shootCadence = 2f;
             magazineSize = 10;
         }

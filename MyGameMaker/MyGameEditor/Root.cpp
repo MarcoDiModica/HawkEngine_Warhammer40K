@@ -296,20 +296,20 @@ bool Root::Start()
 	BoltgunBullets->SetTag("Ammunition");*/
 	
 	//Lictor
-	//auto lictor = CreateGameObject("Lictor");
-	//lictor->SetTag("Enemy");
-	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
-	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
-	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
-	//lictorMesh->SetName("LictorMesh");
-	//lictorMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	//ParentGameObject(*lictorMesh, *lictor);
-	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
+	auto lictor = CreateGameObject("Lictor");
+	lictor->SetTag("Enemy");
+	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
+	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
+	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
+	lictorMesh->SetName("LictorMesh");
+	lictorMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
+	ParentGameObject(*lictorMesh, *lictor);
+	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 
 	//auto lictor2 = CreateGameObject("lictor2");
 	//lictor2->SetTag("Enemy");

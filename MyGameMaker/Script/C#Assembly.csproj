@@ -115,6 +115,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
+    <Compile Include="LaserBeamObject.cs" />
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="Mathf.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="ParticleFX.cs" />
     <Compile Include="PickUpManager.cs" />
     <Compile Include="Physics.cs" />
+    <Compile Include="PiercingBullets.cs" />
     <Compile Include="PlayerAnimations.cs" />
     <Compile Include="PlayerCamera.cs" />
     <Compile Include="PlayerController.cs" />
@@ -163,6 +165,8 @@
     <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Tweening.cs" />
+    <Compile Include="TyranidCorpse.cs" />
+    <Compile Include="TyranidTentacles.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="UICanvas.cs" />
     <Compile Include="UIGameplay.cs" />

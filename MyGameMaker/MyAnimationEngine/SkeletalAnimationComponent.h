@@ -28,6 +28,12 @@ public:
 
     void TransitionAnimations(int oldAnim, int newAnim, float timeToTransition);
 
+    void AutoTransitionAnimation(int newAnim, float timeToTransitionAnim, bool loopAnim = false);
+
+    void PlayAnimOnce(int index, float timeToTransitionAnim = 0.0f);
+
+    void SetLoop(bool isLoop);
+
     ComponentType GetType() const override {
         return ComponentType::ANIMATION; // Cambia a un tipo espec�fico si es necesario
     }
@@ -80,6 +86,10 @@ public:
 
     int GetAnimationIndex();
 
+    void LinkBonesWithGameObjects();
+
+    bool FindAndLinkBoneInHierarchy(GameObject* node, const std::string& boneName);
+   
 	void SetAnimationIndex(int index) {
 		animationIndex = index;
 	}
@@ -113,7 +123,7 @@ public:
     MonoObject* CsharpReference = nullptr;
     MonoObject* GetSharp() override;
 
-
+	bool loopAnimation = true;
     float blendFactor = 0.0f;
     bool isBlending = false;
 	void SaveBinary(const std::string& filename) const;
@@ -183,6 +193,7 @@ private:
     int animationIndex = 0;
 	bool isPlaying = true;
 	float timeToTransition = 0.0f;
+	std::vector<std::string> boneNames;
 
 
 
@@ -399,7 +410,7 @@ protected:
 
         Start();*/
 
-		if (node["animation_file"]) {
+	if (node["animation_file"]) {
 			std::string animName = node["animation_file"].as<std::string>();
 			LoadBinary(animName);
 		}

@@ -1,0 +1,91 @@
+SceneMetadata:
+  SceneName: meshTest
+GameObject0:
+  name: MainCamera
+  uuid: 5724996589950135689
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999253784715
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject1:
+  name: Cylinder.010
+  uuid: 10908826236771297921
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0015566733200103045
+        - 0.0015566733200103045
+        - 0.0015566733200103045
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: Cylinder.010
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~

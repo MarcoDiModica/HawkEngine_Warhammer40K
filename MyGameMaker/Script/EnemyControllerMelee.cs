@@ -263,13 +263,33 @@ public class EnemyControllerMelee : EnemyController
         {
             // Enemy Death
             collider.SetActive(false);
+            if (pc.playerData.isPiercing == true)
+            {
+                pc.playerData.AddHealth(5.0f);
+            }
         }
     }
 
     public override void Attack()
     {
         Engineson.print("Melee attack executed!");
-        pc.playerData.TakeDamage(clawDamage);
+        if (pc.redThirstManager.IsInBlackRage())
+        {
+            if(pc.redThirstManager.redThirstBonus < clawDamage)
+            {
+                pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
+            }
+            else
+            {
+                pc.playerData.TakeDamage(0);
+            }
+
+        }
+        else
+        {
+            pc.playerData.TakeDamage(clawDamage);
+        }
+
         Engineson.print("Player health: " + (pc.playerData.GetHealth()));
 
         sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
@@ -321,36 +341,50 @@ public class EnemyControllerMelee : EnemyController
 
     override public void OnCollisionEnter(GameObject other)
     {
-        //if (other.tag == "BoltgunProjectile")
-        //{
-        //    currentHealth -= 20.0f;
-        //    Engineson.print("Hit");
-        //    anim.SetHitAnimation();
-        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-        //    sound?.Play();
+        if (other.tag == "BoltgunProjectile")
+        {
+            currentHealth -= 20.0f;
+            Engineson.print("Hit");
+            anim.SetHitAnimation();
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
 
-        //    Engineson.print("Boltgun hit!");
-        //}
-        //else if (other.tag == "ShotgunProjectile")
-        //{
-        //    //cosas de la shotgun
-        //    anim.SetHitAnimation();
-        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-        //    sound?.Play();
+            Engineson.print("Boltgun hit!");
+        }
+        else if (other.tag == "ShotgunProjectile")
+        {
+            //cosas de la shotgun
+            anim.SetHitAnimation();
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
 
-        //}
-        //else if (other.tag == "RailgunProjectile")
-        //{
-        //    //Cosas de railgun
-        //    currentHealth -= 100.0f;
-        //    anim.SetHitAnimation();
-        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-        //    sound?.Play();
-        //}
+        }
+        else if (other.tag == "RailgunProjectile")
+        {
+            //Cosas de railgun
+            currentHealth -= 100.0f;
+            anim.SetHitAnimation();
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
+        }
         if (other.tag == "Player" && isLeaping)
         {
             Engineson.print("Player hit while Leaping!");
-            pc.playerData.TakeDamage(leapDamage);
+            if (pc.redThirstManager.IsInBlackRage())
+            {
+                if (pc.redThirstManager.redThirstBonus < leapDamage)
+                {
+                    pc.playerData.TakeDamage(leapDamage - pc.redThirstManager.redThirstBonus);
+                }
+                else
+                {
+                    pc.playerData.TakeDamage(0);
+                }
+            }
+            else
+            {
+                pc.playerData.TakeDamage(leapDamage);
+            }
             Engineson.print("Player health: " + (pc.playerData.GetHealth()));
         }
     }

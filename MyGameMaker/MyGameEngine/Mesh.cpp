@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include <unordered_map>
 #include <unordered_set>
 #include <zlib.h>
 #include <queue>
@@ -17,7 +16,9 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "GameObject.h"
+#include "../MyGameEditor/App.h"
 #include "../MyGameEditor/Log.h"
+#include "ResourceManager.h"
 
 Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 {
@@ -26,29 +27,6 @@ Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
 
 
 Mesh::~Mesh() {}
-
-
-//void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs, const int* boneIDs, const float* weights)
-//{
-//	_boundingBox.min = _vertices.front();
-//	_boundingBox.max = _vertices.front();
-//
-//	for (const auto& v : _vertices) {
-//		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v.position));
-//		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
-//	}
-//	for (size_t i = 0; i < num_verts; ++i) {
-//		_vertices[i].position = vertices[i];
-//		for (int j = 0; j < MAX_BONE_INFLUENCE; ++j) {
-//			_vertices[i].m_BoneIDs[j] = boneIDs[i * MAX_BONE_INFLUENCE + j];
-//			_vertices[i].m_Weights[j] = weights[i * MAX_BONE_INFLUENCE + j];
-//		}
-//	}
-//	
-//
-//	CalculateNormals();
-//}
-
 
 void Mesh::drawBoundingBox(const BoundingBox& bbox) {
 	glLineWidth(2.0);
@@ -847,8 +825,6 @@ std::shared_ptr<Mesh> Mesh::CreatePlane()
 	return mesh;
 }
 
-std::unordered_map<std::string, std::shared_ptr<Mesh>> meshCache;
-
 void Mesh::SaveBinary(const std::string& filename) const
 {
 	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
@@ -857,11 +833,18 @@ void Mesh::SaveBinary(const std::string& filename) const
 		std::filesystem::create_directory("Library/Mesh");
 	}
 
+	if (std::filesystem::exists(fullPath)) {
+		return;
+	}
+
 	std::ofstream fout(fullPath, std::ios::binary);
 	if (!fout.is_open()) {
 		LOG(LogType::LOG_ERROR, "Error al guardar la malla: %s", fullPath.c_str());
 		return;
 	}
+
+	size_t id = static_cast<size_t>(model->GetID());
+	fout.write(reinterpret_cast<const char*>(&id), sizeof(size_t));
 
 	uint32_t nameLength = static_cast<uint32_t>(model->GetMeshName().length());
 	fout.write(reinterpret_cast<const char*>(&nameLength), sizeof(nameLength));
@@ -925,9 +908,11 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 {
 	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
 
-	auto it = meshCache.find(fullPath);
-	if (it != meshCache.end()) {
-		return it->second;
+	if (Application->root->GetResourceManager()->GetMesh(std::stoull(filename)) != nullptr)
+	{
+		auto mesh = Application->root->GetResourceManager()->GetMesh(std::stoull(filename));
+		mesh->loadToOpenGL();
+		return mesh;
 	}
 
 	std::ifstream fin(fullPath, std::ios::binary);
@@ -939,6 +924,10 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 	auto mesh = std::make_shared<Mesh>();
 	mesh->setModel(std::make_shared<Model>());
 	auto& modelData = mesh->model->GetModelData();
+
+	size_t id;
+	fin.read(reinterpret_cast<char*>(&id), sizeof(size_t));
+	mesh->model->SetID(id);
 
 	uint32_t nameLength;
 	fin.read(reinterpret_cast<char*>(&nameLength), sizeof(nameLength));
@@ -1008,9 +997,15 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 		mesh->_texCoords = modelData.vertex_texCoords;
 	}
 
-	mesh->loadToOpenGL();
+	if(Application->root->GetResourceManager()->GetMesh(mesh->model->GetID()) == nullptr){
+		mesh = Application->root->GetResourceManager()->AddMesh(mesh);
+		mesh->loadToOpenGL();
+	}
+	else {
+		mesh = Application->root->GetResourceManager()->GetMesh(mesh->model->GetID());
+	}
+	
 
-	meshCache[fullPath] = mesh;
 	mesh->nameM = filename;
 	mesh->filePath = filename;
 

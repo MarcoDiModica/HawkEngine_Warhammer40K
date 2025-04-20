@@ -157,7 +157,7 @@ public class Boltgun : BaseWeapon
             bulletStart.Y += 0.5f;
             Vector3 direction = Vector3.Normalize(transform.forward);
 
-            // Calcular rotación desde la dirección (LookAt-like)
+            // Calcular rotaciï¿½n desde la direcciï¿½n (LookAt-like)
             float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
             float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 

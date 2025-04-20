@@ -44,6 +44,7 @@ namespace EngineBinds {
 	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
     void GameObjectSetActive(MonoObject* ref, bool active);
+	bool GameObjectIsActive(MonoObject* ref);
 
     // Input
     bool GetKey(int keyID);

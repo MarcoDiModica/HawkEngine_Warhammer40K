@@ -2490,11 +2490,12 @@ private:
         glm::dvec3 currentPosition = transform->GetPosition();
         glm::dvec3 currentRotation = glm::radians(transform->GetRotation());
         glm::dvec3 currentScale = transform->GetScale();
-		glm::dvec1 currentPivot = transform->GetPivotOffset();
+		glm::dvec3 currentPivot = transform->GetPivotOffset();
 
 		float pos[3] = { static_cast<float>(currentPosition.x), static_cast<float>(currentPosition.y), static_cast<float>(currentPosition.z) };
 		float rot[3] = { static_cast<float>(glm::degrees(currentRotation.x)), static_cast<float>(glm::degrees(currentRotation.y)), static_cast<float>(glm::degrees(currentRotation.z)) };
 		float sca[3] = { static_cast<float>(currentScale.x), static_cast<float>(currentScale.y), static_cast<float>(currentScale.z) };
+		float pivot[3] = { static_cast<float>(currentPivot.x), static_cast<float>(currentPivot.y), static_cast<float>(currentPivot.z) };
 
 		ImGui::AlignTextToFramePadding();
 		ImGui::Text("Position");
@@ -2555,11 +2556,23 @@ private:
 			transform->Scale(deltaScale);
 		}
 
-		/*if (ImGui::DragFloat3("Pivot", pivot, 0.001f, -1.0f, 1.0f)) {
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Pivot");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		bool pivotChanged = ImGui::DragFloat3("##Pivot", pivot, 0.01f, -1.0f, 1.0f);
+		ImGui::PopItemWidth();
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Pivot offset (X, Y, Z)");
+			ImGui::EndTooltip();
+		}
+
+		if (pivotChanged) {
 			glm::dvec3 newPivot = { pivot[0], pivot[1], pivot[2] };
-			glm::dvec3 deltaPivot = newPivot - currentPivot;
-			transform->SetPivotOffset(deltaPivot);
-		}*/
+			transform->SetPivotOffset(newPivot);
+		}
 
 		ImGui::EndGroup();
 	}
@@ -2870,6 +2883,16 @@ public:
 				gameObject->AddComponent<UITransformComponent>();
 				}, !gameObject->HasComponent<UITransformComponent>());
 
+			DrawComponentButton(gameObject, "UI Button", [gameObject](){
+				gameObject->AddComponent<UIButtonComponent>();
+				if (!gameObject->HasComponent<UIImageComponent>()) {
+					gameObject->AddComponent<UIImageComponent>();
+					gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
+				}
+				}, !gameObject->HasComponent<UIButtonComponent>());
+
+			
+
 			break;
 
 		case 4:
@@ -3045,6 +3068,13 @@ public:
 				gameObject->AddComponent<UIImageComponent>();
 				gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
 				}, !gameObject->HasComponent<UIImageComponent>());
+		}
+
+		if (matchesSearch("UIButtonComponent")) {
+			anyFound = true;
+			DrawComponentButton(gameObject, "UI Button", [gameObject]() {
+				gameObject->AddComponent<UIButtonComponent>();
+				}, !gameObject->HasComponent<UIButtonComponent>());
 		}
 
 		if (matchesSearch("Rect Transform")) {

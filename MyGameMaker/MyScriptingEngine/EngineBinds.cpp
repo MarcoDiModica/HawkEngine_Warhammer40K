@@ -273,6 +273,10 @@ void EngineBinds::SetActive(MonoObject* ref, bool active) {
 	ConvertFromSharp(ref)->SetActive(active);
 }
 
+bool EngineBinds::GameObjectIsActive(MonoObject* ref) {
+	return ConvertFromSharp(ref)->IsActive();
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
@@ -288,6 +292,7 @@ void EngineBinds::SetTag(MonoObject* ref, MonoString* sharpName) {
 void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
     ConvertFromSharp(ref)->SetActive(active);
 }
+
 
 MonoString* EngineBinds::GetTag(MonoObject* ref) {
 	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
@@ -1392,6 +1397,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
     mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
+    mono_add_internal_call("HawkEngine.GameObject::IsActive", (const void*)GameObjectIsActive);
+
 
 
     // Input

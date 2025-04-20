@@ -1,0 +1,197 @@
+SceneMetadata:
+  SceneName: 2
+GameObject0:
+  name: MainCamera
+  uuid: 5442281204832746374
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999735770004
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975803375244
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject1:
+  name: Gran_Piedra2_PabloFlipnormal
+  uuid: 17762016873670146785
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 4.3359360694885254
+        - 0.55956631898880005
+        - 0.046262465417385101
+      localRotation:
+        - -90.000014489018881
+        - 0
+        - 0
+      localScale:
+        - 0.23759564757347107
+        - 0.23759564757347107
+        - 0.23759564757347107
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 2938377707842750082
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: ""
+        normal_map: ""
+        metallic_map: ""
+        roughness_map: ""
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject2:
+  name: mesh.089
+  uuid: 12209311824225508740
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - -2.8994462490081787
+        - 0.79262250661849976
+        - 0.040951989591121674
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 6746157562630164320
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Low_BSurfaceMesh_BaseColor
+        normal_map: Low_BSurfaceMesh_Normal
+        metallic_map: ""
+        roughness_map: Low_BSurfaceMesh_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~
+GameObject3:
+  name: mesh.089_1
+  uuid: 7714859260317932941
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0.00024807715089991689
+        - 0.79262250661849976
+        - 0.040951989591121674
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+        - 0.0060735000297427177
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 6746157562630164320
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: Low_BSurfaceMesh_BaseColor
+        normal_map: Low_BSurfaceMesh_Normal
+        metallic_map: ""
+        roughness_map: Low_BSurfaceMesh_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+  Children: ~

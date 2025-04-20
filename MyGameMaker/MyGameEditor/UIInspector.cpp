@@ -203,6 +203,7 @@ private:
 			if (mesh) {
 				AlignedProperty("Vertices", static_cast<int>(mesh->getModel()->GetModelData().vertexData.size()), labelWidth);
 				AlignedProperty("Indices", static_cast<int>(mesh->getModel()->GetModelData().indexData.size()), labelWidth);
+				AlignedProperty("Mesh ID", static_cast<int>(mesh->getModel()->GetID()), labelWidth);
 			}
 			else {
 				ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "No mesh assigned");
@@ -217,6 +218,9 @@ private:
 				ImGui::TreePop();
 				return;
 			}
+
+			std::string MatName = "Material Name:" + material->matName;
+			ImGui::Text(MatName.c_str());
 
 			const char* shaderTypes[] = { "UNLIT", "PBR" };
 			int currentType = static_cast<int>(material->GetShaderType());

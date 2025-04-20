@@ -253,7 +253,7 @@ public class Railgun : BaseWeapon
     {
         if (railgunMode == RailgunMode.AUTOMATIC)
         {
-          //  laserBeam.TriggerAbility();
+            laserBeam.TriggerAbility();
         }
         else
         {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
+public enum EnemyState { IDLE, CHASE, ATTACK, STUNNED, DEAD };
+
 public abstract class EnemyController : MonoBehaviour, IEnemyController
 {
     // Variables comunes
@@ -12,6 +14,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected Transform enemyTransform;
     protected Audio sound;
     protected ParticleFX particles;
+    protected EnemyState currentState = EnemyState.IDLE;
 
     public float currentHealth;
     public float maxHealth;

@@ -155,11 +155,11 @@ public class Shotgun : BaseWeapon
                 float yawRad = randomYaw * (float)(Math.PI / 180f);
                 float pitchRad = randomPitch * (float)(Math.PI / 180f);
 
-                // Aplicar rotación a la dirección base
+                // Aplicar rotaciï¿½n a la direcciï¿½n base
                 Matrix4x4 rotationMatrix = Matrix4x4.CreateFromYawPitchRoll(yawRad, pitchRad, 0);
                 Vector3 direction = Vector3.Normalize(Vector3.Transform(baseDirection, rotationMatrix));
 
-                // Posición inicial del proyectil
+                // Posiciï¿½n inicial del proyectil
                 Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f);
                 Vector3 bulletStart = transform.position +
                                       (transform.right * localOffset.X) +
@@ -167,7 +167,7 @@ public class Shotgun : BaseWeapon
                                       (transform.forward * localOffset.Z);
                 bulletStart.Y += 0.5f;
 
-                // Rotación del proyectil
+                // Rotaciï¿½n del proyectil
                 float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
                 float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 

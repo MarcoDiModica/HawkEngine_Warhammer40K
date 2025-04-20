@@ -1,8 +1,91 @@
 SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
+  name: MainCamera
+  uuid: 18434520341186466998
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999253784715
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975511965976
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject1:
+  name: Floor
+  uuid: 4464402535078459771
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 50
+        - 1
+        - 50
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 0
+      material:
+        name: 2
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject2:
   name: Player
-  uuid: 10969078144438863998
+  uuid: 16246928450561451397
   tag: Player
   active: true
   isStatic: false
@@ -142,7 +225,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 10301652783088824172
+      uuid: 3509437015434926677
       tag: Untagged
       active: true
       isStatic: false
@@ -166,25 +249,9 @@ GameObject0:
           name: MeshRenderer
           enabled: true
           mesh:
-            name: Cylinder.001
+            name: 17597220777981042704
           material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
-            normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
-            metallic_map: ""
-            roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
-            ao_map: ""
+            name: 17803050850064222258
           color:
             - 1
             - 1
@@ -201,7 +268,7 @@ GameObject0:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 7173053611303704539
+      uuid: 6742846795934487336
       tag: Untagged
       active: true
       isStatic: false
@@ -273,7 +340,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 14202598188416546145
+      uuid: 14057382545250422934
       tag: Untagged
       active: true
       isStatic: false
@@ -345,7 +412,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 10223265661941201358
+      uuid: 13370977158998369653
       tag: Untagged
       active: true
       isStatic: false
@@ -416,917 +483,3 @@ GameObject0:
             texturePath: Assets/Textures/Smoke30Frames.png
           particleType: 1
       Children: ~
-GameObject1:
-  name: MainCamera
-  uuid: 7669569929930062297
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 20
-        - -14
-      localRotation:
-        - 54.999999253784715
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    CameraComponent:
-      name: CameraComponent
-      enabled: true
-      projection_type: perspective
-      fov: 1.0471975511965976
-      size: 0
-      near_plane: 0.10000000000000001
-      far_plane: 500
-      priority: 1
-    AudioListener: ~
-    ScriptComponents:
-      Script0:
-        name: PlayerCamera
-  Children: ~
-GameObject2:
-  name: Lictor
-  uuid: 9178393674866909706
-  tag: Ranged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 4
-        - 40
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 5
-        - 5
-        - 5
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 10
-      particlesPerSecond: 10
-      minLifetime: 1
-      maxLifetime: 3
-      minSpeed: 1
-      maxSpeed: 3
-      startSize: 1
-      endSize: 1
-      minSize: 0
-      maxSize: 0
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 0
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0
-        - 0
-      shapeParam1: 0.5
-      shapeParam2: 1
-      shapeParam3: 0
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 133
-        - 175
-      useAnimation: false
-      animSpeed: 0
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 0
-        softness: 0
-        useColorGradient: false
-        texturePath: ""
-      particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 0.25
-        - 1
-        - 0.25
-      offset:
-        - 0
-        - -3
-        - -1.39999998
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerRanged
-  Children:
-    - name: LictorMesh
-      uuid: 12029836979205339742
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.00037008654908277094
-            - -0.09231160581111908
-            - -0.150098517537117
-          localRotation:
-            - -90.000002504478161
-            - 0
-            - 0
-          localScale:
-            - 0.40000000596046448
-            - 0.40000000596046448
-            - 0.40000000596046448
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Lictor
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Lictor_Base_color
-            normal_map: Lictor_Normal_OpenGL
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_LictorMesh
-      Children: ~
-GameObject3:
-  name: lictor2
-  uuid: 12821517049454581234
-  tag: Ranged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 4
-        - 40
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 5
-        - 5
-        - 5
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 10
-      particlesPerSecond: 10
-      minLifetime: 1
-      maxLifetime: 3
-      minSpeed: 1
-      maxSpeed: 3
-      startSize: 1
-      endSize: 1
-      minSize: 0
-      maxSize: 0
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 0
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0
-        - 0
-      shapeParam1: 0.5
-      shapeParam2: 1
-      shapeParam3: 0
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 133
-        - 175
-      useAnimation: false
-      animSpeed: 0
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 0
-        softness: 0
-        useColorGradient: false
-        texturePath: ""
-      particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 0.25
-        - 1
-        - 0.25
-      offset:
-        - 0
-        - -3
-        - -1.39999998
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerRanged
-  Children:
-    - name: lictor2Mesh
-      uuid: 6050336089111864270
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.00037008654908277094
-            - -0.09231160581111908
-            - -0.150098517537117
-          localRotation:
-            - -90.000002504478161
-            - 0
-            - 0
-          localScale:
-            - 0.40000000596046448
-            - 0.40000000596046448
-            - 0.40000000596046448
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Lictor
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Lictor_Base_color
-            normal_map: Lictor_Normal_OpenGL
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_lictor2Mesh
-      Children: ~
-GameObject4:
-  name: lictor3
-  uuid: 1992031982470381745
-  tag: Ranged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 4
-        - 40
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 5
-        - 5
-        - 5
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 10
-      particlesPerSecond: 10
-      minLifetime: 1
-      maxLifetime: 3
-      minSpeed: 1
-      maxSpeed: 3
-      startSize: 1
-      endSize: 1
-      minSize: 0
-      maxSize: 0
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 0
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0
-        - 0
-      shapeParam1: 0.5
-      shapeParam2: 1
-      shapeParam3: 0
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 133
-        - 175
-      useAnimation: false
-      animSpeed: 0
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 0
-        softness: 0
-        useColorGradient: false
-        texturePath: ""
-      particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 0.25
-        - 1
-        - 0.25
-      offset:
-        - 0
-        - -3
-        - -1.39999998
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerRanged
-  Children:
-    - name: lictor3Mesh
-      uuid: 1977909310584533177
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.00037008654908277094
-            - -0.09231160581111908
-            - -0.150098517537117
-          localRotation:
-            - -90.000002504478161
-            - 0
-            - 0
-          localScale:
-            - 0.40000000596046448
-            - 0.40000000596046448
-            - 0.40000000596046448
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Lictor
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Lictor_Base_color
-            normal_map: Lictor_Normal_OpenGL
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_lictor3Mesh
-      Children: ~
-GameObject5:
-  name: lictor4
-  uuid: 7901288600886286265
-  tag: Ranged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 4
-        - 40
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 5
-        - 5
-        - 5
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 10
-      particlesPerSecond: 10
-      minLifetime: 1
-      maxLifetime: 3
-      minSpeed: 1
-      maxSpeed: 3
-      startSize: 1
-      endSize: 1
-      minSize: 0
-      maxSize: 0
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 0
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0
-        - 0
-      shapeParam1: 0.5
-      shapeParam2: 1
-      shapeParam3: 0
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 133
-        - 175
-      useAnimation: false
-      animSpeed: 0
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 0
-        softness: 0
-        useColorGradient: false
-        texturePath: ""
-      particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 0.25
-        - 1
-        - 0.25
-      offset:
-        - 0
-        - -3
-        - -1.39999998
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerRanged
-  Children:
-    - name: lictor4Mesh
-      uuid: 356356653367168688
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.00037008654908277094
-            - -0.09231160581111908
-            - -0.150098517537117
-          localRotation:
-            - -90.000002504478161
-            - 0
-            - 0
-          localScale:
-            - 0.40000000596046448
-            - 0.40000000596046448
-            - 0.40000000596046448
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Lictor
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Lictor_Base_color
-            normal_map: Lictor_Normal_OpenGL
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_lictor4Mesh
-      Children: ~
-GameObject6:
-  name: lictor5
-  uuid: 16873084538533406999
-  tag: Ranged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 4
-        - 40
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 5
-        - 5
-        - 5
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 10
-      particlesPerSecond: 10
-      minLifetime: 1
-      maxLifetime: 3
-      minSpeed: 1
-      maxSpeed: 3
-      startSize: 1
-      endSize: 1
-      minSize: 0
-      maxSize: 0
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 0
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0
-        - 0
-      shapeParam1: 0.5
-      shapeParam2: 1
-      shapeParam3: 0
-      isOneShot: false
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 133
-        - 175
-      useAnimation: false
-      animSpeed: 0
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 0
-        softness: 0
-        useColorGradient: false
-        texturePath: ""
-      particleType: 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 0.25
-        - 1
-        - 0.25
-      offset:
-        - 0
-        - -3
-        - -1.39999998
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerRanged
-  Children:
-    - name: lictor5Mesh
-      uuid: 3364813603115025632
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - -0.00037008654908277094
-            - -0.09231160581111908
-            - -0.150098517537117
-          localRotation:
-            - -90.000002504478161
-            - 0
-            - 0
-          localScale:
-            - 0.40000000596046448
-            - 0.40000000596046448
-            - 0.40000000596046448
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Lictor
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Lictor_Base_color
-            normal_map: Lictor_Normal_OpenGL
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_lictor5Mesh
-      Children: ~
-GameObject7:
-  name: Floor
-  uuid: 4976504832296683622
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - -1
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 50
-        - 1
-        - 50
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.5
-          - 0.5
-          - 0.5
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~

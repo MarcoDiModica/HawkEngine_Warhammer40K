@@ -10,12 +10,15 @@ class Animator
 {
 private:
     std::vector<glm::mat4> m_FinalBoneMatrices;
-	std::vector<std::shared_ptr<GameObject>> m_BonesGameObjects;
+	
     Animation* m_CurrentAnimation;
     float m_CurrentTime;
+    float currentTimeBase = 0.0f;
+    float currentTimeLayered = 0.0f;
     float m_DeltaTime;
 	float m_PlaySpeed = 1;
     float transitionTime = 0.0f;
+	glm::dmat4 ownerMatrix;
 
 public:
     Animator(Animation* Animation);
@@ -30,21 +33,33 @@ public:
 	void UpdateAnimation(float dt);
 	void PlayAnimation(Animation* pAnimation);
     void CalculateBoneTransform(const AssimpNodeData* node, glm::mat4 parentTransform);
+	void PlayAnimationOnce(Animation* pAnimation);
 
     void BlendTwoAnimations(Animation* pBaseAnimation, Animation* pLayeredAnimation, float blendFactor, float deltaTime);
     void CalculateBlendedBoneTransform( Animation* pAnimationBase, const AssimpNodeData* node, Animation* pAnimationLayer, const AssimpNodeData* nodeLayered,
         const float currentTimeBase, const float currentTimeLayered, const glm::mat4& parentTransform, const float blendFactor);
 
-	void TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation, float transitionDuration, float deltaTime);
+	void TransitionToAnimation(Animation* pOldAnimation, Animation* pNewAnimation,float transitionDuration, float deltaTime);
 
     float GetCurrentMTime()
     {
 		return m_CurrentTime;
     }
+    std::vector<std::shared_ptr<GameObject>> m_BonesGameObjects;
+	void SetOwnerMatrix(glm::dmat4 matrix)
+	{
+		ownerMatrix = matrix;
+	}
+
+    bool animationFinished = false;
+    bool isLooping = true;
+    float currentDuration = 0.0f;
 
 	void SetCurrentMTime(float time)
 	{
 		m_CurrentTime = time;
+		currentTimeBase = time;
+		currentTimeLayered = time;  
 	}
 
     void UpdateAnimTime(float time)
@@ -52,6 +67,8 @@ public:
 		m_CurrentTime = time;
 		UpdateAnimation(m_CurrentTime);
     }
+
+
 
 	Animation* GetCurrentAnimation()
 	{

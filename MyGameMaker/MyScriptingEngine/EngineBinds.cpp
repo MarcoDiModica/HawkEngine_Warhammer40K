@@ -273,6 +273,10 @@ void EngineBinds::SetActive(MonoObject* ref, bool active) {
 	ConvertFromSharp(ref)->SetActive(active);
 }
 
+bool EngineBinds::GameObjectIsActive(MonoObject* ref) {
+	return ConvertFromSharp(ref)->IsActive();
+}
+
 
 void EngineBinds::SetName(MonoObject* ref, MonoString* sharpName) {
 
@@ -288,6 +292,7 @@ void EngineBinds::SetTag(MonoObject* ref, MonoString* sharpName) {
 void EngineBinds::GameObjectSetActive(MonoObject* ref, bool active) {
     ConvertFromSharp(ref)->SetActive(active);
 }
+
 
 MonoString* EngineBinds::GetTag(MonoObject* ref) {
 	return mono_string_new(MonoManager::GetInstance().GetDomain(), ConvertFromSharp(ref)->GetTag().c_str());
@@ -420,8 +425,8 @@ void EngineBinds::SetRotation(MonoObject* transformRef, float x, float y, float 
 Vector3 EngineBinds::GetEulerAngles(MonoObject* transformRef) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     
-    auto v = transform->GetRotation();
-    return Vector3{(float) v.x,(float)v.y,(float)v.z };
+	glm::vec3 euler = transform->GetEulerAngles();
+	return Vector3{ (float)euler.x, (float)euler.y, (float)euler.z };
 }
 
 void EngineBinds::SetRotationQuat(MonoObject* transformRef, glm::quat* rotation) {
@@ -1034,6 +1039,14 @@ void EngineBinds::SetAnimationSpeed(MonoObject* animationRef, float speed)
 	}
 }
 
+void EngineBinds::SetLoop(MonoObject* animationRef, bool loop)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->SetLoop(loop);
+	}
+}
+
 float EngineBinds::GetAnimationSpeed(MonoObject* animationRef)
 {
 	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
@@ -1093,6 +1106,14 @@ void EngineBinds::TransitionAnimations(MonoObject* animationRef, int oldAnim, in
 	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
 	if (animation) {
 		animation->TransitionAnimations(oldAnim, newAnim, timeToAnim);
+	}
+}
+
+void EngineBinds::PlayAnimOnce(MonoObject* animationRef, int index, float timeToTransition)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	if (animation) {
+		animation->PlayAnimOnce(index, timeToTransition);
 	}
 }
 
@@ -1376,6 +1397,8 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.GameObject::Find", (const void*)GetGameObjectByName);
     mono_add_internal_call("HawkEngine.GameObject::AddScript", (const void*)AddScript);
     mono_add_internal_call("HawkEngine.GameObject::SetActive", (const void*)GameObjectSetActive);
+    mono_add_internal_call("HawkEngine.GameObject::IsActive", (const void*)GameObjectIsActive);
+
 
 
     // Input
@@ -1507,6 +1530,8 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetAnimationPlayState", (const void*)&EngineBinds::SetAnimationPlayState);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::GetAnimationPlayState", (const void*)&EngineBinds::GetAnimationPlayState);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetLoop", (const void*)&EngineBinds::SetLoop);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::PlayAnimOnce", (const void*)&EngineBinds::PlayAnimOnce);
 
 	// Tween
     

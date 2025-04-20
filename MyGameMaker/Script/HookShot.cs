@@ -8,22 +8,15 @@ public class HookShot : BaseAbilities
     public string name;
     public bool enabled;
     public float cooldown;
-    GameObject tp;
-
     private float yHeight = 0.0f;
     private float timer = 0;
     private bool exploded = false;
-    GameObject grenade;
+    GameObject hook;
     Rigidbody rigidbody;
     BoxCollider collider;
-    bool canThrow = true;
-
-    private float explosionCooldown = 1.0f;
-    private float explosionTimer = 0.0f;
-
-    private float abilityCooldown = 3.0f; // Cooldown de la habilidad
-    private float abilityTimer = 0.0f;    // Contador del cooldown
-
+    public bool canThrow = true;
+    private float abilityCooldown = 3.0f; 
+    private float abilityTimer = 0.0f;
     private Audio sound;
     private string hookHit = "Assets/Audio/SFX/Weapons/Shotgun/HookLaunch.wav";
     
@@ -48,66 +41,36 @@ public class HookShot : BaseAbilities
         if (!canThrow)
         {
             abilityTimer += deltaTime;
-            Engineson.print("Cooldown: " + abilityTimer + " / " + abilityCooldown);
 
             if (abilityTimer >= abilityCooldown)
             {
                 canThrow = true;
                 abilityTimer = 0.0f;
-                Engineson.print("Cooldown terminado. Habilidad lista.");
             }
-        }
-
-        if (rigidbody != null && !exploded && collider != null)
-        {
-            timer += deltaTime;
-
-            if (rigidbody.GetVelocity() != null && grenade != null && grenade.GetComponent<Transform>() != null)
-            {
-                float grenadeY = grenade.GetComponent<Transform>().GetPosition().Y;
-
-                if (rigidbody.GetVelocity().Y <= 0.1f && timer > 0.1f && yHeight > grenadeY)
-                {
-                   
-                }
-            }
-        }
-
-        
+        }        
     }
 
     public override void TriggerAbility()
     {
         if (!canThrow)
         {
-            Engineson.print("Habilidad en cooldown. Espera...");
             return;
         }
-
-        Engineson.print("Lanzando hook...");
         sound.LoadAudio(hookHit);
         sound.Play();
-        grenade = Engineson.CreateGameObject("Hook", null);
-
-        if (grenade == null)
+        hook = Engineson.CreateGameObject("Hook", null);
+        if (hook == null)
         {
             Engineson.print("ERROR: No se pudo crear el hook.");
             return;
         }
-
-        grenade.AddScript("Hook");
-        
-        grenade.GetComponent<Hook>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-        grenade.AddComponent<Audio>();
-        grenade.GetComponent<Hook>().Start();
-        
-
+        hook.AddScript("Hook");
+        hook.GetComponent<Hook>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+        hook.AddComponent<Audio>();
+        hook.GetComponent<Hook>().Start();
         canThrow = false;
         abilityTimer = 0.0f;
     }
-
-    
-
     public override void ResetCooldowns()
     {
         canThrow = true;

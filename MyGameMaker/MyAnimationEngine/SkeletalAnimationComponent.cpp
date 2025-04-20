@@ -59,30 +59,39 @@ void SkeletalAnimationComponent::Awake()
 
 void SkeletalAnimationComponent::Start()
 {
+
 	if (animator == nullptr) 
     {
 		animator = std::make_unique<Animator>(animation1.get());
 	}
     //animator = std::make_unique<Animator>(testAnimation.get());
+	animator->SetOwnerMatrix(owner->GetTransform()->GetMatrix());
     animator->PlayAnimation(animation1.get());
-	animator->UpdateAnimation(0.0f);
+	animator->UpdateAnimation(0.01f);
+	LinkBonesWithGameObjects();
 
 }
 
 void SkeletalAnimationComponent::Update(float deltaTime)
 {
+	animator->SetOwnerMatrix(owner->GetTransform()->GetMatrix());
+
     if (isPlaying) 
     {
+		if (!loopAnimation && animator->animationFinished) 
+		{
+			return;
+		}
+
         if (isBlending) 
         {
-            animator->TransitionToAnimation(animation1.get(), newAnimation.get(), timeToTransition, deltaTime);
+            animator->TransitionToAnimation(animation1.get(), newAnimation.get(),timeToTransition, deltaTime);
 			//animator->BlendTwoAnimations(animations[0].get(), animations[2].get(), blendFactor, deltaTime);
         }
         else 
         {
             animator->UpdateAnimation(deltaTime);
         }
-        
     }
 }
 
@@ -95,12 +104,81 @@ void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, 
 	isBlending = true;
 }
 
+void SkeletalAnimationComponent::AutoTransitionAnimation(int newAnim, float timeToTransitionAnim, bool loopAnim)
+{
+	animation1 = std::make_unique<Animation>(*animator->GetCurrentAnimation());
+	newAnimation = std::make_unique<Animation>(*animations[newAnim].get());
+	timeToTransition = timeToTransitionAnim;
+	animator->SetTransitionTime(0);
+	isBlending = true;
+}
+
+void SkeletalAnimationComponent::PlayAnimOnce(int index, float timeToTransitionAnim) 
+{
+	animation1 = std::make_unique<Animation>(*animator->GetCurrentAnimation());
+	newAnimation = std::make_unique<Animation>(*animations[index].get());
+	animator->isLooping = false; 
+	animator->currentDuration = 0.0f;
+	animator->animationFinished = false;
+	timeToTransition = timeToTransitionAnim;
+	animator->SetCurrentMTime(0.0f);
+	animator->SetTransitionTime(timeToTransitionAnim);
+	isBlending = true;
+}
+
 void SkeletalAnimationComponent::Destroy()
 {
 }
 
+void SkeletalAnimationComponent::LinkBonesWithGameObjects()
+{
+	if (!animator || boneNames.empty() || !owner) {
+		return;
+	}
+
+	animator->m_BonesGameObjects.clear();
+
+	for (const auto& boneName : boneNames) {
+	
+		if (!boneName.empty()) {
+		
+			FindAndLinkBoneInHierarchy(owner, boneName);
+		}
+	}
+}
+
+
+bool SkeletalAnimationComponent::FindAndLinkBoneInHierarchy(GameObject* node, const std::string& boneName)
+{
+	if (!node || !animator) {
+		return false;
+	}
+
+	if (node->GetName() == boneName) {
+		animator->AddBoneGameObject(std::shared_ptr<GameObject>(node->shared_from_this()));
+		return true;
+	}
+
+	const auto& children = node->GetChildren();
+	for (const auto& child : children) {
+		if (child) {
+			if (FindAndLinkBoneInHierarchy(child.get(), boneName)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 int SkeletalAnimationComponent::GetAnimationIndex() {
     return animationIndex;
+}
+
+void SkeletalAnimationComponent::SetLoop(bool isLoop) 
+{
+	loopAnimation = isLoop;
+	animator->isLooping = isLoop;
 }
 
 MonoObject* SkeletalAnimationComponent::GetSharp()
@@ -228,6 +306,32 @@ void SkeletalAnimationComponent::SaveBinary(const std::string& filename) const
 
 			WriteAssimpNodeData(fout, animation->GetRootNode());
 		}
+	}
+
+	if (animator) {
+	
+		const auto& boneGameObjects = animator->m_BonesGameObjects; 
+
+		uint32_t numBoneGameObjects = static_cast<uint32_t>(animator->m_BonesGameObjects.size());
+		fout.write(reinterpret_cast<const char*>(&numBoneGameObjects), sizeof(numBoneGameObjects));
+
+		for (const auto& boneGO : animator->m_BonesGameObjects) {
+			if (boneGO) {
+				std::string boneName = boneGO->GetName();
+				uint32_t boneNameLength = static_cast<uint32_t>(boneName.length());
+				fout.write(reinterpret_cast<const char*>(&boneNameLength), sizeof(boneNameLength));
+				fout.write(boneName.c_str(), boneNameLength);
+			}
+			else {
+			
+				uint32_t boneNameLength = 0;
+				fout.write(reinterpret_cast<const char*>(&boneNameLength), sizeof(boneNameLength));
+			}
+		}
+	}
+	else {
+		uint32_t numBoneGameObjects = 0;
+		fout.write(reinterpret_cast<const char*>(&numBoneGameObjects), sizeof(numBoneGameObjects));
 	}
 
 	LOG(LogType::LOG_INFO, "Animación esqueletal guardada correctamente: %s", fullPath.c_str());
@@ -381,6 +485,26 @@ bool SkeletalAnimationComponent::LoadBinary(const std::string& filename)
 	if (!animations.empty()) {
 		animation1 = std::make_unique<Animation>(*animations[animationIndex]);
 	}
+
+	Start();
+
+    uint32_t numBoneGameObjects;
+    if (fin.read(reinterpret_cast<char*>(&numBoneGameObjects), sizeof(numBoneGameObjects))) {
+	
+		for (uint32_t i = 0; i < numBoneGameObjects; ++i) {
+			uint32_t boneNameLength;
+			fin.read(reinterpret_cast<char*>(&boneNameLength), sizeof(boneNameLength));
+
+			if (boneNameLength > 0) {
+				std::string boneName(boneNameLength, '\0');
+				fin.read(&boneName[0], boneNameLength);
+
+				
+				boneNames.push_back(boneName);
+
+			}
+		}
+    }
 
 	Start();
 

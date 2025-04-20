@@ -10,6 +10,9 @@ public class RedThirstManager : MonoBehaviour
 
     private float abilityUseTimer = 0f;
     private int abilityCount = 0;
+    private int differentGunsUsed = 0;
+    private float differentGunsUsedTimer = 0;
+    private const float differentGunsUsedTimeLimit = 3f;
     private const float abilityTimeLimit = 3f;
 
     private float redThirstDecayTimer = 0f;
@@ -21,7 +24,12 @@ public class RedThirstManager : MonoBehaviour
     private PlayerController playerController;
     private float lastActionTime = 0f;
 
+    public float redThirstBonus = 5f;
     public float biblePages = 0f;
+
+    private bool boltgunUsed = false;
+    private bool shotgunUsed = false;
+    private bool railgunUsed = false;
     public override void Awake()
     {
         playerController = gameObject.GetComponent<PlayerController>();
@@ -42,7 +50,15 @@ public class RedThirstManager : MonoBehaviour
                 ResetAbilityCombo();
             }
         }
-
+        if (differentGunsUsed > 0)
+        {
+            differentGunsUsedTimer += deltaTime;
+            if (differentGunsUsedTimer >= differentGunsUsedTimeLimit)
+            {
+                ResetWeaponCombo();
+            }
+        }
+        //redThirstDamageBonus = 5f + (biblePages * biblePages);
         if (isInBlackRage)
         {
             HandleBlackRage(deltaTime);
@@ -50,6 +66,10 @@ public class RedThirstManager : MonoBehaviour
         else
         {
            
+        }
+        if(Input.GetKeyDown(KeyCode.U))
+        {
+            AddRedThirstPoint(1);
         }
     }
 
@@ -65,13 +85,52 @@ public class RedThirstManager : MonoBehaviour
         lastActionTime = 0f;
     }
 
+    public void OnWeaponUsed()
+    {
+        //differentGunsUsed++;
+        if(boltgunUsed && shotgunUsed || boltgunUsed && railgunUsed || shotgunUsed && railgunUsed)
+        {
+            AddRedThirstPoint(1);
+            ResetWeaponCombo();
+        }
+        lastActionTime = 0f;
+        //if (differentGunsUsed == 2)
+        //{
+        //    AddRedThirstPoint(1);
+        //    ResetWeaponCombo();
+        //}
+        //lastActionTime = 0f;
+    }
+    public void OnBoltgunUsed()
+    {
+        boltgunUsed = true;
+        OnWeaponUsed();
+    }
+    public void OnShotgunUsed()
+    {
+        shotgunUsed = true;
+        OnWeaponUsed();
+    }
+    public void OnRailgunUsed()
+    {
+        railgunUsed = true;
+        OnWeaponUsed();
+    }
+    private void ResetWeaponCombo()
+    {
+        differentGunsUsed = 0;
+        differentGunsUsedTimer = 0f;
+        boltgunUsed = false;
+        shotgunUsed = false;
+        railgunUsed = false;
+    }
     private void ResetAbilityCombo()
     {
         abilityCount = 0;
         abilityUseTimer = 0f;
     }
 
-    private void AddRedThirstPoint(int points)
+    public void AddRedThirstPoint(int points)
     {
         //Actualizar el HUD por cada Red Thirst Point
         redThirstPoints += points;
@@ -93,6 +152,7 @@ public class RedThirstManager : MonoBehaviour
     public void AddBiblePages(float points)
     {
         biblePages += points;
+        redThirstBonus = 5f + (biblePages * biblePages);
     }
 
     private void ActivateBlackRage()
@@ -100,7 +160,7 @@ public class RedThirstManager : MonoBehaviour
         isInBlackRage = true;
         blackRageTimer = 0f;
         Engineson.print("Black Rage Activated!");
-        playerController.playerData.blackRageSpeed = 21f;
+        playerController.playerData.blackRageSpeed = redThirstBonus;
         playerController.playerDash.canDash = false;
 
 

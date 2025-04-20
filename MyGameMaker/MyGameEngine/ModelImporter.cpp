@@ -12,6 +12,7 @@
 #include <assimp/mesh.h>
 #include "MyAnimationEngine/SkeletalAnimationComponent.h"
 #include "MyAnimationEngine/Animation.h"
+#include "../MyGameEditor/Root.h"
 
 #include "Material.h"
 #include "MeshRendererComponent.h"
@@ -165,9 +166,37 @@ void ModelImporter::graphicObjectFromNode(const aiScene& scene, const aiNode& no
 	}
 }
 
-std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
+size_t GenerateMeshID(ModelData& model) {
+	std::hash<float> floatHasher;
+	std::hash<unsigned int> intHasher;
+
+	size_t hash = 0;
+
+	for (size_t i = 0; i < model.vertexData.size(); i++) {
+		// Posición
+		hash ^= floatHasher(model.vertexData.at(i).position.x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertexData.at(i).position.y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertexData.at(i).position.z) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+
+		// Normal
+		hash ^= floatHasher(model.vertex_normals.at(i).x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_normals.at(i).y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_normals.at(i).z) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+
+		// Texcoord
+		hash ^= floatHasher(model.vertex_texCoords.at(i).x) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+		hash ^= floatHasher(model.vertex_texCoords.at(i).y) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+
+	for (unsigned int index : model.indexData) {
+		hash ^= intHasher(index) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+
+	return hash;
+}
+
+std::vector<std::shared_ptr<Mesh>> createMeshesFromFBX(const aiScene& scene) {
 	std::vector<std::shared_ptr<Mesh>> meshes;
-	meshes.resize(scene.mNumMeshes);
 
 	std::vector<std::shared_ptr<Model>> models;
 	models.resize(scene.mNumMeshes);
@@ -221,15 +250,58 @@ std::vector<std::shared_ptr<Mesh>>createMeshesFromFBX(const aiScene& scene) {
 			}
 		}
 
+		size_t hash = GenerateMeshID(*modelsData[i]);
+		models[i]->SetID(hash);
+
 		models[i]->SetModelData(*modelsData[i]);
 	}
 
 	for (int i = 0; i < models.size(); i++) {
+		meshes.push_back(std::make_shared<Mesh>());
 		meshes[i] = std::make_shared<Mesh>();
 		meshes[i]->setModel(models[i]);
+		if (Application->root->GetResourceManager()->GetMesh(meshes[i]->getModel()->GetID()) == nullptr) {
+			meshes[i]->loadToOpenGL();
+			meshes[i] = Application->root->GetResourceManager()->AddMesh(meshes[i]);
+		}
+		else {
+			meshes[i] = Application->root->GetResourceManager()->GetMesh(meshes[i]->getModel()->GetID());
+		}
+		
 	}
 
 	return meshes;
+}
+
+size_t GenerateMaterialID(const Material& mat) {
+	std::hash<std::string> strHasher;
+	std::hash<float> floatHasher;
+	size_t hash = 0;
+
+	// Rutas de texturas
+	if (mat.imagePtr) {
+		hash ^= strHasher(mat.imagePtr->image_path) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+	if (mat.normalMapPtr) {
+		hash ^= strHasher(mat.normalMapPtr->image_path) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+	if (mat.metallicMapPtr) {
+		hash ^= strHasher(mat.metallicMapPtr->image_path) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+	if (mat.roughnessMapPtr) {
+		hash ^= strHasher(mat.roughnessMapPtr->image_path) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+	if (mat.aoMapPtr) {
+		hash ^= strHasher(mat.aoMapPtr->image_path) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	}
+
+	// Color base
+	hash ^= floatHasher(mat.color.r) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	hash ^= floatHasher(mat.color.g) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	hash ^= floatHasher(mat.color.b) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+	hash ^= floatHasher(mat.color.a) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+
+	return hash;
 }
 
 std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& scene, const fs::path& basePath) {
@@ -245,10 +317,12 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
             aiString texturePath;
             fbx_material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath);
             const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
-            materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
-            materials[i]->imagePtr->LoadTexture((basePath / textureFileName).string());
-        } else {
-            materials[i]->imagePtr->image_path = "";
+			materials[i]->imagePtr->image_path = (basePath / textureFileName).string();
+			std::string name = std::filesystem::path(texturePath.C_Str()).stem().string();
+			if (Application->root->GetResourceManager()->GetMaterial(name) != nullptr) {
+				materials[i] = Application->root->GetResourceManager()->GetMaterial(name);
+				continue;
+			}
         }
 
         if (fbx_material->GetTextureCount(aiTextureType_NORMALS) > 0) {
@@ -257,7 +331,6 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
             const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
             materials[i]->normalMapPtr = std::make_shared<Image>();
             materials[i]->normalMapPtr->image_path = (basePath / textureFileName).string();
-            materials[i]->normalMapPtr->LoadTexture((basePath / textureFileName).string());
         }
 
         if (fbx_material->GetTextureCount(aiTextureType_METALNESS) > 0) {
@@ -266,7 +339,6 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
             const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
             materials[i]->metallicMapPtr = std::make_shared<Image>();
             materials[i]->metallicMapPtr->image_path = (basePath / textureFileName).string();
-            materials[i]->metallicMapPtr->LoadTexture((basePath / textureFileName).string());
         }
 
         if (fbx_material->GetTextureCount(aiTextureType_SHININESS) > 0) {
@@ -275,8 +347,7 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
             const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
             materials[i]->roughnessMapPtr = std::make_shared<Image>();
             materials[i]->roughnessMapPtr->image_path = (basePath / textureFileName).string();
-            materials[i]->roughnessMapPtr->LoadTexture((basePath / textureFileName).string());
-        }
+		}
 
         if (fbx_material->GetTextureCount(aiTextureType_AMBIENT_OCCLUSION) > 0) {
             aiString texturePath;
@@ -284,12 +355,36 @@ std::vector<std::shared_ptr<Material>> createMaterialsFromFBX(const aiScene& sce
             const std::string textureFileName = std::filesystem::path(texturePath.C_Str()).filename().string();
             materials[i]->aoMapPtr = std::make_shared<Image>();
             materials[i]->aoMapPtr->image_path = (basePath / textureFileName).string();
-            materials[i]->aoMapPtr->LoadTexture((basePath / textureFileName).string());
-        }
+		}
 
         aiColor4D color;
         fbx_material->Get(AI_MATKEY_COLOR_DIFFUSE, color);
         materials[i]->color = glm::vec4(color.r, color.g, color.b, color.a);
+
+		bool hasTexture = false;
+
+		if (materials[i]->imagePtr != nullptr) {
+			hasTexture = true;
+			materials[i]->imagePtr->LoadTexture(materials[i]->imagePtr->image_path);
+		}
+		if (materials[i]->normalMapPtr != nullptr) {
+			materials[i]->normalMapPtr->LoadTexture(materials[i]->normalMapPtr->image_path);
+		}
+		if (materials[i]->metallicMapPtr != nullptr) {
+			materials[i]->metallicMapPtr->LoadTexture(materials[i]->metallicMapPtr->image_path);
+		}
+		if (materials[i]->roughnessMapPtr != nullptr) {
+			materials[i]->roughnessMapPtr->LoadTexture(materials[i]->roughnessMapPtr->image_path);
+		}
+		if (materials[i]->aoMapPtr != nullptr) {
+			materials[i]->aoMapPtr->LoadTexture(materials[i]->aoMapPtr->image_path);
+		}
+
+		if (hasTexture) {
+			materials[i]->SetMatName(materials[i]->imagePtr->image_name);
+			materials[i] = Application->root->GetResourceManager()->AddMaterial(materials[i]);
+		}
+
     }
 
     return materials;
@@ -298,13 +393,13 @@ void ModelImporter::loadFromFile(const std::string& path) {
 	const aiScene* fbx_scene = aiImportFile(path.c_str(), aiProcess_Triangulate | 
 		aiProcess_GenUVCoords | aiProcess_TransformUVCoords | aiProcess_FlipUVs );
 	aiGetErrorString();
+
+	scenePath = path;
 	
 	// Create models and materials from FBX
 	meshes = createMeshesFromFBX(*fbx_scene);
 
 	materials = createMaterialsFromFBX(*fbx_scene, "Assets/Textures/");
-
-	scenePath = path;
 
 	// Create the GameObject hierarchy
 	graphicObjectFromNode(*fbx_scene, *fbx_scene->mRootNode, meshes, materials);

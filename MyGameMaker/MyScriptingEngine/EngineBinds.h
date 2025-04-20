@@ -178,6 +178,8 @@ namespace EngineBinds {
 	void SetAnimationPlayState(MonoObject* skeletalAnimationRef, bool play);
 	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
+	void SetLoop(MonoObject* skeletalAnimationRef, bool isLoop);
+	void PlayAnimOnce(MonoObject* skeletalAnimationRef, int index, float timeToTransitionAnim);
 
 	//Tweening
     void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);

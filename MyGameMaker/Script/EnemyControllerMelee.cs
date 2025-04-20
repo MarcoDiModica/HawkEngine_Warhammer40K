@@ -144,67 +144,67 @@ public class EnemyControllerMelee : EnemyController
                     }
 
                     // Enemy Movement
-                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
-                    {
-                        if (!isFootstepPlaying)
-                        {
-                            sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                            sound?.Play(true);
-                            isFootstepPlaying = true;
-                            hasStoppedFootsteps = false;
-                        }
-                        if (isCombatMusicPlaying == false)
-                        {
-                            sound?.LoadAudio(combatMusic);
-                            sound?.Play(true);
-                            isCombatMusicPlaying = true;
-                        }
+                    //if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                    //{
+                    //    if (!isFootstepPlaying)
+                    //    {
+                    //        sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
+                    //        sound?.Play(true);
+                    //        isFootstepPlaying = true;
+                    //        hasStoppedFootsteps = false;
+                    //    }
+                    //    if (isCombatMusicPlaying == false)
+                    //    {
+                    //        sound?.LoadAudio(combatMusic);
+                    //        sound?.Play(true);
+                    //        isCombatMusicPlaying = true;
+                    //    }
 
-                        Vector3 currentVelocity = rb.GetVelocity();
-                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                        Vector3 desiredVelocity = moveDirection * speedMovement;
+                    //    Vector3 currentVelocity = rb.GetVelocity();
+                    //    moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                    //    Vector3 desiredVelocity = moveDirection * speedMovement;
 
-                        if (!isLeaping)
-                        {
-                            anim.SetRunningAnimation();
-                            if (desiredVelocity.LengthSquared() > 0)
-                            {
-                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                            }
+                    //    if (!isLeaping)
+                    //    {
+                    //        anim.SetRunningAnimation();
+                    //        if (desiredVelocity.LengthSquared() > 0)
+                    //        {
+                    //            desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                    //        }
 
-                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-                        }
-                        isRunning = true;
+                    //        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                    //        rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                    //    }
+                    //    isRunning = true;
 
-                    }
+                    //}
 
-                    // Enemy Leap
-                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
-                    {
-                        leapTimer = 0f;
-                        Leap();
-                    }
-                    else if (isLeaping)
-                    {
-                        leapTimer += deltaTime;
-                        particles.EmitBurst(1);
-                        if (leapTimer >= leapDuration)
-                        {
-                            isLeaping = false;
-                            hasLeap = false;
-                            lastLeap = 0.0f;
-                        }
-                    }
-                    if (!hasLeap)
-                    {
-                        lastLeap += deltaTime;
-                        if (lastLeap >= leapCooldown)
-                        {
-                            Engineson.print("LEAP RESTORED");
-                            hasLeap = true;
-                        }
-                    }
+                    //// Enemy Leap
+                    //if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
+                    //{
+                    //    leapTimer = 0f;
+                    //    Leap();
+                    //}
+                    //else if (isLeaping)
+                    //{
+                    //    leapTimer += deltaTime;
+                    //    particles.EmitBurst(1);
+                    //    if (leapTimer >= leapDuration)
+                    //    {
+                    //        isLeaping = false;
+                    //        hasLeap = false;
+                    //        lastLeap = 0.0f;
+                    //    }
+                    //}
+                    //if (!hasLeap)
+                    //{
+                    //    lastLeap += deltaTime;
+                    //    if (lastLeap >= leapCooldown)
+                    //    {
+                    //        Engineson.print("LEAP RESTORED");
+                    //        hasLeap = true;
+                    //    }
+                    //}
 
                     // Enemy Rotation
                     if (moveDirection != Vector3.Zero)

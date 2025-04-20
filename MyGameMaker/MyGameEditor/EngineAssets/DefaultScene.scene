@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: MainCamera
-  uuid: 2400996637029856764
+  uuid: 13073696965361281148
   tag: Untagged
   active: true
   isStatic: false
@@ -38,7 +38,7 @@ GameObject0:
   Children: ~
 GameObject1:
   name: Player
-  uuid: 4952700752116530735
+  uuid: 17576934059941495004
   tag: Player
   active: true
   isStatic: false
@@ -178,7 +178,7 @@ GameObject1:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 6521681890065622782
+      uuid: 17088610728155370911
       tag: Untagged
       active: true
       isStatic: false
@@ -237,7 +237,7 @@ GameObject1:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 17082740359562659013
+      uuid: 8736224540525253613
       tag: Untagged
       active: true
       isStatic: false
@@ -309,7 +309,7 @@ GameObject1:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 529677415815267328
+      uuid: 11776084229979523766
       tag: Untagged
       active: true
       isStatic: false
@@ -381,7 +381,7 @@ GameObject1:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 4728296924929150607
+      uuid: 17987776845435982419
       tag: Untagged
       active: true
       isStatic: false
@@ -454,7 +454,7 @@ GameObject1:
       Children: ~
 GameObject2:
   name: Cube
-  uuid: 143803067122587077
+  uuid: 11045000116284015919
   tag: Melee
   active: true
   isStatic: false
@@ -517,7 +517,7 @@ GameObject2:
   Children: ~
 GameObject3:
   name: Cube2
-  uuid: 14479308437664694144
+  uuid: 1319736885272738408
   tag: Untagged
   active: true
   isStatic: false
@@ -579,8 +579,174 @@ GameObject3:
       isTrigger: false
   Children: ~
 GameObject4:
+  name: Hormagaunt
+  uuid: 17254717912674777808
+  tag: Melee
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 40
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 2.2000000476837158
+        - 2.2000000476837158
+        - 2.2000000476837158
+    ParticleFX:
+      name: ParticleFX
+      enabled: true
+      emitterShape: 0
+      emissionRate: 1
+      particlesPerSecond: 1
+      minLifetime: 1
+      maxLifetime: 1
+      minSpeed: 0
+      maxSpeed: 0
+      startSize: 2
+      endSize: 2
+      minSize: 1
+      maxSize: 1
+      startColor:
+        - 1
+        - 1
+        - 1
+      endColor:
+        - 1
+        - 1
+        - 1
+      startAlpha: 1
+      endAlpha: 1
+      rotationSpeed: 0
+      gravity:
+        - 0
+        - 0.00100000005
+        - 0
+      shapeParam1: 0.200000003
+      shapeParam2: 1
+      shapeParam3: 20
+      isOneShot: true
+      isPlaying: false
+      isPaused: false
+      burstEmitted: false
+      spriteSize:
+        - 640
+        - 360
+      useAnimation: true
+      animSpeed: 0.0500000007
+      startRotation: 0
+      randomRotation: false
+      material:
+        billboardType: 0
+        particleType: 9
+        softness: 0
+        useColorGradient: false
+        texturePath: Assets/Textures/EnemyDash.png
+      particleType: 9
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
+    BoxColliderComponent:
+      size:
+        - 0.699999988
+        - 3.29999995
+        - 1.60000002
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+    RigidbodyComponent:
+      mass: 1
+      isKinematic: false
+      isFreezed: true
+      friction: 0.5
+      gravity:
+        x: 0
+        y: -9.80000019
+        z: 0
+      damping:
+        linear: 0
+        angular: 0
+    ScriptComponents:
+      Script0:
+        name: EnemyControllerMelee
+  Children:
+    - name: HormagauntMesh
+      uuid: 7789584982700021398
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - -1.3660378731687233e-05
+            - 2.4012357443917309e-07
+            - -1.7342270674115732e-06
+          localScale:
+            - 0.0075779887847602402
+            - 0.0075779887847605421
+            - 0.0075779887847605386
+        MeshRenderer:
+          name: MeshRenderer
+          enabled: true
+          mesh:
+            name: mesh.005
+          material:
+            wrap_mode: Repeat
+            filter: Nearest
+            color:
+              - 0.800000012
+              - 0.800000012
+              - 0.800000012
+              - 1
+            metallic: 0
+            roughness: 0.5
+            ao: 1
+            tonemap_strength: 1
+            shader_type: PBR
+            image: Low_BSurfaceMesh_BaseColor
+            normal_map: Low_BSurfaceMesh_Normal
+            metallic_map: ""
+            roughness_map: Low_BSurfaceMesh_Roughness
+            ao_map: ""
+          color:
+            - 1
+            - 1
+            - 1
+        Shader:
+          name: Shader
+          enabled: true
+        SkeletalAnimationComponent:
+          name: SkeletalAnimationComponent
+          enabled: true
+          animation_file: skeletal_anim_HormagauntMesh
+        ScriptComponents:
+          Script0:
+            name: HormagauntAnimation
+      Children: ~
+GameObject5:
   name: Floor
-  uuid: 11944002935006862389
+  uuid: 1811388180846251831
   tag: Untagged
   active: true
   isStatic: false
@@ -641,9 +807,9 @@ GameObject4:
         - 0
       isTrigger: false
   Children: ~
-GameObject5:
+GameObject6:
   name: shotgun
-  uuid: 9993420202584696838
+  uuid: 13687519670497504551
   tag: Weapon
   active: true
   isStatic: false
@@ -708,7 +874,7 @@ GameObject5:
         name: ShotgunPickUp
   Children:
     - name: bOLTER.010
-      uuid: 9206683190454175413
+      uuid: 13271334555264818987
       tag: Untagged
       active: true
       isStatic: false
@@ -760,7 +926,7 @@ GameObject5:
           enabled: true
       Children: ~
     - name: Cone
-      uuid: 6449184172082171609
+      uuid: 13577950732547044826
       tag: Untagged
       active: true
       isStatic: false
@@ -811,9 +977,75 @@ GameObject5:
           name: Shader
           enabled: true
       Children: ~
-GameObject6:
+GameObject7:
+  name: bOLTER.012
+  uuid: 16686180330676073319
+  tag: Weapon
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 30
+        - 2
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+        - 0.0030000000260770321
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: bOLTER.012
+      material:
+        wrap_mode: Repeat
+        filter: Nearest
+        color:
+          - 0.800000012
+          - 0.800000012
+          - 0.800000012
+          - 1
+        metallic: 0
+        roughness: 0.5
+        ao: 1
+        tonemap_strength: 1
+        shader_type: PBR
+        image: railgun_DefaultMaterial_BaseColor
+        normal_map: railgun_DefaultMaterial_Normal
+        metallic_map: railgun_DefaultMaterial_Metallic
+        roughness_map: railgun_DefaultMaterial_Roughness
+        ao_map: ""
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: true
+    ScriptComponents:
+      Script0:
+        name: RailgunPickUp
+  Children: ~
+GameObject8:
   name: Plane.001
-  uuid: 16256273287436365427
+  uuid: 11191018283079039242
   tag: BiblePage
   active: true
   isStatic: false
@@ -822,9 +1054,9 @@ GameObject6:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 10
+        - 0
         - 2
-        - 3
+        - 0
       localRotation:
         - 0
         - -0

@@ -27,8 +27,10 @@ public class Test1 : MonoBehaviour, IInteractable
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Engineson.print("B key was pressed");
-            SceneManager.LoadScene("Scene2");
+            GameObject laser = Engineson.CreateGameObject("LaserBeam", null);
+            laser.AddComponent<MeshRenderer>();
+            laser.transform.SetPosition(5,0,0);
+            gameObject.AddChild(laser);
         }
 
         //----------- MATHF FUNCTIONS -------------------//

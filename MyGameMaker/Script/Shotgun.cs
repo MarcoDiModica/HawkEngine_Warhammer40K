@@ -94,6 +94,9 @@ public class Shotgun : BaseWeapon
                             case "Ranged":
                                 hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
                                 break;
+                            case "Stalker":
+                                hitObject.GetComponent<EnemyControllerStalker>()?.TakeDamage(finalDamage);
+                                break;
                             case "Boss":
                                 hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
                                 break;

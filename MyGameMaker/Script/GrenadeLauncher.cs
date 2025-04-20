@@ -9,7 +9,7 @@ public class GrenadeLauncher : BaseAbilities
     public bool enabled;
     public float cooldown;
     GameObject grenade;
-    bool canThrow = true;
+    public bool canThrow = true;
     public bool needsDestroy = false;
     private float abilityCooldown = 3.0f; 
     private float abilityTimer = 0.0f;    

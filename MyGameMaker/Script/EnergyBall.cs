@@ -9,7 +9,7 @@ public class EnergyBall : BaseAbilities
     public bool enabled;
     public float cooldown;
     GameObject energyBall;
-    bool canThrow = true;
+    public bool canThrow = true;
     private float abilityCooldown = 3.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;

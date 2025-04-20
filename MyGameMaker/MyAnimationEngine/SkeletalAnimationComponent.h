@@ -410,7 +410,7 @@ protected:
 
         Start();*/
 
-		if (node["animation_file"]) {
+	if (node["animation_file"]) {
 			std::string animName = node["animation_file"].as<std::string>();
 			LoadBinary(animName);
 		}

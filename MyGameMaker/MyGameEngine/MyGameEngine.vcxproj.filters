@@ -23,6 +23,7 @@
     <ClCompile Include="HawkUUID.cpp" />
     <ClCompile Include="ObjectRegistry.cpp" />
     <ClCompile Include="Tweening.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingBox.h" />
@@ -53,5 +54,6 @@
     <ClInclude Include="ObjectRegistry.h" />
     <ClInclude Include="Tweening.h" />
     <ClInclude Include="ImGuiCurveEditor.h" />
+    <ClInclude Include="ResourceManager.h" />
   </ItemGroup>
 </Project>

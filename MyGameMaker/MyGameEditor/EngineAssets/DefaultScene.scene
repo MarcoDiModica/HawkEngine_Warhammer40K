@@ -1,8 +1,91 @@
 SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
+  name: MainCamera
+  uuid: 18434520341186466998
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 20
+        - -14
+      localRotation:
+        - 54.999999253784715
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    CameraComponent:
+      name: CameraComponent
+      enabled: true
+      projection_type: perspective
+      fov: 1.0471975511965976
+      size: 0
+      near_plane: 0.10000000000000001
+      far_plane: 500
+      priority: 1
+    AudioListener: ~
+    ScriptComponents:
+      Script0:
+        name: PlayerCamera
+  Children: ~
+GameObject1:
+  name: Floor
+  uuid: 4464402535078459771
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - -1
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 50
+        - 1
+        - 50
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 0
+      material:
+        name: 2
+      color:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    BoxColliderComponent:
+      size:
+        - 1
+        - 1
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
+  Children: ~
+GameObject2:
   name: Player
-  uuid: 18001751142453096572
+  uuid: 16246928450561451397
   tag: Player
   active: true
   isStatic: false
@@ -125,7 +208,7 @@ GameObject0:
       Script9:
         name: Railgun
       Script10:
-        name: LaserBeam
+        name: ""
       Script11:
         name: EnergyBall
       Script12:
@@ -142,7 +225,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 4236627680165838143
+      uuid: 3509437015434926677
       tag: Untagged
       active: true
       isStatic: false
@@ -166,25 +249,9 @@ GameObject0:
           name: MeshRenderer
           enabled: true
           mesh:
-            name: Cylinder.001
+            name: 17597220777981042704
           material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
-            normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
-            metallic_map: ""
-            roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
-            ao_map: ""
+            name: 17803050850064222258
           color:
             - 1
             - 1
@@ -201,7 +268,7 @@ GameObject0:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 85119369796251981
+      uuid: 6742846795934487336
       tag: Untagged
       active: true
       isStatic: false
@@ -273,7 +340,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 9210870169533083406
+      uuid: 14057382545250422934
       tag: Untagged
       active: true
       isStatic: false
@@ -345,7 +412,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 1869299510593724341
+      uuid: 13370977158998369653
       tag: Untagged
       active: true
       isStatic: false
@@ -416,504 +483,3 @@ GameObject0:
             texturePath: Assets/Textures/Smoke30Frames.png
           particleType: 1
       Children: ~
-GameObject1:
-  name: MainCamera
-  uuid: 2785972349880922770
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 20
-        - -14
-      localRotation:
-        - 54.999999253784715
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
-    CameraComponent:
-      name: CameraComponent
-      enabled: true
-      projection_type: perspective
-      fov: 1.0471975511965976
-      size: 0
-      near_plane: 0.10000000000000001
-      far_plane: 500
-      priority: 1
-    AudioListener: ~
-    ScriptComponents:
-      Script0:
-        name: PlayerCamera
-  Children: ~
-GameObject2:
-  name: Hormagaunt
-  uuid: 6878446801894094344
-  tag: Melee
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 40
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 2.2000000476837158
-        - 2.2000000476837158
-        - 2.2000000476837158
-    ParticleFX:
-      name: ParticleFX
-      enabled: true
-      emitterShape: 0
-      emissionRate: 1
-      particlesPerSecond: 1
-      minLifetime: 1
-      maxLifetime: 1
-      minSpeed: 0
-      maxSpeed: 0
-      startSize: 2
-      endSize: 2
-      minSize: 1
-      maxSize: 1
-      startColor:
-        - 1
-        - 1
-        - 1
-      endColor:
-        - 1
-        - 1
-        - 1
-      startAlpha: 1
-      endAlpha: 1
-      rotationSpeed: 0
-      gravity:
-        - 0
-        - 0.00100000005
-        - 0
-      shapeParam1: 0.200000003
-      shapeParam2: 1
-      shapeParam3: 20
-      isOneShot: true
-      isPlaying: false
-      isPaused: false
-      burstEmitted: false
-      spriteSize:
-        - 640
-        - 360
-      useAnimation: true
-      animSpeed: 0.0500000007
-      startRotation: 0
-      randomRotation: false
-      material:
-        billboardType: 0
-        particleType: 9
-        softness: 0
-        useColorGradient: false
-        texturePath: Assets/Textures/EnemyDash.png
-      particleType: 9
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/HormagauntMeleeAttack.wav
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
-    BoxColliderComponent:
-      size:
-        - 0.699999988
-        - 1.29999995
-        - 1.60000002
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-    RigidbodyComponent:
-      mass: 1
-      isKinematic: false
-      isFreezed: true
-      friction: 0.5
-      gravity:
-        x: 0
-        y: -9.80000019
-        z: 0
-      damping:
-        linear: 0
-        angular: 0
-    ScriptComponents:
-      Script0:
-        name: EnemyControllerMelee
-  Children:
-    - name: HormagauntMesh
-      uuid: 2564233117960894147
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - -1.3660378731687233e-05
-            - 2.4012357443917309e-07
-            - -1.7342270674115732e-06
-          localScale:
-            - 0.0075779887847602402
-            - 0.0075779887847605421
-            - 0.0075779887847605386
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: mesh.005
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: Low_BSurfaceMesh_BaseColor
-            normal_map: Low_BSurfaceMesh_Normal
-            metallic_map: ""
-            roughness_map: Low_BSurfaceMesh_Roughness
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-        SkeletalAnimationComponent:
-          name: SkeletalAnimationComponent
-          enabled: true
-          animation_file: skeletal_anim_HormagauntMesh
-        ScriptComponents:
-          Script0:
-            name: HormagauntAnimation
-      Children: ~
-GameObject3:
-  name: Floor
-  uuid: 14586233144750785390
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - -1
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 50
-        - 1
-        - 50
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.5
-          - 0.5
-          - 0.5
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: default
-        normal_map: ""
-        metallic_map: ""
-        roughness_map: ""
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: false
-  Children: ~
-GameObject4:
-  name: shotgun
-  uuid: 568872361450880416
-  tag: Weapon
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 30
-        - 2
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.0030000000260770321
-        - 0.0030000000260770321
-        - 0.0030000000260770321
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: Cube
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.699999988
-          - 0.699999988
-          - 0.699999988
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: shotgun_DefaultMaterial_BaseColor
-        normal_map: shotgun_DefaultMaterial_Normal
-        metallic_map: shotgun_DefaultMaterial_Metallic
-        roughness_map: shotgun_DefaultMaterial_Roughness
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: ShotgunPickUp
-  Children:
-    - name: bOLTER.010
-      uuid: 3360535248668282736
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: bOLTER.010
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: ""
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-    - name: Cone
-      uuid: 10020196279485381805
-      tag: Untagged
-      active: false
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        MeshRenderer:
-          name: MeshRenderer
-          enabled: true
-          mesh:
-            name: Cone
-          material:
-            wrap_mode: Repeat
-            filter: Nearest
-            color:
-              - 0.800000012
-              - 0.800000012
-              - 0.800000012
-              - 1
-            metallic: 0
-            roughness: 0.5
-            ao: 1
-            tonemap_strength: 1
-            shader_type: PBR
-            image: ""
-            normal_map: ""
-            metallic_map: ""
-            roughness_map: ""
-            ao_map: ""
-          color:
-            - 1
-            - 1
-            - 1
-        Shader:
-          name: Shader
-          enabled: true
-      Children: ~
-GameObject5:
-  name: bOLTER.012
-  uuid: 11515930625161782189
-  tag: Weapon
-  active: false
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 30
-        - 2
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 0.0030000000260770321
-        - 0.0030000000260770321
-        - 0.0030000000260770321
-    MeshRenderer:
-      name: MeshRenderer
-      enabled: true
-      mesh:
-        name: bOLTER.012
-      material:
-        wrap_mode: Repeat
-        filter: Nearest
-        color:
-          - 0.800000012
-          - 0.800000012
-          - 0.800000012
-          - 1
-        metallic: 0
-        roughness: 0.5
-        ao: 1
-        tonemap_strength: 1
-        shader_type: PBR
-        image: railgun_DefaultMaterial_BaseColor
-        normal_map: railgun_DefaultMaterial_Normal
-        metallic_map: railgun_DefaultMaterial_Metallic
-        roughness_map: railgun_DefaultMaterial_Roughness
-        ao_map: ""
-      color:
-        - 1
-        - 1
-        - 1
-    Shader:
-      name: Shader
-      enabled: true
-    BoxColliderComponent:
-      size:
-        - 1
-        - 1
-        - 1
-      offset:
-        - 0
-        - 0
-        - 0
-      isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: RailgunPickUp
-  Children: ~

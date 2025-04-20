@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     private bool once = false;
 
+    public bool canMove = true;
+
+
     private float elapsedTime = 0f;
     private bool isInteracting = false;
     private float dashDelayTimer = 0f; 
@@ -74,6 +77,13 @@ public class PlayerController : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
+        if (!canMove)
+        {
+            playerMovement.SetMoveDirection(Vector3.Zero);
+            StopFootsteps();
+            walkingFX.Stop();
+            return;
+        }
         if (playerData.isHit )
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)

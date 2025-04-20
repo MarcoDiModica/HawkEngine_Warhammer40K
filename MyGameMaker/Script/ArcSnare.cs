@@ -17,7 +17,7 @@ public class ArcSnare : BaseAbilities
     GameObject grenade;
     Rigidbody rigidbody;
     BoxCollider collider;
-    bool canThrow = true;
+    public bool canThrow = true;
 
     private float explosionCooldown = 1.0f;
     private float explosionTimer = 0.0f;

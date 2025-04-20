@@ -420,8 +420,8 @@ void EngineBinds::SetRotation(MonoObject* transformRef, float x, float y, float 
 Vector3 EngineBinds::GetEulerAngles(MonoObject* transformRef) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     
-    auto v = transform->GetRotation();
-    return Vector3{(float) v.x,(float)v.y,(float)v.z };
+	glm::vec3 euler = transform->GetEulerAngles();
+	return Vector3{ (float)euler.x, (float)euler.y, (float)euler.z };
 }
 
 void EngineBinds::SetRotationQuat(MonoObject* transformRef, glm::quat* rotation) {

@@ -133,6 +133,7 @@
     <Compile Include="ParticleFX.cs" />
     <Compile Include="PickUpManager.cs" />
     <Compile Include="Physics.cs" />
+    <Compile Include="PiercingBullets.cs" />
     <Compile Include="PlayerAnimations.cs" />
     <Compile Include="PlayerCamera.cs" />
     <Compile Include="PlayerController.cs" />

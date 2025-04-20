@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     public override void Awake()
     {
-        
+        playerCamera = GameObject.Find("MainCamera");
     }
 
     public override void Start()
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
             currentRotationAngle = transform.eulerAngles.Y;
         }
         playerInput = gameObject.GetComponent<PlayerInput>();
-        playerCamera = GameObject.Find("MainCamera");
+
         cameraTransform = playerCamera.GetComponent<Transform>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;

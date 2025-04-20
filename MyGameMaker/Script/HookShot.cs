@@ -14,7 +14,7 @@ public class HookShot : BaseAbilities
     GameObject hook;
     Rigidbody rigidbody;
     BoxCollider collider;
-    bool canThrow = true;
+    public bool canThrow = true;
     private float abilityCooldown = 3.0f; 
     private float abilityTimer = 0.0f;
     private Audio sound;

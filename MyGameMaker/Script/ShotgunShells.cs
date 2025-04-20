@@ -50,12 +50,12 @@ public class ShotgunShells : PickUp
             Transform.position = Vector3.Lerp(Transform.position, player.GetComponent<Transform>().position, 0.1f);
         }
     }
-    public void Destroy()
-    {
-        GameObject player = GameObject.Find("Player");
-        Transform.position = new Vector3(0, -100, 0);
-        //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
-    }
+   // public void Destroy()
+   // {
+   //     GameObject player = GameObject.Find("Player");
+   //     Transform.position = new Vector3(0, -100, 0);
+   //     //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
+   // }
 
     public void PowerUpMovment(float time, float dt)
     {

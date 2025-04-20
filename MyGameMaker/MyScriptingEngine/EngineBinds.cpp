@@ -122,9 +122,23 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
 
     std::string componentName = std::string(C_name);
 
-    for (const auto& scriptComponent : GO->scriptComponents) {
-        if (scriptComponent->GetTypeName() == componentName) {
-            return scriptComponent->GetSharpObject();
+    for (const auto& scriptComponent : GO->scriptComponents)
+    {
+        MonoObject* monoScript = scriptComponent->GetSharpObject();
+        if (!monoScript) continue;
+
+        MonoClass* scriptClass = mono_object_get_class(monoScript);
+
+        MonoClass* targetClass = mono_class_from_name_case(
+            MonoManager::GetInstance().GetImage(),
+            "", // Namespace vacío (se puede mejorar)
+            C_name
+        );
+
+        if (!targetClass) continue;
+
+        if (mono_class_is_subclass_of(scriptClass, targetClass, true)) {
+            return monoScript;
         }
     }
 
@@ -223,21 +237,27 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
         break;
 	case 13: _component = static_cast<Component*>(go->AddComponent<ParticleFX>());
 		break;
+    default:
+        //for (const auto& [className, id] : MonoManager::GetInstance().scriptIDs) {
+        //    if (component == id) {
+        //        MonoClass* klass = MonoManager::GetInstance().GetClass("", className.c_str());
+        //        if (!klass) return nullptr;
 
-    }
 
-	
+        //        //Commented for the moment but in case is abstract or interface  should give an error 
+        //       /* if (mono_class_is_interface(klass) || mono_class_is_abstract(klass)) {
+        //            Logger::LogError("[AddSharpComponent] Cannot instantiate abstract/interface script: " + className);
+        //            return nullptr;
+        //        }*/
 
-    // loop through all the scripts and grant them unique ids
-    for (auto it = MonoManager::GetInstance().scriptIDs.begin(); it != MonoManager::GetInstance().scriptIDs.end(); ++it) {
-
-        if (component == it->second) {
-
-            auto script = go->AddComponent<ScriptComponent>();
-            script->LoadScript(it->first);
-        }
-
-    }
+        //        auto script = go->AddComponent<ScriptComponent>();
+        //        script->LoadScript(className);
+        //        return script->GetSharpObject();
+        //    }
+        //}
+        break;
+    
+	}
 
     return _component->GetSharp();
 
@@ -393,7 +413,8 @@ Vector3 EngineBinds::GetLocalPosition(MonoObject* transformRef) {
 
 void EngineBinds::SetRotation(MonoObject* transformRef, float x, float y, float z) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
-    if (transform) transform->SetRotation(glm::vec3(x, y, z));
+    if (transform)
+        transform->SetRotation(glm::radians(glm::vec3(x, y, z)));
 }
 
 Vector3 EngineBinds::GetEulerAngles(MonoObject* transformRef) {
@@ -448,6 +469,40 @@ Vector3 EngineBinds::GetForward(MonoObject* transformRef) {
     auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
     auto forward = transform->GetForward();
     return Vector3{ (float) forward.x,(float) forward.y , (float) forward.z };
+}
+
+void EngineBinds::SetRight(MonoObject* transformRef, glm::vec3* newRight) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) transform->SetRight(*newRight);
+}
+
+Vector3 EngineBinds::GetRight(MonoObject* transformRef) {
+
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    auto right = transform->GetRight();
+    return Vector3{ (float) right.x,(float) right.y , (float) right.z };
+}
+
+void EngineBinds::SetUp(MonoObject* transformRef, glm::vec3* newUp) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    if (transform) transform->SetUp(*newUp);
+}
+
+Vector3 EngineBinds::GetUp(MonoObject* transformRef) {
+
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    auto up = transform->GetUp();
+    return Vector3{ (float) up.x,(float) up.y , (float) up.z };
+}
+
+Vector3 EngineBinds::GetLocalScale(MonoObject* transformRef) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    auto scale = transform->GetLocalScale();
+    return Vector3{ (float)scale.x, (float)scale.y, (float)scale.z };
+}
+void EngineBinds::SetLocalScale(MonoObject* transformRef, Vector3 scale) {
+    auto transform = ConvertFromSharpComponent<Transform_Component>(transformRef);
+    transform->SetLocalScale(glm::dvec3(scale.X, scale.Y, scale.Z));
 }
 
 // Camera Class functions
@@ -911,6 +966,50 @@ void EngineBinds::SetImageEnabled(MonoObject* uiImageRef, bool enabled) {
     }
 }
 
+void EngineBinds::SetImageHasAnimation(MonoObject* uiImageRef, bool hasAnimation) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetUseAnimation(hasAnimation);
+	}
+}
+
+void EngineBinds::SetImageAnimationSpeed(MonoObject* uiImageRef, float speed) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetAnimSpeed(speed);
+	}
+}
+
+void EngineBinds::SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetAnimationIndexLimit(indexLimit);
+	}
+}
+
+void EngineBinds::SetImageAnimation(MonoObject* uiImageRef, int index) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+        if (index == 0) 
+        {
+            uiImage->SetAnimationIndex(0);
+        }
+        else 
+        {
+            uiImage->SetAnimationIndex(uiImage->GetAnimationIndexLimit());
+        }
+
+		uiImage->SetAnimationNum(index);
+	}
+}
+
+void EngineBinds::SetImageSpriteSize(MonoObject* uiImageRef, float width, float height) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetSpriteSize(vec2(width, height));
+	}
+}
+
 int EngineBinds::GetState(MonoObject* uiButtonRef)
 {
 	auto uiButton = ConvertFromSharpComponent<UIButtonComponent>(uiButtonRef);
@@ -1327,6 +1426,12 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.Transform::AlignToGlobalUp", (const void*)&EngineBinds::AlignToGlobalUp);
     mono_add_internal_call("HawkEngine.Transform::SetForward", (const void*)&EngineBinds::SetForward);
     mono_add_internal_call("HawkEngine.Transform::GetForward", (const void*)&EngineBinds::GetForward);
+    mono_add_internal_call("HawkEngine.Transform::GetUp", (const void*)&EngineBinds::SetUp);
+    mono_add_internal_call("HawkEngine.Transform::GetUp", (const void*)&EngineBinds::GetUp);
+    mono_add_internal_call("HawkEngine.Transform::GetRight", (const void*)&EngineBinds::SetRight);
+    mono_add_internal_call("HawkEngine.Transform::GetRight", (const void*)&EngineBinds::GetRight);
+    mono_add_internal_call("HawkEngine.Transform::SetLocalScale", (const void*)&EngineBinds::SetLocalScale);
+    mono_add_internal_call("HawkEngine.Transform::GetLocalScale", (const void*)&EngineBinds::GetLocalScale);
 
     // Camera
     mono_add_internal_call("HawkEngine.Camera::SetCameraFieldOfView", (const void*)&EngineBinds::SetCameraFieldOfView);
@@ -1395,6 +1500,11 @@ void EngineBinds::BindEngine() {
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);
 	mono_add_internal_call("HawkEngine.UIImage::SetImageEnabled", (const void*)&EngineBinds::SetImageEnabled);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageHasAnimation", (const void*)&EngineBinds::SetImageHasAnimation);
+    mono_add_internal_call("HawkEngine.UIImage::SetImageAnimationSpeed", (const void*)&EngineBinds::SetImageAnimationSpeed);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimationIndexLimit", (const void*)&EngineBinds::SetImageAnimationIndexLimit);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimation", (const void*)&EngineBinds::SetImageAnimation);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageSpriteSize", (const void*)&EngineBinds::SetImageSpriteSize);
 
 	// UI Button
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Script</RootNamespace>
     <AssemblyName>Script</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,6 +93,8 @@
     <Compile Include="ChapterStandard.cs" />
     <Compile Include="Collider.cs" />
     <Compile Include="Component.cs" />
+    <Compile Include="Coroutine.cs" />
+    <Compile Include="CoroutineManager.cs" />
     <Compile Include="DestroyEnviormentObject.cs" />
     <Compile Include="EnemyController.cs" />
     <Compile Include="EnemyControllerBoss.cs" />
@@ -113,6 +116,7 @@
     <Compile Include="LaserBeam.cs" />
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
+    <Compile Include="Mathf.cs" />
     <Compile Include="MedicaeStimm.cs" />
     <Compile Include="IInteractable.cs" />
     <Compile Include="ImageAsSlider.cs" />
@@ -158,11 +162,14 @@
     <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Tweening.cs" />
+    <Compile Include="TyranidCorpse.cs" />
+    <Compile Include="TyranidTentacles.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="UICanvas.cs" />
     <Compile Include="UIGameplay.cs" />
     <Compile Include="UIImage.cs" />
     <Compile Include="UITransform.cs" />
+    <Compile Include="WaitForSeconds.cs" />
     <Compile Include="WinScreen.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

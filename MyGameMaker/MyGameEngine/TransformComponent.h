@@ -49,6 +49,12 @@ public:
     glm::dvec3 GetUp() const {
         return glm::normalize(localRotation * glm::dvec3(0, 1, 0));
     }
+    // Returns the right vector (local space, i.e. rotation applied to (1,0,0))
+    glm::dvec3 GetRight() const
+    {
+        return glm::normalize(localRotation * glm::dvec3(1, 0, 0));
+    }
+  
 
     void ResetTransform() {
         localPosition = glm::dvec3(0.0);
@@ -81,6 +87,8 @@ public:
     void SetScale(const glm::dvec3& scale);
 
     void SetForward(const glm::dvec3& newFwd);
+    void SetRight(const glm::dvec3& right);
+    void SetUp(const glm::dvec3& up);
     void LookAt(const glm::dvec3& target);
     void AlignToGlobalUp(const glm::vec3& worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
 

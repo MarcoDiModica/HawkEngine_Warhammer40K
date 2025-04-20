@@ -12,7 +12,7 @@ namespace HawkEngine
 
         //contructor
         private GameObject owner;
-      
+        private ButtonState state;
         public UIButton(UIntPtr nativeRigidbody, GameObject owner)
         {
             CplusplusInstance = nativeRigidbody;
@@ -31,6 +31,12 @@ namespace HawkEngine
         public override void Update(float deltaTime) { }
 
         public override void Destroy() { }
+
+        public void SetState(ButtonState state)
+        {
+            this.state = state;
+        }
+
     }
 
     public enum ButtonState

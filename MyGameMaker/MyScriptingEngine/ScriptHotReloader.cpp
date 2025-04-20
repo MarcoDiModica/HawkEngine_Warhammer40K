@@ -18,6 +18,44 @@ ScriptHotReloader::ScriptHotReloader() : m_IsCompiling(false), m_CompilationCool
 }
 
 ScriptHotReloader::~ScriptHotReloader() {
+	if (!m_ScriptFolder.empty()) {
+		TryDeleteFile(m_ScriptFolder + "\\dotnet_config.txt");
+		TryDeleteFile(m_ScriptFolder + "\\msbuild_config.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_preference.txt");
+
+		TryDeleteFile(m_ScriptFolder + "\\build_output.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_result.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_warnings.txt");
+		TryDeleteFile(m_ScriptFolder + "\\build_errors.txt");
+		TryDeleteFile(m_ScriptFolder + "\\process_output.log");
+
+		if (!m_StagingDirectory.empty() && std::filesystem::exists(m_StagingDirectory)) {
+			try {
+				std::filesystem::remove_all(m_StagingDirectory);
+				std::filesystem::create_directories(m_StagingDirectory);
+				LOG(LogType::LOG_INFO, "Staging directory cleaned");
+			}
+			catch (const std::filesystem::filesystem_error& e) {
+				LOG(LogType::LOG_ERROR, "Failed to clean staging directory: %s", e.what());
+			}
+		}
+
+		try {
+			std::vector<std::string> foldersToClean = {
+				m_ScriptFolder + "\\obj",
+				m_ScriptFolder + "\\bin"
+			};
+
+			for (const auto& folder : foldersToClean) {
+				if (std::filesystem::exists(folder)) {
+					std::filesystem::remove_all(folder);
+				}
+			}
+		}
+		catch (const std::filesystem::filesystem_error& e) {
+			LOG(LogType::LOG_ERROR, "Error cleaning build directories: %s", e.what());
+		}
+	}
 }
 
 void ScriptHotReloader::Initialize(const std::string& scriptFolder, const std::string& outputAssemblyDir) {
@@ -112,11 +150,6 @@ bool ScriptHotReloader::CheckForChanges() {
 		return false;
 	}
 
-	if (!m_LastCompilationSuccess) {
-		LOG(LogType::LOG_INFO, "Previous compilation failed. Please fix errors.");
-		return false;
-	}
-
 	if (!IsEngineInForeground()) {
 		return false;
 	}
@@ -139,14 +172,13 @@ bool ScriptHotReloader::CheckForChanges() {
 	}
 
 	if (scriptsModified) {
+		if (!m_LastCompilationSuccess) {
+			LOG(LogType::LOG_INFO, "Previous compilation failed, but changes detected. Attempting recompilation...");
+		}
+
 		if (Application->root->GetActiveScene()->sceneState == Scene::SceneState::PLAY) {
 			LOG(LogType::LOG_ERROR, "Script changes detected, but engine is in play mode. Please stop the game to reload scripts.");
 			return false;
-		}
-
-		LOG(LogType::LOG_INFO, "Detected changes in %d script(s):", modifiedFiles.size());
-		for (const auto& file : modifiedFiles) {
-			LOG(LogType::LOG_INFO, "  - %s", file.c_str());
 		}
 
 		m_IsCompiling = true;
@@ -168,11 +200,11 @@ bool ScriptHotReloader::CheckForChanges() {
 		if (m_PreferMSBuild && msbuildAvailable) {
 			result = CompileWithMSBuild();
 		}
-		else if (!m_PreferMSBuild && dotnetAvailable) {
-			result = CompileExistingProject();
-		}
 		else if (msbuildAvailable) {
 			result = CompileWithMSBuild();
+		}
+		else if (!m_PreferMSBuild && dotnetAvailable) {
+			result = CompileExistingProject();
 		}
 		else if (dotnetAvailable) {
 			result = CompileExistingProject();
@@ -191,6 +223,9 @@ bool ScriptHotReloader::CheckForChanges() {
 			}).detach();
 
 		return result;
+	}
+	else if (!m_LastCompilationSuccess) {
+		LOG(LogType::LOG_INFO, "Previous compilation failed. Please fix errors and save the file.");
 	}
 
 	return false;
@@ -262,11 +297,11 @@ bool ScriptHotReloader::ForceRecompile() {
 	if (m_PreferMSBuild && msbuildAvailable) {
 		result = CompileWithMSBuild();
 	}
-	else if (!m_PreferMSBuild && dotnetAvailable) {
-		result = CompileExistingProject();
-	}
 	else if (msbuildAvailable) {
 		result = CompileWithMSBuild();
+	}
+	else if (!m_PreferMSBuild && dotnetAvailable) {
+		result = CompileExistingProject();
 	}
 	else if (dotnetAvailable) {
 		result = CompileExistingProject();
@@ -768,7 +803,10 @@ bool ScriptHotReloader::FindWorkingMSBuild() {
 				if (!entry.is_directory()) continue;
 
 				for (const auto& year : vsYears) {
-					std::string yearPath = entry.path().string() + "\\" + year;
+					std::string yearPath = entry.path().string();
+					if (yearPath.find(year) == std::string::npos) {
+						yearPath += "\\" + year;
+					}
 					if (!std::filesystem::exists(yearPath)) continue;
 
 					for (const auto& edition : vsEditions) {
@@ -850,70 +888,23 @@ bool ScriptHotReloader::TestMSBuildCompilation(const std::string& msbuildPath) {
 		return false;
 	}
 
-	std::string testOutputFile = m_ScriptFolder + "\\test_msbuild_output.txt";
-	std::string testErrorFile = m_ScriptFolder + "\\test_msbuild_error.txt";
-	std::string resultFile = m_ScriptFolder + "\\test_msbuild_result.txt";
-
 	std::string buildCommand = "\"" + msbuildPath + "\" \"" + m_ProjectFile +
-		"\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal > \"" +
-		testOutputFile + "\" 2> \"" + testErrorFile + "\"";
+		"\" /p:Configuration=Release /t:Rebuild /nologo /verbosity:minimal";
 
+	std::string buildOutput;
 	int buildExitCode = ExecuteSilentProcess(buildCommand, m_ScriptFolder);
 
-	std::ofstream resultStream(resultFile);
-	if (resultStream.is_open()) {
-		resultStream << buildExitCode;
-		resultStream.close();
-	}
-
-	int buildResult = -1;
-	try {
-		std::ifstream resultFileStream(resultFile);
-		if (resultFileStream.is_open()) {
-			std::string line;
-			if (std::getline(resultFileStream, line) && !line.empty()) {
-				buildResult = std::stoi(line);
-			}
-			resultFileStream.close();
-		}
-	}
-	catch (...) {}
-
-	bool buildHasErrors = false;
-
-	try {
-		std::ifstream outputFile(testOutputFile);
-		if (outputFile.is_open()) {
-			std::string line;
-			while (std::getline(outputFile, line)) {
-				if (line.find("error") != std::string::npos) {
-					buildHasErrors = true;
-					break;
-				}
-			}
-			outputFile.close();
-		}
-	}
-	catch (...) {}
-
-	try {
-		std::ifstream errorFile(testErrorFile);
-		if (errorFile.is_open() && errorFile.peek() != std::ifstream::traits_type::eof()) {
-			buildHasErrors = true;
-			errorFile.close();
-		}
-	}
-	catch (...) {}
-
-	TryDeleteFile(testOutputFile);
-	TryDeleteFile(testErrorFile);
-	TryDeleteFile(resultFile);
-
-	if (buildResult != 0 || buildHasErrors) {
-		LOG(LogType::LOG_INFO, "MSBuild failed to build the project, result code: %d", buildResult);
+	if (buildExitCode != 0) {
+		LOG(LogType::LOG_WARNING, "MSBuild exited with code %d", buildExitCode);
 		return false;
 	}
 
+	if (buildOutput.find("error") != std::string::npos) {
+		LOG(LogType::LOG_ERROR, "MSBuild compilation failed due to errors in the output");
+		return false;
+	}
+
+	LOG(LogType::LOG_INFO, "MSBuild compilation succeeded.");
 	return true;
 }
 

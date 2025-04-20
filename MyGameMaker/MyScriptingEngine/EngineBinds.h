@@ -78,8 +78,15 @@ namespace EngineBinds {
     void AlignToGlobalUp(MonoObject* transformRef, glm::vec3* worldUp);
     Vector3 GetForward(MonoObject* transformRef);
     void SetForward(MonoObject* transformRef, glm::vec3* forward);
+    Vector3 GetUp(MonoObject* transformRef);
+   // Quaternion GetRotationQuat(MonoObject* transformRef);
+    void SetUp(MonoObject* transformRef, glm::vec3* newUp);
+    Vector3 GetRight(MonoObject* transformRef);
+    void SetRight(MonoObject* transformRef, glm::vec3* newIn);
+    Vector3 GetLocalScale(MonoObject* transformRef);
+    void SetLocalScale(MonoObject* transformRef, Vector3 scale);
 
-	// Camera
+    // Camera
     void SetCameraFieldOfView(MonoObject* cameraRef, double fov);
     void SetCameraNearClipPlane(MonoObject* cameraRef, float nearClipPlane);
     void SetCameraFarClipPlane(MonoObject* cameraRef, float farClipPlane);
@@ -147,6 +154,11 @@ namespace EngineBinds {
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);
 	void SetImageEnabled(MonoObject* uiImageRef, bool enabled);
+	void SetImageHasAnimation(MonoObject* uiImageRef, bool hasAnimation);
+	void SetImageAnimationSpeed(MonoObject* uiImageRef, float speed);
+	void SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit);
+	void SetImageAnimation(MonoObject* uiImageRef, int index);
+	void SetImageSpriteSize(MonoObject* uiImageRef, float width, float height);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);

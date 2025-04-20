@@ -203,6 +203,7 @@ private:
 			if (mesh) {
 				AlignedProperty("Vertices", static_cast<int>(mesh->getModel()->GetModelData().vertexData.size()), labelWidth);
 				AlignedProperty("Indices", static_cast<int>(mesh->getModel()->GetModelData().indexData.size()), labelWidth);
+				AlignedProperty("Mesh ID", static_cast<int>(mesh->getModel()->GetID()), labelWidth);
 			}
 			else {
 				ImGui::TextColored(ImVec4(0.9f, 0.2f, 0.2f, 1.0f), "No mesh assigned");
@@ -217,6 +218,9 @@ private:
 				ImGui::TreePop();
 				return;
 			}
+
+			std::string MatName = "Material Name:" + material->matName;
+			ImGui::Text(MatName.c_str());
 
 			const char* shaderTypes[] = { "UNLIT", "PBR" };
 			int currentType = static_cast<int>(material->GetShaderType());
@@ -2436,6 +2440,32 @@ private:
 		}
 		ImGui::PopItemWidth();
 
+		bool useAnimation = image->GetUseAnimation();
+		if (ImGui::Checkbox("Use Animation", &useAnimation)) {
+			image->SetUseAnimation(useAnimation);
+		}
+
+		glm::vec2 spriteSize = image->GetSpriteSize();
+		float spriteSizeArray[2] = { spriteSize.x, spriteSize.y };
+		if (ImGui::DragFloat2("Sprite Size", spriteSizeArray, 0.1f, 0.1f, 4600.0f)) {
+			image->SetSpriteSize(glm::vec2(spriteSizeArray[0], spriteSizeArray[1]));
+		}
+
+		float animSpeed = image->GetAnimSpeed();
+        if (ImGui::SliderFloat("Animation Speed", &animSpeed, 0.1f, 100.0f)) {
+			image->SetAnimSpeed(animSpeed);
+		}
+
+		int animNum = image->GetAnimationNum();
+		if (ImGui::DragInt("Animation Num", &animNum, 1, 0, 1)) {
+			image->SetAnimationNum(animNum);
+		}
+
+		int animIndexLimit = image->GetAnimationIndexLimit();
+		if (ImGui::DragInt("Animation Index Limit", &animIndexLimit, 1, 1, 100)) {
+			image->SetAnimationIndexLimit(animIndexLimit);
+		}
+
 		ImGui::EndGroup();
 	}
 	#pragma endregion
@@ -3006,7 +3036,7 @@ public:
 				}, !gameObject->HasComponent<UICanvasComponent>());
 		}
 
-		if (matchesSearch("Image")) {
+		if (matchesSearch("UIImageComponent")) {
 			anyFound = true;
 			DrawComponentButton(gameObject, "Image", [gameObject]() {
 				if (!gameObject->HasComponent<UITransformComponent>()) {

@@ -91,12 +91,12 @@ void Shaders::SetUniform(const std::string& name, float value) {
 	}
 }
 
-//void Shaders::SetUniform(const std::string& name, const glm::vec2& value) {
-//	GLint location = GetUniformLocation(name);
-//	if (location != -1) {
-//		glUniform2fv(location, 1, glm::value_ptr(value));
-//	}
-//}
+void Shaders::SetUniformVec2(const std::string& name, const glm::vec2& value) {
+	GLint location = GetUniformLocation(name);
+	if (location != -1) {
+		glUniform2fv(location, 1, glm::value_ptr(value));
+	}
+}
 
 void Shaders::SetUniform(const std::string& name, const glm::vec3& value) {
 	GLint location = GetUniformLocation(name);

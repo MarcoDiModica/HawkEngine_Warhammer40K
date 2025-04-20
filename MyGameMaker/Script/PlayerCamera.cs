@@ -51,7 +51,7 @@ public class PlayerCamera : MonoBehaviour
             Engineson.print("ERROR: PlayerCamera requires a GameObject named 'Player' in the scene!");
             return;
         }
-
+        
         cameraRef.SetFollowTarget(playerRef, currentOffset, 0, true, true, true, smoothness);
         cameraRef.SetCameraFieldOfView(originalFOV * (Math.PI / 180.0));
     }
@@ -59,7 +59,7 @@ public class PlayerCamera : MonoBehaviour
     public override void Update(float deltaTime)
     {
         Vector2 rightStickInput = Input.GetRightStick();
-        Vector3 baseOffset = new Vector3(-11.9f, 19.8f, -12.2f);
+        Vector3 baseOffset = new Vector3(-9f, 19.8f, 9f);
 
         if (rightStickInput != Vector2.Zero)
         {

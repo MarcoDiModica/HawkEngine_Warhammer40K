@@ -127,6 +127,7 @@ bool Root::Start()
 	//auto canvasHUD = FindGOByName("Canvas_HUD");
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
+
 	//auto objMainCamera = CreateCameraObject("MainCamera");
 	//objMainCamera->GetTransform()->SetPosition(glm::dvec3(0, 20.0f, -14.0f));
 	//objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
@@ -190,6 +191,7 @@ bool Root::Start()
 	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	//ParentGameObject(*walkingFX, *player);
 	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+
 
 	//particle->ApplyPreset(Particle)
 
@@ -421,7 +423,7 @@ bool Root::Start()
 	//hormagaunt2->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt2->SetTag("Melee");
 	//auto mawloc = CreateGameObject("Mawloc");
-	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, -16, 1080));
+	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
 	//mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
 	//mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	//mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -429,7 +431,17 @@ bool Root::Start()
 	//ParentGameObject(*mawlocMesh, *mawloc);
 	//mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
+	//auto mawlocTail = CreateGameObject("MawlocTail");
+	//mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	//mawlocTail->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
+	//mawlocTail->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//mawlocTail->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//auto mawlocTailMesh = CreateCube("MawlocTailMesh");
+	//ParentGameObject(*mawlocTailMesh, *mawlocTail);
+	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
+
 	//Floor
+
 	//auto floor = CreateCube("Floor");
 	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	//floor->GetTransform()->SetScale(glm::vec3(500, 1, 500));

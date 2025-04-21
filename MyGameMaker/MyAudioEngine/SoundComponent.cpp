@@ -15,6 +15,10 @@ SoundComponent::~SoundComponent()
 	Destroy();
 }
 
+std::unique_ptr<Component> SoundComponent::Clone(GameObject* new_owner) {
+	return std::make_unique<SoundComponent>(new_owner, audioEngine);
+}
+
 void SoundComponent::Awake()
 {
 	// Initialize the audio engine or any other setup needed

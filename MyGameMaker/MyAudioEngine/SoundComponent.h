@@ -23,9 +23,7 @@ public:
 		return ComponentType::AUDIO; // Cambia a un tipo espec?fico si es necesario
 	}
 
-	std::unique_ptr<Component> Clone(GameObject* new_owner) override {
-		return nullptr;
-	}
+	std::unique_ptr<Component> Clone(GameObject* new_owner) override;
 
 	AudioEngine* audioEngine = nullptr;
 

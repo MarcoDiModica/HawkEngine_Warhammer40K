@@ -48,10 +48,7 @@ std::shared_ptr<GameObject> PrefabManager::LoadPrefab(const std::string& path)
           return nullptr;  
       }  
 
-      GameObject* go = Application->scene_serializer->DeserializeGameObject(prefabNode).get();  
-      if (!go) return nullptr;  
-
-      return std::shared_ptr<GameObject>(go);  
+      return Application->scene_serializer->DeserializeGameObject(prefabNode);
   }  
   catch (const std::exception& e) {  
       LOG(LogType::LOG_ERROR, "[LoadPrefab] Exception: %s", e.what());  

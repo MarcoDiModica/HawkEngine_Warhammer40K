@@ -1,0 +1,100 @@
+name: Player
+uuid: 38561759676700985
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 6.4858078956604004
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  CapsuleColliderComponent:
+    size:
+      - 1.70000005
+      - 1.10000002
+      - 1
+    offset:
+      - 0
+      - 2.0999999
+      - 0
+    isTrigger: false
+  RigidbodyComponent:
+    mass: 1
+    isKinematic: false
+    isFreezed: true
+    friction: 0.5
+    gravity:
+      x: 0
+      y: -200
+      z: 0
+    damping:
+      linear: 0
+      angular: 0
+Children:
+  - name: playerMesh
+    uuid: 1348953484592712764
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - -90.000002504478161
+          - 0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      MeshRenderer:
+        name: MeshRenderer
+        enabled: true
+        mesh:
+          name: Cylinder.001
+        material:
+          wrap_mode: Repeat
+          filter: Nearest
+          color:
+            - 0.800000012
+            - 0.800000012
+            - 0.800000012
+            - 1
+          metallic: 0
+          roughness: 0.5
+          ao: 1
+          tonemap_strength: 1
+          shader_type: PBR
+          image: dieno zachael jetpack 2_DefaultMaterial_BaseColor
+          normal_map: dieno zachael jetpack 2_DefaultMaterial_Normal
+          metallic_map: ""
+          roughness_map: dieno zachael jetpack 2_DefaultMaterial_Roughness
+          ao_map: ""
+        color:
+          - 1
+          - 1
+          - 1
+      Shader:
+        name: Shader
+        enabled: true
+      SkeletalAnimationComponent:
+        name: SkeletalAnimationComponent
+        enabled: true
+        animation_file: skeletal_anim_playerMesh
+    Children: ~

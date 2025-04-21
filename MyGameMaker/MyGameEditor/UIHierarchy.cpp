@@ -234,23 +234,11 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
 		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), obj.GetID());
 
-		if (ImGui::IsMouseReleased(0)) {
-			PrefabManager::EnsurePrefabDirectoryExists();
-			std::string sanitized = PrefabManager::SanitizeName(obj.GetName());
-			std::string path = PrefabManager::GetPrefabDirectory() + sanitized + ".prefab.yaml";
-			PrefabManager::SavePrefab(obj.shared_from_this(), path);
-            
-		}
-
 		draggedObject = &obj;
 		gameObjectBeingDragged = &obj;
 		ImGui::EndDragDropSource();
 	}
 	if (gameObjectBeingDragged && ImGui::IsMouseReleased(0)) {
-		PrefabManager::EnsurePrefabDirectoryExists();
-		std::string sanitized = obj.GetName(); // fallback, or use custom util
-		std::string path = PrefabManager::GetPrefabDirectory() + sanitized + ".prefab.yaml";
-		PrefabManager::SavePrefab(gameObjectBeingDragged->shared_from_this(), path);
 		gameObjectBeingDragged = nullptr;
 	}
 	if (clickState.mouseDownOnThisItem && ImGui::IsMouseReleased(0)) {
@@ -276,19 +264,18 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 	}
 
+
 	if (draggedObject) {
-		if (ImGui::BeginDragDropTarget()) {
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
-				if (!draggedObject) {
-					draggedObject = *(GameObject**)payload->Data;
-				}
-				Application->root->ParentGameObjectPreserve(*draggedObject, obj);
-				draggedObject = nullptr;
-				should_continue = false;
-			}
-			ImGui::EndDragDropTarget();
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
+			ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
+			ImGui::Text("Dragging %s", obj.GetName().c_str());
+			ImGui::EndDragDropSource();
 		}
-	}
+	}		
+	
+
+
+	
 
 	if (ImGui::BeginPopupContextItem()) {
 		ImGui::Text(obj.GetName().c_str());

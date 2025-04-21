@@ -569,9 +569,9 @@ bool Root::Start()
 
 	//floor->SetActive(false);
 
-	//auto collisionNextLevel = CreateGameObject("CollisionNextLevel");
-	//collisionNextLevel->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//collisionNextLevel->AddComponent<ScriptComponent>()->LoadScript("Scene2ToMenu");
+	auto collisionNextLevel = CreateGameObject("CollisionNextLevel");
+	collisionNextLevel->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	collisionNextLevel->AddComponent<ScriptComponent>()->LoadScript("Scene1ToScene2");
 
 	//CreateLocationBot();
 	//CreateLocationSM();

@@ -58,6 +58,8 @@ public :
     void GetEventParameter(const std::string& strEventName, const std::string& strEventParameter, float* parameter);
     void SetEventParameter(const std::string& strEventName, const std::string& strParameterName, float fValue);
     void StopAllChannels();
+	void PauseAllChannels();
+	void ResumeAllChannels();
     void SetChannel3dPosition(int nChannelId, const glm::vec3& vPosition);
     void SetChannelVolume(int nChannelId, float fVolumedB);
     bool IsPlaying(int nChannelId) const;

@@ -144,6 +144,18 @@ void AudioEngine::StopAllChannels() {
 	sgpImplementation->mChannels.clear();
 }
 
+void AudioEngine::PauseAllChannels() {
+	for (auto& channel : sgpImplementation->mChannels) {
+		channel.second->setPaused(true);
+	}
+}
+
+void AudioEngine::ResumeAllChannels() {
+	for (auto& channel : sgpImplementation->mChannels) {
+		channel.second->setPaused(false);
+	}
+}
+
 int AudioEngine::GetChannelId(const std::string& strSoundName) {
 	auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
 	if (tFoundIt == sgpImplementation->mSounds.end())

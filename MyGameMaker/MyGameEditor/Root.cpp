@@ -627,6 +627,10 @@ bool Root::Update(double dt)
 		//AddInteraction();
 	}
 
+	
+
+
+
 
 	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

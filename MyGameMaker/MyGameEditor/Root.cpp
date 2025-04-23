@@ -375,7 +375,7 @@ bool Root::Start()
 
 	//Hormagaunt
 	auto hormagaunt = CreateGameObject("Hormagaunt");
-	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
+	hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 20));
 	hormagaunt->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
 	hormagaunt->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	hormagaunt->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -498,8 +498,8 @@ bool Root::Start()
 	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	
 	auto obstacle = CreateCube("Obstacle");
-	floor->GetTransform()->SetPosition(glm::vec3(0, 3, 5));
-	floor->GetTransform()->SetScale(glm::vec3(3, 3, 3));
+	obstacle->GetTransform()->SetPosition(glm::vec3(0, 3, 10));
+	obstacle->GetTransform()->SetScale(glm::vec3(3, 3, 3));
 	auto obstacleCollider = obstacle->AddComponent<BoxColliderComponent>(Application->physicsModule);
 
 	

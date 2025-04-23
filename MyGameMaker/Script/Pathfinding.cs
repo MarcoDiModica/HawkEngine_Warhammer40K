@@ -5,12 +5,6 @@ using System.Numerics;
 
 namespace HawkEngine
 {
-    public static class PhysicsBindings
-    {
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern GameObject[] OverlapSphere(Vector3 position, float radius, string tag);
-    }
-
     public class Pathfinding
     {
         private readonly int width = 20;
@@ -25,7 +19,7 @@ namespace HawkEngine
                 for (int y = 0; y < height; y++)
                 {
                     var worldPos = new Vector3(x + 0.5f, 0.5f, y + 0.5f);
-                    var hits = PhysicsBindings.OverlapSphere(worldPos, cellSize * 0.45f, "Obstacle");
+                    var hits = Physics.OverlapSphere(worldPos, cellSize * 0.45f, "Obstacle");
                     bool walkable = hits == null || hits.Length == 0;
                     grid[x, y] = new Node(x, y, walkable);
                 }

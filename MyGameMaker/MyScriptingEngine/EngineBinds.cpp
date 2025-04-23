@@ -1476,7 +1476,7 @@ void EngineBinds::BindEngine() {
     mono_add_internal_call("HawkEngine.AudioSource::PauseSound", (const void*)&EngineBinds::Pause);
     mono_add_internal_call("HawkEngine.AudioSource::ResumeSound", (const void*)&EngineBinds::Resume);
     mono_add_internal_call("HawkEngine.AudioSource::SetVolumeSound", (const void*)&EngineBinds::SetVolume);
-	mono_add_internal_call("HawkEngine.AudioSource::LoadAudioSound", (const void*)&EngineBinds::LoadAudioClip);
+	mono_add_internal_call("HawkEngine.AudioSource::LoadSound", (const void*)&EngineBinds::LoadAudioClip);
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);

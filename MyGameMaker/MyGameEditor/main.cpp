@@ -835,6 +835,7 @@ static void GameRelease() {
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
+	Application->audioEngine->Update();
 
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;

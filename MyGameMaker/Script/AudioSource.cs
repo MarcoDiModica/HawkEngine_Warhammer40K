@@ -56,7 +56,7 @@ namespace HawkEngine
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern int LoadSound(string path, bool is3D, bool loop);
+        private extern void LoadSound(string path, bool is3D, bool loop);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void PlaySound(string path);

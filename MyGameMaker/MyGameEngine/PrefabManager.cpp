@@ -47,8 +47,9 @@ std::shared_ptr<GameObject> PrefabManager::LoadPrefab(const std::string& path)
           LOG(LogType::LOG_ERROR, "[LoadPrefab] SceneSerializer is not initialized.");  
           return nullptr;  
       }  
-
-      return Application->scene_serializer->DeserializeGameObject(prefabNode);
+      auto go = Application->scene_serializer->DeserializeGameObject(prefabNode);
+      go->SetPrefabSourcePath(path);
+	  return go;
   }  
   catch (const std::exception& e) {  
       LOG(LogType::LOG_ERROR, "[LoadPrefab] Exception: %s", e.what());  
@@ -74,4 +75,20 @@ std::string PrefabManager::SanitizeName(const std::string& name) {
        }  
    }  
    return result;  
+}
+std::string PrefabManager::GetUniquePrefabPath(const std::string& baseName) {
+    EnsurePrefabDirectoryExists();
+
+    std::filesystem::path dir = GetPrefabDirectory();
+    std::string cleanName = baseName;
+    std::string ext = ".prefab.yaml";
+
+    std::filesystem::path fullPath = dir / (cleanName + ext);
+    int i = 1;
+
+    while (std::filesystem::exists(fullPath)) {
+        fullPath = dir / (cleanName + " (" + std::to_string(i++) + ")" + ext);
+    }
+
+    return fullPath.string();
 }

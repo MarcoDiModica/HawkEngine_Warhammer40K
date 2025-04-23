@@ -1363,6 +1363,7 @@ void EngineBinds::BindEngine() {
 
     // GameObject
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
+	mono_add_internal_call("MonoBehaviour::Intantiate", (const void*)GetGameObject);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);

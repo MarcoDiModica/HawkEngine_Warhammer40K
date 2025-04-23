@@ -62,4 +62,10 @@ public  class MonoBehaviour
     }
     public virtual void OnTriggerExit(GameObject other) {
     }
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern GameObject Instantiate(GameObject prefab);
+
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern GameObject Instantiate(GameObject prefab, Transform parent);
 }

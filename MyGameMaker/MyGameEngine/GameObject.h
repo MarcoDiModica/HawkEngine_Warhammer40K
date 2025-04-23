@@ -113,6 +113,9 @@ public:
 
     void SelfDestroy();
 
+    const std::string& GetPrefabSourcePath() const { return prefabSourcePath; }
+    void SetPrefabSourcePath(const std::string& path) { prefabSourcePath = path; }
+
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -137,6 +140,8 @@ private:
     mutable std::shared_ptr<Component> cachedComponent;
 
     std::shared_ptr<Mesh> mesh;
+
+    std::string prefabSourcePath;
 
 protected:
     friend class Scene;

@@ -226,20 +226,11 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 	ImGui::PopStyleColor(4);
 
-	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-		if (clickState.item == &obj) {
-			clickState.wasDragged = true;
-		}
-
+	if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID)) {
 		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
 		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), obj.GetID());
-
 		draggedObject = &obj;
-		gameObjectBeingDragged = &obj;
 		ImGui::EndDragDropSource();
-	}
-	if (gameObjectBeingDragged && ImGui::IsMouseReleased(0)) {
-		gameObjectBeingDragged = nullptr;
 	}
 	if (clickState.mouseDownOnThisItem && ImGui::IsMouseReleased(0)) {
 		if (!clickState.wasDragged && clickState.item == &obj) {
@@ -263,15 +254,6 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 			clickState.wasDragged = false;
 		}
 	}
-
-
-	if (draggedObject) {
-		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-			ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
-			ImGui::Text("Dragging %s", obj.GetName().c_str());
-			ImGui::EndDragDropSource();
-		}
-	}		
 	
 
 

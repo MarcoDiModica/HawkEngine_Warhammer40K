@@ -29,6 +29,7 @@ const std::string SCRIPT_ICON_PATH = "EngineAssets/cscript.png";
 static GameObject* draggedObject = nullptr;
 static std::string newPrefabName = "";
 static bool showSaveAsPrefabPopup = false;
+static char nameBuffer[128];
 
 UIProject::UIProject(UIType type, std::string name) : UIElement(type, name)
 {
@@ -101,26 +102,12 @@ bool UIProject::Draw()
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(5, 5));
     bool windowActive = ImGui::Begin("Library", &enabled, projectFlags);
 
-    ImVec2 dropZoneSize(300, 80);
-    ImGui::Dummy(dropZoneSize);
-    ImGui::SameLine();
-    ImGui::Text("Drop GameObject here to create Prefab");
+   
 
-    if (ImGui::BeginDragDropTarget()) {
-        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
-            GameObject* go = *(GameObject**)payload->Data;
-            if (go) {
-                draggedObject = go;
-                newPrefabName = go->GetName();
-                showSaveAsPrefabPopup = true;
-                ImGui::OpenPopup("##SaveAsPrefabPopup");
-            }
-        }
-        ImGui::EndDragDropTarget();
-    }
 
     ImGui::PopStyleVar();
 
+    
 
     if (!windowActive) {
         ImGui::End();
@@ -180,44 +167,7 @@ bool UIProject::Draw()
         ImGui::EndPopup();
     }
 
-    if (showSaveAsPrefabPopup &&
-        ImGui::BeginPopupModal("##SaveAsPrefabPopup", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
-        ImGui::Text("Enter a name to save the prefab:");
-
-        static char nameBuffer[128];
-        strncpy(nameBuffer, newPrefabName.c_str(), sizeof(nameBuffer));
-        nameBuffer[sizeof(nameBuffer) - 1] = '\0';
-
-        ImGui::InputText("Prefab Name", nameBuffer, sizeof(nameBuffer));
-
-        if (ImGui::Button("Save")) {
-            std::string finalName(nameBuffer);
-            if (finalName.empty()) {
-                LOG(LogType::LOG_WARNING, "Please enter a valid prefab name.");
-            }
-            else {
-                std::string path = PrefabManager::GetPrefabDirectory() + finalName + ".prefab.yaml";
-                PrefabManager::EnsurePrefabDirectoryExists();
-                if (draggedObject) {
-                    PrefabManager::SavePrefab(draggedObject->shared_from_this(), path);
-                    LOG(LogType::LOG_INFO, "Prefab saved: %s", path.c_str());
-                }
-                draggedObject = nullptr;
-                showSaveAsPrefabPopup = false;
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        ImGui::SameLine();
-        if (ImGui::Button("Cancel")) {
-            draggedObject = nullptr;
-            showSaveAsPrefabPopup = false;
-            ImGui::CloseCurrentPopup();
-        }
-
-        ImGui::EndPopup();
-    }
-
+   
     ImGui::End();
     return true;
 }
@@ -276,6 +226,21 @@ void UIProject::DrawContentArea()
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(8, 8));
     DrawFolderContents(selectedDirectory);
 
+    if (ImGui::BeginDragDropTarget()) {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
+            GameObject* go = *(GameObject**)payload->Data;
+            if (go) {
+                draggedObject = go;
+                newPrefabName = go->GetName();
+                strncpy(nameBuffer, newPrefabName.c_str(), sizeof(nameBuffer));
+                nameBuffer[sizeof(nameBuffer) - 1] = '\0';
+                showSaveAsPrefabPopup = true;
+                ImGui::OpenPopup("##SaveAsPrefabPopup");
+            }
+        }
+        ImGui::EndDragDropTarget();
+    }
+
     if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)) {
         if (!ImGui::IsAnyItemHovered()) {
             selectedFile.clear();
@@ -287,6 +252,41 @@ void UIProject::DrawContentArea()
         ShowContextMenu();
         ImGui::EndPopup();
     }
+
+    if (showSaveAsPrefabPopup &&
+        ImGui::BeginPopupModal("##SaveAsPrefabPopup", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::Text("Enter a name to save the prefab:");
+        ImGui::InputText("Prefab Name", nameBuffer, sizeof(nameBuffer));
+
+        if (ImGui::Button("Save")) {
+            std::string finalName(nameBuffer);
+            if (finalName.empty()) {
+                LOG(LogType::LOG_WARNING, "Please enter a valid prefab name.");
+            }
+            else {
+                std::string path = PrefabManager::GetUniquePrefabPath(finalName);
+                PrefabManager::EnsurePrefabDirectoryExists();
+                if (draggedObject) {
+                    PrefabManager::SavePrefab(draggedObject->shared_from_this(), path);
+                    LOG(LogType::LOG_INFO, "Prefab saved: %s", path.c_str());
+                }
+                draggedObject = nullptr;
+                showSaveAsPrefabPopup = false;
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
+        ImGui::SameLine();
+        if (ImGui::Button("Cancel")) {
+            draggedObject = nullptr;
+            showSaveAsPrefabPopup = false;
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::EndPopup();
+    }
+
 
     ImGui::PopStyleVar();
 }

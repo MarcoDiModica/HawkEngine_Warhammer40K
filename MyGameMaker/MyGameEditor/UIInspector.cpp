@@ -47,6 +47,7 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 
 #include <MyGameEngine/ImGuiCurveEditor.h>
+#include <MyGameEngine/PrefabManager.h>
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -3195,6 +3196,14 @@ bool UIInspector::Draw() {
 
     DrawGameObjectHeader(selectedObject);
     ImGui::Separator();
+
+	if (!selectedObject->GetPrefabSourcePath().empty()) {
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.5f, 0.2f, 1.0f));
+		if (ImGui::Button("Override Prefab")) {
+			PrefabManager::SavePrefab(selectedObject->shared_from_this(), selectedObject->GetPrefabSourcePath());
+		}
+		ImGui::PopStyleColor();
+	}
 
     ComponentDrawer::DrawComponents(selectedObject, snap, snapValue);
     ImGui::Separator();

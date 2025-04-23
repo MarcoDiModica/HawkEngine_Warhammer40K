@@ -13,4 +13,5 @@ public:
     static std::string GetPrefabDirectory();
     static void EnsurePrefabDirectoryExists();
     static std::string SanitizeName(const std::string& name);
+    static std::string GetUniquePrefabPath(const std::string& baseName);
 };

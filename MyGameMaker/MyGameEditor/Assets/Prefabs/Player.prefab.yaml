@@ -41,6 +41,31 @@ Components:
     damping:
       linear: 0
       angular: 0
+  LightComponent:
+    name: LightComponent
+    enabled: true
+    light_type: 1
+    ambient:
+      - 0.20000000298023224
+      - 0.80000001192092896
+      - 0.20000000298023224
+    diffuse:
+      - 0.5
+      - 0.5
+      - 0.5
+    specular:
+      - 1
+      - 1
+      - 1
+    constant: 1
+    linear: 0.0900000036
+    quadratic: 0.0320000015
+    radius: 1
+    intensity: 2.5
+    direction:
+      - -1
+      - -1
+      - 0
 Children:
   - name: playerMesh
     uuid: 1348953484592712764
@@ -56,7 +81,7 @@ Children:
           - 0
           - 0
         localRotation:
-          - -90.000002504478161
+          - -90
           - 0
           - 0
         localScale:

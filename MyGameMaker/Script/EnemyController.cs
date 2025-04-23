@@ -36,6 +36,13 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected Vector3 moveDirection;
     protected float currentRotationAngle;
 
+    protected Pathfinding pathfinder;
+    protected List<Vector3> chasePath;
+    protected int chaseIndex;
+    protected bool pathInitialized;
+
+    protected const int gridWidth = 500, gridHeight = 500;
+    protected const float cellSize = 1f;
     public abstract void Start();
     public abstract void Update(float deltaTime);
     public abstract void Attack();

@@ -29,7 +29,7 @@ public class EnemyControllerMelee : EnemyController
     private float clawDamage = 10.0f;
     private float leapDamage = 15.0f;
 
-        // Leap Attack
+    // Leap Attack
     public float maxLeapRange = 20.0f;
     public float minLeapRange = 10.0f;
     private float lastLeap = 0f;
@@ -39,6 +39,10 @@ public class EnemyControllerMelee : EnemyController
     private bool hasLeap = true;
 
     private bool isLeaping = false;
+
+    // Pathfinding
+    private float chaseReplanInterval = 0.5f;
+    private float chaseTimer = 0f;
 
     public override void Awake() {
 
@@ -88,6 +92,10 @@ public class EnemyControllerMelee : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
+
+        pathfinder = new Pathfinding();
+        chasePath = null;
+        pathInitialized = false;
     }
 
     public override void Update(float deltaTime)
@@ -212,22 +220,69 @@ public class EnemyControllerMelee : EnemyController
                     isCombatMusicPlaying = true;
                 }
 
-                Vector3 currentVelocity = rb.GetVelocity();
-                moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
+                //Vector3 currentVelocity = rb.GetVelocity();
+                //moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
+                //Vector3 desiredVelocity = moveDirection * speedMovement;
 
-                if (!isLeaping)
+                //if (!isLeaping)
+                //{
+                //    anim.SetRunningAnimation();
+                //    if (desiredVelocity.LengthSquared() > 0)
+                //    {
+                //        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                //    }
+
+                //    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                //    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                //}
+                //isRunning = true;
+                Vector3 myPos = enemyTransform.position;
+                Vector3 tgtPos = playerTransform.position;
+
+                // Replan periodically
+                chaseTimer += deltaTime;
+                if (!pathInitialized || chaseTimer >= chaseReplanInterval)
                 {
-                    anim.SetRunningAnimation();
-                    if (desiredVelocity.LengthSquared() > 0)
-                    {
-                        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                    }
-
-                    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                    chaseTimer = 0f;
+                    pathInitialized = true;
+                    chaseIndex = 0;
+                    chasePath = pathfinder.FindPath(myPos, tgtPos);
                 }
-                isRunning = true;
+
+                // Follow the path
+                if (chasePath != null && chaseIndex < chasePath.Count)
+                {
+                    Vector3 node = chasePath[chaseIndex];
+                    Vector3 wp = new Vector3(
+                        node.X + 0.5f,
+                        myPos.Y,
+                        node.Y + 0.5f
+                    );
+                    Vector3 dir = wp - myPos;
+                    float d = dir.Length();
+
+                    if (d < 0.1f)
+                    {
+                        chaseIndex++;
+                    }
+                    else
+                    {
+                        dir = Vector3.Normalize(dir);
+                        Vector3 desiredVel = dir * speedMovement;
+                        Vector3 curVel = rb.GetVelocity();
+                        Vector3 newVel = Vector3.Lerp(
+                            curVel,
+                            desiredVel,
+                            Math.Min(1, acceleration * deltaTime)
+                        );
+                        rb.SetVelocity(new Vector3(
+                            newVel.X, curVel.Y, newVel.Z
+                        ));
+                        anim.SetRunningAnimation();
+                        isRunning = true;
+                    }
+                }
+
                 break;
 
             case EnemyState.ATTACK:

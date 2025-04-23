@@ -185,6 +185,10 @@ bool Root::Start()
 	//environment = CreateGameObjectWithPath("Assets/Meshes/Level2 Zone1.fbx");
 
 	auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
+	playerMesh1->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
+
+	auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
+	//playerMesh1->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
 
 	/*auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 
@@ -878,7 +882,7 @@ std::shared_ptr<GameObject> Root::CreateGameObjectWithPath(const std::string& pa
 
 		auto shaderComponent = go->AddComponent<ShaderComponent>();
 		shaderComponent->SetOwnerMaterial(meshRenderer->GetMaterial().get());
-		shaderComponent->SetShaderType(ShaderType::BINDLESS_PBR);
+		shaderComponent->SetShaderType(ShaderType::UNLIT); //cambiar luego
 
 		std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
 		const auto& vertices = meshRenderer->GetMesh()->getModel()->GetModelData().vertexData;

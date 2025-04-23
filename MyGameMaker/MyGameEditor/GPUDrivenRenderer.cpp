@@ -137,7 +137,11 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 	glNamedBufferSubData(cullDataBuffer, 0,
 		cullData.size() * sizeof(CullData), cullData.data());
 
-	if (!useGPUCulling) {
+	if (!enableCulling) {
+		// Si el culling está desactivado, incluir todos los objetos sin culling
+		ForceIncludeAllObjects();
+	}
+	else if (!useGPUCulling) {
 		CPUFrustumCulling();
 	}
 	else {
@@ -174,6 +178,34 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 	LOG(LogType::LOG_INFO, "Total de instancias visibles: %d", visibleInstanceCount);
 	LOG(LogType::LOG_INFO, "Total de comandos de dibujo: %d", (int)drawCommands.size());
 	LOG(LogType::LOG_INFO, "Total de batches por shader: %d", (int)shaderBatches.size());
+}
+
+void GPUDrivenRenderer::ForceIncludeAllObjects() {
+	drawCommands.clear();
+	visibleInstanceCount = 0;
+
+	for (const auto& cullItem : cullData) {
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
+		if (!meshData) continue;
+
+		DrawElementsCommand command;
+		command.count = meshData->indexCount;
+		command.instanceCount = cullItem.instanceCount;
+		command.firstIndex = 0;
+		command.baseVertex = 0;
+		command.baseInstance = cullItem.instanceOffset;
+
+		drawCommands.push_back(command);
+		visibleInstanceCount += cullItem.instanceCount;
+	}
+
+	if (!drawCommands.empty()) {
+		glNamedBufferSubData(drawCommandBuffer, 0,
+			drawCommands.size() * sizeof(DrawElementsCommand),
+			drawCommands.data());
+	}
+
+	LOG(LogType::LOG_INFO, "Culling desactivado: Incluyendo todos los objetos (%zu)", drawCommands.size());
 }
 
 void GPUDrivenRenderer::SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
@@ -381,95 +413,74 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	shader->SetUniformMat4("view", viewMatrix);
 	shader->SetUniformMat4("projection", projMatrix);
 
-	// Comprobar si soporta multi-draw-indirect
-	bool supportsMultiDraw = GLEW_ARB_multi_draw_indirect == GL_TRUE;
+	// Renderizado convencional para cada objeto
+	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+		uint32_t meshIndex = batch.meshIndices[i];
+		uint32_t materialIndex = batch.materialIndices[i];
 
-	// Si hay soporte para multi-draw y tenemos suficientes comandos, usarlo
-	if (supportsMultiDraw && batch.commands.size() > 1) {
-		// Preparar VAO para multi-draw
-		glBindVertexArray(defaultVAO);
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
 
-		// Dibujar todos los comandos de una vez
-		glMultiDrawElementsIndirect(
-			GL_TRIANGLES,
-			GL_UNSIGNED_INT,
-			0,  // Offset en el buffer
-			batch.commands.size(),
-			sizeof(DrawElementsCommand)
-		);
+		if (!meshData || !materialData) continue;
 
-		LOG(LogType::LOG_INFO, "Multi-draw-indirect: %zu comandos", batch.commands.size());
-	}
-	else {
-		// Renderizado convencional para cada objeto
-		for (size_t i = 0; i < batch.meshIndices.size(); i++) {
-			uint32_t meshIndex = batch.meshIndices[i];
-			uint32_t materialIndex = batch.materialIndices[i];
+		// Configurar material
+		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
 
-			GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
-			GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
+		// Configurar textura si existe
+		if (materialData->flags & (1 << 0)) {
+			shader->SetUniform("u_HasTexture", 1);
 
-			if (!meshData || !materialData) continue;
-
-			// Configurar material
-			shader->SetUniformVec4("albedoColor", materialData->albedoColor);
-
-			// Configurar textura si existe
-			if (materialData->flags & (1 << 0)) {
-				shader->SetUniform("u_HasTexture", 1);
-
-				// Usar textura bindless si está disponible
-				if (GLEW_ARB_bindless_texture) {
-					GLuint64 textureHandle = materialData->albedoTexture;
-					if (textureHandle != 0) {
-						if (!glIsTextureHandleResidentARB(textureHandle)) {
-							glMakeTextureHandleResidentARB(textureHandle);
-						}
-
-						GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTextureHandle");
-						if (loc != -1) {
-							glUniformHandleui64ARB(loc, textureHandle);
-						}
+			// Usar textura bindless si está disponible
+			if (GLEW_ARB_bindless_texture) {
+				GLuint64 textureHandle = materialData->albedoTexture;
+				if (textureHandle != 0) {
+					if (!glIsTextureHandleResidentARB(textureHandle)) {
+						glMakeTextureHandleResidentARB(textureHandle);
 					}
-				}
-				else {
-					// Fallback a texturas tradicionales
-					GLuint textureID = 0;
-					if (BindlessManager::GetInstance().GetTextureIDFromHandle(
-						materialData->albedoTexture, textureID)) {
-						glActiveTexture(GL_TEXTURE0);
-						glBindTexture(GL_TEXTURE_2D, textureID);
-						shader->SetUniform("texture1", 0);
+
+					GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTextureHandle");
+					if (loc != -1) {
+						glUniformHandleui64ARB(loc, textureHandle);
 					}
 				}
 			}
 			else {
-				shader->SetUniform("u_HasTexture", 0);
-			}
-
-			// Vincular VAO del mesh
-			glBindVertexArray(meshData->vertexArray);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
-
-			if (i < batch.commands.size()) {
-				const DrawElementsCommand& cmd = batch.commands[i];
-
-				// Obtener y configurar instancias
-				for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
-					GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
-					if (!instanceData) continue;
-
-					// Establecer matriz de modelo para esta instancia
-					shader->SetUniformMat4("model", instanceData->modelMatrix);
-
-					// Dibujar instancia
-					glDrawElements(
-						GL_TRIANGLES,
-						cmd.count,
-						GL_UNSIGNED_INT,
-						nullptr
-					);
+				// Fallback a texturas tradicionales
+				GLuint textureID = 0;
+				if (BindlessManager::GetInstance().GetTextureIDFromHandle(
+					materialData->albedoTexture, textureID)) {
+					glActiveTexture(GL_TEXTURE0);
+					glBindTexture(GL_TEXTURE_2D, textureID);
+					shader->SetUniform("texture1", 0);
 				}
+			}
+		}
+		else {
+			shader->SetUniform("u_HasTexture", 0);
+		}
+
+		// Vincular VAO del mesh
+		glBindVertexArray(meshData->vertexArray);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		if (i < batch.commands.size()) {
+			const DrawElementsCommand& cmd = batch.commands[i];
+
+			// Obtener y configurar instancias
+			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
+				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
+				if (!instanceData) continue;
+
+				// Establecer matriz de modelo para esta instancia
+				shader->SetUniformMat4("model", instanceData->modelMatrix);
+
+				// Dibujar instancia
+				glDrawElements(
+					GL_TRIANGLES,
+					cmd.count,
+					GL_UNSIGNED_INT,
+					nullptr
+				);
 			}
 		}
 	}

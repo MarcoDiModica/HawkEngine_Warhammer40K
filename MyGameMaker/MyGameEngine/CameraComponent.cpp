@@ -116,45 +116,44 @@ void CameraComponent::Update(float deltaTime)
         }
     }
 
-	if (frustrumCullingEnabled) {
-		glm::mat4 view = GetViewMatrix(*owner->GetTransform());
-		glm::mat4 projection = GetProjectionMatrix();
-		glm::mat4 vpm = projection * view;
-
-		frustum.Update(vpm);
-
-		if (frustrumRepresentation) {
 #ifndef _BUILD
-			DrawFrustrum();
+    if (frustrumRepresentation) {
+        glm::mat4 view = GetViewMatrix(*owner->GetTransform());
+        glm::mat4 projection = GetProjectionMatrix();
+        glm::mat4 vpm = projection * view;
+
+        frustum.Update(vpm);
+
+        DrawFrustrum();
+    }
 #endif
+	
+    //antiguo culling
+    /*std::function<void(std::shared_ptr<GameObject>, bool)> cullHierarchy =
+		[&](std::shared_ptr<GameObject> gameObject, bool parentVisible) {
+		if (gameObject.get() == owner) {
+			return;
 		}
 
-		std::function<void(std::shared_ptr<GameObject>, bool)> cullHierarchy =
-			[&](std::shared_ptr<GameObject> gameObject, bool parentVisible) {
-			if (gameObject.get() == owner) {
-				return; 
-			}
+		bool isVisible = parentVisible;
 
-			bool isVisible = parentVisible;
-
-			if (parentVisible && gameObject->HasComponent<MeshRenderer>()) {
-				FrustumIntersection result = TestFrustumAABB(gameObject->boundingBox());
-				isVisible = (result != FrustumIntersection::OUTSIDE);
-			}
-
-			if (gameObject->IsActive() != isVisible) {
-				gameObject->SetActive(isVisible);
-			}
-
-			for (auto& child : gameObject->GetChildren()) {
-				cullHierarchy(child, isVisible);
-			}
-			};
-
-		for (auto& gameObject : owner->GetScene()->children()) {
-			cullHierarchy(gameObject, true);
+		if (parentVisible && gameObject->HasComponent<MeshRenderer>()) {
+			FrustumIntersection result = TestFrustumAABB(gameObject->boundingBox());
+			isVisible = (result != FrustumIntersection::OUTSIDE);
 		}
-	}
+
+		if (gameObject->IsActive() != isVisible) {
+			gameObject->SetActive(isVisible);
+		}
+
+		for (auto& child : gameObject->GetChildren()) {
+			cullHierarchy(child, isVisible);
+		}
+		};
+
+	for (auto& gameObject : owner->GetScene()->children()) {
+		cullHierarchy(gameObject, true);
+	}*/
 
 	if (orthographic) {
 		projectionType = ProjectionType::Orthographic;

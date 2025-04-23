@@ -49,6 +49,7 @@ public:
 	);
 
 	void PrepareDrawCommands(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
+	void ForceIncludeAllObjects();
 	void SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 	
 	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
@@ -95,6 +96,7 @@ private:
 	bool useGPUCulling = true;
 	bool useOcclusionCulling = false;
 	bool useFrustumCulling = true;
+	bool enableCulling = false;
 
 	static constexpr int MAX_DRAW_COMMANDS = 10000;
 };

@@ -64,8 +64,5 @@ public  class MonoBehaviour
     }
 
     [MethodImpl(MethodImplOptions.InternalCall)]
-    public static extern GameObject Instantiate(GameObject prefab);
-
-    [MethodImpl(MethodImplOptions.InternalCall)]
-    public static extern GameObject Instantiate(GameObject prefab, Transform parent);
+    public static extern GameObject Instantiate(Prefab prefab, Transform parent = null, bool worldPositionStays = true);
 }

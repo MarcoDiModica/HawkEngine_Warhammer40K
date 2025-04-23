@@ -5,6 +5,8 @@ public class Test1 : MonoBehaviour, IInteractable
 {
     public float speed = 5f;
 
+    public Prefab prefab;
+    public GameObject prefab2;
 
     //Mathf functions
     private float t = 0;
@@ -29,6 +31,11 @@ public class Test1 : MonoBehaviour, IInteractable
         {
             Engineson.print("B key was pressed");
             SceneManager.LoadScene("Scene2");
+        }
+        
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Instantiate(prefab, gameObject.transform);
         }
 
         //----------- MATHF FUNCTIONS -------------------//

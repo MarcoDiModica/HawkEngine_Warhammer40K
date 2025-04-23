@@ -26,6 +26,7 @@
 #include "../MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include <MyGameEngine/PrefabManager.h>
 
 // GameObject
 
@@ -1358,12 +1359,56 @@ void EngineBinds::EmitBurst(MonoObject* particleRef, int burstCount)
 		particle->EmitBurst(burstCount);
 	}
 }
+MonoObject* EngineBinds::InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays)  
+{  
+   if (!prefabObj) return nullptr;  
+ 
+   MonoClass* prefabClass = mono_object_get_class(prefabObj);  
+   MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");  
+
+   MonoString* pathString = nullptr;  
+   mono_field_get_value(prefabObj, pathField, &pathString);  
+
+   if (!pathString) return nullptr;  
+
+   char* cStr = mono_string_to_utf8(pathString);  
+   std::string prefabPath(cStr);  
+   mono_free(cStr);  
+
+   std::shared_ptr<GameObject> newGO = PrefabManager::LoadPrefab(prefabPath);
+
+   if (!newGO) return nullptr;  
+
+   // Handle parenting  
+   if (parentTransformObj) {
+       MonoClass* transformClass = mono_object_get_class(parentTransformObj);
+       MonoClassField* cppInstanceField = mono_class_get_field_from_name(transformClass, "CplusplusInstance");
+
+       if (cppInstanceField) {
+           uintptr_t cppInstance = 0;
+           mono_field_get_value(parentTransformObj, cppInstanceField, &cppInstance);
+           Transform_Component* parentTransform = reinterpret_cast<Transform_Component*>(cppInstance);
+
+           if (parentTransform) {
+               GameObject* parentGO = parentTransform->GetOwner();
+               if (parentGO) {
+                   if (worldPositionStays)
+                       Application->root->ParentGameObjectPreserve(*newGO, *parentGO);
+                   else
+                       Application->root->ParentGameObject(*newGO, *parentGO);
+               }
+           }
+       }
+   }
+
+   return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());  
+}
 
 void EngineBinds::BindEngine() {
 
     // GameObject
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
-	mono_add_internal_call("MonoBehaviour::Intantiate", (const void*)GetGameObject);
+    mono_add_internal_call("MonoBehaviour::Instantiate", (const void*)InstantiatePrefab);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);

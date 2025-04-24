@@ -1015,6 +1015,20 @@ void EngineBinds::SetImageSpriteSize(MonoObject* uiImageRef, float width, float 
 	}
 }
 
+void EngineBinds::SetImageAnimIndex(MonoObject* uiImageRef, int index) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->SetAnimationIndex(index);
+	}
+}
+
+void EngineBinds::PlayStopAnimation(MonoObject* uiImageRef, bool play) {
+	auto uiImage = ConvertFromSharpComponent<UIImageComponent>(uiImageRef);
+	if (uiImage) {
+		uiImage->PlayStopAnimation(play);
+	}
+}
+
 int EngineBinds::GetState(MonoObject* uiButtonRef)
 {
 	auto uiButton = ConvertFromSharpComponent<UIButtonComponent>(uiButtonRef);
@@ -1512,6 +1526,8 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimationIndexLimit", (const void*)&EngineBinds::SetImageAnimationIndexLimit);
 	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimation", (const void*)&EngineBinds::SetImageAnimation);
 	mono_add_internal_call("HawkEngine.UIImage::SetImageSpriteSize", (const void*)&EngineBinds::SetImageSpriteSize);
+	mono_add_internal_call("HawkEngine.UIImage::SetImageAnimIndex", (const void*)&EngineBinds::SetImageAnimIndex);
+	mono_add_internal_call("HawkEngine.UIImage::PlayStopAnimation", (const void*)&EngineBinds::PlayStopAnimation);
 
 	// UI Button
 	mono_add_internal_call("HawkEngine.UIButton::GetState", (const void*)&EngineBinds::GetState);

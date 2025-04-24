@@ -210,6 +210,13 @@ MonoObject* SkeletalAnimationComponent::GetSharp()
     return monoObject;
 }
 
+bool SkeletalAnimationComponent::IsAnimationFinished()
+{
+
+	return animator->animationFinished;
+	
+}
+
 void SkeletalAnimationComponent::SaveBinary(const std::string& filename) const
 {
 	std::string fullPath = "Library/Animation/" + filename + ".anim";

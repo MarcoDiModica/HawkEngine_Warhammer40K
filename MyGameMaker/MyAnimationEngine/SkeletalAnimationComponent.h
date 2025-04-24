@@ -94,6 +94,8 @@ public:
 		animationIndex = index;
 	}
 
+    bool IsAnimationFinished();
+
 	void PlayIndexAnimation(int index) 
     {
 		if (index < 0 || index >= animations.size())

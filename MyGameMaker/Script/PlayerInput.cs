@@ -127,7 +127,7 @@ public class PlayerInput : MonoBehaviour
         }
 
         // Si se está utilizando el right stick (dejo la lógica como la tenías)
-        if (Input.GetRightStick() != Vector2.Zero && isShootPressed)
+        if (Input.GetRightStick() != Vector2.Zero /*&& isShootPressed*/)
         {
             Vector2 rightStickInput = Input.GetRightStick();
             direction = new Vector3(-rightStickInput.X, 0, -rightStickInput.Y); // Asumiendo que quieres invertir el eje Z y X

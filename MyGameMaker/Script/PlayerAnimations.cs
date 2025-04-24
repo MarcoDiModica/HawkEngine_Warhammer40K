@@ -4,7 +4,7 @@ using HawkEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
-    private SkeletalAnimation esk;
+    public SkeletalAnimation esk;
     private PlayerController playerController;
     private PlayerData playerData;
     int animIndex = 0;
@@ -93,9 +93,8 @@ public class PlayerAnimations : MonoBehaviour
 
     public void SetDashAnimation()
     {
-        esk.TransitionAnimations(6, 0, 0.1f);
+        esk.PlayAnimOnce(0, 0.1f);
         esk.SetAnimationSpeed(1.5f);
-        
     }
 
     public void SetShootingStandingToIdleAnimation()

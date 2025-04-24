@@ -102,6 +102,7 @@ void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, 
 	timeToTransition = timeToTransitionAnim;
     animator->SetTransitionTime(0);
 	isBlending = true;
+	animator->isLooping = true;
 }
 
 void SkeletalAnimationComponent::AutoTransitionAnimation(int newAnim, float timeToTransitionAnim, bool loopAnim)

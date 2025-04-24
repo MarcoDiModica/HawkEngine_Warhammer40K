@@ -51,6 +51,8 @@ public class LaserBeam : BaseAbilities
                 //Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
+
+        
     }
     public override void TriggerAbility()
     {
@@ -69,8 +71,10 @@ public class LaserBeam : BaseAbilities
             }
 
             laserBeam.AddScript("LaserBeamObject");
-            laserBeam.GetComponent<LaserBeamObject>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+            laserBeam.GetComponent<LaserBeamObject>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward, gameObject);
             gameObject.AddChild(laserBeam);
+
+            
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;

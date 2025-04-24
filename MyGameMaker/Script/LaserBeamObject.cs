@@ -7,44 +7,46 @@ using static System.Net.Mime.MediaTypeNames;
 public class LaserBeamObject : MonoBehaviour
 {
     public float value = 0.0f;
-    private Rigidbody rigidbody;
     private float deathtimer = 3.0f; // duración por defecto
     private float deathTimerPrevention = 0.0f;
     float damage = 50;
-    private bool needsDestroy = false;
+    public bool needsDestroy = false;
     public List<string> collisionNames = new List<string>();
+    private GameObject parent;
+    private GameObject laserBeam;
 
     public override void Awake()
     {
 
     }
-    public void Init(Vector3 pos, Vector3 dir)
+    public void Init(Vector3 pos, Vector3 dir, GameObject parentObject)
     {
         AddComponent<MeshRenderer>();
-        GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
-        GetComponent<Transform>().SetScale(0.5f, 0.5f, 5.0f);
         AddComponent<BoxCollider>();
-        AddComponent<Rigidbody>();
-        rigidbody = GetComponent<Rigidbody>();
-        //rigidbody.SetMass(0.05f);
-        //rigidbody.SetGravity(new Vector3(0.0f, -9.81f, 0.0f) * 20);
-        //rigidbody.AddForce(dir * 140);
-        //rigidbody.SetFriction(0.5f);
+        GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
+        GetComponent<Transform>().SetScale(0.5f, 0.5f, 20.0f);
+        parent = parentObject;
         needsDestroy = true;
-
     }
     public override void Update(float deltaTime)
     {
-        if (needsDestroy)
+        if (parent != null)
         {
-            deathTimerPrevention += deltaTime;
-            if (deathTimerPrevention >= deathtimer)
+            GetComponent<Transform>().position = parent.GetComponent<Transform>().position + parent.GetComponent<Transform>().forward * 22.0f + new Vector3(0, 3, 0);
+            GetComponent<Transform>().rotation = parent.GetComponent<Transform>().rotation;
+
+            if (needsDestroy)
             {
-                // En vez de destruir, se mueve 100 unidades hacia abajo
-                Engineson.Destroy(gameObject); 
-                needsDestroy = false; // Para que no siga moviéndose constantemente
+                deathTimerPrevention += deltaTime;
+                if (deathTimerPrevention >= deathtimer)
+                {
+                    Engineson.Destroy(gameObject);
+                    needsDestroy = false;
+                }
             }
         }
+
+        
     }
 
     public override void OnCollisionEnter(GameObject other)

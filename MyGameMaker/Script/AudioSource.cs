@@ -10,14 +10,12 @@ namespace HawkEngine
     {
         public string path;
         public string name;
-        public bool is3D;
         public bool loop;
 
-        public AudioClip(string path, string name, bool is3D, bool loop)
+        public AudioClip(string path, string name, bool loop)
         {
             this.path = path;
             this.name = name;
-            this.is3D = is3D;
             this.loop = loop;
         }
 
@@ -27,7 +25,7 @@ namespace HawkEngine
     {
         public void LoadAudioClip(AudioClip audioClip)
         {
-            LoadSound(audioClip.path, audioClip.is3D, audioClip.loop);
+            LoadSound(audioClip.path, audioClip.loop);
         }
 
         public void Play(AudioClip audioClip)
@@ -56,7 +54,7 @@ namespace HawkEngine
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void LoadSound(string path, bool is3D, bool loop);
+        private extern void LoadSound(string path, bool loop);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void PlaySound(string path);

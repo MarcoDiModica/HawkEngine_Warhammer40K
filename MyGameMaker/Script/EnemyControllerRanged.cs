@@ -61,7 +61,7 @@ public class EnemyControllerRanged : EnemyController
         currentHealth = maxHealth;
         gameObject.tag = "Ranged";
 
-        combatSound = new AudioClip(combatMusic, "CombatMusic", false, true);
+        combatSound = new AudioClip(combatMusic, "CombatMusic", true);
         sound.LoadAudioClip(combatSound);
     }
 

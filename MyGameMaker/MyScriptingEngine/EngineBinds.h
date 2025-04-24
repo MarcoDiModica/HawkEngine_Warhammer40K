@@ -148,7 +148,7 @@ namespace EngineBinds {
     void Pause(MonoObject* audioRef, MonoString* path);
     void Resume(MonoObject* audioRef, MonoString* path);
     void SetVolume(MonoObject* audioRef, MonoString* path, float volume);
-	void LoadAudioClip(MonoObject* audioRef, MonoString* path, bool is3D, bool loop);
+	void LoadAudioClip(MonoObject* audioRef, MonoString* path, bool loop);
 
     //UIImage
     void SetTexture(MonoObject* uiImageRef, MonoString* path);

@@ -31,7 +31,7 @@ public class OptionMenu : MonoBehaviour
             return;
         }
 
-        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false);
         sound.LoadAudioClip(buttonClickedFX);
 
     }

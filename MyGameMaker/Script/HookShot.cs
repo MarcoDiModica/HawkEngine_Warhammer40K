@@ -42,7 +42,7 @@ public class HookShot : BaseAbilities
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        hookFX = new AudioClip(hookHit, "HookFX", false, false);
+        hookFX = new AudioClip(hookHit, "HookFX", false);
         sound.LoadAudioClip(hookFX);
     }
 

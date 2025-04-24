@@ -939,12 +939,12 @@ void EngineBinds::SetVolume(MonoObject* audioRef, MonoString* path, float volume
 	}
 }
 
-void EngineBinds::LoadAudioClip(MonoObject* audioRef, MonoString* path, bool is3D, bool loop)
+void EngineBinds::LoadAudioClip(MonoObject* audioRef, MonoString* path, bool loop)
 {
 	char* C_path = mono_string_to_utf8(path);
 	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
 	if (sound) {
-		sound->LoadSound(C_path, is3D, loop);
+		sound->LoadSound(C_path, false, loop);
 	}
 }
 

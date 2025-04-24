@@ -111,8 +111,8 @@ public class PauseMenu : MonoBehaviour
             Engineson.print("ERROR: Sound not found");
             return;
         }
-        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
-        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false);
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false);
         sound.LoadAudioClip(buttonHoveredFX);
         sound.LoadAudioClip(buttonClickedFX);
         this.gameObject.SetActive(false);

@@ -126,9 +126,9 @@ public class PlayerShooting : MonoBehaviour
                 break;
         }
 
-        boltgunEquipedFX = new AudioClip(boltgunEquiped, "BoltgunEquipedFX", false, false);
-        shotgunEquipedFX = new AudioClip(shotgunEquiped, "ShotgunEquipedFX", false, false);
-        railgunEquipedFX = new AudioClip(railgunEquiped, "RailgunEquipedFX", false, false);
+        boltgunEquipedFX = new AudioClip(boltgunEquiped, "BoltgunEquipedFX", false);
+        shotgunEquipedFX = new AudioClip(shotgunEquiped, "ShotgunEquipedFX", false);
+        railgunEquipedFX = new AudioClip(railgunEquiped, "RailgunEquipedFX", false);
         sound.LoadAudioClip(boltgunEquipedFX);
         sound.LoadAudioClip(shotgunEquipedFX);
         sound.LoadAudioClip(railgunEquipedFX);

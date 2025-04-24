@@ -43,7 +43,7 @@ public class Barrage : BaseAbilities
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        barrageFX = new AudioClip(barrage, "BarrageFX", false, false);
+        barrageFX = new AudioClip(barrage, "BarrageFX", false);
         sound.LoadAudioClip(barrageFX);
     }
 

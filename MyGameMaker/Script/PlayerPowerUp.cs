@@ -44,11 +44,11 @@ public class PlayerPowerUp : MonoBehaviour
             Engineson.print("PlayerPowerUp: Audio component not found");
         }
 
-        ammunitionBlessingFX = new AudioClip(AmmunitionBlessingActivated, "AmmunitionBlessingFX", false, false);
-        blackHeartFX = new AudioClip(BlackHeartActivated, "BlackHeartFX", false, false);
-        chapterStandardFX = new AudioClip(ChapterStandardActivated, "ChapterStandardFX", false, false);
-        magnetFX = new AudioClip(MagnetEffect, "MagnetFX", false, false);
-        medicaeStimmFX = new AudioClip(MedicaeStimmActivated, "MedicaeStimmFX", false, false);
+        ammunitionBlessingFX = new AudioClip(AmmunitionBlessingActivated, "AmmunitionBlessingFX", false);
+        blackHeartFX = new AudioClip(BlackHeartActivated, "BlackHeartFX", false);
+        chapterStandardFX = new AudioClip(ChapterStandardActivated, "ChapterStandardFX", false);
+        magnetFX = new AudioClip(MagnetEffect, "MagnetFX", false);
+        medicaeStimmFX = new AudioClip(MedicaeStimmActivated, "MedicaeStimmFX", false);
         sound.LoadAudioClip(ammunitionBlessingFX);
         sound.LoadAudioClip(blackHeartFX);
         sound.LoadAudioClip(chapterStandardFX);

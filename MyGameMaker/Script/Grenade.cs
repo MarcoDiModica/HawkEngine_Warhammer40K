@@ -32,7 +32,7 @@ public class Grenade : MonoBehaviour
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        grenadeFX = new AudioClip(granadeExplosion, "GrenadeFX", false, false);
+        grenadeFX = new AudioClip(granadeExplosion, "GrenadeFX", false);
         sound.LoadAudioClip(grenadeFX);
 
     }

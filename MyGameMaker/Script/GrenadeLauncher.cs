@@ -44,8 +44,8 @@ public class GrenadeLauncher : BaseAbilities
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        launchFX = new AudioClip(granadeLaunch, "GrenadeLaunchFX", false, false);
-        explosionFX = new AudioClip(granadeExplosion, "GrenadeExplosionFX", false, false);
+        launchFX = new AudioClip(granadeLaunch, "GrenadeLaunchFX", false);
+        explosionFX = new AudioClip(granadeExplosion, "GrenadeExplosionFX", false);
         sound.LoadAudioClip(launchFX);
         sound.LoadAudioClip(explosionFX);
     }

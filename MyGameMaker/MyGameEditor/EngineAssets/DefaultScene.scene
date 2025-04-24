@@ -2,7 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: Player
-  uuid: 10993560922060235263
+  uuid: 16501319991278752485
   tag: Player
   active: true
   isStatic: false
@@ -22,9 +22,6 @@ GameObject0:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -75,6 +72,9 @@ GameObject0:
         useColorGradient: false
         texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
       particleType: 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -136,7 +136,7 @@ GameObject0:
         name: InteractionSystem
   Children:
     - name: playerMesh
-      uuid: 18026167049177224009
+      uuid: 15106295654720895506
       tag: Untagged
       active: true
       isStatic: false
@@ -149,7 +149,7 @@ GameObject0:
             - 0
             - 0
           localRotation:
-            - -90
+            - -90.000002504478161
             - 0
             - 0
           localScale:
@@ -195,7 +195,7 @@ GameObject0:
             name: PlayerAnimations
       Children: ~
     - name: RiffleShotFX
-      uuid: 2402549756183573960
+      uuid: 12735510487681650027
       tag: Untagged
       active: true
       isStatic: false
@@ -225,8 +225,8 @@ GameObject0:
           maxLifetime: 0.25
           minSpeed: 0
           maxSpeed: 0
-          startSize: 1
-          endSize: 1
+          startSize: 3
+          endSize: 3
           minSize: 1
           maxSize: 1
           startColor:
@@ -267,7 +267,7 @@ GameObject0:
           particleType: 8
       Children: ~
     - name: InactiveDashFX
-      uuid: 15159207984295220001
+      uuid: 32146919041934545
       tag: Untagged
       active: true
       isStatic: false
@@ -297,7 +297,7 @@ GameObject0:
           maxLifetime: 4
           minSpeed: 0.5
           maxSpeed: 1.5
-          startSize: 0.5
+          startSize: 2
           endSize: 2
           minSize: 0.5
           maxSize: 0
@@ -339,7 +339,7 @@ GameObject0:
           particleType: 1
       Children: ~
     - name: WalkingFX
-      uuid: 17238062089908165683
+      uuid: 2960440344569709036
       tag: Untagged
       active: true
       isStatic: false
@@ -412,7 +412,7 @@ GameObject0:
       Children: ~
 GameObject1:
   name: MainCamera
-  uuid: 2202946686495961773
+  uuid: 9699182192198716829
   tag: Untagged
   active: true
   isStatic: false
@@ -425,7 +425,7 @@ GameObject1:
         - 20
         - -14
       localRotation:
-        - 54.999999735770004
+        - 54.999999253784715
         - -0
         - 0
       localScale:
@@ -447,7 +447,7 @@ GameObject1:
   Children: ~
 GameObject2:
   name: Hormagaunt
-  uuid: 1861769326401855680
+  uuid: 7684364517934526259
   tag: Melee
   active: true
   isStatic: false
@@ -467,9 +467,6 @@ GameObject2:
         - 2.2000000476837158
         - 2.2000000476837158
         - 2.2000000476837158
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -520,6 +517,9 @@ GameObject2:
         useColorGradient: false
         texturePath: Assets/Textures/EnemyDash.png
       particleType: 9
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
     BoxColliderComponent:
       size:
         - 0.699999988
@@ -547,7 +547,7 @@ GameObject2:
         name: EnemyControllerMelee
   Children:
     - name: HormagauntMesh
-      uuid: 6759360939242512237
+      uuid: 15777539015448159882
       tag: Untagged
       active: false
       isStatic: false
@@ -560,13 +560,13 @@ GameObject2:
             - 0
             - 0
           localRotation:
-            - -1.3660378343659465e-05
-            - 2.4012355493896692e-07
-            - -1.7342271369070097e-06
+            - -1.3660378731687233e-05
+            - 2.4012357443917309e-07
+            - -1.7342270674115732e-06
           localScale:
-            - 0.0075779887847602367
-            - 0.0075779887847602367
-            - 0.0075779887847602367
+            - 0.0075779887847602402
+            - 0.0075779887847605421
+            - 0.0075779887847605386
         MeshRenderer:
           name: MeshRenderer
           enabled: true
@@ -607,7 +607,7 @@ GameObject2:
       Children: ~
 GameObject3:
   name: Floor
-  uuid: 14252669991118555903
+  uuid: 2936943060060304287
   tag: Untagged
   active: true
   isStatic: false

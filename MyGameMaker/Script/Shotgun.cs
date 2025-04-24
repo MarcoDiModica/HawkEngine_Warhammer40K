@@ -46,8 +46,8 @@ public class Shotgun : BaseWeapon
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        shotFX = new AudioClip(shotgunShot, "ShotgunShotFX", false, false);
-        reloadFX = new AudioClip(shotgunReload, "ShotgunReloadFX", false, false);
+        shotFX = new AudioClip(shotgunShot, "ShotgunShotFX", false);
+        reloadFX = new AudioClip(shotgunReload, "ShotgunReloadFX", false);
         sound.LoadAudioClip(shotFX);
         sound.LoadAudioClip(reloadFX);
 

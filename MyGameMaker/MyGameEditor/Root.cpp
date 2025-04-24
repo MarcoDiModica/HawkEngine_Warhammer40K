@@ -548,7 +548,7 @@ bool Root::Start()
 	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
 	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
 	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
 	auto riffleShotFX = CreateGameObject("RiffleShotFX");
 	riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
 	ParentGameObject(*riffleShotFX, *player);
@@ -720,8 +720,8 @@ bool Root::Update(double dt)
 		//AddInteraction();
 	}
 
-	//LOG(LogType::LOG_INFO, "ResourceManager Meshes: %d", resourceManager->GetMeshCount());
-	//LOG(LogType::LOG_INFO, "ResourceManager Materials: %d", resourceManager->GetMaterialCount());
+	LOG(LogType::LOG_INFO, "ResourceManager Meshes: %d", resourceManager->GetMeshCount());
+	LOG(LogType::LOG_INFO, "ResourceManager Materials: %d", resourceManager->GetMaterialCount());
 
 	//if (Application->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 	//	Application->scene_serializer->DeSerialize("Library/Scenes/DefaultScene.scene");

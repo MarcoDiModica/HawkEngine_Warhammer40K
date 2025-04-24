@@ -41,7 +41,7 @@ public class EnemyControllerMelee : EnemyController
     private bool isLeaping = false;
 
     // Pathfinding
-    private float chaseReplanInterval = 1f;
+    private float chaseReplanInterval = 0.5f;
     private float chaseTimer = 0f;
 
     public override void Awake() {
@@ -157,27 +157,27 @@ public class EnemyControllerMelee : EnemyController
                     }
 
                     // Enemy Rotation
-                    //if (moveDirection != Vector3.Zero)
-                    //{
-                    //    currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                    //    float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                    //    float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+                    if (moveDirection != Vector3.Zero)
+                    {
+                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-                    //    while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                    //    while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
 
-                    //    currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
 
-                    //    Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                    //    Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                    //        eulerRotation.Y * ((float)Math.PI / 180.0f),
-                    //        eulerRotation.X * ((float)Math.PI / 180.0f),
-                    //        eulerRotation.Z * ((float)Math.PI / 180.0f)
-                    //    );
-
-                    //    // enemyTransform.SetRotationQuat(newRotation);
-                    //    collider.SetRotation(newRotation);
-                    //}
+                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                            eulerRotation.Y * ((float)Math.PI / 180.0f),
+                            eulerRotation.X * ((float)Math.PI / 180.0f),
+                            eulerRotation.Z * ((float)Math.PI / 180.0f)
+                        );
+                        
+                        // enemyTransform.SetRotationQuat(newRotation);
+                        collider.SetRotation(newRotation);
+                    }
                 }
                 else
                 {
@@ -236,49 +236,20 @@ public class EnemyControllerMelee : EnemyController
                 //    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                 //}
                 //isRunning = true;
-                Vector3 currentVelocity = rb.GetVelocity();
-                Engineson.print("Current Velocity: " + currentVelocity);
-                Engineson.print("Move Direction: " + moveDirection);
 
                 Vector3 myPos = enemyTransform.position;
                 Vector3 playerPos = playerTransform.position;
-                chaseTimer += deltaTime;
-                if (chasePath == null || chaseTimer >= chaseReplanInterval)
-                {
-                    chasePath = pathfinder.FindPath(myPos, playerPos);
-                    chaseTimer = 0f;
-                }
+                
+                chasePath = pathfinder.FindPath(myPos, playerPos);
 
                 if (chasePath != null && chasePath.Count > 1)
                 {
                     Vector3 nextWP = chasePath[1];
-                    Vector3 toNext = nextWP - myPos;
-                    Vector3 flatToNext = new Vector3(toNext.X, 0, toNext.Z);
-                    Vector3 dir = Vector3.Normalize(flatToNext);
-
-                    float angleToTarget = (float)Math.Atan2(dir.X, dir.Z) * (180.0f / (float)Math.PI);
-                    float currentYAngle = enemyTransform.eulerAngles.Y;
-
-                    float angleDiff = angleToTarget - currentYAngle;
-                    while (angleDiff > 180f) angleDiff -= 360f;
-                    while (angleDiff < -180f) angleDiff += 360f;
-
-                    float smoothedAngle = Lerp(currentYAngle, angleToTarget, rotationSpeed * deltaTime);
-                    Quaternion rot = Quaternion.CreateFromYawPitchRoll(smoothedAngle * ((float)Math.PI) / 180f, 0, 0);
-                    collider.SetRotation(rot);
-
-                    if (Math.Abs(angleDiff) < 15f && !isLeaping)
-                    {
-                        var vel = dir * speedMovement;
-                        Vector3 newVelocity = Vector3.Lerp(vel, vel, acceleration * deltaTime);
-                        rb.SetVelocity(new Vector3(newVelocity.X, 0, newVelocity.Z));
-                        anim.SetRunningAnimation();
-                        isRunning = true;
-                    }
-                    else
-                    {
-                        rb.SetVelocity(Vector3.Zero);
-                    }
+                    Vector3 dir = Vector3.Normalize(nextWP - myPos);
+                    var vel = dir * speedMovement;
+                    rb.SetVelocity(new Vector3(vel.X, GetComponent<Rigidbody>().GetVelocity().Y, vel.Z));
+                    anim.SetRunningAnimation();
+                    isRunning = true;
                 }
 
                 break;

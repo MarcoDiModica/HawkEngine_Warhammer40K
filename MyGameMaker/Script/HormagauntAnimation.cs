@@ -25,7 +25,13 @@ public class HormagauntAnimation : MonoBehaviour
 
     public override void Update(float deltaTime)
     {
-
+        if (hormagauntesk.GetAnimationIndex() != 12 || hormagauntesk.GetAnimationIndex() != 17)
+        {
+            if (hormagauntesk.GetAnimationTime() >= hormagauntesk.GetAnimationLength() - 1.0f)
+            {
+                hormagauntesk.SetAnimationPlayState(false);
+            }
+        }
     }
 
     public void SetStandardIdleAnimation()

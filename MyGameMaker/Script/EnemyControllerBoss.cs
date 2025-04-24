@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Net;
 using System.Numerics;
@@ -48,6 +50,7 @@ public class EnemyControllerBoss : EnemyController
     {
         new Vector3(10, 0, -10),
         new Vector3(-10, 0, -10),
+        new Vector3(0, 0, 0),
         new Vector3(10, 0, 10),
         new Vector3(-10, 0, 10)
     };
@@ -57,18 +60,11 @@ public class EnemyControllerBoss : EnemyController
     private bool isSlamActive = false;
 
     // Metal Slide stats
-    private float metalSlideDuration = 7.0f;
-    private float metalSlideTimer = 0.0f;
-    private bool isMetalSlideActive = false;
-    private float metalSlideStartTime = 0.0f;
-    private List<(float impactTime, Vector3 position)> pendingImpacts = new List<(float, Vector3)>();
-    private float maxFragmentOffset = 3.0f;
-    private int numberOfFragments;
-    private Random random;
-    private Vector3 playerVelocity;
-    private float bossTime = 0.0f;
+    private GameObject metalSlideObject;
+    private Vector3 metalSlideStartOffset = new Vector3(0, 15.0f, 0);
+    private float metalSlideSpeed = 30.0f;
 
-    //private EnemyControllerBossTail tailController;
+    private EnemyControllerBossTail tailController;
 
     private enum BossPhase
     {
@@ -79,12 +75,6 @@ public class EnemyControllerBoss : EnemyController
 
     private BossPhase currentPhase;
 
-    private class FragmentImpact
-    {
-        public Vector3 position;
-        public float impactTime;
-    }
-
     public override void Awake()
     {
         music = gameObject.GetComponent<Audio>();
@@ -93,11 +83,10 @@ public class EnemyControllerBoss : EnemyController
     public override void Start()
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
-        playerVelocity = GameObject.Find("Player").GetComponent<Rigidbody>().GetVelocity();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.SetMass(1000.0f);
-        //tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
-        //tailController?.gameObject.SetActive(false);
+        tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
+        tailController?.gameObject.SetActive(false);
         currentHealth = maxHealth;
         if (playerTransform == null)
         {
@@ -120,7 +109,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 399.0f;
+        currentHealth = 300.0f;
         gameObject.tag = "Boss";
         isDead = false;
     }
@@ -129,7 +118,6 @@ public class EnemyControllerBoss : EnemyController
     {
         if (!isDead)
         {
-            bossTime += deltaTime;
 
             float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
@@ -208,32 +196,26 @@ public class EnemyControllerBoss : EnemyController
                     {
                         if (playerTransform != null)
                         {
-                            if (slamAttackTimer <= 0.0f)
+                            if (distanceToPlayer <= 5.0f && slamAttackTimer <= 0.0f)
                             {
-                                if (distanceToPlayer >= 5.0f && distanceToPlayer <= 10.0f)
-                                {
-                                    ClawStrike();
-                                }
-                                else if (distanceToPlayer <= slamAttackDistance)
-                                {
-                                    SlamAttack();
-                                }
+                                ClawStrike();
                                 slamAttackTimer = slamAttackCooldown;
                             }
-                            //if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
-                            //{
-                            //    ClawStrike();
-                            //    slamAttackTimer = slamAttackCooldown;
-                            //}
-                            //else
-                            //{
-                            //    ChangePositionToClosest();
-                            //}
-                            else
+                            else if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                            {
+                                SlamAttack(); 
+                                slamAttackTimer = slamAttackCooldown;
+                            }
+                            else if (distanceToPlayer > slamAttackDistance && distanceToPlayer < 30.0f && metalSlideObject == null)
+                            {
+                                MetalSlide();
+                                slamAttackTimer = slamAttackCooldown;
+                            }
+                            else if (distanceToPlayer > 30.0f)
                             {
                                 ChangePositionToClosest();
                             }
-                        
+
                         }
                         timer = 0.0f;
                     }
@@ -248,62 +230,43 @@ public class EnemyControllerBoss : EnemyController
 
                     // The same as phase 2 for the moment
                     
-                    timer += deltaTime;
+                    //timer += deltaTime;
 
-                    if (isBuried && timer >= unburrowingAttackCooldown)
-                    {
-                        isPreparingAttack = true;
-                        timer = 0.0f;
-                    }
-                    else if (isPreparingAttack && timer >= burrowTime)
-                    {
-                        UnburrowingAttackPhase2();
-                        isPreparingAttack = false;
-                        timer = 0.0f;
-                    }
-                    else if (!isBuried && timer >= postAttackDelay)
-                    {
-                        if (playerTransform != null)
-                        {
+                    //if (isBuried && timer >= unburrowingAttackCooldown)
+                    //{
+                    //    isPreparingAttack = true;
+                    //    timer = 0.0f;
+                    //}
+                    //else if (isPreparingAttack && timer >= burrowTime)
+                    //{
+                    //    UnburrowingAttackPhase2();
+                    //    isPreparingAttack = false;
+                    //    timer = 0.0f;
+                    //}
+                    //else if (!isBuried && timer >= postAttackDelay)
+                    //{
+                    //    if (playerTransform != null)
+                    //    {
 
-                            if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
-                            {
-                                ClawStrike();
-                                slamAttackTimer = slamAttackCooldown;
-                            }
-                            else
-                            {
-                                ChangePositionToClosest();
-                            }
-                        }
-                        timer = 0.0f;
-                    }
+                    //        if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                    //        {
+                    //            ClawStrike();
+                    //            slamAttackTimer = slamAttackCooldown;
+                    //        }
+                    //        else
+                    //        {
+                    //            ChangePositionToClosest();
+                    //        }
+                    //    }
+                    //    timer = 0.0f;
+                    //}
 
-                    if (slamAttackTimer > 0.0f)
-                    {
-                        slamAttackTimer -= deltaTime;
-                    }
+                    //if (slamAttackTimer > 0.0f)
+                    //{
+                    //    slamAttackTimer -= deltaTime;
+                    //}
                     break;
             }
-
-            //if (isMetalSlideActive)
-            //{
-            //    float currentTime = bossTime;
-            //    for (int i = pendingImpacts.Count - 1; i>= 0; i--)
-            //    {
-            //        if (currentTime >= pendingImpacts[i].impactTime)
-            //        {
-            //            CreateSlideHurtbox(pendingImpacts[i].position);
-            //            pendingImpacts.RemoveAt(i);
-            //        }
-            //    }
-
-            //    if (pendingImpacts.Count == 0)
-            //    {
-            //        isMetalSlideActive = false;
-            //    }
-
-            //}
 
             if (slamHurtboxObject != null || clawHurtboxObjects != null)
             {
@@ -314,6 +277,8 @@ public class EnemyControllerBoss : EnemyController
                     hurtboxDuration = 0.0f;
                 }
             }
+
+            UpdateMetalSlide(deltaTime);
 
         }
 
@@ -330,20 +295,7 @@ public class EnemyControllerBoss : EnemyController
 
     override public void OnCollisionEnter(GameObject other)
     {
-        if (other.tag == "BoltgunProjectile")
-        {
-            currentHealth -= 20.0f;
-            Engineson.print("Boltgun hit!");
-        }
-        else if (other.tag == "ShotgunProjectile")
-        {
-            //cosas de la shotgun
-        }
-        else if (other.tag == "RailgunProjectile")
-        {
-            //Cosas de railgun
-        }
-        //Engineson.print("Player hit!");
+
     }
 
     public override void Attack()
@@ -408,38 +360,44 @@ public class EnemyControllerBoss : EnemyController
         if (isDead == false)
         {
             CreateClawHurtbox();
-            
+            slamAttackTimer = 0.0f;
         }
     }
 
     private void MetalSlide()
     {
-        if (playerTransform == null) return;
-
-        if (isDead == false)
+        if (isDead == false && playerTransform != null)
         {
-            numberOfFragments = random.Next(5, 9);
-            pendingImpacts.Clear();
-            metalSlideStartTime = bossTime;
-            isMetalSlideActive = true;
+            if (metalSlideObject != null) return;
 
-            Vector3 playerPosition = playerTransform.position;
+            Vector3 spawnPosition = playerTransform.position + metalSlideStartOffset;
 
-            for (int i = 0; i<numberOfFragments; i++)
+            metalSlideObject = Engineson.CreateGameObject("MetalSlide", null);
+            metalSlideObject.AddComponent<MeshRenderer>();
+            metalSlideObject.AddComponent<BoxCollider>();
+            metalSlideObject.GetComponent<BoxCollider>().SetTrigger(true);
+            metalSlideObject.tag = "EnemyAttack";
+
+            var transform = metalSlideObject.GetComponent<Transform>();
+            transform.position = spawnPosition;
+            transform.SetScale(3, 3, 3);
+        }
+    }
+
+    private void UpdateMetalSlide(float deltaTime)
+    {
+        if (metalSlideObject != null)
+        {
+            var transform = metalSlideObject.GetComponent<Transform>();
+            Vector3 position = transform.position;
+            position.Y -= metalSlideSpeed * deltaTime;
+
+            transform.position = position;
+
+            if (position.Y < -10.0f)
             {
-                float baseTime = i * metalSlideDuration / numberOfFragments;
-                float randomOffset = ((float)random.NextDouble() - 0.5f) * (metalSlideDuration / numberOfFragments);
-                float ti = metalSlideStartTime + baseTime + randomOffset;
-
-                Vector3 predictedPosition = playerPosition + playerVelocity * (ti - bossTime);
-
-                float offsetX = ((float)random.NextDouble() * 2 - 1) * maxFragmentOffset;
-                float offsetZ = ((float)random.NextDouble() * 2 - 1) * maxFragmentOffset;
-
-                Vector3 impactPosition = predictedPosition + new Vector3(offsetX, 0, offsetZ);
-                pendingImpacts.Add((ti, impactPosition));
-
-                Engineson.print($"Fragment {i} will impact at {impactPosition} at time {ti}");
+                Engineson.Destroy(metalSlideObject);
+                metalSlideObject = null;
             }
         }
     }
@@ -559,20 +517,6 @@ public class EnemyControllerBoss : EnemyController
 
             clawHurtboxObjects.Add(clawSegment);
         }
-
-    }
-
-    private void CreateSlideHurtbox(Vector3 position)
-    {
-        var fragment = Engineson.CreateGameObject("FragmentImpact", null);
-        fragment.AddComponent<MeshRenderer>();
-        fragment.AddComponent<BoxCollider>();
-        fragment.GetComponent<BoxCollider>().SetTrigger(true);
-        fragment.tag = "EnemyAttack";
-
-        var fragmentTransform = fragment.GetComponent<Transform>();
-        fragmentTransform.position = position;
-        fragmentTransform.SetScale(4.0f, 1.0f, 4.0f);
 
     }
 

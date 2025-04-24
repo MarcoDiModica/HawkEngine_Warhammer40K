@@ -14,6 +14,7 @@ public class EnemyControllerBossTail : EnemyController
 
     private float bossTime = 0.0f;
     private float stateStartTime = 0.0f;
+    bool isBuried = false;
 
     private float emergeDuration = 2.0f;
     private float waitDuration = 2.0f;
@@ -46,8 +47,8 @@ public class EnemyControllerBossTail : EnemyController
         collider = gameObject.GetComponent<BoxCollider>();
         sound = gameObject.GetComponent<Audio>();
         enemyTransform = gameObject.GetComponent<Transform>();
-        //torsoController = GameObject.Find("Mawloc").GetComponent<EnemyControllerBoss>();
-        //torsoTransform = GameObject.Find("Mawloc").transform;
+        torsoController = GameObject.Find("Mawloc").GetComponent<EnemyControllerBoss>();
+        torsoTransform = GameObject.Find("Mawloc").transform;
     }
 
     public override void Start()
@@ -85,7 +86,7 @@ public class EnemyControllerBossTail : EnemyController
             }
             else
             {
-                // Cambiar de túnel
+                ChangePositionToClosest();
             }
         }
         else if (currentState == TailState.Attacking)
@@ -99,13 +100,6 @@ public class EnemyControllerBossTail : EnemyController
         }
     }
 
-    private void ShiftToNewTunnel()
-    {
-        int newIndex = GetSecondClosestFixedPositionIndex(playerTransform.position);
-        currentPositionIndex = newIndex;
-        enemyTransform.position = fixedPositions[newIndex];
-        
-    }
 
     private bool ShouldTailSlash()
     {
@@ -121,34 +115,46 @@ public class EnemyControllerBossTail : EnemyController
         return dist > 5.0f && dist <= 8.0f;
     }
 
-    private int GetSecondClosestFixedPositionIndex(Vector3 playerPosition)
+    public void ChangePositionToClosest()
     {
-        float closestDist = float.MaxValue;
-        float secondClosestDist = float.MaxValue;
-
-        int closestIndex = -1;
-        int secondClosestIndex = -1;
-
-        for (int i = 0; i < fixedPositions.Length; i++)
+        if (isDead == false)
         {
-            float dist = Vector3.Distance(fixedPositions[i], playerPosition);
+            enemyTransform.position = fixedPositions[FindClosestFixedPosition()];
+            collider.SetPosition(enemyTransform.position);
+            Burrow();
+        }
+    }
 
-            if (dist < closestDist)
-            {
-                secondClosestDist = closestDist;
-                secondClosestIndex = closestIndex;
+    private void Burrow()
+    {
+        if (isDead == false)
+        {
+            Engineson.print("Burrowed");
+            enemyTransform.position = new Vector3(0.0f, -40.0f, 0.0f);
+            collider.SetPosition(enemyTransform.position);
+            isBuried = true;
+        }
+    }
 
-                closestDist = dist;
-                closestIndex = i;
-            }
-            else if (dist < secondClosestDist)
+    private int FindClosestFixedPosition()
+    {
+        int closestIndex = 0;
+        float closestDistance = float.MaxValue;
+
+        if (isDead == false)
+        {
+            for (int i = 0; i < fixedPositions.Length; i++)
             {
-                secondClosestDist = dist;
-                secondClosestIndex = i;
+                float distance = Vector3.Distance(playerTransform.position, fixedPositions[i]);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestIndex = i;
+                }
             }
         }
 
-        return secondClosestIndex != -1 ? secondClosestIndex : closestIndex;
+        return closestIndex;
     }
 
     private void TailSlash()
@@ -243,6 +249,11 @@ public class EnemyControllerBossTail : EnemyController
                 activeHurtboxes[i] = (hurtbox, timer);
             }
         }
+    }
+
+    public void Disable()
+    {
+
     }
 
 }

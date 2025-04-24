@@ -66,9 +66,8 @@ namespace HawkEngine
         private bool IsWalkable(int x, int y)
         {
             Vector3 center = new Vector3(x + .5f, .5f, y + .5f);
-            float r = cellSize * .7f;
-            var hits = Physics.OverlapSphere(center, r, "Obstacle");
-                       //?? Array.Empty<GameObject>();
+            var hits = Physics.OverlapSphere(center, cellSize*0.75f, "Obstacle")
+                       ?? Array.Empty<GameObject>();
             return !hits.Any(go => go != null && go.tag == "Obstacle");
         }
 
@@ -107,7 +106,7 @@ namespace HawkEngine
         }
 
         private static Vector3 GridToWorld(Node n) =>
-            new Vector3(n.X + .5f, .5f, n.Y + .5f);
+            new Vector3(n.X, 0f, n.Y);
 
         private class Node
         {

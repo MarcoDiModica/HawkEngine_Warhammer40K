@@ -244,8 +244,7 @@ public class EnemyControllerMelee : EnemyController
                 chaseTimer += deltaTime;
                 if (chaseTimer >= chaseReplanInterval)
                 {
-                    chasePath = pathfinder.FindPath(enemyTransform.position,
-                                                    playerTransform.position);
+                    chasePath = pathfinder.FindPath(enemyTransform.position, playerTransform.position);
                     chaseIndex = 0;
                     chaseTimer = 0f;
                 }
@@ -275,22 +274,22 @@ public class EnemyControllerMelee : EnemyController
                         isRunning = true;
                     }
                 }
-                else
-                {
-                    Vector3 delta = playerTransform.position - enemyTransform.position;
-                    float len = delta.Length();
-                    Vector3 dir = (len > 1e-5f) ? delta / len : Vector3.Zero;
+                //else
+                //{
+                //    Vector3 delta = playerTransform.position - enemyTransform.position;
+                //    float len = delta.Length();
+                //    Vector3 dir = (len > 1e-5f) ? delta / len : Vector3.Zero;
 
-                    moveDirection = dir;
+                //    moveDirection = dir;
 
-                    Vector3 desired = dir * speedMovement;
-                    Vector3 cv = rb.GetVelocity();
-                    float t = Math.Min(1f, acceleration * deltaTime);
+                //    Vector3 desired = dir * speedMovement;
+                //    Vector3 cv = rb.GetVelocity();
+                //    float t = Math.Min(1f, acceleration * deltaTime);
 
-                    rb.SetVelocity(Vector3.Lerp(cv, desired, t));
-                    anim.SetRunningAnimation();
-                    isRunning = true;
-                }
+                //    rb.SetVelocity(Vector3.Lerp(cv, desired, t));
+                //    anim.SetRunningAnimation();
+                //    isRunning = true;
+                //}
 
                 break;
 

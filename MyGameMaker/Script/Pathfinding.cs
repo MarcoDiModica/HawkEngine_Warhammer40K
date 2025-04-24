@@ -10,7 +10,7 @@ namespace HawkEngine
     {
         private const int width = 5000;
         private const int height = 5000;
-        private const float cellSize = 1f;
+        private const float cellSize = 0.1f;
         private static readonly float DiagCost = (float)Math.Sqrt(2);
 
         public List<Vector3> FindPath(Vector3 startW, Vector3 endW)
@@ -18,8 +18,10 @@ namespace HawkEngine
             (int sx, int sy) = ToGrid(startW);
             (int tx, int ty) = ToGrid(endW);
 
-            if (!IsWalkable(sx, sy) || !IsWalkable(tx, ty))
-                return null;
+            if (!IsWalkable(sx, sy))
+                (sx, sy) = FindNearestWalkableNeighbor(sx, sy);
+            if (!IsWalkable(tx, ty))
+                (tx, ty) = FindNearestWalkableNeighbor(tx, ty);
 
             var openSet = new List<Node> { new Node(sx, sy) { G = 0, H = Heuristic(sx, sy, tx, ty) } };
             var closedSet = new HashSet<Node>();
@@ -40,18 +42,50 @@ namespace HawkEngine
 
                     float tentativeG = current.G + EdgeCost(current, nbr);
                     var existing = openSet.FirstOrDefault(n => n.Equals(nbr));
-                    if (existing == null || tentativeG < existing.G)
+                    if (existing == null)
                     {
                         nbr.G = tentativeG;
                         nbr.H = Heuristic(nbr.X, nbr.Y, tx, ty);
                         nbr.Parent = current;
-                        if (existing == null)
-                            openSet.Add(nbr);
+                        openSet.Add(nbr);
+                    }
+                    else if (tentativeG < existing.G)
+                    {
+                        existing.G = tentativeG;
+                        existing.Parent = current;
                     }
                 }
             }
 
             return null;
+        }
+
+        private (int, int) FindNearestWalkableNeighbor(int x, int y)
+        {
+            var visited = new bool[width, height];
+            var queue = new Queue<(int x, int y)>();
+            queue.Enqueue((x, y));
+            visited[x, y] = true;
+
+            while (queue.Count > 0)
+            {
+                var (cx, cy) = queue.Dequeue();
+                if (IsWalkable(cx, cy))
+                    return (cx, cy);
+
+                for (int dx = -1; dx <= 1; dx++)
+                    for (int dy = -1; dy <= 1; dy++)
+                    {
+                        if (dx == 0 && dy == 0) continue;
+                        int nx = cx + dx, ny = cy + dy;
+                        if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
+                        if (visited[nx, ny]) continue;
+                        visited[nx, ny] = true;
+                        queue.Enqueue((nx, ny));
+                    }
+            }
+            
+            return (x, y);
         }
 
         private static (int, int) ToGrid(Vector3 w)
@@ -67,8 +101,8 @@ namespace HawkEngine
         {
             Vector3 center = new Vector3(x + .5f, .5f, y + .5f);
             float r = cellSize * .7f;
-            var hits = Physics.OverlapSphere(center, r, "Obstacle");
-                       //?? Array.Empty<GameObject>();
+            var hits = Physics.OverlapSphere(center, r, "Obstacle")
+                       ?? Array.Empty<GameObject>();
             return !hits.Any(go => go != null && go.tag == "Obstacle");
         }
 
@@ -94,7 +128,8 @@ namespace HawkEngine
 
         private static float Heuristic(int x1, int y1, int x2, int y2)
         {
-            return Math.Max(Math.Abs(x1 - x2), Math.Abs(y1 - y2));
+            float dx = x2 - x1, dy = y2 - y1;
+            return (float)Math.Sqrt(dx * dx + dy * dy);
         }
 
         private List<Vector3> Retrace(Node end)

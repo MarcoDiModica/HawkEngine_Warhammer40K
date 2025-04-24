@@ -106,14 +106,14 @@ bool Root::Start()
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Level1SundayDelivery.Scene");
 
-	auto objMainCamera = CreateCameraObject("MainCamera");
+	/*auto objMainCamera = CreateCameraObject("MainCamera");
 	objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
 	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
 	auto camera = objMainCamera->AddComponent<CameraComponent>();
 	camera->priority = 1;
 	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
 	mainCamera = objMainCamera;
-	UpdateCameraPriority();
+	UpdateCameraPriority();*/
 
 	//particle->ApplyPreset(Particle)
 
@@ -140,10 +140,10 @@ bool Root::Start()
 	///*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.03f, 0.03f, 0.03f));
 
-	auto cube = CreateCube("Cube");
+	/*auto cube = CreateCube("Cube");
 	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");*/
 
 	
 	//// Test PowerUps
@@ -575,6 +575,23 @@ bool Root::Start()
 	//boltgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*boltgunMesh, *boltgun);
 
+	/*auto shotgun = CreateGameObject("Shotgun");
+	shotgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
+	shotgunMesh->SetName("shotgunMesh");
+	shotgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*shotgunMesh, *shotgun);*/
+
+	//auto railgun = CreateGameObject("Railgun");
+	//railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");
+	//railgunMesh->SetName("railgunMesh");
+	//railgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	//railgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//railgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//ParentGameObject(*railgunMesh, *railgun);
 
 
 	//For rendering Interaction System text, remove the canvas if there is already one

@@ -4,11 +4,9 @@ using System.Numerics;
 
 public class Hook : MonoBehaviour
 {
-    private Transform transform;
     private Rigidbody rigidbody;
     private GameObject player; 
     private Audio sound;
-    private bool needsDestroy = false;
     private string hookTp = "Assets/Audio/SFX/Weapons/Shotgun/HookTp.wav";
 
     public override void Awake() { }
@@ -50,9 +48,6 @@ public class Hook : MonoBehaviour
 
     public override void OnCollisionEnter(GameObject other)
     {
-
-        
-
         if (player != null)
         {
             Vector3 hookPosition = other.GetComponent<Transform>().GetPosition();
@@ -64,7 +59,7 @@ public class Hook : MonoBehaviour
         Engineson.print("Colisión con " + other.name);
 
         GetComponent<Collider>().SetPosition(new Vector3(0, -100, 0));
-        needsDestroy = false;
+        
     }
 
 }

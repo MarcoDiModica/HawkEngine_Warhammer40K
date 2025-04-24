@@ -79,7 +79,7 @@ public class PlayerAnimations : MonoBehaviour
         esk.TransitionAnimations(6, 8, 0.1f);
         esk.SetAnimationSpeed(1f);
     }
-    public void SetWalkAnimation()
+    public void SetWalkAnimation()  
     {
         esk.TransitionAnimations(5, 9, 0.1f);
         esk.SetAnimationSpeed(1.5f);

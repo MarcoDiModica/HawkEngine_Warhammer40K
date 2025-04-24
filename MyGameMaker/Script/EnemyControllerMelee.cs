@@ -19,7 +19,7 @@ public class EnemyControllerMelee : EnemyController
     private HormagauntAnimation anim;
     PlayerController pc;
 
-    //audio
+    // Audio
     bool isCombatMusicPlaying = false;
     private Audio music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
@@ -49,7 +49,6 @@ public class EnemyControllerMelee : EnemyController
     {
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
-
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
@@ -58,7 +57,7 @@ public class EnemyControllerMelee : EnemyController
         collider = gameObject.GetComponent<BoxCollider>();
         if (collider == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a Collider component!");
+            Engineson.print("ERROR: Hormagaunt Movement requires a Collider component!");
             return;
         }
 
@@ -71,14 +70,14 @@ public class EnemyControllerMelee : EnemyController
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a Transform component!");
+            Engineson.print("ERROR: Hormagaunt Movement requires a Transform component!");
             return;
         }
 
         anim = GameObject.Find("HormagauntMesh").GetComponent<HormagauntAnimation>();
         if (anim == null)
         {
-            Engineson.print("ERROR: PlayerAnimation requires a SkeletalAnimation component!");
+            Engineson.print("ERROR: HormagauntAnimation requires a SkeletalAnimation component!");
             return;
         }
 
@@ -89,97 +88,40 @@ public class EnemyControllerMelee : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
-        isDead = false;
     }
 
     public override void Update(float deltaTime)
     {
-        if (!isDead)
+        if (currentState != EnemyState.DEAD)
         {
             if (currentHealth <= 0)
             {
-                Engineson.print("This man is dead man.");
-                //Destroy(gameObject);
+                currentState = EnemyState.DEAD;
                 anim.SetDeathAnimation();
-                isDead = true;
                 sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
                 sound?.Play();
+                return;
             }
-            if (!isStunned)
+
+            if (currentState != EnemyState.STUNNED)
             {
-                Vector3 playerPos = playerTransform.position;
-                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerPos);
+                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
                 if (distanceToPlayer < distToChase)
                 {
-                    // Enemy Attack
-                    if (IsPlayerInHurtbox(playerPos))
+                    // Attack
+                    if (IsPlayerInHurtbox(playerTransform.position))
                     {
-                        isAttacking = true;
-
-                        hurtboxTimer += deltaTime;
-                        if (dodgewindow)
-                        {
-                            dodgeTimer += deltaTime;
-                        }
-                        if (hurtboxTimer >= hurtboxActivationTime)
-                        {
-                            //CreateHurtbox();
-                            anim.SetRandomAttackAnimation();
-                            Engineson.print("Attack is ready");
-                            hurtboxTimer = 0f;
-                            dodgeTimer = 0f;
-                            dodgewindow = true;
-                        }
-                        else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
-                        {
-                            Attack();
-
-                            //DestroyHurtbox();
-                            hurtboxTimer = 0f;
-                            dodgeTimer = 0f;
-                            dodgewindow = false;
-                            isAttacking = false;
-                        }
+                        currentState = EnemyState.ATTACK;
                     }
 
-                    // Enemy Movement
-                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                    // Chase
+                    if (distanceToPlayer > minDistToChase)
                     {
-                        if (!isFootstepPlaying)
-                        {
-                            sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                            sound?.Play(true);
-                            isFootstepPlaying = true;
-                            hasStoppedFootsteps = false;
-                        }
-                        if (isCombatMusicPlaying == false)
-                        {
-                            sound?.LoadAudio(combatMusic);
-                            sound?.Play(true);
-                            isCombatMusicPlaying = true;
-                        }
-
-                        Vector3 currentVelocity = rb.GetVelocity();
-                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                        Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                        if (!isLeaping)
-                        {
-                            anim.SetRunningAnimation();
-                            if (desiredVelocity.LengthSquared() > 0)
-                            {
-                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                            }
-
-                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-                        }
-                        isRunning = true;
-
+                        currentState = EnemyState.CHASE;
                     }
 
-                    // Enemy Leap
+                    // Leap
                     if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
                     {
                         leapTimer = 0f;
@@ -231,25 +173,90 @@ public class EnemyControllerMelee : EnemyController
                 }
                 else
                 {
-                    // Enemy Idle
-                    if (!isIdle)
+                    if (currentState != EnemyState.IDLE)
                     {
+                        currentState = EnemyState.IDLE;
                         rb.SetVelocity(Vector3.Zero);
                         anim.SetStandardIdleAnimation();
-                        isIdle = true;
-                    }
-                    isRunning = false;
-                    isFootstepPlaying = false;
-                    if (!hasStoppedFootsteps)
-                    {
-                        sound?.Stop();
-                        hasStoppedFootsteps = true;
                     }
                 }
             }
-            else if (isStunned)
-            {
-                // Enemy Stun
+        }
+
+        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
+
+        switch (currentState)
+        {
+            case EnemyState.IDLE:
+                isRunning = false;
+                isFootstepPlaying = false;
+                if (!hasStoppedFootsteps)
+                {
+                    sound?.Stop();
+                    hasStoppedFootsteps = true;
+                }
+                break;
+
+            case EnemyState.CHASE:
+                if (!isFootstepPlaying)
+                {
+                    sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
+                    sound?.Play(true);
+                    isFootstepPlaying = true;
+                    hasStoppedFootsteps = false;
+                }
+                if (isCombatMusicPlaying == false)
+                {
+                    sound?.LoadAudio(combatMusic);
+                    sound?.Play(true);
+                    isCombatMusicPlaying = true;
+                }
+
+                Vector3 currentVelocity = rb.GetVelocity();
+                moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
+                Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                if (!isLeaping)
+                {
+                    anim.SetRunningAnimation();
+                    if (desiredVelocity.LengthSquared() > 0)
+                    {
+                        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                    }
+
+                    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                }
+                isRunning = true;
+                break;
+
+            case EnemyState.ATTACK:
+                hurtboxTimer += deltaTime;
+                if (dodgewindow)
+                {
+                    dodgeTimer += deltaTime;
+                }
+                if (hurtboxTimer >= hurtboxActivationTime)
+                {
+                    //CreateHurtbox();
+                    anim.SetRandomAttackAnimation();
+                    hurtboxTimer = 0f;
+                    dodgeTimer = 0f;
+                    dodgewindow = true;
+                }
+                else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
+                {
+                    Attack();
+
+                    //DestroyHurtbox();
+                    hurtboxTimer = 0f;
+                    dodgeTimer = 0f;
+                    dodgewindow = false;
+                    isAttacking = false;
+                }
+                break;
+
+            case EnemyState.STUNNED:
                 stunTimer += deltaTime;
                 rb.SetVelocity(Vector3.Zero);
                 if (stunTimer >= stunDuration)
@@ -257,23 +264,54 @@ public class EnemyControllerMelee : EnemyController
                     isStunned = false;
                     stunTimer = 0.0f;
                 }
-            }
-        }
-        if (isDead)
-        {
-            // Enemy Death
-            collider.SetActive(false);
+                break;
+
+            case EnemyState.DEAD:
+                collider.SetActive(false);
+                break;
+
+            default:
+                break;
         }
     }
 
     public override void Attack()
     {
         Engineson.print("Melee attack executed!");
-        pc.playerData.TakeDamage(clawDamage);
+        if (pc.redThirstManager.IsInBlackRage())
+        {
+            if(pc.redThirstManager.redThirstBonus < clawDamage)
+            {
+                pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
+            }
+            else
+            {
+                pc.playerData.TakeDamage(0);
+            }
+
+        }
+        else
+        {
+            pc.playerData.TakeDamage(clawDamage);
+        }
+
         Engineson.print("Player health: " + (pc.playerData.GetHealth()));
 
         sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
         sound?.Play();
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        if (currentHealth > 0)
+        {
+            currentHealth -= damage;
+            anim.SetHitAnimation();
+            particles.ApplyPreset(19);
+            particles.EmitBurst(1);
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
+        }
     }
 
     public void Leap()
@@ -299,58 +337,59 @@ public class EnemyControllerMelee : EnemyController
     {
         Vector3 hurtboxCenter = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
         Vector3 halfSize = hurtboxSize * 0.5f;
-        //Engineson.print("Player in hurtbox");
 
         return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
                (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
     }
 
-    public override void TakeDamage(float damage)
+   
+    override public void OnCollisionEnter(GameObject other)
     {
-        if (currentHealth > 0)
+        if (other.tag == "BoltgunProjectile")
         {
-            currentHealth -= damage;
+            currentHealth -= 20.0f;
+            Engineson.print("Hit");
             anim.SetHitAnimation();
-            particles.ApplyPreset(19);
-            particles.EmitBurst(1);
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
+
+            Engineson.print("Boltgun hit!");
+        }
+        else if (other.tag == "ShotgunProjectile")
+        {
+            //cosas de la shotgun
+            anim.SetHitAnimation();
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
+
+        }
+        else if (other.tag == "RailgunProjectile")
+        {
+            //Cosas de railgun
+            currentHealth -= 100.0f;
+            anim.SetHitAnimation();
             sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
             sound?.Play();
         }
-    }
-
-    override public void OnCollisionEnter(GameObject other)
-    {
-        //if (other.tag == "BoltgunProjectile")
-        //{
-        //    currentHealth -= 20.0f;
-        //    Engineson.print("Hit");
-        //    anim.SetHitAnimation();
-        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-        //    sound?.Play();
-
-        //    Engineson.print("Boltgun hit!");
-        //}
-        //else if (other.tag == "ShotgunProjectile")
-        //{
-        //    //cosas de la shotgun
-        //    anim.SetHitAnimation();
-        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-        //    sound?.Play();
-
-        //}
-        //else if (other.tag == "RailgunProjectile")
-        //{
-        //    //Cosas de railgun
-        //    currentHealth -= 100.0f;
-        //    anim.SetHitAnimation();
-        //    sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-        //    sound?.Play();
-        //}
         if (other.tag == "Player" && isLeaping)
         {
             Engineson.print("Player hit while Leaping!");
-            pc.playerData.TakeDamage(leapDamage);
+            if (pc.redThirstManager.IsInBlackRage())
+            {
+                if (pc.redThirstManager.redThirstBonus < leapDamage)
+                {
+                    pc.playerData.TakeDamage(leapDamage - pc.redThirstManager.redThirstBonus);
+                }
+                else
+                {
+                    pc.playerData.TakeDamage(0);
+                }
+            }
+            else
+            {
+                pc.playerData.TakeDamage(leapDamage);
+            }
             Engineson.print("Player health: " + (pc.playerData.GetHealth()));
         }
     }

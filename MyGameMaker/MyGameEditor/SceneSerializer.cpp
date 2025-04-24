@@ -155,6 +155,9 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 
 		LOG(LogType::LOG_INFO, "Scene created: %s", sceneName.c_str());
 
+		//Application->root->GetResourceManager()->ClearAllMeshes();
+		//Application->root->GetResourceManager()->ClearAllMaterials();
+
 		for (int i = 0; ; i++) {
 			YAML::Node objectNode = rootNode["GameObject" + std::to_string(i)];
 			if (!objectNode || !objectNode["name"].IsDefined()) {

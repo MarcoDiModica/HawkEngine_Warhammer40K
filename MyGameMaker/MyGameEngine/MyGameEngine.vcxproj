@@ -125,6 +125,7 @@
     <ClInclude Include="ModelImporter.h" />
     <ClInclude Include="PrefabManager.h" />
     <ClInclude Include="readOnlyView.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShaderManager.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Octree.cpp" />
     <ClCompile Include="ModelImporter.cpp" />
     <ClCompile Include="PrefabManager.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShaderManager.cpp" />

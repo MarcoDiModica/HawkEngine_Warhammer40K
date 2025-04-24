@@ -23,6 +23,10 @@ public class BoltgunBullets : PickUp
     {
         Transform = gameObject.GetComponent<Transform>();
         startPos = Transform.position;
+
+        rotationSpeed = (float)(new Random().NextDouble() * (100.0f - 30.0f) + 30.0f);
+
+        floatSpeed = (float)(new Random().NextDouble() * (2.0f - 0.5f) + 0.5f);
     }
 
     public override void Update(float deltaTime)
@@ -38,12 +42,12 @@ public class BoltgunBullets : PickUp
             MoveTowardsPlayer(deltaTime);
         }
     }
-    public void Destroy()
-    {
-        GameObject player = GameObject.Find("Player");
-        Transform.position = new Vector3(0, -100, 0);
-        //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
-    }
+   // public void Destroy()
+   // {
+   //     GameObject player = GameObject.Find("Player");
+   //     Transform.position = new Vector3(0, -100, 0);
+   //     //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
+   // }
     public void MoveTowardsPlayer(float deltaTime)
     {
         GameObject player = GameObject.Find("Player");

@@ -58,6 +58,10 @@ public:
 	void SetAnimationNum(int num) { animationNum = num; }
 	int GetAnimationNum() const { return animationNum; }
 
+	void SetAnimIndex(int index) { animIndex = index; }
+
+	void PlayStopAnimation(bool play) { playAnimation = play; }
+
 	void SetAnimationIndexLimit(int limit) { anim1IndexLimit = limit; }
 	int GetAnimationIndexLimit() const { return anim1IndexLimit; }
 
@@ -80,6 +84,7 @@ private:
 	float animSpeed = 0.0f;
 	int animIndex = 0;
 	int anim1IndexLimit = 0;
+	bool playAnimation = true;
 
 	int animationNum = 0;
 

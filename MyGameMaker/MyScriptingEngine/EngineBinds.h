@@ -160,6 +160,8 @@ namespace EngineBinds {
 	void SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit);
 	void SetImageAnimation(MonoObject* uiImageRef, int index);
 	void SetImageSpriteSize(MonoObject* uiImageRef, float width, float height);
+	void SetImageAnimIndex(MonoObject* uiImageRef, int index);
+	void PlayStopAnimation(MonoObject* uiImageRef, bool play);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);

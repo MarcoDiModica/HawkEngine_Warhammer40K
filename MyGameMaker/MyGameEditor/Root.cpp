@@ -496,7 +496,7 @@ bool Root::Start()
 	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
 	//floor->GetTransform()->SetScale(glm::vec3(500, 1, 500));
 	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//
+	
 	
     //auto envObj = CreateGameObject("Environment1");
     //envObj->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
@@ -508,6 +508,28 @@ bool Root::Start()
 	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//
 	
+	//PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
+
+	//auto player = CreateGameObject("Player");
+	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	//player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	//player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
+	//player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
+	//player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
+	//player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
+	//player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
+	//player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
+	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
+	//
 	//player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 	//
 	//auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
@@ -540,7 +562,7 @@ bool Root::Start()
 	//auto walkingFX = CreateGameObject("WalkingFX");
 	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	//ParentGameObject(*walkingFX, *player);
-	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
+	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
 
 
 

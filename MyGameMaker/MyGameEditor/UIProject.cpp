@@ -699,6 +699,9 @@ void UIProject::HandleFileSelection(const std::filesystem::path& filePath)
             }
         }
     }
+	else if (filePath.extension() == ".fbx") {
+		Application->root->CreateGameObjectWithPath(filePath.string());
+	}
 }
 
 void UIProject::HandleRename(const std::filesystem::path& entry, const char* newName)

@@ -10,7 +10,7 @@ public class EnemyControllerRanged : EnemyController
     public float projectileSpeed = 90.0f;
     public float projectileLifetime = 0.5f;
     protected float shootTimer = 0f;
-
+    private PlayerController pc;
     //stats
     private float health = 100.0f;
     private float damage = 20.0f;
@@ -30,7 +30,7 @@ public class EnemyControllerRanged : EnemyController
 
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
-
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
@@ -160,6 +160,10 @@ public class EnemyControllerRanged : EnemyController
         {
             // Enemy Death
             collider.SetActive(false);
+            if (pc.playerData.isPiercing == true)
+            {
+                pc.playerData.AddHealth(5.0f);
+            }
         }
     }
 

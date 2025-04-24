@@ -225,15 +225,17 @@ void Image::LoadTextureLocalPath(const std::string& path) {
 
 }
 
-std::unordered_map<std::string, std::shared_ptr<Image>> imageCache;
-
 void Image::SaveBinary(const std::string& filename) const {
+
+	std::string fullPath = "Library/Images/" + image_name + ".image";
+
 	if (!std::filesystem::exists("Library/Images")) {
 		std::filesystem::create_directories("Library/Images");
 	}
 
-	std::string fullPath = "Library/Images/" + filename + ".image";
-	LOG(LogType::LOG_INFO, "Saving image to: %s", fullPath.c_str());
+	if (std::filesystem::exists(fullPath)) {
+		return;
+	}
 
 	std::ofstream fout(fullPath, std::ios::binary);
 	if (!fout.is_open()) {
@@ -266,7 +268,7 @@ void Image::SaveBinary(const std::string& filename) const {
 	}
 
 	fout.close();
-	LOG(LogType::LOG_INFO, "Successfully saved image to: %s", fullPath.c_str());
+	LOG(LogType::LOG_INFO, "Successfully saved %s image to: %s", image_name.c_str(), fullPath.c_str());
 }
 
 std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
@@ -277,11 +279,6 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 	}
 
 	std::string fullPath = "Library/Images/" + filename + ".image";
-	auto it = imageCache.find(fullPath);
-	if (it != imageCache.end()) {
-		LOG(LogType::LOG_INFO, "Found image in cache: %s", fullPath.c_str());
-		return it->second;
-	}
 
 	std::ifstream fin(fullPath, std::ios::binary);
 	if (!fin.is_open()) {
@@ -364,8 +361,6 @@ std::shared_ptr<Image> Image::LoadBinary(const std::string& filename) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_ALPHA);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	imageCache[fullPath] = img;
 
 	LOG(LogType::LOG_INFO, "Successfully loaded image: %s (%dx%d, %d channels)",
 		fullPath.c_str(), img->_width, img->_height, img->_channels);

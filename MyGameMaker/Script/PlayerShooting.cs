@@ -381,19 +381,24 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
+                if (boltgun.grenadeLauncher.canThrow)
+                {
+                    redThirstManager.OnAbilityUsed();
+                }
                 boltgun.UseAbility1();
-                
+
                 break;
             case GunType.SHOTGUN:
+                if(shotgun.hookShot.canThrow)
+                {
+                    redThirstManager.OnAbilityUsed();
+                    redThirstManager.AddRedThirstPoint(1);
+                }
                 shotgun.UseAbility1();
                 break;
             case GunType.RAILGUN:
                 railgun.UseAbility1();
                 break;
-        }
-        if (redThirstManager != null)
-        {
-            redThirstManager.OnAbilityUsed();
         }
     }
 
@@ -402,20 +407,29 @@ public class PlayerShooting : MonoBehaviour
         switch (currentGun)
         {
             case GunType.BOLTGUN:
+                if (boltgun.arcSnare.canThrow)
+                {
+                    redThirstManager.OnAbilityUsed();
+                }
                 boltgun.UseAbility2();
+               
                 break;
             case GunType.SHOTGUN:
+                if (shotgun.barrage.canThrow)
+                {
+                    redThirstManager.OnAbilityUsed();
+                }
                 shotgun.UseAbility2();
                 break;
             case GunType.RAILGUN:
-               railgun.UseAbility2();
+                if (railgun.energyBall.canThrow)
+                {
+                    redThirstManager.OnAbilityUsed();
+                }
+                railgun.UseAbility2();
                 break;
         }
-        if (redThirstManager != null)
-        {
-            redThirstManager.OnAbilityUsed();
-        }
-    }
+     }
 
     public void CounterAttack(GameObject target)
     {
@@ -439,7 +453,16 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("Counter Attack to: " + target.name);
             Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerRanged>().currentHealth);
         }
-        
+        else if (target.GetComponent<EnemyControllerStalker>() != null)
+        {
+            target.GetComponent<EnemyControllerStalker>().currentHealth -= 10;
+            if (target.GetComponent<EnemyControllerStalker>().currentHealth > 0)
+            {
+                target.GetComponent<EnemyControllerStalker>().isStunned = true;
+            }
+            Engineson.print("Counter Attack to: " + target.name);
+            Engineson.print("Current Enemy Health: " + target.GetComponent<EnemyControllerStalker>().currentHealth);
+        }
     }
 
     public void ResetAbilityCooldown()

@@ -44,6 +44,7 @@ namespace EngineBinds {
 	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
     void GameObjectSetActive(MonoObject* ref, bool active);
+	bool GameObjectIsActive(MonoObject* ref);
 
     // Input
     bool GetKey(int keyID);
@@ -158,6 +159,8 @@ namespace EngineBinds {
 	void SetImageAnimationIndexLimit(MonoObject* uiImageRef, int indexLimit);
 	void SetImageAnimation(MonoObject* uiImageRef, int index);
 	void SetImageSpriteSize(MonoObject* uiImageRef, float width, float height);
+	void SetImageAnimIndex(MonoObject* uiImageRef, int index);
+	void PlayStopAnimation(MonoObject* uiImageRef, bool play);
 
 	//UIButton
     int GetState(MonoObject* uiButtonRef);
@@ -176,6 +179,8 @@ namespace EngineBinds {
 	void SetAnimationPlayState(MonoObject* skeletalAnimationRef, bool play);
 	bool GetAnimationPlayState(MonoObject* skeletalAnimationRef);
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
+	void SetLoop(MonoObject* skeletalAnimationRef, bool isLoop);
+	void PlayAnimOnce(MonoObject* skeletalAnimationRef, int index, float timeToTransitionAnim);
 
 	//Tweening
     void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);

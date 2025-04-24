@@ -1,15 +1,14 @@
 using HawkEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Numerics;
 
 public class Arc : MonoBehaviour
 {
     public float value = 0.0f;
     private Transform transform;
-
-    float distance = 6;
-    float damage = 100;
-    float explosionRadius = 2;
+    public List<string> collisionNames = new List<string>();
+    float damage = 20;
     Rigidbody rigidbody;
     bool isExploded = false;
     GameObject explosion;
@@ -98,7 +97,6 @@ public class Arc : MonoBehaviour
     {
         rigidbody.SetVelocity(new Vector3(0, 0, 0));
         explosion = Engineson.CreateGameObject("Explosion", null);
-        //explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
         var explosionFX = Engineson.CreateGameObject("ExplosionFX", null);
@@ -114,6 +112,31 @@ public class Arc : MonoBehaviour
         
         sound.Play(arcFX);
         isExploded = true;
+
+        for (int i = 0; i < collisionNames.Count; i++)
+        {
+            var enemy = GameObject.Find(collisionNames[i]);
+            if (enemy.tag == "Melee")
+            {
+                enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Ranged")
+            {
+                enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Stalker")
+            {
+                //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Boss")
+            {
+                enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+            }
+            if (enemy.tag == "Destroyable")
+            {
+                enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
+            }
+        }
     }
 
     public override void OnCollisionEnter(GameObject other)

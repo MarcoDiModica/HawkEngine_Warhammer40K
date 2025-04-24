@@ -60,7 +60,7 @@ namespace HawkEngine
             }
         }
 
-        private GameObject owner;
+        public GameObject owner;
 
         public Camera(UIntPtr nativeCamera, GameObject owner)
         {

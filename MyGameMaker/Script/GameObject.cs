@@ -17,7 +17,6 @@ namespace HawkEngine
         {
             CplusplusInstance = C_doppleganger;
             this.name = name;
-            Engineson.print("Ive gotten the name " + GetName());
 
             if (name == "Samson") {
                 AddChild(Engineson.CreateGameObject("joe", null));
@@ -57,6 +56,9 @@ namespace HawkEngine
 
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
         public extern void SetActive(bool active);
+
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        public extern bool IsActive();
 
         //----LifeCycleMethods----// 
         //these will be called from C++ editor

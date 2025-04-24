@@ -82,7 +82,7 @@ public class PlayerDash : MonoBehaviour
         lastDashTime = currentTime;
         isInvulnerable = true;
         rb.AddForce(dashDirection * dashSpeed);
-        playerCamera.GetComponent<PlayerCamera>().StartDash();
+        playerCamera.GetComponent<PlayerCamera>().StartDash(dashDirection);
     }
 
     private void HandleActiveDash(float deltaTime)

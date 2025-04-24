@@ -37,12 +37,12 @@ public class Magnet : PickUp
            // Destroy();
         }
     }
-    public void Destroy()
-    {
-        GameObject player = GameObject.Find("Player");
-        Transform.position = new Vector3(0, -100, 0);
-        //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
-    }
+   // public void Destroy()
+   // {
+   //     GameObject player = GameObject.Find("Player");
+   //     Transform.position = new Vector3(0, -100, 0);
+   //     //player.GetComponent<PickUpManager>().DestroyPickUp(gameObject);
+   // }
     public void PowerUpMovment(float time, float dt)
     {
         float newY = startPos.Y + (float)Math.Sin(time * floatSpeed) * floatHeight;

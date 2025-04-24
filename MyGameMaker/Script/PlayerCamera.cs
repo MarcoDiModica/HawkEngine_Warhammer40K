@@ -25,8 +25,8 @@ public class PlayerCamera : MonoBehaviour
     private float dashOffsetTimer = 0f;
     private bool isDashingCamera = false;
 
-    public double originalFOV = 60.0;
-    public float dashFOV = 50.0f;
+    public double originalFOV = 55.0;
+    public float dashFOV = 45.0f;
     private double currentFOV;
     private double targetFOV;
     private double fovVelocity = 0;
@@ -59,7 +59,7 @@ public class PlayerCamera : MonoBehaviour
     public override void Update(float deltaTime)
     {
         Vector2 rightStickInput = Input.GetRightStick();
-        Vector3 baseOffset = new Vector3(-9f, 19.8f, 9f);
+        Vector3 baseOffset = new Vector3(-23f, 37.8f, 23f);
 
         if (rightStickInput != Vector2.Zero)
         {

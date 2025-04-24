@@ -8,8 +8,8 @@ public class EnemyControllerStalker : EnemyController
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tamaño de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // Tamaño de la hurtbox
+    private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
     private GameObject hurtboxObject;
 
     // Perfect Dodge
@@ -323,7 +323,7 @@ public class EnemyControllerStalker : EnemyController
     private void CreateHurtbox()
     {
         hurtboxObject = Engineson.CreateGameObject("Hurtbox", null);
-        hurtboxObject.AddComponent<MeshRenderer>();
+        //hurtboxObject.AddComponent<MeshRenderer>();
         var hurtboxTransform = hurtboxObject.AddComponent<Transform>();
         hurtboxTransform.position = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
         hurtboxTransform.SetScale(hurtboxSize.X, hurtboxSize.Y, hurtboxSize.Z);

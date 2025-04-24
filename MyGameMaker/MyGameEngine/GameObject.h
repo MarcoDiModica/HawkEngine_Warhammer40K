@@ -76,6 +76,9 @@ public:
     DrawMode drawMode = DrawMode::PushPopMatrix;
 
     HawkUUID GetID() const { return m_UUID; }
+    void RegenerateUUID() {
+        m_UUID = HawkUUID();
+    }
 
 	static GameObject* FindByID(const HawkUUID& id) {
 		return ObjectRegistry::FindObject(id);

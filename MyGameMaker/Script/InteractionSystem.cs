@@ -9,6 +9,7 @@ public class InteractionSystem : MonoBehaviour
     public float areaInteractionRadius = 3.0f;
 
     private PlayerInput playerInput;
+    private PlayerMovement playerMovement;
     private UIImage interactionImage;
     private bool isInteracting = false;
     private GameObject currentInteractable = null;
@@ -24,6 +25,12 @@ public class InteractionSystem : MonoBehaviour
         if (playerInput == null)
         {
             Engineson.print("ERROR: InteractionSystem requires PlayerInput");
+            return;
+        }
+        playerMovement = gameObject.GetComponent<PlayerMovement>();
+        if (playerMovement == null)
+        {
+            Engineson.print("ERROR: InteractionSystem requires PlayerMovement");
             return;
         }
 
@@ -42,28 +49,43 @@ public class InteractionSystem : MonoBehaviour
     public override void Update(float deltaTime)
     {
         if (playerInput == null) return;
+        if(playerMovement.moveSpeed == 0) return; // Prevent interaction when player is not moving
+
         CheckForInteractions();
     }
 
     private void CheckForInteractions()
     {
         var transform = gameObject.GetComponent<Transform>();
+        if (transform == null)
+        {
+            Engineson.print("InteractionSystem: Transform is missing.");
+            return;
+        }
 
-        var interactable = Physics.OverlapSphere(transform.position, interactionRadius, "Interactable")
+        Vector3 position = transform.position;
+        if (float.IsNaN(position.X) || float.IsNaN(position.Y) || float.IsNaN(position.Z))
+        {
+            Engineson.print("InteractionSystem: Invalid transform.position.");
+            return;
+        }
+
+        var interactable = Physics.OverlapSphere(position, interactionRadius, "Interactable")
                                   .Select(obj => obj.GetComponent<Item>())
                                   .FirstOrDefault(i => i != null);
 
-        if (interactable != null)
-        {
-            HandleInteraction(interactable);
-        }
-        else
-        {
-            ShowInteractionMessage(false);
-        }
+        //if (interactable != null)
+        //{
+        //    //HandleInteraction(interactable);
+        //}
+        //else
+        //{
+        //    ShowInteractionMessage(false);
+        //}
 
-        HandleAreaTriggers(transform);
+        //HandleAreaTriggers(transform);
     }
+
 
     private void HandleInteraction(Item interactable)
     {

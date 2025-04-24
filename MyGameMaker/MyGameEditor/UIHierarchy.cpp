@@ -189,7 +189,6 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		if (parent && parent->isSelected) {
 			isChildOfSelected = true;
 		}
-
 		if (isChildOfSelected) {
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.8f, 0.9f, 1.0f));
 			ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.15f, 0.25f, 0.35f, 0.3f));
@@ -204,6 +203,14 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 			ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.15f, 0.15f, 0.15f, 0.0f));
 			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.2f, 0.2f, 0.2f, 0.5f));
 			ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.25f, 0.25f, 0.25f, 0.6f));
+		}
+
+		bool hasPrefabPath = !obj.GetPrefabSourcePath().empty();
+		if (hasPrefabPath) {
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.53f, 0.81f, 0.92f, 1.0f));
+			ImGui::PushStyleColor(ImGuiCol_Header, ImVec4(0.2f, 0.4f, 0.6f, 0.5f));
+			ImGui::PushStyleColor(ImGuiCol_HeaderHovered, ImVec4(0.3f, 0.5f, 0.7f, 0.6f));
+			ImGui::PushStyleColor(ImGuiCol_HeaderActive, ImVec4(0.4f, 0.6f, 0.8f, 0.7f));
 		}
 	}
 

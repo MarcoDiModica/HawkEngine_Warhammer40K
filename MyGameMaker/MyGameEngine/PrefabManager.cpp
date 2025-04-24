@@ -23,6 +23,8 @@ bool PrefabManager::SavePrefab(const std::shared_ptr<GameObject>& go, const std:
 
         fout << prefabNode;
         fout.close();  
+
+        go->SetPrefabSourcePath(path);
         return true;  
            
    }  
@@ -31,31 +33,46 @@ bool PrefabManager::SavePrefab(const std::shared_ptr<GameObject>& go, const std:
        return false;  
    }  
 }  
-std::shared_ptr<GameObject> PrefabManager::LoadPrefab(const std::string& path)  
-{  
-  try {  
-      std::ifstream fin(path);  
-      if (!fin.is_open()) {  
-          LOG(LogType::LOG_ERROR, "[LoadPrefab] Cannot open prefab at: %s", path.c_str());  
-          return nullptr;  
-      }  
 
-      YAML::Node prefabNode = YAML::Load(fin);  
-      fin.close();  
+std::shared_ptr<GameObject> PrefabManager::LoadPrefab(const std::string& path)
+{
+    try {
+        std::ifstream fin(path);
+        if (!fin.is_open()) {
+            LOG(LogType::LOG_ERROR, "[LoadPrefab] Cannot open prefab at: %s", path.c_str());
+            return nullptr;
+        }
 
-      if (!Application || !Application->scene_serializer) {  
-          LOG(LogType::LOG_ERROR, "[LoadPrefab] SceneSerializer is not initialized.");  
-          return nullptr;  
-      }  
-      auto go = Application->scene_serializer->DeserializeGameObject(prefabNode);
-      go->SetPrefabSourcePath(path);
-	  return go;
-  }  
-  catch (const std::exception& e) {  
-      LOG(LogType::LOG_ERROR, "[LoadPrefab] Exception: %s", e.what());  
-      return nullptr;  
-  }  
+        YAML::Node prefabNode = YAML::Load(fin);
+        fin.close();
+
+        if (!Application || !Application->scene_serializer) {
+            LOG(LogType::LOG_ERROR, "[LoadPrefab] SceneSerializer is not initialized.");
+            return nullptr;
+        }
+
+        std::shared_ptr<GameObject> go = Application->scene_serializer->DeserializeGameObject(prefabNode);
+        if (!go) return nullptr;
+
+        go->RegenerateUUID();  
+
+        std::string baseName = go->GetName();
+        std::string finalName = baseName + "_Instance";
+        int suffix = 1;
+        while (Application->root->FindGOByName(finalName)) {
+            finalName = baseName + "_Instance" + std::to_string(++suffix);
+        }
+        go->SetName(finalName);
+
+        go->SetPrefabSourcePath(path);
+        return go;
+    }
+    catch (const std::exception& e) {
+        LOG(LogType::LOG_ERROR, "[LoadPrefab] Exception: %s", e.what());
+        return nullptr;
+    }
 }
+
 
 std::string PrefabManager::GetPrefabDirectory() {  
    return "Assets/Prefabs/";  

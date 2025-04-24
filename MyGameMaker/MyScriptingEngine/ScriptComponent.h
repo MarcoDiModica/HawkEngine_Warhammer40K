@@ -1,6 +1,7 @@
 #pragma once
 #include "../MyGameEngine/Component.h"
 #include <mono/metadata/object.h>
+#include <mono/metadata/attrdefs.h>
 #include <filesystem>
 #include "MyGameEditor/Log.h"
 class ScriptComponent : public Component
@@ -39,25 +40,9 @@ public:
 	
 protected:
 	friend class SceneSerializer;
-	YAML::Node encode() override {
-		YAML::Node node;
-		node["name"] = GetTypeName();
-		return node;
-	}
-	bool decode(const YAML::Node& node) override {
-		if (!node["name"]) {
-			return false;
-		}
-		std::string name = node["name"].as<std::string>();
-		bool success = LoadScript(name);
-		if (!success) {
-			LOG(LogType::LOG_ERROR, "Script %s not found", name.c_str());
-		}
-		else {
-			LOG(LogType::LOG_INFO, "Script %s loaded", name.c_str());
-		}
-		return success;
-	}
+	YAML::Node encode();
+	
+	bool decode(const YAML::Node& node);
 
 private:
 	bool HandleException(MonoObject* exception, const std::string& methodName);

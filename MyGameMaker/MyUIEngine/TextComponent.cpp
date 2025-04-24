@@ -85,7 +85,7 @@ void TextComponent::Render() const
         renderPosition = glm::vec2(rectTransform->GetPosition().x, rectTransform->GetPosition().y);
     }
 
-    FontManager::GetInstance().LoadFont("assets/arial_narrow_7.ttf", m_fontSize);
+    FontManager::GetInstance().LoadFont("Assets/arial_narrow_7.ttf", m_fontSize);
     FontManager::GetInstance().RenderText(unlitShader, m_text, renderPosition.x, renderPosition.y, m_fontSize, m_color);
 
     unlitShader->UnBind();
@@ -94,4 +94,23 @@ void TextComponent::Render() const
         << " en posición (" << renderPosition.x << ", " << renderPosition.y << ")"
         << " con color (" << m_color.r << ", " << m_color.g << ", " << m_color.b << ")"
         << " y tamaño de fuente " << m_fontSize << std::endl;
+}
+
+void TextComponent::Update(float deltaTime)
+{
+    if (CsharpReference) {
+        MonoClass* textClass = mono_object_get_class(CsharpReference);
+        MonoMethod* updateMethod = mono_class_get_method_from_name(textClass, "Update", 0);
+        if (updateMethod) {
+            MonoObject* exception = nullptr;
+            mono_runtime_invoke(updateMethod, CsharpReference, nullptr, &exception);
+            if (exception) {
+                MonoString* exceptionMessage = mono_object_to_string(exception, nullptr);
+                const char* exceptionStr = mono_string_to_utf8(exceptionMessage);
+                LOG(LogType::LOG_ERROR, "UpdateError: %s", exceptionStr);
+                mono_free((void*)exceptionStr);
+            }
+        }
+    }
+    Render();
 }

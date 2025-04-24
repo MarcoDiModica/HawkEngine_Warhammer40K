@@ -23,26 +23,28 @@ bool GPUDrivenRenderer::Initialize() {
 
 	glCreateVertexArrays(1, &defaultVAO);
 
-	glCreateBuffers(1, &drawCommandBuffer);
-	glNamedBufferStorage(drawCommandBuffer,
-		MAX_DRAW_COMMANDS * sizeof(DrawElementsCommand),
-		nullptr,
-		GL_DYNAMIC_STORAGE_BIT);
+	for (int i = 0; i < 2; i++) {
+		glCreateBuffers(1, &drawCommandBuffers[i]);
+		glNamedBufferStorage(drawCommandBuffers[i],
+			MAX_DRAW_COMMANDS * sizeof(DrawElementsCommand),
+			nullptr,
+			GL_DYNAMIC_STORAGE_BIT);
 
-	glCreateBuffers(1, &cullDataBuffer);
-	glNamedBufferStorage(cullDataBuffer,
-		MAX_DRAW_COMMANDS * sizeof(CullData),
-		nullptr,
-		GL_DYNAMIC_STORAGE_BIT);
+		glCreateBuffers(1, &cullDataBuffers[i]);
+		glNamedBufferStorage(cullDataBuffers[i],
+			MAX_DRAW_COMMANDS * sizeof(CullData),
+			nullptr,
+			GL_DYNAMIC_STORAGE_BIT);
 
-	glCreateBuffers(1, &visibleCountBuffer);
-	glNamedBufferStorage(visibleCountBuffer,
-		sizeof(GLuint),
-		nullptr,
-		GL_DYNAMIC_STORAGE_BIT);
+		glCreateBuffers(1, &visibleCountBuffers[i]);
+		glNamedBufferStorage(visibleCountBuffers[i],
+			sizeof(GLuint),
+			nullptr,
+			GL_DYNAMIC_STORAGE_BIT);
 
-	GLuint zero = 0;
-	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
+		GLuint zero = 0;
+		glNamedBufferSubData(visibleCountBuffers[i], 0, sizeof(GLuint), &zero);
+	}
 
 	if (useGPUCulling) {
 		if (!CompileCullingShader()) {
@@ -55,16 +57,21 @@ bool GPUDrivenRenderer::Initialize() {
 }
 
 void GPUDrivenRenderer::Shutdown() {
+	if (frameFence) {
+		glDeleteSync(frameFence);
+		frameFence = nullptr;
+	}
+
+	for (int i = 0; i < 2; i++) {
+		if (drawCommandBuffers[i]) glDeleteBuffers(1, &drawCommandBuffers[i]);
+		if (cullDataBuffers[i]) glDeleteBuffers(1, &cullDataBuffers[i]);
+		if (visibleCountBuffers[i]) glDeleteBuffers(1, &visibleCountBuffers[i]);
+	}
+
 	if (cullingShader) glDeleteProgram(cullingShader);
-	if (drawCommandBuffer) glDeleteBuffers(1, &drawCommandBuffer);
-	if (cullDataBuffer) glDeleteBuffers(1, &cullDataBuffer);
-	if (visibleCountBuffer) glDeleteBuffers(1, &visibleCountBuffer);
 	if (defaultVAO) glDeleteVertexArrays(1, &defaultVAO);
 
 	cullingShader = 0;
-	drawCommandBuffer = 0;
-	cullDataBuffer = 0;
-	visibleCountBuffer = 0;
 	defaultVAO = 0;
 
 	cullData.clear();
@@ -73,6 +80,15 @@ void GPUDrivenRenderer::Shutdown() {
 }
 
 void GPUDrivenRenderer::BeginFrame() {
+	if (frameFence) {
+		GLenum result = glClientWaitSync(frameFence, GL_SYNC_FLUSH_COMMANDS_BIT, 100000000); // 100ms timeout
+		if (result == GL_TIMEOUT_EXPIRED) {
+			LOG(LogType::LOG_WARNING, "BeginFrame: Timeout esperando a que la GPU termine");
+		}
+		glDeleteSync(frameFence);
+		frameFence = nullptr;
+	}
+
 	cullData.clear();
 	drawCommands.clear();
 	shaderBatches.clear();
@@ -80,13 +96,21 @@ void GPUDrivenRenderer::BeginFrame() {
 	visibleInstanceCount = 0;
 
 	GLuint zero = 0;
-	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
+	glNamedBufferSubData(visibleCountBuffers[updateBufferIndex], 0, sizeof(GLuint), &zero);
 
 	BindlessManager::GetInstance().ClearInstances();
 }
 
 void GPUDrivenRenderer::EndFrame() {
-	// Implementación futura si es necesario
+	if (frameFence) {
+		glDeleteSync(frameFence);
+	}
+	frameFence = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+
+	std::swap(updateBufferIndex, renderBufferIndex);
+
+	LOG(LogType::LOG_INFO, "EndFrame: Buffers intercambiados - Render: %d, Update: %d",
+		renderBufferIndex, updateBufferIndex);
 }
 
 void GPUDrivenRenderer::AddInstanceGroup(
@@ -132,13 +156,12 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 	}
 
 	GLuint zero = 0;
-	glNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &zero);
+	glNamedBufferSubData(visibleCountBuffers[updateBufferIndex], 0, sizeof(GLuint), &zero);
 
-	glNamedBufferSubData(cullDataBuffer, 0,
+	glNamedBufferSubData(cullDataBuffers[updateBufferIndex], 0,
 		cullData.size() * sizeof(CullData), cullData.data());
 
 	if (!enableCulling) {
-		// Si el culling está desactivado, incluir todos los objetos sin culling
 		ForceIncludeAllObjects();
 	}
 	else if (!useGPUCulling) {
@@ -148,9 +171,9 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 		glUseProgram(cullingShader);
 		SetCullingUniforms(viewMatrix, projMatrix, cameraPos);
 
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, cullDataBuffer);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, drawCommandBuffer);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, visibleCountBuffer);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, cullDataBuffers[updateBufferIndex]);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, drawCommandBuffers[updateBufferIndex]);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, visibleCountBuffers[updateBufferIndex]);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, BindlessManager::GetInstance().GetMeshBuffer());
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 4, BindlessManager::GetInstance().GetInstanceBuffer());
 
@@ -160,10 +183,10 @@ void GPUDrivenRenderer::PrepareDrawCommands(const glm::mat4& viewMatrix, const g
 
 		glMemoryBarrier(GL_COMMAND_BARRIER_BIT | GL_SHADER_STORAGE_BARRIER_BIT);
 
-		glGetNamedBufferSubData(visibleCountBuffer, 0, sizeof(GLuint), &visibleInstanceCount);
+		glGetNamedBufferSubData(visibleCountBuffers[updateBufferIndex], 0, sizeof(GLuint), &visibleInstanceCount);
 
 		drawCommands.resize(cullData.size());
-		glGetNamedBufferSubData(drawCommandBuffer, 0,
+		glGetNamedBufferSubData(drawCommandBuffers[updateBufferIndex], 0,
 			cullData.size() * sizeof(DrawElementsCommand), drawCommands.data());
 
 		LOG(LogType::LOG_INFO, "Draw commands generados: %zu", drawCommands.size());
@@ -188,6 +211,55 @@ void GPUDrivenRenderer::ForceIncludeAllObjects() {
 		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
 		if (!meshData) continue;
 
+		if (!glIsVertexArray(meshData->vertexArray) || !glIsBuffer(meshData->indexBuffer)) {
+			LOG(LogType::LOG_WARNING, "Invalid VAO/IBO for mesh %u: VAO=%u, IBO=%u",
+				cullItem.meshIndex, meshData->vertexArray, meshData->indexBuffer);
+			continue;
+		}
+
+		DrawElementsCommand command = {};
+		command.count = meshData->indexCount;
+		command.instanceCount = cullItem.instanceCount;
+		command.firstIndex = 0;
+		command.baseVertex = 0;
+		command.baseInstance = cullItem.instanceOffset;
+
+		drawCommands.push_back(command);
+		visibleInstanceCount += cullItem.instanceCount;
+
+		LOG(LogType::LOG_INFO, "Draw command %zu: mesh=%u, count=%u, instanceCount=%u, baseInstance=%u",
+			drawCommands.size() - 1, cullItem.meshIndex, command.count, command.instanceCount, command.baseInstance);
+	}
+
+	if (drawCommands.empty()) {
+		LOG(LogType::LOG_WARNING, "No draw commands generated!");
+		return;
+	}
+
+	glNamedBufferSubData(
+		drawCommandBuffers[updateBufferIndex],
+		0,
+		drawCommands.size() * sizeof(DrawElementsCommand),
+		drawCommands.data()
+	);
+
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "Error uploading draw commands: 0x%X", error);
+	}
+	else {
+		LOG(LogType::LOG_INFO, "Successfully uploaded %zu draw commands to GPU buffer", drawCommands.size());
+	}
+}
+
+void GPUDrivenRenderer::CPUFrustumCulling() {
+	drawCommands.clear();
+	visibleInstanceCount = 0;
+
+	for (const auto& cullItem : cullData) {
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
+		if (!meshData) continue;
+
 		DrawElementsCommand command;
 		command.count = meshData->indexCount;
 		command.instanceCount = cullItem.instanceCount;
@@ -200,12 +272,13 @@ void GPUDrivenRenderer::ForceIncludeAllObjects() {
 	}
 
 	if (!drawCommands.empty()) {
-		glNamedBufferSubData(drawCommandBuffer, 0,
+		glNamedBufferSubData(
+			drawCommandBuffers[updateBufferIndex],
+			0,
 			drawCommands.size() * sizeof(DrawElementsCommand),
-			drawCommands.data());
+			drawCommands.data()
+		);
 	}
-
-	LOG(LogType::LOG_INFO, "Culling desactivado: Incluyendo todos los objetos (%zu)", drawCommands.size());
 }
 
 void GPUDrivenRenderer::SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
@@ -231,29 +304,229 @@ void GPUDrivenRenderer::SetCullingUniforms(const glm::mat4& viewMatrix, const gl
 	}
 }
 
-void GPUDrivenRenderer::CPUFrustumCulling() {
-	drawCommands.clear();
-	visibleInstanceCount = 0;
-
-	for (const auto& cullItem : cullData) {
-		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(cullItem.meshIndex);
-		if (!meshData) continue;
-
-		DrawElementsCommand command;
-		command.count = meshData->indexCount;
-		command.instanceCount = cullItem.instanceCount;
-		command.firstIndex = 0;
-		command.baseVertex = 0;
-		command.baseInstance = cullItem.instanceOffset;
-
-		drawCommands.push_back(command);
-		visibleInstanceCount += cullItem.instanceCount;
+void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
+	if (shaderBatches.empty()) {
+		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
+		return;
 	}
 
-	if (!drawCommands.empty()) {
-		glNamedBufferSubData(drawCommandBuffer, 0,
-			drawCommands.size() * sizeof(DrawElementsCommand),
-			drawCommands.data());
+	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffers[renderBufferIndex]);
+
+	for (const auto& [shaderType, batch] : shaderBatches) {
+		switch (shaderType) {
+		case ShaderType::UNLIT:
+			RenderUnlitBatch(batch, viewMatrix, projMatrix);
+			break;
+		case ShaderType::PBR:
+			LOG(LogType::LOG_INFO, "Renderizado PBR no implementado aún");
+			break;
+		default:
+			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
+			break;
+		}
+	}
+
+	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
+}
+
+void GPUDrivenRenderer::RenderUnlitBatch(
+	const ShaderBatch& batch,
+	const glm::mat4& viewMatrix,
+	const glm::mat4& projMatrix) {
+
+	while (glGetError() != GL_NO_ERROR) {}
+
+	if (!glIsBuffer(drawCommandBuffers[renderBufferIndex])) {
+		LOG(LogType::LOG_ERROR, "Draw command buffer is invalid!");
+		return;
+	}
+
+	if (batch.commands.empty()) {
+		LOG(LogType::LOG_WARNING, "Empty batch, nothing to render");
+		return;
+	}
+
+	GLuint unlitShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::UNLIT);
+	if (unlitShader == 0) {
+		LOG(LogType::LOG_ERROR, "Failed to get UNLIT shader program");
+		return;
+	}
+
+	glUseProgram(unlitShader);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+
+	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "view"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "projection"), 1, GL_FALSE, glm::value_ptr(projMatrix));
+
+	bool hasBindless = GLEW_ARB_bindless_texture && GLEW_ARB_gpu_shader_int64;
+	bool hasSSBOs = GLEW_ARB_shader_storage_buffer_object;
+	bool hasMDI = GLEW_ARB_multi_draw_indirect;
+
+	GLint useBindlessLoc = glGetUniformLocation(unlitShader, "useBindlessMode");
+	if (useBindlessLoc != -1) {
+		glUniform1i(useBindlessLoc, (hasBindless && hasSSBOs) ? 1 : 0);
+	}
+
+	if (hasSSBOs) {
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, BindlessManager::GetInstance().GetInstanceBuffer());
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, BindlessManager::GetInstance().GetMaterialBuffer());
+	}
+
+	glNamedBufferSubData(
+		drawCommandBuffers[renderBufferIndex],
+		0,
+		batch.commands.size() * sizeof(DrawElementsCommand),
+		batch.commands.data()
+	);
+
+	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffers[renderBufferIndex]);
+
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "OpenGL error before drawing: 0x%X", error);
+	}
+
+	std::unordered_map<GLuint, std::vector<size_t>> vaoGroups;
+	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+		if (i >= batch.commands.size()) continue;
+
+		uint32_t meshIndex = batch.meshIndices[i];
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		if (!meshData || meshData->vertexArray == 0) continue;
+
+		vaoGroups[meshData->vertexArray].push_back(i);
+	}
+
+	LOG(LogType::LOG_INFO, "Rendering %zu VAO groups with %zu total commands",
+		vaoGroups.size(), batch.commands.size());
+
+	for (const auto& [vao, commandIndices] : vaoGroups) {
+		if (commandIndices.empty()) continue;
+
+		uint32_t meshIndex = batch.meshIndices[commandIndices[0]];
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		if (!meshData) continue;
+
+		while (glGetError() != GL_NO_ERROR) {}
+
+		glBindVertexArray(vao);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		GLint boundIbo = 0;
+		glGetVertexArrayiv(vao, GL_ELEMENT_ARRAY_BUFFER_BINDING, &boundIbo);
+		LOG(LogType::LOG_INFO, "VAO %u has IBO %u bound (should be %u)",
+			vao, boundIbo, meshData->indexBuffer);
+
+		GLenum bindError = glGetError();
+		if (bindError != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "Error after binding VAO/IBO: 0x%X", bindError);
+			continue;
+		}
+
+		glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffers[renderBufferIndex]);
+		bindError = glGetError();
+		if (bindError != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "Error binding indirect buffer: 0x%X", bindError);
+			continue;
+		}
+
+		for (size_t cmdIdx : commandIndices) {
+			GLintptr byteOffset = cmdIdx * sizeof(DrawElementsCommand);
+
+			LOG(LogType::LOG_INFO, "Drawing command %zu with offset %lld", cmdIdx, (long long)byteOffset);
+
+			glDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (void*)byteOffset);
+
+			GLenum drawError = glGetError();
+			if (drawError != GL_NO_ERROR) {
+				LOG(LogType::LOG_ERROR, "Error after DrawElementsIndirect: 0x%X", drawError);
+			}
+		}
+	}
+
+	//debug mesh info
+	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+		if (i >= batch.commands.size()) continue;
+
+		uint32_t meshIndex = batch.meshIndices[i];
+		DebugMeshInfo(meshIndex);
+	}
+
+	if (visibleInstanceCount == 0 && !batch.meshIndices.empty()) {
+		LOG(LogType::LOG_INFO, "No instances rendered! Trying debug fallback render...");
+
+		uint32_t meshIndex = batch.meshIndices[0];
+		uint32_t materialIndex = batch.materialIndices[0];
+
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		if (meshData && meshData->vertexArray && meshData->indexBuffer) {
+			glBindVertexArray(meshData->vertexArray);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+			GLint modelMatrixLoc = glGetUniformLocation(unlitShader, "model");
+			if (modelMatrixLoc != -1) {
+				glm::mat4 identityModel(1.0f);
+				glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, glm::value_ptr(identityModel));
+			}
+
+			GLint materialIdxLoc = glGetUniformLocation(unlitShader, "materialIndex");
+			if (materialIdxLoc != -1) {
+				glUniform1ui(materialIdxLoc, materialIndex);
+			}
+
+			GLint useBindlessLoc = glGetUniformLocation(unlitShader, "useBindlessMode");
+			if (useBindlessLoc != -1) {
+				glUniform1i(useBindlessLoc, 0);
+			}
+
+			glDrawElements(GL_TRIANGLES, meshData->indexCount, GL_UNSIGNED_INT, 0);
+
+			LOG(LogType::LOG_INFO, "Debug fallback: Drew mesh %u with VAO=%u, IBO=%u, indices=%u",
+				meshIndex, meshData->vertexArray, meshData->indexBuffer, meshData->indexCount);
+		}
+	}
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glUseProgram(0);
+}
+
+void GPUDrivenRenderer::BatchCommandsByShaderType() {
+	shaderBatches.clear();
+
+	for (size_t i = 0; i < cullData.size(); i++) {
+		if (i >= drawCommands.size()) continue;
+
+		const CullData& cullItem = cullData[i];
+
+		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(cullItem.materialIndex);
+		if (!materialData) {
+			LOG(LogType::LOG_WARNING, "Material inválido en índice %u, omitiendo", cullItem.materialIndex);
+			continue;
+		}
+
+		ShaderType shaderType = static_cast<ShaderType>(materialData->shaderType);
+
+		ShaderBatch& batch = shaderBatches[shaderType];
+		batch.shaderType = shaderType;
+
+		batch.commands.push_back(drawCommands[i]);
+		batch.meshIndices.push_back(cullItem.meshIndex);
+		batch.materialIndices.push_back(cullItem.materialIndex);
+	}
+
+	for (const auto& [type, batch] : shaderBatches) {
+		std::string shaderName;
+		switch (type) {
+		case ShaderType::PBR: shaderName = "PBR"; break;
+		case ShaderType::UNLIT: shaderName = "UNLIT"; break;
+		default: shaderName = "DESCONOCIDO";
+		}
+
+		LOG(LogType::LOG_INFO, "Batch para shader %s: %zu comandos",
+			shaderName.c_str(), batch.commands.size());
 	}
 }
 
@@ -298,203 +571,15 @@ void GPUDrivenRenderer::SetFrustumPlanes(const glm::mat4& view, const glm::mat4&
 	frustumPlanes[5].z = vp[2][3] - vp[2][2];
 	frustumPlanes[5].w = vp[3][3] - vp[3][2];
 
-	// Normalizar planos
-	for (auto & frustumPlane : frustumPlanes) {
+	for (auto& frustumPlane : frustumPlanes) {
 		float length = glm::length(glm::vec3(frustumPlane));
-		frustumPlane /= length;
+		if (length > 0.0001f) {
+			frustumPlane /= length;
+		}
 	}
 
 	glUniform4fv(glGetUniformLocation(cullingShader, "u_frustum.planes"),
 		6, glm::value_ptr(frustumPlanes[0]));
-}
-
-void GPUDrivenRenderer::BatchCommandsByShaderType() {
-	shaderBatches.clear();
-
-	for (size_t i = 0; i < cullData.size(); i++) {
-		const CullData& cullItem = cullData[i];
-
-		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(cullItem.materialIndex);
-		if (!materialData) {
-			LOG(LogType::LOG_WARNING, "Material inválido en índice %u, omitiendo", cullItem.materialIndex);
-			continue;
-		}
-
-		ShaderType shaderType = static_cast<ShaderType>(materialData->shaderType);
-
-		ShaderBatch& batch = shaderBatches[shaderType];
-		batch.shaderType = shaderType;
-
-		//log drawCommands
-		if (i < drawCommands.size()) {
-			LOG(LogType::LOG_INFO, "Comando de dibujo %zu: %u instancias", i, drawCommands[i].instanceCount);
-		}
-		//log cullItem
-		LOG(LogType::LOG_INFO, "CullItem %zu: Malla %u, Material %u, Offset %u, Count %u",
-			i, cullItem.meshIndex, cullItem.materialIndex,
-			cullItem.instanceOffset, cullItem.instanceCount);
-
-
-		if (i < drawCommands.size()) {
-			batch.commands.push_back(drawCommands[i]);
-			batch.meshIndices.push_back(cullItem.meshIndex);
-			batch.materialIndices.push_back(cullItem.materialIndex);
-		}
-	}
-
-	for (const auto& [type, batch] : shaderBatches) {
-		std::string shaderName;
-		switch (type) {
-		case ShaderType::PBR: shaderName = "PBR"; break;
-		case ShaderType::UNLIT: shaderName = "UNLIT"; break;
-		default: shaderName = "DESCONOCIDO";
-		}
-	}
-}
-
-void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos) {
-	if (shaderBatches.empty()) {
-		LOG(LogType::LOG_INFO, "No hay objetos para renderizar");
-		return;
-	}
-
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, drawCommandBuffer);
-
-	for (const auto& [shaderType, batch] : shaderBatches) {
-		switch (shaderType) {
-		case ShaderType::UNLIT:
-			RenderUnlitBatch(batch, viewMatrix, projMatrix);
-			break;
-		case ShaderType::PBR:
-			// Implementar renderizado PBR
-			LOG(LogType::LOG_INFO, "Renderizado PBR no implementado aún");
-			break;
-		default:
-			LOG(LogType::LOG_WARNING, "Tipo de shader desconocido: %d", (int)shaderType);
-			break;
-		}
-	}
-
-	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
-}
-
-void GPUDrivenRenderer::RenderUnlitBatch(
-	const ShaderBatch& batch,
-	const glm::mat4& viewMatrix,
-	const glm::mat4& projMatrix) {
-
-	if (batch.commands.empty()) return;
-
-	// Obtener el shader unlit
-	Shaders* shader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
-	if (!shader) {
-		LOG(LogType::LOG_ERROR, "No se pudo obtener el shader UNLIT");
-		return;
-	}
-
-	// Guardar estado actual de OpenGL
-	GLboolean depthTestEnabled;
-	glGetBooleanv(GL_DEPTH_TEST, &depthTestEnabled);
-
-	GLboolean blendEnabled;
-	glGetBooleanv(GL_BLEND, &blendEnabled);
-
-	GLint blendSrc, blendDst;
-	glGetIntegerv(GL_BLEND_SRC, &blendSrc);
-	glGetIntegerv(GL_BLEND_DST, &blendDst);
-
-	// Configurar estado de OpenGL para renderizado
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	// Vincular shader y establecer uniforms
-	shader->Bind();
-	shader->SetUniformMat4("view", viewMatrix);
-	shader->SetUniformMat4("projection", projMatrix);
-
-	// Renderizado convencional para cada objeto
-	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
-		uint32_t meshIndex = batch.meshIndices[i];
-		uint32_t materialIndex = batch.materialIndices[i];
-
-		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
-		GPUMaterial* materialData = BindlessManager::GetInstance().GetMaterialData(materialIndex);
-
-		if (!meshData || !materialData) continue;
-
-		// Configurar material
-		shader->SetUniformVec4("albedoColor", materialData->albedoColor);
-
-		// Configurar textura si existe
-		if (materialData->flags & (1 << 0)) {
-			shader->SetUniform("u_HasTexture", 1);
-
-			// Usar textura bindless si está disponible
-			if (GLEW_ARB_bindless_texture) {
-				GLuint64 textureHandle = materialData->albedoTexture;
-				if (textureHandle != 0) {
-					if (!glIsTextureHandleResidentARB(textureHandle)) {
-						glMakeTextureHandleResidentARB(textureHandle);
-					}
-
-					GLint loc = glGetUniformLocation(shader->GetProgram(), "albedoTextureHandle");
-					if (loc != -1) {
-						glUniformHandleui64ARB(loc, textureHandle);
-					}
-				}
-			}
-			else {
-				// Fallback a texturas tradicionales
-				GLuint textureID = 0;
-				if (BindlessManager::GetInstance().GetTextureIDFromHandle(
-					materialData->albedoTexture, textureID)) {
-					glActiveTexture(GL_TEXTURE0);
-					glBindTexture(GL_TEXTURE_2D, textureID);
-					shader->SetUniform("texture1", 0);
-				}
-			}
-		}
-		else {
-			shader->SetUniform("u_HasTexture", 0);
-		}
-
-		// Vincular VAO del mesh
-		glBindVertexArray(meshData->vertexArray);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
-
-		if (i < batch.commands.size()) {
-			const DrawElementsCommand& cmd = batch.commands[i];
-
-			// Obtener y configurar instancias
-			for (uint32_t instanceIdx = 0; instanceIdx < cmd.instanceCount; instanceIdx++) {
-				GPUInstance* instanceData = BindlessManager::GetInstance().GetInstanceData(cmd.baseInstance + instanceIdx);
-				if (!instanceData) continue;
-
-				// Establecer matriz de modelo para esta instancia
-				shader->SetUniformMat4("model", instanceData->modelMatrix);
-
-				// Dibujar instancia
-				glDrawElements(
-					GL_TRIANGLES,
-					cmd.count,
-					GL_UNSIGNED_INT,
-					nullptr
-				);
-			}
-		}
-	}
-
-	// Limpiar estado
-	glBindVertexArray(0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	// Restaurar estado anterior
-	if (!depthTestEnabled) glDisable(GL_DEPTH_TEST);
-	if (!blendEnabled) glDisable(GL_BLEND); else glBlendFunc(blendSrc, blendDst);
-
-	// Desactivar shader
-	shader->UnBind();
 }
 
 bool GPUDrivenRenderer::CompileCullingShader() {
@@ -522,7 +607,6 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 
 	LOG(LogType::LOG_INFO, "=== Información detallada de GPUMesh %u ===", meshIndex);
 
-	// Verificar IDs de buffer
 	LOG(LogType::LOG_INFO, "VAO: %u (válido: %s)",
 		meshData->vertexArray,
 		glIsVertexArray(meshData->vertexArray) ? "sí" : "NO");
@@ -543,13 +627,11 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 		meshData->normalBuffer,
 		glIsBuffer(meshData->normalBuffer) ? "sí" : "NO");
 
-	// Información de conteo
 	LOG(LogType::LOG_INFO, "Índices: %u", meshData->indexCount);
 	LOG(LogType::LOG_INFO, "Vértices: %u", meshData->vertexCount);
 	LOG(LogType::LOG_INFO, "ID de malla: %u", meshData->meshId);
 	LOG(LogType::LOG_INFO, "Flags de atributos: 0x%X", meshData->attributeFlags);
 
-	// Decodificar flags de atributos
 	LOG(LogType::LOG_INFO, "Atributos habilitados:");
 	if (meshData->attributeFlags & (1 << 0)) LOG(LogType::LOG_INFO, " - Posición");
 	if (meshData->attributeFlags & (1 << 1)) LOG(LogType::LOG_INFO, " - TexCoord");
@@ -558,7 +640,6 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 	if (meshData->attributeFlags & (1 << 4)) LOG(LogType::LOG_INFO, " - Bitangente");
 	if (meshData->attributeFlags & (1 << 5)) LOG(LogType::LOG_INFO, " - Color");
 
-	// Verificar y mostrar posiciones de vértices
 	if (glIsBuffer(meshData->positionBuffer)) {
 		glBindBuffer(GL_ARRAY_BUFFER, meshData->positionBuffer);
 
@@ -568,12 +649,10 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 		LOG(LogType::LOG_INFO, "Tamaño del buffer de posición: %d bytes", bufferSize);
 
 		if (bufferSize > 0) {
-			// Leer los datos del buffer
 			float* positions = (float*)malloc(bufferSize);
 			if (positions) {
 				glGetBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, positions);
 
-				// Mostrar las primeras posiciones (hasta 5 vértices)
 				int numVerts = std::min(5, (int)(bufferSize / (3 * sizeof(float))));
 				LOG(LogType::LOG_INFO, "Primeras %d posiciones de vértices:", numVerts);
 
@@ -589,7 +668,6 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	// Verificar y mostrar índices
 	if (glIsBuffer(meshData->indexBuffer)) {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
 
@@ -599,12 +677,10 @@ void GPUDrivenRenderer::DebugMeshInfo(uint32_t meshIndex) {
 		LOG(LogType::LOG_INFO, "Tamaño del buffer de índices: %d bytes", bufferSize);
 
 		if (bufferSize > 0) {
-			// Leer los datos del buffer
 			unsigned int* indices = (unsigned int*)malloc(bufferSize);
 			if (indices) {
 				glGetBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, bufferSize, indices);
 
-				// Mostrar los primeros índices (hasta 15 índices, o 5 triángulos)
 				int numIndices = std::min(15, (int)(bufferSize / sizeof(unsigned int)));
 				LOG(LogType::LOG_INFO, "Primeros %d índices:", numIndices);
 

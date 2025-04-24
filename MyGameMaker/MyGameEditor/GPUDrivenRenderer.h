@@ -7,7 +7,6 @@
 #include <map>
 #include "BindlessManager.h"
 #include "../MyGameEngine/Shaders.h"
-//#include "../MyGameEngine/Frustum.h" //que?
 
 struct DrawElementsCommand {
 	GLuint count;         // Número de índices
@@ -23,7 +22,7 @@ struct CullData {
 	uint32_t meshIndex;        // Índice de la malla
 	uint32_t instanceOffset;   // Offset en el buffer de instancias
 	uint32_t instanceCount;    // Número de instancias
-	uint32_t materialIndex;    // Índice del material (añadido para agrupar por material)
+	uint32_t materialIndex;    // Índice del material
 };
 
 struct ShaderBatch {
@@ -51,7 +50,7 @@ public:
 	void PrepareDrawCommands(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 	void ForceIncludeAllObjects();
 	void SetCullingUniforms(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
-	
+
 	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 
 	void SetUseGPUCulling(bool enabled) { useGPUCulling = enabled; }
@@ -74,15 +73,20 @@ private:
 	void DebugMeshInfo(uint32_t meshIndex);
 	void BatchCommandsByShaderType();
 
-	// Por ahora solo implementamos renderizado de materiales UNLIT
+	//doble buffer
+	GLuint drawCommandBuffers[2] = { 0, 0 };
+	GLuint cullDataBuffers[2] = { 0, 0 };
+	GLuint visibleCountBuffers[2] = { 0, 0 };
+	int updateBufferIndex = 0;
+	int renderBufferIndex = 1;
+	GLsync frameFence = nullptr;
+
+	// Renderizado de materiales UNLIT
 	void RenderUnlitBatch(const ShaderBatch& batch,
 		const glm::mat4& viewMatrix,
 		const glm::mat4& projMatrix);
 
 	GLuint cullingShader = 0;
-	GLuint drawCommandBuffer = 0;
-	GLuint cullDataBuffer = 0;
-	GLuint visibleCountBuffer = 0;
 	GLuint defaultVAO = 0;
 
 	std::vector<CullData> cullData;

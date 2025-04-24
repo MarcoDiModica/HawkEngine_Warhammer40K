@@ -187,7 +187,7 @@ bool Root::Start()
 	auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 	playerMesh1->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
 
-	auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
+	//auto playerMesh3 = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//playerMesh1->GetComponent<MeshRenderer>()->GetMaterial()->SetShaderType(ShaderType::UNLIT);
 
 	/*auto playerMesh1 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");

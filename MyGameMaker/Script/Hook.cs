@@ -30,7 +30,7 @@ public class Hook : MonoBehaviour
             Engineson.print("Hook: Audio component not found");
         }
 
-        hookFX = new AudioClip(hookTp, "HookTPFX", false);
+        hookFX = new AudioClip(hookTp, "HookTPFX", false, false);
         sound.LoadAudioClip(hookFX);
     }
 

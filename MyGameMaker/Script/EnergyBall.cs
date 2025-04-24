@@ -45,8 +45,8 @@ public class EnergyBall : BaseAbilities
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        launchFX = new AudioClip(energyBallLaunch, "EnergyBallLaunchFX", false);
-        energyFX = new AudioClip(energyBall, "EnergyBallFX", false);
+        launchFX = new AudioClip(energyBallLaunch, "EnergyBallLaunchFX", false, false);
+        energyFX = new AudioClip(energyBall, "EnergyBallFX", false, false);
         sound.LoadAudioClip(launchFX);
         sound.LoadAudioClip(energyFX);
     }

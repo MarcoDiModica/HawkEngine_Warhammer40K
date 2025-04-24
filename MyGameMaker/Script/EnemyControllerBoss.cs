@@ -92,7 +92,7 @@ public class EnemyControllerBoss : EnemyController
         currentHealth = 600.0f;
         gameObject.tag = "Boss";
         isDead = false;
-        musicClip = new AudioClip(combatMusic, "BossMusic", true);
+        musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
         sound.LoadAudioClip(musicClip);
 
     }

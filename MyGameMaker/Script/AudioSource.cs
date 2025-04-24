@@ -11,21 +11,30 @@ namespace HawkEngine
         public string path;
         public string name;
         public bool loop;
+        public bool playOnAwake;
 
-        public AudioClip(string path, string name, bool loop)
+        public AudioClip(string path, string name, bool loop, bool playOnAwake)
         {
             this.path = path;
             this.name = name;
             this.loop = loop;
+            this.playOnAwake = playOnAwake;
         }
 
     }
 
     public class AudioSource : Component
     {
+
+        List<AudioClip> audioClipList;
+
         public void LoadAudioClip(AudioClip audioClip)
         {
             LoadSound(audioClip.path, audioClip.loop);
+            if (audioClip.playOnAwake)
+            {
+                PlaySound(audioClip.path);
+            }
         }
 
         public void Play(AudioClip audioClip)

@@ -93,9 +93,9 @@ public class MenuButtons : MonoBehaviour
             optionsCanvas.SetActive(false);
         }
 
-        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false);
-        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false);
-        buttonStartGameFX = new AudioClip(buttonStartGame, "ButtonStartGameFX", false);
+        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+        buttonStartGameFX = new AudioClip(buttonStartGame, "ButtonStartGameFX", false, false);
         sound.LoadAudioClip(buttonHoveredFX);
         sound.LoadAudioClip(buttonClickedFX);
         sound.LoadAudioClip(buttonStartGameFX);

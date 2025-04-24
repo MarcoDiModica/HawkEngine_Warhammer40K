@@ -67,10 +67,10 @@ public class PlayerController : MonoBehaviour
         inactiveDashFX = GameObject.Find("InactiveDashFX").GetComponent<ParticleFX>();
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
 
-        runFX = new AudioClip(Runfootsteps, "RunFX", true);
-        walkFX = new AudioClip(Walkfootsteps, "WalkFX", true);
-        hitFX = new AudioClip(HitAudio, "HitFX", false);
-        deathFX = new AudioClip(DeathAudio, "DeathFX", false);
+        runFX = new AudioClip(Runfootsteps, "RunFX", true, false);
+        walkFX = new AudioClip(Walkfootsteps, "WalkFX", true, false);
+        hitFX = new AudioClip(HitAudio, "HitFX", false, false);
+        deathFX = new AudioClip(DeathAudio, "DeathFX", false, false);
         sound.LoadAudioClip(runFX);
         sound.LoadAudioClip(deathFX);
         sound.LoadAudioClip(hitFX);

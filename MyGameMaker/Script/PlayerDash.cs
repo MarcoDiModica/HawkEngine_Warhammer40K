@@ -49,7 +49,7 @@ public class PlayerDash : MonoBehaviour
             Engineson.print("PlayerDash: Audio component not found");
         }
 
-        dashFX = new AudioClip(DashSound, "DashFX", false);
+        dashFX = new AudioClip(DashSound, "DashFX", false, false);
         sound.LoadAudioClip(dashFX);
     }
 

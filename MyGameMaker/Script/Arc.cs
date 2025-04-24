@@ -33,7 +33,7 @@ public class Arc : MonoBehaviour
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        arcFX = new AudioClip(arcExplosion, "ArcExplosionFX", false);
+        arcFX = new AudioClip(arcExplosion, "ArcExplosionFX", false, false);
 
         sound.LoadAudioClip(arcFX);
     }

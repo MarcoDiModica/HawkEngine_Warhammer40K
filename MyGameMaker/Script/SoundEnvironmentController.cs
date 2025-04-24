@@ -34,7 +34,7 @@ public class SoundEnvironmentController : MonoBehaviour
 
         for (int i = 0; i < envSounds.Length; i++)
         {
-            AudioClip audioClip = new AudioClip(envSounds[i], "EnvSound" + i, true);
+            AudioClip audioClip = new AudioClip(envSounds[i], "EnvSound" + i, true, false);
             sounds.Add(audioClip);
         }
 

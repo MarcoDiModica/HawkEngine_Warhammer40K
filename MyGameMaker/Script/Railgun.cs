@@ -61,8 +61,8 @@ public class Railgun : BaseWeapon
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        shotFX = new AudioClip(railgunShot, "RailgunShotFX", false);
-        reloadFX = new AudioClip(railgunReload, "RailgunReloadFX", false);
+        shotFX = new AudioClip(railgunShot, "RailgunShotFX", false, false);
+        reloadFX = new AudioClip(railgunReload, "RailgunReloadFX", false, false);
         sound.LoadAudioClip(shotFX);
         sound.LoadAudioClip(reloadFX);
     }

@@ -50,8 +50,8 @@ public class Boltgun : BaseWeapon
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        shotFX = new AudioClip(boltgunShot, "BoltgunShotFX", false);
-        reloadFX = new AudioClip(boltgunReload, "BoltgunReloadFX", false);
+        shotFX = new AudioClip(boltgunShot, "BoltgunShotFX", false, false);
+        reloadFX = new AudioClip(boltgunReload, "BoltgunReloadFX", false, false);
         sound.LoadAudioClip(shotFX);
         sound.LoadAudioClip(reloadFX);
     }

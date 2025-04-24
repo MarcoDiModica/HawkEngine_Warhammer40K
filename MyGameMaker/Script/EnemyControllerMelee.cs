@@ -100,11 +100,11 @@ public class EnemyControllerMelee : EnemyController
         gameObject.tag = "Melee";
         isDead = false;
 
-        musicClip = new AudioClip(combatMusic, "CombatMusic", true);
-        deathSound = new AudioClip(deathFX, "DeathFX", false);
-        footStepSound = new AudioClip(footStepFX, "FootstepFX", true);
-        meleeAttackSound = new AudioClip(meleeAttackFX, "MeleeAttackFX", false);
-        hitSound = new AudioClip(hitFX, "HitFX", false);
+        musicClip = new AudioClip(combatMusic, "CombatMusic", true, false);
+        deathSound = new AudioClip(deathFX, "DeathFX", false, false);
+        footStepSound = new AudioClip(footStepFX, "FootstepFX", true, false);
+        meleeAttackSound = new AudioClip(meleeAttackFX, "MeleeAttackFX", false, false);
+        hitSound = new AudioClip(hitFX, "HitFX", false, false);
         sound.LoadAudioClip(musicClip);
         sound.LoadAudioClip(deathSound);
         sound.LoadAudioClip(footStepSound);

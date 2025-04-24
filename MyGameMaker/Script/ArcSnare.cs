@@ -43,7 +43,7 @@ public class ArcSnare : BaseAbilities
             Engineson.print("PlayerShooting: Audio component not found");
         }
 
-        arcFX = new AudioClip(arcLaunch, "ArcLaunchFX", false);
+        arcFX = new AudioClip(arcLaunch, "ArcLaunchFX", false, false);
         sound.LoadAudioClip(arcFX);
     }
 

@@ -65,8 +65,8 @@ public class WinScreen : MonoBehaviour
         {
             Engineson.print("ERROR: No Audio object found");
         }
-        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false);
-        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false);
+        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
         sound.LoadAudioClip(buttonHoveredFX);
         sound.LoadAudioClip(buttonClickedFX);
     }

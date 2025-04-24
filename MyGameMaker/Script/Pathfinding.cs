@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Numerics;
 
@@ -7,62 +8,45 @@ namespace HawkEngine
 {
     public class Pathfinding
     {
-        private readonly int width = 20;
-        private readonly int height = 20;
-        private readonly float cellSize = 1f;
-        private readonly Node[,] grid;
+        private const int width = 500;
+        private const int height = 500;
+        private const float cellSize = 1f;
+        private static readonly float DiagCost = (float)Math.Sqrt(2);
 
-        public Pathfinding()
+        public List<Vector3> FindPath(Vector3 startW, Vector3 endW)
         {
-            grid = new Node[width, height];
-            for (int x = 0; x < width; x++)
-                for (int y = 0; y < height; y++)
-                {
-                    var worldPos = new Vector3(x + 0.5f, 0.5f, y + 0.5f);
-                    var hits = Physics.OverlapSphere(worldPos, cellSize * 0.45f, "Obstacle");
-                    bool walkable = hits == null || hits.Length == 0;
-                    grid[x, y] = new Node(x, y, walkable);
-                }
-        }
+            (int sx, int sy) = ToGrid(startW);
+            (int tx, int ty) = ToGrid(endW);
 
-        public List<Vector3> FindPath(Vector3 startWorld, Vector3 targetWorld)
-        {
-            var start = NodeFromWorldPoint(startWorld);
-            var target = NodeFromWorldPoint(targetWorld);
-            if (!start.Walkable || !target.Walkable) return null;
+            if (!IsWalkable(sx, sy) || !IsWalkable(tx, ty))
+                return null;
 
-            var openSet = new List<Node> { start };
+            var openSet = new List<Node> { new Node(sx, sy) { G = 0, H = Heuristic(sx, sy, tx, ty) } };
             var closedSet = new HashSet<Node>();
-            start.GCost = 0;
-            start.HCost = Heuristic(start, target);
 
             while (openSet.Count > 0)
             {
-                openSet.Sort((a, b) =>
-                {
-                    int cmp = a.FCost.CompareTo(b.FCost);
-                    return (cmp != 0) ? cmp : a.HCost.CompareTo(b.HCost);
-                });
-                var current = openSet[0];
-                openSet.RemoveAt(0);
+                Node current = openSet.OrderBy(n => n.F).ThenBy(n => n.H).First();
+                if (current.X == tx && current.Y == ty)
+                    return Retrace(current);
+
+                openSet.Remove(current);
                 closedSet.Add(current);
 
-                if (current == target)
-                    return RetracePath(start, target);
-
-                foreach (var neighbor in GetNeighbors(current))
+                foreach (var nbr in GetNeighbors(current))
                 {
-                    if (!neighbor.Walkable || closedSet.Contains(neighbor))
-                        continue;
+                    if (closedSet.Contains(nbr)) continue;
+                    if (!IsWalkable(nbr.X, nbr.Y)) continue;
 
-                    float cost = current.GCost + Distance(current, neighbor);
-                    if (cost < neighbor.GCost || !openSet.Contains(neighbor))
+                    float tentativeG = current.G + EdgeCost(current, nbr);
+                    var existing = openSet.FirstOrDefault(n => n.Equals(nbr));
+                    if (existing == null || tentativeG < existing.G)
                     {
-                        neighbor.GCost = cost;
-                        neighbor.HCost = Heuristic(neighbor, target);
-                        neighbor.Parent = current;
-                        if (!openSet.Contains(neighbor))
-                            openSet.Add(neighbor);
+                        nbr.G = tentativeG;
+                        nbr.H = Heuristic(nbr.X, nbr.Y, tx, ty);
+                        nbr.Parent = current;
+                        if (existing == null)
+                            openSet.Add(nbr);
                     }
                 }
             }
@@ -70,66 +54,71 @@ namespace HawkEngine
             return null;
         }
 
-        private List<Vector3> RetracePath(Node start, Node end)
+        private static (int, int) ToGrid(Vector3 w)
         {
-            var path = new List<Vector3>();
-            var curr = end;
-            while (curr != start)
-            {
-                path.Add(WorldPoint(curr));
-                curr = curr.Parent;
-            }
-            path.Add(WorldPoint(start));
-            path.Reverse();
-            return path;
+            int gx = (int)Math.Floor(w.X);
+            int gy = (int)Math.Floor(w.Z);
+            gx = Math.Max(0, Math.Min(width - 1, gx));
+            gy = Math.Max(0, Math.Min(height - 1, gy));
+            return (gx, gy);
         }
 
-        private Node NodeFromWorldPoint(Vector3 world)
+        private bool IsWalkable(int x, int y)
         {
-            int x = Math.Max(0, Math.Min(width - 1, (int)world.X));
-            int y = Math.Max(0, Math.Min(height - 1, (int)world.Z));
-            return grid[x, y];
+            Vector3 center = new Vector3(x + .5f, .5f, y + .5f);
+            float r = cellSize * .7f;
+            var hits = Physics.OverlapSphere(center, r, "Obstacle");
+                       //?? Array.Empty<GameObject>();
+            return !hits.Any(go => go != null && go.tag == "Obstacle");
         }
 
-        private Vector3 WorldPoint(Node n)
-            => new Vector3(n.X + 0.5f, 0.5f, n.Y + 0.5f);
-
-        private IEnumerable<Node> GetNeighbors(Node node)
+        private IEnumerable<Node> GetNeighbors(Node n)
         {
             for (int dx = -1; dx <= 1; dx++)
                 for (int dy = -1; dy <= 1; dy++)
                 {
                     if (dx == 0 && dy == 0) continue;
-                    int nx = node.X + dx, ny = node.Y + dy;
+                    int nx = n.X + dx, ny = n.Y + dy;
                     if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
-                    // prevent corner‐cutting
                     if (dx != 0 && dy != 0)
                     {
-                        if (!grid[node.X + dx, node.Y].Walkable ||
-                            !grid[node.X, node.Y + dy].Walkable)
+                        if (!IsWalkable(n.X + dx, n.Y) || !IsWalkable(n.X, n.Y + dy))
                             continue;
                     }
-                    yield return grid[nx, ny];
+                    yield return new Node(nx, ny);
                 }
         }
 
-        private static readonly float DiagonalCost = (float)Math.Sqrt(2);
-        private float Distance(Node a, Node b) =>
-            (a.X != b.X && a.Y != b.Y) ? DiagonalCost : 1f;
-        private float Heuristic(Node a, Node b) =>
-            Math.Max(Math.Abs(a.X - b.X), Math.Abs(a.Y - b.Y));
+        private static float EdgeCost(Node a, Node b) =>
+            (a.X != b.X && a.Y != b.Y) ? DiagCost : 1f;
+
+        private static float Heuristic(int x1, int y1, int x2, int y2)
+        {
+            return Math.Max(Math.Abs(x1 - x2), Math.Abs(y1 - y2));
+        }
+
+        private List<Vector3> Retrace(Node end)
+        {
+            var path = new List<Vector3>();
+            for (Node curr = end; curr != null; curr = curr.Parent)
+                path.Add(GridToWorld(curr));
+            path.Reverse();
+            return path;
+        }
+
+        private static Vector3 GridToWorld(Node n) =>
+            new Vector3(n.X + .5f, .5f, n.Y + .5f);
 
         private class Node
         {
             public int X, Y;
-            public bool Walkable;
-            public float GCost = float.MaxValue, HCost;
+            public float G = float.MaxValue, H;
             public Node Parent;
-            public float FCost => GCost + HCost;
-            public Node(int x, int y, bool walkable)
-            {
-                X = x; Y = y; Walkable = walkable;
-            }
+            public float F => G + H;
+            public Node(int x, int y) { X = x; Y = y; }
+            public override bool Equals(object o) =>
+                o is Node n && n.X == X && n.Y == Y;
+            public override int GetHashCode() => (X, Y).GetHashCode();
         }
     }
 }

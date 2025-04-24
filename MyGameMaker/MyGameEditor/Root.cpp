@@ -501,6 +501,7 @@ bool Root::Start()
 	obstacle->GetTransform()->SetPosition(glm::vec3(0, 3, 10));
 	obstacle->GetTransform()->SetScale(glm::vec3(3, 3, 3));
 	auto obstacleCollider = obstacle->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	obstacle->SetTag("Obstacle");
 
 	
     //auto envObj = CreateGameObject("Environment1");

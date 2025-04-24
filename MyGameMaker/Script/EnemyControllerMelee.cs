@@ -236,51 +236,20 @@ public class EnemyControllerMelee : EnemyController
                 //    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                 //}
                 //isRunning = true;
+
                 Vector3 myPos = enemyTransform.position;
-                Vector3 tgtPos = playerTransform.position;
+                Vector3 playerPos = playerTransform.position;
+                
+                chasePath = pathfinder.FindPath(myPos, playerPos);
 
-                // Replan periodically
-                chaseTimer += deltaTime;
-                if (!pathInitialized || chaseTimer >= chaseReplanInterval)
+                if (chasePath != null && chasePath.Count > 1)
                 {
-                    chaseTimer = 0f;
-                    pathInitialized = true;
-                    chaseIndex = 0;
-                    chasePath = pathfinder.FindPath(myPos, tgtPos);
-                }
-
-                // Follow the path
-                if (chasePath != null && chaseIndex < chasePath.Count)
-                {
-                    Vector3 node = chasePath[chaseIndex];
-                    Vector3 wp = new Vector3(
-                        node.X + 0.5f,
-                        myPos.Y,
-                        node.Y + 0.5f
-                    );
-                    Vector3 dir = wp - myPos;
-                    float d = dir.Length();
-
-                    if (d < 0.1f)
-                    {
-                        chaseIndex++;
-                    }
-                    else
-                    {
-                        dir = Vector3.Normalize(dir);
-                        Vector3 desiredVel = dir * speedMovement;
-                        Vector3 curVel = rb.GetVelocity();
-                        Vector3 newVel = Vector3.Lerp(
-                            curVel,
-                            desiredVel,
-                            Math.Min(1, acceleration * deltaTime)
-                        );
-                        rb.SetVelocity(new Vector3(
-                            newVel.X, curVel.Y, newVel.Z
-                        ));
-                        anim.SetRunningAnimation();
-                        isRunning = true;
-                    }
+                    Vector3 nextWP = chasePath[1];
+                    Vector3 dir = Vector3.Normalize(nextWP - myPos);
+                    var vel = dir * speedMovement;
+                    rb.SetVelocity(new Vector3(vel.X, GetComponent<Rigidbody>().GetVelocity().Y, vel.Z));
+                    anim.SetRunningAnimation();
+                    isRunning = true;
                 }
 
                 break;

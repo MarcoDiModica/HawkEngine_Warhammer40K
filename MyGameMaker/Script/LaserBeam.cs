@@ -70,6 +70,7 @@ public class LaserBeam : BaseAbilities
 
             laserBeam.AddScript("LaserBeamObject");
             laserBeam.GetComponent<LaserBeamObject>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+            gameObject.AddChild(laserBeam);
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;

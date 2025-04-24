@@ -35,9 +35,9 @@ public class EnemyControllerStalker : EnemyController
     private GameObject lictorMesh;
 
         // Pounce
-    private float pounceRange = 35.0f;
+    private float pounceRange = 30.0f;
     private float pounceTimer = 0f;
-    private float pounceDuration = 1.8f;
+    private float pounceDuration = 1.5f;
     private float anticipationTimer = 0f;
     private float anticipationDuration = 2f;
     private bool hasPounce = true;
@@ -167,8 +167,6 @@ public class EnemyControllerStalker : EnemyController
         }
 
         Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
-        Engineson.print("Has Paunce = " + hasPounce.ToString());
-        Engineson.print("Is Pouncing = " + isPouncing.ToString());
 
         switch (currentState)
         {
@@ -209,19 +207,17 @@ public class EnemyControllerStalker : EnemyController
                 rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
 
                 // Invisibility
-                if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK)
+                if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK && !isPouncing)
                 {
                     Invisibility();
-
-                    if (distanceToPlayer < pounceRange && hasPounce && !isPouncing)
-                    {
-                        lictorMesh.SetActive(false);
-                        Pounce(deltaTime);
-                    }
                 }
-                else
+
+                //Puonce
+                if (distanceToPlayer < pounceRange && hasPounce && !isPouncing)
                 {
                     lictorMesh.SetActive(true);
+                    //anim.Anticipation
+                    Pounce(deltaTime);
                 }
 
                 break;
@@ -276,7 +272,25 @@ public class EnemyControllerStalker : EnemyController
 
     public override void Attack()
     {
-        pc.playerData.TakeDamage(clawDamage);
+        //Engineson.print("Melee attack executed!");
+        if (pc.redThirstManager.IsInBlackRage())
+        {
+            if (pc.redThirstManager.redThirstBonus < clawDamage)
+            {
+                pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
+            }
+            else
+            {
+                pc.playerData.TakeDamage(0);
+            }
+        }
+        else
+        {
+            pc.playerData.TakeDamage(clawDamage);
+        }
+
+        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
+
         sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
         sound?.Play();
     }
@@ -301,9 +315,8 @@ public class EnemyControllerStalker : EnemyController
 
     public void Pounce(float deltaTime)
     {
-        //anim.Anticipation
         anticipationTimer += deltaTime;
-        if (anticipationTimer <= anticipationDuration)
+        if (anticipationTimer < anticipationDuration)
         {
             rb.SetVelocity(Vector3.Zero);
         }
@@ -315,11 +328,13 @@ public class EnemyControllerStalker : EnemyController
             }
             else
             {
-                hasPounce = false;
-                isPouncing = true;
-                rb.SetVelocity(rb.GetVelocity() * 100f);
-
+                hasPounce = false;                
                 pounceTimer += deltaTime;
+                if (pounceTimer < pounceDuration)
+                {
+                    isPouncing = true;
+                    rb.SetVelocity(rb.GetVelocity() * 120f);
+                }
                 if (pounceTimer >= pounceDuration)
                 {
                     pounceTimer = 0f;
@@ -337,6 +352,30 @@ public class EnemyControllerStalker : EnemyController
         return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
                (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
+    }
+
+    override public void OnCollisionEnter(GameObject other)
+    {
+        if (other.tag == "Player" && isPouncing)
+        {
+            Engineson.print("Player hit while Leaping!");
+            if (pc.redThirstManager.IsInBlackRage())
+            {
+                if (pc.redThirstManager.redThirstBonus < pounceDamage)
+                {
+                    pc.playerData.TakeDamage(pounceDamage - pc.redThirstManager.redThirstBonus);
+                }
+                else
+                {
+                    pc.playerData.TakeDamage(0);
+                }
+            }
+            else
+            {
+                pc.playerData.TakeDamage(pounceDamage);
+            }
+            Engineson.print("Player health: " + (pc.playerData.GetHealth()));
+        }
     }
 
     //For testing

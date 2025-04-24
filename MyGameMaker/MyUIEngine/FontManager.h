@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>  
 #include <GL/glew.h>  
 #include <ft2build.h>  
-#include "freetype/freetype.h"  
+#include FT_FREETYPE_H 
 #include "../MyGameEngine/Shaders.h"
 
 struct Character {  

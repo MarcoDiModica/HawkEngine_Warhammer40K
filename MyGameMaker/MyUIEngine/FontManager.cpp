@@ -52,6 +52,11 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
 
         GLuint texture;
         glGenTextures(1, &texture);
+        if (texture == 0) {
+            std::cerr << "ERROR: No se pudo generar la textura para el carácter: " << c << std::endl;
+            continue;
+        }
+
         glBindTexture(GL_TEXTURE_2D, texture);
         glTexImage2D(
             GL_TEXTURE_2D,
@@ -80,10 +85,16 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
     }
 
     glBindTexture(GL_TEXTURE_2D, 0);
+    std::cout << "Fuente cargada correctamente: " << fontPath << " con tamaño " << fontSize << std::endl;
     return true;
 }
 
 void FontManager::RenderText(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec3& color) {
+    if (Characters.empty()) {
+        std::cerr << "ERROR: No se ha cargado ninguna fuente. Llama a LoadFont primero." << std::endl;
+        return;
+    }
+
     shader->Bind();
     shader->SetUniform("u_HasTexture", true);
     shader->SetUniform("modColor", color);
@@ -92,7 +103,14 @@ void FontManager::RenderText(Shaders* shader, const std::string& text, float x, 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 
+    std::cout << "Rendering text: " << text << " at position (" << x << ", " << y << ") with scale " << scale << std::endl;
+
     for (const char& c : text) {
+        if (Characters.find(c) == Characters.end()) {
+            std::cerr << "Character not found: " << c << std::endl;
+            continue;
+        }
+
         Character ch = Characters[c];
 
         float xpos = x + ch.Bearing.x * scale;
@@ -116,13 +134,18 @@ void FontManager::RenderText(Shaders* shader, const std::string& text, float x, 
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-  
+
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        x += (ch.Advance >> 6) * scale; 
+        x += (ch.Advance >> 6) * scale;
     }
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
     shader->UnBind();
+
+    GLenum error = glGetError();
+    if (error != GL_NO_ERROR) {
+        std::cerr << "OpenGL Error: " << error << std::endl;
+    }
 }

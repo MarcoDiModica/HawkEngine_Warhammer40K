@@ -577,11 +577,11 @@ bool Root::Start()
 	//CreateLocationSM();
 	//CreateWinUI();
 	//CreateLoseUI();
-	//CreateGameplayUI();
+	CreateGameplayUI();
 	// 
 	// 
 	//CreateMainMenuUI();
-	//CreateOptionsMenuUI();
+	CreateOptionsMenuUI();
 	//CreatePauseMenuUI();
 
 	//auto audioScene1 = CreateGameObject("AudioScene");

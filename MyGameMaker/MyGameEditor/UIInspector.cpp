@@ -2629,8 +2629,8 @@ private:
 		ImGui::Text("Color");
 		ImGui::SameLine(labelWidth);
 		ImGui::PushItemWidth(-1);
-		if (ImGui::ColorEdit4("##TextColor", colorArray)) {
-			textComponent->SetColor(glm::vec4(colorArray[0], colorArray[1], colorArray[2], colorArray[3]));
+		if (ImGui::ColorEdit3("##TextColor", colorArray)) {
+			textComponent->SetColor(glm::vec3(colorArray[0], colorArray[1], colorArray[2]));
 		}
 		ImGui::PopItemWidth();
 

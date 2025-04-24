@@ -29,6 +29,7 @@ void Implementation::Update() {
     {
         bool bIsPlaying = false;
         it->second->isPlaying(&bIsPlaying);
+
         if (!bIsPlaying)
         {
             pStoppedChannels.push_back(it);
@@ -38,6 +39,7 @@ void Implementation::Update() {
     {
         mChannels.erase(it);
     }
+    
     mpStudioSystem->update();
 }
 
@@ -105,12 +107,19 @@ int AudioEngine::PlaySound(const std::string& strSoundName, const glm::vec3& vPo
             FMOD_VECTOR position = VectorToFmod(vPos);
             pChannel->set3DAttributes(&position, nullptr);
         }
-        pChannel->setVolume(dbToVolume(fVolumedB));
+
+        // Store the base volume
+        float baseVolume = dbToVolume(fVolumedB);
+        sgpImplementation->mChannelBaseVolumes[nChannelId] = baseVolume;
+
+        // Apply the master volume scaling
+        pChannel->setVolume(baseVolume * sgpImplementation->masterVolume);
         pChannel->setPaused(false);
         sgpImplementation->mChannels[nChannelId] = pChannel;
     }
     return nChannelId;
 }
+
 
 void AudioEngine::StopSound(int nChannelId) {
 	auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
@@ -119,6 +128,8 @@ void AudioEngine::StopSound(int nChannelId) {
 
 	tFoundIt->second->stop();
 	sgpImplementation->mChannels.erase(tFoundIt);
+
+    sgpImplementation->mChannelBaseVolumes.erase(nChannelId);
 }
 
 void AudioEngine::PauseSound(int nChannelId) {
@@ -189,6 +200,22 @@ void AudioEngine::SetChannelVolume(int nChannelId, float fVolumedB)
 
     tFoundIt->second->setVolume(dbToVolume(fVolumedB));
 }
+
+void AudioEngine::SetMasterVolume(float fVolumedB)
+{
+    sgpImplementation->masterVolume = fVolumedB; // Convert dB to linear scale
+    for (auto& channel : sgpImplementation->mChannels) {
+        int channelId = channel.first;
+        FMOD::Channel* pChannel = channel.second;
+
+        // Retrieve the base volume for the channel
+        float baseVolume = sgpImplementation->mChannelBaseVolumes[channelId];
+
+        // Apply the master volume scaling
+        pChannel->setVolume(baseVolume * sgpImplementation->masterVolume);
+    }
+}
+
 
 bool AudioEngine::IsPlaying(int nChannelId) const
 {

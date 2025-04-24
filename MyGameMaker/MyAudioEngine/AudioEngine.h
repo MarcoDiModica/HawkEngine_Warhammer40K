@@ -20,11 +20,15 @@ struct Implementation {
     FMOD::System* mpSystem;
 
     int mnNextChannelId;
+    float masterVolume = 1;
 
     typedef std::map<std::string, FMOD::Sound*> SoundMap;
     typedef std::map<int, FMOD::Channel*> ChannelMap;
     typedef std::map<std::string, FMOD::Studio::EventInstance*> EventMap;
     typedef std::map<std::string, FMOD::Studio::Bank*> BankMap;
+
+    std::map<int, float> mChannelBaseVolumes; // Channel ID -> Base Volume
+
 
     BankMap mBanks;
     EventMap mEvents;
@@ -62,10 +66,11 @@ public :
 	void ResumeAllChannels();
     void SetChannel3dPosition(int nChannelId, const glm::vec3& vPosition);
     void SetChannelVolume(int nChannelId, float fVolumedB);
+	void SetMasterVolume(float fVolumedB);
     bool IsPlaying(int nChannelId) const;
     bool IsEventPlaying(const std::string& strEventName) const;
-    float dbToVolume(float db);
-    float VolumeTodb(float volume);
+    static float dbToVolume(float db);
+    static float VolumeTodb(float volume);
     FMOD_VECTOR VectorToFmod(const glm::vec3& vPosition);
 
 

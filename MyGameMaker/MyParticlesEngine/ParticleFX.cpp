@@ -44,7 +44,8 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/Smoke30Frames.png", // Texture path
+		false						   // Is Local Space
 	};
 
 	const ParticlePreset Fire = {
@@ -77,8 +78,8 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
-
+		"Assets/Textures/Smoke30Frames.png", // Texture path
+		false				   // Is Local Space
 	};
 
 	const ParticlePreset MuzzleFlash = {
@@ -111,7 +112,8 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/Smoke30Frames.png", // Texture path
+		false						   // Is Local Space
 	};
 
 	const ParticlePreset Dust = {
@@ -144,7 +146,8 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/Smoke30Frames.png", // Texture path
+		false						   // Is Local Space
 
 	};
 
@@ -178,7 +181,8 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		0.5f,						   // Min scale
 		0.0f,						   // Max scale
-		"Assets/Textures/Smoke30Frames.png" // Texture path
+		"Assets/Textures/Smoke30Frames.png", // Texture path
+		false						   // Is Local Space
 	};
 
 	const ParticlePreset Flame = {
@@ -211,7 +215,8 @@ namespace ParticlePresets {
 		false,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/fire_spritesheet.png" // Texture path
+		"Assets/Textures/fire_spritesheet.png", // Texture path
+		false						   // Is Local Space
 	};
 
 	const ParticlePreset Environment_Smoke = {
@@ -244,7 +249,8 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/smoke_spritesheet.png" // Texture path
+		"Assets/Textures/smoke_spritesheet.png", // Texture path
+		false						   // Is Local Space
 	};
 
 	const ParticlePreset Environment_Explosion = {
@@ -277,7 +283,8 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/ixplosion.png" // Texture path
+		"Assets/Textures/ixplosion.png", // Texture path
+		false						   // Is Local Space
 	};
 
 
@@ -311,7 +318,8 @@ namespace ParticlePresets {
 		false,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/muzzle.png" // Texture path
+		"Assets/Textures/muzzle.png", // Texture path
+		false						   // Is Local Space
 	};
 
 	const ParticlePreset Enemy_Dash = {
@@ -344,7 +352,8 @@ namespace ParticlePresets {
 		false,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/EnemyDash.png" // Texture path
+		"Assets/Textures/EnemyDash.png", // Texture path
+		false						   // Is Local Space
 	};
 
 
@@ -378,7 +387,8 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Acid_Splash.png" // Texture path
+	"Assets/Textures/Acid_Splash.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset Acid_Puddle = {
@@ -411,7 +421,8 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/acid_puddle.png" // Texture path
+	"Assets/Textures/acid_puddle.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset Energy_Ball = {
@@ -444,7 +455,8 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/ElectricityBall.png" // Texture path
+	"Assets/Textures/ElectricityBall.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset RailGun_Auto = {
@@ -477,7 +489,8 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/RailGunAuto.png" // Texture path
+	"Assets/Textures/RailGunAuto.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset RailGun_Semi = {
@@ -510,7 +523,8 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/RailGunSemi.png" // Texture path
+	"Assets/Textures/RailGunSemi.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset Environment_Dropplet = {
@@ -543,7 +557,8 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	0.3f,						   // Min scale
 	0.3f,						   // Max scale
-	"Assets/Textures/dropplet.png" // Texture path
+	"Assets/Textures/dropplet.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset Environment_Spark = {
@@ -576,7 +591,8 @@ namespace ParticlePresets {
 	false,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/Spark.png" // Texture path
+	"Assets/Textures/Spark.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset Arc_Snare_Impact = { // la que pone thundaaar
@@ -609,7 +625,8 @@ namespace ParticlePresets {
 	true,						   // Random rotation
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
-	"Assets/Textures/thundaaar2.png" // Texture path
+	"Assets/Textures/thundaaar2.png", // Texture path
+	false						   // Is Local Space
 	};
 
 	const ParticlePreset Medicae_Stim = {
@@ -642,7 +659,8 @@ namespace ParticlePresets {
 		true,						   // Random rotation
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
-		"Assets/Textures/Medicae_Stim.png" // Texture path
+		"Assets/Textures/Medicae_Stim.png", // Texture path
+		false 						   // Is Local Space
 	};
 
 	const ParticlePreset Blood_Splash = {
@@ -675,7 +693,8 @@ namespace ParticlePresets {
 		true,                          // Random rotation
 		10.0f,                         // Min scale
 		5.0f,                          // Max scale
-		"Assets/Textures/BloodSplash_decals1_Yiwei.png" // Texture path
+		"Assets/Textures/BloodSplash_decals1_Yiwei.png", // Texture path
+		false						   // Is Local Space
 	};
 
 }
@@ -936,7 +955,18 @@ void ParticleFX::EmitParticle() {
 	particle.maxLifetime = minLifetime + dist01(rng) * (maxLifetime - minLifetime);
 	particle.lifetime = 0.0f;
 
-	particle.position = position + GenerateRandomPosition();
+	particle.parent = owner;
+
+	particle.isLocalSpace = isLocalSpace;
+
+	if (isLocalSpace) 
+	{
+		particle.position = GenerateRandomPosition();
+	}
+	else {
+		particle.position = position + GenerateRandomPosition();
+	}
+
 
 	particle.velocity = GenerateRandomVelocity();
 
@@ -958,6 +988,7 @@ void ParticleFX::EmitParticle() {
 	{
 		particle.rotation = glm::radians(startRotation);
 	}
+
 
 	particle.rotationSpeed = rotationSpeed;
 

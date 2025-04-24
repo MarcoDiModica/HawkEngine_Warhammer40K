@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool isTransitioning = false;
     private float transitionTimer = 0f;
     private float transitionDelay = 0.1f;
+    private bool isDashing = false;
     Vector3 moveDirection;
     private bool once = false;
 
@@ -161,10 +162,10 @@ public class PlayerController : MonoBehaviour
         playerMovement.SetMoveDirection(moveDirection);
         playerMovement.SetLookDirection(lookDirection);
 
-        if (dashDelayTimer > 0f)
-        {
-            return;
-        }
+        //if (dashDelayTimer > 0f)
+        //{
+        //    return;
+        //}
         if (isShootInput)
         {
             SetShootingState();
@@ -197,9 +198,9 @@ public class PlayerController : MonoBehaviour
                 {
                     PlayFootstep();
                 }
-                if (playerMovement.moveSpeed == playerMovement.walkSpeed)
+                if (playerMovement.moveSpeed == playerMovement.walkSpeed && isDashing == false)
                     SetWalkingState();
-                else if (isRunningInput)
+                else if (isRunningInput && isDashing == false)
                     SetRunningState();
             }
         }
@@ -215,18 +216,21 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.GetDashInput() && playerDash.CanDash(elapsedTime))
         {
+            isDashing = true;
             playerDash.InitiateDash(moveDirection, elapsedTime);
             playerAnimations.SetDashAnimation();
-            dashDelayTimer = dashDelayDuration;
+            //dashDelayTimer = dashDelayDuration;
             isRunning = false;
             isWalking = false;
             StopFootsteps();
-        }
-        if (isTransitioning && transitionTimer > 0f)
-        {
-            transitionTimer -= deltaTime;
 
         }
+        if (playerAnimations.esk.IsAnimationFinished() && isDashing == true)
+        {
+            playerAnimations.SetStandardIdleAnimation();
+            isDashing = false;
+        }
+
     }
 
 

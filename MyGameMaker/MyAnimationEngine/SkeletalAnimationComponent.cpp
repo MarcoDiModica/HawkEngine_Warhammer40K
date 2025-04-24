@@ -103,6 +103,7 @@ void SkeletalAnimationComponent::TransitionAnimations(int oldAnim, int newAnim, 
 	timeToTransition = timeToTransitionAnim;
     animator->SetTransitionTime(0);
 	isBlending = true;
+	animator->isLooping = true;
 }
 
 void SkeletalAnimationComponent::AutoTransitionAnimation(int newAnim, float timeToTransitionAnim, bool loopAnim)
@@ -209,6 +210,13 @@ MonoObject* SkeletalAnimationComponent::GetSharp()
     args[1] = ownerGo;
     mono_runtime_invoke(method, monoObject, args, NULL);
     return monoObject;
+}
+
+bool SkeletalAnimationComponent::IsAnimationFinished()
+{
+
+	return animator->animationFinished;
+	
 }
 
 void SkeletalAnimationComponent::SaveBinary(const std::string& filename) const

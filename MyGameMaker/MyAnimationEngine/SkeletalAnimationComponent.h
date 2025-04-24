@@ -425,11 +425,13 @@ protected:
 			LoadBinary(animName);
 		}
 
-	if (node["bone_names"]) {
-		for (const auto& boneName : node["bone_names"]) {
-			boneNames.push_back(boneName.as<std::string>());
+    if (boneNames.empty()) {
+		if (node["bone_names"]) {
+			for (const auto& boneName : node["bone_names"]) {
+				boneNames.push_back(boneName.as<std::string>());
+			}
 		}
-	}
+    }
 
         return true;
     }

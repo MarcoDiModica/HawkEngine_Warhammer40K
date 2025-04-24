@@ -43,6 +43,7 @@
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
 #include "../MyUIEngine/UITransformComponent.h"
+#include "../MyUIEngine/TextComponent.h"
 #include "mono/metadata/debug-helpers.h"
 #include "../MyUIEngine/UIButtonComponent.h"
 
@@ -2578,6 +2579,64 @@ private:
 	}
 	#pragma endregion
 
+	#pragma region TextComponent
+	static void DrawTextComponent(TextComponent* textComponent) {
+		if (!textComponent) return;
+
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+		if (!ImGui::CollapsingHeader("Text")) return;
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Remove Component")) {
+				textComponent->GetOwner()->RemoveComponent<TextComponent>();
+			}
+			ImGui::EndPopup();
+		}
+
+		const float windowWidth = ImGui::GetContentRegionAvail().x;
+		const float labelWidth = windowWidth * 0.4f;
+
+		ImGui::BeginGroup();
+
+		// Text Content
+		std::string text = textComponent->GetText();
+		char buffer[256];
+		strncpy(buffer, text.c_str(), sizeof(buffer));
+		buffer[sizeof(buffer) - 1] = '\0';
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Text");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::InputText("##Text", buffer, sizeof(buffer))) {
+			textComponent->SetText(buffer);
+		}
+		ImGui::PopItemWidth();
+
+		float fontSize = textComponent->GetFontSize();
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Font Size");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::DragFloat("##FontSize", &fontSize, 0.1f, 1.0f, 100.0f)) {
+			textComponent->SetFontSize(fontSize);
+		}
+		ImGui::PopItemWidth();
+
+		glm::vec3 color = textComponent->GetColor();
+		float colorArray[3] = { color.r, color.g, color.b };
+		ImGui::AlignTextToFramePadding();
+		ImGui::Text("Color");
+		ImGui::SameLine(labelWidth);
+		ImGui::PushItemWidth(-1);
+		if (ImGui::ColorEdit4("##TextColor", colorArray)) {
+			textComponent->SetColor(glm::vec4(colorArray[0], colorArray[1], colorArray[2], colorArray[3]));
+		}
+		ImGui::PopItemWidth();
+
+		ImGui::EndGroup();
+	}
+#pragma endregion
 public:
 	#pragma region DrawComponents
 	static void DrawComponents(GameObject* gameObject, bool& snap, float& snapValue) {
@@ -2696,6 +2755,10 @@ public:
 		if (gameObject->HasComponent<UIImageComponent>()) {
 			UIImageComponent* uiImageComponent = gameObject->GetComponent<UIImageComponent>();
 			DrawImageComponent(uiImageComponent);
+		}
+		if (gameObject->HasComponent<TextComponent>()) {
+			TextComponent* textComponent = gameObject->GetComponent<TextComponent>();
+			DrawTextComponent(textComponent);
 		}
 	}
 
@@ -2890,8 +2953,12 @@ public:
 					gameObject->GetComponent<UIImageComponent>()->SetTexture("Assets/default.png");
 				}
 				}, !gameObject->HasComponent<UIButtonComponent>());
-
-			
+			DrawComponentButton(gameObject, "Text", [gameObject]() {
+				if (!gameObject->HasComponent<UITransformComponent>()) {
+					gameObject->AddComponent<UITransformComponent>();
+				}
+				gameObject->AddComponent<TextComponent>();
+				}, !gameObject->HasComponent<TextComponent>());
 
 			break;
 

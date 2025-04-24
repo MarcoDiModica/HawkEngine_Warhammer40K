@@ -1412,7 +1412,7 @@ void Root::CreateMainMenuUI()
 
 	auto emmptyMusic = CreateGameObject("EmptyMusic");
 	emmptyMusic->AddComponent<SoundComponent>();
-	emmptyMusic->GetComponent<ScriptComponent>()->LoadScript("SceneAudio");
+	/*emmptyMusic->GetComponent<ScriptComponent>()->LoadScript("SceneAudio");*/
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
 	canvas->AddComponent<SoundComponent>();

@@ -10,10 +10,27 @@ FontManager::FontManager() {
     if (FT_Init_FreeType(&ft)) {
         std::cerr << "ERROR: No se pudo inicializar FreeType Library" << std::endl;
     }
+
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 FontManager::~FontManager() {
     FT_Done_FreeType(ft);
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
 }
 
 bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
@@ -66,9 +83,14 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
     return true;
 }
 
-void FontManager::RenderText(Shaders* shader, const std::string& text, float x, float y, float scale) {
+void FontManager::RenderText(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec3& color) {
+    shader->Bind();
+    shader->SetUniform("u_HasTexture", true);
+    shader->SetUniform("modColor", color);
+    shader->SetUniformVec2("SheetSize", glm::vec2(1.0f, 1.0f));
+
     glActiveTexture(GL_TEXTURE0);
-    glBindVertexArray(0); 
+    glBindVertexArray(VAO);
 
     for (const char& c : text) {
         Character ch = Characters[c];
@@ -79,17 +101,28 @@ void FontManager::RenderText(Shaders* shader, const std::string& text, float x, 
         float w = ch.Size.x * scale;
         float h = ch.Size.y * scale;
 
+        float vertices[6][4] = {
+            { xpos,     ypos + h,   0.0f, 0.0f },
+            { xpos,     ypos,       0.0f, 1.0f },
+            { xpos + w, ypos,       1.0f, 1.0f },
 
-        shader->SetUniform("uText", 0);
-        shader->SetUniform("uTextColor", glm::vec3(1.0f, 1.0f, 1.0f));
+            { xpos,     ypos + h,   0.0f, 0.0f },
+            { xpos + w, ypos,       1.0f, 1.0f },
+            { xpos + w, ypos + h,   1.0f, 0.0f }
+        };
 
         glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 
-        // Renderiza el carácter (aquí deberías usar un VAO/VBO configurado previamente)
-        // Por simplicidad, este ejemplo no incluye la configuración del VAO/VBO.
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+  
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        x += (ch.Advance >> 6) * scale;
+        x += (ch.Advance >> 6) * scale; 
     }
 
+    glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
+    shader->UnBind();
 }

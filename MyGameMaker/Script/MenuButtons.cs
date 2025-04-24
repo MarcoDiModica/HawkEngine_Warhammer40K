@@ -5,8 +5,6 @@ using System.Runtime.InteropServices;
 
 public class MenuButtons : MonoBehaviour
 {
-    //Referencia el boton y los componentes que quieras usar aqui
-
     private GameObject newGameButton;
     private GameObject continueButton;
     private GameObject optionsButton;

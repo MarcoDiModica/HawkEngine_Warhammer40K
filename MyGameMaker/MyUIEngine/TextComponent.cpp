@@ -10,9 +10,14 @@
 #include "../MyGameEngine/ShaderManager.h"
 #include "../MyUIEngine/FontManager.h"
 
-TextComponent::TextComponent(const std::string& text, const glm::vec2& position, const glm::vec3& color, float fontSize)
-    : m_text(text), m_position(position), m_color(color), m_fontSize(fontSize)
+TextComponent::TextComponent(GameObject* owner, const std::string& text, const glm::vec2& position, const glm::vec3& color, float fontSize)
+    : Component(owner), m_owner(owner), m_text(text), m_position(position), m_color(color), m_fontSize(fontSize)
 {
+}
+
+MonoObject* TextComponent::GetSharp()
+{
+    return CsharpReference;
 }
 
 void TextComponent::SetText(const std::string& text)
@@ -70,7 +75,7 @@ void TextComponent::Render() const
    unlitShader->SetUniform("uTextColor", m_color);  
    unlitShader->SetUniform("uProjection", m_projection);  
 
-   FontManager::GetInstance().RenderText(unlitShader, m_text, m_position.x, m_position.y, m_fontSize);  
+   FontManager::GetInstance().RenderText(unlitShader, m_text, m_position.x, m_position.y, m_fontSize, m_color);  
 
    unlitShader->UnBind();  
 

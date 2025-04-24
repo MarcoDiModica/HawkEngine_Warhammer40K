@@ -28,14 +28,17 @@ public class EnemyControllerMelee : EnemyController
     private float health = 100.0f;
     private float clawDamage = 10.0f;
     private float leapDamage = 15.0f;
+    private float distanceToPlayer;
 
-        // Leap Attack
+    // Leap Attack
     public float maxLeapRange = 20.0f;
     public float minLeapRange = 10.0f;
+    private float leapTimer = 0f;
+    private float leapDuration = 1.5f;
+    private float anticipationTimer = 0f;
+    private float anticipationDuration = 1f;
     private float lastLeap = 0f;
     public float leapCooldown = 2.0f;
-    private float leapDuration = 1.5f;
-    private float leapTimer = 0f;
     private bool hasLeap = true;
     private bool isLeaping = false;
 
@@ -104,7 +107,7 @@ public class EnemyControllerMelee : EnemyController
 
             if (currentState != EnemyState.STUNNED)
             {
-                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+                distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
                 if (distanceToPlayer < distToChase)
                 {
@@ -118,33 +121,6 @@ public class EnemyControllerMelee : EnemyController
                     if (distanceToPlayer > minDistToChase)
                     {
                         currentState = EnemyState.CHASE;
-                    }
-
-                    // Leap
-                    if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
-                    {
-                        leapTimer = 0f;
-                        Leap();
-                    }
-                    else if (isLeaping)
-                    {
-                        leapTimer += deltaTime;
-                        particles.EmitBurst(1);
-                        if (leapTimer >= leapDuration)
-                        {
-                            isLeaping = false;
-                            hasLeap = false;
-                            lastLeap = 0.0f;
-                        }
-                    }
-                    if (!hasLeap)
-                    {
-                        lastLeap += deltaTime;
-                        if (lastLeap >= leapCooldown)
-                        {
-                            Engineson.print("LEAP RESTORED");
-                            hasLeap = true;
-                        }
                     }
 
                     // Enemy Rotation
@@ -227,6 +203,22 @@ public class EnemyControllerMelee : EnemyController
                     rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                 }
                 isRunning = true;
+
+                // Leap
+                if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && currentState != EnemyState.ATTACK && hasLeap && !isLeaping)
+                {
+                    leapTimer = 0.0f;
+                    Leap(deltaTime);
+                }
+                else if (!hasLeap)
+                {
+                    lastLeap += deltaTime;
+                    if (lastLeap >= leapCooldown)
+                    {
+                        Engineson.print("LEAP RESTORED");
+                        hasLeap = true;
+                    }
+                }
                 break;
 
             case EnemyState.ATTACK:
@@ -276,7 +268,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Attack()
     {
-        Engineson.print("Melee attack executed!");
+        //Engineson.print("Melee attack executed!");
         if (pc.redThirstManager.IsInBlackRage())
         {
             if(pc.redThirstManager.redThirstBonus < clawDamage)
@@ -287,7 +279,6 @@ public class EnemyControllerMelee : EnemyController
             {
                 pc.playerData.TakeDamage(0);
             }
-
         }
         else
         {
@@ -313,22 +304,39 @@ public class EnemyControllerMelee : EnemyController
         }
     }
 
-    public void Leap()
+    public void Leap(float deltaTime)
     {
-        if (!isLeaping)
+        anticipationTimer += deltaTime;
+        if (anticipationTimer < anticipationDuration)
         {
-            isLeaping = true;
-            anim.SetWholeLeapAnimation();
-            rb.SetVelocity(rb.GetVelocity() * 1.8f);
-            leapTimer = 0.0f;
+            //anim.SetAnticipationAnimation();
+            rb.SetVelocity(Vector3.Zero);
         }
-
-        if(leapTimer >= leapDuration)
+        else if (anticipationTimer >= anticipationDuration)
         {
-            Engineson.print("Leap ended");
-            isLeaping = false;
-            hasLeap = false;
-            lastLeap = 0.0f;
+            if (distanceToPlayer > distToChase)
+            {
+                return;
+            }
+            else
+            {
+                hasLeap = false;
+                anim.SetWholeLeapAnimation();
+                particles.EmitBurst(1);
+
+                leapTimer += deltaTime;
+                if (leapTimer < leapDuration)
+                {
+                    isLeaping = true;
+                    rb.SetVelocity(rb.GetVelocity() * 10f);
+                }
+                else if (leapTimer >= leapDuration)
+                {
+                    leapTimer = 0f;
+                    isLeaping = false;
+                    lastLeap = 0.0f;
+                }
+            }
         }
     }
 
@@ -345,35 +353,9 @@ public class EnemyControllerMelee : EnemyController
    
     override public void OnCollisionEnter(GameObject other)
     {
-        if (other.tag == "BoltgunProjectile")
-        {
-            currentHealth -= 20.0f;
-            Engineson.print("Hit");
-            anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
-
-            Engineson.print("Boltgun hit!");
-        }
-        else if (other.tag == "ShotgunProjectile")
-        {
-            //cosas de la shotgun
-            anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
-
-        }
-        else if (other.tag == "RailgunProjectile")
-        {
-            //Cosas de railgun
-            currentHealth -= 100.0f;
-            anim.SetHitAnimation();
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
-        }
         if (other.tag == "Player" && isLeaping)
         {
-            Engineson.print("Player hit while Leaping!");
+            Engineson.print(other.tag + "hit with Leap");
             if (pc.redThirstManager.IsInBlackRage())
             {
                 if (pc.redThirstManager.redThirstBonus < leapDamage)
@@ -389,7 +371,7 @@ public class EnemyControllerMelee : EnemyController
             {
                 pc.playerData.TakeDamage(leapDamage);
             }
-            Engineson.print("Player health: " + (pc.playerData.GetHealth()));
+            Engineson.print(other.tag + " health: " + (pc.playerData.GetHealth()));
         }
     }
 

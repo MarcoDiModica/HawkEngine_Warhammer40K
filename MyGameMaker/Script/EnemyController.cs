@@ -28,7 +28,7 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     protected bool isFootstepPlaying = false;
     protected bool hasStoppedFootsteps = false;
 
-    public float distToChase = 50.0F;
+    public float distToChase = 50.0f;
     public float minDistToChase = 10.0f;
     public float speedMovement = 10.0f;
     public float acceleration = 15.0f;

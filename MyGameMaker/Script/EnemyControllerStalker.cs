@@ -216,7 +216,6 @@ public class EnemyControllerStalker : EnemyController
                 if (distanceToPlayer < pounceRange && hasPounce && !isPouncing)
                 {
                     lictorMesh.SetActive(true);
-                    //anim.Anticipation
                     Pounce(deltaTime);
                 }
 
@@ -318,12 +317,14 @@ public class EnemyControllerStalker : EnemyController
         anticipationTimer += deltaTime;
         if (anticipationTimer < anticipationDuration)
         {
+            //anim.Anticipation
             rb.SetVelocity(Vector3.Zero);
         }
         else if (anticipationTimer >= anticipationDuration)
         {
             if (distanceToPlayer > distToChase)
             {
+                anticipationTimer = 0;
                 return;
             }
             else
@@ -335,7 +336,7 @@ public class EnemyControllerStalker : EnemyController
                     isPouncing = true;
                     rb.SetVelocity(rb.GetVelocity() * 120f);
                 }
-                if (pounceTimer >= pounceDuration)
+                else if (pounceTimer >= pounceDuration)
                 {
                     pounceTimer = 0f;
                     isPouncing = false;
@@ -358,7 +359,7 @@ public class EnemyControllerStalker : EnemyController
     {
         if (other.tag == "Player" && isPouncing)
         {
-            Engineson.print("Player hit while Leaping!");
+            Engineson.print(other.tag + " hit with Pounce");
             if (pc.redThirstManager.IsInBlackRage())
             {
                 if (pc.redThirstManager.redThirstBonus < pounceDamage)
@@ -374,7 +375,7 @@ public class EnemyControllerStalker : EnemyController
             {
                 pc.playerData.TakeDamage(pounceDamage);
             }
-            Engineson.print("Player health: " + (pc.playerData.GetHealth()));
+            Engineson.print(other.tag +" health: " + (pc.playerData.GetHealth()));
         }
     }
 

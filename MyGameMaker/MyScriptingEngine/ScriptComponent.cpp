@@ -445,11 +445,15 @@ bool ScriptComponent::decode(const YAML::Node& node)
 				else if (strcmp(className, "GameObject") == 0) {
 					std::string goName = fieldsNode[fieldName].as<std::string>();
 					std::shared_ptr<GameObject> target = Application->root->FindGOByName(goName);
+
 					if (target) {
-                        MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(target.get());
+						MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(target.get());
 						if (managedGO) {
 							mono_field_set_value(monoScript, field, managedGO);
 						}
+					}
+					else {
+						Application->scene_serializer->g_PendingScriptReferences.push_back({ this, field, goName });
 					}
 				}
 			}

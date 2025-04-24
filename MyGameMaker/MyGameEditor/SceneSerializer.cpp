@@ -23,6 +23,8 @@
 #include "MyUIEngine/UIButtonComponent.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include <MyScriptingEngine/MonoManager.h>
+
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -166,6 +168,22 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 
 			auto gameObject = DeserializeGameObject(objectNode);
 		}
+
+		for (const PendingReference& ref : g_PendingScriptReferences) {
+			std::shared_ptr<GameObject> target = Application->root->FindGOByName(ref.goName);
+			if (target) {
+				if (ref.scriptComponent && ref.scriptComponent->monoScript) {
+					MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(target.get());
+					if (managedGO) {
+						mono_field_set_value(ref.scriptComponent->monoScript, ref.field, managedGO);
+					}
+				}
+				else {
+					LOG(LogType::LOG_ERROR, "Invalid script reference: scriptComponent or monoScript is null. Field = %s", mono_field_get_name(ref.field));
+				}
+			}
+		}
+		g_PendingScriptReferences.clear();
 
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
 		Application->root->UpdateCameraPriority();

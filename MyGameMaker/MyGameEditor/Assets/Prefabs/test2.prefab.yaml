@@ -1,0 +1,41 @@
+name: test2
+prefabPath: ""
+uuid: 1592096723623318960
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -8.2816877365112305
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 0
+    material:
+      name: ""
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  ScriptComponents:
+    Script0:
+      name: Test2
+      fields: ~
+Children: ~

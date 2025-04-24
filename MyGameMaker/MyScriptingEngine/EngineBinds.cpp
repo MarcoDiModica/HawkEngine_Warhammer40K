@@ -1435,8 +1435,23 @@ MonoObject* EngineBinds::InstantiatePrefab(MonoObject* prefabObj, MonoObject* pa
            }
        }
    }
+   newGO->TraverseHierarchy([](GameObject* go) {
+       for (auto& script : go->scriptComponents) {
+           if (script && script->monoScript) {
+               script->Awake();
+           }
+       }
+       });
 
-   return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());  
+   newGO->TraverseHierarchy([](GameObject* go) {
+       for (auto& script : go->scriptComponents) {
+           if (script && script->monoScript) {
+               script->Start();
+           }
+       }
+       });
+
+   return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());
 }
 
 void EngineBinds::BindEngine() {

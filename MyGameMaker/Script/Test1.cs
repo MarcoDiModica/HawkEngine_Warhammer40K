@@ -35,7 +35,7 @@ public class Test1 : MonoBehaviour, IInteractable
         
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Instantiate(prefab, gameObject.transform);
+            Instantiate(prefab);
         }
 
         //----------- MATHF FUNCTIONS -------------------//

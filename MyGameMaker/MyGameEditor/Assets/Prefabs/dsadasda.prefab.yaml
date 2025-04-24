@@ -1,0 +1,43 @@
+name: Cube
+prefabPath: ""
+uuid: 6746483867807699002
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 0
+    material:
+      name: ""
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  ScriptComponents:
+    Script0:
+      name: Test1
+      fields:
+        speed: 143
+        prefab: Assets\Prefabs\selfcontrolledcela2.prefab.yaml
+Children: ~

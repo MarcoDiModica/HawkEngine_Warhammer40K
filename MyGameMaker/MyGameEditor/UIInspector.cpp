@@ -1835,13 +1835,27 @@ private:
 			MonoClass* prefabClass = mono_object_get_class(prefabObj);
 			MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");
 			if (pathField) {
-				MonoString* monoStr = nullptr;
-				mono_field_get_value(prefabObj, pathField, &monoStr);
-				if (monoStr) {
-					char* cstr = mono_string_to_utf8(monoStr);
-					displayPath = cstr;
-					mono_free(cstr);
+				MonoString* monoStr = nullptr;  
+                mono_field_get_value(prefabObj, pathField, &monoStr);  
+                if (monoStr) {  
+                   char* cstr = mono_string_to_utf8(monoStr);  
+                   size_t lastSlash = displayPath.find_last_of("/\\");  
+                   if (lastSlash != std::string::npos) {  
+                       displayPath = displayPath.substr(lastSlash + 1);  
+                   }  
+                /*   size_t lastDotYaml = displayPath.rfind(".prefab");  
+                   if (lastDotYaml != std::string::npos && lastDotYaml == displayPath.length() - 5) {  
+                       displayPath = displayPath.substr(0, lastDotYaml);  
+                   }  */
+                   displayPath = cstr;  
+                   mono_free(cstr);  
+                }
+
+				size_t lastSlash = displayPath.find_last_of("/\\"); 
+				if (lastSlash != std::string::npos) {
+					displayPath = displayPath.substr(lastSlash + 1);
 				}
+			
 			}
 		}
 

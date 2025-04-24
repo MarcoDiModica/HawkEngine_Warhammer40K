@@ -118,6 +118,7 @@ public:
 
     const std::string& GetPrefabSourcePath() const { return prefabSourcePath; }
     void SetPrefabSourcePath(const std::string& path) { prefabSourcePath = path; }
+    void TraverseHierarchy(std::function<void(GameObject*)> func);
 
 private:
     friend class SceneSerializer;

@@ -11,6 +11,7 @@ public class ArcSnare : BaseAbilities
     public float cooldown;
     private bool exploded = false;
     GameObject arcSnare;
+    GameObject grenade;
     public bool canThrow = true;
 
     private float explosionCooldown = 1.0f;

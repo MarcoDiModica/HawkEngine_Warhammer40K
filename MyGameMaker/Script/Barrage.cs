@@ -14,10 +14,10 @@ public class Barrage : BaseAbilities
     private float yHeight = 0.0f;
     private float timer = 0;
     
-    GameObject grenade;
+    public GameObject grenade;
     Rigidbody rigidbody;
     BoxCollider collider;
-    bool canThrow = true;
+    public bool canThrow = true;
 
     private float explosionCooldown = 1.0f;
     private float explosionTimer = 0.0f;
@@ -104,7 +104,7 @@ public class Barrage : BaseAbilities
 
 
             grenade.AddScript("BarrageBullet");
-            grenade.GetComponent<BarrageBullet>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
+            grenade.GetComponent<BarrageBullet>().Init(gameObject);
 
 
             canThrow = false; // Inicia el cooldown

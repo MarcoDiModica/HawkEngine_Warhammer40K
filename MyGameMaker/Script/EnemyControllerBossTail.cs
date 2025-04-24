@@ -44,7 +44,7 @@ public class EnemyControllerBossTail : EnemyController
         rb = gameObject.GetComponent<Rigidbody>();
         rb.SetMass(10000.0f);
         collider = gameObject.GetComponent<BoxCollider>();
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         enemyTransform = gameObject.GetComponent<Transform>();
         //torsoController = GameObject.Find("Mawloc").GetComponent<EnemyControllerBoss>();
         //torsoTransform = GameObject.Find("Mawloc").transform;

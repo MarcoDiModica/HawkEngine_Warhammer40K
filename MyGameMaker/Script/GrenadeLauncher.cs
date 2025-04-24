@@ -16,7 +16,7 @@ public class GrenadeLauncher : BaseAbilities
     GameObject grenade;
     Rigidbody rigidbody;
     BoxCollider collider;
-    bool canThrow = true;
+    public bool canThrow = true;
     public bool needsDestroy = false;
 
     private float explosionCooldown = 1.0f;

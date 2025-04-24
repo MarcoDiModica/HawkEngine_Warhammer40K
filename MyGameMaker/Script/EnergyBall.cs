@@ -14,10 +14,10 @@ public class EnergyBall : BaseAbilities
     private float yHeight = 0.0f;
     private float timer = 0;
 
-    GameObject grenade;
+    public GameObject grenade;
     Rigidbody rigidbody;
     BoxCollider collider;
-    bool canThrow = true;
+    public bool canThrow = true;
 
     private float explosionCooldown = 1.0f;
     private float explosionTimer = 0.0f;

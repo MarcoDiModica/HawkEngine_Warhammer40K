@@ -13,8 +13,8 @@ public class Shotgun : BaseWeapon
 
     private PlayerController playerController;
     public PlayerData playerData;
-    Barrage barrage;
-    HookShot hookShot;
+    public Barrage barrage;
+    public HookShot hookShot;
 
     private float timeSinceLastShot = 0.0f;
 

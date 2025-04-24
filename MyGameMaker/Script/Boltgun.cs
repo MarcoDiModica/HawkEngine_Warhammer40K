@@ -7,8 +7,8 @@ using HawkEngine;
 public class Boltgun : BaseWeapon
 {
 
-    GrenadeLauncher grenadeLauncher;
-    ArcSnare arcSnare;
+    public GrenadeLauncher grenadeLauncher;
+    public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
     private AudioSource sound;

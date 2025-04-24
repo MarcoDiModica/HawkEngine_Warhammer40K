@@ -184,7 +184,7 @@ public class PlayerPowerUp : MonoBehaviour
                 other.GetComponent<PiercingBullets>().OnPickUp(playerController);
                 hasPiercingBullets = true;
                 //sound.LoadAudio(MagnetEffect);
-                sound.Play();
+                //sound.Play();
             }
 
 

@@ -50,6 +50,7 @@ public class EnemyControllerStalker : EnemyController
 
     public override void Start()
     {
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         if (playerTransform == null)
@@ -94,7 +95,6 @@ public class EnemyControllerStalker : EnemyController
         //particles = gameObject.GetComponent<ParticleFX>();
         //particles.ApplyPreset(9);
 
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Stalker";
@@ -109,6 +109,7 @@ public class EnemyControllerStalker : EnemyController
             if (currentHealth <= 0)
             {
                 currentState = EnemyState.DEAD;
+                //anim.SetDeathAnimation();
                 sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
                 sound?.Play();
                 return;
@@ -132,6 +133,7 @@ public class EnemyControllerStalker : EnemyController
                         currentState = EnemyState.CHASE;
                     }
 
+                    // Rotation
                     if (moveDirection != Vector3.Zero)
                     {
                         currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
@@ -150,7 +152,6 @@ public class EnemyControllerStalker : EnemyController
                             eulerRotation.Z * ((float)Math.PI / 180.0f)
                         );
 
-                        // enemyTransform.SetRotationQuat(newRotation);
                         collider.SetRotation(newRotation);
                     }
                 }
@@ -218,7 +219,6 @@ public class EnemyControllerStalker : EnemyController
                     lictorMesh.SetActive(true);
                     Pounce(deltaTime);
                 }
-
                 break;
 
             case EnemyState.ATTACK:
@@ -246,12 +246,12 @@ public class EnemyControllerStalker : EnemyController
                     dodgewindow = false;
                     isAttacking = false;
                 }
-
                 break;
 
             case EnemyState.STUNNED:
-                stunTimer += deltaTime;
                 rb.SetVelocity(Vector3.Zero);
+
+                stunTimer += deltaTime;
                 if (stunTimer >= stunDuration)
                 {
                     isStunned = false;
@@ -261,7 +261,6 @@ public class EnemyControllerStalker : EnemyController
 
             case EnemyState.DEAD:
                 collider.SetActive(false);
-
                 break;
 
             default:

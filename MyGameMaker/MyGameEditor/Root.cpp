@@ -115,13 +115,6 @@ bool Root::Start()
 	mainCamera = objMainCamera;
 	UpdateCameraPriority();
 
-	for (int i = 0; i < 10; i++)
-	{
-		//auto cube = CreateCube("Cube" + i.ToString());
-		/*cube->GetTransform()->SetPosition(glm::vec3(0, 0, i));
-		cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));*/
-	}
-
 	//particle->ApplyPreset(Particle)
 
 	/*auto itemtest = CreateCube("item");
@@ -385,7 +378,7 @@ bool Root::Start()
 	hormagauntMesh->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
 	hormagauntMesh->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
 	ParentGameObject(*hormagauntMesh, *hormagaunt);
-	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
+	hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
 	hormagaunt->SetTag("Enemy");
 
 	//auto hormagaunt1= CreateGameObject("Hormagaunt1");

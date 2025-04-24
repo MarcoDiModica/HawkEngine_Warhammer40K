@@ -5,20 +5,31 @@ using HawkEngine;
 
 public class EnemyControllerRanged : EnemyController
 {
+    // Perfect Dodge
+    private bool dodgewindow = false;
+    private float dodgeActivationTime = 0.5f;
+    private float dodgeTimer = 0f;
+    //private TermagauntAnimation animation
+    private PlayerController pc;
+
+    // Audio
+    bool isCombatMusicPlaying = false;
+    private Audio music;
+    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+
+    // Enemy Stats
+    private float health = 100.0f;
+    private float projectileDamage = 15.0f;
+    private float acidDamage = 5.0f;
+    private float distanceToPlayer;
+
+    // Shooting
+    private float projectileRange = 100.0f;
     private List<BulletData> activeProjectiles = new List<BulletData>();
     public float shootCooldown = 2.0f;
     public float projectileSpeed = 90.0f;
     public float projectileLifetime = 0.5f;
     protected float shootTimer = 0f;
-    private PlayerController pc;
-    //stats
-    private float health = 100.0f;
-    private float damage = 20.0f;
-
-    //audio
-    bool isCombatMusicPlaying = false;
-    private Audio music;
-    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
     public override void Awake()
     {
@@ -26,10 +37,9 @@ public class EnemyControllerRanged : EnemyController
     }
     public override void Start()
     {
-
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
@@ -56,6 +66,8 @@ public class EnemyControllerRanged : EnemyController
         }
 
         particles = gameObject.AddComponent<ParticleFX>();
+        //particles.ApplyPreset();
+
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Ranged";
@@ -63,106 +75,143 @@ public class EnemyControllerRanged : EnemyController
 
     public override void Update(float deltaTime)
     {
-        if (!isDead)
+        if (currentState != EnemyState.DEAD)
         {
             if (currentHealth <= 0)
             {
-                Engineson.print("This man is dead man.");
-                //Destroy(gameObject);
-                isDead = true;
+                currentState = EnemyState.DEAD;
+                //anim.SetDeathAnimation();
+                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
+                sound?.Play();
+                return;
             }
-            if (!isStunned)
+
+            if (currentState != EnemyState.STUNNED)
             {
-                Vector3 playerPos = playerTransform.position;
+                distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
-                if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
+                if (distanceToPlayer < distToChase)
                 {
-                    if (shootTimer <= 0)
+                    // Shoot
+                    if (distanceToPlayer < projectileRange)
                     {
-                        Attack();
-                        sound?.Play();
-                        shootTimer = shootCooldown;
-                    }
-
-                    if (isCombatMusicPlaying == false)
-                    {
-                        sound?.LoadAudio(combatMusic);
-                        sound?.Play(true);
-                        isCombatMusicPlaying = true;
+                        currentState = EnemyState.ATTACK;
                     }
                     else
                     {
-                        shootTimer -= deltaTime;
+                        // Chase
+                        if (distanceToPlayer > minDistToChase)
+                        {
+                            currentState = EnemyState.CHASE;
+                        }
                     }
 
-                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
+                    // Rotation
+                    if (moveDirection != Vector3.Zero)
                     {
-                        Vector3 currentVelocity = rb.GetVelocity();
-                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                        Vector3 desiredVelocity = moveDirection * speedMovement;
+                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
 
-                        if (desiredVelocity.LengthSquared() > 0)
-                        {
-                            desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                        }
+                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
 
-                        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                        rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
 
-                        //enemyTransform.position += desiredVelocity * deltaTime;
+                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                            eulerRotation.Y * ((float)Math.PI / 180.0f),
+                            eulerRotation.X * ((float)Math.PI / 180.0f),
+                            eulerRotation.Z * ((float)Math.PI / 180.0f)
+                        );
+
+                        collider.SetRotation(newRotation);
                     }
                 }
                 else
                 {
-                    rb.SetVelocity(Vector3.Zero);
+                    if (currentState != EnemyState.IDLE)
+                    {
+                        currentState = EnemyState.IDLE;
+                        rb.SetVelocity(Vector3.Zero);
+                        //anim.SetStandardIdleAnimation();
+                    }
                 }
-
-                if (moveDirection != Vector3.Zero)
-                {
-                    currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                    float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                    float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
-
-                    while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                    while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
-
-                    currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
-
-                    Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                    Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                        eulerRotation.Y * ((float)Math.PI / 180.0f),
-                        eulerRotation.X * ((float)Math.PI / 180.0f),
-                        eulerRotation.Z * ((float)Math.PI / 180.0f)
-                    );
-
-                    // enemyTransform.SetRotationQuat(newRotation);
-                    collider.SetRotation(newRotation);
-                }
-
             }
-            else if (isStunned)
-            {
-                stunTimer += deltaTime;
+        }
+
+        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
+
+        switch (currentState)
+        {
+            case EnemyState.IDLE:
+                isFootstepPlaying = false;
+                if (!hasStoppedFootsteps)
+                {
+                    sound?.Stop();
+                    hasStoppedFootsteps = true;
+                }
+                break;
+
+            case EnemyState.CHASE:
+                if (!isFootstepPlaying)
+                {
+                    sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
+                    sound?.Play(true);
+                    isFootstepPlaying = true;
+                    hasStoppedFootsteps = false;
+                }
+                if (isCombatMusicPlaying == false)
+                {
+                    sound?.LoadAudio(combatMusic);
+                    sound?.Play(true);
+                    isCombatMusicPlaying = true;
+                }
+
+                Vector3 currentVelocity = rb.GetVelocity();
+                moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
+                Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                if (desiredVelocity.LengthSquared() > 0)
+                {
+                    desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                }
+
+                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                break;
+
+            case EnemyState.ATTACK:
+                shootTimer += deltaTime;
+                if (shootTimer >= shootCooldown)
+                {
+                    Attack();
+                    sound?.Play();
+                    shootTimer = 0;
+                }
+                break;
+
+            case EnemyState.STUNNED:
                 rb.SetVelocity(Vector3.Zero);
+
+                stunTimer += deltaTime;
                 if (stunTimer >= stunDuration)
                 {
-                    isStunned = false;
+                    currentState = EnemyState.IDLE;
                     stunTimer = 0.0f;
                 }
-            }
+                break;
 
-            UpdateProjectiles(deltaTime);
-            CleanupProjectiles();
+            case EnemyState.DEAD:
+                collider.SetActive(false);
+                break;
+
+            default:
+                break;
         }
-        if (isDead)
-        {
-            // Enemy Death
-            collider.SetActive(false);
-            if (pc.playerData.isPiercing == true)
-            {
-                pc.playerData.AddHealth(5.0f);
-            }
-        }
+
+        UpdateProjectiles(deltaTime);
+        CleanupProjectiles();
     }
 
     public override void Attack()
@@ -204,31 +253,17 @@ public class EnemyControllerRanged : EnemyController
 
     public override void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        particles.ApplyPreset(19);
-        particles.EmitBurst(1);
-        Engineson.print("Hit");
-        //anim.SetHitAnimation();
-        //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-        //sound?.Play();
+        if (currentHealth > 0)
+        {
+            currentHealth -= damage;
+            //anim.SetHitAnimation();
+            //particles.ApplyPreset(19);
+            //particles.EmitBurst(1);
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+            sound?.Play();
+        }
     }
-    override public void OnCollisionEnter(GameObject other)
-    {
-        if (other.tag == "BoltgunProjectile")
-        {
-            currentHealth -= 20.0f;
-            Engineson.print("Boltgun hit!");
-        }
-        else if (other.tag == "ShotgunProjectile")
-        {
-            //cosas de la shotgun
-        }
-        else if (other.tag == "RailgunProjectile")
-        {
-            //Cosas de railgun
-        }
-        //Engineson.print("Player hit!");
-    }
+
     private void UpdateProjectiles(float deltaTime)
     {
         foreach (var proj in activeProjectiles)

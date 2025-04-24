@@ -17,7 +17,7 @@ public class EnemyControllerMelee : EnemyController
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
     private HormagauntAnimation anim;
-    PlayerController pc;
+    private PlayerController pc;
 
     // Audio
     bool isCombatMusicPlaying = false;
@@ -49,6 +49,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Start()
     {
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         if (playerTransform == null)
@@ -86,7 +87,6 @@ public class EnemyControllerMelee : EnemyController
         particles = gameObject.AddComponent<ParticleFX>();
         particles.ApplyPreset(9);
 
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
@@ -123,7 +123,7 @@ public class EnemyControllerMelee : EnemyController
                         currentState = EnemyState.CHASE;
                     }
 
-                    // Enemy Rotation
+                    // Rotation
                     if (moveDirection != Vector3.Zero)
                     {
                         currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
@@ -142,7 +142,6 @@ public class EnemyControllerMelee : EnemyController
                             eulerRotation.Z * ((float)Math.PI / 180.0f)
                         );
                         
-                        // enemyTransform.SetRotationQuat(newRotation);
                         collider.SetRotation(newRotation);
                     }
                 }
@@ -163,7 +162,6 @@ public class EnemyControllerMelee : EnemyController
         switch (currentState)
         {
             case EnemyState.IDLE:
-                isRunning = false;
                 isFootstepPlaying = false;
                 if (!hasStoppedFootsteps)
                 {
@@ -202,7 +200,6 @@ public class EnemyControllerMelee : EnemyController
                     Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
                     rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
                 }
-                isRunning = true;
 
                 // Leap
                 if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && currentState != EnemyState.ATTACK && hasLeap && !isLeaping)
@@ -248,11 +245,12 @@ public class EnemyControllerMelee : EnemyController
                 break;
 
             case EnemyState.STUNNED:
-                stunTimer += deltaTime;
                 rb.SetVelocity(Vector3.Zero);
+                
+                stunTimer += deltaTime;
                 if (stunTimer >= stunDuration)
                 {
-                    isStunned = false;
+                    currentState = EnemyState.IDLE;
                     stunTimer = 0.0f;
                 }
                 break;

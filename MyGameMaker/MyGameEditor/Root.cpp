@@ -65,7 +65,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");
@@ -563,6 +563,17 @@ bool Root::Start()
 	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	//ParentGameObject(*walkingFX, *player);
 	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	
+	//ARMAS NO TOCAR
+	
+	//auto boltgun = CreateGameObject("Boltgun");
+	//boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
+	//boltgunMesh->SetName("boltgunMesh");
+	//boltgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	//boltgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//boltgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//ParentGameObject(*boltgunMesh, *boltgun);
 
 
 

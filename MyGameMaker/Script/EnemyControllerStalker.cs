@@ -42,6 +42,7 @@ public class EnemyControllerStalker : EnemyController
     private float anticipationDuration = 2f;
     private bool hasPounce = true;
     private bool isPouncing = false;
+    private bool hasMissed = false;
 
     public override void Awake()
     {
@@ -333,12 +334,18 @@ public class EnemyControllerStalker : EnemyController
                 if (pounceTimer < pounceDuration)
                 {
                     isPouncing = true;
+                    hasMissed = true;
                     rb.SetVelocity(rb.GetVelocity() * 120f);
                 }
                 else if (pounceTimer >= pounceDuration)
                 {
                     pounceTimer = 0f;
                     isPouncing = false;
+
+                    if (hasMissed)
+                    {
+                        currentState = EnemyState.STUNNED;
+                    }
                 }
             }
         }
@@ -358,6 +365,8 @@ public class EnemyControllerStalker : EnemyController
     {
         if (other.tag == "Player" && isPouncing)
         {
+            hasMissed = false;
+
             Engineson.print(other.tag + " hit with Pounce");
             if (pc.redThirstManager.IsInBlackRage())
             {

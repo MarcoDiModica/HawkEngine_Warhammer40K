@@ -65,10 +65,11 @@ void SkeletalAnimationComponent::Start()
 		animator = std::make_unique<Animator>(animation1.get());
 	}
     //animator = std::make_unique<Animator>(testAnimation.get());
+	LinkBonesWithGameObjects();
 	animator->SetOwnerMatrix(owner->GetTransform()->GetMatrix());
     animator->PlayAnimation(animation1.get());
 	animator->UpdateAnimation(0.01f);
-	LinkBonesWithGameObjects();
+	
 
 }
 
@@ -139,9 +140,9 @@ void SkeletalAnimationComponent::LinkBonesWithGameObjects()
 	animator->m_BonesGameObjects.clear();
 
 	for (const auto& boneName : boneNames) {
-	
+
 		if (!boneName.empty()) {
-		
+
 			FindAndLinkBoneInHierarchy(owner, boneName);
 		}
 	}
@@ -220,7 +221,7 @@ void SkeletalAnimationComponent::SaveBinary(const std::string& filename) const
 
 	std::ofstream fout(fullPath, std::ios::binary);
 	if (!fout.is_open()) {
-		LOG(LogType::LOG_ERROR, "Error al guardar la animación esqueletal: %s", fullPath.c_str());
+		LOG(LogType::LOG_ERROR, "Error al guardar la animaciï¿½n esqueletal: %s", fullPath.c_str());
 		return;
 	}
 
@@ -334,7 +335,7 @@ void SkeletalAnimationComponent::SaveBinary(const std::string& filename) const
 		fout.write(reinterpret_cast<const char*>(&numBoneGameObjects), sizeof(numBoneGameObjects));
 	}
 
-	LOG(LogType::LOG_INFO, "Animación esqueletal guardada correctamente: %s", fullPath.c_str());
+	LOG(LogType::LOG_INFO, "Animaciï¿½n esqueletal guardada correctamente: %s", fullPath.c_str());
 }
 
 void SkeletalAnimationComponent::WriteAssimpNodeData(std::ofstream& fout, const AssimpNodeData& node) const
@@ -358,7 +359,7 @@ bool SkeletalAnimationComponent::LoadBinary(const std::string& filename)
 
 	std::ifstream fin(fullPath, std::ios::binary);
 	if (!fin.is_open()) {
-		LOG(LogType::LOG_ERROR, "Error al cargar la animación esqueletal: %s", fullPath.c_str());
+		LOG(LogType::LOG_ERROR, "Error al cargar la animaciï¿½n esqueletal: %s", fullPath.c_str());
 		return false;
 	}
 
@@ -508,7 +509,7 @@ bool SkeletalAnimationComponent::LoadBinary(const std::string& filename)
 
 	Start();
 
-	LOG(LogType::LOG_INFO, "Animación esqueletal cargada correctamente: %s", fullPath.c_str());
+	LOG(LogType::LOG_INFO, "Animaciï¿½n esqueletal cargada correctamente: %s", fullPath.c_str());
 	return true;
 }
 

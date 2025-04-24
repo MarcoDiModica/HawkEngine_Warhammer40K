@@ -16,7 +16,7 @@ public class EnemyControllerStalker : EnemyController
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
-    private HormagauntAnimation anim;
+    //private LictorAnimation anim;
     PlayerController pc;
 
     // Audio
@@ -28,17 +28,19 @@ public class EnemyControllerStalker : EnemyController
     private float health = 350.0f;
     private float clawDamage = 25.0f;
     private float pounceDamage = 35.0f;
+    private float distanceToPlayer;
 
         // Invisibility
-    private float invisibilityRange = 35.0f;
+    private float invisibilityRange = 50.0f;
     private GameObject lictorMesh;
-    private bool isInvisible = false;
 
-        // Pounce+
-    private float pounceRange = 15.0f;
+        // Pounce
+    private float pounceRange = 35.0f;
     private float pounceTimer = 0f;
-    private float pounceDuration = 1.0f;
-    private bool hasPounced = false;
+    private float pounceDuration = 1.8f;
+    private float anticipationTimer = 0f;
+    private float anticipationDuration = 2f;
+    private bool hasPounce = true;
     private bool isPouncing = false;
 
     public override void Awake()
@@ -96,6 +98,8 @@ public class EnemyControllerStalker : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Stalker";
+
+        distToChase = 75f;
     }
 
     public override void Update(float deltaTime)
@@ -112,7 +116,7 @@ public class EnemyControllerStalker : EnemyController
 
             if (currentState != EnemyState.STUNNED)
             {
-                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+                distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
                 if (distanceToPlayer < distToChase)
                 {
@@ -126,21 +130,6 @@ public class EnemyControllerStalker : EnemyController
                     if (distanceToPlayer > minDistToChase)
                     {
                         currentState = EnemyState.CHASE;
-                    }
-
-                    // Invisibility
-                    if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK)
-                    {
-                        Invisibility();
-
-                        if (distanceToPlayer < pounceRange && !hasPounced && !isPouncing)
-                        {
-                            Pounce(deltaTime);
-                        }
-                    }
-                    else
-                    {
-                        lictorMesh.SetActive(true);
                     }
 
                     if (moveDirection != Vector3.Zero)
@@ -178,6 +167,8 @@ public class EnemyControllerStalker : EnemyController
         }
 
         Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
+        Engineson.print("Has Paunce = " + hasPounce.ToString());
+        Engineson.print("Is Pouncing = " + isPouncing.ToString());
 
         switch (currentState)
         {
@@ -216,6 +207,23 @@ public class EnemyControllerStalker : EnemyController
 
                 Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
                 rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+
+                // Invisibility
+                if (distanceToPlayer < invisibilityRange && currentState != EnemyState.ATTACK)
+                {
+                    Invisibility();
+
+                    if (distanceToPlayer < pounceRange && hasPounce && !isPouncing)
+                    {
+                        lictorMesh.SetActive(false);
+                        Pounce(deltaTime);
+                    }
+                }
+                else
+                {
+                    lictorMesh.SetActive(true);
+                }
+
                 break;
 
             case EnemyState.ATTACK:
@@ -293,18 +301,30 @@ public class EnemyControllerStalker : EnemyController
 
     public void Pounce(float deltaTime)
     {
-        if (!hasPounced)
+        //anim.Anticipation
+        anticipationTimer += deltaTime;
+        if (anticipationTimer <= anticipationDuration)
         {
-            isPouncing = true;
-            hasPounced = true;
-            pounceTimer += deltaTime;
-            rb.SetVelocity(rb.GetVelocity() * 2.5f);
-
-            if (pounceTimer >= pounceDuration)
+            rb.SetVelocity(Vector3.Zero);
+        }
+        else if (anticipationTimer >= anticipationDuration)
+        {
+            if (distanceToPlayer > distToChase)
             {
-                isPouncing = false;
-                pounceTimer = 0f;
-                hasPounced = false;
+                return;
+            }
+            else
+            {
+                hasPounce = false;
+                isPouncing = true;
+                rb.SetVelocity(rb.GetVelocity() * 100f);
+
+                pounceTimer += deltaTime;
+                if (pounceTimer >= pounceDuration)
+                {
+                    pounceTimer = 0f;
+                    isPouncing = false;
+                }
             }
         }
     }

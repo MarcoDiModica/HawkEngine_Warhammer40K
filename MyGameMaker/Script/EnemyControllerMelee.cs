@@ -37,7 +37,6 @@ public class EnemyControllerMelee : EnemyController
     private float leapDuration = 1.5f;
     private float leapTimer = 0f;
     private bool hasLeap = true;
-
     private bool isLeaping = false;
 
     public override void Awake() {

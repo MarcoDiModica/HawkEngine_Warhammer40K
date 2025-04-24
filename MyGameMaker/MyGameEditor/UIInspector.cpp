@@ -2060,6 +2060,13 @@ private:
 			system->SetParticleAlpha(system->GetStartAlpha(), endColorArr[3]);
 		}
 
+		ImGui::Text("IsLocalSpace");
+
+		bool isLocalSpace = system->GetIsLocalSpace();
+		if (ImGui::Checkbox("##IsLocalSpace", &isLocalSpace)) {
+			system->SetIsLocalSpace(isLocalSpace);
+		}
+
 		ImGui::EndGroup();
 		ImGui::TreePop();
 	}

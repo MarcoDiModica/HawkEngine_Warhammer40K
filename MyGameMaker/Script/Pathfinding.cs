@@ -8,8 +8,8 @@ namespace HawkEngine
 {
     public class Pathfinding
     {
-        private const int width = 500;
-        private const int height = 500;
+        private const int width = 5000;
+        private const int height = 5000;
         private const float cellSize = 1f;
         private static readonly float DiagCost = (float)Math.Sqrt(2);
 

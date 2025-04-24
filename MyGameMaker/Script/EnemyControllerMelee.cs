@@ -191,7 +191,7 @@ public class EnemyControllerMelee : EnemyController
             }
         }
 
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
+        //Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
 
         switch (currentState)
         {
@@ -237,17 +237,45 @@ public class EnemyControllerMelee : EnemyController
                 //}
                 //isRunning = true;
 
-                Vector3 myPos = enemyTransform.position;
-                Vector3 playerPos = playerTransform.position;
-                
-                chasePath = pathfinder.FindPath(myPos, playerPos);
 
-                if (chasePath != null && chasePath.Count > 1)
+                Vector3 myPos = enemyTransform.position;
+                Vector3 tgtPos = playerTransform.position;
+                chasePath = pathfinder.FindPath(myPos, tgtPos);
+
+                if (chasePath != null && chaseIndex < chasePath.Count)
                 {
-                    Vector3 nextWP = chasePath[1];
-                    Vector3 dir = Vector3.Normalize(nextWP - myPos);
-                    var vel = dir * speedMovement;
-                    rb.SetVelocity(new Vector3(vel.X, GetComponent<Rigidbody>().GetVelocity().Y, vel.Z));
+                    Vector3 wp = chasePath[chaseIndex];
+                    Vector3 delta = wp - myPos;
+                    float d = delta.Length();
+
+                    if (d < 0.1f)
+                    {
+                        chaseIndex++;
+                    }
+                    else
+                    {
+                        Vector3 dir = (d > 1e-5f) ? delta / d : Vector3.Zero;
+
+                        Vector3 desired = dir * speedMovement;
+                        Vector3 cv = rb.GetVelocity();
+                        float t = Math.Min(1f, acceleration * deltaTime);
+
+                        rb.SetVelocity(Vector3.Lerp(cv, desired, t));
+                        anim.SetRunningAnimation();
+                        isRunning = true;
+                    }
+                }
+                else
+                {
+                    Vector3 delta = tgtPos - myPos;
+                    float len = delta.Length();
+                    Vector3 dir = (len > 1e-5f) ? delta / len : Vector3.Zero;
+
+                    Vector3 desired = dir * speedMovement;
+                    Vector3 cv = rb.GetVelocity();
+                    float t = Math.Min(1f, acceleration * deltaTime);
+
+                    rb.SetVelocity(Vector3.Lerp(cv, desired, t));
                     anim.SetRunningAnimation();
                     isRunning = true;
                 }

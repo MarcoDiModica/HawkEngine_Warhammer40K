@@ -240,7 +240,15 @@ public class EnemyControllerMelee : EnemyController
 
                 Vector3 myPos = enemyTransform.position;
                 Vector3 tgtPos = playerTransform.position;
-                chasePath = pathfinder.FindPath(myPos, tgtPos);
+
+                chaseTimer += deltaTime;
+                if (chaseTimer >= chaseReplanInterval)
+                {
+                    chasePath = pathfinder.FindPath(enemyTransform.position,
+                                                    playerTransform.position);
+                    chaseIndex = 0;
+                    chaseTimer = 0f;
+                }
 
                 if (chasePath != null && chaseIndex < chasePath.Count)
                 {
@@ -256,6 +264,8 @@ public class EnemyControllerMelee : EnemyController
                     {
                         Vector3 dir = (d > 1e-5f) ? delta / d : Vector3.Zero;
 
+                        moveDirection = dir;
+
                         Vector3 desired = dir * speedMovement;
                         Vector3 cv = rb.GetVelocity();
                         float t = Math.Min(1f, acceleration * deltaTime);
@@ -267,9 +277,11 @@ public class EnemyControllerMelee : EnemyController
                 }
                 else
                 {
-                    Vector3 delta = tgtPos - myPos;
+                    Vector3 delta = playerTransform.position - enemyTransform.position;
                     float len = delta.Length();
                     Vector3 dir = (len > 1e-5f) ? delta / len : Vector3.Zero;
+
+                    moveDirection = dir;
 
                     Vector3 desired = dir * speedMovement;
                     Vector3 cv = rb.GetVelocity();

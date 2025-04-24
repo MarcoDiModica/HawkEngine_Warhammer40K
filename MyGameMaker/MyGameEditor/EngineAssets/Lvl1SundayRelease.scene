@@ -11,9 +11,9 @@ GameObject0:
       name: Transform_Component
       enabled: true
       localPosition:
-        - 241.47607421875
-        - -8.3913633375232166e-08
-        - 20.370437622070312
+        - -0.11597084999084473
+        - -5.9604644775390625e-08
+        - -18.061798095703125
       localRotation:
         - 0
         - -0
@@ -31696,7 +31696,7 @@ GameObject1:
             - 4407.87109375
           localRotation:
             - -90
-            - -30.312856223474956
+            - -30.312856223474963
             - 0
           localScale:
             - 100
@@ -47406,7 +47406,7 @@ GameObject77:
             - -56.713325500488281
           localRotation:
             - 0
-            - -45.454913554103321
+            - -45.454913554103328
             - 0
           localScale:
             - 10.014464378356934
@@ -49977,32 +49977,6 @@ GameObject91:
         - 0
         - 0
       isTrigger: true
-    ScriptComponents:
-      Script0:
-        name: Scene1ToScene2
-  Children: ~
-GameObject92:
-  name: CollisionNextLevel_1
-  uuid: 16807135813823072516
-  tag: Untagged
-  active: true
-  isStatic: false
-  Components:
-    Transform_Component:
-      name: Transform_Component
-      enabled: true
-      localPosition:
-        - 0
-        - 0
-        - 0
-      localRotation:
-        - 0
-        - -0
-        - 0
-      localScale:
-        - 1
-        - 1
-        - 1
     ScriptComponents:
       Script0:
         name: Scene1ToScene2

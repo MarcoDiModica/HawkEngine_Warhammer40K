@@ -273,7 +273,7 @@ bool Root::Start()
 	////// Test Ammunition
 	//auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/ShotgunShells.fbx");
 	//ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 3, 20));
-	//ShotgunShells->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
+	//ShotgunShells->GetTransform()->SetScale(glm::vec3(0.008, 0.008, 0.008));
 	//ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
@@ -284,7 +284,7 @@ bool Root::Start()
 	//
 	//auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/BoltgunBullets.fbx");
 	//BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 3, 20));
-	//BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
+	//BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.008, 0.008, 0.008));
 	//BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();

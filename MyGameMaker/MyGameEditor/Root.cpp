@@ -465,13 +465,15 @@ bool Root::Start()
 	auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");
 	tyranidWarrior->SetTag("Enemy");
 	tyranidWarrior->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	tyranidWarrior->GetComponent<Transform_Component>()->SetScale(glm::vec3(10, 10, 10));
+	tyranidWarrior->GetComponent<Transform_Component>()->SetScale(glm::vec3(1, 1, 1));
+	tyranidWarrior->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	tyranidWarrior->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto tyranidWarriorMesh = CreateGameObject("Assets/Meshes/TyranidWarrior_low.fbx");
+	auto tyranidWarriorMesh = CreateGameObjectWithPath("Assets/Meshes/TyranidWarrior_low.fbx");
 	tyranidWarriorMesh->SetName(tyranidWarrior->GetName() + "Mesh");
-	tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
+	tyranidWarriorMesh->GetTransform()->SetPosition(glm::vec3(0, 0.65, -6));
+	tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(0.012, 0.012, 0.012));
 	ParentGameObject(*tyranidWarriorMesh, *tyranidWarrior);
-	tyranidWarriorMesh->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
+	tyranidWarrior->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
 
 	//auto mawloc = CreateGameObject("Mawloc");
 	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));

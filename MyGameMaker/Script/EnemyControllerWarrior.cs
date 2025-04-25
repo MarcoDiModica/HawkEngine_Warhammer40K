@@ -96,8 +96,8 @@ public class EnemyControllerWarrior : EnemyController
             {
                 currentState = EnemyState.DEAD;
                 //anim.SetDeathAnimation();
-                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
-                sound?.Play();
+                //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
+                //sound?.Play();
                 return;
             }
 
@@ -167,7 +167,7 @@ public class EnemyControllerWarrior : EnemyController
                 isFootstepPlaying = false;
                 if (!hasStoppedFootsteps)
                 {
-                    sound?.Stop();
+                    //sound?.Stop();
                     hasStoppedFootsteps = true;
                 }
                 break;
@@ -175,15 +175,15 @@ public class EnemyControllerWarrior : EnemyController
             case EnemyState.CHASE:
                 if (!isFootstepPlaying)
                 {
-                    sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                    sound?.Play(true);
+                    //sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
+                    //sound?.Play(true);
                     isFootstepPlaying = true;
                     hasStoppedFootsteps = false;
                 }
                 if (isCombatMusicPlaying == false)
                 {
-                    sound?.LoadAudio(combatMusic);
-                    sound?.Play(true);
+                    //sound?.LoadAudio(combatMusic);
+                    //sound?.Play(true);
                     isCombatMusicPlaying = true;
                 }
 
@@ -234,7 +234,7 @@ public class EnemyControllerWarrior : EnemyController
                     if (shootTimer >= shootCooldown)
                     {
                         Attack();
-                        sound?.Play();
+                        //sound?.Play();
                         shootTimer = 0;
                     }
                 }
@@ -246,6 +246,9 @@ public class EnemyControllerWarrior : EnemyController
             default:
                 break;
         }
+
+        UpdateProjectiles(deltaTime);
+        CleanupProjectiles();
     }
 
     public override void Attack()
@@ -269,8 +272,8 @@ public class EnemyControllerWarrior : EnemyController
                 pc.playerData.TakeDamage(swordDamage);
             }
 
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
-            sound?.Play();
+            //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
+            //sound?.Play();
         }
         else if (isShooting)
         {
@@ -323,5 +326,55 @@ public class EnemyControllerWarrior : EnemyController
         return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
                (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
+    }
+
+    private void UpdateProjectiles(float deltaTime)
+    {
+        foreach (var proj in activeProjectiles)
+        {
+            if (proj.markedForDestruction) continue;
+
+            proj.lifetime += deltaTime;
+
+            if (proj.lifetime >= projectileLifetime)
+            {
+                proj.markedForDestruction = true;
+                continue;
+            }
+
+            try
+            {
+                if (proj.transform != null)
+                {
+                    proj.transform.position += proj.direction * projectileSpeed * deltaTime;
+                }
+            }
+            catch (System.Exception e)
+            {
+                proj.markedForDestruction = true;
+                Engineson.print($"Error updating projectile: {e.Message}");
+            }
+        }
+    }
+
+    private void CleanupProjectiles()
+    {
+        for (int i = activeProjectiles.Count - 1; i >= 0; i--)
+        {
+            var proj = activeProjectiles[i];
+            if (proj.markedForDestruction)
+            {
+                try
+                {
+                    Engineson.Destroy(proj.gameObject);
+                    activeProjectiles.RemoveAt(i);
+                }
+                catch (System.Exception e)
+                {
+                    Engineson.print($"Error destroying projectile: {e.Message}");
+                    activeProjectiles.RemoveAt(i);
+                }
+            }
+        }
     }
 }

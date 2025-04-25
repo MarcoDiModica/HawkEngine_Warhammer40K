@@ -38,7 +38,10 @@ public class PlayerShooting : MonoBehaviour
     private string shotgunEquiped = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunEqquiped.wav";
     private string railgunEquiped = "Assets/Audio/SFX/Weapons/Railgun/RailgunEqquiped.wav";
 
-    private ParticleFX riffleShotFX;
+    public ParticleFX rifleShotFX;
+    public ParticleFX shotgunShotFX;
+    public ParticleFX railgunShotSemiFX;
+    public ParticleFX railgunShotAutoFX;
 
     private enum GunType
     {
@@ -102,8 +105,10 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("ERROR: PlayerShooting requires a Ra ilgun component!");
         }
 
-        riffleShotFX = GameObject.Find("RiffleShotFX").GetComponent<ParticleFX>();
-
+        rifleShotFX = GameObject.Find("RiffleShotFX").GetComponent<ParticleFX>();
+        shotgunShotFX = GameObject.Find("ShotgunShotFX").GetComponent<ParticleFX>();
+        railgunShotSemiFX = GameObject.Find("RailgunShotSemiFX").GetComponent<ParticleFX>();
+        railgunShotAutoFX = GameObject.Find("RailgunShotAutoFX").GetComponent<ParticleFX>();
 
         boltgunMesh = GameObject.Find("Boltgun");
         shotgunMesh = GameObject.Find("Shotgun");
@@ -157,7 +162,7 @@ public class PlayerShooting : MonoBehaviour
         if (playerInput?.IsShooting() == true)
         {
             Shoot();
-            riffleShotFX.EmitBurst(1);
+
         }
         else if (playerInput.IsShooting() == false)
         {
@@ -174,7 +179,10 @@ public class PlayerShooting : MonoBehaviour
                     break;
             }
 
-            riffleShotFX.Stop();
+            rifleShotFX.Stop();
+            shotgunShotFX.Stop();
+            railgunShotSemiFX.Stop();
+            railgunShotAutoFX.Stop();
 
         }
 
@@ -212,9 +220,15 @@ public class PlayerShooting : MonoBehaviour
             {
                 case GunType.BOLTGUN:
                     boltgun.Shoot();
+                    shotgunShotFX.Stop();
+                    railgunShotAutoFX.Stop();
+                    railgunShotSemiFX.Stop();
                     break;
                 case GunType.SHOTGUN:
                     shotgun.Shoot();
+                    rifleShotFX.Stop();
+                    railgunShotAutoFX.Stop();
+                    railgunShotSemiFX.Stop();
                     break;
                 case GunType.RAILGUN:
                     railgun.Shoot();

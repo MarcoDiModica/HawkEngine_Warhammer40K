@@ -178,7 +178,7 @@ public class Boltgun : BaseWeapon
             bulletLifetimes.Add(0);
             bulletHitEnemies.Add(new HashSet<GameObject>());
             bulletStartPositions.Add(bulletStart);
-
+            playerController.playerShooting.rifleShotFX.EmitBurst(1);
         }
 
     }

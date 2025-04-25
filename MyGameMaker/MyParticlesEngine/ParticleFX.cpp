@@ -319,7 +319,41 @@ namespace ParticlePresets {
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
 		"Assets/Textures/muzzle.png", // Texture path
-		false						   // Is Local Space
+		true						   // Is Local Space
+	};
+
+	const ParticlePreset Shotgun_Shot = {
+		ParticleType::SHOTGUN_SHOT,
+		true,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		1.0f,                          // Alpha end
+		1,                          // Size start
+		1,                          // Size end
+		0.25f,                          // Min lifetime
+		0.25f,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		1,                         // Emission rate (particles per second)
+		EmitterShape::POINT,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(1024,778),			   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.05f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/ShotGun Muzzle Flash_Spritesheet_Yiwei.png", // Texture path
+		true						   // Is Local Space
 	};
 
 	const ParticlePreset Enemy_Dash = {
@@ -490,7 +524,7 @@ namespace ParticlePresets {
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
 	"Assets/Textures/RailGunAuto.png", // Texture path
-	false						   // Is Local Space
+	true						   // Is Local Space
 	};
 
 	const ParticlePreset RailGun_Semi = {
@@ -524,7 +558,7 @@ namespace ParticlePresets {
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
 	"Assets/Textures/RailGunSemi.png", // Texture path
-	false						   // Is Local Space
+	true						   // Is Local Space
 	};
 
 	const ParticlePreset Environment_Dropplet = {
@@ -1159,6 +1193,9 @@ void ParticleFX::ApplyPreset(int particleID) {
 	case ParticleType::RIFFLE_SHOT:
 		preset = ParticlePresets::Riffle_Shot;
 		break;
+	case ParticleType::SHOTGUN_SHOT:
+		preset = ParticlePresets::Shotgun_Shot;
+		break;
 	case ParticleType::ENEMY_DASH:
 		preset = ParticlePresets::Enemy_Dash;
 		SetOneShot(true);
@@ -1235,6 +1272,7 @@ void ParticleFX::ApplyPreset(int particleID) {
 	minSize = preset.minSize;
 	maxSize = preset.maxSize;
 	randomAnimIndex = preset.randomAnimIndex;
+	isLocalSpace = preset.isLocalSpace;
 	SetTexture(preset.texturePath);
 }
 

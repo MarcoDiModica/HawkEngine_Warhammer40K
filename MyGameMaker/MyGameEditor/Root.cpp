@@ -552,6 +552,24 @@ bool Root::Start()
 	//ParentGameObject(*riffleShotFX, *player);
 	//riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
 	//riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	//auto findPlayer = FindGOByName("Player");
+	//auto shotgunShotFX = CreateGameObject("ShotgunShotFX");
+	//shotgunShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	//ParentGameObject(*shotgunShotFX, *findPlayer);
+	//shotgunShotFX->AddComponent<ParticleFX>()->ApplyPreset(20);
+	//shotgunShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+
+	//auto railgunShotAutoFX = CreateGameObject("RailgunShotAutoFX");
+	//railgunShotAutoFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	//ParentGameObject(*railgunShotAutoFX, *findPlayer);
+	//railgunShotAutoFX->AddComponent<ParticleFX>()->ApplyPreset(13);
+	//railgunShotAutoFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+
+	//auto railgunShotSemiFX = CreateGameObject("RailgunShotSemiFX");
+	//railgunShotSemiFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	//ParentGameObject(*railgunShotSemiFX, *findPlayer);
+	//railgunShotSemiFX->AddComponent<ParticleFX>()->ApplyPreset(14);
+	//railgunShotSemiFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
 	//
 	//auto inactiveDashFX = CreateGameObject("InactiveDashFX");
 	//inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));

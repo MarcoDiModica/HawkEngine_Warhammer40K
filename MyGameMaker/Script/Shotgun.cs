@@ -16,7 +16,7 @@ public class Shotgun : BaseWeapon
     public HookShot hookShot;
     private RedThirstManager redThirstManager;
 
-    private float timeSinceLastShot = 0.0f;
+    public float timeSinceLastShot = 0.0f;
     private List<Vector3> bulletDirections = new List<Vector3>();
     private List<HashSet<GameObject>> bulletHitEnemies = new List<HashSet<GameObject>>();
     private List<Vector3> bulletStartPositions = new List<Vector3>();
@@ -133,6 +133,7 @@ public class Shotgun : BaseWeapon
     {
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
+
             timeSinceLastShot = 0f;
 
             if (!playerData.infiniteBullets)
@@ -187,6 +188,7 @@ public class Shotgun : BaseWeapon
                 bulletLifetimes.Add(0);
                 bulletHitEnemies.Add(new HashSet<GameObject>());
                 bulletStartPositions.Add(bulletStart);
+                playerController.playerShooting.shotgunShotFX.EmitBurst(1);
             }
         }
     }

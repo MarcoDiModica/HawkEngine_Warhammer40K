@@ -25,6 +25,7 @@ public class PlayerPowerUp : MonoBehaviour
     private string ChapterStandardActivated = "Assets/Audio/SFX/PickUps/PowerUps/ChapterStandard/ChapterStandardActivated.wav";
     private string MagnetEffect = "Assets/Audio/SFX/PickUps/PowerUps/Magnet/MagnetEffect.wav";
     private string MedicaeStimmActivated = "Assets/Audio/SFX/PickUps/PowerUps/MedicaeStimm/Injection Heal Sound Effect.wav";
+    private ParticleFX MedicaeStimmSpeed;
 
     public override void Awake()
     {
@@ -35,7 +36,8 @@ public class PlayerPowerUp : MonoBehaviour
     {
         playerController = gameObject.GetComponent<PlayerController>();
         sound = gameObject.GetComponent<Audio>();
-
+        MedicaeStimmSpeed = GameObject.Find("SpeedBoostFX").GetComponent<ParticleFX>();
+        MedicaeStimmSpeed.Stop();
     }
 
     public override void Update(float deltatime)
@@ -43,9 +45,10 @@ public class PlayerPowerUp : MonoBehaviour
         if (hasMedicaeStimm)
         {
             medicaeStimmTimer += deltatime;
-
+            MedicaeStimmSpeed.Play();
             if (medicaeStimmTimer >= medicaeStimmDuration)
             {
+                MedicaeStimmSpeed.Stop();
                 hasMedicaeStimm = false;
                 medicaeStimmTimer = 0.0f;
                 playerController.playerData.movSpeed = playerController.playerData.stimmSpeed = 0;

@@ -696,7 +696,39 @@ namespace ParticlePresets {
 		"Assets/Textures/Medicae_Stim.png", // Texture path
 		false 						   // Is Local Space
 	};
-
+	const ParticlePreset Medicae_Stim_Speed = {
+		ParticleType::MEDICAE_STIM_SPEED,
+			false,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		0.35f,                          // Alpha start
+		1.0f,                          // Alpha end
+		0.8f,                          // Size start
+		8.0f,                          // Size end
+		0.1f,                          // Min lifetime
+		0.7f,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		80.0f,                         // Emission rate (particles per second)
+		EmitterShape::CIRCLE,            // Shape
+		2.11f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(1024,778),			   // Sprite size
+		true,						   // Use animation
+		true,						   // Random animation Index
+		0.03f,						   // Animation speed
+		0.0f,						   // Start rotation
+		true,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Project3_Velocity_effect.png", // Texture path
+		false 						   // Is Local Space
+	};
 	const ParticlePreset Blood_Splash = {
 		ParticleType::DEFAULT,
 		false,                         // PlayOnAwake
@@ -1235,6 +1267,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 	case ParticleType::BLOOD_SPLASH:
 		preset = ParticlePresets::Blood_Splash;
 		SetOneShot(true);
+		break;
+	case ParticleType::MEDICAE_STIM_SPEED:
+		preset = ParticlePresets::Medicae_Stim_Speed;
+		SetOneShot(false);
 		break;
 	default:
 		preset = ParticlePresets::Medicae_Stim;

@@ -702,12 +702,12 @@ namespace ParticlePresets {
 		5,						   // Duration (only if one-shot)
 		glm::vec3(1,1,1),   // Start color (light gray)
 		glm::vec3(1,1,1),   // End color (dark gray)
-		0.35f,                          // Alpha start
-		1.0f,                          // Alpha end
+		0.17f,                          // Alpha start
+		0.17f,                          // Alpha end
 		0.8f,                          // Size start
 		8.0f,                          // Size end
 		0.1f,                          // Min lifetime
-		0.7f,                          // Max lifetime
+		0.2f,                          // Max lifetime
 		0.0f,                          // Min speed
 		0.0f,                          // Max speed
 		0.0f,						   // End Speed

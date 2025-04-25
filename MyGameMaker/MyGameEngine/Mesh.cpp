@@ -3,52 +3,32 @@
 #include <fstream>
 #include <filesystem>
 #include <unordered_map>
-#include <unordered_set>
-#include <zlib.h>
-#include <queue>
-#ifdef min
-#undef min
-#endif
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <assimp/cimport.h>
+#include <string>
+#include <sstream>
 #include <GL/glew.h>
 #include <glm/gtc/type_ptr.hpp>
 
 #include "GameObject.h"
 #include "../MyGameEditor/Log.h"
 
-Mesh::Mesh() :aabbMin(vec3(0.0f)), aabbMax(vec3(0.0f))
+static std::unordered_map<std::string, std::shared_ptr<Mesh>> meshCache;
+
+Mesh::Mesh() : aabbMin(glm::vec3(0.0f)), aabbMax(glm::vec3(0.0f))
 {
 	_boundingBox = BoundingBox();
 }
 
+Mesh::~Mesh()
+{
+	releaseOpenGLResources();
+}
 
-Mesh::~Mesh() {}
-
-
-//void Mesh::Load(const glm::vec3* vertices, size_t num_verts, const unsigned int* indices, size_t num_indexs, const int* boneIDs, const float* weights)
-//{
-//	_boundingBox.min = _vertices.front();
-//	_boundingBox.max = _vertices.front();
-//
-//	for (const auto& v : _vertices) {
-//		_boundingBox.min = glm::min(_boundingBox.min, glm::dvec3(v.position));
-//		_boundingBox.max = glm::max(_boundingBox.max, glm::dvec3(v.position));
-//	}
-//	for (size_t i = 0; i < num_verts; ++i) {
-//		_vertices[i].position = vertices[i];
-//		for (int j = 0; j < MAX_BONE_INFLUENCE; ++j) {
-//			_vertices[i].m_BoneIDs[j] = boneIDs[i * MAX_BONE_INFLUENCE + j];
-//			_vertices[i].m_Weights[j] = weights[i * MAX_BONE_INFLUENCE + j];
-//		}
-//	}
-//	
-//
-//	CalculateNormals();
-//}
-
+void Mesh::releaseOpenGLResources()
+{
+	/*if (model) {
+		model->ReleaseResources();
+	}*/
+}
 
 void Mesh::drawBoundingBox(const BoundingBox& bbox) {
 	glLineWidth(2.0);
@@ -58,7 +38,6 @@ void Mesh::drawBoundingBox(const BoundingBox& bbox) {
 	drawWiredQuad(bbox.v010(), bbox.v011(), bbox.v111(), bbox.v110());
 	drawWiredQuad(bbox.v000(), bbox.v010(), bbox.v110(), bbox.v100());
 	drawWiredQuad(bbox.v001(), bbox.v011(), bbox.v111(), bbox.v101());
-
 }
 
 void Mesh::drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const vec3& v3) {
@@ -68,85 +47,219 @@ void Mesh::drawWiredQuad(const vec3& v0, const vec3& v1, const vec3& v2, const v
 	glVertex3(v2);
 	glVertex3(v3);
 	glEnd();
-
 }
 
 void Mesh::CalculateNormals() {
-	_normals.resize(_vertices.size(), glm::vec3(0.0f));
-
-	for (size_t i = 0; i < _indices.size(); i += 3) {
-		glm::vec3 v0 = _vertices[_indices[i]].position;
-		glm::vec3 v1 = _vertices[_indices[i + 1]].position;
-		glm::vec3 v2 = _vertices[_indices[i + 2]].position;
-
-		glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
-
-		_normals[_indices[i]] += normal;
-		_normals[_indices[i + 1]] += normal;
-		_normals[_indices[i + 2]] += normal;
+	if (!model || model->GetModelData().vertexData.empty() || model->GetModelData().indexData.empty()) {
+		LOG(LogType::LOG_ERROR, "Cannot calculate normals: Model data is empty");
+		return;
 	}
 
-	for (auto& normal : _normals) {
-		normal = glm::normalize(normal);
+	auto& modelData = model->GetModelData();
+	const auto& vertexData = modelData.vertexData;
+	const auto& indexData = modelData.indexData;
+	auto& normalData = modelData.vertex_normals;
+
+	normalData.clear();
+	normalData.resize(vertexData.size(), glm::vec3(0.0f));
+
+	for (size_t i = 0; i < indexData.size(); i += 3) {
+		if (i + 2 >= indexData.size() ||
+			indexData[i] >= vertexData.size() ||
+			indexData[i + 1] >= vertexData.size() ||
+			indexData[i + 2] >= vertexData.size()) {
+			continue;
+		}
+
+		glm::vec3 v0 = vertexData[indexData[i]].position;
+		glm::vec3 v1 = vertexData[indexData[i + 1]].position;
+		glm::vec3 v2 = vertexData[indexData[i + 2]].position;
+
+		glm::vec3 normal = glm::cross(v1 - v0, v2 - v0);
+		float length = glm::length(normal);
+
+		if (length < 0.0001f) {
+			continue;
+		}
+
+		normal /= length; 
+
+		normalData[indexData[i]] += normal;
+		normalData[indexData[i + 1]] += normal;
+		normalData[indexData[i + 2]] += normal;
 	}
 
-	//normals_buffer.LoadData(_normals.data(), _normals.size() * sizeof(glm::vec3));
+	for (auto& normal : normalData) {
+		float length = glm::length(normal);
+		if (length > 0.0001f) {
+			normal /= length;
+		}
+		else {
+			normal = glm::vec3(0.0f, 1.0f, 0.0f);
+		}
+	}
+
+	for (size_t i = 0; i < vertexData.size(); i++) {
+		if (i < normalData.size()) {
+			modelData.vertexData[i].normal = normalData[i];
+		}
+	}
+
+	if (modelData.vBNormalsID != 0) {
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBNormalsID);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, normalData.size() * sizeof(glm::vec3), normalData.data());
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 }
 
 void Mesh::LoadBones()
 {
-	// Check if the mesh has bone data before enabling the attributes
+	if (!model || model->GetModelData().vertexData.empty()) {
+		LOG(LogType::LOG_ERROR, "Cannot load bones: Model data is empty");
+		return;
+	}
+
 	bool hasBoneData = false;
-	for (const auto& vertex : _vertices) {
+	for (const auto& vertex : model->GetModelData().vertexData) {
 		if (vertex.m_BoneIDs[0] != -1) {
 			hasBoneData = true;
 			break;
 		}
 	}
 
-	if (hasBoneData) {
+	if (!hasBoneData) {
+		return; 
+	}
 
+	model->isAnimated = true;
 
+	if (model->GetModelData().vA != 0) {
+		glBindVertexArray(model->GetModelData().vA);
+
+		if (model->GetModelData().vBBoneIDsID == 0) {
+			glGenBuffers(1, &model->GetModelData().vBBoneIDsID);
+		}
+
+		if (model->GetModelData().vBBoneWeightsID == 0) {
+			glGenBuffers(1, &model->GetModelData().vBBoneWeightsID);
+		}
+
+		std::vector<glm::ivec4> boneIDs;
+		std::vector<glm::vec4> weights;
+
+		boneIDs.reserve(model->GetModelData().vertexData.size());
+		weights.reserve(model->GetModelData().vertexData.size());
+
+		for (const auto& vertex : model->GetModelData().vertexData) {
+			glm::ivec4 ids;
+			glm::vec4 vertexWeights;
+
+			for (int i = 0; i < MAX_BONE_INFLUENCE; i++) {
+				ids[i] = vertex.m_BoneIDs[i];
+				vertexWeights[i] = vertex.m_Weights[i];
+			}
+
+			boneIDs.push_back(ids);
+			weights.push_back(vertexWeights);
+		}
+
+		glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBBoneIDsID);
+		glBufferData(GL_ARRAY_BUFFER, boneIDs.size() * sizeof(glm::ivec4), boneIDs.data(), GL_STATIC_DRAW);
+		glEnableVertexAttribArray(ATTR_BONE_IDS);
+		glVertexAttribIPointer(ATTR_BONE_IDS, 4, GL_INT, sizeof(glm::ivec4), (const void*)0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBBoneWeightsID);
+		glBufferData(GL_ARRAY_BUFFER, weights.size() * sizeof(glm::vec4), weights.data(), GL_STATIC_DRAW);
+		glEnableVertexAttribArray(ATTR_BONE_WEIGHTS);
+		glVertexAttribPointer(ATTR_BONE_WEIGHTS, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 	}
 }
+
 void Mesh::CalculateTangents() {
-	// Resize tangent and bitangent arrays to match vertices
-	std::vector<glm::vec3> tangents(_vertices.size(), glm::vec3(0.0f));
-	std::vector<glm::vec3> bitangents(_vertices.size(), glm::vec3(0.0f));
+	if (!model || model->GetModelData().vertexData.empty() || model->GetModelData().indexData.empty()) {
+		LOG(LogType::LOG_ERROR, "Cannot calculate tangents: Model data is empty");
+		return;
+	}
 
-	// Calculate tangents and bitangents for each triangle
-	for (size_t i = 0; i < _indices.size(); i += 3) {
-		unsigned int idx0 = _indices[i];
-		unsigned int idx1 = _indices[i + 1];
-		unsigned int idx2 = _indices[i + 2];
-		glm::vec3 v0 = _vertices[idx0].position;
-		glm::vec3 v1 = _vertices[idx1].position;
-		glm::vec3 v2 = _vertices[idx2].position;
+	auto& modelData = model->GetModelData();
+	const auto& vertexData = modelData.vertexData;
+	const auto& indexData = modelData.indexData;
+	const auto& texCoords = modelData.vertex_texCoords;
+	auto& tangentData = modelData.vertex_tangents;
+	auto& bitangentData = modelData.vertex_bitangents;
 
-		// Get texture coordinates
-		glm::vec2 uv0, uv1, uv2;
-		if (i < model->GetModelData().vertex_texCoords.size()) {
-			uv0 = model->GetModelData().vertex_texCoords[idx0];
-			uv1 = model->GetModelData().vertex_texCoords[idx1];
-			uv2 = model->GetModelData().vertex_texCoords[idx2];
+	if (modelData.vertex_normals.empty()) {
+		CalculateNormals();
+	}
+
+	if (texCoords.empty() && vertexData.size() > 0) {
+		LOG(LogType::LOG_WARNING, "Calculating tangents without texture coordinates");
+	}
+
+	tangentData.clear();
+	bitangentData.clear();
+	tangentData.resize(vertexData.size(), glm::vec3(0.0f));
+	bitangentData.resize(vertexData.size(), glm::vec3(0.0f));
+
+	for (size_t i = 0; i < indexData.size(); i += 3) {
+		if (i + 2 >= indexData.size() ||
+			indexData[i] >= vertexData.size() ||
+			indexData[i + 1] >= vertexData.size() ||
+			indexData[i + 2] >= vertexData.size()) {
+			continue;
 		}
-		else {
-			// If no texture coordinates, use default
-			uv0 = glm::vec2(0.0f, 0.0f);
-			uv1 = glm::vec2(1.0f, 0.0f);
-			uv2 = glm::vec2(0.0f, 1.0f);
-		}
 
-		// Calculate edges of the triangle
+		unsigned int idx0 = indexData[i];
+		unsigned int idx1 = indexData[i + 1];
+		unsigned int idx2 = indexData[i + 2];
+
+		glm::vec3 v0 = vertexData[idx0].position;
+		glm::vec3 v1 = vertexData[idx1].position;
+		glm::vec3 v2 = vertexData[idx2].position;
+
+		glm::vec2 uv0 = (idx0 < texCoords.size()) ? texCoords[idx0] : glm::vec2(0.0f, 0.0f);
+		glm::vec2 uv1 = (idx1 < texCoords.size()) ? texCoords[idx1] : glm::vec2(1.0f, 0.0f);
+		glm::vec2 uv2 = (idx2 < texCoords.size()) ? texCoords[idx2] : glm::vec2(0.0f, 1.0f);
+
 		glm::vec3 edge1 = v1 - v0;
 		glm::vec3 edge2 = v2 - v0;
 
-		// Calculate UV deltas
 		glm::vec2 deltaUV1 = uv1 - uv0;
 		glm::vec2 deltaUV2 = uv2 - uv0;
 
-		// Calculate tangent and bitangent
-		float f = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+		float determinant = (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+		if (std::abs(determinant) < 0.0001f) {
+			glm::vec3 normal = glm::normalize(glm::cross(edge1, edge2));
+			glm::vec3 tangent;
+
+			if (std::abs(normal.x) < std::abs(normal.y) && std::abs(normal.x) < std::abs(normal.z)) {
+				tangent = glm::normalize(glm::vec3(1.0f, 0.0f, 0.0f));
+			}
+			else if (std::abs(normal.y) < std::abs(normal.z)) {
+				tangent = glm::normalize(glm::vec3(0.0f, 1.0f, 0.0f));
+			}
+			else {
+				tangent = glm::normalize(glm::vec3(0.0f, 0.0f, 1.0f));
+			}
+
+			tangent = glm::normalize(tangent - normal * glm::dot(normal, tangent));
+			glm::vec3 bitangent = glm::cross(normal, tangent);
+
+			tangentData[idx0] += tangent;
+			tangentData[idx1] += tangent;
+			tangentData[idx2] += tangent;
+
+			bitangentData[idx0] += bitangent;
+			bitangentData[idx1] += bitangent;
+			bitangentData[idx2] += bitangent;
+
+			continue;
+		}
+
+		float f = 1.0f / determinant;
 
 		glm::vec3 tangent, bitangent;
 
@@ -158,785 +271,187 @@ void Mesh::CalculateTangents() {
 		bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
 		bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
 
-		// Add to vertices (for averaging)
-		tangents[idx0] += tangent;
-		tangents[idx1] += tangent;
-		tangents[idx2] += tangent;
+		tangentData[idx0] += tangent;
+		tangentData[idx1] += tangent;
+		tangentData[idx2] += tangent;
 
-		bitangents[idx0] += bitangent;
-		bitangents[idx1] += bitangent;
-		bitangents[idx2] += bitangent;
+		bitangentData[idx0] += bitangent;
+		bitangentData[idx1] += bitangent;
+		bitangentData[idx2] += bitangent;
 	}
 
-	// Add calculated tangents and bitangents to model data
-	model->GetModelData().vertex_tangents.resize(_vertices.size());
-	model->GetModelData().vertex_bitangents.resize(_vertices.size());
+	const auto& normalData = modelData.vertex_normals;
 
-	// Normalize all tangents and bitangents
-	for (size_t i = 0; i < _vertices.size(); i++) {
-		// Gram-Schmidt orthogonalization to make tangent perpendicular to normal
-		glm::vec3 normal = glm::vec3(0.0f);
-		if (i < model->GetModelData().vertex_normals.size()) {
-			normal = model->GetModelData().vertex_normals[i];
-		}
-		else if (i < _normals.size()) {
-			normal = _normals[i];
-		}
+	for (size_t i = 0; i < vertexData.size(); i++) {
+		glm::vec3 normal = (i < normalData.size()) ? normalData[i] : glm::vec3(0.0f, 1.0f, 0.0f);
 
-		if (glm::length(normal) > 0.0f && glm::length(tangents[i]) > 0.0f) {
-			// Orthogonalize tangent
-			glm::vec3 t = glm::normalize(tangents[i]);
-			t = glm::normalize(t - normal * glm::dot(normal, t));
-
-			// Calculate handedness
-			float handedness = (glm::dot(glm::cross(normal, t), bitangents[i]) < 0.0f) ? -1.0f : 1.0f;
-
-			// Store final tangent and bitangent
-			model->GetModelData().vertex_tangents[i] = t;
-			model->GetModelData().vertex_bitangents[i] = handedness * glm::normalize(glm::cross(normal, t));
-		}
-		else {
-			// Fallback to default tangent space
-			model->GetModelData().vertex_tangents[i] = glm::vec3(1.0f, 0.0f, 0.0f);
-			model->GetModelData().vertex_bitangents[i] = glm::vec3(0.0f, 1.0f, 0.0f);
-		}
-	}
-
-	// Update OpenGL buffers with tangent and bitangent data
-	glGenBuffers(1, &model->GetModelData().vBTangentsID);
-	glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBTangentsID);
-	glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_tangents.size() * sizeof(glm::vec3),
-		model->GetModelData().vertex_tangents.data(), GL_STATIC_DRAW);
-
-	glGenBuffers(1, &model->GetModelData().vBBitangentsID);
-	glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBBitangentsID);
-	glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_bitangents.size() * sizeof(glm::vec3),
-		model->GetModelData().vertex_bitangents.data(), GL_STATIC_DRAW);
-
-	// Update VAO to include tangent and bitangent attributes
-	glBindVertexArray(model->GetModelData().vA);
-
-	// Tangent (attribute 3)
-	glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBTangentsID);
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
-
-	// Bitangent (attribute 4)
-	glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBBitangentsID);
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-}
-
-void Mesh::Draw() const
-{
-	//display();
-
-	//if (drawBoundingbox) {
-
-		
-	//}
-
-	if (drawVertexNormals)
-	{
-		glColor3f(0.0f, 0.0f, 1.0f); // Blue color for vertex normals
-		glBegin(GL_LINES);
-
-		/*for (size_t i = 0; i < _vertices.size(); ++i) {
-			glm::vec3 end = _vertices[i].position + _normals[i] * 0.2f;
-			glVertex3fv(glm::value_ptr(_vertices[i].position));
-			glVertex3fv(glm::value_ptr(end));
-		}*/
-
-		glEnd();
-		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
-	}
-
-	if (drawTriangleNormals) {
-		glColor3f(0.0f, 1.0f, 0.0f); // Green color for triangle normals
-		glBegin(GL_LINES);
-
-		for (size_t i = 0; i < _indices.size(); i += 3) {
-			glm::vec3 v0 = _vertices[_indices[i]].position;
-			glm::vec3 v1 = _vertices[_indices[i + 1]].position;
-			glm::vec3 v2 = _vertices[_indices[i + 2]].position;
-
-			glm::vec3 center = (v0 + v1 + v2) / 3.0f;
-			glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
-			glm::vec3 end = center + normal * 0.2f;
-
-			glVertex3fv(glm::value_ptr(center));
-			glVertex3fv(glm::value_ptr(end));
-		}
-
-		glEnd();
-		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white	
-	}
-	if (drawFaceNormals)
-	{
-		glColor3f(1.0f, 0.0f, 0.0f); // Red color for face normals
-		glm::vec3 center = ((glm::vec3)_boundingBox.min + (glm::vec3)_boundingBox.max) / 2.0f;
-		glBegin(GL_LINES);
-
-		for (size_t i = 0; i < _indices.size(); i += 3) {
-			glm::vec3 v0 = _vertices[_indices[i]].position;
-			glm::vec3 v1 = _vertices[_indices[i + 1]].position;
-			glm::vec3 v2 = _vertices[_indices[i + 2]].position;
-
-			glm::vec3 normal = glm::normalize(glm::cross(v1 - v0, v2 - v0));
-			glm::vec3 end = center + normal * 0.2f;
-
-			glVertex3fv(glm::value_ptr(center));
-			glVertex3fv(glm::value_ptr(end));
-		}
-
-		glEnd();
-		glColor3f(1.0f, 1.0f, 1.0f); // Reset color to white
-	}
-
-}
-
-std::shared_ptr<Mesh> Mesh::CreateCube()
-{
-
-	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-	std::shared_ptr<Model> model = std::make_shared<Model>();
-
-	// Definimos los v�rtices de manera diferente para evitar compartir v�rtices entre caras
-	// 24 v�rtices (4 por cada cara) con sus propias normales independientes
-
-	// Posiciones de las 8 esquinas del cubo
-	const vec3 v000(-1.0f, -1.0f, -1.0f);
-	const vec3 v001(-1.0f, -1.0f, 1.0f);
-	const vec3 v010(-1.0f, 1.0f, -1.0f);
-	const vec3 v011(-1.0f, 1.0f, 1.0f);
-	const vec3 v100(1.0f, -1.0f, -1.0f);
-	const vec3 v101(1.0f, -1.0f, 1.0f);
-	const vec3 v110(1.0f, 1.0f, -1.0f);
-	const vec3 v111(1.0f, 1.0f, 1.0f);
-
-	// Vector para almacenar los v�rtices
-	std::vector<Vertex> vertices;
-	std::vector<vec3> normals;
-	std::vector<vec2> texCoords;
-	std::vector<vec3> colors;
-	std::vector<vec3> tangents;
-	std::vector<vec3> bitangents;
-	std::vector<unsigned int> indices;
-
-	// Cara frontal (+Z)
-	vertices.push_back({ v001 }); // 0
-	vertices.push_back({ v101 }); // 1
-	vertices.push_back({ v111 }); // 2
-	vertices.push_back({ v011 }); // 3
-
-	// Cara trasera (-Z)
-	vertices.push_back({ v100 }); // 4
-	vertices.push_back({ v000 }); // 5
-	vertices.push_back({ v010 }); // 6
-	vertices.push_back({ v110 }); // 7
-
-	// Cara derecha (+X)
-	vertices.push_back({ v101 }); // 8
-	vertices.push_back({ v100 }); // 9
-	vertices.push_back({ v110 }); // 10
-	vertices.push_back({ v111 }); // 11
-
-	// Cara izquierda (-X)
-	vertices.push_back({ v000 }); // 12
-	vertices.push_back({ v001 }); // 13
-	vertices.push_back({ v011 }); // 14
-	vertices.push_back({ v010 }); // 15
-
-	// Cara superior (+Y)
-	vertices.push_back({ v011 }); // 16
-	vertices.push_back({ v111 }); // 17
-	vertices.push_back({ v110 }); // 18
-	vertices.push_back({ v010 }); // 19
-
-	// Cara inferior (-Y)
-	vertices.push_back({ v000 }); // 20
-	vertices.push_back({ v100 }); // 21
-	vertices.push_back({ v101 }); // 22
-	vertices.push_back({ v001 }); // 23
-
-	// Normals para cada v�rtice
-	for (int i = 0; i < 4; i++) normals.push_back(vec3(0.0f, 0.0f, 1.0f));  // Cara frontal
-	for (int i = 0; i < 4; i++) normals.push_back(vec3(0.0f, 0.0f, -1.0f)); // Cara trasera
-	for (int i = 0; i < 4; i++) normals.push_back(vec3(1.0f, 0.0f, 0.0f));  // Cara derecha
-	for (int i = 0; i < 4; i++) normals.push_back(vec3(-1.0f, 0.0f, 0.0f)); // Cara izquierda
-	for (int i = 0; i < 4; i++) normals.push_back(vec3(0.0f, 1.0f, 0.0f));  // Cara superior
-	for (int i = 0; i < 4; i++) normals.push_back(vec3(0.0f, -1.0f, 0.0f)); // Cara inferior
-
-	// Texcoords para cada cara (usando el mismo patr�n para todas)
-	for (int i = 0; i < 6; i++) {
-		texCoords.push_back(vec2(0.0f, 0.0f)); // Esquina inferior izquierda
-		texCoords.push_back(vec2(1.0f, 0.0f)); // Esquina inferior derecha
-		texCoords.push_back(vec2(1.0f, 1.0f)); // Esquina superior derecha
-		texCoords.push_back(vec2(0.0f, 1.0f)); // Esquina superior izquierda
-	}
-
-	// Colores para cada cara
-	vec3 faceColors[6] = {
-		vec3(1.0f, 0.5f, 0.5f), // Frontal (Rosa claro)
-		vec3(0.5f, 0.5f, 1.0f), // Trasera (Azul claro)
-		vec3(1.0f, 0.5f, 0.0f), // Derecha (Naranja)
-		vec3(0.0f, 0.5f, 1.0f), // Izquierda (Azul marino)
-		vec3(0.5f, 1.0f, 0.5f), // Superior (Verde claro)
-		vec3(1.0f, 1.0f, 0.5f)  // Inferior (Amarillo claro)
-	};
-
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 4; j++) {
-			colors.push_back(faceColors[i]);
-		}
-	}
-
-	// Tangentes y bitangentes para cada cara
-	std::vector<vec3> faceTangents = {
-		vec3(1.0f, 0.0f, 0.0f),  // Frontal
-		vec3(-1.0f, 0.0f, 0.0f), // Trasera
-		vec3(0.0f, 0.0f, -1.0f), // Derecha
-		vec3(0.0f, 0.0f, 1.0f),  // Izquierda
-		vec3(1.0f, 0.0f, 0.0f),  // Superior
-		vec3(1.0f, 0.0f, 0.0f)   // Inferior
-	};
-
-	std::vector<vec3> faceBitangents = {
-		vec3(0.0f, 1.0f, 0.0f),  // Frontal
-		vec3(0.0f, 1.0f, 0.0f),  // Trasera
-		vec3(0.0f, 1.0f, 0.0f),  // Derecha
-		vec3(0.0f, 1.0f, 0.0f),  // Izquierda
-		vec3(0.0f, 0.0f, -1.0f), // Superior
-		vec3(0.0f, 0.0f, 1.0f)   // Inferior
-	};
-
-	for (int i = 0; i < 6; i++) {
-		for (int j = 0; j < 4; j++) {
-			tangents.push_back(faceTangents[i]);
-			bitangents.push_back(faceBitangents[i]);
-		}
-	}
-
-	// �ndices para cada cara (2 tri�ngulos por cara)
-	for (int i = 0; i < 6; i++) {
-		int base = i * 4;
-		indices.push_back(base);     // 0
-		indices.push_back(base + 1); // 1
-		indices.push_back(base + 2); // 2
-
-		indices.push_back(base);     // 0
-		indices.push_back(base + 2); // 2
-		indices.push_back(base + 3); // 3
-	}
-
-	// Asignar los datos al modelo
-	model->GetModelData().vertexData = vertices;
-	model->GetModelData().indexData = indices;
-	model->GetModelData().vertex_normals = normals;
-	model->GetModelData().vertex_texCoords = texCoords;
-	model->GetModelData().vertex_colors = colors;
-	model->GetModelData().vertex_tangents = tangents;
-	model->GetModelData().vertex_bitangents = bitangents;
-
-	model->SetMeshName("Cube");
-
-	// Calcular bounding box
-	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
-
-
-	meshBBox->min = model->GetModelData().vertexData.front().position;
-	meshBBox->max = model->GetModelData().vertexData.front().position;
-
-	for (const auto& v : model->GetModelData().vertexData) {
-		meshBBox->min = glm::min(meshBBox->min, glm::dvec3(v.position));
-		meshBBox->max = glm::max(meshBBox->max, glm::dvec3(v.position));
-	}
-
-	model->SetVertexBoneDataToDefault(model->GetModelData().vertexData[0]);
-
-	meshBBox->min = vec3(-1.0f, -1.0f, -1.0f);
-	meshBBox->max = vec3(1.0f, 1.0f, 1.0f);
-	mesh->setBoundingBox(*meshBBox);
-
-	mesh->setModel(model);
-	mesh->filePath = std::string("Shapes/Cube");
-	mesh->loadToOpenGL();
-
-	return mesh;
-}
-
-std::shared_ptr<Mesh> Mesh::CreateCylinder() {
-	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-	std::shared_ptr<Model> model = std::make_shared<Model>();
-
-	// Par�metros del cilindro
-	const float radius = 1.0f;
-	const float height = 2.0f;
-	const int slices = 20;
-	const float halfHeight = height / 2.0f;
-
-	// V�rtice central de la base inferior
-	Vertex bottomCenter;
-	bottomCenter.position = vec3(0.0f, -halfHeight, 0.0f);
-	model->GetModelData().vertexData.push_back(bottomCenter);
-	model->GetModelData().vertex_texCoords.push_back(vec2(0.5f, 0.5f));
-	model->GetModelData().vertex_normals.push_back(vec3(0.0f, -1.0f, 0.0f));
-	model->GetModelData().vertex_colors.push_back(vec3(0.2f, 0.2f, 0.8f)); // Azul oscuro
-	model->GetModelData().vertex_tangents.push_back(vec3(1.0f, 0.0f, 0.0f));
-	model->GetModelData().vertex_bitangents.push_back(vec3(0.0f, 0.0f, -1.0f));
-
-	// V�rtices de la base inferior
-	for (int i = 0; i < slices; ++i) {
-		float angle = 2.0f * glm::pi<float>() * i / slices;
-		float x = radius * cos(angle);
-		float z = radius * sin(angle);
-
-		Vertex vertex;
-		vertex.position = vec3(x, -halfHeight, z);
-		model->GetModelData().vertexData.push_back(vertex);
-
-		// Coordenada de textura
-		float u = (cos(angle) + 1.0f) / 2.0f;
-		float v = (sin(angle) + 1.0f) / 2.0f;
-		model->GetModelData().vertex_texCoords.push_back(vec2(u, v));
-
-		// Normal apuntando hacia abajo
-		model->GetModelData().vertex_normals.push_back(vec3(0.0f, -1.0f, 0.0f));
-
-		// Color (azul en la base)
-		model->GetModelData().vertex_colors.push_back(vec3(0.2f, 0.2f, 0.8f));
-
-		// Tangente - perpendicular a la normal y apuntando hacia fuera
-		vec3 tangent = glm::normalize(vec3(z, 0.0f, -x));
-		model->GetModelData().vertex_tangents.push_back(tangent);
-
-		// Bitangente - producto vectorial de normal y tangente
-		vec3 normal = vec3(0.0f, -1.0f, 0.0f);
-		vec3 bitangent = glm::cross(normal, tangent);
-		model->GetModelData().vertex_bitangents.push_back(bitangent);
-	}
-	Vertex vertexLow;
-	Vertex vertexHigh;
-
-	// V�rtice central de la base superior
-	Vertex topCenter;
-	topCenter.position = vec3(0.0f, halfHeight, 0.0f);
-	model->GetModelData().vertexData.push_back(topCenter);
-	model->GetModelData().vertex_texCoords.push_back(vec2(0.5f, 0.5f));
-	model->GetModelData().vertex_normals.push_back(vec3(0.0f, 1.0f, 0.0f));
-	model->GetModelData().vertex_colors.push_back(vec3(0.8f, 0.2f, 0.2f)); // Rojo oscuro
-	model->GetModelData().vertex_tangents.push_back(vec3(1.0f, 0.0f, 0.0f));
-	model->GetModelData().vertex_bitangents.push_back(vec3(0.0f, 0.0f, -1.0f));
-
-	// V�rtices de la base superior
-	for (int i = 0; i < slices; ++i) {
-		float angle = 2.0f * glm::pi<float>() * i / slices;
-		float x = radius * cos(angle);
-		float z = radius * sin(angle);
-
-		Vertex vertex;
-		vertex.position = vec3(x, halfHeight, z);
-		model->GetModelData().vertexData.push_back(vertex);
-
-		// Coordenada de textura
-		float u = (cos(angle) + 1.0f) / 2.0f;
-		float v = (sin(angle) + 1.0f) / 2.0f;
-		model->GetModelData().vertex_texCoords.push_back(vec2(u, v));
-
-		// Normal apuntando hacia arriba
-		model->GetModelData().vertex_normals.push_back(vec3(0.0f, 1.0f, 0.0f));
-
-		// Color (rojo en la parte superior)
-		model->GetModelData().vertex_colors.push_back(vec3(0.8f, 0.2f, 0.2f));
-
-		// Tangente - perpendicular a la normal y apuntando hacia fuera
-		vec3 tangent = glm::normalize(vec3(z, 0.0f, -x));
-		model->GetModelData().vertex_tangents.push_back(tangent);
-
-		// Bitangente - producto vectorial de normal y tangente
-		vec3 normal = vec3(0.0f, 1.0f, 0.0f);
-		vec3 bitangent = glm::cross(normal, tangent);
-		model->GetModelData().vertex_bitangents.push_back(bitangent);
-	}
-
-	// V�rtices para el cuerpo del cilindro
-	for (int i = 0; i < slices; ++i) {
-		float angle = 2.0f * glm::pi<float>() * i / slices;
-		float x = radius * cos(angle);
-		float z = radius * sin(angle);
-
-		// Vector normal radial (apunta hacia afuera)
-		vec3 normal = glm::normalize(vec3(x, 0.0f, z));
-
-		// Vector tangente (alrededor del cilindro)
-		vec3 tangent = glm::normalize(vec3(-z, 0.0f, x));
-
-		// Bitangente (a lo largo del eje Y)
-		vec3 bitangent = vec3(0.0f, 1.0f, 0.0f);
-
-		// V�rtice inferior del cuerpo
-		Vertex bottomVertex;
-		bottomVertex.position = vec3(x, -halfHeight, z);
-		model->GetModelData().vertexData.push_back(bottomVertex);
-
-		// Coordenada de textura
-		float u = static_cast<float>(i) / slices;
-		model->GetModelData().vertex_texCoords.push_back(vec2(u, 0.0f));
-
-		// Normal apuntando hacia afuera
-		model->GetModelData().vertex_normals.push_back(normal);
-
-		// Color (gradiente azul a verde en la parte inferior)
-		model->GetModelData().vertex_colors.push_back(vec3(0.2f, 0.5f, 0.7f));
-
-		// Tangente y bitangente
-		model->GetModelData().vertex_tangents.push_back(tangent);
-		model->GetModelData().vertex_bitangents.push_back(bitangent);
-
-		// V�rtice superior del cuerpo
-		Vertex topVertex;
-		topVertex.position = vec3(x, halfHeight, z);
-		model->GetModelData().vertexData.push_back(topVertex);
-
-		// Coordenada de textura
-		model->GetModelData().vertex_texCoords.push_back(vec2(u, 1.0f));
-
-		// Normal apuntando hacia afuera
-		model->GetModelData().vertex_normals.push_back(normal);
-
-		// Color (gradiente verde a rojo en la parte superior)
-		model->GetModelData().vertex_colors.push_back(vec3(0.7f, 0.5f, 0.2f));
-
-		// Tangente y bitangente
-		model->GetModelData().vertex_tangents.push_back(tangent);
-		model->GetModelData().vertex_bitangents.push_back(bitangent);
-	}
-
-	// �ndices para la base inferior - CORRECCI�N
-	unsigned int bottomCenterIndex = 0;
-	for (int i = 0; i < slices; ++i) {
-		unsigned int current = i + 1;
-		unsigned int next = (i + 1) % slices + 1;
-
-		// CORRECCI�N: Volvemos al orden original para la base inferior
-		model->GetModelData().indexData.push_back(bottomCenterIndex);
-		model->GetModelData().indexData.push_back(current);
-		model->GetModelData().indexData.push_back(next);
-	}
-
-	// �ndices para la base superior
-	unsigned int topCenterIndex = slices + 1;
-	for (int i = 0; i < slices; ++i) {
-		unsigned int current = topCenterIndex + i + 1;
-		unsigned int next = topCenterIndex + (i + 1) % slices + 1;
-
-		model->GetModelData().indexData.push_back(topCenterIndex);
-		model->GetModelData().indexData.push_back(next);
-		model->GetModelData().indexData.push_back(current);
-	}
-
-	// �ndices para el cuerpo del cilindro
-	unsigned int bodyStartIndex = topCenterIndex + slices + 1;
-	for (int i = 0; i < slices; ++i) {
-		unsigned int bottomLeft = bodyStartIndex + i * 2;
-		unsigned int bottomRight = bodyStartIndex + ((i + 1) % slices) * 2;
-		unsigned int topLeft = bottomLeft + 1;
-		unsigned int topRight = bottomRight + 1;
-
-		// Triangulaci�n del cuerpo (winding order correcto)
-		model->GetModelData().indexData.push_back(bottomLeft);
-		model->GetModelData().indexData.push_back(topRight);
-		model->GetModelData().indexData.push_back(bottomRight);
-
-		model->GetModelData().indexData.push_back(bottomLeft);
-		model->GetModelData().indexData.push_back(topLeft);
-		model->GetModelData().indexData.push_back(topRight);
-	}
-
-	model->SetMeshName("Cylinder");
-
-	// Calcular bounding box
-	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
-	meshBBox->min = vec3(-radius, -halfHeight, -radius);
-	meshBBox->max = vec3(radius, halfHeight, radius);
-	mesh->setBoundingBox(*meshBBox);
-
-	mesh->setModel(model);
-	mesh->filePath = std::string("Shapes/Cylinder");
-	mesh->loadToOpenGL();
-
-	return mesh;
-}
-
-std::shared_ptr<Mesh> Mesh::CreateSphere()
-{
-	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-	std::shared_ptr<Model> model = std::make_shared<Model>();
-
-	const int stacks = 20;
-	const int slices = 20;
-	const float radius = 1.0f;
-
-	// Generar v�rtices para la esfera
-	for (int i = 0; i <= stacks; ++i) {
-		float phi = i * glm::pi<float>() / stacks;
-		float sinPhi = sin(phi);
-		float cosPhi = cos(phi);
-
-		for (int j = 0; j <= slices; ++j) {
-			float theta = j * 2.0f * glm::pi<float>() / slices;
-			float sinTheta = sin(theta);
-			float cosTheta = cos(theta);
-
-			// Posici�n del v�rtice
-			float x = cosTheta * sinPhi;
-			float y = cosPhi;
-			float z = sinTheta * sinPhi;
-
-			// Crear v�rtice
-			Vertex vertex;
-			vertex.position = glm::vec3(x, y, z) * radius;
-			model->GetModelData().vertexData.push_back(vertex);
-
-			// Coordenadas de textura
-			float u = static_cast<float>(j) / slices;
-			float v = static_cast<float>(i) / stacks;
-			model->GetModelData().vertex_texCoords.push_back(vec2(u, v));
-
-			// Normal (misma direcci�n que la posici�n para una esfera)
-			vec3 normal = vec3(x, y, z);
-			model->GetModelData().vertex_normals.push_back(normal);
-
-			// Color (gradiente basado en posici�n)
-			vec3 color = vec3(
-				(x + 1.0f) * 0.5f,  // R: -1 a 1 mapeado a 0 a 1
-				(y + 1.0f) * 0.5f,  // G: -1 a 1 mapeado a 0 a 1
-				(z + 1.0f) * 0.5f   // B: -1 a 1 mapeado a 0 a 1
-			);
-			model->GetModelData().vertex_colors.push_back(color);
-
-			// Calcular tangente
-			// Para una esfera, podemos derivar la tangente con respecto a theta
-			vec3 tangent = vec3(
-				-sinTheta * sinPhi,  // dx/dtheta
-				0.0f,                // dy/dtheta
-				cosTheta * sinPhi    // dz/dtheta
-			);
-			// Normalizar la tangente
-			if (glm::length(tangent) > 0.0001f) {
-				tangent = glm::normalize(tangent);
+		if (glm::length(tangentData[i]) < 0.0001f) {
+			if (std::abs(normal.x) < 0.707f) {
+				tangentData[i] = glm::normalize(glm::cross(normal, glm::vec3(1.0f, 0.0f, 0.0f)));
 			}
 			else {
-				// Evitar vectores muy peque�os
-				tangent = vec3(1.0f, 0.0f, 0.0f);
+				tangentData[i] = glm::normalize(glm::cross(normal, glm::vec3(0.0f, 1.0f, 0.0f)));
 			}
-			model->GetModelData().vertex_tangents.push_back(tangent);
+		}
+		else {
+			tangentData[i] = glm::normalize(tangentData[i]);
+		}
 
-			// Calcular bitangente (cross product de normal y tangente)
-			vec3 bitangent = glm::cross(normal, tangent);
-			model->GetModelData().vertex_bitangents.push_back(bitangent);
+		tangentData[i] = glm::normalize(tangentData[i] - normal * glm::dot(normal, tangentData[i]));
+
+		bitangentData[i] = glm::normalize(glm::cross(normal, tangentData[i]));
+
+		if (i < modelData.vertexData.size()) {
+			modelData.vertexData[i].tangent = tangentData[i];
+			modelData.vertexData[i].bitangent = bitangentData[i];
 		}
 	}
 
-	// Generar �ndices
-	for (int i = 0; i < stacks; ++i) {
-		for (int j = 0; j < slices; ++j) {
-			int first = i * (slices + 1) + j;
-			int second = first + slices + 1;
+	if (modelData.vA != 0) {
+		glBindVertexArray(modelData.vA);
 
-			// Tri�ngulo 1
-			model->GetModelData().indexData.push_back(first);
-			model->GetModelData().indexData.push_back(second);
-			model->GetModelData().indexData.push_back(first + 1);
-
-			// Tri�ngulo 2
-			model->GetModelData().indexData.push_back(second);
-			model->GetModelData().indexData.push_back(second + 1);
-			model->GetModelData().indexData.push_back(first + 1);
+		if (modelData.vBTangentsID == 0) {
+			glGenBuffers(1, &modelData.vBTangentsID);
 		}
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBTangentsID);
+		glBufferData(GL_ARRAY_BUFFER, tangentData.size() * sizeof(glm::vec3), tangentData.data(), GL_STATIC_DRAW);
+		glEnableVertexAttribArray(ATTR_TANGENT);
+		glVertexAttribPointer(ATTR_TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+
+		if (modelData.vBBitangentsID == 0) {
+			glGenBuffers(1, &modelData.vBBitangentsID);
+		}
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBBitangentsID);
+		glBufferData(GL_ARRAY_BUFFER, bitangentData.size() * sizeof(glm::vec3), bitangentData.data(), GL_STATIC_DRAW);
+		glEnableVertexAttribArray(ATTR_BITANGENT);
+		glVertexAttribPointer(ATTR_BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 	}
-
-	model->SetMeshName("Sphere");
-
-	// Calcular bounding box
-	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
-	meshBBox->min = vec3(-radius, -radius, -radius);
-	meshBBox->max = vec3(radius, radius, radius);
-	mesh->setBoundingBox(*meshBBox);
-
-	mesh->setModel(model);
-	mesh->filePath = std::string("Shapes/Sphere");
-	mesh->loadToOpenGL();
-
-	return mesh;
 }
-
-std::shared_ptr<Mesh> Mesh::CreatePlane()
-{
-	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-	std::shared_ptr<Model> model = std::make_shared<Model>();
-
-	// V�rtices del plano (4 v�rtices)
-	model->GetModelData().vertexData = {
-		Vertex{vec3(-1.0f, 0.0f, 1.0f)},  // 0: Esquina inferior izquierda
-		Vertex{vec3(1.0f, 0.0f, 1.0f)},   // 1: Esquina inferior derecha
-		Vertex{vec3(1.0f, 0.0f, -1.0f)},  // 2: Esquina superior derecha
-		Vertex{vec3(-1.0f, 0.0f, -1.0f)}  // 3: Esquina superior izquierda
-	};
-
-	// �ndices para los tri�ngulos (2 tri�ngulos = 6 �ndices)
-	model->GetModelData().indexData = {
-		0, 1, 2,  // Primer tri�ngulo
-		0, 2, 3   // Segundo tri�ngulo
-	};
-
-	// Coordenadas de textura
-	model->GetModelData().vertex_texCoords = {
-		vec2(0.0f, 0.0f),  // 0: Esquina inferior izquierda
-		vec2(1.0f, 0.0f),  // 1: Esquina inferior derecha
-		vec2(1.0f, 1.0f),  // 2: Esquina superior derecha
-		vec2(0.0f, 1.0f)   // 3: Esquina superior izquierda
-	};
-
-	// Normales (todas apuntando hacia arriba)
-	model->GetModelData().vertex_normals = {
-		vec3(0.0f, 1.0f, 0.0f),
-		vec3(0.0f, 1.0f, 0.0f),
-		vec3(0.0f, 1.0f, 0.0f),
-		vec3(0.0f, 1.0f, 0.0f)
-	};
-
-	// Colores para los v�rtices (degradado de blanco a azul)
-	model->GetModelData().vertex_colors = {
-		vec3(1.0f, 1.0f, 1.0f),  // Blanco
-		vec3(0.8f, 0.8f, 1.0f),  // Casi blanco
-		vec3(0.4f, 0.4f, 1.0f),  // Azul claro
-		vec3(0.0f, 0.0f, 1.0f)   // Azul
-	};
-
-	// Tangentes (a lo largo del eje X)
-	model->GetModelData().vertex_tangents = {
-		vec3(1.0f, 0.0f, 0.0f),
-		vec3(1.0f, 0.0f, 0.0f),
-		vec3(1.0f, 0.0f, 0.0f),
-		vec3(1.0f, 0.0f, 0.0f)
-	};
-
-	// Bitangentes (a lo largo del eje Z negativo - producto vectorial de normal y tangente)
-	model->GetModelData().vertex_bitangents = {
-		vec3(0.0f, 0.0f, -1.0f),
-		vec3(0.0f, 0.0f, -1.0f),
-		vec3(0.0f, 0.0f, -1.0f),
-		vec3(0.0f, 0.0f, -1.0f)
-	};
-
-	model->SetMeshName("Plane");
-
-	// Calcular bounding box
-	std::shared_ptr<BoundingBox> meshBBox = std::make_shared<BoundingBox>();
-	meshBBox->min = vec3(-1.0f, 0.0f, -1.0f);
-	meshBBox->max = vec3(1.0f, 0.0f, 1.0f);
-	mesh->setBoundingBox(*meshBBox);
-
-	mesh->setModel(model);
-	mesh->filePath = std::string("Shapes/Plane");
-	mesh->loadToOpenGL();
-
-	return mesh;
-}
-
-std::unordered_map<std::string, std::shared_ptr<Mesh>> meshCache;
 
 void Mesh::SaveBinary(const std::string& filename) const
 {
-	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
-
-	if (!std::filesystem::exists("Library/Mesh")) {
-		std::filesystem::create_directory("Library/Mesh");
-	}
-
-	std::ofstream fout(fullPath, std::ios::binary);
-	if (!fout.is_open()) {
-		LOG(LogType::LOG_ERROR, "Error al guardar la malla: %s", fullPath.c_str());
+	if (!model) {
+		LOG(LogType::LOG_ERROR, "Error: Cannot save binary mesh - Model is null");
 		return;
 	}
 
-	uint32_t nameLength = static_cast<uint32_t>(model->GetMeshName().length());
-	fout.write(reinterpret_cast<const char*>(&nameLength), sizeof(nameLength));
-	fout.write(model->GetMeshName().c_str(), nameLength);
-
-	int32_t materialIndex = model->GetMaterialIndex();
-	fout.write(reinterpret_cast<const char*>(&materialIndex), sizeof(materialIndex));
-
-	const auto& vertices = model->GetModelData().vertexData;
-	uint32_t numVertices = static_cast<uint32_t>(vertices.size());
-	fout.write(reinterpret_cast<const char*>(&numVertices), sizeof(numVertices));
-	fout.write(reinterpret_cast<const char*>(vertices.data()), numVertices * sizeof(Vertex));
-
-	const auto& indices = model->GetModelData().indexData;
-	uint32_t numIndices = static_cast<uint32_t>(indices.size());
-	fout.write(reinterpret_cast<const char*>(&numIndices), sizeof(numIndices));
-	fout.write(reinterpret_cast<const char*>(indices.data()), numIndices * sizeof(unsigned int));
-
-	const auto& texCoords = model->GetModelData().vertex_texCoords;
-	uint32_t numTexCoords = static_cast<uint32_t>(texCoords.size());
-	fout.write(reinterpret_cast<const char*>(&numTexCoords), sizeof(numTexCoords));
-	if (numTexCoords > 0) {
-		fout.write(reinterpret_cast<const char*>(texCoords.data()), numTexCoords * sizeof(vec2));
+	std::string fullPath = "Library/Mesh/";
+	if (!std::filesystem::exists(fullPath)) {
+		try {
+			std::filesystem::create_directories(fullPath);
+		}
+		catch (const std::filesystem::filesystem_error& e) {
+			LOG(LogType::LOG_ERROR, "Error creating directory for mesh: %s - %s", fullPath.c_str(), e.what());
+			return;
+		}
 	}
 
-	const auto& normals = model->GetModelData().vertex_normals;
-	uint32_t numNormals = static_cast<uint32_t>(normals.size());
-	fout.write(reinterpret_cast<const char*>(&numNormals), sizeof(numNormals));
-	if (numNormals > 0) {
-		fout.write(reinterpret_cast<const char*>(normals.data()), numNormals * sizeof(vec3));
+	fullPath += filename + ".mesh";
+
+	std::ofstream fout(fullPath, std::ios::binary);
+	if (!fout.is_open()) {
+		LOG(LogType::LOG_ERROR, "Error opening file for writing: %s", fullPath.c_str());
+		return;
 	}
 
-	const auto& colors = model->GetModelData().vertex_colors;
-	uint32_t numColors = static_cast<uint32_t>(colors.size());
-	fout.write(reinterpret_cast<const char*>(&numColors), sizeof(numColors));
-	if (numColors > 0) {
-		fout.write(reinterpret_cast<const char*>(colors.data()), numColors * sizeof(vec3));
+	try {
+		// Write mesh name
+		uint32_t nameLength = static_cast<uint32_t>(model->GetMeshName().length());
+		fout.write(reinterpret_cast<const char*>(&nameLength), sizeof(nameLength));
+		fout.write(model->GetMeshName().c_str(), nameLength);
+
+		// Write material index
+		int32_t materialIndex = model->GetMaterialIndex();
+		fout.write(reinterpret_cast<const char*>(&materialIndex), sizeof(materialIndex));
+
+		// Write vertices
+		const auto& vertices = model->GetModelData().vertexData;
+		uint32_t numVertices = static_cast<uint32_t>(vertices.size());
+		fout.write(reinterpret_cast<const char*>(&numVertices), sizeof(numVertices));
+		fout.write(reinterpret_cast<const char*>(vertices.data()), numVertices * sizeof(Vertex));
+
+		// Write indices
+		const auto& indices = model->GetModelData().indexData;
+		uint32_t numIndices = static_cast<uint32_t>(indices.size());
+		fout.write(reinterpret_cast<const char*>(&numIndices), sizeof(numIndices));
+		fout.write(reinterpret_cast<const char*>(indices.data()), numIndices * sizeof(unsigned int));
+
+		// Write texture coordinates
+		const auto& texCoords = model->GetModelData().vertex_texCoords;
+		uint32_t numTexCoords = static_cast<uint32_t>(texCoords.size());
+		fout.write(reinterpret_cast<const char*>(&numTexCoords), sizeof(numTexCoords));
+		if (numTexCoords > 0) {
+			fout.write(reinterpret_cast<const char*>(texCoords.data()), numTexCoords * sizeof(vec2));
+		}
+
+		// Write normals
+		const auto& normals = model->GetModelData().vertex_normals;
+		uint32_t numNormals = static_cast<uint32_t>(normals.size());
+		fout.write(reinterpret_cast<const char*>(&numNormals), sizeof(numNormals));
+		if (numNormals > 0) {
+			fout.write(reinterpret_cast<const char*>(normals.data()), numNormals * sizeof(vec3));
+		}
+
+		// Write colors
+		const auto& colors = model->GetModelData().vertex_colors;
+		uint32_t numColors = static_cast<uint32_t>(colors.size());
+		fout.write(reinterpret_cast<const char*>(&numColors), sizeof(numColors));
+		if (numColors > 0) {
+			fout.write(reinterpret_cast<const char*>(colors.data()), numColors * sizeof(vec3));
+		}
+
+		// Write tangents
+		const auto& tangents = model->GetModelData().vertex_tangents;
+		uint32_t numTangents = static_cast<uint32_t>(tangents.size());
+		fout.write(reinterpret_cast<const char*>(&numTangents), sizeof(numTangents));
+		if (numTangents > 0) {
+			fout.write(reinterpret_cast<const char*>(tangents.data()), numTangents * sizeof(vec3));
+		}
+
+		// Write bitangents
+		const auto& bitangents = model->GetModelData().vertex_bitangents;
+		uint32_t numBitangents = static_cast<uint32_t>(bitangents.size());
+		fout.write(reinterpret_cast<const char*>(&numBitangents), sizeof(numBitangents));
+		if (numBitangents > 0) {
+			fout.write(reinterpret_cast<const char*>(bitangents.data()), numBitangents * sizeof(vec3));
+		}
+
+		// Write bounding box
+		fout.write(reinterpret_cast<const char*>(&_boundingBox.min), sizeof(glm::dvec3));
+		fout.write(reinterpret_cast<const char*>(&_boundingBox.max), sizeof(glm::dvec3));
+
+		// Write model ID
+		uint32_t modelID = model->GetID();
+		fout.write(reinterpret_cast<const char*>(&modelID), sizeof(modelID));
+
+		// Write isAnimated flag
+		bool isAnimated = model->isAnimated;
+		fout.write(reinterpret_cast<const char*>(&isAnimated), sizeof(bool));
+
+		LOG(LogType::LOG_INFO, "Mesh saved successfully: %s", fullPath.c_str());
 	}
-
-	const auto& tangents = model->GetModelData().vertex_tangents;
-	uint32_t numTangents = static_cast<uint32_t>(tangents.size());
-	fout.write(reinterpret_cast<const char*>(&numTangents), sizeof(numTangents));
-	if (numTangents > 0) {
-		fout.write(reinterpret_cast<const char*>(tangents.data()), numTangents * sizeof(vec3));
+	catch (const std::exception& e) {
+		LOG(LogType::LOG_ERROR, "Error writing mesh to file: %s - %s", fullPath.c_str(), e.what());
 	}
-
-	const auto& bitangents = model->GetModelData().vertex_bitangents;
-	uint32_t numBitangents = static_cast<uint32_t>(bitangents.size());
-	fout.write(reinterpret_cast<const char*>(&numBitangents), sizeof(numBitangents));
-	if (numBitangents > 0) {
-		fout.write(reinterpret_cast<const char*>(bitangents.data()), numBitangents * sizeof(vec3));
-	}
-
-	fout.write(reinterpret_cast<const char*>(&_boundingBox.min), sizeof(glm::dvec3));
-	fout.write(reinterpret_cast<const char*>(&_boundingBox.max), sizeof(glm::dvec3));
-
-	uint32_t modelID = model->GetID();
-	fout.write(reinterpret_cast<const char*>(&modelID), sizeof(modelID));
-
-	LOG(LogType::LOG_INFO, "Mesh saved successfully: %s", fullPath.c_str());
 }
 
 std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 {
 	std::string fullPath = "Library/Mesh/" + filename + ".mesh";
 
+	// Check cache first
 	auto it = meshCache.find(fullPath);
 	if (it != meshCache.end()) {
+		LOG(LogType::LOG_INFO, "Returning cached mesh: %s", fullPath.c_str());
 		return it->second;
 	}
 
 	std::ifstream fin(fullPath, std::ios::binary);
 	if (!fin.is_open()) {
-		LOG(LogType::LOG_ERROR, "Error al cargar la malla: %s", fullPath.c_str());
+		LOG(LogType::LOG_ERROR, "Error opening mesh file: %s", fullPath.c_str());
 		return nullptr;
 	}
 
@@ -944,145 +459,221 @@ std::shared_ptr<Mesh> Mesh::LoadBinary(std::string& filename)
 	mesh->setModel(std::make_shared<Model>());
 	auto& modelData = mesh->model->GetModelData();
 
-	uint32_t nameLength;
-	fin.read(reinterpret_cast<char*>(&nameLength), sizeof(nameLength));
-	std::string meshName(nameLength, '\0');
-	fin.read(&meshName[0], nameLength);
-	mesh->model->SetMeshName(meshName);
+	try {
+		// Read mesh name
+		uint32_t nameLength;
+		fin.read(reinterpret_cast<char*>(&nameLength), sizeof(nameLength));
+		std::string meshName(nameLength, '\0');
+		fin.read(&meshName[0], nameLength);
+		mesh->model->SetMeshName(meshName);
 
-	int32_t materialIndex;
-	fin.read(reinterpret_cast<char*>(&materialIndex), sizeof(materialIndex));
-	mesh->model->SetMaterialIndex(materialIndex);
+		// Read material index
+		int32_t materialIndex;
+		fin.read(reinterpret_cast<char*>(&materialIndex), sizeof(materialIndex));
+		mesh->model->SetMaterialIndex(materialIndex);
 
-	uint32_t numVertices;
-	fin.read(reinterpret_cast<char*>(&numVertices), sizeof(numVertices));
-	modelData.vertexData.resize(numVertices);
-	fin.read(reinterpret_cast<char*>(modelData.vertexData.data()), numVertices * sizeof(Vertex));
+		// Read vertices
+		uint32_t numVertices;
+		fin.read(reinterpret_cast<char*>(&numVertices), sizeof(numVertices));
+		modelData.vertexData.resize(numVertices);
+		fin.read(reinterpret_cast<char*>(modelData.vertexData.data()), numVertices * sizeof(Vertex));
 
-	uint32_t numIndices;
-	fin.read(reinterpret_cast<char*>(&numIndices), sizeof(numIndices));
-	modelData.indexData.resize(numIndices);
-	fin.read(reinterpret_cast<char*>(modelData.indexData.data()), numIndices * sizeof(unsigned int));
+		// Read indices
+		uint32_t numIndices;
+		fin.read(reinterpret_cast<char*>(&numIndices), sizeof(numIndices));
+		modelData.indexData.resize(numIndices);
+		fin.read(reinterpret_cast<char*>(modelData.indexData.data()), numIndices * sizeof(unsigned int));
 
-	uint32_t numTexCoords;
-	fin.read(reinterpret_cast<char*>(&numTexCoords), sizeof(numTexCoords));
-	if (numTexCoords > 0) {
-		modelData.vertex_texCoords.resize(numTexCoords);
-		fin.read(reinterpret_cast<char*>(modelData.vertex_texCoords.data()), numTexCoords * sizeof(vec2));
+		// Read texture coordinates
+		uint32_t numTexCoords;
+		fin.read(reinterpret_cast<char*>(&numTexCoords), sizeof(numTexCoords));
+		if (numTexCoords > 0) {
+			modelData.vertex_texCoords.resize(numTexCoords);
+			fin.read(reinterpret_cast<char*>(modelData.vertex_texCoords.data()), numTexCoords * sizeof(vec2));
+		}
+
+		// Read normals
+		uint32_t numNormals;
+		fin.read(reinterpret_cast<char*>(&numNormals), sizeof(numNormals));
+		if (numNormals > 0) {
+			modelData.vertex_normals.resize(numNormals);
+			fin.read(reinterpret_cast<char*>(modelData.vertex_normals.data()), numNormals * sizeof(vec3));
+		}
+
+		// Read colors
+		uint32_t numColors;
+		fin.read(reinterpret_cast<char*>(&numColors), sizeof(numColors));
+		if (numColors > 0) {
+			modelData.vertex_colors.resize(numColors);
+			fin.read(reinterpret_cast<char*>(modelData.vertex_colors.data()), numColors * sizeof(vec3));
+		}
+
+		// Read tangents
+		uint32_t numTangents;
+		fin.read(reinterpret_cast<char*>(&numTangents), sizeof(numTangents));
+		if (numTangents > 0) {
+			modelData.vertex_tangents.resize(numTangents);
+			fin.read(reinterpret_cast<char*>(modelData.vertex_tangents.data()), numTangents * sizeof(vec3));
+		}
+
+		// Read bitangents
+		uint32_t numBitangents;
+		fin.read(reinterpret_cast<char*>(&numBitangents), sizeof(numBitangents));
+		if (numBitangents > 0) {
+			modelData.vertex_bitangents.resize(numBitangents);
+			fin.read(reinterpret_cast<char*>(modelData.vertex_bitangents.data()), numBitangents * sizeof(vec3));
+		}
+
+		// Read bounding box
+		fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.min), sizeof(glm::dvec3));
+		fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.max), sizeof(glm::dvec3));
+
+		// Read model ID
+		uint32_t modelID;
+		fin.read(reinterpret_cast<char*>(&modelID), sizeof(modelID));
+		mesh->model->SetID(modelID);
+
+		// Read isAnimated flag (if present in the file)
+		if (fin.peek() != EOF) {
+			bool isAnimated;
+			fin.read(reinterpret_cast<char*>(&isAnimated), sizeof(bool));
+			mesh->model->isAnimated = isAnimated;
+		}
+
+		// Load the mesh to GPU
+		mesh->loadToOpenGL();
+
+		// Cache the mesh
+		meshCache[fullPath] = mesh;
+		mesh->nameM = filename;
+		mesh->filePath = filename;
+
+		LOG(LogType::LOG_INFO, "Mesh loaded successfully: %s", fullPath.c_str());
+	}
+	catch (const std::exception& e) {
+		LOG(LogType::LOG_ERROR, "Error reading mesh from file: %s - %s", fullPath.c_str(), e.what());
+		return nullptr;
 	}
 
-	uint32_t numNormals;
-	fin.read(reinterpret_cast<char*>(&numNormals), sizeof(numNormals));
-	if (numNormals > 0) {
-		modelData.vertex_normals.resize(numNormals);
-		fin.read(reinterpret_cast<char*>(modelData.vertex_normals.data()), numNormals * sizeof(vec3));
-	}
-
-	uint32_t numColors;
-	fin.read(reinterpret_cast<char*>(&numColors), sizeof(numColors));
-	if (numColors > 0) {
-		modelData.vertex_colors.resize(numColors);
-		fin.read(reinterpret_cast<char*>(modelData.vertex_colors.data()), numColors * sizeof(vec3));
-	}
-
-	uint32_t numTangents;
-	fin.read(reinterpret_cast<char*>(&numTangents), sizeof(numTangents));
-	if (numTangents > 0) {
-		modelData.vertex_tangents.resize(numTangents);
-		fin.read(reinterpret_cast<char*>(modelData.vertex_tangents.data()), numTangents * sizeof(vec3));
-	}
-
-	uint32_t numBitangents;
-	fin.read(reinterpret_cast<char*>(&numBitangents), sizeof(numBitangents));
-	if (numBitangents > 0) {
-		modelData.vertex_bitangents.resize(numBitangents);
-		fin.read(reinterpret_cast<char*>(modelData.vertex_bitangents.data()), numBitangents * sizeof(vec3));
-	}
-
-	fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.min), sizeof(glm::dvec3));
-	fin.read(reinterpret_cast<char*>(&mesh->_boundingBox.max), sizeof(glm::dvec3));
-
-	mesh->_vertices.resize(numVertices);
-	for (size_t i = 0; i < numVertices; ++i) {
-		mesh->_vertices[i] = modelData.vertexData[i];
-	}
-	mesh->_indices = modelData.indexData;
-	mesh->_normals = modelData.vertex_normals;
-	if (numTexCoords > 0) {
-		mesh->_texCoords = modelData.vertex_texCoords;
-	}
-
-	mesh->loadToOpenGL();
-
-	meshCache[fullPath] = mesh;
-	mesh->nameM = filename;
-	mesh->filePath = filename;
-
-	uint32_t modelID;
-	fin.read(reinterpret_cast<char*>(&modelID), sizeof(modelID));
-	mesh->model->SetID(modelID);
-
-	LOG(LogType::LOG_INFO, "Mesh loaded successfully: %s", fullPath.c_str());
 	return mesh;
 }
 
 void Mesh::loadToOpenGL()
 {
-	(glGenVertexArrays(1, &model->GetModelData().vA));
-	(glBindVertexArray(model->GetModelData().vA));
+	if (!model) {
+		LOG(LogType::LOG_ERROR, "Cannot load mesh to OpenGL: Model is null");
+		return;
+	}
 
+	ModelData& modelData = model->GetModelData();
+
+	// Clean up existing resources if any
+	if (modelData.vA != 0) {
+		glDeleteVertexArrays(1, &modelData.vA);
+	}
+
+	// Create and bind vertex array object
+	glGenVertexArrays(1, &modelData.vA);
+	glBindVertexArray(modelData.vA);
+
+	// Extract positions from vertex data
 	std::vector<vec3> positions;
-
-	for (auto & i : model->GetModelData().vertexData)
-	{
-		positions.push_back(i.position);
+	positions.reserve(modelData.vertexData.size());
+	for (const auto& vertex : modelData.vertexData) {
+		positions.push_back(vertex.position);
 	}
 
-	//buffer de positions
-	(glGenBuffers(1, &model->GetModelData().vBPosID));
-	(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBPosID));
-	(glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_DYNAMIC_DRAW));
+	// Create and bind position buffer
+	glGenBuffers(1, &modelData.vBPosID);
+	glBindBuffer(GL_ARRAY_BUFFER, modelData.vBPosID);
+	glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof(vec3), positions.data(), GL_STATIC_DRAW);
 
-	//position layout
-	(glEnableVertexAttribArray(0));
-	(glVertexAttribPointer(0, 3, GL_DOUBLE, GL_FALSE, sizeof(vec3), (const void*)0));
+	// Position attribute (location 0)
+	glEnableVertexAttribArray(ATTR_POSITION);
+	glVertexAttribPointer(ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), (const void*)0);
 
-	//buffer de coordenades de textura
-	if (model->GetModelData().vertex_texCoords.size() > 0)
-	{
-		(glGenBuffers(1, &model->GetModelData().vBTCoordsID));
-		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBTCoordsID));
-		(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_texCoords.size() * sizeof(vec2), model->GetModelData().vertex_texCoords.data(), GL_STATIC_DRAW));
+	// Texture coordinates buffer (if available)
+	if (!modelData.vertex_texCoords.empty()) {
+		glGenBuffers(1, &modelData.vBTCoordsID);
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBTCoordsID);
+		glBufferData(GL_ARRAY_BUFFER, modelData.vertex_texCoords.size() * sizeof(vec2),
+			modelData.vertex_texCoords.data(), GL_STATIC_DRAW);
 
-		//tex coord layout
-		(glEnableVertexAttribArray(1));
-		(glVertexAttribPointer(1, 2, GL_DOUBLE, GL_FALSE, sizeof(vec2), (const void*)0));
+		// Texture coordinates attribute (location 1)
+		glEnableVertexAttribArray(ATTR_TEXCOORD);
+		glVertexAttribPointer(ATTR_TEXCOORD, 2, GL_FLOAT, GL_FALSE, sizeof(vec2), (const void*)0);
 	}
 
-	//buffer de normals
-	if (model->GetModelData().vertex_normals.size() > 0)
-	{
-		(glGenBuffers(1, &model->GetModelData().vBNormalsID));
-		(glBindBuffer(GL_ARRAY_BUFFER, model->GetModelData().vBNormalsID));
-		(glBufferData(GL_ARRAY_BUFFER, model->GetModelData().vertex_normals.size() * sizeof(vec3), model->GetModelData().vertex_normals.data(), GL_STATIC_DRAW));
+	// Normals buffer (if available)
+	if (!modelData.vertex_normals.empty()) {
+		glGenBuffers(1, &modelData.vBNormalsID);
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBNormalsID);
+		glBufferData(GL_ARRAY_BUFFER, modelData.vertex_normals.size() * sizeof(vec3),
+			modelData.vertex_normals.data(), GL_STATIC_DRAW);
 
-		//normal layout
-		(glEnableVertexAttribArray(2));
-		(glVertexAttribPointer(2, 3, GL_DOUBLE, GL_FALSE, sizeof(vec3), (const void*)0));
-
-		//load normals lines for debugging
-		//loadNormalsToOpenGL();
-		//loadFaceNormalsToOpenGL();
+		// Normals attribute (location 2)
+		glEnableVertexAttribArray(ATTR_NORMAL);
+		glVertexAttribPointer(ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), (const void*)0);
 	}
 
-	if (model->GetModelData().vertexData.size() > 0 && model->GetModelData().vertexData[0].m_BoneIDs[0] != -1) {
-		// Create arrays to store IDs and weights
+	// Tangents buffer (if available)
+	if (!modelData.vertex_tangents.empty()) {
+		glGenBuffers(1, &modelData.vBTangentsID);
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBTangentsID);
+		glBufferData(GL_ARRAY_BUFFER, modelData.vertex_tangents.size() * sizeof(vec3),
+			modelData.vertex_tangents.data(), GL_STATIC_DRAW);
+
+		// Tangents attribute (location 3)
+		glEnableVertexAttribArray(ATTR_TANGENT);
+		glVertexAttribPointer(ATTR_TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), (const void*)0);
+	}
+
+	// Bitangents buffer (if available)
+	if (!modelData.vertex_bitangents.empty()) {
+		glGenBuffers(1, &modelData.vBBitangentsID);
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBBitangentsID);
+		glBufferData(GL_ARRAY_BUFFER, modelData.vertex_bitangents.size() * sizeof(vec3),
+			modelData.vertex_bitangents.data(), GL_STATIC_DRAW);
+
+		// Bitangents attribute (location 4)
+		glEnableVertexAttribArray(ATTR_BITANGENT);
+		glVertexAttribPointer(ATTR_BITANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), (const void*)0);
+	}
+
+	// Colors buffer (if available)
+	if (!modelData.vertex_colors.empty()) {
+		glGenBuffers(1, &modelData.vBColorsID);
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBColorsID);
+		glBufferData(GL_ARRAY_BUFFER, modelData.vertex_colors.size() * sizeof(vec3),
+			modelData.vertex_colors.data(), GL_STATIC_DRAW);
+
+		// Colors attribute (location 7)
+		glEnableVertexAttribArray(ATTR_COLOR);
+		glVertexAttribPointer(ATTR_COLOR, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), (const void*)0);
+	}
+
+	// Bone data (if this mesh is animated)
+	bool hasBoneData = false;
+	for (const auto& vertex : modelData.vertexData) {
+		if (vertex.m_BoneIDs[0] != -1) {
+			hasBoneData = true;
+			break;
+		}
+	}
+
+	if (hasBoneData) {
+		model->isAnimated = true;
+
+		// Extract bone IDs and weights
 		std::vector<glm::ivec4> boneIDs;
 		std::vector<glm::vec4> weights;
 
-		for (const auto& vertex : model->GetModelData().vertexData) {
-			glm::ivec4 ids(-1);
-			glm::vec4 vertexWeights(0.0f);
+		boneIDs.reserve(modelData.vertexData.size());
+		weights.reserve(modelData.vertexData.size());
+
+		for (const auto& vertex : modelData.vertexData) {
+			glm::ivec4 ids;
+			glm::vec4 vertexWeights;
 
 			for (int i = 0; i < MAX_BONE_INFLUENCE; i++) {
 				ids[i] = vertex.m_BoneIDs[i];
@@ -1093,42 +684,185 @@ void Mesh::loadToOpenGL()
 			weights.push_back(vertexWeights);
 		}
 
-		// Create buffer for bone IDs
-		GLuint boneIDBuffer;
-		glGenBuffers(1, &boneIDBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, boneIDBuffer);
+		// Bone IDs buffer
+		glGenBuffers(1, &modelData.vBBoneIDsID);
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBBoneIDsID);
 		glBufferData(GL_ARRAY_BUFFER, boneIDs.size() * sizeof(glm::ivec4), boneIDs.data(), GL_STATIC_DRAW);
 
-		// Configure attribute for bone IDs
-		glEnableVertexAttribArray(3);
-		glVertexAttribIPointer(3, 4, GL_INT, sizeof(glm::ivec4), (const void*)0);
+		// Bone IDs attribute (location 5)
+		glEnableVertexAttribArray(ATTR_BONE_IDS);
+		glVertexAttribIPointer(ATTR_BONE_IDS, 4, GL_INT, sizeof(glm::ivec4), (const void*)0);
 
-		// Create buffer for weights
-		GLuint weightBuffer;
-		glGenBuffers(1, &weightBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, weightBuffer);
+		// Bone weights buffer
+		glGenBuffers(1, &modelData.vBBoneWeightsID);
+		glBindBuffer(GL_ARRAY_BUFFER, modelData.vBBoneWeightsID);
 		glBufferData(GL_ARRAY_BUFFER, weights.size() * sizeof(glm::vec4), weights.data(), GL_STATIC_DRAW);
 
-		// Configure attribute for weights
-		glEnableVertexAttribArray(4);
-		glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
+		// Bone weights attribute (location 6)
+		glEnableVertexAttribArray(ATTR_BONE_WEIGHTS);
+		glVertexAttribPointer(ATTR_BONE_WEIGHTS, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), (const void*)0);
 	}
 
-	uint32_t hash = 0;
-	for (const auto& v : model->GetModelData().vertexData) {
-		hash = hash * 31 + std::hash<float>{}(v.position.x);
-		hash = hash * 31 + std::hash<float>{}(v.position.y);
-		hash = hash * 31 + std::hash<float>{}(v.position.z);
+	// Generate and bind element buffer for indices
+	glGenBuffers(1, &modelData.iBID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelData.iBID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, modelData.indexData.size() * sizeof(unsigned int),
+		modelData.indexData.data(), GL_STATIC_DRAW);
+
+	// Unbind buffers
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+
+	// Generate a unique ID for this model if it doesn't have one
+	if (model->GetID() == 0) {
+		model->GenerateUniqueID();
 	}
-	model->SetID(hash);
 
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "OpenGL error during mesh loading: 0x%X", error);
+	}
+	else {
+		LOG(LogType::LOG_INFO, "Mesh loaded to OpenGL successfully: VAO=%u, Vertices=%zu, Indices=%zu",
+			modelData.vA, modelData.vertexData.size(), modelData.indexData.size());
+	}
+}
 
-	//buffer de index
-	(glCreateBuffers(1, &model->GetModelData().iBID));
-	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().iBID));
-	(glBufferData(GL_ELEMENT_ARRAY_BUFFER, model->GetModelData().indexData.size() * sizeof(unsigned int), model->GetModelData().indexData.data(), GL_STATIC_DRAW));
+bool Mesh::validate(std::string& errorMessage) const {
+	std::stringstream errors;
+	bool isValid = true;
 
-	(glBindBuffer(GL_ARRAY_BUFFER, 0));
-	(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-	(glBindVertexArray(0));
+	// Check if model exists
+	if (!model) {
+		errors << "Model is null. ";
+		return false; // Critical error, no need to continue
+	}
+
+	const auto& modelData = model->GetModelData();
+
+	// Check vertex array object
+	if (modelData.vA == 0) {
+		errors << "VAO is invalid (0). ";
+		isValid = false;
+	}
+
+	// Check vertex buffer
+	if (modelData.vBPosID == 0) {
+		errors << "Position buffer is invalid (0). ";
+		isValid = false;
+	}
+
+	// Check index buffer
+	if (modelData.iBID == 0) {
+		errors << "Index buffer is invalid (0). ";
+		isValid = false;
+	}
+
+	// Check vertex data
+	if (modelData.vertexData.empty()) {
+		errors << "Vertex data is empty. ";
+		isValid = false;
+	}
+
+	// Check index data
+	if (modelData.indexData.empty()) {
+		errors << "Index data is empty. ";
+		isValid = false;
+	}
+
+	// Check for invalid indices
+	for (size_t i = 0; i < modelData.indexData.size(); i++) {
+		if (modelData.indexData[i] >= modelData.vertexData.size()) {
+			errors << "Invalid index at position " << i << ": "
+				<< modelData.indexData[i] << " (max: " << modelData.vertexData.size() - 1 << "). ";
+			isValid = false;
+			break; // Report just the first error to avoid huge error messages
+		}
+	}
+
+	/*if (!_boundingBox.isValid()) {
+		errors << "Bounding box is invalid. ";
+		isValid = false;
+	}*/
+
+	// Check model ID
+	if (model->GetID() == 0) {
+		errors << "Model ID is 0. ";
+		isValid = false;
+	}
+
+	// Check if texture coordinates are provided but buffer is missing
+	if (!modelData.vertex_texCoords.empty() && modelData.vBTCoordsID == 0) {
+		errors << "Texture coordinates exist but buffer is invalid. ";
+		isValid = false;
+	}
+
+	// Check if normals are provided but buffer is missing
+	if (!modelData.vertex_normals.empty() && modelData.vBNormalsID == 0) {
+		errors << "Normals exist but buffer is invalid. ";
+		isValid = false;
+	}
+
+	// Check for animated mesh inconsistencies
+	if (model->isAnimated) {
+		bool hasBoneData = false;
+		for (const auto& vertex : modelData.vertexData) {
+			if (vertex.m_BoneIDs[0] != -1) {
+				hasBoneData = true;
+				break;
+			}
+		}
+
+		if (!hasBoneData) {
+			errors << "Mesh is marked as animated but has no bone data. ";
+			isValid = false;
+		}
+
+		if (modelData.vBBoneIDsID == 0 || modelData.vBBoneWeightsID == 0) {
+			errors << "Animated mesh but bone buffers are invalid. ";
+			isValid = false;
+		}
+	}
+
+	// Check OpenGL state for this mesh
+	if (modelData.vA != 0) {
+		GLint currentVAO;
+		glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &currentVAO);
+
+		glBindVertexArray(modelData.vA);
+
+		// Check if required attributes are enabled
+		GLint enabled;
+		glGetVertexAttribiv(ATTR_POSITION, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &enabled);
+		if (enabled == GL_FALSE) {
+			errors << "Position attribute not enabled in VAO. ";
+			isValid = false;
+		}
+
+		if (!modelData.vertex_texCoords.empty()) {
+			glGetVertexAttribiv(ATTR_TEXCOORD, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &enabled);
+			if (enabled == GL_FALSE) {
+				errors << "TexCoord attribute not enabled in VAO. ";
+				isValid = false;
+			}
+		}
+
+		if (!modelData.vertex_normals.empty()) {
+			glGetVertexAttribiv(ATTR_NORMAL, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &enabled);
+			if (enabled == GL_FALSE) {
+				errors << "Normal attribute not enabled in VAO. ";
+				isValid = false;
+			}
+		}
+
+		// Restore previous state
+		glBindVertexArray(currentVAO);
+	}
+
+	errorMessage = errors.str();
+	if (errorMessage.empty()) {
+		errorMessage = "Mesh validation passed.";
+	}
+
+	return isValid;
 }

@@ -154,6 +154,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="ShapeFactorio.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
     <ClCompile Include="HawkUUID.cpp" />
     <ClCompile Include="Tweening.cpp" />

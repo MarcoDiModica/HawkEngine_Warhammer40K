@@ -327,6 +327,574 @@ void GPUDrivenRenderer::RenderAll(const glm::mat4& viewMatrix, const glm::mat4& 
 	}
 
 	glBindBuffer(GL_DRAW_INDIRECT_BUFFER, 0);
+
+	//RenderBasicTest(viewMatrix, projMatrix);
+	//RenderUltraBasicTest();
+	//RenderDirectWithSSBO(viewMatrix, projMatrix);
+	//RenderDirectWithBuffers(viewMatrix, projMatrix);
+	//RenderWithSimplifiedShaders(viewMatrix, projMatrix);
+}
+
+void GPUDrivenRenderer::RenderWithSimplifiedShaders(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
+	// Vertex Shader simplificado
+	const char* vsSource = R"(
+        #version 330 core
+        layout(location = 0) in vec3 position;
+        layout(location = 1) in vec3 normal;
+        layout(location = 2) in vec2 texCoord;
+        
+        out vec2 TexCoord;
+        out vec3 Normal;
+        
+        uniform mat4 model;
+        uniform mat4 view;
+        uniform mat4 projection;
+        
+        void main() {
+            gl_Position = projection * view * model * vec4(position, 1.0);
+            TexCoord = texCoord;
+            Normal = normal;
+        }
+    )";
+
+	// Fragment Shader simplificado
+	const char* fsSource = R"(
+        #version 330 core
+        in vec2 TexCoord;
+        in vec3 Normal;
+        
+        out vec4 FragColor;
+        
+        uniform vec4 albedoColor;
+        
+        void main() {
+            // Color directo sin textura
+            FragColor = albedoColor;
+        }
+    )";
+
+	// Compilar shaders
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vsSource, NULL);
+	glCompileShader(vertexShader);
+
+	GLint success;
+	char infoLog[512];
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error compilando vertex shader simplificado: %s", infoLog);
+		return;
+	}
+
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fsSource, NULL);
+	glCompileShader(fragmentShader);
+
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error compilando fragment shader simplificado: %s", infoLog);
+		glDeleteShader(vertexShader);
+		return;
+	}
+
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error enlazando shader simplificado: %s", infoLog);
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+		return;
+	}
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	// Renderizar usando los mismos meshes pero con shader simplificado
+	for (uint32_t meshIndex = 0; meshIndex < BindlessManager::GetInstance().GetMeshCount(); meshIndex++) {
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		if (!meshData || !meshData->vertexArray || !meshData->indexBuffer) continue;
+
+		// Usar shader
+		glUseProgram(shaderProgram);
+
+		// Matrices
+		glm::vec3 cameraPos = glm::vec3(glm::inverse(viewMatrix)[3]);
+		glm::vec3 cameraFront = -glm::vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]);
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), cameraPos + cameraFront * 5.0f);
+
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+		glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projMatrix));
+
+		// Color fijo verde brillante para asegurar visibilidad
+		glUniform4f(glGetUniformLocation(shaderProgram, "albedoColor"), 0.0f, 1.0f, 0.0f, 1.0f);
+
+		// Desactivar culling y depth test
+		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
+
+		// Dibujar
+		glBindVertexArray(meshData->vertexArray);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+		glDrawElements(GL_TRIANGLES, meshData->indexCount, GL_UNSIGNED_INT, 0);
+
+		GLenum err = glGetError();
+		if (err != GL_NO_ERROR) {
+			LOG(LogType::LOG_ERROR, "Error en RenderWithSimplifiedShaders: 0x%X", err);
+		}
+		else {
+			LOG(LogType::LOG_INFO, "RenderWithSimplifiedShaders completado: VAO=%u, IBO=%u, conteo=%u",
+				meshData->vertexArray, meshData->indexBuffer, meshData->indexCount);
+		}
+
+		// Solo renderizar el primer mesh válido
+		break;
+	}
+
+	// Limpiar estado
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glUseProgram(0);
+	glDeleteProgram(shaderProgram);
+}
+
+void GPUDrivenRenderer::RenderDirectWithBuffers(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
+	// 1. Configurar shader UNLIT con SSBOs
+	GLuint unlitShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::UNLIT);
+	if (unlitShader == 0) return;
+
+	glUseProgram(unlitShader);
+
+	// Configurar matrices
+	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "view"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "projection"), 1, GL_FALSE, glm::value_ptr(projMatrix));
+
+	// Usar SSBOs
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, BindlessManager::GetInstance().GetInstanceBuffer());
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, BindlessManager::GetInstance().GetMaterialBuffer());
+
+	// Habilitar bindless mode
+	GLint useBindlessLoc = glGetUniformLocation(unlitShader, "useBindlessMode");
+	if (useBindlessLoc != -1) {
+		glUniform1i(useBindlessLoc, 1);
+	}
+
+	// 2. Crear instancia simple en frente de la cámara
+	glm::vec3 cameraPos = glm::vec3(glm::inverse(viewMatrix)[3]);
+	glm::vec3 cameraFront = -glm::vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]);
+	glm::mat4 model = glm::translate(glm::mat4(1.0f), cameraPos + cameraFront * 5.0f);
+
+	// 3. Renderizar mesh por mesh
+	for (uint32_t meshIndex = 0; meshIndex < BindlessManager::GetInstance().GetMeshCount(); meshIndex++) {
+		GPUMesh* meshData = BindlessManager::GetInstance().GetMeshData(meshIndex);
+		if (!meshData || meshData->indexCount == 0) continue;
+
+		glBindVertexArray(meshData->vertexArray);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+		for (uint32_t materialIndex = 0; materialIndex < BindlessManager::GetInstance().GetMaterialCount(); materialIndex++) {
+			// Pasar índice de instancia ficticio
+			glUniform1ui(glGetUniformLocation(unlitShader, "InstanceIndex"), materialIndex);
+
+			// Usar matriz modelo directamente
+			glUniformMatrix4fv(glGetUniformLocation(unlitShader, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+			// Dibujar
+			glDrawElements(GL_TRIANGLES, meshData->indexCount, GL_UNSIGNED_INT, 0);
+
+			// Solo probamos una combinación
+			break;
+		}
+
+		// Solo probamos una malla
+		break;
+	}
+
+	// Verificar errores
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "Error en DirectWithBuffers: 0x%X", err);
+	}
+	else {
+		LOG(LogType::LOG_INFO, "DirectWithBuffers renderizado correctamente");
+	}
+
+	// Limpiar estado
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glUseProgram(0);
+}
+
+void GPUDrivenRenderer::RenderDirectWithSSBO(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
+	// Limpiar errores previos
+	while (glGetError() != GL_NO_ERROR) {}
+
+	// 1. Encontrar una malla válida
+	GPUMesh* meshData = nullptr;
+	for (size_t i = 0; i < BindlessManager::GetInstance().GetMeshCount(); i++) {
+		GPUMesh* mesh = BindlessManager::GetInstance().GetMeshData(i);
+		if (mesh && mesh->vertexArray != 0 && mesh->indexBuffer != 0 && mesh->indexCount > 0) {
+			meshData = mesh;
+			break;
+		}
+	}
+
+	if (!meshData) {
+		LOG(LogType::LOG_ERROR, "No se encontró ninguna malla válida");
+		return;
+	}
+
+	// 2. Obtener el shader UNLIT
+	GLuint unlitShader = ShaderManager::GetInstance().GetShaderProgram(ShaderType::UNLIT);
+	if (unlitShader == 0) {
+		LOG(LogType::LOG_ERROR, "Shader UNLIT no disponible");
+		return;
+	}
+
+	// 3. Configurar el renderizado
+	glUseProgram(unlitShader);
+
+	// Deshabilitar bindless mode y usar uniforms directos
+	GLint useBindlessLoc = glGetUniformLocation(unlitShader, "useBindlessMode");
+	if (useBindlessLoc != -1) {
+		glUniform1i(useBindlessLoc, 0);
+	}
+
+	// Configurar matrices
+	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "view"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "projection"), 1, GL_FALSE, glm::value_ptr(projMatrix));
+
+	// Matriz modelo frente a la cámara
+	glm::vec3 cameraPos = glm::vec3(glm::inverse(viewMatrix)[3]);
+	glm::vec3 cameraFront = -glm::vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]);
+	glm::mat4 model = glm::translate(glm::mat4(1.0f), cameraPos + cameraFront * 5.0f);
+
+	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "model"), 1, GL_FALSE, glm::value_ptr(model));
+
+	// Usar primer material
+	if (BindlessManager::GetInstance().GetMaterialCount() > 0) {
+		GPUMaterial* matData = BindlessManager::GetInstance().GetMaterialData(0);
+		if (matData) {
+			// Pasar color directamente como uniform
+			glUniform4fv(glGetUniformLocation(unlitShader, "albedoColor"), 1, glm::value_ptr(matData->albedoColor));
+
+			// Índice de material (0 para el primer material)
+			glUniform1ui(glGetUniformLocation(unlitShader, "materialIndex"), 0);
+		}
+	}
+
+	// 4. Dibujar la malla
+	glBindVertexArray(meshData->vertexArray);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+	glDrawElements(GL_TRIANGLES, meshData->indexCount, GL_UNSIGNED_INT, 0);
+
+	// Verificar errores
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "Error en DirectWithSSBO: 0x%X", err);
+	}
+	else {
+		LOG(LogType::LOG_INFO, "DirectWithSSBO renderizado correctamente");
+	}
+
+	// Limpiar estado
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glUseProgram(0);
+}
+
+void GPUDrivenRenderer::RenderBasicTest(const glm::mat4& viewMatrix, const glm::mat4& projMatrix) {
+	// 1. Crear un shader simple en línea (hardcoded)
+	const char* vsSource = R"(
+        #version 330 core
+        layout(location = 0) in vec3 aPos;
+        uniform mat4 uModel;
+        uniform mat4 uView;
+        uniform mat4 uProjection;
+        void main() {
+            gl_Position = uProjection * uView * uModel * vec4(aPos, 1.0);
+        }
+    )";
+
+	const char* fsSource = R"(
+        #version 330 core
+        out vec4 FragColor;
+        void main() {
+            FragColor = vec4(1.0, 0.0, 0.0, 1.0); // Color rojo brillante
+        }
+    )";
+
+	// Compilar vertex shader
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vsSource, NULL);
+	glCompileShader(vertexShader);
+
+	// Verificar errores de compilación
+	GLint success;
+	char infoLog[512];
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error compilando vertex shader: %s", infoLog);
+		return;
+	}
+
+	// Compilar fragment shader
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fsSource, NULL);
+	glCompileShader(fragmentShader);
+
+	// Verificar errores de compilación
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error compilando fragment shader: %s", infoLog);
+		glDeleteShader(vertexShader);
+		return;
+	}
+
+	// Crear programa de shader
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+	// Verificar errores de enlace
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error enlazando shader: %s", infoLog);
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
+		return;
+	}
+
+	// Liberar shaders individuales
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	// 2. Buscar una malla válida para renderizar
+	GPUMesh* meshData = nullptr;
+	for (size_t i = 0; i < BindlessManager::GetInstance().GetMeshCount(); i++) {
+		GPUMesh* mesh = BindlessManager::GetInstance().GetMeshData(i);
+		if (mesh && mesh->vertexArray != 0 && mesh->indexBuffer != 0 && mesh->indexCount > 0) {
+			meshData = mesh;
+			break;
+		}
+	}
+
+	if (!meshData) {
+		LOG(LogType::LOG_ERROR, "No se encontró ninguna malla válida para el test básico");
+		glDeleteProgram(shaderProgram);
+		return;
+	}
+
+	// 3. Configurar estado de OpenGL para renderizado
+	glUseProgram(shaderProgram);
+
+	// Deshabilitar temporalmente pruebas y culling para asegurar visibilidad
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+
+	// Configurar uniforms
+	GLuint modelLoc = glGetUniformLocation(shaderProgram, "uModel");
+	GLuint viewLoc = glGetUniformLocation(shaderProgram, "uView");
+	GLuint projLoc = glGetUniformLocation(shaderProgram, "uProjection");
+
+	// Matriz de modelo simple (identidad)
+	glm::mat4 model = glm::mat4(1.0f);
+	// Posicionar objeto frente a la cámara
+	glm::vec3 cameraPos = glm::vec3(glm::inverse(viewMatrix)[3]);
+	glm::vec3 cameraFront = -glm::vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]);
+	model = glm::translate(model, cameraPos + cameraFront * 3.0f);
+
+	// Configurar uniforms
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projMatrix));
+
+	// 4. Renderizar directamente
+	glBindVertexArray(meshData->vertexArray);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshData->indexBuffer);
+
+	// Dibujar con glDrawElements (no indirecto)
+	glDrawElements(GL_TRIANGLES, meshData->indexCount, GL_UNSIGNED_INT, 0);
+
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "Error durante renderizado básico: 0x%X", error);
+	}
+	else {
+		LOG(LogType::LOG_INFO, "Renderizado básico completado sin errores (malla: VAO=%u, IBO=%u, índices=%u)",
+			meshData->vertexArray, meshData->indexBuffer, meshData->indexCount);
+	}
+
+	// 5. Limpiar estado
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glUseProgram(0);
+	glDeleteProgram(shaderProgram);
+
+	// Restaurar estado de OpenGL
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+}
+
+void GPUDrivenRenderer::RenderUltraBasicTest() {
+	// Capturar estado actual
+	GLint lastVao = 0;
+	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &lastVao);
+	GLint lastProgram = 0;
+	glGetIntegerv(GL_CURRENT_PROGRAM, &lastProgram);
+
+	// Limpiar errores previos
+	while (glGetError() != GL_NO_ERROR) {}
+
+	// Crear VAO completamente nuevo
+	GLuint testVao;
+	glGenVertexArrays(1, &testVao);
+	glBindVertexArray(testVao);
+
+	LOG(LogType::LOG_INFO, "Test VAO creado: %u", testVao);
+
+	// Crear VBO para un triángulo simple
+	GLuint testVbo;
+	glGenBuffers(1, &testVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, testVbo);
+
+	// Triángulo simple
+	float vertices[] = {
+		-0.5f, -0.5f, 0.0f,  // Esquina inferior izquierda
+		 0.5f, -0.5f, 0.0f,  // Esquina inferior derecha
+		 0.0f,  0.5f, 0.0f   // Esquina superior
+	};
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "Error al crear buffer: 0x%X", err);
+	}
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "Error al configurar atributos: 0x%X", err);
+	}
+
+	// Shader ultra simple (coordenadas de paso directo)
+	const char* vsSource = R"(
+        #version 330 core
+        layout(location = 0) in vec3 aPos;
+        void main() {
+            gl_Position = vec4(aPos, 1.0);
+        }
+    )";
+
+	const char* fsSource = R"(
+        #version 330 core
+        out vec4 FragColor;
+        void main() {
+            FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+        }
+    )";
+
+	// Compilar y enlazar shader
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vsSource, NULL);
+	glCompileShader(vertexShader);
+
+	GLint success;
+	char infoLog[512];
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error VS: %s", infoLog);
+	}
+
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fsSource, NULL);
+	glCompileShader(fragmentShader);
+
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error FS: %s", infoLog);
+	}
+
+	GLuint testProgram = glCreateProgram();
+	glAttachShader(testProgram, vertexShader);
+	glAttachShader(testProgram, fragmentShader);
+	glLinkProgram(testProgram);
+
+	glGetProgramiv(testProgram, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetProgramInfoLog(testProgram, 512, NULL, infoLog);
+		LOG(LogType::LOG_ERROR, "Error linking: %s", infoLog);
+	}
+	else {
+		LOG(LogType::LOG_INFO, "Shader program creado correctamente: %u", testProgram);
+	}
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	// Desactivar depth test y culling para simplificar
+	GLboolean depthTestEnabled;
+	glGetBooleanv(GL_DEPTH_TEST, &depthTestEnabled);
+	GLboolean cullFaceEnabled;
+	glGetBooleanv(GL_CULL_FACE, &cullFaceEnabled);
+
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+
+	// Guardar viewport actual
+	GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	LOG(LogType::LOG_INFO, "Viewport actual: %d,%d,%d,%d", viewport[0], viewport[1], viewport[2], viewport[3]);
+
+	// Guardar framebuffer actual
+	GLint currentFBO;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &currentFBO);
+	LOG(LogType::LOG_INFO, "Framebuffer actual: %d", currentFBO);
+
+	// Renderizar
+	glUseProgram(testProgram);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		LOG(LogType::LOG_ERROR, "Error al dibujar triángulo: 0x%X", err);
+	}
+	else {
+		LOG(LogType::LOG_INFO, "Triángulo dibujado correctamente");
+	}
+
+	// Forzar flush y esperar
+	glFlush();
+	glFinish();
+
+	// Restaurar estado
+	if (depthTestEnabled) glEnable(GL_DEPTH_TEST); else glDisable(GL_DEPTH_TEST);
+	if (cullFaceEnabled) glEnable(GL_CULL_FACE); else glDisable(GL_CULL_FACE);
+
+	glUseProgram(lastProgram);
+	glBindVertexArray(lastVao);
+
+	// Eliminar objetos temporales
+	glDeleteProgram(testProgram);
+	glDeleteBuffers(1, &testVbo);
+	glDeleteVertexArrays(1, &testVao);
 }
 
 void GPUDrivenRenderer::RenderUnlitBatch(
@@ -335,6 +903,15 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	const glm::mat4& projMatrix) {
 
 	while (glGetError() != GL_NO_ERROR) {}
+
+	/*GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	LOG(LogType::LOG_INFO, "Current viewport: x=%d, y=%d, width=%d, height=%d",
+		viewport[0], viewport[1], viewport[2], viewport[3]);
+
+	GLint currentFBO;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &currentFBO);
+	LOG(LogType::LOG_INFO, "Current framebuffer: %d", currentFBO);*/
 
 	if (!glIsBuffer(drawCommandBuffers[renderBufferIndex])) {
 		LOG(LogType::LOG_ERROR, "Draw command buffer is invalid!");
@@ -355,6 +932,13 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	glUseProgram(unlitShader);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+
+	glUseProgram(unlitShader);
+
+	/*GLint colorLocation = glGetUniformLocation(unlitShader, "albedoColorUniform");
+	if (colorLocation != -1) {
+		glUniform4f(colorLocation, 1.0f, 0.0f, 0.0f, 1.0f);
+	}*/
 
 	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "view"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "projection"), 1, GL_FALSE, glm::value_ptr(projMatrix));
@@ -446,12 +1030,37 @@ void GPUDrivenRenderer::RenderUnlitBatch(
 	}
 
 	//debug mesh info
-	for (size_t i = 0; i < batch.meshIndices.size(); i++) {
+	/*for (size_t i = 0; i < batch.meshIndices.size(); i++) {
 		if (i >= batch.commands.size()) continue;
 
 		uint32_t meshIndex = batch.meshIndices[i];
 		DebugMeshInfo(meshIndex);
-	}
+	}*/
+
+	//GPUMesh* debugMesh = BindlessManager::GetInstance().GetMeshData(0); // Primer mesh
+	//GPUMaterial* debugMat = BindlessManager::GetInstance().GetMaterialData(0); // Primer material
+
+	//if (debugMesh && debugMat) {
+	//	glm::vec3 cameraFront = -glm::vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]);
+	//	glm::vec3 cameraPos = glm::vec3(glm::inverse(viewMatrix)[3]);
+	//	glm::vec3 debugPos = cameraPos + cameraFront * 5.0f; // 5 unidades frente a la cámara
+
+	//	glBindVertexArray(debugMesh->vertexArray);
+	//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, debugMesh->indexBuffer);
+
+	//	// Posicionar en frente de la cámara
+	//	glm::mat4 debugModel = glm::translate(glm::mat4(1.0f), debugPos);
+	//	glUniformMatrix4fv(glGetUniformLocation(unlitShader, "model"), 1, GL_FALSE, glm::value_ptr(debugModel));
+
+	//	// Desactivar bindless para simplificar
+	//	glUniform1i(glGetUniformLocation(unlitShader, "useBindlessMode"), 0);
+	//	glUniform1ui(glGetUniformLocation(unlitShader, "materialIndex"), 0);
+
+	//	// Dibujar
+	//	glDrawElements(GL_TRIANGLES, debugMesh->indexCount, GL_UNSIGNED_INT, 0);
+	//	LOG(LogType::LOG_INFO, "Debug object drawn in front of camera at pos=(%f,%f,%f)",
+	//		debugPos.x, debugPos.y, debugPos.z);
+	//}
 
 	if (visibleInstanceCount == 0 && !batch.meshIndices.empty()) {
 		LOG(LogType::LOG_INFO, "No instances rendered! Trying debug fallback render...");

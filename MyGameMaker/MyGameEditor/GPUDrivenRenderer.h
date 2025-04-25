@@ -53,6 +53,11 @@ public:
 
 	void RenderAll(const glm::mat4& viewMatrix, const glm::mat4& projMatrix, const glm::vec3& cameraPos);
 
+	void RenderWithSimplifiedShaders(const glm::mat4& viewMatrix, const glm::mat4& projMatrix);
+	void RenderDirectWithBuffers(const glm::mat4& viewMatrix, const glm::mat4& projMatrix);
+	void RenderDirectWithSSBO(const glm::mat4& viewMatrix, const glm::mat4& projMatrix);
+	void RenderBasicTest(const glm::mat4& viewMatrix, const glm::mat4& projMatrix);
+	void RenderUltraBasicTest();
 	void SetUseGPUCulling(bool enabled) { useGPUCulling = enabled; }
 	void SetUseOcclusionCulling(bool enabled) { useOcclusionCulling = enabled; }
 	void SetUseFrustumCulling(bool enabled) { useFrustumCulling = enabled; }

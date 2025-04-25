@@ -24,7 +24,7 @@
 
 MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
 	name = "MeshRenderer";
-	mesh = Mesh::CreateCube();
+	if (!mesh) mesh = Mesh::CreateCube();
 	material = std::make_shared<Material>();
 
 	auto image = std::make_shared<Image>();

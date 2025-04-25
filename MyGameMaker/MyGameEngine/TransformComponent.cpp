@@ -284,9 +284,9 @@ void Transform_Component::SetMatrix(const glm::dmat4& newMatrix)
 YAML::Node Transform_Component::encode()
 {
     YAML::Node node = Component::encode();
-    node["localPosition"] = YAML::convert<glm::dvec3>::encode(localPosition);
-    node["localRotation"] = YAML::convert<glm::dvec3>::encode(glm::degrees(glm::eulerAngles(localRotation)));
-    node["localScale"] = YAML::convert<glm::dvec3>::encode(localScale);
+	node["localPosition"] = YAML::convert<glm::dvec3>::encode(localPosition);
+	node["localRotation"] = YAML::convert<glm::dvec3>::encode(glm::degrees(glm::eulerAngles(localRotation)));
+	node["localScale"] = YAML::convert<glm::dvec3>::encode(localScale);
     return node;
 }
 

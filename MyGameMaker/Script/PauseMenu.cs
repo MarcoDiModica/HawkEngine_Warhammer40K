@@ -222,6 +222,7 @@ public class PauseMenu : MonoBehaviour
                 sound?.LoadAudio(buttonClicked);
                 sound?.Play();
                 optionsMenu.SetActive(true);
+                gameObject.SetActive(false);
             }
             else if (selectedButton == button_mainMenuButton)
             {

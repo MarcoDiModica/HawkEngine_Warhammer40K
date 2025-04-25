@@ -256,9 +256,9 @@ GameObject1:
                     - 2.6553018983577203e-07
                     - 9.2420677333393542e-08
                   localRotation:
-                    - -179.99991126376861
-                    - -80.537784035034306
-                    - 89.999943818087061
+                    - -179.99992247109589
+                    - -80.537865634133979
+                    - 89.99995331202777
                   localScale:
                     - 0.99999988079071045
                     - 0.99999988079071045
@@ -278,9 +278,9 @@ GameObject1:
                         - 0.29999998211860657
                         - 3.0407264262066747e-07
                       localRotation:
-                        - -78.15104348623305
-                        - -15.877630199355755
-                        - 0.029304008298038073
+                        - -78.151043257184526
+                        - -15.877615657127951
+                        - 0.029302391955796842
                       localScale:
                         - 0.99999964237213135
                         - 1
@@ -367,8 +367,8 @@ GameObject1:
                     - -2.0992075633330387e-08
                   localRotation:
                     - -3.9215701005733474
-                    - -1.0997597137719433e-07
-                    - -2.3444344020430473e-09
+                    - -1.0997607314976573e-07
+                    - -2.3444325090151858e-09
                   localScale:
                     - 1
                     - 1.0000001192092896
@@ -388,9 +388,9 @@ GameObject1:
                         - 0.90553861856460571
                         - -7.775822652433817e-09
                       localRotation:
-                        - -5.4996131717043273
-                        - -15.388338854872963
-                        - -110.08965376575452
+                        - -5.4996120989770629
+                        - -15.388339601179089
+                        - -110.08965387516119
                       localScale:
                         - 0.99999982118606567
                         - 1.0000002384185791
@@ -498,9 +498,9 @@ GameObject1:
                                             - 0.13528183102607727
                                             - 4.3161158203020022e-08
                                           localRotation:
-                                            - 0.59058915573444148
-                                            - -31.48509458355079
-                                            - -15.749576271292657
+                                            - 0.59059145232993027
+                                            - -31.485085671860471
+                                            - -15.74958819314481
                                           localScale:
                                             - 1.0000001192092896
                                             - 0.99999970197677612
@@ -542,9 +542,9 @@ GameObject1:
                                         - 0.36481720209121704
                                         - -0.017056537792086601
                                       localRotation:
-                                        - -8.5895898601959413
-                                        - -2.5416064912041572
-                                        - -26.291286071132749
+                                        - -8.589580008734087
+                                        - -2.5416074546234477
+                                        - -26.291286216122781
                                       localScale:
                                         - 0.99999982118606567
                                         - 0.99999988079071045
@@ -630,9 +630,9 @@ GameObject1:
                                             - 0.13784031569957733
                                             - 6.5996835774129181e-10
                                           localRotation:
-                                            - -1.1652101640650954
-                                            - 6.5606755142346467
-                                            - -17.755871761219449
+                                            - -1.1652091160467242
+                                            - 6.5606756646984765
+                                            - -17.755870012890473
                                           localScale:
                                             - 0.99999958276748657
                                             - 0.99999982118606567
@@ -652,9 +652,9 @@ GameObject1:
                                                 - 0.10049884766340256
                                                 - -2.5751536014695375e-08
                                               localRotation:
-                                                - 0.42800647138555969
-                                                - 0.62468798823402416
-                                                - -54.245444858583717
+                                                - 0.4280066903290109
+                                                - 0.62468756078659082
+                                                - -54.245444858986666
                                               localScale:
                                                 - 1
                                                 - 1.0000002384185791
@@ -696,9 +696,9 @@ GameObject1:
                                             - 0.092195376753807068
                                             - -4.441952938805116e-08
                                           localRotation:
-                                            - -3.2520159452078454
-                                            - -0.48837285341459252
-                                            - -17.077747697950681
+                                            - -3.252015852911061
+                                            - -0.48837203047983635
+                                            - -17.077747721703791
                                           localScale:
                                             - 0.99999982118606567
                                             - 1
@@ -718,9 +718,9 @@ GameObject1:
                                                 - 0.076157920062541962
                                                 - -9.7992320036155434e-08
                                               localRotation:
-                                                - -2.8262870740348904
-                                                - -0.36687237908527592
-                                                - -14.788929017035583
+                                                - -2.8262870465894139
+                                                - -0.3668725906903138
+                                                - -14.788929011903363
                                               localScale:
                                                 - 0.99999988079071045
                                                 - 0.99999988079071045
@@ -806,9 +806,9 @@ GameObject1:
                         - 0.90553861856460571
                         - -7.775822652433817e-09
                       localRotation:
-                        - -5.9323161798616448
-                        - 5.8214739316528226
-                        - 106.23663583348207
+                        - -5.9323178881023022
+                        - 5.8214726518940685
+                        - 106.2366358129984
                       localScale:
                         - 0.9999997615814209
                         - 1
@@ -850,9 +850,9 @@ GameObject1:
                                 - 0.80925267934799194
                                 - 2.9372904108981857e-09
                               localRotation:
-                                - 77.665872898100844
-                                - -51.130216818027151
-                                - -5.4381578050435646
+                                - 77.665878235796839
+                                - -51.130225089442732
+                                - -5.4381907322032204
                               localScale:
                                 - 0.99999994039535522
                                 - 1
@@ -872,9 +872,9 @@ GameObject1:
                                     - 0.69208723306655884
                                     - 1.8827591929948539e-07
                                   localRotation:
-                                    - 24.331600580953484
-                                    - 54.686407985971314
-                                    - 1.2844912697273299
+                                    - 24.331595857294523
+                                    - 54.686406320218559
+                                    - 1.284492639395624
                                   localScale:
                                     - 1.0000001192092896
                                     - 0.99999964237213135
@@ -916,9 +916,9 @@ GameObject1:
                                             - 0.13528183102607727
                                             - 1.1934086785458931e-07
                                           localRotation:
-                                            - -13.102790468709181
-                                            - 3.6254065482139661
-                                            - 20.706266638083129
+                                            - -13.102794150160143
+                                            - 3.6254052920648361
+                                            - 20.706266667226096
                                           localScale:
                                             - 0.99999994039535522
                                             - 0.99999958276748657
@@ -938,9 +938,9 @@ GameObject1:
                                                 - 0.14030985534191132
                                                 - 2.7363634558241756e-07
                                               localRotation:
-                                                - 10.556116109863078
-                                                - 7.4190319368655429
-                                                - 30.174664607567749
+                                                - 10.556117294143647
+                                                - 7.4190322990111675
+                                                - 30.174668030143163
                                               localScale:
                                                 - 0.99999994039535522
                                                 - 1.0000001192092896
@@ -1092,9 +1092,9 @@ GameObject1:
                                         - 0.29854017496109009
                                         - -0.16958671808242798
                                       localRotation:
-                                        - 8.2355564569162887
-                                        - 29.269773050524972
-                                        - 70.386326201360191
+                                        - 8.2355596353005964
+                                        - 29.269774777551962
+                                        - 70.386332852378473
                                       localScale:
                                         - 0.99999988079071045
                                         - 1
@@ -1158,9 +1158,9 @@ GameObject1:
                                         - 0.23643165826797485
                                         - 0.12960666418075562
                                       localRotation:
-                                        - 26.977965488691343
-                                        - -26.238311666927629
-                                        - 36.985877125872179
+                                        - 26.977964059903456
+                                        - -26.238316700341855
+                                        - 36.985876295298397
                                       localScale:
                                         - 0.99999970197677612
                                         - 1.0000001192092896
@@ -1202,9 +1202,9 @@ GameObject1:
                     - 2.6553018983577203e-07
                     - 9.2420677333393542e-08
                   localRotation:
-                    - -179.99991126376861
-                    - 80.537784035034306
-                    - -89.999943818087061
+                    - -179.99992247109589
+                    - 80.537865634133979
+                    - -89.99995331202777
                   localScale:
                     - 0.99999988079071045
                     - 0.99999988079071045
@@ -1312,9 +1312,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - 1.3525928855774621e-10
-                - -89.690719324221519
-                - -179.99999134859755
+                - 2.2799123162010965e-10
+                - -89.690738643731535
+                - -179.99999134859729
               localScale:
                 - 1
                 - 1
@@ -1334,9 +1334,9 @@ GameObject1:
                 - 0.37999996542930603
                 - 0.20000019669532776
               localRotation:
-                - -73.329034078540786
-                - 82.371798502337441
-                - 106.81151647109085
+                - -73.329145917591177
+                - 82.371963077547193
+                - 106.81139735958203
               localScale:
                 - 1
                 - 1.0000003576278687
@@ -1356,9 +1356,9 @@ GameObject1:
                 - -0.52000004053115845
                 - 0.14000017940998077
               localRotation:
-                - 152.94738590354174
-                - -87.529408328383369
-                - -152.96894091517862
+                - 152.94716357892324
+                - -87.529765918483335
+                - -152.9687596505041
               localScale:
                 - 0.99999994039535522
                 - 1
@@ -1378,9 +1378,9 @@ GameObject1:
                 - 0.54000002145767212
                 - 0.068000182509422302
               localRotation:
-                - -29.685905080277266
-                - -87.462489384587997
-                - -150.33834703189726
+                - -29.686139645137857
+                - -87.462714977715663
+                - -150.33810763515717
               localScale:
                 - 0.99999982118606567
                 - 1.0000001192092896
@@ -1466,9 +1466,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - -1.1050229684970142e-10
-                - 89.690719324221519
-                - -179.9999913486223
+                - -2.86649383546785e-10
+                - 89.690738643731535
+                - -179.9999913486453
               localScale:
                 - 1
                 - 1
@@ -1488,9 +1488,9 @@ GameObject1:
                 - 0.41999998688697815
                 - 0.068000182509422302
               localRotation:
-                - -27.05272768251394
-                - 87.529392877101429
-                - 152.9689529289013
+                - -27.05287865898276
+                - 87.528900847419607
+                - 152.96882369375763
               localScale:
                 - 0.99999988079071045
                 - 1.0000001192092896
@@ -1532,9 +1532,9 @@ GameObject1:
                         - 0.51009827852249146
                         - 2.1531700156174338e-07
                       localRotation:
-                        - -0.23691524968815084
-                        - -0.012772266061841817
-                        - -6.1778787067779524
+                        - -0.23691524999221852
+                        - -0.012772258671508156
+                        - -6.1778795593282325
                       localScale:
                         - 0.9999997615814209
                         - 1.0000002384185791
@@ -1868,7 +1868,7 @@ GameObject2:
             - 0
             - 0
           scale:
-            - 0.108999997
+            - 0.200000003
             - 0.0299999993
             - 1
           pivot_offset:
@@ -1924,7 +1924,7 @@ GameObject2:
             - 0
             - 0
           scale:
-            - 0.0590000004
+            - 0.137999997
             - 0.0199999996
             - 1
           pivot_offset:
@@ -1980,7 +1980,7 @@ GameObject2:
             - 0
             - 0
           scale:
-            - 0.108999997
+            - 0.200000003
             - 0.0299999993
             - 1
           pivot_offset:
@@ -2036,7 +2036,7 @@ GameObject2:
             - 0
             - 0
           scale:
-            - 0.0549999997
+            - 0.137999997
             - 0.0179999992
             - 1
           pivot_offset:
@@ -2158,14 +2158,14 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/hautoealthbar_blood.png
+          texture_path: Library\Textures\UI\healthbar_blood.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 265
+            - 51
           sheet_size:
-            - 0
-            - 0
+            - 265
+            - 51
           sprite_offset:
             - 0
             - 0
@@ -2174,7 +2174,7 @@ GameObject2:
     - name: healthbar_empty
       uuid: 9620126331929214149
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -3795,8 +3795,8 @@ GameObject2:
             - 0
           anim_speed: 0
       Children: ~
-    - name: bookshelf
-      uuid: 3571413049458165426
+    - name: healthframe
+      uuid: 13707000718079493592
       tag: Untagged
       active: true
       isStatic: false
@@ -3820,16 +3820,72 @@ GameObject2:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.123000003
-            - 0.926999986
+            - 0.0460000001
+            - 0.916999996
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.0189999994
-            - 0.0250000004
+            - 0.223000005
+            - 0.120999999
+            - 1
+          pivot_offset:
+            - 0
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_longbar_frame.png
+          use_animation: false
+          sprite_size:
+            - 308
+            - 114
+          sheet_size:
+            - 308
+            - 114
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: canister0
+      uuid: 1239388429862782182
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.00700000022
+            - 0.850000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0659999996
+            - 0.134000003
             - 1
           pivot_offset:
             - 0
@@ -3838,20 +3894,20 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UdeI/bookshelf.png
+          texture_path: Library\Textures\UI\Canister_0.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 195
+            - 225
           sheet_size:
-            - 0
-            - 0
+            - 195
+            - 225
           sprite_offset:
             - 0
             - 0
           anim_speed: 0
       Children: ~
-    - name: bible1
+    - name: canister1
       uuid: 6530961750761040329
       tag: Untagged
       active: true
@@ -3876,16 +3932,16 @@ GameObject2:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.125
-            - 0.92900002
+            - 0.00700000022
+            - 0.850000024
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.00300000003
-            - 0.0199999996
+            - 0.0659999996
+            - 0.134000003
             - 1
           pivot_offset:
             - 0
@@ -3894,20 +3950,20 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/bible.png
+          texture_path: Library\Textures\UI\Canister_1.png
           use_animation: false
           sprite_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sheet_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sprite_offset:
             - 0
             - 0
           anim_speed: 0
       Children: ~
-    - name: bible2
+    - name: canister2
       uuid: 1284980077672726345
       tag: Untagged
       active: true
@@ -3932,16 +3988,16 @@ GameObject2:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.128000006
-            - 0.92900002
+            - 0.00700000022
+            - 0.850000024
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.00300000003
-            - 0.0199999996
+            - 0.0659999996
+            - 0.134000003
             - 1
           pivot_offset:
             - 0
@@ -3950,20 +4006,20 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/bible.png
+          texture_path: Library\Textures\UI\Canister_2.png
           use_animation: false
           sprite_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sheet_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sprite_offset:
             - 0
             - 0
           anim_speed: 0
       Children: ~
-    - name: bible3
+    - name: canister3
       uuid: 10156375490601195422
       tag: Untagged
       active: true
@@ -3988,38 +4044,38 @@ GameObject2:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.130999997
-            - 0.92900002
+            - 0.00700000022
+            - 0.850000024
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.00300000003
-            - 0.0199999996
+            - 0.0659999996
+            - 0.134000003
             - 1
           pivot_offset:
-            - 0.5
-            - 0.5
+            - 0
+            - 0
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/bible.png
+          texture_path: Library\Textures\UI\Canister_3.png
           use_animation: false
           sprite_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sheet_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sprite_offset:
             - 0
             - 0
           anim_speed: 0
       Children: ~
-    - name: bible4
+    - name: canister4
       uuid: 6684225447023609560
       tag: Untagged
       active: true
@@ -4044,16 +4100,16 @@ GameObject2:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.134000003
-            - 0.92900002
+            - 0.00700000022
+            - 0.850000024
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.00300000003
-            - 0.0199999996
+            - 0.0659999996
+            - 0.134000003
             - 1
           pivot_offset:
             - 0
@@ -4062,20 +4118,20 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/bible.png
+          texture_path: Library\Textures\UI\Canister_4.png
           use_animation: false
           sprite_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sheet_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sprite_offset:
             - 0
             - 0
           anim_speed: 0
       Children: ~
-    - name: bible5
+    - name: canister5
       uuid: 14665545162057101878
       tag: Untagged
       active: true
@@ -4100,16 +4156,16 @@ GameObject2:
           name: UITransformComponent
           enabled: true
           position:
-            - 0.136999995
-            - 0.92900002
+            - 0.00700000022
+            - 0.850000024
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 0.00300000003
-            - 0.0199999996
+            - 0.0659999996
+            - 0.134000003
             - 1
           pivot_offset:
             - 0
@@ -4118,18 +4174,18 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/bible.png
+          texture_path: Library\Textures\UI\Canister_5.png
           use_animation: false
           sprite_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sheet_size:
-            - 141
-            - 362
+            - 195
+            - 225
           sprite_offset:
             - 0
             - 0
-          anim_speed: 0
+          anim_speed: 0.100000001
       Children: ~
 GameObject3:
   name: Canvas_PauseMenu
@@ -4622,32 +4678,32 @@ GameObject4:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.541999996
+            - 0.36500001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.104000002
+            - 0.0340000018
             - 1
           pivot_offset:
-            - 0
-            - 1
+            - 0.5
+            - 0.5
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\options_menu_1290x720.png
           use_animation: false
           sprite_size:
-            - 1024
-            - 1024
+            - 66
+            - 21
           sheet_size:
-            - 1024
-            - 1024
+            - 66
+            - 21
           sprite_offset:
             - 0
             - 0
@@ -4678,32 +4734,32 @@ GameObject4:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.541999996
+            - 0.36500001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.103999995
+            - 0.0340000018
             - 1
           pivot_offset:
-            - 0
-            - 1
+            - 0.5
+            - 0.5
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\options_menu_1920x1080.png
           use_animation: false
           sprite_size:
-            - 1024
-            - 1024
+            - 61
+            - 20
           sheet_size:
-            - 1024
-            - 1024
+            - 61
+            - 20
           sprite_offset:
             - 0
             - 0
@@ -4734,32 +4790,32 @@ GameObject4:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.541999996
+            - 0.36500001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.103999995
+            - 0.0340000018
             - 1
           pivot_offset:
-            - 0
-            - 1
+            - 0.5
+            - 0.5
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\options_menu_2560x1440.png
           use_animation: false
           sprite_size:
-            - 1024
-            - 1024
+            - 58
+            - 22
           sheet_size:
-            - 1024
-            - 1024
+            - 58
+            - 22
           sprite_offset:
             - 0
             - 0
@@ -4790,32 +4846,32 @@ GameObject4:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.541999996
+            - 0.36500001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.103999995
+            - 0.0340000018
             - 1
           pivot_offset:
-            - 0
-            - 1
+            - 0.5
+            - 0.5
             - 0
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\options_menu_3840x2160.png
           use_animation: false
           sprite_size:
-            - 1024
-            - 1024
+            - 120
+            - 45
           sheet_size:
-            - 1024
-            - 1024
+            - 120
+            - 45
           sprite_offset:
             - 0
             - 0
@@ -4846,20 +4902,20 @@ GameObject4:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.474999994
+            - 0.36500001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.0199999996
+            - 0.0299999993
             - 1
           pivot_offset:
-            - 0
-            - 1
+            - 0.5
+            - 0.5
             - 0
         UIButtonComponent:
           name: UIButtonComponent
@@ -4868,14 +4924,14 @@ GameObject4:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\options__menu_left.png
           use_animation: false
           sprite_size:
-            - 1024
-            - 1024
+            - 24
+            - 30
           sheet_size:
-            - 1024
-            - 1024
+            - 24
+            - 30
           sprite_offset:
             - 0
             - 0
@@ -4906,20 +4962,20 @@ GameObject4:
           name: UITransformComponent
           enabled: true
           position:
-            - 0
-            - 0
+            - 0.600000024
+            - 0.36500001
             - 0
           rotation:
             - 0
             - 0
             - 0
           scale:
-            - 1
-            - 1
+            - 0.0199999996
+            - 0.0299999993
             - 1
           pivot_offset:
-            - 0
-            - 1
+            - 0.5
+            - 0.5
             - 0
         UIButtonComponent:
           name: UIButtonComponent
@@ -4928,14 +4984,126 @@ GameObject4:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Assets/default.png
+          texture_path: Library\Textures\UI\options__menu_right.png
           use_animation: false
           sprite_size:
-            - 1024
-            - 1024
+            - 24
+            - 30
           sheet_size:
-            - 1024
-            - 1024
+            - 24
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Resolution_lefthover
+      uuid: 10054175911002723645
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.476000011
+            - 0.36500001
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_left_hovered.png
+          use_animation: false
+          sprite_size:
+            - 28
+            - 30
+          sheet_size:
+            - 28
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Resolution_righthover
+      uuid: 8973463647592140314
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.598999977
+            - 0.36500001
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_right_hovered.png
+          use_animation: false
+          sprite_size:
+            - 28
+            - 30
+          sheet_size:
+            - 28
+            - 30
           sprite_offset:
             - 0
             - 0
@@ -5108,6 +5276,350 @@ GameObject4:
           sheet_size:
             - 42
             - 42
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_bar
+      uuid: 11448570526562046579
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.479999989
+            - 0.504999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0970000103
+            - 0.0600000024
+            - 1
+          pivot_offset:
+            - 0
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_sliderBar.png
+          use_animation: false
+          sprite_size:
+            - 234
+            - 22
+          sheet_size:
+            - 234
+            - 22
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_slider
+      uuid: 1391713175619672469
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.574999988
+            - 0.504999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00999999978
+            - 0.0500000007
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_slider.png
+          use_animation: false
+          sprite_size:
+            - 14
+            - 43
+          sheet_size:
+            - 14
+            - 43
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_left
+      uuid: 11171108536198447373
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.474999994
+            - 0.504999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_left.png
+          use_animation: false
+          sprite_size:
+            - 24
+            - 30
+          sheet_size:
+            - 24
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_right
+      uuid: 3905075691446521330
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.600000024
+            - 0.504999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIButtonComponent:
+          name: UIButtonComponent
+          enabled: true
+          state: 1
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_right.png
+          use_animation: false
+          sprite_size:
+            - 24
+            - 30
+          sheet_size:
+            - 24
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_lefthover
+      uuid: 706475918597876067
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.476000011
+            - 0.504999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_left_hovered.png
+          use_animation: false
+          sprite_size:
+            - 28
+            - 30
+          sheet_size:
+            - 28
+            - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Master_righthover
+      uuid: 10679109916516890052
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.598999977
+            - 0.504999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0199999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0.5
+            - 0.5
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\options__menu_right_hovered.png
+          use_animation: false
+          sprite_size:
+            - 28
+            - 30
+          sheet_size:
+            - 28
+            - 30
           sprite_offset:
             - 0
             - 0

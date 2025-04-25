@@ -30,6 +30,8 @@ public class OptionMenu : MonoBehaviour
     GameObject masterSlider;
     GameObject masterLeft;
     GameObject masterRight;
+    GameObject masterLeftHover;
+    GameObject masterRightHover;
     UIButton masterLeftButton;
     UIButton masterRightButton;
     UITransform transform_masterSlider;
@@ -107,12 +109,14 @@ public class OptionMenu : MonoBehaviour
         fullScreenButton = fullScreenCheckbox.GetComponent<UIButton>();
 
 
-        //masterSlider = GameObject.Find("Master_slider");
-        //masterLeft = GameObject.Find("Master_left");
-        //masterRight = GameObject.Find("Master_right");
-        //masterLeftButton = masterLeft.GetComponent<UIButton>();
-        //masterRightButton = masterRight.GetComponent<UIButton>();
-        //transform_masterSlider = masterSlider.GetComponent<UITransform>();
+        masterSlider = GameObject.Find("Master_slider");
+        masterLeft = GameObject.Find("Master_left");
+        masterRight = GameObject.Find("Master_right");
+        masterLeftHover = GameObject.Find("Master_lefthover");
+        masterRightHover = GameObject.Find("Master_righthover");
+        masterLeftButton = masterLeft.GetComponent<UIButton>();
+        masterRightButton = masterRight.GetComponent<UIButton>();
+        transform_masterSlider = masterSlider.GetComponent<UITransform>();
 
         //bgmSlider = GameObject.Find("BGM_slider");
         //bgmLeft = GameObject.Find("BGM_left");
@@ -216,29 +220,49 @@ public class OptionMenu : MonoBehaviour
         }
 
 
-        //if (masterLeftButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    if (masterVolume > 0)
-        //    {
-        //        masterVolume -= 10;
-        //        sliderPosMaster -= sliderScale;
-        //        transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
-        //    }
-        //}
+        if (masterLeftButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            if (masterVolume > 0)
+            {
+                masterVolume -= 10;
+                sliderPosMaster -= sliderScale;
+                transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
+            }
+        }
 
-        //if (masterRightButton.GetState() == ButtonState.CLICKED)
-        //{
-        //    sound?.LoadAudio(buttonClicked);
-        //    sound?.Play();
-        //    if (masterVolume < 100)
-        //    {
-        //        masterVolume += 10;
-        //        sliderPosMaster += sliderScale;
-        //        transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
-        //    }
-        //}
+
+        if(masterLeftButton.GetState() == ButtonState.HOVERED)
+        {
+            masterLeftHover.SetActive(true);
+        }
+        else
+        {
+            masterLeftHover.SetActive(false);
+        }
+
+        if (masterRightButton.GetState() == ButtonState.CLICKED)
+        {
+            sound?.LoadAudio(buttonClicked);
+            sound?.Play();
+            if (masterVolume < 100)
+            {
+                masterVolume += 10;
+                sliderPosMaster += sliderScale;
+                transform_masterSlider.DOMoveXUI(sliderPosMaster, 0, Modes.LINEAR);
+            }
+        }
+
+
+        if(masterRightButton.GetState() == ButtonState.HOVERED)
+        {
+            masterRightHover.SetActive(true);
+        }
+        else
+        {
+            masterRightHover.SetActive(false);
+        }
 
         //if (bgmLeftButton.GetState() == ButtonState.CLICKED)
         //{

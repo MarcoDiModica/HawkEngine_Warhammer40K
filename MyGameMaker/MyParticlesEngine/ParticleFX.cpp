@@ -1235,6 +1235,7 @@ void ParticleFX::ApplyPreset(int particleID) {
 	minSize = preset.minSize;
 	maxSize = preset.maxSize;
 	randomAnimIndex = preset.randomAnimIndex;
+	isLocalSpace = preset.isLocalSpace;
 	SetTexture(preset.texturePath);
 }
 

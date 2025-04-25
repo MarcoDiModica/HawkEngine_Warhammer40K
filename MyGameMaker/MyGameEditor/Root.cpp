@@ -150,7 +150,7 @@ bool Root::Start()
 	//
 	//auto powerUp = CreateGameObjectWithPath("Assets/Meshes/MedicaeStimm.fbx");
 	//powerUp->GetTransform()->SetPosition(glm::vec3(10, 3, 5));
-	//powerUp->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//powerUp->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
 	//powerUp->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> MedicaeStimmBaseColor = std::make_shared<Image>();
@@ -167,10 +167,10 @@ bool Root::Start()
 	//powerUp->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MedicaeStimmMetallic);
 	//powerUp->AddComponent<ScriptComponent>()->LoadScript("MedicaeStimm");
 	//powerUp->SetTag("PowerUp");
-	//
+	////
 	//auto powerUp5 = CreateGameObjectWithPath("Assets/Meshes/ChapterStandard.fbx");
 	//powerUp5->GetTransform()->SetPosition(glm::vec3(-30, 3, 0));
-	//powerUp5->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//powerUp5->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
 	//powerUp5->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp5->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
 	//powerUp5->GetComponent<BoxColliderComponent>()->SetTrigger(true);
@@ -188,10 +188,10 @@ bool Root::Start()
 	//powerUp5->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(ChapterMetallic);
 	//powerUp5->AddComponent<ScriptComponent>()->LoadScript("ChapterStandard");
 	//powerUp5->SetTag("PowerUp");
-	//
+	////
 	//auto powerUp6 = CreateGameObjectWithPath("Assets/Meshes/BlackHeart.fbx");
 	//powerUp6->GetTransform()->SetPosition(glm::vec3(-40, 3, 0));
-	//powerUp6->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//powerUp6->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
 	//powerUp6->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp6->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> BlackHeartBaseColor = std::make_shared<Image>();
@@ -211,7 +211,7 @@ bool Root::Start()
 	//
 	//auto powerUp2 = CreateGameObjectWithPath("Assets/Meshes/Magnet.fbx");
 	//powerUp2->GetTransform()->SetPosition(glm::vec3(0, 3, -10));
-	//powerUp2->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//powerUp2->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
 	//powerUp2->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp2->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> MagnetBaseColor = std::make_shared<Image>();
@@ -228,10 +228,10 @@ bool Root::Start()
 	//powerUp2->GetComponent<MeshRenderer>()->GetMaterial()->setMetallicMap(MagnetMetallic);
 	//powerUp2->AddComponent<ScriptComponent>()->LoadScript("Magnet");
 	//powerUp2->SetTag("PowerUp");
-	////
+	//////
 	//auto powerUp3 = CreateGameObjectWithPath("Assets/Meshes/AmmunitionBlessing.fbx");
 	//powerUp3->GetTransform()->SetPosition(glm::vec3(0, 3, 10));
-	//powerUp3->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//powerUp3->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
 	//powerUp3->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp3->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> AmmunitionBlessingBaseColor = std::make_shared<Image>();
@@ -252,7 +252,7 @@ bool Root::Start()
 	//auto powerUp4 = CreateGameObjectWithPath("Assets/Meshes/PiercingBullets.fbx");
 	//powerUp4->GetTransform()->SetPosition(glm::vec3(2, 3, 10));
 	//powerUp4->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//powerUp4->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//powerUp4->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
 	//powerUp4->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//powerUp4->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> PiercingBulletsBaseColor = std::make_shared<Image>();
@@ -273,7 +273,7 @@ bool Root::Start()
 	////// Test Ammunition
 	//auto ShotgunShells = CreateGameObjectWithPath("Assets/Meshes/ShotgunShells.fbx");
 	//ShotgunShells->GetTransform()->SetPosition(glm::vec3(0, 3, 20));
-	//ShotgunShells->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//ShotgunShells->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
 	//ShotgunShells->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//ShotgunShells->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> ShotgunShellsBaseColor = std::make_shared<Image>();
@@ -284,7 +284,7 @@ bool Root::Start()
 	//
 	//auto BoltgunBullets = CreateGameObjectWithPath("Assets/Meshes/BoltgunBullets.fbx");
 	//BoltgunBullets->GetTransform()->SetPosition(glm::vec3(10, 3, 20));
-	//BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.015, 0.015, 0.015));
+	//BoltgunBullets->GetTransform()->SetScale(glm::vec3(0.002, 0.002, 0.002));
 	//BoltgunBullets->AddComponent<BoxColliderComponent>(Application->physicsModule);
 	//BoltgunBullets->GetComponent<BoxColliderComponent>()->SetTrigger(true);
 	//std::shared_ptr<Image> BoltgunBulletsBaseColor = std::make_shared<Image>();

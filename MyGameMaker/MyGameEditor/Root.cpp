@@ -553,7 +553,7 @@ bool Root::Start()
 	//riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
 	//riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
 	
-	auto findPlayer = FindGOByName("Player");
+	//auto findPlayer = FindGOByName("Player");
 	
 	//auto shotgunShotFX = CreateGameObject("ShotgunShotFX");
 	//shotgunShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
@@ -561,17 +561,17 @@ bool Root::Start()
 	//shotgunShotFX->AddComponent<ParticleFX>()->ApplyPreset(20);
 	//shotgunShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
 	
-	//auto speedboostFX = CreateGameObject("SpeedBoostFX");
-	//speedboostFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-	////ParentGameObject(*speedboostFX, *player);
-	//speedboostFX->AddComponent<ParticleFX>()->ApplyPreset(21);
-	//speedboostFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-	
-auto ammunitioBlessingFX = CreateGameObject("AmmunitionBlessingFX");
-ammunitioBlessingFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-ParentGameObject(*ammunitioBlessingFX, *findPlayer);
-ammunitioBlessingFX->AddComponent<ParticleFX>()->ApplyPreset(22);
-ammunitioBlessingFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+//	auto speedboostFX = CreateGameObject("SpeedBoostFX");
+//	speedboostFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+//	//ParentGameObject(*speedboostFX, *player);
+//	speedboostFX->AddComponent<ParticleFX>()->ApplyPreset(21);
+//	speedboostFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+//	
+//auto ammunitioBlessingFX = CreateGameObject("AmmunitionBlessingFX");
+//ammunitioBlessingFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+//ParentGameObject(*ammunitioBlessingFX, *findPlayer);
+//ammunitioBlessingFX->AddComponent<ParticleFX>()->ApplyPreset(22);
+//ammunitioBlessingFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
 
 	//auto railgunShotAutoFX = CreateGameObject("RailgunShotAutoFX");
 	//railgunShotAutoFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
@@ -607,14 +607,14 @@ ammunitioBlessingFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
 	//boltgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//ParentGameObject(*boltgunMesh, *boltgun);
 
-	/*auto shotgun = CreateGameObject("Shotgun");
-	shotgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
-	shotgunMesh->SetName("shotgunMesh");
-	shotgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
-	shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	ParentGameObject(*shotgunMesh, *shotgun);*/
+	//auto shotgun = CreateGameObject("Shotgun");
+	//shotgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
+	//shotgunMesh->SetName("shotgunMesh");
+	//shotgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	//shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	//shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	//ParentGameObject(*shotgunMesh, *shotgun);
 
 	//auto railgun = CreateGameObject("Railgun");
 	//railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private PlayerAnimations playerAnimations;
     private GameObject playerMesh;
     private ParticleFX bloodSplashEffect;
+    private CapsuleCollider capsuleCollider;
     private bool isIdle = false;
     public bool isRunning = false;
     private bool isWalking = false;
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour
         bloodSplashEffect.ApplyPreset(19); // BLOOD_SPLASH preset (index 19)
         inactiveDashFX = GameObject.Find("InactiveDashFX").GetComponent<ParticleFX>();
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
-
+        capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
     }
 
     public override void Start()
@@ -102,7 +103,9 @@ public class PlayerController : MonoBehaviour
                     playerAnimations.SetDeathAnimation();
                     sound.LoadAudio(DeathAudio);
                     sound.Play();
-                    SceneManager.LoadScene("LoseScene");
+                    playerInput.BlockMovement();
+                    capsuleCollider.SetActive(false);
+                    //SceneManager.LoadScene("LoseScene");
                 }
                 else
                 {

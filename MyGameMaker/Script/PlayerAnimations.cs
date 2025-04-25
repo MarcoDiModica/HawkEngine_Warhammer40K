@@ -46,7 +46,8 @@ public class PlayerAnimations : MonoBehaviour
     }
     public void SetDeathAnimation()
     {
-        esk.TransitionAnimations(2, 1, 0.1f);
+        esk.PlayAnimOnce(1, 0.1f);
+        esk.SetAnimationSpeed(1.5f);
     }
     public void SetStandardIdleAnimation()
     {

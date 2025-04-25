@@ -76,9 +76,18 @@ public class Grenade : MonoBehaviour
         explosion = Engineson.CreateGameObject("Explosion", null);
         sound.LoadAudio(granadeExplosion);
         sound.Play();
-        explosion.AddComponent<MeshRenderer>();
+        //explosion.AddComponent<MeshRenderer>();
         explosion.GetComponent<Transform>().SetPosition(GetComponent<Transform>().GetPosition().X, GetComponent<Transform>().GetPosition().Y, GetComponent<Transform>().GetPosition().Z);
         explosion.GetComponent<Transform>().SetScale(4f, 0.25f, 4f);
+        var explosionFX = Engineson.CreateGameObject("ExplosionGranadeFX", null);
+        gameObject.AddChild(explosionFX);
+        explosionFX.AddComponent<ParticleFX>().ApplyPreset(4);
+        explosionFX.GetComponent<ParticleFX>().EmitBurst(40);
+        explosionFX.GetComponent<Transform>().SetPosition(
+            GetComponent<Transform>().GetPosition().X,
+            GetComponent<Transform>().GetPosition().Y,
+            GetComponent<Transform>().GetPosition().Z
+        );
         isExploded = true;
         explosion.AddComponent<BoxCollider>();
         needsDestroy = true;

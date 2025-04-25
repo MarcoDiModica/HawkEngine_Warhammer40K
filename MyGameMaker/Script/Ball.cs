@@ -17,7 +17,7 @@ public class Ball : MonoBehaviour
 
     public void Init(Vector3 pos, Vector3 dir)
     {
-        AddComponent<MeshRenderer>();
+        //AddComponent<MeshRenderer>();
         GetComponent<Transform>().position = pos + dir * 3.0f + new Vector3(0, 2, 0);
         GetComponent<Transform>().SetScale(2.0f, 2.0f, 2.0f);
         AddComponent<BoxCollider>();
@@ -27,6 +27,14 @@ public class Ball : MonoBehaviour
         rigidbody.SetGravity(new Vector3(0.0f, 0.0f, 0.0f) * 20);
         rigidbody.AddForce(dir * 20);
         rigidbody.SetFriction(0.5f);
+        
+        //explosionFX.GetComponent<Transform>().SetPosition(
+        //    GetComponent<Transform>().GetPosition().X,
+        //    GetComponent<Transform>().GetPosition().Y,
+        //    GetComponent<Transform>().GetPosition().Z
+        //);
+
+
     }
     public override void Update(float deltaTime)
     {
@@ -39,6 +47,8 @@ public class Ball : MonoBehaviour
                 needsDestroy = false;
             }
         }
+
+        
     }
 
     public override void OnCollisionEnter(GameObject other)

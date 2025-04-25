@@ -710,29 +710,42 @@ MonoObject* GetMonoObjectFromGameObjectHelper(GameObject* gameObject) {
 	return monoGameObject;
 }
 
-// mirarse esta funcion rarilla
 MonoArray* EngineBinds::OverlapSphere(glm::vec3* position, float radius, MonoString* tag) {
-    if (!Application || !Application->physicsModule) {
-        return nullptr;
-    }
+	if (!Application || !Application->physicsModule) {
+		return nullptr;
+	}
 
-    std::string tagStr = mono_string_to_utf8(tag);
-    auto overlappingObjects = Application->physicsModule->OverlapSphere(*position, radius, tagStr);
+	try {
+		std::string tagStr = mono_string_to_utf8(tag);
+		auto overlappingObjects = Application->physicsModule->OverlapSphere(*position, radius, tagStr);
 
-    MonoDomain* domain = mono_domain_get();
-    MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
-    if (!gameObjectClass) return nullptr;
+		MonoDomain* domain = mono_domain_get();
+		if (!domain) return nullptr;
 
-    MonoArray* monoArray = mono_array_new(domain, gameObjectClass, overlappingObjects.size());
+		MonoClass* gameObjectClass = MonoManager::GetInstance().GetClass("HawkEngine", "GameObject");
+		if (!gameObjectClass) return nullptr;
 
-    for (size_t i = 0; i < overlappingObjects.size(); i++) {
-        MonoObject* monoGameObject = GetMonoObjectFromGameObjectHelper(overlappingObjects[i]);
-        if (monoGameObject) {
-            mono_array_set(monoArray, MonoObject*, i, monoGameObject);
-        }
-    }
+		MonoArray* monoArray = mono_array_new(domain, gameObjectClass, overlappingObjects.size());
 
-    return monoArray;
+		for (size_t i = 0; i < overlappingObjects.size(); i++) {
+			if (overlappingObjects[i]) {
+				MonoObject* monoGameObject = GetMonoObjectFromGameObjectHelper(overlappingObjects[i]);
+				if (monoGameObject) {
+					mono_array_set(monoArray, MonoObject*, i, monoGameObject);
+				}
+			}
+		}
+
+		return monoArray;
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Exception in OverlapSphere: " << e.what() << std::endl;
+		return nullptr;
+	}
+	catch (...) {
+		std::cerr << "Unknown exception in OverlapSphere" << std::endl;
+		return nullptr;
+	}
 }
 
 

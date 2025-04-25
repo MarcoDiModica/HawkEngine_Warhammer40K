@@ -1,35 +1,31 @@
 using HawkEngine;
 using System;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Numerics;
 
 public class EnemyControllerMelee : EnemyController
 {
-    // Hurtbox
-    private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
+    private float hurtboxActivationTime = 1.5f;
     private float hurtboxTimer = 0f;
-    private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f); // Tama�o de la hurtbox
-    private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private Vector3 hurtboxSize = new Vector3(3.0f, 2.0f, 3.0f);
+    private Vector3 hurtboxOffset = new Vector3(4.0f, 0.0f, 0.0f);
     private GameObject hurtboxObject;
 
-    // Perfect Dodge
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
     private HormagauntAnimation anim;
     PlayerController pc;
 
-    // Audio
     bool isCombatMusicPlaying = false;
     private Audio music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
-    // Enemy Stats
     private float health = 100.0f;
     private float clawDamage = 10.0f;
     private float leapDamage = 15.0f;
 
-    // Leap Attack
     public float maxLeapRange = 20.0f;
     public float minLeapRange = 10.0f;
     private float lastLeap = 0f;
@@ -41,12 +37,17 @@ public class EnemyControllerMelee : EnemyController
 
     private bool isLeaping = false;
 
-    // Pathfinding
     private float chaseReplanInterval = 0.5f;
     private float chaseTimer = 0f;
 
-    public override void Awake() {
+    private float pathUpdateDistance = 5.0f;
+    private Vector3 lastPathfindingPosition;
+    private int pathPointIndex = 0;
+    private float pathSmoothingFactor = 0.2f;
+    private List<Vector3> smoothedVelocity = new List<Vector3>();
 
+    public override void Awake()
+    {
         music = gameObject.GetComponent<Audio>();
     }
 
@@ -95,12 +96,20 @@ public class EnemyControllerMelee : EnemyController
         gameObject.tag = "Melee";
 
         pathfinder = new Pathfinding();
+        pathfinder.UpdateGridOrigin(enemyTransform.position);
+        lastPathfindingPosition = enemyTransform.position;
         chasePath = null;
         pathInitialized = false;
     }
 
     public override void Update(float deltaTime)
     {
+        if (!pathInitialized && pathfinder != null && enemyTransform != null && playerTransform != null)
+        {
+            pathfinder.UpdateGridOrigin(enemyTransform.position);
+            pathInitialized = true;
+        }
+
         if (currentState != EnemyState.DEAD)
         {
             if (currentHealth <= 0)
@@ -116,21 +125,24 @@ public class EnemyControllerMelee : EnemyController
             {
                 float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
+                if (Vector3.Distance(enemyTransform.position, lastPathfindingPosition) > pathUpdateDistance)
+                {
+                    pathfinder.UpdateGridOrigin(enemyTransform.position);
+                    lastPathfindingPosition = enemyTransform.position;
+                }
+
                 if (distanceToPlayer < distToChase)
                 {
-                    // Attack
                     if (IsPlayerInHurtbox(playerTransform.position))
                     {
                         currentState = EnemyState.ATTACK;
                     }
 
-                    // Chase
                     if (distanceToPlayer > minDistToChase)
                     {
                         currentState = EnemyState.CHASE;
                     }
 
-                    // Leap
                     if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
                     {
                         currentState = EnemyState.LEAP;
@@ -140,7 +152,6 @@ public class EnemyControllerMelee : EnemyController
                         leapDirection = Vector3.Normalize(playerTransform.position - enemyTransform.position);
                     }
 
-                    // Enemy Rotation
                     if (moveDirection != Vector3.Zero)
                     {
                         currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
@@ -158,8 +169,7 @@ public class EnemyControllerMelee : EnemyController
                             eulerRotation.X * ((float)Math.PI / 180.0f),
                             eulerRotation.Z * ((float)Math.PI / 180.0f)
                         );
-                        
-                        // enemyTransform.SetRotationQuat(newRotation);
+
                         collider.SetRotation(newRotation);
                     }
                 }
@@ -175,8 +185,6 @@ public class EnemyControllerMelee : EnemyController
             }
         }
 
-        //Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
-
         switch (currentState)
         {
             case EnemyState.IDLE:
@@ -190,7 +198,6 @@ public class EnemyControllerMelee : EnemyController
                 break;
 
             case EnemyState.CHASE:
-
                 if (!isFootstepPlaying)
                 {
                     sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
@@ -205,54 +212,86 @@ public class EnemyControllerMelee : EnemyController
                     isCombatMusicPlaying = true;
                 }
 
-                Vector3 myPos = enemyTransform.position;
-                Vector3 tgtPos = playerTransform.position;
-
                 chaseTimer += deltaTime;
-                if (chaseTimer >= chaseReplanInterval)
+                if (chaseTimer >= chaseReplanInterval && enemyTransform != null && playerTransform != null)
                 {
-                    var newPath = pathfinder.FindPath(enemyTransform.position, playerTransform.position);
-                    if (newPath != null && newPath.Count > 1)
+                    chasePath = pathfinder.FindPath(enemyTransform.position, playerTransform.position);
+                    if (chasePath != null && chasePath.Count > 1)
                     {
-                        (int curX, int curY) = Pathfinding.ToGrid(enemyTransform.position);
-                        int found = newPath.FindIndex(v =>
-                        {
-                            var (gx, gy) = Pathfinding.ToGrid(v);
-                            return gx == curX && gy == curY;
-                        });
-                        chasePath = newPath;
-                        chaseIndex = (found >= 0) ? found + 1 : 1;
+                        pathPointIndex = 1;
+                        smoothedVelocity.Clear();
                     }
                     chaseTimer = 0f;
                 }
 
-
-                if (chasePath != null && chaseIndex < chasePath.Count)
+                if (chasePath != null && pathPointIndex < chasePath.Count)
                 {
-                    Vector3 wp = chasePath[chaseIndex];
-                    Vector3 delta = wp - myPos;
-                    float d = delta.Length();
+                    int furthestVisibleIndex = pathPointIndex;
+                    Vector3 myPos = enemyTransform.position;
 
-                    if (d < Pathfinding.cellSize * 0.5f)
+                    for (int i = pathPointIndex + 1; i < Math.Min(chasePath.Count, pathPointIndex + 4); i++)
                     {
-                        chaseIndex++;
+                        Vector3 pointPos = chasePath[i];
+                        Vector3 dirToPoint = pointPos - myPos;
+                        float distToPoint = dirToPoint.Length();
+
+                        if (distToPoint > 0.1f)
+                        {
+                            // si es visible el target
+                        }
+                    }
+
+                    Vector3 targetPosition = chasePath[furthestVisibleIndex];
+                    Vector3 delta = targetPosition - myPos;
+                    float distance = delta.Length();
+
+                    if (distance < 0.5f)
+                    {
+                        pathPointIndex = furthestVisibleIndex + 1;
+
+                        if (pathPointIndex >= chasePath.Count && chasePath.Count > 0)
+                        {
+                            float distanceToPlayerNow = Vector3.Distance(myPos, playerTransform.position);
+                            if (distanceToPlayerNow > 1.5f)
+                            {
+                                chasePath = pathfinder.FindPath(myPos, playerTransform.position);
+                                if (chasePath != null && chasePath.Count > 1)
+                                {
+                                    pathPointIndex = 1;
+                                    smoothedVelocity.Clear();
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        Vector3 dir = (d > 1e-5f) ? delta / d : Vector3.Zero;
+                        Vector3 moveDir = Vector3.Normalize(delta);
+                        moveDirection = moveDir;
 
-                        moveDirection = dir;
+                        Vector3 desiredVelocity = moveDir * speedMovement;
+                        Vector3 currentVelocity = rb.GetVelocity();
 
-                        Vector3 desired = dir * speedMovement;
-                        Vector3 cv = rb.GetVelocity();
-                        float t = Math.Min(1f, acceleration * deltaTime);
+                        Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
+                        rb.SetVelocity(smoothedVel);
 
-                        rb.SetVelocity(Vector3.Lerp(cv, desired, t));
                         anim.SetRunningAnimation();
                         isRunning = true;
                     }
                 }
+                else if (chasePath == null || chasePath.Count == 0)
+                {
+                    Vector3 directDir = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                    moveDirection = directDir;
 
+                    Vector3 desiredVelocity = directDir * speedMovement;
+                    Vector3 currentVelocity = rb.GetVelocity();
+
+                    Vector3 smoothedVel = SmoothVelocity(desiredVelocity, currentVelocity, deltaTime);
+                    rb.SetVelocity(smoothedVel);
+
+                    anim.SetRunningAnimation();
+                    isRunning = true;
+                }
                 break;
 
             case EnemyState.ATTACK:
@@ -263,7 +302,6 @@ public class EnemyControllerMelee : EnemyController
                 }
                 if (hurtboxTimer >= hurtboxActivationTime)
                 {
-                    //CreateHurtbox();
                     anim.SetRandomAttackAnimation();
                     hurtboxTimer = 0f;
                     dodgeTimer = 0f;
@@ -273,7 +311,6 @@ public class EnemyControllerMelee : EnemyController
                 {
                     Attack();
 
-                    //DestroyHurtbox();
                     hurtboxTimer = 0f;
                     dodgeTimer = 0f;
                     dodgewindow = false;
@@ -293,12 +330,11 @@ public class EnemyControllerMelee : EnemyController
 
             case EnemyState.DEAD:
                 collider.SetActive(false);
-
-
                 break;
 
             case EnemyState.LEAP:
                 hasLeap = false;
+                leapTimer += deltaTime;
                 rb.SetVelocity(leapDirection * 1.8f);
                 if (leapTimer >= leapDuration)
                 {
@@ -313,12 +349,43 @@ public class EnemyControllerMelee : EnemyController
         }
     }
 
+    private Vector3 SmoothVelocity(Vector3 desiredVelocity, Vector3 currentVelocity, float deltaTime)
+    {
+        if (smoothedVelocity == null)
+        {
+            smoothedVelocity = new List<Vector3>();
+        }
+
+        while (smoothedVelocity.Count < 3)
+        {
+            smoothedVelocity.Add(currentVelocity);
+        }
+
+        while (smoothedVelocity.Count > 3)
+        {
+            smoothedVelocity.RemoveAt(0);
+        }
+
+        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, pathSmoothingFactor);
+
+        smoothedVelocity.RemoveAt(0);
+        smoothedVelocity.Add(newVelocity);
+
+        Vector3 avgVelocity = Vector3.Zero;
+        foreach (var vel in smoothedVelocity)
+        {
+            avgVelocity += vel;
+        }
+
+        return avgVelocity / smoothedVelocity.Count;
+    }
+
     public override void Attack()
     {
         Engineson.print("Melee attack executed!");
         if (pc.redThirstManager.IsInBlackRage())
         {
-            if(pc.redThirstManager.redThirstBonus < clawDamage)
+            if (pc.redThirstManager.redThirstBonus < clawDamage)
             {
                 pc.playerData.TakeDamage(clawDamage - pc.redThirstManager.redThirstBonus);
             }
@@ -326,7 +393,6 @@ public class EnemyControllerMelee : EnemyController
             {
                 pc.playerData.TakeDamage(0);
             }
-
         }
         else
         {
@@ -362,7 +428,7 @@ public class EnemyControllerMelee : EnemyController
             leapTimer = 0.0f;
         }
 
-        if(leapTimer >= leapDuration)
+        if (leapTimer >= leapDuration)
         {
             Engineson.print("Leap ended");
             isLeaping = false;
@@ -381,7 +447,6 @@ public class EnemyControllerMelee : EnemyController
                (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
     }
 
-   
     override public void OnCollisionEnter(GameObject other)
     {
         if (other.tag == "BoltgunProjectile")
@@ -396,15 +461,12 @@ public class EnemyControllerMelee : EnemyController
         }
         else if (other.tag == "ShotgunProjectile")
         {
-            //cosas de la shotgun
             anim.SetHitAnimation();
             sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
             sound?.Play();
-
         }
         else if (other.tag == "RailgunProjectile")
         {
-            //Cosas de railgun
             currentHealth -= 100.0f;
             anim.SetHitAnimation();
             sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
@@ -432,8 +494,6 @@ public class EnemyControllerMelee : EnemyController
         }
     }
 
-
-    //For testing
     private void CreateHurtbox()
     {
         hurtboxObject = Engineson.CreateGameObject("Hurtbox", null);
@@ -444,7 +504,6 @@ public class EnemyControllerMelee : EnemyController
         var hurtboxCollider = hurtboxObject.AddComponent<BoxCollider>();
         hurtboxCollider.SetTrigger(true);
         hurtboxObject.tag = "EnemyAttack";
-        //Attack();
     }
 
     private void DestroyHurtbox()

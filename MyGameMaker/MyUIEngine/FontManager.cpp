@@ -27,7 +27,6 @@ FontManager::FontManager() {
     glBindVertexArray(0);
 }
 
-
 FontManager::~FontManager() {
     FT_Done_FreeType(ft);
     glDeleteVertexArrays(1, &VAO);
@@ -35,7 +34,6 @@ FontManager::~FontManager() {
 }
 
 void FontManager::Start() {
-    // Cargar una fuente predeterminada
     const std::string defaultFontPath = "Assets/arial_narrow_7.ttf";
     int defaultFontSize = 16;
 
@@ -100,27 +98,17 @@ bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {
     return true;
 }
 
-void FontManager::RenderText(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec3& color) {
+void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text, float x, float y, float scale) {
     if (Characters.empty()) {
         std::cerr << "ERROR: No se ha cargado ninguna fuente. Llama a LoadFont primero." << std::endl;
         return;
     }
 
-    shader->Bind();
-    shader->SetUniform("u_HasTexture", true);
-    shader->SetUniform("modColor", color);
-    shader->SetUniformVec2("SheetSize", glm::vec2(1.0f, 1.0f));
-
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
 
-    std::cout << "Rendering text: " << text << " at position (" << x << ", " << y << ") with scale " << scale << std::endl;
-
     for (const char& c : text) {
-        if (Characters.find(c) == Characters.end()) {
-            std::cerr << "Character not found: " << c << std::endl;
-            continue;
-        }
+        if (Characters.find(c) == Characters.end()) continue;
 
         Character ch = Characters[c];
 
@@ -142,6 +130,9 @@ void FontManager::RenderText(Shaders* shader, const std::string& text, float x, 
 
         glBindTexture(GL_TEXTURE_2D, ch.TextureID);
 
+        shader->SetUniformVec2("SpriteOffset", glm::vec2(0.0f, 0.0f));
+        shader->SetUniformVec2("SpriteSize", glm::vec2(ch.Size));
+
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -153,7 +144,6 @@ void FontManager::RenderText(Shaders* shader, const std::string& text, float x, 
 
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    shader->UnBind();
 
     GLenum error = glGetError();
     if (error != GL_NO_ERROR) {

@@ -49,4 +49,7 @@ private:
     glm::vec3 m_color;
     float m_fontSize;
     glm::mat4 m_projection;
+    glm::vec2 spriteSize = glm::vec2(0.0f, 0.0f);
+    glm::vec2 sheetSize = glm::vec2(0.0f, 0.0f);
+    glm::vec2 spriteOffset = glm::vec2(0.0f, 0.0f);
 };

@@ -12,56 +12,45 @@ TextComponent::TextComponent(GameObject* owner, const std::string& text, const g
 {
 }
 
-MonoObject* TextComponent::GetSharp()
-{
+MonoObject* TextComponent::GetSharp() {
     return CsharpReference;
 }
 
-void TextComponent::SetText(const std::string& text)
-{
+void TextComponent::SetText(const std::string& text) {
     m_text = text;
 }
 
-void TextComponent::SetPosition(const glm::vec2& position)
-{
+void TextComponent::SetPosition(const glm::vec2& position) {
     m_position = position;
 }
 
-void TextComponent::SetColor(const glm::vec3& color)
-{
+void TextComponent::SetColor(const glm::vec3& color) {
     m_color = color;
 }
 
-void TextComponent::SetFontSize(float fontSize)
-{
+void TextComponent::SetFontSize(float fontSize) {
     m_fontSize = fontSize;
 }
 
-const std::string& TextComponent::GetText() const
-{
+const std::string& TextComponent::GetText() const {
     return m_text;
 }
 
-const glm::vec2& TextComponent::GetPosition() const
-{
+const glm::vec2& TextComponent::GetPosition() const {
     return m_position;
 }
 
-const glm::vec3& TextComponent::GetColor() const
-{
+const glm::vec3& TextComponent::GetColor() const {
     return m_color;
 }
 
-float TextComponent::GetFontSize() const
-{
+float TextComponent::GetFontSize() const {
     return m_fontSize;
 }
 
-void TextComponent::Render() const
-{
-    // Obtener el shader
-    Shaders* unlitShader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
-    if (!unlitShader) {
+void TextComponent::Render() const {
+    Shaders* customShader = ShaderManager::GetInstance().GetShader(ShaderType::UNLIT);
+    if (!customShader) {
         std::cerr << "ERROR: Shader UNLIT no encontrado." << std::endl;
         return;
     }
@@ -75,9 +64,16 @@ void TextComponent::Render() const
     glm::mat4 projectionMatrix = mainCamera->projection();
     glm::mat4 viewMatrix = mainCamera->view();
 
-    unlitShader->Bind();
-    unlitShader->SetUniform("uProjection", projectionMatrix);
-    unlitShader->SetUniform("uView", viewMatrix);
+	glm::mat4 modelMatrix = glm::mat4(1.0f);
+    customShader->Bind();
+    customShader->SetUniform("projection", projectionMatrix);
+    customShader->SetUniform("view", viewMatrix);
+	customShader->SetUniform("model", modelMatrix);
+    customShader->SetUniform("u_HasTexture", true);
+    customShader->SetUniform("modColor", m_color);
+    customShader->SetUniformVec2("SheetSize", sheetSize); 
+	customShader->SetUniformVec2("SpriteSize", spriteSize);
+	customShader->SetUniformVec2("SpriteOffset", spriteOffset);
 
     glm::vec2 renderPosition = m_position;
     if (m_owner->HasComponent<UITransformComponent>()) {
@@ -85,9 +81,9 @@ void TextComponent::Render() const
         renderPosition = glm::vec2(rectTransform->GetPosition().x, rectTransform->GetPosition().y);
     }
 
-    FontManager::GetInstance().RenderText(unlitShader, m_text, renderPosition.x, renderPosition.y, m_fontSize, m_color);
+    FontManager::GetInstance().RenderTextWithShader(customShader, m_text, renderPosition.x, renderPosition.y, m_fontSize);
 
-    unlitShader->UnBind();
+    customShader->UnBind();
 
     std::cout << "Renderizando texto: " << m_text
         << " en posición (" << renderPosition.x << ", " << renderPosition.y << ")"
@@ -95,8 +91,7 @@ void TextComponent::Render() const
         << " y tamaño de fuente " << m_fontSize << std::endl;
 }
 
-void TextComponent::Update(float deltaTime)
-{
+void TextComponent::Update(float deltaTime) {
     if (CsharpReference) {
         MonoClass* textClass = mono_object_get_class(CsharpReference);
         MonoMethod* updateMethod = mono_class_get_method_from_name(textClass, "Update", 0);

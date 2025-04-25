@@ -22,6 +22,7 @@ public:
 	void LoadModels();
 	void LoadMaterials();
 
+	//meshes
 	std::shared_ptr<Mesh> AddMesh(std::shared_ptr<Mesh> mesh) {
 		if (meshIndex.find(mesh->getModel()->GetID()) != meshIndex.end()) {
 			return meshes[meshIndex[mesh->getModel()->GetID()]];
@@ -54,6 +55,7 @@ public:
 		meshIndex.clear();
 	}
 
+	//materials
 	std::shared_ptr<Material> AddMaterial(std::shared_ptr<Material> material) {
 		if (materialIndex.find(material->GetMatName()) != materialIndex.end()) {
 			return materials[materialIndex[material->GetMatName()]];
@@ -87,6 +89,39 @@ public:
 		materialIndex.clear();
 	}
 
+	//images
+	std::shared_ptr<Image> AddImage(std::shared_ptr<Image> image) {
+		if (imageIndex.find(image->image_name) != imageIndex.end()) {
+			return images[imageIndex[image->image_name]];
+		}
+		images.push_back(image);
+		imageIndex[image->image_name] = images.size() - 1;
+		return images.back();
+	}
+
+	std::shared_ptr<Image> GetImage(std::string id) {
+		if (imageIndex.find(id) != imageIndex.end()) {
+			return images[imageIndex[id]];
+		}
+		return nullptr;
+	}
+
+	void ClearImage(std::string id) {
+		if (imageIndex.find(id) != imageIndex.end()) {
+			images.erase(images.begin() + imageIndex[id]);
+			imageIndex.erase(id);
+		}
+	}
+
+	int GetImageCount() const {
+		return images.size();
+	}
+
+	void ClearAllImages() {
+		images.clear();
+		imageIndex.clear();
+	}
+
 private:
 	//meshes
 	std::unordered_map<size_t, size_t> meshIndex;
@@ -94,6 +129,9 @@ private:
 	//materials
 	std::unordered_map<std::string, size_t> materialIndex;
 	std::vector<std::shared_ptr<Material>> materials;
+	//images
+	std::unordered_map<std::string, size_t> imageIndex;
+	std::vector<std::shared_ptr<Image>> images;
 
 };
 

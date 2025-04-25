@@ -63,6 +63,9 @@ public class EnemyControllerBoss : EnemyController
     private GameObject metalSlideObject;
     private Vector3 metalSlideStartOffset = new Vector3(0, 15.0f, 0);
     private float metalSlideSpeed = 30.0f;
+    private bool phase3Started = false;
+    private bool hasTeleportedToCenter = false;
+    private bool isPhase3Attacking = false;
 
     private EnemyControllerBossTail tailController;
 
@@ -85,14 +88,15 @@ public class EnemyControllerBoss : EnemyController
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.SetMass(1000.0f);
-        //tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
-        //tailController?.gameObject.SetActive(false);
+        tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
+        tailController?.gameObject.SetActive(false);
         currentHealth = maxHealth;
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
         }
         collider = gameObject.GetComponent<BoxCollider>();
+        collider.SetSize(new Vector3(2.0f, 2.0f, 2.0f));
         if (collider == null)
         {
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
@@ -109,7 +113,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 100.0f;
+        currentHealth = 500.0f;
         gameObject.tag = "Boss";
         isDead = false;
     }
@@ -118,179 +122,184 @@ public class EnemyControllerBoss : EnemyController
     {
         if (!isDead)
         {
-
-            float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
-
-            if (playerTransform != null)
+            if (!isDead)
             {
-                Vector3 directionToPlayer = Vector3.Normalize(playerTransform.position - enemyTransform.position);
-                float targetAngle = (float)Math.Atan2(directionToPlayer.X, directionToPlayer.Z) * (180.0f / (float)Math.PI);
-                Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(targetAngle * ((float)Math.PI / 180.0f), 0, 0);
-                enemyTransform.SetRotationQuat(newRotation);
-                collider.SetRotation(newRotation);
-            }
+                float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
 
-            if (currentHealth < 200)
-            {
-                currentPhase = BossPhase.PHASE3;
-            }
-            else if (currentHealth < 400)
-            {
-                currentPhase = BossPhase.PHASE2;
-            }
-            switch (currentPhase)
-            {
-                case BossPhase.PHASE1:
+                if (playerTransform != null)
+                {
+                    Vector3 directionToPlayer = Vector3.Normalize(playerTransform.position - enemyTransform.position);
+                    float targetAngle = (float)Math.Atan2(directionToPlayer.X, directionToPlayer.Z) * (180.0f / (float)Math.PI);
+                    Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(targetAngle * ((float)Math.PI / 180.0f), 0, 0);
+                    enemyTransform.SetRotationQuat(newRotation);
+                    collider.SetRotation(newRotation);
+                }
 
-                    if (distanceToPlayer <= 200.0f)
-                    {
-                        if (isCombatMusicPlaying == false)
+                if (currentHealth < 200)
+                {
+                    currentPhase = BossPhase.PHASE3;
+                }
+                else if (currentHealth < 400)
+                {
+                    currentPhase = BossPhase.PHASE2;
+                }
+
+                switch (currentPhase)
+                {
+                    case BossPhase.PHASE1:
+                        if (distanceToPlayer <= 200.0f)
                         {
-                            sound?.LoadAudio(combatMusic);
-                            sound?.Play(true);
-                            isCombatMusicPlaying = true;
-                        }
-
-                        timer += deltaTime;
-
-                        if (isBuried && timer >= unburrowingAttackCooldown)
-                        {
-                            UnburrowingAttack();
-                            timer = 0.0f;
-                        }
-                        else if (!isBuried && timer >= postUnburrowingAttackDelay)
-                        {
-                            if (attackCount % 3 == 0 && attackCount > 0)
+                            if (!isCombatMusicPlaying)
                             {
-                                if (timer >= restAfterThirdAttack)
+                                sound?.LoadAudio(combatMusic);
+                                sound?.Play(true);
+                                isCombatMusicPlaying = true;
+                            }
+
+                            timer += deltaTime;
+
+                            if (isBuried && timer >= unburrowingAttackCooldown)
+                            {
+                                UnburrowingAttack();
+                                timer = 0.0f;
+                            }
+                            else if (!isBuried && timer >= postUnburrowingAttackDelay)
+                            {
+                                if (attackCount % 3 == 0 && attackCount > 0)
+                                {
+                                    if (timer >= restAfterThirdAttack)
+                                    {
+                                        Burrow();
+                                        timer = 0.0f;
+                                    }
+                                }
+                                else
                                 {
                                     Burrow();
                                     timer = 0.0f;
                                 }
                             }
-                            else
-                            {
-                                Burrow();
-                                timer = 0.0f;
-                            }
                         }
-                    }
+                        break;
 
-                    break;
-                case BossPhase.PHASE2:
+                    case BossPhase.PHASE2:
+                        timer += deltaTime;
 
-                    timer += deltaTime;
-
-                    if (isBuried && timer >= unburrowingAttackCooldown)
-                    {
-                        isPreparingAttack = true;
-                        timer = 0.0f;
-                    }
-                    else if (isPreparingAttack && timer >= burrowTime)
-                    {
-                        UnburrowingAttackPhase2();
-                        isPreparingAttack = false;
-                        timer = 0.0f;
-                    }
-                    else if (!isBuried && timer >= postAttackDelay)
-                    {
-                        if (playerTransform != null)
+                        if (isBuried && timer >= unburrowingAttackCooldown)
                         {
-                            if (distanceToPlayer <= 5.0f && slamAttackTimer <= 0.0f)
-                            {
-                                ClawStrike();
-                                slamAttackTimer = slamAttackCooldown;
-                            }
-                            else if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
-                            {
-                                SlamAttack(); 
-                                slamAttackTimer = slamAttackCooldown;
-                            }
-                            else if (distanceToPlayer > slamAttackDistance && distanceToPlayer < 30.0f && metalSlideObject == null)
-                            {
-                                MetalSlide();
-                                slamAttackTimer = slamAttackCooldown;
-                            }
-                            else if (distanceToPlayer > 30.0f)
-                            {
-                                ChangePositionToClosest();
-                            }
-
+                            isPreparingAttack = true;
+                            timer = 0.0f;
                         }
-                        timer = 0.0f;
-                    }
+                        else if (isPreparingAttack && timer >= burrowTime)
+                        {
+                            UnburrowingAttackPhase2();
+                            isPreparingAttack = false;
+                            timer = 0.0f;
+                        }
+                        else if (!isBuried && timer >= postAttackDelay)
+                        {
+                            if (playerTransform != null)
+                            {
+                                if (distanceToPlayer <= 8.0f && slamAttackTimer <= 0.0f)
+                                {
+                                    ClawStrike();
+                                    slamAttackTimer = slamAttackCooldown;
+                                }
+                                else if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                                {
+                                    SlamAttack();
+                                    slamAttackTimer = slamAttackCooldown;
+                                }
+                                else if (distanceToPlayer > slamAttackDistance && distanceToPlayer < 30.0f && metalSlideObject == null)
+                                {
+                                    MetalSlide();
+                                    slamAttackTimer = slamAttackCooldown;
+                                }
+                                else if (distanceToPlayer > 30.0f)
+                                {
+                                    ChangePositionToClosest();
+                                }
+                            }
+                            timer = 0.0f;
+                        }
 
-                    if (slamAttackTimer > 0.0f)
-                    {
-                        slamAttackTimer -= deltaTime;
-                    }
+                        if (slamAttackTimer > 0.0f)
+                        {
+                            slamAttackTimer -= deltaTime;
+                        }
+                        break;
 
-                    break;
-                case BossPhase.PHASE3:
+                    case BossPhase.PHASE3:
+                        timer += deltaTime;
+                        
+                        if (!phase3Started)
+                        {
+                            Burrow();
+                            phase3Started = true;
+                            timer = 0.0f;
+                        }
+                        else if (phase3Started && !hasTeleportedToCenter && timer >= burrowTime)
+                        {
+                            UnburrowAtCenter();
+                            hasTeleportedToCenter = true;
+                            isBuried = false;
+                            timer = 0.0f;
+                            tailController.Activate();
+                        }
+                        else if (hasTeleportedToCenter && !isBuried && timer >= postAttackDelay)
+                        {
+                            if (playerTransform != null)
+                            {
+                                if (distanceToPlayer <= 10.0f && slamAttackTimer <= 0.0f)
+                                {
+                                    ClawStrike();
+                                    slamAttackTimer = slamAttackCooldown;
+                                }
+                                else if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
+                                {
+                                    SlamAttack();
+                                    slamAttackTimer = slamAttackCooldown;
+                                }
+                                else if (distanceToPlayer > slamAttackDistance && metalSlideObject == null)
+                                {
+                                    MetalSlide();
+                                    slamAttackTimer = slamAttackCooldown;
+                                }
+                            }
+                            timer = 0.0f;
+                        }
 
-                    // The same as phase 2 for the moment
+                        if (slamAttackTimer > 0.0f)
+                        {
+                            slamAttackTimer -= deltaTime;
+                        }
 
-                    timer += deltaTime;
-                    tailController?.gameObject.SetActive(true);
-
-                    //if (isBuried && timer >= unburrowingAttackCooldown)
-                    //{
-                    //    isPreparingAttack = true;
-                    //    timer = 0.0f;
-                    //}
-                    //else if (isPreparingAttack && timer >= burrowTime)
-                    //{
-                    //    UnburrowingAttackPhase2();
-                    //    isPreparingAttack = false;
-                    //    timer = 0.0f;
-                    //}
-                    //else if (!isBuried && timer >= postAttackDelay)
-                    //{
-                    //    if (playerTransform != null)
-                    //    {
-
-                    //        if (distanceToPlayer <= slamAttackDistance && slamAttackTimer <= 0.0f)
-                    //        {
-                    //            ClawStrike();
-                    //            slamAttackTimer = slamAttackCooldown;
-                    //        }
-                    //        else
-                    //        {
-                    //            ChangePositionToClosest();
-                    //        }
-                    //    }
-                    //    timer = 0.0f;
-                    //}
-
-                    //if (slamAttackTimer > 0.0f)
-                    //{
-                    //    slamAttackTimer -= deltaTime;
-                    //}
-                    break;
-            }
-
-            if (slamHurtboxObject != null || clawHurtboxObjects != null)
-            {
-                hurtboxDuration += deltaTime;
-                if (hurtboxDuration >= 0.5)
-                {
-                    DestroyHurtboxes();
-                    hurtboxDuration = 0.0f;
+                        break;
                 }
+
+                if (slamHurtboxObject != null || clawHurtboxObjects != null)
+                {
+                    hurtboxDuration += deltaTime;
+                    if (hurtboxDuration >= 0.5f)
+                    {
+                        DestroyHurtboxes();
+                        hurtboxDuration = 0.0f;
+                    }
+                }
+
+                UpdateMetalSlide(deltaTime);
             }
 
-            UpdateMetalSlide(deltaTime);
-
-        }
-
-        if (isDead)
-        {
-            collider.SetActive(false);
-            if (isCombatMusicPlaying == true)
+            if (isDead)
             {
-                sound?.Stop();
-                isCombatMusicPlaying = false;
+                collider.SetActive(false);
+                //if (isCombatMusicPlaying == true)
+                //{
+                //    sound?.Stop();
+                //    isCombatMusicPlaying = false;
+                //}
             }
+
         }
     }
 
@@ -342,6 +351,16 @@ public class EnemyControllerBoss : EnemyController
                 Engineson.print("Unburrowing Attack");
             }
             isBuried = false;
+        }
+    }
+
+    private void UnburrowAtCenter()
+    {
+        if (isDead == false)
+        {
+            Vector3 center = new Vector3(0, 0, 0);
+            enemyTransform.position = center;
+            collider.SetPosition(center);
         }
     }
 
@@ -447,12 +466,10 @@ public class EnemyControllerBoss : EnemyController
 
     private void Die()
     {
-        enemyTransform.position = new Vector3(0.0f, -40.0f, 1080.0f);
-        collider.SetPosition(enemyTransform.position);
-        //Engineson.Destroy(tailController.GetGameObject());
+        tailController.Die();
         Engineson.Destroy(GetGameObject());
         isDead = true;
-        SceneManager.LoadScene("WinScene");
+        //SceneManager.LoadScene("WinScene");
     }
 
     private void CreateSlamHurtbox()

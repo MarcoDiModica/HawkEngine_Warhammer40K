@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public enum EnemyState { IDLE, CHASE, ATTACK, STUNNED, DEAD };
+public enum EnemyState { IDLE, CHASE, ATTACK, STUNNED, DEAD, LEAP };
 
 public abstract class EnemyController : MonoBehaviour, IEnemyController
 {
@@ -30,8 +30,8 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
 
     public float distToChase = 50.0F;
     public float minDistToChase = 10.0f;
-    public float speedMovement = 10.0f;
-    public float acceleration = 15.0f;
+    public float speedMovement = 25.0f;
+    public float acceleration = 40.0f;
     public float rotationSpeed = 300.0f;
     protected Vector3 moveDirection;
     protected float currentRotationAngle;

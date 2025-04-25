@@ -37,6 +37,7 @@ public class EnemyControllerMelee : EnemyController
     private float leapDuration = 1.5f;
     private float leapTimer = 0f;
     private bool hasLeap = true;
+    private Vector3 leapDirection;
 
     private bool isLeaping = false;
 
@@ -132,28 +133,11 @@ public class EnemyControllerMelee : EnemyController
                     // Leap
                     if (distanceToPlayer <= maxLeapRange && distanceToPlayer >= minLeapRange && hasLeap && !isLeaping)
                     {
+                        currentState = EnemyState.LEAP;
                         leapTimer = 0f;
-                        Leap();
-                    }
-                    else if (isLeaping)
-                    {
-                        leapTimer += deltaTime;
-                        particles.EmitBurst(1);
-                        if (leapTimer >= leapDuration)
-                        {
-                            isLeaping = false;
-                            hasLeap = false;
-                            lastLeap = 0.0f;
-                        }
-                    }
-                    if (!hasLeap)
-                    {
-                        lastLeap += deltaTime;
-                        if (lastLeap >= leapCooldown)
-                        {
-                            Engineson.print("LEAP RESTORED");
-                            hasLeap = true;
-                        }
+                        isLeaping = true;
+                        anim.SetWholeLeapAnimation();
+                        leapDirection = Vector3.Normalize(playerTransform.position - enemyTransform.position);
                     }
 
                     // Enemy Rotation
@@ -206,6 +190,7 @@ public class EnemyControllerMelee : EnemyController
                 break;
 
             case EnemyState.CHASE:
+
                 if (!isFootstepPlaying)
                 {
                     sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
@@ -219,24 +204,6 @@ public class EnemyControllerMelee : EnemyController
                     sound?.Play(true);
                     isCombatMusicPlaying = true;
                 }
-
-                //Vector3 currentVelocity = rb.GetVelocity();
-                //moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
-                //Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                //if (!isLeaping)
-                //{
-                //    anim.SetRunningAnimation();
-                //    if (desiredVelocity.LengthSquared() > 0)
-                //    {
-                //        desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                //    }
-
-                //    Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                //    rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-                //}
-                //isRunning = true;
-
 
                 Vector3 myPos = enemyTransform.position;
                 Vector3 tgtPos = playerTransform.position;
@@ -257,7 +224,6 @@ public class EnemyControllerMelee : EnemyController
                         chaseIndex = (found >= 0) ? found + 1 : 1;
                     }
                     chaseTimer = 0f;
-                    Engineson.print("" + chasePath.Count);
                 }
 
 
@@ -286,22 +252,6 @@ public class EnemyControllerMelee : EnemyController
                         isRunning = true;
                     }
                 }
-                //else
-                //{
-                //    Vector3 delta = playerTransform.position - enemyTransform.position;
-                //    float len = delta.Length();
-                //    Vector3 dir = (len > 1e-5f) ? delta / len : Vector3.Zero;
-
-                //    moveDirection = dir;
-
-                //    Vector3 desired = dir * speedMovement;
-                //    Vector3 cv = rb.GetVelocity();
-                //    float t = Math.Min(1f, acceleration * deltaTime);
-
-                //    rb.SetVelocity(Vector3.Lerp(cv, desired, t));
-                //    anim.SetRunningAnimation();
-                //    isRunning = true;
-                //}
 
                 break;
 
@@ -343,8 +293,21 @@ public class EnemyControllerMelee : EnemyController
 
             case EnemyState.DEAD:
                 collider.SetActive(false);
+
+
                 break;
 
+            case EnemyState.LEAP:
+                hasLeap = false;
+                rb.SetVelocity(leapDirection * 1.8f);
+                if (leapTimer >= leapDuration)
+                {
+                    isLeaping = false;
+                    hasLeap = true;
+                    currentState = EnemyState.CHASE;
+                    lastLeap = 0f;
+                }
+                break;
             default:
                 break;
         }

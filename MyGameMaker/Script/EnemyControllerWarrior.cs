@@ -1,18 +1,25 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
-public class EnemyControllerRanged : EnemyController
+public class EnemyControllerWarrior : EnemyController
 {
     // Enemy Stats
     private float health = 100.0f;
     private float projectileDamage = 15.0f;
-    private float acidDamage = 5.0f;
+    private float swordDamage = 25.0f;
     private float distanceToPlayer;
 
+    // Hurtbox
+    private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
+    private float hurtboxTimer = 0f;
+    private Vector3 hurtboxSize = new Vector3(10.0f, 10.0f, 10.0f); // Tamaño de la hurtbox
+    private Vector3 hurtboxOffset = new Vector3(5.0f, -3.0f, 0.0f); // Desplazamiento de la hurtbox hacia adelante
+    private GameObject hurtboxObject;
+
     // Shooting
-    private float projectileRange = 100.0f;
+    private float projectileRange = 30;
     private List<BulletData> activeProjectiles = new List<BulletData>();
     public float shootCooldown = 2.0f;
     public float projectileSpeed = 90.0f;
@@ -23,7 +30,7 @@ public class EnemyControllerRanged : EnemyController
     private bool dodgewindow = false;
     private float dodgeActivationTime = 0.5f;
     private float dodgeTimer = 0f;
-    //private TermagauntAnimation animation
+    //private TyranidWarriorAnimation animation
     private PlayerController pc;
 
     // Audio
@@ -31,12 +38,11 @@ public class EnemyControllerRanged : EnemyController
     private Audio music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
-
-
     public override void Awake()
     {
         music = gameObject.GetComponent<Audio>();
     }
+
     public override void Start()
     {
         pc = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -44,35 +50,42 @@ public class EnemyControllerRanged : EnemyController
         rb = gameObject.GetComponent<Rigidbody>();
         if (playerTransform == null)
         {
-            Engineson.print("ERROR: Player couldn't be found!");
+            Engineson.print("ERROR: Player not found!");
         }
 
         collider = gameObject.GetComponent<BoxCollider>();
         if (collider == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a Collider component!");
+            Engineson.print("ERROR: Tyranid Warrior Collider not found!");
             return;
         }
 
         sound = gameObject.GetComponent<Audio>();
         if (sound == null)
         {
-            Engineson.print("PlayerShooting: Audio component not found");
+            Engineson.print("ERROR: Tyranid Warrior Sound not found!");
         }
 
-        enemyTransform = gameObject.GetComponent<Transform>();
+        enemyTransform = gameObject.transform;
         if (enemyTransform == null)
         {
-            Engineson.print("ERROR: PlayerMovement requires a Transform component!");
+            Engineson.print("ERROR: Tyranid Warrior transform not found!");
             return;
         }
 
-        particles = gameObject.AddComponent<ParticleFX>();
-        //particles.ApplyPreset();
+        //anim = GameObject.Find("TyranidWarriorMesh").GetComponent<TyranidWarriorAnimation>();
+        //if (anim == null)
+        //{
+        //    Engineson.print("ERROR: TyranidWarriorAnimation requires SkeletalANimation component");
+        //    return;
+        //}
+
+        //particles = gameObject.GetComponent<ParticleFX>();
+        //particles.ApplyPreset(9);
 
         maxHealth = health;
         currentHealth = maxHealth;
-        gameObject.tag = "Ranged";
+        gameObject.tag = "Warrior";
     }
 
     public override void Update(float deltaTime)
@@ -94,18 +107,22 @@ public class EnemyControllerRanged : EnemyController
 
                 if (distanceToPlayer < distToChase)
                 {
-                    // Shoot
-                    if (distanceToPlayer < projectileRange)
+                    // Attack
+                    if (IsPlayerInHurtbox(playerTransform.position))
                     {
                         currentState = EnemyState.ATTACK;
+                        isAttacking = true;
                     }
+                    // Shooting
+                    else if (distanceToPlayer < projectileRange)
+                    {
+                        currentState = EnemyState.ATTACK;
+                        isShooting = true;
+                    }
+                    // Chase
                     else
                     {
-                        // Chase
-                        if (distanceToPlayer > minDistToChase)
-                        {
-                            currentState = EnemyState.CHASE;
-                        }
+                        currentState = EnemyState.CHASE;
                     }
 
                     // Rotation
@@ -174,6 +191,7 @@ public class EnemyControllerRanged : EnemyController
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
                 Vector3 desiredVelocity = moveDirection * speedMovement;
 
+                //anim.SetRunningAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
                 {
                     desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
@@ -184,135 +202,126 @@ public class EnemyControllerRanged : EnemyController
                 break;
 
             case EnemyState.ATTACK:
-                shootTimer += deltaTime;
-                if (shootTimer >= shootCooldown)
+                if (isAttacking)
                 {
-                    Attack();
-                    sound?.Play();
-                    shootTimer = 0;
+                    hurtboxTimer += deltaTime;
+                    if (dodgewindow)
+                    {
+                        dodgeTimer += deltaTime;
+                    }
+                    if (hurtboxTimer >= hurtboxActivationTime)
+                    {
+                        //CreateHurtbox();
+                        //anim.SetRandomAttackAnimation();
+                        hurtboxTimer = 0f;
+                        dodgeTimer = 0f;
+                        dodgewindow = true;
+                    }
+                    else if (dodgeTimer >= dodgeActivationTime && dodgewindow)
+                    {
+                        Attack();
+
+                        //DestroyHurtbox();
+                        hurtboxTimer = 0f;
+                        dodgeTimer = 0f;
+                        dodgewindow = false;
+                        isAttacking = false;
+                    }
+                }
+                else if (isShooting)
+                {
+                    shootTimer += deltaTime;
+                    if (shootTimer >= shootCooldown)
+                    {
+                        Attack();
+                        sound?.Play();
+                        shootTimer = 0;
+                    }
                 }
                 break;
-
             case EnemyState.STUNNED:
-                rb.SetVelocity(Vector3.Zero);
-
-                stunTimer += deltaTime;
-                if (stunTimer >= stunDuration)
-                {
-                    currentState = EnemyState.IDLE;
-                    stunTimer = 0.0f;
-                }
                 break;
-
             case EnemyState.DEAD:
-                collider.SetActive(false);
                 break;
-
             default:
                 break;
         }
-
-        UpdateProjectiles(deltaTime);
-        CleanupProjectiles();
     }
 
     public override void Attack()
     {
-        try
+        if (isAttacking)
         {
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-            Engineson.print("Projectile created!" + enemyTransform.forward);
-            // TODO: add custom mesh to the projectile
-            projectile.AddComponent<MeshRenderer>();
-            projectile.AddComponent<BoxCollider>();
-            //sound?.Play();
-            projectile.tag = "EnemyAttack";
-
-            if (projectile != null)
+            //Engineson.print("Melee attack executed!");
+            if (pc.redThirstManager.IsInBlackRage())
             {
-                Transform projTransform = projectile.GetComponent<Transform>();
-                BoxCollider projectileCollider = projectile.GetComponent<BoxCollider>();
-                if (projTransform != null)
+                if (pc.redThirstManager.redThirstBonus < swordDamage)
                 {
-                    Vector3 forward = moveDirection;
-                    Vector3 spawnPos = enemyTransform.position + forward * 1.0f;
-                    projTransform.position = spawnPos;
-                    projTransform.SetScale(0.1f, 0.1f, 0.1f);
-
-                    projectile.AddScript("BulletData");
-                    projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
-                    activeProjectiles.Add(projectile.GetComponent<BulletData>());
-                    projectileCollider.SetPosition(projTransform.position);
-                    Engineson.print("Projectile fired!");
+                    pc.playerData.TakeDamage(swordDamage - pc.redThirstManager.redThirstBonus);
+                }
+                else
+                {
+                    pc.playerData.TakeDamage(0);
                 }
             }
+            else
+            {
+                pc.playerData.TakeDamage(swordDamage);
+            }
+
+            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
+            sound?.Play();
         }
-        catch (System.Exception e)
+        else if (isShooting)
         {
-            Engineson.print($"Error creating projectile: {e.Message}");
+            try
+            {
+                GameObject projectile = Engineson.CreateGameObject("Projectile", null);
+                Engineson.print("Projectile created!" + enemyTransform.forward);
+                // TODO: add custom mesh to the projectile
+                projectile.AddComponent<MeshRenderer>();
+                projectile.AddComponent<BoxCollider>();
+                //sound?.Play();
+                projectile.tag = "EnemyAttack";
+
+                if (projectile != null)
+                {
+                    Transform projTransform = projectile.GetComponent<Transform>();
+                    BoxCollider projectileCollider = projectile.GetComponent<BoxCollider>();
+                    if (projTransform != null)
+                    {
+                        Vector3 forward = moveDirection;
+                        Vector3 spawnPos = enemyTransform.position + forward * 1.0f;
+                        projTransform.position = spawnPos;
+                        projTransform.SetScale(0.1f, 0.1f, 0.1f);
+
+                        projectile.AddScript("BulletData");
+                        projectile.GetComponent<BulletData>().Init(projTransform, forward, gameObject);
+                        activeProjectiles.Add(projectile.GetComponent<BulletData>());
+                        projectileCollider.SetPosition(projTransform.position);
+                        Engineson.print("Projectile fired!");
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                Engineson.print($"Error creating projectile: {e.Message}");
+            }
         }
     }
 
     public override void TakeDamage(float damage)
     {
-        if (currentHealth > 0)
-        {
-            currentHealth -= damage;
-            //anim.SetHitAnimation();
-            //particles.ApplyPreset(19);
-            //particles.EmitBurst(1);
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
-        }
+        throw new NotImplementedException();
     }
 
-    private void UpdateProjectiles(float deltaTime)
+    private bool IsPlayerInHurtbox(Vector3 playerPos)
     {
-        foreach (var proj in activeProjectiles)
-        {
-            if (proj.markedForDestruction) continue;
+        Vector3 hurtboxCenter = enemyTransform.position + (enemyTransform.forward * hurtboxOffset.X) + (Vector3.UnitY * hurtboxOffset.Y);
+        Vector3 halfSize = hurtboxSize * 0.5f;
 
-            proj.lifetime += deltaTime;
-
-            if (proj.lifetime >= projectileLifetime)
-            {
-                proj.markedForDestruction = true;
-                continue;
-            }
-
-            try
-            {
-                if (proj.transform != null)
-                {
-                    proj.transform.position += proj.direction * projectileSpeed * deltaTime;
-                }
-            }
-            catch (System.Exception e)
-            {
-                proj.markedForDestruction = true;
-                Engineson.print($"Error updating projectile: {e.Message}");
-            }
-        }
-    }
-
-    private void CleanupProjectiles()
-    {
-        for (int i = activeProjectiles.Count - 1; i >= 0; i--)
-        {
-            var proj = activeProjectiles[i];
-            if (proj.markedForDestruction)
-            {
-                try
-                {
-                    Engineson.Destroy(proj.gameObject);
-                    activeProjectiles.RemoveAt(i);
-                }
-                catch (System.Exception e)
-                {
-                    Engineson.print($"Error destroying projectile: {e.Message}");
-                    activeProjectiles.RemoveAt(i);
-                }
-            }
-        }
+        return (playerPos.X >= hurtboxCenter.X - halfSize.X && playerPos.X <= hurtboxCenter.X + halfSize.X) &&
+               (playerPos.Y >= hurtboxCenter.Y - halfSize.Y && playerPos.Y <= hurtboxCenter.Y + halfSize.Y) &&
+               (playerPos.Z >= hurtboxCenter.Z - halfSize.Z && playerPos.Z <= hurtboxCenter.Z + halfSize.Z);
     }
 }

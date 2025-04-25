@@ -21,10 +21,9 @@ public abstract class EnemyController : MonoBehaviour, IEnemyController
     public bool isStunned = false;
     protected float stunDuration = 2.0f;
     protected float stunTimer = 0.0f;
-    protected bool isIdle = false;
     protected bool isDead = false;
     protected bool isAttacking = false;
-    protected bool isRunning = false;
+    protected bool isShooting = false;
     protected bool isFootstepPlaying = false;
     protected bool hasStoppedFootsteps = false;
 

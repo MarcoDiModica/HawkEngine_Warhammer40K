@@ -289,20 +289,20 @@ bool Root::Start()
 	//BoltgunBullets->SetTag("Ammunition");
 	
 	//Lictor
-	auto lictor = CreateGameObject("Lictor");
-	lictor->SetTag("Enemy");
-	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.4, 0.8, 0.4));
-	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -1.8, -0.8));
-	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
-	lictorMesh->SetName(lictor->GetName() + "Mesh");
-	lictorMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	ParentGameObject(*lictorMesh, *lictor);
-	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
+	//auto lictor = CreateGameObject("Lictor");
+	//lictor->SetTag("Enemy");
+	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.4, 0.8, 0.4));
+	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -1.8, -0.8));
+	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
+	//lictorMesh->SetName(lictor->GetName() + "Mesh");
+	//lictorMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
+	//ParentGameObject(*lictorMesh, *lictor);
+	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 
 	/*auto lictor2 = CreateGameObject("Lictor2");
 	lictor2->SetTag("Enemy");
@@ -388,7 +388,7 @@ bool Root::Start()
 	//hormagaunt1->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//hormagaunt1->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
 	//auto hormagauntMesh1 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh1->SetName("HormagauntMesh1");
+	//hormagauntMesh1->SetName(hormagaunt1->GetName() + "Mesh");
 	//hormagauntMesh1->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//hormagauntMesh1->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//hormagauntMesh1->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
@@ -396,7 +396,7 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh1, *hormagaunt1);
 	//hormagaunt1->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt1->SetTag("Enemy");
-	//
+	
 	//auto hormagaunt2 = CreateGameObject("Hormagaunt2");
 	//hormagaunt2->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//hormagaunt2->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
@@ -404,7 +404,7 @@ bool Root::Start()
 	//hormagaunt2->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//hormagaunt2->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
 	//auto hormagauntMesh2 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh2->SetName("HormagauntMesh2");
+	//hormagauntMesh2->SetName(hormagaunt2->GetName() + "Mesh");
 	//hormagauntMesh2->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//hormagauntMesh2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//hormagauntMesh2->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
@@ -412,7 +412,7 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh2, *hormagaunt2);
 	//hormagaunt2->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt2->SetTag("Enemy");
-	//
+	
 	//auto hormagaunt3 = CreateGameObject("Hormagaunt3");
 	//hormagaunt3->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//hormagaunt3->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
@@ -420,7 +420,7 @@ bool Root::Start()
 	//hormagaunt3->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//hormagaunt3->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
 	//auto hormagauntMesh3 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh3->SetName("HormagauntMesh3");
+	//hormagauntMesh3->SetName(hormagaunt3->GetName() + "Mesh");
 	//hormagauntMesh3->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//hormagauntMesh3->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//hormagauntMesh3->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
@@ -428,7 +428,7 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh3, *hormagaunt3);
 	//hormagaunt3->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt3->SetTag("Enemy");
-	//
+	
 	//auto hormagaunt4 = CreateGameObject("Hormagaunt4");
 	//hormagaunt4->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//hormagaunt4->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
@@ -436,7 +436,7 @@ bool Root::Start()
 	//hormagaunt4->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//hormagaunt4->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
 	//auto hormagauntMesh4 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh4->SetName("HormagauntMesh4");
+	//hormagauntMesh4->SetName(hormagaunt4->GetName() + "Mesh");
 	//hormagauntMesh4->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//hormagauntMesh4->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//hormagauntMesh4->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
@@ -444,7 +444,7 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh4, *hormagaunt4);
 	//hormagaunt4->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt4->SetTag("Enemy");
-	//
+	
 	//auto hormagaunt5 = CreateGameObject("Hormagaunt5");
 	//hormagaunt5->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	//hormagaunt5->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
@@ -452,7 +452,7 @@ bool Root::Start()
 	//hormagaunt5->AddComponent<RigidbodyComponent>(Application->physicsModule);
 	//hormagaunt5->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
 	//auto hormagauntMesh5 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh5->SetName("HormagauntMesh5");
+	//hormagauntMesh5->SetName(hormagaunt5->GetName() + "Mesh");
 	//hormagauntMesh5->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	//hormagauntMesh5->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
 	//hormagauntMesh5->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
@@ -460,8 +460,18 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh5, *hormagaunt5);
 	//hormagaunt5->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt5->SetTag("Enemy");
-
-
+	
+	//Tyranid Warrior
+	auto tyranidWarrior = CreateGameObject("Tyranid_Warrior");
+	tyranidWarrior->SetTag("Enemy");
+	tyranidWarrior->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	tyranidWarrior->GetComponent<Transform_Component>()->SetScale(glm::vec3(10, 10, 10));
+	tyranidWarrior->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	auto tyranidWarriorMesh = CreateGameObject("Assets/Meshes/TyranidWarrior_low.fbx");
+	tyranidWarriorMesh->SetName(tyranidWarrior->GetName() + "Mesh");
+	tyranidWarriorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
+	ParentGameObject(*tyranidWarriorMesh, *tyranidWarrior);
+	tyranidWarriorMesh->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerWarrior");
 
 	//auto mawloc = CreateGameObject("Mawloc");
 	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));

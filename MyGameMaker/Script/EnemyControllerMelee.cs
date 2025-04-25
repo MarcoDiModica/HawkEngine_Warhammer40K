@@ -283,8 +283,6 @@ public class EnemyControllerMelee : EnemyController
             pc.playerData.TakeDamage(clawDamage);
         }
 
-        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
-
         sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
         sound?.Play();
     }

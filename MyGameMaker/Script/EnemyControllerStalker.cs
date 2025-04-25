@@ -5,6 +5,12 @@ using HawkEngine;
 
 public class EnemyControllerStalker : EnemyController
 {
+    // Enemy Stats
+    private float health = 350.0f;
+    private float clawDamage = 25.0f;
+    private float pounceDamage = 35.0f;
+    private float distanceToPlayer;
+
     // Hurtbox
     private float hurtboxActivationTime = 1.5f; // Tiempo que el jugador debe estar en la hurtbox para activarla
     private float hurtboxTimer = 0f;
@@ -24,17 +30,11 @@ public class EnemyControllerStalker : EnemyController
     private Audio music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
-    // Enemy Stats
-    private float health = 350.0f;
-    private float clawDamage = 25.0f;
-    private float pounceDamage = 35.0f;
-    private float distanceToPlayer;
-
-        // Invisibility
+    // Invisibility
     private float invisibilityRange = 50.0f;
     private GameObject lictorMesh;
 
-        // Pounce
+    // Pounce
     private float pounceRange = 30.0f;
     private float pounceTimer = 0f;
     private float pounceDuration = 1.5f;
@@ -42,7 +42,7 @@ public class EnemyControllerStalker : EnemyController
     private float anticipationDuration = 2f;
     private bool hasPounce = true;
     private bool isPouncing = false;
-    private bool hasMissed = false;
+    private bool hasMissed = true;
 
     public override void Awake()
     {
@@ -200,6 +200,7 @@ public class EnemyControllerStalker : EnemyController
                 moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
                 Vector3 desiredVelocity = moveDirection * speedMovement;
 
+                //anim.SetRunningAnimation();
                 if (desiredVelocity.LengthSquared() > 0)
                 {
                     desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
@@ -214,11 +215,15 @@ public class EnemyControllerStalker : EnemyController
                     Invisibility();
                 }
 
-                //Puonce
+                // Puonce
                 if (distanceToPlayer < pounceRange && hasPounce && !isPouncing)
                 {
                     lictorMesh.SetActive(true);
                     Pounce(deltaTime);
+                }
+                else
+                {
+                    anticipationTimer = 0;
                 }
                 break;
 
@@ -288,8 +293,6 @@ public class EnemyControllerStalker : EnemyController
             pc.playerData.TakeDamage(clawDamage);
         }
 
-        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
-
         sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
         sound?.Play();
     }
@@ -322,31 +325,26 @@ public class EnemyControllerStalker : EnemyController
         }
         else if (anticipationTimer >= anticipationDuration)
         {
-            if (distanceToPlayer > distToChase)
+            hasPounce = false;
+            isPouncing = true;
+
+            Engineson.print("Pouncing");
+            rb.SetVelocity(rb.GetVelocity() * 120f);
+        }
+        else
+        {
+            Engineson.print("Not Pouncung anymore");
+            pounceTimer = 0f;
+            isPouncing = false;
+
+            if (hasMissed)
             {
-                anticipationTimer = 0;
-                return;
+                Engineson.print("Missed");
+                currentState = EnemyState.STUNNED;
             }
             else
             {
-                hasPounce = false;                
-                pounceTimer += deltaTime;
-                if (pounceTimer < pounceDuration)
-                {
-                    isPouncing = true;
-                    hasMissed = true;
-                    rb.SetVelocity(rb.GetVelocity() * 120f);
-                }
-                else if (pounceTimer >= pounceDuration)
-                {
-                    pounceTimer = 0f;
-                    isPouncing = false;
-
-                    if (hasMissed)
-                    {
-                        currentState = EnemyState.STUNNED;
-                    }
-                }
+                Engineson.print("Not Missed");
             }
         }
     }
@@ -383,7 +381,6 @@ public class EnemyControllerStalker : EnemyController
             {
                 pc.playerData.TakeDamage(pounceDamage);
             }
-            Engineson.print(other.tag +" health: " + (pc.playerData.GetHealth()));
         }
     }
 

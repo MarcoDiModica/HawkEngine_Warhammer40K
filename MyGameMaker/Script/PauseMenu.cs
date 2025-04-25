@@ -9,7 +9,6 @@ public class PauseMenu : MonoBehaviour
     private GameObject optionsMenuButton;
     private GameObject mainMenuButton;
     private GameObject quitButton;
-    private bool isOptionsMenuActive = false;
     private GameObject HUD;
     private HUD HUDScript;
 
@@ -216,7 +215,6 @@ public class PauseMenu : MonoBehaviour
             {
                 sound?.LoadAudio(buttonClicked);
                 sound?.Play();
-                HUDScript.isPaused = false;
                 gameObject.SetActive(false);
             }
             else if (selectedButton == button_optionsMenuButton)
@@ -224,7 +222,6 @@ public class PauseMenu : MonoBehaviour
                 sound?.LoadAudio(buttonClicked);
                 sound?.Play();
                 optionsMenu.SetActive(true);
-                isOptionsMenuActive = true;
             }
             else if (selectedButton == button_mainMenuButton)
             {

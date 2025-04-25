@@ -54,9 +54,8 @@ public class HUD : MonoBehaviour
     private PlayerPowerUp playerPowerUp;
 
     private GameObject pauseMenu;
+    private GameObject optionMenu;
 
-    public bool openedPause = false;
-    public bool isPaused = false;
 
 
     void win()
@@ -221,6 +220,7 @@ public class HUD : MonoBehaviour
         }
 
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
+        optionMenu = GameObject.Find("Canvas_OptionsMenu");
     }
     public override void Update(float deltaTime)
     {
@@ -459,16 +459,16 @@ public class HUD : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P) || Input.GetControllerButtonDown(ControllerButton.Start))
         {
-            if (!isPaused)
+            if (pauseMenu.IsActive())
             {
-                openedPause = true;
-                Engineson.print("set openedPause to true");
-                pauseMenu.SetActive(true);
-                Engineson.print("opened pause menu");
-                isPaused = true;
+                pauseMenu.SetActive(false);
+                optionMenu.SetActive(false);
             }
-        }
+            else
+            {
+                pauseMenu.SetActive(true);
+            }
 
+        }
     }
-    
 }

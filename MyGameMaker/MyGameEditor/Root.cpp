@@ -138,7 +138,7 @@ bool Root::Start()
 	//UpdateCameraPriority();
 
 	/*Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");*/
-	Application->scene_serializer->DeSerialize("Library/Scenes/EnvMechanicsTest.Scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/UI Remake.Scene");
 	//
 	//auto player = CreateGameObject("Player");
 	//player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
@@ -161,36 +161,36 @@ bool Root::Start()
 	//player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
 	//player->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true);
 	//
-	//auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
-	//playerMesh->SetName("playerMesh");
-	//playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//ParentGameObject(*playerMesh, *player);
-	//playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	//player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-	//player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
-	//player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-	//player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	//player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	//player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
-	//auto riffleShotFX = CreateGameObject("RiffleShotFX");
-	//riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	//ParentGameObject(*riffleShotFX, *player);
-	//riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
-	//riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-	//
-	//auto inactiveDashFX = CreateGameObject("InactiveDashFX");
-	//inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-	//ParentGameObject(*inactiveDashFX, *player);
-	//inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-	//inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-	//
-	//auto walkingFX = CreateGameObject("WalkingFX");
-	//walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	//ParentGameObject(*walkingFX, *player);
-	//walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	/*auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	playerMesh->SetName("playerMesh");
+	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*playerMesh, *player);
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	auto riffleShotFX = CreateGameObject("RiffleShotFX");
+	riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*riffleShotFX, *player);
+	riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
+	riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	
+	auto inactiveDashFX = CreateGameObject("InactiveDashFX");
+	inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	ParentGameObject(*inactiveDashFX, *player);
+	inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+	
+	auto walkingFX = CreateGameObject("WalkingFX");
+	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	ParentGameObject(*walkingFX, *player);
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
 
 
 	//particle->ApplyPreset(Particle)
@@ -372,20 +372,20 @@ bool Root::Start()
 	BoltgunBullets->SetTag("Ammunition");*/
 	
 	//Lictor
-	auto lictor = CreateGameObject("Lictor");
-	lictor->SetTag("Enemy");
-	lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
-	lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
-	auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
-	lictorMesh->SetName("LictorMesh");
-	lictorMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	ParentGameObject(*lictorMesh, *lictor);
-	lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
+	//auto lictor = CreateGameObject("Lictor");
+	//lictor->SetTag("Enemy");
+	//lictor->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
+	//lictor->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
+	//lictor->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
+	//lictor->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	//lictor->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
+	//lictor->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
+	//auto lictorMesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
+	//lictorMesh->SetName("LictorMesh");
+	//lictorMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	//lictorMesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
+	//ParentGameObject(*lictorMesh, *lictor);
+	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 
 	//auto lictor2 = CreateGameObject("lictor2");
 	//lictor2->SetTag("Enemy");

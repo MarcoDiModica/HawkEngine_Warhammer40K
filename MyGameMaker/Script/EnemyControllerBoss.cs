@@ -85,8 +85,8 @@ public class EnemyControllerBoss : EnemyController
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         rb.SetMass(1000.0f);
-        tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
-        tailController?.gameObject.SetActive(false);
+        //tailController = GameObject.Find("MawlocTail").GetComponent<EnemyControllerBossTail>();
+        //tailController?.gameObject.SetActive(false);
         currentHealth = maxHealth;
         if (playerTransform == null)
         {
@@ -109,7 +109,7 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Transform component!");
             return;
         }
-        currentHealth = 300.0f;
+        currentHealth = 100.0f;
         gameObject.tag = "Boss";
         isDead = false;
     }
@@ -229,8 +229,9 @@ public class EnemyControllerBoss : EnemyController
                 case BossPhase.PHASE3:
 
                     // The same as phase 2 for the moment
-                    
-                    //timer += deltaTime;
+
+                    timer += deltaTime;
+                    tailController?.gameObject.SetActive(true);
 
                     //if (isBuried && timer >= unburrowingAttackCooldown)
                     //{
@@ -448,6 +449,8 @@ public class EnemyControllerBoss : EnemyController
     {
         enemyTransform.position = new Vector3(0.0f, -40.0f, 1080.0f);
         collider.SetPosition(enemyTransform.position);
+        //Engineson.Destroy(tailController.GetGameObject());
+        Engineson.Destroy(GetGameObject());
         isDead = true;
         SceneManager.LoadScene("WinScene");
     }

@@ -1837,23 +1837,20 @@ private:
 			if (pathField) {
 				MonoString* monoStr = nullptr;  
                 mono_field_get_value(prefabObj, pathField, &monoStr);  
-                if (monoStr) {  
-                   char* cstr = mono_string_to_utf8(monoStr);  
-                   size_t lastSlash = displayPath.find_last_of("/\\");  
-                   if (lastSlash != std::string::npos) {  
-                       displayPath = displayPath.substr(lastSlash + 1);  
-                   }  
-                /*   size_t lastDotYaml = displayPath.rfind(".prefab");  
-                   if (lastDotYaml != std::string::npos && lastDotYaml == displayPath.length() - 5) {  
-                       displayPath = displayPath.substr(0, lastDotYaml);  
-                   }  */
-                   displayPath = cstr;  
-                   mono_free(cstr);  
-                }
+				if (monoStr) {
+					char* cstr = mono_string_to_utf8(monoStr);
+					std::string fullPath = cstr;
+					mono_free(cstr);
 
-				size_t lastSlash = displayPath.find_last_of("/\\"); 
-				if (lastSlash != std::string::npos) {
-					displayPath = displayPath.substr(lastSlash + 1);
+					size_t lastSlash = fullPath.find_last_of("/\\");
+					std::string fileName = (lastSlash != std::string::npos) ? fullPath.substr(lastSlash + 1) : fullPath;
+
+					size_t extensionPos = fileName.rfind(".prefab.yaml");
+					if (extensionPos != std::string::npos) {
+						fileName = fileName.substr(0, extensionPos);
+					}
+
+					displayPath = fileName;
 				}
 			
 			}

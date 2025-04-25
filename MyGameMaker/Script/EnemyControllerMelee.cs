@@ -244,10 +244,22 @@ public class EnemyControllerMelee : EnemyController
                 chaseTimer += deltaTime;
                 if (chaseTimer >= chaseReplanInterval)
                 {
-                    chasePath = pathfinder.FindPath(enemyTransform.position, playerTransform.position);
-                    chaseIndex = 0;
+                    var newPath = pathfinder.FindPath(enemyTransform.position, playerTransform.position);
+                    if (newPath != null && newPath.Count > 1)
+                    {
+                        (int curX, int curY) = Pathfinding.ToGrid(enemyTransform.position);
+                        int found = newPath.FindIndex(v =>
+                        {
+                            var (gx, gy) = Pathfinding.ToGrid(v);
+                            return gx == curX && gy == curY;
+                        });
+                        chasePath = newPath;
+                        chaseIndex = (found >= 0) ? found + 1 : 1;
+                    }
                     chaseTimer = 0f;
+                    Engineson.print("" + chasePath.Count);
                 }
+
 
                 if (chasePath != null && chaseIndex < chasePath.Count)
                 {
@@ -255,7 +267,7 @@ public class EnemyControllerMelee : EnemyController
                     Vector3 delta = wp - myPos;
                     float d = delta.Length();
 
-                    if (d < 0.1f)
+                    if (d < Pathfinding.cellSize * 0.5f)
                     {
                         chaseIndex++;
                     }

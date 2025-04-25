@@ -8,9 +8,9 @@ namespace HawkEngine
 {
     public class Pathfinding
     {
-        private const int width = 5000;
-        private const int height = 5000;
-        private const float cellSize = 0.1f;
+        private const int width = 50000;
+        private const int height = 50000;
+        public const float cellSize = 1f;
         private static readonly float DiagCost = (float)Math.Sqrt(2);
 
         public List<Vector3> FindPath(Vector3 startW, Vector3 endW)
@@ -88,7 +88,7 @@ namespace HawkEngine
             return (x, y);
         }
 
-        private static (int, int) ToGrid(Vector3 w)
+        public static (int, int) ToGrid(Vector3 w)
         {
             int gx = (int)Math.Floor(w.X);
             int gy = (int)Math.Floor(w.Z);
@@ -100,7 +100,7 @@ namespace HawkEngine
         private bool IsWalkable(int x, int y)
         {
             Vector3 center = new Vector3(x + .5f, .5f, y + .5f);
-            float r = cellSize * .7f;
+            float r = cellSize * 1f;
             var hits = Physics.OverlapSphere(center, r, "Obstacle")
                        ?? Array.Empty<GameObject>();
             return !hits.Any(go => go != null && go.tag == "Obstacle");

@@ -5,7 +5,9 @@ using System.Numerics;
 public class HUD : MonoBehaviour
 {
     private GameObject hpBar;
+    private GameObject hpBarAnim;
     private GameObject hpTempBar;
+    private GameObject hpTempBarAnim;
     private GameObject Player;
     private PlayerData playerData;
     private PlayerShooting playerShootingScript;
@@ -31,6 +33,7 @@ public class HUD : MonoBehaviour
     private GameObject railgunAbility2b;
 
     private UITransform transform_hpBar;
+    private UITransform transform_hpBarAnim;
     private UITransform transform_hpTempBar;
     private UITransform transform_redThirstBar;
 
@@ -56,6 +59,7 @@ public class HUD : MonoBehaviour
     private GameObject pauseMenu;
     private GameObject optionMenu;
 
+    private UIImage hpBarAnimImage;
 
 
     void win()
@@ -76,6 +80,14 @@ public class HUD : MonoBehaviour
         return width;
     }
 
+    float CalculateHPBarAnimPos()
+    {
+        float hp = playerData.GetHealth();
+        float maxHp = playerData.GetMaxHealth();
+        float pos = (hp / maxHp) * 0.2f + 0.043f;
+        return pos;
+    }
+
     float CalculateHPTempBarWidth()
     {
         float hpTemp = playerData.GetHealthTemp();
@@ -84,6 +96,7 @@ public class HUD : MonoBehaviour
         return width;
     }
 
+
     float CalculateRedThirstBarHeight()
     {
         float redThirst = redThirstManager.GetRedThirstPoints();
@@ -91,6 +104,7 @@ public class HUD : MonoBehaviour
         float height = (redThirst / maxRedThirst) * 0.08f;
         return height;
     }
+
 
     public override void Awake()
     {
@@ -221,10 +235,18 @@ public class HUD : MonoBehaviour
 
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
         optionMenu = GameObject.Find("Canvas_OptionsMenu");
+
+        hpBarAnim = GameObject.Find("blood_animation_main");
+        transform_hpBarAnim = hpBarAnim.GetComponent<UITransform>();
+        hpBarAnimImage = hpBarAnim.GetComponent<UIImage>();
+        hpBarAnimImage.SetImageAnimationSpeed(0.5f);
+        hpBarAnimImage.SetImageAnimationIndexLimit(4);
+
     }
     public override void Update(float deltaTime)
     {
         transform_hpBar.SetScaleUI(new Vector3(CalculateHPBarWidth(), 0.032f, 1.0f));
+        transform_hpBarAnim.DOMoveXUI(CalculateHPBarAnimPos(), 0f, Modes.LINEAR);
         transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.018f, 1.0f));
         transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
 

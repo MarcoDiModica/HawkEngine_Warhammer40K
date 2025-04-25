@@ -58,15 +58,6 @@ GameObject1:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -117,6 +108,15 @@ GameObject1:
         useColorGradient: false
         texturePath: Assets/Textures/BloodSplash_decals1_Yiwei.png
       particleType: 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -256,9 +256,9 @@ GameObject1:
                     - 2.6553018983577203e-07
                     - 9.2420677333393542e-08
                   localRotation:
-                    - -179.99992247109589
-                    - -80.537865634133979
-                    - 89.99995331202777
+                    - -179.99991561690533
+                    - -80.537936025229214
+                    - 89.9999601649167
                   localScale:
                     - 0.99999988079071045
                     - 0.99999988079071045
@@ -278,9 +278,9 @@ GameObject1:
                         - 0.29999998211860657
                         - 3.0407264262066747e-07
                       localRotation:
-                        - -78.151043257184526
-                        - -15.877615657127951
-                        - 0.029302391955796842
+                        - -78.151048579570741
+                        - -15.877613672314833
+                        - 0.029302172135830574
                       localScale:
                         - 0.99999964237213135
                         - 1
@@ -367,8 +367,8 @@ GameObject1:
                     - -2.0992075633330387e-08
                   localRotation:
                     - -3.9215701005733474
-                    - -1.0997607314976573e-07
-                    - -2.3444325090151858e-09
+                    - -1.0997616222117024e-07
+                    - -2.3444314486206176e-09
                   localScale:
                     - 1
                     - 1.0000001192092896
@@ -542,9 +542,9 @@ GameObject1:
                                         - 0.36481720209121704
                                         - -0.017056537792086601
                                       localRotation:
-                                        - -8.589580008734087
-                                        - -2.5416074546234477
-                                        - -26.291286216122781
+                                        - -8.5895743072772781
+                                        - -2.5416093937989173
+                                        - -26.29128619632856
                                       localScale:
                                         - 0.99999982118606567
                                         - 0.99999988079071045
@@ -630,9 +630,9 @@ GameObject1:
                                             - 0.13784031569957733
                                             - 6.5996835774129181e-10
                                           localRotation:
-                                            - -1.1652091160467242
-                                            - 6.5606756646984765
-                                            - -17.755870012890473
+                                            - -1.1652083744027901
+                                            - 6.5606757801224864
+                                            - -17.755869971557146
                                           localScale:
                                             - 0.99999958276748657
                                             - 0.99999982118606567
@@ -652,9 +652,9 @@ GameObject1:
                                                 - 0.10049884766340256
                                                 - -2.5751536014695375e-08
                                               localRotation:
-                                                - 0.4280066903290109
-                                                - 0.62468756078659082
-                                                - -54.245444858986666
+                                                - 0.42800690927246215
+                                                - 0.62468713333915749
+                                                - -54.245444859389622
                                               localScale:
                                                 - 1
                                                 - 1.0000002384185791
@@ -696,9 +696,9 @@ GameObject1:
                                             - 0.092195376753807068
                                             - -4.441952938805116e-08
                                           localRotation:
-                                            - -3.252015852911061
-                                            - -0.48837203047983635
-                                            - -17.077747721703791
+                                            - -3.2520154863027462
+                                            - -0.4883715978280686
+                                            - -17.07774773554635
                                           localScale:
                                             - 0.99999982118606567
                                             - 1
@@ -850,9 +850,9 @@ GameObject1:
                                 - 0.80925267934799194
                                 - 2.9372904108981857e-09
                               localRotation:
-                                - 77.665878235796839
-                                - -51.130225089442732
-                                - -5.4381907322032204
+                                - 77.665872396098166
+                                - -51.13022413037438
+                                - -5.4382028668599967
                               localScale:
                                 - 0.99999994039535522
                                 - 1
@@ -1202,9 +1202,9 @@ GameObject1:
                     - 2.6553018983577203e-07
                     - 9.2420677333393542e-08
                   localRotation:
-                    - -179.99992247109589
-                    - 80.537865634133979
-                    - -89.99995331202777
+                    - -179.99991561690533
+                    - 80.537936025229214
+                    - -89.9999601649167
                   localScale:
                     - 0.99999988079071045
                     - 0.99999988079071045
@@ -1312,9 +1312,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - 2.2799123162010965e-10
+                - 4.0403342278091544e-10
                 - -89.690738643731535
-                - -179.99999134859729
+                - -179.99999134863458
               localScale:
                 - 1
                 - 1
@@ -1334,9 +1334,9 @@ GameObject1:
                 - 0.37999996542930603
                 - 0.20000019669532776
               localRotation:
-                - -73.329145917591177
-                - 82.371963077547193
-                - 106.81139735958203
+                - -73.329132560458092
+                - 82.372053124548316
+                - 106.8113913432846
               localScale:
                 - 1
                 - 1.0000003576278687
@@ -1356,9 +1356,9 @@ GameObject1:
                 - -0.52000004053115845
                 - 0.14000017940998077
               localRotation:
-                - 152.94716357892324
-                - -87.529765918483335
-                - -152.9687596505041
+                - 152.94734254339659
+                - -87.529654276563377
+                - -152.96896759975019
               localScale:
                 - 0.99999994039535522
                 - 1
@@ -1378,9 +1378,9 @@ GameObject1:
                 - 0.54000002145767212
                 - 0.068000182509422302
               localRotation:
-                - -29.686139645137857
-                - -87.462714977715663
-                - -150.33810763515717
+                - -29.686020170408959
+                - -87.462415133133234
+                - -150.3382428122174
               localScale:
                 - 0.99999982118606567
                 - 1.0000001192092896
@@ -1466,9 +1466,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - -2.86649383546785e-10
+                - -3.4767824682708142e-10
                 - 89.690738643731535
-                - -179.9999913486453
+                - -179.99999134858425
               localScale:
                 - 1
                 - 1
@@ -1488,9 +1488,9 @@ GameObject1:
                 - 0.41999998688697815
                 - 0.068000182509422302
               localRotation:
-                - -27.05287865898276
-                - 87.528900847419607
-                - 152.96882369375763
+                - -27.052867884653821
+                - 87.528579413247797
+                - 152.96883809301389
               localScale:
                 - 0.99999988079071045
                 - 1.0000001192092896
@@ -1532,9 +1532,9 @@ GameObject1:
                         - 0.51009827852249146
                         - 2.1531700156174338e-07
                       localRotation:
-                        - -0.23691524999221852
-                        - -0.012772258671508156
-                        - -6.1778795593282325
+                        - -0.23691525008207431
+                        - -0.012772257006407826
+                        - -6.1778795593316653
                       localScale:
                         - 0.9999997615814209
                         - 1.0000002384185791
@@ -1800,15 +1800,6 @@ GameObject2:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -1828,6 +1819,15 @@ GameObject2:
         - 0
         - 1
         - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -1942,118 +1942,6 @@ GameObject2:
           sheet_size:
             - 558
             - 83
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-      Children: ~
-    - name: blood_bar1
-      uuid: 14183943796467976168
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0560000017
-            - 0.887000024
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.200000003
-            - 0.0299999993
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/healthbar_blood.png
-          use_animation: false
-          sprite_size:
-            - 265
-            - 51
-          sheet_size:
-            - 265
-            - 51
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-      Children: ~
-    - name: blood_bar2
-      uuid: 1732315796872021132
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.064000003
-            - 0.930999994
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.137999997
-            - 0.0179999992
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/healthbar_blood.png
-          use_animation: false
-          sprite_size:
-            - 265
-            - 51
-          sheet_size:
-            - 265
-            - 51
           sprite_offset:
             - 0
             - 0
@@ -3795,6 +3683,174 @@ GameObject2:
             - 0
           anim_speed: 0
       Children: ~
+    - name: blood_animation_main
+      uuid: 3877624576488717587
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.243000001
+            - 0.887000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0170000009
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\blood_animationsheet.png
+          use_animation: true
+          sprite_size:
+            - 50
+            - 80
+          sheet_size:
+            - 250
+            - 80
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0.5
+      Children: ~
+    - name: blood_bar1
+      uuid: 14183943796467976168
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0560000017
+            - 0.887000024
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.200000003
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/healthbar_blood.png
+          use_animation: false
+          sprite_size:
+            - 265
+            - 51
+          sheet_size:
+            - 265
+            - 51
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: blood_bar2
+      uuid: 1732315796872021132
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.064000003
+            - 0.930999994
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.137999997
+            - 0.0179999992
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library/Textures/UI/healthbar_blood.png
+          use_animation: false
+          sprite_size:
+            - 265
+            - 51
+          sheet_size:
+            - 265
+            - 51
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
     - name: healthframe
       uuid: 13707000718079493592
       tag: Untagged
@@ -4209,15 +4265,6 @@ GameObject3:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -4237,6 +4284,15 @@ GameObject3:
         - 0
         - 1
         - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -4562,6 +4618,15 @@ GameObject4:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -4581,15 +4646,6 @@ GameObject4:
         - 0
         - 1
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true

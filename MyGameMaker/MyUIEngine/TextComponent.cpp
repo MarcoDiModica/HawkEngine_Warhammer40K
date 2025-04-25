@@ -85,7 +85,6 @@ void TextComponent::Render() const
         renderPosition = glm::vec2(rectTransform->GetPosition().x, rectTransform->GetPosition().y);
     }
 
-    FontManager::GetInstance().LoadFont("Assets/arial_narrow_7.ttf", m_fontSize);
     FontManager::GetInstance().RenderText(unlitShader, m_text, renderPosition.x, renderPosition.y, m_fontSize, m_color);
 
     unlitShader->UnBind();

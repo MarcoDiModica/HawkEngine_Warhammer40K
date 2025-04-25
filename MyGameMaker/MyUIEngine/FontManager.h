@@ -22,6 +22,8 @@ public:
 
    void RenderText(Shaders* shader, const std::string& text, float x, float y, float scale, const glm::vec3& color);
 
+   void Start();
+
 private:  
    FontManager();  
    ~FontManager();  

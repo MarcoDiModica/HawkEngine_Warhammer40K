@@ -27,10 +27,21 @@ FontManager::FontManager() {
     glBindVertexArray(0);
 }
 
+
 FontManager::~FontManager() {
     FT_Done_FreeType(ft);
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+}
+
+void FontManager::Start() {
+    // Cargar una fuente predeterminada
+    const std::string defaultFontPath = "Assets/arial_narrow_7.ttf";
+    int defaultFontSize = 16;
+
+    if (!LoadFont(defaultFontPath, defaultFontSize)) {
+        std::cerr << "ERROR: No se pudo cargar la fuente predeterminada en FontManager::Start" << std::endl;
+    }
 }
 
 bool FontManager::LoadFont(const std::string& fontPath, int fontSize) {

@@ -21,12 +21,12 @@ public:
     const glm::vec2& GetPosition() const;
     const glm::vec3& GetColor() const;
     float GetFontSize() const;
-
+	void SetProjection(const glm::mat4& proj) { m_projection = proj; }
     // Método para renderizar el texto  
     void Render() const;
 
     ComponentType GetType() const override { return ComponentType::UI; }
-	void Awake() override {}
+    void Awake() override {}
 	void Start() override {}
     void Update(float deltaTime) override;
 	void Destroy() override {}

@@ -14,7 +14,7 @@ public class LoseScreen : MonoBehaviour
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
 
-    private Audio sound;
+    private AudioSource sound;
 
     private ButtonState prevState_loadLastCheckpoint = ButtonState.DEFAULT;
     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
@@ -22,6 +22,8 @@ public class LoseScreen : MonoBehaviour
 
     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+    private AudioClip buttonHoveredFX;
+    private AudioClip buttonClickedFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
@@ -47,7 +49,7 @@ public class LoseScreen : MonoBehaviour
         loadLastCheckpoint = GameObject.Find("LLC_button");
         mainMenuButton = GameObject.Find("MM_button");
         quitButton = GameObject.Find("QUIT_button");
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
 
         button_loadLastCheckpoint = loadLastCheckpoint.GetComponent<UIButton>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
@@ -73,6 +75,10 @@ public class LoseScreen : MonoBehaviour
             Engineson.print("ERROR: Audio not found");
             return;
         }
+        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+        sound.LoadAudioClip(buttonHoveredFX);
+        sound.LoadAudioClip(buttonClickedFX);
     }
 
     private void NavigateMenu()
@@ -147,8 +153,7 @@ public class LoseScreen : MonoBehaviour
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    sound?.LoadAudio(buttonHovered);
-                    sound?.Play();
+                    sound?.Play(buttonHoveredFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }
@@ -177,20 +182,17 @@ public class LoseScreen : MonoBehaviour
 
             if (selectedButton == button_loadLastCheckpoint)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                sound?.Play(buttonClickedFX);
                 SceneManager.LoadScene("SpaceShip");
             }
             else if (selectedButton == button_mainMenuButton)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                sound?.Play(buttonClickedFX);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
-                sound?.LoadAudio(buttonClicked);
-                sound?.Play();
+                sound?.Play(buttonClickedFX);
                 // Aquí puedes agregar la lógica para salir del juego
             }
         }

@@ -1,34 +1,30 @@
-using System;
 using System.Collections.Generic;
 using System.Numerics;
 using HawkEngine;
 
 public class Shotgun : BaseWeapon
 {
-    private Audio sound;
+    private AudioSource sound;
     private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
     private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
+    private AudioClip shotFX;
+    private AudioClip reloadFX;
 
 
     private PlayerController playerController;
     public PlayerData playerData;
     public Barrage barrage;
     public HookShot hookShot;
-    private RedThirstManager redThirstManager;
 
     private float timeSinceLastShot = 0.0f;
-    private List<Vector3> bulletDirections = new List<Vector3>();
-    private List<HashSet<GameObject>> bulletHitEnemies = new List<HashSet<GameObject>>();
-    private List<Vector3> bulletStartPositions = new List<Vector3>();
-    private List<float> bulletLifetimes = new List<float>();
-    private float hitRayLength = 1f;
+
     public override void Awake()
     {
 
     }
     public override void Start()
     {
-        damage = 12.0f;
+        damage = 70.0f;
         shootCadence = 0.7f;
         magazineSize = 4;
         currentMagazineAmmo = magazineSize;
@@ -36,95 +32,77 @@ public class Shotgun : BaseWeapon
         currentTotalAmmo = 16;
         reloadTime = 2.5f;
         range = 20f;
-        timeToLerp = 0.3f;
+        timeToLerp = 2;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         barrage = gameObject.GetComponent<Barrage>();
         hookShot = gameObject.GetComponent<HookShot>();
-        redThirstManager = gameObject.GetComponent<RedThirstManager>();
+
+        if (sound == null)
+        {
+            Engineson.print("PlayerShooting: Audio component not found");
+        }
+
+        shotFX = new AudioClip(shotgunShot, "ShotgunShotFX", false, false);
+        reloadFX = new AudioClip(shotgunReload, "ShotgunReloadFX", false, false);
+        sound.LoadAudioClip(shotFX);
+        sound.LoadAudioClip(reloadFX);
+
     }
 
     public override void Update(float deltaTime)
     {
         timeSinceLastShot += deltaTime;
 
-        for (int i = bulletsObjects.Count - 1; i >= 0; i--)
+        for (int i = bulletsPos.Count - 1; i >= 0; i--)
         {
             bulletIntervals[i] += deltaTime;
-            bulletLifetimes[i] += deltaTime;
+            bulletsPos[i] = LerpVector3(bulletsPos[i], hitPoints[i], bulletIntervals[i] / timeToLerp);
+            bulletsObjects[i].GetComponent<Transform>().position = bulletsPos[i];
 
-            Vector3 currentPos = bulletsPos[i];
-            Vector3 direction = bulletDirections[i];
-            float speed = range / timeToLerp;
-            Vector3 displacement = direction * speed * deltaTime;
-            Vector3 newPos = currentPos + displacement;
-
-            bool shouldDestroy = false;
-            GameObject hitObject = null;
-
-            RayCast ray = new RayCast();
-            ray.PerformRaycast(currentPos, direction, displacement.Length());
-
-            if (ray.hit.isHit)
-                hitObject = ray.hit.gameObject;
-
-            if (hitObject != null)
+            if (Vector3.Distance(bulletsPos[i], hitPoints[i]) < 0.5f)
             {
-                string tag = hitObject.tag;
-                if (tag != "PowerUp" && tag != "Ammunition" && tag != "Player")
-                {
-                    if (!bulletHitEnemies[i].Contains(hitObject))
-                    {
-                        bulletHitEnemies[i].Add(hitObject);
-
-                        float finalDamage = damage;
-                        redThirstManager.OnShotgunUsed();
-
-                        if (redThirstManager.IsInBlackRage())
-                            finalDamage += redThirstManager.redThirstBonus;
-
-                        switch (tag)
-                        {
-                            case "Melee":
-                                hitObject.GetComponent<EnemyControllerMelee>()?.TakeDamage(finalDamage);
-                                break;
-                            case "Ranged":
-                                hitObject.GetComponent<EnemyControllerRanged>()?.TakeDamage(finalDamage);
-                                break;
-                            case "Stalker":
-                                hitObject.GetComponent<EnemyControllerStalker>()?.TakeDamage(finalDamage);
-                                break;
-                            case "Boss":
-                                hitObject.GetComponent<EnemyControllerBoss>()?.TakeDamage(finalDamage);
-                                break;
-                            case "Destroyable":
-                                hitObject.GetComponent<DestroyEnviormentObject>()?.DestroyObject();
-                                break;
-                        }
-                    }
-
-                    if (!playerData.isPiercing || (playerData.isPiercing && tag != "Melee" && tag != "Ranged" && tag != "Boss"))
-                        shouldDestroy = true;
-                }
-            }
-
-            bulletsPos[i] = newPos;
-            bulletsObjects[i].GetComponent<Transform>().position = newPos;
-
-            float distanceTraveled = Vector3.Distance(bulletStartPositions[i], newPos);
-            if (distanceTraveled > range || shouldDestroy)
-            {
-                Engineson.Destroy(bulletsObjects[i]);
-                bulletsObjects.RemoveAt(i);
                 bulletsPos.RemoveAt(i);
-                bulletDirections.RemoveAt(i);
-                bulletIntervals.RemoveAt(i);
-                bulletLifetimes.RemoveAt(i);
-                bulletHitEnemies.RemoveAt(i);
-                bulletStartPositions.RemoveAt(i);
+                hitPoints.RemoveAt(i);
+                if (collisionNames[i] == "Missed")
+                {
+                    Engineson.Destroy(bulletsObjects[i]);
+                    bulletsObjects.RemoveAt(i);
+                    collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
+                }
+                else
+                {
+                    Engineson.print($"Bullet {i} hit: {collisionNames[i]}");
+                    var enemy = GameObject.Find(collisionNames[i]);
+                    if (enemy.tag == "Melee")
+                    {
+                        enemy.GetComponent<EnemyControllerMelee>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Ranged")
+                    {
+                        enemy.GetComponent<EnemyControllerRanged>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Stalker")
+                    {
+                        //enemy.GetComponent<EnemyControllerStalker>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Boss")
+                    {
+                        enemy.GetComponent<EnemyControllerBoss>().TakeDamage(damage); //placeholder damage
+                    }
+                    if (enemy.tag == "Destroyable")
+                    {
+                        enemy.GetComponent<DestroyEnviormentObject>().DestroyObject();
+                    }
+                    Engineson.Destroy(bulletsObjects[i]);
+                    bulletsObjects.RemoveAt(i);
+                    collisionNames.RemoveAt(i);
+                    bulletIntervals.RemoveAt(i);
+                }
             }
         }
     }
@@ -133,60 +111,61 @@ public class Shotgun : BaseWeapon
     {
         if (currentMagazineAmmo > 0 && timeSinceLastShot >= shootCadence)
         {
-            timeSinceLastShot = 0f;
+            timeSinceLastShot = 0f; // Reiniciar contador
 
             if (!playerData.infiniteBullets)
+            {
                 currentMagazineAmmo--;
+            }
 
-            sound?.LoadAudio(shotgunShot);
-            sound?.Play();
-
+            sound?.Play(shotFX);
+            // Shoot logic
             int numProjectiles = 5;
-            float maxSpreadAngle = 5f;
-
-            Random random = new Random();
+            float spreadAngle = 45f;
+            float angleStep = spreadAngle / (numProjectiles - 1);
+            float startAngle = -spreadAngle / 2;
 
             for (int i = 0; i < numProjectiles; i++)
             {
-                Vector3 baseDirection = transform.forward;
+                Vector3 forward = transform.forward;
+                Vector3 spawnPos = transform.position + forward * 1.0f;
 
-                // Obtener valores aleatorios entre -maxSpreadAngle y +maxSpreadAngle
-                float randomYaw = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle);   // izquierda/derecha
-                float randomPitch = (float)(random.NextDouble() * 2 * maxSpreadAngle - maxSpreadAngle); // arriba/abajo
+                float angle = startAngle + angleStep * i;
+                Vector3 direction = Vector3.Transform(forward, Matrix4x4.CreateRotationY(angle * (3.14f / 180f))); // Convert degrees to radians
 
-                // Convertir variaciones a radianes
-                float yawRad = randomYaw * (float)(Math.PI / 180f);
-                float pitchRad = randomPitch * (float)(Math.PI / 180f);
+                RayCast rayBullet = new RayCast();
+                Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 2.5f, 0);
 
-                // Aplicar rotaci�n a la direcci�n base
-                Matrix4x4 rotationMatrix = Matrix4x4.CreateFromYawPitchRoll(yawRad, pitchRad, 0);
-                Vector3 direction = Vector3.Normalize(Vector3.Transform(baseDirection, rotationMatrix));
+                rayBullet.PerformRaycast(bulletPosition, direction, range);
 
-                // Posici�n inicial del proyectil
-                Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f);
-                Vector3 bulletStart = transform.position +
-                                      (transform.right * localOffset.X) +
-                                      (transform.up * localOffset.Y) +
-                                      (transform.forward * localOffset.Z);
-                bulletStart.Y += 0.5f;
+                var projectile = Engineson.CreateGameObject("Projectile", null);
 
-                // Rotaci�n del proyectil
-                float yaw = (float)(Math.Atan2(direction.X, direction.Z) * (180.0 / Math.PI));
-                float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
-
-                GameObject projectile = Engineson.CreateGameObject("Projectile", null);
+                // TODO: add custom mesh to the projectile
                 projectile.AddComponent<MeshRenderer>();
-                projectile.transform.SetScale(0.2f, 0.2f, 0.2f);
-                projectile.transform.position = bulletStart;
-                projectile.transform.SetRotation(pitch, yaw, 0f);
+                projectile.GetComponent<Transform>().SetScale(0.5f, 0.5f, 0.5f);
 
                 bulletsObjects.Add(projectile);
-                bulletsPos.Add(bulletStart);
-                bulletDirections.Add(direction);
                 bulletIntervals.Add(0);
-                bulletLifetimes.Add(0);
-                bulletHitEnemies.Add(new HashSet<GameObject>());
-                bulletStartPositions.Add(bulletStart);
+
+
+                Vector3 bulletHitPoint = Vector3.Zero;
+
+                if (rayBullet.hit.isHit)
+                {
+                    bulletHitPoint = rayBullet.hit.point;
+                    collisionNames.Add(rayBullet.hit.gameObject.name);
+                   
+                    Engineson.print($"Hit: {bulletHitPoint}");
+                }
+                else
+                {
+                    bulletHitPoint = bulletPosition + direction * range;
+                    collisionNames.Add("Missed");
+                    Engineson.print("Missed");
+                }
+
+                hitPoints.Add(bulletHitPoint);
+                bulletsPos.Add(bulletPosition);
             }
         }
     }
@@ -196,8 +175,7 @@ public class Shotgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
-            sound?.LoadAudio(shotgunReload);
-            sound?.Play();
+            sound?.Play(reloadFX);
 
             if (currentTotalAmmo >= magazineSize)
             {

@@ -10,10 +10,11 @@
 #include "Material.h"
 #include "ModelImporter.h"
 #include <string>
+#include <fstream>
 
 #include "../MyScriptingEngine/ScriptComponent.h"
 #include "../MyGameEditor/Log.h"
-#include "../MyAudioEngine/AudioListener.h"
+//#include "../MyAudioEngine/AudioListener.h"
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "glm/gtx/matrix_decompose.inl"
 
@@ -85,7 +86,7 @@ bool SceneManager::Start() {
 bool SceneManager::Update(double dt) {
     currentScene->DebugDrawTree();
 
-    
+
 
     currentScene->Update(static_cast<float>(dt));
     return true;

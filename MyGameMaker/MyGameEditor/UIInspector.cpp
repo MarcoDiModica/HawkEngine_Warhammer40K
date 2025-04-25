@@ -1,5 +1,8 @@
 ﻿#pragma region Includes
+#undef max
+#undef T 
 #include <glm/glm.hpp>
+
 #include <algorithm>
 #include <iostream>
 #include <filesystem>
@@ -9,6 +12,8 @@
 #include <mono/metadata/class.h> 
 #include <mono/metadata/reflection.h>
 #include <Windows.h>
+#include <shellapi.h>
+
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -21,7 +26,7 @@
 #include "../MyGameEngine/TransformComponent.h"
 #include "../MyGameEngine/LightComponent.h"
 #include "../MyAudioEngine/SoundComponent.h"
-#include "../MyAudioEngine/AudioListener.h"
+//#include "../MyAudioEngine/AudioListener.h"
 #include "../MyGameEditor/Log.h"
 #include "../MyGameEngine/CameraComponent.h"
 #include "../MyGameEngine/Mesh.h"
@@ -38,7 +43,6 @@
 #include "../MyShadersEngine/ShaderComponent.h"
 #include "../MyAnimationEngine/SkeletalAnimationComponent.h"
 
-#include <Windows.h>
 #include "../MyParticlesEngine/ParticleFX.h"
 #include "../MyUIEngine/UICanvasComponent.h"
 #include "../MyUIEngine/UIImageComponent.h"
@@ -879,11 +883,11 @@ private:
 
     static void DrawAudioFilePath(SoundComponent* sound) {
         char audioPath[256];
-        strcpy_s(audioPath, sound->GetAudioPath().c_str());
+        /*strcpy_s(audioPath, sound->GetAudioPath().c_str());
 
         if (ImGui::InputText("Audio File", audioPath, sizeof(audioPath))) {
             sound->LoadAudio(audioPath);
-        }
+        }*/
 
         // Drag and drop handler
         if (ImGui::BeginDragDropTarget()) {
@@ -899,12 +903,12 @@ private:
         std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
 
         if (extension == ".wav" || extension == ".ogg" || extension == ".mp3") {
-            sound->LoadAudio(path);
+            //sound->LoadAudio(path);
         }
     }
 
     static void DrawSoundProperties(SoundComponent* sound) {
-        bool isMusic = sound->IsMusic();
+        /*bool isMusic = sound->IsMusic();
         if (ImGui::Checkbox("Is Music", &isMusic)) {
             if (!sound->GetAudioPath().empty()) {
                 sound->LoadAudio(sound->GetAudioPath(), isMusic);
@@ -929,13 +933,13 @@ private:
         bool autoPlay = sound->GetAutoPlay();
         if (ImGui::Checkbox("Auto Play", &autoPlay)) {
             sound->SetAutoPlay(autoPlay);
-        }
+        }*/
     }
 
     static void DrawPlaybackControls(SoundComponent* sound) {
         ImGui::Separator();
 
-        if (sound->IsPlaying()) {
+        /*if (sound->IsPlaying()) {
             if (ImGui::Button("Stop")) {
                 sound->Stop();
             }
@@ -956,12 +960,12 @@ private:
 
         if (sound->IsSpatial()) {
             ImGui::Text("Position is controlled by Transform component");
-        }
+        }*/
     }
     #pragma endregion
 
     #pragma region AudioListener
-    static void DrawAudioListenerComponent(AudioListener* listener, GameObject* gameObject) {
+    /*static void DrawAudioListenerComponent(AudioListener* listener, GameObject* gameObject) {
         if (!listener) return;
 
         ImGui::SetNextItemOpen(true, ImGuiCond_Once);
@@ -984,7 +988,7 @@ private:
             };
             ImGui::DragFloat3("Position", pos, 0.1f);
         }
-    }
+    }*/
     #pragma endregion 
 
     #pragma region SkeletalAnimation
@@ -2665,10 +2669,10 @@ public:
 			DrawSoundComponent(sound);
 		}
 
-		if (gameObject->HasComponent<AudioListener>()) {
+		/*if (gameObject->HasComponent<AudioListener>()) {
 			AudioListener* listener = gameObject->GetComponent<AudioListener>();
 			DrawAudioListenerComponent(listener, gameObject);
-		}
+		}*/
 
 		if (gameObject->HasComponent<BoxColliderComponent>()) {
 			BoxColliderComponent* collider = gameObject->GetComponent<BoxColliderComponent>();
@@ -2861,12 +2865,12 @@ public:
 
 		case 2:
 			DrawComponentButton(gameObject, "Sound", [gameObject]() {
-				gameObject->AddComponent<SoundComponent>();
+				gameObject->AddComponent<SoundComponent>(Application->audioEngine);
 				}, !gameObject->HasComponent<SoundComponent>());
 
-			DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
+			/*DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
 				gameObject->AddComponent<AudioListener>();
-				}, !gameObject->HasComponent<AudioListener>());
+				}, !gameObject->HasComponent<AudioListener>());*/
 
 			break;
 
@@ -3045,15 +3049,15 @@ public:
 		if (matchesSearch("Sound")) {
 			anyFound = true;
 			DrawComponentButton(gameObject, "Sound", [gameObject]() {
-				gameObject->AddComponent<SoundComponent>();
+				gameObject->AddComponent<SoundComponent>(Application->audioEngine);
 				}, !gameObject->HasComponent<SoundComponent>());
 		}
 
 		if (matchesSearch("Audio Listener")) {
 			anyFound = true;
-			DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
+			/*DrawComponentButton(gameObject, "Audio Listener", [gameObject]() {
 				gameObject->AddComponent<AudioListener>();
-				}, !gameObject->HasComponent<AudioListener>());
+				}, !gameObject->HasComponent<AudioListener>());*/
 		}
 
 		if (matchesSearch("Canvas")) {

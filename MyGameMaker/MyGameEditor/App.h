@@ -12,6 +12,7 @@
 #include "Root.h"
 //#include "../MyGameEngine/Mesh.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
+#include "../MyAudioEngine/AudioEngine.h"
 
 #define FIXED_INTERVAL 0.02
 #undef PROFILE
@@ -70,6 +71,8 @@ public:
 	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
 	PhysicsModule* physicsModule = nullptr;
+	AudioEngine* audioEngine = nullptr;
+
 
 	Mesh ElMesh;
 

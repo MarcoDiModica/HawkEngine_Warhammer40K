@@ -10,14 +10,33 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>
-        $(SolutionDir); $(SolutionDir)External\Mono\include\mono-2.0\;%(AdditionalIncludeDirectories)
-        $(MSBuildThisFileDirectory)vcpkg_installed\$(VcpkgTriplet)\$(VcpkgTriplet)\include\bullet;
-        $(MSBuildThisFileDirectory)vcpkg_installed\$(VcpkgTriplet)\include\bullet;
-      </AdditionalIncludeDirectories>
+		  $(SolutionDir); $(SolutionDir)External\Mono\include\mono-2.0\;
+		  $(SolutionDir)External\FMOD\api\core\inc;
+		  $(SolutionDir)External\FMOD\api\studio\inc;
+		  %(AdditionalIncludeDirectories);
+		  $(MSBuildThisFileDirectory)vcpkg_installed\$(VcpkgTriplet)\$(VcpkgTriplet)\include\bullet;
+		  $(MSBuildThisFileDirectory)vcpkg_installed\$(VcpkgTriplet)\include\bullet;
+
+
+	  </AdditionalIncludeDirectories>
+	  <PreprocessorDefinitions>
+		  NOMINMAX;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)
+	  </PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)External\Mono\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+		  $(SolutionDir)External\Mono\lib\;
+		  $(SolutionDir)External\FMOD\api\core\lib\x64;
+		  $(SolutionDir)External\FMOD\api\studio\lib\x64;
+		  %(AdditionalLibraryDirectories);
+
+	  </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+		  mono-2.0-sgen.lib;
+		  fmod_vc.lib;
+		  fmodstudio_vc.lib;
+		  %(AdditionalDependencies);
+	  </AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   

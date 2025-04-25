@@ -31,6 +31,7 @@ enum class ParticleType {
     BLOOD_SPLASH = 19,
 	SHOTGUN_SHOT = 20,
 	MEDICAE_STIM_SPEED = 21,
+	AMMUNITION_BLESSING = 22,
 };
 
 class ParticleMaterial : public Material {

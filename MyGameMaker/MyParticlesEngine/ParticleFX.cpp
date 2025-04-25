@@ -729,6 +729,39 @@ namespace ParticlePresets {
 		"Assets/Textures/Project3_Velocity_effect.png", // Texture path
 		false 						   // Is Local Space
 	};
+	const ParticlePreset Ammunition_Blessing = {
+		ParticleType::AMMUNITION_BLESSING,
+			false,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		0.70f,                          // Alpha end
+		0.8f,                          // Size start
+		2.0f,                          // Size end
+		0.1f,                          // Min lifetime
+		1.70f,                          // Max lifetime
+		0.25f,                          // Min speed
+		2.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,2.601f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		15.0f,                         // Emission rate (particles per second)
+		EmitterShape::SPHERE,            // Shape
+		1.84f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(778,1024),			   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.03f,						   // Animation speed
+		180.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Project3_AmmunitionBlessing_effect_Yiwei.png", // Texture path
+		true 						   // Is Local Space
+	};
 	const ParticlePreset Blood_Splash = {
 		ParticleType::DEFAULT,
 		false,                         // PlayOnAwake
@@ -1270,6 +1303,10 @@ void ParticleFX::ApplyPreset(int particleID) {
 		break;
 	case ParticleType::MEDICAE_STIM_SPEED:
 		preset = ParticlePresets::Medicae_Stim_Speed;
+		SetOneShot(false);
+		break;
+	case ParticleType::AMMUNITION_BLESSING:
+		preset = ParticlePresets::Ammunition_Blessing;
 		SetOneShot(false);
 		break;
 	default:

@@ -26,6 +26,7 @@ public class PlayerPowerUp : MonoBehaviour
     private string MagnetEffect = "Assets/Audio/SFX/PickUps/PowerUps/Magnet/MagnetEffect.wav";
     private string MedicaeStimmActivated = "Assets/Audio/SFX/PickUps/PowerUps/MedicaeStimm/Injection Heal Sound Effect.wav";
     private ParticleFX MedicaeStimmSpeed;
+    private ParticleFX AmmunitionBlessing;
 
     public override void Awake()
     {
@@ -37,6 +38,8 @@ public class PlayerPowerUp : MonoBehaviour
         playerController = gameObject.GetComponent<PlayerController>();
         sound = gameObject.GetComponent<Audio>();
         MedicaeStimmSpeed = GameObject.Find("SpeedBoostFX").GetComponent<ParticleFX>();
+        AmmunitionBlessing = GameObject.Find("AmmunitionBlessingFX").GetComponent<ParticleFX>();
+        AmmunitionBlessing.Stop();
         MedicaeStimmSpeed.Stop();
     }
 
@@ -59,8 +62,10 @@ public class PlayerPowerUp : MonoBehaviour
         if (hasAmmunitionBlessing)
         {
             ammunitionBlessingTimer += deltatime;
+            AmmunitionBlessing.Play();
             if (ammunitionBlessingTimer >= ammunitionBlessingDuration)
             {
+                AmmunitionBlessing.Stop();
                 hasAmmunitionBlessing = false;
                 ammunitionBlessingTimer = 0.0f;
                 playerController.playerData.infiniteBullets = false;

@@ -527,7 +527,10 @@ bool Root::Start()
 	mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
 	mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	auto mawlocMesh = CreateCube("MawlocMesh");
+	auto mawlocMesh = CreateGameObjectWithPath("Assets/Meshes/Mawloc.fbx");
+	mawlocMesh->SetName("MawlocMesh");
+	mawlocMesh->GetTransform()->SetScale(glm::vec3(0.03, 0.01, 0.03));
+	mawlocMesh->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
 	ParentGameObject(*mawlocMesh, *mawloc);
 	mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 

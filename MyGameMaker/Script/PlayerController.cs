@@ -36,17 +36,17 @@ public class PlayerController : MonoBehaviour
     private float dashDelayTimer = 0f; 
     private float dashDelayDuration = 0.45f;
 
-    private AudioSource sound;
+    //private AudioSource sound;
     private bool isFootstepPlaying = false;
     private bool hasStoppedFootsteps = false;
     private string Runfootsteps = "Assets/Audio/SFX/Player/PlayerFootstep_ready.wav";
     private string Walkfootsteps = "Assets/Audio/SFX/Player/PlayerWalkFootstep_ready.wav";
     public string HitAudio = "Assets/Audio/SFX/Player/PlayerHit_ready.wav";
     public string DeathAudio = "Assets/Audio/SFX/PlayerPlayerDeath_ready.wav";
-    public AudioClip runFX;
-    public AudioClip walkFX;
-    public AudioClip hitFX;
-    public AudioClip deathFX;
+    //public AudioClip runFX;
+    //public AudioClip walkFX;
+    //public AudioClip hitFX;
+    //public AudioClip deathFX;
 
     private ParticleFX inactiveDashFX;
     private ParticleFX walkingFX;
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
         playerAnimations = playerMesh.GetComponent<PlayerAnimations>();
         playerMesh.GetComponent<SkeletalAnimation>().SetAnimationSpeed(2f);
-        sound = gameObject.GetComponent<AudioSource>();
+        //sound = gameObject.GetComponent<AudioSource>();
         //gameObject.GetComponent<Transform>().SetPosition(0, 0, 0);
         playerData = new PlayerData();
         // Add the blood splash effect directly to the player object
@@ -73,14 +73,14 @@ public class PlayerController : MonoBehaviour
         walkingFX = GameObject.Find("WalkingFX").GetComponent<ParticleFX>();
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
 
-        runFX = new AudioClip(Runfootsteps, "RunFX", true, false);
-        walkFX = new AudioClip(Walkfootsteps, "WalkFX", true, false);
-        hitFX = new AudioClip(HitAudio, "HitFX", false, false);
-        deathFX = new AudioClip(DeathAudio, "DeathFX", false, false);
-        sound.LoadAudioClip(runFX);
-        sound.LoadAudioClip(deathFX);
-        sound.LoadAudioClip(hitFX);
-        sound.LoadAudioClip(walkFX);
+        //runFX = new AudioClip(Runfootsteps, "RunFX", true, false);
+        //walkFX = new AudioClip(Walkfootsteps, "WalkFX", true, false);
+        //hitFX = new AudioClip(HitAudio, "HitFX", false, false);
+        //deathFX = new AudioClip(DeathAudio, "DeathFX", false, false);
+        //sound.LoadAudioClip(runFX);
+        //sound.LoadAudioClip(deathFX);
+        //sound.LoadAudioClip(hitFX);
+        //sound.LoadAudioClip(walkFX);
 
     }
 
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
         {
             if (!playerDash.isInvulnerable && !playerData.GodMode)
             {
-                sound.Play(hitFX);
+             //   sound.Play(hitFX);
 
                 if (bloodSplashEffect != null)
                 {
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
                     playerAnimations.SetDeathAnimation();
                     playerInput.BlockMovement();
                     capsuleCollider.SetActive(false);
-                    sound.Play(deathFX);
+                   // sound.Play(deathFX);
                     SceneManager.LoadScene("LoseScene");
                 }
                 else
@@ -269,8 +269,8 @@ public class PlayerController : MonoBehaviour
 
         if (!hasStoppedFootsteps)
         {
-            sound?.Stop(runFX);
-            sound?.Stop(walkFX);
+            //sound?.Stop(runFX);
+            //sound?.Stop(walkFX);
             hasStoppedFootsteps = true;
             isFootstepPlaying = false;
         }
@@ -421,18 +421,18 @@ public class PlayerController : MonoBehaviour
 
         if (!isFootstepPlaying || currentFootstep != newFootstep)
         {
-            sound?.Stop(hitFX);
-            sound?.Stop(deathFX);
-            sound?.Stop(runFX);
-            sound?.Stop(walkFX);
-            if (isRunning)
-            {
-                sound?.Play(runFX);
-            }
-            else
-            {
-                sound?.Play(walkFX);
-            }
+            //sound?.Stop(hitFX);
+            //sound?.Stop(deathFX);
+            //sound?.Stop(runFX);
+            //sound?.Stop(walkFX);
+            //if (isRunning)
+            //{
+            //    sound?.Play(runFX);
+            //}
+            //else
+            //{
+            //    sound?.Play(walkFX);
+            //}
             isFootstepPlaying = true;
             hasStoppedFootsteps = false;
             currentFootstep = newFootstep; 
@@ -443,8 +443,8 @@ public class PlayerController : MonoBehaviour
     {
         if (isFootstepPlaying)
         {
-            sound?.Stop(runFX);
-            sound?.Stop(walkFX);
+            //sound?.Stop(runFX);
+            //sound?.Stop(walkFX);
             isFootstepPlaying = false;
             hasStoppedFootsteps = true;
             currentFootstep = ""; 

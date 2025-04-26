@@ -25,11 +25,11 @@ public class GrenadeLauncher : BaseAbilities
     private float abilityCooldown = 3.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
 
-    private AudioSource sound;
+   // private AudioSource sound;
     private string granadeLaunch = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeShot.wav";
     private string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
-    private AudioClip launchFX;
-    private AudioClip explosionFX;
+  //  private AudioClip launchFX;
+   // private AudioClip explosionFX;
 
     public override void Awake()
     {
@@ -38,16 +38,16 @@ public class GrenadeLauncher : BaseAbilities
 
     public override void Start()
     {
-        sound = gameObject.GetComponent<AudioSource>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+        //sound = gameObject.GetComponent<AudioSource>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
 
-        launchFX = new AudioClip(granadeLaunch, "GrenadeLaunchFX", false, false);
-        explosionFX = new AudioClip(granadeExplosion, "GrenadeExplosionFX", false, false);
-        sound.LoadAudioClip(launchFX);
-        sound.LoadAudioClip(explosionFX);
+        //launchFX = new AudioClip(granadeLaunch, "GrenadeLaunchFX", false, false);
+        //explosionFX = new AudioClip(granadeExplosion, "GrenadeExplosionFX", false, false);
+        //sound.LoadAudioClip(launchFX);
+        //sound.LoadAudioClip(explosionFX);
     }
 
     public override void Update(float deltaTime)
@@ -105,7 +105,7 @@ public class GrenadeLauncher : BaseAbilities
         }
 
         Engineson.print("Lanzando granada...");
-        sound?.Play(launchFX);
+       // sound?.Play(launchFX);
         grenade = Engineson.CreateGameObject("Grenade", null);
 
         if (grenade == null)
@@ -129,7 +129,7 @@ public class GrenadeLauncher : BaseAbilities
 
         // Crear explosión (sin destruir nada)
         explosion = Engineson.CreateGameObject("Explosion", null);
-        sound?.Play(explosionFX);
+        //sound?.Play(explosionFX);
         if (explosion == null) return;
 
         explosion.AddComponent<MeshRenderer>();

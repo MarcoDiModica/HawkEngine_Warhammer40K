@@ -64,7 +64,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl2Alpha1Release.scene");
 
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");

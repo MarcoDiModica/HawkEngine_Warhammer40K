@@ -58,8 +58,8 @@ void TextComponent::Render() const {
 
     float screenWidth = Application->window->width();
     float screenHeight = Application->window->height();
-	
-    glm::mat4 orthoProjection = glm::ortho(0.0f, (float)screenWidth, 0.0f, (float)screenHeight);
+
+    glm::mat4 orthoProjection = glm::ortho(0.0f, screenWidth, 0.0f, screenHeight);
 
     glm::mat4 viewMatrix = glm::mat4(1.0f);
     glm::mat4 modelMatrix = glm::mat4(1.0f);
@@ -68,21 +68,23 @@ void TextComponent::Render() const {
     customShader->SetUniform("projection", orthoProjection);
     customShader->SetUniform("view", viewMatrix);
     customShader->SetUniform("model", modelMatrix);
+    customShader->SetUniform("modColor", glm::vec4(m_color, 1.0f));
 
     glm::vec2 renderPosition = m_position;
     if (m_owner->HasComponent<UITransformComponent>()) {
         UITransformComponent* rectTransform = m_owner->GetComponent<UITransformComponent>();
-        renderPosition = glm::vec2(rectTransform->GetPosition().x, rectTransform->GetPosition().y);
+        renderPosition = rectTransform->GetPosition();
     }
 
+    // renderPosition ya es el correcto para RenderTextWithShader
     FontManager::GetInstance().RenderTextWithShader(customShader, m_text, renderPosition.x, renderPosition.y, m_fontSize);
 
     customShader->UnBind();
 
     std::cout << "Renderizando texto: " << m_text
         << " en posición (" << renderPosition.x << ", " << renderPosition.y << ")"
-        << " con color (" << m_color.r << ", " << m_color.g << ", " << m_color.b << ")"
-        << " y tamaño de fuente " << m_fontSize << std::endl;
+        << " color (" << m_color.r << ", " << m_color.g << ", " << m_color.b << ")"
+        << " tamaño fuente " << m_fontSize << std::endl;
 }
 
 void TextComponent::Update(float deltaTime) {

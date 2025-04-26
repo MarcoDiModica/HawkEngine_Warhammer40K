@@ -158,7 +158,6 @@ void FontManager::RenderTextWithShader(Shaders* shader, const std::string& text,
 
     shader->Bind();
     shader->SetUniform("u_HasTexture", true);
-    shader->SetUniform("modColor", glm::vec4(1.0, 1.0, 1.0, 1.0));
 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);

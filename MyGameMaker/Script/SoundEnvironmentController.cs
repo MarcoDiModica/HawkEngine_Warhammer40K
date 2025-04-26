@@ -1,4 +1,5 @@
 ﻿using HawkEngine;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
@@ -14,21 +15,29 @@ public class SoundEnvironmentController : MonoBehaviour
             "Assets/Audio/SFX/Environment/insect1_ready.wav",
             "Assets/Audio/SFX/Environment/windWhistling_ready.wav",
     };
-    private Audio sound;
+    private AudioSource sound;
     private bool isPlaying = false;
+    private List<AudioClip> sounds = new List<AudioClip>();
 
     public override void Awake()
     {
-        sound = gameObject.AddComponent<Audio>();
+        sound = gameObject.AddComponent<AudioSource>();
     }
 
     public override void Start()
     {
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
         if (sound == null)
         {
             Engineson.print("EnvironmentSound: Audio component not found");
         }
+
+        for (int i = 0; i < envSounds.Length; i++)
+        {
+            AudioClip audioClip = new AudioClip(envSounds[i], "EnvSound" + i, true, false);
+            sounds.Add(audioClip);
+        }
+
     }
 
     public override void Update(float deltaTime) { }
@@ -37,8 +46,7 @@ public class SoundEnvironmentController : MonoBehaviour
     {
         if (!isPlaying && index >= 0 && index < envSounds.Length)
         {
-            sound.LoadAudio(envSounds[index]);
-            sound.Play(true);
+            sound.Play(sounds[index]);
             isPlaying = true;
         }
     }
@@ -47,7 +55,11 @@ public class SoundEnvironmentController : MonoBehaviour
     {
         if (isPlaying)
         {
-            sound.Stop();
+            for (int i = 0; i < sounds.Count; i++)
+            {
+                sound.Stop(sounds[i]);
+            }
+            
             isPlaying = false;
         }
     }

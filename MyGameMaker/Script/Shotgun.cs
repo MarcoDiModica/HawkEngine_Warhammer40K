@@ -5,9 +5,9 @@ using HawkEngine;
 
 public class Shotgun : BaseWeapon
 {
-    private Audio sound;
-    private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
-    private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
+   // private Audio sound;
+    //private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
+    //private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
 
 
     private PlayerController playerController;
@@ -39,7 +39,7 @@ public class Shotgun : BaseWeapon
         timeToLerp = 0.3f;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
-        sound = gameObject.GetComponent<Audio>();
+      //  sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         barrage = gameObject.GetComponent<Barrage>();
@@ -139,8 +139,8 @@ public class Shotgun : BaseWeapon
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
-            sound?.LoadAudio(shotgunShot);
-            sound?.Play();
+         //   sound?.LoadAudio(shotgunShot);
+          //  sound?.Play();
 
             int numProjectiles = 5;
             float maxSpreadAngle = 5f;
@@ -198,8 +198,8 @@ public class Shotgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
-            sound?.LoadAudio(shotgunReload);
-            sound?.Play();
+         //   sound?.LoadAudio(shotgunReload);
+         //   sound?.Play();
 
             if (currentTotalAmmo >= magazineSize)
             {

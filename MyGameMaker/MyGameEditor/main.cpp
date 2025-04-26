@@ -730,6 +730,7 @@ static void RenderEditor()
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
 	}
+	Application->audioEngine->Update();
 
 	/*std::vector<GameObject*> selectedObjects = Application->input->GetSelectedGameObjects();
 	for (auto& object : objects) {
@@ -834,6 +835,7 @@ static void GameRelease() {
 	}
 
 	Application->physicsModule->Update(Application->GetDt());
+	Application->audioEngine->Update();
 
 	if (SceneManagement->currentScene->sceneState == Scene::SceneState::PLAY) {
 		Application->physicsModule->linkPhysicsToScene = true;
@@ -865,7 +867,7 @@ int main(int argc, char** argv) {
 			Application = new App();
 			
 			MonoManager::GetInstance().Initialize();
-			SoundComponent::InitSharedAudioEngine();
+			//SoundComponent::InitSharedAudioEngine();
 
 			ilInit();
 			iluInit();
@@ -883,6 +885,7 @@ int main(int argc, char** argv) {
 		case AWAKE:
 
 			Application->physicsModule->Awake();
+			Application->audioEngine->Init();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }
 			break;

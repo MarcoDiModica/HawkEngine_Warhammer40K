@@ -23,7 +23,5 @@ public:
 	bool startingDrag = false;
 
 	bool Draw();
-
-	GameObject* draggedObject = nullptr;
 };
 #endif // !__UI_HIERARCHY_H__

@@ -18,9 +18,9 @@ public class Railgun : BaseWeapon
     public PlayerData playerData;
 
     private RedThirstManager redThirstManager;
-    private Audio sound;
-    private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
-    private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
+    //private Audio sound;
+    //private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
+    //private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
 
     private float timeSinceLastShot = 0.0f;
 
@@ -55,7 +55,7 @@ public class Railgun : BaseWeapon
         timeToLerp = 2;
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
-        sound = gameObject.GetComponent<Audio>();
+        //sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         toggleMode = gameObject.GetComponent<ToggleMode>();
@@ -190,8 +190,8 @@ public class Railgun : BaseWeapon
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
-            sound?.LoadAudio(railgunShot);
-            sound?.Play();
+            //sound?.LoadAudio(railgunShot);
+            //sound?.Play();
 
             Vector3 localOffset = new Vector3(0f, 2.5f, 0.5f);
             Vector3 bulletStart = transform.position +
@@ -244,8 +244,8 @@ public class Railgun : BaseWeapon
         isRecharged = true;
         coolTimer = 0f;
         currentMagazineAmmo = magazineSize;
-        sound?.LoadAudio(railgunReload);
-        sound?.Play();
+        //sound?.LoadAudio(railgunReload);
+        //sound?.Play();
     }
 
     public override void Reload()

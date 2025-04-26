@@ -1,0 +1,165 @@
+<html>
+<head>
+<title>Welcome to the FMOD Engine | New in FMOD Engine 2.03</title>
+<link rel="stylesheet" href="style/docs.css">
+<link rel="stylesheet" href="style/code_highlight.css">
+<script type="text/javascript" src="scripts/language-selector.js"></script></head>
+<body>
+<div class="docs-body">
+<div class="manual-toc">
+<p>FMOD Engine User Manual 2.03</p>
+<ul>
+<li class="manual-current-chapter manual-inactive-chapter"><a href="welcome.html">Welcome to the FMOD Engine</a><ul class="subchapters"><li class="manual-current-chapter manual-active-chapter"><a href="welcome-whats-new-203.html">New in FMOD Engine 2.03</a></li><li><a href="welcome-whats-new-202.html">New in FMOD Engine 2.02</a></li><li><a href="welcome-whats-new-201.html">New in FMOD Engine 2.01</a></li><li><a href="welcome-whats-new-200.html">New in FMOD Engine 2.00</a></li><li><a href="welcome-whats-new-110.html">New in FMOD Engine 1.10</a></li><li><a href="welcome-revision-history.html">Detailed Revision History</a></li></ul></li>
+<li><a href="studio-guide.html">Studio API Guide</a></li>
+<li><a href="core-guide.html">Core API Guide</a></li>
+<li><a href="platforms.html">Platform Details</a></li>
+<li><a href="white-papers.html">White Papers</a></li>
+<li><a href="studio-api.html">Studio API Reference</a></li>
+<li><a href="core-api.html">Core API Reference</a></li>
+<li><a href="fsbank-api.html">FSBank API Reference</a></li>
+<li><a href="plugin-api.html">Plug-in API Reference</a></li>
+<li><a href="effects-reference.html">Effects Reference</a></li>
+<li><a href="troubleshooting.html">Troubleshooting</a></li>
+<li><a href="glossary.html">Glossary</a></li>
+</ul>
+</div>
+<div class="manual-content api">
+<h1>1. Welcome to the FMOD Engine | New in FMOD Engine 2.03</h1>
+<div class="toc">
+<ul>
+<li><a href="#whats-new-in-203">What's New in 2.03?</a><ul>
+<li><a href="#echo-improvements">Echo Improvements</a></li>
+<li><a href="#eq-improvements">EQ Improvements</a></li>
+<li><a href="#fft-improvements">FFT Improvements</a></li>
+<li><a href="#multiband-dynamics">Multiband Dynamics</a><ul>
+<li><a href="#upward-compression">Upward Compression</a></li>
+<li><a href="#downward-compression">Downward Compression</a></li>
+<li><a href="#upward-expansion">Upward Expansion</a></li>
+<li><a href="#downward-expansion">Downward Expansion</a></li>
+</ul>
+</li>
+<li><a href="#passthrough-ports">Passthrough Ports</a></li>
+<li><a href="#vr-vibration">VR Vibration</a></li>
+<li><a href="#platform-notes">Platform Notes</a></li>
+<li><a href="#api-differences">API Differences</a><ul>
+<li><a href="#studio-api">Studio API</a></li>
+<li><a href="#core-api">Core API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#whats-new-since-202-initial-release">What's New Since 2.02 Initial Release?</a><ul>
+<li><a href="#platforms">Platforms</a></li>
+<li><a href="#api-differences_1">API Differences</a><ul>
+<li><a href="#studio-api_1">Studio API</a></li>
+<li><a href="#core-api_1">Core API</a></li>
+<li><a href="#fsbank-api">FSBank API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="whats-new-in-203"><a href="#whats-new-in-203">What's New in 2.03?</a></h2>
+<p>This section describes the major features introduced in the 2.03 release. See the <a href="welcome-revision-history.html">Detailed Revision History</a> for information regarding each patch release.</p>
+<h3 id="echo-improvements"><a href="#echo-improvements">Echo Improvements</a></h3>
+<p>Changes in delay time can now be ramped gradually using <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_echo_delaychangemode_lerp">FMOD_DSP_ECHO_DELAYCHANGEMODE_LERP</a>. This mode is best suited for small changes in delay, otherwise a noticeable warping effect can occur. This warping can be used for simulating doppler, and as an effect with large parameter changes.</p>
+<p>The existing delay change mode of <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_echo_delaychangemode_fade">FMOD_DSP_ECHO_DELAYCHANGEMODE_FADE</a> has been made the default, and is best suited to large changes in delay time. With small changes, a noticeable zipper effect can occur.</p>
+<h3 id="eq-improvements"><a href="#eq-improvements">EQ Improvements</a></h3>
+<p>The Multiband EQ effect now has low-overhead 6dB highpass and lowpass filters.</p>
+<p>The 6dB lowpass filter can be set with <code>FMOD_DSP_MULTIBAND_EQ_FILTER_LOWPASS_6DB</code>, and uses an efficient one-pole low pass design.</p>
+<p>The 6dB highpass can be set with <code>FMOD_DSP_MULTIBAND_EQ_FILTER_HIGHPASS_6DB</code>, and uses a slightly less efficient one-pole one-zero highpass design.</p>
+<h3 id="fft-improvements"><a href="#fft-improvements">FFT Improvements</a></h3>
+<p>Hardware offloading of the FFT DSP can now be enabled using <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_immediate_mode">FMOD_DSP_FFT_IMMEDIATE_MODE</a>.</p>
+<p>The RMS value of the analysis band's spectral components can now be queried using <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_rms">FMOD_DSP_FFT_RMS</a>. The analysis band's range can now be set with <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_band_start_freq">FMOD_DSP_FFT_BAND_START_FREQ</a> and <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_band_stop_freq">FMOD_DSP_FFT_BAND_STOP_FREQ</a>.</p>
+<p><a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_downmix">FMOD_DSP_FFT_DOWNMIX</a> and <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_channel">FMOD_DSP_FFT_CHANNEL</a> have been added to provide greater control over how the input signal is processed and which part of a spectrum is analyzed.</p>
+<h3 id="multiband-dynamics"><a href="#multiband-dynamics">Multiband Dynamics</a></h3>
+<p>A new DSP effect has been added, <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_multiband_dynamics">FMOD_DSP_MULTIBAND_DYNAMICS</a>. This plugin can be used to compress or expand the dynamic range of a signal within three separate frequency bands.<br />
+The Multiband Dynamics plugin operates similarly to the existing <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_compressor">FMOD_DSP_COMPRESSOR</a> plugin, providing gain, threshold, ratio, attack and release controls to alter the envelope of the signal. The difference is that the Multiband Dynamics plugin can perform this same processing in a limited frequency range, and rather than just attenuating the signal above the threshold it can also be configured to amplify or attenuate the signal above or below the threshold.</p>
+<p>Here are the different modes available in each band, as well as some suggested use cases for them:</p>
+<h4 id="upward-compression"><a href="#upward-compression">Upward Compression</a></h4>
+<p>This mode can be set with <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_multiband_dynamics_mode_compress_up">FMOD_DSP_MULTIBAND_DYNAMICS_MODE_COMPRESS_UP</a> to amplify the signal below the threshold.<br />
+Upward Compression can be useful for bringing out quieter details in sounds, such as breath in the middle frequency range of vocals, or fret noise in the upper frequency range of a guitar.</p>
+<h4 id="downward-compression"><a href="#downward-compression">Downward Compression</a></h4>
+<p>This mode can be set with <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_multiband_dynamics_mode_compress_down">FMOD_DSP_MULTIBAND_DYNAMICS_MODE_COMPRESS_DOWN</a> to attenuate the signal above the threshold.<br />
+This is the mode that the existing FMOD Compressor uses, and is useful for bringing down harsh percussive sounds, such as plosives and sibilance in the upper frequency range.</p>
+<h4 id="upward-expansion"><a href="#upward-expansion">Upward Expansion</a></h4>
+<p>This mode can be set with <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_multiband_dynamics_mode_expand_up">FMOD_DSP_MULTIBAND_DYNAMICS_MODE_EXPAND_UP</a> to amplify the signal above the threshold.<br />
+Upward Expansion can easily cause clipping, so use with caution, but can be useful for bringing percussive sounds forward, such as snares in the upper frequency range or explosions in the lower frequency range.</p>
+<h4 id="downward-expansion"><a href="#downward-expansion">Downward Expansion</a></h4>
+<p>This mode can be set with <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_multiband_dynamics_mode_expand_down">FMOD_DSP_MULTIBAND_DYNAMICS_MODE_EXPAND_DOWN</a> to attenuate the signal below the threshold.<br />
+Downward Epansion be useful for removing noise in the signal, such as bird chirps in the upper frequency range, or room tone in the lower frequency range.</p>
+<h3 id="passthrough-ports"><a href="#passthrough-ports">Passthrough Ports</a></h3>
+<p>A new port type has been added, <a class="apilink" href="core-api-system.html#fmod_port_type_passthrough">FMOD_PORT_TYPE_PASSTHROUGH</a>, to bypass the binauralization applied to all sounds by WinSonic and PS5.</p>
+<p>You can use this port type to preserve multi-channel layouts for non-diegetic sounds.</p>
+<h3 id="vr-vibration"><a href="#vr-vibration">VR Vibration</a></h3>
+<p>Controller vibration for VR devices that support vibration, such as the PlayStation VR2 Sense&trade; controller, can now be controlled by <a class="apilink" href="core-api-system.html#fmod_port_type_vr_vibration">FMOD_PORT_TYPE_VR_VIBRATION</a> Ports.</p>
+<p>To use VR vibration ports in the Core API call <a class="apilink" href="core-api-system.html#system_attachchannelgrouptoport">System::attachChannelGroupToPort</a>, passing in <code>FMOD_PORT_TYPE_VR_VIBRATION</code> for the <code>portType</code> and the controller's user id for the <code>portIndex</code>.</p>
+<p>For the Studio API, you must create a <a href="https://fmod.com/docs/2.03/studio/mixing.html#port-buses">Port Bus</a> in FMOD Studio, set to the "VR Vibration" port type, and route audio into the Port. Then in the API, retrieve the Port with <a class="apilink" href="studio-api-system.html#studio_system_getbus">Studio::System::getBus</a> and call <a class="apilink" href="studio-api-bus.html#studio_bus_setportindex">Studio::Bus::setPortIndex</a> with the controller's user id to route the Port's audio to the controller.</p>
+<h3 id="platform-notes"><a href="#platform-notes">Platform Notes</a></h3>
+<ul>
+<li>Changed default dsp buffer size on Windows from 512 to 1024</li>
+<li>Removed Fastcomp support for HTML5</li>
+<li>Android minimum version raised to SDK 21 and NDK 26b</li>
+<li>Unity Editor minimum version raised to 2021.3</li>
+<li>Profiler &amp; FSBank tool minimum macOS version raised to 11.0</li>
+<li>Profiler &amp; FSBank tool minimum Windows version raised to Win10 1809</li>
+<li>Profiler &amp; FSBank tool minimum Linux GNU C library version raised to GLIBC_2.28</li>
+</ul>
+<h3 id="api-differences"><a href="#api-differences">API Differences</a></h3>
+<p>APIs that have changed with this release that haven't been called out explicitly above.</p>
+<h4 id="studio-api"><a href="#studio-api">Studio API</a></h4>
+<ul>
+<li>Added <a class="apilink" href="studio-api-eventinstance.html#studio_eventinstance_getsystem">Studio::EventInstance::getSystem</a></li>
+</ul>
+<h4 id="core-api"><a href="#core-api">Core API</a></h4>
+<ul>
+<li>Modified <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_type_fft">FMOD_DSP_TYPE_FFT</a> to add <code>FMOD_DSP_FFT_BAND_START_FREQ</code>, <code>FMOD_DSP_FFT_BAND_STOP_FREQ</code>, <code>FMOD_DSP_FFT_DOWNMIX</code>, <code>FMOD_DSP_FFT_CHANNEL</code>, and <code>FMOD_DSP_FFT_IMMEDIATE_MODE</code></li>
+<li>Modified <a class="apilink" href="core-api-system.html#system_getversion">System::getVersion</a> to output build number from second argument</li>
+<li>Removed <code>FMOD_DSP_TYPE_ENVELOPEFOLLOWER</code></li>
+<li>Removed <code>FMOD_DSP_TYPE_LADSPAPLUGIN</code></li>
+<li>Removed <code>FMOD_DSP_TYPE_VSTPLUGIN</code></li>
+<li>Removed <code>FMOD_DSP_TYPE_WINAMPPLUGIN</code></li>
+<li>Removed <code>FMOD_PORT_INDEX_FLAG_VR_CONTROLLER</code></li>
+<li>Renamed <code>F_CALLBACK</code> to <code>F_CALL</code></li>
+<li>Renamed <code>FMOD_DSP_FFT_DOMINANT_FREQ</code> to <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_spectral_centroid">FMOD_DSP_FFT_SPECTRAL_CENTROID</a></li>
+<li>Renamed <code>FMOD_DSP_FFT_WINDOW</code> to <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_window_type">FMOD_DSP_FFT_WINDOW_TYPE</a></li>
+<li>Renamed <code>FMOD_DSP_FFT_WINDOWTYPE</code> enum value to <a class="apilink" href="core-api-common-dsp-effects.html#fmod_dsp_fft_window_type">FMOD_DSP_FFT_WINDOW_TYPE</a></li>
+</ul>
+<h2 id="whats-new-since-202-initial-release"><a href="#whats-new-since-202-initial-release">What's New Since 2.02 Initial Release?</a></h2>
+<p>This section describes any major changes that occurred in 2.02.xx leading up to the release of 2.03.</p>
+<h3 id="platforms"><a href="#platforms">Platforms</a></h3>
+<ul>
+<li>Removed support for Stadia</li>
+<li>Added Open Harmony platform</li>
+<li>Added support for Vision Pro, and Windows arm64 devices</li>
+<li>Added support for hardware offloaded convolution reverb on XSX and PS5</li>
+<li>Added support for hardware echo cancellation on Android and iOS</li>
+</ul>
+<h3 id="api-differences_1"><a href="#api-differences_1">API Differences</a></h3>
+<p>APIs that have changed with this release that haven't been called out explicitly above.</p>
+<h4 id="studio-api_1"><a href="#studio-api_1">Studio API</a></h4>
+<ul>
+<li>Added <a class="apilink" href="studio-api-eventinstance.html#fmod_studio_event_callback_nested_timeline_beat">FMOD_STUDIO_EVENT_CALLBACK_NESTED_TIMELINE_BEAT</a></li>
+<li>Added <a href="studio-api-common.html#fmod_studio_parameter_flags">FMOD_STUDIO_PARAMETER_LABELED</a></li>
+<li>Added <a class="apilink" href="studio-api-eventinstance.html#fmod_studio_timeline_nested_beat_properties">FMOD_STUDIO_TIMELINE_NESTED_BEAT_PROPERTIES</a></li>
+</ul>
+<h4 id="core-api_1"><a href="#core-api_1">Core API</a></h4>
+<ul>
+<li>Added <a class="apilink" href="core-api-dsp.html#dsp_setcallback">DSP::setCallback</a></li>
+<li>Added <code>FMOD_GameCore_XMAConfigure</code></li>
+<li>Added <a class="apilink" href="core-api-system.html#fmod_outputtype_audioworklet">FMOD_OUTPUTTYPE_AUDIOWORKLET</a></li>
+<li>Added <code>FMOD_PS5_AT9Configure</code></li>
+<li>Added <a class="apilink" href="core-api-system.html#fmod_init_clip_output">FMOD_INIT_CLIP_OUTPUT</a></li>
+<li>Added <a class="apilink" href="core-api-system.html#fmod_system_callback_recordpositionchanged">FMOD_SYSTEM_CALLBACK_RECORDPOSITIONCHANGED</a></li>
+</ul>
+<h4 id="fsbank-api"><a href="#fsbank-api">FSBank API</a></h4>
+<ul>
+<li>Added <a class="apilink" href="fsbank-api.html#fsbank_build_align4k">FSBANK_BUILD_ALIGN4K</a></li>
+</ul></div>
+
+<p class="manual-footer">FMOD Engine User Manual 2.03.07 (2025-04-02). &copy; 2025 Firelight Technologies Pty Ltd.</p>
+</body>
+</html>
+
+</div>

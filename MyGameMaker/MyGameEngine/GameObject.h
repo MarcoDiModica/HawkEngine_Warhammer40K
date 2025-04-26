@@ -76,6 +76,9 @@ public:
     DrawMode drawMode = DrawMode::PushPopMatrix;
 
     HawkUUID GetID() const { return m_UUID; }
+    void RegenerateUUID() {
+        m_UUID = HawkUUID();
+    }
 
 	static GameObject* FindByID(const HawkUUID& id) {
 		return ObjectRegistry::FindObject(id);
@@ -113,6 +116,10 @@ public:
 
     void SelfDestroy();
 
+    const std::string& GetPrefabSourcePath() const { return prefabSourcePath; }
+    void SetPrefabSourcePath(const std::string& path) { prefabSourcePath = path; }
+    void TraverseHierarchy(std::function<void(GameObject*)> func);
+
 private:
     friend class SceneSerializer;
     friend class GameObject;
@@ -137,6 +144,8 @@ private:
     mutable std::shared_ptr<Component> cachedComponent;
 
     std::shared_ptr<Mesh> mesh;
+
+    std::string prefabSourcePath;
 
 protected:
     friend class Scene;

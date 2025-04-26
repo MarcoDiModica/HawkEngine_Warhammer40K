@@ -146,6 +146,7 @@
     <Compile Include="PlayerMovement.cs" />
     <Compile Include="PlayerPowerUp.cs" />
     <Compile Include="PlayerShooting.cs" />
+    <Compile Include="Prefab.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Railgun.cs" />
     <Compile Include="RailgunPickUp.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="SoundTrigger.cs" />
     <Compile Include="Test1.cs" />
+    <Compile Include="Test2.cs" />
     <Compile Include="ToggleMode.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Tweening.cs" />

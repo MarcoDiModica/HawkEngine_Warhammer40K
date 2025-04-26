@@ -5,6 +5,9 @@ public class Test1 : MonoBehaviour, IInteractable
 {
     public float speed = 5f;
 
+    public Prefab prefab;
+    public GameObject prefab2;
+    private Transform t2;
 
     //Mathf functions
     private float t = 0;
@@ -20,6 +23,8 @@ public class Test1 : MonoBehaviour, IInteractable
 
     public override void Start()
     {
+        //prefab2 = GameObject.Find("MainCamera");
+        //t2 = prefab2.transform;
         Engineson.print("Test1 Start");
     }
 
@@ -32,6 +37,15 @@ public class Test1 : MonoBehaviour, IInteractable
             laser.transform.SetPosition(5,0,0);
             gameObject.AddChild(laser);
         }
+        
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Instantiate(prefab);
+        } 
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    t2.position += t2.forward * speed * deltaTime;
+        //}
 
         //----------- MATHF FUNCTIONS -------------------//
         //t += deltaTime;

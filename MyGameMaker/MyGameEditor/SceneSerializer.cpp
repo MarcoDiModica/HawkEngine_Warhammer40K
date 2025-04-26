@@ -12,7 +12,7 @@
 #include "MyGameEngine/LightComponent.h"
 #include "MyShadersEngine/ShaderComponent.h"
 #include "MyAudioEngine/SoundComponent.h"
-#include "MyAudioEngine/AudioListener.h"
+//#include "MyAudioEngine/AudioListener.h"
 #include "MyPhysicsEngine/BoxColliderComponent.h"
 #include "MyPhysicsEngine/RigidBodyComponent.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
@@ -23,6 +23,8 @@
 #include "MyUIEngine/UIButtonComponent.h"
 #include "MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include <MyScriptingEngine/MonoManager.h>
+
 
 SceneSerializer::SceneSerializer(App* app) : Module(app) {
 }
@@ -66,6 +68,7 @@ YAML::Node SceneSerializer::SerializeGameObject(GameObject& gameObject) {
 	YAML::Node node;
 
 	node["name"] = gameObject.GetName();
+    node["prefabPath"] = gameObject.prefabSourcePath;
 	node["uuid"] = gameObject.GetID().GetValue();
 	node["tag"] = gameObject.tag;
 	node["active"] = gameObject.IsActive();
@@ -166,6 +169,22 @@ bool SceneSerializer::DeSerialize(const std::string& path) {
 			auto gameObject = DeserializeGameObject(objectNode);
 		}
 
+		for (const PendingReference& ref : g_PendingScriptReferences) {
+			std::shared_ptr<GameObject> target = Application->root->FindGOByName(ref.goName);
+			if (target) {
+				if (ref.scriptComponent && ref.scriptComponent->monoScript) {
+					MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(target.get());
+					if (managedGO) {
+						mono_field_set_value(ref.scriptComponent->monoScript, ref.field, managedGO);
+					}
+				}
+				else {
+					LOG(LogType::LOG_ERROR, "Invalid script reference: scriptComponent or monoScript is null. Field = %s", mono_field_get_name(ref.field));
+				}
+			}
+		}
+		g_PendingScriptReferences.clear();
+
 		LOG(LogType::LOG_INFO, "Scene deserialized successfully: %s", sceneName.c_str());
 		Application->root->UpdateCameraPriority();
 		return true;
@@ -194,6 +213,7 @@ std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::N
 	auto objectName = node["name"].as<std::string>();
 	std::shared_ptr<GameObject> gameObject = Application->root->CreateGameObject(objectName);
 
+
 	if (node["uuid"].IsDefined()) {
 		uint64_t idValue = node["uuid"].as<uint64_t>();
 		gameObject->m_UUID = HawkUUID(idValue);
@@ -201,6 +221,10 @@ std::shared_ptr<GameObject> SceneSerializer::DeserializeGameObject(const YAML::N
 
 	if (node["tag"].IsDefined()) {
 		gameObject->tag = node["tag"].as<std::string>();
+	}
+
+	if (node["prefabPath"].IsDefined()) {
+		gameObject->prefabSourcePath = node["prefabPath"].as<std::string>();
 	}
 
 	if (node["active"].IsDefined()) {
@@ -259,12 +283,12 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			shader->decode(componentData);
 		}
 		else if (componentName == "SoundComponent") {
-			auto sound = gameObject->AddComponent<SoundComponent>();
+			auto sound = gameObject->AddComponent<SoundComponent>(Application->audioEngine);
 			sound->decode(componentData);
 		}
 		else if (componentName == "AudioListener") {
-			auto listener = gameObject->AddComponent<AudioListener>();
-			listener->decode(componentData);
+			/*auto listener = gameObject->AddComponent<AudioListener>();
+			listener->decode(componentData);*/
 		}
 		else if (componentName == "RigidbodyComponent") {
 			auto rb = gameObject->AddComponent<RigidbodyComponent>(Application->physicsModule);

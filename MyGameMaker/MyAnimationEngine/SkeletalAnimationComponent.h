@@ -94,6 +94,8 @@ public:
 		animationIndex = index;
 	}
 
+    bool IsAnimationFinished();
+
 	void PlayIndexAnimation(int index) 
     {
 		if (index < 0 || index >= animations.size())
@@ -273,6 +275,14 @@ protected:
             }
         }*/
 
+      
+        YAML::Node boneNamesNode;
+        for (const auto& boneName : boneNames) {
+            boneNamesNode.push_back(boneName);
+        }
+        node["bone_names"] = boneNamesNode;
+
+        
         std::string animName = "skeletal_anim_" +  owner->GetName();
         SaveBinary(animName);
         node["animation_file"] = animName;
@@ -414,6 +424,14 @@ protected:
 			std::string animName = node["animation_file"].as<std::string>();
 			LoadBinary(animName);
 		}
+
+    if (boneNames.empty()) {
+		if (node["bone_names"]) {
+			for (const auto& boneName : node["bone_names"]) {
+				boneNames.push_back(boneName.as<std::string>());
+			}
+		}
+    }
 
         return true;
     }

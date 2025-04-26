@@ -611,6 +611,14 @@ MonoObject* GameObject::GetSharp() {
     return CsharpReference;
 }
 
+
+void GameObject::TraverseHierarchy(std::function<void(GameObject*)> func) {
+    func(this);
+    for (auto& child : children) {
+        child->TraverseHierarchy(func);
+    }
+}
+
 void GameObject::SelfDestroy()
 {
 	auto self = shared_from_this();

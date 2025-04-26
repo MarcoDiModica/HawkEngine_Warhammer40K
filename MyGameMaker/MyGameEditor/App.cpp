@@ -40,6 +40,7 @@ App::App() {
 
 	
 	physicsModule = new PhysicsModule();
+	audioEngine = new AudioEngine();
 
 	//gizmos = new Gizmos(this);
 
@@ -61,7 +62,6 @@ App::App() {
 	
 	//AddModule(gizmos, true);
 	AddModule(scene_serializer, true);
-
 };
 
 

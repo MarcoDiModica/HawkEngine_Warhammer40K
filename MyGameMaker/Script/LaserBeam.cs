@@ -18,7 +18,7 @@ public class LaserBeam : BaseAbilities
     private float abilityCooldown = 3.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
-    private Audio sound;
+   // private AudioSource sound;
     private string laserBeamSound = "Assets/Audio/SFX/Weapons/Railgun/BarrageShot.wav";
     private bool laserActive = false;
     private float deathtimer = 3.0f;
@@ -32,13 +32,15 @@ public class LaserBeam : BaseAbilities
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+        //sound = gameObject.GetComponent<AudioSource>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
 
-        
+        //laserFX = new AudioClip(laserBeamSound, "Laser", false, false);
+        //sound.LoadAudioClip(laserFX);
+
     }
     public override void Update(float deltaTime)
     {
@@ -76,8 +78,8 @@ public class LaserBeam : BaseAbilities
         if (canThrow)
         {
             //Engineson.print("Lanzando granada...");
-            sound.LoadAudio(laserBeamSound);
-            sound.Play();
+
+           // sound.Play(laserFX);
 
             laserBeam = Engineson.CreateGameObject("LaserBeam", null);
             laserBeam.tag = "LaserBeam";

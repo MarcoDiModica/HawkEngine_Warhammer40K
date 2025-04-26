@@ -12,9 +12,9 @@ public class Boltgun : BaseWeapon
     public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
-    private Audio sound;
-    private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
-    private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
+    //private Audio sound;
+   // private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
+    //private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
     GameObject projectile;
     private RedThirstManager redThirstManager;
     private float timeSinceLastShot = 0.0f;
@@ -46,7 +46,7 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         arcSnare = gameObject.GetComponent<ArcSnare>();
-        sound = gameObject.GetComponent<Audio>();
+      //  sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
@@ -148,8 +148,8 @@ public class Boltgun : BaseWeapon
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
-            sound?.LoadAudio(boltgunShot);
-            sound?.Play();
+          //  sound?.LoadAudio(boltgunShot);
+          //  sound?.Play();
 
             Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
@@ -178,7 +178,7 @@ public class Boltgun : BaseWeapon
             bulletLifetimes.Add(0);
             bulletHitEnemies.Add(new HashSet<GameObject>());
             bulletStartPositions.Add(bulletStart);
-
+            playerController.playerShooting.rifleShotFX.EmitBurst(1);
         }
 
     }
@@ -187,8 +187,8 @@ public class Boltgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
-            sound?.LoadAudio(boltgunReload);
-            sound?.Play();
+           // sound?.LoadAudio(boltgunReload);
+           // sound?.Play();
            
             if(currentTotalAmmo >= magazineSize)
             {

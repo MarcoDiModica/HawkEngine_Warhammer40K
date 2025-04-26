@@ -5,31 +5,48 @@ using static BaseWeapon;
 
 public class Barrage : BaseAbilities
 {
+
     public string name;
     public bool enabled;
     public float cooldown;
+    
+
     private float yHeight = 0.0f;
     private float timer = 0;
-    GameObject barrage;
+    
+    public GameObject grenade;
     Rigidbody rigidbody;
     BoxCollider collider;
     public bool canThrow = true;
+
+    private float explosionCooldown = 1.0f;
+    private float explosionTimer = 0.0f;
+
     private float abilityCooldown = 3.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
-    private Audio sound;
-    private string barrageSound = "Assets/Audio/SFX/Weapons/Shotgun/BarrageShot.wav";
+
+   // private AudioSource sound;
+    private string barrage = "Assets/Audio/SFX/Weapons/Shotgun/BarrageShot.wav";
+   // private AudioClip barrageFX;
+
+
     public override void Awake()
     {
+
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+        //sound = gameObject.GetComponent<AudioSource>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
+
+        //barrageFX = new AudioClip(barrage, "BarrageFX", false, false);
+        //sound.LoadAudioClip(barrageFX);
     }
+
     public override void Update(float deltaTime)
     {
         // Manejo del cooldown de la habilidad
@@ -45,25 +62,50 @@ public class Barrage : BaseAbilities
                 Engineson.print("Cooldown terminado. Habilidad lista.");
             }
         }
+
+        if (rigidbody != null && collider != null)
+        {
+            timer += deltaTime;
+
+            if (rigidbody.GetVelocity() != null && grenade != null && grenade.GetComponent<Transform>() != null)
+            {
+                float grenadeY = grenade.GetComponent<Transform>().GetPosition().Y;
+
+                if (rigidbody.GetVelocity().Y <= 0.1f && timer > 0.1f && yHeight > grenadeY)
+                {
+                    
+                }
+            }
+        }
+
+        
     }
+
+
+
     public override void TriggerAbility()
     {
         if (canThrow)
         {
             Engineson.print("Lanzando granada...");
-            sound.LoadAudio(barrageSound);
-            sound.Play();
+           // sound.Play(barrageFX);
 
-            barrage = Engineson.CreateGameObject("Barrage", null);
+            grenade = Engineson.CreateGameObject("Barrage", null);
 
-            if (barrage == null)
+
+
+            if (grenade == null)
             {
                 Engineson.print("ERROR: No se pudo crear la granada.");
                 return;
             }
 
-            barrage.AddScript("BarrageBullet");
-            barrage.GetComponent<BarrageBullet>().Init(gameObject);
+
+
+
+            grenade.AddScript("BarrageBullet");
+            grenade.GetComponent<BarrageBullet>().Init(gameObject);
+
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;

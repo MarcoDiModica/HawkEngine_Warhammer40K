@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>Core API Reference | Android Specific</title>
+<link rel="stylesheet" href="style/docs.css">
+<link rel="stylesheet" href="style/code_highlight.css">
+<script type="text/javascript" src="scripts/language-selector.js"></script></head>
+<body>
+<div class="docs-body">
+<div class="manual-toc">
+<p>FMOD Engine User Manual 2.03</p>
+<ul>
+<li><a href="welcome.html">Welcome to the FMOD Engine</a></li>
+<li><a href="studio-guide.html">Studio API Guide</a></li>
+<li><a href="core-guide.html">Core API Guide</a></li>
+<li><a href="platforms.html">Platform Details</a></li>
+<li><a href="white-papers.html">White Papers</a></li>
+<li><a href="studio-api.html">Studio API Reference</a></li>
+<li class="manual-current-chapter manual-inactive-chapter"><a href="core-api.html">Core API Reference</a><ul class="subchapters"><li><a href="core-api-common.html">Common</a></li><li><a href="core-api-common-dsp-effects.html">Effect Parameters</a></li><li><a href="core-api-system.html">System</a></li><li><a href="core-api-sound.html">Sound</a></li><li><a href="core-api-channelcontrol.html">ChannelControl</a></li><li><a href="core-api-channel.html">Channel</a></li><li><a href="core-api-channelgroup.html">ChannelGroup</a></li><li><a href="core-api-soundgroup.html">SoundGroup</a></li><li><a href="core-api-dsp.html">DSP</a></li><li><a href="core-api-dspconnection.html">DSPConnection</a></li><li><a href="core-api-geometry.html">Geometry</a></li><li><a href="core-api-reverb3d.html">Reverb3D</a></li><li><a href="core-api-platform-ios.html">iOS Specific</a></li><li class="manual-current-chapter manual-active-chapter"><a href="core-api-platform-android.html">Android Specific</a></li></ul></li>
+<li><a href="fsbank-api.html">FSBank API Reference</a></li>
+<li><a href="plugin-api.html">Plug-in API Reference</a></li>
+<li><a href="effects-reference.html">Effects Reference</a></li>
+<li><a href="troubleshooting.html">Troubleshooting</a></li>
+<li><a href="glossary.html">Glossary</a></li>
+</ul>
+</div>
+<div class="manual-content api">
+<h1>7. Core API Reference | Android Specific</h1>
+<p>APIs and types for Android platform, see fmod_android.h</p>
+<ul>
+<li><span><a class="apilink" href="core-api-platform-android.html#fmod_android_jni_init" title="Call to initialize FMOD from a native activity.">FMOD_Android_JNI_Init</a> Call to initialize FMOD from a native activity.</span></li>
+<li><span><a class="apilink" href="core-api-platform-android.html#fmod_android_jni_close" title="Call to uninitialize FMOD from a native activity.">FMOD_Android_JNI_Close</a> Call to uninitialize FMOD from a native activity.</span></li>
+</ul>
+<h2 api="function" id="fmod_android_jni_close"><a href="#fmod_android_jni_close">FMOD_Android_JNI_Close</a></h2>
+<p>Call to uninitialize FMOD from a native activity.</p>
+<p>
+<div class="language-selector">
+<div class="language-tab" data-language="language-c">C</div>
+<div class="language-tab" data-language="language-cpp">C++</div>
+<div class="language-tab" data-language="language-csharp">C#</div>
+</div>
+</p>
+<div class="highlight language-c-cpp"><pre><span></span><span class="n">FMOD_RESULT</span> <span class="nf">FMOD_Android_JNI_Close</span><span class="p">();</span>
+</pre></div>
+
+<div class="highlight language-csharp"><pre><span></span><span class="n">RESULT</span> <span class="n">FMOD</span><span class="p">.</span><span class="n">Android</span><span class="p">.</span><span class="n">JNI_Close</span><span class="p">();</span>
+</pre></div>
+
+<div class="admonition language-javascript">
+<p>Not supported for JavaScript.</p>
+</div>
+<p>When using a native activity, you will need to call this function after calling <a class="apilink" href="core-api-system.html#system_release">System::release</a>.</p>
+<p><strong>See Also:</strong> <a href="platforms-android.html#java">Java</a></p>
+<h2 api="function" id="fmod_android_jni_init"><a href="#fmod_android_jni_init">FMOD_Android_JNI_Init</a></h2>
+<p>Call to initialize FMOD from a native activity.</p>
+<p>
+<div class="language-selector">
+<div class="language-tab" data-language="language-c">C</div>
+<div class="language-tab" data-language="language-cpp">C++</div>
+<div class="language-tab" data-language="language-csharp">C#</div>
+</div>
+</p>
+<div class="highlight language-c-cpp"><pre><span></span><span class="n">FMOD_RESULT</span> <span class="nf">FMOD_Android_JNI_Init</span><span class="p">(</span>
+    <span class="n">JavaVM</span> <span class="o">*</span><span class="n">vm</span><span class="p">,</span>
+    <span class="n">jobject</span> <span class="n">javaActivity</span>
+<span class="p">);</span>
+</pre></div>
+
+<div class="highlight language-csharp"><pre><span></span><span class="n">FMOD_RESULT</span> <span class="n">FMOD</span><span class="p">.</span><span class="n">Android</span><span class="p">.</span><span class="n">JNI_Init</span><span class="p">(</span>
+    <span class="n">IntPtr</span> <span class="n">vm</span><span class="p">,</span>
+    <span class="n">IntPtr</span> <span class="n">javaActivity</span>
+<span class="p">);</span>
+</pre></div>
+
+<div class="admonition language-javascript">
+<p>Not supported for JavaScript.</p>
+</div>
+<dl>
+<dt>vm</dt>
+<dd>Pointer to the <code>ANativeActivity::vm</code> JavaVM.</dd>
+<dt>javaActivity</dt>
+<dd>Pointer to your <code>ANativeActivity::clazz</code> jobject.</dd>
+</dl>
+<p>When using a native activity, you will need to call this function before making calls into the FMOD API.<br />
+The vm must be attached to the current thread before being passed to this function. For example:</p>
+<div class="highlight language-cpp"><pre><span></span><span class="n">mApp</span><span class="o">-&gt;</span><span class="n">activity</span><span class="o">-&gt;</span><span class="n">vm</span><span class="o">-&gt;</span><span class="n">AttachCurrentThread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">mJniEnv</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+<span class="n">FMOD_Android_JNI_Init</span><span class="p">(</span><span class="n">mApp</span><span class="o">-&gt;</span><span class="n">activity</span><span class="o">-&gt;</span><span class="n">vm</span><span class="p">,</span> <span class="n">mApp</span><span class="o">-&gt;</span><span class="n">activity</span><span class="o">-&gt;</span><span class="n">clazz</span><span class="p">);</span>
+</pre></div>
+
+<p><strong>See Also:</strong> <a href="platforms-android.html#java">Java</a></p></div>
+
+<p class="manual-footer">FMOD Engine User Manual 2.03.07 (2025-04-02). &copy; 2025 Firelight Technologies Pty Ltd.</p>
+</body>
+</html>
+
+</div>

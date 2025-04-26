@@ -57225,6 +57225,16 @@ GameObject91:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 0.400000006
+            - 0.5
+            - 0.899999976
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Pablo_Tree2.001
       prefabPath: ""
@@ -57262,6 +57272,16 @@ GameObject91:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 0.400000006
+            - 0.699999988
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Pablo_Tree3.001
       prefabPath: ""
@@ -57714,6 +57734,16 @@ GameObject99:
     Shader:
       name: Shader
       enabled: true
+    BoxColliderComponent:
+      size:
+        - 0.400000006
+        - 0.5
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~
 GameObject100:
   name: Pablo_Tree2.001_copy_copy
@@ -57980,6 +58010,16 @@ GameObject106:
         - 1
         - 1
         - 1
+    BoxColliderComponent:
+      size:
+        - 0.600000024
+        - 0.600000024
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~
 GameObject107:
   name: Pablo_Tree2.001_copy_copy_copy_copy
@@ -58018,6 +58058,16 @@ GameObject107:
     Shader:
       name: Shader
       enabled: true
+    BoxColliderComponent:
+      size:
+        - 0.600000024
+        - 0.5
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~
 GameObject108:
   name: Pablo_Tree2.001_copy_copy_copy
@@ -58436,6 +58486,16 @@ GameObject118:
     Shader:
       name: Shader
       enabled: true
+    BoxColliderComponent:
+      size:
+        - 0.5
+        - 0.600000024
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~
 GameObject119:
   name: Pablo_Tree2.001_copy_copy_copy_copy_copy
@@ -58512,6 +58572,16 @@ GameObject120:
     Shader:
       name: Shader
       enabled: true
+    BoxColliderComponent:
+      size:
+        - 0.400000006
+        - 0.5
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~
 GameObject121:
   name: Plane.001_copy_copy_copy_copy
@@ -58626,6 +58696,16 @@ GameObject123:
         - 1
         - 1
         - 1
+    BoxColliderComponent:
+      size:
+        - 0.600000024
+        - 0.300000012
+        - 1
+      offset:
+        - 0
+        - 0
+        - 0
+      isTrigger: false
   Children: ~
 GameObject124:
   name: Plane.001_copy_copy_copy
@@ -59099,6 +59179,16 @@ GameObject129:
         Shader:
           name: Shader
           enabled: true
+        BoxColliderComponent:
+          size:
+            - 0.800000012
+            - 0.899999976
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
       Children: ~
     - name: Pequeña_Piedra3_Pablo.001_level1
       prefabPath: ""
@@ -60437,6 +60527,732 @@ GameObject135:
             - 76.916122680154842
             - 7.4319052696228027
             - 3.6912219868472675
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 6071856329190670583
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 435.45571899414062
+            - 3.0125105381011963
+            - 157.14541625976562
+          localRotation:
+            - -1.1600447982592346
+            - 43.362847164443821
+            - -1.1074938727810881
+          localScale:
+            - 9.3872044703916142
+            - 7.4319051836369807
+            - 3.6912222416513041
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 4730495020928455133
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 359.92279052734375
+            - 3.0125107765197754
+            - 118.63552856445312
+          localRotation:
+            - 180
+            - -83.05934675683703
+            - 180
+          localScale:
+            - 76.916153952491868
+            - 7.4319052696228027
+            - 3.6912229598507422
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 14353090822543477099
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 358.91305541992188
+            - 3.0125105381011963
+            - 66.139381408691406
+          localRotation:
+            - 0
+            - -69.399658417400815
+            - 0
+          localScale:
+            - 32.93203345864351
+            - 7.4319052696228027
+            - 3.6912231059630347
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 584587763274980522
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 317.81427001953125
+            - 3.0125100612640381
+            - 57.555503845214844
+          localRotation:
+            - 180
+            - -12.192759363608621
+            - 180
+          localScale:
+            - 75.248341358827844
+            - 7.4319052696228027
+            - 3.6912234603892871
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy
+      prefabPath: ""
+      uuid: 3594478310264552595
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 398.79095458984375
+            - 3.0125107765197754
+            - 60.126976013183594
+          localRotation:
+            - 0
+            - 14.712252753542467
+            - 0
+          localScale:
+            - 45.594175445669521
+            - 22.270631790161133
+            - 42.98199216189834
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy
+      prefabPath: ""
+      uuid: 7448457156867432740
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 439.66387939453125
+            - 3.0125107765197754
+            - 49.608798980712891
+          localRotation:
+            - 0
+            - 9.417786377378496
+            - 0
+          localScale:
+            - 39.650371083938694
+            - 22.270631790161133
+            - 37.701607696664517
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy
+      prefabPath: ""
+      uuid: 15566405085367841483
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 448.885009765625
+            - 3.0125107765197754
+            - 70.537391662597656
+          localRotation:
+            - 0
+            - 57.427379696881168
+            - 0
+          localScale:
+            - 19.381339266419914
+            - 22.270631790161133
+            - 12.552568064013689
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy
+      prefabPath: ""
+      uuid: 10330969249007211539
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 426.56964111328125
+            - 3.0125110149383545
+            - 125.20607757568359
+          localRotation:
+            - 0
+            - 63.427576191690079
+            - 0
+          localScale:
+            - 18.667142922781416
+            - 22.270631790161133
+            - 27.451982125915112
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy
+      prefabPath: ""
+      uuid: 8279341028254357988
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 385.52639770507812
+            - 3.0125110149383545
+            - 126.81566619873047
+          localRotation:
+            - 0
+            - -13.983695528927347
+            - 0
+          localScale:
+            - 18.315165077855276
+            - 22.270631790161133
+            - 19.679179547794391
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy
+      prefabPath: ""
+      uuid: 8829719612661721487
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 403.55816650390625
+            - 3.0125110149383545
+            - 133.866455078125
+          localRotation:
+            - 0
+            - -13.983694469384606
+            - 0
+          localScale:
+            - 20.527037103771903
+            - 22.270631790161133
+            - 19.679179432568709
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 8604392482425732949
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 407.7877197265625
+            - 3.0125110149383545
+            - 111.33802032470703
+          localRotation:
+            - 0
+            - 30.009466507110211
+            - 0
+          localScale:
+            - 10.669476056551147
+            - 22.270631790161133
+            - 19.679175885593111
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 12409107500441470409
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 396.85018920898438
+            - 3.0125110149383545
+            - 118.32086181640625
+          localRotation:
+            - 0
+            - 33.920727937184232
+            - 0
+          localScale:
+            - 20.527039721969899
+            - 22.270631790161133
+            - 19.679176465075209
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 17325732448449259005
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 414.96026611328125
+            - 3.0125110149383545
+            - 110.37618255615234
+          localRotation:
+            - 0
+            - -1.8796991699652921
+            - 0
+          localScale:
+            - 17.404436345949058
+            - 22.270631790161133
+            - 19.679176083480726
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 7788055432278324130
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 424.79562377929688
+            - 3.0125110149383545
+            - 113.16482543945312
+          localRotation:
+            - 0
+            - 49.434288525412228
+            - 0
+          localScale:
+            - 17.404437742155206
+            - 22.270631790161133
+            - 17.247075950605204
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 4906396400998084724
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 432.3314208984375
+            - 3.0125110149383545
+            - 121.75542449951172
+          localRotation:
+            - 0
+            - 29.279239100527171
+            - 0
+          localScale:
+            - 17.404436691158185
+            - 22.270631790161133
+            - 12.486825155881002
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 6317602706766269603
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 418.31643676757812
+            - 3.0125110149383545
+            - 134.92329406738281
+          localRotation:
+            - 0
+            - 29.279239488276648
+            - 0
+          localScale:
+            - 23.177925811651573
+            - 22.270631790161133
+            - 12.48682432404188
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy
+      prefabPath: ""
+      uuid: 6403618815618469943
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 590.47967529296875
+            - 3.0125107765197754
+            - 14.264518737792969
+          localRotation:
+            - 0
+            - 14.712256164461278
+            - 0
+          localScale:
+            - 4.9375633527771683
+            - 22.270631790161133
+            - 5.5844205433466483
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy
+      prefabPath: ""
+      uuid: 1169847277070744347
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 606.19873046875
+            - 3.0125107765197754
+            - -52.461013793945312
+          localRotation:
+            - 0
+            - 14.712256164461278
+            - 0
+          localScale:
+            - 4.9375633527771683
+            - 22.270631790161133
+            - 5.5844205433466483
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 4081873769990889768
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 660.53216552734375
+            - 3.0125102996826172
+            - -4.3420705795288086
+          localRotation:
+            - 0
+            - 14.712256164461278
+            - 0
+          localScale:
+            - 4.9375633527771683
+            - 22.270631790161133
+            - 5.5844205433466483
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 8603554562784491522
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 724.756591796875
+            - 3.0125102996826172
+            - -73.196113586425781
+          localRotation:
+            - 0
+            - 14.712256164461278
+            - 0
+          localScale:
+            - 4.9375633527771683
+            - 22.270631790161133
+            - 5.5844205433466483
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy_copy_copy_copy
+      prefabPath: ""
+      uuid: 7023014870382976959
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 661.808349609375
+            - 3.0125095844268799
+            - -14.385470390319824
+          localRotation:
+            - 0
+            - 0.22086447989232177
+            - 0
+          localScale:
+            - 4.9375638647313789
+            - 22.270631790161133
+            - 4.5210072724930299
+        BoxColliderComponent:
+          size:
+            - 1
+            - 1
+            - 1
+          offset:
+            - 0
+            - 0
+            - 0
+          isTrigger: false
+      Children: ~
+    - name: Empty_copy_copy_copy
+      prefabPath: ""
+      uuid: 16837662514051420356
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 471.60348510742188
+            - 3.0125117301940918
+            - 108.95404815673828
+          localRotation:
+            - 0
+            - -34.093535110266984
+            - 0
+          localScale:
+            - 13.32869818979202
+            - 22.270631790161133
+            - 12.634847096035639
         BoxColliderComponent:
           size:
             - 1

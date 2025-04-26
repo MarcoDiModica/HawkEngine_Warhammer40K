@@ -10,25 +10,23 @@ public class EnergyBall : BaseAbilities
     public bool enabled;
     public float cooldown;
 
-
-    private float yHeight = 0.0f;
-    private float timer = 0;
-
-    public GameObject grenade;
+    public GameObject energyBall;
     Rigidbody rigidbody;
     BoxCollider collider;
     public bool canThrow = true;
 
-    private float explosionCooldown = 1.0f;
-    private float explosionTimer = 0.0f;
 
     private float abilityCooldown = 3.0f; // Cooldown de la habilidad
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
 
-   // private AudioSource sound;
+    private bool energyBallActive = false;
+    private float deathtimer = 3.0f;
+    private float deathTimerPrevention = 0.0f;
+
+    // private AudioSource sound;
     private string energyBallLaunch = "Assets/Audio/SFX/Weapons/Railgun/EnergyBallLaunch.wav";
-    private string energyBall= "Assets/Audio/SFX/Weapons/Railgun/EnergyBallMoving.wav";
+    private string energyBallAudio= "Assets/Audio/SFX/Weapons/Railgun/EnergyBallMoving.wav";
     //private AudioClip launchFX;
     //private AudioClip energyFX;
 
@@ -67,22 +65,19 @@ public class EnergyBall : BaseAbilities
             }
         }
 
-        if (rigidbody != null && collider != null)
+        if (energyBallActive)
         {
-            timer += deltaTime;
-
-            if (rigidbody.GetVelocity() != null && grenade != null && grenade.GetComponent<Transform>() != null)
+            deathTimerPrevention += deltaTime;
+            if (deathTimerPrevention >= deathtimer)
             {
-                float grenadeY = grenade.GetComponent<Transform>().GetPosition().Y;
-
-                if (rigidbody.GetVelocity().Y <= 0.1f && timer > 0.1f && yHeight > grenadeY)
+                if (energyBall != null)
                 {
-
+                    energyBallActive = false;
+                    Engineson.Destroy(energyBall);
+                    deathTimerPrevention = 0.0f;
                 }
             }
         }
-
-
     }
 
 
@@ -93,25 +88,16 @@ public class EnergyBall : BaseAbilities
         {
             Engineson.print("Lanzando granada...");
           //  sound.Play(launchFX);
-            grenade = Engineson.CreateGameObject("energyBall", null);
+            energyBall = Engineson.CreateGameObject("energyBall", null);
 
-            if (grenade == null)
+            if (energyBall == null)
             {
                 Engineson.print("ERROR: No se pudo crear la granada.");
                 return;
             }
             energyBall.AddScript("Ball");
             energyBall.GetComponent<Ball>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-            var energyBallFX = Engineson.CreateGameObject("ExplosionFX", null);
-            energyBall.AddChild(energyBallFX);
-            energyBallFX.AddComponent<ParticleFX>().ApplyPreset(12);
-            //energyBallFX.GetComponent<Transform>().SetLocalPosition(0, 0.5f, 0);
-            energyBallFX.GetComponent<ParticleFX>().EmitBurst(1);
-            energyBallFX.GetComponent<Transform>().SetPosition(
-                energyBall.GetComponent<Transform>().GetPosition().X,
-                energyBall.GetComponent<Transform>().GetPosition().Y,
-                energyBall.GetComponent<Transform>().GetPosition().Z
-            );
+            
             //sound.LoadAudio(energyBallSound);
             //sound.Play();
             canThrow = false;

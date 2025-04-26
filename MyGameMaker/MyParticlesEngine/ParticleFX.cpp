@@ -490,7 +490,7 @@ namespace ParticlePresets {
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
 	"Assets/Textures/ElectricityBall.png", // Texture path
-	false						   // Is Local Space
+	true						   // Is Local Space
 	};
 
 	const ParticlePreset RailGun_Auto = {

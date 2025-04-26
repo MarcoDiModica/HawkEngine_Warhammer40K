@@ -31,7 +31,16 @@ public class Ball : MonoBehaviour
         rigidbody.SetGravity(new Vector3(0.0f, 0.0f, 0.0f) * 20);
         rigidbody.AddForce(dir * 20);
         rigidbody.SetFriction(0.5f);
-        
+        var energyBallFX = Engineson.CreateGameObject("ExplosionFX", null);
+        gameObject.AddChild(energyBallFX);
+        energyBallFX.AddComponent<ParticleFX>().ApplyPreset(12);
+        //energyBallFX.GetComponent<ParticleFX>().EmitBurst(1);
+        energyBallFX.GetComponent<ParticleFX>().Play();
+        //energyBallFX.GetComponent<Transform>().SetPosition(
+        //    GetComponent<Transform>().GetPosition().X,
+        //    GetComponent<Transform>().GetPosition().Y,
+        //    GetComponent<Transform>().GetPosition().Z
+        //);
     }
     public override void Update(float deltaTime)
     {

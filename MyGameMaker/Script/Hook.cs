@@ -7,10 +7,10 @@ public class Hook : MonoBehaviour
     private Transform transform;
     private Rigidbody rigidbody;
     private GameObject player; 
-    //private AudioSource sound;
+
     private bool needsDestroy = false;
-//     private string hookTp = "Assets/Audio/SFX/Weapons/Shotgun/HookTp.wav";
-//     private AudioClip hookFX;
+    private string hookTp = "Assets/Audio/SFX/Weapons/Shotgun/HookTp.wav";
+
 
     public override void Awake() { }
 
@@ -22,16 +22,7 @@ public class Hook : MonoBehaviour
         if(player == null)
         {
             Engineson.print("No se ha encontrado el jugador.");
-        }
-
-//         sound = gameObject.GetComponent<AudioSource>();
-//         if (sound == null)
-//         {
-//             Engineson.print("Hook: Audio component not found");
-//         }
-// 
-//         hookFX = new AudioClip(hookTp, "HookTPFX", false, false);
-//         sound.LoadAudioClip(hookFX);
+        }       
     }
 
     public override void Update(float deltaTime) { }
@@ -61,7 +52,7 @@ public class Hook : MonoBehaviour
             Vector3 hookPosition = other.GetComponent<Transform>().GetPosition();
             player.GetComponent<Collider>().SetPosition(hookPosition);
             Engineson.print("Jugador teletransportado a la posición del hook.");
-            //sound.Play(hookFX);
+            Audio.PlayOneShot(hookTp);
         }
         Engineson.print("Colisión con " + other.name);
 

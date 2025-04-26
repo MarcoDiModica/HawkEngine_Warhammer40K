@@ -25,7 +25,7 @@ public class HookShot : BaseAbilities
     private float abilityTimer = 0.0f;    // Contador del cooldown
 
    // private AudioSource sound;
-    private string hookHit = "Assets/Audio/SFX/Weapons/Shotgun/HookLaunch.wav";
+    private string hookLaunchAudio = "Assets/Audio/SFX/Weapons/Shotgun/HookLaunch.wav";
    // private AudioClip hookFX;
 
 
@@ -36,14 +36,7 @@ public class HookShot : BaseAbilities
 
     public override void Start()
     {
-        //sound = gameObject.GetComponent<AudioSource>();
-        //if (sound == null)
-        //{
-        //    Engineson.print("PlayerShooting: Audio component not found");
-        //}
-
-        //hookFX = new AudioClip(hookHit, "HookFX", false, false);
-        //sound.LoadAudioClip(hookFX);
+        
     }
 
     public override void Update(float deltaTime)
@@ -89,7 +82,7 @@ public class HookShot : BaseAbilities
         }
 
         Engineson.print("Lanzando hook...");
-       // sound.Play(hookFX);
+        Audio.Play(hookLaunchAudio);
         grenade = Engineson.CreateGameObject("Hook", null);
 
         if (grenade == null)

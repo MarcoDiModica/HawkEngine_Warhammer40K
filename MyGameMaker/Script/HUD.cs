@@ -35,6 +35,7 @@ public class HUD : MonoBehaviour
     private UITransform transform_hpBar;
     private UITransform transform_hpBarAnim;
     private UITransform transform_hpTempBar;
+    private UITransform transform_hpTempBarAnim;
     private UITransform transform_redThirstBar;
 
     private RedThirstManager redThirstManager;
@@ -60,6 +61,7 @@ public class HUD : MonoBehaviour
     private GameObject optionMenu;
 
     private UIImage hpBarAnimImage;
+    private UIImage hpTempBarAnimImage;
 
 
     void win()
@@ -96,6 +98,13 @@ public class HUD : MonoBehaviour
         return width;
     }
 
+    float CalculateHPTempBarAnimPos()
+    {
+        float hpTemp = playerData.GetHealthTemp();
+        float maxHpTemp = playerData.GetMaxHealthTemp();
+        float pos = (hpTemp / maxHpTemp) * 0.138f + 0.057f;
+        return pos;
+    }
 
     float CalculateRedThirstBarHeight()
     {
@@ -242,12 +251,20 @@ public class HUD : MonoBehaviour
         hpBarAnimImage.SetImageAnimationSpeed(0.5f);
         hpBarAnimImage.SetImageAnimationIndexLimit(4);
 
+        hpTempBarAnim = GameObject.Find("blood_animation_temp");
+        transform_hpTempBarAnim = hpTempBarAnim.GetComponent<UITransform>();
+        hpTempBarAnimImage = hpTempBarAnim.GetComponent<UIImage>();
+        hpTempBarAnimImage.SetImageAnimationSpeed(0.5f);
+        hpTempBarAnimImage.SetImageAnimationIndexLimit(4);
+
+
     }
     public override void Update(float deltaTime)
     {
         transform_hpBar.SetScaleUI(new Vector3(CalculateHPBarWidth(), 0.032f, 1.0f));
         transform_hpBarAnim.DOMoveXUI(CalculateHPBarAnimPos(), 0f, Modes.LINEAR);
         transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.018f, 1.0f));
+        transform_hpTempBarAnim.DOMoveXUI(CalculateHPTempBarAnimPos(), 0f, Modes.LINEAR);
         transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
 
         if (redThirstManager.biblePages >= 1)

@@ -24,7 +24,6 @@ ComponentMapper::ComponentMapper() {
     AddMapping(std::type_index(typeid(BoxColliderComponent)), "BoxCollider");
     AddMapping(std::type_index(typeid(BaseColliderComponent)), "Collider");
     AddMapping(std::type_index(typeid(RigidbodyComponent)), "Rigidbody");
-    AddMapping(std::type_index(typeid(SoundComponent)), "AudioSource");
     AddMapping(std::type_index(typeid(UIImageComponent)), "UIImage");
 	AddMapping(std::type_index(typeid(UIButtonComponent)), "UIButton");
 	AddMapping(std::type_index(typeid(UICanvasComponent)), "UICanvas");

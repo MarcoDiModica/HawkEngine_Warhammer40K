@@ -106,8 +106,6 @@ public:
 	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
 	PhysicsModule* physicsModule = nullptr;
-	AudioEngine* audioEngine = nullptr;
-
 
 	Mesh ElMesh;
 	std::unordered_map<std::string, std::shared_ptr<Image>> loadedPartTextures;

@@ -24,7 +24,7 @@
 
 MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
 	name = "MeshRenderer";
-	mesh = Mesh::CreateCube();
+	/*mesh = Mesh::CreateCube();
 	material = std::make_shared<Material>();
 
 	auto image = std::make_shared<Image>();
@@ -36,7 +36,7 @@ MeshRenderer::MeshRenderer(GameObject* owner) : Component(owner) {
 		owner->AddComponent<ShaderComponent>();
 	}
 	owner->GetComponent<ShaderComponent>()->SetOwnerMaterial(material.get());
-	owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::PBR);
+	owner->GetComponent<ShaderComponent>()->SetShaderType(ShaderType::PBR);*/
 }
 
 void MeshRenderer::Awake() {

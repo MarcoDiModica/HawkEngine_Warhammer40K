@@ -1,0 +1,410 @@
+name: Canvas_Main_Menu
+prefabPath: ""
+uuid: 17410387335041980135
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
+  SoundComponent:
+    name: SoundComponent
+    enabled: true
+  UITransformComponent:
+    name: UITransformComponent
+    enabled: true
+    position:
+      - 0
+      - 0
+      - 0
+    rotation:
+      - 0
+      - 0
+      - 0
+    scale:
+      - 1
+      - 1
+      - 1
+    pivot_offset:
+      - 0
+      - 1
+      - 0
+  ScriptComponents:
+    Script0:
+      name: MenuButtons
+      fields: ~
+Children:
+  - name: bg_menu
+    prefabPath: ""
+    uuid: 9788133063437924705
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0
+          - 0
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/menu_bg.png
+        use_animation: false
+        sprite_size:
+          - 2560
+          - 1440
+        sheet_size:
+          - 2560
+          - 1440
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~
+  - name: title
+    prefabPath: ""
+    uuid: 6625504129754297127
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.0140000004
+          - 0.0869999975
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.386999995
+          - 0.184
+          - 1
+        pivot_offset:
+          - 0
+          - 0
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/title.png
+        use_animation: false
+        sprite_size:
+          - 931
+          - 187
+        sheet_size:
+          - 931
+          - 187
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~
+  - name: new_game_button
+    prefabPath: ""
+    uuid: 15392935800367965204
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.177000001
+          - 0.361000001
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.181999996
+          - 0.0719999969
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/menu_newGame.png
+        use_animation: false
+        sprite_size:
+          - 469
+          - 103
+        sheet_size:
+          - 469
+          - 103
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: continue_button
+    prefabPath: ""
+    uuid: 6632715185754125999
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.177000001
+          - 0.469000012
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.181999996
+          - 0.0719999969
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/menu_continue.png
+        use_animation: false
+        sprite_size:
+          - 469
+          - 103
+        sheet_size:
+          - 469
+          - 103
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: options_button
+    prefabPath: ""
+    uuid: 14376951008711137567
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.177000001
+          - 0.565999985
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.181999996
+          - 0.0719999969
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/menu_options.png
+        use_animation: false
+        sprite_size:
+          - 469
+          - 103
+        sheet_size:
+          - 469
+          - 103
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~
+  - name: exit_button
+    prefabPath: ""
+    uuid: 16294529409072573873
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0.177000001
+          - 0.66900003
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 0.181999996
+          - 0.0719999969
+          - 1
+        pivot_offset:
+          - 0.5
+          - 0.5
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library/Textures/UI/menu_exit.png
+        use_animation: false
+        sprite_size:
+          - 469
+          - 103
+        sheet_size:
+          - 469
+          - 103
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+      UIButtonComponent:
+        name: UIButtonComponent
+        enabled: true
+        state: 1
+    Children: ~

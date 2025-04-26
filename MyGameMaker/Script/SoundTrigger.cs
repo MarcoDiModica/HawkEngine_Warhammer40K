@@ -2,7 +2,7 @@ using HawkEngine;
 public class SoundTrigger : MonoBehaviour
 {
     private Collider soundCollider;
-    private Audio sound;
+    private AudioSource sound;
 
     public override void Awake()
     {
@@ -17,7 +17,7 @@ public class SoundTrigger : MonoBehaviour
             Engineson.print("Error");
         }
 
-        sound = gameObject.GetComponent<Audio>();
+        sound = gameObject.GetComponent<AudioSource>();
 
     }
     public override void Update(float deltaTime)
@@ -28,7 +28,7 @@ public class SoundTrigger : MonoBehaviour
     {
         if(sound != null)
         {
-            sound.Play();
+            //sound.Play();
         }
         else
         {
@@ -40,7 +40,7 @@ public class SoundTrigger : MonoBehaviour
     {
         if (sound != null)
         {
-            sound.Stop();
+            //sound.Stop();
         }
         else
         {

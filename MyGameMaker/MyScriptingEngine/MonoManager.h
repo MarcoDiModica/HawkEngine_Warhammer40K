@@ -71,6 +71,8 @@ public:
 
 	MonoObject* CreateGameObjectReference(GameObject* nativeGO);
 
+	MonoObject* CreatePrefabReference(const std::string& path);
+
 	std::vector<std::string> scriptNames;
 private:
 	MonoManager();

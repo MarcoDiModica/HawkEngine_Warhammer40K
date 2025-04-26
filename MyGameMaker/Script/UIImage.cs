@@ -28,6 +28,13 @@ namespace HawkEngine
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void SetImageSpriteSize(float width, float height);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void SetImageAnimIndex(int index);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void PlayStopAnimation(bool play);
+
+
         //contructor
         private GameObject owner;
 

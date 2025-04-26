@@ -6,7 +6,7 @@ using System.Numerics;
 
 public class OptionMenu : MonoBehaviour
 {
-    private Audio sound;
+    //private Audio sound;
     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
     private GameObject pauseMenu;
     private List<string> resolutions = new List<string>();
@@ -91,7 +91,7 @@ public class OptionMenu : MonoBehaviour
     public override void Start()
     {
         Engineson.print("OptionMenu Start");
-        sound = gameObject.GetComponent<Audio>();
+        //sound = gameObject.GetComponent<Audio>();
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
         resolutions.Add("1280x720");
         resolutions.Add("1920x1080");
@@ -153,21 +153,21 @@ public class OptionMenu : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
             gameObject.SetActive(false);
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
         }
 
         if (rLeftButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             PreviousResolution();
         }
 
         if (rRightButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             NextResolution();
         }
 
@@ -201,8 +201,8 @@ public class OptionMenu : MonoBehaviour
 
         if (fullScreenButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
 
             if (fullScreenTick.IsActive())
             {
@@ -230,8 +230,8 @@ public class OptionMenu : MonoBehaviour
 
         if (masterLeftButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (masterVolume > 0)
             {
                 masterVolume -= 10;
@@ -252,8 +252,8 @@ public class OptionMenu : MonoBehaviour
 
         if (masterRightButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (masterVolume < 100)
             {
                 masterVolume += 10;
@@ -274,8 +274,8 @@ public class OptionMenu : MonoBehaviour
 
         if (bgmLeftButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (bgmVolume > 0)
             {
                 bgmVolume -= 10;
@@ -286,8 +286,8 @@ public class OptionMenu : MonoBehaviour
 
         if (bgmRightButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (bgmVolume < 100)
             {
                 bgmVolume += 10;
@@ -317,8 +317,8 @@ public class OptionMenu : MonoBehaviour
 
         if (sfxLeftButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (sfxVolume > 0)
             {
                 sfxVolume -= 10;
@@ -329,8 +329,8 @@ public class OptionMenu : MonoBehaviour
 
         if (sfxRightButton.GetState() == ButtonState.CLICKED)
         {
-            sound?.LoadAudio(buttonClicked);
-            sound?.Play();
+            //sound?.LoadAudio(buttonClicked);
+            //sound?.Play();
             if (sfxVolume < 100)
             {
                 sfxVolume += 10;

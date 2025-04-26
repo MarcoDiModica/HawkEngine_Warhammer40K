@@ -1,0 +1,55 @@
+name: estandarte.001_1
+prefabPath: ""
+uuid: 2837259723708779123
+tag: PowerUp
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - -30
+      - 3
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 0.0020000000949949026
+      - 0.0020000000949949026
+      - 0.0020000000949949026
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 11023065401122553535
+    material:
+      name: powerups_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 2.5
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: ChapterStandard
+      fields:
+        floatSpeed: 1.16855896
+        floatHeight: 0.5
+        rotationSpeed: 67.070488
+        lifeTime: 10
+Children: ~

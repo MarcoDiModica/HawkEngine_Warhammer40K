@@ -5,9 +5,9 @@ using System.Numerics;
 
 public class OptionMenu : MonoBehaviour
 {
-    private AudioSource sound;
-    private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-    private AudioClip buttonClickedFX;
+//     private AudioSource sound;
+//     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+//     private AudioClip buttonClickedFX;
     private GameObject pauseMenu;
     public override void Awake()
     {
@@ -16,7 +16,7 @@ public class OptionMenu : MonoBehaviour
     public override void Start()
     {
         //Engineson.print("OptionMenu Start");
-        sound = gameObject.GetComponent<AudioSource>();
+        //sound = gameObject.GetComponent<AudioSource>();
         pauseMenu = GameObject.Find("Canvas_PauseMenu");
 
         if (pauseMenu == null)
@@ -24,15 +24,15 @@ public class OptionMenu : MonoBehaviour
             Engineson.print("ERROR: No PauseMenu object found");
             return;
         }
-
-        if (sound == null)
-        {
-            Engineson.print("ERROR: Audio not found");
-            return;
-        }
-
-        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
-        sound.LoadAudioClip(buttonClickedFX);
+// 
+//         if (sound == null)
+//         {
+//             Engineson.print("ERROR: Audio not found");
+//             return;
+//         }
+// 
+//         buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+//         sound.LoadAudioClip(buttonClickedFX);
 
     }
 
@@ -51,7 +51,7 @@ public class OptionMenu : MonoBehaviour
                 pauseMenu.SetActive(true);
             }
             gameObject.SetActive(false);
-            sound?.Play(buttonClickedFX);
+          //  sound?.Play(buttonClickedFX);
         }
 
         //if (gamePlaycanvas.GetComponent<UIButton>().GetState() == ButtonState.HOVERED)

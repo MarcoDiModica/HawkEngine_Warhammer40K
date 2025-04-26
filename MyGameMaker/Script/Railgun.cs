@@ -17,11 +17,11 @@ public class Railgun : BaseWeapon
     public LaserBeam laserBeam;
     public PlayerData playerData;
 
-    private AudioSource sound;
-    private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
-    private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
-    private AudioClip shotFX;
-    private AudioClip reloadFX;
+//     private AudioSource sound;
+//     private string railgunReload = "Assets/Audio/SFX/Weapons/Railgun/RailgunCharge.wav";
+//     private string railgunShot = "Assets/Audio/SFX/Weapons/Railgun/RailgunShot.wav";
+//     private AudioClip shotFX;
+//     private AudioClip reloadFX;
 
     private float timeSinceLastShot = 0.0f;
     public enum RailgunMode
@@ -49,22 +49,22 @@ public class Railgun : BaseWeapon
         timeToLerp = 2;
         ammoType = AmmoType.RAILGUN;
         transform = gameObject.GetComponent<Transform>();
-        sound = gameObject.GetComponent<AudioSource>();
+       // sound = gameObject.GetComponent<AudioSource>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         toggleMode = gameObject.GetComponent<ToggleMode>();
         energyBall = gameObject.GetComponent<EnergyBall>();
         laserBeam = gameObject.GetComponent<LaserBeam>();
 
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
-
-        shotFX = new AudioClip(railgunShot, "RailgunShotFX", false, false);
-        reloadFX = new AudioClip(railgunReload, "RailgunReloadFX", false, false);
-        sound.LoadAudioClip(shotFX);
-        sound.LoadAudioClip(reloadFX);
+//         if (sound == null)
+//         {
+//             Engineson.print("PlayerShooting: Audio component not found");
+//         }
+// 
+//         shotFX = new AudioClip(railgunShot, "RailgunShotFX", false, false);
+//         reloadFX = new AudioClip(railgunReload, "RailgunReloadFX", false, false);
+//         sound.LoadAudioClip(shotFX);
+//         sound.LoadAudioClip(reloadFX);
     }
 
     public override void Update(float deltaTime)
@@ -165,7 +165,7 @@ public class Railgun : BaseWeapon
             {
                 currentMagazineAmmo--;
             }
-            sound?.Play(shotFX);
+           // sound?.Play(shotFX);
             // Shoot logic
             RayCast rayBullet = new RayCast();
             Vector3 bulletPosition = transform.GetPosition() + new Vector3(0, 2.5f, 0);
@@ -214,7 +214,7 @@ public class Railgun : BaseWeapon
         isRecharged = true;
         coolTimer = 0f;
         currentMagazineAmmo = magazineSize;
-        sound?.Play(reloadFX);
+      //  sound?.Play(reloadFX);
     }
 
     public override void Reload()

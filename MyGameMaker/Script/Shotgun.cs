@@ -4,11 +4,11 @@ using HawkEngine;
 
 public class Shotgun : BaseWeapon
 {
-    private AudioSource sound;
-    private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
-    private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
-    private AudioClip shotFX;
-    private AudioClip reloadFX;
+//     private AudioSource sound;
+//     private string shotgunShot = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunShot.wav";
+//     private string shotgunReload = "Assets/Audio/SFX/Weapons/Shotgun/ShotgunReload.wav";
+//     private AudioClip shotFX;
+//     private AudioClip reloadFX;
 
 
     private PlayerController playerController;
@@ -35,21 +35,21 @@ public class Shotgun : BaseWeapon
         timeToLerp = 2;
         ammoType = AmmoType.SHOTGUN;
         transform = gameObject.GetComponent<Transform>();
-        sound = gameObject.GetComponent<AudioSource>();
+       // sound = gameObject.GetComponent<AudioSource>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         barrage = gameObject.GetComponent<Barrage>();
         hookShot = gameObject.GetComponent<HookShot>();
 
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
-
-        shotFX = new AudioClip(shotgunShot, "ShotgunShotFX", false, false);
-        reloadFX = new AudioClip(shotgunReload, "ShotgunReloadFX", false, false);
-        sound.LoadAudioClip(shotFX);
-        sound.LoadAudioClip(reloadFX);
+//         if (sound == null)
+//         {
+//             Engineson.print("PlayerShooting: Audio component not found");
+//         }
+// 
+//         shotFX = new AudioClip(shotgunShot, "ShotgunShotFX", false, false);
+//         reloadFX = new AudioClip(shotgunReload, "ShotgunReloadFX", false, false);
+//         sound.LoadAudioClip(shotFX);
+//         sound.LoadAudioClip(reloadFX);
 
     }
 
@@ -118,7 +118,7 @@ public class Shotgun : BaseWeapon
                 currentMagazineAmmo--;
             }
 
-            sound?.Play(shotFX);
+           // sound?.Play(shotFX);
             // Shoot logic
             int numProjectiles = 5;
             float spreadAngle = 45f;
@@ -175,7 +175,7 @@ public class Shotgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
-            sound?.Play(reloadFX);
+          //  sound?.Play(reloadFX);
 
             if (currentTotalAmmo >= magazineSize)
             {

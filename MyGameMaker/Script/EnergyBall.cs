@@ -26,11 +26,11 @@ public class EnergyBall : BaseAbilities
     private float abilityTimer = 0.0f;    // Contador del cooldown
     private float time = 0.0f;
 
-    private AudioSource sound;
-    private string energyBallLaunch = "Assets/Audio/SFX/Weapons/Railgun/EnergyBallLaunch.wav";
-    private string energyBall= "Assets/Audio/SFX/Weapons/Railgun/EnergyBallMoving.wav";
-    private AudioClip launchFX;
-    private AudioClip energyFX;
+//     private AudioSource sound;
+//     private string energyBallLaunch = "Assets/Audio/SFX/Weapons/Railgun/EnergyBallLaunch.wav";
+//     private string energyBall= "Assets/Audio/SFX/Weapons/Railgun/EnergyBallMoving.wav";
+//     private AudioClip launchFX;
+//     private AudioClip energyFX;
 
 
     public override void Awake()
@@ -39,16 +39,16 @@ public class EnergyBall : BaseAbilities
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<AudioSource>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
-
-        launchFX = new AudioClip(energyBallLaunch, "EnergyBallLaunchFX", false, false);
-        energyFX = new AudioClip(energyBall, "EnergyBallFX", false, false);
-        sound.LoadAudioClip(launchFX);
-        sound.LoadAudioClip(energyFX);
+//         sound = gameObject.GetComponent<AudioSource>();
+//         if (sound == null)
+//         {
+//             Engineson.print("PlayerShooting: Audio component not found");
+//         }
+// 
+//         launchFX = new AudioClip(energyBallLaunch, "EnergyBallLaunchFX", false, false);
+//         energyFX = new AudioClip(energyBall, "EnergyBallFX", false, false);
+//         sound.LoadAudioClip(launchFX);
+//         sound.LoadAudioClip(energyFX);
     }
 
     public override void Update(float deltaTime)
@@ -92,7 +92,7 @@ public class EnergyBall : BaseAbilities
         if (canThrow)
         {
             Engineson.print("Lanzando granada...");
-            sound.Play(launchFX);
+            //sound.Play(launchFX);
             grenade = Engineson.CreateGameObject("energyBall", null);
 
             if (grenade == null)
@@ -103,7 +103,7 @@ public class EnergyBall : BaseAbilities
 
             grenade.AddScript("Ball");
             grenade.GetComponent<Ball>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-            sound.Play(energyFX);
+            //sound.Play(energyFX);
 
             canThrow = false; // Inicia el cooldown
             abilityTimer = 0.0f;

@@ -11,12 +11,12 @@ public class Boltgun : BaseWeapon
     public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
-    private AudioSource sound;
-    private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
-    private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
+    //private AudioSource sound;
+    //private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
+    //private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
 
-    AudioClip shotFX;
-    AudioClip reloadFX;
+    //AudioClip shotFX;
+    //AudioClip reloadFX;
 
     GameObject projectile;
 
@@ -41,19 +41,19 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         arcSnare = gameObject.GetComponent<ArcSnare>();
-        sound = gameObject.GetComponent<AudioSource>();
+        //sound = gameObject.GetComponent<AudioSource>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
 
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
 
-        shotFX = new AudioClip(boltgunShot, "BoltgunShotFX", false, false);
-        reloadFX = new AudioClip(boltgunReload, "BoltgunReloadFX", false, false);
-        sound.LoadAudioClip(shotFX);
-        sound.LoadAudioClip(reloadFX);
+        //shotFX = new AudioClip(boltgunShot, "BoltgunShotFX", false, false);
+        //reloadFX = new AudioClip(boltgunReload, "BoltgunReloadFX", false, false);
+        //sound.LoadAudioClip(shotFX);
+        //sound.LoadAudioClip(reloadFX);
     }
 
     public override void Update(float deltaTime)
@@ -125,7 +125,7 @@ public class Boltgun : BaseWeapon
             }
 
             
-            sound.Play(shotFX);
+            //sound.Play(shotFX);
             // Shoot logic
 
             RayCast rayBullet = new RayCast();
@@ -175,7 +175,7 @@ public class Boltgun : BaseWeapon
         if (currentTotalAmmo > 0)
         {
             
-            sound.Play(reloadFX);
+            //sound.Play(reloadFX);
            
             if(currentTotalAmmo >= magazineSize)
             {

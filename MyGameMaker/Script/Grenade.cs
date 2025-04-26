@@ -16,9 +16,9 @@ public class Grenade : MonoBehaviour
     float deathtimer = 0.2f;
     public bool needsDestroy = false;
     float deathTimerPrevention = 0;
-    private AudioSource sound;
+    //private AudioSource sound;
     private string granadeExplosion = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunAbility1GrenadeExplosion.wav";
-    private AudioClip grenadeFX;
+    //private AudioClip grenadeFX;
 
     public override void Awake()
     {
@@ -26,14 +26,14 @@ public class Grenade : MonoBehaviour
     }
     public override void Start()
     {
-        sound = gameObject.GetComponent<AudioSource>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+        //sound = gameObject.GetComponent<AudioSource>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerShooting: Audio component not found");
+        //}
 
-        grenadeFX = new AudioClip(granadeExplosion, "GrenadeFX", false, false);
-        sound.LoadAudioClip(grenadeFX);
+        //grenadeFX = new AudioClip(granadeExplosion, "GrenadeFX", false, false);
+        //sound.LoadAudioClip(grenadeFX);
 
     }
 

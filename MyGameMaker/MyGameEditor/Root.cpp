@@ -41,6 +41,7 @@ std::shared_ptr<GameObject> environment;
 
 bool Root::Awake()
 {
+	resourceManager->LoadResources();
     SceneManagement = new SceneManager();
 	resourceManager = new ResourceManager();
 	Application->root->CreateScene("DefaultScene");
@@ -58,14 +59,13 @@ bool Root::Awake()
 
 bool Root::CleanUp()
 {
-    
+	resourceManager->CleanUp();
     return true;
 }
 
 bool Root::Start()
 {
 
-	resourceManager->LoadResources();
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");

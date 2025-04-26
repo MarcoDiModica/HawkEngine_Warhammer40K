@@ -125,3 +125,9 @@ void ResourceManager::SaveMaterials()
 	}
 
 }
+
+void ResourceManager::CleanUp() {
+	ClearAllImages();
+	ClearAllMaterials();
+	ClearAllMeshes();
+}

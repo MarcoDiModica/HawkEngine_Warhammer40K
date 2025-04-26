@@ -268,7 +268,18 @@ void App::FinishUpdate()
 #endif // !_BUILD	
 }
 
-bool App::CleanUP() { return true; }
+bool App::CleanUP() 
+{
+	for (const auto& module : modules)
+	{
+		if (module->active == false)
+			continue;
+
+		if (module->CleanUp() == false)
+			return false;
+	}
+	return true;
+}
 
 void App::AddLog(LogType type, const char* entry)
 {

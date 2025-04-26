@@ -45,7 +45,6 @@ bool Root::Awake()
 	resourceManager = new ResourceManager();
 	Application->root->CreateScene("DefaultScene");
 	Application->root->SetActiveScene("DefaultScene");
-    
 	
 	ShaderManager::GetInstance().Initialize();
 	MonoManager::GetInstance().EnableHotReloading();
@@ -214,7 +213,6 @@ bool Root::Start()
 	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
 	ParentGameObject(*walkingFX, *player);
 	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
-
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Level1SundayDelivery.Scene");
 
 	auto objMainCamera = CreateCameraObject("MainCamera");
@@ -251,11 +249,10 @@ bool Root::Start()
 	///*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.03f, 0.03f, 0.03f));
 
-
-	//auto cube = CreateCube("Cube");
-	//cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
+	auto cube = CreateCube("Cube");
+	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
 
 	
 	//// Test PowerUps
@@ -603,10 +600,10 @@ bool Root::Start()
 	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
 
 	//Floor
-	//auto floor = CreateCube("Floor");
-	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
+	/*auto floor = CreateCube("Floor");
+	floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
+	floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
+	auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);*/
 	
 	
     //auto envObj = CreateGameObject("Environment1");
@@ -1547,7 +1544,6 @@ void Root::CreateGameplayUI()
 	bible5Icon->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.137, 0.929, 0), glm::vec3(0.003, 0.020, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("HUD");
-	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreateMainMenuUI()
@@ -1555,7 +1551,6 @@ void Root::CreateMainMenuUI()
     auto canvas = CreateGameObject("Canvas_Main_Menu");
     canvas->AddComponent<UICanvasComponent>();
     canvas->AddComponent<UITransformComponent>();
-	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 
     auto menuImage = CreateGameObject("bg_menu");
     Application->root->ParentGameObject(*menuImage, *canvas);
@@ -1604,11 +1599,9 @@ void Root::CreateMainMenuUI()
     quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.177, 0.669, 0), glm::vec3(0.182, 0.072, 1));
 
 	auto emmptyMusic = CreateGameObject("EmptyMusic");
-	emmptyMusic->AddComponent<SoundComponent>(Application->audioEngine);
 	emmptyMusic->GetComponent<ScriptComponent>()->LoadScript("SceneAudio");
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
-	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreatePauseMenuUI() {
@@ -1656,7 +1649,6 @@ void Root::CreatePauseMenuUI() {
 	quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.5, 0.631, 0), glm::vec3(0.142, 0.083, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("PauseMenu");
-	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreateOptionsMenuUI() {
@@ -1672,7 +1664,6 @@ void Root::CreateOptionsMenuUI() {
 	menuImage->GetComponent<UITransformComponent>()->SetPivotOffset(glm::vec3(0, 0, 0));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("OptionMenu");
-	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreateWinUI() {
@@ -1704,8 +1695,6 @@ void Root::CreateWinUI() {
 	quitButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.579, 0.861, 0), glm::vec3(0.184, 0.064, 1));
 	
 	canvas->AddComponent<ScriptComponent>()->LoadScript("WinScreen");
-	canvas->AddComponent<SoundComponent>(Application->audioEngine);
-
 }
 
 void Root::CreateLoseUI() {
@@ -1745,7 +1734,6 @@ void Root::CreateLoseUI() {
 	restartButton->GetComponent<UITransformComponent>()->SetTransform(glm::vec3(0.282, 0.755, 0), glm::vec3(0.261, 0.059, 1));
 
 	canvas->AddComponent<ScriptComponent>()->LoadScript("LoseScreen");
-	canvas->AddComponent<SoundComponent>(Application->audioEngine);
 }
 
 void Root::CreateLocationSM() {
@@ -1778,21 +1766,21 @@ void Root::SetMainCamera(std::shared_ptr<GameObject> camera)
 	mainCamera = camera;
 }
 
-std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
-{
-    auto gameObject = CreateGameObject(name);
-    if (!gameObject) {
-        LOG(LogType::LOG_ERROR, "Failed to create audio object");
-        return nullptr;
-    }
-
-    // Add SoundComponent
-    auto soundComponent = gameObject->AddComponent<SoundComponent>(Application->audioEngine);
-    if (!soundComponent) {
-        LOG(LogType::LOG_ERROR, "Failed to add SoundComponent to audio object");
-        return nullptr;
-    }
-
-    LOG(LogType::LOG_OK, "Created audio object: %s", name.c_str());
-    return gameObject;
-}
+//std::shared_ptr<GameObject> Root::CreateAudioObject(const std::string& name)
+//{
+//    auto gameObject = CreateGameObject(name);
+//    if (!gameObject) {
+//        LOG(LogType::LOG_ERROR, "Failed to create audio object");
+//        return nullptr;
+//    }
+//
+//    // Add SoundComponent
+//    auto soundComponent = gameObject->AddComponent<SoundComponent>(Application->audioEngine);
+//    if (!soundComponent) {
+//        LOG(LogType::LOG_ERROR, "Failed to add SoundComponent to audio object");
+//        return nullptr;
+//    }
+//
+//    LOG(LogType::LOG_OK, "Created audio object: %s", name.c_str());
+//    return gameObject;
+//}

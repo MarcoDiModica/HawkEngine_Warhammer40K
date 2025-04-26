@@ -71,8 +71,6 @@ public:
 	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
 	PhysicsModule* physicsModule = nullptr;
-	AudioEngine* audioEngine = nullptr;
-
 
 	Mesh ElMesh;
 

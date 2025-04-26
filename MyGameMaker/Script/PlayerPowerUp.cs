@@ -19,17 +19,19 @@ public class PlayerPowerUp : MonoBehaviour
     private float piercingBulletsDuration = 5.0f;
     private float piercingBulletsTimer = 0.0f;
 
-    private AudioSource sound;
+   // private AudioSource sound;
     private string AmmunitionBlessingActivated = "Assets/Audio/SFX/PickUps/PowerUps/AmmunitionBlessing/AmmunitionBlessingActivated.wav";
     private string BlackHeartActivated = "Assets/Audio/SFX/PickUps/PowerUps/BlackHeart/BlackHeartActivated.wav";
     private string ChapterStandardActivated = "Assets/Audio/SFX/PickUps/PowerUps/ChapterStandard/ChapterStandardActivated.wav";
     private string MagnetEffect = "Assets/Audio/SFX/PickUps/PowerUps/Magnet/MagnetEffect.wav";
     private string MedicaeStimmActivated = "Assets/Audio/SFX/PickUps/PowerUps/MedicaeStimm/Injection Heal Sound Effect.wav";
-    private AudioClip ammunitionBlessingFX;
-    private AudioClip blackHeartFX;
-    private AudioClip chapterStandardFX;
-    private AudioClip magnetFX;
-    private AudioClip medicaeStimmFX;
+    private ParticleFX MedicaeStimmSpeed;
+    private ParticleFX AmmunitionBlessing;
+    //private AudioClip ammunitionBlessingFX;
+    //private AudioClip blackHeartFX;
+    //private AudioClip chapterStandardFX;
+    //private AudioClip magnetFX;
+    //private AudioClip medicaeStimmFX;
 
     public override void Awake()
     {
@@ -39,23 +41,26 @@ public class PlayerPowerUp : MonoBehaviour
     public override void Start()
     {
         playerController = gameObject.GetComponent<PlayerController>();
-        sound = gameObject.GetComponent<AudioSource>();
+       // sound = gameObject.GetComponent<AudioSource>();
 
-        if (sound == null)
-        {
-            Engineson.print("PlayerPowerUp: Audio component not found");
-        }
-
-        ammunitionBlessingFX = new AudioClip(AmmunitionBlessingActivated, "AmmunitionBlessingFX", false, false);
-        blackHeartFX = new AudioClip(BlackHeartActivated, "BlackHeartFX", false, false);
-        chapterStandardFX = new AudioClip(ChapterStandardActivated, "ChapterStandardFX", false, false);
-        magnetFX = new AudioClip(MagnetEffect, "MagnetFX", false, false);
-        medicaeStimmFX = new AudioClip(MedicaeStimmActivated, "MedicaeStimmFX", false, false);
-        sound.LoadAudioClip(ammunitionBlessingFX);
-        sound.LoadAudioClip(blackHeartFX);
-        sound.LoadAudioClip(chapterStandardFX);
-        sound.LoadAudioClip(magnetFX);
-        sound.LoadAudioClip(medicaeStimmFX);
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerPowerUp: Audio component not found");
+        //}
+        MedicaeStimmSpeed = GameObject.Find("SpeedBoostFX").GetComponent<ParticleFX>();
+        AmmunitionBlessing = GameObject.Find("AmmunitionBlessingFX").GetComponent<ParticleFX>();
+        AmmunitionBlessing.Stop();
+        MedicaeStimmSpeed.Stop();
+        //ammunitionBlessingFX = new AudioClip(AmmunitionBlessingActivated, "AmmunitionBlessingFX", false, false);
+        //blackHeartFX = new AudioClip(BlackHeartActivated, "BlackHeartFX", false, false);
+        //chapterStandardFX = new AudioClip(ChapterStandardActivated, "ChapterStandardFX", false, false);
+        //magnetFX = new AudioClip(MagnetEffect, "MagnetFX", false, false);
+        //medicaeStimmFX = new AudioClip(MedicaeStimmActivated, "MedicaeStimmFX", false, false);
+        //sound.LoadAudioClip(ammunitionBlessingFX);
+        //sound.LoadAudioClip(blackHeartFX);
+        //sound.LoadAudioClip(chapterStandardFX);
+        //sound.LoadAudioClip(magnetFX);
+        //sound.LoadAudioClip(medicaeStimmFX);
 
     }
 
@@ -64,9 +69,10 @@ public class PlayerPowerUp : MonoBehaviour
         if (hasMedicaeStimm)
         {
             medicaeStimmTimer += deltatime;
-
+            MedicaeStimmSpeed.Play();
             if (medicaeStimmTimer >= medicaeStimmDuration)
             {
+                MedicaeStimmSpeed.Stop();
                 hasMedicaeStimm = false;
                 medicaeStimmTimer = 0.0f;
                 playerController.playerData.movSpeed = playerController.playerData.stimmSpeed = 0;
@@ -77,8 +83,10 @@ public class PlayerPowerUp : MonoBehaviour
         if (hasAmmunitionBlessing)
         {
             ammunitionBlessingTimer += deltatime;
+            AmmunitionBlessing.Play();
             if (ammunitionBlessingTimer >= ammunitionBlessingDuration)
             {
+                AmmunitionBlessing.Stop();
                 hasAmmunitionBlessing = false;
                 ammunitionBlessingTimer = 0.0f;
                 playerController.playerData.infiniteBullets = false;
@@ -105,7 +113,7 @@ public class PlayerPowerUp : MonoBehaviour
             if (magnetTimer >= magnetDuration)
             {
                 hasMagnet = false;
-                sound.Stop(magnetFX);
+               // sound.Stop(magnetFX);
                 magnetTimer = 0.0f;
                 playerController.playerShooting.boltgun.shootCadence = playerController.playerShooting.boltgun.shootCadence * 1.5f;
                 playerController.playerShooting.shotgun.shootCadence = playerController.playerShooting.shotgun.shootCadence * 1.5f;
@@ -152,32 +160,32 @@ public class PlayerPowerUp : MonoBehaviour
             if (other.GetComponent<BlackHeart>() != null)
             {
                 other.GetComponent<BlackHeart>().OnPickUp(playerController);
-                sound.Play(blackHeartFX);
+               // sound.Play(blackHeartFX);
 
             }
             else if (other.GetComponent<MedicaeStimm>() != null)
             {
                 other.GetComponent<MedicaeStimm>().OnPickUp(playerController);
                 hasMedicaeStimm = true;
-                sound.Play(medicaeStimmFX);
+               // sound.Play(medicaeStimmFX);
             }
             else if (other.GetComponent<ChapterStandard>() != null)
             {
                 other.GetComponent<ChapterStandard>().OnPickUp(playerController);
-                sound.Play(chapterStandardFX);
+               // sound.Play(chapterStandardFX);
 
             }
             else if (other.GetComponent<AmmunitionBlessing>() != null)
             {
                 other.GetComponent<AmmunitionBlessing>().OnPickUp(playerController);
                 hasAmmunitionBlessing = true;
-                sound.Play(ammunitionBlessingFX);
+               // sound.Play(ammunitionBlessingFX);
             }
             else if (other.GetComponent<Magnet>() != null)
             {
                 other.GetComponent<Magnet>().OnPickUp(playerController);
                 hasMagnet = true;
-                sound.Play(magnetFX);
+              //  sound.Play(magnetFX);
             }
             else if(other.GetComponent<PiercingBullets>() != null)
             {

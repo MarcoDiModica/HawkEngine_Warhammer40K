@@ -283,8 +283,8 @@ void SceneSerializer::DeserializeComponents(GameObject* gameObject, const YAML::
 			shader->decode(componentData);
 		}
 		else if (componentName == "SoundComponent") {
-			auto sound = gameObject->AddComponent<SoundComponent>(Application->audioEngine);
-			sound->decode(componentData);
+			/*auto sound = gameObject->AddComponent<SoundComponent>(Application->audioEngine);
+			sound->decode(componentData);*/
 		}
 		else if (componentName == "AudioListener") {
 			/*auto listener = gameObject->AddComponent<AudioListener>();

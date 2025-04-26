@@ -26,6 +26,7 @@
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
 #include <MyGameEngine/PrefabManager.h>
+#include "MyAudioEngine/AudioManager.h"
 
 // GameObject
 
@@ -174,9 +175,6 @@ MonoObject* EngineBinds::GetSharpComponent(MonoObject* ref, MonoString* componen
     else if (componentName == "HawkEngine.Rigidbody") {
 		return GO->GetComponent<RigidbodyComponent>()->GetSharp();
 	}
-    else if (componentName == "HawkEngine.AudioSource") {
-        return GO->GetComponent<SoundComponent>()->GetSharp();
-    }
     else if (componentName == "HawkEngine.UIImage") {
         return GO->GetComponent<UIImageComponent>()->GetSharp();
     }
@@ -218,8 +216,6 @@ MonoObject* EngineBinds::AddSharpComponent(MonoObject* ref, int component) {
     case 3: _component = static_cast<Component*>(go->AddComponent<BoxColliderComponent>(Application->physicsModule));
 		break;
     case 4: _component = static_cast<Component*>(go->AddComponent<RigidbodyComponent>(Application->physicsModule));
-        break;
-    case 5: _component = static_cast<Component*>(go->AddComponent<SoundComponent>(Application->audioEngine));
         break;
     case 6: _component = static_cast<Component*>(go->AddComponent<UIImageComponent>());
 		break;
@@ -898,60 +894,117 @@ MonoObject* EngineBinds::Raycast(glm::vec3* origin, glm::vec3* direction, float 
     return nullptr;
 }
 
-
-void EngineBinds::Play(MonoObject* audioRef, MonoString* path)
-{
-    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-    char* C_path = mono_string_to_utf8(path);
-	if (sound) {
-		sound->PlaySound(C_path);
-	}
-
-}
-
-void EngineBinds::Stop(MonoObject* audioRef, MonoString* path)
-{
-    auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-    char* C_path = mono_string_to_utf8(path);
-	if (sound) {
-		sound->StopSound(C_path);
-	}
-}
-
-void EngineBinds::Pause(MonoObject* audioRef, MonoString* path)
-{
-	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-    char* C_path = mono_string_to_utf8(path);
-	if (sound) {
-		sound->PauseSound(C_path);
-	}
-}
-
-void EngineBinds::Resume(MonoObject* audioRef, MonoString* path)
-{
-	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-    char* C_path = mono_string_to_utf8(path);
-	if (sound) {
-		sound->ResumeSound(C_path);
-	}
-}
-
-void EngineBinds::SetVolume(MonoObject* audioRef, MonoString* path, float volume)
-{
-	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-    char* C_path = mono_string_to_utf8(path);
-	if (sound) {
-		sound->SetVolume(C_path, volume);
-	}
-}
-
-void EngineBinds::LoadAudioClip(MonoObject* audioRef, MonoString* path, bool loop)
-{
+int EngineBinds::AudioPlay(MonoString* path, bool loop) {
 	char* C_path = mono_string_to_utf8(path);
-	auto sound = ConvertFromSharpComponent<SoundComponent>(audioRef);
-	if (sound) {
-		sound->LoadSound(C_path, false, loop);
-	}
+	int result = AudioManager::Play(C_path, loop);
+	mono_free(C_path);
+	return result;
+}
+
+int EngineBinds::AudioPlayOneShot(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	int result = AudioManager::PlayOneShot(C_path);
+	mono_free(C_path);
+	return result;
+}
+
+void EngineBinds::AudioStop(int audioId) {
+	AudioManager::Stop(audioId);
+}
+
+void EngineBinds::AudioStopPath(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::Stop(C_path);
+	mono_free(C_path);
+}
+
+void EngineBinds::AudioPause(int audioId) {
+	AudioManager::Pause(audioId);
+}
+
+void EngineBinds::AudioPausePath(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::Pause(C_path);
+	mono_free(C_path);
+}
+
+void EngineBinds::AudioResume(int audioId) {
+	AudioManager::Resume(audioId);
+}
+
+void EngineBinds::AudioResumePath(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::Resume(C_path);
+	mono_free(C_path);
+}
+
+int EngineBinds::AudioPlayMusic(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	int result = AudioManager::PlayMusic(C_path);
+	mono_free(C_path);
+	return result;
+}
+
+void EngineBinds::AudioStopMusic(MonoString* path) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::StopMusic(C_path);
+	mono_free(C_path);
+}
+
+void EngineBinds::AudioStopAllMusic() {
+	AudioManager::StopAllMusic();
+}
+
+float EngineBinds::AudioGetMasterVolume() {
+	return AudioManager::GetMasterVolume();
+}
+
+void EngineBinds::AudioSetMasterVolume(float volume) {
+	AudioManager::SetMasterVolume(volume);
+}
+
+float EngineBinds::AudioGetMusicVolume() {
+	return AudioManager::GetMusicVolume();
+}
+
+void EngineBinds::AudioSetMusicVolume(float volume) {
+	AudioManager::SetMusicVolume(volume);
+}
+
+float EngineBinds::AudioGetSfxVolume() {
+	return AudioManager::GetSfxVolume();
+}
+
+void EngineBinds::AudioSetSfxVolume(float volume) {
+	AudioManager::SetSfxVolume(volume);
+}
+
+void EngineBinds::AudioSetVolumeById(int audioId, float volume) {
+	AudioManager::SetVolume(audioId, volume);
+}
+
+void EngineBinds::AudioSetVolumeByPath(MonoString* path, float volume) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::SetVolume(C_path, volume);
+	mono_free(C_path);
+}
+
+void EngineBinds::AudioStopAll() {
+	AudioManager::StopAll();
+}
+
+void EngineBinds::AudioPauseAll() {
+	AudioManager::PauseAll();
+}
+
+void EngineBinds::AudioResumeAll() {
+	AudioManager::ResumeAll();
+}
+
+void EngineBinds::AudioSchedulePlay(MonoString* path, float delay, bool loop) {
+	char* C_path = mono_string_to_utf8(path);
+	AudioManager::SchedulePlay(C_path, delay, loop);
+	mono_free(C_path);
 }
 
 void EngineBinds::SetTexture(MonoObject* uiImageRef, MonoString* path)
@@ -1567,12 +1620,29 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.RayCast::Raycast", (const void*)&EngineBinds::Raycast);
 
     // Audio
-    mono_add_internal_call("HawkEngine.AudioSource::PlaySound", (const void*)&EngineBinds::Play);
-    mono_add_internal_call("HawkEngine.AudioSource::StopSound", (const void*)&EngineBinds::Stop);
-    mono_add_internal_call("HawkEngine.AudioSource::PauseSound", (const void*)&EngineBinds::Pause);
-    mono_add_internal_call("HawkEngine.AudioSource::ResumeSound", (const void*)&EngineBinds::Resume);
-    mono_add_internal_call("HawkEngine.AudioSource::SetVolumeSound", (const void*)&EngineBinds::SetVolume);
-	mono_add_internal_call("HawkEngine.AudioSource::LoadSound", (const void*)&EngineBinds::LoadAudioClip);
+	mono_add_internal_call("HawkEngine.Audio::Play", (const void*)&EngineBinds::AudioPlay);
+	mono_add_internal_call("HawkEngine.Audio::PlayOneShot", (const void*)&EngineBinds::AudioPlayOneShot);
+	mono_add_internal_call("HawkEngine.Audio::Stop(int)", (const void*)&EngineBinds::AudioStop);
+	mono_add_internal_call("HawkEngine.Audio::Stop(string)", (const void*)&EngineBinds::AudioStopPath);
+	mono_add_internal_call("HawkEngine.Audio::Pause(int)", (const void*)&EngineBinds::AudioPause);
+	mono_add_internal_call("HawkEngine.Audio::Pause(string)", (const void*)&EngineBinds::AudioPausePath);
+	mono_add_internal_call("HawkEngine.Audio::Resume(int)", (const void*)&EngineBinds::AudioResume);
+	mono_add_internal_call("HawkEngine.Audio::Resume(string)", (const void*)&EngineBinds::AudioResumePath);
+	mono_add_internal_call("HawkEngine.Audio::PlayMusic", (const void*)&EngineBinds::AudioPlayMusic);
+	mono_add_internal_call("HawkEngine.Audio::StopMusic", (const void*)&EngineBinds::AudioStopMusic);
+	mono_add_internal_call("HawkEngine.Audio::StopAllMusic", (const void*)&EngineBinds::AudioStopAllMusic);
+	mono_add_internal_call("HawkEngine.Audio::GetMasterVolume", (const void*)&EngineBinds::AudioGetMasterVolume);
+	mono_add_internal_call("HawkEngine.Audio::SetMasterVolume", (const void*)&EngineBinds::AudioSetMasterVolume);
+	mono_add_internal_call("HawkEngine.Audio::GetMusicVolume", (const void*)&EngineBinds::AudioGetMusicVolume);
+	mono_add_internal_call("HawkEngine.Audio::SetMusicVolume", (const void*)&EngineBinds::AudioSetMusicVolume);
+	mono_add_internal_call("HawkEngine.Audio::GetSfxVolume", (const void*)&EngineBinds::AudioGetSfxVolume);
+	mono_add_internal_call("HawkEngine.Audio::SetSfxVolume", (const void*)&EngineBinds::AudioSetSfxVolume);
+	mono_add_internal_call("HawkEngine.Audio::SetVolume(int,float)", (const void*)&EngineBinds::AudioSetVolumeById);
+	mono_add_internal_call("HawkEngine.Audio::SetVolume(string,float)", (const void*)&EngineBinds::AudioSetVolumeByPath);
+	mono_add_internal_call("HawkEngine.Audio::StopAll", (const void*)&EngineBinds::AudioStopAll);
+	mono_add_internal_call("HawkEngine.Audio::PauseAll", (const void*)&EngineBinds::AudioPauseAll);
+	mono_add_internal_call("HawkEngine.Audio::ResumeAll", (const void*)&EngineBinds::AudioResumeAll);
+	mono_add_internal_call("HawkEngine.Audio::SchedulePlay", (const void*)&EngineBinds::AudioSchedulePlay);
 
     // UI Image
     mono_add_internal_call("HawkEngine.UIImage::SetImage", (const void*)&EngineBinds::SetTexture);

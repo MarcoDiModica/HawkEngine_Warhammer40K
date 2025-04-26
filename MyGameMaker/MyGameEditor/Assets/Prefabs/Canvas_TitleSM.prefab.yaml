@@ -1,0 +1,106 @@
+name: Canvas_TitleSM
+prefabPath: ""
+uuid: 7090175036182397745
+tag: Untagged
+active: true
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 0
+      - 0
+      - 0
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 1
+      - 1
+      - 1
+  UITransformComponent:
+    name: UITransformComponent
+    enabled: true
+    position:
+      - 0
+      - 0
+      - 0
+    rotation:
+      - 0
+      - 0
+      - 0
+    scale:
+      - 1
+      - 1
+      - 1
+    pivot_offset:
+      - 0
+      - 1
+      - 0
+  UICanvasComponent:
+    name: UICanvasComponent
+    enabled: true
+  ScriptComponents:
+    Script0:
+      name: LocationTitle
+      fields: ~
+Children:
+  - name: Title
+    prefabPath: ""
+    uuid: 7575903569088132683
+    tag: Untagged
+    active: true
+    isStatic: false
+    Components:
+      Transform_Component:
+        name: Transform_Component
+        enabled: true
+        localPosition:
+          - 0
+          - 0
+          - 0
+        localRotation:
+          - 0
+          - -0
+          - 0
+        localScale:
+          - 1
+          - 1
+          - 1
+      UITransformComponent:
+        name: UITransformComponent
+        enabled: true
+        position:
+          - 0
+          - 1
+          - 0
+        rotation:
+          - 0
+          - 0
+          - 0
+        scale:
+          - 1
+          - 1
+          - 1
+        pivot_offset:
+          - 0
+          - 1
+          - 0
+      UIImageComponent:
+        name: UIImageComponent
+        enabled: true
+        texture_path: Library\Textures\UI\location_sacarium_mortis.png
+        use_animation: false
+        sprite_size:
+          - 2560
+          - 1440
+        sheet_size:
+          - 2560
+          - 1440
+        sprite_offset:
+          - 0
+          - 0
+        anim_speed: 0
+    Children: ~

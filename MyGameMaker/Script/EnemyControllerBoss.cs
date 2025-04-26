@@ -15,9 +15,9 @@ public class EnemyControllerBoss : EnemyController
     private List<GameObject> clawHurtboxObjects = new List<GameObject>();
 
     //audio
-    private AudioSource music;
-    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-    private AudioClip musicClip;
+//     private AudioSource music;
+//     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+//     private AudioClip musicClip;
    
     //stats
     bool isCombatMusicPlaying = false;
@@ -88,7 +88,7 @@ public class EnemyControllerBoss : EnemyController
 
     public override void Awake()
     {
-        music = gameObject.GetComponent<AudioSource>();
+        //music = gameObject.GetComponent<AudioSource>();
     }
 
     public override void Start()
@@ -110,11 +110,11 @@ public class EnemyControllerBoss : EnemyController
             Engineson.print("ERROR: PlayerMovement requires a Collider component!");
             return;
         }
-        sound = gameObject.GetComponent<AudioSource>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+//         sound = gameObject.GetComponent<AudioSource>();
+//         if (sound == null)
+//         {
+//             Engineson.print("PlayerShooting: Audio component not found");
+//         }
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
         {
@@ -124,8 +124,8 @@ public class EnemyControllerBoss : EnemyController
         currentHealth = 399.0f;
         gameObject.tag = "Boss";
         isDead = false;
-        musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
-        sound.LoadAudioClip(musicClip);
+//         musicClip = new AudioClip(combatMusic, "BossMusic", true, false);
+//         sound.LoadAudioClip(musicClip);
 
     }
 
@@ -162,7 +162,7 @@ public class EnemyControllerBoss : EnemyController
                     {
                         if (isCombatMusicPlaying == false)
                         {
-                            sound.Play(musicClip);
+                            //sound.Play(musicClip);
                             isCombatMusicPlaying = true;
                         }
 
@@ -325,7 +325,7 @@ public class EnemyControllerBoss : EnemyController
             collider.SetActive(false);
             if (isCombatMusicPlaying == true)
             {
-                sound.Stop(musicClip);
+                //sound.Stop(musicClip);
                 isCombatMusicPlaying = false;
             }
         }

@@ -10,14 +10,14 @@ public class WinScreen : MonoBehaviour
     private UIButton button_quitButton;
     private UITransform transform_mainMenuButton;
     private UITransform transform_quitButton;
-    private AudioSource sound;
-    private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
-    private ButtonState prevState_quitButton = ButtonState.DEFAULT;
-
-    private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
-    private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
-    private AudioClip buttonHoveredFX;
-    private AudioClip buttonClickedFX;
+//     private AudioSource sound;
+//     private ButtonState prevState_mainMenuButton = ButtonState.DEFAULT;
+//     private ButtonState prevState_quitButton = ButtonState.DEFAULT;
+// 
+//     private string buttonHovered = "Assets/Audio/SFX/UI/UI_Hover.wav";
+//     private string buttonClicked = "Assets/Audio/SFX/UI/UI_Click.wav";
+//     private AudioClip buttonHoveredFX;
+//     private AudioClip buttonClickedFX;
 
     private int selectedButtonIndex = -1;
     private UIButton[] buttons;
@@ -43,7 +43,7 @@ public class WinScreen : MonoBehaviour
     {
         mainMenuButton = GameObject.Find("Menu_Button");
         quitButton = GameObject.Find("Quit_Button");
-        sound = gameObject.GetComponent<AudioSource>();
+        //sound = gameObject.GetComponent<AudioSource>();
         button_mainMenuButton = mainMenuButton.GetComponent<UIButton>();
         button_quitButton = quitButton.GetComponent<UIButton>();
 
@@ -61,14 +61,14 @@ public class WinScreen : MonoBehaviour
             return;
         }
 
-        if (sound == null)
-        {
-            Engineson.print("ERROR: No Audio object found");
-        }
-        buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
-        buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
-        sound.LoadAudioClip(buttonHoveredFX);
-        sound.LoadAudioClip(buttonClickedFX);
+//         if (sound == null)
+//         {
+//             Engineson.print("ERROR: No Audio object found");
+//         }
+//         buttonHoveredFX = new AudioClip(buttonHovered, "ButtonHoveredFX", false, false);
+//         buttonClickedFX = new AudioClip(buttonClicked, "ButtonClickedFX", false, false);
+//         sound.LoadAudioClip(buttonHoveredFX);
+//         sound.LoadAudioClip(buttonClickedFX);
     }
 
     private void NavigateMenu()
@@ -143,7 +143,7 @@ public class WinScreen : MonoBehaviour
 
                 if (!hasPlayedHoverSound[i])
                 {
-                    sound?.Play(buttonHoveredFX);
+                    //sound?.Play(buttonHoveredFX);
                     hasPlayedHoverSound[i] = true;
                 }
             }
@@ -171,12 +171,12 @@ public class WinScreen : MonoBehaviour
 
             if (selectedButton == button_mainMenuButton)
             {
-                sound?.Play(buttonClickedFX);
+                //sound?.Play(buttonClickedFX);
                 SceneManager.LoadScene("MainMenu");
             }
             else if (selectedButton == button_quitButton)
             {
-                sound?.Play(buttonClickedFX);
+                //sound?.Play(buttonClickedFX);
                 // Aquí puedes agregar la lógica para salir del juego
             }
         }
@@ -192,11 +192,11 @@ public class WinScreen : MonoBehaviour
             Engineson.print("ERROR: No Button or object found");
             return;
         }
-        if (sound == null)
-        {
-            Engineson.print("ERROR: No Audio object found");
-            return;
-        }
+//         if (sound == null)
+//         {
+//             Engineson.print("ERROR: No Audio object found");
+//             return;
+//         }
 
         NavigateMenu();
     }

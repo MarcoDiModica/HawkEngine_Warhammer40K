@@ -101,7 +101,6 @@ public class HookShot : BaseAbilities
         grenade.AddScript("Hook");
         
         grenade.GetComponent<Hook>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-        grenade.AddComponent<AudioSource>();
         grenade.GetComponent<Hook>().Start();
         
 

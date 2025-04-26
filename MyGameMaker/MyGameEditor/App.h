@@ -13,6 +13,8 @@
 //#include "../MyGameEngine/Mesh.h"
 #include "../MyPhysicsEngine/PhysicsModule.h"
 #include "../MyAudioEngine/AudioEngine.h"
+#include "../MyParticlesEngine/ParticleFX.h"
+#include "../MyGameEngine/Image.h"
 
 #define FIXED_INTERVAL 0.02
 #undef PROFILE
@@ -89,7 +91,7 @@ public:
 		for (const auto& path : texturePaths) {
 			auto image = std::make_shared<Image>();
 			if (image->LoadTexture(path)) {
-				Application->loadedPartTextures[path] = image;
+				loadedPartTextures[path] = image;
 			}
 			else {
 				std::cerr << "Failed to load texture: " << path << std::endl;
@@ -105,7 +107,9 @@ public:
 	EditorCamera* camera = nullptr;
 	SceneSerializer* scene_serializer = nullptr;
 	Gizmos* gizmos = nullptr;
+
 	PhysicsModule* physicsModule = nullptr;
+	AudioEngine* audioEngine = nullptr;
 
 	Mesh ElMesh;
 	std::unordered_map<std::string, std::shared_ptr<Image>> loadedPartTextures;

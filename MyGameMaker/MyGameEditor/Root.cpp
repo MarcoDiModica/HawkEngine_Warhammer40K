@@ -523,7 +523,7 @@ bool Root::Start()
 	//hormagaunt5->SetTag("Enemy");
 
 	auto mawloc = CreateGameObject("Mawloc");
-	mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
+	mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
 	mawloc->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
 	mawloc->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	mawloc->AddComponent<RigidbodyComponent>(Application->physicsModule);
@@ -537,13 +537,13 @@ bool Root::Start()
 	mawloc->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBoss");
 
 	auto mawlocTail = CreateGameObject("MawlocTail");
-	mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 15));
+	mawlocTail->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 5, 15));
 	mawlocTail->GetComponent<Transform_Component>()->SetScale(glm::vec3(2, 5, 2));
 	mawlocTail->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
 	mawlocTail->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	mawlocTail->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 2.5, 0));
 	auto mawlocTailMesh = CreateGameObjectWithPath("Assets/Meshes/MawlocTail.fbx");
 	mawlocTailMesh->SetName("MawlocTailMesh");
-	mawlocTailMesh->GetTransform()->SetScale(glm::vec3(0.035, 0.014, 0.035));
 	ParentGameObject(*mawlocTailMesh, *mawlocTail);
 	mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
 

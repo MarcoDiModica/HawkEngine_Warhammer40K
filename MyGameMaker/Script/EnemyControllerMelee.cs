@@ -21,17 +21,11 @@ public class EnemyControllerMelee : EnemyController
 
     // Audio
     bool isCombatMusicPlaying = false;
-    //private AudioSource music;
-    //private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-    //private string deathFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
-    //private string footStepFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
-    //private string meleeAttackFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
-    //private string hitFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
-    //private AudioClip musicClip;
-    //private AudioClip deathSound;
-    //private AudioClip footStepSound;
-    //private AudioClip meleeAttackSound;
-    //private AudioClip hitSound;
+    private const string MUSIC_COMBAT = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    private const string SFX_DEATH = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
+    private const string SFX_FOOTSTEP = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
+    private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
+    private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
 
     // Enemy Stats
     private float health = 100.0f;
@@ -53,7 +47,7 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Awake() 
     {
-        music = gameObject.GetComponent<Audio>();
+        //music = gameObject.GetComponent<Audio>();
     }
 
     public override void Start()
@@ -99,17 +93,6 @@ public class EnemyControllerMelee : EnemyController
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
         isDead = false;
-
-//         musicClip = new AudioClip(combatMusic, "CombatMusic", true, false);
-//         deathSound = new AudioClip(deathFX, "DeathFX", false, false);
-//         footStepSound = new AudioClip(footStepFX, "FootstepFX", true, false);
-//         meleeAttackSound = new AudioClip(meleeAttackFX, "MeleeAttackFX", false, false);
-//         hitSound = new AudioClip(hitFX, "HitFX", false, false);
-//         sound.LoadAudioClip(musicClip);
-//         sound.LoadAudioClip(deathSound);
-//         sound.LoadAudioClip(footStepSound);
-//         sound.LoadAudioClip(meleeAttackSound);
-//         sound.LoadAudioClip(hitSound);
     }
 
     public override void Update(float deltaTime)
@@ -120,8 +103,8 @@ public class EnemyControllerMelee : EnemyController
             {
                 currentState = EnemyState.DEAD;
                 anim.SetDeathAnimation();
-                isDead = true;
-                //sound?.Play(deathSound);
+                Audio.PlayOneShot(SFX_DEATH);
+                return;
             }
 
             if (currentState != EnemyState.STUNNED)
@@ -139,35 +122,7 @@ public class EnemyControllerMelee : EnemyController
                     // Chase
                     if (distanceToPlayer > minDistToChase)
                     {
-                        if (!isFootstepPlaying)
-                        {
-                            //sound?.Play(footStepSound);
-                            isFootstepPlaying = true;
-                            hasStoppedFootsteps = false;
-                        }
-                        if (isCombatMusicPlaying == false)
-                        {
-                            //sound?.Play(musicClip);
-                            isCombatMusicPlaying = true;
-                        }
-
-                        Vector3 currentVelocity = rb.GetVelocity();
-                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
-                        Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                        if (!isLeaping)
-                        {
-                            anim.SetRunningAnimation();
-                            if (desiredVelocity.LengthSquared() > 0)
-                            {
-                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                            }
-
-                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-                        }
-                        isRunning = true;
-
+                        currentState = EnemyState.CHASE;
                     }
 
                     // Rotation
@@ -188,7 +143,7 @@ public class EnemyControllerMelee : EnemyController
                             eulerRotation.X * ((float)Math.PI / 180.0f),
                             eulerRotation.Z * ((float)Math.PI / 180.0f)
                         );
-                        
+
                         collider.SetRotation(newRotation);
                     }
                 }
@@ -200,24 +155,6 @@ public class EnemyControllerMelee : EnemyController
                         rb.SetVelocity(Vector3.Zero);
                         anim.SetStandardIdleAnimation();
                     }
-                    isRunning = false;
-                    isFootstepPlaying = false;
-                    if (!hasStoppedFootsteps)
-                    {
-                        //sound?.Stop(footStepSound);
-                        hasStoppedFootsteps = true;
-                    }
-                }
-            }
-            else if (isStunned)
-            {
-                // Enemy Stun
-                stunTimer += deltaTime;
-                rb.SetVelocity(Vector3.Zero);
-                if (stunTimer >= stunDuration)
-                {
-                    isStunned = false;
-                    stunTimer = 0.0f;
                 }
             }
         }
@@ -230,7 +167,7 @@ public class EnemyControllerMelee : EnemyController
                 isFootstepPlaying = false;
                 if (!hasStoppedFootsteps)
                 {
-                    sound?.Stop();
+                    Audio.Stop(SFX_FOOTSTEP);
                     hasStoppedFootsteps = true;
                 }
                 break;
@@ -238,15 +175,13 @@ public class EnemyControllerMelee : EnemyController
             case EnemyState.CHASE:
                 if (!isFootstepPlaying)
                 {
-                    sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                    sound?.Play(true);
+                    Audio.Play(SFX_FOOTSTEP, true);
                     isFootstepPlaying = true;
                     hasStoppedFootsteps = false;
                 }
                 if (isCombatMusicPlaying == false)
                 {
-                    sound?.LoadAudio(combatMusic);
-                    sound?.Play(true);
+                    Audio.Play(MUSIC_COMBAT, true);
                     isCombatMusicPlaying = true;
                 }
 
@@ -311,7 +246,7 @@ public class EnemyControllerMelee : EnemyController
 
             case EnemyState.STUNNED:
                 rb.SetVelocity(Vector3.Zero);
-                
+
                 stunTimer += deltaTime;
                 if (stunTimer >= stunDuration)
                 {
@@ -356,8 +291,7 @@ public class EnemyControllerMelee : EnemyController
             pc.playerData.TakeDamage(clawDamage);
         }
 
-        sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
-        sound?.Play();
+        Audio.PlayOneShot(SFX_ATTACK);
     }
 
     public override void TakeDamage(float damage)
@@ -368,7 +302,7 @@ public class EnemyControllerMelee : EnemyController
             anim.SetHitAnimation();
             particles.ApplyPreset(19);
             particles.EmitBurst(1);
-            //sound?.Play(hitSound);
+            Audio.PlayOneShot(SFX_HIT);
         }
     }
 

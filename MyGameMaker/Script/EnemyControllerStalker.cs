@@ -27,8 +27,11 @@ public class EnemyControllerStalker : EnemyController
 
     // Audio
     bool isCombatMusicPlaying = false;
-    private Audio music;
-    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    private const string MUSIC_COMBAT = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    private const string SFX_DEATH = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
+    private const string SFX_FOOTSTEP = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
+    private const string SFX_ATTACK = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
+    private const string SFX_HIT = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
 
     // Invisibility
     private float invisibilityRange = 50.0f;
@@ -46,7 +49,7 @@ public class EnemyControllerStalker : EnemyController
 
     public override void Awake()
     {
-        music = gameObject.GetComponent<Audio>();
+
     }
 
     public override void Start()
@@ -71,12 +74,6 @@ public class EnemyControllerStalker : EnemyController
         { 
             Engineson.print("ERROR: Lictor Collider not found!"); 
             return; 
-        }
-
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("ERROR: Lictor Sound not found!");
         }
 
         enemyTransform = gameObject.transform;
@@ -111,8 +108,7 @@ public class EnemyControllerStalker : EnemyController
             {
                 currentState = EnemyState.DEAD;
                 //anim.SetDeathAnimation();
-                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
-                sound?.Play();
+                Audio.PlayOneShot(SFX_DEATH);
                 return;
             }
 
@@ -176,7 +172,7 @@ public class EnemyControllerStalker : EnemyController
                 isFootstepPlaying = false;
                 if (!hasStoppedFootsteps)
                 {
-                    sound?.Stop();
+                    Audio.Stop(SFX_FOOTSTEP);
                     hasStoppedFootsteps = true;
                 }
                 break;
@@ -184,15 +180,13 @@ public class EnemyControllerStalker : EnemyController
             case EnemyState.CHASE:
                 if (!isFootstepPlaying)
                 {
-                    sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                    sound?.Play(true);
+                    Audio.Play(SFX_FOOTSTEP, true);
                     isFootstepPlaying = true;
                     hasStoppedFootsteps = false;
                 }
                 if (isCombatMusicPlaying == false)
                 {
-                    sound?.LoadAudio(combatMusic);
-                    sound?.Play(true);
+                    Audio.Play(MUSIC_COMBAT, true);
                     isCombatMusicPlaying = true;
                 }
 
@@ -293,8 +287,7 @@ public class EnemyControllerStalker : EnemyController
             pc.playerData.TakeDamage(clawDamage);
         }
 
-        sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav");
-        sound?.Play();
+        Audio.PlayOneShot(SFX_ATTACK);
     }
 
     public override void TakeDamage(float damage)
@@ -305,8 +298,7 @@ public class EnemyControllerStalker : EnemyController
             //anim.SetHitAnimation();
             //particles.ApplyPreset(19);
             //particles.EmitBurst(1);
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
+            Audio.PlayOneShot(SFX_HIT);
         }
     }
 

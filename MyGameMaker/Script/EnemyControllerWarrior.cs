@@ -35,12 +35,12 @@ public class EnemyControllerWarrior : EnemyController
 
     // Audio
     bool isCombatMusicPlaying = false;
-    private Audio music;
+    //private Audio music;
     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
 
     public override void Awake()
     {
-        music = gameObject.GetComponent<Audio>();
+        //music = gameObject.GetComponent<Audio>();
     }
 
     public override void Start()
@@ -60,11 +60,11 @@ public class EnemyControllerWarrior : EnemyController
             return;
         }
 
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("ERROR: Tyranid Warrior Sound not found!");
-        }
+        //sound = gameObject.GetComponent<Audio>();
+        //if (sound == null)
+        //{
+        //    Engineson.print("ERROR: Tyranid Warrior Sound not found!");
+        //}
 
         enemyTransform = gameObject.transform;
         if (enemyTransform == null)

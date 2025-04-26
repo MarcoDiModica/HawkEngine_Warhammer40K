@@ -260,18 +260,24 @@ public class HUD : MonoBehaviour
         hpBarAnim = GameObject.Find("blood_animation_main");
         transform_hpBarAnim = hpBarAnim.GetComponent<UITransform>();
         hpBarAnimImage = hpBarAnim.GetComponent<UIImage>();
+        hpBarAnimImage.SetImageHasAnimation(true);
+        hpBarAnimImage.SetImageSpriteSize(50, 80);
         hpBarAnimImage.SetImageAnimationSpeed(0.5f);
         hpBarAnimImage.SetImageAnimationIndexLimit(4);
 
         hpTempBarAnim = GameObject.Find("blood_animation_temp");
         transform_hpTempBarAnim = hpTempBarAnim.GetComponent<UITransform>();
         hpTempBarAnimImage = hpTempBarAnim.GetComponent<UIImage>();
+        hpTempBarAnimImage.SetImageHasAnimation(true);
+        hpTempBarAnimImage.SetImageSpriteSize(50, 80);
         hpTempBarAnimImage.SetImageAnimationSpeed(0.5f);
         hpTempBarAnimImage.SetImageAnimationIndexLimit(4);
 
         redThirstBarAnim = GameObject.Find("thirst_animation");
         transform_redThirstBarAnim = redThirstBarAnim.GetComponent<UITransform>();
         redThirstBarAnimImage = redThirstBarAnim.GetComponent<UIImage>();
+        redThirstBarAnimImage.SetImageHasAnimation(true);
+        redThirstBarAnimImage.SetImageSpriteSize(175, 40);
         redThirstBarAnimImage.SetImageAnimationSpeed(0.5f);
         redThirstBarAnimImage.SetImageAnimationIndexLimit(6);
     }

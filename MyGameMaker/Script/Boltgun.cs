@@ -165,11 +165,15 @@ public class Boltgun : BaseWeapon
             float pitch = (float)(-Math.Asin(direction.Y) * (180.0 / Math.PI));
 
 
-            GameObject projectile = Engineson.CreateGameObject("Projectile", null);
-            projectile.AddComponent<MeshRenderer>();
-            projectile.transform.SetScale(0.2f, 0.2f, 0.2f);
+            GameObject projectile = Engineson.CreateGameObject("BoltgunProjectile", null);
+            //projectile.AddComponent<MeshRenderer>();
+            projectile.transform.SetScale(0.25f, 0.25f, 0.25f);
             projectile.transform.position = bulletStart;
             projectile.transform.SetRotation(pitch, yaw, 0f);
+            projectile.AddComponent<ParticleFX>();
+            projectile.GetComponent<ParticleFX>().ApplyPreset(14);
+            projectile.GetComponent<ParticleFX>().EmitBurst(1);
+            
 
             bulletsObjects.Add(projectile);
             bulletsPos.Add(bulletStart);

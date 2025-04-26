@@ -883,6 +883,8 @@ int main(int argc, char** argv) {
 		case AWAKE:
 
 			Application->physicsModule->Awake();
+			Application->audioEngine->Init();
+			Application->LoadAllParticleTextures();
 			AudioManager::Initialize();
 			if (Application->Awake()) { state = START; }
 			else { printf("Failed on Awake"); state = FAIL; }

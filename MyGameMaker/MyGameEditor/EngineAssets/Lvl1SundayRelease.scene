@@ -19522,7 +19522,7 @@ GameObject0:
             - -7994.11376953125
           localRotation:
             - -2.5044781914217818e-06
-            - -36.000396799353098
+            - -36.000396799353105
             - 179.99999499104371
           localScale:
             - 31.999998092651367
@@ -19556,7 +19556,7 @@ GameObject0:
             - -8825.88671875
           localRotation:
             - -2.5044781914217818e-06
-            - -36.000396799353098
+            - -36.000396799353105
             - 179.99999499104371
           localScale:
             - 31.999998092651367
@@ -19624,7 +19624,7 @@ GameObject0:
             - -5642.91455078125
           localRotation:
             - -2.5044786341299888e-06
-            - 32.169242441788342
+            - 32.169242441788334
             - -179.99999499104359
           localScale:
             - 31.999998092651367
@@ -28294,7 +28294,7 @@ GameObject0:
             - 4407.87109375
           localRotation:
             - -90
-            - -30.312856223474956
+            - -30.312856223474963
             - 0
           localScale:
             - 100
@@ -43246,7 +43246,7 @@ GameObject76:
             - -56.713325500488281
           localRotation:
             - 0
-            - -45.454913554103321
+            - -45.454913554103328
             - 0
           localScale:
             - 10.014464378356934
@@ -45356,9 +45356,9 @@ GameObject81:
       Script0:
         name: MedicaeStimm
         fields:
-          floatSpeed: 0.97391963
+          floatSpeed: 1.0666486
           floatHeight: 0.5
-          rotationSpeed: 94.5150681
+          rotationSpeed: 64.4885406
           lifeTime: 10
   Children: ~
 GameObject82:
@@ -45409,9 +45409,9 @@ GameObject82:
       Script0:
         name: ChapterStandard
         fields:
-          floatSpeed: 1.11254859
+          floatSpeed: 0.779650271
           floatHeight: 0.5
-          rotationSpeed: 72.4003525
+          rotationSpeed: 44.2512093
           lifeTime: 10
   Children: ~
 GameObject83:
@@ -45462,9 +45462,9 @@ GameObject83:
       Script0:
         name: BlackHeart
         fields:
-          floatSpeed: 1.26631415
+          floatSpeed: 1.54334807
           floatHeight: 0.5
-          rotationSpeed: 50.1699677
+          rotationSpeed: 79.0754089
           lifeTime: 10
   Children: ~
 GameObject84:
@@ -45515,9 +45515,9 @@ GameObject84:
       Script0:
         name: Magnet
         fields:
-          floatSpeed: 1.08340561
+          floatSpeed: 1.43031955
           floatHeight: 0.5
-          rotationSpeed: 80.5106201
+          rotationSpeed: 48.4854774
           lifeTime: 10
   Children: ~
 GameObject85:
@@ -45568,9 +45568,9 @@ GameObject85:
       Script0:
         name: AmmunitionBlessing
         fields:
-          floatSpeed: 1.53370833
+          floatSpeed: 1.07631969
           floatHeight: 0.5
-          rotationSpeed: 67.2819214
+          rotationSpeed: 76.5048447
           lifeTime: 10
   Children: ~
 GameObject86:
@@ -45793,9 +45793,9 @@ GameObject88:
       Script0:
         name: ShotgunShells
         fields:
-          floatSpeed: 1.83727002
+          floatSpeed: 1.11089361
           floatHeight: 0.5
-          rotationSpeed: 98.3547974
+          rotationSpeed: 89.6270523
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -45847,9 +45847,9 @@ GameObject89:
       Script0:
         name: BoltgunBullets
         fields:
-          floatSpeed: 1.98708403
+          floatSpeed: 1.10841441
           floatHeight: 0.5
-          rotationSpeed: 38.6040955
+          rotationSpeed: 92.6755753
           lifeTime: 30
           isDetected: false
   Children: ~
@@ -48454,7 +48454,49 @@ GameObject92:
       Script0:
         name: PiercingBullets
         fields:
-          floatSpeed: 1.80113924
+          floatSpeed: 1.61716104
           floatHeight: 0.5
-          rotationSpeed: 70.2146149
+          rotationSpeed: 95.3023376
+  Children: ~
+GameObject93:
+  name: Cube
+  prefabPath: ""
+  uuid: 14171564815784552896
+  tag: Untagged
+  active: false
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    Shader:
+      name: Shader
+      enabled: true
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 0
+      material:
+        name: ""
+      color:
+        - 1
+        - 1
+        - 1
+    ScriptComponents:
+      Script0:
+        name: Test1
+        fields: ~
   Children: ~

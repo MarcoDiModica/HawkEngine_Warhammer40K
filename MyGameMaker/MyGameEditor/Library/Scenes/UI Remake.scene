@@ -58,15 +58,6 @@ GameObject1:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -117,6 +108,15 @@ GameObject1:
         useColorGradient: false
         texturePath: Assets/Textures/Smoke30Frames.png
       particleType: 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -367,8 +367,8 @@ GameObject1:
                     - -2.0992075633330387e-08
                   localRotation:
                     - -3.9215701005733474
-                    - -1.0997620039268603e-07
-                    - -2.3444309374034395e-09
+                    - -1.0997623855059877e-07
+                    - -2.3444300288497217e-09
                   localScale:
                     - 1
                     - 1.0000001192092896
@@ -630,9 +630,9 @@ GameObject1:
                                             - 0.13784031569957733
                                             - 6.5996835774129181e-10
                                           localRotation:
-                                            - -1.1652078841556415
-                                            - 6.5606754222053336
-                                            - -17.755869939833762
+                                            - -1.1652075663082411
+                                            - 6.5606754716727655
+                                            - -17.75586992211948
                                           localScale:
                                             - 0.99999958276748657
                                             - 0.99999982118606567
@@ -652,9 +652,9 @@ GameObject1:
                                                 - 0.10049884766340256
                                                 - -2.5751536014695375e-08
                                               localRotation:
-                                                - 0.42800700658066265
-                                                - 0.6246869433625204
-                                                - -54.245444859568714
+                                                - 0.42800709172533807
+                                                - 0.62468677713296306
+                                                - -54.245444859725424
                                               localScale:
                                                 - 1
                                                 - 1.0000002384185791
@@ -1312,9 +1312,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - 4.5383527819361019e-10
+                - 4.5988059012231872e-10
                 - -89.690738643731535
-                - -179.99999134858476
+                - -179.99999134857873
               localScale:
                 - 1
                 - 1
@@ -1334,9 +1334,9 @@ GameObject1:
                 - 0.37999996542930603
                 - 0.20000019669532776
               localRotation:
-                - -73.329139353138117
-                - 82.371995817105173
-                - 106.81138456247615
+                - -73.329177791308368
+                - 82.371942593170203
+                - 106.81134613024169
               localScale:
                 - 1
                 - 1.0000003576278687
@@ -1356,9 +1356,9 @@ GameObject1:
                 - -0.52000004053115845
                 - 0.14000017940998077
               localRotation:
-                - 152.94748015145714
-                - -87.530015157698656
-                - -152.96907501351839
+                - 152.94755434078229
+                - -87.52992278689787
+                - -152.96913591906699
               localScale:
                 - 0.99999994039535522
                 - 1
@@ -1378,9 +1378,9 @@ GameObject1:
                 - 0.54000002145767212
                 - 0.068000182509422302
               localRotation:
-                - -29.685973716343302
-                - -87.462694951734619
-                - -150.33828443338024
+                - -29.686007614624124
+                - -87.462700017110464
+                - -150.33824449652801
               localScale:
                 - 0.99999982118606567
                 - 1.0000001192092896
@@ -1466,9 +1466,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - -4.4663847827848088e-10
+                - -4.5901697413250328e-10
                 - 89.690738643731535
-                - -179.99999134859198
+                - -179.99999134857958
               localScale:
                 - 1
                 - 1
@@ -1488,9 +1488,9 @@ GameObject1:
                 - 0.41999998688697815
                 - 0.068000182509422302
               localRotation:
-                - -27.052808995417006
-                - 87.528172612341933
-                - 152.9689066447595
+                - -27.052921957312069
+                - 87.528378914765057
+                - 152.96878281174148
               localScale:
                 - 0.99999988079071045
                 - 1.0000001192092896
@@ -1800,15 +1800,6 @@ GameObject2:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -1828,6 +1819,15 @@ GameObject2:
         - 0
         - 1
         - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -1998,62 +1998,6 @@ GameObject2:
           sheet_size:
             - 200
             - 263
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-      Children: ~
-    - name: red_thirst_bar
-      uuid: 17252117799590548721
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.0189999994
-            - 0.948000014
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.0370000005
-            - 0.0799999982
-            - 1
-          pivot_offset:
-            - 0
-            - 1
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\healthbar_blood.png
-          use_animation: false
-          sprite_size:
-            - 265
-            - 51
-          sheet_size:
-            - 265
-            - 51
           sprite_offset:
             - 0
             - 0
@@ -3683,6 +3627,118 @@ GameObject2:
             - 0
           anim_speed: 0
       Children: ~
+    - name: thirst_animation
+      uuid: 3178218666524282036
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0189999994
+            - 0.880999982
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0370000005
+            - 0.0179999992
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\thirst_animation.png
+          use_animation: true
+          sprite_size:
+            - 175
+            - 40
+          sheet_size:
+            - 1225
+            - 40
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0.5
+      Children: ~
+    - name: red_thirst_bar
+      uuid: 17252117799590548721
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.0189999994
+            - 0.948000014
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0370000005
+            - 0.0799999982
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\healthbar_blood.png
+          use_animation: false
+          sprite_size:
+            - 265
+            - 51
+          sheet_size:
+            - 265
+            - 51
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
     - name: blood_animation_main
       uuid: 3877624576488717587
       tag: Untagged
@@ -3739,62 +3795,6 @@ GameObject2:
             - 0
           anim_speed: 0.5
       Children: ~
-    - name: blood_animation_temp
-      uuid: 14685901532547063155
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.197999999
-            - 0.930999994
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.00899999961
-            - 0.0179999992
-            - 1
-          pivot_offset:
-            - 0
-            - 0
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library\Textures\UI\blood_animationsheet.png
-          use_animation: true
-          sprite_size:
-            - 50
-            - 80
-          sheet_size:
-            - 250
-            - 80
-          sprite_offset:
-            - 100
-            - 0
-          anim_speed: 0.550000012
-      Children: ~
     - name: blood_bar1
       uuid: 14183943796467976168
       tag: Untagged
@@ -3850,6 +3850,62 @@ GameObject2:
             - 0
             - 0
           anim_speed: 0
+      Children: ~
+    - name: blood_animation_temp
+      uuid: 14685901532547063155
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.197999999
+            - 0.930999994
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.00899999961
+            - 0.0179999992
+            - 1
+          pivot_offset:
+            - 0
+            - 0
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\blood_animationsheet.png
+          use_animation: true
+          sprite_size:
+            - 50
+            - 80
+          sheet_size:
+            - 250
+            - 80
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0.5
       Children: ~
     - name: blood_bar2
       uuid: 1732315796872021132
@@ -4022,7 +4078,7 @@ GameObject2:
     - name: canister1
       uuid: 6530961750761040329
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4078,7 +4134,7 @@ GameObject2:
     - name: canister2
       uuid: 1284980077672726345
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4134,7 +4190,7 @@ GameObject2:
     - name: canister3
       uuid: 10156375490601195422
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4190,7 +4246,7 @@ GameObject2:
     - name: canister4
       uuid: 6684225447023609560
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4246,7 +4302,7 @@ GameObject2:
     - name: canister5
       uuid: 14665545162057101878
       tag: Untagged
-      active: true
+      active: false
       isStatic: false
       Components:
         Transform_Component:
@@ -4321,15 +4377,6 @@ GameObject3:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -4349,6 +4396,15 @@ GameObject3:
         - 0
         - 1
         - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -4674,6 +4730,15 @@ GameObject4:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -4693,15 +4758,6 @@ GameObject4:
         - 0
         - 1
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true

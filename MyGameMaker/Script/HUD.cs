@@ -8,6 +8,8 @@ public class HUD : MonoBehaviour
     private GameObject hpBarAnim;
     private GameObject hpTempBar;
     private GameObject hpTempBarAnim;
+    private GameObject redThirstBar;
+    private GameObject redThirstBarAnim;
     private GameObject Player;
     private PlayerData playerData;
     private PlayerShooting playerShootingScript;
@@ -37,9 +39,9 @@ public class HUD : MonoBehaviour
     private UITransform transform_hpTempBar;
     private UITransform transform_hpTempBarAnim;
     private UITransform transform_redThirstBar;
+    private UITransform transform_redThirstBarAnim;
 
     private RedThirstManager redThirstManager;
-    private GameObject redThirstBar;
 
     private GameObject nodash;
     private GameObject msup;
@@ -62,6 +64,7 @@ public class HUD : MonoBehaviour
 
     private UIImage hpBarAnimImage;
     private UIImage hpTempBarAnimImage;
+    private UIImage redThirstBarAnimImage;
 
 
     void win()
@@ -106,12 +109,21 @@ public class HUD : MonoBehaviour
         return pos;
     }
 
+
     float CalculateRedThirstBarHeight()
     {
         float redThirst = redThirstManager.GetRedThirstPoints();
         float maxRedThirst = 5;
         float height = (redThirst / maxRedThirst) * 0.08f;
         return height;
+    }
+
+    float CalculateRedThirstBarAnimPos()
+    {
+        float redThirst = redThirstManager.GetRedThirstPoints();
+        float maxRedThirst = 5;
+        float pos = 0.961f - (redThirst / maxRedThirst) * 0.08f;
+        return pos;
     }
 
 
@@ -257,7 +269,11 @@ public class HUD : MonoBehaviour
         hpTempBarAnimImage.SetImageAnimationSpeed(0.5f);
         hpTempBarAnimImage.SetImageAnimationIndexLimit(4);
 
-
+        redThirstBarAnim = GameObject.Find("thirst_animation");
+        transform_redThirstBarAnim = redThirstBarAnim.GetComponent<UITransform>();
+        redThirstBarAnimImage = redThirstBarAnim.GetComponent<UIImage>();
+        redThirstBarAnimImage.SetImageAnimationSpeed(0.5f);
+        redThirstBarAnimImage.SetImageAnimationIndexLimit(6);
     }
     public override void Update(float deltaTime)
     {
@@ -266,6 +282,7 @@ public class HUD : MonoBehaviour
         transform_hpTempBar.SetScaleUI(new Vector3(CalculateHPTempBarWidth(), 0.018f, 1.0f));
         transform_hpTempBarAnim.DOMoveXUI(CalculateHPTempBarAnimPos(), 0f, Modes.LINEAR);
         transform_redThirstBar.SetScaleUI(new Vector3(0.037f, CalculateRedThirstBarHeight(), 1.0f));
+        transform_redThirstBarAnim.DOMoveYUI(CalculateRedThirstBarAnimPos(), 0f, Modes.LINEAR);
 
         if (redThirstManager.biblePages >= 1)
         {
@@ -512,6 +529,10 @@ public class HUD : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             redThirstManager.AddBiblePages(1);
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            redThirstManager.AddRedThirstPoint(1);
         }
     }
 }

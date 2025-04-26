@@ -48,6 +48,7 @@
 
 #include <MyGameEngine/ImGuiCurveEditor.h>
 #include <MyGameEngine/PrefabManager.h>
+#include "DragDropManager.h"
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -1806,6 +1807,7 @@ private:
 					}
 				}
 			}
+			DragDropManager::draggedObject = nullptr;
 			ImGui::EndDragDropTarget();
 		}
 

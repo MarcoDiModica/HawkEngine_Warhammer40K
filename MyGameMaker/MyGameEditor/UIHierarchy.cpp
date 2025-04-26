@@ -8,13 +8,13 @@
 #include "Root.h"
 #include "MyGameEditor/Input.h"
 #include "MyGameEngine/GameObject.h"
+#include "DragDropManager.h"
 
 UIHierarchy::UIHierarchy(UIType type, std::string name) : UIElement(type, name) {
 }
 
 UIHierarchy::~UIHierarchy() {
-	delete draggedObject;
-	draggedObject = nullptr;
+
 }
 
 bool UIHierarchy::Draw() {
@@ -112,17 +112,24 @@ bool UIHierarchy::Draw() {
 			Application->input->ClearSelection();
 		}
 
-		if (draggedObject && ImGui::IsMouseReleased(ImGuiMouseButton_Left) && draggedObject->GetParent()) {
-			GameObject* p = draggedObject->GetParent();
-			auto dragTransform = draggedObject->GetTransform();
-			glm::dmat4 worldMatrix = dragTransform->GetMatrix();
+		if (DragDropManager::draggedObject && ImGui::IsMouseReleased(ImGuiMouseButton_Left) && DragDropManager::draggedObject->GetParent()) {
+			GameObject* p = DragDropManager::draggedObject->GetParent();
+			Transform_Component* dragTransform = DragDropManager::draggedObject->GetTransform();
 
-			currentScene->AddGameObject(draggedObject->shared_from_this());
+			if (dragTransform) {
+				glm::dmat4 worldMatrix = dragTransform->GetMatrix();
 
-			if (p) p->RemoveChild(draggedObject);
+				currentScene->AddGameObject(DragDropManager::draggedObject->shared_from_this());
+				if (p) {
+					p->RemoveChild(DragDropManager::draggedObject);
+				}
+				dragTransform = DragDropManager::draggedObject->GetTransform();
+				if (dragTransform) {
+					dragTransform->SetMatrix(worldMatrix);
+				}
+			}
 
-			dragTransform->SetMatrix(worldMatrix);
-			draggedObject = nullptr;
+			DragDropManager::draggedObject = nullptr;
 		}
 	}
 
@@ -239,7 +246,7 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 
 		ImGui::SetDragDropPayload("GAMEOBJECT", &obj, sizeof(GameObject*));
 		ImGui::Text("Dragging %s, gid %d", obj.GetName().c_str(), obj.GetID());
-		draggedObject = &obj;
+		DragDropManager::draggedObject = &obj;
 		ImGui::EndDragDropSource();
 	}
 
@@ -266,14 +273,14 @@ bool UIHierarchy::DrawSceneObject(GameObject& obj)
 		}
 	}
 
-	if (draggedObject) {
+	if (DragDropManager::draggedObject) {
 		if (ImGui::BeginDragDropTarget()) {
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
-				if (!draggedObject) {
-					draggedObject = *(GameObject**)payload->Data;
+				if (!DragDropManager::draggedObject) {
+					DragDropManager::draggedObject = *(GameObject**)payload->Data;
 				}
-				Application->root->ParentGameObjectPreserve(*draggedObject, obj);
-				draggedObject = nullptr;
+				Application->root->ParentGameObjectPreserve(*DragDropManager::draggedObject, obj);
+				DragDropManager::draggedObject = nullptr;
 				should_continue = false;
 			}
 			ImGui::EndDragDropTarget();

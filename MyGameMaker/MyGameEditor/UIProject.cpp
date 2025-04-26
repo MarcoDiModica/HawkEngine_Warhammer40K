@@ -16,6 +16,7 @@
 #include "MyGUI.h"
 #include "MyGameEngine/types.h"
 #include <MyGameEngine/PrefabManager.h>
+#include "DragDropManager.h"
 
 const std::string FOLDER_ICON_PATH = "EngineAssets/folder.png";
 const std::string MATERIAL_ICON_PATH = "EngineAssets/material.png";
@@ -26,7 +27,6 @@ const std::string AUDIO_ICON_PATH = "EngineAssets/audio.png";
 const std::string DEFAULT_ICON_PATH = "EngineAssets/default.png";
 const std::string SCRIPT_ICON_PATH = "EngineAssets/cscript.png";
 
-static GameObject* draggedObject = nullptr;
 static std::string newPrefabName = "";
 static bool showSaveAsPrefabPopup = false;
 static char nameBuffer[128];
@@ -230,7 +230,7 @@ void UIProject::DrawContentArea()
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAMEOBJECT")) {
             GameObject* go = *(GameObject**)payload->Data;
             if (go) {
-                draggedObject = go;
+                DragDropManager::draggedObject->GetParent();
                 newPrefabName = go->GetName();
                 strncpy(nameBuffer, newPrefabName.c_str(), sizeof(nameBuffer));
                 nameBuffer[sizeof(nameBuffer) - 1] = '\0';
@@ -267,11 +267,11 @@ void UIProject::DrawContentArea()
             else {
                 std::string path = PrefabManager::GetUniquePrefabPath(finalName);
                 PrefabManager::EnsurePrefabDirectoryExists();
-                if (draggedObject) {
-                    PrefabManager::SavePrefab(draggedObject->shared_from_this(), path);
+                if (DragDropManager::draggedObject) {
+                    PrefabManager::SavePrefab(DragDropManager::draggedObject->shared_from_this(), path);
                     LOG(LogType::LOG_INFO, "Prefab saved: %s", path.c_str());
                 }
-                draggedObject = nullptr;
+                DragDropManager::draggedObject = nullptr;
                 showSaveAsPrefabPopup = false;
                 ImGui::CloseCurrentPopup();
             }
@@ -279,7 +279,7 @@ void UIProject::DrawContentArea()
 
         ImGui::SameLine();
         if (ImGui::Button("Cancel")) {
-            draggedObject = nullptr;
+            DragDropManager::draggedObject = nullptr;
             showSaveAsPrefabPopup = false;
             ImGui::CloseCurrentPopup();
         }

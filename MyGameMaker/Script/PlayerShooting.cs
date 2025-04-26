@@ -20,6 +20,10 @@ public class PlayerShooting : MonoBehaviour
     private int abilityCount = 0;
     private const float abilityTimeLimit = 3f;
 
+    private bool firstShotReady = false;
+    private float firstShotTimer = 0f;
+    private float firstShotDelay = 0.04f;
+
     // Guns Scripts
     public Boltgun boltgun;
     public Shotgun shotgun;
@@ -148,9 +152,7 @@ public class PlayerShooting : MonoBehaviour
 
     }
 
-    private bool firstShotReady = false;
-    private float firstShotTimer = 0f;
-    private float firstShotDelay = 0.04f; // Ajusta esto si quieres más o menos delay
+
 
     public override void Update(float deltaTime)
     {
@@ -174,11 +176,11 @@ public class PlayerShooting : MonoBehaviour
         {
             if (!firstShotReady)
             {
-                //firstShotTimer += deltaTime;
+
                 if (firstShotTimer >= firstShotDelay)
                 {
                     firstShotReady = true;
-                    shootTimer = 0f; // Resetea shootTimer cuando habilitas disparo
+                    shootTimer = 0f;
                 }
             }
 

@@ -114,9 +114,11 @@
     <Compile Include="IEnemyController.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="Interaction.cs" />
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
     <Compile Include="LaserBeamObject.cs" />
+    <Compile Include="LocationTitle.cs" />
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="Mathf.cs" />

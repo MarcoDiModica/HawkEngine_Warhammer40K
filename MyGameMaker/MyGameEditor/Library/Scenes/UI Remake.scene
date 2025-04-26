@@ -58,15 +58,6 @@ GameObject1:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
-      volume: 1
-      is_music: true
-      is_spatial: false
-      auto_play: false
-      loop: false
     ParticleFX:
       name: ParticleFX
       enabled: true
@@ -117,6 +108,15 @@ GameObject1:
         useColorGradient: false
         texturePath: Assets/Textures/Smoke30Frames.png
       particleType: 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav
+      volume: 1
+      is_music: true
+      is_spatial: false
+      auto_play: false
+      loop: false
     CapsuleColliderComponent:
       size:
         - 1.70000005
@@ -367,8 +367,8 @@ GameObject1:
                     - -2.0992075633330387e-08
                   localRotation:
                     - -3.9215701005733474
-                    - -1.099762767357176e-07
-                    - -2.3444299149690838e-09
+                    - -1.0997646759329652e-07
+                    - -2.3444273588831943e-09
                   localScale:
                     - 1
                     - 1.0000001192092896
@@ -652,9 +652,9 @@ GameObject1:
                                                 - 0.10049884766340256
                                                 - -2.5751536014695375e-08
                                               localRotation:
-                                                - 0.42800717687001355
-                                                - 0.62468661090340571
-                                                - -54.245444859882127
+                                                - 0.42800734715936445
+                                                - 0.62468627844429092
+                                                - -54.245444860195541
                                               localScale:
                                                 - 1
                                                 - 1.0000002384185791
@@ -1334,9 +1334,9 @@ GameObject1:
                 - 0.37999996542930603
                 - 0.20000019669532776
               localRotation:
-                - -73.329117829065169
-                - 82.371859603987076
-                - 106.81139641764037
+                - -73.329094101135098
+                - 82.371843992441043
+                - 106.81138626283938
               localScale:
                 - 1
                 - 1.0000003576278687
@@ -1356,9 +1356,9 @@ GameObject1:
                 - -0.52000004053115845
                 - 0.14000017940998077
               localRotation:
-                - 152.94752092720447
-                - -87.530080872504342
-                - -152.96913390474714
+                - 152.9475061959462
+                - -87.530489600904872
+                - -152.96915661032506
               localScale:
                 - 0.99999994039535522
                 - 1
@@ -1378,9 +1378,9 @@ GameObject1:
                 - 0.54000002145767212
                 - 0.068000182509422302
               localRotation:
-                - -29.686065708290457
-                - -87.462889166935355
-                - -150.33820330983846
+                - -29.686105886933134
+                - -87.463296254344939
+                - -150.33819694514509
               localScale:
                 - 0.99999982118606567
                 - 1.0000001192092896
@@ -1488,9 +1488,9 @@ GameObject1:
                 - 0.41999998688697815
                 - 0.068000182509422302
               localRotation:
-                - -27.052908192244718
-                - 87.528236590938789
-                - 152.96880624023257
+                - -27.053214475821981
+                - 87.5285928427367
+                - 152.96850961641744
               localScale:
                 - 0.99999988079071045
                 - 1.0000001192092896
@@ -1800,15 +1800,6 @@ GameObject2:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -1828,6 +1819,15 @@ GameObject2:
         - 0
         - 1
         - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -4545,15 +4545,6 @@ GameObject3:
         - 1
         - 1
         - 1
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -4573,6 +4564,15 @@ GameObject3:
         - 0
         - 1
         - 0
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -4880,7 +4880,7 @@ GameObject4:
   name: Canvas_OptionsMenu
   uuid: 11199687553851354564
   tag: Untagged
-  active: true
+  active: false
   isStatic: false
   Components:
     Transform_Component:
@@ -4898,6 +4898,15 @@ GameObject4:
         - 1
         - 1
         - 1
+    SoundComponent:
+      name: SoundComponent
+      enabled: true
+      audio_path: ""
+      volume: 1
+      is_music: false
+      is_spatial: false
+      auto_play: false
+      loop: false
     UITransformComponent:
       name: UITransformComponent
       enabled: true
@@ -4917,15 +4926,6 @@ GameObject4:
         - 0
         - 1
         - 0
-    SoundComponent:
-      name: SoundComponent
-      enabled: true
-      audio_path: ""
-      volume: 1
-      is_music: false
-      is_spatial: false
-      auto_play: false
-      loop: false
     UICanvasComponent:
       name: UICanvasComponent
       enabled: true
@@ -6644,6 +6644,374 @@ GameObject4:
           sheet_size:
             - 28
             - 30
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+GameObject5:
+  name: Canvas_TitleSM
+  uuid: 7090175036182397745
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: LocationTitle
+  Children:
+    - name: Title
+      uuid: 7575903569088132683
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 1
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\location_sacarium_mortis.png
+          use_animation: false
+          sprite_size:
+            - 2560
+            - 1440
+          sheet_size:
+            - 2560
+            - 1440
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+GameObject6:
+  name: Canvas_TitleBoT
+  uuid: 589702757648470464
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: LocationTitle
+  Children:
+    - name: Title
+      uuid: 1973183082197185432
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0
+            - 1
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 1
+            - 1
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\location_butcher_of_truth.png
+          use_animation: false
+          sprite_size:
+            - 2560
+            - 1440
+          sheet_size:
+            - 2560
+            - 1440
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+GameObject7:
+  name: Canvas_Interaction
+  uuid: 9684721831398361971
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 0
+        - 0
+        - 0
+      localRotation:
+        - 0
+        - -0
+        - 0
+      localScale:
+        - 1
+        - 1
+        - 1
+    UITransformComponent:
+      name: UITransformComponent
+      enabled: true
+      position:
+        - 0
+        - 0
+        - 0
+      rotation:
+        - 0
+        - 0
+        - 0
+      scale:
+        - 1
+        - 1
+        - 1
+      pivot_offset:
+        - 0
+        - 1
+        - 0
+    UICanvasComponent:
+      name: UICanvasComponent
+      enabled: true
+    ScriptComponents:
+      Script0:
+        name: Interaction
+  Children:
+    - name: Box
+      uuid: 13130904076925775302
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.882000029
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.666999996
+            - 0.264999956
+            - 1
+          pivot_offset:
+            - 0.5
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_box.png
+          use_animation: false
+          sprite_size:
+            - 1482
+            - 392
+          sheet_size:
+            - 1482
+            - 392
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: Text
+      uuid: 9142295323120274569
+      tag: Untagged
+      active: false
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.5
+            - 0.882000029
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.666999996
+            - 0.264999986
+            - 1
+          pivot_offset:
+            - 0.5
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\dialogue_text.png
+          use_animation: false
+          sprite_size:
+            - 1482
+            - 392
+          sheet_size:
+            - 1482
+            - 392
           sprite_offset:
             - 0
             - 0

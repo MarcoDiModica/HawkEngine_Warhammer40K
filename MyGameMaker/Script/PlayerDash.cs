@@ -23,9 +23,9 @@ public class PlayerDash : MonoBehaviour
 
     private float targetFOV;
     private float zoomSpeed = 0.5f;
-//     private AudioSource sound;
-//     private string DashSound = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
-//     private AudioClip dashFX;
+   // private AudioSource sound;
+    private string DashSound = "Assets/Audio/SFX/Player/PlayerDash_ready.wav";
+    //private AudioClip dashFX;
 
 
 
@@ -41,16 +41,16 @@ public class PlayerDash : MonoBehaviour
 
         playerCamera = GameObject.Find("MainCamera");
         playerCamera.GetComponent<PlayerCamera>();    
-//         sound = gameObject.GetComponent<AudioSource>();
-// 
-// 
-//         if (sound == null)
-//         {
-//             Engineson.print("PlayerDash: Audio component not found");
-//         }
-// 
-//         dashFX = new AudioClip(DashSound, "DashFX", false, false);
-//         sound.LoadAudioClip(dashFX);
+       // sound = gameObject.GetComponent<AudioSource>();
+
+
+        //if (sound == null)
+        //{
+        //    Engineson.print("PlayerDash: Audio component not found");
+        //}
+
+        //dashFX = new AudioClip(DashSound, "DashFX", false, false);
+        //sound.LoadAudioClip(dashFX);
     }
 
     public override void Update(float deltaTime)
@@ -91,7 +91,7 @@ public class PlayerDash : MonoBehaviour
         {
             rb.AddForce(dashDirection * dashSpeed);
             currentDashTime -= deltaTime;
-           // sound.Play(dashFX);
+            //sound.Play(dashFX);
         }
         else
         {

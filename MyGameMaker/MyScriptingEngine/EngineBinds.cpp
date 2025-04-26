@@ -1127,6 +1127,12 @@ void EngineBinds::SetAnimation(MonoObject* animationRef, int index)
 	}
 }
 
+bool EngineBinds::IsAnimationFinished(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->IsAnimationFinished() : false;
+}
+
 int EngineBinds::GetAnimationIndex(MonoObject* animationRef)
 {
 	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
@@ -1668,6 +1674,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetLoop", (const void*)&EngineBinds::SetLoop);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::PlayAnimOnce", (const void*)&EngineBinds::PlayAnimOnce);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::IsAnimationFinished", (const void*)&EngineBinds::IsAnimationFinished);
 
 	// Tween
     

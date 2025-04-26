@@ -319,7 +319,41 @@ namespace ParticlePresets {
 		1.0f,						   // Min scale
 		1.0f,						   // Max scale
 		"Assets/Textures/muzzle.png", // Texture path
-		false						   // Is Local Space
+		true						   // Is Local Space
+	};
+
+	const ParticlePreset Shotgun_Shot = {
+		ParticleType::SHOTGUN_SHOT,
+		true,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		1.0f,                          // Alpha end
+		1,                          // Size start
+		1,                          // Size end
+		0.25f,                          // Min lifetime
+		0.25f,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		1,                         // Emission rate (particles per second)
+		EmitterShape::POINT,            // Shape
+		0.2f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(1024,778),			   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.05f,						   // Animation speed
+		0.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/ShotGun Muzzle Flash_Spritesheet_Yiwei.png", // Texture path
+		true						   // Is Local Space
 	};
 
 	const ParticlePreset Enemy_Dash = {
@@ -490,7 +524,7 @@ namespace ParticlePresets {
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
 	"Assets/Textures/RailGunAuto.png", // Texture path
-	false						   // Is Local Space
+	true						   // Is Local Space
 	};
 
 	const ParticlePreset RailGun_Semi = {
@@ -524,7 +558,7 @@ namespace ParticlePresets {
 	1.0f,						   // Min scale
 	1.0f,						   // Max scale
 	"Assets/Textures/RailGunSemi.png", // Texture path
-	false						   // Is Local Space
+	true						   // Is Local Space
 	};
 
 	const ParticlePreset Environment_Dropplet = {
@@ -662,7 +696,72 @@ namespace ParticlePresets {
 		"Assets/Textures/Medicae_Stim.png", // Texture path
 		false 						   // Is Local Space
 	};
-
+	const ParticlePreset Medicae_Stim_Speed = {
+		ParticleType::MEDICAE_STIM_SPEED,
+			false,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		0.17f,                          // Alpha start
+		0.17f,                          // Alpha end
+		0.8f,                          // Size start
+		8.0f,                          // Size end
+		0.1f,                          // Min lifetime
+		0.2f,                          // Max lifetime
+		0.0f,                          // Min speed
+		0.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,0.001f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		80.0f,                         // Emission rate (particles per second)
+		EmitterShape::CIRCLE,            // Shape
+		2.11f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(1024,778),			   // Sprite size
+		true,						   // Use animation
+		true,						   // Random animation Index
+		0.03f,						   // Animation speed
+		0.0f,						   // Start rotation
+		true,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Project3_Velocity_effect.png", // Texture path
+		false 						   // Is Local Space
+	};
+	const ParticlePreset Ammunition_Blessing = {
+		ParticleType::AMMUNITION_BLESSING,
+			false,						   // PlayOnAwake
+		5,						   // Duration (only if one-shot)
+		glm::vec3(1,1,1),   // Start color (light gray)
+		glm::vec3(1,1,1),   // End color (dark gray)
+		1.0f,                          // Alpha start
+		0.70f,                          // Alpha end
+		0.8f,                          // Size start
+		2.0f,                          // Size end
+		0.1f,                          // Min lifetime
+		1.70f,                          // Max lifetime
+		0.25f,                          // Min speed
+		2.0f,                          // Max speed
+		0.0f,						   // End Speed
+		glm::vec3(0.0f,2.601f,0.0f),	   // Gravity (negative for upward)
+		0,                          // Rotation speed
+		15.0f,                         // Emission rate (particles per second)
+		EmitterShape::SPHERE,            // Shape
+		1.84f,                          // Cone base radius
+		1.0f,                          // Cone height
+		20.0f,                         // Cone angle in degrees
+		glm::vec2(778,1024),			   // Sprite size
+		true,						   // Use animation
+		false,						   // Random animation Index
+		0.03f,						   // Animation speed
+		180.0f,						   // Start rotation
+		false,						   // Random rotation
+		1.0f,						   // Min scale
+		1.0f,						   // Max scale
+		"Assets/Textures/Project3_AmmunitionBlessing_effect_Yiwei.png", // Texture path
+		true 						   // Is Local Space
+	};
 	const ParticlePreset Blood_Splash = {
 		ParticleType::DEFAULT,
 		false,                         // PlayOnAwake
@@ -1159,6 +1258,9 @@ void ParticleFX::ApplyPreset(int particleID) {
 	case ParticleType::RIFFLE_SHOT:
 		preset = ParticlePresets::Riffle_Shot;
 		break;
+	case ParticleType::SHOTGUN_SHOT:
+		preset = ParticlePresets::Shotgun_Shot;
+		break;
 	case ParticleType::ENEMY_DASH:
 		preset = ParticlePresets::Enemy_Dash;
 		SetOneShot(true);
@@ -1199,6 +1301,14 @@ void ParticleFX::ApplyPreset(int particleID) {
 		preset = ParticlePresets::Blood_Splash;
 		SetOneShot(true);
 		break;
+	case ParticleType::MEDICAE_STIM_SPEED:
+		preset = ParticlePresets::Medicae_Stim_Speed;
+		SetOneShot(false);
+		break;
+	case ParticleType::AMMUNITION_BLESSING:
+		preset = ParticlePresets::Ammunition_Blessing;
+		SetOneShot(false);
+		break;
 	default:
 		preset = ParticlePresets::Medicae_Stim;
 		SetOneShot(false);
@@ -1235,6 +1345,7 @@ void ParticleFX::ApplyPreset(int particleID) {
 	minSize = preset.minSize;
 	maxSize = preset.maxSize;
 	randomAnimIndex = preset.randomAnimIndex;
+	isLocalSpace = preset.isLocalSpace;
 	SetTexture(preset.texturePath);
 }
 

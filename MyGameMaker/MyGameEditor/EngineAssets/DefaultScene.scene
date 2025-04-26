@@ -2,8 +2,7 @@ SceneMetadata:
   SceneName: DefaultScene
 GameObject0:
   name: MainCamera
-  prefabPath: ""
-  uuid: 11323722437014068529
+  uuid: 4202232475853622285
   tag: Untagged
   active: true
   isStatic: false
@@ -16,9 +15,9 @@ GameObject0:
         - 20
         - 14
       localRotation:
-        - -130.0000007620315
-        - 44.999999846574461
-        - 179.99999583712059
+        - -130.00000393764998
+        - 45.000002600858409
+        - -179.99999565358834
       localScale:
         - 1
         - 1
@@ -35,17 +34,10 @@ GameObject0:
     ScriptComponents:
       Script0:
         name: PlayerCamera
-        fields:
-          smoothness: 19
-          maxOffsetDistance: 3.5999999
-          offsetSmoothness: 5
-          returnDelay: 0.200000003
-          dashFOV: 45
   Children: ~
 GameObject1:
   name: Cube
-  prefabPath: ""
-  uuid: 17101724874426576913
+  uuid: 2221847893955336189
   tag: Untagged
   active: true
   isStatic: false
@@ -76,11 +68,41 @@ GameObject1:
         - 1
         - 1
         - 1
+  Children: ~
+GameObject2:
+  name: Cone.006
+  uuid: 14880486827830742112
+  tag: Untagged
+  active: true
+  isStatic: false
+  Components:
+    Transform_Component:
+      name: Transform_Component
+      enabled: true
+      localPosition:
+        - 2.7000000476837158
+        - 2.1000001430511475
+        - -4.1000003814697266
+      localRotation:
+        - -90.000009334667297
+        - 0
+        - 0
+      localScale:
+        - 0.10000000149011612
+        - 0.10000000149011745
+        - 0.10000000149011745
     Shader:
       name: Shader
       enabled: true
-    ScriptComponents:
-      Script0:
-        name: Test1
-        fields: ~
+    MeshRenderer:
+      name: MeshRenderer
+      enabled: true
+      mesh:
+        name: 11570663412471811156
+      material:
+        name: Abeto_Low_1001_BaseColor
+      color:
+        - 1
+        - 1
+        - 1
   Children: ~

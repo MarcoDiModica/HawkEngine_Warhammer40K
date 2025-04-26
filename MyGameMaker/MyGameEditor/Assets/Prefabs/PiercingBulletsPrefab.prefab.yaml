@@ -1,0 +1,54 @@
+name: bullet.001
+prefabPath: ""
+uuid: 12480395221347981638
+tag: PowerUp
+active: false
+isStatic: false
+Components:
+  Transform_Component:
+    name: Transform_Component
+    enabled: true
+    localPosition:
+      - 2
+      - 3
+      - 10
+    localRotation:
+      - 0
+      - -0
+      - 0
+    localScale:
+      - 0.0020000000949949026
+      - 0.0020000000949949026
+      - 0.0020000000949949026
+  MeshRenderer:
+    name: MeshRenderer
+    enabled: true
+    mesh:
+      name: 7850369178212967008
+    material:
+      name: powerups_DefaultMaterial_BaseColor
+    color:
+      - 1
+      - 1
+      - 1
+  Shader:
+    name: Shader
+    enabled: true
+  BoxColliderComponent:
+    size:
+      - 1
+      - 1
+      - 1
+    offset:
+      - 0
+      - 0
+      - 0
+    isTrigger: true
+  ScriptComponents:
+    Script0:
+      name: PiercingBullets
+      fields:
+        floatSpeed: 1
+        floatHeight: 0.5
+        rotationSpeed: 50
+Children: ~

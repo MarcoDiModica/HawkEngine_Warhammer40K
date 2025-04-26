@@ -20,6 +20,10 @@ public class PlayerShooting : MonoBehaviour
     private int abilityCount = 0;
     private const float abilityTimeLimit = 3f;
 
+    private bool firstShotReady = false;
+    private float firstShotTimer = 0f;
+    private float firstShotDelay = 0.04f;
+
     // Guns Scripts
     public Boltgun boltgun;
     public Shotgun shotgun;
@@ -148,11 +152,11 @@ public class PlayerShooting : MonoBehaviour
 
     }
 
+
+
     public override void Update(float deltaTime)
     {
-
-
-        //Engineson.print($"Shoot Timer: {shootTimer}");
+        playerInput.UpdateLookDirection();
 
         if (playerInput.IsChangingWeaponRight() || Input.GetKeyDown(KeyCode.Q))
         {
@@ -168,14 +172,27 @@ public class PlayerShooting : MonoBehaviour
             railgun.ChangeMode();
         }
 
-
         if (playerInput?.IsShooting() == true)
         {
-            Shoot();
+            if (!firstShotReady)
+            {
 
+                if (firstShotTimer >= firstShotDelay)
+                {
+                    firstShotReady = true;
+                    shootTimer = 0f;
+                }
+            }
+
+            
+                Shoot();
+            
         }
-        else if (playerInput.IsShooting() == false)
+        else
         {
+            firstShotTimer = 0f;
+            firstShotReady = false;
+
             switch (currentGun)
             {
                 case GunType.BOLTGUN:
@@ -193,9 +210,7 @@ public class PlayerShooting : MonoBehaviour
             shotgunShotFX.Stop();
             railgunShotSemiFX.Stop();
             railgunShotAutoFX.Stop();
-
         }
-
 
         if (playerInput?.IsReloading() == true && currentGun != GunType.RAILGUN)
         {
@@ -218,15 +233,13 @@ public class PlayerShooting : MonoBehaviour
             Engineson.print("Ability 2 pressed");
             UseAbility2();
         }
-
     }
 
     private void Shoot()
     {
         try
         {
-            
-            switch(currentGun)
+            switch (currentGun)
             {
                 case GunType.BOLTGUN:
                     boltgun.Shoot();

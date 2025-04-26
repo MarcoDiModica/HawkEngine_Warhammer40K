@@ -40,7 +40,7 @@ App::App() {
 #endif // ENABLE_EDITOR	
 
 	physicsModule = new PhysicsModule();
-
+	audioEngine = new AudioEngine();
 	//gizmos = new Gizmos(this);
 
 	scene_serializer = new SceneSerializer(this);

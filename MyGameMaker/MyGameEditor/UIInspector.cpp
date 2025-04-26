@@ -51,6 +51,8 @@
 #include "../MyUIEngine/UIButtonComponent.h"
 
 #include <MyGameEngine/ImGuiCurveEditor.h>
+#include <MyGameEngine/PrefabManager.h>
+#include "DragDropManager.h"
 typedef unsigned int guint32;
 #pragma endregion
 
@@ -1602,6 +1604,9 @@ private:
 				if (strcmp(className, "GameObject") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
 					DrawGameObjectField(monoScript, field, fieldName);
 				}
+				else if (strcmp(className, "Prefab") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
+					DrawPrefabField(monoScript, field, fieldName);
+				}
 				else if (strcmp(className, "Transform") == 0 && strcmp(nameSpace, "HawkEngine") == 0) {
 					DrawComponentField(monoScript, field, fieldName, "Transform", "HawkEngine.Transform");
 				}
@@ -1801,12 +1806,12 @@ private:
 				GameObject* draggedGO = *(GameObject**)payload->Data;
 				if (draggedGO) {
 					MonoObject* managedGO = MonoManager::GetInstance().CreateGameObjectReference(draggedGO);
-
 					if (managedGO) {
 						mono_field_set_value(monoScript, field, managedGO);
 					}
 				}
 			}
+			DragDropManager::draggedObject = nullptr;
 			ImGui::EndDragDropTarget();
 		}
 
@@ -1825,6 +1830,73 @@ private:
 			ImGui::EndTooltip();
 		}
 	}
+
+	static void DrawPrefabField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
+		MonoObject* prefabObj = nullptr;
+		mono_field_get_value(monoScript, field, &prefabObj);
+
+		std::string displayPath = "None";
+
+		if (prefabObj) {
+			MonoClass* prefabClass = mono_object_get_class(prefabObj);
+			MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");
+			if (pathField) {
+				MonoString* monoStr = nullptr;  
+                mono_field_get_value(prefabObj, pathField, &monoStr);  
+				if (monoStr) {
+					char* cstr = mono_string_to_utf8(monoStr);
+					std::string fullPath = cstr;
+					mono_free(cstr);
+
+					size_t lastSlash = fullPath.find_last_of("/\\");
+					std::string fileName = (lastSlash != std::string::npos) ? fullPath.substr(lastSlash + 1) : fullPath;
+
+					size_t extensionPos = fileName.rfind(".prefab.yaml");
+					if (extensionPos != std::string::npos) {
+						fileName = fileName.substr(0, extensionPos);
+					}
+
+					displayPath = fileName;
+				}
+			
+			}
+		}
+
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.25f, 0.35f, 0.45f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.35f, 0.45f, 0.55f, 1.0f));
+		ImGui::Button(displayPath.c_str(), ImVec2(-1, 0));
+		ImGui::PopStyleColor(2);
+
+		if (ImGui::BeginDragDropTarget()) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ASSET_PATH")) {
+				const char* rawPath = (const char*)payload->Data;
+				std::string assetPath = std::string(rawPath);
+
+				if (assetPath.ends_with(".prefab.yaml")) {
+					MonoObject* prefabGO = MonoManager::GetInstance().CreatePrefabReference(assetPath); 
+					if (prefabGO) {
+						mono_field_set_value(monoScript, field, prefabGO);
+					}
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Clear Reference")) {
+				void* nullRef = nullptr;
+				mono_field_set_value(monoScript, field, nullRef);
+			}
+			ImGui::EndPopup();
+		}
+
+		if (ImGui::IsItemHovered()) {
+			ImGui::BeginTooltip();
+			ImGui::Text("Prefab path: %s", displayPath.c_str());
+			ImGui::EndTooltip();
+		}
+	}
+
 
 	static void DrawStringField(MonoObject* monoScript, MonoClassField* field, const char* fieldName) {
 		std::string value = MonoFieldHelper::GetStringValue(monoScript, field);
@@ -3240,6 +3312,14 @@ bool UIInspector::Draw() {
 
     DrawGameObjectHeader(selectedObject);
     ImGui::Separator();
+
+	if (!selectedObject->GetPrefabSourcePath().empty()) {
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.5f, 0.2f, 1.0f));
+		if (ImGui::Button("Override Prefab")) {
+			PrefabManager::SavePrefab(selectedObject->shared_from_this(), selectedObject->GetPrefabSourcePath());
+		}
+		ImGui::PopStyleColor();
+	}
 
     ComponentDrawer::DrawComponents(selectedObject, snap, snapValue);
     ImGui::Separator();

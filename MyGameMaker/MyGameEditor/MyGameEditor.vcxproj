@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="DragDropManager.cpp" />
     <ClCompile Include="EditorCamera.cpp" />
     <ClCompile Include="HardwareSettings.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -175,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="DragDropManager.h" />
     <ClInclude Include="EditorCamera.h" />
     <ClInclude Include="HardwareSettings.h" />
     <ClInclude Include="Input.h" />

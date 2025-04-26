@@ -44,6 +44,7 @@ namespace EngineBinds {
 	void SetTag(MonoObject* ref, MonoString* tag);
     MonoObject* GetGameObjectByName(MonoString* name);	
     void GameObjectSetActive(MonoObject* ref, bool active);
+    MonoObject* InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays);
 	bool GameObjectIsActive(MonoObject* ref);
 
     // Input
@@ -181,6 +182,7 @@ namespace EngineBinds {
 	void TransitionAnimations(MonoObject* skeletalAnimationRef, int oldAnim, int newAnim, float timeToTransition);
 	void SetLoop(MonoObject* skeletalAnimationRef, bool isLoop);
 	void PlayAnimOnce(MonoObject* skeletalAnimationRef, int index, float timeToTransitionAnim);
+	bool IsAnimationFinished(MonoObject* skeletalAnimationRef);
 
 	//Tweening
     void DOMove(MonoObject* transformRef, glm::vec3* targetPosition, float duration, Modes mode);

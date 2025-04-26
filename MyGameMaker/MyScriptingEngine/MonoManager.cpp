@@ -492,3 +492,22 @@ MonoObject* MonoManager::CreateGameObjectReference(GameObject* nativeGO) {
 
 	return managedGO;
 }
+
+MonoObject* MonoManager::CreatePrefabReference(const std::string& path) {  
+	MonoClass* prefabClass = mono_class_from_name(image, "HawkEngine", "Prefab");  
+	if (!prefabClass) {  
+		LOG(LogType::LOG_ERROR, "Failed to find PrefabObject class in assembly");  
+		return nullptr;  
+	}  
+
+	MonoObject* instance = mono_object_new(domain, prefabClass);  
+	mono_runtime_object_init(instance);  
+
+	MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");  
+	if (pathField) {  
+		MonoString* pathStr = mono_string_new(domain, path.c_str());  
+		mono_field_set_value(instance, pathField, pathStr);  
+	}  
+
+	return instance;  
+}

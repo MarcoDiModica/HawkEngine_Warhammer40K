@@ -25,6 +25,7 @@
 #include "../MyParticlesEngine/ParticleFX.h"
 #include <MyPhysicsEngine/MeshColliderComponent.h>
 #include <MyPhysicsEngine/CapsuleColliderComponent.h>
+#include <MyGameEngine/PrefabManager.h>
 
 // GameObject
 
@@ -1073,6 +1074,12 @@ void EngineBinds::SetAnimation(MonoObject* animationRef, int index)
 	}
 }
 
+bool EngineBinds::IsAnimationFinished(MonoObject* animationRef)
+{
+	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
+	return animation ? animation->IsAnimationFinished() : false;
+}
+
 int EngineBinds::GetAnimationIndex(MonoObject* animationRef)
 {
 	auto animation = ConvertFromSharpComponent<SkeletalAnimationComponent>(animationRef);
@@ -1391,11 +1398,63 @@ void EngineBinds::EmitBurst(MonoObject* particleRef, int burstCount)
 		particle->EmitBurst(burstCount);
 	}
 }
+MonoObject* EngineBinds::InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays)  
+{  
+  if (!prefabObj) return nullptr;  
+
+  MonoClass* prefabClass = mono_object_get_class(prefabObj);  
+  MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");  
+
+  MonoString* pathString = nullptr;  
+  mono_field_get_value(prefabObj, pathField, &pathString);  
+
+  if (!pathString) return nullptr;  
+
+  char* cStr = mono_string_to_utf8(pathString);  
+  std::string prefabPath(cStr);  
+  mono_free(cStr);  
+
+  std::shared_ptr<GameObject> newGO = PrefabManager::LoadPrefab(prefabPath);
+
+  if (!newGO) return nullptr;  
+
+  // Handle parenting  
+  if (parentTransformObj) {
+      MonoClass* transformClass = mono_object_get_class(parentTransformObj);
+      MonoClassField* cppInstanceField = mono_class_get_field_from_name(transformClass, "CplusplusInstance");
+
+      if (cppInstanceField) {
+          uintptr_t cppInstance = 0;
+          mono_field_get_value(parentTransformObj, cppInstanceField, &cppInstance);
+          Transform_Component* parentTransform = reinterpret_cast<Transform_Component*>(cppInstance);
+
+          if (parentTransform) {
+              GameObject* parentGO = parentTransform->GetOwner();
+              if (parentGO) {
+                  if (worldPositionStays)
+                      Application->root->ParentGameObjectPreserve(*newGO, *parentGO);
+                  else
+                      Application->root->ParentGameObject(*newGO, *parentGO);
+              }
+          }
+      }
+  }
+   newGO->TraverseHierarchy([](GameObject* go) {  
+       go->Awake();  
+   });  
+
+   newGO->TraverseHierarchy([](GameObject* go) {  
+       go->Start();  
+   });
+
+  return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());
+}
 
 void EngineBinds::BindEngine() {
 
     // GameObject
 	mono_add_internal_call("MonoBehaviour::GetGameObject", (const void*)GetGameObject);
+    mono_add_internal_call("MonoBehaviour::Instantiate", (const void*)InstantiatePrefab);
     mono_add_internal_call("HawkEngine.Engineson::CreateGameObject", (const void*)CreateGameObjectSharp);
     mono_add_internal_call("HawkEngine.GameObject::GetName", (const void*)GameObjectGetName);
     mono_add_internal_call("HawkEngine.GameObject::GetTag", (const void*)GameObjectGetTag);
@@ -1545,6 +1604,7 @@ void EngineBinds::BindEngine() {
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::TransitionAnimations", (const void*)&EngineBinds::TransitionAnimations);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::SetLoop", (const void*)&EngineBinds::SetLoop);
 	mono_add_internal_call("HawkEngine.SkeletalAnimation::PlayAnimOnce", (const void*)&EngineBinds::PlayAnimOnce);
+	mono_add_internal_call("HawkEngine.SkeletalAnimation::IsAnimationFinished", (const void*)&EngineBinds::IsAnimationFinished);
 
 	// Tween
     

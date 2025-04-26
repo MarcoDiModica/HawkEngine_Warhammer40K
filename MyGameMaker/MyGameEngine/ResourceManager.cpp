@@ -114,3 +114,14 @@ void ResourceManager::LoadMaterials()
 		}
 	}
 }
+
+void ResourceManager::SaveMaterials()
+{
+
+	for (auto material : materials)
+	{
+		material->color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+		material->SaveBinary(material->GetMatName());
+	}
+
+}

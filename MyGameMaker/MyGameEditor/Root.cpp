@@ -65,7 +65,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	resourceManager->LoadResources();
+	//resourceManager->LoadResources();
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");

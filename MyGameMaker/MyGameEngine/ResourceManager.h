@@ -21,6 +21,7 @@ public:
 	void LoadTextures();
 	void LoadModels();
 	void LoadMaterials();
+	void SaveMaterials();
 
 	//meshes
 	std::shared_ptr<Mesh> AddMesh(std::shared_ptr<Mesh> mesh) {

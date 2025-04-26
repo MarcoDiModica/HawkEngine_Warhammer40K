@@ -1396,62 +1396,54 @@ void EngineBinds::EmitBurst(MonoObject* particleRef, int burstCount)
 }
 MonoObject* EngineBinds::InstantiatePrefab(MonoObject* prefabObj, MonoObject* parentTransformObj, bool worldPositionStays)  
 {  
-   if (!prefabObj) return nullptr;  
- 
-   MonoClass* prefabClass = mono_object_get_class(prefabObj);  
-   MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");  
+  if (!prefabObj) return nullptr;  
 
-   MonoString* pathString = nullptr;  
-   mono_field_get_value(prefabObj, pathField, &pathString);  
+  MonoClass* prefabClass = mono_object_get_class(prefabObj);  
+  MonoClassField* pathField = mono_class_get_field_from_name(prefabClass, "path");  
 
-   if (!pathString) return nullptr;  
+  MonoString* pathString = nullptr;  
+  mono_field_get_value(prefabObj, pathField, &pathString);  
 
-   char* cStr = mono_string_to_utf8(pathString);  
-   std::string prefabPath(cStr);  
-   mono_free(cStr);  
+  if (!pathString) return nullptr;  
 
-   std::shared_ptr<GameObject> newGO = PrefabManager::LoadPrefab(prefabPath);
+  char* cStr = mono_string_to_utf8(pathString);  
+  std::string prefabPath(cStr);  
+  mono_free(cStr);  
 
-   if (!newGO) return nullptr;  
+  std::shared_ptr<GameObject> newGO = PrefabManager::LoadPrefab(prefabPath);
 
-   // Handle parenting  
-   if (parentTransformObj) {
-       MonoClass* transformClass = mono_object_get_class(parentTransformObj);
-       MonoClassField* cppInstanceField = mono_class_get_field_from_name(transformClass, "CplusplusInstance");
+  if (!newGO) return nullptr;  
 
-       if (cppInstanceField) {
-           uintptr_t cppInstance = 0;
-           mono_field_get_value(parentTransformObj, cppInstanceField, &cppInstance);
-           Transform_Component* parentTransform = reinterpret_cast<Transform_Component*>(cppInstance);
+  // Handle parenting  
+  if (parentTransformObj) {
+      MonoClass* transformClass = mono_object_get_class(parentTransformObj);
+      MonoClassField* cppInstanceField = mono_class_get_field_from_name(transformClass, "CplusplusInstance");
 
-           if (parentTransform) {
-               GameObject* parentGO = parentTransform->GetOwner();
-               if (parentGO) {
-                   if (worldPositionStays)
-                       Application->root->ParentGameObjectPreserve(*newGO, *parentGO);
-                   else
-                       Application->root->ParentGameObject(*newGO, *parentGO);
-               }
-           }
-       }
-   }
-   newGO->TraverseHierarchy([](GameObject* go) {
-       for (auto& script : go->scriptComponents) {
-           if (script && script->monoScript) {
-               script->Awake();
-           }
-       }
-       });
+      if (cppInstanceField) {
+          uintptr_t cppInstance = 0;
+          mono_field_get_value(parentTransformObj, cppInstanceField, &cppInstance);
+          Transform_Component* parentTransform = reinterpret_cast<Transform_Component*>(cppInstance);
 
-   newGO->TraverseHierarchy([](GameObject* go) {
-       for (auto& script : go->scriptComponents) {
-           if (script && script->monoScript) {
-               script->Start();
-           }
-       }
-       });
+          if (parentTransform) {
+              GameObject* parentGO = parentTransform->GetOwner();
+              if (parentGO) {
+                  if (worldPositionStays)
+                      Application->root->ParentGameObjectPreserve(*newGO, *parentGO);
+                  else
+                      Application->root->ParentGameObject(*newGO, *parentGO);
+              }
+          }
+      }
+  }
+   newGO->TraverseHierarchy([](GameObject* go) {  
+       go->Awake();  
+   });  
 
-   return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());
+   newGO->TraverseHierarchy([](GameObject* go) {  
+       go->Start();  
+   });
+
+  return MonoManager::GetInstance().CreateGameObjectReference(newGO.get());
 }
 
 void EngineBinds::BindEngine() {

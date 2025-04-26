@@ -37,16 +37,7 @@ public class EnergyBall : BaseAbilities
     }
     public override void Start()
     {
-        //sound = gameObject.GetComponent<AudioSource>();
-        //if (sound == null)
-        //{
-        //    Engineson.print("PlayerShooting: Audio component not found");
-        //}
-
-        //launchFX = new AudioClip(energyBallLaunch, "EnergyBallLaunchFX", false, false);
-        //energyFX = new AudioClip(energyBall, "EnergyBallFX", false, false);
-        //sound.LoadAudioClip(launchFX);
-        //sound.LoadAudioClip(energyFX);
+        
     }
 
     public override void Update(float deltaTime)
@@ -74,6 +65,7 @@ public class EnergyBall : BaseAbilities
                 {
                     energyBallActive = false;
                     Engineson.Destroy(energyBall);
+                    Audio.Stop(energyBallAudio);
                     deathTimerPrevention = 0.0f;
                 }
             }
@@ -87,7 +79,7 @@ public class EnergyBall : BaseAbilities
         if (canThrow)
         {
             Engineson.print("Lanzando granada...");
-          //  sound.Play(launchFX);
+            Audio.PlayOneShot(energyBallLaunch);
             energyBall = Engineson.CreateGameObject("energyBall", null);
 
             if (energyBall == null)
@@ -98,8 +90,7 @@ public class EnergyBall : BaseAbilities
             energyBall.AddScript("Ball");
             energyBall.GetComponent<Ball>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
             
-            //sound.LoadAudio(energyBallSound);
-            //sound.Play();
+            Audio.Play(energyBallAudio, true);
             canThrow = false;
             abilityTimer = 0.0f;
         }

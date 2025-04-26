@@ -12,9 +12,9 @@ public class Boltgun : BaseWeapon
     public ArcSnare arcSnare;
     private PlayerController playerController;
     public PlayerData playerData;
-    //private Audio sound;
-   // private string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
-    //private string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
+
+    private const string boltgunShot = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav";
+    private const string boltgunReload = "Assets/Audio/SFX/Weapons/Boltgun/BoltgunReload.wav";
     GameObject projectile;
     private RedThirstManager redThirstManager;
     private float timeSinceLastShot = 0.0f;
@@ -46,10 +46,10 @@ public class Boltgun : BaseWeapon
         transform = gameObject.GetComponent<Transform>();
         grenadeLauncher = gameObject.GetComponent<GrenadeLauncher>();
         arcSnare = gameObject.GetComponent<ArcSnare>();
-      //  sound = gameObject.GetComponent<Audio>();
         playerController = gameObject.GetComponent<PlayerController>();
         playerData = playerController.playerData;
         redThirstManager = gameObject.GetComponent<RedThirstManager>();
+
     }
 
     public override void Update(float deltaTime)
@@ -148,9 +148,7 @@ public class Boltgun : BaseWeapon
             if (!playerData.infiniteBullets)
                 currentMagazineAmmo--;
 
-          //  sound?.LoadAudio(boltgunShot);
-          //  sound?.Play();
-
+            int audio = Audio.PlayOneShot(boltgunShot);
             Vector3 localOffset = new Vector3(0.0f, 2.5f, 0.5f); // Y = altura, Z = hacia adelante, X = lateral si se desea
 
             Vector3 bulletStart = transform.position +
@@ -191,10 +189,8 @@ public class Boltgun : BaseWeapon
     {
         if (currentTotalAmmo > 0)
         {
-           // sound?.LoadAudio(boltgunReload);
-           // sound?.Play();
-           
-            if(currentTotalAmmo >= magazineSize)
+           int audioo = Audio.PlayOneShot(boltgunReload);
+            if (currentTotalAmmo >= magazineSize)
             {
                 currentMagazineAmmo = magazineSize;
                 currentTotalAmmo = currentTotalAmmo - magazineSize;

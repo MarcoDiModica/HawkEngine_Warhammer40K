@@ -249,10 +249,10 @@ bool Root::Start()
 	///*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
 	//environment->GetTransform()->SetScale(glm::dvec3(0.03f, 0.03f, 0.03f));
 
-	/*auto cube = CreateCube("Cube");
-	cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	cube->AddComponent<ScriptComponent>()->LoadScript("Test1");*/
+auto cube = CreateCube("Cube");
+cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
 
 	
 	//// Test PowerUps

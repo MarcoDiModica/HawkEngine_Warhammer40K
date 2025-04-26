@@ -25,10 +25,10 @@ public class Test1 : MonoBehaviour
         Audio.SfxVolume = 1.0f;
 
         //backgroundMusicId = Audio.PlayMusic(MUSIC_BACKGROUND);
-        Audio.MusicVolume = 0.5f;
+        //Audio.MusicVolume = 0.5f;
 
         ambienceId = Audio.Play(MUSIC_BACKGROUND, true);
-        Audio.MasterVolume = 0.5f;
+        //Audio.MasterVolume = 0.5f;
 
         Audio.SchedulePlay(SFX_COLLECT, 5.0f);
     }

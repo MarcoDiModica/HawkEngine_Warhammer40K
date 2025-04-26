@@ -118,6 +118,8 @@ protected:
 		fin.read(reinterpret_cast<char*>(&color), sizeof(color));
 		fin.read(reinterpret_cast<char*>(&shaderType), sizeof(shaderType));
 
+		color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+
 		while (fin.peek() != EOF) {
 			char type[4];
 			fin.read(type, 3);

@@ -90,7 +90,6 @@ public class ArcSnare : BaseAbilities
 
             grenade.AddScript("Arc");
             grenade.GetComponent<Arc>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-            grenade.AddComponent<AudioSource>();
             grenade.GetComponent<Arc>().Start();
 
 

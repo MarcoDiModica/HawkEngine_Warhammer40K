@@ -65,7 +65,7 @@ public class Test1 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             int attackId = Audio.PlayOneShot(SFX_ATTACK);
-            soundEffects["attack"] = attackId;
+            //soundEffects["attack"] = attackId;
         }
 
         if (Input.GetKeyDown(KeyCode.F))

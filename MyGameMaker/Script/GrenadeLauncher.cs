@@ -116,7 +116,6 @@ public class GrenadeLauncher : BaseAbilities
 
         grenade.AddScript("Grenade");
         grenade.GetComponent<Grenade>().Init(gameObject.GetComponent<Transform>().GetPosition(), gameObject.GetComponent<Transform>().forward);
-        grenade.AddComponent<AudioSource>();
         grenade.GetComponent<Grenade>().Start();
 
         canThrow = false; // Inicia el cooldown

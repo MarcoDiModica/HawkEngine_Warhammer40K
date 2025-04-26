@@ -64,31 +64,8 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl2Alpha1Release.scene");
 
-	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
-	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");
-	////	
-	////environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
-	////environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
-	//Audio Trigger
-	//auto audioTrigger = CreateGameObject("AudioTrigger");
-	//audioTrigger->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
-	//audioTrigger->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//audioTrigger->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//audioTrigger->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(1, 1, 1));
-	//audioTrigger->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, 0, 0));
-	//audioTrigger->GetComponent<BoxColliderComponent>()->SetTrigger(true);
-	//audioTrigger->AddComponent<SoundComponent>();
-	//audioTrigger->AddComponent<ScriptComponent>()->LoadScript("SoundTrigger");
-
-	//auto scene = CreateGameObjectWithPath("Assets/Meshes/Level1.fbx");
-	//auto scenezone1 = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");
-	//	
-	//environment = CreateGameObjectWithPath("Assets/Meshes/Zone1.fbx");
-	//environment->GetTransform()->SetScale(glm::dvec3(0.01f, 0.01f, 0.01f));
-
-	////Application->scene_serializer->DeSerialize("Library/Scenes/MainMenu.scene");
 	
 	//auto canvasMainMenu = FindGOByName("Canvas_Main_Menu");
 	//canvasMainMenu->AddComponent<ScriptComponent>()->LoadScript("MenuButtons");
@@ -104,98 +81,8 @@ bool Root::Start()
 	//canvasHUD->AddComponent<ScriptComponent>()->LoadScript("HUD");
 
 	//Application->scene_serializer->DeSerialize("Library/Scenes/Mortis_Level1.Scene");
-	/*auto player = CreateGameObject("Player");
-	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
-	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
-	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
-	player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
-	player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
-	player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
-	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
-	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
-	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
-	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
-	player->AddComponent<SoundComponent>(Application->audioEngine);
-	
-	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
-	playerMesh->SetName("playerMesh");
-	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	ParentGameObject(*playerMesh, *player);
-	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
-	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
-	auto riffleShotFX = CreateGameObject("RiffleShotFX");
-	riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-	ParentGameObject(*riffleShotFX, *player);
-	riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
-	riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-	
-	auto inactiveDashFX = CreateGameObject("InactiveDashFX");
-	inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-	ParentGameObject(*inactiveDashFX, *player);
-	inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-	inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-	
-	auto walkingFX = CreateGameObject("WalkingFX");
-	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-	ParentGameObject(*walkingFX, *player);
-	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);*/
-	//Application->scene_serializer->DeSerialize("Library/Scenes/Level1SundayDelivery.Scene");
-
-	/*auto objMainCamera = CreateCameraObject("MainCamera");
-	objMainCamera->GetTransform()->SetPosition(glm::dvec3(-14, 20, 14.0f));
-	objMainCamera->GetTransform()->SetRotation(glm::dvec3(glm::radians(-130.0), glm::radians(45.0), glm::radians(180.0)));
-	auto camera = objMainCamera->AddComponent<CameraComponent>();
-	camera->priority = 1;
-	objMainCamera->AddComponent<ScriptComponent>()->LoadScript("PlayerCamera");
-	mainCamera = objMainCamera;
-	UpdateCameraPriority();*/
 
 	//particle->ApplyPreset(Particle)
-
-	/*auto itemtest = CreateCube("item");
-	itemtest->GetTransform()->SetPosition(glm::vec3(10, 2, 0));
-	itemtest->GetTransform()->SetScale(glm::vec3(5, 5, 5));
-	itemtest->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	itemtest->AddComponent<ScriptComponent>()->LoadScript("Item");
-	itemtest->SetTag("Interactable");
-	
-	auto itemtest2 = CreateCube("item");
-	itemtest2->GetTransform()->SetPosition(glm::vec3(-20, 2, 10));
-	itemtest2->GetTransform()->SetScale(glm::vec3(2, 2, 2));
-	itemtest2->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	itemtest2->AddComponent<ScriptComponent>()->LoadScript("AreaTrigger");
-	itemtest2->SetTag("AreaTrigger");*/
-
-	/*auto floor2 = CreateCube("Player2");
-	floor2->GetTransform()->SetPosition(glm::vec3(10, 3, 0));
-	floor2->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	floor2->AddComponent<RigidbodyComponent>(Application->physicsModule);*/
-
-	//environment = CreateGameObjectWithPath("Assets/Meshes/Level1.fbx");
-	///*environment = CreateGameObjectWithPath("Assets/Meshes/Lvl1Zone3Blockout.fbx");*/
-	//environment->GetTransform()->SetScale(glm::dvec3(0.03f, 0.03f, 0.03f));
-
-
-	//auto cube = CreateCube("Cube");
-	//cube->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//cube->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-	//cube->AddComponent<ScriptComponent>()->LoadScript("Test1");
 
 	
 	//// Test PowerUps
@@ -361,70 +248,6 @@ bool Root::Start()
 	//ParentGameObject(*lictorMesh, *lictor);
 	//lictor->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerStalker");
 
-	//auto lictor2 = CreateGameObject("lictor2");
-	//lictor2->SetTag("Enemy");
-	//lictor2->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	//lictor2->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor2->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor2->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor2->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
-	//lictor2->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
-	//auto lictor2Mesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
-	//lictor2Mesh->SetName("lictor2Mesh");
-	//lictor2Mesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//lictor2Mesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	//ParentGameObject(*lictor2Mesh, *lictor2);
-	//lictor2->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
-
-	//auto lictor3 = CreateGameObject("lictor3");
-	//lictor3->SetTag("Enemy");
-	//lictor3->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	//lictor3->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor3->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor3->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor3->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
-	//lictor3->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
-	//auto lictor3Mesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
-	//lictor3Mesh->SetName("lictor3Mesh");
-	//lictor3Mesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//lictor3Mesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	//ParentGameObject(*lictor3Mesh, *lictor3);
-	//lictor3->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
-
-	//auto lictor4 = CreateGameObject("lictor4");
-	//lictor4->SetTag("Enemy");
-	//lictor4->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	//lictor4->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor4->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor4->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor4->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
-	//lictor4->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
-	//auto lictor4Mesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
-	//lictor4Mesh->SetName("lictor4Mesh");
-	//lictor4Mesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//lictor4Mesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	//ParentGameObject(*lictor4Mesh, *lictor4);
-	//lictor4->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
-
-	//auto lictor5 = CreateGameObject("lictor5");
-	//lictor5->SetTag("Enemy");
-	//lictor5->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 4, 40));
-	//lictor5->GetComponent<Transform_Component>()->SetScale(glm::vec3(5, 5, 5));
-	//lictor5->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//lictor5->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//lictor5->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.25, 1.0, 0.25));
-	//lictor5->GetComponent<BoxColliderComponent>()->SetOffset(glm::vec3(0, -3, -1.4));
-	//auto lictor5Mesh = CreateGameObjectWithPath("Assets/Meshes/LictorAnimated.fbx");
-	//lictor5Mesh->SetName("lictor5Mesh");
-	//lictor5Mesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-	//lictor5Mesh->GetTransform()->SetScale(glm::vec3(0.4, 0.4, 0.4));
-	//ParentGameObject(*lictor5Mesh, *lictor5);
-	//lictor5->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerRanged");
-	//auto cube = CreateCube("Cube");
-	//cube->GetComponent<Transform_Component>()->SetPosition(glm::vec3(5, 0, 5));
-	//auto cubeMesh = CreateCube("CubeMesh");
-	//ParentGameObject(*cubeMesh, *cube);
-
 	//Hormagaunt
 	//auto hormagaunt = CreateGameObject("Hormagaunt");
 	//hormagaunt->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
@@ -441,88 +264,6 @@ bool Root::Start()
 	//ParentGameObject(*hormagauntMesh, *hormagaunt);
 	//hormagaunt->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
 	//hormagaunt->SetTag("Enemy");
-	//
-	//auto hormagaunt1= CreateGameObject("Hormagaunt1");
-	//hormagaunt1->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
-	//hormagaunt1->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt1->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//hormagaunt1->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt1->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
-	//auto hormagauntMesh1 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh1->SetName("HormagauntMesh1");
-	//hormagauntMesh1->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//hormagauntMesh1->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//hormagauntMesh1->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//hormagauntMesh1->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagauntMesh1, *hormagaunt1);
-	//hormagaunt1->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	//hormagaunt1->SetTag("Enemy");
-	//
-	//auto hormagaunt2 = CreateGameObject("Hormagaunt2");
-	//hormagaunt2->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
-	//hormagaunt2->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt2->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//hormagaunt2->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt2->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
-	//auto hormagauntMesh2 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh2->SetName("HormagauntMesh2");
-	//hormagauntMesh2->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//hormagauntMesh2->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//hormagauntMesh2->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//hormagauntMesh2->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagauntMesh2, *hormagaunt2);
-	//hormagaunt2->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	//hormagaunt2->SetTag("Enemy");
-	//
-	//auto hormagaunt3 = CreateGameObject("Hormagaunt3");
-	//hormagaunt3->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
-	//hormagaunt3->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt3->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//hormagaunt3->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt3->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
-	//auto hormagauntMesh3 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh3->SetName("HormagauntMesh3");
-	//hormagauntMesh3->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//hormagauntMesh3->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//hormagauntMesh3->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//hormagauntMesh3->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagauntMesh3, *hormagaunt3);
-	//hormagaunt3->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	//hormagaunt3->SetTag("Enemy");
-	//
-	//auto hormagaunt4 = CreateGameObject("Hormagaunt4");
-	//hormagaunt4->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
-	//hormagaunt4->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt4->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//hormagaunt4->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt4->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
-	//auto hormagauntMesh4 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh4->SetName("HormagauntMesh4");
-	//hormagauntMesh4->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//hormagauntMesh4->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//hormagauntMesh4->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//hormagauntMesh4->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagauntMesh4, *hormagaunt4);
-	//hormagaunt4->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	//hormagaunt4->SetTag("Enemy");
-	//
-	//auto hormagaunt5 = CreateGameObject("Hormagaunt5");
-	//hormagaunt5->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 0, 10));
-	//hormagaunt5->GetComponent<Transform_Component>()->SetScale(glm::vec3(2.2, 2.2, 2.2));
-	//hormagaunt5->AddComponent<SoundComponent>()->LoadAudio("Assets/Audio/HormagauntMeleeAttack.wav");
-	//hormagaunt5->AddComponent<RigidbodyComponent>(Application->physicsModule);
-	//hormagaunt5->GetComponent<BoxColliderComponent>()->SetSize(glm::vec3(0.7f, 2.0f, 1.6));
-	//auto hormagauntMesh5 = CreateGameObjectWithPath("Assets/Meshes/Hormagaunt.fbx");
-	//hormagauntMesh5->SetName("HormagauntMesh5");
-	//hormagauntMesh5->GetTransform()->Rotate(glm::radians(90.0f), glm::dvec3(1, 0, 0));
-	//hormagauntMesh5->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-	//hormagauntMesh5->GetTransform()->SetScale(glm::vec3(0.01, 0.01, 0.01));
-	//hormagauntMesh5->AddComponent<ScriptComponent>()->LoadScript("HormagauntAnimation");
-	//ParentGameObject(*hormagauntMesh5, *hormagaunt5);
-	//hormagaunt5->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerMelee");
-	//hormagaunt5->SetTag("Enemy");
-
-
 
 	//auto mawloc = CreateGameObject("Mawloc");
 	//mawloc->GetComponent<Transform_Component>()->SetPosition(glm::vec3(0, 10, 10));
@@ -541,141 +282,123 @@ bool Root::Start()
 	//auto mawlocTailMesh = CreateCube("MawlocTailMesh");
 	//ParentGameObject(*mawlocTailMesh, *mawlocTail);
 	//mawlocTail->AddComponent<ScriptComponent>()->LoadScript("EnemyControllerBossTail");
-
-	//Floor
-	//auto floor = CreateCube("Floor");
-	//floor->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-	//floor->GetTransform()->SetScale(glm::vec3(50, 1, 50));
-	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	
-	
-    //auto envObj = CreateGameObject("Environment1");
-    //envObj->GetTransform()->SetPosition(glm::vec3(0, -1, 0));
-    //envObj->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-    //auto encObjScript = envObj->AddComponent<ScriptComponent>()->LoadScript("SoundEnvironmentController");
-    //auto envObjCollider = envObj->AddComponent<BoxColliderComponent>(Application->physicsModule);
-    //envObjCollider->SetTrigger(true); 
-
-	//auto floorCollider = floor->AddComponent<BoxColliderComponent>(Application->physicsModule);
-	//
 	
 	//PLAYER BUENO CON TODOS LOS SCRIPTS PORFA NO LO BORREIS
 
-//	auto player = CreateGameObject("Player");
-//	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
-//	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
-//	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
-//	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
-//	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
-//	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
-//	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
-//	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
-//	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
-//	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
-//	player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
-//	player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
-//	player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
-//	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
-//	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
-//	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
-//	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
-//	
-//	//player->AddComponent<SoundComponent>()->LoadSound("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true, false);
-//	
-//	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
-//	playerMesh->SetName("playerMesh");
-//	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
-//	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-//	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	ParentGameObject(*playerMesh, *player);
-//	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
-//	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
-//	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
-//	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
-//	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
-//	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
-//	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
-//	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
-//	
-//	auto riffleShotFX = CreateGameObject("RiffleShotFX");
-//	riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-//	ParentGameObject(*riffleShotFX, *player);
-//	riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
-//	riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-//	
-//	auto findPlayer = FindGOByName("Player");
-//	
-//	auto shotgunShotFX = CreateGameObject("ShotgunShotFX");
-//	shotgunShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-//	ParentGameObject(*shotgunShotFX, *findPlayer);
-//	shotgunShotFX->AddComponent<ParticleFX>()->ApplyPreset(20);
-//	shotgunShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-//	
-//	auto speedboostFX = CreateGameObject("SpeedBoostFX");
-//	speedboostFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-//	ParentGameObject(*speedboostFX, *player);
-//	speedboostFX->AddComponent<ParticleFX>()->ApplyPreset(21);
-//	speedboostFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-//	
-//auto ammunitioBlessingFX = CreateGameObject("AmmunitionBlessingFX");
-//ammunitioBlessingFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-//ParentGameObject(*ammunitioBlessingFX, *findPlayer);
-//ammunitioBlessingFX->AddComponent<ParticleFX>()->ApplyPreset(22);
-//ammunitioBlessingFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-//
-//	auto railgunShotAutoFX = CreateGameObject("RailgunShotAutoFX");
-//	railgunShotAutoFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-//	ParentGameObject(*railgunShotAutoFX, *findPlayer);
-//	railgunShotAutoFX->AddComponent<ParticleFX>()->ApplyPreset(13);
-//	railgunShotAutoFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-//
-//	auto railgunShotSemiFX = CreateGameObject("RailgunShotSemiFX");
-//	railgunShotSemiFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
-//	ParentGameObject(*railgunShotSemiFX, *findPlayer);
-//	railgunShotSemiFX->AddComponent<ParticleFX>()->ApplyPreset(14);
-//	railgunShotSemiFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
-//	
-//	auto inactiveDashFX = CreateGameObject("InactiveDashFX");
-//	inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
-//	ParentGameObject(*inactiveDashFX, *player);
-//	inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-//	inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
-//	
-//	auto walkingFX = CreateGameObject("WalkingFX");
-//	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
-//	ParentGameObject(*walkingFX, *player);
-//	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
-//	
-//	//ARMAS NO TOCAR
-//	
-//	auto boltgun = CreateGameObject("Boltgun");
-//	boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
-//	boltgunMesh->SetName("boltgunMesh");
-//	boltgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
-//	boltgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-//	boltgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	ParentGameObject(*boltgunMesh, *boltgun);
-//
-//	auto shotgun = CreateGameObject("Shotgun");
-//	shotgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
-//	shotgunMesh->SetName("shotgunMesh");
-//	shotgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
-//	shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-//	shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	ParentGameObject(*shotgunMesh, *shotgun);
-//
-//	auto railgun = CreateGameObject("Railgun");
-//	railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");
-//	railgunMesh->SetName("railgunMesh");
-//	railgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
-//	railgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
-//	railgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
-//	ParentGameObject(*railgunMesh, *railgun);
+	auto player = CreateGameObject("Player");
+	player->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerShooting");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerMovement");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerInput");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerDash");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerController");
+	player->AddComponent<ScriptComponent>()->LoadScript("PlayerPowerUp");
+	player->AddComponent<ScriptComponent>()->LoadScript("Boltgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("Shotgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("GrenadeLauncher");
+	player->AddComponent<ScriptComponent>()->LoadScript("Railgun");
+	player->AddComponent<ScriptComponent>()->LoadScript("LaserBeam");
+	player->AddComponent<ScriptComponent>()->LoadScript("EnergyBall");
+	player->AddComponent<ScriptComponent>()->LoadScript("ToggleMode");
+	player->AddComponent<ScriptComponent>()->LoadScript("Barrage");
+	player->AddComponent<ScriptComponent>()->LoadScript("HookShot");
+	player->AddComponent<ScriptComponent>()->LoadScript("ArcSnare");
+	player->AddComponent<ScriptComponent>()->LoadScript("RedThirstManager");
+	
+	//player->AddComponent<SoundComponent>()->LoadSound("Assets/Audio/SFX/Weapons/Boltgun/BoltgunShot.wav", true, false);
+	
+	auto playerMesh = CreateGameObjectWithPath("Assets/Meshes/dieno zachael.fbx");
+	playerMesh->SetName("playerMesh");
+	playerMesh->GetTransform()->Rotate(glm::radians(-90.0f), glm::dvec3(1, 0, 0));
+	playerMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	playerMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*playerMesh, *player);
+	playerMesh->AddComponent<ScriptComponent>()->LoadScript("PlayerAnimations");
+	player->AddComponent<CapsuleColliderComponent>(Application->physicsModule);
+	player->AddComponent<RigidbodyComponent>(Application->physicsModule);
+	player->GetComponent<RigidbodyComponent>()->SetFreezeRotations(true);
+	player->GetComponent<RigidbodyComponent>()->SetGravity(glm::vec3(0, -200, 0));
+	player->GetComponent<CapsuleColliderComponent>()->SetSize(glm::vec3(1.7f, 1.1f, 1));
+	player->GetComponent<CapsuleColliderComponent>()->SetOffset(glm::vec3(0, 2.1f, 0));
+	player->AddComponent<ScriptComponent>()->LoadScript("InteractionSystem");
+	
+	auto riffleShotFX = CreateGameObject("RiffleShotFX");
+	riffleShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*riffleShotFX, *player);
+	riffleShotFX->AddComponent<ParticleFX>()->ApplyPreset(8);
+	riffleShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	
+	auto findPlayer = FindGOByName("Player");
+	
+	auto shotgunShotFX = CreateGameObject("ShotgunShotFX");
+	shotgunShotFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*shotgunShotFX, *findPlayer);
+	shotgunShotFX->AddComponent<ParticleFX>()->ApplyPreset(20);
+	shotgunShotFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	
+	auto speedboostFX = CreateGameObject("SpeedBoostFX");
+	speedboostFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	ParentGameObject(*speedboostFX, *player);
+	speedboostFX->AddComponent<ParticleFX>()->ApplyPreset(21);
+	speedboostFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+	
+	auto ammunitioBlessingFX = CreateGameObject("AmmunitionBlessingFX");
+	ammunitioBlessingFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	ParentGameObject(*ammunitioBlessingFX, *findPlayer);
+	ammunitioBlessingFX->AddComponent<ParticleFX>()->ApplyPreset(22);
+	ammunitioBlessingFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
 
+	auto railgunShotAutoFX = CreateGameObject("RailgunShotAutoFX");
+	railgunShotAutoFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*railgunShotAutoFX, *findPlayer);
+	railgunShotAutoFX->AddComponent<ParticleFX>()->ApplyPreset(13);
+	railgunShotAutoFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+
+	auto railgunShotSemiFX = CreateGameObject("RailgunShotSemiFX");
+	railgunShotSemiFX->GetTransform()->SetPosition(glm::vec3(-0.8, 3, 0.5f));
+	ParentGameObject(*railgunShotSemiFX, *findPlayer);
+	railgunShotSemiFX->AddComponent<ParticleFX>()->ApplyPreset(14);
+	railgunShotSemiFX->GetComponent<ParticleFX>()->SetParticleSize(3, 3);
+	
+	auto inactiveDashFX = CreateGameObject("InactiveDashFX");
+	inactiveDashFX->GetTransform()->SetPosition(glm::vec3(0, 3, -1));
+	ParentGameObject(*inactiveDashFX, *player);
+	inactiveDashFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	inactiveDashFX->GetComponent<ParticleFX>()->SetParticleSize(2, 2);
+	
+	auto walkingFX = CreateGameObject("WalkingFX");
+	walkingFX->GetTransform()->SetPosition(glm::vec3(0, 0, -1));
+	ParentGameObject(*walkingFX, *player);
+	walkingFX->AddComponent<ParticleFX>()->ApplyPreset(1);
+	
+	//ARMAS NO TOCAR
+	
+	auto boltgun = CreateGameObject("Boltgun");
+	boltgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	auto boltgunMesh = CreateGameObjectWithPath("Assets/boltgun.fbx");
+	boltgunMesh->SetName("boltgunMesh");
+	boltgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	boltgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	boltgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*boltgunMesh, *boltgun);
+
+	auto shotgun = CreateGameObject("Shotgun");
+	shotgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	auto shotgunMesh = CreateGameObjectWithPath("Assets/shotgun.fbx");
+	shotgunMesh->SetName("shotgunMesh");
+	shotgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	shotgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	shotgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*shotgunMesh, *shotgun);
+
+	auto railgun = CreateGameObject("Railgun");
+	railgun->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	auto railgunMesh = CreateGameObjectWithPath("Assets/railgun.fbx");
+	railgunMesh->SetName("railgunMesh");
+	railgunMesh->GetTransform()->Rotate(glm::radians(0.0f), glm::dvec3(1, 0, 0));
+	railgunMesh->GetTransform()->SetScale(glm::vec3(1, 1, 1));
+	railgunMesh->GetTransform()->SetPosition(glm::vec3(0, 0, 0));
+	ParentGameObject(*railgunMesh, *railgun);
 
 	//For rendering Interaction System text, remove the canvas if there is already one
 	//auto canvas = CreateGameObject("Canvas");

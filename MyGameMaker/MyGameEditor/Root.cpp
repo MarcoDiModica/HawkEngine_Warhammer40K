@@ -64,7 +64,7 @@ bool Root::CleanUp()
 
 bool Root::Start()
 {
-	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1SundayRelease.scene");
+	Application->scene_serializer->DeSerialize("Library/Scenes/Lvl1Alpha1Release.scene");
 
 	//auto scene = CreateGameObjectWithPath("Assets/Meshes/SpaceShip.fbx");
 	//auto scenezone23 = CreateGameObjectWithPath("Assets/Meshes/BlockingLvl2area2&3.fbx");

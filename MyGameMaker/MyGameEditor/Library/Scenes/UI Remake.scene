@@ -256,9 +256,9 @@ GameObject1:
                     - 2.6553018983577203e-07
                     - 9.2420677333393542e-08
                   localRotation:
-                    - -179.99991219018011
-                    - -80.537932598482087
-                    - 89.999963591731699
+                    - -179.99991219033797
+                    - -80.537941307777757
+                    - 89.999963591888033
                   localScale:
                     - 0.99999988079071045
                     - 0.99999988079071045
@@ -367,8 +367,8 @@ GameObject1:
                     - -2.0992075633330387e-08
                   localRotation:
                     - -3.9215701005733474
-                    - -1.0997623855059877e-07
-                    - -2.3444300288497217e-09
+                    - -1.0997626400734465e-07
+                    - -2.3444299529292963e-09
                   localScale:
                     - 1
                     - 1.0000001192092896
@@ -652,9 +652,9 @@ GameObject1:
                                                 - 0.10049884766340256
                                                 - -2.5751536014695375e-08
                                               localRotation:
-                                                - 0.42800709172533807
-                                                - 0.62468677713296306
-                                                - -54.245444859725424
+                                                - 0.42800715254296345
+                                                - 0.62468665839756499
+                                                - -54.245444859837356
                                               localScale:
                                                 - 1
                                                 - 1.0000002384185791
@@ -1202,9 +1202,9 @@ GameObject1:
                     - 2.6553018983577203e-07
                     - 9.2420677333393542e-08
                   localRotation:
-                    - -179.99991219018011
-                    - 80.537932598482087
-                    - -89.999963591731699
+                    - -179.99991219033797
+                    - 80.537941307777757
+                    - -89.999963591888033
                   localScale:
                     - 0.99999988079071045
                     - 0.99999988079071045
@@ -1312,9 +1312,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - 4.5988059012231872e-10
+                - 4.6074420611213432e-10
                 - -89.690738643731535
-                - -179.99999134857873
+                - -179.99999134857788
               localScale:
                 - 1
                 - 1
@@ -1334,9 +1334,9 @@ GameObject1:
                 - 0.37999996542930603
                 - 0.20000019669532776
               localRotation:
-                - -73.329177791308368
-                - 82.371942593170203
-                - 106.81134613024169
+                - -73.329141511362707
+                - 82.371871449772556
+                - 106.8113751555379
               localScale:
                 - 1
                 - 1.0000003576278687
@@ -1356,9 +1356,9 @@ GameObject1:
                 - -0.52000004053115845
                 - 0.14000017940998077
               localRotation:
-                - 152.94755434078229
-                - -87.52992278689787
-                - -152.96913591906699
+                - 152.9475561881525
+                - -87.530026022520872
+                - -152.96915467422059
               localScale:
                 - 0.99999994039535522
                 - 1
@@ -1378,9 +1378,9 @@ GameObject1:
                 - 0.54000002145767212
                 - 0.068000182509422302
               localRotation:
-                - -29.686007614624124
-                - -87.462700017110464
-                - -150.33824449652801
+                - -29.686067472641348
+                - -87.462832767252081
+                - -150.3381906770822
               localScale:
                 - 0.99999982118606567
                 - 1.0000001192092896
@@ -1466,9 +1466,9 @@ GameObject1:
                 - -1.4360001087188721
                 - 1.5000002384185791
               localRotation:
-                - -4.5901697413250328e-10
+                - -4.6045633411552916e-10
                 - 89.690738643731535
-                - -179.99999134857958
+                - -179.99999134857813
               localScale:
                 - 1
                 - 1
@@ -1488,9 +1488,9 @@ GameObject1:
                 - 0.41999998688697815
                 - 0.068000182509422302
               localRotation:
-                - -27.052921957312069
-                - 87.528378914765057
-                - 152.96878281174148
+                - -27.052851248505842
+                - 87.528346350212786
+                - 152.96885110606436
               localScale:
                 - 0.99999988079071045
                 - 1.0000001192092896
@@ -2563,62 +2563,6 @@ GameObject2:
             - 0
           anim_speed: 0
       Children: ~
-    - name: weapon_switcher_frame
-      uuid: 7150697968427902142
-      tag: Untagged
-      active: true
-      isStatic: false
-      Components:
-        Transform_Component:
-          name: Transform_Component
-          enabled: true
-          localPosition:
-            - 0
-            - 0
-            - 0
-          localRotation:
-            - 0
-            - -0
-            - 0
-          localScale:
-            - 1
-            - 1
-            - 1
-        UITransformComponent:
-          name: UITransformComponent
-          enabled: true
-          position:
-            - 0.99000001
-            - 0.980000019
-            - 0
-          rotation:
-            - 0
-            - 0
-            - 0
-          scale:
-            - 0.152999997
-            - 0.131999999
-            - 1
-          pivot_offset:
-            - 1
-            - 1
-            - 0
-        UIImageComponent:
-          name: UIImageComponent
-          enabled: true
-          texture_path: Library/Textures/UI/gunswitcher_frame.png
-          use_animation: false
-          sprite_size:
-            - 778
-            - 380
-          sheet_size:
-            - 778
-            - 380
-          sprite_offset:
-            - 0
-            - 0
-          anim_speed: 0
-      Children: ~
     - name: boltgun_ability_1
       uuid: 7226111253171644170
       tag: Untagged
@@ -3334,14 +3278,14 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/status_msup.png
+          texture_path: Library\Textures\UI\powerup_sprint.png
           use_animation: false
           sprite_size:
-            - 0
-            - 0
+            - 99
+            - 82
           sheet_size:
-            - 42
-            - 35
+            - 99
+            - 82
           sprite_offset:
             - 0
             - 0
@@ -3390,14 +3334,14 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/status_noreload.png
+          texture_path: Library\Textures\UI\powerup_bullets.png
           use_animation: false
           sprite_size:
             - 0
             - 0
           sheet_size:
-            - 46
-            - 38
+            - 100
+            - 87
           sprite_offset:
             - 0
             - 0
@@ -3446,14 +3390,14 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/status_defenseup.png
+          texture_path: Library\Textures\UI\powerup_shield.png
           use_animation: false
           sprite_size:
             - 0
             - 0
           sheet_size:
-            - 35
-            - 31
+            - 99
+            - 81
           sprite_offset:
             - 0
             - 0
@@ -3502,14 +3446,14 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/status_asup.png
+          texture_path: Library\Textures\UI\powerup_cadence.png
           use_animation: false
           sprite_size:
             - 0
             - 0
           sheet_size:
-            - 35
-            - 37
+            - 99
+            - 69
           sprite_offset:
             - 0
             - 0
@@ -3558,14 +3502,14 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/status_attackup.png
+          texture_path: Library\Textures\UI\powerup_damage.png
           use_animation: false
           sprite_size:
             - 0
             - 0
           sheet_size:
-            - 42
-            - 39
+            - 98
+            - 80
           sprite_offset:
             - 0
             - 0
@@ -3614,14 +3558,14 @@ GameObject2:
         UIImageComponent:
           name: UIImageComponent
           enabled: true
-          texture_path: Library/Textures/UI/status_magnet.png
+          texture_path: Library\Textures\UI\powerup_magnet.png
           use_animation: false
           sprite_size:
             - 0
             - 0
           sheet_size:
-            - 35
-            - 39
+            - 98
+            - 87
           sprite_offset:
             - 0
             - 0
@@ -4354,6 +4298,230 @@ GameObject2:
             - 0
             - 0
           anim_speed: 0.100000001
+      Children: ~
+    - name: overheat_bg
+      uuid: 2214268850656711866
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.920000017
+            - 0.971000016
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0659999996
+            - 0.0299999993
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gunswitcher_railgun_bar_green.png
+          use_animation: false
+          sprite_size:
+            - 332
+            - 72
+          sheet_size:
+            - 332
+            - 72
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: overheat_bar
+      uuid: 13629648236656851210
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.920000017
+            - 0.967999995
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.063000001
+            - 0.0249999985
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\overheat bar.png
+          use_animation: false
+          sprite_size:
+            - 1
+            - 1
+          sheet_size:
+            - 1
+            - 1
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: overheat_warning
+      uuid: 16934900250375778685
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.959999979
+            - 0.961000025
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.0289999992
+            - 0.0160000008
+            - 1
+          pivot_offset:
+            - 0
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\overheat_warning.png
+          use_animation: false
+          sprite_size:
+            - 76
+            - 50
+          sheet_size:
+            - 76
+            - 50
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
+      Children: ~
+    - name: weapon_switcher_frame
+      uuid: 7150697968427902142
+      tag: Untagged
+      active: true
+      isStatic: false
+      Components:
+        Transform_Component:
+          name: Transform_Component
+          enabled: true
+          localPosition:
+            - 0
+            - 0
+            - 0
+          localRotation:
+            - 0
+            - -0
+            - 0
+          localScale:
+            - 1
+            - 1
+            - 1
+        UITransformComponent:
+          name: UITransformComponent
+          enabled: true
+          position:
+            - 0.99000001
+            - 0.980000019
+            - 0
+          rotation:
+            - 0
+            - 0
+            - 0
+          scale:
+            - 0.152999997
+            - 0.131999999
+            - 1
+          pivot_offset:
+            - 1
+            - 1
+            - 0
+        UIImageComponent:
+          name: UIImageComponent
+          enabled: true
+          texture_path: Library\Textures\UI\gunswitcher_frame.png
+          use_animation: false
+          sprite_size:
+            - 779
+            - 381
+          sheet_size:
+            - 779
+            - 381
+          sprite_offset:
+            - 0
+            - 0
+          anim_speed: 0
       Children: ~
 GameObject3:
   name: Canvas_PauseMenu

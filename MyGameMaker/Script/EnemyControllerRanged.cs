@@ -5,43 +5,32 @@ using HawkEngine;
 
 public class EnemyControllerRanged : EnemyController
 {
-    // Enemy Stats
-    private float health = 100.0f;
-    private float projectileDamage = 15.0f;
-    private float acidDamage = 5.0f;
-    private float distanceToPlayer;
-
-    // Shooting
-    private float projectileRange = 100.0f;
     private List<BulletData> activeProjectiles = new List<BulletData>();
     public float shootCooldown = 2.0f;
     public float projectileSpeed = 90.0f;
     public float projectileLifetime = 0.5f;
     protected float shootTimer = 0f;
-
-    // Perfect Dodge
-    private bool dodgewindow = false;
-    private float dodgeActivationTime = 0.5f;
-    private float dodgeTimer = 0f;
-    //private TermagauntAnimation animation
     private PlayerController pc;
+    //stats
+    private float health = 100.0f;
+    private float damage = 20.0f;
 
-    // Audio
+    //audio
     bool isCombatMusicPlaying = false;
-    private Audio music;
-    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
-
-
+//     private AudioSource music;
+//     private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+//     private AudioClip combatSound;
 
     public override void Awake()
     {
-        music = gameObject.GetComponent<Audio>();
+        //music = gameObject.GetComponent<AudioSource>();
     }
     public override void Start()
     {
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
+
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
+        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         if (playerTransform == null)
         {
             Engineson.print("ERROR: Player couldn't be found!");
@@ -54,11 +43,11 @@ public class EnemyControllerRanged : EnemyController
             return;
         }
 
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("PlayerShooting: Audio component not found");
-        }
+//         sound = gameObject.GetComponent<AudioSource>();
+//         if (sound == null)
+//         {
+//             Engineson.print("PlayerShooting: Audio component not found");
+//         }
 
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
@@ -68,152 +57,114 @@ public class EnemyControllerRanged : EnemyController
         }
 
         particles = gameObject.AddComponent<ParticleFX>();
-        //particles.ApplyPreset();
-
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Ranged";
+
+//         combatSound = new AudioClip(combatMusic, "CombatMusic", true, false);
+//         sound.LoadAudioClip(combatSound);
     }
 
     public override void Update(float deltaTime)
     {
-        if (currentState != EnemyState.DEAD)
+        if (!isDead)
         {
             if (currentHealth <= 0)
             {
-                currentState = EnemyState.DEAD;
-                //anim.SetDeathAnimation();
-                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
-                sound?.Play();
-                return;
+                Engineson.print("This man is dead man.");
+                //Destroy(gameObject);
+                isDead = true;
             }
-
-            if (currentState != EnemyState.STUNNED)
+            if (!isStunned)
             {
-                distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+                Vector3 playerPos = playerTransform.position;
 
-                if (distanceToPlayer < distToChase)
+                if (Vector3.Distance(enemyTransform.position, playerPos) < distToChase)
                 {
-                    // Shoot
-                    if (distanceToPlayer < projectileRange)
+                    if (shootTimer <= 0)
                     {
-                        currentState = EnemyState.ATTACK;
+                        Attack();
+                        shootTimer = shootCooldown;
+                    }
+
+                    if (isCombatMusicPlaying == false)
+                    {
+                        //sound?.Play(combatSound);
+                        isCombatMusicPlaying = true;
                     }
                     else
                     {
-                        // Chase
-                        if (distanceToPlayer > minDistToChase)
-                        {
-                            currentState = EnemyState.CHASE;
-                        }
+                        shootTimer -= deltaTime;
                     }
 
-                    // Rotation
-                    if (moveDirection != Vector3.Zero)
+                    if (Vector3.Distance(enemyTransform.position, playerPos) > minDistToChase)
                     {
-                        currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
-                        float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
-                        float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+                        Vector3 currentVelocity = rb.GetVelocity();
+                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                        Vector3 desiredVelocity = moveDirection * speedMovement;
 
-                        while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
-                        while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+                        if (desiredVelocity.LengthSquared() > 0)
+                        {
+                            desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                        }
 
-                        currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+                        Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                        rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
 
-                        Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
-                        Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
-                            eulerRotation.Y * ((float)Math.PI / 180.0f),
-                            eulerRotation.X * ((float)Math.PI / 180.0f),
-                            eulerRotation.Z * ((float)Math.PI / 180.0f)
-                        );
-
-                        collider.SetRotation(newRotation);
+                        //enemyTransform.position += desiredVelocity * deltaTime;
                     }
                 }
                 else
                 {
-                    if (currentState != EnemyState.IDLE)
-                    {
-                        currentState = EnemyState.IDLE;
-                        rb.SetVelocity(Vector3.Zero);
-                        //anim.SetStandardIdleAnimation();
-                    }
+                    rb.SetVelocity(Vector3.Zero);
                 }
+
+                if (moveDirection != Vector3.Zero)
+                {
+                    currentRotationAngle = GetComponent<Transform>().eulerAngles.Y;
+                    float targetAngle = (float)Math.Atan2(moveDirection.X, moveDirection.Z);
+                    float targetAngleDegrees = targetAngle * (180.0f / (float)Math.PI);
+
+                    while (targetAngleDegrees - currentRotationAngle > 180.0f) targetAngleDegrees -= 360.0f;
+                    while (targetAngleDegrees - currentRotationAngle < -180.0f) targetAngleDegrees += 360.0f;
+
+                    currentRotationAngle = Lerp(currentRotationAngle, targetAngleDegrees, rotationSpeed * deltaTime);
+
+                    Vector3 eulerRotation = new Vector3(0, currentRotationAngle, 0);
+                    Quaternion newRotation = Quaternion.CreateFromYawPitchRoll(
+                        eulerRotation.Y * ((float)Math.PI / 180.0f),
+                        eulerRotation.X * ((float)Math.PI / 180.0f),
+                        eulerRotation.Z * ((float)Math.PI / 180.0f)
+                    );
+
+                    // enemyTransform.SetRotationQuat(newRotation);
+                    collider.SetRotation(newRotation);
+                }
+
             }
-        }
-
-        Engineson.print(gameObject.name + " STATE: " + currentState.ToString());
-
-        switch (currentState)
-        {
-            case EnemyState.IDLE:
-                isFootstepPlaying = false;
-                if (!hasStoppedFootsteps)
-                {
-                    sound?.Stop();
-                    hasStoppedFootsteps = true;
-                }
-                break;
-
-            case EnemyState.CHASE:
-                if (!isFootstepPlaying)
-                {
-                    sound?.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav");
-                    sound?.Play(true);
-                    isFootstepPlaying = true;
-                    hasStoppedFootsteps = false;
-                }
-                if (isCombatMusicPlaying == false)
-                {
-                    sound?.LoadAudio(combatMusic);
-                    sound?.Play(true);
-                    isCombatMusicPlaying = true;
-                }
-
-                Vector3 currentVelocity = rb.GetVelocity();
-                moveDirection = Vector3.Normalize(playerTransform.position - gameObject.GetComponent<Transform>().position);
-                Vector3 desiredVelocity = moveDirection * speedMovement;
-
-                if (desiredVelocity.LengthSquared() > 0)
-                {
-                    desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
-                }
-
-                Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
-                rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
-                break;
-
-            case EnemyState.ATTACK:
-                shootTimer += deltaTime;
-                if (shootTimer >= shootCooldown)
-                {
-                    Attack();
-                    sound?.Play();
-                    shootTimer = 0;
-                }
-                break;
-
-            case EnemyState.STUNNED:
-                rb.SetVelocity(Vector3.Zero);
-
+            else if (isStunned)
+            {
                 stunTimer += deltaTime;
+                rb.SetVelocity(Vector3.Zero);
                 if (stunTimer >= stunDuration)
                 {
-                    currentState = EnemyState.IDLE;
+                    isStunned = false;
                     stunTimer = 0.0f;
                 }
-                break;
+            }
 
-            case EnemyState.DEAD:
-                collider.SetActive(false);
-                break;
-
-            default:
-                break;
+            UpdateProjectiles(deltaTime);
+            CleanupProjectiles();
         }
-
-        UpdateProjectiles(deltaTime);
-        CleanupProjectiles();
+        if (isDead)
+        {
+            // Enemy Death
+            collider.SetActive(false);
+            if (pc.playerData.isPiercing == true)
+            {
+                pc.playerData.AddHealth(5.0f);
+            }
+        }
     }
 
     public override void Attack()
@@ -255,17 +206,31 @@ public class EnemyControllerRanged : EnemyController
 
     public override void TakeDamage(float damage)
     {
-        if (currentHealth > 0)
-        {
-            currentHealth -= damage;
-            //anim.SetHitAnimation();
-            //particles.ApplyPreset(19);
-            //particles.EmitBurst(1);
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
-        }
+        currentHealth -= damage;
+        particles.ApplyPreset(19);
+        particles.EmitBurst(1);
+        Engineson.print("Hit");
+        //anim.SetHitAnimation();
+        //sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
+        //sound?.Play();
     }
-
+    override public void OnCollisionEnter(GameObject other)
+    {
+        if (other.tag == "BoltgunProjectile")
+        {
+            currentHealth -= 20.0f;
+            Engineson.print("Boltgun hit!");
+        }
+        else if (other.tag == "ShotgunProjectile")
+        {
+            //cosas de la shotgun
+        }
+        else if (other.tag == "RailgunProjectile")
+        {
+            //Cosas de railgun
+        }
+        //Engineson.print("Player hit!");
+    }
     private void UpdateProjectiles(float deltaTime)
     {
         foreach (var proj in activeProjectiles)

@@ -76,7 +76,7 @@
     <Compile Include="AmmunitionBlessing.cs" />
     <Compile Include="Arc.cs" />
     <Compile Include="ArcSnare.cs" />
-    <Compile Include="AudioSource.cs" />
+    <Compile Include="Audio.cs" />
     <Compile Include="Ball.cs" />
     <Compile Include="Barrage.cs" />
     <Compile Include="BarrageBullet.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="Boltgun.cs" />
     <Compile Include="BoltgunBullets.cs" />
     <Compile Include="BoltgunPickUp.cs" />
+    <Compile Include="BoltgunUpgradePickUp.cs" />
     <Compile Include="BoxCollider.cs" />
     <Compile Include="BulletData.cs" />
     <Compile Include="Camera.cs" />
@@ -115,9 +116,11 @@
     <Compile Include="IEnemyController.cs" />
     <Compile Include="ImageAsSlider.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="Interaction.cs" />
     <Compile Include="IPowerUp.cs" />
     <Compile Include="LaserBeam.cs" />
     <Compile Include="LaserBeamObject.cs" />
+    <Compile Include="LocationTitle.cs" />
     <Compile Include="LoseScreen.cs" />
     <Compile Include="Magnet.cs" />
     <Compile Include="Mathf.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Railgun.cs" />
     <Compile Include="RailgunPickUp.cs" />
+    <Compile Include="RailgunUpgradePickUp.cs" />
     <Compile Include="RedThirstManager.cs" />
     <Compile Include="RayCast.cs" />
     <Compile Include="Rigidbody.cs" />
@@ -161,6 +165,7 @@
     <Compile Include="SceneManager.cs" />
     <Compile Include="ShotgunPickUp.cs" />
     <Compile Include="ShotgunShells.cs" />
+    <Compile Include="ShotgunUpgradePickUp.cs" />
     <Compile Include="SkeletalAnimation.cs" />
     <Compile Include="SoundEnvironmentController.cs" />
     <Compile Include="SoundTrigger.cs" />

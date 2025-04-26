@@ -21,8 +21,17 @@ public class EnemyControllerMelee : EnemyController
 
     // Audio
     bool isCombatMusicPlaying = false;
-    private Audio music;
-    private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    //private AudioSource music;
+    //private string combatMusic = "Assets/Audio/PlaceHolder_CombatMusic.wav";
+    //private string deathFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav";
+    //private string footStepFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntFootstep_ready.wav";
+    //private string meleeAttackFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntMeleeAttack_ready.wav";
+    //private string hitFX = "Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav";
+    //private AudioClip musicClip;
+    //private AudioClip deathSound;
+    //private AudioClip footStepSound;
+    //private AudioClip meleeAttackSound;
+    //private AudioClip hitSound;
 
     // Enemy Stats
     private float health = 100.0f;
@@ -42,14 +51,13 @@ public class EnemyControllerMelee : EnemyController
     private bool hasLeap = true;
     private bool isLeaping = false;
 
-    public override void Awake() {
-
+    public override void Awake() 
+    {
         music = gameObject.GetComponent<Audio>();
     }
 
     public override void Start()
     {
-        pc = GameObject.Find("Player").GetComponent<PlayerController>();
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         rb = gameObject.GetComponent<Rigidbody>();
         if (playerTransform == null)
@@ -64,11 +72,11 @@ public class EnemyControllerMelee : EnemyController
             return;
         }
 
-        sound = gameObject.GetComponent<Audio>();
-        if (sound == null)
-        {
-            Engineson.print("ERROR: Audio component not found");
-        }
+//         sound = gameObject.GetComponent<AudioSource>();
+//         if (sound == null)
+//         {
+//             Engineson.print("ERROR: Audio component not found");
+//         }
 
         enemyTransform = gameObject.GetComponent<Transform>();
         if (enemyTransform == null)
@@ -90,6 +98,18 @@ public class EnemyControllerMelee : EnemyController
         maxHealth = health;
         currentHealth = maxHealth;
         gameObject.tag = "Melee";
+        isDead = false;
+
+//         musicClip = new AudioClip(combatMusic, "CombatMusic", true, false);
+//         deathSound = new AudioClip(deathFX, "DeathFX", false, false);
+//         footStepSound = new AudioClip(footStepFX, "FootstepFX", true, false);
+//         meleeAttackSound = new AudioClip(meleeAttackFX, "MeleeAttackFX", false, false);
+//         hitSound = new AudioClip(hitFX, "HitFX", false, false);
+//         sound.LoadAudioClip(musicClip);
+//         sound.LoadAudioClip(deathSound);
+//         sound.LoadAudioClip(footStepSound);
+//         sound.LoadAudioClip(meleeAttackSound);
+//         sound.LoadAudioClip(hitSound);
     }
 
     public override void Update(float deltaTime)
@@ -100,9 +120,8 @@ public class EnemyControllerMelee : EnemyController
             {
                 currentState = EnemyState.DEAD;
                 anim.SetDeathAnimation();
-                sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntDeath_ready.wav");
-                sound?.Play();
-                return;
+                isDead = true;
+                //sound?.Play(deathSound);
             }
 
             if (currentState != EnemyState.STUNNED)
@@ -120,7 +139,35 @@ public class EnemyControllerMelee : EnemyController
                     // Chase
                     if (distanceToPlayer > minDistToChase)
                     {
-                        currentState = EnemyState.CHASE;
+                        if (!isFootstepPlaying)
+                        {
+                            //sound?.Play(footStepSound);
+                            isFootstepPlaying = true;
+                            hasStoppedFootsteps = false;
+                        }
+                        if (isCombatMusicPlaying == false)
+                        {
+                            //sound?.Play(musicClip);
+                            isCombatMusicPlaying = true;
+                        }
+
+                        Vector3 currentVelocity = rb.GetVelocity();
+                        moveDirection = Vector3.Normalize(playerPos - gameObject.GetComponent<Transform>().position);
+                        Vector3 desiredVelocity = moveDirection * speedMovement;
+
+                        if (!isLeaping)
+                        {
+                            anim.SetRunningAnimation();
+                            if (desiredVelocity.LengthSquared() > 0)
+                            {
+                                desiredVelocity = Vector3.Normalize(desiredVelocity) * speedMovement;
+                            }
+
+                            Vector3 newVelocity = Vector3.Lerp(currentVelocity, desiredVelocity, acceleration * deltaTime);
+                            rb.SetVelocity(new Vector3(newVelocity.X, currentVelocity.Y, newVelocity.Z));
+                        }
+                        isRunning = true;
+
                     }
 
                     // Rotation
@@ -153,6 +200,24 @@ public class EnemyControllerMelee : EnemyController
                         rb.SetVelocity(Vector3.Zero);
                         anim.SetStandardIdleAnimation();
                     }
+                    isRunning = false;
+                    isFootstepPlaying = false;
+                    if (!hasStoppedFootsteps)
+                    {
+                        //sound?.Stop(footStepSound);
+                        hasStoppedFootsteps = true;
+                    }
+                }
+            }
+            else if (isStunned)
+            {
+                // Enemy Stun
+                stunTimer += deltaTime;
+                rb.SetVelocity(Vector3.Zero);
+                if (stunTimer >= stunDuration)
+                {
+                    isStunned = false;
+                    stunTimer = 0.0f;
                 }
             }
         }
@@ -266,8 +331,16 @@ public class EnemyControllerMelee : EnemyController
 
     public override void Attack()
     {
-        //Engineson.print("Melee attack executed!");
-        if (pc.redThirstManager.IsInBlackRage())
+        Engineson.print("Melee attack executed!");
+        pc.playerData.TakeDamage(clawDamage);
+        Engineson.print("Player health: " + (pc.playerData.GetHealth()));
+
+        //sound?.Play(meleeAttackSound);
+    }
+
+    public void Leap()
+    {
+        if (!isLeaping)
         {
             if(pc.redThirstManager.redThirstBonus < clawDamage)
             {
@@ -295,8 +368,7 @@ public class EnemyControllerMelee : EnemyController
             anim.SetHitAnimation();
             particles.ApplyPreset(19);
             particles.EmitBurst(1);
-            sound.LoadAudio("Assets/Audio/SFX/Enemies/Hormagaunt/HormagauntHit_ready.wav");
-            sound?.Play();
+            //sound?.Play(hitSound);
         }
     }
 
